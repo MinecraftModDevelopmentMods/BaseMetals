@@ -435,3 +435,97 @@ item.basemetals.stone_crackhammer.name=Massette ene pierre
 
 
 item.basemetals.bucket_mercury.name=Godet de Mercure
+
+
+item.basemetals.human_detector.name=Sécurité plaque de pression
+
+achievement.cupronickel_maker.desc=Combinez poudre de cuivre et de nickel pour faire cuivre-nickel
+
+item.basemetals.cupronickel_axe.name=Hache en cuivre-nickel
+item.basemetals.cupronickel_bars.name=Mélange de cuivre-nickel
+item.basemetals.cupronickel_blend.name=Mezcla de cuivre-nickel
+item.basemetals.cupronickel_block.name=Bloc d'cuivre-nickel
+item.basemetals.cupronickel_boots.name=Bottes en cuivre-nickel
+item.basemetals.cupronickel_chestplate.name=Plastron en cuivre-nickel
+item.basemetals.cupronickel_crackhammer.name=Massette en cuivre-nickel
+item.basemetals.cupronickel_door.name=Porte en cuivre-nickel
+item.basemetals.cupronickel_helmet.name=Casque en cuivre-nickel
+item.basemetals.cupronickel_hoe.name=Houe en cuivre-nickel
+item.basemetals.cupronickel_ingot.name=Lingot de cuivre-nickel
+item.basemetals.cupronickel_leggings.name=Jambières en cuivre-nickel
+item.basemetals.cupronickel_nugget.name=Pépite de cuivre-nickel
+item.basemetals.cupronickel_pickaxe.name=Pioche en cuivre-nickel
+item.basemetals.cupronickel_powder.name=Laiton en cuivre-nickel
+item.basemetals.cupronickel_shovel.name=Pelle en cuivre-nickel
+item.basemetals.cupronickel_sword.name=Épée en cuivre-nickel
+item.basemetals.cupronickel_trapdoor.name=Trappe en cuivre-nickel
+tile.basemetals.cupronickel_bars.name=Mélange de cuivre-nickel
+tile.basemetals.cupronickel_block.name=Bloc d'cuivre-nickel
+tile.basemetals.cupronickel_door.name=Porte en cuivre-nickel
+tile.basemetals.cupronickel_trapdoor.name=Trappe en cuivre-nickel
+
+item.basemetals.platinum_axe.name=Hache en platine
+item.basemetals.platinum_bars.name=Mélange en platine
+item.basemetals.platinum_block.name=Bloc en platine
+item.basemetals.platinum_boots.name=Bottes en platine
+item.basemetals.platinum_chestplate.name=Plastron en platine
+item.basemetals.platinum_crackhammer.name=Massette en platine
+item.basemetals.platinum_door.name=Porte en platine
+item.basemetals.platinum_helmet.name=Casque en platine
+item.basemetals.platinum_hoe.name=Houe en platine
+item.basemetals.platinum_ingot.name=Lingot en platine
+item.basemetals.platinum_leggings.name=Jambières en platine
+item.basemetals.platinum_nugget.name=Pépite en platine
+item.basemetals.platinum_ore.name=Minerai en platine
+item.basemetals.platinum_pickaxe.name=Pioche en platine
+item.basemetals.platinum_powder.name=Laiton en platine
+item.basemetals.platinum_shovel.name=Pelle en platine
+item.basemetals.platinum_sword.name=Épée en platine
+item.basemetals.platinum_trapdoor.name=Trappe en platine
+tile.basemetals.platinum_bars.name=Mélange en platine
+tile.basemetals.platinum_block.name=Bloc en platine
+tile.basemetals.platinum_door.name=Porte en platine
+tile.basemetals.platinum_ore.name=Minerai en platine
+tile.basemetals.platinum_trapdoor.name=Trappe en platine
+
+item.basemetals.adamantine_rod.name=Barre en adamantin
+item.basemetals.aquarium_rod.name=Barre en aquarium
+item.basemetals.brass_rod.name=Barre en laiton
+item.basemetals.bronze_rod.name=Barre de bronze
+item.basemetals.coldiron_rod.name=Barre de fer-froid
+item.basemetals.copper_rod.name=Barre en cuivre
+item.basemetals.cupronickel_rod.name=Barre de cuivre-nickel
+item.basemetals.electrum_rod.name=Barre en électrum
+item.basemetals.gold_rod.name=Barre de or
+item.basemetals.invar_rod.name=Barre de invar
+item.basemetals.iron_rod.name=Barre de fer
+item.basemetals.lead_rod.name=Barre de plomb
+item.basemetals.mithril_rod.name=Barre de mithril
+item.basemetals.nickel_rod.name=Barre en nickel
+item.basemetals.platinum_rod.name=Barre en platine
+item.basemetals.silver_rod.name=Barre en argent
+item.basemetals.starsteel_rod.name=Barre en acier-étoile
+item.basemetals.steel_rod.name=Barre en acier
+item.basemetals.tin_rod.name=Barre en étain
+item.basemetals.zinc_rod.name=Barre de zinc
+
+item.basemetals.adamantine_gear.name=Pignon en adamantin
+item.basemetals.aquarium_gear.name=Pignon en aquarium
+item.basemetals.brass_gear.name=Pignon en laiton
+item.basemetals.bronze_gear.name=Pignon de bronze
+item.basemetals.coldiron_gear.name=Pignon de fer-froid
+item.basemetals.copper_gear.name=Pignon en cuivre
+item.basemetals.cupronickel_gear.name=Pignon de cuivre-nickel
+item.basemetals.electrum_gear.name=Pignon en électrum
+item.basemetals.gold_gear.name=Pignon de or
+item.basemetals.invar_gear.name=Pignon de invar
+item.basemetals.iron_gear.name=Pignon de fer
+item.basemetals.lead_gear.name=Pignon de plomb
+item.basemetals.mithril_gear.name=Pignon de mithril
+item.basemetals.nickel_gear.name=Pignon en nickel
+item.basemetals.platinum_gear.name=Pignon en platine
+item.basemetals.silver_gear.name=Pignon en argent
+item.basemetals.starsteel_gear.name=Pignon en acier-étoile
+item.basemetals.steel_gear.name=Pignon en acier
+item.basemetals.tin_gear.name=Pignon en étain
+item.basemetals.zinc_gear.name=Pignon de zinc

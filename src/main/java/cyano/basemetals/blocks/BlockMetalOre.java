@@ -9,41 +9,45 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMetalObject{
+/**
+ * Ore Block
+ */
+public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMetalObject {
 
 	final MetalMaterial metal;
-	
+
 	public BlockMetalOre(MetalMaterial metal) {
 		super();
 		this.setStepSound(Block.soundTypePiston);
 		this.metal = metal;
-		this.blockHardness = Math.max(5f,metal.getOreBlockHardness());
-		this.blockResistance = Math.max(1.5f,metal.getBlastResistance()*0.75f);
+		this.blockHardness = Math.max(5f, metal.getOreBlockHardness());
+		this.blockResistance = Math.max(1.5f, metal.getBlastResistance()*0.75f);
 		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
 	//	FMLLog.info(metal.getName()+" ore harvest level set to "+metal.getRequiredHarvestLevel());
 	}
 
 	@Override
-    public int getExpDrop(final IBlockAccess bs, final BlockPos coord, final int i) {
-        return 0; // xp comes from smelting
-    }
+	public int getExpDrop(final IBlockAccess bs, final BlockPos coord, final int i) {
+		return 0; // XP comes from smelting
+	}
 
 	@Override
 	public String getOreDictionaryName() {
 		return "ore"+metal.getCapitalizedName();
 	}
-	
+
 	@Override
 	public boolean canEntityDestroy(final IBlockAccess bs, final BlockPos coord, final Entity entity) {
 		if(this == cyano.basemetals.init.Blocks.starsteel_ore && entity instanceof net.minecraft.entity.boss.EntityDragon) return false;
 		return super.canEntityDestroy(bs, coord, entity);
 	}
-	
-	public MetalMaterial getMetal(){
+
+	public MetalMaterial getMetal() {
 		return metal;
 	}
+
 	@Override
-	public MetalMaterial getMetalMaterial(){
+	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}
 }

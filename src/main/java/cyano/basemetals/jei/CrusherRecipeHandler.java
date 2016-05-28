@@ -1,6 +1,5 @@
 package cyano.basemetals.jei;
 
-import cyano.basemetals.BaseMetals;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 

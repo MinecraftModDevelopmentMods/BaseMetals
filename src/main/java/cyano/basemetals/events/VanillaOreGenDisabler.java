@@ -11,13 +11,10 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class VanillaOreGenDisabler {
 
-	
-
-
 	@SubscribeEvent(priority=EventPriority.HIGHEST) 	
 	public void handleOreGenEvent(OreGenEvent event){
 		if(event instanceof BaseMetalsOreGenEvent){
-			if(!((BaseMetalsOreGenEvent)event).modID.equals(BaseMetals.MODID)){
+			if(!((BaseMetalsOreGenEvent)event).modID.equals(BaseMetals.MODID)) {
 				// other mod or vanilla
 				event.setResult(Result.DENY);
 			}
@@ -26,23 +23,23 @@ public class VanillaOreGenDisabler {
 			event.setResult(Result.DENY);
 		}
 	}
-	
-	
-	
-	private VanillaOreGenDisabler(){
+
+	private VanillaOreGenDisabler() {
 		// do nothing
 	}
-	
+
 	private static VanillaOreGenDisabler instance = null;
-	
+
 	private static final Lock initLock = new ReentrantLock();
 
-	public static VanillaOreGenDisabler getInstance(){
-		if(instance == null){
+	public static VanillaOreGenDisabler getInstance() {
+		if(instance == null) {
 			initLock.lock();
 			try{
-				if(instance == null){instance = new VanillaOreGenDisabler();}
-			} finally{
+				if(instance == null) {
+					instance = new VanillaOreGenDisabler();
+				}
+			} finally {
 				initLock.unlock();
 			}
 		}

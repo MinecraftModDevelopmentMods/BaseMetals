@@ -42,7 +42,14 @@ import java.util.*;
  * @author DrCyano
  *
  */
-@Mod(modid = BaseMetals.MODID, name=BaseMetals.NAME, version = BaseMetals.VERSION)
+@Mod(
+		modid = BaseMetals.MODID,
+		name=BaseMetals.NAME,
+		version = BaseMetals.VERSION,
+		dependencies = "required-after:Forge",
+		acceptedMinecraftVersions = "1.8.9)")
+//		updateJSON = "https://raw.githubusercontent.com/cyanobacterium/BaseMetals/master/update.json")
+
 public class BaseMetals
 {
 	
@@ -168,7 +175,6 @@ public class BaseMetals
 
 		config.save();
 
-
 		cyano.basemetals.init.Fluids.init();
 		cyano.basemetals.init.Materials.init();
 		cyano.basemetals.init.ItemGroups.init();
@@ -176,6 +182,9 @@ public class BaseMetals
 		cyano.basemetals.init.Items.init();
 		cyano.basemetals.init.VillagerTrades.init();
 		
+		
+
+
 
 
 		if(event.getSide() == Side.CLIENT){
@@ -207,7 +216,7 @@ public class BaseMetals
 				oreSpawnConfigFiles.add(f.toPath());
 			}
 		}
-		
+
 		cyano.basemetals.init.Fluids.init();
 		cyano.basemetals.init.Recipes.init();
 		cyano.basemetals.init.DungeonLoot.init();
@@ -215,7 +224,7 @@ public class BaseMetals
 		
 		cyano.basemetals.init.Achievements.init();
 		
-		
+
 		MinecraftForge.EVENT_BUS.register(BucketHandler.getInstance());
 		
 		if(disableVanillaOreGen){

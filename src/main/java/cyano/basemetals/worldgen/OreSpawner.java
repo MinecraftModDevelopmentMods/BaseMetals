@@ -1,20 +1,6 @@
 package cyano.basemetals.worldgen;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import com.google.common.base.Predicate;
-
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.events.BaseMetalsOreGenEvent;
 import net.minecraft.block.Block;
@@ -30,6 +16,10 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class OreSpawner implements IWorldGenerator {
 

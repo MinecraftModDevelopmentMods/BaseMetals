@@ -1,10 +1,52 @@
 {
     "variants": {
-        "facing=down":  { "model": "basemetals:starsteel_plate", "x": 90  },
-        "facing=up":    { "model": "basemetals:starsteel_plate", "x": 270 },
-        "facing=north": { "model": "basemetals:starsteel_plate"           },
-        "facing=south": { "model": "basemetals:starsteel_plate", "y": 180 },
-        "facing=west":  { "model": "basemetals:starsteel_plate", "y": 270 },
-        "facing=east":  { "model": "basemetals:starsteel_plate", "y": 90  }
+        "facing=down":  [
+			{ "model": "basemetals:starsteel_plate0", "x": 90  },
+			{ "model": "basemetals:starsteel_plate1", "x": 90  },
+			{ "model": "basemetals:starsteel_plate2", "x": 90  },
+			{ "model": "basemetals:starsteel_plate3", "x": 90  },
+			{ "model": "basemetals:starsteel_plate4", "x": 90  },
+			{ "model": "basemetals:starsteel_plate5", "x": 90  }
+		],
+        "facing=up":    [
+			{ "model": "basemetals:starsteel_plate0", "x": 270 },
+			{ "model": "basemetals:starsteel_plate1", "x": 270 },
+			{ "model": "basemetals:starsteel_plate2", "x": 270 },
+			{ "model": "basemetals:starsteel_plate3", "x": 270 },
+			{ "model": "basemetals:starsteel_plate4", "x": 270 },
+			{ "model": "basemetals:starsteel_plate5", "x": 270 }
+		],
+        "facing=north": [
+			{ "model": "basemetals:starsteel_plate0"           },
+			{ "model": "basemetals:starsteel_plate1"           },
+			{ "model": "basemetals:starsteel_plate2"           },
+			{ "model": "basemetals:starsteel_plate3"           },
+			{ "model": "basemetals:starsteel_plate4"           },
+			{ "model": "basemetals:starsteel_plate5"           }
+		],
+        "facing=south": [
+			{ "model": "basemetals:starsteel_plate0", "y": 180 },
+			{ "model": "basemetals:starsteel_plate1", "y": 180 },
+			{ "model": "basemetals:starsteel_plate2", "y": 180 },
+			{ "model": "basemetals:starsteel_plate3", "y": 180 },
+			{ "model": "basemetals:starsteel_plate4", "y": 180 },
+			{ "model": "basemetals:starsteel_plate5", "y": 180 }
+		],
+        "facing=west":  [
+			{ "model": "basemetals:starsteel_plate0", "y": 270 },
+			{ "model": "basemetals:starsteel_plate1", "y": 270 },
+			{ "model": "basemetals:starsteel_plate2", "y": 270 },
+			{ "model": "basemetals:starsteel_plate3", "y": 270 },
+			{ "model": "basemetals:starsteel_plate4", "y": 270 },
+			{ "model": "basemetals:starsteel_plate5", "y": 270 }
+		],
+        "facing=east":  [
+			{ "model": "basemetals:starsteel_plate0", "y": 90  },
+			{ "model": "basemetals:starsteel_plate1", "y": 90  },
+			{ "model": "basemetals:starsteel_plate2", "y": 90  },
+			{ "model": "basemetals:starsteel_plate3", "y": 90  },
+			{ "model": "basemetals:starsteel_plate4", "y": 90  },
+			{ "model": "basemetals:starsteel_plate5", "y": 90  }
+		]
     }
 }

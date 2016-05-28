@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "basemetals:human_detector_up" },
+        "powered=true": { "model": "basemetals:human_detector_down" }
+    }
+}

@@ -1,11 +1,5 @@
 package cyano.basemetals.items;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
-
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.init.Achievements;
 import cyano.basemetals.init.Materials;
@@ -25,6 +19,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
 public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMetalObject {
 	
 	protected final String customTexture;
@@ -40,6 +38,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	}
 	
 	private static final int UPDATE_INTERVAL = 11;
+	private static final int EFFECT_DURATION = 59;
 	private static final Map<EntityPlayer,AtomicLong> playerUpdateTimestampMap = new HashMap<>();
 	private static final Map<EntityPlayer,AtomicInteger> playerUpdateCountMap = new HashMap<>();
 	@Override
@@ -64,7 +63,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	private static final Map<EntityPlayer,AtomicInteger> starsteelUpdateCache = new HashMap<>();
 	private static final Map<EntityPlayer,AtomicInteger> adamantineUpdateCache = new HashMap<>();
 	private static final Map<EntityPlayer,AtomicInteger> leadUpdateCache = new HashMap<>();
-	private static final int EFFECT_DURATION = 59;
 	protected void doArmorUpdate(World w, EntityPlayer player, ItemStack armor,
 			int i) {
 		// some sanity checks

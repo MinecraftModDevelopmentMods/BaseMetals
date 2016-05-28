@@ -1,31 +1,25 @@
 package cyano.basemetals.blocks;
 
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.FMLLog;
 
 /**
  * This class represents a fluid that applies a function to any living entities that swim in it.
  * @author DrCyano
  *
  */
-public class InteractiveFluidBlock extends BlockFluidClassic{
+public class InteractiveFluidBlock extends BlockFluidClassic {
 
 	private final java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect;
 	private final boolean isFlammable;
+
 	/**
 	 * Constructor for this fluid block.
 	 * @param fluid The Fluid of this fluid block
@@ -37,6 +31,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 		this.isFlammable = flammable;
 		this.immersionEffect = immersionEffect;
 	}
+
 	/**
 	 * Constructor for this fluid block.
 	 * @param fluid The Fluid of this fluid block
@@ -45,6 +40,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 	public InteractiveFluidBlock(Fluid fluid,  java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect) {
 		this(fluid,false,immersionEffect);
 	}
+
 	/**
 	 * Constructor for this fluid block.
 	 * @param fluid The Fluid of this fluid block
@@ -53,15 +49,13 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 		this(fluid,false,null);
 	}
 
-	
 	@Override
 	public void onEntityCollidedWithBlock( World world, BlockPos coord, Entity entity ) {
-		if (immersionEffect != null && entity instanceof EntityLivingBase 
-				) {
+		if (immersionEffect != null && entity instanceof EntityLivingBase) {
 			immersionEffect.accept(world,(EntityLivingBase)entity);
 		}
 	}
-	
+
 	/**
 	 * Chance that fire will spread and consume this block.
 	 * 300 being a 100% chance, 0, being a 0% chance.
@@ -76,7 +70,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 		if(isFlammable) return 60;
 		return 0;
 	}
-	
+
 	/**
 	 * Called when fire is updating on a neighbor block.
 	 * The higher the number returned, the faster fire will spread around this block.

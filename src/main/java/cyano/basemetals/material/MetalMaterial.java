@@ -1,8 +1,8 @@
 package cyano.basemetals.material;
 
-import java.util.Locale;
-
 import cyano.basemetals.BaseMetals;
+
+import java.util.Locale;
 
 public class MetalMaterial {
 

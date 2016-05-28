@@ -39,6 +39,7 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
     	if(metal == Materials.electrum) crafter.addStat(Achievements.electrum_maker, 1);
     	if(metal == Materials.steel) crafter.addStat(Achievements.steel_maker, 1);
     	if(metal == Materials.invar) crafter.addStat(Achievements.invar_maker, 1);
-    	if(metal == Materials.mithril) crafter.addStat(Achievements.mithril_maker, 1);
+		if(metal == Materials.mithril) crafter.addStat(Achievements.mithril_maker, 1);
+		if(metal == Materials.cupronickel) crafter.addStat(Achievements.cupronickel_maker, 1);
 	}
 }

@@ -18,50 +18,49 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BucketHandler {
 
-        private static BucketHandler instance = null;
-        private static Lock initLock = new ReentrantLock();
-        public final Map<Block, Item> buckets;
+	private static BucketHandler instance = null;
+	private static Lock initLock = new ReentrantLock();
+	public final Map<Block, Item> buckets;
 
-        private BucketHandler() {
-        	buckets = new HashMap<Block, Item>(); 
-        }
-        
-        public static BucketHandler getInstance(){
-        	if(instance == null){
-        		initLock.lock();
-        		try{
-        			if(instance == null){
-        				instance = new BucketHandler();
-        			}
-        		}finally{
-        			initLock.unlock();
-        		}
-        	}
-        	return instance;
-        }
+	private BucketHandler() {
+		buckets = new HashMap<Block, Item>(); 
+	}
 
-    	@SubscribeEvent(priority=EventPriority.HIGH) 
-        public void onBucketFill(FillBucketEvent event) {
+	public static BucketHandler getInstance() {
+		if(instance == null) {
+			initLock.lock();
+			try {
+				if(instance == null) {
+					instance = new BucketHandler();
+				}
+			} finally {
+				initLock.unlock();
+			}
+		}
+		return instance;
+	}
 
-                ItemStack result = fillCustomBucket(event.world, event.target);
+	@SubscribeEvent(priority=EventPriority.HIGH) 
+	public void onBucketFill(FillBucketEvent event) {
 
-                if (result == null)
-                        return;
+		ItemStack result = fillCustomBucket(event.world, event.target);
 
-                event.result = result;
-                event.setResult(Result.ALLOW);
-        }
+		if (result == null)
+			return;
 
-        private ItemStack fillCustomBucket(World world, MovingObjectPosition location) {
-        		BlockPos pos = location.getBlockPos();
-                Block block = world.getBlockState(pos).getBlock();
+		event.result = result;
+		event.setResult(Result.ALLOW);
+	}
 
-                Item bucket = buckets.get(block);
-                if (bucket != null && block.getMetaFromState(world.getBlockState(pos)) == 0) {
-                        world.setBlockToAir(pos);
-                        return new ItemStack(bucket);
-                } else
-                        return null;
+	private ItemStack fillCustomBucket(World world, MovingObjectPosition location) {
+		BlockPos pos = location.getBlockPos();
+		Block block = world.getBlockState(pos).getBlock();
 
-        }
+		Item bucket = buckets.get(block);
+		if (bucket != null && block.getMetaFromState(world.getBlockState(pos)) == 0) {
+			world.setBlockToAir(pos);
+			return new ItemStack(bucket);
+		} else
+			return null;
+	}
 }

@@ -1,21 +1,17 @@
 package cyano.basemetals.items;
 
+import cyano.basemetals.init.Materials;
+import cyano.basemetals.material.MetalMaterial;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import com.google.common.collect.Multimap;
 
-import cyano.basemetals.init.Materials;
-import cyano.basemetals.material.MetalMaterial;
 
 public abstract class MetalToolEffects {
 	public static void extraEffectsOnAttack(final MetalMaterial metal, final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker){

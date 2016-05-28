@@ -1,6 +1,12 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "basemetals:blocks/starsteel_block"
+        "particle": "basemetals:blocks/starsteel0",
+        "down": "basemetals:blocks/starsteel0",
+        "up": "basemetals:blocks/starsteel1",
+        "north": "basemetals:blocks/starsteel2",
+        "east": "basemetals:blocks/starsteel3",
+        "south": "basemetals:blocks/starsteel4",
+        "west": "basemetals:blocks/starsteel5"
     }
 }

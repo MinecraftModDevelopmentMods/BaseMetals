@@ -1,24 +1,21 @@
 package cyano.basemetals.items;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import cyano.basemetals.init.Materials;
+import cyano.basemetals.material.IMetalObject;
+import cyano.basemetals.material.MetalMaterial;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-import cyano.basemetals.init.Materials;
-import cyano.basemetals.material.IMetalObject;
-import cyano.basemetals.material.MetalMaterial;
+
+import java.util.List;
 
 public class ItemMetalSword extends ItemSword  implements IMetalObject {
 	protected final MetalMaterial metal;

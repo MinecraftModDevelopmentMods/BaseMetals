@@ -13,7 +13,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * This class handles all of the recipes for the crack hammer, collectively 

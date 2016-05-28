@@ -24,14 +24,12 @@ public class EntityBetterVillager {
 	 * @param tradeList Trades to add to the given level
 	 */
 	@Deprecated
-	public static void addVillagerTrades(int profession, int career, int level, EntityVillager.ITradeList... tradeList){
+	public static void addVillagerTrades(int profession, int career, int level, EntityVillager.ITradeList... tradeList) {
 		try {
-			VillagerTradeHelper.insertTrades(profession,career,level,tradeList);
+			VillagerTradeHelper.insertTrades(profession, career, level, tradeList);
 		} catch (NoSuchFieldException | IllegalAccessException ex) {
-			FMLLog.log(Level.ERROR,ex,"%s: %s.addVillagerTrades(%s, %s, %s, EntityVillager.ITradeList[%s]) failed!",
+			FMLLog.log(Level.ERROR, ex, "%s: %s.addVillagerTrades(%s, %s, %s, EntityVillager.ITradeList[%s]) failed!",
 					BaseMetals.MODID, EntityBetterVillager.class.getCanonicalName(), profession, career, level, tradeList.length);
 		}
 	}
-
-	
 }
