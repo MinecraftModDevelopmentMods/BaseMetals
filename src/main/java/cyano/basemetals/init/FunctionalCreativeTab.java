@@ -53,7 +53,7 @@ public class FunctionalCreativeTab  extends CreativeTabs {
 	 */
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void displayAllReleventItems(List<ItemStack> itemList)
+	public void displayAllReleventItems(List itemList)
 	{
 		super.displayAllReleventItems(itemList);
 		itemList.sort(itemSortingAlgorithm);
