@@ -78,7 +78,7 @@ public abstract class Materials {
 		registerMaterial(lead.getName(), lead);
 		mithril = addMaterial("mithril", 9, 9, 9, 0.05);
 		nickel = addMaterial("nickel", 4, 4, 7, 0.1);
-		platinum = addMaterial("platinum", 3, 5, 12, 0.5);
+		platinum = addRareMaterial("platinum", 3, 5, 15, 0.5);
 		silver = addMaterial("silver", 5, 4, 6, 0.1);
 		starsteel = new StarSteelMaterial("starsteel", 10, 25, 12, 0.01f);
 		registerMaterial(starsteel.getName(), starsteel);
@@ -91,6 +91,12 @@ public abstract class Materials {
 
 	private static MetalMaterial addMaterial(String name, double hardness, double strength, double magic, double rarity) {
 		MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic, (int)(Math.max(50*rarity,1)));
+		registerMaterial(name, m);
+		return m;
+	}
+	
+	private static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic, double rarity) {
+		MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic, (int)(Math.max(50*rarity,1)), true);
 		registerMaterial(name, m);
 		return m;
 	}

@@ -62,10 +62,13 @@ public abstract class VillagerTrades {
 
 		for(MetalMaterial m : cyano.basemetals.init.Materials.getAllMetals()) {
 			float value = m.hardness + m.strength + m.magicAffinity + m.getToolHarvestLevel();
+			if(m.isRare) continue;
 			// for reference, iron has a value of 21.5, gold would be 14, copper is 14, and diamond is 30
 			int emeraldPurch = emeraldPurchaseValue(value);
 			int emeraldSale = emeraldSaleValue(value);
 			int tradeLevel = tradeLevel(value);
+
+			if(emeraldPurch > 64 || emeraldSale > 64) continue; // too expensive
 
 			int armorsmith = (3 << 16) | (1 << 8) | (tradeLevel);
 			int weaponsmith = (3 << 16) | (2 << 8) | (tradeLevel);

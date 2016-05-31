@@ -650,6 +650,7 @@ public abstract class Items {
 		// mercury is special
 		mercury_ingot = registerItem(new Item(), "mercury_ingot", null, ItemGroups.tab_items);
 		OreDictionary.registerOre("ingotMercury", mercury_ingot);
+		OreDictionary.registerOre("quicksilver", mercury_ingot);
 		mercury_powder = registerItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
 		OreDictionary.registerOre("dustMercury", mercury_powder);
 		bucket_mercury = (ItemBucket)registerItem(new ItemBucket(Fluids.fluidBlockMercury),"bucket_mercury", null, ItemGroups.tab_items);
