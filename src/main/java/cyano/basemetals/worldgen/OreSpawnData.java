@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.registry.GameData;
 import java.util.*;
 
 public class OreSpawnData {
+
 	public final float frequency;
 	public final int spawnQuantity;
 	public final int minY;
@@ -21,7 +22,7 @@ public class OreSpawnData {
 	public final Block ore;
 	public final int metaData;
 	
-	public OreSpawnData(Block oreBlock, int metaDataValue, int minHeight, int maxHeight, float spawnFrequency, int spawnQuantity, int spawnQuantityVariation, Collection<String> biomes){
+	public OreSpawnData(Block oreBlock, int metaDataValue, int minHeight, int maxHeight, float spawnFrequency, int spawnQuantity, int spawnQuantityVariation, Collection<String> biomes) {
 		this.spawnQuantity = spawnQuantity;
 		this.frequency = spawnFrequency;
 		this.minY = minHeight;
@@ -37,11 +38,11 @@ public class OreSpawnData {
 	
 	private static boolean doOnce = true; 
 	
-	public OreSpawnData(JsonObject jsonEntry){
+	public OreSpawnData(JsonObject jsonEntry) {
 		String blockName = jsonEntry.get("blockID").getAsString();
 		String modId;
 		String name;
-		if(blockName.contains(":")){
+		if(blockName.contains(":")) {
 			modId = blockName.substring(0,blockName.indexOf(":"));
 			name = blockName.substring(blockName.indexOf(":")+1);
 		} else {
@@ -50,11 +51,11 @@ public class OreSpawnData {
 		}
 		//this.ore = GameRegistry.findBlock(modId, name); // sadly, this doesn't work because the GameData now store the block key as a ResourceLocation instead of a String
 		this.ore = GameData.getBlockRegistry().getObject(new ResourceLocation(blockName));
-		if(ore == null){
+		if(ore == null) {
 			FMLLog.severe("Failed to find ore block "+modId+":"+name);
-			if(doOnce){
+			if(doOnce) {
 				StringBuilder sb = new StringBuilder("Valid block IDs:\n");
-				for(Object key : GameData.getBlockRegistry().getKeys()){
+				for(Object key : GameData.getBlockRegistry().getKeys()) {
 					sb.append("\t(").append(key.getClass().getName()).append(")\t")
 					.append(String.valueOf(key)).append("\n");
 				}
@@ -62,12 +63,12 @@ public class OreSpawnData {
 				doOnce = false;
 			}
 		}
-		this.metaData = get("blockMeta",0,jsonEntry);
-		this.spawnQuantity = (int)get("size",8.0f,jsonEntry);
-		this.frequency = get("frequency",20.0f,jsonEntry);
-		this.minY = get("minHeight",0,jsonEntry);
-		this.maxY = get("maxHeight",255,jsonEntry);
-		this.variation = (int)get("variation",0.5f * spawnQuantity,jsonEntry);
+		this.metaData = get("blockMeta", 0, jsonEntry);
+		this.spawnQuantity = (int)get("size", 8.0f, jsonEntry);
+		this.frequency = get("frequency", 20.0f, jsonEntry);
+		this.minY = get("minHeight", 0, jsonEntry);
+		this.maxY = get("maxHeight", 255, jsonEntry);
+		this.variation = (int)get("variation", 0.5f * spawnQuantity, jsonEntry);
 		if(jsonEntry.has("biomes") && jsonEntry.get("biomes").getAsJsonArray().size() > 0){
 			this.restrictBiomes = true;
 			JsonArray biomeEntries = jsonEntry.get("biomes").getAsJsonArray();
@@ -82,29 +83,32 @@ public class OreSpawnData {
 		}
 	}
 
-	private static int get(String key, int defaultValue, JsonObject root){
-		if(root.has(key)){
+	private static int get(String key, int defaultValue, JsonObject root) {
+		if(root.has(key)) {
 			return root.get(key).getAsInt();
 		} else {
 			return defaultValue;
 		}
 	}
-	private static float get(String key, float defaultValue, JsonObject root){
-		if(root.has(key)){
+
+	private static float get(String key, float defaultValue, JsonObject root) {
+		if(root.has(key)) {
 			return root.get(key).getAsFloat();
 		} else {
 			return defaultValue;
 		}
 	}
-	private static String get(String key, String defaultValue, JsonObject root){
-		if(root.has(key)){
+
+	private static String get(String key, String defaultValue, JsonObject root) {
+		if(root.has(key)) {
 			return root.get(key).getAsString();
 		} else {
 			return defaultValue;
 		}
 	}
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return "oreSpawn: [ore="+ore+"#"+metaData+",frequency="+frequency+",spawnQuantity="+spawnQuantity+",variation=+/-"+variation+",Y-range="+minY+"-"+maxY+",restrictBiomes="+restrictBiomes+",biomes="+Arrays.toString(biomesByName.toArray())+"]";
 	}
 }

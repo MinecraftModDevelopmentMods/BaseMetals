@@ -1,0 +1,7 @@
+{
+    "parent": "basemetals:item/door_item",
+    "textures": {
+        "bottom": "basemetals:blocks/invar_door_lower",
+        "top": "basemetals:blocks/invar_door_upper"
+    }
+}

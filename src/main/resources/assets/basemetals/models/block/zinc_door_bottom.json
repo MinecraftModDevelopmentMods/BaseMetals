@@ -1,0 +1,7 @@
+{
+    "parent": "block/door_bottom",
+    "textures": {
+        "bottom": "basemetals:blocks/zinc_door_lower",
+        "top": "basemetals:blocks/zinc_door_upper"
+    }
+}

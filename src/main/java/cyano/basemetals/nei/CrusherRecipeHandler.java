@@ -22,7 +22,7 @@ import cyano.basemetals.BaseMetals;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import cyano.basemetals.registry.recipe.ICrusherRecipe;
 
-public class CrusherRecipeHandler extends TemplateRecipeHandler{
+public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public String getOverlayIdentifier() {
@@ -33,7 +33,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 	public String getGuiTexture() {
 		return BaseMetals.MODID+":textures/gui/nei/nei_crusher.png";
 	}
-	
+
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
 		ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(ingredient);
@@ -61,30 +61,28 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 		}
 	}
 
-	
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
 		if (outputId.equals("crusher") && getClass() == CrusherRecipeHandler.class) {// we don't want overstep subclasses
 			// add all crusher recipes
 			Collection<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance().getAllRecipes();
 			if(recipes == null) return;
-			for(ICrusherRecipe r : recipes){
+			for(ICrusherRecipe r : recipes) {
 				if(r == null) continue;
 				for(ItemStack input : r.getValidInputs()){
 					arecipes.add(new CrusherPair(input.copy(),r.getOutput().copy()));
 				}
 			}
-			
-		} else{
+		} else {
 			super.loadCraftingRecipes(outputId, results);
 		}
 	}
-	
+
 	@Override
 	public TemplateRecipeHandler newInstance() {
 		return super.newInstance();
 	}
-	
+
 	@Override
 	public String getRecipeName() {
 		String key = "nei."+BaseMetals.MODID+".recipehandler.crusher.name";
@@ -99,13 +97,13 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 	public void loadTransferRects() {
 		transferRects.add(new RecipeTransferRect(new Rectangle(95, 23, 18, 18), "crusher"));
 	}
-	
+
 	@Override
 	public Class<? extends GuiContainer> getGuiClass() {
 		return GuiCrusher.class;
 	}
-	
-	public static class GuiCrusher extends GuiContainer{
+
+	public static class GuiCrusher extends GuiContainer {
 
 		ResourceLocation guiDisplayImage = new ResourceLocation(BaseMetals.MODID+":textures/gui/nei/nei_crusher.png");
 		public GuiCrusher(Container container) {
@@ -120,28 +118,25 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 			this.mc.renderEngine.bindTexture(guiDisplayImage);
 			this.drawTexturedModalRect(x, y, 0, 0, 176, 76); // x, y, textureOffsetX, textureOffsetY, width, height)
 		}
-		
 	}
 	
-	public static class ContainerCrusher extends Container{
+	public static class ContainerCrusher extends Container {
 
 		@Override
 		public boolean canInteractWith(EntityPlayer playerIn) {
 			return true;
 		}
-		
-		
 	}
 	
-	public class CrusherPair extends CachedRecipe
-	{
+	public class CrusherPair extends CachedRecipe {
+
 		public CrusherPair(ItemStack ingred, ItemStack result) {
 			if(ingred == null || result == null){
 				FMLLog.warning("Added null item to NEI GUI: "+ingred+" -> "+result);
-				if(ingred == null){
+				if(ingred == null) {
 					ingred = new ItemStack(Blocks.air);
 				}
-				if(result == null){
+				if(result == null) {
 					result = new ItemStack(Blocks.air);
 				}
 			}
@@ -149,12 +144,15 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler{
 			this.ingred = new PositionedStack(ingred, 65, 23);
 			this.result = new PositionedStack(result, 123, 23);
 		}
+
 		public List<PositionedStack> getIngredients() {
 			return getCycledIngredients(cycleticks / 48, Arrays.asList(ingred));
 		}
+
 		public PositionedStack getResult() {
 			return result;
 		}
+
 		PositionedStack ingred;
 		PositionedStack result;
 	}

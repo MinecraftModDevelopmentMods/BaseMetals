@@ -25,7 +25,7 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	 * @param input The input item as a direct ItemStack reference.
 	 * @param output The result of applying this recipe to an input item
 	 */
-	public ArbitraryCrusherRecipe(ItemStack input, ItemStack output){
+	public ArbitraryCrusherRecipe(ItemStack input, ItemStack output) {
 		this.input = input;
 		this.output = output;
 		if(input == null) throw new NullPointerException(this.getClass().getName()+": cannot have null input item");
@@ -49,11 +49,12 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	 */
 	@Override
 	public boolean isValidInput(ItemStack input) {
-		if(input != null && this.input.getItemDamage() == OreDictionary.WILDCARD_VALUE){
+		if(input != null && this.input.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
 			return this.input.getItem() == input.getItem();
 		}
 		return ItemStack.areItemsEqual(this.input, input);
 	}
+
 	/**
 	 * Returns a list of all registered blocks/items for which <code>isValidInput(...)</code> would 
 	 * return true. This method is only used for displaying recipes in NEI and does not need to be 

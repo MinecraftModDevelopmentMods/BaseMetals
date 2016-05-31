@@ -1,18 +1,13 @@
 package cyano.basemetals.init;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.blocks.InteractiveFluidBlock;
-import cyano.basemetals.fluids.BlockFluidMercury;
 import cyano.basemetals.fluids.CustomFluid;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -29,32 +24,33 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class Fluids{
-	
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class Fluids {
+
 	public static Fluid fluidMercury = null;
 	public static BlockFluidBase fluidBlockMercury = null;
 
-	private static final Map<Fluid,BlockFluidBase> fluidBlocks = new HashMap<>();
-	private static final Map<BlockFluidBase,String> fluidBlockNames = new HashMap<>();
+	private static final Map<Fluid, BlockFluidBase> fluidBlocks = new HashMap<>();
+	private static final Map<BlockFluidBase, String> fluidBlockNames = new HashMap<>();
 
 	private static boolean initDone = false;
-	public static void init(){
-		if(initDone)return;
+	public static void init() {
+		if(initDone) return;
 
-		
 		// fluids
-		fluidMercury = newFluid(BaseMetals.MODID, "mercury",13594,2000,300,0, 0xFFFFFFFF);
-		
+		fluidMercury = newFluid(BaseMetals.MODID, "mercury", 13594, 2000, 300, 0, 0xFFFFFFFF);
+
 		// fluid blocks
 		fluidBlockMercury = registerFluidBlock(fluidMercury, new InteractiveFluidBlock(
 				fluidMercury, false, (World w, EntityLivingBase e)->{
-					if(w.rand.nextInt(32) == 0)e.addPotionEffect(new PotionEffect(Potion.confusion.id,1200,2));
-				}),"liquid_mercury");
-		
+					if(w.rand.nextInt(32) == 0) e.addPotionEffect(new PotionEffect(Potion.confusion.id, 1200, 2));
+				}), "liquid_mercury");
+
 		initDone = true;
 	}
 
-	
 	@SideOnly(Side.CLIENT)
 	public static void bakeModels(String modID){
 		for(Fluid fluid : fluidBlocks.keySet()){
@@ -79,10 +75,9 @@ public abstract class Fluids{
 			});
 		}
 	}
-	
 
 	private static Fluid newFluid(String modID, String name, int density, int viscosity, int temperature, int luminosity, int tintColor) {
-		Fluid f = new CustomFluid(name,new ResourceLocation(modID+":blocks/"+name+"_still"),new ResourceLocation(modID+":blocks/"+name+"_flow"),tintColor);
+		Fluid f = new CustomFluid(name, new ResourceLocation(modID+":blocks/"+name+"_still"), new ResourceLocation(modID+":blocks/"+name+"_flow"), tintColor);
 		f.setDensity(density);
 		f.setViscosity(viscosity);
 		f.setTemperature(temperature);

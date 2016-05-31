@@ -1,28 +1,25 @@
 package cyano.basemetals.init;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import cyano.basemetals.BaseMetals;
+import cyano.basemetals.blocks.*;
+import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.registry.IOreDictionaryEntry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockOre;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import cyano.basemetals.BaseMetals;
-import cyano.basemetals.blocks.BlockMetalBars;
-import cyano.basemetals.blocks.BlockMetalBlock;
-import cyano.basemetals.blocks.BlockMetalDoor;
-import cyano.basemetals.blocks.BlockMetalOre;
-import cyano.basemetals.blocks.BlockMetalPlate;
-import cyano.basemetals.blocks.BlockMetalTrapDoor;
-import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.registry.IOreDictionaryEntry;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class initializes all blocks in Base Metals and provides some utility 
@@ -32,7 +29,7 @@ import cyano.basemetals.registry.IOreDictionaryEntry;
  */
 public abstract class Blocks {
 	private static final Map<String,Block> allBlocks = new HashMap<>();
-	
+
 	/**
 	 * Gets an block by its name. The name is the name as it is registered in 
 	 * the GameRegistry, not its unlocalized name (the unlocalized name is the 
@@ -43,7 +40,7 @@ public abstract class Blocks {
 	public static Block getBlockByName(String name) {
 		return allBlocks.get(name);
 	}
-	
+
 	public static Block adamantine_bars;
 	public static Block adamantine_block;
 	public static Block adamantine_plate;
@@ -56,111 +53,130 @@ public abstract class Blocks {
 	public static Block aquarium_plate;
 	public static BlockDoor aquarium_door;
 	public static Block aquarium_trapdoor;
-	
+
 	public static Block brass_bars;
 	public static Block brass_block;
 	public static Block brass_plate;
 	public static BlockDoor brass_door;
 	public static Block brass_trapdoor;
-	
+
 	public static Block bronze_bars;
 	public static Block bronze_block;
 	public static Block bronze_plate;
 	public static BlockDoor bronze_door;
 	public static Block bronze_trapdoor;
-	
+
 	public static Block coldiron_bars;
 	public static Block coldiron_block;
 	public static Block coldiron_plate;
 	public static BlockDoor coldiron_door;
 	public static Block coldiron_ore;
 	public static Block coldiron_trapdoor;
-	
+
 	public static Block copper_bars;
 	public static Block copper_block;
 	public static Block copper_plate;
 	public static BlockDoor copper_door;
 	public static Block copper_ore;
 	public static Block copper_trapdoor;
-	
+
+	public static Block cupronickel_bars;
+	public static Block cupronickel_block;
+	public static Block cupronickel_plate;
+	public static BlockDoor cupronickel_door;
+	public static Block cupronickel_trapdoor;
+
 	public static Block electrum_bars;
 	public static Block electrum_block;
 	public static Block electrum_plate;
 	public static BlockDoor electrum_door;
 	public static Block electrum_trapdoor;
-	
+
 	public static Block invar_bars;
 	public static Block invar_block;
 	public static Block invar_plate;
 	public static BlockDoor invar_door;
 	public static Block invar_trapdoor;
-	
+
 	public static Block lead_bars;
 	public static Block lead_block;
 	public static Block lead_plate;
 	public static BlockDoor lead_door;
 	public static Block lead_ore;
 	public static Block lead_trapdoor;
-	
+
 	public static Block mercury_ore;
-	
+
 	public static Block mithril_bars;
 	public static Block mithril_block;
 	public static Block mithril_plate;
 	public static BlockDoor mithril_door;
 	public static Block mithril_trapdoor;
-	
+
 	public static Block nickel_bars;
 	public static Block nickel_block;
 	public static Block nickel_plate;
 	public static BlockDoor nickel_door;
 	public static Block nickel_ore;
 	public static Block nickel_trapdoor;
-	
+
+	public static Block platinum_bars;
+	public static Block platinum_block;
+	public static Block platinum_plate;
+	public static BlockDoor platinum_door;
+	public static Block platinum_ore;
+	public static Block platinum_trapdoor;
+
 	public static Block silver_bars;
 	public static Block silver_block;
 	public static Block silver_plate;
 	public static BlockDoor silver_door;
 	public static Block silver_ore;
 	public static Block silver_trapdoor;
-	
+
 	public static Block starsteel_bars;
 	public static Block starsteel_block;
 	public static Block starsteel_plate;
 	public static BlockDoor starsteel_door;
 	public static Block starsteel_ore;
 	public static Block starsteel_trapdoor;
-	
+
 	public static Block steel_bars;
 	public static Block steel_block;
 	public static Block steel_plate;
 	public static BlockDoor steel_door;
 	public static Block steel_trapdoor;
-	
+
 	public static Block tin_bars;
 	public static Block tin_block;
 	public static Block tin_plate;
 	public static BlockDoor tin_door;
 	public static Block tin_ore;
 	public static Block tin_trapdoor;
-	
+
+	public static Block zinc_bars;
 	public static Block zinc_block;
 	public static Block zinc_plate;
+	public static BlockDoor zinc_door;
 	public static Block zinc_ore;
-	
-	
+	public static Block zinc_trapdoor;
 
 	public static Block iron_plate;
+
+	public static Block gold_bars;
 	public static Block gold_plate;
-	
-	
+	public static BlockDoor gold_door;
+	public static Block gold_trapdoor;
+
+	public static Block human_detector;
+
 	private static boolean initDone = false;
+
 	public static void init(){
-		if(initDone)return;
-		
+		if(initDone) return;
+
 		cyano.basemetals.init.Materials.init();
 		cyano.basemetals.init.ItemGroups.init();
-
 
 		adamantine_block = createBlock(Materials.adamantine);
 		adamantine_plate = createPlate(Materials.adamantine);
@@ -201,6 +217,12 @@ public abstract class Blocks {
 		copper_door = createDoor(Materials.copper);
 		copper_trapdoor = createTrapDoor(Materials.copper);
 
+		cupronickel_block = createBlock(Materials.cupronickel);
+		cupronickel_plate = createPlate(Materials.cupronickel);
+		cupronickel_bars = createBars(Materials.cupronickel);
+		cupronickel_door = createDoor(Materials.cupronickel);
+		cupronickel_trapdoor = createTrapDoor(Materials.cupronickel);
+
 		electrum_block = createBlock(Materials.electrum);
 		electrum_plate = createPlate(Materials.electrum);
 		electrum_bars = createBars(Materials.electrum);
@@ -220,11 +242,9 @@ public abstract class Blocks {
 		lead_door = createDoor(Materials.lead);
 		lead_trapdoor = createTrapDoor(Materials.lead);
 
-		mercury_ore = new BlockOre().setHardness(3.0f).setResistance(5.0f).setStepSound(Block.soundTypePiston).setUnlocalizedName(BaseMetals.MODID+".mercury_ore");
-		GameRegistry.registerBlock(mercury_ore, "mercury_ore");
-		allBlocks.put("mercury_ore", mercury_ore);
+		mercury_ore = addBlock(new BlockOre().setHardness(3.0f).setResistance(5.0f).setStepSound(Block.soundTypePiston), "mercury_ore", null, null);
 		OreDictionary.registerOre("oreMercury", mercury_ore);
-		
+
 		mithril_block = createBlock(Materials.mithril);
 		mithril_plate = createPlate(Materials.mithril);
 		mithril_bars = createBars(Materials.mithril);
@@ -237,6 +257,13 @@ public abstract class Blocks {
 		nickel_bars = createBars(Materials.nickel);
 		nickel_door = createDoor(Materials.nickel);
 		nickel_trapdoor = createTrapDoor(Materials.nickel);
+
+		platinum_block = createBlock(Materials.platinum);
+		platinum_plate = createPlate(Materials.platinum);
+		platinum_ore = createOre(Materials.platinum);
+		platinum_bars = createBars(Materials.platinum);
+		platinum_door = createDoor(Materials.platinum);
+		platinum_trapdoor = createTrapDoor(Materials.platinum);
 
 		silver_block = createBlock(Materials.silver);
 		silver_plate = createPlate(Materials.silver);
@@ -274,70 +301,80 @@ public abstract class Blocks {
 		zinc_block = createBlock(Materials.zinc);
 		zinc_plate = createPlate(Materials.zinc);
 		zinc_ore = createOre(Materials.zinc);
-		
+		zinc_bars = createBars(Materials.zinc);
+		zinc_door = createDoor(Materials.zinc);
+		zinc_trapdoor = createTrapDoor(Materials.zinc);
+
 		iron_plate = createPlate(Materials.vanilla_iron);
+
 		gold_plate = createPlate(Materials.vanilla_gold);
-		
+		gold_bars = createBars(Materials.vanilla_gold);
+		gold_door = createDoor(Materials.vanilla_gold);
+		gold_trapdoor = createTrapDoor(Materials.vanilla_gold);
+
+		human_detector = addBlock(new BlockHumanDetector(),"human_detector", null, null);
+
 		// final block settings
-		for(Block b : allBlocks.values()){
-			if(b instanceof IOreDictionaryEntry){OreDictionary.registerOre(((IOreDictionaryEntry)b).getOreDictionaryName(), b);}
+		for(Block b : allBlocks.values()) {
+			if(b instanceof IOreDictionaryEntry){ OreDictionary.registerOre(((IOreDictionaryEntry)b).getOreDictionaryName(), b); }
 			if(b instanceof BlockMetalDoor == false) b.setCreativeTab(ItemGroups.tab_blocks);
 		}
-		
+
 		initDone = true;
 	}
-	
-	private static Block createPlate(MetalMaterial metal) {
-		Block block = new BlockMetalPlate(metal);
-		block.setUnlocalizedName(BaseMetals.MODID+"."+metal.getName()+"_plate");
-		GameRegistry.registerBlock(block, metal.getName()+"_plate");
-		allBlocks.put(metal.getName()+"_plate", block);
+
+	private static Block addBlock(Block block, String type, MetalMaterial metal, CreativeTabs tab) {
+		String name = null;
+		if(metal != null){
+			name = metal.getName()+"_"+type;
+		} else {
+			name = type;
+		}
+		block.setUnlocalizedName(BaseMetals.MODID+"."+name);
+		GameRegistry.registerBlock(block, name);
+
+		allBlocks.put(name, block);
+		if(tab != null){
+			block.setCreativeTab(tab);
+		}
 		return block;
 	}
 
-	private static Block createBars(MetalMaterial metal){
-		Block block = new BlockMetalBars(metal);
-		block.setUnlocalizedName(BaseMetals.MODID+"."+metal.getName()+"_bars");
-		GameRegistry.registerBlock(block, metal.getName()+"_bars");
-		allBlocks.put(metal.getName()+"_bars", block);
-		return block;
+	private static Block createPlate(MetalMaterial metal) {
+		return addBlock(new BlockMetalPlate(metal), "plate", metal, null);
 	}
-	private static Block createBlock(MetalMaterial metal){
+
+	private static Block createBars(MetalMaterial metal) {
+		return addBlock(new BlockMetalBars(metal), "bars", metal, null);
+	}
+
+	private static Block createBlock(MetalMaterial metal) {
 		return createBlock(metal,false);
 	}
-	private static Block createBlock(MetalMaterial metal, boolean glow){
-		Block block = new BlockMetalBlock(metal,glow);
-		block.setUnlocalizedName(BaseMetals.MODID+"."+metal.getName()+"_block");
-		GameRegistry.registerBlock(block, metal.getName()+"_block");
-		allBlocks.put(metal.getName()+"_block", block);
-		return block;
+
+	private static Block createBlock(MetalMaterial metal, boolean glow) {
+		return addBlock(new BlockMetalBlock(metal, glow), "block", metal, null);
 	}
+
 	private static Block createOre(MetalMaterial metal){
-		Block block = new BlockMetalOre(metal);
-		block.setUnlocalizedName(BaseMetals.MODID+"."+metal.getName()+"_ore");
-		GameRegistry.registerBlock(block, metal.getName()+"_ore");
-		allBlocks.put(metal.getName()+"_ore", block);
-		return block;
+		return addBlock(new BlockMetalOre(metal), "ore", metal, null);
 	}
-	private static BlockDoor createDoor(MetalMaterial metal){
+
+	private static BlockDoor createDoor(MetalMaterial metal) {
+		String name = metal.getName()+"_"+"door";
 		BlockDoor block = new BlockMetalDoor(metal);
-		block.setUnlocalizedName(BaseMetals.MODID+"."+metal.getName()+"_door");
-		GameRegistry.registerBlock(block, metal.getName()+"_door");
+		block.setUnlocalizedName(BaseMetals.MODID+"."+name);
+		GameRegistry.registerBlock(block, name);
 		allBlocks.put(metal.getName()+"_door", block);
 		return block;
 	}
 
-	private static Block createTrapDoor(MetalMaterial metal){
-		Block block = new BlockMetalTrapDoor(metal);
-		block.setUnlocalizedName(BaseMetals.MODID+"."+metal.getName()+"_trapdoor");
-		GameRegistry.registerBlock(block, metal.getName()+"_trapdoor");
-		allBlocks.put(metal.getName()+"_trapdoor", block);
-		return block;
+	private static Block createTrapDoor(MetalMaterial metal) {
+		return addBlock(new BlockMetalTrapDoor(metal), "trapdoor", metal, null);
 	}
-	
 
 	@SideOnly(Side.CLIENT)
-	public static void registerItemRenders(FMLInitializationEvent event){
+	public static void registerItemRenders(FMLInitializationEvent event) {
 		for(String name : allBlocks.keySet()){
 			if(allBlocks.get(name) instanceof BlockDoor) continue;// do not add door blocks
 			Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
@@ -345,5 +382,4 @@ public abstract class Blocks {
 				new ModelResourceLocation(BaseMetals.MODID+":"+name, "inventory"));
 		}
 	}
-
 }

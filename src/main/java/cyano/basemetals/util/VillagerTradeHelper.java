@@ -31,25 +31,25 @@ public class VillagerTradeHelper {
 		appendToMultidimensionalArray(trades,tradeTable,professionID,Math.max(0,careerID-1),Math.max(0,tradeLevel-1));
 	}
 
-	public static void appendToMultidimensionalArray(Object append, Object array, int... indices){
+	public static void appendToMultidimensionalArray(Object append, Object array, int... indices) {
 		appendToMultidimensionalArray(Arrays.asList(append).toArray(),array,indices);
 	}
 
-	public static void appendToMultidimensionalArray(Object[] append, Object array, int... indices){
+	public static void appendToMultidimensionalArray(Object[] append, Object array, int... indices) {
 		// get the lowest level array
 		Object prevArray = null;
 		int i = 0;
-		while( i < indices.length){
+		while( i < indices.length) {
 			int index = indices[i];
 			prevArray = array;
 			array = Array.get(array, index);
 			i++;
 			// make sure the next array is long enough
-			if(i < indices.length){
+			if(i < indices.length) {
 				int nextIndex = indices[i];
-				if(Array.getLength(array) <= nextIndex){
+				if(Array.getLength(array) <= nextIndex) {
 					Object pad;
-					if(array.getClass().getComponentType().isArray()){
+					if(array.getClass().getComponentType().isArray()) {
 						pad = Array.newInstance(array.getClass().getComponentType().getComponentType(),0);
 					} else {
 						// this shouldn't happen
@@ -64,19 +64,19 @@ public class VillagerTradeHelper {
 
 		// expand lowest level array to new size
 		Class aType = array.getClass().getComponentType();
-		if(!aType.isAssignableFrom(append.getClass().getComponentType())){
+		if(!aType.isAssignableFrom(append.getClass().getComponentType())) {
 			throw new IllegalArgumentException("Class type "+append.getClass().getComponentType().getCanonicalName()+" cannot be appended to "+aType.getCanonicalName()+" array");
 		}
-		Object newArray = expandArray(array,Array.getLength(array)+append.length,null);
-		System.arraycopy(append,0,newArray,Array.getLength(array),append.length);
-		Array.set(prevArray,indices[indices.length - 1],newArray);
+		Object newArray = expandArray(array, Array.getLength(array)+append.length, null);
+		System.arraycopy(append, 0, newArray, Array.getLength(array), append.length);
+		Array.set(prevArray,indices[indices.length - 1], newArray);
 	}
 
-	public static Object expandArray(Object array, int newSize, Object fill){
+	public static Object expandArray(Object array, int newSize, Object fill) {
 		Object newArray = Array.newInstance(array.getClass().getComponentType(),newSize);
 		if(Array.getLength(array) == 0) return newArray;
 		System.arraycopy(array,0,newArray,0,Array.getLength(array));
-		for (int i = Array.getLength(array); i < newSize; i++){
+		for (int i = Array.getLength(array); i < newSize; i++) {
 			Array.set(newArray,i,fill);
 		}
 		return newArray;
@@ -89,9 +89,9 @@ public class VillagerTradeHelper {
 		modField.setInt(v, v.getModifiers() & ~Modifier.FINAL);
 	}
 
-	public static Field getTradeArrayFromClass(Class c){
+	public static Field getTradeArrayFromClass(Class c) {
 		// search for 4D array of ITradeList objects
-		for(Field f : c.getDeclaredFields()){
+		for(Field f : c.getDeclaredFields()) {
 			if(f.getType().isArray() // D1
 					&& f.getType().getComponentType().isArray() // D2
 					&& f.getType().getComponentType().getComponentType().isArray() // D3

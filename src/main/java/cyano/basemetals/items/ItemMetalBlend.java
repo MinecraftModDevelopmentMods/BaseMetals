@@ -10,35 +10,36 @@ import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
 
+/**
+ * Blends
+ */
 public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject {
 
 	protected final MetalMaterial metal;
 	private final String oreDict;
-	public ItemMetalBlend(MetalMaterial metal){
+
+	public ItemMetalBlend(MetalMaterial metal) {
 		this.metal = metal;
 		this.setCreativeTab(CreativeTabs.tabMaterials);
 		this.oreDict = "dust"+metal.getCapitalizedName(); // same oreDict entry as powder
 	}
-	
-	public String getOreDictionaryName(){
+
+	public String getOreDictionaryName() {
 		return oreDict;
 	}
-	
 
 	@Override
-    public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
-    	super.onCreated(item, world, crafter);
-    	// achievement
-    	// achievement
-    	if(metal == Materials.aquarium || metal == Materials.brass || metal == Materials.bronze
-    			|| metal == Materials.electrum || metal == Materials.invar || metal == Materials.steel ){
-        	crafter.addStat(Achievements.metallurgy, 1);
-    	}
-    	
+	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
+		super.onCreated(item, world, crafter);
+		// achievement
+		if(metal == Materials.aquarium || metal == Materials.brass || metal == Materials.bronze
+				|| metal == Materials.electrum || metal == Materials.invar || metal == Materials.steel ){
+			crafter.addStat(Achievements.metallurgy, 1);
+		}
 	}
 
 	@Override
-	public MetalMaterial getMetalMaterial(){
+	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}
 }

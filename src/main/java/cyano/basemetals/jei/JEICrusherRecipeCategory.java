@@ -18,11 +18,11 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	private static final int inputSlot = 0;
 	private static final int outputSlot = 1;
-	
+
 	public JEICrusherRecipeCategory(IGuiHelper guiHelper){
 		background = guiHelper.createDrawable(bgtex, 24,26, 128,32);
 	}
-	
+
 	@Override
 	public IDrawable getBackground() {
 		return background;
@@ -54,5 +54,4 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 		guiItemStacks.setFromRecipe(inputSlot, recipeWrapper.getInputs());
 		guiItemStacks.setFromRecipe(outputSlot, recipeWrapper.getOutputs());
 	}
-
 }

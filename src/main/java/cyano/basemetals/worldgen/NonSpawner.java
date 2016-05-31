@@ -6,12 +6,11 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
-public class NonSpawner extends WorldGenerator{
+public class NonSpawner extends WorldGenerator {
 
 	@Override
 	public boolean generate(World worldIn, Random prng, BlockPos coord) {
 		// do nothing
 		return true;
 	}
-
 }
