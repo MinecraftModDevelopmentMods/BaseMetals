@@ -1,20 +1,18 @@
 // Gradle build script
-
-// For those who want the bleeding edge:
+// For those who want the bleeding edge
 buildscript {
-    repositories {
-        jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
-    }
+	repositories {
+		jcenter()
+		maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+	}
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
-
 
 
 allprojects {
@@ -31,14 +29,14 @@ plugins {
 */
 
 
-version = "2.2.2.1"
+version = "2.3.0.4"
 group= "cyano.basemetals"
-archivesBaseName = "BaseMetals_1.9"
+archivesBaseName = "BaseMetals_1.9.4"
 
 minecraft {
-    version = "1.9-12.16.1.1907"
-    runDir = "run"
-    mappings = "stable_24"
+	version = "1.9.4-12.17.0.1922-1.9.4"
+	runDir = "run"
+	mappings = "snapshot_20160518"
 }
 
 dependencies {

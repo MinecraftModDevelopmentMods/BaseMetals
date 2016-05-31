@@ -1,8 +1,8 @@
 package cyano.basemetals.util;
 
-import cyano.basemetals.BaseMetals;
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraftforge.fml.common.FMLLog;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -14,6 +14,14 @@ import java.util.Arrays;
  */
 public class VillagerTradeHelper {
 
+	private static final ResourceLocation[] professionList = {
+			new ResourceLocation("minecraft:farmer"),
+			new ResourceLocation("minecraft:librarian"),
+			new ResourceLocation("minecraft:priest"),
+			new ResourceLocation("minecraft:smith"),
+			new ResourceLocation("minecraft:butcher")
+	};
+
 	/**
 	 * Inserts one or more trades to the defaul villager trade table using dark magic (aka java reflection).
 	 * @param professionID Villager profession ID (0-4)
@@ -24,11 +32,28 @@ public class VillagerTradeHelper {
 	 * @throws IllegalAccessException Thrown if java reflection has been disabled for security reasons
 	 */
 	public static void insertTrades(int professionID, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) throws NoSuchFieldException, IllegalAccessException {
+		ResourceLocation profession = professionList[professionID];
+		insertTrades(profession,careerID,tradeLevel,trades);
+		/*
 		FMLLog.info("%s: injecting villager trades %s into default trade array table at position [%s][%s][%s][*]", BaseMetals.MODID, Arrays.toString(trades), professionID, careerID-1, tradeLevel-1);
 		Field vanillaTradeField = getTradeArrayFromClass(EntityVillager.class);
 		unlockPrivateFinalField(vanillaTradeField);
 		Object tradeTable = vanillaTradeField.get(null); // is static
 		appendToMultidimensionalArray(trades,tradeTable,professionID,Math.max(0,careerID-1),Math.max(0,tradeLevel-1));
+		*/
+	}
+
+	/**
+	 * Inserts one or more trades to the defaul villager trade table using dark magic (aka java reflection).
+	 * @param profession Villager profession
+	 * @param careerID Villager career ID (1-3)
+	 * @param tradeLevel Level of trade (1+)
+	 * @param trades Trades to add to the given level
+	 */
+	public static void insertTrades(ResourceLocation profession, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
+		for(EntityVillager.ITradeList trade : trades) {
+			VillagerRegistry.instance().getRegistry().getValue(profession).getCareer(careerID-1).addTrade(tradeLevel, trade);
+		}
 	}
 
 	public static void appendToMultidimensionalArray(Object append, Object array, int... indices){

@@ -9,13 +9,11 @@ import cyano.basemetals.registry.IOreDictionaryEntry;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -596,6 +594,7 @@ public abstract class Items {
 		GameRegistry.register(mercury_ingot);
 		itemRegistry.put(mercury_ingot, "mercury_ingot");
 		OreDictionary.registerOre("ingotMercury", mercury_ingot);
+		OreDictionary.registerOre("quicksilver", mercury_ingot);
 		mercury_powder = new Item().setRegistryName(BaseMetals.MODID, "mercury_powder").setUnlocalizedName(BaseMetals.MODID+"."+"mercury_powder").setCreativeTab(ItemGroups.tab_items);
 		GameRegistry.register(mercury_powder);
 		itemRegistry.put(mercury_powder, "mercury_powder");
@@ -785,7 +784,9 @@ public abstract class Items {
 
 
 	private static Item create_gear(MetalMaterial metal){
-		return registerItem(new GenericMetalItem(metal), metal.getName()+"_"+"gear", metal, ItemGroups.tab_items);
+		Item i = registerItem(new GenericMetalItem(metal), metal.getName()+"_"+"gear", metal, ItemGroups.tab_items);
+		OreDictionary.registerOre("gear"+metal.getCapitalizedName(),i);
+		return i;
 	}
 	
 	private static Item create_axe(MetalMaterial metal){

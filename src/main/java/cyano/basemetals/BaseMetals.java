@@ -2,21 +2,22 @@ package cyano.basemetals;
 
 import cyano.basemetals.data.AdditionalLootTables;
 import cyano.basemetals.data.DataConstants;
-import cyano.basemetals.events.VanillaOreGenDisabler;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.versioning.ArtifactVersion;
+import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -46,13 +47,12 @@ import java.util.*;
 		modid = BaseMetals.MODID,
 		name=BaseMetals.NAME,
 		version = BaseMetals.VERSION,
-		dependencies = "required-after:Forge",
-		acceptedMinecraftVersions = "1.9)")
+		acceptedMinecraftVersions = "[1.9.4,)") // see VersionRange.createFromVersionSpec(String) for explanation of this convoluted feature
 //		updateJSON = "https://raw.githubusercontent.com/cyanobacterium/BaseMetals/master/update.json")
 
 public class BaseMetals
 {
-	
+
 	public static BaseMetals INSTANCE = null;
 	/** ID of this mod */
 	public static final String MODID = "basemetals";
@@ -60,13 +60,9 @@ public class BaseMetals
 	public static final String NAME ="Base Metals";
 	/** Version number, in Major.Minor.Build format. The minor number is increased whenever a change 
 	 * is made that has the potential to break compatibility with other mods that depend on this one. */
-	public static final String VERSION = "2.2.2.1";
-	
-	/** All ore-spawn files discovered in the ore-spawn folder */
-	public static final List<Path> oreSpawnConfigFiles = new LinkedList<>();
-	
-	/** multiplier to increase or reduce the frequency of metal ingots appearing in treasure chests */
-	public static float chestLootFactor = 0.5f;
+	public static final String VERSION = "2.3.0";
+
+
 	
 //	/** If true, some metals can be used to brew potions */
 //	public static boolean enablePotionRecipes = true;
@@ -76,16 +72,14 @@ public class BaseMetals
 	/** If true, then crack hammers can mine on all the same blocks that their pick-axe equivalent 
 	 * can mine. If false, then the hammer is 1 step weaker than the pick-axe */
 	public static boolean strongHammers = true;
-	/** Whether or not vanilla ore-gen has been disabled */
-	public static boolean disableVanillaOreGen = false;
-	/** Ignores other mods telling this mod not to generate ore */
-	public static boolean forceOreGen = false;
 	/** For when the user adds specific recipies via the config file */
 	public static List<String> userCrusherRecipes = new ArrayList<>();
 	/** location of ore-spawn files */
 	public static Path oreSpawnFolder = null;
 	/** if true, then this mod will scan the Ore Dictionary for obvious hammer recipes from other mods */
 	public static boolean autoDetectRecipes = true;
+	/** if true, then this mod will require the orespawn mod */
+	public static boolean requireOreSpawn = true;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
@@ -98,11 +92,7 @@ public class BaseMetals
 //		enablePotionRecipes = config.getBoolean("enable_potions", "options", enablePotionRecipes, 
 //				"If true, then some metals can be used to brew potions.");
 		
-		
-		chestLootFactor = config.getFloat("treasure_chest_loot_factor", "options", 0.5f, 0.0f, 1000.0f, 
-				"Controls the rarity of metal ingots being found in treasure chests relative to \n"
-			 +  "the frequency of other chest loot items. Set to 0 to disable metal ingots from \n"
-			 +  "appearing in treasure chests.");
+
 		
 		enforceHardness = config.getBoolean("enforce_hardness", "options", enforceHardness, 
 				"If true, then the crack hammer cannot crush ingots into powders if that \n"
@@ -113,16 +103,14 @@ public class BaseMetals
 			+	"material can harvest. If false, then your crack hammer must be made of a harder \n"
 			+	"material than the ore you are crushing.");
 
-		disableVanillaOreGen = config.getBoolean("disable_standard_ore_generation", "options", disableVanillaOreGen, 
-				"If true, then ore generation will be handled exclusively by oregen .json files \n"
-			+	"(vanilla ore generation will be disabled)");
 
-		forceOreGen = config.getBoolean("force_ore_generation", "options", forceOreGen, 
-				"If true, then ore generation cannot be disabled by other mods.");
-		
-		autoDetectRecipes = config.getBoolean("automatic_recipes", "options", autoDetectRecipes, 
+		autoDetectRecipes = config.getBoolean("automatic_recipes", "options", autoDetectRecipes,
 				"If true, then Base Metals will scan the Ore Dictionary to automatically add a \n"
-			+	"Crack Hammer recipe for every material that has an ore, dust, and ingot.");
+						+	"Crack Hammer recipe for every material that has an ore, dust, and ingot.");
+
+		requireOreSpawn = config.getBoolean("using_orespawn", "options", requireOreSpawn,
+				"If false, then Base Metals will not require DrCyano's Ore Spawn mod. \n" +
+						"Set to false if using another mod to manually handle ore generation.");
 
 		
 		ConfigCategory userRecipeCat = config.getCategory("hammer recipes");
@@ -150,24 +138,22 @@ public class BaseMetals
 				userCrusherRecipes.add(recipe);
 			}
 		}
-		
-		oreSpawnFolder = Paths.get(event.getSuggestedConfigurationFile().toPath().getParent().toString(),"orespawn");
-		Path oreSpawnFile = Paths.get(oreSpawnFolder.toString(),MODID+".json");
-		if(Files.exists(oreSpawnFile) == false){
-			try {
-				Files.createDirectories(oreSpawnFile.getParent());
-				Files.write(oreSpawnFile, Arrays.asList(DataConstants.defaultOreSpawnJSON.split("\n")), Charset.forName("UTF-8"));
-			} catch (IOException e) {
-				FMLLog.severe(MODID+": Error: Failed to write file "+oreSpawnFile);
+
+		if(requireOreSpawn) {
+			if(!net.minecraftforge.fml.common.Loader.isModLoaded("orespawn")){
+				HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
+				orespawnMod.add(new DefaultArtifactVersion("1.0.0"));
+				throw new MissingModsException(orespawnMod, "orespawn", "DrCyano's Ore Spawn Mod");
 			}
-		}
-		Path oreVanillaSpawnFile = Paths.get(oreSpawnFolder.toString(),"minecraft.json");
-		if(disableVanillaOreGen && Files.exists(oreVanillaSpawnFile) == false){
-			try {
-				Files.createDirectories(oreVanillaSpawnFile.getParent());
-				Files.write(oreVanillaSpawnFile, Arrays.asList(DataConstants.defaultVanillaOreSpawnJSON.split("\n")), Charset.forName("UTF-8"));
-			} catch (IOException e) {
-				FMLLog.severe(MODID+": Error: Failed to write file "+oreVanillaSpawnFile);
+			oreSpawnFolder = Paths.get(event.getSuggestedConfigurationFile().toPath().getParent().toString(), "orespawn");
+			Path oreSpawnFile = Paths.get(oreSpawnFolder.toString(), MODID + ".json");
+			if (Files.exists(oreSpawnFile) == false) {
+				try {
+					Files.createDirectories(oreSpawnFile.getParent());
+					Files.write(oreSpawnFile, Arrays.asList(DataConstants.defaultOreSpawnJSON.split("\n")), Charset.forName("UTF-8"));
+				} catch (IOException e) {
+					FMLLog.severe(MODID + ": Error: Failed to write file " + oreSpawnFile);
+				}
 			}
 		}
 
@@ -236,27 +222,12 @@ public class BaseMetals
 	public void init(FMLInitializationEvent event)
 	{
 
-
-		try {
-			Files.walk(oreSpawnFolder) // doing it the Java8 way
-					.filter((Path p)->Files.isRegularFile(p))
-					.filter((Path p)->p.getFileName().toString().toLowerCase(Locale.US).endsWith(".json"))
-					.forEach(oreSpawnConfigFiles::add);
-		} catch (IOException ioe) {
-			FMLLog.log(Level.ERROR,ioe,"Error while searching for orespawn files");
-		}
-
 		cyano.basemetals.init.Recipes.init();
 		cyano.basemetals.init.DungeonLoot.init();
 		cyano.basemetals.init.Entities.init();
 		
 		cyano.basemetals.init.Achievements.init();
-		
 
-		
-		if(disableVanillaOreGen){
-			MinecraftForge.ORE_GEN_BUS.register(VanillaOreGenDisabler.getInstance());
-		}
 
 		if(event.getSide() == Side.CLIENT){
 			clientInit(event);
@@ -281,16 +252,6 @@ public class BaseMetals
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		// parse orespawn data
-		for(Path oreSpawnFile : oreSpawnConfigFiles){
-			try {
-				cyano.basemetals.init.WorldGen.loadConfig(oreSpawnFile);
-
-			} catch (IOException e) {
-				FMLLog.log(Level.ERROR, e,MODID+": Error parsing ore-spawn config file "+oreSpawnFile);
-			}
-		}
-		
 		cyano.basemetals.init.WorldGen.init();
 
 		
