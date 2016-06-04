@@ -13,8 +13,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.UniversalBucket;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -73,7 +72,7 @@ public abstract class Items {
 		return Collections.unmodifiableMap(itemsByMetal);
 	}
 
-	public static UniversalBucket universal_bucket;
+	//public static UniversalBucket universal_bucket; // now automatically added by Forge
 	// TODO: metal arrows or crossbow & bolts
 	
 	public static Item adamantine_axe;
@@ -700,9 +699,6 @@ public abstract class Items {
 		zinc_powder = create_powder(Materials.zinc);
 		zinc_rod = create_rod(Materials.zinc);
 
-		universal_bucket = (UniversalBucket)registerItem(new UniversalBucket(),"bucket", null, null);
-		universal_bucket.setUnlocalizedName("bucket");
-		MinecraftForge.EVENT_BUS.register(universal_bucket);
 
 
 		for(Item i : itemRegistry.keySet()){

@@ -433,6 +433,7 @@ item.basemetals.wood_crackhammer.name=木质破裂锤
 item.basemetals.stone_crackhammer.name=石质破裂锤
 
 item.bucket.mercury=汞桶
+fluid.basemetals.mercury=汞
 
 item.basemetals.human_detector.name=安全壓盤
 

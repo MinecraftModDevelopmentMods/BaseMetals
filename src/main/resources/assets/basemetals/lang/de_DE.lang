@@ -438,6 +438,7 @@ item.basemetals.stone_crackhammer.name=Steinbruchhammer
 
 item.bucket.mercury=Quecksilbereimer
 tile.basemetals.liquid_mercury.name=Quecksilber
+fluid.basemetals.mercury=Quecksilber
 
 tile.basemetals.human_detector.name=Sicherheitsdruckplatte
 item.basemetals.human_detector.name=Sicherheitsdruckplatte

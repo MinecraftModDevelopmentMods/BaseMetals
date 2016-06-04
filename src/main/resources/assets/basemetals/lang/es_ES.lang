@@ -433,6 +433,7 @@ item.basemetals.wood_crackhammer.name=Almádena de madera
 item.basemetals.stone_crackhammer.name=Almádena de piedra
 
 item.bucket.mercury=Cubo de mercurio
+fluid.basemetals.mercury=Mercurio
 
 item.basemetals.human_detector.name=Seguridad plato de presión
 

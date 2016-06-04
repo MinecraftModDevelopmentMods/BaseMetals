@@ -440,6 +440,7 @@ item.basemetals.wood_crackhammer.name=Mazza di Legno
 item.basemetals.stone_crackhammer.name=Mazza Stone
 
 item.bucket.mercury=Secchio di Mercurio
+fluid.basemetals.mercury=Mercurio
 
 item.basemetals.human_detector.name=Security Pressure Plate
 

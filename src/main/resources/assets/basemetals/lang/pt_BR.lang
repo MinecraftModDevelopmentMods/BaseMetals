@@ -434,6 +434,7 @@ item.basemetals.wood_crackhammer.name=Marreta de Madeira
 item.basemetals.stone_crackhammer.name=Marreta de Pedra
 
 item.bucket.mercury=Balde de Mercúrio
+fluid.basemetals.mercury=Mercúrio
 
 item.basemetals.human_detector.name=Placa de Pressão de Segurança
 

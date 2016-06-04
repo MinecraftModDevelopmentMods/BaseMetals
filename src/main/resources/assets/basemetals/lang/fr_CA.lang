@@ -435,6 +435,7 @@ item.basemetals.stone_crackhammer.name=Massette ene pierre
 
 
 item.bucket.mercury=Godet de Mercure
+fluid.basemetals.mercury=Mercure
 
 
 item.basemetals.human_detector.name=Sécurité plaque de pression

@@ -433,6 +433,7 @@ item.basemetals.wood_crackhammer.name=Wooden Crack Hammer
 item.basemetals.stone_crackhammer.name=Stone Crack Hammer
 
 item.bucket.mercury=Bucket o' Quicksilver
+fluid.basemetals.mercury=Quicksilver
 
 item.basemetals.human_detector.name=Secret Floor Button
 

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.Mod;
@@ -60,9 +61,13 @@ public class BaseMetals
 	public static final String NAME ="Base Metals";
 	/** Version number, in Major.Minor.Build format. The minor number is increased whenever a change 
 	 * is made that has the potential to break compatibility with other mods that depend on this one. */
-	public static final String VERSION = "2.3.0";
+	public static final String VERSION = "2.3.1";
 
 
+	static {
+		// Forge says this needs to be statically initialized here.
+		FluidRegistry.enableUniversalBucket();
+	}
 	
 //	/** If true, some metals can be used to brew potions */
 //	public static boolean enablePotionRecipes = true;

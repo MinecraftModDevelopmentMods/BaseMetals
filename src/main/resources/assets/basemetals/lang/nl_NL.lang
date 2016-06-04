@@ -434,6 +434,7 @@ item.basemetals.wood_crackhammer.name=Houten Breek Hamer
 item.basemetals.stone_crackhammer.name=Stenen Breek Hamer
 
 item.bucket.mercury=Emmer met Kwik
+fluid.basemetals.mercury=Kwik
 
 item.basemetals.human_detector.name=Security Pressure Plate
 

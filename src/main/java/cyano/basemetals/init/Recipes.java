@@ -7,7 +7,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -221,10 +222,12 @@ public abstract class Recipes {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(cyano.basemetals.init.Items.mithril_blend,3), "dustSilver","dustSilver","dustColdiron","ingotMercury"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(cyano.basemetals.init.Items.aquarium_blend,3), "dustCopper","dustCopper","dustZinc", Items.PRISMARINE_CRYSTALS, Items.PRISMARINE_CRYSTALS, Items.PRISMARINE_CRYSTALS));
 
-		ItemStack bucketMercury = new ItemStack(cyano.basemetals.init.Items.universal_bucket,1,0);
-		cyano.basemetals.init.Items.universal_bucket.fill(bucketMercury, new FluidStack(Fluids.fluidMercury,cyano.basemetals.init.Items.universal_bucket.getCapacity()),true );
-		GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, Items.BUCKET,"ingotMercury","ingotMercury","ingotMercury","ingotMercury","ingotMercury","ingotMercury","ingotMercury","ingotMercury"));
-		
+		if(FluidRegistry.isUniversalBucketEnabled()) {
+			UniversalBucket universal_bucket = ForgeModContainer.getInstance().universalBucket;
+			ItemStack bucketMercury = new ItemStack(universal_bucket, 1, 0);
+			universal_bucket.fill(bucketMercury, new FluidStack(Fluids.fluidMercury, universal_bucket.getCapacity()), true);
+			GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, Items.BUCKET, "ingotMercury", "ingotMercury", "ingotMercury", "ingotMercury", "ingotMercury", "ingotMercury", "ingotMercury", "ingotMercury"));
+		}
 		// potions
 		// TODO: potion recipes
 		

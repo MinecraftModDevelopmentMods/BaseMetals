@@ -438,6 +438,7 @@ item.basemetals.stone_crackhammer.name=Stone Crack Hammer
 
 item.bucket.mercury=Bucket of Mercury
 tile.basemetals.liquid_mercury.name=Liquid Mercury
+fluid.basemetals.mercury=Mercury
 
 
 item.basemetals.human_detector.name=Security Pressure Plate
