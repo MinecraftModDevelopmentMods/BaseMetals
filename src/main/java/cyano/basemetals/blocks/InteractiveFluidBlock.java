@@ -89,39 +89,8 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 	}
 
 	// TODO: remove the block overrides and see if fluids are working correctly yet
-	@Override // Block override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return FULL_BLOCK_AABB;
-	}
-
-	@Override // Block override
-	public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+	@Override // block override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos){
 		return NULL_AABB;
-	}
-
-	@Override // Block override
-	public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
-		return this.blockMaterial != Material.LAVA;
-	}
-
-	@Override // Block override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override // Block override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-
-	@Override // Block override
-	public boolean canCollideCheck(IBlockState state, boolean hitIfLiquid) {
-		return hitIfLiquid && ((Integer)state.getValue(LEVEL)).intValue() == 0;
-	}
-
-	@Override // Block override
-	public boolean isBlockSolid(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-		Material material = worldIn.getBlockState(pos).getMaterial();
-		return material == this.blockMaterial?false:(side == EnumFacing.UP?true:(material == Material.ICE?false:super.isBlockSolid(worldIn, pos, side)));
 	}
 }
