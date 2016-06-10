@@ -29,7 +29,7 @@ plugins {
 */
 
 
-version = "2.3.2.6"
+version = "2.3.3.10"
 group= "cyano.basemetals"
 archivesBaseName = "BaseMetals_1.9.4"
 

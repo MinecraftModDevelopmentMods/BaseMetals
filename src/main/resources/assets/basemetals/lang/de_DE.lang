@@ -153,6 +153,7 @@ item.basemetals.iron_crackhammer.name=Eisenbruchhammer
 item.basemetals.iron_powder.name=Pulverisiertes Eisen
 item.basemetals.iron_nugget.name=Eisenklumpen
 item.basemetals.gold_powder.name=Pulverisiertes Gold
+item.basemetals.gold_crackhammer.name=Goldbruchhammer
 item.basemetals.lead_axe.name=Bleiaxt
 item.basemetals.lead_bars.name=Bleigitter
 item.basemetals.lead_block.name=Bleiblock

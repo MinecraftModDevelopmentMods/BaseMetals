@@ -61,7 +61,7 @@ public class BaseMetals
 	public static final String NAME ="Base Metals";
 	/** Version number, in Major.Minor.Build format. The minor number is increased whenever a change 
 	 * is made that has the potential to break compatibility with other mods that depend on this one. */
-	public static final String VERSION = "2.3.2";
+	public static final String VERSION = "2.3.3";
 
 
 	static {
@@ -77,6 +77,8 @@ public class BaseMetals
 	/** If true, then crack hammers can mine on all the same blocks that their pick-axe equivalent 
 	 * can mine. If false, then the hammer is 1 step weaker than the pick-axe */
 	public static boolean strongHammers = true;
+	/** If true, hammers cannot be crafted */
+	public static boolean disableAllHammers = false;
 	/** For when the user adds specific recipies via the config file */
 	public static List<String> userCrusherRecipes = new ArrayList<>();
 	/** location of ore-spawn files */
@@ -96,12 +98,14 @@ public class BaseMetals
 		
 //		enablePotionRecipes = config.getBoolean("enable_potions", "options", enablePotionRecipes, 
 //				"If true, then some metals can be used to brew potions.");
-		
 
-		
-		enforceHardness = config.getBoolean("enforce_hardness", "options", enforceHardness, 
+
+		disableAllHammers = config.getBoolean("disable_crack_hammer", "options", disableAllHammers,
+				"If true, then the crack hammer cannot be crafted.");
+
+		enforceHardness = config.getBoolean("enforce_hardness", "options", enforceHardness,
 				"If true, then the crack hammer cannot crush ingots into powders if that \n"
-			+	"crackhammer is not hard enough to crush the ingot's ore.");
+						+	"crackhammer is not hard enough to crush the ingot's ore.");
 		
 		strongHammers = config.getBoolean("strong_hammers", "options", strongHammers, 
 				"If true, then the crack hammer can crush ingots/ores that a pickaxe of the same \n"

@@ -13,7 +13,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -215,6 +214,7 @@ public abstract class Items {
 	public static Item electrum_shovel;
 	public static Item electrum_sword;
 	public static Item electrum_rod;
+	public static Item gold_crackhammer;
 	public static Item gold_powder;
 	public static Item gold_rod;
 	public static Item invar_axe;
@@ -533,6 +533,7 @@ public abstract class Items {
 		electrum_rod = create_rod(Materials.electrum);
 		gold_powder = create_powder(Materials.vanilla_gold);
 		gold_rod = create_rod(Materials.vanilla_gold);
+		gold_crackhammer = create_crackhammer(Materials.vanilla_gold);
 		invar_axe = create_axe(Materials.invar);
 		invar_blend = create_blend(Materials.invar);
 		invar_boots = create_boots(Materials.invar);
