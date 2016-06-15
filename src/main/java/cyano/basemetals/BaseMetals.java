@@ -53,6 +53,7 @@ import java.util.*;
 
 public class BaseMetals
 {
+	//TODO: use metal plates to modify or repair shields
 
 	public static BaseMetals INSTANCE = null;
 	/** ID of this mod */
