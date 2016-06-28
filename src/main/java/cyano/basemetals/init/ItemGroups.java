@@ -1,9 +1,9 @@
 package cyano.basemetals.init;
 
+import cyano.basemetals.BaseMetals;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import cyano.basemetals.BaseMetals;
 
 /**
  * This class initializes all item groups in Base Metals.
@@ -36,14 +36,13 @@ public class ItemGroups {
 					if(delta == 0) return a.getItem().getUnlocalizedName().compareToIgnoreCase(b.getItem().getUnlocalizedName());
 					return delta;
 				});
-//		tab_items = new FunctionalCreativeTab( BaseMetals.MODID.concat(".items"),()->itemItem);
-//		tab_tools = new FunctionalCreativeTab( BaseMetals.MODID.concat(".tools"),()->toolItem);
+//		tab_items = new FunctionalCreativeTab(BaseMetals.MODID.concat(".items"), ()->itemItem);
+//		tab_tools = new FunctionalCreativeTab(BaseMetals.MODID.concat(".tools"), ()->toolItem);
 		tab_items = tab_blocks;
 		tab_tools = tab_items;
 		
 		
 		initDone = true;
 	}
-	
-	
 }
+

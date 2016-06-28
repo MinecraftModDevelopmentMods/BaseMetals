@@ -15,22 +15,21 @@ import org.apache.logging.log4j.Level;
 
 import java.util.*;
 
-public abstract class VillagerTrades{
+public abstract class VillagerTrades {
 	
 	public static final int TRADES_PER_LEVEL = 4;
 	
 	private static boolean initDone = false;
-	public static void init(){
-		if(initDone)return;
+
+	public static void init() {
+		if(initDone) return;
 		
 		cyano.basemetals.init.Materials.init();
 		cyano.basemetals.init.Items.init();
 
-		
 		// Minecraft stores trades in a 4D array:
 		// [Profession ID][Sub-profession ID][villager level - 1][trades]
-		
-		
+
 		final int size = cyano.basemetals.init.Materials.getAllMetals().size();
 		final Map<MetalMaterial, List<Item>> allArmors = new HashMap<>(size);
 		final Map<MetalMaterial, Item> allHammers = new HashMap<>(size);
@@ -40,29 +39,29 @@ public abstract class VillagerTrades{
 		final Map<MetalMaterial, Item> allPickAxes = new HashMap<>(size);
 		final Map<MetalMaterial, Item> allShovels = new HashMap<>(size);
 		final Map<MetalMaterial, Item> allIngots = new HashMap<>(size);
-		
+
 		final Map<Item,Integer> tradeLevelMap = new HashMap<>();
-		
+
 		cyano.basemetals.init.Items.getItemsByMetal().entrySet().stream()
 				.forEach((Map.Entry<MetalMaterial,List<Item>> e)->{
 					final MetalMaterial m = e.getKey();
 					if(m == null) return;
-					for(Item i : e.getValue()){
-						if(i instanceof ItemArmor){allArmors.computeIfAbsent(m, (MetalMaterial g)->new ArrayList<>()).add(i); continue;}
-						if(i instanceof ItemMetalCrackHammer){allHammers.put(m,i); continue;}
-						if(i instanceof ItemSword){allSwords.put(m,i); continue;}
-						if(i instanceof ItemHoe){allHoes.put(m,i); continue;}
-						if(i instanceof ItemAxe){allAxes.put(m,i); continue;}
-						if(i instanceof ItemPickaxe){allPickAxes.put(m,i); continue;}
-						if(i instanceof ItemSpade){allShovels.put(m,i); continue;}
-						if(i instanceof ItemMetalIngot){allIngots.put(m,i); continue;}
+					for(Item i : e.getValue()) {
+						if(i instanceof ItemArmor) { allArmors.computeIfAbsent(m, (MetalMaterial g)->new ArrayList<>()).add(i); continue; }
+						if(i instanceof ItemMetalCrackHammer) { allHammers.put(m, i); continue; }
+						if(i instanceof ItemSword) { allSwords.put(m, i); continue; }
+						if(i instanceof ItemHoe) { allHoes.put(m, i); continue; }
+						if(i instanceof ItemAxe) { allAxes.put(m, i); continue; }
+						if(i instanceof ItemPickaxe) { allPickAxes.put(m, i); continue; }
+						if(i instanceof ItemSpade) { allShovels.put(m, i); continue; }
+						if(i instanceof ItemMetalIngot) { allIngots.put(m, i); continue; }
 					}
 				}
 		);
 
 		Map<Integer,List<ITradeList>> tradesTable = new HashMap<>(); // integer is used as byte data: (unused) (profession) (career) (level)
 
-		for(MetalMaterial m : cyano.basemetals.init.Materials.getAllMetals()){
+		for(MetalMaterial m : cyano.basemetals.init.Materials.getAllMetals()) {
 			float value = m.hardness + m.strength + m.magicAffinity + m.getToolHarvestLevel();
 			if(m.isRare) continue;
 			// for reference, iron has a value of 21.5, gold would be 14, copper is 14, and diamond is 30
@@ -76,7 +75,7 @@ public abstract class VillagerTrades{
 			int weaponsmith = (3 << 16) | (2 << 8) | (tradeLevel);
 			int toolsmith = (3 << 16) | (3 << 8) | (tradeLevel);
 
-			if(allIngots.containsKey(m)){
+			if(allIngots.containsKey(m)) {
 				ITradeList[] ingotTrades = makeTradePalette(
 						makePurchasePalette(emeraldPurch, 12, allIngots.get(m)),
 						makeSalePalette(emeraldSale, 12, allIngots.get(m))
@@ -106,14 +105,14 @@ public abstract class VillagerTrades{
 										allHammers.get(m)))
 						));
 			}
-			if(allSwords.containsKey(m)){
+			if(allSwords.containsKey(m)) {
 				tradesTable.computeIfAbsent(weaponsmith,(Integer key)->new ArrayList<>())
 						.addAll(Arrays.asList(
 						makeTradePalette(
 						makePurchasePalette(emeraldPurch + (int)(m.getBaseAttackDamage() / 2)-1, 1, allSwords.get(m)))
 						));
 			}
-			if(allArmors.containsKey(m)){
+			if(allArmors.containsKey(m)) {
 				tradesTable.computeIfAbsent(armorsmith,(Integer key)->new ArrayList<>())
 						.addAll(Arrays.asList(
 						makeTradePalette(
@@ -121,7 +120,7 @@ public abstract class VillagerTrades{
 						)));
 			}
 			
-			if(m.magicAffinity > 5){
+			if(m.magicAffinity > 5) {
 				if(allHammers.containsKey(m)) tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel+2),(Integer key)->new ArrayList<>())
 						.addAll(Arrays.asList(
 						new ListEnchantedItemForEmeralds(allHammers.get(m), new PriceInfo(emeraldPurch+7, emeraldPurch+12))));
@@ -147,9 +146,9 @@ public abstract class VillagerTrades{
 				makePurchasePalette(1,10,Items.carbon_powder)));
 		tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1),(Integer key)->new ArrayList<>())
 				.addAll(Arrays.asList(
-				makePurchasePalette(1,10,Items.carbon_powder)));
+				makePurchasePalette(1, 10, Items.carbon_powder)));
 		
-		for(Integer k : tradesTable.keySet()){
+		for(Integer k : tradesTable.keySet()) {
 			List<ITradeList> trades = tradesTable.get(k);
 			int profession = (k >> 16) & 0xFF;
 			int career = (k >> 8) & 0xFF;
@@ -161,54 +160,54 @@ public abstract class VillagerTrades{
 						trades
 				));
 			} catch (NoSuchFieldException | IllegalAccessException ex) {
-				FMLLog.log(Level.ERROR,ex,"Java Reflection Exception");
+				FMLLog.log(Level.ERROR, ex, "Java Reflection Exception");
 			}
 		}
-		
-		
-		
+
 		initDone = true;
 	}
-	
-	private static int emeraldPurchaseValue(float value){
+
+	private static int emeraldPurchaseValue(float value) {
 		return Math.max(1, (int)(value * 0.2F));
 	}
-	private static int emeraldSaleValue(float value){
+
+	private static int emeraldSaleValue(float value) {
 		return Math.max(1, emeraldPurchaseValue(value) / 3);
 	}
-	private static int tradeLevel(float value){
-		return Math.max(1, Math.min(4,(int)(value * 0.1F)));
+
+	private static int tradeLevel(float value) {
+		return Math.max(1, Math.min(4, (int)(value * 0.1F)));
 	}
-	private static int fluctuation(int baseValue){
+	private static int fluctuation(int baseValue) {
 		if(baseValue <= 1) return 0;
 		return Math.max(2, baseValue / 4);
 	}
 
-	private static ITradeList[] makePurchasePalette(int emeraldPrice, int stackSize, Item... items){
+	private static ITradeList[] makePurchasePalette(int emeraldPrice, int stackSize, Item... items) {
 		ITradeList[] trades = new ITradeList[items.length];
-		for(int i = 0; i < items.length; i++){
+		for(int i = 0; i < items.length; i++) {
 			Item item = items[i];
 			trades[i] = new SimpleTrade(
-					new ItemStack(net.minecraft.init.Items.EMERALD,emeraldPrice,0), fluctuation(emeraldPrice),
+					new ItemStack(net.minecraft.init.Items.EMERALD, emeraldPrice, 0), fluctuation(emeraldPrice),
 					(ItemStack)null, 0,
-					new ItemStack(item,stackSize,0), 0);
+					new ItemStack(item,stackSize, 0), 0);
+		}
+		return trades;
+	}
+
+	private static ITradeList[] makeSalePalette(int emeraldValue, int stackSize, Item... items) {
+		ITradeList[] trades = new ITradeList[items.length];
+		for(int i = 0; i < items.length; i++) {
+			Item item = items[i];
+			trades[i] = new SimpleTrade(
+					new ItemStack(item, stackSize, 0), fluctuation(stackSize),
+					(ItemStack)null, 0,
+					new ItemStack(net.minecraft.init.Items.EMERALD, emeraldValue, 0), 0);
 		}
 		return trades;
 	}
 	
-	private static ITradeList[] makeSalePalette(int emeraldValue, int stackSize, Item... items){
-		ITradeList[] trades = new ITradeList[items.length];
-		for(int i = 0; i < items.length; i++){
-			Item item = items[i];
-			trades[i] = new SimpleTrade(
-					new ItemStack(item,stackSize,0), fluctuation(stackSize),
-					(ItemStack)null, 0,
-					new ItemStack(net.minecraft.init.Items.EMERALD,emeraldValue,0), 0);
-		}
-		return trades;
-	}
-	
-	private static ITradeList[] makeTradePalette(ITradeList[]... list){
+	private static ITradeList[] makeTradePalette(ITradeList[]... list) {
 		if(list.length == 1) return list[0];
 		int totalsize = 0;
 		for(ITradeList[] e : list){
@@ -217,7 +216,7 @@ public abstract class VillagerTrades{
 		ITradeList[] concat = new ITradeList[totalsize];
 		int index = 0;
 		int element = 0;
-		while(index < totalsize){
+		while(index < totalsize) {
 			System.arraycopy(list[element], 0, concat, index, list[element].length);
 			index += list[element].length;
 			element++;

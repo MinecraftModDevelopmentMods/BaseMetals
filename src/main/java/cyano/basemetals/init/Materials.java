@@ -54,8 +54,8 @@ public abstract class Materials {
 	public static MetalMaterial vanilla_diamond;
 	
 	private static boolean initDone = false;
-	public static void init(){
-		if(initDone)return;
+	public static void init() {
+		if(initDone) return;
 		
 		// vanilla metals
 		vanilla_wood = addMaterial("wood",2,2,6);
@@ -65,7 +65,7 @@ public abstract class Materials {
 		vanilla_diamond = addMaterial("diamond",10,15,4);
 
 		// mod metals
-		copper = addMaterial("copper",4,4,5);
+		copper = addMaterial("copper", 4, 4, 5);
 		silver = addMaterial("silver", 5, 4, 6);
 		tin = addMaterial("tin", 3, 1, 2);
 		lead = new LeadMaterial("lead", 1, 1, 1);
@@ -91,8 +91,8 @@ public abstract class Materials {
 		initDone = true;
 	}
 
-	private static MetalMaterial addMaterial(String name, double hardness, double strength, double magic){
-		MetalMaterial m = new MetalMaterial(name,(float)hardness,(float)strength,(float)magic);
+	private static MetalMaterial addMaterial(String name, double hardness, double strength, double magic) {
+		MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic);
 		registerMaterial(name, m);
 		return m;
 	}
@@ -102,8 +102,8 @@ public abstract class Materials {
 		registerMaterial(name, m);
 		return m;
 	}
-	
-	protected static void registerMaterial(String name, MetalMaterial m){
+
+	protected static void registerMaterial(String name, MetalMaterial m) {
 
 		allMaterials.put(name, m);
 		
@@ -112,7 +112,7 @@ public abstract class Materials {
 		int[] protection = m.getDamageReductionArray();
 		int durability = m.getArmorMaxDamageFactor();
 		ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, (m.hardness > 10 ? (int)(m.hardness / 5) : 0));
-		if(am == null){
+		if(am == null) {
 			// uh-oh
 			FMLLog.severe("Failed to create armor material enum for "+m);
 		}

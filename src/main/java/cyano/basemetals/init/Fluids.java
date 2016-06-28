@@ -27,9 +27,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Fluids{
+/**
+ * This class initializes all fluids in Base Metals and provides some utility 
+ * methods for looking up fluids. 
+ * @author DrCyano
+ *
+ */
+public abstract class Fluids {
 
-	static{
+	static {
 		FluidRegistry.enableUniversalBucket();
 	}
 
@@ -42,26 +48,24 @@ public abstract class Fluids{
     private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
 
 	private static boolean initDone = false;
-	public static void init(){
-		if(initDone)return;
+	public static void init() {
+		if(initDone) return;
 
-		
 		// fluids
 		fluidMercury = newFluid(BaseMetals.MODID, "mercury",13594,2000,300,0, 0xFFD8D8D8);
-		
+
 		// fluid blocks
 		fluidBlockMercury = registerFluidBlock(fluidMercury, new InteractiveFluidBlock(
 				fluidMercury, false, (World w, EntityLivingBase e)->{
-					if(w.rand.nextInt(32) == 0)e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey),30*20,2));
+					if(w.rand.nextInt(32) == 0) e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30*20, 2));
 				}),"liquid_mercury");
-		
+
 		initDone = true;
 	}
 
-	
 	@SideOnly(Side.CLIENT)
-	public static void bakeModels(String modID){
-		for(Fluid fluid : fluidBlocks.keySet()){
+	public static void bakeModels(String modID) {
+		for(Fluid fluid : fluidBlocks.keySet()) {
 			BlockFluidBase block = fluidBlocks.get(fluid);
 			Item item = Item.getItemFromBlock(block);
 			final ModelResourceLocation fluidModelLocation = new ModelResourceLocation(
@@ -83,25 +87,24 @@ public abstract class Fluids{
 			});
 		}
 	}
-	
 
 	private static Fluid newFluid(String modID, String name, int density, int viscosity, int temperature, int luminosity, int tintColor) {
-		Fluid f = new CustomFluid(name,new ResourceLocation(modID+":blocks/"+name+"_still"),new ResourceLocation(modID+":blocks/"+name+"_flow"),tintColor);
-		f.setDensity(density);
-		f.setViscosity(viscosity);
-		f.setTemperature(temperature);
-		f.setLuminosity(luminosity);
-		f.setUnlocalizedName(modID+"."+name);
-		FluidRegistry.registerFluid(f);
-		return f;
+		Fluid fluid = new CustomFluid(name, new ResourceLocation(modID+":blocks/"+name+"_still"), new ResourceLocation(modID+":blocks/"+name+"_flow"), tintColor);
+		fluid.setDensity(density);
+		fluid.setViscosity(viscosity);
+		fluid.setTemperature(temperature);
+		fluid.setLuminosity(luminosity);
+		fluid.setUnlocalizedName(modID+"."+name);
+		FluidRegistry.registerFluid(fluid);
+		return fluid;
 	}
 
-	private static BlockFluidBase registerFluidBlock(Fluid f, BlockFluidBase block, String name) {
+	private static BlockFluidBase registerFluidBlock(Fluid fluid, BlockFluidBase block, String name) {
 		block.setUnlocalizedName(BaseMetals.MODID+"."+name);
 		GameRegistry.registerBlock(block, name);
 		block.setCreativeTab(CreativeTabs.MISC);
 		FluidRegistry.addBucketForFluid(f);
-		fluidBlocks.put(f, block);
+		fluidBlocks.put(fluid, block);
 		fluidBlockNames.put(block, name);
 		return block;
 	}
