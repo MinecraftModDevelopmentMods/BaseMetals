@@ -56,38 +56,37 @@ public abstract class Materials {
 	private static boolean initDone = false;
 	public static void init() {
 		if(initDone) return;
-		
-		// vanilla metals
-		vanilla_wood = addMaterial("wood",2,2,6);
-		vanilla_stone = addMaterial("stone",5,4,2);
-		vanilla_iron = addMaterial("iron",8,8,4.5);
-		vanilla_gold = addMaterial("gold",1,1,10);
+
+		// Vanilla Materials
+		vanilla_wood = addMaterial("wood", 2, 2, 6);
+		vanilla_stone = addMaterial("stone", 5, 4, 2);
+		vanilla_iron = addMaterial("iron", 8, 8, 4.5);
+		vanilla_gold = addMaterial("gold", 1, 1, 10);
 		vanilla_diamond = addMaterial("diamond",10,15,4);
 
-		// mod metals
-		copper = addMaterial("copper", 4, 4, 5);
-		silver = addMaterial("silver", 5, 4, 6);
-		tin = addMaterial("tin", 3, 1, 2);
-		lead = new LeadMaterial("lead", 1, 1, 1);
-		registerMaterial(lead.getName(), lead);
-		nickel = addMaterial("nickel", 4, 4, 7);
-		zinc = addMaterial("zinc", 1, 1, 1);
-		bronze = addMaterial("bronze", 8, 4, 4.5);
-		brass = addMaterial("brass", 3.5, 3, 9);
-		steel = addMaterial("steel", 8, 15, 2);
-		invar = addMaterial("invar", 9, 10, 3);
-		electrum = addMaterial("electrum", 5, 4, 10);
-		coldiron = addMaterial("coldiron", 7, 7, 7);
-		mithril = addMaterial("mithril", 9, 9, 9);
+		// Mod Metals
 		adamantine = new AdamantineMaterial("adamantine", 12, 100, 0);
 		registerMaterial(adamantine.getName(), adamantine);
+		aquarium = addMaterial("aquarium", 4, 10, 15);
+		brass = addMaterial("brass", 3.5, 3, 9);
+		bronze = addMaterial("bronze", 8, 4, 4.5);
+		coldiron = addMaterial("coldiron", 7, 7, 7);
+		copper = addMaterial("copper", 4, 4, 5);
+		cupronickel = addMaterial("cupronickel", 6, 6, 6);
+		electrum = addMaterial("electrum", 5, 4, 10);
+		invar = addMaterial("invar", 9, 10, 3);
+		lead = new LeadMaterial("lead", 1, 1, 1);
+		registerMaterial(lead.getName(), lead);
+		mithril = addMaterial("mithril", 9, 9, 9);
+		nickel = addMaterial("nickel", 4, 4, 7);
+		platinum = addRareMaterial("platinum", 3, 5, 15);
+		silver = addMaterial("silver", 5, 4, 6);
 		starsteel = new StarSteelMaterial("starsteel", 10, 25, 12);
 		registerMaterial(starsteel.getName(), starsteel);
-		aquarium = addMaterial("aquarium", 4, 10, 15);
-		
-		cupronickel = addMaterial("cupronickel", 6, 6, 6);
-		platinum = addRareMaterial("platinum", 3, 5, 15);
-		
+		steel = addMaterial("steel", 8, 15, 2);
+		tin = addMaterial("tin", 3, 1, 2);
+		zinc = addMaterial("zinc", 1, 1, 1);
+
 		initDone = true;
 	}
 
@@ -97,8 +96,8 @@ public abstract class Materials {
 		return m;
 	}
 
-	private static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic){
-		MetalMaterial m = new MetalMaterial(name,(float)hardness,(float)strength,(float)magic,true);
+	private static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic) {
+		MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic, true);
 		registerMaterial(name, m);
 		return m;
 	}
@@ -120,29 +119,29 @@ public abstract class Materials {
 		FMLLog.info("Created armor material enum "+am);
 		
 		ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(), m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
-		if(tm == null){
+		if(tm == null) {
 			// uh-oh
 			FMLLog.severe("Failed to create tool material enum for "+m);
 		}
 		toolMaterialMap.put(m, tm);
 		FMLLog.info("Created tool material enum "+tm);
 	}
+
 	/**
 	 * Gets the armor material for a given metal 
 	 * @param m The metal of interest
 	 * @return The armor material for this metal, or null if there isn't one
 	 */
-	public static ArmorMaterial getArmorMaterialFor(MetalMaterial m){
+	public static ArmorMaterial getArmorMaterialFor(MetalMaterial m) {
 		return armorMaterialMap.get(m);
 	}
-
 
 	/**
 	 * Gets the tool material for a given metal 
 	 * @param m The metal of interest
 	 * @return The tool material for this metal, or null if there isn't one
 	 */
-	public static ToolMaterial getToolMaterialFor(MetalMaterial m){
+	public static ToolMaterial getToolMaterialFor(MetalMaterial m) {
 		return toolMaterialMap.get(m);
 	}
 
@@ -154,13 +153,14 @@ public abstract class Materials {
 	public static Collection<MetalMaterial> getAllMetals() {
 		return allMaterials.values();
 	}
+
 	/**
 	 * Gets a metal material by its name (e.g. "copper").
 	 * @param metalName The name of a metal
 	 * @return The material representing the named metal, or null if no metals 
 	 * have been registered under that name.
 	 */
-	public static MetalMaterial getMetalByName(String metalName){
+	public static MetalMaterial getMetalByName(String metalName) {
 		return allMaterials.get(metalName);
 	}
 }

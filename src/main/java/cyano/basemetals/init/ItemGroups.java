@@ -19,11 +19,11 @@ public class ItemGroups {
 	private static Item blockItem;
 //	private static Item itemItem;
 //	private static Item toolItem;
-	
+
 	private static boolean initDone = false;
 	public static void init(){
 		if(initDone) return;
-		
+
 		// place holders
 		blockItem = Items.copper_crackhammer;
 //		itemItem = Items.copper_crackhammer;
@@ -40,9 +40,7 @@ public class ItemGroups {
 //		tab_tools = new FunctionalCreativeTab(BaseMetals.MODID.concat(".tools"), ()->toolItem);
 		tab_items = tab_blocks;
 		tab_tools = tab_items;
-		
-		
+
 		initDone = true;
 	}
 }
-

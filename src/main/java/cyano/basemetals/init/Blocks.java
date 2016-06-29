@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public abstract class Blocks {
 	private static final Map<String,Block> allBlocks = new HashMap<>();
-	
+
 	/**
 	 * Gets an block by its name. The name is the name as it is registered in 
 	 * the GameRegistry, not its unlocalized name (the unlocalized name is the 
@@ -152,22 +152,29 @@ public abstract class Blocks {
 	public static Block tin_ore;
 	public static Block tin_trapdoor;
 
+	public static Block zinc_bars;
 	public static Block zinc_block;
 	public static Block zinc_plate;
+	public static BlockDoor zinc_door;
 	public static Block zinc_ore;
+	public static Block zinc_trapdoor;
 
 	public static Block iron_plate;
+
+	public static Block gold_bars;
 	public static Block gold_plate;
+	public static BlockDoor gold_door;
+	public static Block gold_trapdoor;
 
 	public static Block human_detector;
 
 	private static boolean initDone = false;
+
 	public static void init() {
-		if(initDone)return;
-		
+		if(initDone) return;
+
 		cyano.basemetals.init.Materials.init();
 		cyano.basemetals.init.ItemGroups.init();
-
 
 		adamantine_block = createBlock(Materials.adamantine);
 		adamantine_plate = createPlate(Materials.adamantine);
@@ -301,7 +308,7 @@ public abstract class Blocks {
 		iron_plate = createPlate(Materials.vanilla_iron);
 		gold_plate = createPlate(Materials.vanilla_gold);
 
-		human_detector = addBlock(new BlockHumanDetector(),"human_detector");
+		human_detector = addBlock(new BlockHumanDetector(), "human_detector");
 
 		// final block settings
 		for(Block b : allBlocks.values()) {

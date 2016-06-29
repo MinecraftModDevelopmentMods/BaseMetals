@@ -42,8 +42,8 @@ public abstract class Fluids {
 	public static Fluid fluidMercury = null;
 	public static BlockFluidBase fluidBlockMercury = null;
 
-	private static final Map<Fluid,BlockFluidBase> fluidBlocks = new HashMap<>();
-	private static final Map<BlockFluidBase,String> fluidBlockNames = new HashMap<>();
+	private static final Map<Fluid, BlockFluidBase> fluidBlocks = new HashMap<>();
+	private static final Map<BlockFluidBase, String> fluidBlockNames = new HashMap<>();
 
     private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
 
@@ -52,13 +52,13 @@ public abstract class Fluids {
 		if(initDone) return;
 
 		// fluids
-		fluidMercury = newFluid(BaseMetals.MODID, "mercury",13594,2000,300,0, 0xFFD8D8D8);
+		fluidMercury = newFluid(BaseMetals.MODID, "mercury", 13594, 2000, 300, 0, 0xFFD8D8D8);
 
 		// fluid blocks
 		fluidBlockMercury = registerFluidBlock(fluidMercury, new InteractiveFluidBlock(
 				fluidMercury, false, (World w, EntityLivingBase e)->{
 					if(w.rand.nextInt(32) == 0) e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30*20, 2));
-				}),"liquid_mercury");
+				}), "liquid_mercury");
 
 		initDone = true;
 	}
@@ -103,7 +103,7 @@ public abstract class Fluids {
 		block.setUnlocalizedName(BaseMetals.MODID+"."+name);
 		GameRegistry.registerBlock(block, name);
 		block.setCreativeTab(CreativeTabs.MISC);
-		FluidRegistry.addBucketForFluid(f);
+		FluidRegistry.addBucketForFluid(fluid);
 		fluidBlocks.put(fluid, block);
 		fluidBlockNames.put(block, name);
 		return block;

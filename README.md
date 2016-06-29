@@ -63,7 +63,7 @@ Also known as a sledgehammer, this tool is designed for pulverizing rocks. Using
 
 ## Requirements
 
-This mod requires that you install Minecraft Forge version 1.9-12.16.0.1865 or later (ealier versions of Forge for Minecraft 1.9 may work, but no guarentees).
+This mod requires that you install Minecraft Forge version 1.9-12.16.1.1887 or later (ealier versions of Forge for Minecraft 1.9 may work, but no guarentees).
 
 
 

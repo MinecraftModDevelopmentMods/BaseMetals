@@ -17,13 +17,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMetalObject{
+/**
+ * Metal Block
+ */
+public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMetalObject {
 
 	final MetalMaterial metal;
-	
-	public BlockMetalBlock(MetalMaterial metal){
-		this(metal,false);
+
+	public BlockMetalBlock(MetalMaterial metal) {
+		this(metal, false);
 	}
+
 	public BlockMetalBlock(MetalMaterial metal, boolean glows) {
 		super(Material.IRON);
 		this.setSoundType(SoundType.METAL);
@@ -41,62 +45,60 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	///// OVERRIDE OF ALL METHODS THAT DEPEND ON BLOCK MATERIAL: /////
 	@Override
 	public MapColor getMapColor(final IBlockState p_getMapColor_1_) {
-        return MapColor.IRON;
-    }
-	
+		return MapColor.IRON;
+	}
+
 	@Override
 	public boolean isFullBlock(IBlockState bs) {
-        return true;
-    }
-    
+		return true;
+	}
+
 	@Override
 	public boolean isNormalCube(IBlockState bs) {
-        return true;
-    }
-    
+		return true;
+	}
+
 	@Override
 	public boolean isVisuallyOpaque() {
-        return true;
-    }
-    
+		return true;
+	}
+
 	@Override
 	public boolean isFullCube(IBlockState bs) {
-        return true;
-    }
-    
+		return true;
+	}
+
 	@Override
 	public boolean isPassable(final IBlockAccess p_isPassable_1_, final BlockPos p_isPassable_2_) {
-        return false;
-    }
-    
+		return false;
+	}
+
 	@Override
 	public boolean isReplaceable(final IBlockAccess w, final BlockPos p) {
-        return false;
-    }
-    
+		return false;
+	}
+
 	@Override
 	public boolean isNormalCube(final IBlockState bs, final IBlockAccess w, final BlockPos coord) {
-        return this.isNormalCube(bs);
-    }
+		return this.isNormalCube(bs);
+	}
 
 	@Override
 	public String getOreDictionaryName() {
 		return "block"+metal.getCapitalizedName();
 	}
-	
 
 	@Override
 	public void onBlockPlacedBy(final World w, final BlockPos coord, final IBlockState bs, final EntityLivingBase placer, final ItemStack src) {
 		super.onBlockPlacedBy(w, coord, bs, placer, src);
-    	// achievement
-		if(placer instanceof EntityPlayer){
+		// achievement
+		if(placer instanceof EntityPlayer) {
 			((EntityPlayer)placer).addStat(Achievements.blocktastic, 1);
 		}
 	}
-	
 
 	@Override
-	public MetalMaterial getMetalMaterial(){
+	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}
 }

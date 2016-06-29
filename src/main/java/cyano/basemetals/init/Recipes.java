@@ -22,40 +22,40 @@ public abstract class Recipes {
 	
 	private static boolean initDone = false;
 	public static void init() {
-		if(initDone)return;
+		if(initDone) return;
 
 		cyano.basemetals.init.Materials.init();
 		cyano.basemetals.init.Blocks.init();
 		cyano.basemetals.init.Items.init();
-		
+
 		initPureVanillaCrusherRecipes();
 		initVanillaRecipes();
 		initMetalRecipes();
-		
+
 		initDone = true;
 	}
 
 	private static void initPureVanillaCrusherRecipes() {
 		// see net.minecraftforge.oredict.OreDictionary.initVanillaEntries() for vanilla oreDict names
-		CrusherRecipeRegistry.addNewCrusherRecipe("stone", new ItemStack(Blocks.COBBLESTONE,1));
-		CrusherRecipeRegistry.addNewCrusherRecipe("cobblestone", new ItemStack(Blocks.GRAVEL,1));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.GRAVEL, new ItemStack(Blocks.SAND,1));
-		CrusherRecipeRegistry.addNewCrusherRecipe("sandstone", new ItemStack(Blocks.SAND,4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.RED_SANDSTONE, new ItemStack(Blocks.SAND,4,1));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.GLOWSTONE, new ItemStack(Items.GLOWSTONE_DUST,4));
-		CrusherRecipeRegistry.addNewCrusherRecipe("oreLapis", new ItemStack(Items.DYE,8,4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.REDSTONE_ORE, new ItemStack(Items.REDSTONE,4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.REDSTONE_BLOCK, new ItemStack(Items.REDSTONE,9));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Items.REEDS, new ItemStack(Items.SUGAR,2));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Items.BONE, new ItemStack(Items.DYE,3,15));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Items.BLAZE_ROD, new ItemStack(Items.BLAZE_POWDER,2));
-		CrusherRecipeRegistry.addNewCrusherRecipe("oreQuartz", new ItemStack(Items.QUARTZ,2));
-		CrusherRecipeRegistry.addNewCrusherRecipe("blockQuartz", new ItemStack(Items.QUARTZ,4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Blocks.PRISMARINE,1,0), new ItemStack(Items.PRISMARINE_SHARD,4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Blocks.PRISMARINE,1,1), new ItemStack(Items.PRISMARINE_SHARD,9));
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Blocks.PRISMARINE,1,2), new ItemStack(Items.PRISMARINE_SHARD,8));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.SEA_LANTERN, new ItemStack(Items.PRISMARINE_CRYSTALS,3));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.SLIME_BLOCK, new ItemStack(Items.SLIME_BALL,9));
+		CrusherRecipeRegistry.addNewCrusherRecipe("stone", new ItemStack(Blocks.COBBLESTONE, 1));
+		CrusherRecipeRegistry.addNewCrusherRecipe("cobblestone", new ItemStack(Blocks.GRAVEL, 1));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.GRAVEL, new ItemStack(Blocks.SAND, 1));
+		CrusherRecipeRegistry.addNewCrusherRecipe("sandstone", new ItemStack(Blocks.SAND, 4));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.RED_SANDSTONE, new ItemStack(Blocks.SAND, 4, 1));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.GLOWSTONE, new ItemStack(Items.GLOWSTONE_DUST, 4));
+		CrusherRecipeRegistry.addNewCrusherRecipe("oreLapis", new ItemStack(Items.DYE, 8, 4));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.REDSTONE_ORE, new ItemStack(Items.REDSTONE, 4));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.REDSTONE_BLOCK, new ItemStack(Items.REDSTONE, 9));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Items.REEDS, new ItemStack(Items.SUGAR, 2));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Items.BONE, new ItemStack(Items.DYE, 3, 15));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Items.BLAZE_ROD, new ItemStack(Items.BLAZE_POWDER, 2));
+		CrusherRecipeRegistry.addNewCrusherRecipe("oreQuartz", new ItemStack(Items.QUARTZ, 2));
+		CrusherRecipeRegistry.addNewCrusherRecipe("blockQuartz", new ItemStack(Items.QUARTZ, 4));
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Blocks.PRISMARINE, 1, 0), new ItemStack(Items.PRISMARINE_SHARD, 4));
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Blocks.PRISMARINE, 1, 1), new ItemStack(Items.PRISMARINE_SHARD, 9));
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Blocks.PRISMARINE, 1, 2), new ItemStack(Items.PRISMARINE_SHARD, 8));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.SEA_LANTERN, new ItemStack(Items.PRISMARINE_CRYSTALS, 3));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.SLIME_BLOCK, new ItemStack(Items.SLIME_BALL, 9));
 		
 	}
 
@@ -77,21 +77,21 @@ public abstract class Recipes {
 		OreDictionary.registerOre("door", Items.BIRCH_DOOR);
 		OreDictionary.registerOre("door", Items.ACACIA_DOOR);
 		
-		CrusherRecipeRegistry.addNewCrusherRecipe("oreIron", new ItemStack(cyano.basemetals.init.Items.iron_powder,2));
-		CrusherRecipeRegistry.addNewCrusherRecipe("blockIron", new ItemStack(cyano.basemetals.init.Items.iron_powder,9));
-		CrusherRecipeRegistry.addNewCrusherRecipe("ingotIron", new ItemStack(cyano.basemetals.init.Items.iron_powder,1));
-		CrusherRecipeRegistry.addNewCrusherRecipe("oreGold", new ItemStack(cyano.basemetals.init.Items.gold_powder,2));
-		CrusherRecipeRegistry.addNewCrusherRecipe("blockGold", new ItemStack(cyano.basemetals.init.Items.gold_powder,9));
-		CrusherRecipeRegistry.addNewCrusherRecipe("ingotGold", new ItemStack(cyano.basemetals.init.Items.gold_powder,1));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(cyano.basemetals.init.Items.iron_nugget,9), new ItemStack(Items.IRON_INGOT)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.IRON_INGOT), "xxx","xxx","xxx",'x',cyano.basemetals.init.Items.iron_nugget));
+		CrusherRecipeRegistry.addNewCrusherRecipe("oreIron", new ItemStack(cyano.basemetals.init.Items.iron_powder, 2));
+		CrusherRecipeRegistry.addNewCrusherRecipe("blockIron", new ItemStack(cyano.basemetals.init.Items.iron_powder, 9));
+		CrusherRecipeRegistry.addNewCrusherRecipe("ingotIron", new ItemStack(cyano.basemetals.init.Items.iron_powder, 1));
+		CrusherRecipeRegistry.addNewCrusherRecipe("oreGold", new ItemStack(cyano.basemetals.init.Items.gold_powder, 2));
+		CrusherRecipeRegistry.addNewCrusherRecipe("blockGold", new ItemStack(cyano.basemetals.init.Items.gold_powder, 9));
+		CrusherRecipeRegistry.addNewCrusherRecipe("ingotGold", new ItemStack(cyano.basemetals.init.Items.gold_powder, 1));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(cyano.basemetals.init.Items.iron_nugget, 9), new ItemStack(Items.IRON_INGOT)));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.IRON_INGOT), "xxx", "xxx", "xxx", 'x', cyano.basemetals.init.Items.iron_nugget));
 		GameRegistry.addSmelting(cyano.basemetals.init.Items.iron_powder, new ItemStack(Items.IRON_INGOT), 0f);
 		GameRegistry.addSmelting(cyano.basemetals.init.Items.gold_powder, new ItemStack(Items.GOLD_INGOT), 0f);
-		CrusherRecipeRegistry.addNewCrusherRecipe("oreCoal", new ItemStack(cyano.basemetals.init.Items.carbon_powder,2));
-		CrusherRecipeRegistry.addNewCrusherRecipe("blockCoal", new ItemStack(cyano.basemetals.init.Items.carbon_powder,9));
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Items.COAL,1,0), new ItemStack(cyano.basemetals.init.Items.carbon_powder,1));
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Items.COAL,1,1), new ItemStack(cyano.basemetals.init.Items.carbon_powder,1));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.COAL_BLOCK), "xxx","xxx","xxx",'x',cyano.basemetals.init.Items.carbon_powder));
+		CrusherRecipeRegistry.addNewCrusherRecipe("oreCoal", new ItemStack(cyano.basemetals.init.Items.carbon_powder, 2));
+		CrusherRecipeRegistry.addNewCrusherRecipe("blockCoal", new ItemStack(cyano.basemetals.init.Items.carbon_powder, 9));
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Items.COAL, 1, 0), new ItemStack(cyano.basemetals.init.Items.carbon_powder, 1));
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Items.COAL, 1, 1), new ItemStack(cyano.basemetals.init.Items.carbon_powder, 1));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.COAL_BLOCK), "xxx", "xxx", "xxx", 'x', cyano.basemetals.init.Items.carbon_powder));
 	}
 
 	private static void initMetalRecipes() {
@@ -160,7 +160,7 @@ public abstract class Recipes {
 			Block plate = cyano.basemetals.init.Blocks.getBlockByName(baseName+"plate");
 			Block ore = cyano.basemetals.init.Blocks.getBlockByName(baseName+"ore");
 			Block trapdoor = cyano.basemetals.init.Blocks.getBlockByName(baseName+"trapdoor");
-			
+
 			// NOTE: smelting XP is based on output item, not input item
 			// ingot-related recipes 
 			if(ore != null && powder != null) {
@@ -239,7 +239,7 @@ public abstract class Recipes {
 			// misc recipes
 			if(ingot != null && pickaxe != null) GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.BUCKET), "x x", " x ", 'x', "ingot"+oreDictName));
 		}
-		
+
 		// alloy blends
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(cyano.basemetals.init.Items.brass_blend, 3), "dustCopper", "dustCopper", "dustZinc"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(cyano.basemetals.init.Items.bronze_blend, 4), "dustCopper", "dustCopper", "dustCopper", "dustTin"));

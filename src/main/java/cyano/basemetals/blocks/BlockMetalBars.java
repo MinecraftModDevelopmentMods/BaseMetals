@@ -6,9 +6,13 @@ import cyano.basemetals.registry.IOreDictionaryEntry;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
+/**
+ * Metal Bars
+ */
 public class BlockMetalBars extends net.minecraft.block.BlockPane implements IOreDictionaryEntry, IMetalObject {
 
 	final MetalMaterial metal;
+
 	public BlockMetalBars(MetalMaterial metal) {
 		super(Material.IRON, true);
 		this.setSoundType(SoundType.METAL);
@@ -17,13 +21,14 @@ public class BlockMetalBars extends net.minecraft.block.BlockPane implements IOr
 		this.blockResistance = metal.getBlastResistance();
 		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
 	}
+
 	@Override
 	public String getOreDictionaryName() {
 		return "bars"+metal.getCapitalizedName();
 	}
-	
+
 	@Override
-	public MetalMaterial getMetalMaterial(){
+	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}
 }

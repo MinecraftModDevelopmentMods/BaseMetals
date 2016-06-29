@@ -5,21 +5,26 @@ import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
 import net.minecraft.creativetab.CreativeTabs;
 
-public class ItemMetalNugget extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject{
+/**
+ * Nuggets
+ */
+public class ItemMetalNugget extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject {
 
 	protected final MetalMaterial metal;
 	private final String oreDict;
-	public ItemMetalNugget(MetalMaterial metal){
+
+	public ItemMetalNugget(MetalMaterial metal) {
 		this.metal = metal;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
 		this.oreDict = "nugget"+metal.getCapitalizedName();
 	}
-	
-	public String getOreDictionaryName(){
+
+	public String getOreDictionaryName() {
 		return oreDict;
 	}
+
 	@Override
-	public MetalMaterial getMetalMaterial(){
+	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}
 }

@@ -17,10 +17,11 @@ import net.minecraftforge.fluids.Fluid;
  * @author DrCyano
  *
  */
-public class InteractiveFluidBlock extends BlockFluidClassic{
+public class InteractiveFluidBlock extends BlockFluidClassic {
 
 	private final java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect;
 	private final boolean isFlammable;
+
 	/**
 	 * Constructor for this fluid block.
 	 * @param fluid The Fluid of this fluid block
@@ -32,6 +33,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 		this.isFlammable = flammable;
 		this.immersionEffect = immersionEffect;
 	}
+
 	/**
 	 * Constructor for this fluid block.
 	 * @param fluid The Fluid of this fluid block
@@ -40,6 +42,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 	public InteractiveFluidBlock(Fluid fluid,  java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect) {
 		this(fluid,false,immersionEffect);
 	}
+
 	/**
 	 * Constructor for this fluid block.
 	 * @param fluid The Fluid of this fluid block
@@ -48,16 +51,14 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 		this(fluid,false,null);
 	}
 
-	
 	@Override
 	public void onEntityCollidedWithBlock( World world, BlockPos coord, IBlockState state,Entity entity ) {
-        super.onEntityCollidedWithBlock(world,coord,state,entity);
-		if (immersionEffect != null && entity instanceof EntityLivingBase 
-				) {
+		super.onEntityCollidedWithBlock(world,coord,state,entity);
+		if (immersionEffect != null && entity instanceof EntityLivingBase) {
 			immersionEffect.accept(world,(EntityLivingBase)entity);
 		}
 	}
-	
+
 	/**
 	 * Chance that fire will spread and consume this block.
 	 * 300 being a 100% chance, 0, being a 0% chance.
@@ -72,7 +73,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 		if(isFlammable) return 60;
 		return 0;
 	}
-	
+
 	/**
 	 * Called when fire is updating on a neighbor block.
 	 * The higher the number returned, the faster fire will spread around this block.

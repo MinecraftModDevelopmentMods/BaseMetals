@@ -13,10 +13,11 @@ import java.util.List;
  *
  */
 public class FunctionalCreativeTab  extends CreativeTabs {
-	
+
 	private final java.util.function.Supplier<Item> itemSupplier;
 	private final java.util.Comparator<ItemStack> itemSortingAlgorithm;
 	private final boolean searchable;
+
 	/**
 	 * Constructor
 	 * @param unlocalizedName Name for translation
@@ -29,7 +30,7 @@ public class FunctionalCreativeTab  extends CreativeTabs {
 			final java.util.function.BiFunction<ItemStack,ItemStack,Integer> itemSortingAlgorithm) {
 		super(unlocalizedName);
 		this.itemSupplier = itemSupplier;
-		this.itemSortingAlgorithm = new java.util.Comparator<ItemStack>(){
+		this.itemSortingAlgorithm = new java.util.Comparator<ItemStack>() {
 			@Override
 			public int compare(ItemStack o1, ItemStack o2) {
 				return itemSortingAlgorithm.apply(o1, o2);
@@ -38,7 +39,6 @@ public class FunctionalCreativeTab  extends CreativeTabs {
 		this.searchable = searchable;
 		if(searchable)setBackgroundImageName("item_search.png");
 	}
-
 
 	/**
 	 * Determines if the search bar should be shown for this tab.
@@ -49,7 +49,6 @@ public class FunctionalCreativeTab  extends CreativeTabs {
 	public boolean hasSearchBar() {
 		return searchable;
 	}
-	
 
 	/**
 	 * only shows items which have tabToDisplayOn == this
@@ -63,7 +62,6 @@ public class FunctionalCreativeTab  extends CreativeTabs {
 		itemList.sort(itemSortingAlgorithm);
 	}
 
-	
 	/**
 	 * Gets the item used in the tab icon
 	 */

@@ -12,12 +12,13 @@ import net.minecraft.item.ItemStack;
  *
  */
 public interface ICrusherRecipe {
-	
+
 	/**
 	 * Gets the output item from applying this recipe.
 	 * @return An ItemStack instance of the result of this recipe
 	 */
 	public abstract ItemStack getOutput();
+
 	/**
 	 * Checks if the given ItemStack instance is the input for this recipe.
 	 * @param input An ItemStack to test
@@ -25,6 +26,7 @@ public interface ICrusherRecipe {
 	 * input.
 	 */
 	public abstract boolean isValidInput(ItemStack input);
+
 	/**
 	 * Returns a list of all registered blocks/items for which <code>isValidInput(...)</code> would 
 	 * return true. This method is only used for displaying recipes in NEI and does not need to be 
@@ -32,5 +34,4 @@ public interface ICrusherRecipe {
 	 * @return A list of allowed inputs.
 	 */
 	public abstract Collection<ItemStack> getValidInputs();
-
 }

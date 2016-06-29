@@ -31,7 +31,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-
 /**
  * This is the entry point for this mod. If you are writing your own mod that 
  * uses this mod, the classes of interest to you are the init classes (classes 
@@ -48,22 +47,24 @@ import java.util.*;
 		modid = BaseMetals.MODID,
 		name=BaseMetals.NAME,
 		version = BaseMetals.VERSION,
+		dependencies = "required-after:Forge",
 		acceptedMinecraftVersions = "[1.9.4,)") // see VersionRange.createFromVersionSpec(String) for explanation of this convoluted feature
 //		updateJSON = "https://raw.githubusercontent.com/cyanobacterium/BaseMetals/master/update.json")
-
 public class BaseMetals
 {
 	//TODO: use metal plates to modify or repair shields
 
 	public static BaseMetals INSTANCE = null;
+
 	/** ID of this mod */
 	public static final String MODID = "basemetals";
+
 	/** display name of this mod */
 	public static final String NAME ="Base Metals";
+
 	/** Version number, in Major.Minor.Build format. The minor number is increased whenever a change 
 	 * is made that has the potential to break compatibility with other mods that depend on this one. */
 	public static final String VERSION = "2.3.3";
-
 
 	static {
 		// Forge says this needs to be statically initialized here.
@@ -75,24 +76,31 @@ public class BaseMetals
 	
 	/** If true, hammers cannot crush ores that they cannot mine */
 	public static boolean enforceHardness = true;
+
 	/** If true, then crack hammers can mine on all the same blocks that their pick-axe equivalent 
 	 * can mine. If false, then the hammer is 1 step weaker than the pick-axe */
 	public static boolean strongHammers = true;
+
 	/** If true, hammers cannot be crafted */
 	public static boolean disableAllHammers = false;
+
 	/** For when the user adds specific recipies via the config file */
 	public static List<String> userCrusherRecipes = new ArrayList<>();
+
 	/** location of ore-spawn files */
 	public static Path oreSpawnFolder = null;
+
 	/** if true, then this mod will scan the Ore Dictionary for obvious hammer recipes from other mods */
 	public static boolean autoDetectRecipes = true;
+
 	/** if true, then this mod will require the orespawn mod */
 	public static boolean requireOreSpawn = true;
 	
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event)
-	{
+	public void preInit(FMLPreInitializationEvent event) {
+
 		INSTANCE = this;
+
 		// load config
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
@@ -107,7 +115,7 @@ public class BaseMetals
 		enforceHardness = config.getBoolean("enforce_hardness", "options", enforceHardness,
 				"If true, then the crack hammer cannot crush ingots into powders if that \n"
 						+	"crackhammer is not hard enough to crush the ingot's ore.");
-		
+
 		strongHammers = config.getBoolean("strong_hammers", "options", strongHammers, 
 				"If true, then the crack hammer can crush ingots/ores that a pickaxe of the same \n"
 			+	"material can harvest. If false, then your crack hammer must be made of a harder \n"
@@ -122,7 +130,7 @@ public class BaseMetals
 				"If false, then Base Metals will not require DrCyano's Ore Spawn mod. \n" +
 						"Set to false if using another mod to manually handle ore generation.");
 
-		
+
 		ConfigCategory userRecipeCat = config.getCategory("hammer recipes");
 		userRecipeCat.setComment(
 			  "This section allows you to add your own recipes for the Crack Hammer (and other rock \n"
@@ -150,7 +158,7 @@ public class BaseMetals
 		}
 
 		if(requireOreSpawn) {
-			if(!net.minecraftforge.fml.common.Loader.isModLoaded("orespawn")){
+			if(!net.minecraftforge.fml.common.Loader.isModLoaded("orespawn")) {
 				HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
 				orespawnMod.add(new DefaultArtifactVersion("1.0.0"));
 				throw new MissingModsException(orespawnMod, "orespawn", "DrCyano's Ore Spawn Mod");
@@ -175,9 +183,6 @@ public class BaseMetals
 		cyano.basemetals.init.Blocks.init();
 		cyano.basemetals.init.Items.init();
 		cyano.basemetals.init.VillagerTrades.init();
-		
-		
-
 
 		Path ALTPath = Paths.get(event.getSuggestedConfigurationFile().getParent(),"additional-loot-tables");
 		Path myLootFolder = ALTPath.resolve(MODID);
@@ -218,19 +223,19 @@ public class BaseMetals
 	}
 	
 	@SideOnly(Side.CLIENT)
-	private void clientPreInit(FMLPreInitializationEvent event){
+	private void clientPreInit(FMLPreInitializationEvent event) {
 		// client-only code
 		cyano.basemetals.init.Fluids.bakeModels(MODID);
 
 	}
+
 	@SideOnly(Side.SERVER)
-	private void serverPreInit(FMLPreInitializationEvent event){
+	private void serverPreInit(FMLPreInitializationEvent event) {
 		// server-only code
 	}
-	
+
 	@EventHandler
-	public void init(FMLInitializationEvent event)
-	{
+	public void init(FMLInitializationEvent event) {
 
 		cyano.basemetals.init.Recipes.init();
 		cyano.basemetals.init.DungeonLoot.init();
@@ -239,60 +244,58 @@ public class BaseMetals
 		cyano.basemetals.init.Achievements.init();
 
 
-		if(event.getSide() == Side.CLIENT){
+		if(event.getSide() == Side.CLIENT) {
 			clientInit(event);
 		}
-		if(event.getSide() == Side.SERVER){
+		if(event.getSide() == Side.SERVER) {
 			serverInit(event);
 		}
 	}
-	
 
 	@SideOnly(Side.CLIENT)
-	private void clientInit(FMLInitializationEvent event){
+	private void clientInit(FMLInitializationEvent event) {
 		// client-only code
 		cyano.basemetals.init.Items.registerItemRenders(event);
 		cyano.basemetals.init.Blocks.registerItemRenders(event);
 	}
+
 	@SideOnly(Side.SERVER)
-	private void serverInit(FMLInitializationEvent event){
+	private void serverInit(FMLInitializationEvent event) {
 		// server-only code
 	}
 	
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event)
-	{
+	public void postInit(FMLPostInitializationEvent event) {
 		cyano.basemetals.init.WorldGen.init();
 
-		
+
 		// parse user crusher recipes
-		for(String recipe : userCrusherRecipes){
+		for(String recipe : userCrusherRecipes) {
 			FMLLog.info(MODID+": adding custom crusher recipe '"+recipe+"'");
 			int i = recipe.indexOf("->");
 			String inputStr = recipe.substring(0,i);
 			String outputStr = recipe.substring(i+2,recipe.length());
 			ItemStack input = parseStringAsItemStack(inputStr,true);
 			ItemStack output = parseStringAsItemStack(outputStr,false);
-			if(input == null || output == null){
+			if(input == null || output == null) {
 				FMLLog.severe("Failed to add recipe formula '"+recipe+"' because the blocks/items could not be found");
 			} else {
 				CrusherRecipeRegistry.addNewCrusherRecipe(input, output);
 			}
 		}
-		
 
-		if(autoDetectRecipes){
+		if(autoDetectRecipes) {
 			// add recipe for every X where the Ore Dictionary has dustX, oreX, and ingotX
 			Set<String> dictionary = new HashSet<>();
 			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()));
-			for(String entry : dictionary){
+			for(String entry : dictionary) {
 				if(entry.contains("Mercury")) continue;
-				if(entry.startsWith("dust")){
+				if(entry.startsWith("dust")) {
 					String X = entry.substring("dust".length());
 					String dustX = entry;
 					String ingotX = "ingot".concat(X);
 					String oreX = "ore".concat(X);
-					if(dictionary.contains(oreX) && dictionary.contains(ingotX) && !OreDictionary.getOres(dustX).isEmpty()){
+					if(dictionary.contains(oreX) && dictionary.contains(ingotX) && !OreDictionary.getOres(dustX).isEmpty()) {
 						ItemStack dustX1 = OreDictionary.getOres(dustX).get(0).copy();
 						dustX1.stackSize = 1; 
 						ItemStack dustX2 = dustX1.copy();
@@ -301,21 +304,21 @@ public class BaseMetals
 						// but is it already registered
 						List<ItemStack> oreBlocks = OreDictionary.getOres(oreX);
 						boolean alreadyHasOreRecipe = true;
-						for(ItemStack i : oreBlocks){
+						for(ItemStack i : oreBlocks) {
 							alreadyHasOreRecipe = alreadyHasOreRecipe 
 									&& (CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null);
 						}
 						List<ItemStack> ingotStacks = OreDictionary.getOres(ingotX);
 						boolean alreadyHasIngotRecipe = true;
-						for(ItemStack i : ingotStacks){
+						for(ItemStack i : ingotStacks) {
 							alreadyHasIngotRecipe = alreadyHasIngotRecipe 
 									&& (CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null);
 						}
-						if(!alreadyHasOreRecipe){
+						if(!alreadyHasOreRecipe) {
 							FMLLog.info(MODID+": automatically adding custom crusher recipe \"%s\" -> %s",oreX,dustX2);
 							CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX2);
 						}
-						if(!alreadyHasIngotRecipe){
+						if(!alreadyHasIngotRecipe) {
 							FMLLog.info(MODID+": automatically adding custom crusher recipe \"%s\" -> %s",ingotX,dustX1);
 							CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX1);
 						}
@@ -323,27 +326,27 @@ public class BaseMetals
 				}
 			}
 		}
-		
-		if(event.getSide() == Side.CLIENT){
+
+		if(event.getSide() == Side.CLIENT) {
 			clientPostInit(event);
 		}
-		if(event.getSide() == Side.SERVER){
+
+		if(event.getSide() == Side.SERVER) {
 			serverPostInit(event);
 		}
 		
 		CrusherRecipeRegistry.getInstance().clearCache();
 	}
-	
 
 	@SideOnly(Side.CLIENT)
-	private void clientPostInit(FMLPostInitializationEvent event){
+	private void clientPostInit(FMLPostInitializationEvent event) {
 		// client-only code
 	}
+
 	@SideOnly(Side.SERVER)
-	private void serverPostInit(FMLPostInitializationEvent event){
+	private void serverPostInit(FMLPostInitializationEvent event) {
 		// server-only code
 	}
-	
 
 	/**
 	 * Parses a String in the format (stack-size)*(modid):(item/block name)#(metadata value). The 
@@ -353,40 +356,36 @@ public class BaseMetals
 	 * the OreDictionary wildcard value. If false, then the default meta value is 0 instead.
 	 * @return An ItemStack representing the item, or null if the item is not found
 	 */
-	public static ItemStack parseStringAsItemStack(String str, boolean allowWildcard){
+	public static ItemStack parseStringAsItemStack(String str, boolean allowWildcard) {
 		str = str.trim();
 		int count = 1;
 		int meta;
-		if(allowWildcard){
+		if(allowWildcard) {
 			meta = OreDictionary.WILDCARD_VALUE;
 		} else {
 			meta = 0;
 		}
 		int nameStart = 0;
 		int nameEnd = str.length();
-		if(str.contains("*")){
+		if(str.contains("*")) {
 			count = Integer.parseInt(str.substring(0,str.indexOf("*")).trim());
 			nameStart = str.indexOf("*")+1;
 		}
-		if(str.contains("#")){
+		if(str.contains("#")) {
 			meta = Integer.parseInt(str.substring(str.indexOf("#")+1,str.length()).trim());
 			nameEnd = str.indexOf("#");
 		}
 		String id = str.substring(nameStart,nameEnd).trim();
-		if(Block.getBlockFromName(id) != null){
+		if(Block.getBlockFromName(id) != null) {
 			// is a block
-			return new ItemStack(Block.getBlockFromName(id),count,meta);
-		} else if(Item.getByNameOrId(id) != null){
+			return new ItemStack(Block.getBlockFromName(id), count, meta);
+		} else if(Item.getByNameOrId(id) != null) {
 			// is an item
-			return new ItemStack(Item.getByNameOrId(id),count,meta);
+			return new ItemStack(Item.getByNameOrId(id), count, meta);
 		} else {
 			// item not found
 			FMLLog.severe("Failed to find item or block for ID '"+id+"'");
 			return null;
 		}
 	}
-
-
-
-
 }

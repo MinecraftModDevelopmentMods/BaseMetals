@@ -63,11 +63,11 @@ public abstract class Achievements {
 	}
 
 	private static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, Item icon) {
-		return makeAchievement( baseName, requirement, x, y, new ItemStack(icon));
+		return makeAchievement(baseName, requirement, x, y, new ItemStack(icon));
 	}
 
 	private static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, Block icon) {
-		return makeAchievement( baseName, requirement, x, y, new ItemStack(icon));
+		return makeAchievement(baseName, requirement, x, y, new ItemStack(icon));
 	}
 
 	private static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, ItemStack icon) {
