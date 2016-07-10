@@ -1,9 +1,13 @@
 package cyano.basemetals.jei;
 
-import cyano.basemetals.BaseMetals;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
+/**
+ * 
+ * @author DrCyano
+ *
+ */
 public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeJEI> {
 
 	private final String id = BaseMetalsJEIPlugin.JEIUID;

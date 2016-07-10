@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -110,7 +111,7 @@ public abstract class Fluids {
 
 	private static BlockFluidBase registerFluidBlock(Fluid fluid, BlockFluidBase block, String name) {
 		ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
-		block.setUnlocalizedName(location);
+		block.setRegistryName(location);
 		block.setUnlocalizedName(location.toString());
 		GameRegistry.register(block);
 		block.setCreativeTab(CreativeTabs.MISC);

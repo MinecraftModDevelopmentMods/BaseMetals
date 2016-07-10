@@ -61,7 +61,6 @@ public abstract class Recipes {
 		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(Blocks.PRISMARINE, 1, 2), new ItemStack(Items.PRISMARINE_SHARD, 8));
 		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.SEA_LANTERN, new ItemStack(Items.PRISMARINE_CRYSTALS, 3));
 		CrusherRecipeRegistry.addNewCrusherRecipe(Blocks.SLIME_BLOCK, new ItemStack(Items.SLIME_BALL, 9));
-		
 	}
 
 	private static void initVanillaRecipes() {
@@ -81,7 +80,7 @@ public abstract class Recipes {
 		OreDictionary.registerOre("door", Items.DARK_OAK_DOOR);
 		OreDictionary.registerOre("door", Items.BIRCH_DOOR);
 		OreDictionary.registerOre("door", Items.ACACIA_DOOR);
-		
+
 		CrusherRecipeRegistry.addNewCrusherRecipe("oreIron", new ItemStack(cyano.basemetals.init.Items.iron_powder, 2));
 		CrusherRecipeRegistry.addNewCrusherRecipe("blockIron", new ItemStack(cyano.basemetals.init.Items.iron_powder, 9));
 		CrusherRecipeRegistry.addNewCrusherRecipe("ingotIron", new ItemStack(cyano.basemetals.init.Items.iron_powder, 1));
@@ -137,7 +136,6 @@ public abstract class Recipes {
 		OreDictionary.registerOre("rod"+v_oreDictName, v_rod);
 		OreDictionary.registerOre("rod", v_rod);
 		GameRegistry.addSmelting(v_rod, new ItemStack(v_nugget, 4), 0);
-
 
 		for(MetalMaterial metal : Materials.getAllMetals()) {
 			if(exceptions.contains(metal)) continue;

@@ -46,6 +46,7 @@ public class MetalMaterial {
 	private int[] cache =  null;
 
 	/**
+	 * @deprecated
 	 * @param name String used to identify items and blocks using this material
 	 * @param hardness hardness on a scale from 0 to 10 (or more), where 0 is non-solid and 
 	 * diamond is 10. For reference, wood is 3, stone is 5, iron is 8, diamond is 10.

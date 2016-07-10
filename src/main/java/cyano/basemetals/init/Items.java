@@ -13,6 +13,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -830,7 +831,7 @@ public abstract class Items {
 	}
 
 	private static Item registerItem(Item item, String name, MetalMaterial metal, CreativeTabs tab) {
-		ResourceLocation location = new ResourceLocation(ModernMetals.MODID, name);
+		ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
 		item.setRegistryName(location);
 		item.setUnlocalizedName(location.toString());
 		GameRegistry.register(item); 
