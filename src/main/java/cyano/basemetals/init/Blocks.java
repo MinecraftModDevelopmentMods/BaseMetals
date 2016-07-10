@@ -10,6 +10,7 @@ import net.minecraft.block.BlockOre;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,18 +27,6 @@ import java.util.Map;
  *
  */
 public abstract class Blocks {
-	private static final Map<String,Block> allBlocks = new HashMap<>();
-
-	/**
-	 * Gets an block by its name. The name is the name as it is registered in 
-	 * the GameRegistry, not its unlocalized name (the unlocalized name is the 
-	 * registered name plus the prefix "basemetals.")
-	 * @param name The name of the block in question
-	 * @return The block matching that name, or null if there isn't one
-	 */
-	public static Block getBlockByName(String name) {
-		return allBlocks.get(name);
-	}
 
 	public static Block adamantine_bars;
 	public static Block adamantine_block;
@@ -170,6 +159,22 @@ public abstract class Blocks {
 
 	private static boolean initDone = false;
 
+	private static final Map<String, Block> allBlocks = new HashMap<>();
+
+	/**
+	 * Gets an block by its name. The name is the name as it is registered in 
+	 * the GameRegistry, not its unlocalized name (the unlocalized name is the 
+	 * registered name plus the prefix "basemetals.")
+	 * @param name The name of the block in question
+	 * @return The block matching that name, or null if there isn't one
+	 */
+	public static Block getBlockByName(String name) {
+		return allBlocks.get(name);
+	}
+
+	/**
+	 * 
+	 */
 	public static void init() {
 		if(initDone) return;
 
@@ -320,13 +325,17 @@ public abstract class Blocks {
 	}
 
 	private static Block addBlock(Block block, String name) {
-		block.setRegistryName(BaseMetals.MODID, name);
-		block.setUnlocalizedName(BaseMetals.MODID+"."+name);
+		ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
+		block.setRegistryName(location);
+		block.setUnlocalizedName(location.toString());
 		GameRegistry.register(block);
 
-		ItemBlock itemBlock = new ItemBlock(block);
-		itemBlock.setRegistryName(BaseMetals.MODID, name);
-		GameRegistry.register(itemBlock);
+		if (!(block instanceof BlockMetalDoor)) {
+			ItemBlock itemBlock = new ItemBlock(block);
+			itemBlock.setRegistryName(location);
+			itemBlock.setUnlocalizedName(location.toString());
+			GameRegistry.register(itemBlock);
+		}
 
 		allBlocks.put(name, block);
 		return block;
@@ -353,31 +362,24 @@ public abstract class Blocks {
 	}
 
 	private static BlockDoor createDoor(MetalMaterial metal) {
-		String name = metal.getName()+"_door";
-		BlockDoor block = new BlockMetalDoor(metal);
-		block.setRegistryName(BaseMetals.MODID, name);
-		block.setUnlocalizedName(BaseMetals.MODID+"."+name);
-		GameRegistry.register(block);
-		
-		ItemBlock itemBlock = new ItemBlock(block);
-		itemBlock.setRegistryName(BaseMetals.MODID, name);
-		GameRegistry.register(itemBlock);
-		
-		allBlocks.put(metal.getName()+"_door", block);
-		return block;
+		return (BlockDoor)addBlock(new BlockMetalDoor(metal), metal.getName()+"_door");
 	}
 
 	private static Block createTrapDoor(MetalMaterial metal) {
 		return addBlock(new BlockMetalTrapDoor(metal), metal.getName()+"_trapdoor");
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerItemRenders(FMLInitializationEvent event) {
 		for(String name : allBlocks.keySet()) {
 			if(allBlocks.get(name) instanceof BlockDoor) continue; // do not add door blocks
 			Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 			.register(net.minecraft.item.Item.getItemFromBlock(allBlocks.get(name)), 0, 
-				new ModelResourceLocation(BaseMetals.MODID+":"+name, "inventory"));
+				new ModelResourceLocation(new ResourceLocation(BaseMetals.MODID, name), "inventory"));
 		}
 	}
 }

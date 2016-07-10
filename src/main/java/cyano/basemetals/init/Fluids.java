@@ -45,9 +45,13 @@ public abstract class Fluids {
 	private static final Map<Fluid, BlockFluidBase> fluidBlocks = new HashMap<>();
 	private static final Map<BlockFluidBase, String> fluidBlockNames = new HashMap<>();
 
-    private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
+	private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
 
 	private static boolean initDone = false;
+
+	/**
+	 * 
+	 */
 	public static void init() {
 		if(initDone) return;
 
@@ -63,6 +67,10 @@ public abstract class Fluids {
 		initDone = true;
 	}
 
+	/**
+	 * 
+	 * @param modID
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void bakeModels(String modID) {
 		for(Fluid fluid : fluidBlocks.keySet()) {
@@ -96,14 +104,22 @@ public abstract class Fluids {
 		fluid.setLuminosity(luminosity);
 		fluid.setUnlocalizedName(modID+"."+name);
 		FluidRegistry.registerFluid(fluid);
+		FluidRegistry.addBucketForFluid(fluid);
 		return fluid;
 	}
 
 	private static BlockFluidBase registerFluidBlock(Fluid fluid, BlockFluidBase block, String name) {
-		block.setUnlocalizedName(BaseMetals.MODID+"."+name);
-		GameRegistry.registerBlock(block, name);
+		ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
+		block.setUnlocalizedName(location);
+		block.setUnlocalizedName(location.toString());
+		GameRegistry.register(block);
 		block.setCreativeTab(CreativeTabs.MISC);
-		FluidRegistry.addBucketForFluid(fluid);
+
+		ItemBlock itemBlock = new ItemBlock(block);
+		itemBlock.setRegistryName(location);
+		itemBlock.setUnlocalizedName(location.toString());
+		GameRegistry.register(itemBlock);
+
 		fluidBlocks.put(fluid, block);
 		fluidBlockNames.put(block, name);
 		return block;

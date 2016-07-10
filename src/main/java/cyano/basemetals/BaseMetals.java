@@ -95,7 +95,11 @@ public class BaseMetals
 
 	/** if true, then this mod will require the orespawn mod */
 	public static boolean requireOreSpawn = true;
-	
+
+	/**
+	 * 
+	 * @param event
+	 */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
@@ -104,7 +108,7 @@ public class BaseMetals
 		// load config
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
-		
+
 //		enablePotionRecipes = config.getBoolean("enable_potions", "options", enablePotionRecipes, 
 //				"If true, then some metals can be used to brew potions.");
 
@@ -140,17 +144,17 @@ public class BaseMetals
 			+ "formula modid:name->modid:name for most items/blocks. \n\n"
 			+ "All properties in this section will be parsed for formulas, regardless their name. \n"
 			+ "This lets you organize your recipe lists for easier reading.");
-		if(userRecipeCat.keySet().size()==0){
+		if(userRecipeCat.keySet().size()==0) {
 			Property prop = new Property("custom","",Property.Type.STRING);
 			prop.setComment("Example: minecraft:stained_glass#11->minecraft:dye#4; minecraft:wool->4*minecraft:string");
 			userRecipeCat.put("custom", prop);
 		}
-		for(Property p : userRecipeCat.values()){
+		for(Property p : userRecipeCat.values()) {
 			String[] recipes = p.getString().split(";");
-			for(String r : recipes){
+			for(String r : recipes) {
 				String recipe = r.trim();
 				if(recipe.isEmpty()) continue;
-				if(recipe.contains("->") == false){
+				if(recipe.contains("->") == false) {
 					throw new IllegalArgumentException ("Malformed hammer recipe expression '"+recipe+"'. Should be in format 'modid:itemname->modid:itemname'");
 				}
 				userCrusherRecipes.add(recipe);
@@ -186,8 +190,8 @@ public class BaseMetals
 
 		Path ALTPath = Paths.get(event.getSuggestedConfigurationFile().getParent(),"additional-loot-tables");
 		Path myLootFolder = ALTPath.resolve(MODID);
-		if(Files.notExists(myLootFolder)){
-			try{
+		if(Files.notExists(myLootFolder)) {
+			try {
 				Files.createDirectories(myLootFolder.resolve("chests"));
 				Files.write(myLootFolder.resolve("chests").resolve("abandoned_mineshaft.json"),
 						Arrays.asList(         AdditionalLootTables.abandoned_mineshaft));
@@ -209,24 +213,23 @@ public class BaseMetals
 						Arrays.asList(         AdditionalLootTables.stronghold_crossing));
 				Files.write(myLootFolder.resolve("chests").resolve("village_blacksmith.json"),
 						Arrays.asList(         AdditionalLootTables.village_blacksmith));
-			} catch(IOException ex){
+			} catch(IOException ex) {
 				FMLLog.log(Level.ERROR,ex,"%s: Failed to extract additional loot tables",MODID);
 			}
 		}
 
-		if(event.getSide() == Side.CLIENT){
+		if(event.getSide() == Side.CLIENT) {
 			clientPreInit(event);
 		}
-		if(event.getSide() == Side.SERVER){
+		if(event.getSide() == Side.SERVER) {
 			serverPreInit(event);
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	private void clientPreInit(FMLPreInitializationEvent event) {
 		// client-only code
 		cyano.basemetals.init.Fluids.bakeModels(MODID);
-
 	}
 
 	@SideOnly(Side.SERVER)
@@ -234,6 +237,10 @@ public class BaseMetals
 		// server-only code
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 
@@ -263,11 +270,14 @@ public class BaseMetals
 	private void serverInit(FMLInitializationEvent event) {
 		// server-only code
 	}
-	
+
+	/**
+	 * 
+	 * @param event
+	 */
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		cyano.basemetals.init.WorldGen.init();
-
 
 		// parse user crusher recipes
 		for(String recipe : userCrusherRecipes) {
@@ -334,7 +344,7 @@ public class BaseMetals
 		if(event.getSide() == Side.SERVER) {
 			serverPostInit(event);
 		}
-		
+
 		CrusherRecipeRegistry.getInstance().clearCache();
 	}
 

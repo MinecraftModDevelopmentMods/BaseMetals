@@ -15,12 +15,20 @@ import org.apache.logging.log4j.Level;
 
 import java.util.*;
 
+/**
+ * 
+ * @author DrCyano
+ *
+ */
 public abstract class VillagerTrades {
 
 	public static final int TRADES_PER_LEVEL = 4;
 
 	private static boolean initDone = false;
 
+	/**
+	 * 
+	 */
 	public static void init() {
 		if(initDone) return;
 
@@ -178,6 +186,7 @@ public abstract class VillagerTrades {
 	private static int tradeLevel(float value) {
 		return Math.max(1, Math.min(4, (int)(value * 0.1F)));
 	}
+
 	private static int fluctuation(int baseValue) {
 		if(baseValue <= 1) return 0;
 		return Math.max(2, baseValue / 4);

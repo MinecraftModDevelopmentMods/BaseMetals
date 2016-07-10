@@ -1,7 +1,11 @@
 package cyano.basemetals.data;
 
+/**
+ * Loot Tables
+ * @author DrCyano
+ *
+ */
 public abstract class AdditionalLootTables {
-
 
 	public static final String abandoned_mineshaft = "{\n" +
 			"    \"pools\": [\n" +

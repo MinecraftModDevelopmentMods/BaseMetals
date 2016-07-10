@@ -18,8 +18,13 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 
+ * @author DrCyano
+ *
+ */
 public abstract class Recipes {
-	
+
 	private static boolean initDone = false;
 	public static void init() {
 		if(initDone) return;

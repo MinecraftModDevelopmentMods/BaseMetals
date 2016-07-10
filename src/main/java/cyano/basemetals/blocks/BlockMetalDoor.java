@@ -20,10 +20,17 @@ import java.util.Random;
 
 /**
  * Door Block
+ * @author DrCyano
+ *
  */
 public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMetalObject {
 
 	final MetalMaterial metal;
+
+	/**
+	 * 
+	 * @param metal
+	 */
 	public BlockMetalDoor(MetalMaterial metal) {
 		super((metal.getToolHarvestLevel() > 0) ? Material.IRON : Material.ROCK);
 		this.setSoundType(SoundType.METAL);

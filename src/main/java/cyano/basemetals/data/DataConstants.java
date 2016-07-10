@@ -1,5 +1,10 @@
 package cyano.basemetals.data;
 
+/**
+ * 
+ * @author DrCyano
+ *
+ */
 public abstract class DataConstants {
 
 	public static final String defaultOreSpawnJSON = "{"

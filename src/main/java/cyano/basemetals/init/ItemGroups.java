@@ -21,10 +21,14 @@ public class ItemGroups {
 //	private static Item toolItem;
 
 	private static boolean initDone = false;
-	public static void init(){
+
+	/**
+	 * 
+	 */
+	public static void init() {
 		if(initDone) return;
 
-		// place holders
+		// placeholders
 		blockItem = Items.copper_crackhammer;
 //		itemItem = Items.copper_crackhammer;
 //		toolItem = Items.copper_crackhammer;

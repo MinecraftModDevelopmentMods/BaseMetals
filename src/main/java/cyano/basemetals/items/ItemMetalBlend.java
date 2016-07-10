@@ -12,12 +12,18 @@ import cyano.basemetals.registry.IOreDictionaryEntry;
 
 /**
  * Blends
+ * @author DrCyano
+ *
  */
 public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject {
 
 	protected final MetalMaterial metal;
 	private final String oreDict;
 
+	/**
+	 * 
+	 * @param metal
+	 */
 	public ItemMetalBlend(MetalMaterial metal) {
 		this.metal = metal;
 		this.setCreativeTab(CreativeTabs.MATERIALS);

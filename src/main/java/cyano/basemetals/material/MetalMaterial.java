@@ -5,6 +5,11 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 
 import java.util.Locale;
 
+/**
+ * 
+ * @author Jasmine Iwanek
+ *
+ */
 public class MetalMaterial {
 
 	/** hardness on a scale from 0 to 10 (or more), where 0 is non-solid and 
@@ -37,6 +42,8 @@ public class MetalMaterial {
 	final String titleName;
 
 	private final String enumName;
+
+	private int[] cache =  null;
 
 	/**
 	 * @param name String used to identify items and blocks using this material
@@ -122,7 +129,7 @@ public class MetalMaterial {
 	@Override
 	public boolean equals(Object o) {
 		if(o == this) return true;
-		if(o.hashCode() == this.hashCode() && o instanceof MetalMaterial){
+		if(o.hashCode() == this.hashCode() && o instanceof MetalMaterial) {
 			MetalMaterial other = (MetalMaterial)o;
 			return this.identifier.equals(other.identifier); 
 		}
@@ -223,7 +230,6 @@ public class MetalMaterial {
 		return (int)(2.0f * strength);
 	}
 
-	private int[] cache =  null;
 	/**
 	 * Gets the protection value for helmets, chestplates, leg armor, and boots 
 	 * made from this material

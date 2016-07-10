@@ -33,48 +33,7 @@ import java.util.*;
  */
 public abstract class Items {
 
-	private static Map<Item, String> itemRegistry = new HashMap<>();
-	private static Map<String, Item> allItems = new HashMap<>();
-	private static Map<MetalMaterial, List<Item>> itemsByMetal = new HashMap<>();
-
-	private static Map<BlockDoor,Item> doorMap = new HashMap<>();
-
-	private static Map<Class, Integer> classSortingValues = new HashMap<>();
-	private static Map<MetalMaterial, Integer> materialSortingValues = new HashMap<>();
-
-	/**
-	 * Gets an item by its name. The name is the name as it is registered in 
-	 * the GameRegistry, not its unlocalized name (the unlocalized name is the 
-	 * registered name plus the prefix "basemetals.")
-	 * @param name The name of the item in question
-	 * @return The item matching that name, or null if there isn't one
-	 */
-	public static Item getItemByName(String name) {
-		return allItems.get(name);
-	}
-
-	/**
-	 * This is the reverse of the getItemByName(...) method, returning the 
-	 * registered name of an item instance (Base Metals items only).
-	 * @param i The item in question
-	 * @return The name of the item, or null if the item is not a Base Metals 
-	 * item.
-	 */
-	public static String getNameOfItem(Item i) {
-		return itemRegistry.get(i);
-	}
-
-	/**
-	 * Gets a map of all items added, sorted by metal
-	 * @return An unmodifiable map of added items catagorized by metal material
-	 */
-	public static Map<MetalMaterial, List<Item>> getItemsByMetal() {
-		return Collections.unmodifiableMap(itemsByMetal);
-	}
-
-	//public static UniversalBucket universal_bucket; // now automatically added by Forge
 	// TODO: metal arrows or crossbow & bolts
-
 	public static Item adamantine_axe;
 	public static Item adamantine_boots;
 	public static Item adamantine_chestplate;
@@ -415,6 +374,49 @@ public abstract class Items {
 	public static Item zinc_rod;
 	public static Item zinc_gear;
 
+	private static boolean initDone = false;
+
+	private static Map<Item, String> itemRegistry = new HashMap<>();
+	private static Map<String, Item> allItems = new HashMap<>();
+	private static Map<MetalMaterial, List<Item>> itemsByMetal = new HashMap<>();
+
+	private static Map<BlockDoor,Item> doorMap = new HashMap<>();
+
+	private static Map<Class, Integer> classSortingValues = new HashMap<>();
+	private static Map<MetalMaterial, Integer> materialSortingValues = new HashMap<>();
+
+	/**
+	 * Gets an item by its name. The name is the name as it is registered in 
+	 * the GameRegistry, not its unlocalized name (the unlocalized name is the 
+	 * registered name plus the prefix "basemetals.")
+	 * @param name The name of the item in question
+	 * @return The item matching that name, or null if there isn't one
+	 */
+	public static Item getItemByName(String name) {
+		return allItems.get(name);
+	}
+
+	/**
+	 * This is the reverse of the getItemByName(...) method, returning the 
+	 * registered name of an item instance (Base Metals items only).
+	 * @param i The item in question
+	 * @return The name of the item, or null if the item is not a Base Metals 
+	 * item.
+	 */
+	public static String getNameOfItem(Item i) {
+		return itemRegistry.get(i);
+	}
+
+	/**
+	 * Gets a map of all items added, sorted by metal
+	 * @return An unmodifiable map of added items catagorized by metal material
+	 */
+	public static Map<MetalMaterial, List<Item>> getItemsByMetal() {
+		return Collections.unmodifiableMap(itemsByMetal);
+	}
+
+	//public static UniversalBucket universal_bucket; // now automatically added by Forge
+
 	/**
 	 * Gets the inventory item corresponding to a given door block
 	 * @param b The door block
@@ -424,7 +426,9 @@ public abstract class Items {
 		return doorMap.get(b);
 	}
 
-	private static boolean initDone = false;
+	/**
+	 * 
+	 */
 	public static void init() {
 		if(initDone) return;
 
@@ -826,8 +830,9 @@ public abstract class Items {
 	}
 
 	private static Item registerItem(Item item, String name, MetalMaterial metal, CreativeTabs tab) {
-		item.setRegistryName(BaseMetals.MODID, name);
-		item.setUnlocalizedName(BaseMetals.MODID+"."+name);
+		ResourceLocation location = new ResourceLocation(ModernMetals.MODID, name);
+		item.setRegistryName(location);
+		item.setUnlocalizedName(location.toString());
 		GameRegistry.register(item); 
 		itemRegistry.put(item, name);
 		if(tab != null) {
@@ -907,19 +912,20 @@ public abstract class Items {
 	}
 
 	private static Item create_door(MetalMaterial metal,BlockDoor door) {
+		ResourceLocation location = new ResourceLocation(BaseMetals.MODID, metal.getName()+"_"+"door");
 		Item item = new ItemMetalDoor(door, metal);
-		registerItem(item, metal.getName()+"_"+"door"+"_"+"item", metal, ItemGroups.tab_blocks);
-		item.setUnlocalizedName(BaseMetals.MODID+"."+metal.getName()+"_"+"door"); // Dirty Hack to set name right
+		registerItem(item, location.getResourcePath()+"_"+"item", metal, ItemGroups.tab_blocks);
+		item.setUnlocalizedName(location.toString()); // Hack to set name right
 		doorMap.put(door, item);
 		return item;
 	}
 
-    /**
-     * Uses reflection to expand the size of the combat damage and attack speed arrays to prevent initialization
-     * index-out-of-bounds errors
-     * @param itemClass The class to modify
-     */
-    private static void expandCombatArrays(Class itemClass) throws IllegalAccessException, NoSuchFieldException {
+	/**
+	 * Uses reflection to expand the size of the combat damage and attack speed arrays to prevent initialization
+	 * index-out-of-bounds errors
+	 * @param itemClass The class to modify
+	 */
+	private static void expandCombatArrays(Class itemClass) throws IllegalAccessException, NoSuchFieldException {
         // WARNING: this method contains black magic
         final int expandedSize = 256;
         Field[] fields = itemClass.getDeclaredFields();
@@ -940,6 +946,11 @@ public abstract class Items {
         }
     }
 
+	/**
+	 * 
+	 * @param a
+	 * @return
+	 */
 	public static int getSortingValue(ItemStack a) {
 		int classVal = 990000;
 		int metalVal = 9900;
@@ -956,13 +967,17 @@ public abstract class Items {
 		}
 		return classVal + metalVal + (a.getMetadata() % 100);
 	}
-	
+
+	/**
+	 * 
+	 * @param event
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerItemRenders(FMLInitializationEvent event) {
-		for(Item i : itemRegistry.keySet()){
+		for(Item i : itemRegistry.keySet()) {
 			Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 			.register(i, 0, 
-				new ModelResourceLocation(BaseMetals.MODID+":"+itemRegistry.get(i), "inventory"));
+				new ModelResourceLocation(new ResourceLocation(BaseMetals.MODID, itemRegistry.get(i)), "inventory"));
 		}
 	}
 }

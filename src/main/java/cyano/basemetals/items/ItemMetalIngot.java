@@ -12,11 +12,18 @@ import net.minecraft.world.World;
 
 /**
  * Ingots
+ * @author DrCyano
+ *
  */
 public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject {
 
 	protected final MetalMaterial metal;
 	private final String oreDict;
+
+	/**
+	 * 
+	 * @param metal
+	 */
 	public ItemMetalIngot(MetalMaterial metal) {
 		this.metal = metal;
 		this.setCreativeTab(CreativeTabs.MATERIALS);

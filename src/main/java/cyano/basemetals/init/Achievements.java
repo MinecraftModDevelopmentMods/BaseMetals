@@ -32,6 +32,10 @@ public abstract class Achievements {
 	public static Achievement juggernaut; // full adamantine armor
 
 	private static boolean initDone = false;
+
+	/**
+	 * 
+	 */
 	public static void init() {
 		if(initDone) return;
 
