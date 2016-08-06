@@ -68,6 +68,13 @@ processResources
     }
 }
 
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+}
+
+build.dependsOn deobfJar
+
 idea { 
 	module { 
 		inheritOutputDirs = true 
