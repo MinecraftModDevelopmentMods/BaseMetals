@@ -13,7 +13,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * This class handles all of the recipes for the crack hammer, collectively 
@@ -36,8 +35,8 @@ public class CrusherRecipeRegistry {
 
 	private final List<ICrusherRecipe> recipes = new ArrayList<>(); 
 
-	private final Map<ItemLookupReference,ICrusherRecipe> recipeByInputCache = new HashMap<>();
-	private final Map<ItemLookupReference,List<ICrusherRecipe>> recipeByOutputCache = new HashMap<>();
+	private final Map<ItemLookupReference, ICrusherRecipe> recipeByInputCache = new HashMap<>();
+	private final Map<ItemLookupReference, List<ICrusherRecipe>> recipeByOutputCache = new HashMap<>();
 	
 	private static final Lock initLock = new ReentrantLock();
 	private static CrusherRecipeRegistry instance = null;
@@ -70,7 +69,7 @@ public class CrusherRecipeRegistry {
 	 * @param output The item to create as the result of this crusher recipe.
 	 */
 	public static void addNewCrusherRecipe(final String oreDictionaryName, final ItemStack output) { // preferred method
-		getInstance().addRecipe(new OreDictionaryCrusherRecipe(oreDictionaryName,output));
+		getInstance().addRecipe(new OreDictionaryCrusherRecipe(oreDictionaryName, output));
 	}
 
 	/**
@@ -175,7 +174,8 @@ public class CrusherRecipeRegistry {
 		ItemLookupReference ref = new ItemLookupReference(output);
 		if(recipeByOutputCache.containsKey(ref)) {
 			List<ICrusherRecipe> recipeCache = recipeByOutputCache.get(ref);
-			if(recipeCache.isEmpty()) return null;
+			if(recipeCache.isEmpty())
+				return null;
 			return recipeCache;
 		} else {
 			// add recipe cache
@@ -186,7 +186,8 @@ public class CrusherRecipeRegistry {
 				}
 			}
 			recipeByOutputCache.put(ref, recipeCache);
-			if(recipeCache.isEmpty()) return null;
+			if(recipeCache.isEmpty())
+				return null;
 			return recipeCache;
 		}
 	}
@@ -203,7 +204,8 @@ public class CrusherRecipeRegistry {
 		ItemLookupReference ref = new ItemLookupReference(output);
 		if(recipeByOutputCache.containsKey(ref)) {
 			List<ICrusherRecipe> recipeCache = recipeByOutputCache.get(ref);
-			if(recipeCache.isEmpty()) return null;
+			if(recipeCache.isEmpty())
+				return null;
 			return recipeCache;
 		} else {
 			// add recipe cache
@@ -214,7 +216,8 @@ public class CrusherRecipeRegistry {
 				}
 			}
 			recipeByOutputCache.put(ref, recipeCache);
-			if(recipeCache.isEmpty()) return null;
+			if(recipeCache.isEmpty())
+				return null;
 			return recipeCache;
 		}
 	}

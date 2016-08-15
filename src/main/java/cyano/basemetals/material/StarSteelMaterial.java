@@ -7,7 +7,7 @@ public class StarSteelMaterial extends MetalMaterial {
 		super(name, hardness, strength, magic);
 	}
 
-	public float getBlastResistance(){
+	public float getBlastResistance() {
 		return 2000;
 	}
 }

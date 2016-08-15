@@ -3,7 +3,7 @@ package cyano.basemetals.nei;
 import codechicken.nei.api.IConfigureNEI;
 import cyano.basemetals.BaseMetals;
 
-public class NEIBaseMetalsConfig implements IConfigureNEI{
+public class NEIBaseMetalsConfig implements IConfigureNEI {
 
 	// see https://www.youtube.com/watch?v=8CtcExhsplg for a tutorial
 

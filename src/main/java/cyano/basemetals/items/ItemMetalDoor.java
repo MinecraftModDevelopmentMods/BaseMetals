@@ -11,15 +11,23 @@ import net.minecraft.block.BlockDoor;
 public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDictionaryEntry, IMetalObject {
 
 	private final MetalMaterial metal;
-	public ItemMetalDoor(BlockDoor block,MetalMaterial metal) {
+	private final String oreDict;
+
+	/**
+	 * 
+	 * @param metal
+	 */
+	public ItemMetalDoor(BlockDoor block, MetalMaterial metal) {
 		super(block);
 		this.metal = metal;
+		this.oreDict = "door" + metal.getCapitalizedName();
 	}
 
 	@Override
 	public String getOreDictionaryName() {
-		return "door"+metal.getCapitalizedName();
+		return oreDict;
 	}
+
 	@Override
 	public MetalMaterial getMetalMaterial() {
 		return metal;

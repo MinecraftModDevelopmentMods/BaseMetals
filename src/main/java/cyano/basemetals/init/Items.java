@@ -6,6 +6,7 @@ import cyano.basemetals.items.*;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
+
 import net.minecraft.block.BlockDoor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -381,9 +382,9 @@ public abstract class Items {
 	private static Map<String, Item> allItems = new HashMap<>();
 	private static Map<MetalMaterial, List<Item>> itemsByMetal = new HashMap<>();
 
-	private static Map<BlockDoor,Item> doorMap = new HashMap<>();
+	private static Map<BlockDoor, Item> doorMap = new HashMap<>();
 
-	private static Map<Class, Integer> classSortingValues = new HashMap<>();
+	private static Map<Class<?>, Integer> classSortingValues = new HashMap<>();
 	private static Map<MetalMaterial, Integer> materialSortingValues = new HashMap<>();
 
 	/**
@@ -431,13 +432,14 @@ public abstract class Items {
 	 * 
 	 */
 	public static void init() {
-		if(initDone) return;
+		if(initDone)
+			return;
 
 		cyano.basemetals.init.Blocks.init();
 
         try {
             expandCombatArrays(net.minecraft.item.ItemAxe.class);
-        }catch (IllegalAccessException | NoSuchFieldException ex){
+        } catch (IllegalAccessException | NoSuchFieldException ex) {
             FMLLog.severe("Error modifying item classes: %s", ex);
         }
 
@@ -793,9 +795,11 @@ public abstract class Items {
 		zinc_rod = create_rod(Materials.zinc);
 		zinc_gear = create_gear(Materials.zinc);
 
+		// TODO: Make this support multiple oredicts
 		for(Item i : itemRegistry.keySet()) {
 			allItems.put(itemRegistry.get(i), i);
-			if(i instanceof IOreDictionaryEntry) { OreDictionary.registerOre(((IOreDictionaryEntry)i).getOreDictionaryName(), i); }
+			if(i instanceof IOreDictionaryEntry)
+				OreDictionary.registerOre(((IOreDictionaryEntry)i).getOreDictionaryName(), i);
 		}
 
 		int ss = 0;
@@ -824,7 +828,7 @@ public abstract class Items {
 		metlist.addAll(Materials.getAllMetals());
 		metlist.sort((MetalMaterial a, MetalMaterial b)-> a.getName().compareToIgnoreCase(b.getName()));
 		for(int i = 0; i < metlist.size(); i++) {
-			materialSortingValues.put(metlist.get(i), i*100);
+			materialSortingValues.put(metlist.get(i), i * 100);
 		}
 
 		initDone = true;
@@ -834,88 +838,96 @@ public abstract class Items {
 		ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
 		item.setRegistryName(location);
 		item.setUnlocalizedName(location.toString());
-		GameRegistry.register(item); 
+		GameRegistry.register(item);
 		itemRegistry.put(item, name);
+
 		if(tab != null) {
 			item.setCreativeTab(tab);
 		}
+
 		if(metal != null) {
 			itemsByMetal.computeIfAbsent(metal, (MetalMaterial g)->new ArrayList<>());
 			itemsByMetal.get(metal).add(item);
 		}
+
 		return item;
 	}
 
 	private static Item create_ingot(MetalMaterial metal) {
-		return registerItem(new ItemMetalIngot(metal), metal.getName()+"_"+"ingot", metal, ItemGroups.tab_items);
+		Item i = registerItem(new ItemMetalIngot(metal), metal.getName() + "_ingot", metal, ItemGroups.tab_items);
+		return i;
 	}
 
 	private static Item create_nugget(MetalMaterial metal) {
-		return registerItem(new ItemMetalNugget(metal), metal.getName()+"_"+"nugget", metal, ItemGroups.tab_items);
+		Item i = registerItem(new ItemMetalNugget(metal), metal.getName() + "_nugget", metal, ItemGroups.tab_items);
+		return i;
 	}
 
 	private static Item create_powder(MetalMaterial metal) {
-		return registerItem(new ItemMetalPowder(metal), metal.getName()+"_"+"powder", metal, ItemGroups.tab_items);
+		Item i = registerItem(new ItemMetalPowder(metal), metal.getName() + "_powder", metal, ItemGroups.tab_items);
+		return i;
 	}
 
 	private static Item create_blend(MetalMaterial metal) {
-		return registerItem(new ItemMetalBlend(metal), metal.getName()+"_"+"blend", metal, ItemGroups.tab_items);
+		Item i = registerItem(new ItemMetalBlend(metal), metal.getName() + "_blend", metal, ItemGroups.tab_items);
+		return i;
 	}
 
 	private static Item create_rod(MetalMaterial metal) {
-		return registerItem(new GenericMetalItem(metal), metal.getName()+"_"+"rod", metal, ItemGroups.tab_items);
+		Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_rod", metal, ItemGroups.tab_items);
+		return i;
 	}
 
 	private static Item create_gear(MetalMaterial metal) {
-		Item i = registerItem(new GenericMetalItem(metal), metal.getName()+"_"+"gear", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("gear"+metal.getCapitalizedName(), i);
+		Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_gear", metal, ItemGroups.tab_items);
+		OreDictionary.registerOre("gear" + metal.getCapitalizedName(), i);
 		return i;
 	}
 
 	private static Item create_axe(MetalMaterial metal) {
-		return registerItem(new ItemMetalAxe(metal), metal.getName()+"_"+"axe", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalAxe(metal), metal.getName() + "_axe", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_crackhammer(MetalMaterial metal) {
-		return registerItem(new ItemMetalCrackHammer(metal), metal.getName()+"_"+"crackhammer", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalCrackHammer(metal), metal.getName() + "_crackhammer", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_hoe(MetalMaterial metal) {
-		return registerItem(new ItemMetalHoe(metal), metal.getName()+"_"+"hoe", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalHoe(metal), metal.getName() + "_hoe", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_pickaxe(MetalMaterial metal) {
-		return registerItem(new ItemMetalPickaxe(metal), metal.getName()+"_"+"pickaxe", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalPickaxe(metal), metal.getName() + "_pickaxe", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_shovel(MetalMaterial metal) {
-		return registerItem(new ItemMetalShovel(metal), metal.getName()+"_"+"shovel", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalShovel(metal), metal.getName() + "_shovel", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_sword(MetalMaterial metal) {
-		return registerItem(new ItemMetalSword(metal), metal.getName()+"_"+"sword", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalSword(metal), metal.getName() + "_sword", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_helmet(MetalMaterial metal) {
-		return registerItem(ItemMetalArmor.createHelmet(metal), metal.getName()+"_"+"helmet", metal, ItemGroups.tab_tools);
+		return registerItem(ItemMetalArmor.createHelmet(metal), metal.getName() + "_helmet", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_chestplate(MetalMaterial metal) {
-		return registerItem(ItemMetalArmor.createChestplate(metal), metal.getName()+"_"+"chestplate", metal, ItemGroups.tab_tools);
+		return registerItem(ItemMetalArmor.createChestplate(metal), metal.getName() + "_chestplate", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_leggings(MetalMaterial metal) {
-		return registerItem(ItemMetalArmor.createLeggings(metal), metal.getName()+"_"+"leggings", metal, ItemGroups.tab_tools);
+		return registerItem(ItemMetalArmor.createLeggings(metal), metal.getName() + "_leggings", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_boots(MetalMaterial metal) {
-		return registerItem(ItemMetalArmor.createBoots(metal), metal.getName()+"_"+"boots", metal, ItemGroups.tab_tools);
+		return registerItem(ItemMetalArmor.createBoots(metal), metal.getName() + "_boots", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item create_door(MetalMaterial metal,BlockDoor door) {
-		ResourceLocation location = new ResourceLocation(BaseMetals.MODID, metal.getName()+"_"+"door");
+		ResourceLocation location = new ResourceLocation(BaseMetals.MODID, metal.getName() + "_door");
 		Item item = new ItemMetalDoor(door, metal);
-		registerItem(item, location.getResourcePath()+"_"+"item", metal, ItemGroups.tab_blocks);
+		registerItem(item, location.getResourcePath() + "_item", metal, ItemGroups.tab_blocks);
 		item.setUnlocalizedName(location.toString()); // Hack to set name right
 		doorMap.put(door, item);
 		return item;
@@ -926,11 +938,11 @@ public abstract class Items {
 	 * index-out-of-bounds errors
 	 * @param itemClass The class to modify
 	 */
-	private static void expandCombatArrays(Class itemClass) throws IllegalAccessException, NoSuchFieldException {
+	private static void expandCombatArrays(Class<?> itemClass) throws IllegalAccessException, NoSuchFieldException {
         // WARNING: this method contains black magic
         final int expandedSize = 256;
         Field[] fields = itemClass.getDeclaredFields();
-        for(Field f : fields){
+        for(Field f : fields) {
             if(Modifier.isStatic(f.getModifiers())
                     && f.getType().isArray()
                     && f.getType().getComponentType().equals(float.class)) {
@@ -957,12 +969,12 @@ public abstract class Items {
 		int metalVal = 9900;
 		if(a.getItem() instanceof ItemBlock && ((ItemBlock)a.getItem()).getBlock() instanceof IMetalObject) {
 			classVal = classSortingValues.computeIfAbsent(((ItemBlock)a.getItem()).getBlock().getClass(),
-					(Class c)->990000);
+					(Class<?> c)->990000);
 			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject)((ItemBlock)a.getItem()).getBlock()).getMetalMaterial(),
 					(MetalMaterial m)->9900);
 		} else if(a.getItem() instanceof IMetalObject) {
 			classVal = classSortingValues.computeIfAbsent(a.getItem().getClass(),
-					(Class c)->990000);
+					(Class<?> c)->990000);
 			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject)a.getItem()).getMetalMaterial(),
 					(MetalMaterial m)->9900);
 		}

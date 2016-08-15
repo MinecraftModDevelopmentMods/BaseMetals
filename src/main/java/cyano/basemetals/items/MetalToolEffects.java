@@ -25,7 +25,7 @@ public abstract class MetalToolEffects {
     			target.attackEntityFrom(extraDamage, 3f);
     		}
     	} else if(metal.equals(Materials.adamantine)) {
-    		if(target.getMaxHealth() > 20f){
+    		if(target.getMaxHealth() > 20f) {
     			DamageSource extraDamage = DamageSource.generic; 
     			target.attackEntityFrom(extraDamage, 4f);
     		}
@@ -33,8 +33,8 @@ public abstract class MetalToolEffects {
     		if(target.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD) {
 				final ResourceLocation witherKey = new ResourceLocation("wither");
 				final ResourceLocation blindKey = new ResourceLocation("wither");
-				final PotionEffect wither = new PotionEffect(Potion.REGISTRY.getObject(witherKey),60,3);
-				final PotionEffect blind = new PotionEffect(Potion.REGISTRY.getObject(blindKey),60,1);
+				final PotionEffect wither = new PotionEffect(Potion.REGISTRY.getObject(witherKey), 60, 3);
+				final PotionEffect blind = new PotionEffect(Potion.REGISTRY.getObject(blindKey), 60, 1);
     			target.addPotionEffect(wither);
     			target.addPotionEffect(blind);
     		}
@@ -50,7 +50,7 @@ public abstract class MetalToolEffects {
 		// do nothing for now. This would be where achievements or automatic enchantments could appear
 	}
 
-	public static void addToolSpecialPropertiesToolTip(MetalMaterial metal, java.util.List tooltipList) {
+	public static void addToolSpecialPropertiesToolTip(MetalMaterial metal, java.util.List<String> tooltipList) {
 		if(metal == Materials.adamantine) {
 			tooltipList.add(I18n.translateToLocal("tooltip.adamantine.tool").replace("%x", String.valueOf(4)));
 		} else if(metal == Materials.aquarium) {
@@ -64,7 +64,7 @@ public abstract class MetalToolEffects {
 		}
 	}
 
-	public static void addArmorSpecialPropertiesToolTip(MetalMaterial metal, java.util.List tooltipList) {
+	public static void addArmorSpecialPropertiesToolTip(MetalMaterial metal, java.util.List<String> tooltipList) {
 		if(metal == Materials.adamantine) {
 			tooltipList.add(I18n.translateToLocal("tooltip.adamantine.armor").replace("%x", String.valueOf(4)));
 		} else if(metal == Materials.aquarium) {

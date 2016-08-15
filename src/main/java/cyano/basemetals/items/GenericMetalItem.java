@@ -6,16 +6,23 @@ import net.minecraft.item.Item;
 
 /**
  * version of Item that stores a metal material
+ * @author DrCyano
+ *
  */
 public class GenericMetalItem extends Item  implements IMetalObject {
 
 	private final MetalMaterial metal;
 
-	public GenericMetalItem(MetalMaterial m){
-		this.metal = m;
+	/**
+	 * 
+	 * @param metal
+	 */
+	public GenericMetalItem(MetalMaterial metal) {
+		this.metal = metal;
 	}
 
-	@Override public MetalMaterial getMetalMaterial(){
+	@Override
+	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}
 }

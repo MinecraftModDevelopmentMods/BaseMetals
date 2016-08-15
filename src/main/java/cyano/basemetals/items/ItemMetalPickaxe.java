@@ -19,14 +19,16 @@ import java.util.Set;
 
 /**
  * Pickaxes
+ * @author DrCyano
+ *
  */
-public class ItemMetalPickaxe extends ItemPickaxe  implements IMetalObject {
+public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 
-	protected final MetalMaterial metal;
-	protected final Set<String> toolTypes;
-	protected final String repairOreDictName;
-	protected final boolean regenerates;
-	protected final long regenInterval = 200; 
+	private final MetalMaterial metal;
+	private final Set<String> toolTypes;
+	private final String repairOreDictName;
+	private final boolean regenerates;
+	private final long regenInterval = 200; 
 
 	public ItemMetalPickaxe(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));
@@ -35,12 +37,8 @@ public class ItemMetalPickaxe extends ItemPickaxe  implements IMetalObject {
 		this.efficiencyOnProperMaterial = metal.getToolEfficiency();
 		this.toolTypes = new HashSet<>();
 		toolTypes.add("pickaxe");
-		repairOreDictName = "ingot"+metal.getCapitalizedName();
-		if(metal.equals(Materials.starsteel)) {
-			regenerates = true;
-		} else {
-			regenerates = false;
-		}
+		repairOreDictName = "ingot" + metal.getCapitalizedName();
+		regenerates = metal.equals(Materials.starsteel);
 	}
 
 	public ToolMaterial getToolMaterial() {
@@ -60,7 +58,8 @@ public class ItemMetalPickaxe extends ItemPickaxe  implements IMetalObject {
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
 		for(ItemStack i : acceptableItems ) {
-			if(ItemStack.areItemsEqual(i, repairMaterial)) return true;
+			if(ItemStack.areItemsEqual(i, repairMaterial))
+				return true;
 		}
 		return false;
 	}
@@ -68,21 +67,8 @@ public class ItemMetalPickaxe extends ItemPickaxe  implements IMetalObject {
 	@Override
 	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		super.hitEntity(item, target, attacker);
-		MetalToolEffects.extraEffectsOnAttack(metal,item, target, attacker);
+		MetalToolEffects.extraEffectsOnAttack(metal, item, target, attacker);
 		return true;
-	}
-
-	@Override
-	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
-		super.onCreated(item, world, crafter);
-		MetalToolEffects.extraEffectsOnCrafting(metal,item, world, crafter);
-	}
-
-	@Override
-	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if(regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % regenInterval == 0) {
-			item.setItemDamage(item.getItemDamage() - 1);
-		}
 	}
 
 	@Override
@@ -93,14 +79,27 @@ public class ItemMetalPickaxe extends ItemPickaxe  implements IMetalObject {
 		return super.canHarvestBlock(target);
 	}
 
+	@Override
+	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
+		super.onCreated(item, world, crafter);
+		MetalToolEffects.extraEffectsOnCrafting(metal, item, world, crafter);
+	}
+
+	@Override
+	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
+		if(regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % regenInterval == 0) {
+			item.setItemDamage(item.getItemDamage() - 1);
+		}
+	}
+
 	public String getMaterialName() {
 		return metal.getName();
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b) {
-		super.addInformation(stack,player,list,b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(metal,list);
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
+		super.addInformation(stack, player, list, b);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(metal, list);
 	}
 
 	@Override

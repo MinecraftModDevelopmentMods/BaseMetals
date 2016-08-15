@@ -5,6 +5,7 @@ import cyano.basemetals.init.Achievements;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +29,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Armor
+ * @author DrCyano
+ *
  */
 public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMetalObject {
 
@@ -40,17 +43,16 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
     private static final ResourceLocation fatiguePotionKey = new ResourceLocation("mining_fatigue");
     private static final ResourceLocation fireproofPotionKey = new ResourceLocation("fire_resistance");
 
-
-    protected final String customTexture;
-	protected final MetalMaterial metal;
-	protected final String repairOreDictName;
+    private final String customTexture;
+	private final MetalMaterial metal;
+	private final String repairOreDictName;
 
 	protected ItemMetalArmor(MetalMaterial metal, ArmorMaterial armorMat, int renderIndex,
-                             EntityEquipmentSlot slot) {
+							 EntityEquipmentSlot slot) {
 		super(armorMat, renderIndex, slot);
 		this.metal = metal;
-		this.repairOreDictName = "ingot"+metal.getCapitalizedName();
-		this.customTexture = BaseMetals.MODID+":textures/models/armor/"+metal.getName()+"_layer_"+(slot == EntityEquipmentSlot.LEGS ? 2 : 1)+".png";
+		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
+		this.customTexture = BaseMetals.MODID + ":textures/models/armor/" + metal.getName() + "_layer_" + (slot == EntityEquipmentSlot.LEGS ? 2 : 1) + ".png";
 	}
 
 	private static final int UPDATE_INTERVAL = 11;
@@ -60,41 +62,44 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 
 	@Override
 	public void onArmorTick(World w, EntityPlayer player, ItemStack armor) {
-		if(playerUpdateTimestampMap.containsKey(player) == false) {
+		if(!(playerUpdateTimestampMap.containsKey(player))) {
 			playerUpdateTimestampMap.put(player, new AtomicLong(0));
 			playerUpdateCountMap.put(player, new AtomicInteger(0));
 			return;
 		}
 		if(!w.isRemote && w.getTotalWorldTime() > playerUpdateTimestampMap.get(player).get()) {
-	//		FMLLog.info("onArmorTick update triggered at time="+w.getTotalWorldTime()+" (update target was "+playerUpdateTimestampMap.get(player).get()+") for player "+player.getName()+" by item "+armor); // debug code
+	//		FMLLog.info("onArmorTick update triggered at time=" + w.getTotalWorldTime() + " (update target was " + playerUpdateTimestampMap.get(player).get() + ") for player " + player.getName() + " by item " + armor); // debug code
 			playerUpdateTimestampMap.get(player).set(w.getTotalWorldTime() + UPDATE_INTERVAL);
 			int updateCount = playerUpdateCountMap.get(player).getAndIncrement();
-			for(int i = 0; i < 4; i++){
+			for(int i = 0; i < 4; i++) {
 				if(player.inventory.armorInventory[i] != null && player.inventory.armorInventory[i].getItem() instanceof ItemMetalArmor) {
-					doArmorUpdate(w,player,player.inventory.armorInventory[i],updateCount);
+					doArmorUpdate(w, player,player.inventory.armorInventory[i], updateCount);
 				}
 			}
 		}
 	}
 
-	private static final Map<EntityPlayer,AtomicInteger> starsteelUpdateCache = new HashMap<>();
-	private static final Map<EntityPlayer,AtomicInteger> adamantineUpdateCache = new HashMap<>();
-	private static final Map<EntityPlayer,AtomicInteger> leadUpdateCache = new HashMap<>();
+	private static final Map<EntityPlayer, AtomicInteger> starsteelUpdateCache = new HashMap<>();
+	private static final Map<EntityPlayer, AtomicInteger> adamantineUpdateCache = new HashMap<>();
+	private static final Map<EntityPlayer, AtomicInteger> leadUpdateCache = new HashMap<>();
 
 	protected void doArmorUpdate(final World w, final EntityPlayer player, final ItemStack armor,
 			int i) {
 		// some sanity checks
-		if(armor == null) return;
-		if(armor.getItem() == null) return;
-		if(player == null) return;
-	//	FMLLog.info("doArmorUpdate "+i+" for "+player.getName()+" on item "+armor); // debug code
+		if(armor == null)
+			return;
+		if(armor.getItem() == null)
+			return;
+		if(player == null)
+			return;
+	//	FMLLog.info("doArmorUpdate " + i + " for " + player.getName() + " on item " + armor); // debug code
 		Item armorItem = armor.getItem();
-		if(i % 2 == 0){
+		if(i % 2 == 0) {
 			// count armor pieces
 			if(((ItemMetalArmor)armorItem).metal.equals(Materials.starsteel)) {
 				starsteel: {
 					// used to count up the starsteel armor items
-					if(starsteelUpdateCache.containsKey(player) == false){
+					if(!(starsteelUpdateCache.containsKey(player))) {
 						starsteelUpdateCache.put(player, new AtomicInteger(0));
 					}
 					starsteelUpdateCache.get(player).incrementAndGet();
@@ -105,7 +110,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			if(((ItemMetalArmor)armorItem).metal.equals(Materials.lead)) {
 				lead: {
 					// used to count up the starsteel armor items
-					if(leadUpdateCache.containsKey(player) == false){
+					if(!(leadUpdateCache.containsKey(player))) {
 						leadUpdateCache.put(player, new AtomicInteger(0));
 					}
 					leadUpdateCache.get(player).incrementAndGet();
@@ -115,7 +120,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			if(((ItemMetalArmor)armorItem).metal.equals(Materials.adamantine)) {
 				adamantine: {
 					// used to count up the adamantine armor items
-					if(adamantineUpdateCache.containsKey(player) == false){
+					if(!(adamantineUpdateCache.containsKey(player))) {
 						adamantineUpdateCache.put(player, new AtomicInteger(0));
 					}
 					adamantineUpdateCache.get(player).incrementAndGet();
@@ -125,9 +130,10 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		} else {
 			// apply potion effects. Note that "Level I" is actually effect level 0 in the effect constructor 
 			starsteel: {
-				if(starsteelUpdateCache.containsKey(player) == false) break starsteel;
+				if(!(starsteelUpdateCache.containsKey(player) == false)) break starsteel;
 				int num = starsteelUpdateCache.get(player).getAndSet(0);
-				if(num == 0) break starsteel;
+				if(num == 0)
+					break starsteel;
 				final PotionEffect jumpBoost = new PotionEffect(Potion.REGISTRY.getObject(jumpPotionKey), EFFECT_DURATION, num-1, false, false);
 				player.addPotionEffect(jumpBoost);
 				if(num > 1) {
@@ -139,7 +145,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			lead: {
 				if(leadUpdateCache.containsKey(player) == false) break lead;
 				int level = leadUpdateCache.get(player).getAndSet(0) / 2;
-				if(level == 0) break lead;
+				if(level == 0)
+					break lead;
 				if(level > 0) {
 					final PotionEffect speedLoss = new PotionEffect(Potion.REGISTRY.getObject(slowPotionKey), EFFECT_DURATION, level-1, false, false);
 					player.addPotionEffect(speedLoss);
@@ -150,7 +157,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 				if(adamantineUpdateCache.containsKey(player) == false) break adamantine;
 				int num = adamantineUpdateCache.get(player).getAndSet(0);
 				int level = num / 2;
-				if(level == 0) break adamantine;
+				if(level == 0)
+					break adamantine;
 				if(level > 0) {
 					final PotionEffect protection = new PotionEffect(Potion.REGISTRY.getObject(protectionPotionKey), EFFECT_DURATION, level-1, false, false);
 					player.addPotionEffect(protection);
@@ -200,7 +208,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 						&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == cyano.basemetals.init.Items.aquarium_leggings
 						&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == cyano.basemetals.init.Items.aquarium_boots) {
 					Block b1 = w.getBlockState(new BlockPos(player.posX,player.posY, player.posZ)).getBlock();
-					Block b2 = w.getBlockState(new BlockPos(player.posX,player.posY+1, player.posZ)).getBlock();
+					Block b2 = w.getBlockState(new BlockPos(player.posX,player.posY + 1, player.posZ)).getBlock();
 					if(b1 == Blocks.WATER && b2 == Blocks.WATER) {
 						final PotionEffect waterBreathing = new PotionEffect(Potion.REGISTRY.getObject(waterBreathingPotionKey), EFFECT_DURATION, 0, false, false);
 						player.addPotionEffect(waterBreathing);
@@ -218,7 +226,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		ArmorMaterial material = cyano.basemetals.init.Materials.getArmorMaterialFor(metal);
 		if(material == null) {
 			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for "+metal);
+			FMLLog.severe("Failed to load armor material enum for " + metal);
 		}
 		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.HEAD);
 	}
@@ -227,7 +235,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		ArmorMaterial material = cyano.basemetals.init.Materials.getArmorMaterialFor(metal);
 		if(material == null) {
 			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for "+metal);
+			FMLLog.severe("Failed to load armor material enum for " + metal);
 		}
 		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.CHEST);
 	}
@@ -236,7 +244,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		ArmorMaterial material = cyano.basemetals.init.Materials.getArmorMaterialFor(metal);
 		if(material == null) {
 			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for "+metal);
+			FMLLog.severe("Failed to load armor material enum for " + metal);
 		}
 		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.LEGS);
 	}
@@ -246,15 +254,20 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		ArmorMaterial material = cyano.basemetals.init.Materials.getArmorMaterialFor(metal);
 		if(material == null) {
 			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for "+metal);
+			FMLLog.severe("Failed to load armor material enum for " + metal);
 		}
 		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.FEET);
 	}
 
+	@SideOnly(Side.CLIENT)
+	@Override public String getArmorTexture(ItemStack stack, Entity e, EntityEquipmentSlot slot, String layer){
+		return customTexture;
+	}
+
 	@Override
-	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
-		super.onCreated(item, world, crafter);
-		extraEffectsOnCrafting(item, world, crafter);
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b){
+		super.addInformation(stack, player, list, b);
+		MetalToolEffects.addArmorSpecialPropertiesToolTip(metal, list);
 	}
 
 	public void extraEffectsOnCrafting(final ItemStack item, final World world, final EntityPlayer crafter) {
@@ -273,15 +286,10 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
-	@Override public String getArmorTexture(ItemStack stack, Entity e, EntityEquipmentSlot slot, String layer){
-		return customTexture;
-	}
-
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b){
-		super.addInformation(stack, player, list, b);
-		MetalToolEffects.addArmorSpecialPropertiesToolTip(metal, list);
+	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
+		super.onCreated(item, world, crafter);
+		extraEffectsOnCrafting(item, world, crafter);
 	}
 
 	@Override

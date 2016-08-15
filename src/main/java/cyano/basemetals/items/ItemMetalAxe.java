@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * Axes
+ * @author DrCyano
+ *
  */
 public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 
@@ -29,19 +31,10 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 		this.metal = metal;
 		this.setMaxDamage(metal.getToolDurability());
 		this.damageVsEntity = 4F + 2F * metal.getBaseAttackDamage();
-		this.attackSpeed = -3.5F + Math.min(0.5F,0.05F * metal.strength);
+		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * metal.strength);
 		this.efficiencyOnProperMaterial = metal.getToolEfficiency();
-		repairOreDictName = "ingot"+metal.getCapitalizedName();
-		if(metal.equals(Materials.starsteel)) {
-			regenerates = true;
-		} else {
-			regenerates = false;
-		}
-	}
-
-	@Override
-	public MetalMaterial getMetalMaterial() {
-		return metal;
+		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
+		this.regenerates = metal.equals(Materials.starsteel);
 	}
 
 	public ToolMaterial getToolMaterial() {
@@ -61,7 +54,8 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
 		for(ItemStack i : acceptableItems) {
-			if(ItemStack.areItemsEqual(i, repairMaterial)) return true;
+			if(ItemStack.areItemsEqual(i, repairMaterial))
+				return true;
 		}
 		return false;
 	}
@@ -69,14 +63,14 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 	@Override
 	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		super.hitEntity(item, target, attacker);
-		MetalToolEffects.extraEffectsOnAttack(metal,item, target, attacker);
+		MetalToolEffects.extraEffectsOnAttack(metal, item, target, attacker);
 		return true;
 	}
 
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		MetalToolEffects.extraEffectsOnCrafting(metal,item, world, crafter);
+		MetalToolEffects.extraEffectsOnCrafting(metal, item, world, crafter);
 	}
 
 	@Override
@@ -91,8 +85,13 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b){
-		super.addInformation(stack,player,list,b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(metal,list);
+	public MetalMaterial getMetalMaterial() {
+		return metal;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
+		super.addInformation(stack, player, list, b);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(metal, list);
 	}
 }

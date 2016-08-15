@@ -19,8 +19,10 @@ import java.util.List;
 
 /**
  * Swords
+ * @author DrCyano
+ *
  */
-public class ItemMetalSword extends ItemSword  implements IMetalObject {
+public class ItemMetalSword extends ItemSword implements IMetalObject {
 	protected final MetalMaterial metal;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
@@ -33,19 +35,15 @@ public class ItemMetalSword extends ItemSword  implements IMetalObject {
 		this.setMaxDamage(metal.getToolDurability());
 		// this.damageVsEntity = attackDamage + metal.getBaseAttackDamage(); // damageVsEntity  is private, sadly
 		this.attackDamage = 3F + metal.getBaseAttackDamage();
-		repairOreDictName = "ingot"+metal.getCapitalizedName();
-		if(metal.equals(Materials.starsteel)) {
-			regenerates = true;
-		} else {
-			regenerates = false;
-		}
+		repairOreDictName = "ingot" + metal.getCapitalizedName();
+		regenerates = metal.equals(Materials.starsteel);
 		this.setCreativeTab(CreativeTabs.COMBAT);
 	}
 
 	@Override
 	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		item.damageItem(1, attacker);
-		MetalToolEffects.extraEffectsOnAttack(metal,item, target, attacker);
+		MetalToolEffects.extraEffectsOnAttack(metal, item, target, attacker);
 		return true;
 	}
 
@@ -67,7 +65,8 @@ public class ItemMetalSword extends ItemSword  implements IMetalObject {
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
 		for(ItemStack i : acceptableItems ) {
-			if(ItemStack.areItemsEqual(i, repairMaterial)) return true;
+			if(ItemStack.areItemsEqual(i, repairMaterial))
+				return true;
 		}
 		return false;
 	}
@@ -75,12 +74,12 @@ public class ItemMetalSword extends ItemSword  implements IMetalObject {
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		MetalToolEffects.extraEffectsOnCrafting(metal,item, world, crafter);
+		MetalToolEffects.extraEffectsOnCrafting(metal, item, world, crafter);
 	}
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if(regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % regenInterval == 0){
+		if(regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % regenInterval == 0) {
 			item.setItemDamage(item.getItemDamage() - 1);
 		}
 	}
@@ -99,9 +98,9 @@ public class ItemMetalSword extends ItemSword  implements IMetalObject {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b){
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b){
 		super.addInformation(stack,player,list,b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(metal,list);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(metal, list);
 	}
 
 	@Override

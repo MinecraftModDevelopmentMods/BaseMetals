@@ -25,7 +25,7 @@ import java.util.Random;
  */
 public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMetalObject {
 
-	final MetalMaterial metal;
+	private final MetalMaterial metal;
 
 	/**
 	 * 

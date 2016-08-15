@@ -37,16 +37,17 @@ public abstract class Achievements {
 	 * 
 	 */
 	public static void init() {
-		if(initDone) return;
+		if(initDone)
+			return;
 
 		page = new AchievementPage(BaseMetals.NAME);
 		AchievementPage.registerAchievementPage(page);
 
 		this_is_new = makeAchievement("this_is_new", AchievementList.BUILD_FURNACE, 0, 0, Items.copper_ingot);
-		blocktastic = makeAchievement("blocktastic", this_is_new,2,0,Blocks.copper_block);
-		geologist = makeAchievement("geologist", this_is_new,4,2,Items.iron_crackhammer);
-		metallurgy = makeAchievement("metallurgy", geologist,6,2,Items.brass_blend);
-		brass_maker = makeAchievement("brass_maker", metallurgy,9,3,Items.brass_ingot);
+		blocktastic = makeAchievement("blocktastic", this_is_new, 2, 0, Blocks.copper_block);
+		geologist = makeAchievement("geologist", this_is_new, 4, 2, Items.iron_crackhammer);
+		metallurgy = makeAchievement("metallurgy", geologist, 6, 2, Items.brass_blend);
+		brass_maker = makeAchievement("brass_maker", metallurgy, 9, 3, Items.brass_ingot);
 		bronze_maker = makeAchievement("bronze_maker", metallurgy, 9, 4, Items.bronze_ingot);
 		cupronickel_maker = makeAchievement("cupronickel_maker", metallurgy, 9, 5, Items.cupronickel_ingot);
 		electrum_maker = makeAchievement("electrum_maker", metallurgy, 9, 6, Items.electrum_ingot);
@@ -75,8 +76,7 @@ public abstract class Achievements {
 	}
 
 	private static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, ItemStack icon) {
-		Achievement a = new Achievement(baseName, baseName, x, y, icon, requirement);
-		a.registerStat();
+		Achievement a = new Achievement(baseName, baseName, x, y, icon, requirement).registerStat();
 		page.getAchievements().add(a);
 		return a;
 	}

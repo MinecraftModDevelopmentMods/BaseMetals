@@ -12,15 +12,15 @@ import net.minecraft.util.text.translation.I18n;
 
 public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
-	private final ResourceLocation bgtex = new ResourceLocation(BaseMetals.MODID+":textures/gui/nei/nei_crusher.png");
+	private final ResourceLocation bgtex = new ResourceLocation(BaseMetals.MODID + ":textures/gui/nei/nei_crusher.png");
 	private final IDrawable background;
 	private final String id = BaseMetalsJEIPlugin.JEIUID;
 
 	private static final int inputSlot = 0;
 	private static final int outputSlot = 1;
 
-	public JEICrusherRecipeCategory(IGuiHelper guiHelper){
-		background = guiHelper.createDrawable(bgtex, 24,26, 128,32);
+	public JEICrusherRecipeCategory(IGuiHelper guiHelper) {
+		background = guiHelper.createDrawable(bgtex, 24, 26, 128, 32);
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	@Override
 	public String getTitle() {
-		String key = "nei."+BaseMetals.MODID+".recipehandler.crusher.name";
+		String key = "nei." + BaseMetals.MODID + ".recipehandler.crusher.name";
 		if(I18n.canTranslate(key)) {
 			return I18n.translateToLocal(key);
 		} else {
@@ -49,7 +49,7 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 		int x = 45, y = 7;
 		guiItemStacks.init(inputSlot, true, x, y);
-		guiItemStacks.init(outputSlot, false, x+58, y);
+		guiItemStacks.init(outputSlot, false, x + 58, y);
 
 		guiItemStacks.setFromRecipe(inputSlot, recipeWrapper.getInputs());
 		guiItemStacks.setFromRecipe(outputSlot, recipeWrapper.getOutputs());

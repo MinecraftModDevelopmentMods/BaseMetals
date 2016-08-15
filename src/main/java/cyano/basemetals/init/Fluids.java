@@ -4,7 +4,6 @@ import cyano.basemetals.BaseMetals;
 import cyano.basemetals.blocks.InteractiveFluidBlock;
 import cyano.basemetals.fluids.CustomFluid;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
@@ -12,7 +11,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
@@ -54,7 +52,8 @@ public abstract class Fluids {
 	 * 
 	 */
 	public static void init() {
-		if(initDone) return;
+		if(initDone)
+			return;
 
 		// fluids
 		fluidMercury = newFluid(BaseMetals.MODID, "mercury", 13594, 2000, 300, 0, 0xFFD8D8D8);
@@ -62,7 +61,7 @@ public abstract class Fluids {
 		// fluid blocks
 		fluidBlockMercury = registerFluidBlock(fluidMercury, new InteractiveFluidBlock(
 				fluidMercury, false, (World w, EntityLivingBase e)->{
-					if(w.rand.nextInt(32) == 0) e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30*20, 2));
+					if(w.rand.nextInt(32) == 0) e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
 				}), "liquid_mercury");
 
 		initDone = true;
@@ -79,16 +78,11 @@ public abstract class Fluids {
 			Item item = Item.getItemFromBlock(block);
 			final ModelResourceLocation fluidModelLocation = new ModelResourceLocation(
 					modID.toLowerCase() + ":" + fluidBlockNames.get(block), "fluid");
-            ModelBakery.registerItemVariants(item);
-			ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition()
-			{
-				public ModelResourceLocation getModelLocation(ItemStack stack)
-				{
-					return fluidModelLocation;
-				}
-			});
+			ModelBakery.registerItemVariants(item);
+			ModelLoader.setCustomMeshDefinition(item, stack -> fluidModelLocation);
 			ModelLoader.setCustomStateMapper(block, new StateMapperBase()
 			{
+				@Override
 				protected ModelResourceLocation getModelResourceLocation(IBlockState state)
 				{
 					return fluidModelLocation;
@@ -98,12 +92,12 @@ public abstract class Fluids {
 	}
 
 	private static Fluid newFluid(String modID, String name, int density, int viscosity, int temperature, int luminosity, int tintColor) {
-		Fluid fluid = new CustomFluid(name, new ResourceLocation(modID+":blocks/"+name+"_still"), new ResourceLocation(modID+":blocks/"+name+"_flow"), tintColor);
+		Fluid fluid = new CustomFluid(name, new ResourceLocation(modID + ":blocks/" + name + "_still"), new ResourceLocation(modID + ":blocks/" + name + "_flow"), tintColor);
 		fluid.setDensity(density);
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);
 		fluid.setLuminosity(luminosity);
-		fluid.setUnlocalizedName(modID+"."+name);
+		fluid.setUnlocalizedName(modID + "." + name);
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
 		return fluid;

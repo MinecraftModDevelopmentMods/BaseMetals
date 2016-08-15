@@ -60,9 +60,10 @@ public class MetalMaterial {
 	 * @param lootFrequency (unused in MC 1.9)
 	 */
 	@Deprecated
-	public MetalMaterial(String name, float hardness, float strength, float magic, int lootFrequency){
+	public MetalMaterial(String name, float hardness, float strength, float magic, int lootFrequency) {
 		this(name,hardness,strength,magic);
 	}
+
 	/**
 	 * @param name String used to identify items and blocks using this material
 	 * @param hardness hardness on a scale from 0 to 10 (or more), where 0 is non-solid and
@@ -86,6 +87,7 @@ public class MetalMaterial {
 		enumName = (BaseMetals.MODID+"_"+name).toUpperCase(Locale.ENGLISH);
 		isRare = false;
 	}
+	
 	/**
 	 * @param name String used to identify items and blocks using this material
 	 * @param hardness hardness on a scale from 0 to 10 (or more), where 0 is non-solid and
@@ -159,23 +161,23 @@ public class MetalMaterial {
 	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool equivalent)
 	 */
 	public int getRequiredHarvestLevel() {
-		return (int)clamp((0.9f*hardness / 3f),-1,3); 
+		return (int)clamp((0.9f*hardness / 3f), -1,3); 
 	}
 
 	static int clamp(int x, int min, int max) {
-		if(x < min)return min;
+		if(x < min) return min;
 		if(x > max) return max;
 		return x;
 	}
 
 	static float clamp(float x, float min, float max) {
-		if(x < min)return min;
+		if(x < min) return min;
 		if(x > max) return max;
 		return x;
 	}
 
 	static double clamp(double x, double min, double max) {
-		if(x < min)return min;
+		if(x < min) return min;
 		if(x > max) return max;
 		return x;
 	}
@@ -259,7 +261,7 @@ public class MetalMaterial {
 	 * Gets the base damage from attacks with tools made from this material
 	 * @return the base damage from attacks with tools made from this material
 	 */
-	public float getBaseAttackDamage(){
+	public float getBaseAttackDamage() {
 		return round(0.25f * hardness, 1);
 	}
 
@@ -270,6 +272,7 @@ public class MetalMaterial {
 		}
 		return (float)Math.round(number * x) / (float)x;
 	}
+
 	/**
 	 * Gets the enchantibility score for this material
 	 * @return the enchantibility score for this material

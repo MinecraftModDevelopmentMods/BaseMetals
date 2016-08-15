@@ -52,12 +52,12 @@ public class VillagerTradeHelper {
 	 */
 	public static void insertTrades(ResourceLocation profession, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
 		for(EntityVillager.ITradeList trade : trades) {
-			VillagerRegistry.instance().getRegistry().getValue(profession).getCareer(careerID-1).addTrade(tradeLevel, trade);
+			VillagerRegistry.instance().getRegistry().getValue(profession).getCareer(careerID - 1).addTrade(tradeLevel, trade);
 		}
 	}
 
 	public static void appendToMultidimensionalArray(Object append, Object array, int... indices) {
-		appendToMultidimensionalArray(Arrays.asList(append).toArray(),array,indices);
+		appendToMultidimensionalArray(Arrays.asList(append).toArray(), array, indices);
 	}
 
 	public static void appendToMultidimensionalArray(Object[] append, Object array, int... indices) {
@@ -81,28 +81,29 @@ public class VillagerTradeHelper {
 						pad = null;
 					}
 					Object newArray = expandArray(array,nextIndex+1,pad);
-					Array.set(prevArray,index,newArray);
+					Array.set(prevArray, index, newArray);
 					array = newArray;
 				}
 			}
 		}
 
 		// expand lowest level array to new size
-		Class aType = array.getClass().getComponentType();
+		Class<?> aType = array.getClass().getComponentType();
 		if(!aType.isAssignableFrom(append.getClass().getComponentType())) {
-			throw new IllegalArgumentException("Class type "+append.getClass().getComponentType().getCanonicalName()+" cannot be appended to "+aType.getCanonicalName()+" array");
+			throw new IllegalArgumentException("Class type " + append.getClass().getComponentType().getCanonicalName() + " cannot be appended to " + aType.getCanonicalName() + " array");
 		}
-		Object newArray = expandArray(array, Array.getLength(array)+append.length, null);
+		Object newArray = expandArray(array, Array.getLength(array) + append.length, null);
 		System.arraycopy(append, 0, newArray, Array.getLength(array), append.length);
 		Array.set(prevArray,indices[indices.length - 1], newArray);
 	}
 
 	public static Object expandArray(Object array, int newSize, Object fill) {
-		Object newArray = Array.newInstance(array.getClass().getComponentType(),newSize);
-		if(Array.getLength(array) == 0) return newArray;
+		Object newArray = Array.newInstance(array.getClass().getComponentType(), newSize);
+		if(Array.getLength(array) == 0)
+			return newArray;
 		System.arraycopy(array,0,newArray,0,Array.getLength(array));
 		for (int i = Array.getLength(array); i < newSize; i++) {
-			Array.set(newArray,i,fill);
+			Array.set(newArray, i, fill);
 		}
 		return newArray;
 	}
@@ -114,7 +115,7 @@ public class VillagerTradeHelper {
 		modField.setInt(v, v.getModifiers() & ~Modifier.FINAL);
 	}
 
-	public static Field getTradeArrayFromClass(Class c) {
+	public static Field getTradeArrayFromClass(Class<?> c) {
 		// search for 4D array of ITradeList objects
 		for(Field f : c.getDeclaredFields()) {
 			if(f.getType().isArray() // D1

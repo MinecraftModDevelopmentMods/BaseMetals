@@ -4,6 +4,7 @@ import cyano.basemetals.BaseMetals;
 import cyano.basemetals.blocks.*;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockOre;
@@ -159,7 +160,9 @@ public abstract class Blocks {
 
 	private static boolean initDone = false;
 
+//	private static Map<Block, String> blockRegistry = new HashMap<>();
 	private static final Map<String, Block> allBlocks = new HashMap<>();
+//	private static Map<MetalMaterial, List<Block>> blocksByMetal = new HashMap<>();
 
 	/**
 	 * Gets an block by its name. The name is the name as it is registered in 
@@ -176,7 +179,8 @@ public abstract class Blocks {
 	 * 
 	 */
 	public static void init() {
-		if(initDone) return;
+		if(initDone)
+			return;
 
 		cyano.basemetals.init.Materials.init();
 		cyano.basemetals.init.ItemGroups.init();
@@ -315,10 +319,13 @@ public abstract class Blocks {
 
 		human_detector = addBlock(new BlockHumanDetector(), "human_detector");
 
+		// TODO: Make this support multiple oredicts
 		// final block settings
 		for(Block b : allBlocks.values()) {
-			if(b instanceof IOreDictionaryEntry) { OreDictionary.registerOre(((IOreDictionaryEntry)b).getOreDictionaryName(), b); }
-			if(!(b instanceof BlockMetalDoor)) b.setCreativeTab(ItemGroups.tab_blocks);
+			if(b instanceof IOreDictionaryEntry)
+				OreDictionary.registerOre(((IOreDictionaryEntry)b).getOreDictionaryName(), b);
+			if(!(b instanceof BlockMetalDoor))
+				b.setCreativeTab(ItemGroups.tab_blocks);
 		}
 
 		initDone = true;
@@ -342,11 +349,11 @@ public abstract class Blocks {
 	}
 
 	private static Block createPlate(MetalMaterial metal) {
-		return addBlock(new BlockMetalPlate(metal), metal.getName()+"_plate");
+		return addBlock(new BlockMetalPlate(metal), metal.getName() + "_plate");
 	}
 
 	private static Block createBars(MetalMaterial metal) {
-		return addBlock(new BlockMetalBars(metal), metal.getName()+"_bars");
+		return addBlock(new BlockMetalBars(metal), metal.getName() + "_bars");
 	}
 
 	private static Block createBlock(MetalMaterial metal) {
@@ -354,19 +361,19 @@ public abstract class Blocks {
 	}
 
 	private static Block createBlock(MetalMaterial metal, boolean glow) {
-		return addBlock(new BlockMetalBlock(metal, glow), metal.getName()+"_block");
+		return addBlock(new BlockMetalBlock(metal, glow), metal.getName() + "_block");
 	}
 
 	private static Block createOre(MetalMaterial metal) {
-		return addBlock(new BlockMetalOre(metal), metal.getName()+"_ore");
+		return addBlock(new BlockMetalOre(metal), metal.getName() + "_ore");
 	}
 
 	private static BlockDoor createDoor(MetalMaterial metal) {
-		return (BlockDoor)addBlock(new BlockMetalDoor(metal), metal.getName()+"_door");
+		return (BlockDoor)addBlock(new BlockMetalDoor(metal), metal.getName() + "_door");
 	}
 
 	private static Block createTrapDoor(MetalMaterial metal) {
-		return addBlock(new BlockMetalTrapDoor(metal), metal.getName()+"_trapdoor");
+		return addBlock(new BlockMetalTrapDoor(metal), metal.getName() + "_trapdoor");
 	}
 
 	/**
@@ -376,9 +383,10 @@ public abstract class Blocks {
 	@SideOnly(Side.CLIENT)
 	public static void registerItemRenders(FMLInitializationEvent event) {
 		for(String name : allBlocks.keySet()) {
-			if(allBlocks.get(name) instanceof BlockDoor) continue; // do not add door blocks
+			if(allBlocks.get(name) instanceof BlockDoor)
+				continue; // do not add door blocks
 			Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-			.register(net.minecraft.item.Item.getItemFromBlock(allBlocks.get(name)), 0, 
+			.register(net.minecraft.item.Item.getItemFromBlock(allBlocks.get(name)), 0,
 				new ModelResourceLocation(new ResourceLocation(BaseMetals.MODID, name), "inventory"));
 		}
 	}

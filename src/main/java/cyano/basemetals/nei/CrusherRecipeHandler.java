@@ -31,30 +31,32 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public String getGuiTexture() {
-		return BaseMetals.MODID+":textures/gui/nei/nei_crusher.png";
+		return BaseMetals.MODID + ":textures/gui/nei/nei_crusher.png";
 	}
 
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
 		ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(ingredient);
-		if(recipe == null) return;
-		arecipes.add(new CrusherPair(ingredient.copy(),recipe.getOutput()));
+		if(recipe == null)
+			return;
+		arecipes.add(new CrusherPair(ingredient.copy(), recipe.getOutput()));
 	}
 
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
 		List<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance().getRecipesForOutputItem(result);
-		if(recipes == null) return; // no crusher recipes
+		if(recipes == null)
+			return; // no crusher recipes
 		for(ICrusherRecipe r : recipes){
-			for(ItemStack input : r.getValidInputs()){
-				arecipes.add(new CrusherPair(input.copy(),r.getOutput().copy()));
+			for(ItemStack input : r.getValidInputs()) {
+				arecipes.add(new CrusherPair(input.copy(), r.getOutput().copy()));
 			}
 		}
 	}
 
 	@Override
 	public void loadUsageRecipes(String inputId, Object... ingredients) {
-		if (inputId.equals("crusher") && getClass() == CrusherRecipeHandler.class) {// we don't want overstep subclasses
+		if (inputId.equals("crusher") && getClass() == CrusherRecipeHandler.class) { // we don't want overstep subclasses
 			loadCraftingRecipes("smelting");
 		} else {
 			super.loadUsageRecipes(inputId, ingredients);
@@ -63,14 +65,16 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
-		if (outputId.equals("crusher") && getClass() == CrusherRecipeHandler.class) {// we don't want overstep subclasses
+		if (outputId.equals("crusher") && getClass() == CrusherRecipeHandler.class) { // we don't want overstep subclasses
 			// add all crusher recipes
 			Collection<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance().getAllRecipes();
-			if(recipes == null) return;
+			if(recipes == null)
+				return;
 			for(ICrusherRecipe r : recipes) {
-				if(r == null) continue;
-				for(ItemStack input : r.getValidInputs()){
-					arecipes.add(new CrusherPair(input.copy(),r.getOutput().copy()));
+				if(r == null)
+					continue;
+				for(ItemStack input : r.getValidInputs()) {
+					arecipes.add(new CrusherPair(input.copy(), r.getOutput().copy()));
 				}
 			}
 		} else {
@@ -105,7 +109,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	public static class GuiCrusher extends GuiContainer {
 
-		ResourceLocation guiDisplayImage = new ResourceLocation(BaseMetals.MODID+":textures/gui/nei/nei_crusher.png");
+		ResourceLocation guiDisplayImage = new ResourceLocation(BaseMetals.MODID + ":textures/gui/nei/nei_crusher.png");
 		public GuiCrusher(Container container) {
 			super(container);
 		}
@@ -131,7 +135,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	public class CrusherPair extends CachedRecipe {
 
 		public CrusherPair(ItemStack ingred, ItemStack result) {
-			if(ingred == null || result == null){
+			if(ingred == null || result == null) {
 				FMLLog.warning("Added null item to NEI GUI: "+ingred+" -> "+result);
 				if(ingred == null) {
 					ingred = new ItemStack(Blocks.AIR);

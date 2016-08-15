@@ -19,8 +19,10 @@ import java.util.Set;
 
 /**
  * Hoes
+ * @author DrCyano
+ *
  */
-public class ItemMetalHoe extends ItemHoe  implements IMetalObject {
+public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 
 	protected final MetalMaterial metal;
 	protected final Set<String> toolTypes;
@@ -35,23 +37,15 @@ public class ItemMetalHoe extends ItemHoe  implements IMetalObject {
 		this.toolTypes = new HashSet<>();
 		toolTypes.add("hoe");
 		repairOreDictName = "ingot"+metal.getCapitalizedName();
-		if(metal.equals(Materials.starsteel)){
-			regenerates = true;
-		} else {
-			regenerates = false;
-		}
-	}
-
-	@Override
-	public MetalMaterial getMetalMaterial(){
-		return metal;
+		regenerates = metal.equals(Materials.starsteel);
 	}
 
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
 		for(ItemStack i : acceptableItems ) {
-			if(ItemStack.areItemsEqual(i, repairMaterial)) return true;
+			if(ItemStack.areItemsEqual(i, repairMaterial))
+				return true;
 		}
 		return false;
 	}
@@ -72,7 +66,7 @@ public class ItemMetalHoe extends ItemHoe  implements IMetalObject {
 	@Override
 	public float getStrVsBlock(final ItemStack tool, final IBlockState target) {
 		if(this.canHarvestBlock(target,tool)) {
-			return Math.max(1.0f,metal.getToolEfficiency());
+			return Math.max(1.0f, metal.getToolEfficiency());
 		} else {
 			return 1.0f;
 		}
@@ -81,21 +75,8 @@ public class ItemMetalHoe extends ItemHoe  implements IMetalObject {
 	@Override
 	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		super.hitEntity(item, target, attacker);
-		MetalToolEffects.extraEffectsOnAttack(metal,item, target, attacker);
+		MetalToolEffects.extraEffectsOnAttack(metal, item, target, attacker);
 		return true;
-	}
-
-	@Override
-	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
-		super.onCreated(item, world, crafter);
-		MetalToolEffects.extraEffectsOnCrafting(metal,item, world, crafter);
-	}
-
-	@Override
-	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if(regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % regenInterval == 0){
-			item.setItemDamage(item.getItemDamage() - 1);
-		}
 	}
 
 	@Override
@@ -104,6 +85,24 @@ public class ItemMetalHoe extends ItemHoe  implements IMetalObject {
 			return metal.getToolHarvestLevel() >= target.getBlock().getHarvestLevel(target);
 		}
 		return false;
+	}
+
+	@Override
+	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
+		super.onCreated(item, world, crafter);
+		MetalToolEffects.extraEffectsOnCrafting(metal, item, world, crafter);
+	}
+
+	@Override
+	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
+		if(regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % regenInterval == 0) {
+			item.setItemDamage(item.getItemDamage() - 1);
+		}
+	}
+
+	@Override
+	public MetalMaterial getMetalMaterial() {
+		return metal;
 	}
 
 	public String getMaterialName() {

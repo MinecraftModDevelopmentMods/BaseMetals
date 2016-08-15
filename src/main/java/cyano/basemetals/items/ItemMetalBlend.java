@@ -1,14 +1,15 @@
 package cyano.basemetals.items;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import cyano.basemetals.init.Achievements;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 /**
  * Blends
@@ -17,7 +18,7 @@ import cyano.basemetals.registry.IOreDictionaryEntry;
  */
 public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject {
 
-	protected final MetalMaterial metal;
+	private final MetalMaterial metal;
 	private final String oreDict;
 
 	/**
@@ -27,11 +28,7 @@ public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDicti
 	public ItemMetalBlend(MetalMaterial metal) {
 		this.metal = metal;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "dust"+metal.getCapitalizedName(); // same oreDict entry as powder
-	}
-
-	public String getOreDictionaryName() {
-		return oreDict;
+		this.oreDict = "dust" + metal.getCapitalizedName(); // same oreDict entry as powder
 	}
 
 	@Override
@@ -42,6 +39,11 @@ public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDicti
 				|| metal == Materials.electrum || metal == Materials.invar || metal == Materials.steel ) {
 			crafter.addStat(Achievements.metallurgy, 1);
 		}
+	}
+
+	@Override
+	public String getOreDictionaryName() {
+		return oreDict;
 	}
 
 	@Override

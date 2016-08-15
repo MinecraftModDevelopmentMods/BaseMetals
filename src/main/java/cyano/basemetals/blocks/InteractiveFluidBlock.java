@@ -40,7 +40,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	 * @param immersionEffect A function to define what happens to swimming entities. Can be null.
 	 */
 	public InteractiveFluidBlock(Fluid fluid,  java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect) {
-		this(fluid,false,immersionEffect);
+		this(fluid, false, immersionEffect);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	 * @param fluid The Fluid of this fluid block
 	 */
 	public InteractiveFluidBlock(Fluid fluid) {
-		this(fluid,false,null);
+		this(fluid, false, null);
 	}
 
 	@Override
@@ -70,7 +70,8 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	 */
 	public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face)
 	{
-		if(isFlammable) return 60;
+		if(isFlammable)
+			return 60;
 		return 0;
 	}
 
@@ -85,7 +86,8 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	 */
 	public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
 	{
-		if(isFlammable) return 30;
+		if(isFlammable)
+			return 30;
 		return 0;
 	}
 

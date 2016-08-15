@@ -22,8 +22,13 @@ import net.minecraft.world.World;
  */
 public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMetalObject {
 
-	final MetalMaterial metal;
+	private final MetalMaterial metal;
+	private final String oreDict;
 
+	/**
+	 * 
+	 * @param metal
+	 */
 	public BlockMetalBlock(MetalMaterial metal) {
 		this(metal, false);
 	}
@@ -35,10 +40,11 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		this.lightOpacity = 255;
 		this.translucent = false;
 		this.metal = metal;
+		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		this.oreDict = "block" + metal.getCapitalizedName();
 		this.blockHardness = metal.getMetalBlockHardness();
 		this.blockResistance = metal.getBlastResistance();
 		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
-		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		if(glows) this.setLightLevel(0.5f);
 	}
 
@@ -84,17 +90,17 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	}
 
 	@Override
-	public String getOreDictionaryName() {
-		return "block"+metal.getCapitalizedName();
-	}
-
-	@Override
 	public void onBlockPlacedBy(final World w, final BlockPos coord, final IBlockState bs, final EntityLivingBase placer, final ItemStack src) {
 		super.onBlockPlacedBy(w, coord, bs, placer, src);
 		// achievement
 		if(placer instanceof EntityPlayer) {
 			((EntityPlayer)placer).addStat(Achievements.blocktastic, 1);
 		}
+	}
+
+	@Override
+	public String getOreDictionaryName() {
+		return oreDict;
 	}
 
 	@Override

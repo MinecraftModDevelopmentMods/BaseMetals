@@ -24,8 +24,8 @@ import java.util.Map;
 public abstract class Materials {
 
 	private static Map<String, MetalMaterial> allMaterials = new HashMap<>();
-	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap= new HashMap<>();
-	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap= new HashMap<>();
+	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
+	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 	
 	public static MetalMaterial copper;
 	public static MetalMaterial silver;
@@ -59,14 +59,15 @@ public abstract class Materials {
 	 * 
 	 */
 	public static void init() {
-		if(initDone) return;
+		if(initDone)
+			return;
 
 		// Vanilla Materials
 		vanilla_wood = addMaterial("wood", 2, 2, 6);
 		vanilla_stone = addMaterial("stone", 5, 4, 2);
 		vanilla_iron = addMaterial("iron", 8, 8, 4.5);
 		vanilla_gold = addMaterial("gold", 1, 1, 10);
-		vanilla_diamond = addMaterial("diamond",10,15,4);
+		vanilla_diamond = addMaterial("diamond", 10, 15, 4);
 
 		// Mod Metals
 		adamantine = new AdamantineMaterial("adamantine", 12, 100, 0);

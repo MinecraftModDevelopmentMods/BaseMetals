@@ -17,7 +17,7 @@ import net.minecraft.world.World;
  */
 public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject {
 
-	protected final MetalMaterial metal;
+	private final MetalMaterial metal;
 	private final String oreDict;
 
 	/**
@@ -27,16 +27,7 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 	public ItemMetalIngot(MetalMaterial metal) {
 		this.metal = metal;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "ingot"+metal.getCapitalizedName();
-	}
-
-	public String getOreDictionaryName() {
-		return oreDict;
-	}
-
-	@Override
-	public MetalMaterial getMetalMaterial() {
-		return metal;
+		this.oreDict = "ingot" + metal.getCapitalizedName();
 	}
 
 	@Override
@@ -52,5 +43,14 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 		if(metal == Materials.invar) crafter.addStat(Achievements.invar_maker, 1);
 		if(metal == Materials.mithril) crafter.addStat(Achievements.mithril_maker, 1);
 		if(metal == Materials.cupronickel) crafter.addStat(Achievements.cupronickel_maker, 1);
+	}
+
+	public String getOreDictionaryName() {
+		return oreDict;
+	}
+
+	@Override
+	public MetalMaterial getMetalMaterial() {
+		return metal;
 	}
 }

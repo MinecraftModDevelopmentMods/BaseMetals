@@ -3,6 +3,7 @@ package cyano.basemetals.blocks;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -23,23 +24,29 @@ import java.util.List;
 
 /**
  * Metal Plate
+ * @author DrCyano
+ *
  */
 public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDictionaryEntry, IMetalObject {
+
 
 	/**
 	 * Blockstate property
 	 */
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
+
 	@Override
 	public IBlockState withRotation(IBlockState state, Rotation rot) {
 		return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
 	}
+
 	@Override
 	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
 		return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
 	}
 
-	final MetalMaterial metal;
+	private final MetalMaterial metal;
+	private String oreDict;
 
 	private static final float thickness = 1.0f / 16.0f;
 
@@ -77,6 +84,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 		super(Material.IRON);
         this.blockSoundType = SoundType.METAL;
 		this.metal = metal;
+		this.oreDict = "plate" + metal.getCapitalizedName();
 		this.blockHardness = metal.getMetalBlockHardness();
 		this.blockResistance = metal.getBlastResistance();
 		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
@@ -148,9 +156,9 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 		}
 		boolean upOrRight = up + right > 0;
 		boolean upOrLeft = up - right > 0;
-		if(upOrRight){
+		if(upOrRight) {
 			// up or right
-			if(upOrLeft){
+			if(upOrLeft) {
 				// up
 				return defaultState.withProperty(FACING,face.rotateAround(upRotationAxis));
 			} else {
@@ -159,7 +167,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 			}
 		} else {
 			// down or left
-			if(upOrLeft){
+			if(upOrLeft) {
 				// left
 				return defaultState.withProperty(FACING,face.rotateAround(rightRotationAxis));
 			} else {
@@ -202,7 +210,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	public String getOreDictionaryName() {
-		return "plate"+metal.getCapitalizedName();
+		return oreDict;
 	}
 
 	@Override

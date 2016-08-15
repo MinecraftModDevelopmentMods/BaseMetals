@@ -7,16 +7,22 @@ import net.minecraft.creativetab.CreativeTabs;
 
 /**
  * Nuggets
+ * @author DrCyano
+ *
  */
 public class ItemMetalNugget extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject {
 
-	protected final MetalMaterial metal;
+	private final MetalMaterial metal;
 	private final String oreDict;
 
+	/**
+	 * 
+	 * @param metal
+	 */
 	public ItemMetalNugget(MetalMaterial metal) {
 		this.metal = metal;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "nugget"+metal.getCapitalizedName();
+		this.oreDict = "nugget" + metal.getCapitalizedName();
 	}
 
 	public String getOreDictionaryName() {

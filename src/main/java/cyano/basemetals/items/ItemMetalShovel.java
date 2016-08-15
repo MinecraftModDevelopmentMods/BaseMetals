@@ -1,49 +1,38 @@
 package cyano.basemetals.items;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemSpade;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 
+import java.util.List;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemSpade;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
+
 /**
  * Shovels
+ * @author DrCyano
+ *
  */
-public class ItemMetalShovel extends ItemSpade  implements IMetalObject {
+public class ItemMetalShovel extends ItemSpade implements IMetalObject {
 
-	protected final MetalMaterial metal;
-	protected final String repairOreDictName;
-	protected final boolean regenerates;
-	protected final long regenInterval = 200;
+	private final MetalMaterial metal;
+	private final String repairOreDictName;
+	private final boolean regenerates;
+	private final long regenInterval = 200;
 
 	public ItemMetalShovel(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));
 		this.metal = metal;
 		this.setMaxDamage(metal.getToolDurability());
 		this.efficiencyOnProperMaterial = metal.getToolEfficiency();
-		repairOreDictName = "ingot"+metal.getCapitalizedName();
-		if(metal.equals(Materials.starsteel)){
-			regenerates = true;
-		} else {
-			regenerates = false;
-		}
+		repairOreDictName = "ingot" + metal.getCapitalizedName();
+		regenerates = metal.equals(Materials.starsteel);
 	}
 
 	public ToolMaterial getToolMaterial() {
@@ -71,14 +60,14 @@ public class ItemMetalShovel extends ItemSpade  implements IMetalObject {
 	@Override
 	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		super.hitEntity(item, target, attacker);
-		MetalToolEffects.extraEffectsOnAttack(metal,item, target, attacker);
+		MetalToolEffects.extraEffectsOnAttack(metal, item, target, attacker);
 		return true;
 	}
 
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		MetalToolEffects.extraEffectsOnCrafting(metal,item, world, crafter);
+		MetalToolEffects.extraEffectsOnCrafting(metal, item, world, crafter);
 	}
 
 	@Override
@@ -93,13 +82,13 @@ public class ItemMetalShovel extends ItemSpade  implements IMetalObject {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean b){
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b){
 		super.addInformation(stack,player,list,b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(metal,list);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(metal, list);
 	}
 
 	@Override
-	public MetalMaterial getMetalMaterial(){
+	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}
 }

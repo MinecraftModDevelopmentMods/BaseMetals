@@ -19,10 +19,17 @@ import net.minecraft.world.World;
  */
 public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implements IOreDictionaryEntry, IMetalObject {
 
-	final MetalMaterial metal;
+	private final MetalMaterial metal;
+	private final String oreDict;
+
+	/**
+	 * 
+	 * @param metal
+	 */
 	public BlockMetalTrapDoor(MetalMaterial metal) {
 		super(Material.IRON);
 		this.metal = metal;
+		this.oreDict = "trapdoor" + metal.getCapitalizedName();
 		this.blockHardness = metal.getMetalBlockHardness();
 		this.blockResistance = metal.getBlastResistance();
 		this.blockSoundType = SoundType.METAL;
@@ -45,7 +52,7 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 
 	@Override
 	public String getOreDictionaryName() {
-		return "trapdoor"+metal.getCapitalizedName();
+		return oreDict;
 	}
 
 	@Override

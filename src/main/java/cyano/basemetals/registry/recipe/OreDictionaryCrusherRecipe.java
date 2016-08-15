@@ -12,7 +12,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class OreDictionaryCrusherRecipe implements ICrusherRecipe{
+public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
 
 	private final ItemStack output;
 	private final String oreDictSource;
@@ -23,7 +23,7 @@ public class OreDictionaryCrusherRecipe implements ICrusherRecipe{
 	 * @param oreDictionaryID The input item(s), described by an OreDictionary name
 	 * @param results The result of applying this recipe to an input item
 	 */
-	public OreDictionaryCrusherRecipe(String oreDictionaryID, ItemStack results){
+	public OreDictionaryCrusherRecipe(String oreDictionaryID, ItemStack results) {
 		this.oreDictSource = oreDictionaryID;
 		this.output = results;
 	}

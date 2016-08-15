@@ -7,7 +7,8 @@ public abstract class DungeonLoot {
 	
 	private static boolean initDone = false;
 	public static void init() {
-		if(initDone) return;
+		if(initDone)
+			return;
 		// loot now handled by AdditionalLootTables mod
 		initDone = true;
 	}
