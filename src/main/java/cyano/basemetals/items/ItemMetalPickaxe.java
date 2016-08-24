@@ -73,10 +73,7 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 
 	@Override
 	public boolean canHarvestBlock(final IBlockState target) {
-		if(this.toolTypes.contains(target.getBlock().getHarvestTool(target))) {
-			return metal.getToolHarvestLevel() >= target.getBlock().getHarvestLevel(target);
-		}
-		return super.canHarvestBlock(target);
+		return (this.toolTypes.contains(target.getBlock().getHarvestTool(target)))? metal.getToolHarvestLevel() >= target.getBlock().getHarvestLevel(target) : super.canHarvestBlock(target);
 	}
 
 	@Override

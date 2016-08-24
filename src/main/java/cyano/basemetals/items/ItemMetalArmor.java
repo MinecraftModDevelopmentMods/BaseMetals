@@ -68,7 +68,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			return;
 		}
 		if(!w.isRemote && w.getTotalWorldTime() > playerUpdateTimestampMap.get(player).get()) {
-	//		FMLLog.info("onArmorTick update triggered at time=" + w.getTotalWorldTime() + " (update target was " + playerUpdateTimestampMap.get(player).get() + ") for player " + player.getName() + " by item " + armor); // debug code
 			playerUpdateTimestampMap.get(player).set(w.getTotalWorldTime() + UPDATE_INTERVAL);
 			int updateCount = playerUpdateCountMap.get(player).getAndIncrement();
 			for(int i = 0; i < 4; i++) {
@@ -88,11 +87,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		// some sanity checks
 		if(armor == null)
 			return;
-		if(armor.getItem() == null)
-			return;
 		if(player == null)
 			return;
-	//	FMLLog.info("doArmorUpdate " + i + " for " + player.getName() + " on item " + armor); // debug code
 		Item armorItem = armor.getItem();
 		if(i % 2 == 0) {
 			// count armor pieces
@@ -130,7 +126,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		} else {
 			// apply potion effects. Note that "Level I" is actually effect level 0 in the effect constructor 
 			starsteel: {
-				if(!(starsteelUpdateCache.containsKey(player) == false)) break starsteel;
+				if(starsteelUpdateCache.containsKey(player)) break starsteel;
 				int num = starsteelUpdateCache.get(player).getAndSet(0);
 				if(num == 0)
 					break starsteel;
@@ -140,10 +136,9 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 					final PotionEffect speedBoost = new PotionEffect(Potion.REGISTRY.getObject(speedPotionKey), EFFECT_DURATION, num-2, false, false);
 					player.addPotionEffect(speedBoost);
 				}
-				break starsteel;
 			}
 			lead: {
-				if(leadUpdateCache.containsKey(player) == false) break lead;
+				if(!leadUpdateCache.containsKey(player)) break lead;
 				int level = leadUpdateCache.get(player).getAndSet(0) / 2;
 				if(level == 0)
 					break lead;
@@ -151,7 +146,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 					final PotionEffect speedLoss = new PotionEffect(Potion.REGISTRY.getObject(slowPotionKey), EFFECT_DURATION, level-1, false, false);
 					player.addPotionEffect(speedLoss);
 				}
-				break lead;
 			}
 			adamantine: {
 				if(!adamantineUpdateCache.containsKey(player)) break adamantine;
@@ -166,7 +160,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 				if(num == 4) {
 					player.addStat(Achievements.juggernaut, 1);
 				}
-				break adamantine;
 			}
 			// full suit of cold-iron makes you fire-proof
 			if(armorItem == cyano.basemetals.init.Items.coldiron_helmet) {
@@ -186,17 +179,13 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 						&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == cyano.basemetals.init.Items.mithril_leggings
 						&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == cyano.basemetals.init.Items.mithril_boots) {
                     final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
-                    Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
-                    while(effectIterator.hasNext()) {
-                        PotionEffect pe = effectIterator.next();
-                        Potion p = pe.getPotion();
-                        if(p.isBadEffect()) {
-                            removeList.add(p);
-                        }
-                    }
-                    for(Potion p : removeList) {
-                        player.removePotionEffect(p);
-                    }
+					for (PotionEffect pe : player.getActivePotionEffects()) {
+						Potion p = pe.getPotion();
+						if (p.isBadEffect()) {
+							removeList.add(p);
+						}
+					}
+					removeList.forEach(player::removePotionEffect);
 					if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == cyano.basemetals.init.Items.mithril_sword) {
 						player.addStat(Achievements.angel_of_death, 1);
 					}

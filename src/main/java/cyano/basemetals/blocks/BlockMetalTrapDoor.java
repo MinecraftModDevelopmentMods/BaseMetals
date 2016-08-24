@@ -46,7 +46,7 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 		}
 		state = state.cycleProperty(BlockTrapDoor.OPEN);
 		world.setBlockState(coord, state, 2);
-		world.playEvent(player, ((Boolean)state.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
+		world.playEvent(player, (state.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
 

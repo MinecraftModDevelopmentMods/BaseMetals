@@ -42,9 +42,6 @@ public abstract class Fluids {
 
 	private static boolean initDone = false;
 
-	/**
-	 * 
-	 */
 	public static void init() {
 		if(initDone)
 			return;

@@ -22,9 +22,6 @@ public abstract class VillagerTrades {
 
 	private static boolean initDone = false;
 
-	/**
-	 * 
-	 */
 	public static void init() {
 		if(initDone)
 			return;
@@ -44,9 +41,6 @@ public abstract class VillagerTrades {
 		final Map<MetalMaterial, Item> allPickAxes = new HashMap<>(size);
 		final Map<MetalMaterial, Item> allShovels = new HashMap<>(size);
 		final Map<MetalMaterial, Item> allIngots = new HashMap<>(size);
-
-		@SuppressWarnings("unused")
-		final Map<Item, Integer> tradeLevelMap = new HashMap<>();
 
 		cyano.basemetals.init.Items.getItemsByMetal().entrySet().stream()
 				.forEach((Map.Entry<MetalMaterial,List<Item>> e)->{
@@ -377,7 +371,7 @@ public abstract class VillagerTrades {
 			ItemStack in1 = input1.copy();
 			if(maxInputMarkup1 > 0) in1.stackSize = in1.stackSize + random.nextInt(maxInputMarkup1);
 			ItemStack in2 = null;
-			if(input2 != null && input2.getItem() != null) {
+			if(input2 != null) {
 				in2 = input2.copy();
 				if(maxInputMarkup2 > 0) in2.stackSize = in2.stackSize + random.nextInt(maxInputMarkup2);
 			}

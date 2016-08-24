@@ -854,28 +854,23 @@ public abstract class Items {
 	}
 
 	private static Item create_ingot(MetalMaterial metal) {
-		Item i = registerItem(new ItemMetalIngot(metal), metal.getName() + "_ingot", metal, ItemGroups.tab);
-		return i;
+		return registerItem(new ItemMetalIngot(metal), metal.getName() + "_ingot", metal, ItemGroups.tab);
 	}
 
 	private static Item create_nugget(MetalMaterial metal) {
-		Item i = registerItem(new ItemMetalNugget(metal), metal.getName() + "_nugget", metal, ItemGroups.tab);
-		return i;
+		return registerItem(new ItemMetalNugget(metal), metal.getName() + "_nugget", metal, ItemGroups.tab);
 	}
 
 	private static Item create_powder(MetalMaterial metal) {
-		Item i = registerItem(new ItemMetalPowder(metal), metal.getName() + "_powder", metal, ItemGroups.tab);
-		return i;
+		return registerItem(new ItemMetalPowder(metal), metal.getName() + "_powder", metal, ItemGroups.tab);
 	}
 
 	private static Item create_blend(MetalMaterial metal) {
-		Item i = registerItem(new ItemMetalBlend(metal), metal.getName() + "_blend", metal, ItemGroups.tab);
-		return i;
+		return registerItem(new ItemMetalBlend(metal), metal.getName() + "_blend", metal, ItemGroups.tab);
 	}
 
 	private static Item create_rod(MetalMaterial metal) {
-		Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_rod", metal, ItemGroups.tab);
-		return i;
+		return registerItem(new GenericMetalItem(metal), metal.getName() + "_rod", metal, ItemGroups.tab);
 	}
 
 	private static Item create_gear(MetalMaterial metal) {
@@ -959,10 +954,11 @@ public abstract class Items {
         }
     }
 
+
 	/**
-	 * 
-	 * @param a
-	 * @return
+	 * Gets the sorting value of a given ItemStack
+	 * @param a ItemStack to get value of
+	 * @return Sort value of item stack
 	 */
 	public static int getSortingValue(ItemStack a) {
 		int classVal = 990000;

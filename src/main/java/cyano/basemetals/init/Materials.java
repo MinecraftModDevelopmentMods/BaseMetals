@@ -55,9 +55,6 @@ public abstract class Materials {
 
 	private static boolean initDone = false;
 
-	/**
-	 * 
-	 */
 	public static void init() {
 		if(initDone)
 			return;

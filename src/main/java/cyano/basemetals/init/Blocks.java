@@ -160,9 +160,7 @@ public abstract class Blocks {
 
 	private static boolean initDone = false;
 
-//	private static Map<Block, String> blockRegistry = new HashMap<>();
 	private static final Map<String, Block> allBlocks = new HashMap<>();
-//	private static Map<MetalMaterial, List<Block>> blocksByMetal = new HashMap<>();
 
 	/**
 	 * Gets an block by its name. The name is the name as it is registered in 
@@ -175,9 +173,6 @@ public abstract class Blocks {
 		return allBlocks.get(name);
 	}
 
-	/**
-	 * 
-	 */
 	public static void init() {
 		if(initDone)
 			return;
