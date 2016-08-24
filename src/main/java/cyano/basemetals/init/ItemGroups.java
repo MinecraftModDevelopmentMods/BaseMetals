@@ -13,33 +13,22 @@ public class ItemGroups {
 
 	public static final java.util.function.BiFunction<ItemStack,ItemStack,Integer> sortingAlgorithm = (ItemStack a,ItemStack b)->{
 		int delta = Items.getSortingValue(a) - Items.getSortingValue(b);
-		if(delta == 0)
-			return a.getItem().getUnlocalizedName().compareToIgnoreCase(b.getItem().getUnlocalizedName());
-		return delta;
+		return (delta==0)? a.getItem().getUnlocalizedName().compareToIgnoreCase(b.getItem().getUnlocalizedName()) : delta;
 	};
 
 	public static CreativeTabs tab;
 
-	@SuppressWarnings("unused")
-	private static Item blockItem;
-//	private static Item itemItem;
-//	private static Item toolItem;
+	private static final Item tabItem = Items.copper_crackhammer;
 
 	private static boolean initDone = false;
 
-	/**
-	 * 
-	 */
 	public static void init() {
 		if(initDone)
 			return;
 
-		// placeholders
-		blockItem = Items.copper_crackhammer;
-
 		tab = FunctionalCreativeTab.create(BaseMetals.MODID.concat(".blocks"))
 				.setIconMetadata(3)
-				.setIcon(blockItem)
+				.setIcon(tabItem)
 				.setItemSortingAlgorithm(sortingAlgorithm);
 
 		initDone = true;

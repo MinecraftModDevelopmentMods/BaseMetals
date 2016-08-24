@@ -3,9 +3,9 @@ package cyano.basemetals.blocks;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -26,7 +26,7 @@ import java.util.List;
  * @author DrCyano
  *
  */
-public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDictionaryEntry, IMetalObject {
+public class BlockMetalPlate extends Block implements IOreDictionaryEntry, IMetalObject {
 
 
 	/**
@@ -189,7 +189,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { FACING });
+		return new BlockStateContainer(this, FACING);
 	}
 
 	@Override
@@ -204,7 +204,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 									  final Entity entity) {
 
 		final EnumFacing orientation =  world.getBlockState(coord).getValue(FACING);
-		super.addCollisionBoxToList(coord, box, collisionBoxList, BOXES[orientation.ordinal()]);
+		addCollisionBoxToList(coord, box, collisionBoxList, BOXES[orientation.ordinal()]);
 	}
 
 	@Override

@@ -36,8 +36,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
 		ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(ingredient);
-		if(recipe == null)
-			return;
+		if(recipe == null) return;
 		arecipes.add(new CrusherPair(ingredient.copy(), recipe.getOutput()));
 	}
 

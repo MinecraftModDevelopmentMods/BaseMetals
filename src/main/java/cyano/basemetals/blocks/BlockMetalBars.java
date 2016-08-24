@@ -3,7 +3,7 @@ package cyano.basemetals.blocks;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
-
+import net.minecraft.block.BlockPane;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
@@ -12,13 +12,12 @@ import net.minecraft.block.material.Material;
  * @author DrCyano
  *
  */
-public class BlockMetalBars extends net.minecraft.block.BlockPane implements IOreDictionaryEntry, IMetalObject {
+public class BlockMetalBars extends BlockPane implements IOreDictionaryEntry, IMetalObject {
 
 	private final MetalMaterial metal;
 	private final String oreDict;
 
 	/**
-	 * 
 	 * @param metal
 	 */
 	public BlockMetalBars(MetalMaterial metal) {
@@ -40,4 +39,5 @@ public class BlockMetalBars extends net.minecraft.block.BlockPane implements IOr
 	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}
+
 }

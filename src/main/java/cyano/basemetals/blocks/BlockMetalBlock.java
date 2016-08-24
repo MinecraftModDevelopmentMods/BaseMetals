@@ -26,7 +26,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	private final String oreDict;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public BlockMetalBlock(MetalMaterial metal) {

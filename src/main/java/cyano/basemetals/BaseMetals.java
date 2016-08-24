@@ -1,8 +1,8 @@
 package cyano.basemetals;
 
 import cyano.basemetals.data.DataConstants;
-import cyano.basemetals.data.DataConstants;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
+import cyano.basemetals.stabiliser.IStableInfo;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -277,7 +277,6 @@ public class BaseMetals
 	 */
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		cyano.basemetals.init.WorldGen.init();
 
 		// parse user crusher recipes
 		for(String recipe : userCrusherRecipes) {

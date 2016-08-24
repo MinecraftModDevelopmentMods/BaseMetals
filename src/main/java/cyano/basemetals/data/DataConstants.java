@@ -7,6 +7,8 @@ package cyano.basemetals.data;
  */
 public abstract class DataConstants {
 
+	//TODO: Switch to a json builder
+
 	public static final String defaultOreSpawnJSON = "{"
 			+ "\n	\"dimensions\":["
 			+ "\n		{"

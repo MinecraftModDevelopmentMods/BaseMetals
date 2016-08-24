@@ -23,12 +23,11 @@ import java.util.Random;
  * @author DrCyano
  *
  */
-public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMetalObject {
+public class BlockMetalDoor extends BlockDoor implements IMetalObject {
 
 	private final MetalMaterial metal;
 
 	/**
-	 * 
 	 * @param metal
 	 */
 	public BlockMetalDoor(MetalMaterial metal) {
@@ -53,14 +52,14 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 	}
 
 	@Override
-	public boolean onBlockActivated(final World world, final BlockPos coord, IBlockState blockstate, 
-									final EntityPlayer player,
-									final EnumHand hand, ItemStack heldItem,
-                                    final EnumFacing face,
-    		                        final float partialX, final float partialY, final float partialZ) {
-		if (this.metal.getToolHarvestLevel() > 1) {
-			return false;
-		}
+	public boolean onBlockActivated(
+			final World world, final BlockPos coord, IBlockState blockstate,
+			final EntityPlayer player,
+			final EnumHand hand, ItemStack heldItem,
+			final EnumFacing face,
+			final float partialX, final float partialY, final float partialZ
+	) {
+		if (this.metal.getToolHarvestLevel() > 1) return false;
 		final BlockPos pos = (blockstate.getValue(BlockDoor.HALF) == EnumDoorHalf.LOWER) ? coord : coord.down();
 		final IBlockState bs = coord.equals(pos) ? blockstate : world.getBlockState(pos);
 		if (bs.getBlock() != this) {
@@ -69,7 +68,7 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 		blockstate = bs.cycleProperty(BlockDoor.OPEN);
 		world.setBlockState(pos, blockstate, 2);
 		world.markBlockRangeForRenderUpdate(pos, coord);
-		world.playEvent(player, ((Boolean)blockstate.getValue(BlockDoor.OPEN)) ? 1003 : 1006, coord, 0);
+		world.playEvent(player, (blockstate.getValue(BlockDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
 
@@ -77,4 +76,5 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}
+
 }

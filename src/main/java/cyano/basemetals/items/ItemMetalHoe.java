@@ -81,10 +81,7 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 
 	@Override
 	public boolean canHarvestBlock(final IBlockState target) {
-		if(this.toolTypes.contains(target.getBlock().getHarvestTool(target))) {
-			return metal.getToolHarvestLevel() >= target.getBlock().getHarvestLevel(target);
-		}
-		return false;
+		return this.toolTypes.contains(target.getBlock().getHarvestTool(target)) && metal.getToolHarvestLevel() >= target.getBlock().getHarvestLevel(target);
 	}
 
 	@Override
@@ -95,9 +92,8 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if(regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % regenInterval == 0) {
+		if(regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % regenInterval == 0)
 			item.setItemDamage(item.getItemDamage() - 1);
-		}
 	}
 
 	@Override
