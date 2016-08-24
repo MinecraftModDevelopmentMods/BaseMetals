@@ -5,13 +5,11 @@ import java.util.*;
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.registry.recipe.*;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.*;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraftforge.fml.common.FMLLog;
 
 /**
@@ -110,7 +108,7 @@ public class CrusherRecipeRegistry {
 
 			@Override
 			public Collection<ItemStack> getValidInputs() {
-				return Arrays.asList(new ItemStack(input));
+				return Collections.singletonList(new ItemStack(input));
 			}
 			
 		});
@@ -140,7 +138,7 @@ public class CrusherRecipeRegistry {
 
 			@Override
 			public Collection<ItemStack> getValidInputs() {
-				return Arrays.asList(new ItemStack(input));
+				return Collections.singletonList(new ItemStack(input));
 			}
 		});
 	}

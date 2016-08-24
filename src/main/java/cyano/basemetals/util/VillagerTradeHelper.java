@@ -4,10 +4,9 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Chris on 3/30/2016.
@@ -57,7 +56,7 @@ public class VillagerTradeHelper {
 	}
 
 	public static void appendToMultidimensionalArray(Object append, Object array, int... indices) {
-		appendToMultidimensionalArray(Arrays.asList(append).toArray(), array, indices);
+		appendToMultidimensionalArray(Collections.singletonList(append).toArray(), array, indices);
 	}
 
 	public static void appendToMultidimensionalArray(Object[] append, Object array, int... indices) {

@@ -325,7 +325,7 @@ public abstract class Blocks {
 			if(b instanceof IOreDictionaryEntry)
 				OreDictionary.registerOre(((IOreDictionaryEntry)b).getOreDictionaryName(), b);
 			if(!(b instanceof BlockMetalDoor))
-				b.setCreativeTab(ItemGroups.tab_blocks);
+				b.setCreativeTab(ItemGroups.tab);
 		}
 
 		initDone = true;

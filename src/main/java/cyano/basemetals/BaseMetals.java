@@ -1,6 +1,6 @@
 package cyano.basemetals;
 
-import cyano.basemetals.data.AdditionalLootTables;
+import cyano.basemetals.data.DataConstants;
 import cyano.basemetals.data.DataConstants;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import net.minecraft.block.Block;
@@ -154,7 +154,7 @@ public class BaseMetals
 			for(String r : recipes) {
 				String recipe = r.trim();
 				if(recipe.isEmpty()) continue;
-				if(recipe.contains("->") == false) {
+				if(!recipe.contains("->")) {
 					throw new IllegalArgumentException ("Malformed hammer recipe expression '"+recipe+"'. Should be in format 'modid:itemname->modid:itemname'");
 				}
 				userCrusherRecipes.add(recipe);
@@ -171,7 +171,7 @@ public class BaseMetals
 			}
 			oreSpawnFolder = Paths.get(event.getSuggestedConfigurationFile().toPath().getParent().toString(), "orespawn");
 			Path oreSpawnFile = Paths.get(oreSpawnFolder.toString(), MODID + ".json");
-			if (Files.exists(oreSpawnFile) == false) {
+			if (!Files.exists(oreSpawnFile)) {
 				try {
 					Files.createDirectories(oreSpawnFile.getParent());
 					Files.write(oreSpawnFile, Arrays.asList(DataConstants.defaultOreSpawnJSON.split("\n")), Charset.forName("UTF-8"));
@@ -194,25 +194,25 @@ public class BaseMetals
 			try {
 				Files.createDirectories(myLootFolder.resolve("chests"));
 				Files.write(myLootFolder.resolve("chests").resolve("abandoned_mineshaft.json"),
-						Arrays.asList(         AdditionalLootTables.abandoned_mineshaft));
+						Collections.singletonList(DataConstants.abandoned_mineshaft));
 				Files.write(myLootFolder.resolve("chests").resolve("desert_pyramid.json"),
-						Arrays.asList(         AdditionalLootTables.desert_pyramid));
+						Collections.singletonList(DataConstants.desert_pyramid));
 				Files.write(myLootFolder.resolve("chests").resolve("end_city_treasure.json"),
-						Arrays.asList(         AdditionalLootTables.end_city_treasure));
+						Collections.singletonList(DataConstants.end_city_treasure));
 				Files.write(myLootFolder.resolve("chests").resolve("jungle_temple.json"),
-						Arrays.asList(         AdditionalLootTables.jungle_temple));
+						Collections.singletonList(DataConstants.jungle_temple));
 				Files.write(myLootFolder.resolve("chests").resolve("nether_bridge.json"),
-						Arrays.asList(         AdditionalLootTables.nether_bridge));
+						Collections.singletonList(DataConstants.nether_bridge));
 				Files.write(myLootFolder.resolve("chests").resolve("simple_dungeon.json"),
-						Arrays.asList(         AdditionalLootTables.simple_dungeon));
+						Collections.singletonList(DataConstants.simple_dungeon));
 				Files.write(myLootFolder.resolve("chests").resolve("spawn_bonus_chest.json"),
-						Arrays.asList(         AdditionalLootTables.spawn_bonus_chest));
+						Collections.singletonList(DataConstants.spawn_bonus_chest));
 				Files.write(myLootFolder.resolve("chests").resolve("stronghold_corridor.json"),
-						Arrays.asList(         AdditionalLootTables.stronghold_corridor));
+						Collections.singletonList(DataConstants.stronghold_corridor));
 				Files.write(myLootFolder.resolve("chests").resolve("stronghold_crossing.json"),
-						Arrays.asList(         AdditionalLootTables.stronghold_crossing));
+						Collections.singletonList(DataConstants.stronghold_crossing));
 				Files.write(myLootFolder.resolve("chests").resolve("village_blacksmith.json"),
-						Arrays.asList(         AdditionalLootTables.village_blacksmith));
+						Collections.singletonList(DataConstants.village_blacksmith));
 			} catch(IOException ex) {
 				FMLLog.log(Level.ERROR,ex,"%s: Failed to extract additional loot tables",MODID);
 			}

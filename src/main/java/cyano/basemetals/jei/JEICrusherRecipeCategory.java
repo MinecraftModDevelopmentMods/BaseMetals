@@ -32,7 +32,7 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 	public String getTitle() {
 		String key = "nei." + BaseMetals.MODID + ".recipehandler.crusher.name";
 		if(I18n.canTranslate(key)) {
-			return I18n.translateToLocal(key);
+			return net.minecraft.client.resources.I18n.format(key);
 		} else {
 			return "Crusher";
 		}

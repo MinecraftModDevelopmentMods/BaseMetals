@@ -1,15 +1,11 @@
 package cyano.basemetals.init;
 
-import cyano.basemetals.items.ItemMetalCrackHammer;
-import cyano.basemetals.items.ItemMetalIngot;
+import cyano.basemetals.items.*;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.util.VillagerTradeHelper;
-import net.minecraft.entity.passive.EntityVillager.ITradeList;
-import net.minecraft.entity.passive.EntityVillager.ListEnchantedItemForEmeralds;
-import net.minecraft.entity.passive.EntityVillager.PriceInfo;
+import net.minecraft.entity.passive.EntityVillager.*;
 import net.minecraft.item.*;
-import net.minecraft.village.MerchantRecipe;
-import net.minecraft.village.MerchantRecipeList;
+import net.minecraft.village.*;
 import net.minecraftforge.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
 
@@ -138,22 +134,22 @@ public abstract class VillagerTrades {
 			if(m.magicAffinity > 5) {
 				if(allHammers.containsKey(m))
 					tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel + 2),(Integer key)->new ArrayList<>())
-						.addAll(Arrays.asList(
-						new ListEnchantedItemForEmeralds(allHammers.get(m), new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
+						.addAll(Collections.singletonList(
+								new ListEnchantedItemForEmeralds(allHammers.get(m), new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
 				if(allPickAxes.containsKey(m))
 					tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel + 1),(Integer key)->new ArrayList<>())
-						.addAll(Arrays.asList(
-						new ListEnchantedItemForEmeralds(allPickAxes.get(m), new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
+						.addAll(Collections.singletonList(
+								new ListEnchantedItemForEmeralds(allPickAxes.get(m), new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
 				if(allArmors.containsKey(m)) {
 					for(int i = 0; i < allArmors.get(m).size(); i++)
 						tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (tradeLevel + 1),(Integer key)->new ArrayList<>())
-								.addAll(Arrays.asList(
-						new ListEnchantedItemForEmeralds(allArmors.get(m).get(i), new PriceInfo(emeraldPurch + 7 + (int)(m.hardness / 2), emeraldPurch + 12 + (int)(m.hardness / 2)))));
+								.addAll(Collections.singletonList(
+										new ListEnchantedItemForEmeralds(allArmors.get(m).get(i), new PriceInfo(emeraldPurch + 7 + (int) (m.hardness / 2), emeraldPurch + 12 + (int) (m.hardness / 2)))));
 				}
 				if(allSwords.containsKey(m))
 					tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (tradeLevel + 1),(Integer key)->new ArrayList<>())
-						.addAll(Arrays.asList(
-						new ListEnchantedItemForEmeralds(allSwords.get(m), new PriceInfo(emeraldPurch + 7 + (int)(m.getBaseAttackDamage() / 2) - 1, emeraldPurch + 12 + (int)(m.getBaseAttackDamage() / 2) - 1))));
+						.addAll(Collections.singletonList(
+								new ListEnchantedItemForEmeralds(allSwords.get(m), new PriceInfo(emeraldPurch + 7 + (int) (m.getBaseAttackDamage() / 2) - 1, emeraldPurch + 12 + (int) (m.getBaseAttackDamage() / 2) - 1))));
 			}
 		}
 		tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1),(Integer key)->new ArrayList<>())
@@ -208,8 +204,7 @@ public abstract class VillagerTrades {
 		for(int i = 0; i < items.length; i++) {
 			Item item = items[i];
 			trades[i] = new SimpleTrade(
-					new ItemStack(net.minecraft.init.Items.EMERALD, emeraldPrice, 0), fluctuation(emeraldPrice),
-					(ItemStack)null, 0,
+					new ItemStack(net.minecraft.init.Items.EMERALD, emeraldPrice, 0), fluctuation(emeraldPrice), null, 0,
 					new ItemStack(item, stackSize, 0), 0);
 		}
 		return trades;
@@ -220,8 +215,7 @@ public abstract class VillagerTrades {
 		for(int i = 0; i < items.length; i++) {
 			Item item = items[i];
 			trades[i] = new SimpleTrade(
-					new ItemStack(item, stackSize, 0), fluctuation(stackSize),
-					(ItemStack)null, 0,
+					new ItemStack(item, stackSize, 0), fluctuation(stackSize), null, 0,
 					new ItemStack(net.minecraft.init.Items.EMERALD, emeraldValue, 0), 0);
 		}
 		return trades;

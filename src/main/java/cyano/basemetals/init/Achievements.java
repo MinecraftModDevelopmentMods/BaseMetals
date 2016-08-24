@@ -57,12 +57,9 @@ public abstract class Achievements {
 		aquarium_maker = makeAchievement("aquarium_maker", metallurgy, 11, 12, Items.aquarium_ingot);
 		demon_slayer = makeAchievement("demon_slayer", AchievementList.PORTAL, -5, 5, Items.coldiron_sword);
 		angel_of_death = makeAchievement("angel_of_death", mithril_maker, 11, 11, Items.mithril_sword);
-		scuba_diver = makeAchievement("scuba_diver", aquarium_maker, 11, 13, Items.aquarium_sword);
-		scuba_diver.setSpecial();
-		juggernaut = makeAchievement("juggernaut", AchievementList.PORTAL, -7, 3, Items.adamantine_helmet);
-		juggernaut.setSpecial();
-		moon_boots = makeAchievement("moon_boots", AchievementList.THE_END, -2, 6, Items.starsteel_boots);
-		moon_boots.setSpecial();
+		scuba_diver = makeAchievement("scuba_diver", aquarium_maker, 11, 13, Items.aquarium_sword).setSpecial();
+		juggernaut = makeAchievement("juggernaut", AchievementList.PORTAL, -7, 3, Items.adamantine_helmet).setSpecial();
+		moon_boots = makeAchievement("moon_boots", AchievementList.THE_END, -2, 6, Items.starsteel_boots).setSpecial();
 
 		initDone = true;
 	}

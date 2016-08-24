@@ -1,7 +1,8 @@
 package cyano.basemetals.jei;
 
-import mezz.jei.api.recipe.IRecipeHandler;
-import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.recipe.*;
+
+import javax.annotation.Nonnull;
 
 /**
  * 
@@ -11,6 +12,12 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeJEI> {
 
 	private final String id = BaseMetalsJEIPlugin.JEIUID;
+
+	@Nonnull
+	@Override
+	public String getRecipeCategoryUid(@Nonnull CrusherRecipeJEI recipe) {
+		return id;
+	}
 
 	@Override
 	public String getRecipeCategoryUid() {

@@ -154,7 +154,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 				break lead;
 			}
 			adamantine: {
-				if(adamantineUpdateCache.containsKey(player) == false) break adamantine;
+				if(!adamantineUpdateCache.containsKey(player)) break adamantine;
 				int num = adamantineUpdateCache.get(player).getAndSet(0);
 				int level = num / 2;
 				if(level == 0)
