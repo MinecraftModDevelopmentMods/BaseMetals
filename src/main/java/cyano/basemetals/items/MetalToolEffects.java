@@ -2,15 +2,11 @@ package cyano.basemetals.items;
 
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.MetalMaterial;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.potion.*;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 /**
@@ -52,29 +48,33 @@ public abstract class MetalToolEffects {
 
 	public static void addToolSpecialPropertiesToolTip(MetalMaterial metal, java.util.List<String> tooltipList) {
 		if(metal == Materials.adamantine) {
-			tooltipList.add(I18n.translateToLocal("tooltip.adamantine.tool").replace("%x", String.valueOf(4)));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.adamantine.tool")
+					.replace("%x", String.valueOf(4)));
 		} else if(metal == Materials.aquarium) {
-			tooltipList.add(I18n.translateToLocal("tooltip.aquarium.tool").replace("%x", String.valueOf(4)));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.aquarium.tool")
+					.replace("%x", String.valueOf(4)));
 		} else if(metal == Materials.coldiron) {
-			tooltipList.add(I18n.translateToLocal("tooltip.coldiron.tool").replace("%x", String.valueOf(3)));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.coldiron.tool")
+					.replace("%x", String.valueOf(3)));
 		} else if(metal == Materials.mithril) {
-			tooltipList.add(I18n.translateToLocal("tooltip.mithril.tool"));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.mithril.tool"));
 		} else if(metal == Materials.starsteel) {
-			tooltipList.add(I18n.translateToLocal("tooltip.starsteel.tool").replace("%x", String.valueOf(10)));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.starsteel.tool")
+					.replace("%x", String.valueOf(10)));
 		}
 	}
 
 	public static void addArmorSpecialPropertiesToolTip(MetalMaterial metal, java.util.List<String> tooltipList) {
 		if(metal == Materials.adamantine) {
-			tooltipList.add(I18n.translateToLocal("tooltip.adamantine.armor").replace("%x", String.valueOf(4)));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.adamantine.armor").replace("%x", String.valueOf(4)));
 		} else if(metal == Materials.aquarium) {
-			tooltipList.add(I18n.translateToLocal("tooltip.aquarium.armor").replace("%x", String.valueOf(4)));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.aquarium.armor").replace("%x", String.valueOf(4)));
 		} else if(metal == Materials.coldiron) {
-			tooltipList.add(I18n.translateToLocal("tooltip.coldiron.armor").replace("%x", String.valueOf(3)));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.coldiron.armor").replace("%x", String.valueOf(3)));
 		} else if(metal == Materials.mithril) {
-			tooltipList.add(I18n.translateToLocal("tooltip.mithril.armor"));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.mithril.armor"));
 		} else if(metal == Materials.starsteel) {
-			tooltipList.add(I18n.translateToLocal("tooltip.starsteel.armor").replace("%x", String.valueOf(10)));
+			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.starsteel.armor").replace("%x", String.valueOf(10)));
 		}
 	}
 }

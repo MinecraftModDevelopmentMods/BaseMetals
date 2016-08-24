@@ -1,10 +1,9 @@
 package cyano.basemetals.registry.recipe;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.*;
 
 /**
  * This class is an implementation of the ICrusherRecipe superclass. It uses the 
@@ -63,6 +62,6 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	 */
 	@Override
 	public Collection<ItemStack> getValidInputs() {
-		return Arrays.asList(input);
+		return Collections.singletonList(input);
 	}
 }

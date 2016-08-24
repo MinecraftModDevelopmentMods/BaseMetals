@@ -2,6 +2,7 @@ package cyano.basemetals.material;
 
 import cyano.basemetals.BaseMetals;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
 
@@ -106,9 +107,7 @@ public class MetalMaterial {
 		this.strength = strength;
 		this.magicAffinity = magic;
 		this.identifier = name;
-		String firstLetter = name.substring(0,1);
-		String rest = name.substring(1);
-		titleName = firstLetter.toUpperCase(Locale.ENGLISH)+rest;
+		titleName = StringUtils.capitalize(name);
 		enumName = (BaseMetals.MODID+"_"+name).toUpperCase(Locale.ENGLISH);
 		this.isRare = isRare;
 	}

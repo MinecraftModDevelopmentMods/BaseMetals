@@ -3,7 +3,6 @@ package cyano.basemetals.blocks;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -37,12 +36,12 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	public IBlockState withRotation(IBlockState state, Rotation rot) {
-		return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	}
 
 	@Override
 	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-		return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
 	}
 
 	private final MetalMaterial metal;
@@ -184,7 +183,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	public int getMetaFromState(final IBlockState bs) {
-		int i = ((EnumFacing)bs.getValue(FACING)).getIndex();
+		int i = (bs.getValue(FACING)).getIndex();
 		return i;
 	}
 
@@ -195,7 +194,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	public AxisAlignedBB getBoundingBox(final IBlockState bs, final IBlockAccess world, final BlockPos coord) {
-        final EnumFacing orientation = (EnumFacing) bs.getValue(FACING);
+        final EnumFacing orientation =  bs.getValue(FACING);
 		return BOXES[orientation.ordinal()];
 	}
 
@@ -204,7 +203,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 									  final AxisAlignedBB box, final List<AxisAlignedBB> collisionBoxList,
 									  final Entity entity) {
 
-		final EnumFacing orientation = (EnumFacing) world.getBlockState(coord).getValue(FACING);
+		final EnumFacing orientation =  world.getBlockState(coord).getValue(FACING);
 		super.addCollisionBoxToList(coord, box, collisionBoxList, BOXES[orientation.ordinal()]);
 	}
 

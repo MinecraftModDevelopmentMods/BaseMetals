@@ -1,10 +1,10 @@
 package cyano.basemetals.nei;
 
 import java.awt.Rectangle;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import codechicken.nei.api.stack.PositionedStack;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -16,7 +16,6 @@ import net.minecraftforge.fml.common.FMLLog;
 
 import org.lwjgl.opengl.GL11;
 
-import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
@@ -48,9 +47,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 		if(recipes == null)
 			return; // no crusher recipes
 		for(ICrusherRecipe r : recipes){
-			for(ItemStack input : r.getValidInputs()) {
-				arecipes.add(new CrusherPair(input.copy(), r.getOutput().copy()));
-			}
+			arecipes.addAll(r.getValidInputs().stream().map(input -> new CrusherPair(input.copy(), r.getOutput().copy())).collect(Collectors.toList()));
 		}
 	}
 
@@ -73,9 +70,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 			for(ICrusherRecipe r : recipes) {
 				if(r == null)
 					continue;
-				for(ItemStack input : r.getValidInputs()) {
-					arecipes.add(new CrusherPair(input.copy(), r.getOutput().copy()));
-				}
+				arecipes.addAll(r.getValidInputs().stream().map(input -> new CrusherPair(input.copy(), r.getOutput().copy())).collect(Collectors.toList()));
 			}
 		} else {
 			super.loadCraftingRecipes(outputId, results);
@@ -91,7 +86,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	public String getRecipeName() {
 		String key = "nei."+BaseMetals.MODID+".recipehandler.crusher.name";
 		if(I18n.canTranslate(key)) {
-			return I18n.translateToLocal(key);
+			return net.minecraft.client.resources.I18n.format(key);
 		} else {
 			return "Crusher";
 		}
@@ -150,7 +145,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 		}
 
 		public List<PositionedStack> getIngredients() {
-			return getCycledIngredients(cycleticks / 48, Arrays.asList(ingred));
+			return getCycledIngredients(cycleticks / 48, Collections.singletonList(ingred));
 		}
 
 		public PositionedStack getResult() {

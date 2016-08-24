@@ -37,11 +37,22 @@ repositories {
         name "DVS1 Maven FS"
         url "http://dvs1.progwml6.com/files/maven"
     }
+    maven {
+        name "Chickenbones Repo"
+        url "http://chickenbones.net/maven/"
+    }
+    maven {
+        name "tterrag"
+        url "http://maven.tterrag.com/"
+    }
 }
 
 dependencies {
     compile "slimeknights:TConstruct:1.10.2-2.4.0.jenkins327:deobf"
     compile "slimeknights.mantle:Mantle:1.10.2-0.10.4.jenkins163:deobf"
+    deobfCompile "mezz.jei:jei_1.10.2:+"
+    compile "codechicken:CodeChickenLib:1.10.2-2.2.3.57:deobf"
+    compile "codechicken:NotEnoughItems:1.10.2-2.1.1.146:deobf"
 }
 
 processResources {

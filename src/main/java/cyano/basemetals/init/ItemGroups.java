@@ -18,9 +18,7 @@ public class ItemGroups {
 		return delta;
 	};
 
-	public static CreativeTabs tab_blocks;
-	public static CreativeTabs tab_items;
-	public static CreativeTabs tab_tools;
+	public static CreativeTabs tab;
 
 	@SuppressWarnings("unused")
 	private static Item blockItem;
@@ -38,16 +36,11 @@ public class ItemGroups {
 
 		// placeholders
 		blockItem = Items.copper_crackhammer;
-//		itemItem = Items.copper_crackhammer;
-//		toolItem = Items.copper_crackhammer;
 
-		tab_blocks = FunctionalCreativeTab.create(BaseMetals.MODID.concat(".blocks"))
+		tab = FunctionalCreativeTab.create(BaseMetals.MODID.concat(".blocks"))
 				.setIconMetadata(3)
 				.setIcon(blockItem)
 				.setItemSortingAlgorithm(sortingAlgorithm);
-
-		tab_items = tab_blocks;
-		tab_tools = tab_items;
 
 		initDone = true;
 	}
