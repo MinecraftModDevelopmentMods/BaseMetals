@@ -3,6 +3,8 @@ package cyano.basemetals;
 import cyano.basemetals.data.DataConstants;
 import cyano.basemetals.data.DataConstants;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
+import cyano.basemetals.stabiliser.IStableInfo;
+import cyano.basemetals.stabiliser.Stabiliser;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,6 +17,7 @@ import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
@@ -396,6 +399,25 @@ public class BaseMetals
 			// item not found
 			FMLLog.severe("Failed to find item or block for ID '"+id+"'");
 			return null;
+		}
+	}
+
+
+	@EventHandler
+	public void IMC(FMLInterModComms.IMCEvent event) {
+		for (final FMLInterModComms.IMCMessage imcMessage : event.getMessages()) {
+			if (imcMessage.key.equalsIgnoreCase("stabiliser-register") && imcMessage.isStringMessage()) {
+				try {
+					Class clazz = Class.forName(imcMessage.getStringValue());
+					for (Class interfaz : clazz.getInterfaces()) {
+						if (interfaz == IStableInfo.class) Stabiliser.INSTANCE.register((IStableInfo) clazz.newInstance());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else if (imcMessage.key.equalsIgnoreCase("stabiliser-isloaded") && imcMessage.isStringMessage()) {
+				FMLInterModComms.sendMessage(imcMessage.getSender(), "loaded-reply", Stabiliser.INSTANCE.isAddonLoaded(imcMessage.getStringValue())? "YES" : "NO");
+			}
 		}
 	}
 }
