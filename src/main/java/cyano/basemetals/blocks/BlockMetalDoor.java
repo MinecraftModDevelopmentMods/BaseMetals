@@ -20,6 +20,7 @@ import java.util.Random;
 
 /**
  * Door Block
+ *
  * @author DrCyano
  *
  */
@@ -28,7 +29,7 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 	private final MetalMaterial metal;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public BlockMetalDoor(MetalMaterial metal) {

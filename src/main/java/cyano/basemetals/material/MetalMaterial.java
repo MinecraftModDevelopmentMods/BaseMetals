@@ -108,7 +108,7 @@ public class MetalMaterial {
 		this.magicAffinity = magic;
 		this.identifier = name;
 		titleName = StringUtils.capitalize(name);
-		enumName = (BaseMetals.MODID+"_"+name).toUpperCase(Locale.ENGLISH);
+		enumName = (BaseMetals.MODID + "_" + name).toUpperCase(Locale.ENGLISH);
 		this.isRare = isRare;
 	}
 	
@@ -130,7 +130,8 @@ public class MetalMaterial {
 	}
 	@Override
 	public boolean equals(Object o) {
-		if(o == this) return true;
+		if(o == this)
+			return true;
 		if(o.hashCode() == this.hashCode() && o instanceof MetalMaterial) {
 			MetalMaterial other = (MetalMaterial)o;
 			return this.identifier.equals(other.identifier); 
@@ -160,24 +161,30 @@ public class MetalMaterial {
 	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool equivalent)
 	 */
 	public int getRequiredHarvestLevel() {
-		return (int)clamp((0.9f*hardness / 3f), -1,3); 
+		return (int)clamp((0.9f * hardness / 3f), -1, 3); 
 	}
 
 	static int clamp(int x, int min, int max) {
-		if(x < min) return min;
-		if(x > max) return max;
+		if(x < min)
+			return min;
+		if(x > max)
+			return max;
 		return x;
 	}
 
 	static float clamp(float x, float min, float max) {
-		if(x < min) return min;
-		if(x > max) return max;
+		if(x < min)
+			return min;
+		if(x > max)
+			return max;
 		return x;
 	}
 
 	static double clamp(double x, double min, double max) {
-		if(x < min) return min;
-		if(x > max) return max;
+		if(x < min)
+			return min;
+		if(x > max)
+			return max;
 		return x;
 	}
 

@@ -7,6 +7,9 @@ package cyano.basemetals.init;
  */
 public abstract class WorldGen {
 
+	/**
+	 *
+	 */
 	public static void init() {
 		// do nothing, for now
 	}

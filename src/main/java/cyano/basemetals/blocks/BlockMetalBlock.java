@@ -45,7 +45,8 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		this.blockHardness = metal.getMetalBlockHardness();
 		this.blockResistance = metal.getBlastResistance();
 		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
-		if(glows) this.setLightLevel(0.5f);
+		if(glows)
+			this.setLightLevel(0.5f);
 	}
 
 	///// OVERRIDE OF ALL METHODS THAT DEPEND ON BLOCK MATERIAL: /////

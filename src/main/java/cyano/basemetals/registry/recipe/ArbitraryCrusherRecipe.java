@@ -27,8 +27,10 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	public ArbitraryCrusherRecipe(ItemStack input, ItemStack output) {
 		this.input = input;
 		this.output = output;
-		if(input == null) throw new NullPointerException(this.getClass().getName() + ": cannot have null input item");
-		if(output == null) throw new NullPointerException(this.getClass().getName() + ": cannot have null output item");
+		if(input == null)
+			throw new NullPointerException(this.getClass().getName() + ": cannot have null input item");
+		if(output == null)
+			throw new NullPointerException(this.getClass().getName() + ": cannot have null output item");
 	}
 
 	/**

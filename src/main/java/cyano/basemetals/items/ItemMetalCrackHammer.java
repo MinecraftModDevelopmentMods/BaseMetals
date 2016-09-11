@@ -41,6 +41,10 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	private final boolean regenerates;
 	private final long regenInterval = 200;
 
+	/**
+	 *
+	 * @param metal
+	 */
 	public ItemMetalCrackHammer(MetalMaterial metal) {
 		super(1 + Materials.getToolMaterialFor(metal).getDamageVsEntity(), attack_speed, Materials.getToolMaterialFor(metal), new HashSet<Block>());
 		this.metal = metal;
@@ -88,7 +92,8 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	public EnumActionResult onItemUse(final ItemStack item, final EntityPlayer player, final World w,
 									  final BlockPos coord, EnumHand hand, final EnumFacing facing,
 									  final float partialX, final float partialY, final float partialZ) {
-		if(facing != EnumFacing.UP) return EnumActionResult.PASS;
+		if(facing != EnumFacing.UP)
+			return EnumActionResult.PASS;
 		List<EntityItem> entities = w.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(
 				coord.getX(), coord.getY() + 1, coord.getZ(),
 				coord.getX() + 1,coord.getY() + 2, coord.getZ() + 1));
@@ -150,11 +155,13 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	}
 	
 	protected ICrusherRecipe getCrusherRecipe(IBlockState block) {
-		if(block == null || Item.getItemFromBlock(block.getBlock()) == null)return null;
+		if(block == null || Item.getItemFromBlock(block.getBlock()) == null)
+			return null;
 		//return CrusherRecipeRegistry.getInstance().getRecipeForInputItem(block);
 		return CrusherRecipeRegistry.getInstance().getRecipeForInputItem(new ItemStack(block.getBlock(), 1, block.getBlock().getMetaFromState(block)));
 	}
 
+	@Override
 	public ToolMaterial getToolMaterial() {
 		return this.toolMaterial;
 	}
@@ -164,6 +171,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		return this.toolMaterial.getEnchantability();
 	}
 
+	@Override
 	public String getToolMaterialName() {
 		return this.toolMaterial.toString();
 	}
@@ -172,7 +180,8 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
 		for(ItemStack i : acceptableItems ) {
-			if(ItemStack.areItemsEqual(i, repairMaterial)) return true;
+			if(ItemStack.areItemsEqual(i, repairMaterial))
+				return true;
 		}
 		return false;
 	}

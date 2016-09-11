@@ -14,6 +14,11 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import net.minecraft.item.ItemStack;
 
+/**
+ *
+ * @author Jasmine Iwanek
+ *
+ */
 @JEIPlugin
 public class BaseMetalsJEIPlugin extends BlankModPlugin {
 

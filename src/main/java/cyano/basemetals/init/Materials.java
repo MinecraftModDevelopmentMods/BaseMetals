@@ -16,8 +16,9 @@ import java.util.Map;
 
 /**
  * This class initializes all of the metal materials in Base Metals. It also
- * contains utility methods for looking up materials by name and finding the 
+ * contains utility methods for looking up materials by name and finding the
  * tool and armor material equivalents for a given metal.
+ *
  * @author DrCyano
  *
  */
@@ -56,7 +57,7 @@ public abstract class Materials {
 	private static boolean initDone = false;
 
 	/**
-	 * 
+	 *
 	 */
 	public static void init() {
 		if(initDone)
@@ -96,13 +97,13 @@ public abstract class Materials {
 	}
 
 	private static MetalMaterial addMaterial(String name, double hardness, double strength, double magic) {
-		MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic);
+		final MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic);
 		registerMaterial(name, m);
 		return m;
 	}
 
 	private static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic) {
-		MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic, true);
+		final MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic, true);
 		registerMaterial(name, m);
 		return m;
 	}

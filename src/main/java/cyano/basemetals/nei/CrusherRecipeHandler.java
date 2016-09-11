@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import codechicken.nei.api.stack.PositionedStack;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -16,11 +15,18 @@ import net.minecraftforge.fml.common.FMLLog;
 
 import org.lwjgl.opengl.GL11;
 
+import codechicken.nei.api.stack.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import cyano.basemetals.registry.recipe.ICrusherRecipe;
 
+/**
+ *
+ * @author Jasmine Iwanek
+ *
+ */
 public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
@@ -102,9 +108,19 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 		return GuiCrusher.class;
 	}
 
+	/**
+	 * 
+	 * @author Jasmine Iwanek
+	 *
+	 */
 	public static class GuiCrusher extends GuiContainer {
 
 		ResourceLocation guiDisplayImage = new ResourceLocation(BaseMetals.MODID + ":textures/gui/nei/nei_crusher.png");
+
+		/**
+		 * 
+		 * @param container
+		 */
 		public GuiCrusher(Container container) {
 			super(container);
 		}
@@ -118,7 +134,12 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 			this.drawTexturedModalRect(x, y, 0, 0, 176, 76); // x, y, textureOffsetX, textureOffsetY, width, height)
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @author Jasmine Iwanek
+	 *
+	 */
 	public static class ContainerCrusher extends Container {
 
 		@Override
@@ -126,9 +147,19 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 			return true;
 		}
 	}
-	
+
+	/**
+	 *
+	 * @author Jasmine Iwanek
+	 *
+	 */
 	public class CrusherPair extends CachedRecipe {
 
+		/**
+		 * 
+		 * @param ingred
+		 * @param result
+		 */
 		public CrusherPair(ItemStack ingred, ItemStack result) {
 			if(ingred == null || result == null) {
 				FMLLog.warning("Added null item to NEI GUI: "+ingred+" -> "+result);
@@ -144,10 +175,12 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 			this.result = new PositionedStack(result, 123, 23);
 		}
 
+		@Override
 		public List<PositionedStack> getIngredients() {
 			return getCycledIngredients(cycleticks / 48, Collections.singletonList(ingred));
 		}
 
+		@Override
 		public PositionedStack getResult() {
 			return result;
 		}

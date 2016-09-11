@@ -26,6 +26,10 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 	protected final boolean regenerates;
 	protected final long regenInterval = 200; 
 
+	/**
+	 *
+	 * @param metal
+	 */
 	public ItemMetalAxe(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));
 		this.metal = metal;
@@ -37,6 +41,7 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 		this.regenerates = metal.equals(Materials.starsteel);
 	}
 
+	@Override
 	public ToolMaterial getToolMaterial() {
 		return this.toolMaterial;
 	}
@@ -46,6 +51,7 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 		return this.toolMaterial.getEnchantability();
 	}
 
+	@Override
 	public String getToolMaterialName() {
 		return this.toolMaterial.toString();
 	}

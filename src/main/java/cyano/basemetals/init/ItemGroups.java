@@ -11,24 +11,26 @@ import net.minecraft.item.*;
  */
 public class ItemGroups {
 
-	public static final java.util.function.BiFunction<ItemStack,ItemStack,Integer> sortingAlgorithm = (ItemStack a,ItemStack b)->{
+	public static final java.util.function.BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (ItemStack a,ItemStack b)->{
 		int delta = Items.getSortingValue(a) - Items.getSortingValue(b);
 		if(delta == 0)
 			return a.getItem().getUnlocalizedName().compareToIgnoreCase(b.getItem().getUnlocalizedName());
 		return delta;
 	};
 
-	public static CreativeTabs tab;
+	public static CreativeTabs tab_blocks;
+	public static CreativeTabs tab_items;
+	public static CreativeTabs tab_tools;
 
 	@SuppressWarnings("unused")
 	private static Item blockItem;
-//	private static Item itemItem;
-//	private static Item toolItem;
+	// private static Item itemItem;
+	// private static Item toolItem;
 
 	private static boolean initDone = false;
 
 	/**
-	 * 
+	 *
 	 */
 	public static void init() {
 		if(initDone)
@@ -36,11 +38,16 @@ public class ItemGroups {
 
 		// placeholders
 		blockItem = Items.copper_crackhammer;
+		// itemItem = Items.copper_crackhammer;
+		// toolItem = Items.copper_crackhammer;
 
-		tab = FunctionalCreativeTab.create(BaseMetals.MODID.concat(".blocks"))
+		tab_blocks = FunctionalCreativeTab.create(BaseMetals.MODID.concat(".blocks"))
 				.setIconMetadata(3)
 				.setIcon(blockItem)
 				.setItemSortingAlgorithm(sortingAlgorithm);
+
+		tab_items = tab_blocks;
+		tab_tools = tab_items;
 
 		initDone = true;
 	}

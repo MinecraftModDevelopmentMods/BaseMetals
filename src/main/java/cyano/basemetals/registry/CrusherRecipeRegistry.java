@@ -78,7 +78,8 @@ public class CrusherRecipeRegistry {
 	 * @param output The item to create as the result of this crusher recipe.
 	 */
 	public static void addNewCrusherRecipe(final ItemStack input, final ItemStack output) {
-		if(input == null || output == null) FMLLog.severe("%s: %s: Crusher recipe not registered because of null input or output. \n %s", 
+		if(input == null || output == null)
+			FMLLog.severe("%s: %s: Crusher recipe not registered because of null input or output. \n %s", 
 				BaseMetals.MODID, CrusherRecipeRegistry.class,
 				Arrays.toString(Thread.currentThread().getStackTrace()).replace(", ", "\n").replace("[", "").replace("]", "")
 				);

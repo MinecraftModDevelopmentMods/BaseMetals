@@ -55,10 +55,22 @@ public class VillagerTradeHelper {
 		}
 	}
 
+	/**
+	 * 
+	 * @param append
+	 * @param array
+	 * @param indices
+	 */
 	public static void appendToMultidimensionalArray(Object append, Object array, int... indices) {
 		appendToMultidimensionalArray(Collections.singletonList(append).toArray(), array, indices);
 	}
 
+	/**
+	 *
+	 * @param append
+	 * @param array
+	 * @param indices
+	 */
 	public static void appendToMultidimensionalArray(Object[] append, Object array, int... indices) {
 		// get the lowest level array
 		Object prevArray = null;
@@ -96,6 +108,13 @@ public class VillagerTradeHelper {
 		Array.set(prevArray,indices[indices.length - 1], newArray);
 	}
 
+	/**
+	 * 
+	 * @param array
+	 * @param newSize
+	 * @param fill
+	 * @return
+	 */
 	public static Object expandArray(Object array, int newSize, Object fill) {
 		Object newArray = Array.newInstance(array.getClass().getComponentType(), newSize);
 		if(Array.getLength(array) == 0)
@@ -107,6 +126,12 @@ public class VillagerTradeHelper {
 		return newArray;
 	}
 
+	/**
+	 *
+	 * @param v
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 */
 	public static void unlockPrivateFinalField(Field v) throws NoSuchFieldException, IllegalAccessException {
 		v.setAccessible(true);
 		Field modField = Field.class.getDeclaredField("modifiers");
@@ -114,6 +139,11 @@ public class VillagerTradeHelper {
 		modField.setInt(v, v.getModifiers() & ~Modifier.FINAL);
 	}
 
+	/**
+	 *
+	 * @param c
+	 * @return
+	 */
 	public static Field getTradeArrayFromClass(Class<?> c) {
 		// search for 4D array of ITradeList objects
 		for(Field f : c.getDeclaredFields()) {

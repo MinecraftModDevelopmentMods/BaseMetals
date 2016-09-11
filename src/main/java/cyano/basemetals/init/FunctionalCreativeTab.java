@@ -35,8 +35,10 @@ public class FunctionalCreativeTab extends CreativeTabs {
 
 	@Override
 	public Item getTabIconItem() {
-		if(icon!=null) return icon.getItem();
-		else return net.minecraft.init.Items.APPLE;
+		if(icon!=null)
+			return icon.getItem();
+		else
+			return net.minecraft.init.Items.APPLE;
 	}
 
 	/**
@@ -70,7 +72,8 @@ public class FunctionalCreativeTab extends CreativeTabs {
 
 	@Override
 	public int getIconItemDamage() {
-		if(icon!=null) return icon.getMetadata();
+		if(icon!=null)
+			return icon.getMetadata();
 		return 0;
 	}
 
@@ -97,12 +100,15 @@ public class FunctionalCreativeTab extends CreativeTabs {
 	@SideOnly(Side.CLIENT)
 	public void displayAllRelevantItems(List<ItemStack> itemList) {
 		super.displayAllRelevantItems(itemList);
-		if (itemSortingAlgorithm != null) itemList.sort(itemSortingAlgorithm);
+		if (itemSortingAlgorithm != null)
+			itemList.sort(itemSortingAlgorithm);
 	}
 
 	public FunctionalCreativeTab setIconMetadata(int meta) {
-		if(this.icon!=null) this.icon.setItemDamage(meta);
-		else FMLLog.bigWarning("No tab icon has been set, the metadata will not work");
+		if(this.icon!=null)
+			this.icon.setItemDamage(meta);
+		else
+			FMLLog.bigWarning("No tab icon has been set, the metadata will not work");
 		return this;
 	}
 

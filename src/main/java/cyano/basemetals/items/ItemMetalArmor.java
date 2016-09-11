@@ -103,7 +103,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 						starsteelUpdateCache.put(player, new AtomicInteger(0));
 					}
 					starsteelUpdateCache.get(player).incrementAndGet();
-					if(armorItem == cyano.basemetals.init.Items.starsteel_boots) player.addStat(Achievements.moon_boots, 1);
+					if(armorItem == cyano.basemetals.init.Items.starsteel_boots)
+						player.addStat(Achievements.moon_boots, 1);
 					break starsteel;
 				}
 			}
@@ -130,7 +131,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		} else {
 			// apply potion effects. Note that "Level I" is actually effect level 0 in the effect constructor 
 			starsteel: {
-				if(!(starsteelUpdateCache.containsKey(player) == false)) break starsteel;
+				if(starsteelUpdateCache.containsKey(player))
+					break starsteel;
 				int num = starsteelUpdateCache.get(player).getAndSet(0);
 				if(num == 0)
 					break starsteel;
@@ -143,7 +145,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 				break starsteel;
 			}
 			lead: {
-				if(leadUpdateCache.containsKey(player) == false) break lead;
+				if(!(leadUpdateCache.containsKey(player)))
+					break lead;
 				int level = leadUpdateCache.get(player).getAndSet(0) / 2;
 				if(level == 0)
 					break lead;
@@ -154,7 +157,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 				break lead;
 			}
 			adamantine: {
-				if(!adamantineUpdateCache.containsKey(player)) break adamantine;
+				if(!(adamantineUpdateCache.containsKey(player)))
+					break adamantine;
 				int num = adamantineUpdateCache.get(player).getAndSet(0);
 				int level = num / 2;
 				if(level == 0)
@@ -222,6 +226,11 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		}
 	}
 
+	/**
+	 *
+	 * @param metal
+	 * @return
+	 */
 	public static ItemMetalArmor createHelmet(MetalMaterial metal) {
 		ArmorMaterial material = cyano.basemetals.init.Materials.getArmorMaterialFor(metal);
 		if(material == null) {
@@ -230,7 +239,12 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		}
 		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.HEAD);
 	}
-	
+
+	/**
+	 * 
+	 * @param metal
+	 * @return
+	 */
 	public static ItemMetalArmor createChestplate(MetalMaterial metal) {
 		ArmorMaterial material = cyano.basemetals.init.Materials.getArmorMaterialFor(metal);
 		if(material == null) {
@@ -239,7 +253,12 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		}
 		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.CHEST);
 	}
-	
+
+	/**
+	 * 
+	 * @param metal
+	 * @return
+	 */
 	public static ItemMetalArmor createLeggings(MetalMaterial metal) {
 		ArmorMaterial material = cyano.basemetals.init.Materials.getArmorMaterialFor(metal);
 		if(material == null) {
@@ -249,7 +268,11 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.LEGS);
 	}
 
-	
+	/**
+	 * 
+	 * @param metal
+	 * @return
+	 */
 	public static ItemMetalArmor createBoots(MetalMaterial metal) {
 		ArmorMaterial material = cyano.basemetals.init.Materials.getArmorMaterialFor(metal);
 		if(material == null) {
@@ -270,6 +293,12 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		MetalToolEffects.addArmorSpecialPropertiesToolTip(metal, list);
 	}
 
+	/**
+	 * 
+	 * @param item
+	 * @param world
+	 * @param crafter
+	 */
 	public void extraEffectsOnCrafting(final ItemStack item, final World world, final EntityPlayer crafter) {
 		//
 	}
@@ -281,7 +310,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		// repair with string or wool
 		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
 		for(ItemStack i : acceptableItems ){
-			if(ItemStack.areItemsEqual(i, repairMaterial)) return true;
+			if(ItemStack.areItemsEqual(i, repairMaterial))
+				return true;
 		}
 		return false;
 	}

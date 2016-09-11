@@ -22,7 +22,7 @@ public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDicti
 	private final String oreDict;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public ItemMetalBlend(MetalMaterial metal) {
@@ -35,10 +35,13 @@ public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDicti
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
 		// achievement
-		if(metal == Materials.aquarium || metal == Materials.brass || metal == Materials.bronze
-				|| metal == Materials.electrum || metal == Materials.invar || metal == Materials.steel ) {
+		if((this.metal == Materials.aquarium)
+				|| (this.metal == Materials.brass)
+				|| (this.metal == Materials.bronze)
+				|| (this.metal == Materials.electrum)
+				|| (this.metal == Materials.invar)
+				|| (this.metal == Materials.steel))
 			crafter.addStat(Achievements.metallurgy, 1);
-		}
 	}
 
 	@Override

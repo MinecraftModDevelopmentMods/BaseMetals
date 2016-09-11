@@ -68,6 +68,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	 * @param face The face that the fire is coming from
 	 * @return A number ranging from 0 to 300 relating used to determine if the block will be consumed by fire
 	 */
+	@Override
 	public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face)
 	{
 		if(isFlammable)
@@ -84,6 +85,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	 * @param face The face that the fire is coming from
 	 * @return A number that is used to determine the speed of fire growth around the block
 	 */
+	@Override
 	public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
 	{
 		if(isFlammable)

@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 /**
  * Ingots
+ *
  * @author DrCyano
  *
  */
@@ -21,7 +22,7 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 	private final String oreDict;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public ItemMetalIngot(MetalMaterial metal) {
@@ -35,16 +36,25 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 		super.onCreated(item, world, crafter);
 		crafter.addStat(Achievements.this_is_new, 1);
 
-		if(metal == Materials.aquarium) crafter.addStat(Achievements.aquarium_maker, 1);
-		if(metal == Materials.brass) crafter.addStat(Achievements.brass_maker, 1);
-		if(metal == Materials.bronze) crafter.addStat(Achievements.bronze_maker, 1);
-		if(metal == Materials.electrum) crafter.addStat(Achievements.electrum_maker, 1);
-		if(metal == Materials.steel) crafter.addStat(Achievements.steel_maker, 1);
-		if(metal == Materials.invar) crafter.addStat(Achievements.invar_maker, 1);
-		if(metal == Materials.mithril) crafter.addStat(Achievements.mithril_maker, 1);
-		if(metal == Materials.cupronickel) crafter.addStat(Achievements.cupronickel_maker, 1);
+		if(metal == Materials.aquarium)
+			crafter.addStat(Achievements.aquarium_maker, 1);
+		else if(metal == Materials.brass)
+			crafter.addStat(Achievements.brass_maker, 1);
+		else if(metal == Materials.bronze)
+			crafter.addStat(Achievements.bronze_maker, 1);
+		else if(metal == Materials.electrum)
+			crafter.addStat(Achievements.electrum_maker, 1);
+		else if(metal == Materials.steel)
+			crafter.addStat(Achievements.steel_maker, 1);
+		else if(metal == Materials.invar)
+			crafter.addStat(Achievements.invar_maker, 1);
+		else if(metal == Materials.mithril)
+			crafter.addStat(Achievements.mithril_maker, 1);
+		else if(metal == Materials.cupronickel)
+			crafter.addStat(Achievements.cupronickel_maker, 1);
 	}
 
+	@Override
 	public String getOreDictionaryName() {
 		return oreDict;
 	}

@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
  * @author DrCyano
  *
  */
-public class GenericMetalItem extends Item  implements IMetalObject {
+public class GenericMetalItem extends Item implements IMetalObject {
 
 	private final MetalMaterial metal;
 

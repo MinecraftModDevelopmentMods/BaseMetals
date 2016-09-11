@@ -26,6 +26,10 @@ public class ItemMetalShovel extends ItemSpade implements IMetalObject {
 	private final boolean regenerates;
 	private final long regenInterval = 200;
 
+	/**
+	 *
+	 * @param metal
+	 */
 	public ItemMetalShovel(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));
 		this.metal = metal;
@@ -35,6 +39,7 @@ public class ItemMetalShovel extends ItemSpade implements IMetalObject {
 		regenerates = metal.equals(Materials.starsteel);
 	}
 
+	@Override
 	public ToolMaterial getToolMaterial() {
 		return this.toolMaterial;
 	}
@@ -44,6 +49,7 @@ public class ItemMetalShovel extends ItemSpade implements IMetalObject {
 		return this.toolMaterial.getEnchantability();
 	}
 
+	@Override
 	public String getToolMaterialName() {
 		return this.toolMaterial.toString();
 	}
@@ -52,7 +58,8 @@ public class ItemMetalShovel extends ItemSpade implements IMetalObject {
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
 		for(ItemStack i : acceptableItems ){
-			if(ItemStack.areItemsEqual(i, repairMaterial)) return true;
+			if(ItemStack.areItemsEqual(i, repairMaterial))
+				return true;
 		}
 		return false;
 	}

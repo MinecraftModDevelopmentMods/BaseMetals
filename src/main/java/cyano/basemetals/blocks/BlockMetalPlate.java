@@ -3,6 +3,7 @@ package cyano.basemetals.blocks;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -53,7 +54,12 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 	static {
 		for(int i = 0; i < EnumFacing.values().length; i++) {
 			EnumFacing orientation = EnumFacing.values()[i];
-			float x1 = 0, x2 = 1, y1 = 0,y2 = 1, z1 = 0, z2 = 1;
+			float x1 = 0;
+			float x2 = 1;
+			float y1 = 0;
+			float y2 = 1;
+			float z1 = 0;
+			float z2 = 1;
 			switch(orientation){
 				case DOWN:
 					y1 = 1f - thickness;
@@ -78,7 +84,11 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 			BOXES[orientation.ordinal()] = new AxisAlignedBB(x1, y1, z1, x2, y2, z2);
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @param metal
+	 */
 	public BlockMetalPlate(MetalMaterial metal) {
 		super(Material.IRON);
         this.blockSoundType = SoundType.METAL;
@@ -108,8 +118,10 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 									 final int i, final EntityLivingBase placer) {
 		IBlockState defaultState = this.getDefaultState().withProperty(FACING, face);
 		// redimension to face-local up and right dimensions
-		float up, right;
-		EnumFacing.Axis upRotationAxis, rightRotationAxis;
+		float up;
+		float right;
+		EnumFacing.Axis upRotationAxis;
+		EnumFacing.Axis rightRotationAxis;
 		switch(face){
 			case UP: // works
 				up = partialZ - 0.5F;
@@ -194,7 +206,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	public AxisAlignedBB getBoundingBox(final IBlockState bs, final IBlockAccess world, final BlockPos coord) {
-        final EnumFacing orientation =  bs.getValue(FACING);
+        final EnumFacing orientation = bs.getValue(FACING);
 		return BOXES[orientation.ordinal()];
 	}
 
@@ -203,7 +215,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 									  final AxisAlignedBB box, final List<AxisAlignedBB> collisionBoxList,
 									  final Entity entity) {
 
-		final EnumFacing orientation =  world.getBlockState(coord).getValue(FACING);
+		final EnumFacing orientation = world.getBlockState(coord).getValue(FACING);
 		super.addCollisionBoxToList(coord, box, collisionBoxList, BOXES[orientation.ordinal()]);
 	}
 

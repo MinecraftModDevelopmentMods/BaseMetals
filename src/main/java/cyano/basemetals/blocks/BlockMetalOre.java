@@ -39,7 +39,8 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 	}
 	@Override
 	public boolean canEntityDestroy(IBlockState bs, IBlockAccess w, BlockPos coord, Entity entity) {
-		if(this == cyano.basemetals.init.Blocks.starsteel_ore && entity instanceof net.minecraft.entity.boss.EntityDragon) return false;
+		if(this == cyano.basemetals.init.Blocks.starsteel_ore && entity instanceof net.minecraft.entity.boss.EntityDragon)
+			return false;
 		return super.canEntityDestroy(bs, w, coord, entity);
 	}
 

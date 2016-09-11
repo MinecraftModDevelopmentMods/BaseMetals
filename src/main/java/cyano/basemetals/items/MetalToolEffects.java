@@ -14,6 +14,13 @@ import net.minecraft.world.World;
  */
 public abstract class MetalToolEffects {
 
+	/**
+	 * 
+	 * @param metal
+	 * @param item
+	 * @param target
+	 * @param attacker
+	 */
 	public static void extraEffectsOnAttack(final MetalMaterial metal, final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker){
     	if(metal.equals(Materials.coldiron)) {
     		if(target.isImmuneToFire()) {
@@ -42,10 +49,22 @@ public abstract class MetalToolEffects {
     	}
     }
 
+	/**
+	 * 
+	 * @param metal
+	 * @param item
+	 * @param world
+	 * @param crafter
+	 */
 	public static void extraEffectsOnCrafting(final MetalMaterial metal, final ItemStack item, final World world, final EntityPlayer crafter) {
 		// do nothing for now. This would be where achievements or automatic enchantments could appear
 	}
 
+	/**
+	 * 
+	 * @param metal
+	 * @param tooltipList
+	 */
 	public static void addToolSpecialPropertiesToolTip(MetalMaterial metal, java.util.List<String> tooltipList) {
 		if(metal == Materials.adamantine) {
 			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.adamantine.tool")
@@ -64,6 +83,11 @@ public abstract class MetalToolEffects {
 		}
 	}
 
+	/**
+	 * 
+	 * @param metal
+	 * @param tooltipList
+	 */
 	public static void addArmorSpecialPropertiesToolTip(MetalMaterial metal, java.util.List<String> tooltipList) {
 		if(metal == Materials.adamantine) {
 			tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.adamantine.armor").replace("%x", String.valueOf(4)));

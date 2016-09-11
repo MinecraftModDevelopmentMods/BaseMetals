@@ -29,6 +29,10 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 	protected final long regenInterval = 200; 
 	protected final float attackDamage;
 
+	/**
+	 *
+	 * @param metal
+	 */
 	public ItemMetalSword(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));
 		this.metal = metal;

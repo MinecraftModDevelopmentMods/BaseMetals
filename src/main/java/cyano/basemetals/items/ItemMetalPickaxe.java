@@ -30,6 +30,10 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 	private final boolean regenerates;
 	private final long regenInterval = 200; 
 
+	/**
+	 *
+	 * @param metal
+	 */
 	public ItemMetalPickaxe(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));
 		this.metal = metal;
@@ -41,6 +45,7 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 		regenerates = metal.equals(Materials.starsteel);
 	}
 
+	@Override
 	public ToolMaterial getToolMaterial() {
 		return this.toolMaterial;
 	}
@@ -50,6 +55,7 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 		return this.toolMaterial.getEnchantability();
 	}
 
+	@Override
 	public String getToolMaterialName() {
 		return this.toolMaterial.toString();
 	}

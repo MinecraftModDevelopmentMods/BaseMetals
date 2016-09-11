@@ -25,6 +25,7 @@ public class ItemMetalPowder extends net.minecraft.item.Item implements IOreDict
 		this.oreDict = "dust" + metal.getCapitalizedName();
 	}
 
+	@Override
 	public String getOreDictionaryName() {
 		return oreDict;
 	}

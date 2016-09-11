@@ -10,6 +10,11 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
+/**
+ * 
+ * @author Jasmine Iwanek
+ *
+ */
 public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	private final ResourceLocation bgtex = new ResourceLocation(BaseMetals.MODID + ":textures/gui/nei/nei_crusher.png");
@@ -19,6 +24,10 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 	private static final int inputSlot = 0;
 	private static final int outputSlot = 1;
 
+	/**
+	 *
+	 * @param guiHelper
+	 */
 	public JEICrusherRecipeCategory(IGuiHelper guiHelper) {
 		background = guiHelper.createDrawable(bgtex, 24, 26, 128, 32);
 	}
@@ -47,7 +56,8 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
-		int x = 45, y = 7;
+		int x = 45;
+		int y = 7;
 		guiItemStacks.init(inputSlot, true, x, y);
 		guiItemStacks.init(outputSlot, false, x + 58, y);
 

@@ -25,6 +25,7 @@ public class ItemMetalNugget extends net.minecraft.item.Item implements IOreDict
 		this.oreDict = "nugget" + metal.getCapitalizedName();
 	}
 
+	@Override
 	public String getOreDictionaryName() {
 		return oreDict;
 	}

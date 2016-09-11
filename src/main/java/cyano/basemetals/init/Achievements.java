@@ -34,7 +34,7 @@ public abstract class Achievements {
 	private static boolean initDone = false;
 
 	/**
-	 * 
+	 *
 	 */
 	public static void init() {
 		if(initDone)

@@ -30,6 +30,10 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 	protected final boolean regenerates;
 	protected final long regenInterval = 200; 
 
+	/**
+	 *
+	 * @param metal
+	 */
 	public ItemMetalHoe(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));
 		this.metal = metal;
@@ -105,6 +109,7 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 		return metal;
 	}
 
+	@Override
 	public String getMaterialName() {
 		return metal.getName();
 	}
