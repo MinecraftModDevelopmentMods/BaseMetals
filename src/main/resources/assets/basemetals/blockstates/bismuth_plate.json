@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "basemetals:bismuth_plate", "x": 90  },
+        "facing=up":    { "model": "basemetals:bismuth_plate", "x": 270 },
+        "facing=north": { "model": "basemetals:bismuth_plate"           },
+        "facing=south": { "model": "basemetals:bismuth_plate", "y": 180 },
+        "facing=west":  { "model": "basemetals:bismuth_plate", "y": 270 },
+        "facing=east":  { "model": "basemetals:bismuth_plate", "y": 90  }
+    }
+}

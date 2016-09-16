@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/adamantine_block",
+        "top": "basemetals:blocks/adamantine_block",
+        "side": "basemetals:blocks/adamantine_block"
+    }
+}

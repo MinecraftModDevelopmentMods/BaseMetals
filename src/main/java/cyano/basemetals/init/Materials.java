@@ -28,25 +28,28 @@ public abstract class Materials {
 	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 	
-	public static MetalMaterial copper;
-	public static MetalMaterial silver;
-	public static MetalMaterial tin;
-	public static MetalMaterial lead;
-	public static MetalMaterial nickel;
-	public static MetalMaterial bronze;
-	public static MetalMaterial brass;
-	public static MetalMaterial steel;
-	public static MetalMaterial invar;
-	public static MetalMaterial electrum;
-	public static MetalMaterial coldiron;
-	public static MetalMaterial mithril;
+	public static MetalMaterial antimony;
 	public static MetalMaterial adamantine;
-	public static MetalMaterial starsteel;
-	public static MetalMaterial zinc;
 	public static MetalMaterial aquarium;
+	public static MetalMaterial bismuth;
+	public static MetalMaterial brass;
+	public static MetalMaterial bronze;
+	public static MetalMaterial coldiron;
+	public static MetalMaterial copper;
 	public static MetalMaterial cupronickel;
+	public static MetalMaterial electrum;
+	public static MetalMaterial invar;
+	public static MetalMaterial lead;
+	public static MetalMaterial mithril;
+	public static MetalMaterial nickel;
+	public static MetalMaterial pewter;
 	public static MetalMaterial platinum;
-
+	public static MetalMaterial silver;
+	public static MetalMaterial starsteel;
+	public static MetalMaterial steel;
+	public static MetalMaterial tin;
+	public static MetalMaterial zinc;
+	
 	// vanilla imports
 	public static MetalMaterial vanilla_wood;
 	public static MetalMaterial vanilla_stone;
@@ -71,9 +74,11 @@ public abstract class Materials {
 		vanilla_diamond = addMaterial("diamond", 10, 15, 4);
 
 		// Mod Metals
+		antimony = addMaterial("antimony", 1, 1, 1);
 		adamantine = new AdamantineMaterial("adamantine", 12, 100, 0);
 		registerMaterial(adamantine.getName(), adamantine);
 		aquarium = addMaterial("aquarium", 4, 10, 15);
+		bismuth = addMaterial("bismuth", 1, 1, 1);
 		brass = addMaterial("brass", 3.5, 3, 9);
 		bronze = addMaterial("bronze", 8, 4, 4.5);
 		coldiron = addMaterial("coldiron", 7, 7, 7);
@@ -85,6 +90,7 @@ public abstract class Materials {
 		registerMaterial(lead.getName(), lead);
 		mithril = addMaterial("mithril", 9, 9, 9);
 		nickel = addMaterial("nickel", 4, 4, 7);
+		pewter = addMaterial("pewter", 1, 1, 1);
 		platinum = addRareMaterial("platinum", 3, 5, 15);
 		silver = addMaterial("silver", 5, 4, 6);
 		starsteel = new StarSteelMaterial("starsteel", 10, 25, 12);

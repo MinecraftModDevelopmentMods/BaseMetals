@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "basemetals:copper_pressure_plate_up" },
+        "powered=true": { "model": "basemetals:copper_pressure_plate_down" }
+    }
+}

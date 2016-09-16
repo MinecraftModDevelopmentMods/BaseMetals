@@ -1,0 +1,8 @@
+{
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "basemetals:blocks/pewter_block",
+        "top": "basemetals:blocks/pewter_block",
+        "side": "basemetals:blocks/pewter_block"
+    }
+}

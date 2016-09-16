@@ -62,17 +62,54 @@ public abstract class Items {
 	public static Item adamantine_rod;
 	public static Item adamantine_gear;
 
-	protected static Item adamantine_slab;
-	//protected static Item adamantine_shield;
+	public static Item adamantine_slab;
+	//public static Item adamantine_shield;
 
-	protected static Item adamantine_crystal;
-	protected static Item adamantine_shard;
-	protected static Item adamantine_clump;
-	protected static Item adamantine_powder_dirty;
+	public static Item adamantine_crystal;
+	public static Item adamantine_shard;
+	public static Item adamantine_clump;
+	public static Item adamantine_powder_dirty;
 
-	protected static Item adamantine_dense_plate;
-	protected static Item adamantine_crushed;
-	protected static Item adamantine_crushed_purified;
+	public static Item adamantine_dense_plate;
+	public static Item adamantine_crushed;
+	public static Item adamantine_crushed_purified;
+
+	public static Item antimony_arrow;
+	public static Item antimony_axe;
+	public static Item antimony_boots;
+	public static Item antimony_bolt;
+	public static Item antimony_bow;
+	public static Item antimony_chestplate;
+	public static Item antimony_crackhammer;
+	public static Item antimony_crossbow;
+	public static Item antimony_door;
+	public static Item antimony_fishing_rod;
+	public static Item antimony_helmet;
+	public static Item antimony_hoe;
+	public static Item antimony_horsearmor;
+	public static Item antimony_ingot;
+	public static Item antimony_leggings;
+	public static Item antimony_nugget;
+	public static Item antimony_pickaxe;
+	public static Item antimony_powder;
+	public static Item antimony_shears;
+	public static Item antimony_shovel;
+	public static Item antimony_smallpowder;
+	public static Item antimony_sword;
+	public static Item antimony_rod;
+	public static Item antimony_gear;
+
+	public static Item antimony_slab;
+	//public static Item antimony_shield;
+
+	public static Item antimony_crystal;
+	public static Item antimony_shard;
+	public static Item antimony_clump;
+	public static Item antimony_powder_dirty;
+
+	public static Item antimony_dense_plate;
+	public static Item antimony_crushed;
+	public static Item antimony_crushed_purified;
 
 	public static Item aquarium_arrow;
 	public static Item aquarium_axe;
@@ -100,17 +137,54 @@ public abstract class Items {
 	public static Item aquarium_rod;
 	public static Item aquarium_gear;
 
-	protected static Item aquarium_slab;
-	//protected static Item aquarium_shield;
+	public static Item aquarium_slab;
+	//public static Item aquarium_shield;
 
-	protected static Item aquarium_crystal;
-	protected static Item aquarium_shard;
-	protected static Item aquarium_clump;
-	protected static Item aquarium_powder_dirty;
+	public static Item aquarium_crystal;
+	public static Item aquarium_shard;
+	public static Item aquarium_clump;
+	public static Item aquarium_powder_dirty;
 
-	protected static Item aquarium_dense_plate;
-	protected static Item aquarium_crushed;
-	protected static Item aquarium_crushed_purified;
+	public static Item aquarium_dense_plate;
+	public static Item aquarium_crushed;
+	public static Item aquarium_crushed_purified;
+
+	public static Item bismuth_arrow;
+	public static Item bismuth_axe;
+	public static Item bismuth_boots;
+	public static Item bismuth_bolt;
+	public static Item bismuth_bow;
+	public static Item bismuth_chestplate;
+	public static Item bismuth_crackhammer;
+	public static Item bismuth_crossbow;
+	public static Item bismuth_door;
+	public static Item bismuth_fishing_rod;
+	public static Item bismuth_helmet;
+	public static Item bismuth_hoe;
+	public static Item bismuth_horsearmor;
+	public static Item bismuth_ingot;
+	public static Item bismuth_leggings;
+	public static Item bismuth_nugget;
+	public static Item bismuth_pickaxe;
+	public static Item bismuth_powder;
+	public static Item bismuth_shears;
+	public static Item bismuth_shovel;
+	public static Item bismuth_smallpowder;
+	public static Item bismuth_sword;
+	public static Item bismuth_rod;
+	public static Item bismuth_gear;
+
+	public static Item bismuth_slab;
+	//public static Item bismuth_shield;
+
+	public static Item bismuth_crystal;
+	public static Item bismuth_shard;
+	public static Item bismuth_clump;
+	public static Item bismuth_powder_dirty;
+
+	public static Item bismuth_dense_plate;
+	public static Item bismuth_crushed;
+	public static Item bismuth_crushed_purified;
 
 	public static Item brass_arrow;
 	public static Item brass_axe;
@@ -138,17 +212,17 @@ public abstract class Items {
 	public static Item brass_rod;
 	public static Item brass_gear;
 
-	protected static Item brass_slab;
-	//protected static Item brass_shield;
+	public static Item brass_slab;
+	//public static Item brass_shield;
 
-	protected static Item brass_crystal;
-	protected static Item brass_shard;
-	protected static Item brass_clump;
-	protected static Item brass_powder_dirty;
+	public static Item brass_crystal;
+	public static Item brass_shard;
+	public static Item brass_clump;
+	public static Item brass_powder_dirty;
 
-	protected static Item brass_dense_plate;
-	protected static Item brass_crushed;
-	protected static Item brass_crushed_purified;
+	public static Item brass_dense_plate;
+	public static Item brass_crushed;
+	public static Item brass_crushed_purified;
 
 	public static Item bronze_arrow;
 	public static Item bronze_axe;
@@ -176,17 +250,17 @@ public abstract class Items {
 	public static Item bronze_rod;
 	public static Item bronze_gear;
 
-	protected static Item bronze_slab;
-	//protected static Item bronze_shield;
+	public static Item bronze_slab;
+	//public static Item bronze_shield;
 
-	protected static Item bronze_crystal;
-	protected static Item bronze_shard;
-	protected static Item bronze_clump;
-	protected static Item bronze_powder_dirty;
+	public static Item bronze_crystal;
+	public static Item bronze_shard;
+	public static Item bronze_clump;
+	public static Item bronze_powder_dirty;
 
-	protected static Item bronze_dense_plate;
-	protected static Item bronze_crushed;
-	protected static Item bronze_crushed_purified;
+	public static Item bronze_dense_plate;
+	public static Item bronze_crushed;
+	public static Item bronze_crushed_purified;
 
 	public static Item carbon_powder;
 
@@ -214,17 +288,17 @@ public abstract class Items {
 	public static Item coldiron_rod;
 	public static Item coldiron_gear;
 
-	protected static Item coldiron_slab;
-	//protected static Item coldiron_shield;
+	public static Item coldiron_slab;
+	//public static Item coldiron_shield;
 
-	protected static Item coldiron_crystal;
-	protected static Item coldiron_shard;
-	protected static Item coldiron_clump;
-	protected static Item coldiron_powder_dirty;
+	public static Item coldiron_crystal;
+	public static Item coldiron_shard;
+	public static Item coldiron_clump;
+	public static Item coldiron_powder_dirty;
 
-	protected static Item coldiron_dense_plate;
-	protected static Item coldiron_crushed;
-	protected static Item coldiron_crushed_purified;
+	public static Item coldiron_dense_plate;
+	public static Item coldiron_crushed;
+	public static Item coldiron_crushed_purified;
 
 	public static Item copper_arrow;
 	public static Item copper_axe;
@@ -250,17 +324,13 @@ public abstract class Items {
 	public static Item copper_rod;
 	public static Item copper_gear;
 
-	protected static Item copper_slab;
-	//protected static Item copper_shield;
+	public static Item copper_slab;
+	//public static Item copper_shield;
 
-	protected static Item copper_crystal;
-	protected static Item copper_shard;
-	protected static Item copper_clump;
-	protected static Item copper_powder_dirty;
 
-	protected static Item copper_dense_plate;
-	protected static Item copper_crushed;
-	protected static Item copper_crushed_purified;
+	public static Item copper_dense_plate;
+	public static Item copper_crushed;
+	public static Item copper_crushed_purified;
 
 	public static Item cupronickel_arrow;
 	public static Item cupronickel_axe;
@@ -288,17 +358,17 @@ public abstract class Items {
 	public static Item cupronickel_rod;
 	public static Item cupronickel_gear;
 
-	protected static Item cupronickel_slab;
-	//protected static Item cupronickel_shield;
+	public static Item cupronickel_slab;
+	//public static Item cupronickel_shield;
 
-	protected static Item cupronickel_crystal;
-	protected static Item cupronickel_shard;
-	protected static Item cupronickel_clump;
-	protected static Item cupronickel_powder_dirty;
+	public static Item cupronickel_crystal;
+	public static Item cupronickel_shard;
+	public static Item cupronickel_clump;
+	public static Item cupronickel_powder_dirty;
 
-	protected static Item cupronickel_dense_plate;
-	protected static Item cupronickel_crushed;
-	protected static Item cupronickel_crushed_purified;
+	public static Item cupronickel_dense_plate;
+	public static Item cupronickel_crushed;
+	public static Item cupronickel_crushed_purified;
 
 	public static Item diamond_crackhammer;
 	public static Item diamond_gear;
@@ -329,17 +399,17 @@ public abstract class Items {
 	public static Item electrum_rod;
 	public static Item electrum_gear;
 
-	protected static Item electrum_slab;
-	//protected static Item electrum_shield;
+	public static Item electrum_slab;
+	//public static Item electrum_shield;
 
-	protected static Item electrum_crystal;
-	protected static Item electrum_shard;
-	protected static Item electrum_clump;
-	protected static Item electrum_powder_dirty;
+	public static Item electrum_crystal;
+	public static Item electrum_shard;
+	public static Item electrum_clump;
+	public static Item electrum_powder_dirty;
 
-	protected static Item electrum_dense_plate;
-	protected static Item electrum_crushed;
-	protected static Item electrum_crushed_purified;
+	public static Item electrum_dense_plate;
+	public static Item electrum_crushed;
+	public static Item electrum_crushed_purified;
 
 	public static Item gold_crackhammer;
 	public static Item gold_powder;
@@ -372,17 +442,17 @@ public abstract class Items {
 	public static Item invar_rod;
 	public static Item invar_gear;
 
-	protected static Item invar_slab;
-	//protected static Item invar_shield;
+	public static Item invar_slab;
+	//public static Item invar_shield;
 
-	protected static Item invar_crystal;
-	protected static Item invar_shard;
-	protected static Item invar_clump;
-	protected static Item invar_powder_dirty;
+	public static Item invar_crystal;
+	public static Item invar_shard;
+	public static Item invar_clump;
+	public static Item invar_powder_dirty;
 
-	protected static Item invar_dense_plate;
-	protected static Item invar_crushed;
-	protected static Item invar_crushed_purified;
+	public static Item invar_dense_plate;
+	public static Item invar_crushed;
+	public static Item invar_crushed_purified;
 
 	public static Item iron_crackhammer;
 	public static Item iron_nugget;
@@ -414,28 +484,23 @@ public abstract class Items {
 	public static Item lead_rod;
 	public static Item lead_gear;
 
-	protected static Item lead_slab;
-	//protected static Item lead_shield;
+	public static Item lead_slab;
+	//public static Item lead_shield;
 
-	protected static Item lead_crystal;
-	protected static Item lead_shard;
-	protected static Item lead_clump;
-	protected static Item lead_powder_dirty;
-
-	protected static Item lead_dense_plate;
-	protected static Item lead_crushed;
-	protected static Item lead_crushed_purified;
+	public static Item lead_dense_plate;
+	public static Item lead_crushed;
+	public static Item lead_crushed_purified;
 
 	public static Item mercury_ingot;
 	public static Item mercury_powder;
 
-	protected static Item mercury_crystal;
-	protected static Item mercury_shard;
-	protected static Item mercury_clump;
-	protected static Item mercury_powder_dirty;
+	public static Item mercury_crystal;
+	public static Item mercury_shard;
+	public static Item mercury_clump;
+	public static Item mercury_powder_dirty;
 
-	protected static Item mercury_crushed;
-	protected static Item mercury_crushed_purified;
+	public static Item mercury_crushed;
+	public static Item mercury_crushed_purified;
 
 	public static Item mithril_arrow;
 	public static Item mithril_axe;
@@ -463,17 +528,17 @@ public abstract class Items {
 	public static Item mithril_rod;
 	public static Item mithril_gear;
 
-	protected static Item mithril_slab;
-	//protected static Item mithril_shield;
+	public static Item mithril_slab;
+	//public static Item mithril_shield;
 
-	protected static Item mithril_crystal;
-	protected static Item mithril_shard;
-	protected static Item mithril_clump;
-	protected static Item mithril_powder_dirty;
+	public static Item mithril_crystal;
+	public static Item mithril_shard;
+	public static Item mithril_clump;
+	public static Item mithril_powder_dirty;
 
-	protected static Item mithril_dense_plate;
-	protected static Item mithril_crushed;
-	protected static Item mithril_crushed_purified;
+	public static Item mithril_dense_plate;
+	public static Item mithril_crushed;
+	public static Item mithril_crushed_purified;
 
 	public static Item nickel_arrow;
 	public static Item nickel_axe;
@@ -499,17 +564,55 @@ public abstract class Items {
 	public static Item nickel_rod;
 	public static Item nickel_gear;
 
-	protected static Item nickel_slab;
-	//protected static Item nickel_shield;
+	public static Item nickel_slab;
+	//public static Item nickel_shield;
 
-	protected static Item nickel_crystal;
-	protected static Item nickel_shard;
-	protected static Item nickel_clump;
-	protected static Item nickel_powder_dirty;
+	public static Item nickel_crystal;
+	public static Item nickel_shard;
+	public static Item nickel_clump;
+	public static Item nickel_powder_dirty;
 
-	protected static Item nickel_dense_plate;
-	protected static Item nickel_crushed;
-	protected static Item nickel_crushed_purified;
+	public static Item nickel_dense_plate;
+	public static Item nickel_crushed;
+	public static Item nickel_crushed_purified;
+
+	public static Item pewter_arrow;
+	public static Item pewter_axe;
+	public static Item pewter_blend;
+	public static Item pewter_boots;
+	public static Item pewter_bolt;
+	public static Item pewter_bow;
+	public static Item pewter_chestplate;
+	public static Item pewter_crackhammer;
+	public static Item pewter_crossbow;
+	public static Item pewter_door;
+	public static Item pewter_fishing_rod;
+	public static Item pewter_helmet;
+	public static Item pewter_hoe;
+	public static Item pewter_horsearmor;
+	public static Item pewter_ingot;
+	public static Item pewter_leggings;
+	public static Item pewter_nugget;
+	public static Item pewter_pickaxe;
+	public static Item pewter_powder;
+	public static Item pewter_shears;
+	public static Item pewter_shovel;
+	public static Item pewter_smallpowder;
+	public static Item pewter_sword;
+	public static Item pewter_rod;
+	public static Item pewter_gear;
+
+	public static Item pewter_slab;
+	//public static Item pewter_shield;
+
+	public static Item pewter_crystal;
+	public static Item pewter_shard;
+	public static Item pewter_clump;
+	public static Item pewter_powder_dirty;
+
+	public static Item pewter_dense_plate;
+	public static Item pewter_crushed;
+	public static Item pewter_crushed_purified;
 
 	public static Item platinum_arrow;
 	public static Item platinum_axe;
@@ -535,17 +638,17 @@ public abstract class Items {
 	public static Item platinum_rod;
 	public static Item platinum_gear;
 
-	protected static Item platinum_slab;
-	//protected static Item platinum_shield;
+	public static Item platinum_slab;
+	//public static Item platinum_shield;
 
-	protected static Item platinum_crystal;
-	protected static Item platinum_shard;
-	protected static Item platinum_clump;
-	protected static Item platinum_powder_dirty;
+	public static Item platinum_crystal;
+	public static Item platinum_shard;
+	public static Item platinum_clump;
+	public static Item platinum_powder_dirty;
 
-	protected static Item platinum_dense_plate;
-	protected static Item platinum_crushed;
-	protected static Item platinum_crushed_purified;
+	public static Item platinum_dense_plate;
+	public static Item platinum_crushed;
+	public static Item platinum_crushed_purified;
 
 	public static Item silver_arrow;
 	public static Item silver_axe;
@@ -571,17 +674,12 @@ public abstract class Items {
 	public static Item silver_rod;
 	public static Item silver_gear;
 
-	protected static Item silver_slab;
-	//protected static Item silver_shield;
+	public static Item silver_slab;
+	//public static Item silver_shield;
 
-	protected static Item silver_crystal;
-	protected static Item silver_shard;
-	protected static Item silver_clump;
-	protected static Item silver_powder_dirty;
-
-	protected static Item silver_dense_plate;
-	protected static Item silver_crushed;
-	protected static Item silver_crushed_purified;
+	public static Item silver_dense_plate;
+	public static Item silver_crushed;
+	public static Item silver_crushed_purified;
 
 	public static Item starsteel_arrow;
 	public static Item starsteel_axe;
@@ -607,17 +705,17 @@ public abstract class Items {
 	public static Item starsteel_rod;
 	public static Item starsteel_gear;
 
-	protected static Item starsteel_slab;
-	//protected static Item starsteel_shield;
+	public static Item starsteel_slab;
+	//public static Item starsteel_shield;
 
-	protected static Item starsteel_crystal;
-	protected static Item starsteel_shard;
-	protected static Item starsteel_clump;
-	protected static Item starsteel_powder_dirty;
+	public static Item starsteel_crystal;
+	public static Item starsteel_shard;
+	public static Item starsteel_clump;
+	public static Item starsteel_powder_dirty;
 
-	protected static Item starsteel_dense_plate;
-	protected static Item starsteel_crushed;
-	protected static Item starsteel_crushed_purified;
+	public static Item starsteel_dense_plate;
+	public static Item starsteel_crushed;
+	public static Item starsteel_crushed_purified;
 
 	public static Item steel_arrow;
 	public static Item steel_axe;
@@ -645,17 +743,17 @@ public abstract class Items {
 	public static Item steel_rod;
 	public static Item steel_gear;
 
-	protected static Item steel_slab;
-	//protected static Item steel_shield;
+	public static Item steel_slab;
+	//public static Item steel_shield;
 
-	protected static Item steel_crystal;
-	protected static Item steel_shard;
-	protected static Item steel_clump;
-	protected static Item steel_powder_dirty;
+	public static Item steel_crystal;
+	public static Item steel_shard;
+	public static Item steel_clump;
+	public static Item steel_powder_dirty;
 
-	protected static Item steel_dense_plate;
-	protected static Item steel_crushed;
-	protected static Item steel_crushed_purified;
+	public static Item steel_dense_plate;
+	public static Item steel_crushed;
+	public static Item steel_crushed_purified;
 
 	public static Item stone_crackhammer;
 	public static Item stone_rod;
@@ -685,17 +783,12 @@ public abstract class Items {
 	public static Item tin_rod;
 	public static Item tin_gear;
 
-	protected static Item tin_slab;
-	//protected static Item tin_shield;
+	public static Item tin_slab;
+	//public static Item tin_shield;
 
-	protected static Item tin_crystal;
-	protected static Item tin_shard;
-	protected static Item tin_clump;
-	protected static Item tin_powder_dirty;
-
-	protected static Item tin_dense_plate;
-	protected static Item tin_crushed;
-	protected static Item tin_crushed_purified;
+	public static Item tin_dense_plate;
+	public static Item tin_crushed;
+	public static Item tin_crushed_purified;
 
 	public static Item wood_crackhammer;
 	public static Item wood_rod;
@@ -724,17 +817,17 @@ public abstract class Items {
 	public static Item zinc_rod;
 	public static Item zinc_gear;
 
-	protected static Item zinc_slab;
-	//protected static Item zinc_shield;
+	public static Item zinc_slab;
+	//public static Item zinc_shield;
 
-	protected static Item zinc_crystal;
-	protected static Item zinc_shard;
-	protected static Item zinc_clump;
-	protected static Item zinc_powder_dirty;
+	public static Item zinc_crystal;
+	public static Item zinc_shard;
+	public static Item zinc_clump;
+	public static Item zinc_powder_dirty;
 
-	protected static Item zinc_dense_plate;
-	protected static Item zinc_crushed;
-	protected static Item zinc_crushed_purified;
+	public static Item zinc_dense_plate;
+	public static Item zinc_crushed;
+	public static Item zinc_crushed_purified;
 
 	private static boolean initDone = false;
 
@@ -833,6 +926,35 @@ public abstract class Items {
 		adamantine_crushed = createCrushed(Materials.adamantine);
 		adamantine_crushed_purified = createCrushedPurified(Materials.adamantine);
 
+		antimony_axe = createAxe(Materials.antimony);
+		antimony_boots = createBoots(Materials.antimony);
+		antimony_chestplate = createChestplate(Materials.antimony);
+		antimony_crackhammer = createCrackhammer(Materials.antimony);
+		antimony_door = createDoor(Materials.antimony, Blocks.antimony_door);
+		antimony_helmet = createHelmet(Materials.antimony);
+		antimony_hoe = createHoe(Materials.antimony);
+		antimony_ingot = createIngot(Materials.antimony);
+		antimony_leggings = createLeggings(Materials.antimony);
+		antimony_nugget = createNugget(Materials.antimony);
+		antimony_pickaxe = createPickaxe(Materials.antimony);
+		antimony_powder = createPowder(Materials.antimony);
+		antimony_shovel = createShovel(Materials.antimony);
+		antimony_sword = createSword(Materials.antimony);
+		antimony_rod = createRod(Materials.antimony);
+		antimony_gear = createGear(Materials.antimony);
+
+		antimony_slab = createSlab(Materials.antimony, Blocks.antimony_slab, Blocks.antimony_slab, Blocks.double_antimony_slab);
+		//antimony_shield = createShield(Materials.);
+
+		antimony_crystal = createCrystal(Materials.antimony);
+		antimony_shard = createShard(Materials.antimony);
+		antimony_clump = createClump(Materials.antimony);
+		antimony_powder_dirty = createDirtyPowder(Materials.antimony);
+
+		antimony_dense_plate = createDensePlate(Materials.antimony);
+		antimony_crushed = createCrushed(Materials.antimony);
+		antimony_crushed_purified = createCrushedPurified(Materials.antimony);
+
 		aquarium_axe = createAxe(Materials.aquarium);
 		aquarium_blend = createBlend(Materials.aquarium);
 		aquarium_boots = createBoots(Materials.aquarium);
@@ -862,6 +984,35 @@ public abstract class Items {
 		aquarium_dense_plate = createDensePlate(Materials.aquarium);
 		aquarium_crushed = createCrushed(Materials.aquarium);
 		aquarium_crushed_purified = createCrushedPurified(Materials.aquarium);
+
+		bismuth_axe = createAxe(Materials.bismuth);
+		bismuth_boots = createBoots(Materials.bismuth);
+		bismuth_chestplate = createChestplate(Materials.bismuth);
+		bismuth_crackhammer = createCrackhammer(Materials.bismuth);
+		bismuth_door = createDoor(Materials.bismuth, Blocks.bismuth_door);
+		bismuth_helmet = createHelmet(Materials.bismuth);
+		bismuth_hoe = createHoe(Materials.bismuth);
+		bismuth_ingot = createIngot(Materials.bismuth);
+		bismuth_leggings = createLeggings(Materials.bismuth);
+		bismuth_nugget = createNugget(Materials.bismuth);
+		bismuth_pickaxe = createPickaxe(Materials.bismuth);
+		bismuth_powder = createPowder(Materials.bismuth);
+		bismuth_shovel = createShovel(Materials.bismuth);
+		bismuth_sword = createSword(Materials.bismuth);
+		bismuth_rod = createRod(Materials.bismuth);
+		bismuth_gear = createGear(Materials.bismuth);
+
+		bismuth_slab = createSlab(Materials.bismuth, Blocks.bismuth_slab, Blocks.bismuth_slab, Blocks.double_bismuth_slab);
+		//bismuth_shield = createShield(Materials.);
+
+		bismuth_crystal = createCrystal(Materials.bismuth);
+		bismuth_shard = createShard(Materials.bismuth);
+		bismuth_clump = createClump(Materials.bismuth);
+		bismuth_powder_dirty = createDirtyPowder(Materials.bismuth);
+
+		bismuth_dense_plate = createDensePlate(Materials.bismuth);
+		bismuth_crushed = createCrushed(Materials.bismuth);
+		bismuth_crushed_purified = createCrushedPurified(Materials.bismuth);
 
 		brass_axe = createAxe(Materials.brass);
 		brass_blend = createBlend(Materials.brass);
@@ -977,11 +1128,6 @@ public abstract class Items {
 
 		copper_slab = createSlab(Materials.copper, Blocks.copper_slab, Blocks.copper_slab, Blocks.double_copper_slab);
 		//copper_shield = createShield(Materials.copper);
-
-		copper_crystal = createCrystal(Materials.copper);
-		copper_shard = createShard(Materials.copper);
-		copper_clump = createClump(Materials.copper);
-		copper_powder_dirty = createDirtyPowder(Materials.copper);
 
 		copper_dense_plate = createDensePlate(Materials.copper);
 		copper_crushed = createCrushed(Materials.copper);
@@ -1111,11 +1257,6 @@ public abstract class Items {
 		lead_slab = createSlab(Materials.lead, Blocks.lead_slab, Blocks.lead_slab, Blocks.double_lead_slab);
 		//lead_shield = createShield(Materials.lead);
 
-		lead_crystal = createCrystal(Materials.lead);
-		lead_shard = createShard(Materials.lead);
-		lead_clump = createClump(Materials.lead);
-		lead_powder_dirty = createDirtyPowder(Materials.lead);
-
 		lead_dense_plate = createDensePlate(Materials.lead);
 		lead_crushed = createCrushed(Materials.lead);
 		lead_crushed_purified = createCrushedPurified(Materials.lead);
@@ -1234,6 +1375,36 @@ public abstract class Items {
 		nickel_crushed = createCrushed(Materials.nickel);
 		nickel_crushed_purified = createCrushedPurified(Materials.nickel);
 
+		pewter_axe = createAxe(Materials.pewter);
+		pewter_blend = createBlend(Materials.pewter);
+		pewter_boots = createBoots(Materials.pewter);
+		pewter_chestplate = createChestplate(Materials.pewter);
+		pewter_crackhammer = createCrackhammer(Materials.pewter);
+		pewter_door = createDoor(Materials.pewter, Blocks.pewter_door);
+		pewter_helmet = createHelmet(Materials.pewter);
+		pewter_hoe = createHoe(Materials.pewter);
+		pewter_ingot = createIngot(Materials.pewter);
+		pewter_leggings = createLeggings(Materials.pewter);
+		pewter_nugget = createNugget(Materials.pewter);
+		pewter_pickaxe = createPickaxe(Materials.pewter);
+		pewter_powder = createPowder(Materials.pewter);
+		pewter_shovel = createShovel(Materials.pewter);
+		pewter_sword = createSword(Materials.pewter);
+		pewter_rod = createRod(Materials.pewter);
+		pewter_gear = createGear(Materials.pewter);
+
+		pewter_slab = createSlab(Materials.pewter, Blocks.pewter_slab, Blocks.pewter_slab, Blocks.double_pewter_slab);
+		//pewter_shield = createShield(Materials.);
+
+		// pewter_crystal = createCrystal(Materials.pewter);
+		// pewter_shard = createShard(Materials.pewter);
+		// pewter_clump = createClump(Materials.pewter);
+		// pewter_powder_dirty = createDirtyPowder(Materials.pewter);
+
+		// pewter_dense_plate = createDensePlate(Materials.pewter);
+		// pewter_crushed = createCrushed(Materials.pewter);
+		// pewter_crushed_purified = createCrushedPurified(Materials.pewter);
+
 		silver_axe = createAxe(Materials.silver);
 		silver_boots = createBoots(Materials.silver);
 		silver_chestplate = createChestplate(Materials.silver);
@@ -1253,11 +1424,6 @@ public abstract class Items {
 
 		silver_slab = createSlab(Materials.silver, Blocks.silver_slab, Blocks.silver_slab, Blocks.double_silver_slab);
 		//silver_shield = createShield(Materials.silver);
-
-		silver_crystal = createCrystal(Materials.silver);
-		silver_shard = createShard(Materials.silver);
-		silver_clump = createClump(Materials.silver);
-		silver_powder_dirty = createDirtyPowder(Materials.silver);
 
 		silver_dense_plate = createDensePlate(Materials.silver);
 		silver_crushed = createCrushed(Materials.silver);
@@ -1341,11 +1507,6 @@ public abstract class Items {
 
 		tin_slab = createSlab(Materials.tin, Blocks.tin_slab, Blocks.tin_slab, Blocks.double_tin_slab);
 		//tin_shield = createShield(Materials.tin);
-
-		tin_crystal = createCrystal(Materials.tin);
-		tin_shard = createShard(Materials.tin);
-		tin_clump = createClump(Materials.tin);
-		tin_powder_dirty = createDirtyPowder(Materials.tin);
 
 		tin_dense_plate = createDensePlate(Materials.tin);
 		tin_crushed = createCrushed(Materials.tin);
@@ -1529,7 +1690,7 @@ public abstract class Items {
 		return registerItem(ItemMetalArmor.createBoots(metal), metal.getName() + "_boots", metal, ItemGroups.tab_tools);
 	}
 
-	private static Item createHorsearmor(MetalMaterial metal) {
+	private static Item createHorseArmor(MetalMaterial metal) {
 		return registerItem(new ItemMetalHorseArmor(metal), metal.getName() + "_horsearmor", metal, ItemGroups.tab_tools);
 	}
 

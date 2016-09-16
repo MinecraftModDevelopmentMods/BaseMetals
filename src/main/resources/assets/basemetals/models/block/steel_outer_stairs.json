@@ -1,0 +1,8 @@
+{
+    "parent": "block/outer_stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/steel_block",
+        "top": "basemetals:blocks/steel_block",
+        "side": "basemetals:blocks/steel_block"
+    }
+}

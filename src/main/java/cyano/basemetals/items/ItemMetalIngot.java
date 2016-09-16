@@ -36,21 +36,21 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 		super.onCreated(item, world, crafter);
 		crafter.addStat(Achievements.this_is_new, 1);
 
-		if(metal == Materials.aquarium)
+		if(this.getMetalMaterial() == Materials.aquarium)
 			crafter.addStat(Achievements.aquarium_maker, 1);
-		else if(metal == Materials.brass)
+		else if(this.getMetalMaterial() == Materials.brass)
 			crafter.addStat(Achievements.brass_maker, 1);
-		else if(metal == Materials.bronze)
+		else if(this.getMetalMaterial() == Materials.bronze)
 			crafter.addStat(Achievements.bronze_maker, 1);
-		else if(metal == Materials.electrum)
+		else if(this.getMetalMaterial() == Materials.electrum)
 			crafter.addStat(Achievements.electrum_maker, 1);
-		else if(metal == Materials.steel)
+		else if(this.getMetalMaterial() == Materials.steel)
 			crafter.addStat(Achievements.steel_maker, 1);
-		else if(metal == Materials.invar)
+		else if(this.getMetalMaterial() == Materials.invar)
 			crafter.addStat(Achievements.invar_maker, 1);
-		else if(metal == Materials.mithril)
+		else if(this.getMetalMaterial() == Materials.mithril)
 			crafter.addStat(Achievements.mithril_maker, 1);
-		else if(metal == Materials.cupronickel)
+		else if(this.getMetalMaterial() == Materials.cupronickel)
 			crafter.addStat(Achievements.cupronickel_maker, 1);
 	}
 

@@ -1,0 +1,8 @@
+{
+    "parent": "basemetals:block/plate",
+    "textures": {
+        "top": "basemetals:blocks/bismuth_plate",
+        "side": "basemetals:blocks/bismuth_plate",
+        "bottom": "basemetals:blocks/bismuth_plate"
+    }
+}

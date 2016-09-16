@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "basemetals:coldiron_pressure_plate_up" },
+        "powered=true": { "model": "basemetals:coldiron_pressure_plate_down" }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/zinc_block",
+        "top": "basemetals:blocks/zinc_block",
+        "side": "basemetals:blocks/zinc_block"
+    }
+}

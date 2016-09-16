@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "basemetals:tin_pressure_plate_up" },
+        "powered=true": { "model": "basemetals:tin_pressure_plate_down" }
+    }
+}

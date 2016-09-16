@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/mithril_block",
+        "top": "basemetals:blocks/mithril_block",
+        "side": "basemetals:blocks/mithril_block"
+    }
+}

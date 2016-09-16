@@ -1,0 +1,8 @@
+{
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "basemetals:blocks/silver_block",
+        "top": "basemetals:blocks/silver_block",
+        "side": "basemetals:blocks/silver_block"
+    }
+}

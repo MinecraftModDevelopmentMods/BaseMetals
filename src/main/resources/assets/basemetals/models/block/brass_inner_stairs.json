@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/brass_block",
+        "top": "basemetals:blocks/brass_block",
+        "side": "basemetals:blocks/brass_block"
+    }
+}

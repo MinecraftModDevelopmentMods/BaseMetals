@@ -1,0 +1,8 @@
+{
+    "parent": "block/outer_stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/lead_block",
+        "top": "basemetals:blocks/lead_block",
+        "side": "basemetals:blocks/lead_block"
+    }
+}

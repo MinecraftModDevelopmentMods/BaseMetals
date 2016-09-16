@@ -1,0 +1,8 @@
+{
+    "parent": "block/outer_stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/coldiron_block",
+        "top": "basemetals:blocks/coldiron_block",
+        "side": "basemetals:blocks/coldiron_block"
+    }
+}

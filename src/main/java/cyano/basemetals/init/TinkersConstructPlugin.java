@@ -38,11 +38,11 @@ public class TinkersConstructPlugin {
 
 		if(Loader.isModLoaded(TCONSTRUCT_MODID)) {
 			final double d = 0; // durabilityFactorGeneral;
-//			System.out.println("DURABILITY FACTOR" + d);
+			// System.out.println("DURABILITY FACTOR" + d);
 			final float s = 0;// (float) speedFactorGeneral;
-//			System.out.println("SPEED FACTOR" + s);
+			// System.out.println("SPEED FACTOR" + s);
 			final float a = 0; // (float) attackFactorGeneral;
-//			System.out.println("ATTACK FACTOR" + a);
+			// System.out.println("ATTACK FACTOR" + a);
 
 //			final Material aluminum = new Material("aluminum", 0xFFC5C8C1);
 
@@ -126,7 +126,7 @@ public class TinkersConstructPlugin {
 		
 		// Set fluid used, Set whether craftable, set whether castable, adds the
 		// item with the value 144.
-		//material.setFluid(fluid).setCraftable(craft).setCastable(cast).addItem(item, 1, Material.VALUE_Ingot); TODO
+		material.setFluid(fluid).setCraftable(craft).setCastable(cast).addItem(item, 1, Material.VALUE_Ingot);
 		material.setRepresentativeItem(item); // Uses item as the picture?
 
 		// Probably don't need this

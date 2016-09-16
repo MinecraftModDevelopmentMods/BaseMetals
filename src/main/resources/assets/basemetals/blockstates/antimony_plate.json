@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "basemetals:antimony_plate", "x": 90  },
+        "facing=up":    { "model": "basemetals:antimony_plate", "x": 270 },
+        "facing=north": { "model": "basemetals:antimony_plate"           },
+        "facing=south": { "model": "basemetals:antimony_plate", "y": 180 },
+        "facing=west":  { "model": "basemetals:antimony_plate", "y": 270 },
+        "facing=east":  { "model": "basemetals:antimony_plate", "y": 90  }
+    }
+}

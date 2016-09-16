@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "basemetals:zinc_pressure_plate_up" },
+        "powered=true": { "model": "basemetals:zinc_pressure_plate_down" }
+    }
+}

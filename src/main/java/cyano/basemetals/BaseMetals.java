@@ -2,6 +2,7 @@ package cyano.basemetals;
 
 import cyano.basemetals.data.AdditionalLootTables;
 import cyano.basemetals.data.DataConstants;
+
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -22,6 +23,7 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+
 import org.apache.logging.log4j.Level;
 
 import java.io.IOException;
@@ -43,10 +45,7 @@ import java.util.*;
  * @author DrCyano
  *
  */
-@Mod(
-		modid = BaseMetals.MODID,
-		name=BaseMetals.NAME,
-		version = BaseMetals.VERSION,
+@Mod(modid = BaseMetals.MODID, name=BaseMetals.NAME, version = BaseMetals.VERSION,
 		dependencies = "required-after:Forge",
 		acceptedMinecraftVersions = "[1.10.2,)") // see VersionRange.createFromVersionSpec(String) for explanation of this convoluted feature
 //		updateJSON = "https://raw.githubusercontent.com/cyanobacterium/BaseMetals/master/update.json")
@@ -189,7 +188,7 @@ public class BaseMetals
 		cyano.basemetals.init.Items.init();
 		cyano.basemetals.init.VillagerTrades.init();
 
-		Path ALTPath = Paths.get(event.getSuggestedConfigurationFile().getParent(),"additional-loot-tables");
+		Path ALTPath = Paths.get(event.getSuggestedConfigurationFile().getParent(), "additional-loot-tables");
 		Path myLootFolder = ALTPath.resolve(MODID);
 		if(Files.notExists(myLootFolder)) {
 			try {
@@ -215,13 +214,14 @@ public class BaseMetals
 				Files.write(myLootFolder.resolve("chests").resolve("village_blacksmith.json"),
 						Collections.singletonList(AdditionalLootTables.village_blacksmith));
 			} catch(IOException ex) {
-				FMLLog.log(Level.ERROR,ex,"%s: Failed to extract additional loot tables",MODID);
+				FMLLog.log(Level.ERROR, ex, "%s: Failed to extract additional loot tables", MODID);
 			}
 		}
 
 		if(event.getSide() == Side.CLIENT) {
 			clientPreInit(event);
 		}
+
 		if(event.getSide() == Side.SERVER) {
 			serverPreInit(event);
 		}
@@ -255,6 +255,7 @@ public class BaseMetals
 		if(event.getSide() == Side.CLIENT) {
 			clientInit(event);
 		}
+
 		if(event.getSide() == Side.SERVER) {
 			serverInit(event);
 		}

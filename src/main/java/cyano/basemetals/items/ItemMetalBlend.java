@@ -35,12 +35,12 @@ public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDicti
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
 		// achievement
-		if((this.metal == Materials.aquarium)
-				|| (this.metal == Materials.brass)
-				|| (this.metal == Materials.bronze)
-				|| (this.metal == Materials.electrum)
-				|| (this.metal == Materials.invar)
-				|| (this.metal == Materials.steel))
+		if((this.getMetalMaterial() == Materials.aquarium)
+				|| (this.getMetalMaterial() == Materials.brass)
+				|| (this.getMetalMaterial() == Materials.bronze)
+				|| (this.getMetalMaterial() == Materials.electrum)
+				|| (this.getMetalMaterial() == Materials.invar)
+				|| (this.getMetalMaterial() == Materials.steel))
 			crafter.addStat(Achievements.metallurgy, 1);
 	}
 

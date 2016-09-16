@@ -290,8 +290,8 @@ public abstract class Recipes {
 			if((ingot != null) && (axe != null))
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe), "xx", "x/", " /", 'x', "ingot" + oreDictName, '/', "stickWood"));
 
-			if((ingot != null) && (axe != null))
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe), "xx", "/x", "/ ", 'x', "ingot" + oreDictName, '/', "stickWood"));
+//			if((ingot != null) && (axe != null))
+//				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe), "xx", "/x", "/ ", 'x', "ingot" + oreDictName, '/', "stickWood"));
 
 			if((block != null) && (crackhammer != null) && (!BaseMetals.disableAllHammers))
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crackhammer), "x", "/", "/", 'x', "block" + oreDictName, '/', "stickWood"));
@@ -299,8 +299,8 @@ public abstract class Recipes {
 			if((ingot != null) && (hoe != null))
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe), "xx", " /", " /", 'x', "ingot" + oreDictName, '/', "stickWood"));
 
-			if((ingot != null) && (hoe != null))
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe), "xx", "/ ", "/ ", 'x', "ingot" + oreDictName, '/', "stickWood"));
+//			if((ingot != null) && (hoe != null))
+//				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe), "xx", "/ ", "/ ", 'x', "ingot" + oreDictName, '/', "stickWood"));
 
 			if((ingot != null) && (pickaxe != null))
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(pickaxe), "xxx", " / ", " / ", 'x', "ingot" + oreDictName, '/', "stickWood"));
@@ -428,7 +428,7 @@ public abstract class Recipes {
 	 */
 	public static void addOredicts(String[] oreDictEntries, ItemStack itemStackName) {
 		//for(int i = 0; i < oreDictEntries.length; i++)
-		//	OreDictionary.registerOre(oreDictEntries[i], ItemStackName);
+		//	OreDictionary.registerOre(oreDictEntries[i], itemStackName);
 		for (final String oreDictEntry : oreDictEntries) {
 			OreDictionary.registerOre(oreDictEntry, itemStackName);
 		}

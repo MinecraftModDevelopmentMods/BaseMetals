@@ -1,6 +1,7 @@
 package cyano.basemetals.init;
 
 import cyano.basemetals.BaseMetals;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
 
@@ -22,11 +23,6 @@ public class ItemGroups {
 	public static CreativeTabs tab_items;
 	public static CreativeTabs tab_tools;
 
-	@SuppressWarnings("unused")
-	private static Item blockItem;
-	// private static Item itemItem;
-	// private static Item toolItem;
-
 	private static boolean initDone = false;
 
 	/**
@@ -37,9 +33,9 @@ public class ItemGroups {
 			return;
 
 		// placeholders
-		blockItem = Items.copper_crackhammer;
-		// itemItem = Items.copper_crackhammer;
-		// toolItem = Items.copper_crackhammer;
+		Item blockItem = Items.copper_crackhammer;
+		// Item itemItem = Items.copper_crackhammer;
+		// Item toolItem = Items.copper_crackhammer;
 
 		tab_blocks = FunctionalCreativeTab.create(BaseMetals.MODID.concat(".blocks"))
 				.setIconMetadata(3)

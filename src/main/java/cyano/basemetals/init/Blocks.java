@@ -46,6 +46,21 @@ public abstract class Blocks {
 	protected static Block adamantine_stairs;
 	protected static Block adamantine_wall;
 
+	public static Block antimony_bars;
+	public static Block antimony_block;
+	public static Block antimony_plate;
+	public static BlockDoor antimony_door;
+	public static Block antimony_ore;
+	public static Block antimony_trapdoor;
+
+	protected static Block antimony_button;
+	protected static BlockSlab antimony_slab;
+	protected static BlockSlab double_antimony_slab;
+	protected static Block antimony_lever;
+	protected static Block antimony_pressure_plate;
+	protected static Block antimony_stairs;
+	protected static Block antimony_wall;
+
 	public static Block aquarium_bars;
 	public static Block aquarium_block;
 	public static Block aquarium_plate;
@@ -59,6 +74,21 @@ public abstract class Blocks {
 	protected static Block aquarium_pressure_plate;
 	protected static Block aquarium_stairs;
 	protected static Block aquarium_wall;
+
+	public static Block bismuth_bars;
+	public static Block bismuth_block;
+	public static Block bismuth_plate;
+	public static BlockDoor bismuth_door;
+	public static Block bismuth_ore;
+	public static Block bismuth_trapdoor;
+
+	protected static Block bismuth_button;
+	protected static BlockSlab bismuth_slab;
+	protected static BlockSlab double_bismuth_slab;
+	protected static Block bismuth_lever;
+	protected static Block bismuth_pressure_plate;
+	protected static Block bismuth_stairs;
+	protected static Block bismuth_wall;
 
 	public static Block brass_bars;
 	public static Block brass_block;
@@ -206,6 +236,21 @@ public abstract class Blocks {
 	protected static Block nickel_stairs;
 	protected static Block nickel_wall;
 
+	public static Block pewter_bars;
+	public static Block pewter_block;
+	public static Block pewter_plate;
+	public static BlockDoor pewter_door;
+	// public static Block pewter_ore;
+	public static Block pewter_trapdoor;
+
+	protected static Block pewter_button;
+	protected static BlockSlab pewter_slab;
+	protected static BlockSlab double_pewter_slab;
+	protected static Block pewter_lever;
+	protected static Block pewter_pressure_plate;
+	protected static Block pewter_stairs;
+	protected static Block pewter_wall;
+
 	public static Block platinum_bars;
 	public static Block platinum_block;
 	public static Block platinum_plate;
@@ -346,6 +391,21 @@ public abstract class Blocks {
 		adamantine_stairs = createStairs(Materials.adamantine);
 		adamantine_wall = createWall(Materials.adamantine);
 
+		antimony_block = createBlock(Materials.antimony);
+		antimony_plate = createPlate(Materials.antimony);
+		antimony_ore = createOre(Materials.antimony);
+		antimony_bars = createBars(Materials.antimony);
+		antimony_door = createDoor(Materials.antimony);
+		antimony_trapdoor = createTrapDoor(Materials.antimony);
+
+		antimony_button = createButton(Materials.antimony);
+		antimony_slab = createSlab(Materials.antimony);
+		double_antimony_slab = createDoubleSlab(Materials.antimony);
+		antimony_lever = createLever(Materials.antimony);
+		antimony_pressure_plate = createPressurePlate(Materials.antimony);
+		antimony_stairs = createStairs(Materials.antimony);
+		antimony_wall = createWall(Materials.antimony);
+
 		aquarium_block = createBlock(Materials.aquarium);
 		aquarium_plate = createPlate(Materials.aquarium);
 		aquarium_bars = createBars(Materials.aquarium);
@@ -359,6 +419,21 @@ public abstract class Blocks {
 		aquarium_pressure_plate = createPressurePlate(Materials.aquarium);
 		aquarium_stairs = createStairs(Materials.aquarium);
 		aquarium_wall = createWall(Materials.aquarium);
+
+		bismuth_block = createBlock(Materials.bismuth);
+		bismuth_plate = createPlate(Materials.bismuth);
+		bismuth_ore = createOre(Materials.bismuth);
+		bismuth_bars = createBars(Materials.bismuth);
+		bismuth_door = createDoor(Materials.bismuth);
+		bismuth_trapdoor = createTrapDoor(Materials.bismuth);
+
+		bismuth_button = createButton(Materials.bismuth);
+		bismuth_slab = createSlab(Materials.bismuth);
+		double_bismuth_slab = createDoubleSlab(Materials.bismuth);
+		bismuth_lever = createLever(Materials.bismuth);
+		bismuth_pressure_plate = createPressurePlate(Materials.bismuth);
+		bismuth_stairs = createStairs(Materials.bismuth);
+		bismuth_wall = createWall(Materials.bismuth);
 
 		brass_block = createBlock(Materials.brass);
 		brass_plate = createPlate(Materials.brass);
@@ -511,6 +586,21 @@ public abstract class Blocks {
 		nickel_pressure_plate = createPressurePlate(Materials.nickel);
 		nickel_stairs = createStairs(Materials.nickel);
 		nickel_wall = createWall(Materials.nickel);
+
+		pewter_block = createBlock(Materials.pewter);
+		pewter_plate = createPlate(Materials.pewter);
+		// pewter_ore = createOre(Materials.pewter);
+		pewter_bars = createBars(Materials.pewter);
+		pewter_door = createDoor(Materials.pewter);
+		pewter_trapdoor = createTrapDoor(Materials.pewter);
+
+		pewter_button = createButton(Materials.pewter);
+		pewter_slab = createSlab(Materials.pewter);
+		double_pewter_slab = createDoubleSlab(Materials.pewter);
+		pewter_lever = createLever(Materials.pewter);
+		pewter_pressure_plate = createPressurePlate(Materials.pewter);
+		pewter_stairs = createStairs(Materials.pewter);
+		pewter_wall = createWall(Materials.pewter);
 
 		platinum_block = createBlock(Materials.platinum);
 		platinum_plate = createPlate(Materials.platinum);
@@ -675,7 +765,7 @@ public abstract class Blocks {
 	}
 
 	private static Block createStairs(MetalMaterial metal) {
-		return addBlock(new BlockMetalStairs(metal), metal.getName() + "_stairs");
+		return addBlock(new BlockMetalStairs(metal, Blocks.getBlockByName(metal.getName() + "_block")), metal.getName() + "_stairs");
 	}
 
 	private static Block createWall(MetalMaterial metal) {

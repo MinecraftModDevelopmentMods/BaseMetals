@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+    "textures": {
+        "layer0": "basemetals:items/starsteel_powder_dirty"
+    }
+}

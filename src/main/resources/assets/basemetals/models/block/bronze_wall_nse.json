@@ -1,0 +1,6 @@
+{
+    "parent": "block/wall_nse",
+    "textures": {
+        "wall": "basemetals:blocks/bronze_block"
+    }
+}

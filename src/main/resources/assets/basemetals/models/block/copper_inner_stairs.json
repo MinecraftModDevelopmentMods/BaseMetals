@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/copper_block",
+        "top": "basemetals:blocks/copper_block",
+        "side": "basemetals:blocks/copper_block"
+    }
+}

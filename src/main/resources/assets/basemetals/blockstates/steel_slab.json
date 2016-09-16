@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=bottom,variant=default": { "model": "basemetals:half_slab_steel" },
+        "half=top,variant=default": { "model": "basemetals:upper_slab_steel" }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/bismuth_block",
+        "top": "basemetals:blocks/bismuth_block",
+        "side": "basemetals:blocks/bismuth_block"
+    }
+}

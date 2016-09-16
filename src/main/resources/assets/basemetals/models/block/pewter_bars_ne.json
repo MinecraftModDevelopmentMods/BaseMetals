@@ -1,0 +1,8 @@
+{
+    "parent": "basemetals:block/bars_ne",
+    "textures": {
+        "particle": "basemetals:blocks/pewter_bars",
+        "bars": "basemetals:blocks/pewter_bars",
+        "edge": "basemetals:blocks/pewter_bars"
+    }
+}

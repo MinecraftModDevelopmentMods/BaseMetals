@@ -20,13 +20,13 @@ public class FunctionalCreativeTab extends CreativeTabs {
 	protected java.util.Comparator<ItemStack> itemSortingAlgorithm;
 	protected int tabPage;
 
+	private FunctionalCreativeTab(String label) {
+		super(label);
+	}
+
 	public FunctionalCreativeTab setTabPage(int tabPage) {
 		this.tabPage = tabPage;
 		return this;
-	}
-
-	private FunctionalCreativeTab(String label) {
-		super(label);
 	}
 
 	public static FunctionalCreativeTab create(String label) {
@@ -87,7 +87,8 @@ public class FunctionalCreativeTab extends CreativeTabs {
 	 */
 	public FunctionalCreativeTab setSearchable(boolean searchable) {
 		this.searchable = searchable;
-		if(searchable)setBackgroundImageName("item_search.png");
+		if(searchable)
+			setBackgroundImageName("item_search.png");
 		return this;
 	}
 
@@ -117,6 +118,7 @@ public class FunctionalCreativeTab extends CreativeTabs {
 		return searchable;
 	}
 
+	@SuppressWarnings("unused")
 	private static void tutorial() {
 		CreativeTabs tab = FunctionalCreativeTab.create("label")
 				.setIcon(net.minecraft.init.Blocks.DIRT) //Can be Block, Item or ItemStack

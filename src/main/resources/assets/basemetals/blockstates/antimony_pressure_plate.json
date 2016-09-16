@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "basemetals:antimony_pressure_plate_up" },
+        "powered=true": { "model": "basemetals:antimony_pressure_plate_down" }
+    }
+}

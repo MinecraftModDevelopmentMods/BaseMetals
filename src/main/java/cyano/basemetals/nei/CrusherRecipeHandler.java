@@ -90,7 +90,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public String getRecipeName() {
-		String key = "nei."+BaseMetals.MODID+".recipehandler.crusher.name";
+		String key = "nei." + BaseMetals.MODID + ".recipehandler.crusher.name";
 		if(I18n.canTranslate(key)) {
 			return net.minecraft.client.resources.I18n.format(key);
 		} else {
@@ -155,6 +155,9 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	 */
 	public class CrusherPair extends CachedRecipe {
 
+		PositionedStack ingred;
+		PositionedStack result;
+
 		/**
 		 * 
 		 * @param ingred
@@ -184,8 +187,5 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 		public PositionedStack getResult() {
 			return result;
 		}
-
-		PositionedStack ingred;
-		PositionedStack result;
 	}
 }

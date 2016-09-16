@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/platinum_block",
+        "top": "basemetals:blocks/platinum_block",
+        "side": "basemetals:blocks/platinum_block"
+    }
+}

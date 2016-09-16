@@ -1,0 +1,6 @@
+{
+    "parent": "block/wall_ne",
+    "textures": {
+        "wall": "basemetals:blocks/starsteel_block"
+    }
+}

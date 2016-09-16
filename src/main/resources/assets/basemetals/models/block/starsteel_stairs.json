@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/starsteel_block",
+        "top": "basemetals:blocks/starsteel_block",
+        "side": "basemetals:blocks/starsteel_block"
+    }
+}
