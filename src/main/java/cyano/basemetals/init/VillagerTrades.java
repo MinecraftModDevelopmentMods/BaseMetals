@@ -3,6 +3,7 @@ package cyano.basemetals.init;
 import cyano.basemetals.items.*;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.util.VillagerTradeHelper;
+
 import net.minecraft.entity.passive.EntityVillager.*;
 import net.minecraft.item.*;
 import net.minecraft.village.*;

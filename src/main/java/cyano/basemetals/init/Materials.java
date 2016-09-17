@@ -12,6 +12,8 @@ import net.minecraftforge.fml.common.FMLLog;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,6 +58,8 @@ public abstract class Materials {
 	public static MetalMaterial vanilla_iron;
 	public static MetalMaterial vanilla_gold;
 	public static MetalMaterial vanilla_diamond;
+
+	public static List<MetalMaterial> materials = new LinkedList<MetalMaterial>();
 
 	private static boolean initDone = false;
 
@@ -105,12 +109,16 @@ public abstract class Materials {
 	private static MetalMaterial addMaterial(String name, double hardness, double strength, double magic) {
 		final MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic);
 		registerMaterial(name, m);
+
+		materials.add(m);
 		return m;
 	}
 
 	private static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic) {
 		final MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic, true);
 		registerMaterial(name, m);
+
+		materials.add(m);
 		return m;
 	}
 
