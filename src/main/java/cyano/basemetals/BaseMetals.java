@@ -12,6 +12,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -187,6 +188,10 @@ public class BaseMetals
 		cyano.basemetals.init.Blocks.init();
 		cyano.basemetals.init.Items.init();
 		cyano.basemetals.init.VillagerTrades.init();
+		cyano.basemetals.init.EnderIOPlugin.init();
+		if(Loader.isModLoaded("tconstruct"))
+			cyano.basemetals.init.TinkersConstructPlugin.init();
+		cyano.basemetals.init.VeinMinerPlugin.init();
 
 		Path ALTPath = Paths.get(event.getSuggestedConfigurationFile().getParent(), "additional-loot-tables");
 		Path myLootFolder = ALTPath.resolve(MODID);

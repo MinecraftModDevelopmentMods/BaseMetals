@@ -1,6 +1,8 @@
 package cyano.basemetals.init;
 
 import com.google.common.collect.Lists;
+
+import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.utils.StringUtilities;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,18 +46,79 @@ public class TinkersConstructPlugin {
 			final float a = 0; // (float) attackFactorGeneral;
 			// System.out.println("ATTACK FACTOR" + a);
 
-//			final Material aluminum = new Material("aluminum", 0xFFC5C8C1);
+			final Material adamantine = new Material("adamantine", 0xFF000000);
+			final Material antimony = new Material("antimony", 0xFF000000);
+			final Material aquarium = new Material("aqaurium", 0xFF000000);
+			final Material bismuth = new Material("bismuth", 0xFF000000);
+			final Material brass = new Material("brass", 0xFF000000);
+			final Material bronze = new Material("bronze", 0xFF000000);
+			final Material coldiron = new Material("coldiron", 0xFF000000);
+			final Material copper = new Material("copper", 0xFF000000);
+			final Material cupronickel = new Material("cupronickel", 0xFF000000);
+			final Material electrum = new Material("electrum", 0xFF000000);
+			final Material invar = new Material("invar", 0xFF000000);
+			final Material lead = new Material("lead", 0xFF000000);
+			final Material mercury = new Material("mercury", 0xFF000000);
+			final Material mithril = new Material("mithril", 0xFF000000);
+			final Material nickel = new Material("nickel", 0xFF000000);
+			final Material pewter = new Material("pewter", 0xFF000000);
+			final Material platinum = new Material("platinum", 0xFF000000);
+			final Material silver = new Material("silver", 0xFF000000);
+			final Material starsteel = new Material("starsteel", 0xFF000000);
+			final Material steel = new Material("steel", 0xFF000000);
+			final Material tin = new Material("tin", 0xFF000000);
+			final Material zinc = new Material("zinc", 0xFF000000);
 
-			// registerFluid(Fluids.fluidAluminum); // TCon already has this
-			// registerTinkerMaterial(aluminum, Fluids.fluidAluminum, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
-			// registerFluid(Fluids.fluidAluminumBrass); // TCon already has this
-			// registerTinkerMaterial(aluminumbrass, Fluids.fluidAluminumBrass, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidAdamantine, true);
+			registerTinkerMaterial(adamantine, Fluids.fluidAdamantine, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidAntimony, true);
+			registerTinkerMaterial(antimony, Fluids.fluidAntimony, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidAquarium, true);
+//			registerTinkerMaterial(aquarium, Fluids.fluidAquarium, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidBismuth, true);
+			registerTinkerMaterial(bismuth, Fluids.fluidBismuth, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidBrass, true);
+			registerTinkerMaterial(brass, Fluids.fluidBrass, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+//			registerFluid(Fluids.fluidBronze, true);
+//			registerTinkerMaterial(bronze, Fluids.fluidBronze, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidColdIron, true);
+			registerTinkerMaterial(coldiron, Fluids.fluidColdIron, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+//			registerFluid(Fluids.fluidCopper, true);
+//			registerTinkerMaterial(copper, Fluids.fluidCopper, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidCupronickel, true);
+			registerTinkerMaterial(cupronickel, Fluids.fluidCupronickel, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+//			registerFluid(Fluids.fluidElectrum, true);
+//			registerTinkerMaterial(electrum, Fluids.fluidElectrum, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidInvar, true);
+			registerTinkerMaterial(invar, Fluids.fluidInvar, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+//			registerFluid(Fluids.fluidLead, true);
+//			registerTinkerMaterial(lead, Fluids.fluidLead, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidMercury, true);
+			registerTinkerMaterial(mercury, Fluids.fluidMercury, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidMithril, true);
+			registerTinkerMaterial(mithril, Fluids.fluidMithril, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidNickel, true);
+			registerTinkerMaterial(nickel, Fluids.fluidNickel, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidPewter, true);
+			registerTinkerMaterial(pewter, Fluids.fluidPewter, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidPlatinum, true);
+			registerTinkerMaterial(platinum, Fluids.fluidPlatinum, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+//			registerFluid(Fluids.fluidSilver, true);
+//			registerTinkerMaterial(silver, Fluids.fluidSilver, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidStarSteel, true);
+			registerTinkerMaterial(starsteel, Fluids.fluidStarSteel, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+//			registerFluid(Fluids.fluidSteel, true);
+//			registerTinkerMaterial(steel, Fluids.fluidSteel, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidTin, true);
+			registerTinkerMaterial(tin, Fluids.fluidTin, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
+			registerFluid(Fluids.fluidZinc, true);
+			registerTinkerMaterial(zinc, Fluids.fluidZinc, (int) (235 * d), 5.33f * s, 3.80f * a, 1.15f, 17, 117, 1, false, true);
 
 			// registerAlloy("aluminumbrass", 2, new String[] { "aluminum", 1, "brass" }, new int[] { 1, 1 }); // TCon already has Aluminum Brass alloy
-			registerAlloy("galvanizedsteel", 2, new String[] { "steel", "zinc" }, new int[] { 1, 1 });
-			registerAlloy("nichrome", 2, new String[] { "nickel", "chrome" }, new int[] { 1, 1 });
-			registerAlloy("stainlesssteel", 2, new String[] { "steel", "chrome" }, new int[] { 1, 1 });
-			registerAlloy("titanium", 2, new String[] { "rutile", "magnesium" }, new int[] { 1, 1 });
+			//registerAlloy("galvanizedsteel", 2, new String[] { "steel", "zinc" }, new int[] { 1, 1 });
+			//registerAlloy("nichrome", 2, new String[] { "nickel", "chrome" }, new int[] { 1, 1 });
+			//registerAlloy("stainlesssteel", 2, new String[] { "steel", "chrome" }, new int[] { 1, 1 });
+			//registerAlloy("titanium", 2, new String[] { "rutile", "magnesium" }, new int[] { 1, 1 });
 		}
 
 		initDone = true;

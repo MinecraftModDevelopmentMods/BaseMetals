@@ -30,8 +30,8 @@ public abstract class Materials {
 	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 	
-	public static MetalMaterial antimony;
 	public static MetalMaterial adamantine;
+	public static MetalMaterial antimony;
 	public static MetalMaterial aquarium;
 	public static MetalMaterial bismuth;
 	public static MetalMaterial brass;
@@ -78,9 +78,9 @@ public abstract class Materials {
 		vanilla_diamond = addMaterial("diamond", 10, 15, 4);
 
 		// Mod Metals
-		antimony = addMaterial("antimony", 1, 1, 1);
 		adamantine = new AdamantineMaterial("adamantine", 12, 100, 0);
 		registerMaterial(adamantine.getName(), adamantine);
+		antimony = addMaterial("antimony", 1, 1, 1);
 		aquarium = addMaterial("aquarium", 4, 10, 15);
 		bismuth = addMaterial("bismuth", 1, 1, 1);
 		brass = addMaterial("brass", 3.5, 3, 9);
