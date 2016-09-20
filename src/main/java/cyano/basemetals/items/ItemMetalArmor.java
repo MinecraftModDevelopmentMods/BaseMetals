@@ -73,7 +73,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			int updateCount = playerUpdateCountMap.get(player).getAndIncrement();
 			for(int i = 0; i < 4; i++) {
 				if(player.inventory.armorInventory[i] != null && player.inventory.armorInventory[i].getItem() instanceof ItemMetalArmor) {
-					doArmorUpdate(w, player,player.inventory.armorInventory[i], updateCount);
+					doArmorUpdate(w, player, player.inventory.armorInventory[i], updateCount);
 				}
 			}
 		}
@@ -131,7 +131,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		} else {
 			// apply potion effects. Note that "Level I" is actually effect level 0 in the effect constructor 
 			starsteel: {
-				if(starsteelUpdateCache.containsKey(player))
+				if(!starsteelUpdateCache.containsKey(player))
 					break starsteel;
 				int num = starsteelUpdateCache.get(player).getAndSet(0);
 				if(num == 0)
