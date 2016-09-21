@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/antimony_crossbow",
+    "textures": {
+        "layer0": "basemetals:items/antimony_crossbow_pulling_0"
+    }
+}

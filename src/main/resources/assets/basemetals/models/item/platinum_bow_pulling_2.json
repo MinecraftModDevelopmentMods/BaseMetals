@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/platinum_bow",
+    "textures": {
+        "layer0": "basemetals:items/platinum_bow_pulling_2"
+    }
+}

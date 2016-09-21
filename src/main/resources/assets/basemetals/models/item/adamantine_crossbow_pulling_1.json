@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/adamantine_crossbow",
+    "textures": {
+        "layer0": "basemetals:items/adamantine_crossbow_pulling_1"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/pewter_bow",
+    "textures": {
+        "layer0": "basemetals:items/pewter_bow_pulling_2"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/brass_bow",
+    "textures": {
+        "layer0": "basemetals:items/brass_bow_pulling_1"
+    }
+}

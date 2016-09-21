@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/copper_crossbow",
+    "textures": {
+        "layer0": "basemetals:items/copper_crossbow_pulling_0"
+    }
+}

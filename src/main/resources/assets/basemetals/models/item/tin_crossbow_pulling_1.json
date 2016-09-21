@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/tin_crossbow",
+    "textures": {
+        "layer0": "basemetals:items/tin_crossbow_pulling_1"
+    }
+}

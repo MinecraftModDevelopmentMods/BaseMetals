@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/coldiron_crossbow",
+    "textures": {
+        "layer0": "basemetals:items/coldiron_crossbow_pulling_0"
+    }
+}

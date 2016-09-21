@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/copper_bow",
+    "textures": {
+        "layer0": "basemetals:items/copper_bow_pulling_0"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "parent": "item/handheld_rod",
+    "textures": {
+        "layer0": "basemetals:items/silver_fishing_rod_uncast"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "cast": 1
+            },
+            "model": "basemetals:item/silver_fishing_rod_cast"
+        }
+    ]
+}

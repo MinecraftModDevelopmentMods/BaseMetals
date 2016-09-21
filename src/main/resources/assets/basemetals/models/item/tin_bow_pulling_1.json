@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/tin_bow",
+    "textures": {
+        "layer0": "basemetals:items/tin_bow_pulling_1"
+    }
+}

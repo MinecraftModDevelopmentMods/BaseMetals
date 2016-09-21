@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/steel_bow",
+    "textures": {
+        "layer0": "basemetals:items/steel_bow_pulling_0"
+    }
+}

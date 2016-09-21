@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/aquarium_bow",
+    "textures": {
+        "layer0": "basemetals:items/aquarium_bow_pulling_2"
+    }
+}

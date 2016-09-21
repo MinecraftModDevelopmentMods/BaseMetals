@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/mithril_crossbow",
+    "textures": {
+        "layer0": "basemetals:items/mithril_crossbow_pulling_0"
+    }
+}

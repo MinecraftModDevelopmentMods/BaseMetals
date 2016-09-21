@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/invar_bow",
+    "textures": {
+        "layer0": "basemetals:items/invar_bow_pulling_0"
+    }
+}

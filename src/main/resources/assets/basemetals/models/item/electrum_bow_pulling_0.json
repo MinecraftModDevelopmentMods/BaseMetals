@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/electrum_bow",
+    "textures": {
+        "layer0": "basemetals:items/electrum_bow_pulling_0"
+    }
+}

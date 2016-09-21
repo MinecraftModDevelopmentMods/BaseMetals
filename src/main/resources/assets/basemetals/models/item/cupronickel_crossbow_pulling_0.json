@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/cupronickel_crossbow",
+    "textures": {
+        "layer0": "basemetals:items/cupronickel_crossbow_pulling_0"
+    }
+}

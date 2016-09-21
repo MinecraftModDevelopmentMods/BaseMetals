@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/bismuth_bow",
+    "textures": {
+        "layer0": "basemetals:items/bismuth_bow_pulling_1"
+    }
+}

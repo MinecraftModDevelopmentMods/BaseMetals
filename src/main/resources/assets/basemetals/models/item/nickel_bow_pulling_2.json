@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/nickel_bow",
+    "textures": {
+        "layer0": "basemetals:items/nickel_bow_pulling_2"
+    }
+}
