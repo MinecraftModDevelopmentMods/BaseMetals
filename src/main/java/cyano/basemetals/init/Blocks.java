@@ -9,14 +9,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockSlab;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashMap;
@@ -351,7 +345,7 @@ public abstract class Blocks {
 
 	private static boolean initDone = false;
 
-	// private static Map<Block, String> blockRegistry = new HashMap<>();
+	private static Map<Block, String> allBlocks = new HashMap<>();
 	private static final Map<String, Block> blockRegistry = new HashMap<>();
 	// private static Map<MetalMaterial, List<Block>> blocksByMetal = new HashMap<>();
 
@@ -364,6 +358,17 @@ public abstract class Blocks {
 	 */
 	public static Block getBlockByName(String name) {
 		return blockRegistry.get(name);
+	}
+
+	/**
+	 * This is the reverse of the getBlockByName(...) method, returning the
+	 * registered name of an block instance (Base Metals blocks only).
+	 * @param b The item in question
+	 * @return The name of the item, or null if the item is not a Base Metals
+	 * block.
+	 */
+	public static String getNameOfItem(Block b) {
+		return allBlocks.get(b);
 	}
 
 	/**
@@ -685,6 +690,9 @@ public abstract class Blocks {
 		zinc_block = createBlock(Materials.zinc);
 		zinc_plate = createPlate(Materials.zinc);
 		zinc_ore = createOre(Materials.zinc);
+		zinc_bars = createBars(Materials.zinc);
+		zinc_door = createDoor(Materials.zinc);
+		zinc_trapdoor = createTrapDoor(Materials.zinc);
 
 		zinc_button = createButton(Materials.zinc);
 		zinc_slab = createSlab(Materials.zinc);
@@ -697,43 +705,60 @@ public abstract class Blocks {
 		iron_plate = createPlate(Materials.vanilla_iron);
 		gold_plate = createPlate(Materials.vanilla_gold);
 
-		human_detector = addBlock(new BlockHumanDetector(), "human_detector");
+		human_detector = addBlock(new BlockHumanDetector(), "human_detector", null);
 
 		// TODO: Make this support multiple oredicts
-		// final block settings
+/*
 		for(final Block b : blockRegistry.values()) {
 			if(b instanceof IOreDictionaryEntry)
 				OreDictionary.registerOre(((IOreDictionaryEntry)b).getOreDictionaryName(), b);
-			if(!(b instanceof BlockMetalDoor))
-				b.setCreativeTab(ItemGroups.tab_blocks);
 		}
-
+*/
 		initDone = true;
 	}
 
-	private static Block addBlock(Block block, String name) {
-		final ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
-		block.setRegistryName(location);
-		block.setUnlocalizedName(location.toString());
+	private static Block addBlock(Block block, String name, MetalMaterial metal) {
+		String fullName = null;
+
+		if ((block instanceof BlockDoubleMetalSlab) && (metal != null)) {
+			fullName = "double_" + metal.getName() + "_" + name;
+		} else if (block instanceof BlockDoubleMetalSlab) {
+			fullName = "double_" + name;
+		} else if(metal != null) {
+			fullName = metal.getName() + "_" + name;
+		} else {
+			fullName = name;
+		}
+
+		block.setRegistryName(fullName);
+		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 		GameRegistry.register(block);
+		blockRegistry.put(fullName, block);
+		allBlocks.put(block, fullName);
 
 		if (!(block instanceof BlockMetalDoor) && !(block instanceof BlockMetalSlab)) {
 			final ItemBlock itemBlock = new ItemBlock(block);
-			itemBlock.setRegistryName(location);
-			itemBlock.setUnlocalizedName(location.toString());
+			itemBlock.setRegistryName(fullName);
+			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 			GameRegistry.register(itemBlock);
 		}
 
-		blockRegistry.put(name, block);
+		if(!(block instanceof BlockMetalDoor))
+			block.setCreativeTab(ItemGroups.tab_blocks);
+
+		// TODO: Make this support multiple oredicts
+		if(block instanceof IOreDictionaryEntry)
+			OreDictionary.registerOre(((IOreDictionaryEntry)block).getOreDictionaryName(), block);
+
 		return block;
 	}
 
 	private static Block createPlate(MetalMaterial metal) {
-		return addBlock(new BlockMetalPlate(metal), metal.getName() + "_plate");
+		return addBlock(new BlockMetalPlate(metal), "plate", metal);
 	}
 
 	private static Block createBars(MetalMaterial metal) {
-		return addBlock(new BlockMetalBars(metal), metal.getName() + "_bars");
+		return addBlock(new BlockMetalBars(metal), "bars", metal);
 	}
 
 	private static Block createBlock(MetalMaterial metal) {
@@ -741,62 +766,47 @@ public abstract class Blocks {
 	}
 
 	private static Block createBlock(MetalMaterial metal, boolean glow) {
-		return addBlock(new BlockMetalBlock(metal, glow), metal.getName() + "_block");
+		return addBlock(new BlockMetalBlock(metal, glow), "block", metal);
 	}
 
 	private static Block createButton(MetalMaterial metal) {
-		return addBlock(new BlockButtonMetal(metal), metal.getName() + "_button");
+		return addBlock(new BlockButtonMetal(metal), "button", metal);
 	}
 
 	private static Block createLever(MetalMaterial metal) {
-		return addBlock(new BlockMetalLever(metal), metal.getName() + "_lever");
+		return addBlock(new BlockMetalLever(metal), "lever", metal);
 	}
 
 	private static Block createPressurePlate(MetalMaterial metal) {
-		return addBlock(new BlockMetalPressurePlate(metal), metal.getName() + "_pressure_plate");
+		return addBlock(new BlockMetalPressurePlate(metal), "pressure_plate", metal);
 	}
 
 	private static BlockSlab createSlab(MetalMaterial metal) {
-		return (BlockSlab)addBlock(new BlockHalfMetalSlab(metal), metal.getName() + "_slab");
+		return (BlockSlab)addBlock(new BlockHalfMetalSlab(metal), "slab", metal);
 	}
 
 	private static BlockSlab createDoubleSlab(MetalMaterial metal) {
-		return (BlockSlab)addBlock(new BlockDoubleMetalSlab(metal), "double_" + metal.getName() + "_slab");
+		return (BlockSlab)addBlock(new BlockDoubleMetalSlab(metal), "slab", metal);
 	}
 
 	private static Block createStairs(MetalMaterial metal) {
-		return addBlock(new BlockMetalStairs(metal, Blocks.getBlockByName(metal.getName() + "_block")), metal.getName() + "_stairs");
+		return addBlock(new BlockMetalStairs(metal, Blocks.getBlockByName(metal.getName() + "_block")), "stairs", metal);
 	}
 
 	private static Block createWall(MetalMaterial metal) {
-		return addBlock(new BlockMetalWall(metal, Blocks.getBlockByName(metal.getName() + "_block")), metal.getName() + "_wall");
+		return addBlock(new BlockMetalWall(metal, Blocks.getBlockByName(metal.getName() + "_block")), "wall", metal);
 	}
 
 	private static Block createOre(MetalMaterial metal) {
-		return addBlock(new BlockMetalOre(metal), metal.getName() + "_ore");
+		return addBlock(new BlockMetalOre(metal), "ore", metal);
 	}
 
 	private static BlockDoor createDoor(MetalMaterial metal) {
-		return (BlockDoor)addBlock(new BlockMetalDoor(metal), metal.getName() + "_door");
+		return (BlockDoor)addBlock(new BlockMetalDoor(metal), "door", metal);
 	}
 
 	private static Block createTrapDoor(MetalMaterial metal) {
-		return addBlock(new BlockMetalTrapDoor(metal), metal.getName() + "_trapdoor");
-	}
-
-	/**
-	 * 
-	 * @param event
-	 */
-	@SideOnly(Side.CLIENT)
-	public static void registerItemRenders(FMLInitializationEvent event) {
-		for(final String name : blockRegistry.keySet()) {
-			if(blockRegistry.get(name) instanceof BlockDoor)
-				continue; // do not add door blocks
-			Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-			.register(net.minecraft.item.Item.getItemFromBlock(blockRegistry.get(name)), 0,
-				new ModelResourceLocation(new ResourceLocation(BaseMetals.MODID, name), "inventory"));
-		}
+		return addBlock(new BlockMetalTrapDoor(metal), "trapdoor", metal);
 	}
 
 	public static Map<String, Block> getBlockRegistry() {

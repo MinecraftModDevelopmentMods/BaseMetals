@@ -10,18 +10,12 @@ import cyano.basemetals.registry.IOreDictionaryEntry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.lang.reflect.Array;
@@ -121,6 +115,7 @@ public abstract class Items {
 	public static Item aquarium_crackhammer;
 	public static Item aquarium_crossbow;
 	public static Item aquarium_door;
+	public static Item aquarium_fishing_rod;
 	public static Item aquarium_helmet;
 	public static Item aquarium_hoe;
 	public static Item aquarium_horsearmor;
@@ -196,6 +191,7 @@ public abstract class Items {
 	public static Item brass_crackhammer;
 	public static Item brass_crossbow;
 	public static Item brass_door;
+	public static Item brass_fishing_rod;
 	public static Item brass_helmet;
 	public static Item brass_hoe;
 	public static Item brass_horsearmor;
@@ -234,6 +230,7 @@ public abstract class Items {
 	public static Item bronze_crackhammer;
 	public static Item bronze_crossbow;
 	public static Item bronze_door;
+	public static Item bronze_fishing_rod;
 	public static Item bronze_helmet;
 	public static Item bronze_hoe;
 	public static Item bronze_horsearmor;
@@ -273,6 +270,7 @@ public abstract class Items {
 	public static Item coldiron_crackhammer;
 	public static Item coldiron_crossbow;
 	public static Item coldiron_door;
+	public static Item coldiron_fishing_rod;
 	public static Item coldiron_helmet;
 	public static Item coldiron_hoe;
 	public static Item coldiron_horsearmor;
@@ -309,6 +307,7 @@ public abstract class Items {
 	public static Item copper_crackhammer;
 	public static Item copper_crossbow;
 	public static Item copper_door;
+	public static Item copper_fishing_rod;
 	public static Item copper_helmet;
 	public static Item copper_hoe;
 	public static Item copper_horsearmor;
@@ -342,6 +341,7 @@ public abstract class Items {
 	public static Item cupronickel_crackhammer;
 	public static Item cupronickel_crossbow;
 	public static Item cupronickel_door;
+	public static Item cupronickel_fishing_rod;
 	public static Item cupronickel_helmet;
 	public static Item cupronickel_hoe;
 	public static Item cupronickel_horsearmor;
@@ -383,6 +383,7 @@ public abstract class Items {
 	public static Item electrum_crackhammer;
 	public static Item electrum_crossbow;
 	public static Item electrum_door;
+	public static Item electrum_fishing_rod;
 	public static Item electrum_helmet;
 	public static Item electrum_hoe;
 	public static Item electrum_horsearmor;
@@ -426,6 +427,7 @@ public abstract class Items {
 	public static Item invar_crackhammer;
 	public static Item invar_crossbow;
 	public static Item invar_door;
+	public static Item invar_fishing_rod;
 	public static Item invar_helmet;
 	public static Item invar_hoe;
 	public static Item invar_horsearmor;
@@ -469,6 +471,7 @@ public abstract class Items {
 	public static Item lead_crackhammer;
 	public static Item lead_crossbow;
 	public static Item lead_door;
+	public static Item lead_fishing_rod;
 	public static Item lead_helmet;
 	public static Item lead_hoe;
 	public static Item lead_horsearmor;
@@ -512,6 +515,7 @@ public abstract class Items {
 	public static Item mithril_crackhammer;
 	public static Item mithril_crossbow;
 	public static Item mithril_door;
+	public static Item mithril_fishing_rod;
 	public static Item mithril_helmet;
 	public static Item mithril_hoe;
 	public static Item mithril_horsearmor;
@@ -549,6 +553,7 @@ public abstract class Items {
 	public static Item nickel_crackhammer;
 	public static Item nickel_crossbow;
 	public static Item nickel_door;
+	public static Item nickel_fishing_rod;
 	public static Item nickel_helmet;
 	public static Item nickel_hoe;
 	public static Item nickel_horsearmor;
@@ -623,6 +628,7 @@ public abstract class Items {
 	public static Item platinum_crackhammer;
 	public static Item platinum_crossbow;
 	public static Item platinum_door;
+	public static Item platinum_fishing_rod;
 	public static Item platinum_helmet;
 	public static Item platinum_hoe;
 	public static Item platinum_horsearmor;
@@ -659,6 +665,7 @@ public abstract class Items {
 	public static Item silver_crackhammer;
 	public static Item silver_crossbow;
 	public static Item silver_door;
+	public static Item silver_fishing_rod;
 	public static Item silver_helmet;
 	public static Item silver_hoe;
 	public static Item silver_horsearmor;
@@ -690,6 +697,7 @@ public abstract class Items {
 	public static Item starsteel_crackhammer;
 	public static Item starsteel_crossbow;
 	public static Item starsteel_door;
+	public static Item starsteel_fishing_rod;
 	public static Item starsteel_helmet;
 	public static Item starsteel_hoe;
 	public static Item starsteel_horsearmor;
@@ -727,6 +735,7 @@ public abstract class Items {
 	public static Item steel_crackhammer;
 	public static Item steel_crossbow;
 	public static Item steel_door;
+	public static Item steel_fishing_rod;
 	public static Item steel_helmet;
 	public static Item steel_hoe;
 	public static Item steel_horsearmor;
@@ -768,6 +777,7 @@ public abstract class Items {
 	public static Item tin_crackhammer;
 	public static Item tin_crossbow;
 	public static Item tin_door;
+	public static Item tin_fishing_rod;
 	public static Item tin_helmet;
 	public static Item tin_hoe;
 	public static Item tin_horsearmor;
@@ -803,6 +813,7 @@ public abstract class Items {
 	public static Item zinc_crackhammer;
 	public static Item zinc_crossbow;
 	public static Item zinc_door;
+	public static Item zinc_fishing_rod;
 	public static Item zinc_helmet;
 	public static Item zinc_hoe;
 	public static Item zinc_horsearmor;
@@ -831,8 +842,8 @@ public abstract class Items {
 
 	private static boolean initDone = false;
 
-	private static Map<Item, String> itemRegistry = new HashMap<>();
-	private static Map<String, Item> allItems = new HashMap<>();
+	private static Map<String, Item> itemRegistry = new HashMap<>();
+	private static Map<Item, String> allItems = new HashMap<>();
 	private static Map<MetalMaterial, List<Item>> itemsByMetal = new HashMap<>();
 
 	private static Map<BlockDoor, Item> doorMap = new HashMap<>();
@@ -848,7 +859,7 @@ public abstract class Items {
 	 * @return The item matching that name, or null if there isn't one
 	 */
 	public static Item getItemByName(String name) {
-		return allItems.get(name);
+		return itemRegistry.get(name);
 	}
 
 	/**
@@ -859,7 +870,7 @@ public abstract class Items {
 	 * item.
 	 */
 	public static String getNameOfItem(Item i) {
-		return itemRegistry.get(i);
+		return allItems.get(i);
 	}
 
 	/**
@@ -896,21 +907,29 @@ public abstract class Items {
 		} catch (IllegalAccessException | NoSuchFieldException ex) {
 			FMLLog.severe("Error modifying item classes: %s", ex);
 		}
-
+		
+		adamantine_arrow = createArrow(Materials.adamantine);
 		adamantine_axe = createAxe(Materials.adamantine);
+		adamantine_bolt = createBolt(Materials.adamantine);
 		adamantine_boots = createBoots(Materials.adamantine);
+		adamantine_bow = createBow(Materials.adamantine);
 		adamantine_chestplate = createChestplate(Materials.adamantine);
 		adamantine_crackhammer = createCrackhammer(Materials.adamantine);
+		adamantine_crossbow = createCrossbow(Materials.adamantine);
 		adamantine_door = createDoor(Materials.adamantine, Blocks.adamantine_door);
+		adamantine_fishing_rod = createFishingRod(Materials.adamantine);
 		adamantine_helmet = createHelmet(Materials.adamantine);
 		adamantine_hoe = createHoe(Materials.adamantine);
+		adamantine_horsearmor = createHorseArmor(Materials.adamantine);
 		adamantine_ingot = createIngot(Materials.adamantine);
 		adamantine_leggings = createLeggings(Materials.adamantine);
 		adamantine_nugget = createNugget(Materials.adamantine);
 		adamantine_pickaxe = createPickaxe(Materials.adamantine);
 		adamantine_powder = createPowder(Materials.adamantine);
+		adamantine_shears = createShears(Materials.adamantine);
 		adamantine_shovel = createShovel(Materials.adamantine);
 		adamantine_sword = createSword(Materials.adamantine);
+		adamantine_smallpowder = createSmallPowder(Materials.adamantine);
 		adamantine_rod = createRod(Materials.adamantine);
 		adamantine_gear = createGear(Materials.adamantine);
 
@@ -925,6 +944,15 @@ public abstract class Items {
 		adamantine_dense_plate = createDensePlate(Materials.adamantine);
 		adamantine_crushed = createCrushed(Materials.adamantine);
 		adamantine_crushed_purified = createCrushedPurified(Materials.adamantine);
+
+		antimony_arrow = createArrow(Materials.antimony);
+		antimony_bolt = createBolt(Materials.antimony);
+		antimony_bow = createBow(Materials.antimony);
+		antimony_crossbow = createCrossbow(Materials.antimony);
+		antimony_fishing_rod = createFishingRod(Materials.antimony);
+		antimony_horsearmor = createHorseArmor(Materials.antimony);
+		antimony_shears = createShears(Materials.antimony);
+		antimony_smallpowder = createSmallPowder(Materials.antimony);
 
 		antimony_axe = createAxe(Materials.antimony);
 		antimony_boots = createBoots(Materials.antimony);
@@ -954,6 +982,16 @@ public abstract class Items {
 		antimony_dense_plate = createDensePlate(Materials.antimony);
 		antimony_crushed = createCrushed(Materials.antimony);
 		antimony_crushed_purified = createCrushedPurified(Materials.antimony);
+
+		aquarium_arrow = createArrow(Materials.aquarium);
+		aquarium_bolt = createBolt(Materials.aquarium);
+		aquarium_bow = createBow(Materials.aquarium);
+		aquarium_crossbow = createCrossbow(Materials.aquarium);
+		aquarium_fishing_rod = createFishingRod(Materials.aquarium);
+		aquarium_horsearmor = createHorseArmor(Materials.aquarium);
+		aquarium_shears = createShears(Materials.aquarium);
+		aquarium_smallblend = createSmallBlend(Materials.aquarium);
+		aquarium_smallpowder = createSmallPowder(Materials.aquarium);
 
 		aquarium_axe = createAxe(Materials.aquarium);
 		aquarium_blend = createBlend(Materials.aquarium);
@@ -985,6 +1023,15 @@ public abstract class Items {
 		aquarium_crushed = createCrushed(Materials.aquarium);
 		aquarium_crushed_purified = createCrushedPurified(Materials.aquarium);
 
+		bismuth_arrow = createArrow(Materials.bismuth);
+		bismuth_bolt = createBolt(Materials.bismuth);
+		bismuth_bow = createBow(Materials.bismuth);
+		bismuth_crossbow = createCrossbow(Materials.bismuth);
+		bismuth_fishing_rod = createFishingRod(Materials.bismuth);
+		bismuth_horsearmor = createHorseArmor(Materials.bismuth);
+		bismuth_shears = createShears(Materials.bismuth);
+		bismuth_smallpowder = createSmallPowder(Materials.bismuth);
+
 		bismuth_axe = createAxe(Materials.bismuth);
 		bismuth_boots = createBoots(Materials.bismuth);
 		bismuth_chestplate = createChestplate(Materials.bismuth);
@@ -1013,6 +1060,16 @@ public abstract class Items {
 		bismuth_dense_plate = createDensePlate(Materials.bismuth);
 		bismuth_crushed = createCrushed(Materials.bismuth);
 		bismuth_crushed_purified = createCrushedPurified(Materials.bismuth);
+
+		brass_arrow = createArrow(Materials.brass);
+		brass_bolt = createBolt(Materials.brass);
+		brass_bow = createBow(Materials.brass);
+		brass_crossbow = createCrossbow(Materials.brass);
+		brass_fishing_rod = createFishingRod(Materials.brass);
+		brass_horsearmor = createHorseArmor(Materials.brass);
+		brass_shears = createShears(Materials.brass);
+		brass_smallblend = createSmallBlend(Materials.brass);
+		brass_smallpowder = createSmallPowder(Materials.brass);
 
 		brass_axe = createAxe(Materials.brass);
 		brass_blend = createBlend(Materials.brass);
@@ -1044,6 +1101,16 @@ public abstract class Items {
 		brass_crushed = createCrushed(Materials.brass);
 		brass_crushed_purified = createCrushedPurified(Materials.brass);
 
+		bronze_arrow = createArrow(Materials.bronze);
+		bronze_bolt = createBolt(Materials.bronze);
+		bronze_bow = createBow(Materials.bronze);
+		bronze_crossbow = createCrossbow(Materials.bronze);
+		bronze_fishing_rod = createFishingRod(Materials.bronze);
+		bronze_horsearmor = createHorseArmor(Materials.bronze);
+		bronze_shears = createShears(Materials.bronze);
+		bronze_smallblend = createSmallBlend(Materials.bronze);
+		bronze_smallpowder = createSmallPowder(Materials.bronze);
+
 		bronze_axe = createAxe(Materials.bronze);
 		bronze_blend = createBlend(Materials.bronze);
 		bronze_boots = createBoots(Materials.bronze);
@@ -1073,13 +1140,22 @@ public abstract class Items {
 		bronze_dense_plate = createDensePlate(Materials.bronze);
 		bronze_crushed = createCrushed(Materials.bronze);
 		bronze_crushed_purified = createCrushedPurified(Materials.bronze);
-		
+
 		carbon_powder = new Item().setRegistryName(BaseMetals.MODID, "carbon_powder").setUnlocalizedName(BaseMetals.MODID + "." + "carbon_powder").setCreativeTab(ItemGroups.tab_items);
 		GameRegistry.register(carbon_powder);
-		itemRegistry.put(carbon_powder, "carbon_powder");
+		itemRegistry.put("carbon_powder", carbon_powder);
 		OreDictionary.registerOre("dustCoal", carbon_powder);
 		OreDictionary.registerOre("dustCarbon", carbon_powder);
-		
+
+		coldiron_arrow = createArrow(Materials.coldiron);
+		coldiron_bolt = createBolt(Materials.coldiron);
+		coldiron_bow = createBow(Materials.coldiron);
+		coldiron_crossbow = createCrossbow(Materials.coldiron);
+		coldiron_fishing_rod = createFishingRod(Materials.coldiron);
+		coldiron_horsearmor = createHorseArmor(Materials.coldiron);
+		coldiron_shears = createShears(Materials.coldiron);
+		coldiron_smallpowder = createSmallPowder(Materials.coldiron);
+
 		coldiron_axe = createAxe(Materials.coldiron);
 		coldiron_boots = createBoots(Materials.coldiron);
 		coldiron_chestplate = createChestplate(Materials.coldiron);
@@ -1109,6 +1185,15 @@ public abstract class Items {
 		coldiron_crushed = createCrushed(Materials.coldiron);
 		coldiron_crushed_purified = createCrushedPurified(Materials.coldiron);
 
+		copper_arrow = createArrow(Materials.copper);
+		copper_bolt = createBolt(Materials.copper);
+		copper_bow = createBow(Materials.copper);
+		copper_crossbow = createCrossbow(Materials.copper);
+		copper_fishing_rod = createFishingRod(Materials.copper);
+		copper_horsearmor = createHorseArmor(Materials.copper);
+		copper_shears = createShears(Materials.copper);
+		copper_smallpowder = createSmallPowder(Materials.copper);
+
 		copper_axe = createAxe(Materials.copper);
 		copper_boots = createBoots(Materials.copper);
 		copper_chestplate = createChestplate(Materials.copper);
@@ -1132,6 +1217,16 @@ public abstract class Items {
 		copper_dense_plate = createDensePlate(Materials.copper);
 		copper_crushed = createCrushed(Materials.copper);
 		copper_crushed_purified = createCrushedPurified(Materials.copper);
+
+		cupronickel_arrow = createArrow(Materials.cupronickel);
+		cupronickel_bolt = createBolt(Materials.cupronickel);
+		cupronickel_bow = createBow(Materials.cupronickel);
+		cupronickel_crossbow = createCrossbow(Materials.cupronickel);
+		cupronickel_fishing_rod = createFishingRod(Materials.cupronickel);
+		cupronickel_horsearmor = createHorseArmor(Materials.cupronickel);
+		cupronickel_shears = createShears(Materials.cupronickel);
+		cupronickel_smallblend = createSmallBlend(Materials.cupronickel);
+		cupronickel_smallpowder = createSmallPowder(Materials.cupronickel);
 
 		cupronickel_axe = createAxe(Materials.cupronickel);
 		cupronickel_blend = createBlend(Materials.cupronickel);
@@ -1165,6 +1260,16 @@ public abstract class Items {
 
 		diamond_crackhammer = createCrackhammer(Materials.vanilla_diamond);
 		diamond_gear = createGear(Materials.vanilla_diamond);
+
+		electrum_arrow = createArrow(Materials.electrum);
+		electrum_bolt = createBolt(Materials.electrum);
+		electrum_bow = createBow(Materials.electrum);
+		electrum_crossbow = createCrossbow(Materials.electrum);
+		electrum_fishing_rod = createFishingRod(Materials.electrum);
+		electrum_horsearmor = createHorseArmor(Materials.electrum);
+		electrum_shears = createShears(Materials.electrum);
+		electrum_smallblend = createSmallBlend(Materials.electrum);
+		electrum_smallpowder = createSmallPowder(Materials.electrum);
 
 		electrum_axe = createAxe(Materials.electrum);
 		electrum_blend = createBlend(Materials.electrum);
@@ -1200,6 +1305,16 @@ public abstract class Items {
 		gold_powder = createPowder(Materials.vanilla_gold);
 		gold_rod = createRod(Materials.vanilla_gold);
 		gold_gear = createGear(Materials.vanilla_gold);
+
+		invar_arrow = createArrow(Materials.invar);
+		invar_bolt = createBolt(Materials.invar);
+		invar_bow = createBow(Materials.invar);
+		invar_crossbow = createCrossbow(Materials.invar);
+		invar_fishing_rod = createFishingRod(Materials.invar);
+		invar_horsearmor = createHorseArmor(Materials.invar);
+		invar_shears = createShears(Materials.invar);
+		invar_smallblend = createSmallBlend(Materials.invar);
+		invar_smallpowder = createSmallPowder(Materials.invar);
 
 		invar_axe = createAxe(Materials.invar);
 		invar_blend = createBlend(Materials.invar);
@@ -1237,6 +1352,15 @@ public abstract class Items {
 		iron_rod = createRod(Materials.vanilla_iron);
 		iron_gear = createGear(Materials.vanilla_iron);
 
+		lead_arrow = createArrow(Materials.lead);
+		lead_bolt = createBolt(Materials.lead);
+		lead_bow = createBow(Materials.lead);
+		lead_crossbow = createCrossbow(Materials.lead);
+		lead_fishing_rod = createFishingRod(Materials.lead);
+		lead_horsearmor = createHorseArmor(Materials.lead);
+		lead_shears = createShears(Materials.lead);
+		lead_smallpowder = createSmallPowder(Materials.lead);
+
 		lead_axe = createAxe(Materials.lead);
 		lead_boots = createBoots(Materials.lead);
 		lead_chestplate = createChestplate(Materials.lead);
@@ -1260,6 +1384,15 @@ public abstract class Items {
 		lead_dense_plate = createDensePlate(Materials.lead);
 		lead_crushed = createCrushed(Materials.lead);
 		lead_crushed_purified = createCrushedPurified(Materials.lead);
+
+		platinum_arrow = createArrow(Materials.platinum);
+		platinum_bolt = createBolt(Materials.platinum);
+		platinum_bow = createBow(Materials.platinum);
+		platinum_crossbow = createCrossbow(Materials.platinum);
+		platinum_fishing_rod = createFishingRod(Materials.platinum);
+		platinum_horsearmor = createHorseArmor(Materials.platinum);
+		platinum_shears = createShears(Materials.platinum);
+		platinum_smallpowder = createSmallPowder(Materials.platinum);
 
 		platinum_axe = createAxe(Materials.platinum);
 		platinum_boots = createBoots(Materials.platinum);
@@ -1298,14 +1431,21 @@ public abstract class Items {
 		wood_gear = createGear(Materials.vanilla_wood);
 		
 		// mercury is special
+		mercury_ingot = registerItem(new Item(), "mercury_ingot", null, ItemGroups.tab_items);
+/*
 		mercury_ingot = new Item().setRegistryName(BaseMetals.MODID, "mercury_ingot").setUnlocalizedName(BaseMetals.MODID + "." + "mercury_ingot").setCreativeTab(ItemGroups.tab_items);
 		GameRegistry.register(mercury_ingot);
-		itemRegistry.put(mercury_ingot, "mercury_ingot");
+		itemRegistry.put("mercury_ingot", mercury_ingot);
+*/
 		OreDictionary.registerOre("ingotMercury", mercury_ingot);
 		OreDictionary.registerOre("quicksilver", mercury_ingot);
+
+		mercury_powder = registerItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
+/*
 		mercury_powder = new Item().setRegistryName(BaseMetals.MODID, "mercury_powder").setUnlocalizedName(BaseMetals.MODID + "." + "mercury_powder").setCreativeTab(ItemGroups.tab_items);
 		GameRegistry.register(mercury_powder);
-		itemRegistry.put(mercury_powder, "mercury_powder");
+*/
+		itemRegistry.put("mercury_powder", mercury_powder);
 		OreDictionary.registerOre("dustMercury", mercury_powder);
 
 		//mercury_crystal = createCrystal(Materials.mercury);
@@ -1315,7 +1455,17 @@ public abstract class Items {
 
 		//mercury_crushed = createCrushed(Materials.mercury);
 		//mercury_crushed_purified = createCrushedPurified(Materials.mercury);
-		
+
+		mithril_arrow = createArrow(Materials.mithril);
+		mithril_bolt = createBolt(Materials.mithril);
+		mithril_bow = createBow(Materials.mithril);
+		mithril_crossbow = createCrossbow(Materials.mithril);
+		mithril_fishing_rod = createFishingRod(Materials.mithril);
+		mithril_horsearmor = createHorseArmor(Materials.mithril);
+		mithril_shears = createShears(Materials.mithril);
+		mithril_smallblend = createSmallBlend(Materials.mithril);
+		mithril_smallpowder = createSmallPowder(Materials.mithril);
+
 		mithril_axe = createAxe(Materials.mithril);
 		mithril_blend = createBlend(Materials.mithril);
 		mithril_boots = createBoots(Materials.mithril);
@@ -1346,6 +1496,15 @@ public abstract class Items {
 		mithril_crushed = createCrushed(Materials.mithril);
 		mithril_crushed_purified = createCrushedPurified(Materials.mithril);
 
+		nickel_arrow = createArrow(Materials.nickel);
+		nickel_bolt = createBolt(Materials.nickel);
+		nickel_bow = createBow(Materials.nickel);
+		nickel_crossbow = createCrossbow(Materials.nickel);
+		nickel_fishing_rod = createFishingRod(Materials.nickel);
+		nickel_horsearmor = createHorseArmor(Materials.nickel);
+		nickel_shears = createShears(Materials.nickel);
+		nickel_smallpowder = createSmallPowder(Materials.nickel);
+
 		nickel_axe = createAxe(Materials.nickel);
 		nickel_boots = createBoots(Materials.nickel);
 		nickel_chestplate = createChestplate(Materials.nickel);
@@ -1374,6 +1533,15 @@ public abstract class Items {
 		nickel_dense_plate = createDensePlate(Materials.nickel);
 		nickel_crushed = createCrushed(Materials.nickel);
 		nickel_crushed_purified = createCrushedPurified(Materials.nickel);
+
+		pewter_arrow = createArrow(Materials.pewter);
+		pewter_bolt = createBolt(Materials.pewter);
+		pewter_bow = createBow(Materials.pewter);
+		pewter_crossbow = createCrossbow(Materials.pewter);
+		pewter_fishing_rod = createFishingRod(Materials.pewter);
+		pewter_horsearmor = createHorseArmor(Materials.pewter);
+		pewter_shears = createShears(Materials.pewter);
+		pewter_smallpowder = createSmallPowder(Materials.pewter);
 
 		pewter_axe = createAxe(Materials.pewter);
 		pewter_blend = createBlend(Materials.pewter);
@@ -1405,6 +1573,15 @@ public abstract class Items {
 		// pewter_crushed = createCrushed(Materials.pewter);
 		// pewter_crushed_purified = createCrushedPurified(Materials.pewter);
 
+		silver_arrow = createArrow(Materials.silver);
+		silver_bolt = createBolt(Materials.silver);
+		silver_bow = createBow(Materials.silver);
+		silver_crossbow = createCrossbow(Materials.silver);
+		silver_fishing_rod = createFishingRod(Materials.silver);
+		silver_horsearmor = createHorseArmor(Materials.silver);
+		silver_shears = createShears(Materials.silver);
+		silver_smallpowder = createSmallPowder(Materials.silver);
+
 		silver_axe = createAxe(Materials.silver);
 		silver_boots = createBoots(Materials.silver);
 		silver_chestplate = createChestplate(Materials.silver);
@@ -1428,6 +1605,15 @@ public abstract class Items {
 		silver_dense_plate = createDensePlate(Materials.silver);
 		silver_crushed = createCrushed(Materials.silver);
 		silver_crushed_purified = createCrushedPurified(Materials.silver);
+
+		starsteel_arrow = createArrow(Materials.starsteel);
+		starsteel_bolt = createBolt(Materials.starsteel);
+		starsteel_bow = createBow(Materials.starsteel);
+		starsteel_crossbow = createCrossbow(Materials.starsteel);
+		starsteel_fishing_rod = createFishingRod(Materials.starsteel);
+		starsteel_horsearmor = createHorseArmor(Materials.starsteel);
+		starsteel_shears = createShears(Materials.starsteel);
+		starsteel_smallpowder = createSmallPowder(Materials.starsteel);
 
 		starsteel_axe = createAxe(Materials.starsteel);
 		starsteel_boots = createBoots(Materials.starsteel);
@@ -1457,6 +1643,16 @@ public abstract class Items {
 		starsteel_dense_plate = createDensePlate(Materials.starsteel);
 		starsteel_crushed = createCrushed(Materials.starsteel);
 		starsteel_crushed_purified = createCrushedPurified(Materials.starsteel);
+
+		steel_arrow = createArrow(Materials.steel);
+		steel_bolt = createBolt(Materials.steel);
+		steel_bow = createBow(Materials.steel);
+		steel_crossbow = createCrossbow(Materials.steel);
+		steel_fishing_rod = createFishingRod(Materials.steel);
+		steel_horsearmor = createHorseArmor(Materials.steel);
+		steel_shears = createShears(Materials.steel);
+		steel_smallblend = createSmallBlend(Materials.steel);
+		steel_smallpowder = createSmallPowder(Materials.steel);
 
 		steel_axe = createAxe(Materials.steel);
 		steel_blend = createBlend(Materials.steel);
@@ -1488,6 +1684,13 @@ public abstract class Items {
 		steel_crushed = createCrushed(Materials.steel);
 		steel_crushed_purified = createCrushedPurified(Materials.steel);
 
+		tin_arrow = createArrow(Materials.tin);
+		tin_bolt = createBolt(Materials.tin);
+		tin_bow = createBow(Materials.tin);
+		tin_crossbow = createCrossbow(Materials.tin);
+		tin_fishing_rod = createFishingRod(Materials.tin);
+		tin_horsearmor = createHorseArmor(Materials.tin);
+
 		tin_axe = createAxe(Materials.tin);
 		tin_boots = createBoots(Materials.tin);
 		tin_chestplate = createChestplate(Materials.tin);
@@ -1500,7 +1703,9 @@ public abstract class Items {
 		tin_nugget = createNugget(Materials.tin);
 		tin_pickaxe = createPickaxe(Materials.tin);
 		tin_powder = createPowder(Materials.tin);
+		tin_shears = createShears(Materials.tin);
 		tin_shovel = createShovel(Materials.tin);
+		tin_smallpowder = createSmallPowder(Materials.tin);
 		tin_sword = createSword(Materials.tin);
 		tin_rod = createRod(Materials.tin);
 		tin_gear = createGear(Materials.tin);
@@ -1512,19 +1717,28 @@ public abstract class Items {
 		tin_crushed = createCrushed(Materials.tin);
 		tin_crushed_purified = createCrushedPurified(Materials.tin);
 
+
+		zinc_arrow = createArrow(Materials.zinc);
 		zinc_axe = createAxe(Materials.zinc);
+		zinc_bolt = createBolt(Materials.zinc);
 		zinc_boots = createBoots(Materials.zinc);
+		zinc_bow = createBow(Materials.zinc);
 		zinc_chestplate = createChestplate(Materials.zinc);
 		zinc_crackhammer = createCrackhammer(Materials.zinc);
+		zinc_crossbow = createCrossbow(Materials.zinc);
 		zinc_door = createDoor(Materials.zinc, Blocks.zinc_door);
+		zinc_fishing_rod = createFishingRod(Materials.zinc);
 		zinc_helmet = createHelmet(Materials.zinc);
 		zinc_hoe = createHoe(Materials.zinc);
+		zinc_horsearmor = createHorseArmor(Materials.zinc);
 		zinc_ingot = createIngot(Materials.zinc);
 		zinc_leggings = createLeggings(Materials.zinc);
 		zinc_nugget = createNugget(Materials.zinc);
 		tin_pickaxe = createPickaxe(Materials.zinc);
 		zinc_powder = createPowder(Materials.zinc);
+		zinc_shears = createShears(Materials.zinc);
 		zinc_shovel = createShovel(Materials.zinc);
+		zinc_smallpowder = createSmallPowder(Materials.zinc);
 		zinc_sword = createSword(Materials.zinc);
 		zinc_rod = createRod(Materials.zinc);
 		zinc_gear = createGear(Materials.zinc);
@@ -1542,8 +1756,7 @@ public abstract class Items {
 		zinc_crushed_purified = createCrushedPurified(Materials.zinc);
 
 		// TODO: Make this support multiple oredicts
-		for(final Item i : itemRegistry.keySet()) {
-			allItems.put(itemRegistry.get(i), i);
+		for(final Item i : allItems.keySet()) {
 			if(i instanceof IOreDictionaryEntry)
 				OreDictionary.registerOre(((IOreDictionaryEntry)i).getOreDictionaryName(), i);
 		}
@@ -1601,11 +1814,18 @@ public abstract class Items {
 	}
 
 	private static Item registerItem(Item item, String name, MetalMaterial metal, CreativeTabs tab) {
-		final ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
-		item.setRegistryName(location);
-		item.setUnlocalizedName(location.toString());
+		String fullName = null;
+		if(metal != null) {
+			fullName = metal.getName() + "_" + name;
+		} else {
+			fullName = name;
+		}
+
+		item.setRegistryName(fullName);
+		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
 		GameRegistry.register(item);
-		itemRegistry.put(item, name);
+		itemRegistry.put(fullName, item);
+		allItems.put(item, fullName);
 
 		if(tab != null) {
 			item.setCreativeTab(tab);
@@ -1616,183 +1836,167 @@ public abstract class Items {
 			itemsByMetal.get(metal).add(item);
 		}
 
+		if(item instanceof IOreDictionaryEntry)
+			OreDictionary.registerOre(((IOreDictionaryEntry)item).getOreDictionaryName(), item);
+
 		return item;
 	}
 
 	private static Item createIngot(MetalMaterial metal) {
-		final Item i = registerItem(new ItemMetalIngot(metal), metal.getName() + "_ingot", metal, ItemGroups.tab_items);
-		return i;
+		return registerItem(new ItemMetalIngot(metal), "ingot", metal, ItemGroups.tab_items);
 	}
 
 	private static Item createNugget(MetalMaterial metal) {
-		final Item i = registerItem(new ItemMetalNugget(metal), metal.getName() + "_nugget", metal, ItemGroups.tab_items);
-		return i;
+		return registerItem(new ItemMetalNugget(metal), "nugget", metal, ItemGroups.tab_items);
 	}
 
 	private static Item createPowder(MetalMaterial metal) {
-		final Item i = registerItem(new ItemMetalPowder(metal), metal.getName() + "_powder", metal, ItemGroups.tab_items);
-		return i;
+		return registerItem(new ItemMetalPowder(metal), "powder", metal, ItemGroups.tab_items);
 	}
 
 	private static Item createBlend(MetalMaterial metal) {
-		final Item i = registerItem(new ItemMetalBlend(metal), metal.getName() + "_blend", metal, ItemGroups.tab_items);
-		return i;
+		return registerItem(new ItemMetalBlend(metal), "blend", metal, ItemGroups.tab_items);
 	}
 
 	private static Item createRod(MetalMaterial metal) {
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_rod", metal, ItemGroups.tab_items);
-		return i;
+		return registerItem(new ItemMetalRod(metal), "rod", metal, ItemGroups.tab_items);
 	}
 
 	private static Item createGear(MetalMaterial metal) {
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_gear", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("gear" + metal.getCapitalizedName(), i);
-		return i;
+		return registerItem(new ItemMetalGear(metal), "gear", metal, ItemGroups.tab_items);
 	}
 
 	private static Item createAxe(MetalMaterial metal) {
-		return registerItem(new ItemMetalAxe(metal), metal.getName() + "_axe", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalAxe(metal), "axe", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createCrackhammer(MetalMaterial metal) {
-		return registerItem(new ItemMetalCrackHammer(metal), metal.getName() + "_crackhammer", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalCrackHammer(metal), "crackhammer", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createHoe(MetalMaterial metal) {
-		return registerItem(new ItemMetalHoe(metal), metal.getName() + "_hoe", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalHoe(metal), "hoe", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createPickaxe(MetalMaterial metal) {
-		return registerItem(new ItemMetalPickaxe(metal), metal.getName() + "_pickaxe", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalPickaxe(metal), "pickaxe", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createShovel(MetalMaterial metal) {
-		return registerItem(new ItemMetalShovel(metal), metal.getName() + "_shovel", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalShovel(metal), "shovel", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createSword(MetalMaterial metal) {
-		return registerItem(new ItemMetalSword(metal), metal.getName() + "_sword", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalSword(metal), "sword", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createHelmet(MetalMaterial metal) {
-		return registerItem(ItemMetalArmor.createHelmet(metal), metal.getName() + "_helmet", metal, ItemGroups.tab_tools);
+		return registerItem(ItemMetalArmor.createHelmet(metal), "helmet", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createChestplate(MetalMaterial metal) {
-		return registerItem(ItemMetalArmor.createChestplate(metal), metal.getName() + "_chestplate", metal, ItemGroups.tab_tools);
+		return registerItem(ItemMetalArmor.createChestplate(metal), "chestplate", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createLeggings(MetalMaterial metal) {
-		return registerItem(ItemMetalArmor.createLeggings(metal), metal.getName() + "_leggings", metal, ItemGroups.tab_tools);
+		return registerItem(ItemMetalArmor.createLeggings(metal), "leggings", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createBoots(MetalMaterial metal) {
-		return registerItem(ItemMetalArmor.createBoots(metal), metal.getName() + "_boots", metal, ItemGroups.tab_tools);
+		return registerItem(ItemMetalArmor.createBoots(metal), "boots", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createHorseArmor(MetalMaterial metal) {
-		return registerItem(new ItemMetalHorseArmor(metal), metal.getName() + "_horsearmor", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalHorseArmor(metal), "horsearmor", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createArrow(MetalMaterial metal) {
-		return registerItem(new ItemMetalArrow(metal), metal.getName() + "_arrow", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalArrow(metal), "arrow", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createBolt(MetalMaterial metal) {
-		return registerItem(new ItemMetalBolt(metal), metal.getName() + "_bolt", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalBolt(metal), "bolt", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createBow(MetalMaterial metal) {
-		return registerItem(new ItemMetalBow(metal), metal.getName() + "_bow", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalBow(metal), "bow", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createCrossbow(MetalMaterial metal) {
-		return registerItem(new ItemMetalCrossbow(metal), metal.getName() + "_crossbow", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalCrossbow(metal), "crossbow", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createShears(MetalMaterial metal) {
-		return registerItem(new ItemMetalShears(metal), metal.getName() + "_shears", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalShears(metal), "shears", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createSmallBlend(MetalMaterial metal) {
-		//return registerItem(new ItemMetalSmallBlend(metal), metal.getName() + "_smallblend", metal, ItemGroups.tab_items);
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_smallblend", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("dustTiny" + metal.getCapitalizedName(), i);
-		return i;
+		return registerItem(new ItemMetalSmallBlend(metal), "smallblend", metal, ItemGroups.tab_items);
 	}
 
 	private static Item createFishingRod(MetalMaterial metal) {
-		return registerItem(new ItemMetalFishingRod(metal), metal.getName() + "_fishing_rod", metal, ItemGroups.tab_tools);
+		return registerItem(new ItemMetalFishingRod(metal), "fishing_rod", metal, ItemGroups.tab_tools);
 	}
 
 	private static Item createSmallPowder(MetalMaterial metal) {
-		//return registerItem(new ItemMetalSmallPowder(metal), metal.getName() + "_smallpowder", metal, ItemGroups.tab_items);
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_smallpowder", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("dustTiny" + metal.getCapitalizedName(), i);
-		return i;
+		return registerItem(new ItemMetalSmallPowder(metal), "smallpowder", metal, ItemGroups.tab_items);
 	}
 
 	@SuppressWarnings("unused")
 	private static Item createShield(MetalMaterial metal) {
-		return registerItem(new ItemMetalShield(metal), metal.getName() + "_shield", metal, ItemGroups.tab_items);
+		return registerItem(new ItemMetalShield(metal), "shield", metal, ItemGroups.tab_items);
 	}
 
 	private static Item createCrystal(MetalMaterial metal) {
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_crystal", metal, ItemGroups.tab_items);
+		final Item i = registerItem(new GenericMetalItem(metal), "crystal", metal, ItemGroups.tab_items);
 		OreDictionary.registerOre("crystal" + metal.getCapitalizedName(), i);
 		return i;
 	}
 
 	private static Item createShard(MetalMaterial metal) {
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_shard", metal, ItemGroups.tab_items);
+		final Item i = registerItem(new GenericMetalItem(metal), "shard", metal, ItemGroups.tab_items);
 		OreDictionary.registerOre("shard" + metal.getCapitalizedName(), i);
 		return i;
 	}
 
 	private static Item createClump(MetalMaterial metal) {
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_clump", metal, ItemGroups.tab_items);
+		final Item i = registerItem(new GenericMetalItem(metal), "clump", metal, ItemGroups.tab_items);
 		OreDictionary.registerOre("clump" + metal.getCapitalizedName(), i);
 		return i;
 	}
 
 	private static Item createDirtyPowder(MetalMaterial metal) {
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_powder_dirty", metal, ItemGroups.tab_items);
+		final Item i = registerItem(new GenericMetalItem(metal), "powder_dirty", metal, ItemGroups.tab_items);
 		OreDictionary.registerOre("dustDirty" + metal.getCapitalizedName(), i);
 		return i;
 	}
 
 	// TODO: Possibly make this a block, 1/2 of the normal plate.
 	private static Item createDensePlate(MetalMaterial metal) {
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_dense_plate", metal, ItemGroups.tab_items);
+		final Item i = registerItem(new GenericMetalItem(metal), "dense_plate", metal, ItemGroups.tab_items);
 		OreDictionary.registerOre("plateDense" + metal.getCapitalizedName(), i);
 		return i;
 	}
 
 	private static Item createCrushed(MetalMaterial metal) {
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_crushed", metal, ItemGroups.tab_items);
+		final Item i = registerItem(new GenericMetalItem(metal), "crushed", metal, ItemGroups.tab_items);
 		OreDictionary.registerOre("crushed" + metal.getCapitalizedName(), i);
 		return i;
 	}
 
 	private static Item createCrushedPurified(MetalMaterial metal) {
-		final Item i = registerItem(new GenericMetalItem(metal), metal.getName() + "_crushed_purified", metal, ItemGroups.tab_items);
+		final Item i = registerItem(new GenericMetalItem(metal), "crushed_purified", metal, ItemGroups.tab_items);
 		OreDictionary.registerOre("crushedPurified" + metal.getCapitalizedName(), i);
 		return i;
 	}
 
 	private static Item createSlab(MetalMaterial metal, Block block, BlockSlab slab, BlockSlab doubleslab) {
-		final ResourceLocation location = new ResourceLocation(BaseMetals.MODID, metal.getName() + "_slab");
-		final Item item = new ItemMetalSlab(metal, block, slab, doubleslab);
-		registerItem(item, location.getResourcePath(), metal, ItemGroups.tab_blocks);
-		//item.setUnlocalizedName(location.toString()); // Hack to set name right
-		return item;
+		return registerItem(new ItemMetalSlab(metal, block, slab, doubleslab), "slab", metal, ItemGroups.tab_blocks);
 	}
 
 	private static Item createDoor(MetalMaterial metal, BlockDoor door) {
-		final ResourceLocation location = new ResourceLocation(BaseMetals.MODID, metal.getName() + "_door");
 		final Item item = new ItemMetalDoor(door, metal);
-		registerItem(item, location.getResourcePath() + "_item", metal, ItemGroups.tab_blocks);
-		item.setUnlocalizedName(location.toString()); // Hack to set name right
+		registerItem(item, "door", metal, ItemGroups.tab_blocks);
 		doorMap.put(door, item);
 		return item;
 	}
@@ -1845,20 +2049,7 @@ public abstract class Items {
 		return classVal + metalVal + (a.getMetadata() % 100);
 	}
 
-	/**
-	 * 
-	 * @param event
-	 */
-	@SideOnly(Side.CLIENT)
-	public static void registerItemRenders(FMLInitializationEvent event) {
-		for(final Item i : itemRegistry.keySet()) {
-			Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-			.register(i, 0, 
-				new ModelResourceLocation(new ResourceLocation(BaseMetals.MODID, itemRegistry.get(i)), "inventory"));
-		}
-	}
-
-	public static Map<Item, String> getItemRegistry() {
+	public static Map<String, Item> getItemRegistry() {
 		return itemRegistry;
 	}
 }

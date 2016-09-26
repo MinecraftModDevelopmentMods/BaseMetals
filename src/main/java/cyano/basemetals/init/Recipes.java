@@ -181,7 +181,7 @@ public abstract class Recipes {
 			final Item slab = cyano.basemetals.init.Items.getItemByName(baseName + "slab");
 			final Block lever = cyano.basemetals.init.Blocks.getBlockByName(baseName + "lever");
 			final Block pressure_plate = cyano.basemetals.init.Blocks.getBlockByName(baseName + "pressure_plate");
-			final Item stairs = cyano.basemetals.init.Items.getItemByName(baseName + "stairs");
+			final Block stairs = cyano.basemetals.init.Blocks.getBlockByName(baseName + "stairs");
 			final Block wall = cyano.basemetals.init.Blocks.getBlockByName(baseName + "wall");
 
 			// NOTE: smelting XP is based on output item, not input item
@@ -230,7 +230,6 @@ public abstract class Recipes {
 			if((ingot != null) && (rod != null)) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(rod, 4), "x", "x", 'x', "ingot" + oreDictName));
 				OreDictionary.registerOre("stick" + oreDictName, rod);
-				OreDictionary.registerOre("rod" + oreDictName, rod);
 				OreDictionary.registerOre("rod", rod);
 			}
 
@@ -244,7 +243,6 @@ public abstract class Recipes {
 
 			if((rod != null) && (ingot != null) && (gear != null)) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(gear, 4), " x ", "x/x", " x ", 'x', "ingot" + oreDictName, '/', "rod" + oreDictName));
-				OreDictionary.registerOre("gear" + oreDictName, gear);
 				OreDictionary.registerOre("gear", gear);
 
 				if(metal == Materials.steel)
@@ -322,7 +320,7 @@ public abstract class Recipes {
 
 			// Bows and Crossbows
 			if((rod != null) && (arrow != null))
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(arrow, 4), "x", "y", "z", 'x', "nugget" + oreDictName, 'y', "rod" + oreDictName,'z' ,net.minecraft.init.Items.FEATHER));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(arrow, 4), "x", "y", "z", 'x', "nugget" + oreDictName, 'y', "rod" + oreDictName, 'z' ,net.minecraft.init.Items.FEATHER));
 
 			if((rod != null) && (bow != null))
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bow), " xy", "x y", " xy", 'x', "rod" + oreDictName, 'y', net.minecraft.init.Items.STRING));

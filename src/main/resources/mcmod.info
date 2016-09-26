@@ -5,10 +5,10 @@
   "description": "This mod adds historically common metals to Minecraft",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/cyanobacterium/BaseMetals",
+  "url": "https://github.com/MineCraftModDevelopment/BaseMetals",
   "updateUrl": "",
-  "authorList": ["Cyanobacterium (aka DrCyano)","JRIwanek"],
-  "credits": "The Forge and FML guys, for making the Forge modding API (you guys are awesome), geologists everywhere, and the mod authors",
+  "authorList": ["jriwanek"],
+  "credits": "Cyanobacterium (aka DrCyano) For starting the project & geologists everywhere",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

@@ -11,8 +11,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,6 +31,8 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 
 	private final MetalMaterial metal;
 
+	public Item doorItem;
+
 	/**
 	 *
 	 * @param metal
@@ -42,15 +47,26 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 		this.disableStats();
 	}
 
+	private Item getDoorItem() {
+		if(this.doorItem == null) {
+			FMLLog.severe("getting item for door: %s, %s", this.getRegistryName().getResourceDomain(), this.metal.getName() + "_door_item");
+			this.doorItem = Item.REGISTRY.getObject(new ResourceLocation(this.getRegistryName().getResourceDomain(), this.metal.getName() + "_door_item"));
+		}
+
+		return this.doorItem;
+//		return GameRegistry.findItem(this.getRegistryName().getResourceDomain(), this.metal.getName() + "door_item");
+//		return cyano.basemetals.init.Items.getDoorItemForBlock(this);
+	}
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public ItemStack getItem(final World w, final BlockPos c, final IBlockState bs) {
-		return new ItemStack(cyano.basemetals.init.Items.getDoorItemForBlock(this));
+		return new ItemStack(this.getDoorItem());
 	}
 
 	@Override
-	public Item getItemDropped(final IBlockState bs, final Random prng, final int i) {
-		return (bs.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null : cyano.basemetals.init.Items.getDoorItemForBlock(this);
+	public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
+		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null : this.getDoorItem();
 	}
 
 	@Override

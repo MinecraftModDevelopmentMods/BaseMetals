@@ -62,7 +62,7 @@ public class MetalMaterial {
 	 */
 	@Deprecated
 	public MetalMaterial(String name, float hardness, float strength, float magic, int lootFrequency) {
-		this(name,hardness,strength,magic);
+		this(name, hardness, strength, magic);
 	}
 
 	/**
@@ -82,11 +82,9 @@ public class MetalMaterial {
 		this.strength = strength;
 		this.magicAffinity = magic;
 		this.identifier = name;
-		String firstLetter = name.substring(0,1);
-		String rest = name.substring(1);
-		titleName = firstLetter.toUpperCase(Locale.ENGLISH)+rest;
-		enumName = (BaseMetals.MODID+"_"+name).toUpperCase(Locale.ENGLISH);
-		isRare = false;
+		titleName = StringUtils.capitalize(name);
+		enumName = (BaseMetals.MODID + "_" + name).toUpperCase(Locale.ENGLISH);
+		this.isRare = false;
 	}
 	
 	/**

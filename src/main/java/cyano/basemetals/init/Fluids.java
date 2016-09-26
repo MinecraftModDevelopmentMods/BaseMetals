@@ -4,19 +4,15 @@ import cyano.basemetals.BaseMetals;
 import cyano.basemetals.blocks.BlockMoltenFluid;
 import cyano.basemetals.blocks.InteractiveFluidBlock;
 import cyano.basemetals.fluids.CustomFluid;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.*;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.*;
 import net.minecraft.potion.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -100,7 +96,7 @@ public abstract class Fluids {
 	public static Fluid fluidZinc = null;
 	public static BlockFluidBase fluidBlockZinc = null;
 
-	private static final Map<Fluid, BlockFluidBase> fluidBlocks = new HashMap<>();
+	private static final Map<String, BlockFluidBase> fluidBlockRegistry = new HashMap<>();
 	private static final Map<BlockFluidBase, String> fluidBlockNames = new HashMap<>();
 
 	private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
@@ -114,32 +110,29 @@ public abstract class Fluids {
 		if(initDone)
 			return;
 
-
 		// fluids
-		fluidAdamantine = newFluid(BaseMetals.MODID, "adamantine", 2000, 10000, 330, 10, 0xFF000000);
-		fluidAntimony = newFluid(BaseMetals.MODID, "antimony", 2000, 10000, 330, 10, 0xFF000000);
-		fluidAquarium = newFluid(BaseMetals.MODID, "aquarium", 2000, 10000, 330, 10, 0xFF000000);
-		fluidBismuth = newFluid(BaseMetals.MODID, "bismuth", 2000, 10000, 330, 10, 0xFF000000);
-		fluidBrass = newFluid(BaseMetals.MODID, "brass", 2000, 10000, 330, 10, 0xFF000000);
-		fluidBronze = newFluid(BaseMetals.MODID, "bronze", 2000, 10000, 330, 10, 0xFF000000);
-		fluidColdIron = newFluid(BaseMetals.MODID, "coldiron", 2000, 10000, 330, 10, 0xFF000000);
-		fluidCopper = newFluid(BaseMetals.MODID, "copper", 2000, 10000, 330, 10, 0xFF000000);
-		fluidCupronickel = newFluid(BaseMetals.MODID, "cupronickel", 2000, 10000, 330, 10, 0xFF000000);
-		fluidElectrum = newFluid(BaseMetals.MODID, "electrum", 2000, 10000, 330, 10, 0xFF000000);
-		fluidInvar = newFluid(BaseMetals.MODID, "invar", 2000, 10000, 330, 10, 0xFF000000);
-		fluidLead = newFluid(BaseMetals.MODID, "lead", 2000, 10000, 330, 10, 0xFF000000);
-
-		fluidMercury = newFluid(BaseMetals.MODID, "mercury", 13594, 2000, 300, 0, 0xFFD8D8D8);
-		
-		fluidMithril = newFluid(BaseMetals.MODID, "mithril", 2000, 10000, 330, 10, 0xFF000000);
-		fluidNickel = newFluid(BaseMetals.MODID, "nickel", 2000, 10000, 330, 10, 0xFF000000);
-		fluidPewter = newFluid(BaseMetals.MODID, "pewter", 2000, 10000, 330, 10, 0xFF000000);
-		fluidPlatinum = newFluid(BaseMetals.MODID, "platinum", 2000, 10000, 330, 10, 0xFF000000);
-		fluidSilver = newFluid(BaseMetals.MODID, "silver", 2000, 10000, 330, 10, 0xFF000000);
-		fluidStarSteel = newFluid(BaseMetals.MODID, "starsteel", 2000, 10000, 330, 10, 0xFF000000);
-		fluidSteel = newFluid(BaseMetals.MODID, "steel", 2000, 10000, 330, 10, 0xFF000000);
-		fluidTin = newFluid(BaseMetals.MODID, "tin", 2000, 10000, 330, 10, 0xFF000000);
-		fluidZinc = newFluid(BaseMetals.MODID, "zinc", 2000, 10000, 330, 10, 0xFF000000);
+		fluidAdamantine = newFluid("adamantine", 2000, 10000, 330, 10, 0xFF53393F);
+		fluidAntimony = newFluid("antimony", 2000, 10000, 330, 10, 0xFFD8E3DE);
+		fluidAquarium = newFluid("aquarium", 2000, 10000, 330, 10, 0xFF000000);
+		fluidBismuth = newFluid("bismuth", 2000, 10000, 330, 10, 0xFFDDD7CB);
+		fluidBrass = newFluid("brass", 2000, 10000, 330, 10, 0xFFFFE374);
+		fluidBronze = newFluid("bronze", 2000, 10000, 330, 10, 0xFFF7A54F);
+		fluidColdIron = newFluid("coldiron", 2000, 10000, 330, 10, 0xFFC7CEF0);
+		fluidCopper = newFluid("copper", 2000, 10000, 330, 10, 0xFFFF9F78);
+		fluidCupronickel = newFluid("cupronickel", 2000, 10000, 330, 10, 0xFFC8AB6F);
+		fluidElectrum = newFluid("electrum", 2000, 10000, 330, 10, 0xFFFFF2B3);
+		fluidInvar = newFluid("invar", 2000, 10000, 330, 10, 0xFFD2CDB8);
+		fluidLead = newFluid("lead", 2000, 10000, 330, 10, 0xFF7B7B7B);
+		fluidMercury = newFluid("mercury", 13594, 2000, 300, 0, 0xFFD8D8D8);
+		fluidMithril = newFluid("mithril", 2000, 10000, 330, 10, 0xFFF4FFFF);
+		fluidNickel = newFluid("nickel", 2000, 10000, 330, 10, 0xFFEEFFEB);
+		fluidPewter = newFluid("pewter", 2000, 10000, 330, 10, 0xFF92969F);
+		fluidPlatinum = newFluid("platinum", 2000, 10000, 330, 10, 0xFFF2FFFF);
+		fluidSilver = newFluid("silver", 2000, 10000, 330, 10, 0xFFFFFFFF);
+		fluidStarSteel = newFluid("starsteel", 2000, 10000, 330, 10, 0xFF53393F);
+		fluidSteel = newFluid("steel", 2000, 10000, 330, 10, 0xFFD5E3E5);
+		fluidTin = newFluid("tin", 2000, 10000, 330, 10, 0xFFFFF7EE);
+		fluidZinc = newFluid("zinc", 2000, 10000, 330, 10, 0xFFBCBCBC);
 
 		// fluid blocks
 		fluidBlockAdamantine = registerFluidBlock(fluidAdamantine, new BlockMoltenFluid(fluidAdamantine), "adamantine");
@@ -173,35 +166,13 @@ public abstract class Fluids {
 		initDone = true;
 	}
 
-	/**
-	 *
-	 * @param modID
-	 */
-	@SideOnly(Side.CLIENT)
-	public static void bakeModels(String modID) {
-		for(final Fluid fluid : fluidBlocks.keySet()) {
-			final BlockFluidBase block = fluidBlocks.get(fluid);
-			final Item item = Item.getItemFromBlock(block);
-			final ModelResourceLocation fluidModelLocation = new ModelResourceLocation(
-					modID.toLowerCase() + ":" + fluidBlockNames.get(block), "fluid");
-			ModelBakery.registerItemVariants(item);
-			ModelLoader.setCustomMeshDefinition(item, stack -> fluidModelLocation);
-			ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-				@Override
-				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-					return fluidModelLocation;
-				}
-			});
-		}
-	}
-
-	private static Fluid newFluid(String modID, String name, int density, int viscosity, int temperature, int luminosity, int tintColor) {
-		Fluid fluid = new CustomFluid(name, new ResourceLocation(modID + ":blocks/" + name + "_still"), new ResourceLocation(modID + ":blocks/" + name + "_flow"), tintColor);
+	private static Fluid newFluid(String name, int density, int viscosity, int temperature, int luminosity, int tintColor) {
+		Fluid fluid = new CustomFluid(name, new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_still"), new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_flow"), tintColor);
 		fluid.setDensity(density);
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);
 		fluid.setLuminosity(luminosity);
-		fluid.setUnlocalizedName(modID + "." + name);
+		fluid.setUnlocalizedName(BaseMetals.MODID + "." + name);
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
 		return fluid;
@@ -219,8 +190,23 @@ public abstract class Fluids {
 		itemBlock.setUnlocalizedName(location.toString());
 		GameRegistry.register(itemBlock);
 
-		fluidBlocks.put(fluid, block);
+		fluidBlockRegistry.put(name, block);
 		fluidBlockNames.put(block, name);
 		return block;
+	}
+
+	public static BlockFluidBase getFluidBlockByName(String name) {
+		FMLLog.severe("getFluidBlockByName(): " + name);
+		return fluidBlockRegistry.get(name);
+	}
+
+	public static String getNameOfFluidBlock(BlockFluidBase b) {
+		FMLLog.severe("getNameOfFluidBlock(): " + b.getUnlocalizedName());
+		return fluidBlockNames.get(b);
+	}
+
+	public static Map<String, BlockFluidBase> getFluidBlockRegistry() {
+		FMLLog.severe("getFluidBlockRegistry(): ");
+		return fluidBlockRegistry;
 	}
 }

@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
  * Helper functions to send IMC messages to VeinMiner
  */
 public class IMCMessage {
-	
+
 	/**
 	 *
 	 * @param type

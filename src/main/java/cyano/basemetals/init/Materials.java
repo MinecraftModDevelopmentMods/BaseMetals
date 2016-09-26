@@ -29,6 +29,7 @@ public abstract class Materials {
 	private static Map<String, MetalMaterial> allMaterials = new HashMap<>();
 	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
+	protected static List<MetalMaterial> materials = new LinkedList<MetalMaterial>();
 	
 	public static MetalMaterial adamantine;
 	public static MetalMaterial antimony;
@@ -58,8 +59,6 @@ public abstract class Materials {
 	public static MetalMaterial vanilla_iron;
 	public static MetalMaterial vanilla_gold;
 	public static MetalMaterial vanilla_diamond;
-
-	public static List<MetalMaterial> materials = new LinkedList<MetalMaterial>();
 
 	private static boolean initDone = false;
 
@@ -106,7 +105,7 @@ public abstract class Materials {
 		initDone = true;
 	}
 
-	private static MetalMaterial addMaterial(String name, double hardness, double strength, double magic) {
+	protected static MetalMaterial addMaterial(String name, double hardness, double strength, double magic) {
 		final MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic);
 		registerMaterial(name, m);
 
@@ -114,7 +113,7 @@ public abstract class Materials {
 		return m;
 	}
 
-	private static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic) {
+	protected static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic) {
 		final MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic, true);
 		registerMaterial(name, m);
 
@@ -133,18 +132,18 @@ public abstract class Materials {
 		ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, (m.hardness > 10 ? (int)(m.hardness / 5) : 0));
 		if(am == null) {
 			// uh-oh
-			FMLLog.severe("Failed to create armor material enum for "+m);
+			FMLLog.severe("Failed to create armor material enum for " + m);
 		}
 		armorMaterialMap.put(m, am);
-		FMLLog.info("Created armor material enum "+am);
+		FMLLog.info("Created armor material enum " + am);
 		
 		ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(), m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
 		if(tm == null) {
 			// uh-oh
-			FMLLog.severe("Failed to create tool material enum for "+m);
+			FMLLog.severe("Failed to create tool material enum for " + m);
 		}
 		toolMaterialMap.put(m, tm);
-		FMLLog.info("Created tool material enum "+tm);
+		FMLLog.info("Created tool material enum " + tm);
 	}
 
 	/**

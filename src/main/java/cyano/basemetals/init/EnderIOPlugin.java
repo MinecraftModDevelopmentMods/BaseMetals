@@ -15,28 +15,30 @@ public class EnderIOPlugin {
 
 	private static boolean initDone = false;
 
+	private static String MODID = BaseMetals.MODID;
+
 	// @formatter:off
 	private static final String ALLOY_SMELTER_MSG =
-			"<recipeGroup name=\"" + BaseMetals.MODID + "\" >" +
+			"<recipeGroup name=\"" + MODID + "\" >" +
 			 "<recipe name=\"%s\" energyCost=\"%d\" >" +
 			  "<input>" +
-			   "<itemStack modID=\"" + BaseMetals.MODID + "\" itemName=\"%s\" />" +
+			   "<itemStack modID=\"" + MODID + "\" itemName=\"%s\" />" +
 			  "</input>" +
 			  "<output>" +
-			   "<itemStack modID=\"" + BaseMetals.MODID + "\" itemName=\"%s\" />" +
+			   "<itemStack modID=\"" + MODID + "\" itemName=\"%s\" />" +
 			  "</output>" +
 			 "</recipe>" +
 			"</recipeGroup>";
 
 	private static final String SAG_MILL_MSG =
-			"<recipeGroup name=\"" + BaseMetals.MODID + "\">" +
+			"<recipeGroup name=\"" + MODID + "\">" +
 			 "<recipe name=\"%s\" energyCost=\"%d\">" +
 			  "<input>" +
-			   "<itemStack modID=\"" + BaseMetals.MODID + "\" itemName=\"%s\" itemMeta=\"%d\" />" +
+			   "<itemStack modID=\"" + MODID + "\" itemName=\"%s\" itemMeta=\"%d\" />" +
 			  "</input>" +
 			  "<output>" +
-			   "<itemStack modID=\"" + BaseMetals.MODID + "\" itemName=\"%s\" itemMeta=\"%d\" number=\"2\" />" +
-			   "<itemStack modID=\"" + BaseMetals.MODID + "\" itemName=\"%s\" itemMeta=\"%d\" number=\"1\" chance=\"0.1\" />" +
+			   "<itemStack modID=\"" + MODID + "\" itemName=\"%s\" itemMeta=\"%d\" number=\"2\" />" +
+			   "<itemStack modID=\"" + MODID + "\" itemName=\"%s\" itemMeta=\"%d\" number=\"1\" chance=\"0.1\" />" +
 			   "<itemStack modID=\"minecraft\" itemName=\"%s\" chance=\"0.15\"/>" +
 			  "</output>" +
 			 "</recipe>" +

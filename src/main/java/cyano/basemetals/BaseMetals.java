@@ -2,6 +2,7 @@ package cyano.basemetals;
 
 import cyano.basemetals.data.AdditionalLootTables;
 import cyano.basemetals.data.DataConstants;
+import cyano.basemetals.proxy.CommonProxy;
 
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import net.minecraft.block.Block;
@@ -16,13 +17,13 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.logging.log4j.Level;
@@ -48,12 +49,12 @@ import java.util.*;
  */
 @Mod(modid = BaseMetals.MODID, name=BaseMetals.NAME, version = BaseMetals.VERSION,
 		dependencies = "required-after:Forge",
-		acceptedMinecraftVersions = "[1.10.2,)") // see VersionRange.createFromVersionSpec(String) for explanation of this convoluted feature
-//		updateJSON = "https://raw.githubusercontent.com/cyanobacterium/BaseMetals/master/update.json")
-public class BaseMetals
-{
+		acceptedMinecraftVersions = "[1.10.2,)",
+		updateJSON = "https://raw.githubusercontent.com/MinecraftModDevelopment/BaseMetals/master/update.json")
+public class BaseMetals {
 	//TODO: use metal plates to modify or repair shields
 
+	@Instance
 	public static BaseMetals INSTANCE = null;
 
 	/** ID of this mod */
@@ -62,9 +63,15 @@ public class BaseMetals
 	/** display name of this mod */
 	public static final String NAME ="Base Metals";
 
-	/** Version number, in Major.Minor.Build format. The minor number is increased whenever a change 
-	 * is made that has the potential to break compatibility with other mods that depend on this one. */
-	public static final String VERSION = "2.4.0";
+	/**
+	 * Version number, in Major.Minor.Build format. The minor number is
+	 * increased whenever a change is made that has the potential to break
+	 * compatibility with other mods that depend on this one.
+	 */
+	public static final String VERSION = "2.5.0";
+
+	@SidedProxy(clientSide = "cyano.basemetals.proxy.ClientProxy", serverSide = "cyano.basemetals.proxy.CommonProxy")
+	public static CommonProxy PROXY = null;
 
 	static {
 		// Forge says this needs to be statically initialized here.
@@ -223,24 +230,7 @@ public class BaseMetals
 			}
 		}
 
-		if(event.getSide() == Side.CLIENT) {
-			clientPreInit(event);
-		}
-
-		if(event.getSide() == Side.SERVER) {
-			serverPreInit(event);
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	private void clientPreInit(FMLPreInitializationEvent event) {
-		// client-only code
-		cyano.basemetals.init.Fluids.bakeModels(MODID);
-	}
-
-	@SideOnly(Side.SERVER)
-	private void serverPreInit(FMLPreInitializationEvent event) {
-		// server-only code
+		PROXY.preInit();
 	}
 
 	/**
@@ -256,26 +246,7 @@ public class BaseMetals
 		
 		cyano.basemetals.init.Achievements.init();
 
-
-		if(event.getSide() == Side.CLIENT) {
-			clientInit(event);
-		}
-
-		if(event.getSide() == Side.SERVER) {
-			serverInit(event);
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	private void clientInit(FMLInitializationEvent event) {
-		// client-only code
-		cyano.basemetals.init.Items.registerItemRenders(event);
-		cyano.basemetals.init.Blocks.registerItemRenders(event);
-	}
-
-	@SideOnly(Side.SERVER)
-	private void serverInit(FMLInitializationEvent event) {
-		// server-only code
+		PROXY.init();
 	}
 
 	/**
@@ -345,25 +316,9 @@ public class BaseMetals
 			}
 		}
 
-		if(event.getSide() == Side.CLIENT) {
-			clientPostInit(event);
-		}
-
-		if(event.getSide() == Side.SERVER) {
-			serverPostInit(event);
-		}
-
 		CrusherRecipeRegistry.getInstance().clearCache();
-	}
 
-	@SideOnly(Side.CLIENT)
-	private void clientPostInit(FMLPostInitializationEvent event) {
-		// client-only code
-	}
-
-	@SideOnly(Side.SERVER)
-	private void serverPostInit(FMLPostInitializationEvent event) {
-		// server-only code
+		PROXY.postInit();
 	}
 
 	/**
@@ -386,12 +341,12 @@ public class BaseMetals
 		int nameStart = 0;
 		int nameEnd = str.length();
 		if(str.contains("*")) {
-			count = Integer.parseInt(str.substring(0, str.indexOf("*")).trim());
-			nameStart = str.indexOf("*") + 1;
+			count = Integer.parseInt(str.substring(0, str.indexOf('*')).trim());
+			nameStart = str.indexOf('*') + 1;
 		}
 		if(str.contains("#")) {
-			meta = Integer.parseInt(str.substring(str.indexOf("#") + 1,str.length()).trim());
-			nameEnd = str.indexOf("#");
+			meta = Integer.parseInt(str.substring(str.indexOf('#') + 1,str.length()).trim());
+			nameEnd = str.indexOf('#');
 		}
 		String id = str.substring(nameStart,nameEnd).trim();
 		if(Block.getBlockFromName(id) != null) {

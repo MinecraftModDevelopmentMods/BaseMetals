@@ -7,7 +7,7 @@ buildscript {
         }
         maven {
             name = "sonatype"
-            url = 'https://oss.sonatype.org/content/groups/public'
+            url = "https://oss.sonatype.org/content/groups/public"
         }
     }
     dependencies {
@@ -28,7 +28,7 @@ sourceCompatibility = targetCompatibility = "1.8"
 minecraft {
     version = "1.10.2-12.18.1.2011"
     runDir = "run"
-    mappings = "snapshot_20160820"
+    mappings = "snapshot_20160917"
 //    coreMod = "basemetals.asm.BaseMetalPlugin"
 }
 
@@ -48,11 +48,12 @@ repositories {
 }
 
 dependencies {
-    compile "slimeknights:TConstruct:1.10.2-2.4.0.jenkins327:deobf"
-    compile "slimeknights.mantle:Mantle:1.10.2-0.10.4.jenkins163:deobf"
+    compile "slimeknights:TConstruct:1.10.2-2.5.1.jenkins350:deobf"
+    compile "slimeknights.mantle:Mantle:1.10.2-1.0.0.jenkins170:deobf"
     deobfCompile "mezz.jei:jei_1.10.2:+"
-    compile "codechicken:CodeChickenLib:1.10.2-2.2.3.57:deobf"
-    compile "codechicken:NotEnoughItems:1.10.2-2.1.1.146:deobf"
+    compile "codechicken:CodeChickenLib:1.10.2-2.2.3.80:deobf"
+    compile "codechicken:CodeChickenCore:1.10.2-2.1.8.79:deobf"
+    compile "codechicken:NotEnoughItems:1.10.2-2.1.1.147:deobf"
 }
 
 processResources {
@@ -75,6 +76,11 @@ processResources {
 //    }
 //}
 
+task apiJar(type: Jar) {
+    from apiClasses
+    classifier = 'apiClasses'
+}
+
 task deobfJar(type: Jar) {
     classifier = "deobf"
     from sourceSets.main.output
@@ -86,6 +92,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
+//  archives apiJar
     archives deobfJar
     archives sourceJar
     archives javadocJar
@@ -100,7 +107,7 @@ curseforge {
         mainArtifact(jar) {
             displayName = "Base Metals $project.version"
             relations {
-                requiredLibrary "drcyanos-ore-spawn"
+                requiredLibrary "mmd-orespawn"
                 optionalLibrary "additional-loot-tables"
             }
         }
