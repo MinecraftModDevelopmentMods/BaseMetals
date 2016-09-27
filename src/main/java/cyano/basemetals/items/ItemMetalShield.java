@@ -62,7 +62,7 @@ public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack)
     {
-        return I18n.translateToLocal(this.getUnlocalizedName());
+        return I18n.translateToLocal(this.getUnlocalizedName() + ".name");
     }
 	
 	
