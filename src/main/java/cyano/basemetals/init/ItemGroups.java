@@ -1,20 +1,22 @@
 package cyano.basemetals.init;
 
 import cyano.basemetals.BaseMetals;
-
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 /**
  * This class initializes all item groups in Base Metals.
+ * 
  * @author DrCyano
  *
  */
 public class ItemGroups {
 
-	public static final java.util.function.BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (ItemStack a,ItemStack b)->{
-		int delta = Items.getSortingValue(a) - Items.getSortingValue(b);
-		if(delta == 0)
+	public static final java.util.function.BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (ItemStack a,
+			ItemStack b) -> {
+		final int delta = Items.getSortingValue(a) - Items.getSortingValue(b);
+		if (delta == 0)
 			return a.getItem().getUnlocalizedName().compareToIgnoreCase(b.getItem().getUnlocalizedName());
 		return delta;
 	};
@@ -29,11 +31,11 @@ public class ItemGroups {
 	 *
 	 */
 	public static void init() {
-		if(initDone)
+		if (initDone)
 			return;
 
 		// placeholders
-		Item blockItem = Items.copper_crackhammer;
+		final Item blockItem = Items.copper_crackhammer;
 		// Item itemItem = Items.copper_crackhammer;
 		// Item toolItem = Items.copper_crackhammer;
 
@@ -48,4 +50,3 @@ public class ItemGroups {
 		initDone = true;
 	}
 }
-
