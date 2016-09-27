@@ -57,7 +57,7 @@ public abstract class Items {
 	public static Item adamantine_gear;
 
 	public static Item adamantine_slab;
-	//public static Item adamantine_shield;
+	public static Item adamantine_shield;
 
 	public static Item adamantine_crystal;
 	public static Item adamantine_shard;
@@ -94,7 +94,7 @@ public abstract class Items {
 	public static Item antimony_gear;
 
 	public static Item antimony_slab;
-	//public static Item antimony_shield;
+	public static Item antimony_shield;
 
 	public static Item antimony_crystal;
 	public static Item antimony_shard;
@@ -133,7 +133,7 @@ public abstract class Items {
 	public static Item aquarium_gear;
 
 	public static Item aquarium_slab;
-	//public static Item aquarium_shield;
+	public static Item aquarium_shield;
 
 	public static Item aquarium_crystal;
 	public static Item aquarium_shard;
@@ -170,7 +170,7 @@ public abstract class Items {
 	public static Item bismuth_gear;
 
 	public static Item bismuth_slab;
-	//public static Item bismuth_shield;
+	public static Item bismuth_shield;
 
 	public static Item bismuth_crystal;
 	public static Item bismuth_shard;
@@ -209,7 +209,7 @@ public abstract class Items {
 	public static Item brass_gear;
 
 	public static Item brass_slab;
-	//public static Item brass_shield;
+	public static Item brass_shield;
 
 	public static Item brass_crystal;
 	public static Item brass_shard;
@@ -248,7 +248,7 @@ public abstract class Items {
 	public static Item bronze_gear;
 
 	public static Item bronze_slab;
-	//public static Item bronze_shield;
+	public static Item bronze_shield;
 
 	public static Item bronze_crystal;
 	public static Item bronze_shard;
@@ -287,7 +287,7 @@ public abstract class Items {
 	public static Item coldiron_gear;
 
 	public static Item coldiron_slab;
-	//public static Item coldiron_shield;
+	public static Item coldiron_shield;
 
 	public static Item coldiron_crystal;
 	public static Item coldiron_shard;
@@ -324,7 +324,7 @@ public abstract class Items {
 	public static Item copper_gear;
 
 	public static Item copper_slab;
-	//public static Item copper_shield;
+	public static Item copper_shield;
 
 
 	public static Item copper_dense_plate;
@@ -359,7 +359,7 @@ public abstract class Items {
 	public static Item cupronickel_gear;
 
 	public static Item cupronickel_slab;
-	//public static Item cupronickel_shield;
+	public static Item cupronickel_shield;
 
 	public static Item cupronickel_crystal;
 	public static Item cupronickel_shard;
@@ -401,7 +401,7 @@ public abstract class Items {
 	public static Item electrum_gear;
 
 	public static Item electrum_slab;
-	//public static Item electrum_shield;
+	public static Item electrum_shield;
 
 	public static Item electrum_crystal;
 	public static Item electrum_shard;
@@ -445,7 +445,7 @@ public abstract class Items {
 	public static Item invar_gear;
 
 	public static Item invar_slab;
-	//public static Item invar_shield;
+	public static Item invar_shield;
 
 	public static Item invar_crystal;
 	public static Item invar_shard;
@@ -488,7 +488,7 @@ public abstract class Items {
 	public static Item lead_gear;
 
 	public static Item lead_slab;
-	//public static Item lead_shield;
+	public static Item lead_shield;
 
 	public static Item lead_dense_plate;
 	public static Item lead_crushed;
@@ -533,7 +533,7 @@ public abstract class Items {
 	public static Item mithril_gear;
 
 	public static Item mithril_slab;
-	//public static Item mithril_shield;
+	public static Item mithril_shield;
 
 	public static Item mithril_crystal;
 	public static Item mithril_shard;
@@ -570,7 +570,7 @@ public abstract class Items {
 	public static Item nickel_gear;
 
 	public static Item nickel_slab;
-	//public static Item nickel_shield;
+	public static Item nickel_shield;
 
 	public static Item nickel_crystal;
 	public static Item nickel_shard;
@@ -608,7 +608,7 @@ public abstract class Items {
 	public static Item pewter_gear;
 
 	public static Item pewter_slab;
-	//public static Item pewter_shield;
+	public static Item pewter_shield;
 
 	public static Item pewter_crystal;
 	public static Item pewter_shard;
@@ -645,7 +645,7 @@ public abstract class Items {
 	public static Item platinum_gear;
 
 	public static Item platinum_slab;
-	//public static Item platinum_shield;
+	public static Item platinum_shield;
 
 	public static Item platinum_crystal;
 	public static Item platinum_shard;
@@ -682,7 +682,7 @@ public abstract class Items {
 	public static Item silver_gear;
 
 	public static Item silver_slab;
-	//public static Item silver_shield;
+	public static Item silver_shield;
 
 	public static Item silver_dense_plate;
 	public static Item silver_crushed;
@@ -714,7 +714,7 @@ public abstract class Items {
 	public static Item starsteel_gear;
 
 	public static Item starsteel_slab;
-	//public static Item starsteel_shield;
+	public static Item starsteel_shield;
 
 	public static Item starsteel_crystal;
 	public static Item starsteel_shard;
@@ -753,7 +753,7 @@ public abstract class Items {
 	public static Item steel_gear;
 
 	public static Item steel_slab;
-	//public static Item steel_shield;
+	public static Item steel_shield;
 
 	public static Item steel_crystal;
 	public static Item steel_shard;
@@ -794,7 +794,7 @@ public abstract class Items {
 	public static Item tin_gear;
 
 	public static Item tin_slab;
-	//public static Item tin_shield;
+	public static Item tin_shield;
 
 	public static Item tin_dense_plate;
 	public static Item tin_crushed;
@@ -829,7 +829,7 @@ public abstract class Items {
 	public static Item zinc_gear;
 
 	public static Item zinc_slab;
-	//public static Item zinc_shield;
+	public static Item zinc_shield;
 
 	public static Item zinc_crystal;
 	public static Item zinc_shard;
@@ -934,7 +934,7 @@ public abstract class Items {
 		adamantine_gear = createGear(Materials.adamantine);
 
 		adamantine_slab = createSlab(Materials.adamantine, Blocks.adamantine_slab, Blocks.adamantine_slab, Blocks.double_adamantine_slab);
-		//adamantine_shield = createShield(Materials.);
+		adamantine_shield = createShield(Materials.adamantine);
 
 		adamantine_crystal = createCrystal(Materials.adamantine);
 		adamantine_shard = createShard(Materials.adamantine);
@@ -972,7 +972,7 @@ public abstract class Items {
 		antimony_gear = createGear(Materials.antimony);
 
 		antimony_slab = createSlab(Materials.antimony, Blocks.antimony_slab, Blocks.antimony_slab, Blocks.double_antimony_slab);
-		//antimony_shield = createShield(Materials.);
+		antimony_shield = createShield(Materials.antimony);
 
 		antimony_crystal = createCrystal(Materials.antimony);
 		antimony_shard = createShard(Materials.antimony);
@@ -1012,7 +1012,7 @@ public abstract class Items {
 		aquarium_gear = createGear(Materials.aquarium);
 
 		aquarium_slab = createSlab(Materials.aquarium, Blocks.aquarium_slab, Blocks.aquarium_slab, Blocks.double_aquarium_slab);
-		//aquarium_shield = createShield(Materials.aquarium);
+		aquarium_shield = createShield(Materials.aquarium);
 
 		aquarium_crystal = createCrystal(Materials.aquarium);
 		aquarium_shard = createShard(Materials.aquarium);
@@ -1050,7 +1050,7 @@ public abstract class Items {
 		bismuth_gear = createGear(Materials.bismuth);
 
 		bismuth_slab = createSlab(Materials.bismuth, Blocks.bismuth_slab, Blocks.bismuth_slab, Blocks.double_bismuth_slab);
-		//bismuth_shield = createShield(Materials.);
+		bismuth_shield = createShield(Materials.bismuth);
 
 		bismuth_crystal = createCrystal(Materials.bismuth);
 		bismuth_shard = createShard(Materials.bismuth);
@@ -1090,7 +1090,7 @@ public abstract class Items {
 		brass_gear = createGear(Materials.brass);
 
 		brass_slab = createSlab(Materials.brass, Blocks.brass_slab, Blocks.brass_slab, Blocks.double_brass_slab);
-		//brass_shield = createShield(Materials.brass);
+		brass_shield = createShield(Materials.brass);
 
 		brass_crystal = createCrystal(Materials.brass);
 		brass_shard = createShard(Materials.brass);
@@ -1130,7 +1130,7 @@ public abstract class Items {
 		bronze_gear = createGear(Materials.bronze);
 
 		bronze_slab = createSlab(Materials.bronze, Blocks.bronze_slab, Blocks.bronze_slab, Blocks.double_bronze_slab);
-		//bronze_shield = createShield(Materials.bronze);
+		bronze_shield = createShield(Materials.bronze);
 
 		bronze_crystal = createCrystal(Materials.bronze);
 		bronze_shard = createShard(Materials.bronze);
@@ -1174,7 +1174,7 @@ public abstract class Items {
 		coldiron_gear = createGear(Materials.coldiron);
 
 		coldiron_slab = createSlab(Materials.coldiron, Blocks.coldiron_slab, Blocks.coldiron_slab, Blocks.double_coldiron_slab);
-		//coldiron_shield = createShield(Materials.coldiron);
+		coldiron_shield = createShield(Materials.coldiron);
 
 		coldiron_crystal = createCrystal(Materials.coldiron);
 		coldiron_shard = createShard(Materials.coldiron);
@@ -1212,7 +1212,7 @@ public abstract class Items {
 		copper_gear = createGear(Materials.copper);
 
 		copper_slab = createSlab(Materials.copper, Blocks.copper_slab, Blocks.copper_slab, Blocks.double_copper_slab);
-		//copper_shield = createShield(Materials.copper);
+		copper_shield = createShield(Materials.copper);
 
 		copper_dense_plate = createDensePlate(Materials.copper);
 		copper_crushed = createCrushed(Materials.copper);
@@ -1247,7 +1247,7 @@ public abstract class Items {
 		cupronickel_gear = createGear(Materials.cupronickel);
 
 		cupronickel_slab = createSlab(Materials.cupronickel, Blocks.cupronickel_slab, Blocks.cupronickel_slab, Blocks.double_cupronickel_slab);
-		//cupronickel_shield = createShield(Materials.cupronickel);
+		cupronickel_shield = createShield(Materials.cupronickel);
 
 		cupronickel_crystal = createCrystal(Materials.cupronickel);
 		cupronickel_shard = createShard(Materials.cupronickel);
@@ -1290,7 +1290,7 @@ public abstract class Items {
 		electrum_gear = createGear(Materials.electrum);
 
 		electrum_slab = createSlab(Materials.electrum, Blocks.electrum_slab, Blocks.electrum_slab, Blocks.double_electrum_slab);
-		//electrum_shield = createShield(Materials.electrum);
+		electrum_shield = createShield(Materials.electrum);
 
 		electrum_crystal = createCrystal(Materials.electrum);
 		electrum_shard = createShard(Materials.electrum);
@@ -1335,7 +1335,7 @@ public abstract class Items {
 		invar_gear = createGear(Materials.invar);
 
 		invar_slab = createSlab(Materials.invar, Blocks.invar_slab, Blocks.invar_slab, Blocks.double_invar_slab);
-		//invar_shield = createShield(Materials.invar);
+		invar_shield = createShield(Materials.invar);
 
 		invar_crystal = createCrystal(Materials.invar);
 		invar_shard = createShard(Materials.invar);
@@ -1379,7 +1379,7 @@ public abstract class Items {
 		lead_gear = createGear(Materials.lead);
 
 		lead_slab = createSlab(Materials.lead, Blocks.lead_slab, Blocks.lead_slab, Blocks.double_lead_slab);
-		//lead_shield = createShield(Materials.lead);
+		lead_shield = createShield(Materials.lead);
 
 		lead_dense_plate = createDensePlate(Materials.lead);
 		lead_crushed = createCrushed(Materials.lead);
@@ -1412,7 +1412,7 @@ public abstract class Items {
 		platinum_gear = createGear(Materials.platinum);
 
 		platinum_slab = createSlab(Materials.platinum, Blocks.platinum_slab, Blocks.platinum_slab, Blocks.double_platinum_slab);
-		//platinum_shield = createShield(Materials.platinum);
+		platinum_shield = createShield(Materials.platinum);
 
 		platinum_crystal = createCrystal(Materials.platinum);
 		platinum_shard = createShard(Materials.platinum);
@@ -1485,7 +1485,7 @@ public abstract class Items {
 		mithril_gear = createGear(Materials.mithril);
 
 		mithril_slab = createSlab(Materials.mithril, Blocks.mithril_slab, Blocks.mithril_slab, Blocks.double_mithril_slab);
-		//mithril_shield = createShield(Materials.mithril);
+		mithril_shield = createShield(Materials.mithril);
 
 		mithril_crystal = createCrystal(Materials.mithril);
 		mithril_shard = createShard(Materials.mithril);
@@ -1523,7 +1523,7 @@ public abstract class Items {
 		nickel_gear = createGear(Materials.nickel);
 
 		nickel_slab = createSlab(Materials.nickel, Blocks.nickel_slab, Blocks.nickel_slab, Blocks.double_nickel_slab);
-		//nickel_shield = createShield(Materials.nickel);
+		nickel_shield = createShield(Materials.nickel);
 
 		nickel_crystal = createCrystal(Materials.nickel);
 		nickel_shard = createShard(Materials.nickel);
@@ -1562,7 +1562,7 @@ public abstract class Items {
 		pewter_gear = createGear(Materials.pewter);
 
 		pewter_slab = createSlab(Materials.pewter, Blocks.pewter_slab, Blocks.pewter_slab, Blocks.double_pewter_slab);
-		//pewter_shield = createShield(Materials.);
+		pewter_shield = createShield(Materials.pewter);
 
 		// pewter_crystal = createCrystal(Materials.pewter);
 		// pewter_shard = createShard(Materials.pewter);
@@ -1600,7 +1600,7 @@ public abstract class Items {
 		silver_gear = createGear(Materials.silver);
 
 		silver_slab = createSlab(Materials.silver, Blocks.silver_slab, Blocks.silver_slab, Blocks.double_silver_slab);
-		//silver_shield = createShield(Materials.silver);
+		silver_shield = createShield(Materials.silver);
 
 		silver_dense_plate = createDensePlate(Materials.silver);
 		silver_crushed = createCrushed(Materials.silver);
@@ -1633,7 +1633,7 @@ public abstract class Items {
 		starsteel_gear = createGear(Materials.starsteel);
 
 		starsteel_slab = createSlab(Materials.starsteel, Blocks.starsteel_slab, Blocks.starsteel_slab, Blocks.double_starsteel_slab);
-		//starsteel_shield = createShield(Materials.starsteel);
+		starsteel_shield = createShield(Materials.starsteel);
 
 		starsteel_crystal = createCrystal(Materials.starsteel);
 		starsteel_shard = createShard(Materials.starsteel);
@@ -1673,7 +1673,7 @@ public abstract class Items {
 		steel_gear = createGear(Materials.steel);
 
 		steel_slab = createSlab(Materials.steel, Blocks.steel_slab, Blocks.steel_slab, Blocks.double_steel_slab);
-		//steel_shield = createShield(Materials.steel);
+		steel_shield = createShield(Materials.steel);
 
 		steel_crystal = createCrystal(Materials.steel);
 		steel_shard = createShard(Materials.steel);
@@ -1711,7 +1711,7 @@ public abstract class Items {
 		tin_gear = createGear(Materials.tin);
 
 		tin_slab = createSlab(Materials.tin, Blocks.tin_slab, Blocks.tin_slab, Blocks.double_tin_slab);
-		//tin_shield = createShield(Materials.tin);
+		tin_shield = createShield(Materials.tin);
 
 		tin_dense_plate = createDensePlate(Materials.tin);
 		tin_crushed = createCrushed(Materials.tin);
@@ -1744,7 +1744,7 @@ public abstract class Items {
 		zinc_gear = createGear(Materials.zinc);
 
 		zinc_slab = createSlab(Materials.zinc, Blocks.zinc_slab, Blocks.zinc_slab, Blocks.double_zinc_slab);
-		//zinc_shield = createShield(Materials.zinc);
+		zinc_shield = createShield(Materials.zinc);
 
 		zinc_crystal = createCrystal(Materials.zinc);
 		zinc_shard = createShard(Materials.zinc);

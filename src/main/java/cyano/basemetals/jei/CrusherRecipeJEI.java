@@ -3,6 +3,7 @@ package cyano.basemetals.jei;
 import java.util.Collections;
 import java.util.List;
 
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
@@ -34,5 +35,11 @@ public class CrusherRecipeJEI  extends BlankRecipeWrapper {
 	@Override
 	public List<ItemStack> getOutputs() {
 		return outputs;
+	}
+
+	@Override
+	public void getIngredients(IIngredients ingredients) {
+		// TODO Auto-generated method stub
+		
 	}
 }

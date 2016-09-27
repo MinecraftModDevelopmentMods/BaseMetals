@@ -1,11 +1,20 @@
 package cyano.basemetals.items;
 
+import java.util.List;
+
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemShield;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * 
@@ -40,4 +49,25 @@ public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, 
 	public String getOreDictionaryName() {
 		return "shield" + this.metal.getCapitalizedName();
 	}
+
+	/**
+	 * Return whether this item is repairable in an anvil.
+	 */
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
+        for(ItemStack i : acceptableItems) {
+            if(ItemStack.areItemsEqual(i, repair))
+                return true;
+        }
+        return false;
+	}
+	
+	@Override
+	public String getItemStackDisplayName(ItemStack stack)
+    {
+        return stack.getUnlocalizedName();
+    }
+	
+	
 }
