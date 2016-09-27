@@ -1,7 +1,12 @@
 package cyano.basemetals.material;
 
 import cyano.basemetals.BaseMetals;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
@@ -46,6 +51,49 @@ public class MetalMaterial {
 
 	private int[] cache =  null;
 
+	public Item arrow;
+	public Item axe;
+	public Item blend;
+	public Item boots;
+	public Item bolt;
+	public Item bow;
+	public Item chestplate;
+	public Item crackhammer;
+	public Item crossbow;
+	public Item door;
+	public Item fishing_rod;
+	public Item gear;
+	public Item helmet;
+	public Item hoe;
+	public Item horsearmor;
+	public Item ingot;
+	public Item leggings;
+	public Item nugget;
+	public Item pickaxe;
+	public Item powder;
+	public Item rod;
+	public Item shears;
+	public Item shield;
+	public Item shovel;
+	public Item slab;
+	public Item smallpowder;
+	public Item sword;
+
+	public Block bars;
+	public Block block;
+	public Block button;
+	public BlockDoor doorBlock;
+	public BlockSlab double_slab;
+	public BlockSlab half_slab;
+	public Block lever;
+	public Block ore;
+	public Block plate;
+	public Block pressure_plate;
+	public Block stairs;
+	public Block trapdoor;
+	public Block wall;
+
+	
 	/**
 	 * @deprecated
 	 * @param name String used to identify items and blocks using this material
