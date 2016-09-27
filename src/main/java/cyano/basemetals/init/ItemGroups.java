@@ -39,9 +39,9 @@ public class ItemGroups {
 		// Item itemItem = Items.copper_crackhammer;
 		// Item toolItem = Items.copper_crackhammer;
 
-		tab_blocks = FunctionalCreativeTab.create(BaseMetals.MODID.concat(".blocks"))
-				.setIconMetadata(3)
+		tab_blocks = EnhancedCreativeTab.create(BaseMetals.MODID.concat(".blocks"))
 				.setIcon(blockItem)
+				.setMeta(3)
 				.setItemSortingAlgorithm(sortingAlgorithm);
 
 		tab_items = tab_blocks;
