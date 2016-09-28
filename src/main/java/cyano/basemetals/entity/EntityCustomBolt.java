@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
@@ -30,14 +30,14 @@ public class EntityCustomBolt extends EntityTippedArrow {
 	 * @param stack
 	 * @param shooter
 	 */
-	public EntityCustomBolt (World worldIn, ItemStack stack, EntityPlayer shooter) {
+	public EntityCustomBolt(World worldIn, ItemStack stack, EntityPlayer shooter) {
 		super(worldIn, shooter);
 		this.itemStack = stack;
 	}
 
 	@Override
 	protected ItemStack getArrowStack() {
-		if(this.itemStack == null)
+		if (this.itemStack == null)
 			this.itemStack = new ItemStack(Items.getItemByName("aluminum_arrow"));
 
 		return new ItemStack(this.itemStack.getItem(), 1, this.itemStack.getItemDamage());
@@ -51,7 +51,7 @@ public class EntityCustomBolt extends EntityTippedArrow {
 		this.itemStack.writeToNBT(itemStackCompound);
 
 		compound.setTag("itemstack", itemStackCompound);
-		
+
 		return compound;
 	}
 

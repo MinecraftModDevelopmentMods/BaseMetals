@@ -8,7 +8,7 @@ package cyano.basemetals.material;
 public interface IMetalObject {
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public MetalMaterial getMetalMaterial();

@@ -5,7 +5,6 @@ import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
 import net.minecraft.creativetab.CreativeTabs;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;

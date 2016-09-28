@@ -1,10 +1,12 @@
 package cyano.basemetals.init;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.blocks.*;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockOre;
@@ -12,9 +14,6 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class initializes all blocks in Base Metals and provides some utility
@@ -353,6 +352,7 @@ public abstract class Blocks {
 	 * Gets an block by its name. The name is the name as it is registered in
 	 * the GameRegistry, not its unlocalized name (the unlocalized name is the
 	 * registered name plus the prefix "basemetals.")
+	 * 
 	 * @param name The name of the block in question
 	 * @return The block matching that name, or null if there isn't one
 	 */
@@ -363,6 +363,7 @@ public abstract class Blocks {
 	/**
 	 * This is the reverse of the getBlockByName(...) method, returning the
 	 * registered name of an block instance (Base Metals blocks only).
+	 * 
 	 * @param b The item in question
 	 * @return The name of the item, or null if the item is not a Base Metals
 	 * block.
@@ -375,7 +376,7 @@ public abstract class Blocks {
 	 *
 	 */
 	public static void init() {
-		if(initDone)
+		if (initDone)
 			return;
 
 		cyano.basemetals.init.Materials.init();
@@ -555,9 +556,9 @@ public abstract class Blocks {
 		lead_stairs = createStairs(Materials.lead);
 		lead_wall = createWall(Materials.lead);
 
-		mercury_ore = new BlockOre().setHardness(3.0f).setResistance(5.0f).setRegistryName(BaseMetals.MODID, "mercury_ore").setUnlocalizedName(BaseMetals.MODID+".mercury_ore");
+		mercury_ore = new BlockOre().setHardness(3.0f).setResistance(5.0f).setRegistryName(BaseMetals.MODID, "mercury_ore").setUnlocalizedName(BaseMetals.MODID + ".mercury_ore");
 		GameRegistry.register(mercury_ore);
-		ItemBlock mercury_ore_item = new ItemBlock(mercury_ore);
+		final ItemBlock mercury_ore_item = new ItemBlock(mercury_ore);
 		mercury_ore_item.setRegistryName(BaseMetals.MODID, "mercury_ore");
 		GameRegistry.register(mercury_ore_item);
 		blockRegistry.put("mercury_ore", mercury_ore);
@@ -707,28 +708,20 @@ public abstract class Blocks {
 
 		human_detector = addBlock(new BlockHumanDetector(), "human_detector", null);
 
-		// TODO: Make this support multiple oredicts
-/*
-		for(final Block b : blockRegistry.values()) {
-			if(b instanceof IOreDictionaryEntry)
-				OreDictionary.registerOre(((IOreDictionaryEntry)b).getOreDictionaryName(), b);
-		}
-*/
 		initDone = true;
 	}
 
 	private static Block addBlock(Block block, String name, MetalMaterial metal) {
 		String fullName = null;
 
-		if ((block instanceof BlockDoubleMetalSlab) && (metal != null)) {
+		if ((block instanceof BlockDoubleMetalSlab) && (metal != null))
 			fullName = "double_" + metal.getName() + "_" + name;
-		} else if (block instanceof BlockDoubleMetalSlab) {
+		else if (block instanceof BlockDoubleMetalSlab)
 			fullName = "double_" + name;
-		} else if(metal != null) {
+		else if (metal != null)
 			fullName = metal.getName() + "_" + name;
-		} else {
+		else
 			fullName = name;
-		}
 
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
@@ -743,12 +736,12 @@ public abstract class Blocks {
 			GameRegistry.register(itemBlock);
 		}
 
-		if(!(block instanceof BlockMetalDoor))
+		if (!(block instanceof BlockMetalDoor))
 			block.setCreativeTab(ItemGroups.tab_blocks);
 
 		// TODO: Make this support multiple oredicts
-		if(block instanceof IOreDictionaryEntry)
-			OreDictionary.registerOre(((IOreDictionaryEntry)block).getOreDictionaryName(), block);
+		if (block instanceof IOreDictionaryEntry)
+			OreDictionary.registerOre(((IOreDictionaryEntry) block).getOreDictionaryName(), block);
 
 		return block;
 	}
@@ -782,11 +775,11 @@ public abstract class Blocks {
 	}
 
 	private static BlockSlab createSlab(MetalMaterial metal) {
-		return (BlockSlab)addBlock(new BlockHalfMetalSlab(metal), "slab", metal);
+		return (BlockSlab) addBlock(new BlockHalfMetalSlab(metal), "slab", metal);
 	}
 
 	private static BlockSlab createDoubleSlab(MetalMaterial metal) {
-		return (BlockSlab)addBlock(new BlockDoubleMetalSlab(metal), "slab", metal);
+		return (BlockSlab) addBlock(new BlockDoubleMetalSlab(metal), "slab", metal);
 	}
 
 	private static Block createStairs(MetalMaterial metal) {
@@ -802,7 +795,7 @@ public abstract class Blocks {
 	}
 
 	private static BlockDoor createDoor(MetalMaterial metal) {
-		return (BlockDoor)addBlock(new BlockMetalDoor(metal), "door", metal);
+		return (BlockDoor) addBlock(new BlockMetalDoor(metal), "door", metal);
 	}
 
 	private static Block createTrapDoor(MetalMaterial metal) {

@@ -27,15 +27,16 @@ public class BaseMetalsJEIPlugin extends BlankModPlugin {
 	@Override
 	public void register(IModRegistry registry) {
 
-		IItemRegistry itemRegistry = registry.getItemRegistry();
-		IJeiHelpers jeiHelpers = registry.getJeiHelpers();
-		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
+		final IItemRegistry itemRegistry = registry.getItemRegistry();
+		final IJeiHelpers jeiHelpers = registry.getJeiHelpers();
+		final IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
 		registry.addRecipeCategories(new JEICrusherRecipeCategory(guiHelper));
 		registry.addRecipeHandlers(new CrusherRecipeHandler());
 
 		registry.addRecipes(CrusherRecipeRegistry.getInstance().getAllRecipes().stream()
-				.map((ICrusherRecipe in)->new CrusherRecipeJEI(Arrays.asList(in.getValidInputs().toArray(new ItemStack[0])), in.getOutput()))
+				.map((ICrusherRecipe in) -> new CrusherRecipeJEI(
+						Arrays.asList(in.getValidInputs().toArray(new ItemStack[0])), in.getOutput()))
 				.collect(Collectors.toList()));
 	}
 }

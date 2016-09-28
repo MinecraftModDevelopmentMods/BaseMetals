@@ -8,7 +8,7 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.block.SoundType;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
@@ -17,9 +17,9 @@ public class BlockMetalStairs extends BlockStairs implements IOreDictionaryEntry
 	final MetalMaterial metal;
 
 	/**
-	 * 
+	 *
 	 * @param metal
- 	 * @param modelBlock
+	 * @param modelBlock
 	 */
 	public BlockMetalStairs(MetalMaterial metal, Block modelBlock) {
 		super(modelBlock.getDefaultState());

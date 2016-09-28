@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Level;
 import cyano.basemetals.BaseMetals;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
-
 import portablejim.veinminer.api.IMCMessage;
 
 /**
@@ -21,10 +20,10 @@ public class VeinMinerPlugin {
 	 *
 	 */
 	public static void init() {
-		if(initDone)
+		if (initDone)
 			return;
 
-		if(Loader.isModLoaded("VeinMiner") || Loader.isModLoaded("veinminer")) {
+		if (Loader.isModLoaded("VeinMiner") || Loader.isModLoaded("veinminer")) {
 			FMLLog.log(Level.ERROR, "%s: Activating VeinMiner Support", BaseMetals.MODID);
 
 			addToolsForMetal("aluminum");
@@ -60,7 +59,7 @@ public class VeinMinerPlugin {
 		IMCMessage.addTool("pickaxe", BaseMetals.MODID + ":" + metal + "_pickaxe");
 		IMCMessage.addTool("shears", BaseMetals.MODID + ":" + metal + "_shears");
 		IMCMessage.addTool("shovel", BaseMetals.MODID + ":" + metal + "_shovel");
-//		IMCMessage.addTool("crook", BaseMetals.MODID + ":" + metal + "_crook");
+		// IMCMessage.addTool("crook", BaseMetals.MODID + ":" + metal + "_crook");
 		IMCMessage.addTool("hammer", BaseMetals.MODID + ":" + metal + "_hammer");
 	}
 }

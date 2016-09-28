@@ -11,7 +11,7 @@ import org.objectweb.asm.tree.ClassNode;
 public interface ITransformer extends Opcodes {
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	String getTarget();

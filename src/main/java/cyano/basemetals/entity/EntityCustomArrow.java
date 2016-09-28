@@ -1,7 +1,6 @@
 package cyano.basemetals.entity;
 
 import cyano.basemetals.init.Items;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.item.ItemStack;
@@ -31,14 +30,14 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	 * @param stack
 	 * @param shooter
 	 */
-	public EntityCustomArrow (World worldIn, ItemStack stack, EntityPlayer shooter) {
+	public EntityCustomArrow(World worldIn, ItemStack stack, EntityPlayer shooter) {
 		super(worldIn, shooter);
 		this.itemStack = stack;
 	}
 
 	@Override
 	protected ItemStack getArrowStack() {
-		if(this.itemStack == null)
+		if (this.itemStack == null)
 			this.itemStack = new ItemStack(Items.getItemByName("aluminum_arrow"));
 
 		return new ItemStack(this.itemStack.getItem(), 1, this.itemStack.getItemDamage());
@@ -52,7 +51,7 @@ public class EntityCustomArrow extends EntityTippedArrow {
 		this.itemStack.writeToNBT(itemStackCompound);
 
 		compound.setTag("itemstack", itemStackCompound);
-		
+
 		return compound;
 	}
 

@@ -1,5 +1,11 @@
 package cyano.basemetals.init;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import cyano.basemetals.material.AdamantineMaterial;
 import cyano.basemetals.material.LeadMaterial;
 import cyano.basemetals.material.MetalMaterial;
@@ -9,12 +15,6 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.FMLLog;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This class initializes all of the metal materials in Base Metals. It also
@@ -30,7 +30,7 @@ public abstract class Materials {
 	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 	protected static List<MetalMaterial> materials = new LinkedList<MetalMaterial>();
-	
+
 	public static MetalMaterial adamantine;
 	public static MetalMaterial antimony;
 	public static MetalMaterial aquarium;
@@ -52,7 +52,7 @@ public abstract class Materials {
 	public static MetalMaterial steel;
 	public static MetalMaterial tin;
 	public static MetalMaterial zinc;
-	
+
 	// vanilla imports
 	public static MetalMaterial vanilla_wood;
 	public static MetalMaterial vanilla_stone;
@@ -66,7 +66,7 @@ public abstract class Materials {
 	 *
 	 */
 	public static void init() {
-		if(initDone)
+		if (initDone)
 			return;
 
 		// Vanilla Materials
@@ -106,7 +106,7 @@ public abstract class Materials {
 	}
 
 	protected static MetalMaterial addMaterial(String name, double hardness, double strength, double magic) {
-		final MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic);
+		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic);
 		registerMaterial(name, m);
 
 		materials.add(m);
@@ -114,7 +114,7 @@ public abstract class Materials {
 	}
 
 	protected static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic) {
-		final MetalMaterial m = new MetalMaterial(name, (float)hardness, (float)strength, (float)magic, true);
+		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, true);
 		registerMaterial(name, m);
 
 		materials.add(m);
@@ -124,30 +124,29 @@ public abstract class Materials {
 	protected static void registerMaterial(String name, MetalMaterial m) {
 
 		allMaterials.put(name, m);
-		
-		String enumName = m.getEnumName();
-		String texName = m.getName();
-		int[] protection = m.getDamageReductionArray();
-		int durability = m.getArmorMaxDamageFactor();
-		ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, (m.hardness > 10 ? (int)(m.hardness / 5) : 0));
-		if(am == null) {
+
+		final String enumName = m.getEnumName();
+		final String texName = m.getName();
+		final int[] protection = m.getDamageReductionArray();
+		final int durability = m.getArmorMaxDamageFactor();
+		final ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, (m.hardness > 10 ? (int) (m.hardness / 5) : 0));
+		if (am == null)
 			// uh-oh
 			FMLLog.severe("Failed to create armor material enum for " + m);
-		}
 		armorMaterialMap.put(m, am);
 		FMLLog.info("Created armor material enum " + am);
-		
-		ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(), m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
-		if(tm == null) {
+
+		final ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(), m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
+		if (tm == null)
 			// uh-oh
 			FMLLog.severe("Failed to create tool material enum for " + m);
-		}
 		toolMaterialMap.put(m, tm);
 		FMLLog.info("Created tool material enum " + tm);
 	}
 
 	/**
-	 * Gets the armor material for a given metal 
+	 * Gets the armor material for a given metal
+	 * 
 	 * @param m The metal of interest
 	 * @return The armor material for this metal, or null if there isn't one
 	 */
@@ -156,7 +155,8 @@ public abstract class Materials {
 	}
 
 	/**
-	 * Gets the tool material for a given metal 
+	 * Gets the tool material for a given metal
+	 * 
 	 * @param m The metal of interest
 	 * @return The tool material for this metal, or null if there isn't one
 	 */
@@ -165,8 +165,9 @@ public abstract class Materials {
 	}
 
 	/**
-	 * Returns a list of all metal materials in Base Metals. All of the metals 
-	 * in this list are also available as static public members of this class. 
+	 * Returns a list of all metal materials in Base Metals. All of the metals
+	 * in this list are also available as static public members of this class.
+	 * 
 	 * @return A Collection of MetalMaterial instances.
 	 */
 	public static Collection<MetalMaterial> getAllMetals() {
@@ -175,8 +176,9 @@ public abstract class Materials {
 
 	/**
 	 * Gets a metal material by its name (e.g. "copper").
+	 * 
 	 * @param metalName The name of a metal
-	 * @return The material representing the named metal, or null if no metals 
+	 * @return The material representing the named metal, or null if no metals
 	 * have been registered under that name.
 	 */
 	public static MetalMaterial getMetalByName(String metalName) {

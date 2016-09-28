@@ -8,7 +8,7 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.item.ItemSlab;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */

@@ -3,10 +3,9 @@ package cyano.basemetals.items;
 import java.util.List;
 
 import cyano.basemetals.entity.EntityCustomArrow;
+import cyano.basemetals.init.Items;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.init.Items;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -115,11 +114,11 @@ public class ItemMetalBow extends ItemBow {
 	}
 
 	private ItemStack findAmmo(EntityPlayer player) {
-		if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND))) {
+		if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND)))
 			return player.getHeldItem(EnumHand.OFF_HAND);
-		} else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND))) {
+		else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND)))
 			return player.getHeldItem(EnumHand.MAIN_HAND);
-		} else {
+		else {
 			for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 				final ItemStack itemstack = player.inventory.getStackInSlot(i);
 
@@ -140,9 +139,9 @@ public class ItemMetalBow extends ItemBow {
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		final boolean flag = this.findAmmo(playerIn) != null;
 
-		if (!playerIn.capabilities.isCreativeMode && !flag) {
+		if (!playerIn.capabilities.isCreativeMode && !flag)
 			return new ActionResult<>(EnumActionResult.FAIL, itemStackIn);
-		} else {
+		else {
 			playerIn.setActiveHand(hand);
 			return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 		}
@@ -151,8 +150,8 @@ public class ItemMetalBow extends ItemBow {
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		final List<ItemStack> acceptableItems = OreDictionary.getOres(this.repairOreDictName);
-		for(final ItemStack i : acceptableItems)
-			if(ItemStack.areItemsEqual(i, repairMaterial))
+		for (final ItemStack i : acceptableItems)
+			if (ItemStack.areItemsEqual(i, repairMaterial))
 				return true;
 
 		return false;
@@ -160,7 +159,7 @@ public class ItemMetalBow extends ItemBow {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if(this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 

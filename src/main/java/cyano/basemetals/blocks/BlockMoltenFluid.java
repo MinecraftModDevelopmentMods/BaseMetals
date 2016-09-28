@@ -28,7 +28,7 @@ public class BlockMoltenFluid extends BlockFluidClassic {
 	@Override
 	public String getUnlocalizedName() {
 		final Fluid fluid = FluidRegistry.getFluid(this.fluidName);
-		if(fluid != null)
+		if (fluid != null)
 			return fluid.getUnlocalizedName();
 		return super.getUnlocalizedName();
 	}

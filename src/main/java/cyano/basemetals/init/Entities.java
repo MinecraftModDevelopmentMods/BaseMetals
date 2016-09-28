@@ -1,7 +1,7 @@
 package cyano.basemetals.init;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
@@ -10,10 +10,10 @@ public abstract class Entities {
 	private static boolean initDone = false;
 
 	/**
-	 * 
+	 *
 	 */
 	public static void init() {
-		if(initDone)
+		if (initDone)
 			return;
 
 		initDone = true;

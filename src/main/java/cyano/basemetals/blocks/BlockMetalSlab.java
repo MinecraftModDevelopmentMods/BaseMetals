@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLLog;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
@@ -33,7 +33,7 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 	private Item slabItem;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public BlockMetalSlab(MetalMaterial metal) {
@@ -77,7 +77,7 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return this.isDouble() ? new BlockStateContainer(this, new IProperty[] { VARIANT }): new BlockStateContainer(this, new IProperty[] { HALF, VARIANT });
+		return this.isDouble() ? new BlockStateContainer(this, new IProperty[] { VARIANT }) : new BlockStateContainer(this, new IProperty[] { HALF, VARIANT });
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 	}
 
 	private Item getSlabItem() {
-		if(this.slabItem == null) {
+		if (this.slabItem == null) {
 			FMLLog.severe("getting item for slab: %s, %s", this.getRegistryName().getResourceDomain(), this.metal.getName() + "_slab");
 			this.slabItem = Item.REGISTRY.getObject(new ResourceLocation(this.getRegistryName().getResourceDomain(), this.metal.getName() + "_slab"));
 		}
@@ -109,21 +109,21 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 		return this.slabItem;
 	}
 
-    /**
-     * Get the Item that this Block should drop when harvested.
-     */
+	/**
+	 * Get the Item that this Block should drop when harvested.
+	 */
 	@Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    	return getSlabItem();
-    }
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return this.getSlabItem();
+	}
 
 	@Override
-    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-    	return new ItemStack(this.getSlabItem());
-    }
+	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+		return new ItemStack(this.getSlabItem());
+	}
 
 	/**
-	 * 
+	 *
 	 * @author Jasmine Iwanek
 	 *
 	 */
@@ -140,8 +140,8 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 		return this.metal;
 	}
 
-	//@Override
-	//public String getOreDictionaryName() {
-	//	return "slab" + metal.getCapitalizedName();
-	//}
+	// @Override
+	// public String getOreDictionaryName() {
+	// return "slab" + metal.getCapitalizedName();
+	// }
 }

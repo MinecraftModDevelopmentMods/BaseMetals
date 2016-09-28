@@ -4,14 +4,14 @@ import net.minecraft.client.renderer.entity.RenderVillager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
 public class ProxyFunctions {
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")

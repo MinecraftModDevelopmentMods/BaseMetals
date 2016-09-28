@@ -1,13 +1,13 @@
 package cyano.basemetals.asm;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import cyano.basemetals.asm.transformer.EntityHorseTransformer;
 import cyano.basemetals.asm.transformer.HorseTypeTransformer;
 import cyano.basemetals.asm.transformer.ITransformer;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @IFMLLoadingPlugin.Name("BaseMetals")
 @IFMLLoadingPlugin.MCVersion("1.9")
@@ -24,7 +24,7 @@ public class BaseMetalPlugin implements IFMLLoadingPlugin {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[]{"cyano.basemetals.asm.ModernMetalTransformer"};
+		return new String[] { "cyano.basemetals.asm.ModernMetalTransformer" };
 	}
 
 	@Override

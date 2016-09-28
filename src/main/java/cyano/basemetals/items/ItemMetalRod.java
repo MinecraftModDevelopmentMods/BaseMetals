@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 /**
  * Rods
+ * 
  * @author Jasmine Iwanek
  *
  */
@@ -16,7 +17,7 @@ public class ItemMetalRod extends net.minecraft.item.Item implements IOreDiction
 	private final String oreDict;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public ItemMetalRod(MetalMaterial metal) {
@@ -27,11 +28,11 @@ public class ItemMetalRod extends net.minecraft.item.Item implements IOreDiction
 
 	@Override
 	public String getOreDictionaryName() {
-		return oreDict;
+		return this.oreDict;
 	}
 
 	@Override
 	public MetalMaterial getMetalMaterial() {
-		return metal;
+		return this.metal;
 	}
 }

@@ -1,12 +1,21 @@
 package cyano.basemetals.init;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.blocks.*;
 import cyano.basemetals.items.*;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
@@ -18,14 +27,10 @@ import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.*;
-
 /**
- * This class initializes all items in Base Metals and provides some utility 
- * methods for looking up items. 
+ * This class initializes all items in Base Metals and provides some utility
+ * methods for looking up items.
+ * 
  * @author DrCyano
  *
  */
@@ -325,7 +330,6 @@ public abstract class Items {
 
 	public static Item copper_slab;
 	public static Item copper_shield;
-
 
 	public static Item copper_dense_plate;
 	public static Item copper_crushed;
@@ -855,6 +859,7 @@ public abstract class Items {
 	 * Gets an item by its name. The name is the name as it is registered in the
 	 * GameRegistry, not its unlocalized name (the unlocalized name is the
 	 * registered name plus the prefix "basemetals.")
+	 * 
 	 * @param name The name of the item in question
 	 * @return The item matching that name, or null if there isn't one
 	 */
@@ -865,6 +870,7 @@ public abstract class Items {
 	/**
 	 * This is the reverse of the getItemByName(...) method, returning the
 	 * registered name of an item instance (Base Metals items only).
+	 * 
 	 * @param i The item in question
 	 * @return The name of the item, or null if the item is not a Base Metals
 	 * item.
@@ -875,13 +881,14 @@ public abstract class Items {
 
 	/**
 	 * Gets a map of all items added, sorted by metal
+	 * 
 	 * @return An unmodifiable map of added items catagorized by metal material
 	 */
 	public static Map<MetalMaterial, List<Item>> getItemsByMetal() {
 		return Collections.unmodifiableMap(itemsByMetal);
 	}
 
-	//public static UniversalBucket universal_bucket; // now automatically added by Forge
+	// public static UniversalBucket universal_bucket; // now automatically added by Forge
 
 	/**
 	 * Gets the inventory item corresponding to a given door block
@@ -897,7 +904,7 @@ public abstract class Items {
 	 *
 	 */
 	public static void init() {
-		if(initDone)
+		if (initDone)
 			return;
 
 		cyano.basemetals.init.Blocks.init();
@@ -907,7 +914,7 @@ public abstract class Items {
 		} catch (IllegalAccessException | NoSuchFieldException ex) {
 			FMLLog.severe("Error modifying item classes: %s", ex);
 		}
-		
+
 		adamantine_arrow = createArrow(Materials.adamantine);
 		adamantine_axe = createAxe(Materials.adamantine);
 		adamantine_bolt = createBolt(Materials.adamantine);
@@ -1076,7 +1083,7 @@ public abstract class Items {
 		brass_boots = createBoots(Materials.brass);
 		brass_chestplate = createChestplate(Materials.brass);
 		brass_crackhammer = createCrackhammer(Materials.brass);
-		brass_door = createDoor(Materials.brass,Blocks.brass_door);
+		brass_door = createDoor(Materials.brass, Blocks.brass_door);
 		brass_helmet = createHelmet(Materials.brass);
 		brass_hoe = createHoe(Materials.brass);
 		brass_ingot = createIngot(Materials.brass);
@@ -1116,7 +1123,7 @@ public abstract class Items {
 		bronze_boots = createBoots(Materials.bronze);
 		bronze_chestplate = createChestplate(Materials.bronze);
 		bronze_crackhammer = createCrackhammer(Materials.bronze);
-		bronze_door = createDoor(Materials.bronze,Blocks.bronze_door);
+		bronze_door = createDoor(Materials.bronze, Blocks.bronze_door);
 		bronze_helmet = createHelmet(Materials.bronze);
 		bronze_hoe = createHoe(Materials.bronze);
 		bronze_ingot = createIngot(Materials.bronze);
@@ -1160,7 +1167,7 @@ public abstract class Items {
 		coldiron_boots = createBoots(Materials.coldiron);
 		coldiron_chestplate = createChestplate(Materials.coldiron);
 		coldiron_crackhammer = createCrackhammer(Materials.coldiron);
-		coldiron_door = createDoor(Materials.coldiron,Blocks.coldiron_door);
+		coldiron_door = createDoor(Materials.coldiron, Blocks.coldiron_door);
 		coldiron_helmet = createHelmet(Materials.coldiron);
 		coldiron_hoe = createHoe(Materials.coldiron);
 		coldiron_ingot = createIngot(Materials.coldiron);
@@ -1198,7 +1205,7 @@ public abstract class Items {
 		copper_boots = createBoots(Materials.copper);
 		copper_chestplate = createChestplate(Materials.copper);
 		copper_crackhammer = createCrackhammer(Materials.copper);
-		copper_door = createDoor(Materials.copper,Blocks.copper_door);
+		copper_door = createDoor(Materials.copper, Blocks.copper_door);
 		copper_helmet = createHelmet(Materials.copper);
 		copper_hoe = createHoe(Materials.copper);
 		copper_ingot = createIngot(Materials.copper);
@@ -1276,7 +1283,7 @@ public abstract class Items {
 		electrum_boots = createBoots(Materials.electrum);
 		electrum_chestplate = createChestplate(Materials.electrum);
 		electrum_crackhammer = createCrackhammer(Materials.electrum);
-		electrum_door = createDoor(Materials.electrum,Blocks.electrum_door);
+		electrum_door = createDoor(Materials.electrum, Blocks.electrum_door);
 		electrum_helmet = createHelmet(Materials.electrum);
 		electrum_hoe = createHoe(Materials.electrum);
 		electrum_ingot = createIngot(Materials.electrum);
@@ -1365,7 +1372,7 @@ public abstract class Items {
 		lead_boots = createBoots(Materials.lead);
 		lead_chestplate = createChestplate(Materials.lead);
 		lead_crackhammer = createCrackhammer(Materials.lead);
-		lead_door = createDoor(Materials.lead,Blocks.lead_door);
+		lead_door = createDoor(Materials.lead, Blocks.lead_door);
 		lead_helmet = createHelmet(Materials.lead);
 		lead_hoe = createHoe(Materials.lead);
 		lead_ingot = createIngot(Materials.lead);
@@ -1429,32 +1436,24 @@ public abstract class Items {
 
 		wood_crackhammer = createCrackhammer(Materials.vanilla_wood);
 		wood_gear = createGear(Materials.vanilla_wood);
-		
+
 		// mercury is special
 		mercury_ingot = registerItem(new Item(), "mercury_ingot", null, ItemGroups.tab_items);
-/*
-		mercury_ingot = new Item().setRegistryName(BaseMetals.MODID, "mercury_ingot").setUnlocalizedName(BaseMetals.MODID + "." + "mercury_ingot").setCreativeTab(ItemGroups.tab_items);
-		GameRegistry.register(mercury_ingot);
 		itemRegistry.put("mercury_ingot", mercury_ingot);
-*/
 		OreDictionary.registerOre("ingotMercury", mercury_ingot);
 		OreDictionary.registerOre("quicksilver", mercury_ingot);
 
 		mercury_powder = registerItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
-/*
-		mercury_powder = new Item().setRegistryName(BaseMetals.MODID, "mercury_powder").setUnlocalizedName(BaseMetals.MODID + "." + "mercury_powder").setCreativeTab(ItemGroups.tab_items);
-		GameRegistry.register(mercury_powder);
-*/
 		itemRegistry.put("mercury_powder", mercury_powder);
 		OreDictionary.registerOre("dustMercury", mercury_powder);
 
-		//mercury_crystal = createCrystal(Materials.mercury);
-		//mercury_shard = createShard(Materials.mercury);
-		//mercury_clump = createClump(Materials.mercury);
-		//mercury_powder_dirty = createDirtyPowder(Materials.mercury);
+		// mercury_crystal = createCrystal(Materials.mercury);
+		// mercury_shard = createShard(Materials.mercury);
+		// mercury_clump = createClump(Materials.mercury);
+		// mercury_powder_dirty = createDirtyPowder(Materials.mercury);
 
-		//mercury_crushed = createCrushed(Materials.mercury);
-		//mercury_crushed_purified = createCrushedPurified(Materials.mercury);
+		// mercury_crushed = createCrushed(Materials.mercury);
+		// mercury_crushed_purified = createCrushedPurified(Materials.mercury);
 
 		mithril_arrow = createArrow(Materials.mithril);
 		mithril_bolt = createBolt(Materials.mithril);
@@ -1586,7 +1585,7 @@ public abstract class Items {
 		silver_boots = createBoots(Materials.silver);
 		silver_chestplate = createChestplate(Materials.silver);
 		silver_crackhammer = createCrackhammer(Materials.silver);
-		silver_door = createDoor(Materials.silver,Blocks.silver_door);
+		silver_door = createDoor(Materials.silver, Blocks.silver_door);
 		silver_helmet = createHelmet(Materials.silver);
 		silver_hoe = createHoe(Materials.silver);
 		silver_ingot = createIngot(Materials.silver);
@@ -1619,7 +1618,7 @@ public abstract class Items {
 		starsteel_boots = createBoots(Materials.starsteel);
 		starsteel_chestplate = createChestplate(Materials.starsteel);
 		starsteel_crackhammer = createCrackhammer(Materials.starsteel);
-		starsteel_door = createDoor(Materials.starsteel,Blocks.starsteel_door);
+		starsteel_door = createDoor(Materials.starsteel, Blocks.starsteel_door);
 		starsteel_helmet = createHelmet(Materials.starsteel);
 		starsteel_hoe = createHoe(Materials.starsteel);
 		starsteel_ingot = createIngot(Materials.starsteel);
@@ -1659,7 +1658,7 @@ public abstract class Items {
 		steel_boots = createBoots(Materials.steel);
 		steel_chestplate = createChestplate(Materials.steel);
 		steel_crackhammer = createCrackhammer(Materials.steel);
-		steel_door = createDoor(Materials.steel,Blocks.steel_door);
+		steel_door = createDoor(Materials.steel, Blocks.steel_door);
 		steel_helmet = createHelmet(Materials.steel);
 		steel_hoe = createHoe(Materials.steel);
 		steel_ingot = createIngot(Materials.steel);
@@ -1717,7 +1716,6 @@ public abstract class Items {
 		tin_crushed = createCrushed(Materials.tin);
 		tin_crushed_purified = createCrushedPurified(Materials.tin);
 
-
 		zinc_arrow = createArrow(Materials.zinc);
 		zinc_axe = createAxe(Materials.zinc);
 		zinc_bolt = createBolt(Materials.zinc);
@@ -1756,10 +1754,9 @@ public abstract class Items {
 		zinc_crushed_purified = createCrushedPurified(Materials.zinc);
 
 		// TODO: Make this support multiple oredicts
-		for(final Item i : allItems.keySet()) {
-			if(i instanceof IOreDictionaryEntry)
-				OreDictionary.registerOre(((IOreDictionaryEntry)i).getOreDictionaryName(), i);
-		}
+		for (final Item i : allItems.keySet())
+			if (i instanceof IOreDictionaryEntry)
+				OreDictionary.registerOre(((IOreDictionaryEntry) i).getOreDictionaryName(), i);
 
 		int ss = 0;
 		classSortingValues.put(BlockMetalOre.class, ++ss * 10000);
@@ -1804,10 +1801,10 @@ public abstract class Items {
 		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalSlab.class, ++ss * 10000);
 
-		List<MetalMaterial> metlist = new ArrayList<>(Materials.getAllMetals().size());
+		final List<MetalMaterial> metlist = new ArrayList<>(Materials.getAllMetals().size());
 		metlist.addAll(Materials.getAllMetals());
-		metlist.sort((MetalMaterial a, MetalMaterial b)-> a.getName().compareToIgnoreCase(b.getName()));
-		for(int i = 0; i < metlist.size(); i++)
+		metlist.sort((MetalMaterial a, MetalMaterial b) -> a.getName().compareToIgnoreCase(b.getName()));
+		for (int i = 0; i < metlist.size(); i++)
 			materialSortingValues.put(metlist.get(i), i * 100);
 
 		initDone = true;
@@ -1815,11 +1812,10 @@ public abstract class Items {
 
 	private static Item registerItem(Item item, String name, MetalMaterial metal, CreativeTabs tab) {
 		String fullName = null;
-		if(metal != null) {
+		if (metal != null)
 			fullName = metal.getName() + "_" + name;
-		} else {
+		else
 			fullName = name;
-		}
 
 		item.setRegistryName(fullName);
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
@@ -1827,17 +1823,16 @@ public abstract class Items {
 		itemRegistry.put(fullName, item);
 		allItems.put(item, fullName);
 
-		if(tab != null) {
+		if (tab != null)
 			item.setCreativeTab(tab);
-		}
 
-		if(metal != null) {
-			itemsByMetal.computeIfAbsent(metal, (MetalMaterial g)->new ArrayList<>());
+		if (metal != null) {
+			itemsByMetal.computeIfAbsent(metal, (MetalMaterial g) -> new ArrayList<>());
 			itemsByMetal.get(metal).add(item);
 		}
 
-		if(item instanceof IOreDictionaryEntry)
-			OreDictionary.registerOre(((IOreDictionaryEntry)item).getOreDictionaryName(), item);
+		if (item instanceof IOreDictionaryEntry)
+			OreDictionary.registerOre(((IOreDictionaryEntry) item).getOreDictionaryName(), item);
 
 		return item;
 	}
@@ -1942,7 +1937,6 @@ public abstract class Items {
 		return registerItem(new ItemMetalSmallPowder(metal), "smallpowder", metal, ItemGroups.tab_items);
 	}
 
-	@SuppressWarnings("unused")
 	private static Item createShield(MetalMaterial metal) {
 		return registerItem(new ItemMetalShield(metal), "shield", metal, ItemGroups.tab_items);
 	}
@@ -2002,49 +1996,50 @@ public abstract class Items {
 	}
 
 	/**
-	 * Uses reflection to expand the size of the combat damage and attack speed arrays to prevent initialization
-	 * index-out-of-bounds errors
+	 * Uses reflection to expand the size of the combat damage and attack speed
+	 * arrays to prevent initialization index-out-of-bounds errors
+	 * 
 	 * @param itemClass The class to modify
 	 */
 	private static void expandCombatArrays(Class<?> itemClass) throws IllegalAccessException, NoSuchFieldException {
-        // WARNING: this method contains black magic
-        final int expandedSize = 256;
-        Field[] fields = itemClass.getDeclaredFields();
-        for(Field f : fields) {
-            if(Modifier.isStatic(f.getModifiers())
-                    && f.getType().isArray()
-                    && f.getType().getComponentType().equals(float.class)) {
-                FMLLog.info("%s: Expanding array variable %s.%s to size %s", Thread.currentThread().getStackTrace()[0], itemClass.getSimpleName(), f.getName(), expandedSize);
-                f.setAccessible(true); // bypass 'private' key word
-                Field modifiersField = Field.class.getDeclaredField("modifiers");
-                modifiersField.setAccessible(true);
-                modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL); // bypass 'final' key word
-                float[] newArray = new float[expandedSize];
-                Arrays.fill(newArray,0F);
-                System.arraycopy(f.get(null), 0, newArray, 0, Array.getLength(f.get(null)));
-                f.set(null,newArray);
-            }
-        }
-    }
+		// WARNING: this method contains black magic
+		final int expandedSize = 256;
+		final Field[] fields = itemClass.getDeclaredFields();
+		for (final Field f : fields)
+			if (Modifier.isStatic(f.getModifiers())
+					&& f.getType().isArray()
+					&& f.getType().getComponentType().equals(float.class)) {
+				FMLLog.info("%s: Expanding array variable %s.%s to size %s", Thread.currentThread().getStackTrace()[0], itemClass.getSimpleName(), f.getName(), expandedSize);
+				f.setAccessible(true); // bypass 'private' key word
+				final Field modifiersField = Field.class.getDeclaredField("modifiers");
+				modifiersField.setAccessible(true);
+				modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL); // bypass 'final' key word
+				final float[] newArray = new float[expandedSize];
+				Arrays.fill(newArray, 0F);
+				System.arraycopy(f.get(null), 0, newArray, 0, Array.getLength(f.get(null)));
+				f.set(null, newArray);
+			}
+	}
 
 	/**
-	 * 
+	 *
 	 * @param a
 	 * @return
 	 */
 	public static int getSortingValue(ItemStack a) {
 		int classVal = 990000;
 		int metalVal = 9900;
-		if(a.getItem() instanceof ItemBlock && ((ItemBlock)a.getItem()).getBlock() instanceof IMetalObject) {
-			classVal = classSortingValues.computeIfAbsent(((ItemBlock)a.getItem()).getBlock().getClass(),
-					(Class<?> c)->990000);
-			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject)((ItemBlock)a.getItem()).getBlock()).getMetalMaterial(),
-					(MetalMaterial m)->9900);
-		} else if(a.getItem() instanceof IMetalObject) {
+		if ((a.getItem() instanceof ItemBlock) && (((ItemBlock) a.getItem()).getBlock() instanceof IMetalObject)) {
+			classVal = classSortingValues.computeIfAbsent(((ItemBlock) a.getItem()).getBlock().getClass(),
+					(Class<?> c) -> 990000);
+			metalVal = materialSortingValues.computeIfAbsent(
+					((IMetalObject) ((ItemBlock) a.getItem()).getBlock()).getMetalMaterial(),
+					(MetalMaterial m) -> 9900);
+		} else if (a.getItem() instanceof IMetalObject) {
 			classVal = classSortingValues.computeIfAbsent(a.getItem().getClass(),
-					(Class<?> c)->990000);
-			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject)a.getItem()).getMetalMaterial(),
-					(MetalMaterial m)->9900);
+					(Class<?> c) -> 990000);
+			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject) a.getItem()).getMetalMaterial(),
+					(MetalMaterial m) -> 9900);
 		}
 		return classVal + metalVal + (a.getMetadata() % 100);
 	}

@@ -1,21 +1,24 @@
 package cyano.basemetals.init;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.blocks.BlockMoltenFluid;
 import cyano.basemetals.blocks.InteractiveFluidBlock;
 import cyano.basemetals.fluids.CustomFluid;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.*;
-import net.minecraft.potion.*;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class initializes all fluids in Base Metals and provides some utility
@@ -59,10 +62,10 @@ public abstract class Fluids {
 
 	public static Fluid fluidElectrum = null;
 	public static BlockFluidBase fluidBlockElectrum = null;
-	
+
 	public static Fluid fluidInvar = null;
 	public static BlockFluidBase fluidBlockInvar = null;
-	
+
 	public static Fluid fluidLead = null;
 	public static BlockFluidBase fluidBlockLead = null;
 
@@ -107,7 +110,7 @@ public abstract class Fluids {
 	 *
 	 */
 	public static void init() {
-		if(initDone)
+		if (initDone)
 			return;
 
 		// fluids
@@ -148,9 +151,10 @@ public abstract class Fluids {
 		fluidBlockInvar = registerFluidBlock(fluidInvar, new BlockMoltenFluid(fluidInvar), "invar");
 		fluidBlockLead = registerFluidBlock(fluidLead, new BlockMoltenFluid(fluidLead), "lead");
 
-		fluidBlockMercury = registerFluidBlock(fluidMercury, new InteractiveFluidBlock(
-				fluidMercury, false, (World w, EntityLivingBase e)->{
-					if(w.rand.nextInt(32) == 0) e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
+		fluidBlockMercury = registerFluidBlock(fluidMercury,
+				new InteractiveFluidBlock(fluidMercury, false, (World w, EntityLivingBase e) -> {
+					if (w.rand.nextInt(32) == 0)
+						e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
 				}), "liquid_mercury");
 
 		fluidBlockMithril = registerFluidBlock(fluidMithril, new BlockMoltenFluid(fluidMithril), "mithril");
@@ -167,7 +171,7 @@ public abstract class Fluids {
 	}
 
 	private static Fluid newFluid(String name, int density, int viscosity, int temperature, int luminosity, int tintColor) {
-		Fluid fluid = new CustomFluid(name, new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_still"), new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_flow"), tintColor);
+		final Fluid fluid = new CustomFluid(name, new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_still"), new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_flow"), tintColor);
 		fluid.setDensity(density);
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);
@@ -179,7 +183,7 @@ public abstract class Fluids {
 	}
 
 	private static BlockFluidBase registerFluidBlock(Fluid fluid, BlockFluidBase block, String name) {
-		ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
+		final ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
 		block.setRegistryName(location);
 		block.setUnlocalizedName(location.toString());
 		GameRegistry.register(block);

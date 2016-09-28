@@ -4,7 +4,6 @@ import java.util.List;
 
 import cyano.basemetals.entity.projectile.EntityMetalFishHook;
 import cyano.basemetals.init.Materials;
-import cyano.basemetals.items.MetalToolEffects;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import net.minecraft.creativetab.CreativeTabs;
@@ -52,7 +51,7 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 			@SideOnly(Side.CLIENT)
 			@Override
 			public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn) {
-				return entityIn == null ? 0.0F : ((entityIn.getHeldItemMainhand() == stack) && entityIn instanceof EntityPlayer && (((EntityPlayer)entityIn).fishEntity != null) ? 1.0F : 0.0F);
+				return entityIn == null ? 0.0F : ((entityIn.getHeldItemMainhand() == stack) && (entityIn instanceof EntityPlayer) && (((EntityPlayer) entityIn).fishEntity != null) ? 1.0F : 0.0F);
 			}
 		});
 
@@ -66,7 +65,7 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 			itemStackIn.damageItem(i, playerIn);
 			playerIn.swingArm(hand);
 		} else {
-			worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / ((itemRand.nextFloat() * 0.4F) + 0.8F));
+			worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / ((itemRand.nextFloat() * 0.4F) + 0.8F));
 
 			if (!worldIn.isRemote)
 				worldIn.spawnEntityInWorld(new EntityMetalFishHook(worldIn, playerIn));
@@ -81,10 +80,9 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		final List<ItemStack> acceptableItems = OreDictionary.getOres(this.repairOreDictName);
-		for(final ItemStack i : acceptableItems) {
-			if(ItemStack.areItemsEqual(i, repairMaterial))
+		for (final ItemStack i : acceptableItems)
+			if (ItemStack.areItemsEqual(i, repairMaterial))
 				return true;
-		}
 		return false;
 	}
 
@@ -92,7 +90,7 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
 		super.onUpdate(item, world, player, inventoryIndex, isHeld);
 
-		if(this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 

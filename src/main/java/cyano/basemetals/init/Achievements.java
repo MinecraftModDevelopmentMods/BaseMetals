@@ -37,7 +37,7 @@ public abstract class Achievements {
 	 *
 	 */
 	public static void init() {
-		if(initDone)
+		if (initDone)
 			return;
 
 		page = new AchievementPage(BaseMetals.NAME);
@@ -73,7 +73,7 @@ public abstract class Achievements {
 	}
 
 	private static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, ItemStack icon) {
-		Achievement a = new Achievement(baseName, baseName, x, y, icon, requirement).registerStat();
+		final Achievement a = new Achievement(baseName, baseName, x, y, icon, requirement).registerStat();
 		page.getAchievements().add(a);
 		return a;
 	}

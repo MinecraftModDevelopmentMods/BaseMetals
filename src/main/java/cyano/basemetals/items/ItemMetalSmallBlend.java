@@ -1,7 +1,6 @@
 package cyano.basemetals.items;
 
 import cyano.basemetals.init.Achievements;
-import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
@@ -35,13 +34,7 @@ public class ItemMetalSmallBlend extends Item implements IOreDictionaryEntry, IM
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
 		// achievement
-		if((this.metal == Materials.aquarium)
-				|| (this.metal == Materials.brass)
-				|| (this.metal == Materials.bronze)
-				|| (this.metal == Materials.electrum)
-				|| (this.metal == Materials.invar)
-				|| (this.metal == Materials.steel))
-			crafter.addStat(Achievements.metallurgy, 1);
+		crafter.addStat(Achievements.metallurgy, 1);
 	}
 
 	@Override

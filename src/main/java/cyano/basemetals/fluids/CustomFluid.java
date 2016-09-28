@@ -4,7 +4,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
@@ -13,7 +13,7 @@ public class CustomFluid extends Fluid {
 	private final int color;
 
 	/**
-	 * 
+	 *
 	 * @param fluidName
 	 * @param still
 	 * @param flowing
@@ -26,6 +26,6 @@ public class CustomFluid extends Fluid {
 
 	@Override
 	public int getColor() {
-		return color;
+		return this.color;
 	}
 }

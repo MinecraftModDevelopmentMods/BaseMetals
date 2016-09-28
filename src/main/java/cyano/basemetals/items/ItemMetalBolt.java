@@ -31,7 +31,7 @@ public class ItemMetalBolt extends Item implements IOreDictionaryEntry, IMetalOb
 	}
 
 	/**
-	 * 
+	 *
 	 * @param worldIn
 	 * @param stack
 	 * @param shooter

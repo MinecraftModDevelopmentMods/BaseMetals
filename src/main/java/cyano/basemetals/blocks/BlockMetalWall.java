@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
@@ -24,7 +24,7 @@ public class BlockMetalWall extends BlockWall implements IOreDictionaryEntry, IM
 	final MetalMaterial metal;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 * @param modelBlock
 	 */

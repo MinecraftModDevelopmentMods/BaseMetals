@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
@@ -30,35 +30,34 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 	 * @param guiHelper
 	 */
 	public JEICrusherRecipeCategory(IGuiHelper guiHelper) {
-		background = guiHelper.createDrawable(bgtex, 24, 26, 128, 32);
+		this.background = guiHelper.createDrawable(this.bgtex, 24, 26, 128, 32);
 	}
 
 	@Override
 	public IDrawable getBackground() {
-		return background;
+		return this.background;
 	}
 
 	@Override
 	public String getTitle() {
-		String key = "nei." + BaseMetals.MODID + ".recipehandler.crusher.name";
-		if(I18n.canTranslate(key)) {
+		final String key = "nei." + BaseMetals.MODID + ".recipehandler.crusher.name";
+		if (I18n.canTranslate(key))
 			return net.minecraft.client.resources.I18n.format(key);
-		} else {
+		else
 			return "Crusher";
-		}
 	}
 
 	@Override
 	public String getUid() {
-		return id;
+		return this.id;
 	}
 
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper) {
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+		final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
-		int x = 45;
-		int y = 7;
+		final int x = 45;
+		final int y = 7;
 		guiItemStacks.init(inputSlot, true, x, y);
 		guiItemStacks.init(outputSlot, false, x + 58, y);
 
@@ -69,6 +68,5 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		// TODO Auto-generated method stub
-		
 	}
 }

@@ -18,7 +18,7 @@ public class IMCMessage {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param type
 	 * @param blockName
 	 */

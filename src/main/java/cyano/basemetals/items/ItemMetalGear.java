@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 /**
  * Gears
+ * 
  * @author Jasmine Iwanek
  *
  */
@@ -16,7 +17,7 @@ public class ItemMetalGear extends net.minecraft.item.Item implements IOreDictio
 	private final String oreDict;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public ItemMetalGear(MetalMaterial metal) {
@@ -27,11 +28,11 @@ public class ItemMetalGear extends net.minecraft.item.Item implements IOreDictio
 
 	@Override
 	public String getOreDictionaryName() {
-		return oreDict;
+		return this.oreDict;
 	}
 
 	@Override
 	public MetalMaterial getMetalMaterial() {
-		return metal;
+		return this.metal;
 	}
 }

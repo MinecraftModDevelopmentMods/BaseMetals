@@ -14,7 +14,7 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 	private final String oreDict;
 
 	/**
-	 * 
+	 *
 	 * @param block
 	 * @param metal
 	 */
@@ -26,11 +26,11 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 
 	@Override
 	public String getOreDictionaryName() {
-		return oreDict;
+		return this.oreDict;
 	}
 
 	@Override
 	public MetalMaterial getMetalMaterial() {
-		return metal;
+		return this.metal;
 	}
 }

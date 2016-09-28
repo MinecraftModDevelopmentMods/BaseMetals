@@ -10,18 +10,18 @@ import net.minecraft.item.ItemStack;
  *
  */
 public interface IHorseArmor {
-	
+
 	/**
-	 * 
+	 *
 	 * @return
 	 */
-    HorseType getArmorType();
+	HorseType getArmorType();
 
-    /**
-     *
-     * @param entity
-     * @param stack
-     * @return
-     */
-    String getArmorTexture(EntityHorse entity, ItemStack stack);
+	/**
+	 *
+	 * @param entity
+	 * @param stack
+	 * @return
+	 */
+	String getArmorTexture(EntityHorse entity, ItemStack stack);
 }

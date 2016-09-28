@@ -14,8 +14,7 @@ public class StarSteelMaterial extends MetalMaterial {
 	 * @param strength
 	 * @param magic
 	 */
-	public StarSteelMaterial(String name, float hardness, float strength,
-			float magic) {
+	public StarSteelMaterial(String name, float hardness, float strength, float magic) {
 		super(name, hardness, strength, magic);
 	}
 

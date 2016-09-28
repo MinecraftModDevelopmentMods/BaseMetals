@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 /**
  * Powders
+ * 
  * @author DrCyano
  *
  */
@@ -16,7 +17,7 @@ public class ItemMetalPowder extends net.minecraft.item.Item implements IOreDict
 	private final String oreDict;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public ItemMetalPowder(MetalMaterial metal) {
@@ -27,11 +28,11 @@ public class ItemMetalPowder extends net.minecraft.item.Item implements IOreDict
 
 	@Override
 	public String getOreDictionaryName() {
-		return oreDict;
+		return this.oreDict;
 	}
 
 	@Override
 	public MetalMaterial getMetalMaterial() {
-		return metal;
+		return this.metal;
 	}
 }

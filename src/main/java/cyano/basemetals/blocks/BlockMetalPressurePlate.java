@@ -8,7 +8,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
@@ -17,7 +17,7 @@ public class BlockMetalPressurePlate extends BlockPressurePlate implements IOreD
 	final MetalMaterial metal;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public BlockMetalPressurePlate(MetalMaterial metal) {

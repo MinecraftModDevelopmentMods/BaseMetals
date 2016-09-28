@@ -23,7 +23,7 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 	private final String oreDict;
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public BlockMetalTrapDoor(MetalMaterial metal) {
@@ -41,22 +41,21 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 	public boolean onBlockActivated(final World world, final BlockPos coord, IBlockState state,
 									final EntityPlayer player, EnumHand hand, ItemStack heldItem, final EnumFacing facing,
 									final float partialX, final float partialY, final float partialZ) {
-		if (this.metal.getToolHarvestLevel() > 1) {
+		if (this.metal.getToolHarvestLevel() > 1)
 			return true;
-		}
 		state = state.cycleProperty(BlockTrapDoor.OPEN);
 		world.setBlockState(coord, state, 2);
-		world.playEvent(player, ((Boolean)state.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
+		world.playEvent(player, ((Boolean) state.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
 
 	@Override
 	public String getOreDictionaryName() {
-		return oreDict;
+		return this.oreDict;
 	}
 
 	@Override
 	public MetalMaterial getMetalMaterial() {
-		return metal;
+		return this.metal;
 	}
 }

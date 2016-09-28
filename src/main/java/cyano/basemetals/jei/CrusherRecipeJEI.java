@@ -8,17 +8,17 @@ import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
-public class CrusherRecipeJEI  extends BlankRecipeWrapper {
+public class CrusherRecipeJEI extends BlankRecipeWrapper {
 
 	private final List<List<ItemStack>> input;
 	private final List<ItemStack> outputs;
-	
+
 	/**
-	 * 
+	 *
 	 * @param input
 	 * @param output
 	 */
@@ -29,17 +29,16 @@ public class CrusherRecipeJEI  extends BlankRecipeWrapper {
 
 	@Override
 	public List<List<ItemStack>> getInputs() {
-		return input;
+		return this.input;
 	}
 
 	@Override
 	public List<ItemStack> getOutputs() {
-		return outputs;
+		return this.outputs;
 	}
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
 		// TODO Auto-generated method stub
-		
 	}
 }

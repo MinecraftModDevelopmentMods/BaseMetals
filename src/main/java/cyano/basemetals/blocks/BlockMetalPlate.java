@@ -1,9 +1,10 @@
 package cyano.basemetals.blocks;
 
+import java.util.List;
+
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -20,15 +21,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.List;
-
 /**
  * Metal Plate
+ * 
  * @author DrCyano
  *
  */
 public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDictionaryEntry, IMetalObject {
-
 
 	/**
 	 * Blockstate property
@@ -46,21 +45,21 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 	}
 
 	private final MetalMaterial metal;
-	private String oreDict;
+	private final String oreDict;
 
 	private static final float thickness = 1.0f / 16.0f;
 
 	private static final AxisAlignedBB[] BOXES = new AxisAlignedBB[EnumFacing.values().length];
 	static {
-		for(int i = 0; i < EnumFacing.values().length; i++) {
-			EnumFacing orientation = EnumFacing.values()[i];
+		for (int i = 0; i < EnumFacing.values().length; i++) {
+			final EnumFacing orientation = EnumFacing.values()[i];
 			float x1 = 0;
 			float x2 = 1;
 			float y1 = 0;
 			float y2 = 1;
 			float z1 = 0;
 			float z2 = 1;
-			switch(orientation){
+			switch (orientation) {
 				case DOWN:
 					y1 = 1f - thickness;
 					break;
@@ -86,19 +85,19 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 	}
 
 	/**
-	 * 
+	 *
 	 * @param metal
 	 */
 	public BlockMetalPlate(MetalMaterial metal) {
 		super(Material.IRON);
-        this.blockSoundType = SoundType.METAL;
+		this.blockSoundType = SoundType.METAL;
 		this.metal = metal;
 		this.oreDict = "plate" + metal.getCapitalizedName();
 		this.blockHardness = metal.getMetalBlockHardness();
 		this.blockResistance = metal.getBlastResistance();
 		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
 		this.setDefaultState(this.blockState.getBaseState()
-				.withProperty(FACING,EnumFacing.NORTH));
+				.withProperty(FACING, EnumFacing.NORTH));
 		this.useNeighborBrightness = true;
 	}
 
@@ -116,13 +115,13 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 	public IBlockState onBlockPlaced(final World w, final BlockPos coord, final EnumFacing face,
 									 final float partialX, final float partialY, final float partialZ,
 									 final int i, final EntityLivingBase placer) {
-		IBlockState defaultState = this.getDefaultState().withProperty(FACING, face);
+		final IBlockState defaultState = this.getDefaultState().withProperty(FACING, face);
 		// redimension to face-local up and right dimensions
 		float up;
 		float right;
 		EnumFacing.Axis upRotationAxis;
 		EnumFacing.Axis rightRotationAxis;
-		switch(face){
+		switch (face) {
 			case UP: // works
 				up = partialZ - 0.5F;
 				right = partialX - 0.5F;
@@ -159,31 +158,31 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 				upRotationAxis = EnumFacing.Axis.X;
 				rightRotationAxis = EnumFacing.Axis.Y;
 				break;
-			default: return defaultState;
+			default:
+				return defaultState;
 		}
-		if(Math.abs(up) < 0.25F && Math.abs(right) < 0.25F) {
+		if ((Math.abs(up) < 0.25F) && (Math.abs(right) < 0.25F))
 			// no rotation
 			return defaultState;
-		}
-		boolean upOrRight = up + right > 0;
-		boolean upOrLeft = up - right > 0;
-		if(upOrRight) {
+		final boolean upOrRight = (up + right) > 0;
+		final boolean upOrLeft = (up - right) > 0;
+		if (upOrRight) {
 			// up or right
-			if(upOrLeft) {
+			if (upOrLeft) {
 				// up
-				return defaultState.withProperty(FACING,face.rotateAround(upRotationAxis));
+				return defaultState.withProperty(FACING, face.rotateAround(upRotationAxis));
 			} else {
 				// right
-				return defaultState.withProperty(FACING,face.rotateAround(rightRotationAxis).getOpposite());
+				return defaultState.withProperty(FACING, face.rotateAround(rightRotationAxis).getOpposite());
 			}
-		} else {
+		} else { 
 			// down or left
-			if(upOrLeft) {
+			if (upOrLeft) {
 				// left
-				return defaultState.withProperty(FACING,face.rotateAround(rightRotationAxis));
+				return defaultState.withProperty(FACING, face.rotateAround(rightRotationAxis));
 			} else {
 				// down
-				return defaultState.withProperty(FACING,face.rotateAround(upRotationAxis).getOpposite());
+				return defaultState.withProperty(FACING, face.rotateAround(upRotationAxis).getOpposite());
 			}
 		}
 	}
@@ -195,7 +194,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	public int getMetaFromState(final IBlockState bs) {
-		int i = (bs.getValue(FACING)).getIndex();
+		final int i = (bs.getValue(FACING)).getIndex();
 		return i;
 	}
 
@@ -206,7 +205,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	public AxisAlignedBB getBoundingBox(final IBlockState bs, final IBlockAccess world, final BlockPos coord) {
-        final EnumFacing orientation = bs.getValue(FACING);
+		final EnumFacing orientation = bs.getValue(FACING);
 		return BOXES[orientation.ordinal()];
 	}
 
@@ -221,11 +220,11 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	public String getOreDictionaryName() {
-		return oreDict;
+		return this.oreDict;
 	}
 
 	@Override
 	public MetalMaterial getMetalMaterial() {
-		return metal;
+		return this.metal;
 	}
 }

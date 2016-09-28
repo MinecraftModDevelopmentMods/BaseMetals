@@ -3,7 +3,6 @@ package cyano.basemetals.items;
 import java.util.List;
 
 import cyano.basemetals.init.Materials;
-import cyano.basemetals.items.MetalToolEffects;
 import cyano.basemetals.material.MetalMaterial;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -40,8 +39,8 @@ public class ItemMetalShears extends ItemShears {
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		final List<ItemStack> acceptableItems = OreDictionary.getOres(this.repairOreDictName);
-		for(final ItemStack i : acceptableItems)
-			if(ItemStack.areItemsEqual(i, repairMaterial))
+		for (final ItemStack i : acceptableItems)
+			if (ItemStack.areItemsEqual(i, repairMaterial))
 				return true;
 
 		return false;
@@ -49,7 +48,7 @@ public class ItemMetalShears extends ItemShears {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if(this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 

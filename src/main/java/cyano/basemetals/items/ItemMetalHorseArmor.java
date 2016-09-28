@@ -2,7 +2,6 @@ package cyano.basemetals.items;
 
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.items.IHorseArmor;
 import cyano.basemetals.utils.HorseUtilities;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
@@ -25,8 +24,8 @@ public class ItemMetalHorseArmor extends Item implements IMetalObject, IHorseArm
 	 */
 	public ItemMetalHorseArmor(MetalMaterial m) {
 		this.metal = m;
-        this.setCreativeTab(CreativeTabs.COMBAT);
-        this.setMaxStackSize(1);
+		this.setCreativeTab(CreativeTabs.COMBAT);
+		this.setMaxStackSize(1);
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class ItemMetalHorseArmor extends Item implements IMetalObject, IHorseArm
 
 	@Override
 	public String getArmorTexture(EntityHorse entity, ItemStack stack) {
-		return "basemetals:textures/entity/horse/armor/horse_armor_" + this.metal.getName() + ".png";
+		return stack.getItem().getRegistryName().getResourceDomain() + ":textures/entity/horse/armor/horse_armor_" + this.metal.getName() + ".png";
 	}
 
 	@Override

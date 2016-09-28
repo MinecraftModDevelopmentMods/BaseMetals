@@ -9,12 +9,11 @@ import cyano.basemetals.registry.IOreDictionaryEntry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraft.util.text.translation.I18n;
-
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
- * 
+ *
  * @author Jasmine Iwanek
  *
  */
@@ -52,20 +51,17 @@ public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, 
 	 */
 	@Override
 	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
-        for(ItemStack i : acceptableItems) {
-            if(ItemStack.areItemsEqual(i, repair))
-                return true;
-        }
-        return false;
+		final List<ItemStack> acceptableItems = OreDictionary.getOres(this.repairOreDictName);
+		for (final ItemStack i : acceptableItems)
+			if (ItemStack.areItemsEqual(i, repair))
+				return true;
+		return false;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
-	public String getItemStackDisplayName(ItemStack stack)
-    {
-        return I18n.translateToLocal(this.getUnlocalizedName() + ".name");
-    }
-	
-	
+	public String getItemStackDisplayName(ItemStack stack) {
+		return I18n.translateToLocal(this.getUnlocalizedName() + ".name");
+	}
+
 }

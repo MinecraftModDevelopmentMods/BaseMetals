@@ -49,11 +49,11 @@ public class EnderIOPlugin {
 	 *
 	 */
 	public static void init() {
-		if(initDone)
+		if (initDone)
 			return;
 
 		// TODO: Verify blocks, Slabs, Ingots, Oreblocks
-		if(Loader.isModLoaded(ENDER_IO_MODID)) {
+		if (Loader.isModLoaded(ENDER_IO_MODID)) {
 			addSagMillRecipe("aluminum", null, 3600);
 			addSagMillRecipe("aluminumbrass", null, 3600);
 			addSagMillRecipe("cadmium", null, 3600);

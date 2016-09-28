@@ -1,6 +1,7 @@
 package cyano.basemetals.asm;
 
 import com.google.common.base.Optional;
+
 import cyano.basemetals.items.IHorseArmor;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.HorseType;
@@ -16,7 +17,7 @@ public class BaseMetalHooks {
 	public static final DataParameter<Optional<ItemStack>> ARMOR_STACK = EntityDataManager.createKey(EntityHorse.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
 	/**
-	 * 
+	 *
 	 * @param entity
 	 */
 	public static void onInitHorse(EntityHorse entity) {
@@ -24,7 +25,7 @@ public class BaseMetalHooks {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param entity
 	 * @param stack
 	 */
@@ -33,18 +34,17 @@ public class BaseMetalHooks {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param type
 	 * @param entity
 	 * @return
 	 */
 	@SideOnly(Side.CLIENT)
 	public static String getTextureName(HorseType type, EntityHorse entity) {
-		ItemStack stack = entity.getDataManager().get(BaseMetalHooks.ARMOR_STACK).orNull();
+		final ItemStack stack = entity.getDataManager().get(BaseMetalHooks.ARMOR_STACK).orNull();
 
-		if (stack != null && stack.getItem() instanceof IHorseArmor) {
+		if ((stack != null) && (stack.getItem() instanceof IHorseArmor))
 			return ((IHorseArmor) stack.getItem()).getArmorTexture(entity, stack);
-		}
 
 		return type.getTexture().toString();
 	}
