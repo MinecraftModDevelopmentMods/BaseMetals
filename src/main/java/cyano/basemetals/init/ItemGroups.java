@@ -2,7 +2,6 @@ package cyano.basemetals.init;
 
 import cyano.basemetals.BaseMetals;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -35,14 +34,11 @@ public class ItemGroups {
 			return;
 
 		// placeholders
-		final Item blockItem = Items.copper_crackhammer;
 		// Item itemItem = Items.copper_crackhammer;
 		// Item toolItem = Items.copper_crackhammer;
 
-		tab_blocks = EnhancedCreativeTab.create(BaseMetals.MODID.concat(".blocks"))
-				.setIcon(blockItem)
-				.setMeta(3)
-				.setItemSortingAlgorithm(sortingAlgorithm);
+		tab_blocks = new GeneralizedCreativeTab(BaseMetals.MODID.concat(".blocks"), true,
+				() -> Items.copper_crackhammer);
 
 		tab_items = tab_blocks;
 		tab_tools = tab_items;
