@@ -85,7 +85,7 @@ public class BaseMetals {
 	 */
 	public static final String VERSION = "2.5.0";
 
-	@SidedProxy(clientSide = "cyano.basemetals.proxy.ClientProxy", serverSide = "cyano.basemetals.proxy.CommonProxy")
+	@SidedProxy(clientSide = "cyano.basemetals.proxy.ClientProxy", serverSide = "cyano.basemetals.proxy.ServerProxy")
 	public static CommonProxy PROXY = null;
 
 	static {
