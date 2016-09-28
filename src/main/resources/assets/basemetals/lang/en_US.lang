@@ -119,6 +119,7 @@ item.basemetals.copper_shield.name=Copper Shield
 item.basemetals.copper_shovel.name=Copper Shovel
 item.basemetals.copper_sword.name=Copper Sword
 item.basemetals.copper_trapdoor.name=Copper Trapdoor
+item.basemetals.cupronickel_shield.name=Aquarium Shield
 item.basemetals.electrum_axe.name=Electrum Axe
 item.basemetals.electrum_bars.name=Electrum Bars
 item.basemetals.electrum_blend.name=Electrum Blend
@@ -478,6 +479,7 @@ item.basemetals.cupronickel_nugget.name=Cupronickel Nugget
 item.basemetals.cupronickel_pickaxe.name=Cupronickel Pickaxe
 item.basemetals.cupronickel_powder.name=Powdered Cupronickel
 item.basemetals.cupronickel_shovel.name=Cupronickel Shovel
+item.basemetals.cupronickel_shield.name=Cupronickel Shield
 item.basemetals.cupronickel_sword.name=Cupronickel Sword
 item.basemetals.cupronickel_trapdoor.name=Cupronickel Trapdoor
 tile.basemetals.cupronickel_bars.name=Cupronickel Bars
@@ -501,6 +503,7 @@ item.basemetals.platinum_ore.name=Platinum Ore
 item.basemetals.platinum_pickaxe.name=Platinum Pickaxe
 item.basemetals.platinum_powder.name=Powdered Platinum
 item.basemetals.platinum_shovel.name=Platinum Shovel
+item.basemetals.platinum_shield.name=Platinum Shield
 item.basemetals.platinum_sword.name=Platinum Sword
 item.basemetals.platinum_trapdoor.name=Platinum Trapdoor
 tile.basemetals.platinum_bars.name=Platinum Bars
@@ -552,3 +555,9 @@ item.basemetals.tin_gear.name=Tin Gear
 item.basemetals.zinc_gear.name=Zinc Gear
 
 item.basemetals.gold_crackhammer.name=Golden Crack Hammer
+
+item.basemetals.antimony_shield.name=Antimony Shield
+item.basemetals.bismuth_shield.name=Bismuth Shield
+item.basemetals.pewter_shield.name=Pewter Shield
+
+item.basemetals.pewter_shield.name=Pewter Shield
