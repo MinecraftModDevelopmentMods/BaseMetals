@@ -45,6 +45,10 @@ repositories {
         name "tterrag"
         url "http://maven.tterrag.com/"
     }
+	maven {
+		name "Ilexiconn"
+		url "https://maven.ilexiconn.net/"
+	}
 }
 
 dependencies {
@@ -54,6 +58,7 @@ dependencies {
     compile "codechicken:CodeChickenLib:1.10.2-2.2.3.85:deobf"
     compile "codechicken:CodeChickenCore:1.10.2-2.1.8.79:deobf"
     compile "codechicken:NotEnoughItems:1.10.2-2.1.1.147:deobf"
+	compile "mmd:orespawn:2.0.0.5-1.10.2:dev"
 }
 
 processResources {
