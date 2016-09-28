@@ -26,7 +26,7 @@ archivesBaseName = "BaseMetals_1.10.2"
 sourceCompatibility = targetCompatibility = "1.8"
 
 minecraft {
-    version = "1.10.2-12.18.1.2011"
+    version = "1.10.2-12.18.1.2094"
     runDir = "run"
     mappings = "snapshot_20160917"
 //    coreMod = "basemetals.asm.BaseMetalPlugin"
@@ -48,10 +48,10 @@ repositories {
 }
 
 dependencies {
-    compile "slimeknights:TConstruct:1.10.2-2.5.1.jenkins350:deobf"
+    compile "slimeknights:TConstruct:1.10.2-2.5.2.jenkins365:deobf"
     compile "slimeknights.mantle:Mantle:1.10.2-1.0.0.jenkins170:deobf"
-    deobfCompile "mezz.jei:jei_1.10.2:+"
-    compile "codechicken:CodeChickenLib:1.10.2-2.2.3.80:deobf"
+    compile "mezz.jei:jei_1.10.2:3.11.2.280"
+    compile "codechicken:CodeChickenLib:1.10.2-2.2.3.85:deobf"
     compile "codechicken:CodeChickenCore:1.10.2-2.1.8.79:deobf"
     compile "codechicken:NotEnoughItems:1.10.2-2.1.1.147:deobf"
 }
