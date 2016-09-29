@@ -30,7 +30,7 @@ public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, 
 	 */
 	public ItemMetalShield(MetalMaterial metal) {
 		this.metal = metal;
-		this.setMaxDamage(metal.getToolDurability());
+		this.setMaxDamage((int) (metal.strength * 168));
 		this.setCreativeTab(CreativeTabs.TOOLS);
 		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
 		this.regenerates = metal.equals(Materials.starsteel);

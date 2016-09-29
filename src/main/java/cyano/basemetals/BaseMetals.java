@@ -213,8 +213,8 @@ public class BaseMetals {
 		cyano.basemetals.init.Items.init();
 		cyano.basemetals.init.VillagerTrades.init();
 		cyano.basemetals.init.EnderIOPlugin.init();
-		if (Loader.isModLoaded("tconstruct"))
-			cyano.basemetals.init.TinkersConstructPlugin.init();
+		//if (Loader.isModLoaded("tconstruct"))
+			//cyano.basemetals.init.TinkersConstructPlugin.init();
 		cyano.basemetals.init.VeinMinerPlugin.init();
 
 		final Path ALTPath = Paths.get(event.getSuggestedConfigurationFile().getParent(), "additional-loot-tables");
@@ -263,8 +263,8 @@ public class BaseMetals {
 		cyano.basemetals.init.Achievements.init();
 
 		PROXY.init();
-
-		MinecraftForge.EVENT_BUS.register(this);
+		
+		MinecraftForge.EVENT_BUS.register(new cyano.basemetals.util.EventHandler());
 	}
 
 	/**
@@ -383,57 +383,5 @@ public class BaseMetals {
 		}
 	}
 
-/*
-	@SubscribeEvent
-	void event(ItemCraftedEvent event) {
 
-		FMLLog.severe("BASEMETALS: An Item Was Crafted!");
-
-		final Item item = event.crafting.getItem();
-
-		if (item instanceof IMetalObject) {
-			FMLLog.severe("BASEMETALS: It's one of ours!");
-
-			final MetalMaterial material = ((IMetalObject) item).getMetalMaterial();
-
-			if (item instanceof ItemMetalBlend)
-				FMLLog.severe("BASEMETALS: Yes, It was a blend!");
-		}
-	}
-*/
-
-	@SubscribeEvent
-	void event(ItemSmeltedEvent event) {
-//		FMLLog.severe("BASEMETALS: An Item Was Smelted!");
-
-		final Item item = event.smelting.getItem();
-
-		if (item instanceof IMetalObject) {
-//			FMLLog.severe("BASEMETALS: It's one of ours!");
-
-			final MetalMaterial material = ((IMetalObject) item).getMetalMaterial();
-			if (item instanceof ItemMetalIngot) {
-//				FMLLog.severe("BASEMETALS: Yes, It was an ingot!");
-
-				event.player.addStat(Achievements.this_is_new, 1);
-
-				if (material == Materials.aquarium)
-					event.player.addStat(Achievements.aquarium_maker, 1);
-				else if (material == Materials.brass)
-					event.player.addStat(Achievements.brass_maker, 1);
-				else if (material == Materials.bronze)
-					event.player.addStat(Achievements.bronze_maker, 1);
-				else if (material == Materials.electrum)
-					event.player.addStat(Achievements.electrum_maker, 1);
-				else if (material == Materials.steel)
-					event.player.addStat(Achievements.steel_maker, 1);
-				else if (material == Materials.invar)
-					event.player.addStat(Achievements.invar_maker, 1);
-				else if (material == Materials.mithril)
-					event.player.addStat(Achievements.mithril_maker, 1);
-				else if (material == Materials.cupronickel)
-					event.player.addStat(Achievements.cupronickel_maker, 1);
-			}
-		}
-	}
 }
