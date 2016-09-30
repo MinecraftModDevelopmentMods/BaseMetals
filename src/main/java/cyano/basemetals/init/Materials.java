@@ -6,10 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import cyano.basemetals.material.AdamantineMaterial;
-import cyano.basemetals.material.LeadMaterial;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.material.StarSteelMaterial;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -77,8 +74,7 @@ public abstract class Materials {
 		vanilla_diamond = addMaterial("diamond", 10, 15, 4);
 
 		// Mod Metals
-		adamantine = new AdamantineMaterial("adamantine", 12, 100, 0);
-		registerMaterial(adamantine.getName(), adamantine);
+		adamantine = addMaterial("adamantine", 12, 100, 0).setBlastResistance(2000f);
 		antimony = addMaterial("antimony", 1, 1, 1);
 		aquarium = addMaterial("aquarium", 4, 10, 15);
 		bismuth = addMaterial("bismuth", 1, 1, 1);
@@ -89,14 +85,13 @@ public abstract class Materials {
 		cupronickel = addMaterial("cupronickel", 6, 6, 6);
 		electrum = addMaterial("electrum", 5, 4, 10);
 		invar = addMaterial("invar", 9, 10, 3);
-		lead = new LeadMaterial("lead", 1, 1, 1);
-		registerMaterial(lead.getName(), lead);
+		lead = addMaterial("lead", 1, 1, 1).setBaseDamage(4f);
 		mithril = addMaterial("mithril", 9, 9, 9);
 		nickel = addMaterial("nickel", 4, 4, 7);
 		pewter = addMaterial("pewter", 1, 1, 1);
 		platinum = addRareMaterial("platinum", 3, 5, 15);
 		silver = addMaterial("silver", 5, 4, 6);
-		starsteel = new StarSteelMaterial("starsteel", 10, 25, 12);
+		starsteel = addMaterial("starsteel", 10, 25, 12).setBlastResistance(2000f);
 		registerMaterial(starsteel.getName(), starsteel);
 		steel = addMaterial("steel", 8, 15, 2);
 		tin = addMaterial("tin", 3, 1, 2);
@@ -129,14 +124,17 @@ public abstract class Materials {
 		final String texName = m.getName();
 		final int[] protection = m.getDamageReductionArray();
 		final int durability = m.getArmorMaxDamageFactor();
-		final ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, (m.hardness > 10 ? (int) (m.hardness / 5) : 0));
+		final ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection,
+				m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON,
+				(m.hardness > 10 ? (int) (m.hardness / 5) : 0));
 		if (am == null)
 			// uh-oh
 			FMLLog.severe("Failed to create armor material enum for " + m);
 		armorMaterialMap.put(m, am);
 		FMLLog.info("Created armor material enum " + am);
 
-		final ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(), m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
+		final ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(),
+				m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
 		if (tm == null)
 			// uh-oh
 			FMLLog.severe("Failed to create tool material enum for " + m);
@@ -147,7 +145,8 @@ public abstract class Materials {
 	/**
 	 * Gets the armor material for a given metal
 	 * 
-	 * @param m The metal of interest
+	 * @param m
+	 *            The metal of interest
 	 * @return The armor material for this metal, or null if there isn't one
 	 */
 	public static ArmorMaterial getArmorMaterialFor(MetalMaterial m) {
@@ -157,7 +156,8 @@ public abstract class Materials {
 	/**
 	 * Gets the tool material for a given metal
 	 * 
-	 * @param m The metal of interest
+	 * @param m
+	 *            The metal of interest
 	 * @return The tool material for this metal, or null if there isn't one
 	 */
 	public static ToolMaterial getToolMaterialFor(MetalMaterial m) {
@@ -177,9 +177,10 @@ public abstract class Materials {
 	/**
 	 * Gets a metal material by its name (e.g. "copper").
 	 * 
-	 * @param metalName The name of a metal
+	 * @param metalName
+	 *            The name of a metal
 	 * @return The material representing the named metal, or null if no metals
-	 * have been registered under that name.
+	 *         have been registered under that name.
 	 */
 	public static MetalMaterial getMetalByName(String metalName) {
 		return allMaterials.get(metalName);
