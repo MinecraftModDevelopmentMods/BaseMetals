@@ -352,7 +352,7 @@ public abstract class Blocks {
 	 * Gets an block by its name. The name is the name as it is registered in
 	 * the GameRegistry, not its unlocalized name (the unlocalized name is the
 	 * registered name plus the prefix "basemetals.")
-	 * 
+	 *
 	 * @param name The name of the block in question
 	 * @return The block matching that name, or null if there isn't one
 	 */
@@ -363,7 +363,7 @@ public abstract class Blocks {
 	/**
 	 * This is the reverse of the getBlockByName(...) method, returning the
 	 * registered name of an block instance (Base Metals blocks only).
-	 * 
+	 *
 	 * @param b The item in question
 	 * @return The name of the item, or null if the item is not a Base Metals
 	 * block.
@@ -747,11 +747,15 @@ public abstract class Blocks {
 	}
 
 	private static Block createPlate(MetalMaterial metal) {
-		return addBlock(new BlockMetalPlate(metal), "plate", metal);
+		final Block b = addBlock(new BlockMetalPlate(metal), "plate", metal);
+		metal.plate = b;
+		return b;
 	}
 
 	private static Block createBars(MetalMaterial metal) {
-		return addBlock(new BlockMetalBars(metal), "bars", metal);
+		final Block b = addBlock(new BlockMetalBars(metal), "bars", metal);
+		metal.bars = b;
+		return b;
 	}
 
 	private static Block createBlock(MetalMaterial metal) {
@@ -759,47 +763,69 @@ public abstract class Blocks {
 	}
 
 	private static Block createBlock(MetalMaterial metal, boolean glow) {
-		return addBlock(new BlockMetalBlock(metal, glow), "block", metal);
+		final Block b = addBlock(new BlockMetalBlock(metal, glow), "block", metal);
+		metal.block = b;
+		return b;
 	}
 
 	private static Block createButton(MetalMaterial metal) {
-		return addBlock(new BlockButtonMetal(metal), "button", metal);
+		final Block b = addBlock(new BlockButtonMetal(metal), "button", metal);
+		metal.button = b;
+		return b;
 	}
 
 	private static Block createLever(MetalMaterial metal) {
-		return addBlock(new BlockMetalLever(metal), "lever", metal);
+		final Block b = addBlock(new BlockMetalLever(metal), "lever", metal);
+		metal.lever = b;
+		return b;
 	}
 
 	private static Block createPressurePlate(MetalMaterial metal) {
-		return addBlock(new BlockMetalPressurePlate(metal), "pressure_plate", metal);
+		final Block b = addBlock(new BlockMetalPressurePlate(metal), "pressure_plate", metal);
+		metal.pressure_plate = b;
+		return b;
 	}
 
 	private static BlockSlab createSlab(MetalMaterial metal) {
-		return (BlockSlab) addBlock(new BlockHalfMetalSlab(metal), "slab", metal);
+		final BlockSlab b = (BlockSlab) addBlock(new BlockHalfMetalSlab(metal), "slab", metal);
+		metal.half_slab = b;
+		return b;
 	}
 
 	private static BlockSlab createDoubleSlab(MetalMaterial metal) {
-		return (BlockSlab) addBlock(new BlockDoubleMetalSlab(metal), "slab", metal);
+		final BlockSlab b = (BlockSlab) addBlock(new BlockDoubleMetalSlab(metal), "slab", metal);
+		metal.double_slab = b;
+		return b;
 	}
 
 	private static Block createStairs(MetalMaterial metal) {
-		return addBlock(new BlockMetalStairs(metal, Blocks.getBlockByName(metal.getName() + "_block")), "stairs", metal);
+		final Block b = addBlock(new BlockMetalStairs(metal, Blocks.getBlockByName(metal.getName() + "_block")), "stairs", metal);
+		metal.stairs = b;
+		return b;
 	}
 
 	private static Block createWall(MetalMaterial metal) {
-		return addBlock(new BlockMetalWall(metal, Blocks.getBlockByName(metal.getName() + "_block")), "wall", metal);
+		final Block b = addBlock(new BlockMetalWall(metal, Blocks.getBlockByName(metal.getName() + "_block")), "wall", metal);
+		metal.wall = b;
+		return b;
 	}
 
 	private static Block createOre(MetalMaterial metal) {
-		return addBlock(new BlockMetalOre(metal), "ore", metal);
+		final Block b = addBlock(new BlockMetalOre(metal), "ore", metal);
+		metal.ore = b;
+		return b;
 	}
 
 	private static BlockDoor createDoor(MetalMaterial metal) {
-		return (BlockDoor) addBlock(new BlockMetalDoor(metal), "door", metal);
+		final BlockDoor b = (BlockDoor) addBlock(new BlockMetalDoor(metal), "door", metal);
+		metal.doorBlock = b;
+		return b;
 	}
 
 	private static Block createTrapDoor(MetalMaterial metal) {
-		return addBlock(new BlockMetalTrapDoor(metal), "trapdoor", metal);
+		final Block b = addBlock(new BlockMetalTrapDoor(metal), "trapdoor", metal);
+		metal.trapdoor = b;
+		return b;
 	}
 
 	public static Map<String, Block> getBlockRegistry() {

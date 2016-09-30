@@ -90,6 +90,7 @@ public class MetalMaterial {
 	public Item shield;
 	public Item shovel;
 	public Item slab;
+	public Item smallblend;
 	public Item smallpowder;
 	public Item sword;
 
@@ -106,6 +107,14 @@ public class MetalMaterial {
 	public Block stairs;
 	public Block trapdoor;
 	public Block wall;
+
+	public Item crystal;
+	public Item shard;
+	public Item clump;
+	public Item dirtypowder;
+	public Item denseplate;
+	public Item crushed;
+	public Item crushedpurified;
 
 	/**
 	 * @deprecated
