@@ -26,6 +26,19 @@ public class BlockMetalWall extends BlockWall implements IOreDictionaryEntry, IM
 	/**
 	 *
 	 * @param metal
+	 */
+	public BlockMetalWall(MetalMaterial metal) {
+		super(metal.block);
+		this.setSoundType(SoundType.METAL);
+		this.metal = metal;
+		this.blockHardness = metal.getMetalBlockHardness();
+		this.blockResistance = metal.getBlastResistance();
+		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+	}
+
+	/**
+	 *
+	 * @param metal
 	 * @param modelBlock
 	 */
 	public BlockMetalWall(MetalMaterial metal, Block modelBlock) {

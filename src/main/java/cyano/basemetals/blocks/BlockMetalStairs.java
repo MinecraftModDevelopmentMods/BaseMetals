@@ -19,6 +19,19 @@ public class BlockMetalStairs extends BlockStairs implements IOreDictionaryEntry
 	/**
 	 *
 	 * @param metal
+	 */
+	public BlockMetalStairs(MetalMaterial metal) {
+		super(metal.block.getDefaultState());
+		this.setSoundType(SoundType.METAL);
+		this.metal = metal;
+		this.blockHardness = metal.getMetalBlockHardness();
+		this.blockResistance = metal.getBlastResistance();
+		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+	}
+
+	/**
+	 *
+	 * @param metal
 	 * @param modelBlock
 	 */
 	public BlockMetalStairs(MetalMaterial metal, Block modelBlock) {

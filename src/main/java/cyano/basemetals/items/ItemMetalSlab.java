@@ -19,6 +19,15 @@ public class ItemMetalSlab extends ItemSlab implements IOreDictionaryEntry, IMet
 	/**
 	 *
 	 * @param metal
+	 */
+	public ItemMetalSlab(MetalMaterial metal) {
+		super(metal.half_slab, metal.half_slab, metal.double_slab);
+		this.metal = metal;
+	}
+
+	/**
+	 *
+	 * @param metal
 	 * @param block
 	 * @param slab
 	 * @param doubleslab

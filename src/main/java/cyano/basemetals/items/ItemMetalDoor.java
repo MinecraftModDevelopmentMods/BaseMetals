@@ -15,6 +15,16 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 
 	/**
 	 *
+	 * @param metal
+	 */
+	public ItemMetalDoor(MetalMaterial metal) {
+		super(metal.doorBlock);
+		this.metal = metal;
+		this.oreDict = "door" + metal.getCapitalizedName();
+	}
+
+	/**
+	 *
 	 * @param block
 	 * @param metal
 	 */

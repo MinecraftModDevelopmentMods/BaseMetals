@@ -799,13 +799,13 @@ public abstract class Blocks {
 	}
 
 	private static Block createStairs(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalStairs(metal, Blocks.getBlockByName(metal.getName() + "_block")), "stairs", metal);
+		final Block b = addBlock(new BlockMetalStairs(metal), "stairs", metal);
 		metal.stairs = b;
 		return b;
 	}
 
 	private static Block createWall(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalWall(metal, Blocks.getBlockByName(metal.getName() + "_block")), "wall", metal);
+		final Block b = addBlock(new BlockMetalWall(metal), "wall", metal);
 		metal.wall = b;
 		return b;
 	}

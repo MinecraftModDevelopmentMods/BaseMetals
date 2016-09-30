@@ -16,9 +16,7 @@ import cyano.basemetals.items.*;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockSlab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -923,7 +921,7 @@ public abstract class Items {
 		adamantine_chestplate = createChestplate(Materials.adamantine);
 		adamantine_crackhammer = createCrackhammer(Materials.adamantine);
 		adamantine_crossbow = createCrossbow(Materials.adamantine);
-		adamantine_door = createDoor(Materials.adamantine, Blocks.adamantine_door);
+		adamantine_door = createDoor(Materials.adamantine);
 		adamantine_fishing_rod = createFishingRod(Materials.adamantine);
 		adamantine_helmet = createHelmet(Materials.adamantine);
 		adamantine_hoe = createHoe(Materials.adamantine);
@@ -940,7 +938,7 @@ public abstract class Items {
 		adamantine_rod = createRod(Materials.adamantine);
 		adamantine_gear = createGear(Materials.adamantine);
 
-		adamantine_slab = createSlab(Materials.adamantine, Blocks.adamantine_slab, Blocks.adamantine_slab, Blocks.double_adamantine_slab);
+		adamantine_slab = createSlab(Materials.adamantine);
 		adamantine_shield = createShield(Materials.adamantine);
 
 		adamantine_crystal = createCrystal(Materials.adamantine);
@@ -965,7 +963,7 @@ public abstract class Items {
 		antimony_boots = createBoots(Materials.antimony);
 		antimony_chestplate = createChestplate(Materials.antimony);
 		antimony_crackhammer = createCrackhammer(Materials.antimony);
-		antimony_door = createDoor(Materials.antimony, Blocks.antimony_door);
+		antimony_door = createDoor(Materials.antimony);
 		antimony_helmet = createHelmet(Materials.antimony);
 		antimony_hoe = createHoe(Materials.antimony);
 		antimony_ingot = createIngot(Materials.antimony);
@@ -978,7 +976,7 @@ public abstract class Items {
 		antimony_rod = createRod(Materials.antimony);
 		antimony_gear = createGear(Materials.antimony);
 
-		antimony_slab = createSlab(Materials.antimony, Blocks.antimony_slab, Blocks.antimony_slab, Blocks.double_antimony_slab);
+		antimony_slab = createSlab(Materials.antimony);
 		antimony_shield = createShield(Materials.antimony);
 
 		antimony_crystal = createCrystal(Materials.antimony);
@@ -1005,7 +1003,7 @@ public abstract class Items {
 		aquarium_boots = createBoots(Materials.aquarium);
 		aquarium_chestplate = createChestplate(Materials.aquarium);
 		aquarium_crackhammer = createCrackhammer(Materials.aquarium);
-		aquarium_door = createDoor(Materials.aquarium, Blocks.aquarium_door);
+		aquarium_door = createDoor(Materials.aquarium);
 		aquarium_helmet = createHelmet(Materials.aquarium);
 		aquarium_hoe = createHoe(Materials.aquarium);
 		aquarium_ingot = createIngot(Materials.aquarium);
@@ -1018,7 +1016,7 @@ public abstract class Items {
 		aquarium_rod = createRod(Materials.aquarium);
 		aquarium_gear = createGear(Materials.aquarium);
 
-		aquarium_slab = createSlab(Materials.aquarium, Blocks.aquarium_slab, Blocks.aquarium_slab, Blocks.double_aquarium_slab);
+		aquarium_slab = createSlab(Materials.aquarium);
 		aquarium_shield = createShield(Materials.aquarium);
 
 		aquarium_crystal = createCrystal(Materials.aquarium);
@@ -1043,7 +1041,7 @@ public abstract class Items {
 		bismuth_boots = createBoots(Materials.bismuth);
 		bismuth_chestplate = createChestplate(Materials.bismuth);
 		bismuth_crackhammer = createCrackhammer(Materials.bismuth);
-		bismuth_door = createDoor(Materials.bismuth, Blocks.bismuth_door);
+		bismuth_door = createDoor(Materials.bismuth);
 		bismuth_helmet = createHelmet(Materials.bismuth);
 		bismuth_hoe = createHoe(Materials.bismuth);
 		bismuth_ingot = createIngot(Materials.bismuth);
@@ -1056,7 +1054,7 @@ public abstract class Items {
 		bismuth_rod = createRod(Materials.bismuth);
 		bismuth_gear = createGear(Materials.bismuth);
 
-		bismuth_slab = createSlab(Materials.bismuth, Blocks.bismuth_slab, Blocks.bismuth_slab, Blocks.double_bismuth_slab);
+		bismuth_slab = createSlab(Materials.bismuth);
 		bismuth_shield = createShield(Materials.bismuth);
 
 		bismuth_crystal = createCrystal(Materials.bismuth);
@@ -1083,7 +1081,7 @@ public abstract class Items {
 		brass_boots = createBoots(Materials.brass);
 		brass_chestplate = createChestplate(Materials.brass);
 		brass_crackhammer = createCrackhammer(Materials.brass);
-		brass_door = createDoor(Materials.brass, Blocks.brass_door);
+		brass_door = createDoor(Materials.brass);
 		brass_helmet = createHelmet(Materials.brass);
 		brass_hoe = createHoe(Materials.brass);
 		brass_ingot = createIngot(Materials.brass);
@@ -1096,7 +1094,7 @@ public abstract class Items {
 		brass_rod = createRod(Materials.brass);
 		brass_gear = createGear(Materials.brass);
 
-		brass_slab = createSlab(Materials.brass, Blocks.brass_slab, Blocks.brass_slab, Blocks.double_brass_slab);
+		brass_slab = createSlab(Materials.brass);
 		brass_shield = createShield(Materials.brass);
 
 		brass_crystal = createCrystal(Materials.brass);
@@ -1123,7 +1121,7 @@ public abstract class Items {
 		bronze_boots = createBoots(Materials.bronze);
 		bronze_chestplate = createChestplate(Materials.bronze);
 		bronze_crackhammer = createCrackhammer(Materials.bronze);
-		bronze_door = createDoor(Materials.bronze, Blocks.bronze_door);
+		bronze_door = createDoor(Materials.bronze);
 		bronze_helmet = createHelmet(Materials.bronze);
 		bronze_hoe = createHoe(Materials.bronze);
 		bronze_ingot = createIngot(Materials.bronze);
@@ -1136,7 +1134,7 @@ public abstract class Items {
 		bronze_rod = createRod(Materials.bronze);
 		bronze_gear = createGear(Materials.bronze);
 
-		bronze_slab = createSlab(Materials.bronze, Blocks.bronze_slab, Blocks.bronze_slab, Blocks.double_bronze_slab);
+		bronze_slab = createSlab(Materials.bronze);
 		bronze_shield = createShield(Materials.bronze);
 
 		bronze_crystal = createCrystal(Materials.bronze);
@@ -1167,7 +1165,7 @@ public abstract class Items {
 		coldiron_boots = createBoots(Materials.coldiron);
 		coldiron_chestplate = createChestplate(Materials.coldiron);
 		coldiron_crackhammer = createCrackhammer(Materials.coldiron);
-		coldiron_door = createDoor(Materials.coldiron, Blocks.coldiron_door);
+		coldiron_door = createDoor(Materials.coldiron);
 		coldiron_helmet = createHelmet(Materials.coldiron);
 		coldiron_hoe = createHoe(Materials.coldiron);
 		coldiron_ingot = createIngot(Materials.coldiron);
@@ -1180,7 +1178,7 @@ public abstract class Items {
 		coldiron_rod = createRod(Materials.coldiron);
 		coldiron_gear = createGear(Materials.coldiron);
 
-		coldiron_slab = createSlab(Materials.coldiron, Blocks.coldiron_slab, Blocks.coldiron_slab, Blocks.double_coldiron_slab);
+		coldiron_slab = createSlab(Materials.coldiron);
 		coldiron_shield = createShield(Materials.coldiron);
 
 		coldiron_crystal = createCrystal(Materials.coldiron);
@@ -1205,7 +1203,7 @@ public abstract class Items {
 		copper_boots = createBoots(Materials.copper);
 		copper_chestplate = createChestplate(Materials.copper);
 		copper_crackhammer = createCrackhammer(Materials.copper);
-		copper_door = createDoor(Materials.copper, Blocks.copper_door);
+		copper_door = createDoor(Materials.copper);
 		copper_helmet = createHelmet(Materials.copper);
 		copper_hoe = createHoe(Materials.copper);
 		copper_ingot = createIngot(Materials.copper);
@@ -1218,7 +1216,7 @@ public abstract class Items {
 		copper_rod = createRod(Materials.copper);
 		copper_gear = createGear(Materials.copper);
 
-		copper_slab = createSlab(Materials.copper, Blocks.copper_slab, Blocks.copper_slab, Blocks.double_copper_slab);
+		copper_slab = createSlab(Materials.copper);
 		copper_shield = createShield(Materials.copper);
 
 		copper_dense_plate = createDensePlate(Materials.copper);
@@ -1240,7 +1238,7 @@ public abstract class Items {
 		cupronickel_boots = createBoots(Materials.cupronickel);
 		cupronickel_chestplate = createChestplate(Materials.cupronickel);
 		cupronickel_crackhammer = createCrackhammer(Materials.cupronickel);
-		cupronickel_door = createDoor(Materials.cupronickel, Blocks.cupronickel_door);
+		cupronickel_door = createDoor(Materials.cupronickel);
 		cupronickel_helmet = createHelmet(Materials.cupronickel);
 		cupronickel_hoe = createHoe(Materials.cupronickel);
 		cupronickel_ingot = createIngot(Materials.cupronickel);
@@ -1253,7 +1251,7 @@ public abstract class Items {
 		cupronickel_rod = createRod(Materials.cupronickel);
 		cupronickel_gear = createGear(Materials.cupronickel);
 
-		cupronickel_slab = createSlab(Materials.cupronickel, Blocks.cupronickel_slab, Blocks.cupronickel_slab, Blocks.double_cupronickel_slab);
+		cupronickel_slab = createSlab(Materials.cupronickel);
 		cupronickel_shield = createShield(Materials.cupronickel);
 
 		cupronickel_crystal = createCrystal(Materials.cupronickel);
@@ -1283,7 +1281,7 @@ public abstract class Items {
 		electrum_boots = createBoots(Materials.electrum);
 		electrum_chestplate = createChestplate(Materials.electrum);
 		electrum_crackhammer = createCrackhammer(Materials.electrum);
-		electrum_door = createDoor(Materials.electrum, Blocks.electrum_door);
+		electrum_door = createDoor(Materials.electrum);
 		electrum_helmet = createHelmet(Materials.electrum);
 		electrum_hoe = createHoe(Materials.electrum);
 		electrum_ingot = createIngot(Materials.electrum);
@@ -1296,7 +1294,7 @@ public abstract class Items {
 		electrum_rod = createRod(Materials.electrum);
 		electrum_gear = createGear(Materials.electrum);
 
-		electrum_slab = createSlab(Materials.electrum, Blocks.electrum_slab, Blocks.electrum_slab, Blocks.double_electrum_slab);
+		electrum_slab = createSlab(Materials.electrum);
 		electrum_shield = createShield(Materials.electrum);
 
 		electrum_crystal = createCrystal(Materials.electrum);
@@ -1328,7 +1326,7 @@ public abstract class Items {
 		invar_boots = createBoots(Materials.invar);
 		invar_chestplate = createChestplate(Materials.invar);
 		invar_crackhammer = createCrackhammer(Materials.invar);
-		invar_door = createDoor(Materials.invar, Blocks.invar_door);
+		invar_door = createDoor(Materials.invar);
 		invar_helmet = createHelmet(Materials.invar);
 		invar_hoe = createHoe(Materials.invar);
 		invar_ingot = createIngot(Materials.invar);
@@ -1341,7 +1339,7 @@ public abstract class Items {
 		invar_rod = createRod(Materials.invar);
 		invar_gear = createGear(Materials.invar);
 
-		invar_slab = createSlab(Materials.invar, Blocks.invar_slab, Blocks.invar_slab, Blocks.double_invar_slab);
+		invar_slab = createSlab(Materials.invar);
 		invar_shield = createShield(Materials.invar);
 
 		invar_crystal = createCrystal(Materials.invar);
@@ -1372,7 +1370,7 @@ public abstract class Items {
 		lead_boots = createBoots(Materials.lead);
 		lead_chestplate = createChestplate(Materials.lead);
 		lead_crackhammer = createCrackhammer(Materials.lead);
-		lead_door = createDoor(Materials.lead, Blocks.lead_door);
+		lead_door = createDoor(Materials.lead);
 		lead_helmet = createHelmet(Materials.lead);
 		lead_hoe = createHoe(Materials.lead);
 		lead_ingot = createIngot(Materials.lead);
@@ -1385,7 +1383,7 @@ public abstract class Items {
 		lead_rod = createRod(Materials.lead);
 		lead_gear = createGear(Materials.lead);
 
-		lead_slab = createSlab(Materials.lead, Blocks.lead_slab, Blocks.lead_slab, Blocks.double_lead_slab);
+		lead_slab = createSlab(Materials.lead);
 		lead_shield = createShield(Materials.lead);
 
 		lead_dense_plate = createDensePlate(Materials.lead);
@@ -1405,7 +1403,7 @@ public abstract class Items {
 		platinum_boots = createBoots(Materials.platinum);
 		platinum_chestplate = createChestplate(Materials.platinum);
 		platinum_crackhammer = createCrackhammer(Materials.platinum);
-		platinum_door = createDoor(Materials.platinum, Blocks.platinum_door);
+		platinum_door = createDoor(Materials.platinum);
 		platinum_helmet = createHelmet(Materials.platinum);
 		platinum_hoe = createHoe(Materials.platinum);
 		platinum_ingot = createIngot(Materials.platinum);
@@ -1418,7 +1416,7 @@ public abstract class Items {
 		platinum_rod = createRod(Materials.platinum);
 		platinum_gear = createGear(Materials.platinum);
 
-		platinum_slab = createSlab(Materials.platinum, Blocks.platinum_slab, Blocks.platinum_slab, Blocks.double_platinum_slab);
+		platinum_slab = createSlab(Materials.platinum);
 		platinum_shield = createShield(Materials.platinum);
 
 		platinum_crystal = createCrystal(Materials.platinum);
@@ -1470,7 +1468,7 @@ public abstract class Items {
 		mithril_boots = createBoots(Materials.mithril);
 		mithril_chestplate = createChestplate(Materials.mithril);
 		mithril_crackhammer = createCrackhammer(Materials.mithril);
-		mithril_door = createDoor(Materials.mithril, Blocks.mithril_door);
+		mithril_door = createDoor(Materials.mithril);
 		mithril_helmet = createHelmet(Materials.mithril);
 		mithril_hoe = createHoe(Materials.mithril);
 		mithril_ingot = createIngot(Materials.mithril);
@@ -1483,7 +1481,7 @@ public abstract class Items {
 		mithril_rod = createRod(Materials.mithril);
 		mithril_gear = createGear(Materials.mithril);
 
-		mithril_slab = createSlab(Materials.mithril, Blocks.mithril_slab, Blocks.mithril_slab, Blocks.double_mithril_slab);
+		mithril_slab = createSlab(Materials.mithril);
 		mithril_shield = createShield(Materials.mithril);
 
 		mithril_crystal = createCrystal(Materials.mithril);
@@ -1508,7 +1506,7 @@ public abstract class Items {
 		nickel_boots = createBoots(Materials.nickel);
 		nickel_chestplate = createChestplate(Materials.nickel);
 		nickel_crackhammer = createCrackhammer(Materials.nickel);
-		nickel_door = createDoor(Materials.nickel, Blocks.nickel_door);
+		nickel_door = createDoor(Materials.nickel);
 		nickel_helmet = createHelmet(Materials.nickel);
 		nickel_hoe = createHoe(Materials.nickel);
 		nickel_ingot = createIngot(Materials.nickel);
@@ -1521,7 +1519,7 @@ public abstract class Items {
 		nickel_rod = createRod(Materials.nickel);
 		nickel_gear = createGear(Materials.nickel);
 
-		nickel_slab = createSlab(Materials.nickel, Blocks.nickel_slab, Blocks.nickel_slab, Blocks.double_nickel_slab);
+		nickel_slab = createSlab(Materials.nickel);
 		nickel_shield = createShield(Materials.nickel);
 
 		nickel_crystal = createCrystal(Materials.nickel);
@@ -1547,7 +1545,7 @@ public abstract class Items {
 		pewter_boots = createBoots(Materials.pewter);
 		pewter_chestplate = createChestplate(Materials.pewter);
 		pewter_crackhammer = createCrackhammer(Materials.pewter);
-		pewter_door = createDoor(Materials.pewter, Blocks.pewter_door);
+		pewter_door = createDoor(Materials.pewter);
 		pewter_helmet = createHelmet(Materials.pewter);
 		pewter_hoe = createHoe(Materials.pewter);
 		pewter_ingot = createIngot(Materials.pewter);
@@ -1560,7 +1558,7 @@ public abstract class Items {
 		pewter_rod = createRod(Materials.pewter);
 		pewter_gear = createGear(Materials.pewter);
 
-		pewter_slab = createSlab(Materials.pewter, Blocks.pewter_slab, Blocks.pewter_slab, Blocks.double_pewter_slab);
+		pewter_slab = createSlab(Materials.pewter);
 		pewter_shield = createShield(Materials.pewter);
 
 		// pewter_crystal = createCrystal(Materials.pewter);
@@ -1585,7 +1583,7 @@ public abstract class Items {
 		silver_boots = createBoots(Materials.silver);
 		silver_chestplate = createChestplate(Materials.silver);
 		silver_crackhammer = createCrackhammer(Materials.silver);
-		silver_door = createDoor(Materials.silver, Blocks.silver_door);
+		silver_door = createDoor(Materials.silver);
 		silver_helmet = createHelmet(Materials.silver);
 		silver_hoe = createHoe(Materials.silver);
 		silver_ingot = createIngot(Materials.silver);
@@ -1598,7 +1596,7 @@ public abstract class Items {
 		silver_rod = createRod(Materials.silver);
 		silver_gear = createGear(Materials.silver);
 
-		silver_slab = createSlab(Materials.silver, Blocks.silver_slab, Blocks.silver_slab, Blocks.double_silver_slab);
+		silver_slab = createSlab(Materials.silver);
 		silver_shield = createShield(Materials.silver);
 
 		silver_dense_plate = createDensePlate(Materials.silver);
@@ -1618,7 +1616,7 @@ public abstract class Items {
 		starsteel_boots = createBoots(Materials.starsteel);
 		starsteel_chestplate = createChestplate(Materials.starsteel);
 		starsteel_crackhammer = createCrackhammer(Materials.starsteel);
-		starsteel_door = createDoor(Materials.starsteel, Blocks.starsteel_door);
+		starsteel_door = createDoor(Materials.starsteel);
 		starsteel_helmet = createHelmet(Materials.starsteel);
 		starsteel_hoe = createHoe(Materials.starsteel);
 		starsteel_ingot = createIngot(Materials.starsteel);
@@ -1631,7 +1629,7 @@ public abstract class Items {
 		starsteel_rod = createRod(Materials.starsteel);
 		starsteel_gear = createGear(Materials.starsteel);
 
-		starsteel_slab = createSlab(Materials.starsteel, Blocks.starsteel_slab, Blocks.starsteel_slab, Blocks.double_starsteel_slab);
+		starsteel_slab = createSlab(Materials.starsteel);
 		starsteel_shield = createShield(Materials.starsteel);
 
 		starsteel_crystal = createCrystal(Materials.starsteel);
@@ -1658,7 +1656,7 @@ public abstract class Items {
 		steel_boots = createBoots(Materials.steel);
 		steel_chestplate = createChestplate(Materials.steel);
 		steel_crackhammer = createCrackhammer(Materials.steel);
-		steel_door = createDoor(Materials.steel, Blocks.steel_door);
+		steel_door = createDoor(Materials.steel);
 		steel_helmet = createHelmet(Materials.steel);
 		steel_hoe = createHoe(Materials.steel);
 		steel_ingot = createIngot(Materials.steel);
@@ -1671,7 +1669,7 @@ public abstract class Items {
 		steel_rod = createRod(Materials.steel);
 		steel_gear = createGear(Materials.steel);
 
-		steel_slab = createSlab(Materials.steel, Blocks.steel_slab, Blocks.steel_slab, Blocks.double_steel_slab);
+		steel_slab = createSlab(Materials.steel);
 		steel_shield = createShield(Materials.steel);
 
 		steel_crystal = createCrystal(Materials.steel);
@@ -1694,7 +1692,7 @@ public abstract class Items {
 		tin_boots = createBoots(Materials.tin);
 		tin_chestplate = createChestplate(Materials.tin);
 		tin_crackhammer = createCrackhammer(Materials.tin);
-		tin_door = createDoor(Materials.tin, Blocks.tin_door);
+		tin_door = createDoor(Materials.tin);
 		tin_helmet = createHelmet(Materials.tin);
 		tin_hoe = createHoe(Materials.tin);
 		tin_ingot = createIngot(Materials.tin);
@@ -1709,7 +1707,7 @@ public abstract class Items {
 		tin_rod = createRod(Materials.tin);
 		tin_gear = createGear(Materials.tin);
 
-		tin_slab = createSlab(Materials.tin, Blocks.tin_slab, Blocks.tin_slab, Blocks.double_tin_slab);
+		tin_slab = createSlab(Materials.tin);
 		tin_shield = createShield(Materials.tin);
 
 		tin_dense_plate = createDensePlate(Materials.tin);
@@ -1724,7 +1722,7 @@ public abstract class Items {
 		zinc_chestplate = createChestplate(Materials.zinc);
 		zinc_crackhammer = createCrackhammer(Materials.zinc);
 		zinc_crossbow = createCrossbow(Materials.zinc);
-		zinc_door = createDoor(Materials.zinc, Blocks.zinc_door);
+		zinc_door = createDoor(Materials.zinc);
 		zinc_fishing_rod = createFishingRod(Materials.zinc);
 		zinc_helmet = createHelmet(Materials.zinc);
 		zinc_hoe = createHoe(Materials.zinc);
@@ -1741,7 +1739,7 @@ public abstract class Items {
 		zinc_rod = createRod(Materials.zinc);
 		zinc_gear = createGear(Materials.zinc);
 
-		zinc_slab = createSlab(Materials.zinc, Blocks.zinc_slab, Blocks.zinc_slab, Blocks.double_zinc_slab);
+		zinc_slab = createSlab(Materials.zinc);
 		zinc_shield = createShield(Materials.zinc);
 
 		zinc_crystal = createCrystal(Materials.zinc);
@@ -2039,21 +2037,21 @@ public abstract class Items {
 	private static Item createCrushedPurified(MetalMaterial metal) {
 		final Item i = registerItem(new GenericMetalItem(metal), "crushed_purified", metal, ItemGroups.tab_items);
 		OreDictionary.registerOre("crushedPurified" + metal.getCapitalizedName(), i);
-		metal.crushedpurified = i;
+//		metal.crushedpurified = i;
 		return i;
 	}
 
-	private static Item createSlab(MetalMaterial metal, Block block, BlockSlab slab, BlockSlab doubleslab) {
-		final Item i = registerItem(new ItemMetalSlab(metal, block, slab, doubleslab), "slab", metal, ItemGroups.tab_blocks);
+	private static Item createSlab(MetalMaterial metal) {
+		final Item i = registerItem(new ItemMetalSlab(metal), "slab", metal, ItemGroups.tab_blocks);
 		metal.slab = i;
 		return i;
 	}
 
-	private static Item createDoor(MetalMaterial metal, BlockDoor door) {
-		final Item i = new ItemMetalDoor(door, metal);
+	private static Item createDoor(MetalMaterial metal) {
+		final Item i = new ItemMetalDoor(metal);
 		registerItem(i, "door", metal, ItemGroups.tab_blocks);
 		metal.door = i;
-		doorMap.put(door, i);
+		doorMap.put(metal.doorBlock, i);
 		return i;
 	}
 
