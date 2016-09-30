@@ -55,6 +55,16 @@ public class MetalMaterial {
 
 	private int[] cache = null;
 
+	/**
+	 * The resistance the material has against explosions.
+	 */
+	private float blastResistance;
+
+	/**
+	 * The base attack damage for the material.
+	 */
+	private float baseDamage;
+
 	public Item arrow;
 	public Item axe;
 	public Item blend;
@@ -99,19 +109,24 @@ public class MetalMaterial {
 
 	/**
 	 * @deprecated
-	 * @param name String used to identify items and blocks using this material
-	 * @param hardness hardness on a scale from 0 to 10 (or more), where 0 is
-	 *            	   non-solid and diamond is 10. For reference, wood is 3, stone
-	 *            	   is 5, iron is 8, diamond is 10. Used for damage, armor
-	 *            	   protection, and tool effectiveness calculations
-	 * @param strength durability on a scale from 0 to 10 (or more). For reference,
-	 *            	   leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
-	 *            	   minecraft diamond is 10. Used for item durability calculations
-	 *            	   and blast resistance
-	 * @param magic Scale from 0 to 10 (or more) on how magical the material is.
-	 *              For reference, stone is 2, iron is 4.5, diamond is 4, wood is
-	 *              6, gold is 10. Used to calculate enchantibility
-	 * @param lootFrequency (unused in MC 1.9)
+	 * @param name
+	 *            String used to identify items and blocks using this material
+	 * @param hardness
+	 *            hardness on a scale from 0 to 10 (or more), where 0 is
+	 *            non-solid and diamond is 10. For reference, wood is 3, stone
+	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
+	 *            protection, and tool effectiveness calculations
+	 * @param strength
+	 *            durability on a scale from 0 to 10 (or more). For reference,
+	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
+	 *            minecraft diamond is 10. Used for item durability calculations
+	 *            and blast resistance
+	 * @param magic
+	 *            Scale from 0 to 10 (or more) on how magical the material is.
+	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
+	 *            6, gold is 10. Used to calculate enchantibility
+	 * @param lootFrequency
+	 *            (unused in MC 1.9)
 	 */
 	@Deprecated
 	public MetalMaterial(String name, float hardness, float strength, float magic, int lootFrequency) {
@@ -119,18 +134,22 @@ public class MetalMaterial {
 	}
 
 	/**
-	 * @param name String used to identify items and blocks using this material
-	 * @param hardness hardness on a scale from 0 to 10 (or more), where 0 is
-	 *            	   non-solid and diamond is 10. For reference, wood is 3, stone
-	 *            	   is 5, iron is 8, diamond is 10. Used for damage, armor
-	 *            	   protection, and tool effectiveness calculations
-	 * @param strength durability on a scale from 0 to 10 (or more). For reference,
-	 *            	   leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
-	 *            	   minecraft diamond is 10. Used for item durability calculations
-	 *            	   and blast resistance
-	 * @param magic Scale from 0 to 10 (or more) on how magical the material is.
-	 *              For reference, stone is 2, iron is 4.5, diamond is 4, wood is
-	 *              6, gold is 10. Used to calculate enchantibility
+	 * @param name
+	 *            String used to identify items and blocks using this material
+	 * @param hardness
+	 *            hardness on a scale from 0 to 10 (or more), where 0 is
+	 *            non-solid and diamond is 10. For reference, wood is 3, stone
+	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
+	 *            protection, and tool effectiveness calculations
+	 * @param strength
+	 *            durability on a scale from 0 to 10 (or more). For reference,
+	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
+	 *            minecraft diamond is 10. Used for item durability calculations
+	 *            and blast resistance
+	 * @param magic
+	 *            Scale from 0 to 10 (or more) on how magical the material is.
+	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
+	 *            6, gold is 10. Used to calculate enchantibility
 	 */
 	public MetalMaterial(String name, float hardness, float strength, float magic) {
 		this.hardness = hardness;
@@ -140,22 +159,29 @@ public class MetalMaterial {
 		this.titleName = StringUtils.capitalize(name);
 		this.enumName = (BaseMetals.MODID + "_" + name).toUpperCase(Locale.ENGLISH);
 		this.isRare = false;
+		this.blastResistance = 2.5f * this.strength;
+		this.baseDamage = this.round(0.25f * this.hardness, 1);
 	}
 
 	/**
-	 * @param name String used to identify items and blocks using this material
-	 * @param hardness hardness on a scale from 0 to 10 (or more), where 0 is
-	 *                 non-solid and diamond is 10. For reference, wood is 3, stone
-	 *                 is 5, iron is 8, diamond is 10. Used for damage, armor
-	 *                 protection, and tool effectiveness calculations
-	 * @param strength durability on a scale from 0 to 10 (or more). For reference,
-	 *                 leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
-	 *                 minecraft diamond is 10. Used for item durability calculations
-	 *                 and blast resistance
-	 * @param magic Scale from 0 to 10 (or more) on how magical the material is.
-	 *              For reference, stone is 2, iron is 4.5, diamond is 4, wood is
-	 *              6, gold is 10. Used to calculate enchantibility
-	 * @param isRare If true, this metal is designated as an extremely rare metal
+	 * @param name
+	 *            String used to identify items and blocks using this material
+	 * @param hardness
+	 *            hardness on a scale from 0 to 10 (or more), where 0 is
+	 *            non-solid and diamond is 10. For reference, wood is 3, stone
+	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
+	 *            protection, and tool effectiveness calculations
+	 * @param strength
+	 *            durability on a scale from 0 to 10 (or more). For reference,
+	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
+	 *            minecraft diamond is 10. Used for item durability calculations
+	 *            and blast resistance
+	 * @param magic
+	 *            Scale from 0 to 10 (or more) on how magical the material is.
+	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
+	 *            6, gold is 10. Used to calculate enchantibility
+	 * @param isRare
+	 *            If true, this metal is designated as an extremely rare metal
 	 */
 	public MetalMaterial(String name, float hardness, float strength, float magic, boolean isRare) {
 		this.hardness = hardness;
@@ -208,7 +234,8 @@ public class MetalMaterial {
 	/**
 	 * Gets the tool harvest level
 	 * 
-	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool equivalent)
+	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool
+	 *         equivalent)
 	 */
 	public int getToolHarvestLevel() {
 		return (int) (this.hardness / 3f);
@@ -218,7 +245,8 @@ public class MetalMaterial {
 	 * Gets the tool harvest level needed from a tool trying to mine this
 	 * metal's ore and other blocks
 	 * 
-	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool equivalent)
+	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool
+	 *         equivalent)
 	 */
 	public int getRequiredHarvestLevel() {
 		return (int) clamp(((0.9f * this.hardness) / 3f), -1, 3);
@@ -254,7 +282,7 @@ public class MetalMaterial {
 	 * @return the blast resistance score
 	 */
 	public float getBlastResistance() {
-		return 2.5f * this.strength;
+		return this.blastResistance;
 	}
 
 	/**
@@ -297,7 +325,8 @@ public class MetalMaterial {
 	/**
 	 * Gets the number used to determine how much damage an armor item can take.
 	 * 
-	 * @return The number used to determine how much damage an armor item can take.
+	 * @return The number used to determine how much damage an armor item can
+	 *         take.
 	 */
 	public int getArmorMaxDamageFactor() {
 		return (int) (2.0f * this.strength);
@@ -335,7 +364,7 @@ public class MetalMaterial {
 	 * @return the base damage from attacks with tools made from this material
 	 */
 	public float getBaseAttackDamage() {
-		return this.round(0.25f * this.hardness, 1);
+		return this.baseDamage;
 	}
 
 	private float round(float number, int numDecimalPlaces) {
@@ -358,4 +387,29 @@ public class MetalMaterial {
 		return this.enumName;
 	}
 
+	/**
+	 * Sets the blast resistance of the material. Should only be used as a
+	 * builder method.
+	 * 
+	 * @param resistance
+	 *            The resistance for the material.
+	 * @return An instance of the material, for quality of life.
+	 */
+	public MetalMaterial setBlastResistance(float resistance) {
+		this.blastResistance = resistance;
+		return this;
+	}
+
+	/**
+	 * Sets the base weapon damage for the material. Should only be used as a
+	 * builder method.
+	 * 
+	 * @param damage
+	 *            The base damage of the material.
+	 * @return An instance of the material, for quality of life.
+	 */
+	public MetalMaterial setBaseDamage(float damage) {
+		this.baseDamage = damage;
+		return this;
+	}
 }
