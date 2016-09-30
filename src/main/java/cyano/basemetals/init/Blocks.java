@@ -1,7 +1,13 @@
 package cyano.basemetals.init;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.blocks.*;
@@ -11,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockSlab;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -344,9 +351,8 @@ public abstract class Blocks {
 
 	private static boolean initDone = false;
 
-	private static Map<Block, String> allBlocks = new HashMap<>();
-	private static final Map<String, Block> blockRegistry = new HashMap<>();
-	// private static Map<MetalMaterial, List<Block>> blocksByMetal = new HashMap<>();
+	private static BiMap<String, Block> blockRegistry = HashBiMap.create(16);
+	private static Map<MetalMaterial, List<Block>> blocksByMetal = new HashMap<>();
 
 	/**
 	 * Gets an block by its name. The name is the name as it is registered in
@@ -368,8 +374,21 @@ public abstract class Blocks {
 	 * @return The name of the item, or null if the item is not a Base Metals
 	 * block.
 	 */
-	public static String getNameOfItem(Block b) {
-		return allBlocks.get(b);
+	public static String getNameOfBlock(Block b) {
+		return blockRegistry.inverse().get(b);
+	}
+	
+	public static Map<String, Block> getBlockRegistry() {
+		return blockRegistry;
+	}
+
+	/**
+	 * Gets a map of all blocks added, sorted by metal
+	 *
+	 * @return An unmodifiable map of added items catagorized by metal material
+	 */
+	public static Map<MetalMaterial, List<Block>> getBlocksByMetal() {
+		return Collections.unmodifiableMap(blocksByMetal);
 	}
 
 	/**
@@ -706,12 +725,12 @@ public abstract class Blocks {
 		iron_plate = createPlate(Materials.vanilla_iron);
 		gold_plate = createPlate(Materials.vanilla_gold);
 
-		human_detector = addBlock(new BlockHumanDetector(), "human_detector", null);
+		human_detector = addBlock(new BlockHumanDetector(), "human_detector", null, null);
 
 		initDone = true;
 	}
 
-	private static Block addBlock(Block block, String name, MetalMaterial metal) {
+	private static Block addBlock(Block block, String name, MetalMaterial metal, CreativeTabs tab) {
 		String fullName = null;
 
 		if ((block instanceof BlockDoubleMetalSlab) && (metal != null))
@@ -727,7 +746,11 @@ public abstract class Blocks {
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 		GameRegistry.register(block);
 		blockRegistry.put(fullName, block);
-		allBlocks.put(block, fullName);
+
+		/*
+		if ( block instanceof  BlockMetalDoor)
+			doorMap.put(metal.door, (BlockDoor) block);
+		*/
 
 		if (!(block instanceof BlockMetalDoor) && !(block instanceof BlockMetalSlab)) {
 			final ItemBlock itemBlock = new ItemBlock(block);
@@ -736,8 +759,13 @@ public abstract class Blocks {
 			GameRegistry.register(itemBlock);
 		}
 
-		if (!(block instanceof BlockMetalDoor))
-			block.setCreativeTab(ItemGroups.tab_blocks);
+		if (tab != null)
+			block.setCreativeTab(tab);
+
+		if (metal != null) {
+			blocksByMetal.computeIfAbsent(metal, (MetalMaterial g) -> new ArrayList<>());
+			blocksByMetal.get(metal).add(block);
+		}
 
 		// TODO: Make this support multiple oredicts
 		if (block instanceof IOreDictionaryEntry)
@@ -747,13 +775,13 @@ public abstract class Blocks {
 	}
 
 	private static Block createPlate(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalPlate(metal), "plate", metal);
+		final Block b = addBlock(new BlockMetalPlate(metal), "plate", metal, ItemGroups.tab_blocks);
 		metal.plate = b;
 		return b;
 	}
 
 	private static Block createBars(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalBars(metal), "bars", metal);
+		final Block b = addBlock(new BlockMetalBars(metal), "bars", metal, ItemGroups.tab_blocks);
 		metal.bars = b;
 		return b;
 	}
@@ -763,72 +791,68 @@ public abstract class Blocks {
 	}
 
 	private static Block createBlock(MetalMaterial metal, boolean glow) {
-		final Block b = addBlock(new BlockMetalBlock(metal, glow), "block", metal);
+		final Block b = addBlock(new BlockMetalBlock(metal, glow), "block", metal, ItemGroups.tab_blocks);
 		metal.block = b;
 		return b;
 	}
 
 	private static Block createButton(MetalMaterial metal) {
-		final Block b = addBlock(new BlockButtonMetal(metal), "button", metal);
+		final Block b = addBlock(new BlockButtonMetal(metal), "button", metal, ItemGroups.tab_blocks);
 		metal.button = b;
 		return b;
 	}
 
 	private static Block createLever(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalLever(metal), "lever", metal);
+		final Block b = addBlock(new BlockMetalLever(metal), "lever", metal, ItemGroups.tab_blocks);
 		metal.lever = b;
 		return b;
 	}
 
 	private static Block createPressurePlate(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalPressurePlate(metal), "pressure_plate", metal);
+		final Block b = addBlock(new BlockMetalPressurePlate(metal), "pressure_plate", metal, ItemGroups.tab_blocks);
 		metal.pressure_plate = b;
 		return b;
 	}
 
 	private static BlockSlab createSlab(MetalMaterial metal) {
-		final BlockSlab b = (BlockSlab) addBlock(new BlockHalfMetalSlab(metal), "slab", metal);
+		final BlockSlab b = (BlockSlab) addBlock(new BlockHalfMetalSlab(metal), "slab", metal, ItemGroups.tab_blocks);
 		metal.half_slab = b;
 		return b;
 	}
 
 	private static BlockSlab createDoubleSlab(MetalMaterial metal) {
-		final BlockSlab b = (BlockSlab) addBlock(new BlockDoubleMetalSlab(metal), "slab", metal);
+		final BlockSlab b = (BlockSlab) addBlock(new BlockDoubleMetalSlab(metal), "slab", metal, ItemGroups.tab_blocks);
 		metal.double_slab = b;
 		return b;
 	}
 
 	private static Block createStairs(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalStairs(metal), "stairs", metal);
+		final Block b = addBlock(new BlockMetalStairs(metal), "stairs", metal, ItemGroups.tab_blocks);
 		metal.stairs = b;
 		return b;
 	}
 
 	private static Block createWall(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalWall(metal), "wall", metal);
+		final Block b = addBlock(new BlockMetalWall(metal), "wall", metal, ItemGroups.tab_blocks);
 		metal.wall = b;
 		return b;
 	}
 
 	private static Block createOre(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalOre(metal), "ore", metal);
+		final Block b = addBlock(new BlockMetalOre(metal), "ore", metal, ItemGroups.tab_blocks);
 		metal.ore = b;
 		return b;
 	}
 
 	private static BlockDoor createDoor(MetalMaterial metal) {
-		final BlockDoor b = (BlockDoor) addBlock(new BlockMetalDoor(metal), "door", metal);
+		final BlockDoor b = (BlockDoor) addBlock(new BlockMetalDoor(metal), "door", metal, null);
 		metal.doorBlock = b;
 		return b;
 	}
 
 	private static Block createTrapDoor(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalTrapDoor(metal), "trapdoor", metal);
+		final Block b = addBlock(new BlockMetalTrapDoor(metal), "trapdoor", metal, ItemGroups.tab_blocks);
 		metal.trapdoor = b;
 		return b;
-	}
-
-	public static Map<String, Block> getBlockRegistry() {
-		return blockRegistry;
 	}
 }

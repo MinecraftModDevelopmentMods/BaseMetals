@@ -147,47 +147,46 @@ public abstract class Recipes {
 		for (final MetalMaterial metal : Materials.getAllMetals()) {
 			if (exceptions.contains(metal))
 				continue;
-			final String baseName = metal.getName() + "_";
 			final String oreDictName = metal.getCapitalizedName();
-			final Item axe = cyano.basemetals.init.Items.getItemByName(baseName + "axe");
-			final Item blend = cyano.basemetals.init.Items.getItemByName(baseName + "blend");
-			final Item boots = cyano.basemetals.init.Items.getItemByName(baseName + "boots");
-			final Item chestplate = cyano.basemetals.init.Items.getItemByName(baseName + "chestplate");
-			final Item crackhammer = cyano.basemetals.init.Items.getItemByName(baseName + "crackhammer");
-			final Item door = cyano.basemetals.init.Items.getItemByName(baseName + "door_item");
-			final Item helmet = cyano.basemetals.init.Items.getItemByName(baseName + "helmet");
-			final Item hoe = cyano.basemetals.init.Items.getItemByName(baseName + "hoe");
-			final Item ingot = cyano.basemetals.init.Items.getItemByName(baseName + "ingot");
-			final Item leggings = cyano.basemetals.init.Items.getItemByName(baseName + "leggings");
-			final Item nugget = cyano.basemetals.init.Items.getItemByName(baseName + "nugget");
-			final Item pickaxe = cyano.basemetals.init.Items.getItemByName(baseName + "pickaxe");
-			final Item powder = cyano.basemetals.init.Items.getItemByName(baseName + "powder");
-			final Item shovel = cyano.basemetals.init.Items.getItemByName(baseName + "shovel");
-			final Item sword = cyano.basemetals.init.Items.getItemByName(baseName + "sword");
-			final Item rod = cyano.basemetals.init.Items.getItemByName(baseName + "rod");
-			final Item gear = cyano.basemetals.init.Items.getItemByName(baseName + "gear");
-			final Block bars = cyano.basemetals.init.Blocks.getBlockByName(baseName + "bars");
-			final Block block = cyano.basemetals.init.Blocks.getBlockByName(baseName + "block");
-			final Block plate = cyano.basemetals.init.Blocks.getBlockByName(baseName + "plate");
-			final Block ore = cyano.basemetals.init.Blocks.getBlockByName(baseName + "ore");
-			final Block trapdoor = cyano.basemetals.init.Blocks.getBlockByName(baseName + "trapdoor");
+			final Item axe = metal.axe;
+			final Item blend = metal.blend;
+			final Item boots = metal.boots;
+			final Item chestplate = metal.chestplate;
+			final Item crackhammer = metal.crackhammer;
+			final Item door = metal.door;
+			final Item helmet = metal.helmet;
+			final Item hoe = metal.hoe;
+			final Item ingot = metal.ingot;
+			final Item leggings = metal.leggings;
+			final Item nugget = metal.nugget;
+			final Item pickaxe = metal.pickaxe;
+			final Item powder = metal.powder;
+			final Item shovel = metal.shovel;
+			final Item sword = metal.sword;
+			final Item rod = metal.rod;
+			final Item gear = metal.gear;
+			final Block bars = metal.bars;
+			final Block block = metal.block;
+			final Block plate = metal.plate;
+			final Block ore = metal.ore;
+			final Block trapdoor = metal.trapdoor;
 
-			final Item arrow = cyano.basemetals.init.Items.getItemByName(baseName + "arrow");
-			final Item bow = cyano.basemetals.init.Items.getItemByName(baseName + "bow");
-			final Item bolt = cyano.basemetals.init.Items.getItemByName(baseName + "bolt");
-			final Item crossbow = cyano.basemetals.init.Items.getItemByName(baseName + "crossbow");
-			final Item shears = cyano.basemetals.init.Items.getItemByName(baseName + "shears");
-			final Item smallblend = cyano.basemetals.init.Items.getItemByName(baseName + "smallblend");
-			final Item smallpowder = cyano.basemetals.init.Items.getItemByName(baseName + "smallpowder");
-			final Item fishingrod = cyano.basemetals.init.Items.getItemByName(baseName + "fishingrod");
-			final Item horsearmor = cyano.basemetals.init.Items.getItemByName(baseName + "horsearmor");
+			final Item arrow = metal.arrow;
+			final Item bow = metal.bow;
+			final Item bolt = metal.bolt;
+			final Item crossbow = metal.crossbow;
+			final Item shears = metal.shears;
+			final Item smallblend = metal.smallblend;
+			final Item smallpowder = metal.smallpowder;
+			final Item fishingrod = metal.fishing_rod;
+			final Item horsearmor = metal.horsearmor;
 
-			final Block button = cyano.basemetals.init.Blocks.getBlockByName(baseName + "button");
-			final Item slab = cyano.basemetals.init.Items.getItemByName(baseName + "slab");
-			final Block lever = cyano.basemetals.init.Blocks.getBlockByName(baseName + "lever");
-			final Block pressure_plate = cyano.basemetals.init.Blocks.getBlockByName(baseName + "pressure_plate");
-			final Block stairs = cyano.basemetals.init.Blocks.getBlockByName(baseName + "stairs");
-			final Block wall = cyano.basemetals.init.Blocks.getBlockByName(baseName + "wall");
+			final Block button = metal.button;
+			final Item slab = metal.slab;
+			final Block lever = metal.lever;
+			final Block pressure_plate = metal.pressure_plate;
+			final Block stairs = metal.stairs;
+			final Block wall = metal.wall;
 
 			// NOTE: smelting XP is based on output item, not input item
 			// ingot-related recipes
@@ -287,8 +286,8 @@ public abstract class Recipes {
 			if ((ingot != null) && (axe != null))
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe), "xx", "x/", " /", 'x', "ingot" + oreDictName, '/', "stickWood"));
 
-			// if((ingot != null) && (axe != null))
-			// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe), "xx", "/x", "/ ", 'x', "ingot" + oreDictName, '/', "stickWood"));
+			// if ((ingot != null) && (axe != null))
+			//	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe), "xx", "/x", "/ ", 'x', "ingot" + oreDictName, '/', "stickWood"));
 
 			if ((block != null) && (crackhammer != null) && (!BaseMetals.disableAllHammers))
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crackhammer), "x", "/", "/", 'x', "block" + oreDictName, '/', "stickWood"));
@@ -296,7 +295,7 @@ public abstract class Recipes {
 			if ((ingot != null) && (hoe != null))
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe), "xx", " /", " /", 'x', "ingot" + oreDictName, '/', "stickWood"));
 
-			// if((ingot != null) && (hoe != null))
+			// if ((ingot != null) && (hoe != null))
 			// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe), "xx", "/ ", "/ ", 'x', "ingot" + oreDictName, '/', "stickWood"));
 
 			if ((ingot != null) && (pickaxe != null))
@@ -337,14 +336,13 @@ public abstract class Recipes {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(slab, 6), "xxx", 'x', "block" + oreDictName));
 
 			if ((block != null) && (rod != null))
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(lever), "x", "y", 'x', "rod" + oreDictName,
-						'y', "block" + oreDictName));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(lever), "x", "y", 'x', "rod" + oreDictName, 'y', "block" + oreDictName));
 
 			if (ingot != null)
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(pressure_plate), "xx", 'x', "ingot" + oreDictName));
 
 			// if (block != null) // Crashes
-			// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(stairs, 4), "x", "xx", "xxx", 'x', "block" + oreDictName));
+			//	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(stairs, 4), "x", "xx", "xxx", 'x', "block" + oreDictName));
 
 			if (block != null)
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(wall, 6), "xxx", "xxx", 'x', "block" + oreDictName));
@@ -404,8 +402,8 @@ public abstract class Recipes {
 	 */
 	public static void addOredicts(String[] oreDictEntries, Block name) {
 		addOredicts(oreDictEntries, new ItemStack(name));
-		// for(int i = 0; i < oreDictEntries.length; i++)
-		// 	OreDictionary.registerOre(oreDictEntries[i], name);
+		// for (int i = 0; i < oreDictEntries.length; i++)
+		//	OreDictionary.registerOre(oreDictEntries[i], name);
 	}
 
 	/**
@@ -415,8 +413,8 @@ public abstract class Recipes {
 	 */
 	public static void addOredicts(String[] oreDictEntries, Item name) {
 		addOredicts(oreDictEntries, new ItemStack(name));
-		// for(int i = 0; i < oreDictEntries.length; i++)
-		// 	OreDictionary.registerOre(oreDictEntries[i], name);
+		// for (int i = 0; i < oreDictEntries.length; i++)
+		//	OreDictionary.registerOre(oreDictEntries[i], name);
 	}
 
 	/**
@@ -425,8 +423,8 @@ public abstract class Recipes {
 	 * @param itemStackName
 	 */
 	public static void addOredicts(String[] oreDictEntries, ItemStack itemStackName) {
-		// for(int i = 0; i < oreDictEntries.length; i++)
-		// 	OreDictionary.registerOre(oreDictEntries[i], itemStackName);
+		// for (int i = 0; i < oreDictEntries.length; i++)
+		//	OreDictionary.registerOre(oreDictEntries[i], itemStackName);
 		for (final String oreDictEntry : oreDictEntries)
 			OreDictionary.registerOre(oreDictEntry, itemStackName);
 	}

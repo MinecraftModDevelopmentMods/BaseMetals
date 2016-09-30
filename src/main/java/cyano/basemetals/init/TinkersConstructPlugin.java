@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import slimeknights.tconstruct.library.MaterialIntegration;
@@ -33,7 +34,7 @@ public class TinkersConstructPlugin {
 	private static HashMap<String, MaterialCorrelation> correlation = new HashMap<String, MaterialCorrelation>();
 	private static boolean initDone = false;
 
-	private static List<MaterialIntegration> integrateList = Lists.newArrayList(); // List of materials needed to be integrated
+//	private static List<MaterialIntegration> integrateList = Lists.newArrayList(); // List of materials needed to be integrated
 
 	/**
 	 *
@@ -51,28 +52,28 @@ public class TinkersConstructPlugin {
 			final float a = 0; // (float) attackFactorGeneral;
 			// System.out.println("ATTACK FACTOR" + a);
 
-			final Material adamantine = createTCMaterial("adamantine", 0xFF000000, Fluids.fluidAdamantine);
-			final Material antimony = createTCMaterial("antimony", 0xFF000000, Fluids.fluidAntimony);
-			final Material aquarium = createTCMaterial("aqaurium", 0xFF000000, Fluids.fluidAquarium);
-			final Material bismuth = createTCMaterial("bismuth", 0xFF000000, Fluids.fluidBismuth);
-			final Material brass = createTCMaterial("brass", 0xFF000000, Fluids.fluidBrass);
-			// final Material bronze = createTCMaterial("bronze", 0xFF000000, Fluids.fluidBronze);
-			final Material coldiron = createTCMaterial("coldiron", 0xFF000000, Fluids.fluidColdIron);
-			// final Material copper = createTCMaterial("copper", 0xFF000000, Fluids.fluidCopper);
-			final Material cupronickel = createTCMaterial("cupronickel", 0xFF000000, Fluids.fluidCupronickel);
-			// final Material electrum = createTCMaterial("electrum", 0xFF000000, Fluids.fluidElectrum);
-			final Material invar = createTCMaterial("invar", 0xFF000000, Fluids.fluidInvar);
-			// final Material lead = createTCMaterial("lead", 0xFF000000, Fluids.fluidLead);
-			final Material mercury = createTCMaterial("mercury", 0xFF000000, Fluids.fluidMercury);
-			final Material mithril = createTCMaterial("mithril", 0xFF000000, Fluids.fluidMithril);
-			final Material nickel = createTCMaterial("nickel", 0xFF000000, Fluids.fluidNickel);
-			final Material pewter = createTCMaterial("pewter", 0xFF000000, Fluids.fluidPewter);
-			final Material platinum = createTCMaterial("platinum", 0xFF000000, Fluids.fluidPlatinum);
-			// final Material silver = createTCMaterial("silver", 0xFF000000, Fluids.fluidSilver);
-			final Material starsteel = createTCMaterial("starsteel", 0xFF000000, Fluids.fluidStarSteel);
-			// final Material steel = createTCMaterial("steel", 0xFF000000, Fluids.fluidSteel);
-			final Material tin = createTCMaterial("tin", 0xFF000000, Fluids.fluidTin);
-			final Material zinc = createTCMaterial("zinc", 0xFF000000, Fluids.fluidZinc);
+			final Material adamantine = createTCMaterial("adamantine", Fluids.fluidAdamantine);
+			final Material antimony = createTCMaterial("antimony", Fluids.fluidAntimony);
+			final Material aquarium = createTCMaterial("aquarium", Fluids.fluidAquarium);
+			final Material bismuth = createTCMaterial("bismuth", Fluids.fluidBismuth);
+			final Material brass = createTCMaterial("brass", Fluids.fluidBrass);
+			// final Material bronze = createTCMaterial("bronze", Fluids.fluidBronze);
+			final Material coldiron = createTCMaterial("coldiron", Fluids.fluidColdIron);
+			// final Material copper = createTCMaterial("copper", Fluids.fluidCopper);
+			final Material cupronickel = createTCMaterial("cupronickel", Fluids.fluidCupronickel);
+			// final Material electrum = createTCMaterial("electrum", Fluids.fluidElectrum);
+			final Material invar = createTCMaterial("invar", Fluids.fluidInvar);
+			// final Material lead = createTCMaterial("lead", Fluids.fluidLead);
+//			final Material mercury = createTCMaterial("mercury", Fluids.fluidMercury); // Crashes
+			final Material mithril = createTCMaterial("mithril", Fluids.fluidMithril);
+			final Material nickel = createTCMaterial("nickel", Fluids.fluidNickel);
+			final Material pewter = createTCMaterial("pewter", Fluids.fluidPewter);
+			final Material platinum = createTCMaterial("platinum", Fluids.fluidPlatinum);
+			// final Material silver = createTCMaterial("silver", Fluids.fluidSilver);
+			final Material starsteel = createTCMaterial("starsteel", Fluids.fluidStarSteel);
+			// final Material steel = createTCMaterial("steel",  Fluids.fluidSteel);
+			final Material tin = createTCMaterial("tin", Fluids.fluidTin);
+			final Material zinc = createTCMaterial("zinc", Fluids.fluidZinc);
 
 			for(String name : correlation.keySet()) {
 				if (null != correlation.get(name).getMeltFluid()) {
@@ -102,17 +103,18 @@ public class TinkersConstructPlugin {
 	private static void setupTConSmeltAndParts(final String name, double durabilityFactor, float speedFactor, float attackFactor) {
 		final MaterialCorrelation metal = correlation.get(name);
 		
+		FMLLog.severe("TCONPLUGIN: setupTconSmeltAndParts, name was: %s", name);
 		registerFluid(metal.getMeltFluid(), true);
 		metal.getMetal().getBaseAttackDamage();
 		
-		registerTinkerMaterial(metal.getMaterial(), metal.getMeltFluid(), 
-				(int) (metal.getMetal().getToolDurability()), 
-				metal.getMetal().magicAffinity*3/2,
-				metal.getMetal().getBaseAttackDamage()*4, 
+		registerTinkerMaterial(metal.getMaterial(), metal.getMeltFluid(),
+				(int) (metal.getMetal().getToolDurability()),
+				metal.getMetal().magicAffinity * 3 / 2,
+				metal.getMetal().getBaseAttackDamage() * 4,
 				// Handle durability multiplier, handle durability
-				(metal.getMetal().hardness+metal.getMetal().magicAffinity*2)/9, (int) (metal.getMetal().getToolDurability()/6.8), 
+				(metal.getMetal().hardness + metal.getMetal().magicAffinity * 2) / 9, (int) (metal.getMetal().getToolDurability() / 6.8), 
 				// "Extra" - durability of non handle, non-head parts?
-				(int) (metal.getMetal().getToolDurability()/10),
+				(int) (metal.getMetal().getToolDurability() / 10),
 				// Mining level
 				metal.getMetal().getToolHarvestLevel(),
 				// Craft at workbench: always false, craft at smeltery: always true
@@ -126,11 +128,19 @@ public class TinkersConstructPlugin {
 	 * @param meltFluid fluid to be produced when this is melted in the smeltery
 	 * @return
 	 */
-	private static Material createTCMaterial(String name, int hexColor, Fluid meltFluid) {
-		final Material material = new Material(name,hexColor);
-		correlation.put(name, new MaterialCorrelation(material, Materials.getMetalByName(name), meltFluid));
-		
-		return material;
+	private static Material createTCMaterial(String name, Fluid meltFluid) {
+		MetalMaterial bmmaterial = Materials.getMetalByName(name);
+		int tintColor = 0xFF000000;
+		if (bmmaterial != null) {
+			tintColor = bmmaterial.getTintColor();
+		} else {
+			tintColor = 0xFFD8D8D8; // Hack for Mercury as it doesn't have a metalMaterial
+		}
+
+		final Material tcmaterial = new Material(name, tintColor);
+		correlation.put(name, new MaterialCorrelation(tcmaterial, bmmaterial, meltFluid));
+
+		return tcmaterial;
 	}
 
 	/**
@@ -141,8 +151,8 @@ public class TinkersConstructPlugin {
 	 * @param name Material identifier
 	 * @return
 	 */
-	private static Material createTCMaterial(String name, int hexColor) {
-		return createTCMaterial(name, hexColor, null);
+	private static Material createTCMaterial(String name) {
+		return createTCMaterial(name, null);
 	}
 
 	/**
@@ -202,7 +212,7 @@ public class TinkersConstructPlugin {
 	}
 
 	private static void registerTinkerMaterial(Material material, Fluid fluid, int headDura, float headSpeed, float headAttack, float handleMod, int handleDura, int extra, int headLevel, boolean craft, boolean cast, ITrait trait) {
-		final List<MaterialIntegration> integrateList = Lists.newArrayList(); // List of materials needed to be integrated
+//		final List<MaterialIntegration> integrateList = Lists.newArrayList(); // List of materials needed to be integrated
 
 		TinkerRegistry.addMaterialStats(material, new HeadMaterialStats(headDura, headSpeed, headAttack, headLevel)); // Sets stats for head
 		TinkerRegistry.addMaterialStats(material, new HandleMaterialStats(handleMod, handleDura)); // Sets Stats for handle
@@ -212,7 +222,8 @@ public class TinkersConstructPlugin {
 			TinkerRegistry.addMaterialTrait(material, trait, stats);
 		}
 
-		final Item item = Items.getItemByName(material.identifier + "_ingot"); // Why do we need to get an item here?
+		MetalMaterial metal = Materials.getMetalByName(material.identifier);
+		final Item item = metal.ingot; // Why do we need to get an item here?
 
 		// Set fluid used, Set whether craftable, set whether castable, adds the
 		// item with the value 144.
@@ -223,6 +234,6 @@ public class TinkersConstructPlugin {
 		// proxy.setRenderInfo(material);
 		final MaterialIntegration integration = new MaterialIntegration(material, fluid, StringUtils.capitalize(fluid.getName()));
 		integration.integrate();
-		integrateList.add(integration);
+//		integrateList.add(integration);
 	}
 }

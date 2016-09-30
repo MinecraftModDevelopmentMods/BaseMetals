@@ -39,6 +39,11 @@ public class MetalMaterial {
 	public final float magicAffinity;
 
 	/**
+	 * Color Info for metal
+	 */
+	public final int tintColor;
+	
+	/**
 	 * Rare metals, like platinum, are never found in villager trades and
 	 * unusually uncommon in world generation
 	 */
@@ -134,12 +139,9 @@ public class MetalMaterial {
 	 *            Scale from 0 to 10 (or more) on how magical the material is.
 	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
 	 *            6, gold is 10. Used to calculate enchantibility
-	 * @param lootFrequency
-	 *            (unused in MC 1.9)
 	 */
-	@Deprecated
-	public MetalMaterial(String name, float hardness, float strength, float magic, int lootFrequency) {
-		this(name, hardness, strength, magic);
+	public MetalMaterial(String name, float hardness, float strength, float magic) {
+		this(name, hardness, strength, magic, 0x00000000);
 	}
 
 	/**
@@ -159,20 +161,15 @@ public class MetalMaterial {
 	 *            Scale from 0 to 10 (or more) on how magical the material is.
 	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
 	 *            6, gold is 10. Used to calculate enchantibility
+	 * @param tintColor
+	 *            Color Info for the metal
 	 */
-	public MetalMaterial(String name, float hardness, float strength, float magic) {
-		this.hardness = hardness;
-		this.strength = strength;
-		this.magicAffinity = magic;
-		this.identifier = name;
-		this.titleName = StringUtils.capitalize(name);
-		this.enumName = (BaseMetals.MODID + "_" + name).toUpperCase(Locale.ENGLISH);
-		this.isRare = false;
-		this.blastResistance = 2.5f * this.strength;
-		this.baseDamage = this.round(0.25f * this.hardness, 1);
+	public MetalMaterial(String name, float hardness, float strength, float magic, int tintColor) {
+		this(name, hardness, strength, magic, 0x00000000, false);
 	}
 
 	/**
+	 * @deprecated
 	 * @param name
 	 *            String used to identify items and blocks using this material
 	 * @param hardness
@@ -193,13 +190,42 @@ public class MetalMaterial {
 	 *            If true, this metal is designated as an extremely rare metal
 	 */
 	public MetalMaterial(String name, float hardness, float strength, float magic, boolean isRare) {
+		this(name, hardness, strength, magic, 0x00000000, false);
+	}
+
+	/**
+	 * @param name
+	 *            String used to identify items and blocks using this material
+	 * @param hardness
+	 *            hardness on a scale from 0 to 10 (or more), where 0 is
+	 *            non-solid and diamond is 10. For reference, wood is 3, stone
+	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
+	 *            protection, and tool effectiveness calculations
+	 * @param strength
+	 *            durability on a scale from 0 to 10 (or more). For reference,
+	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
+	 *            minecraft diamond is 10. Used for item durability calculations
+	 *            and blast resistance
+	 * @param magic
+	 *            Scale from 0 to 10 (or more) on how magical the material is.
+	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
+	 *            6, gold is 10. Used to calculate enchantibility
+	 * @param tintColor
+	 *            Color Info for the metal
+	 * @param isRare
+	 *            If true, this metal is designated as an extremely rare metal
+	 */
+	public MetalMaterial(String name, float hardness, float strength, float magic, int tintColor, boolean isRare) {
 		this.hardness = hardness;
 		this.strength = strength;
 		this.magicAffinity = magic;
+		this.tintColor = tintColor;
 		this.identifier = name;
 		this.titleName = StringUtils.capitalize(name);
 		this.enumName = (BaseMetals.MODID + "_" + name).toUpperCase(Locale.ENGLISH);
 		this.isRare = isRare;
+		this.blastResistance = 2.5f * this.strength;
+		this.baseDamage = this.round(0.25f * this.hardness, 1);
 	}
 
 	public String getName() {
@@ -394,6 +420,15 @@ public class MetalMaterial {
 
 	public String getEnumName() {
 		return this.enumName;
+	}
+	
+	/**
+	 * Gets the tint color for this material
+	 * 
+	 * @return the tint color for this material
+	 */
+	public int getTintColor() {
+		return this.tintColor;
 	}
 
 	/**

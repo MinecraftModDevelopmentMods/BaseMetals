@@ -67,49 +67,48 @@ public abstract class Materials {
 			return;
 
 		// Vanilla Materials
-		vanilla_wood = addMaterial("wood", 2, 2, 6);
-		vanilla_stone = addMaterial("stone", 5, 4, 2);
-		vanilla_iron = addMaterial("iron", 8, 8, 4.5);
-		vanilla_gold = addMaterial("gold", 1, 1, 10);
-		vanilla_diamond = addMaterial("diamond", 10, 15, 4);
+		vanilla_wood = addMaterial("wood", 2, 2, 6, 0xFF000000);
+		vanilla_stone = addMaterial("stone", 5, 4, 2, 0xFF000000);
+		vanilla_iron = addMaterial("iron", 8, 8, 4.5, 0xFF000000);
+		vanilla_gold = addMaterial("gold", 1, 1, 10, 0xFF000000);
+		vanilla_diamond = addMaterial("diamond", 10, 15, 4, 0xFF000000);
 
 		// Mod Metals
-		adamantine = addMaterial("adamantine", 12, 100, 0).setBlastResistance(2000f);
-		antimony = addMaterial("antimony", 1, 1, 1);
-		aquarium = addMaterial("aquarium", 4, 10, 15);
-		bismuth = addMaterial("bismuth", 1, 1, 1);
-		brass = addMaterial("brass", 3.5, 3, 9);
-		bronze = addMaterial("bronze", 8, 4, 4.5);
-		coldiron = addMaterial("coldiron", 7, 7, 7);
-		copper = addMaterial("copper", 4, 4, 5);
-		cupronickel = addMaterial("cupronickel", 6, 6, 6);
-		electrum = addMaterial("electrum", 5, 4, 10);
-		invar = addMaterial("invar", 9, 10, 3);
-		lead = addMaterial("lead", 1, 1, 1).setBaseDamage(4f);
-		mithril = addMaterial("mithril", 9, 9, 9);
-		nickel = addMaterial("nickel", 4, 4, 7);
-		pewter = addMaterial("pewter", 1, 1, 1);
-		platinum = addRareMaterial("platinum", 3, 5, 15);
-		silver = addMaterial("silver", 5, 4, 6);
-		starsteel = addMaterial("starsteel", 10, 25, 12).setBlastResistance(2000f);
-		registerMaterial(starsteel.getName(), starsteel);
-		steel = addMaterial("steel", 8, 15, 2);
-		tin = addMaterial("tin", 3, 1, 2);
-		zinc = addMaterial("zinc", 1, 1, 1);
+		adamantine = addMaterial("adamantine", 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
+		antimony = addMaterial("antimony", 1, 1, 1, 0xFFD8E3DE);
+		aquarium = addMaterial("aquarium", 4, 10, 15, 0xFF000000);
+		bismuth = addMaterial("bismuth", 1, 1, 1, 0xFFDDD7CB);
+		brass = addMaterial("brass", 3.5, 3, 9, 0xFFFFE374);
+		bronze = addMaterial("bronze", 8, 4, 4.5, 0xFFF7A54F);
+		coldiron = addMaterial("coldiron", 7, 7, 7, 0xFFC7CEF0);
+		copper = addMaterial("copper", 4, 4, 5, 0xFFFF9F78);
+		cupronickel = addMaterial("cupronickel", 6, 6, 6, 0xFFC8AB6F);
+		electrum = addMaterial("electrum", 5, 4, 10, 0xFFFFF2B3);
+		invar = addMaterial("invar", 9, 10, 3, 0xFFD2CDB8);
+		lead = addMaterial("lead", 1, 1, 1, 0xFF7B7B7B).setBaseDamage(4f);
+		mithril = addMaterial("mithril", 9, 9, 9, 0xFFF4FFFF);
+		nickel = addMaterial("nickel", 4, 4, 7, 0xFFEEFFEB);
+		pewter = addMaterial("pewter", 1, 1, 1, 0xFF92969F);
+		platinum = addRareMaterial("platinum", 3, 5, 15, 0xFFF2FFFF);
+		silver = addMaterial("silver", 5, 4, 6, 0xFFFFFFFF);
+		starsteel = addMaterial("starsteel", 10, 25, 12, 0xFF53393F).setBlastResistance(2000f);
+		steel = addMaterial("steel", 8, 15, 2, 0xFFD5E3E5);
+		tin = addMaterial("tin", 3, 1, 2, 0xFFFFF7EE);
+		zinc = addMaterial("zinc", 1, 1, 1, 0xFFBCBCBC);
 
 		initDone = true;
 	}
 
-	protected static MetalMaterial addMaterial(String name, double hardness, double strength, double magic) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic);
+	protected static MetalMaterial addMaterial(String name, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor);
 		registerMaterial(name, m);
 
 		materials.add(m);
 		return m;
 	}
 
-	protected static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, true);
+	protected static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, true);
 		registerMaterial(name, m);
 
 		materials.add(m);

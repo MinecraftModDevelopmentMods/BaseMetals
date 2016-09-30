@@ -16,12 +16,6 @@ import org.apache.logging.log4j.Level;
 
 import cyano.basemetals.data.AdditionalLootTables;
 import cyano.basemetals.data.DataConstants;
-import cyano.basemetals.init.Achievements;
-import cyano.basemetals.init.Materials;
-import cyano.basemetals.items.ItemMetalBlend;
-import cyano.basemetals.items.ItemMetalIngot;
-import cyano.basemetals.material.IMetalObject;
-import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.proxy.CommonProxy;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import net.minecraft.block.Block;
@@ -42,9 +36,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.oredict.OreDictionary;
@@ -213,8 +204,8 @@ public class BaseMetals {
 		cyano.basemetals.init.Items.init();
 		cyano.basemetals.init.VillagerTrades.init();
 		cyano.basemetals.init.EnderIOPlugin.init();
-		//if (Loader.isModLoaded("tconstruct"))
-			//cyano.basemetals.init.TinkersConstructPlugin.init();
+		if (Loader.isModLoaded("tconstruct"))
+			cyano.basemetals.init.TinkersConstructPlugin.init();
 		cyano.basemetals.init.VeinMinerPlugin.init();
 
 		final Path ALTPath = Paths.get(event.getSuggestedConfigurationFile().getParent(), "additional-loot-tables");
