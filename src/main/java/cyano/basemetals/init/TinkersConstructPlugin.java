@@ -3,10 +3,11 @@ package cyano.basemetals.init;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.collect.Lists;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.init.Fluids;
-import cyano.basemetals.utils.StringUtilities;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -153,7 +154,7 @@ public class TinkersConstructPlugin {
 		if (Loader.isModLoaded(TCONSTRUCT_MODID)) {
 			final NBTTagCompound message = new NBTTagCompound();
 			message.setString("fluid", fluid.getName());
-			message.setString("ore", StringUtilities.upperCaseFirst(fluid.getName()));
+			message.setString("ore", StringUtils.capitalize(fluid.getName()));
 			message.setBoolean("toolforge", toolforge);
 			// message.setTag("alloy", alloysTagList); // you can also send an alloy with the registration (see below)
 
@@ -220,7 +221,7 @@ public class TinkersConstructPlugin {
 
 		// Probably don't need this
 		// proxy.setRenderInfo(material);
-		final MaterialIntegration integration = new MaterialIntegration(material, fluid, StringUtilities.upperCaseFirst(fluid.getName()));
+		final MaterialIntegration integration = new MaterialIntegration(material, fluid, StringUtils.capitalize(fluid.getName()));
 		integration.integrate();
 		integrateList.add(integration);
 	}
