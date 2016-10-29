@@ -47,6 +47,15 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	private final MetalMaterial metal;
 	private final String repairOreDictName;
 
+	private static final int UPDATE_INTERVAL = 11;
+	private static final int EFFECT_DURATION = 45;
+	private static final Map<EntityPlayer, AtomicLong> playerUpdateTimestampMap = new HashMap<>();
+	private static final Map<EntityPlayer, AtomicInteger> playerUpdateCountMap = new HashMap<>();
+
+	private static final Map<EntityPlayer, AtomicInteger> starsteelUpdateCache = new HashMap<>();
+	private static final Map<EntityPlayer, AtomicInteger> adamantineUpdateCache = new HashMap<>();
+	private static final Map<EntityPlayer, AtomicInteger> leadUpdateCache = new HashMap<>();
+
 	protected ItemMetalArmor(MetalMaterial metal, ArmorMaterial armorMat, int renderIndex,
 							 EntityEquipmentSlot slot) {
 		super(armorMat, renderIndex, slot);
@@ -54,11 +63,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
 		this.customTexture = BaseMetals.MODID + ":textures/models/armor/" + metal.getName() + "_layer_" + (slot == EntityEquipmentSlot.LEGS ? 2 : 1) + ".png";
 	}
-
-	private static final int UPDATE_INTERVAL = 11;
-	private static final int EFFECT_DURATION = 45;
-	private static final Map<EntityPlayer,AtomicLong> playerUpdateTimestampMap = new HashMap<>();
-	private static final Map<EntityPlayer,AtomicInteger> playerUpdateCountMap = new HashMap<>();
 
 	@Override
 	public void onArmorTick(World w, EntityPlayer player, ItemStack armor) {
@@ -78,10 +82,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			}
 		}
 	}
-
-	private static final Map<EntityPlayer, AtomicInteger> starsteelUpdateCache = new HashMap<>();
-	private static final Map<EntityPlayer, AtomicInteger> adamantineUpdateCache = new HashMap<>();
-	private static final Map<EntityPlayer, AtomicInteger> leadUpdateCache = new HashMap<>();
 
 	protected void doArmorUpdate(final World w, final EntityPlayer player, final ItemStack armor,
 			int i) {

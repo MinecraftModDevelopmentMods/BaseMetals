@@ -13,7 +13,6 @@ import java.util.Map;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
-import cyano.basemetals.BaseMetals;
 import cyano.basemetals.blocks.*;
 import cyano.basemetals.items.*;
 import cyano.basemetals.material.IMetalObject;
@@ -906,526 +905,564 @@ public abstract class Items {
 			FMLLog.severe("Error modifying item classes: %s", ex);
 		}
 
-		adamantine_arrow = createArrow(Materials.adamantine);
-		adamantine_axe = createAxe(Materials.adamantine);
-		adamantine_bolt = createBolt(Materials.adamantine);
-		adamantine_boots = createBoots(Materials.adamantine);
-		adamantine_bow = createBow(Materials.adamantine);
-		adamantine_chestplate = createChestplate(Materials.adamantine);
-		adamantine_crackhammer = createCrackhammer(Materials.adamantine);
-		adamantine_crossbow = createCrossbow(Materials.adamantine);
-		adamantine_door = createDoor(Materials.adamantine);
-		adamantine_fishing_rod = createFishingRod(Materials.adamantine);
-		adamantine_helmet = createHelmet(Materials.adamantine);
-		adamantine_hoe = createHoe(Materials.adamantine);
-		adamantine_horsearmor = createHorseArmor(Materials.adamantine);
-		adamantine_ingot = createIngot(Materials.adamantine);
-		adamantine_leggings = createLeggings(Materials.adamantine);
-		adamantine_nugget = createNugget(Materials.adamantine);
-		adamantine_pickaxe = createPickaxe(Materials.adamantine);
-		adamantine_powder = createPowder(Materials.adamantine);
-		adamantine_shears = createShears(Materials.adamantine);
-		adamantine_shovel = createShovel(Materials.adamantine);
-		adamantine_sword = createSword(Materials.adamantine);
-		adamantine_smallpowder = createSmallPowder(Materials.adamantine);
-		adamantine_rod = createRod(Materials.adamantine);
-		adamantine_gear = createGear(Materials.adamantine);
+		String materialName;
+		
+		materialName = "adamantine";
 
-		adamantine_slab = createSlab(Materials.adamantine);
-		adamantine_shield = createShield(Materials.adamantine);
+		adamantine_arrow = createArrow(materialName);
+		adamantine_axe = createAxe(materialName);
+		adamantine_bolt = createBolt(materialName);
+		adamantine_boots = createBoots(materialName);
+		adamantine_bow = createBow(materialName);
+		adamantine_chestplate = createChestplate(materialName);
+		adamantine_crackhammer = createCrackhammer(materialName);
+		adamantine_crossbow = createCrossbow(materialName);
+		adamantine_door = createDoor(materialName);
+		adamantine_fishing_rod = createFishingRod(materialName);
+		adamantine_helmet = createHelmet(materialName);
+		adamantine_hoe = createHoe(materialName);
+		adamantine_horsearmor = createHorseArmor(materialName);
+		adamantine_ingot = createIngot(materialName);
+		adamantine_leggings = createLeggings(materialName);
+		adamantine_nugget = createNugget(materialName);
+		adamantine_pickaxe = createPickaxe(materialName);
+		adamantine_powder = createPowder(materialName);
+		adamantine_shears = createShears(materialName);
+		adamantine_shovel = createShovel(materialName);
+		adamantine_sword = createSword(materialName);
+		adamantine_smallpowder = createSmallPowder(materialName);
+		adamantine_rod = createRod(materialName);
+		adamantine_gear = createGear(materialName);
 
-		adamantine_crystal = createCrystal(Materials.adamantine);
-		adamantine_shard = createShard(Materials.adamantine);
-		adamantine_clump = createClump(Materials.adamantine);
-		adamantine_powder_dirty = createDirtyPowder(Materials.adamantine);
+		adamantine_slab = createSlab(materialName);
+		adamantine_shield = createShield(materialName);
 
-		adamantine_dense_plate = createDensePlate(Materials.adamantine);
-		adamantine_crushed = createCrushed(Materials.adamantine);
-		adamantine_crushed_purified = createCrushedPurified(Materials.adamantine);
+		adamantine_crystal = createCrystal(materialName);
+		adamantine_shard = createShard(materialName);
+		adamantine_clump = createClump(materialName);
+		adamantine_powder_dirty = createDirtyPowder(materialName);
 
-		antimony_arrow = createArrow(Materials.antimony);
-		antimony_bolt = createBolt(Materials.antimony);
-		antimony_bow = createBow(Materials.antimony);
-		antimony_crossbow = createCrossbow(Materials.antimony);
-		antimony_fishing_rod = createFishingRod(Materials.antimony);
-		antimony_horsearmor = createHorseArmor(Materials.antimony);
-		antimony_shears = createShears(Materials.antimony);
-		antimony_smallpowder = createSmallPowder(Materials.antimony);
+		adamantine_dense_plate = createDensePlate(materialName);
+		adamantine_crushed = createCrushed(materialName);
+		adamantine_crushed_purified = createCrushedPurified(materialName);
 
-		antimony_axe = createAxe(Materials.antimony);
-		antimony_boots = createBoots(Materials.antimony);
-		antimony_chestplate = createChestplate(Materials.antimony);
-		antimony_crackhammer = createCrackhammer(Materials.antimony);
-		antimony_door = createDoor(Materials.antimony);
-		antimony_helmet = createHelmet(Materials.antimony);
-		antimony_hoe = createHoe(Materials.antimony);
-		antimony_ingot = createIngot(Materials.antimony);
-		antimony_leggings = createLeggings(Materials.antimony);
-		antimony_nugget = createNugget(Materials.antimony);
-		antimony_pickaxe = createPickaxe(Materials.antimony);
-		antimony_powder = createPowder(Materials.antimony);
-		antimony_shovel = createShovel(Materials.antimony);
-		antimony_sword = createSword(Materials.antimony);
-		antimony_rod = createRod(Materials.antimony);
-		antimony_gear = createGear(Materials.antimony);
+		materialName = "antimony";
 
-		antimony_slab = createSlab(Materials.antimony);
-		antimony_shield = createShield(Materials.antimony);
+		antimony_arrow = createArrow(materialName);
+		antimony_bolt = createBolt(materialName);
+		antimony_bow = createBow(materialName);
+		antimony_crossbow = createCrossbow(materialName);
+		antimony_fishing_rod = createFishingRod(materialName);
+		antimony_horsearmor = createHorseArmor(materialName);
+		antimony_shears = createShears(materialName);
+		antimony_smallpowder = createSmallPowder(materialName);
 
-		antimony_crystal = createCrystal(Materials.antimony);
-		antimony_shard = createShard(Materials.antimony);
-		antimony_clump = createClump(Materials.antimony);
-		antimony_powder_dirty = createDirtyPowder(Materials.antimony);
+		antimony_axe = createAxe(materialName);
+		antimony_boots = createBoots(materialName);
+		antimony_chestplate = createChestplate(materialName);
+		antimony_crackhammer = createCrackhammer(materialName);
+		antimony_door = createDoor(materialName);
+		antimony_helmet = createHelmet(materialName);
+		antimony_hoe = createHoe(materialName);
+		antimony_ingot = createIngot(materialName);
+		antimony_leggings = createLeggings(materialName);
+		antimony_nugget = createNugget(materialName);
+		antimony_pickaxe = createPickaxe(materialName);
+		antimony_powder = createPowder(materialName);
+		antimony_shovel = createShovel(materialName);
+		antimony_sword = createSword(materialName);
+		antimony_rod = createRod(materialName);
+		antimony_gear = createGear(materialName);
 
-		antimony_dense_plate = createDensePlate(Materials.antimony);
-		antimony_crushed = createCrushed(Materials.antimony);
-		antimony_crushed_purified = createCrushedPurified(Materials.antimony);
+		antimony_slab = createSlab(materialName);
+		antimony_shield = createShield(materialName);
 
-		aquarium_arrow = createArrow(Materials.aquarium);
-		aquarium_bolt = createBolt(Materials.aquarium);
-		aquarium_bow = createBow(Materials.aquarium);
-		aquarium_crossbow = createCrossbow(Materials.aquarium);
-		aquarium_fishing_rod = createFishingRod(Materials.aquarium);
-		aquarium_horsearmor = createHorseArmor(Materials.aquarium);
-		aquarium_shears = createShears(Materials.aquarium);
-		aquarium_smallblend = createSmallBlend(Materials.aquarium);
-		aquarium_smallpowder = createSmallPowder(Materials.aquarium);
+		antimony_crystal = createCrystal(materialName);
+		antimony_shard = createShard(materialName);
+		antimony_clump = createClump(materialName);
+		antimony_powder_dirty = createDirtyPowder(materialName);
 
-		aquarium_axe = createAxe(Materials.aquarium);
-		aquarium_blend = createBlend(Materials.aquarium);
-		aquarium_boots = createBoots(Materials.aquarium);
-		aquarium_chestplate = createChestplate(Materials.aquarium);
-		aquarium_crackhammer = createCrackhammer(Materials.aquarium);
-		aquarium_door = createDoor(Materials.aquarium);
-		aquarium_helmet = createHelmet(Materials.aquarium);
-		aquarium_hoe = createHoe(Materials.aquarium);
-		aquarium_ingot = createIngot(Materials.aquarium);
-		aquarium_leggings = createLeggings(Materials.aquarium);
-		aquarium_nugget = createNugget(Materials.aquarium);
-		aquarium_pickaxe = createPickaxe(Materials.aquarium);
-		aquarium_powder = createPowder(Materials.aquarium);
-		aquarium_shovel = createShovel(Materials.aquarium);
-		aquarium_sword = createSword(Materials.aquarium);
-		aquarium_rod = createRod(Materials.aquarium);
-		aquarium_gear = createGear(Materials.aquarium);
+		antimony_dense_plate = createDensePlate(materialName);
+		antimony_crushed = createCrushed(materialName);
+		antimony_crushed_purified = createCrushedPurified(materialName);
 
-		aquarium_slab = createSlab(Materials.aquarium);
-		aquarium_shield = createShield(Materials.aquarium);
+		materialName = "aquarium";
 
-		aquarium_crystal = createCrystal(Materials.aquarium);
-		aquarium_shard = createShard(Materials.aquarium);
-		aquarium_clump = createClump(Materials.aquarium);
-		aquarium_powder_dirty = createDirtyPowder(Materials.aquarium);
+		aquarium_arrow = createArrow(materialName);
+		aquarium_bolt = createBolt(materialName);
+		aquarium_bow = createBow(materialName);
+		aquarium_crossbow = createCrossbow(materialName);
+		aquarium_fishing_rod = createFishingRod(materialName);
+		aquarium_horsearmor = createHorseArmor(materialName);
+		aquarium_shears = createShears(materialName);
+		aquarium_smallblend = createSmallBlend(materialName);
+		aquarium_smallpowder = createSmallPowder(materialName);
 
-		aquarium_dense_plate = createDensePlate(Materials.aquarium);
-		aquarium_crushed = createCrushed(Materials.aquarium);
-		aquarium_crushed_purified = createCrushedPurified(Materials.aquarium);
+		aquarium_axe = createAxe(materialName);
+		aquarium_blend = createBlend(materialName);
+		aquarium_boots = createBoots(materialName);
+		aquarium_chestplate = createChestplate(materialName);
+		aquarium_crackhammer = createCrackhammer(materialName);
+		aquarium_door = createDoor(materialName);
+		aquarium_helmet = createHelmet(materialName);
+		aquarium_hoe = createHoe(materialName);
+		aquarium_ingot = createIngot(materialName);
+		aquarium_leggings = createLeggings(materialName);
+		aquarium_nugget = createNugget(materialName);
+		aquarium_pickaxe = createPickaxe(materialName);
+		aquarium_powder = createPowder(materialName);
+		aquarium_shovel = createShovel(materialName);
+		aquarium_sword = createSword(materialName);
+		aquarium_rod = createRod(materialName);
+		aquarium_gear = createGear(materialName);
 
-		bismuth_arrow = createArrow(Materials.bismuth);
-		bismuth_bolt = createBolt(Materials.bismuth);
-		bismuth_bow = createBow(Materials.bismuth);
-		bismuth_crossbow = createCrossbow(Materials.bismuth);
-		bismuth_fishing_rod = createFishingRod(Materials.bismuth);
-		bismuth_horsearmor = createHorseArmor(Materials.bismuth);
-		bismuth_shears = createShears(Materials.bismuth);
-		bismuth_smallpowder = createSmallPowder(Materials.bismuth);
+		aquarium_slab = createSlab(materialName);
+		aquarium_shield = createShield(materialName);
 
-		bismuth_axe = createAxe(Materials.bismuth);
-		bismuth_boots = createBoots(Materials.bismuth);
-		bismuth_chestplate = createChestplate(Materials.bismuth);
-		bismuth_crackhammer = createCrackhammer(Materials.bismuth);
-		bismuth_door = createDoor(Materials.bismuth);
-		bismuth_helmet = createHelmet(Materials.bismuth);
-		bismuth_hoe = createHoe(Materials.bismuth);
-		bismuth_ingot = createIngot(Materials.bismuth);
-		bismuth_leggings = createLeggings(Materials.bismuth);
-		bismuth_nugget = createNugget(Materials.bismuth);
-		bismuth_pickaxe = createPickaxe(Materials.bismuth);
-		bismuth_powder = createPowder(Materials.bismuth);
-		bismuth_shovel = createShovel(Materials.bismuth);
-		bismuth_sword = createSword(Materials.bismuth);
-		bismuth_rod = createRod(Materials.bismuth);
-		bismuth_gear = createGear(Materials.bismuth);
+		aquarium_crystal = createCrystal(materialName);
+		aquarium_shard = createShard(materialName);
+		aquarium_clump = createClump(materialName);
+		aquarium_powder_dirty = createDirtyPowder(materialName);
 
-		bismuth_slab = createSlab(Materials.bismuth);
-		bismuth_shield = createShield(Materials.bismuth);
+		aquarium_dense_plate = createDensePlate(materialName);
+		aquarium_crushed = createCrushed(materialName);
+		aquarium_crushed_purified = createCrushedPurified(materialName);
 
-		bismuth_crystal = createCrystal(Materials.bismuth);
-		bismuth_shard = createShard(Materials.bismuth);
-		bismuth_clump = createClump(Materials.bismuth);
-		bismuth_powder_dirty = createDirtyPowder(Materials.bismuth);
+		materialName = "bismuth";
 
-		bismuth_dense_plate = createDensePlate(Materials.bismuth);
-		bismuth_crushed = createCrushed(Materials.bismuth);
-		bismuth_crushed_purified = createCrushedPurified(Materials.bismuth);
+		bismuth_arrow = createArrow(materialName);
+		bismuth_bolt = createBolt(materialName);
+		bismuth_bow = createBow(materialName);
+		bismuth_crossbow = createCrossbow(materialName);
+		bismuth_fishing_rod = createFishingRod(materialName);
+		bismuth_horsearmor = createHorseArmor(materialName);
+		bismuth_shears = createShears(materialName);
+		bismuth_smallpowder = createSmallPowder(materialName);
 
-		brass_arrow = createArrow(Materials.brass);
-		brass_bolt = createBolt(Materials.brass);
-		brass_bow = createBow(Materials.brass);
-		brass_crossbow = createCrossbow(Materials.brass);
-		brass_fishing_rod = createFishingRod(Materials.brass);
-		brass_horsearmor = createHorseArmor(Materials.brass);
-		brass_shears = createShears(Materials.brass);
-		brass_smallblend = createSmallBlend(Materials.brass);
-		brass_smallpowder = createSmallPowder(Materials.brass);
+		bismuth_axe = createAxe(materialName);
+		bismuth_boots = createBoots(materialName);
+		bismuth_chestplate = createChestplate(materialName);
+		bismuth_crackhammer = createCrackhammer(materialName);
+		bismuth_door = createDoor(materialName);
+		bismuth_helmet = createHelmet(materialName);
+		bismuth_hoe = createHoe(materialName);
+		bismuth_ingot = createIngot(materialName);
+		bismuth_leggings = createLeggings(materialName);
+		bismuth_nugget = createNugget(materialName);
+		bismuth_pickaxe = createPickaxe(materialName);
+		bismuth_powder = createPowder(materialName);
+		bismuth_shovel = createShovel(materialName);
+		bismuth_sword = createSword(materialName);
+		bismuth_rod = createRod(materialName);
+		bismuth_gear = createGear(materialName);
 
-		brass_axe = createAxe(Materials.brass);
-		brass_blend = createBlend(Materials.brass);
-		brass_boots = createBoots(Materials.brass);
-		brass_chestplate = createChestplate(Materials.brass);
-		brass_crackhammer = createCrackhammer(Materials.brass);
-		brass_door = createDoor(Materials.brass);
-		brass_helmet = createHelmet(Materials.brass);
-		brass_hoe = createHoe(Materials.brass);
-		brass_ingot = createIngot(Materials.brass);
-		brass_leggings = createLeggings(Materials.brass);
-		brass_nugget = createNugget(Materials.brass);
-		brass_pickaxe = createPickaxe(Materials.brass);
-		brass_powder = createPowder(Materials.brass);
-		brass_shovel = createShovel(Materials.brass);
-		brass_sword = createSword(Materials.brass);
-		brass_rod = createRod(Materials.brass);
-		brass_gear = createGear(Materials.brass);
+		bismuth_slab = createSlab(materialName);
+		bismuth_shield = createShield(materialName);
 
-		brass_slab = createSlab(Materials.brass);
-		brass_shield = createShield(Materials.brass);
+		bismuth_crystal = createCrystal(materialName);
+		bismuth_shard = createShard(materialName);
+		bismuth_clump = createClump(materialName);
+		bismuth_powder_dirty = createDirtyPowder(materialName);
 
-		brass_crystal = createCrystal(Materials.brass);
-		brass_shard = createShard(Materials.brass);
-		brass_clump = createClump(Materials.brass);
-		brass_powder_dirty = createDirtyPowder(Materials.brass);
+		bismuth_dense_plate = createDensePlate(materialName);
+		bismuth_crushed = createCrushed(materialName);
+		bismuth_crushed_purified = createCrushedPurified(materialName);
 
-		brass_dense_plate = createDensePlate(Materials.brass);
-		brass_crushed = createCrushed(Materials.brass);
-		brass_crushed_purified = createCrushedPurified(Materials.brass);
+		materialName = "brass";
 
-		bronze_arrow = createArrow(Materials.bronze);
-		bronze_bolt = createBolt(Materials.bronze);
-		bronze_bow = createBow(Materials.bronze);
-		bronze_crossbow = createCrossbow(Materials.bronze);
-		bronze_fishing_rod = createFishingRod(Materials.bronze);
-		bronze_horsearmor = createHorseArmor(Materials.bronze);
-		bronze_shears = createShears(Materials.bronze);
-		bronze_smallblend = createSmallBlend(Materials.bronze);
-		bronze_smallpowder = createSmallPowder(Materials.bronze);
+		brass_arrow = createArrow(materialName);
+		brass_bolt = createBolt(materialName);
+		brass_bow = createBow(materialName);
+		brass_crossbow = createCrossbow(materialName);
+		brass_fishing_rod = createFishingRod(materialName);
+		brass_horsearmor = createHorseArmor(materialName);
+		brass_shears = createShears(materialName);
+		brass_smallblend = createSmallBlend(materialName);
+		brass_smallpowder = createSmallPowder(materialName);
 
-		bronze_axe = createAxe(Materials.bronze);
-		bronze_blend = createBlend(Materials.bronze);
-		bronze_boots = createBoots(Materials.bronze);
-		bronze_chestplate = createChestplate(Materials.bronze);
-		bronze_crackhammer = createCrackhammer(Materials.bronze);
-		bronze_door = createDoor(Materials.bronze);
-		bronze_helmet = createHelmet(Materials.bronze);
-		bronze_hoe = createHoe(Materials.bronze);
-		bronze_ingot = createIngot(Materials.bronze);
-		bronze_leggings = createLeggings(Materials.bronze);
-		bronze_nugget = createNugget(Materials.bronze);
-		bronze_pickaxe = createPickaxe(Materials.bronze);
-		bronze_powder = createPowder(Materials.bronze);
-		bronze_shovel = createShovel(Materials.bronze);
-		bronze_sword = createSword(Materials.bronze);
-		bronze_rod = createRod(Materials.bronze);
-		bronze_gear = createGear(Materials.bronze);
+		brass_axe = createAxe(materialName);
+		brass_blend = createBlend(materialName);
+		brass_boots = createBoots(materialName);
+		brass_chestplate = createChestplate(materialName);
+		brass_crackhammer = createCrackhammer(materialName);
+		brass_door = createDoor(materialName);
+		brass_helmet = createHelmet(materialName);
+		brass_hoe = createHoe(materialName);
+		brass_ingot = createIngot(materialName);
+		brass_leggings = createLeggings(materialName);
+		brass_nugget = createNugget(materialName);
+		brass_pickaxe = createPickaxe(materialName);
+		brass_powder = createPowder(materialName);
+		brass_shovel = createShovel(materialName);
+		brass_sword = createSword(materialName);
+		brass_rod = createRod(materialName);
+		brass_gear = createGear(materialName);
 
-		bronze_slab = createSlab(Materials.bronze);
-		bronze_shield = createShield(Materials.bronze);
+		brass_slab = createSlab(materialName);
+		brass_shield = createShield(materialName);
 
-		bronze_crystal = createCrystal(Materials.bronze);
-		bronze_shard = createShard(Materials.bronze);
-		bronze_clump = createClump(Materials.bronze);
-		bronze_powder_dirty = createDirtyPowder(Materials.bronze);
+		brass_crystal = createCrystal(materialName);
+		brass_shard = createShard(materialName);
+		brass_clump = createClump(materialName);
+		brass_powder_dirty = createDirtyPowder(materialName);
 
-		bronze_dense_plate = createDensePlate(Materials.bronze);
-		bronze_crushed = createCrushed(Materials.bronze);
-		bronze_crushed_purified = createCrushedPurified(Materials.bronze);
+		brass_dense_plate = createDensePlate(materialName);
+		brass_crushed = createCrushed(materialName);
+		brass_crushed_purified = createCrushedPurified(materialName);
+
+		materialName = "bronze";
+
+		bronze_arrow = createArrow(materialName);
+		bronze_bolt = createBolt(materialName);
+		bronze_bow = createBow(materialName);
+		bronze_crossbow = createCrossbow(materialName);
+		bronze_fishing_rod = createFishingRod(materialName);
+		bronze_horsearmor = createHorseArmor(materialName);
+		bronze_shears = createShears(materialName);
+		bronze_smallblend = createSmallBlend(materialName);
+		bronze_smallpowder = createSmallPowder(materialName);
+
+		bronze_axe = createAxe(materialName);
+		bronze_blend = createBlend(materialName);
+		bronze_boots = createBoots(materialName);
+		bronze_chestplate = createChestplate(materialName);
+		bronze_crackhammer = createCrackhammer(materialName);
+		bronze_door = createDoor(materialName);
+		bronze_helmet = createHelmet(materialName);
+		bronze_hoe = createHoe(materialName);
+		bronze_ingot = createIngot(materialName);
+		bronze_leggings = createLeggings(materialName);
+		bronze_nugget = createNugget(materialName);
+		bronze_pickaxe = createPickaxe(materialName);
+		bronze_powder = createPowder(materialName);
+		bronze_shovel = createShovel(materialName);
+		bronze_sword = createSword(materialName);
+		bronze_rod = createRod(materialName);
+		bronze_gear = createGear(materialName);
+
+		bronze_slab = createSlab(materialName);
+		bronze_shield = createShield(materialName);
+
+		bronze_crystal = createCrystal(materialName);
+		bronze_shard = createShard(materialName);
+		bronze_clump = createClump(materialName);
+		bronze_powder_dirty = createDirtyPowder(materialName);
+
+		bronze_dense_plate = createDensePlate(materialName);
+		bronze_crushed = createCrushed(materialName);
+		bronze_crushed_purified = createCrushedPurified(materialName);
 
 		carbon_powder = addItem(new Item(), "carbon_powder", null, ItemGroups.tab_items);
 		itemRegistry.put("carbon_powder", carbon_powder);
 		OreDictionary.registerOre("dustCoal", carbon_powder);
 		OreDictionary.registerOre("dustCarbon", carbon_powder);
 
-		coldiron_arrow = createArrow(Materials.coldiron);
-		coldiron_bolt = createBolt(Materials.coldiron);
-		coldiron_bow = createBow(Materials.coldiron);
-		coldiron_crossbow = createCrossbow(Materials.coldiron);
-		coldiron_fishing_rod = createFishingRod(Materials.coldiron);
-		coldiron_horsearmor = createHorseArmor(Materials.coldiron);
-		coldiron_shears = createShears(Materials.coldiron);
-		coldiron_smallpowder = createSmallPowder(Materials.coldiron);
+		materialName = "coldiron";
 
-		coldiron_axe = createAxe(Materials.coldiron);
-		coldiron_boots = createBoots(Materials.coldiron);
-		coldiron_chestplate = createChestplate(Materials.coldiron);
-		coldiron_crackhammer = createCrackhammer(Materials.coldiron);
-		coldiron_door = createDoor(Materials.coldiron);
-		coldiron_helmet = createHelmet(Materials.coldiron);
-		coldiron_hoe = createHoe(Materials.coldiron);
-		coldiron_ingot = createIngot(Materials.coldiron);
-		coldiron_leggings = createLeggings(Materials.coldiron);
-		coldiron_nugget = createNugget(Materials.coldiron);
-		coldiron_pickaxe = createPickaxe(Materials.coldiron);
-		coldiron_powder = createPowder(Materials.coldiron);
-		coldiron_shovel = createShovel(Materials.coldiron);
-		coldiron_sword = createSword(Materials.coldiron);
-		coldiron_rod = createRod(Materials.coldiron);
-		coldiron_gear = createGear(Materials.coldiron);
+		coldiron_arrow = createArrow(materialName);
+		coldiron_bolt = createBolt(materialName);
+		coldiron_bow = createBow(materialName);
+		coldiron_crossbow = createCrossbow(materialName);
+		coldiron_fishing_rod = createFishingRod(materialName);
+		coldiron_horsearmor = createHorseArmor(materialName);
+		coldiron_shears = createShears(materialName);
+		coldiron_smallpowder = createSmallPowder(materialName);
 
-		coldiron_slab = createSlab(Materials.coldiron);
-		coldiron_shield = createShield(Materials.coldiron);
+		coldiron_axe = createAxe(materialName);
+		coldiron_boots = createBoots(materialName);
+		coldiron_chestplate = createChestplate(materialName);
+		coldiron_crackhammer = createCrackhammer(materialName);
+		coldiron_door = createDoor(materialName);
+		coldiron_helmet = createHelmet(materialName);
+		coldiron_hoe = createHoe(materialName);
+		coldiron_ingot = createIngot(materialName);
+		coldiron_leggings = createLeggings(materialName);
+		coldiron_nugget = createNugget(materialName);
+		coldiron_pickaxe = createPickaxe(materialName);
+		coldiron_powder = createPowder(materialName);
+		coldiron_shovel = createShovel(materialName);
+		coldiron_sword = createSword(materialName);
+		coldiron_rod = createRod(materialName);
+		coldiron_gear = createGear(materialName);
 
-		coldiron_crystal = createCrystal(Materials.coldiron);
-		coldiron_shard = createShard(Materials.coldiron);
-		coldiron_clump = createClump(Materials.coldiron);
-		coldiron_powder_dirty = createDirtyPowder(Materials.coldiron);
+		coldiron_slab = createSlab(materialName);
+		coldiron_shield = createShield(materialName);
 
-		coldiron_dense_plate = createDensePlate(Materials.coldiron);
-		coldiron_crushed = createCrushed(Materials.coldiron);
-		coldiron_crushed_purified = createCrushedPurified(Materials.coldiron);
+		coldiron_crystal = createCrystal(materialName);
+		coldiron_shard = createShard(materialName);
+		coldiron_clump = createClump(materialName);
+		coldiron_powder_dirty = createDirtyPowder(materialName);
 
-		copper_arrow = createArrow(Materials.copper);
-		copper_bolt = createBolt(Materials.copper);
-		copper_bow = createBow(Materials.copper);
-		copper_crossbow = createCrossbow(Materials.copper);
-		copper_fishing_rod = createFishingRod(Materials.copper);
-		copper_horsearmor = createHorseArmor(Materials.copper);
-		copper_shears = createShears(Materials.copper);
-		copper_smallpowder = createSmallPowder(Materials.copper);
+		coldiron_dense_plate = createDensePlate(materialName);
+		coldiron_crushed = createCrushed(materialName);
+		coldiron_crushed_purified = createCrushedPurified(materialName);
 
-		copper_axe = createAxe(Materials.copper);
-		copper_boots = createBoots(Materials.copper);
-		copper_chestplate = createChestplate(Materials.copper);
-		copper_crackhammer = createCrackhammer(Materials.copper);
-		copper_door = createDoor(Materials.copper);
-		copper_helmet = createHelmet(Materials.copper);
-		copper_hoe = createHoe(Materials.copper);
-		copper_ingot = createIngot(Materials.copper);
-		copper_leggings = createLeggings(Materials.copper);
-		copper_nugget = createNugget(Materials.copper);
-		copper_pickaxe = createPickaxe(Materials.copper);
-		copper_powder = createPowder(Materials.copper);
-		copper_shovel = createShovel(Materials.copper);
-		copper_sword = createSword(Materials.copper);
-		copper_rod = createRod(Materials.copper);
-		copper_gear = createGear(Materials.copper);
+		materialName = "copper";
 
-		copper_slab = createSlab(Materials.copper);
-		copper_shield = createShield(Materials.copper);
+		copper_arrow = createArrow(materialName);
+		copper_bolt = createBolt(materialName);
+		copper_bow = createBow(materialName);
+		copper_crossbow = createCrossbow(materialName);
+		copper_fishing_rod = createFishingRod(materialName);
+		copper_horsearmor = createHorseArmor(materialName);
+		copper_shears = createShears(materialName);
+		copper_smallpowder = createSmallPowder(materialName);
 
-		copper_dense_plate = createDensePlate(Materials.copper);
-		copper_crushed = createCrushed(Materials.copper);
-		copper_crushed_purified = createCrushedPurified(Materials.copper);
+		copper_axe = createAxe(materialName);
+		copper_boots = createBoots(materialName);
+		copper_chestplate = createChestplate(materialName);
+		copper_crackhammer = createCrackhammer(materialName);
+		copper_door = createDoor(materialName);
+		copper_helmet = createHelmet(materialName);
+		copper_hoe = createHoe(materialName);
+		copper_ingot = createIngot(materialName);
+		copper_leggings = createLeggings(materialName);
+		copper_nugget = createNugget(materialName);
+		copper_pickaxe = createPickaxe(materialName);
+		copper_powder = createPowder(materialName);
+		copper_shovel = createShovel(materialName);
+		copper_sword = createSword(materialName);
+		copper_rod = createRod(materialName);
+		copper_gear = createGear(materialName);
 
-		cupronickel_arrow = createArrow(Materials.cupronickel);
-		cupronickel_bolt = createBolt(Materials.cupronickel);
-		cupronickel_bow = createBow(Materials.cupronickel);
-		cupronickel_crossbow = createCrossbow(Materials.cupronickel);
-		cupronickel_fishing_rod = createFishingRod(Materials.cupronickel);
-		cupronickel_horsearmor = createHorseArmor(Materials.cupronickel);
-		cupronickel_shears = createShears(Materials.cupronickel);
-		cupronickel_smallblend = createSmallBlend(Materials.cupronickel);
-		cupronickel_smallpowder = createSmallPowder(Materials.cupronickel);
+		copper_slab = createSlab(materialName);
+		copper_shield = createShield(materialName);
 
-		cupronickel_axe = createAxe(Materials.cupronickel);
-		cupronickel_blend = createBlend(Materials.cupronickel);
-		cupronickel_boots = createBoots(Materials.cupronickel);
-		cupronickel_chestplate = createChestplate(Materials.cupronickel);
-		cupronickel_crackhammer = createCrackhammer(Materials.cupronickel);
-		cupronickel_door = createDoor(Materials.cupronickel);
-		cupronickel_helmet = createHelmet(Materials.cupronickel);
-		cupronickel_hoe = createHoe(Materials.cupronickel);
-		cupronickel_ingot = createIngot(Materials.cupronickel);
-		cupronickel_leggings = createLeggings(Materials.cupronickel);
-		cupronickel_nugget = createNugget(Materials.cupronickel);
-		cupronickel_pickaxe = createPickaxe(Materials.cupronickel);
-		cupronickel_powder = createPowder(Materials.cupronickel);
-		cupronickel_shovel = createShovel(Materials.cupronickel);
-		cupronickel_sword = createSword(Materials.cupronickel);
-		cupronickel_rod = createRod(Materials.cupronickel);
-		cupronickel_gear = createGear(Materials.cupronickel);
+		copper_dense_plate = createDensePlate(materialName);
+		copper_crushed = createCrushed(materialName);
+		copper_crushed_purified = createCrushedPurified(materialName);
 
-		cupronickel_slab = createSlab(Materials.cupronickel);
-		cupronickel_shield = createShield(Materials.cupronickel);
+		materialName = "cupronickel";
 
-		cupronickel_crystal = createCrystal(Materials.cupronickel);
-		cupronickel_shard = createShard(Materials.cupronickel);
-		cupronickel_clump = createClump(Materials.cupronickel);
-		cupronickel_powder_dirty = createDirtyPowder(Materials.cupronickel);
+		cupronickel_arrow = createArrow(materialName);
+		cupronickel_bolt = createBolt(materialName);
+		cupronickel_bow = createBow(materialName);
+		cupronickel_crossbow = createCrossbow(materialName);
+		cupronickel_fishing_rod = createFishingRod(materialName);
+		cupronickel_horsearmor = createHorseArmor(materialName);
+		cupronickel_shears = createShears(materialName);
+		cupronickel_smallblend = createSmallBlend(materialName);
+		cupronickel_smallpowder = createSmallPowder(materialName);
 
-		cupronickel_dense_plate = createDensePlate(Materials.cupronickel);
-		cupronickel_crushed = createCrushed(Materials.cupronickel);
-		cupronickel_crushed_purified = createCrushedPurified(Materials.cupronickel);
+		cupronickel_axe = createAxe(materialName);
+		cupronickel_blend = createBlend(materialName);
+		cupronickel_boots = createBoots(materialName);
+		cupronickel_chestplate = createChestplate(materialName);
+		cupronickel_crackhammer = createCrackhammer(materialName);
+		cupronickel_door = createDoor(materialName);
+		cupronickel_helmet = createHelmet(materialName);
+		cupronickel_hoe = createHoe(materialName);
+		cupronickel_ingot = createIngot(materialName);
+		cupronickel_leggings = createLeggings(materialName);
+		cupronickel_nugget = createNugget(materialName);
+		cupronickel_pickaxe = createPickaxe(materialName);
+		cupronickel_powder = createPowder(materialName);
+		cupronickel_shovel = createShovel(materialName);
+		cupronickel_sword = createSword(materialName);
+		cupronickel_rod = createRod(materialName);
+		cupronickel_gear = createGear(materialName);
 
-		diamond_crackhammer = createCrackhammer(Materials.vanilla_diamond);
-		diamond_gear = createGear(Materials.vanilla_diamond);
+		cupronickel_slab = createSlab(materialName);
+		cupronickel_shield = createShield(materialName);
 
-		electrum_arrow = createArrow(Materials.electrum);
-		electrum_bolt = createBolt(Materials.electrum);
-		electrum_bow = createBow(Materials.electrum);
-		electrum_crossbow = createCrossbow(Materials.electrum);
-		electrum_fishing_rod = createFishingRod(Materials.electrum);
-		electrum_horsearmor = createHorseArmor(Materials.electrum);
-		electrum_shears = createShears(Materials.electrum);
-		electrum_smallblend = createSmallBlend(Materials.electrum);
-		electrum_smallpowder = createSmallPowder(Materials.electrum);
+		cupronickel_crystal = createCrystal(materialName);
+		cupronickel_shard = createShard(materialName);
+		cupronickel_clump = createClump(materialName);
+		cupronickel_powder_dirty = createDirtyPowder(materialName);
 
-		electrum_axe = createAxe(Materials.electrum);
-		electrum_blend = createBlend(Materials.electrum);
-		electrum_boots = createBoots(Materials.electrum);
-		electrum_chestplate = createChestplate(Materials.electrum);
-		electrum_crackhammer = createCrackhammer(Materials.electrum);
-		electrum_door = createDoor(Materials.electrum);
-		electrum_helmet = createHelmet(Materials.electrum);
-		electrum_hoe = createHoe(Materials.electrum);
-		electrum_ingot = createIngot(Materials.electrum);
-		electrum_leggings = createLeggings(Materials.electrum);
-		electrum_nugget = createNugget(Materials.electrum);
-		electrum_pickaxe = createPickaxe(Materials.electrum);
-		electrum_powder = createPowder(Materials.electrum);
-		electrum_shovel = createShovel(Materials.electrum);
-		electrum_sword = createSword(Materials.electrum);
-		electrum_rod = createRod(Materials.electrum);
-		electrum_gear = createGear(Materials.electrum);
+		cupronickel_dense_plate = createDensePlate(materialName);
+		cupronickel_crushed = createCrushed(materialName);
+		cupronickel_crushed_purified = createCrushedPurified(materialName);
 
-		electrum_slab = createSlab(Materials.electrum);
-		electrum_shield = createShield(Materials.electrum);
+		materialName = "diamond";
 
-		electrum_crystal = createCrystal(Materials.electrum);
-		electrum_shard = createShard(Materials.electrum);
-		electrum_clump = createClump(Materials.electrum);
-		electrum_powder_dirty = createDirtyPowder(Materials.electrum);
+		diamond_crackhammer = createCrackhammer(materialName);
+		diamond_gear = createGear(materialName);
 
-		electrum_dense_plate = createDensePlate(Materials.electrum);
-		electrum_crushed = createCrushed(Materials.electrum);
-		electrum_crushed_purified = createCrushedPurified(Materials.electrum);
+		materialName = "electrum";
 
-		gold_crackhammer = createCrackhammer(Materials.vanilla_gold);
-		gold_powder = createPowder(Materials.vanilla_gold);
-		gold_rod = createRod(Materials.vanilla_gold);
-		gold_gear = createGear(Materials.vanilla_gold);
+		electrum_arrow = createArrow(materialName);
+		electrum_bolt = createBolt(materialName);
+		electrum_bow = createBow(materialName);
+		electrum_crossbow = createCrossbow(materialName);
+		electrum_fishing_rod = createFishingRod(materialName);
+		electrum_horsearmor = createHorseArmor(materialName);
+		electrum_shears = createShears(materialName);
+		electrum_smallblend = createSmallBlend(materialName);
+		electrum_smallpowder = createSmallPowder(materialName);
 
-		invar_arrow = createArrow(Materials.invar);
-		invar_bolt = createBolt(Materials.invar);
-		invar_bow = createBow(Materials.invar);
-		invar_crossbow = createCrossbow(Materials.invar);
-		invar_fishing_rod = createFishingRod(Materials.invar);
-		invar_horsearmor = createHorseArmor(Materials.invar);
-		invar_shears = createShears(Materials.invar);
-		invar_smallblend = createSmallBlend(Materials.invar);
-		invar_smallpowder = createSmallPowder(Materials.invar);
+		electrum_axe = createAxe(materialName);
+		electrum_blend = createBlend(materialName);
+		electrum_boots = createBoots(materialName);
+		electrum_chestplate = createChestplate(materialName);
+		electrum_crackhammer = createCrackhammer(materialName);
+		electrum_door = createDoor(materialName);
+		electrum_helmet = createHelmet(materialName);
+		electrum_hoe = createHoe(materialName);
+		electrum_ingot = createIngot(materialName);
+		electrum_leggings = createLeggings(materialName);
+		electrum_nugget = createNugget(materialName);
+		electrum_pickaxe = createPickaxe(materialName);
+		electrum_powder = createPowder(materialName);
+		electrum_shovel = createShovel(materialName);
+		electrum_sword = createSword(materialName);
+		electrum_rod = createRod(materialName);
+		electrum_gear = createGear(materialName);
 
-		invar_axe = createAxe(Materials.invar);
-		invar_blend = createBlend(Materials.invar);
-		invar_boots = createBoots(Materials.invar);
-		invar_chestplate = createChestplate(Materials.invar);
-		invar_crackhammer = createCrackhammer(Materials.invar);
-		invar_door = createDoor(Materials.invar);
-		invar_helmet = createHelmet(Materials.invar);
-		invar_hoe = createHoe(Materials.invar);
-		invar_ingot = createIngot(Materials.invar);
-		invar_leggings = createLeggings(Materials.invar);
-		invar_nugget = createNugget(Materials.invar);
-		invar_pickaxe = createPickaxe(Materials.invar);
-		invar_powder = createPowder(Materials.invar);
-		invar_shovel = createShovel(Materials.invar);
-		invar_sword = createSword(Materials.invar);
-		invar_rod = createRod(Materials.invar);
-		invar_gear = createGear(Materials.invar);
+		electrum_slab = createSlab(materialName);
+		electrum_shield = createShield(materialName);
 
-		invar_slab = createSlab(Materials.invar);
-		invar_shield = createShield(Materials.invar);
+		electrum_crystal = createCrystal(materialName);
+		electrum_shard = createShard(materialName);
+		electrum_clump = createClump(materialName);
+		electrum_powder_dirty = createDirtyPowder(materialName);
 
-		invar_crystal = createCrystal(Materials.invar);
-		invar_shard = createShard(Materials.invar);
-		invar_clump = createClump(Materials.invar);
-		invar_powder_dirty = createDirtyPowder(Materials.invar);
+		electrum_dense_plate = createDensePlate(materialName);
+		electrum_crushed = createCrushed(materialName);
+		electrum_crushed_purified = createCrushedPurified(materialName);
 
-		invar_dense_plate = createDensePlate(Materials.invar);
-		invar_crushed = createCrushed(Materials.invar);
-		invar_crushed_purified = createCrushedPurified(Materials.invar);
+		materialName = "gold";
 
-		iron_crackhammer = createCrackhammer(Materials.vanilla_iron);
-		iron_nugget = createNugget(Materials.vanilla_iron);
-		iron_powder = createPowder(Materials.vanilla_iron);
-		iron_rod = createRod(Materials.vanilla_iron);
-		iron_gear = createGear(Materials.vanilla_iron);
+		gold_crackhammer = createCrackhammer(materialName);
+		gold_powder = createPowder(materialName);
+		gold_rod = createRod(materialName);
+		gold_gear = createGear(materialName);
 
-		lead_arrow = createArrow(Materials.lead);
-		lead_bolt = createBolt(Materials.lead);
-		lead_bow = createBow(Materials.lead);
-		lead_crossbow = createCrossbow(Materials.lead);
-		lead_fishing_rod = createFishingRod(Materials.lead);
-		lead_horsearmor = createHorseArmor(Materials.lead);
-		lead_shears = createShears(Materials.lead);
-		lead_smallpowder = createSmallPowder(Materials.lead);
+		materialName = "invar";
 
-		lead_axe = createAxe(Materials.lead);
-		lead_boots = createBoots(Materials.lead);
-		lead_chestplate = createChestplate(Materials.lead);
-		lead_crackhammer = createCrackhammer(Materials.lead);
-		lead_door = createDoor(Materials.lead);
-		lead_helmet = createHelmet(Materials.lead);
-		lead_hoe = createHoe(Materials.lead);
-		lead_ingot = createIngot(Materials.lead);
-		lead_leggings = createLeggings(Materials.lead);
-		lead_nugget = createNugget(Materials.lead);
-		lead_pickaxe = createPickaxe(Materials.lead);
-		lead_powder = createPowder(Materials.lead);
-		lead_shovel = createShovel(Materials.lead);
-		lead_sword = createSword(Materials.lead);
-		lead_rod = createRod(Materials.lead);
-		lead_gear = createGear(Materials.lead);
+		invar_arrow = createArrow(materialName);
+		invar_bolt = createBolt(materialName);
+		invar_bow = createBow(materialName);
+		invar_crossbow = createCrossbow(materialName);
+		invar_fishing_rod = createFishingRod(materialName);
+		invar_horsearmor = createHorseArmor(materialName);
+		invar_shears = createShears(materialName);
+		invar_smallblend = createSmallBlend(materialName);
+		invar_smallpowder = createSmallPowder(materialName);
 
-		lead_slab = createSlab(Materials.lead);
-		lead_shield = createShield(Materials.lead);
+		invar_axe = createAxe(materialName);
+		invar_blend = createBlend(materialName);
+		invar_boots = createBoots(materialName);
+		invar_chestplate = createChestplate(materialName);
+		invar_crackhammer = createCrackhammer(materialName);
+		invar_door = createDoor(materialName);
+		invar_helmet = createHelmet(materialName);
+		invar_hoe = createHoe(materialName);
+		invar_ingot = createIngot(materialName);
+		invar_leggings = createLeggings(materialName);
+		invar_nugget = createNugget(materialName);
+		invar_pickaxe = createPickaxe(materialName);
+		invar_powder = createPowder(materialName);
+		invar_shovel = createShovel(materialName);
+		invar_sword = createSword(materialName);
+		invar_rod = createRod(materialName);
+		invar_gear = createGear(materialName);
 
-		lead_dense_plate = createDensePlate(Materials.lead);
-		lead_crushed = createCrushed(Materials.lead);
-		lead_crushed_purified = createCrushedPurified(Materials.lead);
+		invar_slab = createSlab(materialName);
+		invar_shield = createShield(materialName);
 
-		platinum_arrow = createArrow(Materials.platinum);
-		platinum_bolt = createBolt(Materials.platinum);
-		platinum_bow = createBow(Materials.platinum);
-		platinum_crossbow = createCrossbow(Materials.platinum);
-		platinum_fishing_rod = createFishingRod(Materials.platinum);
-		platinum_horsearmor = createHorseArmor(Materials.platinum);
-		platinum_shears = createShears(Materials.platinum);
-		platinum_smallpowder = createSmallPowder(Materials.platinum);
+		invar_crystal = createCrystal(materialName);
+		invar_shard = createShard(materialName);
+		invar_clump = createClump(materialName);
+		invar_powder_dirty = createDirtyPowder(materialName);
 
-		platinum_axe = createAxe(Materials.platinum);
-		platinum_boots = createBoots(Materials.platinum);
-		platinum_chestplate = createChestplate(Materials.platinum);
-		platinum_crackhammer = createCrackhammer(Materials.platinum);
-		platinum_door = createDoor(Materials.platinum);
-		platinum_helmet = createHelmet(Materials.platinum);
-		platinum_hoe = createHoe(Materials.platinum);
-		platinum_ingot = createIngot(Materials.platinum);
-		platinum_leggings = createLeggings(Materials.platinum);
-		platinum_nugget = createNugget(Materials.platinum);
-		platinum_pickaxe = createPickaxe(Materials.platinum);
-		platinum_powder = createPowder(Materials.platinum);
-		platinum_shovel = createShovel(Materials.platinum);
-		platinum_sword = createSword(Materials.platinum);
-		platinum_rod = createRod(Materials.platinum);
-		platinum_gear = createGear(Materials.platinum);
+		invar_dense_plate = createDensePlate(materialName);
+		invar_crushed = createCrushed(materialName);
+		invar_crushed_purified = createCrushedPurified(materialName);
 
-		platinum_slab = createSlab(Materials.platinum);
-		platinum_shield = createShield(Materials.platinum);
+		materialName = "iron";
 
-		platinum_crystal = createCrystal(Materials.platinum);
-		platinum_shard = createShard(Materials.platinum);
-		platinum_clump = createClump(Materials.platinum);
-		platinum_powder_dirty = createDirtyPowder(Materials.platinum);
+		iron_crackhammer = createCrackhammer(materialName);
+		iron_nugget = createNugget(materialName);
+		iron_powder = createPowder(materialName);
+		iron_rod = createRod(materialName);
+		iron_gear = createGear(materialName);
 
-		platinum_dense_plate = createDensePlate(Materials.platinum);
-		platinum_crushed = createCrushed(Materials.platinum);
-		platinum_crushed_purified = createCrushedPurified(Materials.platinum);
+		materialName = "lead";
 
-		stone_crackhammer = createCrackhammer(Materials.vanilla_stone);
-		stone_rod = createRod(Materials.vanilla_stone);
-		stone_gear = createGear(Materials.vanilla_stone);
+		lead_arrow = createArrow(materialName);
+		lead_bolt = createBolt(materialName);
+		lead_bow = createBow(materialName);
+		lead_crossbow = createCrossbow(materialName);
+		lead_fishing_rod = createFishingRod(materialName);
+		lead_horsearmor = createHorseArmor(materialName);
+		lead_shears = createShears(materialName);
+		lead_smallpowder = createSmallPowder(materialName);
 
-		wood_crackhammer = createCrackhammer(Materials.vanilla_wood);
-		wood_gear = createGear(Materials.vanilla_wood);
+		lead_axe = createAxe(materialName);
+		lead_boots = createBoots(materialName);
+		lead_chestplate = createChestplate(materialName);
+		lead_crackhammer = createCrackhammer(materialName);
+		lead_door = createDoor(materialName);
+		lead_helmet = createHelmet(materialName);
+		lead_hoe = createHoe(materialName);
+		lead_ingot = createIngot(materialName);
+		lead_leggings = createLeggings(materialName);
+		lead_nugget = createNugget(materialName);
+		lead_pickaxe = createPickaxe(materialName);
+		lead_powder = createPowder(materialName);
+		lead_shovel = createShovel(materialName);
+		lead_sword = createSword(materialName);
+		lead_rod = createRod(materialName);
+		lead_gear = createGear(materialName);
+
+		lead_slab = createSlab(materialName);
+		lead_shield = createShield(materialName);
+
+		lead_dense_plate = createDensePlate(materialName);
+		lead_crushed = createCrushed(materialName);
+		lead_crushed_purified = createCrushedPurified(materialName);
+
+		materialName = "platinum";
+
+		platinum_arrow = createArrow(materialName);
+		platinum_bolt = createBolt(materialName);
+		platinum_bow = createBow(materialName);
+		platinum_crossbow = createCrossbow(materialName);
+		platinum_fishing_rod = createFishingRod(materialName);
+		platinum_horsearmor = createHorseArmor(materialName);
+		platinum_shears = createShears(materialName);
+		platinum_smallpowder = createSmallPowder(materialName);
+
+		platinum_axe = createAxe(materialName);
+		platinum_boots = createBoots(materialName);
+		platinum_chestplate = createChestplate(materialName);
+		platinum_crackhammer = createCrackhammer(materialName);
+		platinum_door = createDoor(materialName);
+		platinum_helmet = createHelmet(materialName);
+		platinum_hoe = createHoe(materialName);
+		platinum_ingot = createIngot(materialName);
+		platinum_leggings = createLeggings(materialName);
+		platinum_nugget = createNugget(materialName);
+		platinum_pickaxe = createPickaxe(materialName);
+		platinum_powder = createPowder(materialName);
+		platinum_shovel = createShovel(materialName);
+		platinum_sword = createSword(materialName);
+		platinum_rod = createRod(materialName);
+		platinum_gear = createGear(materialName);
+
+		platinum_slab = createSlab(materialName);
+		platinum_shield = createShield(materialName);
+
+		platinum_crystal = createCrystal(materialName);
+		platinum_shard = createShard(materialName);
+		platinum_clump = createClump(materialName);
+		platinum_powder_dirty = createDirtyPowder(materialName);
+
+		platinum_dense_plate = createDensePlate(materialName);
+		platinum_crushed = createCrushed(materialName);
+		platinum_crushed_purified = createCrushedPurified(materialName);
+
+		materialName = "stone";
+
+		stone_crackhammer = createCrackhammer(materialName);
+		stone_rod = createRod(materialName);
+		stone_gear = createGear(materialName);
+
+		materialName = "wood";
+
+		wood_crackhammer = createCrackhammer(materialName);
+		wood_gear = createGear(materialName);
 
 		// mercury is special
 		mercury_ingot = addItem(new Item(), "mercury_ingot", null, ItemGroups.tab_items);
@@ -1437,303 +1474,319 @@ public abstract class Items {
 		itemRegistry.put("mercury_powder", mercury_powder);
 		OreDictionary.registerOre("dustMercury", mercury_powder);
 
-		mithril_arrow = createArrow(Materials.mithril);
-		mithril_bolt = createBolt(Materials.mithril);
-		mithril_bow = createBow(Materials.mithril);
-		mithril_crossbow = createCrossbow(Materials.mithril);
-		mithril_fishing_rod = createFishingRod(Materials.mithril);
-		mithril_horsearmor = createHorseArmor(Materials.mithril);
-		mithril_shears = createShears(Materials.mithril);
-		mithril_smallblend = createSmallBlend(Materials.mithril);
-		mithril_smallpowder = createSmallPowder(Materials.mithril);
+		materialName = "mithril";
 
-		mithril_axe = createAxe(Materials.mithril);
-		mithril_blend = createBlend(Materials.mithril);
-		mithril_boots = createBoots(Materials.mithril);
-		mithril_chestplate = createChestplate(Materials.mithril);
-		mithril_crackhammer = createCrackhammer(Materials.mithril);
-		mithril_door = createDoor(Materials.mithril);
-		mithril_helmet = createHelmet(Materials.mithril);
-		mithril_hoe = createHoe(Materials.mithril);
-		mithril_ingot = createIngot(Materials.mithril);
-		mithril_leggings = createLeggings(Materials.mithril);
-		mithril_nugget = createNugget(Materials.mithril);
-		mithril_pickaxe = createPickaxe(Materials.mithril);
-		mithril_powder = createPowder(Materials.mithril);
-		mithril_shovel = createShovel(Materials.mithril);
-		mithril_sword = createSword(Materials.mithril);
-		mithril_rod = createRod(Materials.mithril);
-		mithril_gear = createGear(Materials.mithril);
+		mithril_arrow = createArrow(materialName);
+		mithril_bolt = createBolt(materialName);
+		mithril_bow = createBow(materialName);
+		mithril_crossbow = createCrossbow(materialName);
+		mithril_fishing_rod = createFishingRod(materialName);
+		mithril_horsearmor = createHorseArmor(materialName);
+		mithril_shears = createShears(materialName);
+		mithril_smallblend = createSmallBlend(materialName);
+		mithril_smallpowder = createSmallPowder(materialName);
 
-		mithril_slab = createSlab(Materials.mithril);
-		mithril_shield = createShield(Materials.mithril);
+		mithril_axe = createAxe(materialName);
+		mithril_blend = createBlend(materialName);
+		mithril_boots = createBoots(materialName);
+		mithril_chestplate = createChestplate(materialName);
+		mithril_crackhammer = createCrackhammer(materialName);
+		mithril_door = createDoor(materialName);
+		mithril_helmet = createHelmet(materialName);
+		mithril_hoe = createHoe(materialName);
+		mithril_ingot = createIngot(materialName);
+		mithril_leggings = createLeggings(materialName);
+		mithril_nugget = createNugget(materialName);
+		mithril_pickaxe = createPickaxe(materialName);
+		mithril_powder = createPowder(materialName);
+		mithril_shovel = createShovel(materialName);
+		mithril_sword = createSword(materialName);
+		mithril_rod = createRod(materialName);
+		mithril_gear = createGear(materialName);
 
-		mithril_crystal = createCrystal(Materials.mithril);
-		mithril_shard = createShard(Materials.mithril);
-		mithril_clump = createClump(Materials.mithril);
-		mithril_powder_dirty = createDirtyPowder(Materials.mithril);
+		mithril_slab = createSlab(materialName);
+		mithril_shield = createShield(materialName);
 
-		mithril_dense_plate = createDensePlate(Materials.mithril);
-		mithril_crushed = createCrushed(Materials.mithril);
-		mithril_crushed_purified = createCrushedPurified(Materials.mithril);
+		mithril_crystal = createCrystal(materialName);
+		mithril_shard = createShard(materialName);
+		mithril_clump = createClump(materialName);
+		mithril_powder_dirty = createDirtyPowder(materialName);
 
-		nickel_arrow = createArrow(Materials.nickel);
-		nickel_bolt = createBolt(Materials.nickel);
-		nickel_bow = createBow(Materials.nickel);
-		nickel_crossbow = createCrossbow(Materials.nickel);
-		nickel_fishing_rod = createFishingRod(Materials.nickel);
-		nickel_horsearmor = createHorseArmor(Materials.nickel);
-		nickel_shears = createShears(Materials.nickel);
-		nickel_smallpowder = createSmallPowder(Materials.nickel);
+		mithril_dense_plate = createDensePlate(materialName);
+		mithril_crushed = createCrushed(materialName);
+		mithril_crushed_purified = createCrushedPurified(materialName);
 
-		nickel_axe = createAxe(Materials.nickel);
-		nickel_boots = createBoots(Materials.nickel);
-		nickel_chestplate = createChestplate(Materials.nickel);
-		nickel_crackhammer = createCrackhammer(Materials.nickel);
-		nickel_door = createDoor(Materials.nickel);
-		nickel_helmet = createHelmet(Materials.nickel);
-		nickel_hoe = createHoe(Materials.nickel);
-		nickel_ingot = createIngot(Materials.nickel);
-		nickel_leggings = createLeggings(Materials.nickel);
-		nickel_nugget = createNugget(Materials.nickel);
-		nickel_pickaxe = createPickaxe(Materials.nickel);
-		nickel_powder = createPowder(Materials.nickel);
-		nickel_shovel = createShovel(Materials.nickel);
-		nickel_sword = createSword(Materials.nickel);
-		nickel_rod = createRod(Materials.nickel);
-		nickel_gear = createGear(Materials.nickel);
+		materialName = "nickel";
 
-		nickel_slab = createSlab(Materials.nickel);
-		nickel_shield = createShield(Materials.nickel);
+		nickel_arrow = createArrow(materialName);
+		nickel_bolt = createBolt(materialName);
+		nickel_bow = createBow(materialName);
+		nickel_crossbow = createCrossbow(materialName);
+		nickel_fishing_rod = createFishingRod(materialName);
+		nickel_horsearmor = createHorseArmor(materialName);
+		nickel_shears = createShears(materialName);
+		nickel_smallpowder = createSmallPowder(materialName);
 
-		nickel_crystal = createCrystal(Materials.nickel);
-		nickel_shard = createShard(Materials.nickel);
-		nickel_clump = createClump(Materials.nickel);
-		nickel_powder_dirty = createDirtyPowder(Materials.nickel);
+		nickel_axe = createAxe(materialName);
+		nickel_boots = createBoots(materialName);
+		nickel_chestplate = createChestplate(materialName);
+		nickel_crackhammer = createCrackhammer(materialName);
+		nickel_door = createDoor(materialName);
+		nickel_helmet = createHelmet(materialName);
+		nickel_hoe = createHoe(materialName);
+		nickel_ingot = createIngot(materialName);
+		nickel_leggings = createLeggings(materialName);
+		nickel_nugget = createNugget(materialName);
+		nickel_pickaxe = createPickaxe(materialName);
+		nickel_powder = createPowder(materialName);
+		nickel_shovel = createShovel(materialName);
+		nickel_sword = createSword(materialName);
+		nickel_rod = createRod(materialName);
+		nickel_gear = createGear(materialName);
 
-		nickel_dense_plate = createDensePlate(Materials.nickel);
-		nickel_crushed = createCrushed(Materials.nickel);
-		nickel_crushed_purified = createCrushedPurified(Materials.nickel);
+		nickel_slab = createSlab(materialName);
+		nickel_shield = createShield(materialName);
 
-		pewter_arrow = createArrow(Materials.pewter);
-		pewter_bolt = createBolt(Materials.pewter);
-		pewter_bow = createBow(Materials.pewter);
-		pewter_crossbow = createCrossbow(Materials.pewter);
-		pewter_fishing_rod = createFishingRod(Materials.pewter);
-		pewter_horsearmor = createHorseArmor(Materials.pewter);
-		pewter_shears = createShears(Materials.pewter);
-		pewter_smallpowder = createSmallPowder(Materials.pewter);
+		nickel_crystal = createCrystal(materialName);
+		nickel_shard = createShard(materialName);
+		nickel_clump = createClump(materialName);
+		nickel_powder_dirty = createDirtyPowder(materialName);
 
-		pewter_axe = createAxe(Materials.pewter);
-		pewter_blend = createBlend(Materials.pewter);
-		pewter_boots = createBoots(Materials.pewter);
-		pewter_chestplate = createChestplate(Materials.pewter);
-		pewter_crackhammer = createCrackhammer(Materials.pewter);
-		pewter_door = createDoor(Materials.pewter);
-		pewter_helmet = createHelmet(Materials.pewter);
-		pewter_hoe = createHoe(Materials.pewter);
-		pewter_ingot = createIngot(Materials.pewter);
-		pewter_leggings = createLeggings(Materials.pewter);
-		pewter_nugget = createNugget(Materials.pewter);
-		pewter_pickaxe = createPickaxe(Materials.pewter);
-		pewter_powder = createPowder(Materials.pewter);
-		pewter_shovel = createShovel(Materials.pewter);
-		pewter_sword = createSword(Materials.pewter);
-		pewter_rod = createRod(Materials.pewter);
-		pewter_gear = createGear(Materials.pewter);
+		nickel_dense_plate = createDensePlate(materialName);
+		nickel_crushed = createCrushed(materialName);
+		nickel_crushed_purified = createCrushedPurified(materialName);
 
-		pewter_slab = createSlab(Materials.pewter);
-		pewter_shield = createShield(Materials.pewter);
+		materialName = "pewter";
 
-		// pewter_crystal = createCrystal(Materials.pewter);
-		// pewter_shard = createShard(Materials.pewter);
-		// pewter_clump = createClump(Materials.pewter);
-		// pewter_powder_dirty = createDirtyPowder(Materials.pewter);
+		pewter_arrow = createArrow(materialName);
+		pewter_bolt = createBolt(materialName);
+		pewter_bow = createBow(materialName);
+		pewter_crossbow = createCrossbow(materialName);
+		pewter_fishing_rod = createFishingRod(materialName);
+		pewter_horsearmor = createHorseArmor(materialName);
+		pewter_shears = createShears(materialName);
+		pewter_smallpowder = createSmallPowder(materialName);
 
-		// pewter_dense_plate = createDensePlate(Materials.pewter);
-		// pewter_crushed = createCrushed(Materials.pewter);
-		// pewter_crushed_purified = createCrushedPurified(Materials.pewter);
+		pewter_axe = createAxe(materialName);
+		pewter_blend = createBlend(materialName);
+		pewter_boots = createBoots(materialName);
+		pewter_chestplate = createChestplate(materialName);
+		pewter_crackhammer = createCrackhammer(materialName);
+		pewter_door = createDoor(materialName);
+		pewter_helmet = createHelmet(materialName);
+		pewter_hoe = createHoe(materialName);
+		pewter_ingot = createIngot(materialName);
+		pewter_leggings = createLeggings(materialName);
+		pewter_nugget = createNugget(materialName);
+		pewter_pickaxe = createPickaxe(materialName);
+		pewter_powder = createPowder(materialName);
+		pewter_shovel = createShovel(materialName);
+		pewter_sword = createSword(materialName);
+		pewter_rod = createRod(materialName);
+		pewter_gear = createGear(materialName);
 
-		silver_arrow = createArrow(Materials.silver);
-		silver_bolt = createBolt(Materials.silver);
-		silver_bow = createBow(Materials.silver);
-		silver_crossbow = createCrossbow(Materials.silver);
-		silver_fishing_rod = createFishingRod(Materials.silver);
-		silver_horsearmor = createHorseArmor(Materials.silver);
-		silver_shears = createShears(Materials.silver);
-		silver_smallpowder = createSmallPowder(Materials.silver);
+		pewter_slab = createSlab(materialName);
+		pewter_shield = createShield(materialName);
 
-		silver_axe = createAxe(Materials.silver);
-		silver_boots = createBoots(Materials.silver);
-		silver_chestplate = createChestplate(Materials.silver);
-		silver_crackhammer = createCrackhammer(Materials.silver);
-		silver_door = createDoor(Materials.silver);
-		silver_helmet = createHelmet(Materials.silver);
-		silver_hoe = createHoe(Materials.silver);
-		silver_ingot = createIngot(Materials.silver);
-		silver_leggings = createLeggings(Materials.silver);
-		silver_nugget = createNugget(Materials.silver);
-		silver_pickaxe = createPickaxe(Materials.silver);
-		silver_powder = createPowder(Materials.silver);
-		silver_shovel = createShovel(Materials.silver);
-		silver_sword = createSword(Materials.silver);
-		silver_rod = createRod(Materials.silver);
-		silver_gear = createGear(Materials.silver);
+		// pewter_crystal = createCrystal(materialName);
+		// pewter_shard = createShard(materialName);
+		// pewter_clump = createClump(materialName);
+		// pewter_powder_dirty = createDirtyPowder(materialName);
 
-		silver_slab = createSlab(Materials.silver);
-		silver_shield = createShield(Materials.silver);
+		// pewter_dense_plate = createDensePlate(materialName);
+		// pewter_crushed = createCrushed(materialName);
+		// pewter_crushed_purified = createCrushedPurified(materialName);
 
-		silver_dense_plate = createDensePlate(Materials.silver);
-		silver_crushed = createCrushed(Materials.silver);
-		silver_crushed_purified = createCrushedPurified(Materials.silver);
+		materialName = "silver";
 
-		starsteel_arrow = createArrow(Materials.starsteel);
-		starsteel_bolt = createBolt(Materials.starsteel);
-		starsteel_bow = createBow(Materials.starsteel);
-		starsteel_crossbow = createCrossbow(Materials.starsteel);
-		starsteel_fishing_rod = createFishingRod(Materials.starsteel);
-		starsteel_horsearmor = createHorseArmor(Materials.starsteel);
-		starsteel_shears = createShears(Materials.starsteel);
-		starsteel_smallpowder = createSmallPowder(Materials.starsteel);
+		silver_arrow = createArrow(materialName);
+		silver_bolt = createBolt(materialName);
+		silver_bow = createBow(materialName);
+		silver_crossbow = createCrossbow(materialName);
+		silver_fishing_rod = createFishingRod(materialName);
+		silver_horsearmor = createHorseArmor(materialName);
+		silver_shears = createShears(materialName);
+		silver_smallpowder = createSmallPowder(materialName);
 
-		starsteel_axe = createAxe(Materials.starsteel);
-		starsteel_boots = createBoots(Materials.starsteel);
-		starsteel_chestplate = createChestplate(Materials.starsteel);
-		starsteel_crackhammer = createCrackhammer(Materials.starsteel);
-		starsteel_door = createDoor(Materials.starsteel);
-		starsteel_helmet = createHelmet(Materials.starsteel);
-		starsteel_hoe = createHoe(Materials.starsteel);
-		starsteel_ingot = createIngot(Materials.starsteel);
-		starsteel_leggings = createLeggings(Materials.starsteel);
-		starsteel_nugget = createNugget(Materials.starsteel);
-		starsteel_pickaxe = createPickaxe(Materials.starsteel);
-		starsteel_powder = createPowder(Materials.starsteel);
-		starsteel_shovel = createShovel(Materials.starsteel);
-		starsteel_sword = createSword(Materials.starsteel);
-		starsteel_rod = createRod(Materials.starsteel);
-		starsteel_gear = createGear(Materials.starsteel);
+		silver_axe = createAxe(materialName);
+		silver_boots = createBoots(materialName);
+		silver_chestplate = createChestplate(materialName);
+		silver_crackhammer = createCrackhammer(materialName);
+		silver_door = createDoor(materialName);
+		silver_helmet = createHelmet(materialName);
+		silver_hoe = createHoe(materialName);
+		silver_ingot = createIngot(materialName);
+		silver_leggings = createLeggings(materialName);
+		silver_nugget = createNugget(materialName);
+		silver_pickaxe = createPickaxe(materialName);
+		silver_powder = createPowder(materialName);
+		silver_shovel = createShovel(materialName);
+		silver_sword = createSword(materialName);
+		silver_rod = createRod(materialName);
+		silver_gear = createGear(materialName);
 
-		starsteel_slab = createSlab(Materials.starsteel);
-		starsteel_shield = createShield(Materials.starsteel);
+		silver_slab = createSlab(materialName);
+		silver_shield = createShield(materialName);
 
-		starsteel_crystal = createCrystal(Materials.starsteel);
-		starsteel_shard = createShard(Materials.starsteel);
-		starsteel_clump = createClump(Materials.starsteel);
-		starsteel_powder_dirty = createDirtyPowder(Materials.starsteel);
+		silver_dense_plate = createDensePlate(materialName);
+		silver_crushed = createCrushed(materialName);
+		silver_crushed_purified = createCrushedPurified(materialName);
 
-		starsteel_dense_plate = createDensePlate(Materials.starsteel);
-		starsteel_crushed = createCrushed(Materials.starsteel);
-		starsteel_crushed_purified = createCrushedPurified(Materials.starsteel);
+		materialName = "starsteel";
 
-		steel_arrow = createArrow(Materials.steel);
-		steel_bolt = createBolt(Materials.steel);
-		steel_bow = createBow(Materials.steel);
-		steel_crossbow = createCrossbow(Materials.steel);
-		steel_fishing_rod = createFishingRod(Materials.steel);
-		steel_horsearmor = createHorseArmor(Materials.steel);
-		steel_shears = createShears(Materials.steel);
-		steel_smallblend = createSmallBlend(Materials.steel);
-		steel_smallpowder = createSmallPowder(Materials.steel);
+		starsteel_arrow = createArrow(materialName);
+		starsteel_bolt = createBolt(materialName);
+		starsteel_bow = createBow(materialName);
+		starsteel_crossbow = createCrossbow(materialName);
+		starsteel_fishing_rod = createFishingRod(materialName);
+		starsteel_horsearmor = createHorseArmor(materialName);
+		starsteel_shears = createShears(materialName);
+		starsteel_smallpowder = createSmallPowder(materialName);
 
-		steel_axe = createAxe(Materials.steel);
-		steel_blend = createBlend(Materials.steel);
-		steel_boots = createBoots(Materials.steel);
-		steel_chestplate = createChestplate(Materials.steel);
-		steel_crackhammer = createCrackhammer(Materials.steel);
-		steel_door = createDoor(Materials.steel);
-		steel_helmet = createHelmet(Materials.steel);
-		steel_hoe = createHoe(Materials.steel);
-		steel_ingot = createIngot(Materials.steel);
-		steel_leggings = createLeggings(Materials.steel);
-		steel_nugget = createNugget(Materials.steel);
-		steel_pickaxe = createPickaxe(Materials.steel);
-		steel_powder = createPowder(Materials.steel);
-		steel_shovel = createShovel(Materials.steel);
-		steel_sword = createSword(Materials.steel);
-		steel_rod = createRod(Materials.steel);
-		steel_gear = createGear(Materials.steel);
+		starsteel_axe = createAxe(materialName);
+		starsteel_boots = createBoots(materialName);
+		starsteel_chestplate = createChestplate(materialName);
+		starsteel_crackhammer = createCrackhammer(materialName);
+		starsteel_door = createDoor(materialName);
+		starsteel_helmet = createHelmet(materialName);
+		starsteel_hoe = createHoe(materialName);
+		starsteel_ingot = createIngot(materialName);
+		starsteel_leggings = createLeggings(materialName);
+		starsteel_nugget = createNugget(materialName);
+		starsteel_pickaxe = createPickaxe(materialName);
+		starsteel_powder = createPowder(materialName);
+		starsteel_shovel = createShovel(materialName);
+		starsteel_sword = createSword(materialName);
+		starsteel_rod = createRod(materialName);
+		starsteel_gear = createGear(materialName);
 
-		steel_slab = createSlab(Materials.steel);
-		steel_shield = createShield(Materials.steel);
+		starsteel_slab = createSlab(materialName);
+		starsteel_shield = createShield(materialName);
 
-		steel_crystal = createCrystal(Materials.steel);
-		steel_shard = createShard(Materials.steel);
-		steel_clump = createClump(Materials.steel);
-		steel_powder_dirty = createDirtyPowder(Materials.steel);
+		starsteel_crystal = createCrystal(materialName);
+		starsteel_shard = createShard(materialName);
+		starsteel_clump = createClump(materialName);
+		starsteel_powder_dirty = createDirtyPowder(materialName);
 
-		steel_dense_plate = createDensePlate(Materials.steel);
-		steel_crushed = createCrushed(Materials.steel);
-		steel_crushed_purified = createCrushedPurified(Materials.steel);
+		starsteel_dense_plate = createDensePlate(materialName);
+		starsteel_crushed = createCrushed(materialName);
+		starsteel_crushed_purified = createCrushedPurified(materialName);
 
-		tin_arrow = createArrow(Materials.tin);
-		tin_bolt = createBolt(Materials.tin);
-		tin_bow = createBow(Materials.tin);
-		tin_crossbow = createCrossbow(Materials.tin);
-		tin_fishing_rod = createFishingRod(Materials.tin);
-		tin_horsearmor = createHorseArmor(Materials.tin);
+		materialName = "steel";
 
-		tin_axe = createAxe(Materials.tin);
-		tin_boots = createBoots(Materials.tin);
-		tin_chestplate = createChestplate(Materials.tin);
-		tin_crackhammer = createCrackhammer(Materials.tin);
-		tin_door = createDoor(Materials.tin);
-		tin_helmet = createHelmet(Materials.tin);
-		tin_hoe = createHoe(Materials.tin);
-		tin_ingot = createIngot(Materials.tin);
-		tin_leggings = createLeggings(Materials.tin);
-		tin_nugget = createNugget(Materials.tin);
-		tin_pickaxe = createPickaxe(Materials.tin);
-		tin_powder = createPowder(Materials.tin);
-		tin_shears = createShears(Materials.tin);
-		tin_shovel = createShovel(Materials.tin);
-		tin_smallpowder = createSmallPowder(Materials.tin);
-		tin_sword = createSword(Materials.tin);
-		tin_rod = createRod(Materials.tin);
-		tin_gear = createGear(Materials.tin);
+		steel_arrow = createArrow(materialName);
+		steel_bolt = createBolt(materialName);
+		steel_bow = createBow(materialName);
+		steel_crossbow = createCrossbow(materialName);
+		steel_fishing_rod = createFishingRod(materialName);
+		steel_horsearmor = createHorseArmor(materialName);
+		steel_shears = createShears(materialName);
+		steel_smallblend = createSmallBlend(materialName);
+		steel_smallpowder = createSmallPowder(materialName);
 
-		tin_slab = createSlab(Materials.tin);
-		tin_shield = createShield(Materials.tin);
+		steel_axe = createAxe(materialName);
+		steel_blend = createBlend(materialName);
+		steel_boots = createBoots(materialName);
+		steel_chestplate = createChestplate(materialName);
+		steel_crackhammer = createCrackhammer(materialName);
+		steel_door = createDoor(materialName);
+		steel_helmet = createHelmet(materialName);
+		steel_hoe = createHoe(materialName);
+		steel_ingot = createIngot(materialName);
+		steel_leggings = createLeggings(materialName);
+		steel_nugget = createNugget(materialName);
+		steel_pickaxe = createPickaxe(materialName);
+		steel_powder = createPowder(materialName);
+		steel_shovel = createShovel(materialName);
+		steel_sword = createSword(materialName);
+		steel_rod = createRod(materialName);
+		steel_gear = createGear(materialName);
 
-		tin_dense_plate = createDensePlate(Materials.tin);
-		tin_crushed = createCrushed(Materials.tin);
-		tin_crushed_purified = createCrushedPurified(Materials.tin);
+		steel_slab = createSlab(materialName);
+		steel_shield = createShield(materialName);
 
-		zinc_arrow = createArrow(Materials.zinc);
-		zinc_axe = createAxe(Materials.zinc);
-		zinc_bolt = createBolt(Materials.zinc);
-		zinc_boots = createBoots(Materials.zinc);
-		zinc_bow = createBow(Materials.zinc);
-		zinc_chestplate = createChestplate(Materials.zinc);
-		zinc_crackhammer = createCrackhammer(Materials.zinc);
-		zinc_crossbow = createCrossbow(Materials.zinc);
-		zinc_door = createDoor(Materials.zinc);
-		zinc_fishing_rod = createFishingRod(Materials.zinc);
-		zinc_helmet = createHelmet(Materials.zinc);
-		zinc_hoe = createHoe(Materials.zinc);
-		zinc_horsearmor = createHorseArmor(Materials.zinc);
-		zinc_ingot = createIngot(Materials.zinc);
-		zinc_leggings = createLeggings(Materials.zinc);
-		zinc_nugget = createNugget(Materials.zinc);
-		tin_pickaxe = createPickaxe(Materials.zinc);
-		zinc_powder = createPowder(Materials.zinc);
-		zinc_shears = createShears(Materials.zinc);
-		zinc_shovel = createShovel(Materials.zinc);
-		zinc_smallpowder = createSmallPowder(Materials.zinc);
-		zinc_sword = createSword(Materials.zinc);
-		zinc_rod = createRod(Materials.zinc);
-		zinc_gear = createGear(Materials.zinc);
+		steel_crystal = createCrystal(materialName);
+		steel_shard = createShard(materialName);
+		steel_clump = createClump(materialName);
+		steel_powder_dirty = createDirtyPowder(materialName);
 
-		zinc_slab = createSlab(Materials.zinc);
-		zinc_shield = createShield(Materials.zinc);
+		steel_dense_plate = createDensePlate(materialName);
+		steel_crushed = createCrushed(materialName);
+		steel_crushed_purified = createCrushedPurified(materialName);
 
-		zinc_crystal = createCrystal(Materials.zinc);
-		zinc_shard = createShard(Materials.zinc);
-		zinc_clump = createClump(Materials.zinc);
-		zinc_powder_dirty = createDirtyPowder(Materials.zinc);
+		materialName = "tin";
 
-		zinc_dense_plate = createDensePlate(Materials.zinc);
-		zinc_crushed = createCrushed(Materials.zinc);
-		zinc_crushed_purified = createCrushedPurified(Materials.zinc);
+		tin_arrow = createArrow(materialName);
+		tin_bolt = createBolt(materialName);
+		tin_bow = createBow(materialName);
+		tin_crossbow = createCrossbow(materialName);
+		tin_fishing_rod = createFishingRod(materialName);
+		tin_horsearmor = createHorseArmor(materialName);
+
+		tin_axe = createAxe(materialName);
+		tin_boots = createBoots(materialName);
+		tin_chestplate = createChestplate(materialName);
+		tin_crackhammer = createCrackhammer(materialName);
+		tin_door = createDoor(materialName);
+		tin_helmet = createHelmet(materialName);
+		tin_hoe = createHoe(materialName);
+		tin_ingot = createIngot(materialName);
+		tin_leggings = createLeggings(materialName);
+		tin_nugget = createNugget(materialName);
+		tin_pickaxe = createPickaxe(materialName);
+		tin_powder = createPowder(materialName);
+		tin_shears = createShears(materialName);
+		tin_shovel = createShovel(materialName);
+		tin_smallpowder = createSmallPowder(materialName);
+		tin_sword = createSword(materialName);
+		tin_rod = createRod(materialName);
+		tin_gear = createGear(materialName);
+
+		tin_slab = createSlab(materialName);
+		tin_shield = createShield(materialName);
+
+		tin_dense_plate = createDensePlate(materialName);
+		tin_crushed = createCrushed(materialName);
+		tin_crushed_purified = createCrushedPurified(materialName);
+
+		materialName = "zinc";
+
+		zinc_arrow = createArrow(materialName);
+		zinc_axe = createAxe(materialName);
+		zinc_bolt = createBolt(materialName);
+		zinc_boots = createBoots(materialName);
+		zinc_bow = createBow(materialName);
+		zinc_chestplate = createChestplate(materialName);
+		zinc_crackhammer = createCrackhammer(materialName);
+		zinc_crossbow = createCrossbow(materialName);
+		zinc_door = createDoor(materialName);
+		zinc_fishing_rod = createFishingRod(materialName);
+		zinc_helmet = createHelmet(materialName);
+		zinc_hoe = createHoe(materialName);
+		zinc_horsearmor = createHorseArmor(materialName);
+		zinc_ingot = createIngot(materialName);
+		zinc_leggings = createLeggings(materialName);
+		zinc_nugget = createNugget(materialName);
+		tin_pickaxe = createPickaxe(materialName);
+		zinc_powder = createPowder(materialName);
+		zinc_shears = createShears(materialName);
+		zinc_shovel = createShovel(materialName);
+		zinc_smallpowder = createSmallPowder(materialName);
+		zinc_sword = createSword(materialName);
+		zinc_rod = createRod(materialName);
+		zinc_gear = createGear(materialName);
+
+		zinc_slab = createSlab(materialName);
+		zinc_shield = createShield(materialName);
+
+		zinc_crystal = createCrystal(materialName);
+		zinc_shard = createShard(materialName);
+		zinc_clump = createClump(materialName);
+		zinc_powder_dirty = createDirtyPowder(materialName);
+
+		zinc_dense_plate = createDensePlate(materialName);
+		zinc_crushed = createCrushed(materialName);
+		zinc_crushed_purified = createCrushedPurified(materialName);
 
 		int ss = 0;
 		classSortingValues.put(BlockMetalOre.class, ++ss * 10000);
@@ -1778,8 +1831,8 @@ public abstract class Items {
 		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalSlab.class, ++ss * 10000);
 
-		final List<MetalMaterial> metlist = new ArrayList<>(Materials.getAllMetals().size());
-		metlist.addAll(Materials.getAllMetals());
+		final List<MetalMaterial> metlist = new ArrayList<>(Materials.getAllMaterials().size());
+		metlist.addAll(Materials.getAllMaterials());
 		metlist.sort((MetalMaterial a, MetalMaterial b) -> a.getName().compareToIgnoreCase(b.getName()));
 		for (int i = 0; i < metlist.size(); i++)
 			materialSortingValues.put(metlist.get(i), i * 100);
@@ -1787,30 +1840,26 @@ public abstract class Items {
 		initDone = true;
 	}
 
-	private static Item addItem(Item item, String name, MetalMaterial metal, CreativeTabs tab) {
+	private static Item addItem(Item item, String name, MetalMaterial material, CreativeTabs tab) {
 
-		String fullName = null;
-		if (metal != null)
-			fullName = metal.getName() + "_" + name;
+		String fullName;
+		if (material != null)
+			fullName = material.getName() + "_" + name;
 		else
 			fullName = name;
 
+		// Loader.instance().activeModContainer().getModId()
 		item.setRegistryName(fullName);
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
 		GameRegistry.register(item);
 		itemRegistry.put(fullName, item);
 
-		/*
-		if (item instanceof ItemMetalDoor)
-			doorMap.put(metal.doorBlock, item);
-		*/
-
 		if (tab != null)
 			item.setCreativeTab(tab);
 
-		if (metal != null) {
-			itemsByMetal.computeIfAbsent(metal, (MetalMaterial g) -> new ArrayList<>());
-			itemsByMetal.get(metal).add(item);
+		if (material != null) {
+			itemsByMetal.computeIfAbsent(material, (MetalMaterial g) -> new ArrayList<>());
+			itemsByMetal.get(material).add(item);
 		}
 
 		if (item instanceof IOreDictionaryEntry)
@@ -1819,221 +1868,256 @@ public abstract class Items {
 		return item;
 	}
 
-	private static Item createIngot(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalIngot(metal), "ingot", metal, ItemGroups.tab_items);
-		metal.ingot = i;
+	private static Item createIngot(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalIngot(material), "ingot", material, ItemGroups.tab_items);
+		material.ingot = i;
 		return i;
 	}
 
-	private static Item createNugget(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalNugget(metal), "nugget", metal, ItemGroups.tab_items);
-		metal.nugget = i;
+	private static Item createNugget(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalNugget(material), "nugget", material, ItemGroups.tab_items);
+		material.nugget = i;
 		return i;
 	}
 
-	private static Item createPowder(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalPowder(metal), "powder", metal, ItemGroups.tab_items);
-		metal.powder = i;
+	private static Item createPowder(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalPowder(material), "powder", material, ItemGroups.tab_items);
+		material.powder = i;
 		return i;
 	}
 
-	private static Item createBlend(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalBlend(metal), "blend", metal, ItemGroups.tab_items);
-		metal.blend = i;
+	private static Item createBlend(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalBlend(material), "blend", material, ItemGroups.tab_items);
+		material.blend = i;
 		return i;
 	}
 
-	private static Item createRod(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalRod(metal), "rod", metal, ItemGroups.tab_items);
-		metal.rod = i;
+	private static Item createRod(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalRod(material), "rod", material, ItemGroups.tab_items);
+		material.rod = i;
 		return i;
 	}
 
-	private static Item createGear(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalGear(metal), "gear", metal, ItemGroups.tab_items);
-		metal.gear = i;
+	private static Item createGear(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalGear(material), "gear", material, ItemGroups.tab_items);
+		material.gear = i;
 		return i;
 	}
 
-	private static Item createAxe(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalAxe(metal), "axe", metal, ItemGroups.tab_tools);
-		metal.axe = i;
+	private static Item createAxe(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalAxe(material), "axe", material, ItemGroups.tab_tools);
+		material.axe = i;
 		return i;
 	}
 
-	private static Item createCrackhammer(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalCrackHammer(metal), "crackhammer", metal, ItemGroups.tab_tools);
-		metal.crackhammer = i;
+	private static Item createCrackhammer(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalCrackHammer(material), "crackhammer", material, ItemGroups.tab_tools);
+		material.crackhammer = i;
 		return i;
 	}
 
-	private static Item createHoe(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalHoe(metal), "hoe", metal, ItemGroups.tab_tools);
-		metal.hoe = i;
+	private static Item createHoe(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalHoe(material), "hoe", material, ItemGroups.tab_tools);
+		material.hoe = i;
 		return i;
 	}
 
-	private static Item createPickaxe(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalPickaxe(metal), "pickaxe", metal, ItemGroups.tab_tools);
-		metal.pickaxe = i;
+	private static Item createPickaxe(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalPickaxe(material), "pickaxe", material, ItemGroups.tab_tools);
+		material.pickaxe = i;
 		return i;
 	}
 
-	private static Item createShovel(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalShovel(metal), "shovel", metal, ItemGroups.tab_tools);
-		metal.shovel = i;
+	private static Item createShovel(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalShovel(material), "shovel", material, ItemGroups.tab_tools);
+		material.shovel = i;
 		return i;
 	}
 
-	private static Item createSword(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalSword(metal), "sword", metal, ItemGroups.tab_tools);
-		metal.sword = i;
+	private static Item createSword(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalSword(material), "sword", material, ItemGroups.tab_tools);
+		material.sword = i;
 		return i;
 	}
 
-	private static Item createHelmet(MetalMaterial metal) {
-		final Item i = addItem(ItemMetalArmor.createHelmet(metal), "helmet", metal, ItemGroups.tab_tools);
-		metal.helmet = i;
+	private static Item createHelmet(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(ItemMetalArmor.createHelmet(material), "helmet", material, ItemGroups.tab_tools);
+		material.helmet = i;
 		return i;
 	}
 
-	private static Item createChestplate(MetalMaterial metal) {
-		final Item i = addItem(ItemMetalArmor.createChestplate(metal), "chestplate", metal, ItemGroups.tab_tools);
-		metal.chestplate = i;
+	private static Item createChestplate(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(ItemMetalArmor.createChestplate(material), "chestplate", material, ItemGroups.tab_tools);
+		material.chestplate = i;
 		return i;
 	}
 
-	private static Item createLeggings(MetalMaterial metal) {
-		final Item i = addItem(ItemMetalArmor.createLeggings(metal), "leggings", metal, ItemGroups.tab_tools);
-		metal.leggings = i;
+	private static Item createLeggings(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(ItemMetalArmor.createLeggings(material), "leggings", material, ItemGroups.tab_tools);
+		material.leggings = i;
 		return i;
 	}
 
-	private static Item createBoots(MetalMaterial metal) {
-		final Item i = addItem(ItemMetalArmor.createBoots(metal), "boots", metal, ItemGroups.tab_tools);
-		metal.boots = i;
+	private static Item createBoots(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(ItemMetalArmor.createBoots(material), "boots", material, ItemGroups.tab_tools);
+		material.boots = i;
 		return i;
 	}
 
-	private static Item createHorseArmor(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalHorseArmor(metal), "horsearmor", metal, ItemGroups.tab_tools);
-		metal.horsearmor = i;
+	private static Item createHorseArmor(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.tab_tools);
+		material.horsearmor = i;
 		return i;
 	}
 
-	private static Item createArrow(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalArrow(metal), "arrow", metal, ItemGroups.tab_tools);
-		metal.arrow = i;
+	private static Item createArrow(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalArrow(material), "arrow", material, ItemGroups.tab_tools);
+		material.arrow = i;
 		return i;
 	}
 
-	private static Item createBolt(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalBolt(metal), "bolt", metal, ItemGroups.tab_tools);
-		metal.bolt = i;
+	private static Item createBolt(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalBolt(material), "bolt", material, ItemGroups.tab_tools);
+		material.bolt = i;
 		return i;
 	}
 
-	private static Item createBow(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalBow(metal), "bow", metal, ItemGroups.tab_tools);
-		metal.bow = i;
+	private static Item createBow(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalBow(material), "bow", material, ItemGroups.tab_tools);
+		material.bow = i;
 		return i;
 	}
 
-	private static Item createCrossbow(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalCrossbow(metal), "crossbow", metal, ItemGroups.tab_tools);
-		metal.crossbow = i;
+	private static Item createCrossbow(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalCrossbow(material), "crossbow", material, ItemGroups.tab_tools);
+		material.crossbow = i;
 		return i;
 	}
 
-	private static Item createShears(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalShears(metal), "shears", metal, ItemGroups.tab_tools);
-		metal.shears = i;
+	private static Item createShears(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalShears(material), "shears", material, ItemGroups.tab_tools);
+		material.shears = i;
 		return i;
 	}
 
-	private static Item createSmallBlend(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalSmallBlend(metal), "smallblend", metal, ItemGroups.tab_items);
-		metal.smallblend = i;
+	private static Item createSmallBlend(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalSmallBlend(material), "smallblend", material, ItemGroups.tab_items);
+		material.smallblend = i;
 		return i;
 	}
 
-	private static Item createFishingRod(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalFishingRod(metal), "fishing_rod", metal, ItemGroups.tab_tools);
-		metal.fishing_rod = i;
+	private static Item createFishingRod(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalFishingRod(material), "fishing_rod", material, ItemGroups.tab_tools);
+		material.fishing_rod = i;
 		return i;
 	}
 
-	private static Item createSmallPowder(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalSmallPowder(metal), "smallpowder", metal, ItemGroups.tab_items);
-		metal.smallpowder = i;
+	private static Item createSmallPowder(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalSmallPowder(material), "smallpowder", material, ItemGroups.tab_items);
+		material.smallpowder = i;
 		return i;
 	}
 
-	private static Item createShield(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalShield(metal), "shield", metal, ItemGroups.tab_items);
-		metal.shield = i;
+	private static Item createShield(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalShield(material), "shield", material, ItemGroups.tab_items);
+		material.shield = i;
 		return i;
 	}
 
-	private static Item createCrystal(MetalMaterial metal) {
-		final Item i = addItem(new GenericMetalItem(metal), "crystal", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("crystal" + metal.getCapitalizedName(), i);
-		metal.crystal = i;
+	private static Item createCrystal(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.tab_items);
+		OreDictionary.registerOre("crystal" + material.getCapitalizedName(), i);
+		material.crystal = i;
 		return i;
 	}
 
-	private static Item createShard(MetalMaterial metal) {
-		final Item i = addItem(new GenericMetalItem(metal), "shard", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("shard" + metal.getCapitalizedName(), i);
-		metal.shard = i;
+	private static Item createShard(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.tab_items);
+		OreDictionary.registerOre("shard" + material.getCapitalizedName(), i);
+		material.shard = i;
 		return i;
 	}
 
-	private static Item createClump(MetalMaterial metal) {
-		final Item i = addItem(new GenericMetalItem(metal), "clump", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("clump" + metal.getCapitalizedName(), i);
-		metal.clump = i;
+	private static Item createClump(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.tab_items);
+		OreDictionary.registerOre("clump" + material.getCapitalizedName(), i);
+		material.clump = i;
 		return i;
 	}
 
-	private static Item createDirtyPowder(MetalMaterial metal) {
-		final Item i = addItem(new GenericMetalItem(metal), "powder_dirty", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("dustDirty" + metal.getCapitalizedName(), i);
-		metal.dirtypowder = i;
+	private static Item createDirtyPowder(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.tab_items);
+		OreDictionary.registerOre("dustDirty" + material.getCapitalizedName(), i);
+		material.dirtypowder = i;
 		return i;
 	}
 
 	// TODO: Possibly make this a block, 1/2 of the normal plate.
-	private static Item createDensePlate(MetalMaterial metal) {
-		final Item i = addItem(new GenericMetalItem(metal), "dense_plate", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("plateDense" + metal.getCapitalizedName(), i);
-		metal.denseplate = i;
+	private static Item createDensePlate(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.tab_items);
+		OreDictionary.registerOre("plateDense" + material.getCapitalizedName(), i);
+		material.denseplate = i;
 		return i;
 	}
 
-	private static Item createCrushed(MetalMaterial metal) {
-		final Item i = addItem(new GenericMetalItem(metal), "crushed", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("crushed" + metal.getCapitalizedName(), i);
-		metal.crushed = i;
+	private static Item createCrushed(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.tab_items);
+		OreDictionary.registerOre("crushed" + material.getCapitalizedName(), i);
+		material.crushed = i;
 		return i;
 	}
 
-	private static Item createCrushedPurified(MetalMaterial metal) {
-		final Item i = addItem(new GenericMetalItem(metal), "crushed_purified", metal, ItemGroups.tab_items);
-		OreDictionary.registerOre("crushedPurified" + metal.getCapitalizedName(), i);
-//		metal.crushedpurified = i;
+	private static Item createCrushedPurified(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.tab_items);
+		OreDictionary.registerOre("crushedPurified" + material.getCapitalizedName(), i);
+//		material.crushedpurified = i;
 		return i;
 	}
 
-	private static Item createSlab(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalSlab(metal), "slab", metal, ItemGroups.tab_blocks);
-		metal.slab = i;
+	private static Item createSlab(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
+		material.slab = i;
 		return i;
 	}
 
-	private static Item createDoor(MetalMaterial metal) {
-		final Item i = addItem(new ItemMetalDoor(metal), "door", metal, ItemGroups.tab_blocks);;
-		metal.door = i;
+	private static Item createDoor(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Item i = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.tab_blocks);
+		material.door = i;
 		return i;
 	}
 

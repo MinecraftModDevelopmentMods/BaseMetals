@@ -38,13 +38,13 @@ public abstract class Blocks {
 	public static Block adamantine_ore;
 	public static Block adamantine_trapdoor;
 
-	protected static Block adamantine_button;
-	protected static BlockSlab adamantine_slab;
-	protected static BlockSlab double_adamantine_slab;
-	protected static Block adamantine_lever;
-	protected static Block adamantine_pressure_plate;
-	protected static Block adamantine_stairs;
-	protected static Block adamantine_wall;
+	public static Block adamantine_button;
+	public static BlockSlab adamantine_slab;
+	public static BlockSlab double_adamantine_slab;
+	public static Block adamantine_lever;
+	public static Block adamantine_pressure_plate;
+	public static Block adamantine_stairs;
+	public static Block adamantine_wall;
 
 	public static Block antimony_bars;
 	public static Block antimony_block;
@@ -53,13 +53,13 @@ public abstract class Blocks {
 	public static Block antimony_ore;
 	public static Block antimony_trapdoor;
 
-	protected static Block antimony_button;
-	protected static BlockSlab antimony_slab;
-	protected static BlockSlab double_antimony_slab;
-	protected static Block antimony_lever;
-	protected static Block antimony_pressure_plate;
-	protected static Block antimony_stairs;
-	protected static Block antimony_wall;
+	public static Block antimony_button;
+	public static BlockSlab antimony_slab;
+	public static BlockSlab double_antimony_slab;
+	public static Block antimony_lever;
+	public static Block antimony_pressure_plate;
+	public static Block antimony_stairs;
+	public static Block antimony_wall;
 
 	public static Block aquarium_bars;
 	public static Block aquarium_block;
@@ -67,13 +67,13 @@ public abstract class Blocks {
 	public static BlockDoor aquarium_door;
 	public static Block aquarium_trapdoor;
 
-	protected static Block aquarium_button;
-	protected static BlockSlab aquarium_slab;
-	protected static BlockSlab double_aquarium_slab;
-	protected static Block aquarium_lever;
-	protected static Block aquarium_pressure_plate;
-	protected static Block aquarium_stairs;
-	protected static Block aquarium_wall;
+	public static Block aquarium_button;
+	public static BlockSlab aquarium_slab;
+	public static BlockSlab double_aquarium_slab;
+	public static Block aquarium_lever;
+	public static Block aquarium_pressure_plate;
+	public static Block aquarium_stairs;
+	public static Block aquarium_wall;
 
 	public static Block bismuth_bars;
 	public static Block bismuth_block;
@@ -82,13 +82,13 @@ public abstract class Blocks {
 	public static Block bismuth_ore;
 	public static Block bismuth_trapdoor;
 
-	protected static Block bismuth_button;
-	protected static BlockSlab bismuth_slab;
-	protected static BlockSlab double_bismuth_slab;
-	protected static Block bismuth_lever;
-	protected static Block bismuth_pressure_plate;
-	protected static Block bismuth_stairs;
-	protected static Block bismuth_wall;
+	public static Block bismuth_button;
+	public static BlockSlab bismuth_slab;
+	public static BlockSlab double_bismuth_slab;
+	public static Block bismuth_lever;
+	public static Block bismuth_pressure_plate;
+	public static Block bismuth_stairs;
+	public static Block bismuth_wall;
 
 	public static Block brass_bars;
 	public static Block brass_block;
@@ -96,13 +96,13 @@ public abstract class Blocks {
 	public static BlockDoor brass_door;
 	public static Block brass_trapdoor;
 
-	protected static Block brass_button;
-	protected static BlockSlab brass_slab;
-	protected static BlockSlab double_brass_slab;
-	protected static Block brass_lever;
-	protected static Block brass_pressure_plate;
-	protected static Block brass_stairs;
-	protected static Block brass_wall;
+	public static Block brass_button;
+	public static BlockSlab brass_slab;
+	public static BlockSlab double_brass_slab;
+	public static Block brass_lever;
+	public static Block brass_pressure_plate;
+	public static Block brass_stairs;
+	public static Block brass_wall;
 
 	public static Block bronze_bars;
 	public static Block bronze_block;
@@ -110,13 +110,13 @@ public abstract class Blocks {
 	public static BlockDoor bronze_door;
 	public static Block bronze_trapdoor;
 
-	protected static Block bronze_button;
-	protected static BlockSlab bronze_slab;
-	protected static BlockSlab double_bronze_slab;
-	protected static Block bronze_lever;
-	protected static Block bronze_pressure_plate;
-	protected static Block bronze_stairs;
-	protected static Block bronze_wall;
+	public static Block bronze_button;
+	public static BlockSlab bronze_slab;
+	public static BlockSlab double_bronze_slab;
+	public static Block bronze_lever;
+	public static Block bronze_pressure_plate;
+	public static Block bronze_stairs;
+	public static Block bronze_wall;
 
 	public static Block coldiron_bars;
 	public static Block coldiron_block;
@@ -125,13 +125,13 @@ public abstract class Blocks {
 	public static Block coldiron_ore;
 	public static Block coldiron_trapdoor;
 
-	protected static Block coldiron_button;
-	protected static BlockSlab coldiron_slab;
-	protected static BlockSlab double_coldiron_slab;
-	protected static Block coldiron_lever;
-	protected static Block coldiron_pressure_plate;
-	protected static Block coldiron_stairs;
-	protected static Block coldiron_wall;
+	public static Block coldiron_button;
+	public static BlockSlab coldiron_slab;
+	public static BlockSlab double_coldiron_slab;
+	public static Block coldiron_lever;
+	public static Block coldiron_pressure_plate;
+	public static Block coldiron_stairs;
+	public static Block coldiron_wall;
 
 	public static Block copper_bars;
 	public static Block copper_block;
@@ -140,13 +140,13 @@ public abstract class Blocks {
 	public static Block copper_ore;
 	public static Block copper_trapdoor;
 
-	protected static Block copper_button;
-	protected static BlockSlab copper_slab;
-	protected static BlockSlab double_copper_slab;
-	protected static Block copper_lever;
-	protected static Block copper_pressure_plate;
-	protected static Block copper_stairs;
-	protected static Block copper_wall;
+	public static Block copper_button;
+	public static BlockSlab copper_slab;
+	public static BlockSlab double_copper_slab;
+	public static Block copper_lever;
+	public static Block copper_pressure_plate;
+	public static Block copper_stairs;
+	public static Block copper_wall;
 
 	public static Block cupronickel_bars;
 	public static Block cupronickel_block;
@@ -154,13 +154,13 @@ public abstract class Blocks {
 	public static BlockDoor cupronickel_door;
 	public static Block cupronickel_trapdoor;
 
-	protected static Block cupronickel_button;
-	protected static BlockSlab cupronickel_slab;
-	protected static BlockSlab double_cupronickel_slab;
-	protected static Block cupronickel_lever;
-	protected static Block cupronickel_pressure_plate;
-	protected static Block cupronickel_stairs;
-	protected static Block cupronickel_wall;
+	public static Block cupronickel_button;
+	public static BlockSlab cupronickel_slab;
+	public static BlockSlab double_cupronickel_slab;
+	public static Block cupronickel_lever;
+	public static Block cupronickel_pressure_plate;
+	public static Block cupronickel_stairs;
+	public static Block cupronickel_wall;
 
 	public static Block electrum_bars;
 	public static Block electrum_block;
@@ -168,13 +168,13 @@ public abstract class Blocks {
 	public static BlockDoor electrum_door;
 	public static Block electrum_trapdoor;
 
-	protected static Block electrum_button;
-	protected static BlockSlab electrum_slab;
-	protected static BlockSlab double_electrum_slab;
-	protected static Block electrum_lever;
-	protected static Block electrum_pressure_plate;
-	protected static Block electrum_stairs;
-	protected static Block electrum_wall;
+	public static Block electrum_button;
+	public static BlockSlab electrum_slab;
+	public static BlockSlab double_electrum_slab;
+	public static Block electrum_lever;
+	public static Block electrum_pressure_plate;
+	public static Block electrum_stairs;
+	public static Block electrum_wall;
 
 	public static Block invar_bars;
 	public static Block invar_block;
@@ -182,13 +182,13 @@ public abstract class Blocks {
 	public static BlockDoor invar_door;
 	public static Block invar_trapdoor;
 
-	protected static Block invar_button;
-	protected static BlockSlab invar_slab;
-	protected static BlockSlab double_invar_slab;
-	protected static Block invar_lever;
-	protected static Block invar_pressure_plate;
-	protected static Block invar_stairs;
-	protected static Block invar_wall;
+	public static Block invar_button;
+	public static BlockSlab invar_slab;
+	public static BlockSlab double_invar_slab;
+	public static Block invar_lever;
+	public static Block invar_pressure_plate;
+	public static Block invar_stairs;
+	public static Block invar_wall;
 
 	public static Block lead_bars;
 	public static Block lead_block;
@@ -197,13 +197,13 @@ public abstract class Blocks {
 	public static Block lead_ore;
 	public static Block lead_trapdoor;
 
-	protected static Block lead_button;
-	protected static BlockSlab lead_slab;
-	protected static BlockSlab double_lead_slab;
-	protected static Block lead_lever;
-	protected static Block lead_pressure_plate;
-	protected static Block lead_stairs;
-	protected static Block lead_wall;
+	public static Block lead_button;
+	public static BlockSlab lead_slab;
+	public static BlockSlab double_lead_slab;
+	public static Block lead_lever;
+	public static Block lead_pressure_plate;
+	public static Block lead_stairs;
+	public static Block lead_wall;
 
 	public static Block mercury_ore;
 
@@ -213,13 +213,13 @@ public abstract class Blocks {
 	public static BlockDoor mithril_door;
 	public static Block mithril_trapdoor;
 
-	protected static Block mithril_button;
-	protected static BlockSlab mithril_slab;
-	protected static BlockSlab double_mithril_slab;
-	protected static Block mithril_lever;
-	protected static Block mithril_pressure_plate;
-	protected static Block mithril_stairs;
-	protected static Block mithril_wall;
+	public static Block mithril_button;
+	public static BlockSlab mithril_slab;
+	public static BlockSlab double_mithril_slab;
+	public static Block mithril_lever;
+	public static Block mithril_pressure_plate;
+	public static Block mithril_stairs;
+	public static Block mithril_wall;
 
 	public static Block nickel_bars;
 	public static Block nickel_block;
@@ -228,13 +228,13 @@ public abstract class Blocks {
 	public static Block nickel_ore;
 	public static Block nickel_trapdoor;
 
-	protected static Block nickel_button;
-	protected static BlockSlab nickel_slab;
-	protected static BlockSlab double_nickel_slab;
-	protected static Block nickel_lever;
-	protected static Block nickel_pressure_plate;
-	protected static Block nickel_stairs;
-	protected static Block nickel_wall;
+	public static Block nickel_button;
+	public static BlockSlab nickel_slab;
+	public static BlockSlab double_nickel_slab;
+	public static Block nickel_lever;
+	public static Block nickel_pressure_plate;
+	public static Block nickel_stairs;
+	public static Block nickel_wall;
 
 	public static Block pewter_bars;
 	public static Block pewter_block;
@@ -243,13 +243,13 @@ public abstract class Blocks {
 	// public static Block pewter_ore;
 	public static Block pewter_trapdoor;
 
-	protected static Block pewter_button;
-	protected static BlockSlab pewter_slab;
-	protected static BlockSlab double_pewter_slab;
-	protected static Block pewter_lever;
-	protected static Block pewter_pressure_plate;
-	protected static Block pewter_stairs;
-	protected static Block pewter_wall;
+	public static Block pewter_button;
+	public static BlockSlab pewter_slab;
+	public static BlockSlab double_pewter_slab;
+	public static Block pewter_lever;
+	public static Block pewter_pressure_plate;
+	public static Block pewter_stairs;
+	public static Block pewter_wall;
 
 	public static Block platinum_bars;
 	public static Block platinum_block;
@@ -258,13 +258,13 @@ public abstract class Blocks {
 	public static Block platinum_ore;
 	public static Block platinum_trapdoor;
 
-	protected static Block platinum_button;
-	protected static BlockSlab platinum_slab;
-	protected static BlockSlab double_platinum_slab;
-	protected static Block platinum_lever;
-	protected static Block platinum_pressure_plate;
-	protected static Block platinum_stairs;
-	protected static Block platinum_wall;
+	public static Block platinum_button;
+	public static BlockSlab platinum_slab;
+	public static BlockSlab double_platinum_slab;
+	public static Block platinum_lever;
+	public static Block platinum_pressure_plate;
+	public static Block platinum_stairs;
+	public static Block platinum_wall;
 
 	public static Block silver_bars;
 	public static Block silver_block;
@@ -273,13 +273,13 @@ public abstract class Blocks {
 	public static Block silver_ore;
 	public static Block silver_trapdoor;
 
-	protected static Block silver_button;
-	protected static BlockSlab silver_slab;
-	protected static BlockSlab double_silver_slab;
-	protected static Block silver_lever;
-	protected static Block silver_pressure_plate;
-	protected static Block silver_stairs;
-	protected static Block silver_wall;
+	public static Block silver_button;
+	public static BlockSlab silver_slab;
+	public static BlockSlab double_silver_slab;
+	public static Block silver_lever;
+	public static Block silver_pressure_plate;
+	public static Block silver_stairs;
+	public static Block silver_wall;
 
 	public static Block starsteel_bars;
 	public static Block starsteel_block;
@@ -288,13 +288,13 @@ public abstract class Blocks {
 	public static Block starsteel_ore;
 	public static Block starsteel_trapdoor;
 
-	protected static Block starsteel_button;
-	protected static BlockSlab starsteel_slab;
-	protected static BlockSlab double_starsteel_slab;
-	protected static Block starsteel_lever;
-	protected static Block starsteel_pressure_plate;
-	protected static Block starsteel_stairs;
-	protected static Block starsteel_wall;
+	public static Block starsteel_button;
+	public static BlockSlab starsteel_slab;
+	public static BlockSlab double_starsteel_slab;
+	public static Block starsteel_lever;
+	public static Block starsteel_pressure_plate;
+	public static Block starsteel_stairs;
+	public static Block starsteel_wall;
 
 	public static Block steel_bars;
 	public static Block steel_block;
@@ -302,13 +302,13 @@ public abstract class Blocks {
 	public static BlockDoor steel_door;
 	public static Block steel_trapdoor;
 
-	protected static Block steel_button;
-	protected static BlockSlab steel_slab;
-	protected static BlockSlab double_steel_slab;
-	protected static Block steel_lever;
-	protected static Block steel_pressure_plate;
-	protected static Block steel_stairs;
-	protected static Block steel_wall;
+	public static Block steel_button;
+	public static BlockSlab steel_slab;
+	public static BlockSlab double_steel_slab;
+	public static Block steel_lever;
+	public static Block steel_pressure_plate;
+	public static Block steel_stairs;
+	public static Block steel_wall;
 
 	public static Block tin_bars;
 	public static Block tin_block;
@@ -317,13 +317,13 @@ public abstract class Blocks {
 	public static Block tin_ore;
 	public static Block tin_trapdoor;
 
-	protected static Block tin_button;
-	protected static BlockSlab tin_slab;
-	protected static BlockSlab double_tin_slab;
-	protected static Block tin_lever;
-	protected static Block tin_pressure_plate;
-	protected static Block tin_stairs;
-	protected static Block tin_wall;
+	public static Block tin_button;
+	public static BlockSlab tin_slab;
+	public static BlockSlab double_tin_slab;
+	public static Block tin_lever;
+	public static Block tin_pressure_plate;
+	public static Block tin_stairs;
+	public static Block tin_wall;
 
 	public static Block zinc_bars;
 	public static Block zinc_block;
@@ -332,13 +332,13 @@ public abstract class Blocks {
 	public static Block zinc_ore;
 	public static Block zinc_trapdoor;
 
-	protected static Block zinc_button;
-	protected static BlockSlab zinc_slab;
-	protected static BlockSlab double_zinc_slab;
-	protected static Block zinc_lever;
-	protected static Block zinc_pressure_plate;
-	protected static Block zinc_stairs;
-	protected static Block zinc_wall;
+	public static Block zinc_button;
+	public static BlockSlab zinc_slab;
+	public static BlockSlab double_zinc_slab;
+	public static Block zinc_lever;
+	public static Block zinc_pressure_plate;
+	public static Block zinc_stairs;
+	public static Block zinc_wall;
 
 	public static Block iron_plate;
 
@@ -377,7 +377,7 @@ public abstract class Blocks {
 	public static String getNameOfBlock(Block b) {
 		return blockRegistry.inverse().get(b);
 	}
-	
+
 	public static Map<String, Block> getBlockRegistry() {
 		return blockRegistry;
 	}
@@ -401,179 +401,205 @@ public abstract class Blocks {
 		cyano.basemetals.init.Materials.init();
 		cyano.basemetals.init.ItemGroups.init();
 
-		adamantine_block = createBlock(Materials.adamantine);
-		adamantine_plate = createPlate(Materials.adamantine);
-		adamantine_ore = createOre(Materials.adamantine);
-		adamantine_bars = createBars(Materials.adamantine);
-		adamantine_door = createDoor(Materials.adamantine);
-		adamantine_trapdoor = createTrapDoor(Materials.adamantine);
+		String materialName;
+		
+		materialName = "adamantine";
 
-		adamantine_button = createButton(Materials.adamantine);
-		adamantine_slab = createSlab(Materials.adamantine);
-		double_adamantine_slab = createDoubleSlab(Materials.adamantine);
-		adamantine_lever = createLever(Materials.adamantine);
-		adamantine_pressure_plate = createPressurePlate(Materials.adamantine);
-		adamantine_stairs = createStairs(Materials.adamantine);
-		adamantine_wall = createWall(Materials.adamantine);
+		adamantine_block = createBlock(materialName);
+		adamantine_plate = createPlate(materialName);
+		adamantine_ore = createOre(materialName);
+		adamantine_bars = createBars(materialName);
+		adamantine_door = createDoor(materialName);
+		adamantine_trapdoor = createTrapDoor(materialName);
 
-		antimony_block = createBlock(Materials.antimony);
-		antimony_plate = createPlate(Materials.antimony);
-		antimony_ore = createOre(Materials.antimony);
-		antimony_bars = createBars(Materials.antimony);
-		antimony_door = createDoor(Materials.antimony);
-		antimony_trapdoor = createTrapDoor(Materials.antimony);
+		adamantine_button = createButton(materialName);
+		adamantine_slab = createSlab(materialName);
+		double_adamantine_slab = createDoubleSlab(materialName);
+		adamantine_lever = createLever(materialName);
+		adamantine_pressure_plate = createPressurePlate(materialName);
+		adamantine_stairs = createStairs(materialName);
+		adamantine_wall = createWall(materialName);
 
-		antimony_button = createButton(Materials.antimony);
-		antimony_slab = createSlab(Materials.antimony);
-		double_antimony_slab = createDoubleSlab(Materials.antimony);
-		antimony_lever = createLever(Materials.antimony);
-		antimony_pressure_plate = createPressurePlate(Materials.antimony);
-		antimony_stairs = createStairs(Materials.antimony);
-		antimony_wall = createWall(Materials.antimony);
+		materialName = "antimony";
 
-		aquarium_block = createBlock(Materials.aquarium);
-		aquarium_plate = createPlate(Materials.aquarium);
-		aquarium_bars = createBars(Materials.aquarium);
-		aquarium_door = createDoor(Materials.aquarium);
-		aquarium_trapdoor = createTrapDoor(Materials.aquarium);
+		antimony_block = createBlock(materialName);
+		antimony_plate = createPlate(materialName);
+		antimony_ore = createOre(materialName);
+		antimony_bars = createBars(materialName);
+		antimony_door = createDoor(materialName);
+		antimony_trapdoor = createTrapDoor(materialName);
 
-		aquarium_button = createButton(Materials.aquarium);
-		aquarium_slab = createSlab(Materials.aquarium);
-		double_aquarium_slab = createDoubleSlab(Materials.aquarium);
-		aquarium_lever = createLever(Materials.aquarium);
-		aquarium_pressure_plate = createPressurePlate(Materials.aquarium);
-		aquarium_stairs = createStairs(Materials.aquarium);
-		aquarium_wall = createWall(Materials.aquarium);
+		antimony_button = createButton(materialName);
+		antimony_slab = createSlab(materialName);
+		double_antimony_slab = createDoubleSlab(materialName);
+		antimony_lever = createLever(materialName);
+		antimony_pressure_plate = createPressurePlate(materialName);
+		antimony_stairs = createStairs(materialName);
+		antimony_wall = createWall(materialName);
 
-		bismuth_block = createBlock(Materials.bismuth);
-		bismuth_plate = createPlate(Materials.bismuth);
-		bismuth_ore = createOre(Materials.bismuth);
-		bismuth_bars = createBars(Materials.bismuth);
-		bismuth_door = createDoor(Materials.bismuth);
-		bismuth_trapdoor = createTrapDoor(Materials.bismuth);
+		materialName = "aquarium";
 
-		bismuth_button = createButton(Materials.bismuth);
-		bismuth_slab = createSlab(Materials.bismuth);
-		double_bismuth_slab = createDoubleSlab(Materials.bismuth);
-		bismuth_lever = createLever(Materials.bismuth);
-		bismuth_pressure_plate = createPressurePlate(Materials.bismuth);
-		bismuth_stairs = createStairs(Materials.bismuth);
-		bismuth_wall = createWall(Materials.bismuth);
+		aquarium_block = createBlock(materialName);
+		aquarium_plate = createPlate(materialName);
+		aquarium_bars = createBars(materialName);
+		aquarium_door = createDoor(materialName);
+		aquarium_trapdoor = createTrapDoor(materialName);
 
-		brass_block = createBlock(Materials.brass);
-		brass_plate = createPlate(Materials.brass);
-		brass_bars = createBars(Materials.brass);
-		brass_door = createDoor(Materials.brass);
-		brass_trapdoor = createTrapDoor(Materials.brass);
+		aquarium_button = createButton(materialName);
+		aquarium_slab = createSlab(materialName);
+		double_aquarium_slab = createDoubleSlab(materialName);
+		aquarium_lever = createLever(materialName);
+		aquarium_pressure_plate = createPressurePlate(materialName);
+		aquarium_stairs = createStairs(materialName);
+		aquarium_wall = createWall(materialName);
 
-		brass_button = createButton(Materials.brass);
-		brass_slab = createSlab(Materials.brass);
-		double_brass_slab = createDoubleSlab(Materials.brass);
-		brass_lever = createLever(Materials.brass);
-		brass_pressure_plate = createPressurePlate(Materials.brass);
-		brass_stairs = createStairs(Materials.brass);
-		brass_wall = createWall(Materials.brass);
+		materialName = "bismuth";
 
-		bronze_block = createBlock(Materials.bronze);
-		bronze_plate = createPlate(Materials.bronze);
-		bronze_bars = createBars(Materials.bronze);
-		bronze_door = createDoor(Materials.bronze);
-		bronze_trapdoor = createTrapDoor(Materials.bronze);
+		bismuth_block = createBlock(materialName);
+		bismuth_plate = createPlate(materialName);
+		bismuth_ore = createOre(materialName);
+		bismuth_bars = createBars(materialName);
+		bismuth_door = createDoor(materialName);
+		bismuth_trapdoor = createTrapDoor(materialName);
 
-		bronze_button = createButton(Materials.bronze);
-		bronze_slab = createSlab(Materials.bronze);
-		double_bronze_slab = createDoubleSlab(Materials.bronze);
-		bronze_lever = createLever(Materials.bronze);
-		bronze_pressure_plate = createPressurePlate(Materials.bronze);
-		bronze_stairs = createStairs(Materials.bronze);
-		bronze_wall = createWall(Materials.bronze);
+		bismuth_button = createButton(materialName);
+		bismuth_slab = createSlab(materialName);
+		double_bismuth_slab = createDoubleSlab(materialName);
+		bismuth_lever = createLever(materialName);
+		bismuth_pressure_plate = createPressurePlate(materialName);
+		bismuth_stairs = createStairs(materialName);
+		bismuth_wall = createWall(materialName);
 
-		coldiron_block = createBlock(Materials.coldiron);
-		coldiron_plate = createPlate(Materials.coldiron);
-		coldiron_ore = createOre(Materials.coldiron);
-		coldiron_bars = createBars(Materials.coldiron);
-		coldiron_door = createDoor(Materials.coldiron);
-		coldiron_trapdoor = createTrapDoor(Materials.coldiron);
+		materialName = "brass";
 
-		coldiron_button = createButton(Materials.coldiron);
-		coldiron_slab = createSlab(Materials.coldiron);
-		double_coldiron_slab = createDoubleSlab(Materials.coldiron);
-		coldiron_lever = createLever(Materials.coldiron);
-		coldiron_pressure_plate = createPressurePlate(Materials.coldiron);
-		coldiron_stairs = createStairs(Materials.coldiron);
-		coldiron_wall = createWall(Materials.coldiron);
+		brass_block = createBlock(materialName);
+		brass_plate = createPlate(materialName);
+		brass_bars = createBars(materialName);
+		brass_door = createDoor(materialName);
+		brass_trapdoor = createTrapDoor(materialName);
 
-		copper_block = createBlock(Materials.copper);
-		copper_plate = createPlate(Materials.copper);
-		copper_ore = createOre(Materials.copper);
-		copper_bars = createBars(Materials.copper);
-		copper_door = createDoor(Materials.copper);
-		copper_trapdoor = createTrapDoor(Materials.copper);
+		brass_button = createButton(materialName);
+		brass_slab = createSlab(materialName);
+		double_brass_slab = createDoubleSlab(materialName);
+		brass_lever = createLever(materialName);
+		brass_pressure_plate = createPressurePlate(materialName);
+		brass_stairs = createStairs(materialName);
+		brass_wall = createWall(materialName);
 
-		copper_button = createButton(Materials.copper);
-		copper_slab = createSlab(Materials.copper);
-		double_copper_slab = createDoubleSlab(Materials.copper);
-		copper_lever = createLever(Materials.copper);
-		copper_pressure_plate = createPressurePlate(Materials.copper);
-		copper_stairs = createStairs(Materials.copper);
-		copper_wall = createWall(Materials.copper);
+		materialName = "bronze";
 
-		cupronickel_block = createBlock(Materials.cupronickel);
-		cupronickel_plate = createPlate(Materials.cupronickel);
-		cupronickel_bars = createBars(Materials.cupronickel);
-		cupronickel_door = createDoor(Materials.cupronickel);
-		cupronickel_trapdoor = createTrapDoor(Materials.cupronickel);
+		bronze_block = createBlock(materialName);
+		bronze_plate = createPlate(materialName);
+		bronze_bars = createBars(materialName);
+		bronze_door = createDoor(materialName);
+		bronze_trapdoor = createTrapDoor(materialName);
 
-		cupronickel_button = createButton(Materials.cupronickel);
-		cupronickel_slab = createSlab(Materials.cupronickel);
-		double_cupronickel_slab = createDoubleSlab(Materials.cupronickel);
-		cupronickel_lever = createLever(Materials.cupronickel);
-		cupronickel_pressure_plate = createPressurePlate(Materials.cupronickel);
-		cupronickel_stairs = createStairs(Materials.cupronickel);
-		cupronickel_wall = createWall(Materials.cupronickel);
+		bronze_button = createButton(materialName);
+		bronze_slab = createSlab(materialName);
+		double_bronze_slab = createDoubleSlab(materialName);
+		bronze_lever = createLever(materialName);
+		bronze_pressure_plate = createPressurePlate(materialName);
+		bronze_stairs = createStairs(materialName);
+		bronze_wall = createWall(materialName);
 
-		electrum_block = createBlock(Materials.electrum);
-		electrum_plate = createPlate(Materials.electrum);
-		electrum_bars = createBars(Materials.electrum);
-		electrum_door = createDoor(Materials.electrum);
-		electrum_trapdoor = createTrapDoor(Materials.electrum);
+		materialName = "coldiron";
 
-		electrum_button = createButton(Materials.electrum);
-		electrum_slab = createSlab(Materials.electrum);
-		double_electrum_slab = createDoubleSlab(Materials.electrum);
-		electrum_lever = createLever(Materials.electrum);
-		electrum_pressure_plate = createPressurePlate(Materials.electrum);
-		electrum_stairs = createStairs(Materials.electrum);
-		electrum_wall = createWall(Materials.electrum);
+		coldiron_block = createBlock(materialName);
+		coldiron_plate = createPlate(materialName);
+		coldiron_ore = createOre(materialName);
+		coldiron_bars = createBars(materialName);
+		coldiron_door = createDoor(materialName);
+		coldiron_trapdoor = createTrapDoor(materialName);
 
-		invar_block = createBlock(Materials.invar);
-		invar_plate = createPlate(Materials.invar);
-		invar_bars = createBars(Materials.invar);
-		invar_door = createDoor(Materials.invar);
-		invar_trapdoor = createTrapDoor(Materials.invar);
+		coldiron_button = createButton(materialName);
+		coldiron_slab = createSlab(materialName);
+		double_coldiron_slab = createDoubleSlab(materialName);
+		coldiron_lever = createLever(materialName);
+		coldiron_pressure_plate = createPressurePlate(materialName);
+		coldiron_stairs = createStairs(materialName);
+		coldiron_wall = createWall(materialName);
 
-		invar_button = createButton(Materials.invar);
-		invar_slab = createSlab(Materials.invar);
-		double_invar_slab = createDoubleSlab(Materials.invar);
-		invar_lever = createLever(Materials.invar);
-		invar_pressure_plate = createPressurePlate(Materials.invar);
-		invar_stairs = createStairs(Materials.invar);
-		invar_wall = createWall(Materials.invar);
+		materialName = "copper";
 
-		lead_block = createBlock(Materials.lead);
-		lead_plate = createPlate(Materials.lead);
-		lead_ore = createOre(Materials.lead);
-		lead_bars = createBars(Materials.lead);
-		lead_door = createDoor(Materials.lead);
-		lead_trapdoor = createTrapDoor(Materials.lead);
+		copper_block = createBlock(materialName);
+		copper_plate = createPlate(materialName);
+		copper_ore = createOre(materialName);
+		copper_bars = createBars(materialName);
+		copper_door = createDoor(materialName);
+		copper_trapdoor = createTrapDoor(materialName);
 
-		lead_button = createButton(Materials.lead);
-		lead_slab = createSlab(Materials.lead);
-		double_lead_slab = createDoubleSlab(Materials.lead);
-		lead_lever = createLever(Materials.lead);
-		lead_pressure_plate = createPressurePlate(Materials.lead);
-		lead_stairs = createStairs(Materials.lead);
-		lead_wall = createWall(Materials.lead);
+		copper_button = createButton(materialName);
+		copper_slab = createSlab(materialName);
+		double_copper_slab = createDoubleSlab(materialName);
+		copper_lever = createLever(materialName);
+		copper_pressure_plate = createPressurePlate(materialName);
+		copper_stairs = createStairs(materialName);
+		copper_wall = createWall(materialName);
+
+		materialName = "cupronickel";
+
+		cupronickel_block = createBlock(materialName);
+		cupronickel_plate = createPlate(materialName);
+		cupronickel_bars = createBars(materialName);
+		cupronickel_door = createDoor(materialName);
+		cupronickel_trapdoor = createTrapDoor(materialName);
+
+		cupronickel_button = createButton(materialName);
+		cupronickel_slab = createSlab(materialName);
+		double_cupronickel_slab = createDoubleSlab(materialName);
+		cupronickel_lever = createLever(materialName);
+		cupronickel_pressure_plate = createPressurePlate(materialName);
+		cupronickel_stairs = createStairs(materialName);
+		cupronickel_wall = createWall(materialName);
+
+		materialName = "electrum";
+
+		electrum_block = createBlock(materialName);
+		electrum_plate = createPlate(materialName);
+		electrum_bars = createBars(materialName);
+		electrum_door = createDoor(materialName);
+		electrum_trapdoor = createTrapDoor(materialName);
+
+		electrum_button = createButton(materialName);
+		electrum_slab = createSlab(materialName);
+		double_electrum_slab = createDoubleSlab(materialName);
+		electrum_lever = createLever(materialName);
+		electrum_pressure_plate = createPressurePlate(materialName);
+		electrum_stairs = createStairs(materialName);
+		electrum_wall = createWall(materialName);
+
+		materialName = "invar";
+
+		invar_block = createBlock(materialName);
+		invar_plate = createPlate(materialName);
+		invar_bars = createBars(materialName);
+		invar_door = createDoor(materialName);
+		invar_trapdoor = createTrapDoor(materialName);
+
+		invar_button = createButton(materialName);
+		invar_slab = createSlab(materialName);
+		double_invar_slab = createDoubleSlab(materialName);
+		invar_lever = createLever(materialName);
+		invar_pressure_plate = createPressurePlate(materialName);
+		invar_stairs = createStairs(materialName);
+		invar_wall = createWall(materialName);
+
+		materialName = "lead";
+
+		lead_block = createBlock(materialName);
+		lead_plate = createPlate(materialName);
+		lead_ore = createOre(materialName);
+		lead_bars = createBars(materialName);
+		lead_door = createDoor(materialName);
+		lead_trapdoor = createTrapDoor(materialName);
+
+		lead_button = createButton(materialName);
+		lead_slab = createSlab(materialName);
+		double_lead_slab = createDoubleSlab(materialName);
+		lead_lever = createLever(materialName);
+		lead_pressure_plate = createPressurePlate(materialName);
+		lead_stairs = createStairs(materialName);
+		lead_wall = createWall(materialName);
 
 		mercury_ore = new BlockOre().setHardness(3.0f).setResistance(5.0f).setRegistryName(BaseMetals.MODID, "mercury_ore").setUnlocalizedName(BaseMetals.MODID + ".mercury_ore");
 		GameRegistry.register(mercury_ore);
@@ -583,86 +609,98 @@ public abstract class Blocks {
 		blockRegistry.put("mercury_ore", mercury_ore);
 		OreDictionary.registerOre("oreMercury", mercury_ore);
 
-		mithril_block = createBlock(Materials.mithril);
-		mithril_plate = createPlate(Materials.mithril);
-		mithril_bars = createBars(Materials.mithril);
-		mithril_door = createDoor(Materials.mithril);
-		mithril_trapdoor = createTrapDoor(Materials.mithril);
+		materialName = "mithril";
 
-		mithril_button = createButton(Materials.mithril);
-		mithril_slab = createSlab(Materials.mithril);
-		double_mithril_slab = createDoubleSlab(Materials.mithril);
-		mithril_lever = createLever(Materials.mithril);
-		mithril_pressure_plate = createPressurePlate(Materials.mithril);
-		mithril_stairs = createStairs(Materials.mithril);
-		mithril_wall = createWall(Materials.mithril);
+		mithril_block = createBlock(materialName);
+		mithril_plate = createPlate(materialName);
+		mithril_bars = createBars(materialName);
+		mithril_door = createDoor(materialName);
+		mithril_trapdoor = createTrapDoor(materialName);
 
-		nickel_block = createBlock(Materials.nickel);
-		nickel_plate = createPlate(Materials.nickel);
-		nickel_ore = createOre(Materials.nickel);
-		nickel_bars = createBars(Materials.nickel);
-		nickel_door = createDoor(Materials.nickel);
-		nickel_trapdoor = createTrapDoor(Materials.nickel);
+		mithril_button = createButton(materialName);
+		mithril_slab = createSlab(materialName);
+		double_mithril_slab = createDoubleSlab(materialName);
+		mithril_lever = createLever(materialName);
+		mithril_pressure_plate = createPressurePlate(materialName);
+		mithril_stairs = createStairs(materialName);
+		mithril_wall = createWall(materialName);
 
-		nickel_button = createButton(Materials.nickel);
-		nickel_slab = createSlab(Materials.nickel);
-		double_nickel_slab = createDoubleSlab(Materials.nickel);
-		nickel_lever = createLever(Materials.nickel);
-		nickel_pressure_plate = createPressurePlate(Materials.nickel);
-		nickel_stairs = createStairs(Materials.nickel);
-		nickel_wall = createWall(Materials.nickel);
+		materialName = "nickel";
 
-		pewter_block = createBlock(Materials.pewter);
-		pewter_plate = createPlate(Materials.pewter);
-		// pewter_ore = createOre(Materials.pewter);
-		pewter_bars = createBars(Materials.pewter);
-		pewter_door = createDoor(Materials.pewter);
-		pewter_trapdoor = createTrapDoor(Materials.pewter);
+		nickel_block = createBlock(materialName);
+		nickel_plate = createPlate(materialName);
+		nickel_ore = createOre(materialName);
+		nickel_bars = createBars(materialName);
+		nickel_door = createDoor(materialName);
+		nickel_trapdoor = createTrapDoor(materialName);
 
-		pewter_button = createButton(Materials.pewter);
-		pewter_slab = createSlab(Materials.pewter);
-		double_pewter_slab = createDoubleSlab(Materials.pewter);
-		pewter_lever = createLever(Materials.pewter);
-		pewter_pressure_plate = createPressurePlate(Materials.pewter);
-		pewter_stairs = createStairs(Materials.pewter);
-		pewter_wall = createWall(Materials.pewter);
+		nickel_button = createButton(materialName);
+		nickel_slab = createSlab(materialName);
+		double_nickel_slab = createDoubleSlab(materialName);
+		nickel_lever = createLever(materialName);
+		nickel_pressure_plate = createPressurePlate(materialName);
+		nickel_stairs = createStairs(materialName);
+		nickel_wall = createWall(materialName);
 
-		platinum_block = createBlock(Materials.platinum);
-		platinum_plate = createPlate(Materials.platinum);
-		platinum_ore = createOre(Materials.platinum);
-		platinum_bars = createBars(Materials.platinum);
-		platinum_door = createDoor(Materials.platinum);
-		platinum_trapdoor = createTrapDoor(Materials.platinum);
+		materialName = "pewter";
 
-		platinum_button = createButton(Materials.platinum);
-		platinum_slab = createSlab(Materials.platinum);
-		double_platinum_slab = createDoubleSlab(Materials.platinum);
-		platinum_lever = createLever(Materials.platinum);
-		platinum_pressure_plate = createPressurePlate(Materials.platinum);
-		platinum_stairs = createStairs(Materials.platinum);
-		platinum_wall = createWall(Materials.platinum);
+		pewter_block = createBlock(materialName);
+		pewter_plate = createPlate(materialName);
+		// pewter_ore = createOre(materialName);
+		pewter_bars = createBars(materialName);
+		pewter_door = createDoor(materialName);
+		pewter_trapdoor = createTrapDoor(materialName);
 
-		silver_block = createBlock(Materials.silver);
-		silver_plate = createPlate(Materials.silver);
-		silver_ore = createOre(Materials.silver);
-		silver_bars = createBars(Materials.silver);
-		silver_door = createDoor(Materials.silver);
-		silver_trapdoor = createTrapDoor(Materials.silver);
+		pewter_button = createButton(materialName);
+		pewter_slab = createSlab(materialName);
+		double_pewter_slab = createDoubleSlab(materialName);
+		pewter_lever = createLever(materialName);
+		pewter_pressure_plate = createPressurePlate(materialName);
+		pewter_stairs = createStairs(materialName);
+		pewter_wall = createWall(materialName);
 
-		silver_button = createButton(Materials.silver);
-		silver_slab = createSlab(Materials.silver);
-		double_silver_slab = createDoubleSlab(Materials.silver);
-		silver_lever = createLever(Materials.silver);
-		silver_pressure_plate = createPressurePlate(Materials.silver);
-		silver_stairs = createStairs(Materials.silver);
-		silver_wall = createWall(Materials.silver);
+		materialName = "platinum";
 
-		starsteel_block = createBlock(Materials.starsteel);
-		starsteel_plate = createPlate(Materials.starsteel);
-		starsteel_ore = createOre(Materials.starsteel);
-		starsteel_bars = createBars(Materials.starsteel);
-		starsteel_door = createDoor(Materials.starsteel);
-		starsteel_trapdoor = createTrapDoor(Materials.starsteel);
+		platinum_block = createBlock(materialName);
+		platinum_plate = createPlate(materialName);
+		platinum_ore = createOre(materialName);
+		platinum_bars = createBars(materialName);
+		platinum_door = createDoor(materialName);
+		platinum_trapdoor = createTrapDoor(materialName);
+
+		platinum_button = createButton(materialName);
+		platinum_slab = createSlab(materialName);
+		double_platinum_slab = createDoubleSlab(materialName);
+		platinum_lever = createLever(materialName);
+		platinum_pressure_plate = createPressurePlate(materialName);
+		platinum_stairs = createStairs(materialName);
+		platinum_wall = createWall(materialName);
+
+		materialName = "silver";
+
+		silver_block = createBlock(materialName);
+		silver_plate = createPlate(materialName);
+		silver_ore = createOre(materialName);
+		silver_bars = createBars(materialName);
+		silver_door = createDoor(materialName);
+		silver_trapdoor = createTrapDoor(materialName);
+
+		silver_button = createButton(materialName);
+		silver_slab = createSlab(materialName);
+		double_silver_slab = createDoubleSlab(materialName);
+		silver_lever = createLever(materialName);
+		silver_pressure_plate = createPressurePlate(materialName);
+		silver_stairs = createStairs(materialName);
+		silver_wall = createWall(materialName);
+
+		materialName = "starsteel";
+
+		starsteel_block = createBlock(materialName);
+		starsteel_plate = createPlate(materialName);
+		starsteel_ore = createOre(materialName);
+		starsteel_bars = createBars(materialName);
+		starsteel_door = createDoor(materialName);
+		starsteel_trapdoor = createTrapDoor(materialName);
 		starsteel_block.setLightLevel(0.5f);
 		starsteel_plate.setLightLevel(0.5f);
 		starsteel_ore.setLightLevel(0.5f);
@@ -670,87 +708,95 @@ public abstract class Blocks {
 		starsteel_door.setLightLevel(0.5f);
 		starsteel_trapdoor.setLightLevel(0.5f);
 
-		starsteel_button = createButton(Materials.starsteel);
-		starsteel_slab = createSlab(Materials.starsteel);
-		double_starsteel_slab = createDoubleSlab(Materials.starsteel);
-		starsteel_lever = createLever(Materials.starsteel);
-		starsteel_pressure_plate = createPressurePlate(Materials.starsteel);
-		starsteel_stairs = createStairs(Materials.starsteel);
-		starsteel_wall = createWall(Materials.starsteel);
+		starsteel_button = createButton(materialName);
+		starsteel_slab = createSlab(materialName);
+		double_starsteel_slab = createDoubleSlab(materialName);
+		starsteel_lever = createLever(materialName);
+		starsteel_pressure_plate = createPressurePlate(materialName);
+		starsteel_stairs = createStairs(materialName);
+		starsteel_wall = createWall(materialName);
 
-		steel_block = createBlock(Materials.steel);
-		steel_plate = createPlate(Materials.steel);
-		steel_bars = createBars(Materials.steel);
-		steel_door = createDoor(Materials.steel);
-		steel_trapdoor = createTrapDoor(Materials.steel);
+		materialName = "steel";
 
-		steel_button = createButton(Materials.steel);
-		steel_slab = createSlab(Materials.steel);
-		double_steel_slab = createDoubleSlab(Materials.steel);
-		steel_lever = createLever(Materials.steel);
-		steel_pressure_plate = createPressurePlate(Materials.steel);
-		steel_stairs = createStairs(Materials.steel);
-		steel_wall = createWall(Materials.steel);
+		steel_block = createBlock(materialName);
+		steel_plate = createPlate(materialName);
+		steel_bars = createBars(materialName);
+		steel_door = createDoor(materialName);
+		steel_trapdoor = createTrapDoor(materialName);
 
-		tin_block = createBlock(Materials.tin);
-		tin_plate = createPlate(Materials.tin);
-		tin_ore = createOre(Materials.tin);
-		tin_bars = createBars(Materials.tin);
-		tin_door = createDoor(Materials.tin);
-		tin_trapdoor = createTrapDoor(Materials.tin);
+		steel_button = createButton(materialName);
+		steel_slab = createSlab(materialName);
+		double_steel_slab = createDoubleSlab(materialName);
+		steel_lever = createLever(materialName);
+		steel_pressure_plate = createPressurePlate(materialName);
+		steel_stairs = createStairs(materialName);
+		steel_wall = createWall(materialName);
 
-		tin_button = createButton(Materials.tin);
-		tin_slab = createSlab(Materials.tin);
-		double_tin_slab = createDoubleSlab(Materials.tin);
-		tin_lever = createLever(Materials.tin);
-		tin_pressure_plate = createPressurePlate(Materials.tin);
-		tin_stairs = createStairs(Materials.tin);
-		tin_wall = createWall(Materials.tin);
+		materialName = "tin";
 
-		zinc_block = createBlock(Materials.zinc);
-		zinc_plate = createPlate(Materials.zinc);
-		zinc_ore = createOre(Materials.zinc);
-		zinc_bars = createBars(Materials.zinc);
-		zinc_door = createDoor(Materials.zinc);
-		zinc_trapdoor = createTrapDoor(Materials.zinc);
+		tin_block = createBlock(materialName);
+		tin_plate = createPlate(materialName);
+		tin_ore = createOre(materialName);
+		tin_bars = createBars(materialName);
+		tin_door = createDoor(materialName);
+		tin_trapdoor = createTrapDoor(materialName);
 
-		zinc_button = createButton(Materials.zinc);
-		zinc_slab = createSlab(Materials.zinc);
-		double_zinc_slab = createDoubleSlab(Materials.zinc);
-		zinc_lever = createLever(Materials.zinc);
-		zinc_pressure_plate = createPressurePlate(Materials.zinc);
-		zinc_stairs = createStairs(Materials.zinc);
-		zinc_wall = createWall(Materials.zinc);
+		tin_button = createButton(materialName);
+		tin_slab = createSlab(materialName);
+		double_tin_slab = createDoubleSlab(materialName);
+		tin_lever = createLever(materialName);
+		tin_pressure_plate = createPressurePlate(materialName);
+		tin_stairs = createStairs(materialName);
+		tin_wall = createWall(materialName);
 
-		iron_plate = createPlate(Materials.vanilla_iron);
-		gold_plate = createPlate(Materials.vanilla_gold);
+		materialName = "zinc";
+
+		zinc_block = createBlock(materialName);
+		zinc_plate = createPlate(materialName);
+		zinc_ore = createOre(materialName);
+		zinc_bars = createBars(materialName);
+		zinc_door = createDoor(materialName);
+		zinc_trapdoor = createTrapDoor(materialName);
+
+		zinc_button = createButton(materialName);
+		zinc_slab = createSlab(materialName);
+		double_zinc_slab = createDoubleSlab(materialName);
+		zinc_lever = createLever(materialName);
+		zinc_pressure_plate = createPressurePlate(materialName);
+		zinc_stairs = createStairs(materialName);
+		zinc_wall = createWall(materialName);
+
+		materialName = "iron";
+
+		iron_plate = createPlate(materialName);
+
+		materialName = "gold";
+
+		gold_plate = createPlate(materialName);
 
 		human_detector = addBlock(new BlockHumanDetector(), "human_detector", null, null);
 
 		initDone = true;
 	}
 
-	private static Block addBlock(Block block, String name, MetalMaterial metal, CreativeTabs tab) {
-		String fullName = null;
+	private static Block addBlock(Block block, String name, MetalMaterial material, CreativeTabs tab) {
 
-		if ((block instanceof BlockDoubleMetalSlab) && (metal != null))
-			fullName = "double_" + metal.getName() + "_" + name;
+		String fullName;
+
+		if ((block instanceof BlockDoubleMetalSlab) && (material != null))
+			fullName = "double_" + material.getName() + "_" + name;
 		else if (block instanceof BlockDoubleMetalSlab)
 			fullName = "double_" + name;
-		else if (metal != null)
-			fullName = metal.getName() + "_" + name;
+		else if (material != null)
+			fullName = material.getName() + "_" + name;
 		else
 			fullName = name;
 
+		// Loader.instance().activeModContainer().getModId()
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 		GameRegistry.register(block);
 		blockRegistry.put(fullName, block);
-
-		/*
-		if ( block instanceof  BlockMetalDoor)
-			doorMap.put(metal.door, (BlockDoor) block);
-		*/
 
 		if (!(block instanceof BlockMetalDoor) && !(block instanceof BlockMetalSlab)) {
 			final ItemBlock itemBlock = new ItemBlock(block);
@@ -762,9 +808,9 @@ public abstract class Blocks {
 		if (tab != null)
 			block.setCreativeTab(tab);
 
-		if (metal != null) {
-			blocksByMetal.computeIfAbsent(metal, (MetalMaterial g) -> new ArrayList<>());
-			blocksByMetal.get(metal).add(block);
+		if (material != null) {
+			blocksByMetal.computeIfAbsent(material, (MetalMaterial g) -> new ArrayList<>());
+			blocksByMetal.get(material).add(block);
 		}
 
 		// TODO: Make this support multiple oredicts
@@ -774,85 +820,98 @@ public abstract class Blocks {
 		return block;
 	}
 
-	private static Block createPlate(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalPlate(metal), "plate", metal, ItemGroups.tab_blocks);
-		metal.plate = b;
+	private static Block createPlate(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockMetalPlate(material), "plate", material, ItemGroups.tab_blocks);
+		material.plate = b;
 		return b;
 	}
 
-	private static Block createBars(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalBars(metal), "bars", metal, ItemGroups.tab_blocks);
-		metal.bars = b;
+	private static Block createBars(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockMetalBars(material), "bars", material, ItemGroups.tab_blocks);
+		material.bars = b;
 		return b;
 	}
 
-	private static Block createBlock(MetalMaterial metal) {
-		return createBlock(metal, false);
+	private static Block createBlock(String materialName) {
+		return createBlock(materialName, false);
 	}
 
-	private static Block createBlock(MetalMaterial metal, boolean glow) {
-		final Block b = addBlock(new BlockMetalBlock(metal, glow), "block", metal, ItemGroups.tab_blocks);
-		metal.block = b;
+	private static Block createBlock(String materialName, boolean glow) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockMetalBlock(material, glow), "block", material, ItemGroups.tab_blocks);
+		material.block = b;
 		return b;
 	}
 
-	private static Block createButton(MetalMaterial metal) {
-		final Block b = addBlock(new BlockButtonMetal(metal), "button", metal, ItemGroups.tab_blocks);
-		metal.button = b;
+	private static Block createButton(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockButtonMetal(material), "button", material, ItemGroups.tab_blocks);
+		material.button = b;
 		return b;
 	}
 
-	private static Block createLever(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalLever(metal), "lever", metal, ItemGroups.tab_blocks);
-		metal.lever = b;
+	private static Block createLever(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockMetalLever(material), "lever", material, ItemGroups.tab_blocks);
+		material.lever = b;
 		return b;
 	}
 
-	private static Block createPressurePlate(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalPressurePlate(metal), "pressure_plate", metal, ItemGroups.tab_blocks);
-		metal.pressure_plate = b;
+	private static Block createPressurePlate(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockMetalPressurePlate(material), "pressure_plate", material, ItemGroups.tab_blocks);
+		material.pressure_plate = b;
 		return b;
 	}
 
-	private static BlockSlab createSlab(MetalMaterial metal) {
-		final BlockSlab b = (BlockSlab) addBlock(new BlockHalfMetalSlab(metal), "slab", metal, ItemGroups.tab_blocks);
-		metal.half_slab = b;
+	private static BlockSlab createSlab(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final BlockSlab b = (BlockSlab) addBlock(new BlockHalfMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
+		material.half_slab = b;
 		return b;
 	}
 
-	private static BlockSlab createDoubleSlab(MetalMaterial metal) {
-		final BlockSlab b = (BlockSlab) addBlock(new BlockDoubleMetalSlab(metal), "slab", metal, ItemGroups.tab_blocks);
-		metal.double_slab = b;
+	private static BlockSlab createDoubleSlab(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final BlockSlab b = (BlockSlab) addBlock(new BlockDoubleMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
+		material.double_slab = b;
 		return b;
 	}
 
-	private static Block createStairs(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalStairs(metal), "stairs", metal, ItemGroups.tab_blocks);
-		metal.stairs = b;
+	private static Block createStairs(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockMetalStairs(material), "stairs", material, ItemGroups.tab_blocks);
+		material.stairs = b;
 		return b;
 	}
 
-	private static Block createWall(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalWall(metal), "wall", metal, ItemGroups.tab_blocks);
-		metal.wall = b;
+	private static Block createWall(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockMetalWall(material), "wall", material, ItemGroups.tab_blocks);
+		material.wall = b;
 		return b;
 	}
 
-	private static Block createOre(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalOre(metal), "ore", metal, ItemGroups.tab_blocks);
-		metal.ore = b;
+	private static Block createOre(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockMetalOre(material), "ore", material, ItemGroups.tab_blocks);
+		material.ore = b;
 		return b;
 	}
 
-	private static BlockDoor createDoor(MetalMaterial metal) {
-		final BlockDoor b = (BlockDoor) addBlock(new BlockMetalDoor(metal), "door", metal, null);
-		metal.doorBlock = b;
+	private static BlockDoor createDoor(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final BlockDoor b = (BlockDoor) addBlock(new BlockMetalDoor(material), "door", material, null);
+		material.doorBlock = b;
 		return b;
 	}
 
-	private static Block createTrapDoor(MetalMaterial metal) {
-		final Block b = addBlock(new BlockMetalTrapDoor(metal), "trapdoor", metal, ItemGroups.tab_blocks);
-		metal.trapdoor = b;
+	private static Block createTrapDoor(String materialName) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		final Block b = addBlock(new BlockMetalTrapDoor(material), "trapdoor", material, ItemGroups.tab_blocks);
+		material.trapdoor = b;
 		return b;
 	}
 }

@@ -24,7 +24,8 @@ public class VeinMinerPlugin {
 			return;
 
 		if (Loader.isModLoaded("VeinMiner") || Loader.isModLoaded("veinminer")) {
-			FMLLog.log(Level.ERROR, "%s: Activating VeinMiner Support", BaseMetals.MODID);
+//			FMLLog.log(Level.ERROR, "%s: Activating VeinMiner Support", BaseMetals.MODID);
+			FMLLog.log(Level.ERROR, "%s: Activating VeinMiner Support", Loader.instance().activeModContainer().getModId());
 
 			addToolsForMetal("aluminum");
 			addToolsForMetal("aluminumbrass");

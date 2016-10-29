@@ -144,7 +144,7 @@ public abstract class Recipes {
 		OreDictionary.registerOre("rod", v_rod);
 		GameRegistry.addSmelting(v_rod, new ItemStack(v_nugget, 4), 0);
 
-		for (final MetalMaterial metal : Materials.getAllMetals()) {
+		for (final MetalMaterial metal : Materials.getAllMaterials()) {
 			if (exceptions.contains(metal))
 				continue;
 			final String oreDictName = metal.getCapitalizedName();

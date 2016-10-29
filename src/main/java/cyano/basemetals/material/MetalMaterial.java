@@ -140,6 +140,7 @@ public class MetalMaterial {
 	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
 	 *            6, gold is 10. Used to calculate enchantibility
 	 */
+	@Deprecated
 	public MetalMaterial(String name, float hardness, float strength, float magic) {
 		this(name, hardness, strength, magic, 0x00000000);
 	}
@@ -165,7 +166,7 @@ public class MetalMaterial {
 	 *            Color Info for the metal
 	 */
 	public MetalMaterial(String name, float hardness, float strength, float magic, int tintColor) {
-		this(name, hardness, strength, magic, 0x00000000, false);
+		this(name, hardness, strength, magic, tintColor, false);
 	}
 
 	/**
@@ -189,6 +190,7 @@ public class MetalMaterial {
 	 * @param isRare
 	 *            If true, this metal is designated as an extremely rare metal
 	 */
+	@Deprecated
 	public MetalMaterial(String name, float hardness, float strength, float magic, boolean isRare) {
 		this(name, hardness, strength, magic, 0x00000000, false);
 	}
@@ -284,7 +286,7 @@ public class MetalMaterial {
 	 *         equivalent)
 	 */
 	public int getRequiredHarvestLevel() {
-		return (int) clamp(((0.9f * this.hardness) / 3f), -1, 3);
+		return (int) clamp((0.9f * this.hardness) / 3f, -1, 3);
 	}
 
 	static int clamp(int x, int min, int max) {

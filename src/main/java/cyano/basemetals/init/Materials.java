@@ -26,7 +26,7 @@ public abstract class Materials {
 	private static Map<String, MetalMaterial> allMaterials = new HashMap<>();
 	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
-	protected static List<MetalMaterial> materials = new LinkedList<MetalMaterial>();
+	protected static List<MetalMaterial> materials = new LinkedList<>();
 
 	public static MetalMaterial adamantine;
 	public static MetalMaterial antimony;
@@ -67,57 +67,55 @@ public abstract class Materials {
 			return;
 
 		// Vanilla Materials
-		vanilla_wood = addMaterial("wood", 2, 2, 6, 0xFF000000);
-		vanilla_stone = addMaterial("stone", 5, 4, 2, 0xFF000000);
-		vanilla_iron = addMaterial("iron", 8, 8, 4.5, 0xFF000000);
-		vanilla_gold = addMaterial("gold", 1, 1, 10, 0xFF000000);
-		vanilla_diamond = addMaterial("diamond", 10, 15, 4, 0xFF000000);
+		vanilla_wood = createMaterial("wood", 2, 2, 6, 0xFF000000);
+		vanilla_stone = createMaterial("stone", 5, 4, 2, 0xFF000000);
+		vanilla_iron = createMaterial("iron", 8, 8, 4.5, 0xFF000000);
+		vanilla_gold = createMaterial("gold", 1, 1, 10, 0xFF000000);
+		vanilla_diamond = createMaterial("diamond", 10, 15, 4, 0xFF000000);
 
 		// Mod Metals
-		adamantine = addMaterial("adamantine", 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
-		antimony = addMaterial("antimony", 1, 1, 1, 0xFFD8E3DE);
-		aquarium = addMaterial("aquarium", 4, 10, 15, 0xFF000000);
-		bismuth = addMaterial("bismuth", 1, 1, 1, 0xFFDDD7CB);
-		brass = addMaterial("brass", 3.5, 3, 9, 0xFFFFE374);
-		bronze = addMaterial("bronze", 8, 4, 4.5, 0xFFF7A54F);
-		coldiron = addMaterial("coldiron", 7, 7, 7, 0xFFC7CEF0);
-		copper = addMaterial("copper", 4, 4, 5, 0xFFFF9F78);
-		cupronickel = addMaterial("cupronickel", 6, 6, 6, 0xFFC8AB6F);
-		electrum = addMaterial("electrum", 5, 4, 10, 0xFFFFF2B3);
-		invar = addMaterial("invar", 9, 10, 3, 0xFFD2CDB8);
-		lead = addMaterial("lead", 1, 1, 1, 0xFF7B7B7B).setBaseDamage(4f);
-		mithril = addMaterial("mithril", 9, 9, 9, 0xFFF4FFFF);
-		nickel = addMaterial("nickel", 4, 4, 7, 0xFFEEFFEB);
-		pewter = addMaterial("pewter", 1, 1, 1, 0xFF92969F);
-		platinum = addRareMaterial("platinum", 3, 5, 15, 0xFFF2FFFF);
-		silver = addMaterial("silver", 5, 4, 6, 0xFFFFFFFF);
-		starsteel = addMaterial("starsteel", 10, 25, 12, 0xFF53393F).setBlastResistance(2000f);
-		steel = addMaterial("steel", 8, 15, 2, 0xFFD5E3E5);
-		tin = addMaterial("tin", 3, 1, 2, 0xFFFFF7EE);
-		zinc = addMaterial("zinc", 1, 1, 1, 0xFFBCBCBC);
+		adamantine = createMaterial("adamantine", 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
+		antimony = createMaterial("antimony", 1, 1, 1, 0xFFD8E3DE);
+		aquarium = createMaterial("aquarium", 4, 10, 15, 0xFF000000);
+		bismuth = createMaterial("bismuth", 1, 1, 1, 0xFFDDD7CB);
+		brass = createMaterial("brass", 3.5, 3, 9, 0xFFFFE374);
+		bronze = createMaterial("bronze", 8, 4, 4.5, 0xFFF7A54F);
+		coldiron = createMaterial("coldiron", 7, 7, 7, 0xFFC7CEF0);
+		copper = createMaterial("copper", 4, 4, 5, 0xFFFF9F78);
+		cupronickel = createMaterial("cupronickel", 6, 6, 6, 0xFFC8AB6F);
+		electrum = createMaterial("electrum", 5, 4, 10, 0xFFFFF2B3);
+		invar = createMaterial("invar", 9, 10, 3, 0xFFD2CDB8);
+		lead = createMaterial("lead", 1, 1, 1, 0xFF7B7B7B).setBaseDamage(4f);
+		mithril = createMaterial("mithril", 9, 9, 9, 0xFFF4FFFF);
+		nickel = createMaterial("nickel", 4, 4, 7, 0xFFEEFFEB);
+		pewter = createMaterial("pewter", 1, 1, 1, 0xFF92969F);
+		platinum = createRareMaterial("platinum", 3, 5, 15, 0xFFF2FFFF);
+		silver = createMaterial("silver", 5, 4, 6, 0xFFFFFFFF);
+		starsteel = createMaterial("starsteel", 10, 25, 12, 0xFF53393F).setBlastResistance(2000f);
+		steel = createMaterial("steel", 8, 15, 2, 0xFFD5E3E5);
+		tin = createMaterial("tin", 3, 1, 2, 0xFFFFF7EE);
+		zinc = createMaterial("zinc", 1, 1, 1, 0xFFBCBCBC);
 
 		initDone = true;
 	}
 
-	protected static MetalMaterial addMaterial(String name, double hardness, double strength, double magic, int tintColor) {
+	protected static MetalMaterial createMaterial(String name, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor);
-		registerMaterial(name, m);
 
-		materials.add(m);
-		return m;
+		return registerMaterial(name, m);
 	}
 
-	protected static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic, int tintColor) {
+	protected static MetalMaterial createRareMaterial(String name, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, true);
 		registerMaterial(name, m);
 
-		materials.add(m);
-		return m;
+		return registerMaterial(name, m);
 	}
 
-	protected static void registerMaterial(String name, MetalMaterial m) {
+	protected static MetalMaterial registerMaterial(String name, MetalMaterial m) {
 
 		allMaterials.put(name, m);
+		materials.add(m);
 
 		final String enumName = m.getEnumName();
 		final String texName = m.getName();
@@ -125,7 +123,7 @@ public abstract class Materials {
 		final int durability = m.getArmorMaxDamageFactor();
 		final ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection,
 				m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON,
-				(m.hardness > 10 ? (int) (m.hardness / 5) : 0));
+				m.hardness > 10 ? (int) (m.hardness / 5) : 0);
 		if (am == null)
 			// uh-oh
 			FMLLog.severe("Failed to create armor material enum for " + m);
@@ -139,6 +137,8 @@ public abstract class Materials {
 			FMLLog.severe("Failed to create tool material enum for " + m);
 		toolMaterialMap.put(m, tm);
 		FMLLog.info("Created tool material enum " + tm);
+		
+		return m;
 	}
 
 	/**
@@ -164,11 +164,34 @@ public abstract class Materials {
 	}
 
 	/**
+	 * Returns a list of all materials in Base Metals. All of the materials
+	 * in this list are also available as static public members of this class.
+	 * 
+	 * @return A Collection of MetalMaterial instances.
+	 */
+	public static Collection<MetalMaterial> getAllMaterials() {
+		return allMaterials.values();
+	}
+
+	/**
+	 * Gets a material by its name (e.g. "copper").
+	 * 
+	 * @param materialName
+	 *            The name of a metal
+	 * @return The material representing the named material, or null if no materials
+	 *         have been registered under that name.
+	 */
+	public static MetalMaterial getMaterialByName(String materialName) {
+		return allMaterials.get(materialName);
+	}
+
+	/**
 	 * Returns a list of all metal materials in Base Metals. All of the metals
 	 * in this list are also available as static public members of this class.
 	 * 
 	 * @return A Collection of MetalMaterial instances.
 	 */
+	@Deprecated
 	public static Collection<MetalMaterial> getAllMetals() {
 		return allMaterials.values();
 	}
@@ -181,6 +204,7 @@ public abstract class Materials {
 	 * @return The material representing the named metal, or null if no metals
 	 *         have been registered under that name.
 	 */
+	@Deprecated
 	public static MetalMaterial getMetalByName(String metalName) {
 		return allMaterials.get(metalName);
 	}

@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -101,7 +102,8 @@ public abstract class Fluids {
 	public static Fluid fluidZinc = null;
 	public static BlockFluidBase fluidBlockZinc = null;
 
-	private static BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create();
+	private static final BiMap<String, Fluid> fluidRegistry = HashBiMap.create();
+	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create();
 
 	private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
 
@@ -139,40 +141,34 @@ public abstract class Fluids {
 		fluidZinc = addFluid("zinc", 2000, 10000, 330, 10);
 
 		// fluid blocks
-		fluidBlockAdamantine = addFluidBlock(fluidAdamantine, new BlockMoltenFluid(fluidAdamantine), "adamantine");
-		fluidBlockAntimony = addFluidBlock(fluidAntimony, new BlockMoltenFluid(fluidAntimony), "antimony");
-		fluidBlockAquarium = addFluidBlock(fluidAquarium, new BlockMoltenFluid(fluidAquarium), "aquarium");
-		fluidBlockBismuth = addFluidBlock(fluidBismuth, new BlockMoltenFluid(fluidBismuth), "bismuth");
-		fluidBlockBrass = addFluidBlock(fluidBrass, new BlockMoltenFluid(fluidBrass), "brass");
-		fluidBlockBronze = addFluidBlock(fluidBronze, new BlockMoltenFluid(fluidBronze), "bronze");
-		fluidBlockColdIron = addFluidBlock(fluidColdIron, new BlockMoltenFluid(fluidColdIron), "coldiron");
-		fluidBlockCopper = addFluidBlock(fluidCopper, new BlockMoltenFluid(fluidCopper), "copper");
-		fluidBlockCupronickel = addFluidBlock(fluidCupronickel, new BlockMoltenFluid(fluidCupronickel), "cupronickel");
-		fluidBlockElectrum = addFluidBlock(fluidElectrum, new BlockMoltenFluid(fluidElectrum), "electrum");
-		fluidBlockInvar = addFluidBlock(fluidInvar, new BlockMoltenFluid(fluidInvar), "invar");
-		fluidBlockLead = addFluidBlock(fluidLead, new BlockMoltenFluid(fluidLead), "lead");
-
-		fluidBlockMercury = addFluidBlock(fluidMercury,
-				new InteractiveFluidBlock(fluidMercury, false, (World w, EntityLivingBase e) -> {
-					if (w.rand.nextInt(32) == 0)
-						e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
-				}), "liquid_mercury");
-
-		fluidBlockMithril = addFluidBlock(fluidMithril, new BlockMoltenFluid(fluidMithril), "mithril");
-		fluidBlockNickel = addFluidBlock(fluidNickel, new BlockMoltenFluid(fluidNickel), "nickel");
-		fluidBlockPewter = addFluidBlock(fluidPewter, new BlockMoltenFluid(fluidPewter), "pewter");
-		fluidBlockPlatinum = addFluidBlock(fluidPlatinum, new BlockMoltenFluid(fluidPlatinum), "platinum");
-		fluidBlockSilver = addFluidBlock(fluidSilver, new BlockMoltenFluid(fluidSilver), "silver");
-		fluidBlockStarSteel = addFluidBlock(fluidStarSteel, new BlockMoltenFluid(fluidStarSteel), "starsteel");
-		fluidBlockSteel = addFluidBlock(fluidSteel, new BlockMoltenFluid(fluidSteel), "steel");
-		fluidBlockTin = addFluidBlock(fluidTin, new BlockMoltenFluid(fluidTin), "tin");
-		fluidBlockZinc = addFluidBlock(fluidZinc, new BlockMoltenFluid(fluidZinc), "zinc");
+		fluidBlockAdamantine = addFluidBlock("adamantine");
+		fluidBlockAntimony = addFluidBlock("antimony");
+		fluidBlockAquarium = addFluidBlock("aquarium");
+		fluidBlockBismuth = addFluidBlock("bismuth");
+		fluidBlockBrass = addFluidBlock("brass");
+		fluidBlockBronze = addFluidBlock("bronze");
+		fluidBlockColdIron = addFluidBlock("coldiron");
+		fluidBlockCopper = addFluidBlock("copper");
+		fluidBlockCupronickel = addFluidBlock("cupronickel");
+		fluidBlockElectrum = addFluidBlock("electrum");
+		fluidBlockInvar = addFluidBlock("invar");
+		fluidBlockLead = addFluidBlock("lead");
+		fluidBlockMercury = addFluidBlock("mercury");
+		fluidBlockMithril = addFluidBlock("mithril");
+		fluidBlockNickel = addFluidBlock("nickel");
+		fluidBlockPewter = addFluidBlock("pewter");
+		fluidBlockPlatinum = addFluidBlock("platinum");
+		fluidBlockSilver = addFluidBlock("silver");
+		fluidBlockStarSteel = addFluidBlock("starsteel");
+		fluidBlockSteel = addFluidBlock("steel");
+		fluidBlockTin = addFluidBlock("tin");
+		fluidBlockZinc = addFluidBlock("zinc");
 
 		initDone = true;
 	}
 
 	private static Fluid addFluid(String name, int density, int viscosity, int temperature, int luminosity) {
-		MetalMaterial metal = Materials.getMetalByName(name);
+		MetalMaterial metal = Materials.getMaterialByName(name);
 		int tintColor = 0xFF000000;
 		if (metal != null) { 
 			tintColor = metal.getTintColor();
@@ -185,14 +181,29 @@ public abstract class Fluids {
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);
 		fluid.setLuminosity(luminosity);
-		fluid.setUnlocalizedName(BaseMetals.MODID + "." + name);
+		fluid.setUnlocalizedName(Loader.instance().activeModContainer().getModId() + "." + name);
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
+
+		fluidRegistry.put(name, fluid);
 		return fluid;
 	}
 
-	private static BlockFluidBase addFluidBlock(Fluid fluid, BlockFluidBase block, String name) {
-		final ResourceLocation location = new ResourceLocation(BaseMetals.MODID, name);
+	private static BlockFluidBase addFluidBlock(String name) {
+
+		final ResourceLocation location = new ResourceLocation(Loader.instance().activeModContainer().getModId(), name);
+		Fluid fluid = getFluidByName(name);
+		BlockFluidBase block;
+
+		if (name != "mercury") {
+			block = new BlockMoltenFluid(fluid);
+		} else {
+			block = new InteractiveFluidBlock(fluid, false, (World w, EntityLivingBase e) -> {
+					if (w.rand.nextInt(32) == 0)
+						e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
+				}); // , "liquid_mercury")
+		}
+
 		block.setRegistryName(location);
 		block.setUnlocalizedName(location.toString());
 		GameRegistry.register(block);
@@ -205,6 +216,34 @@ public abstract class Fluids {
 
 		fluidBlockRegistry.put(name, block);
 		return block;
+	}
+
+	/**
+	 * Gets a fluid by its name. The name is the name as it is registered in
+	 * the GameRegistry, not its unlocalized name (the unlocalized name is the
+	 * registered name plus the prefix "basemetals.")
+	 *
+	 * @param name The name of the fluid in question
+	 * @return The fluid matching that name, or null if there isn't one
+	 */
+	public static Fluid getFluidByName(String name) {
+		return fluidRegistry.get(name);
+	}
+
+	/**
+	 * This is the reverse of the getFluidByName(...) method, returning the
+	 * registered name of an fluid instance (Base Metals fluids only).
+	 *
+	 * @param b The item in question
+	 * @return The name of the item, or null if the item is not a Base Metals
+	 * fluid block.
+	 */
+	public static String getNameOfFluid(Fluid b) {
+		return fluidRegistry.inverse().get(b);
+	}
+
+	public static Map<String, Fluid> getFluidRegistry() {
+		return fluidRegistry;
 	}
 
 	/**

@@ -20,10 +20,10 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	private final ResourceLocation bgtex = new ResourceLocation(BaseMetals.MODID + ":textures/gui/nei/nei_crusher.png");
 	private final IDrawable background;
-	private final String id = BaseMetalsJEIPlugin.JEIUID;
+	private static final String ID = BaseMetalsJEIPlugin.JEIUID;
 
-	private static final int inputSlot = 0;
-	private static final int outputSlot = 1;
+	private static final int INPUT_SLOT = 0;
+	private static final int OUTPUT_SLOT = 1;
 
 	/**
 	 *
@@ -49,24 +49,33 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	@Override
 	public String getUid() {
-		return this.id;
+		return ID;
 	}
 
+	@Deprecated
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper) {
 		final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
 		final int x = 45;
 		final int y = 7;
-		guiItemStacks.init(inputSlot, true, x, y);
-		guiItemStacks.init(outputSlot, false, x + 58, y);
+		guiItemStacks.init(INPUT_SLOT, true, x, y);
+		guiItemStacks.init(OUTPUT_SLOT, false, x + 58, y);
 
-		guiItemStacks.setFromRecipe(inputSlot, recipeWrapper.getInputs());
-		guiItemStacks.setFromRecipe(outputSlot, recipeWrapper.getOutputs());
+		guiItemStacks.setFromRecipe(INPUT_SLOT, recipeWrapper.getInputs());
+		guiItemStacks.setFromRecipe(OUTPUT_SLOT, recipeWrapper.getOutputs());
 	}
 
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
-		// TODO Auto-generated method stub
+		final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+
+		final int x = 45;
+		final int y = 7;
+		guiItemStacks.init(INPUT_SLOT, true, x, y);
+		guiItemStacks.init(OUTPUT_SLOT, false, x + 58, y);
+
+		guiItemStacks.setFromRecipe(INPUT_SLOT, recipeWrapper.getInputs());
+		guiItemStacks.setFromRecipe(OUTPUT_SLOT, recipeWrapper.getOutputs());
 	}
 }

@@ -5,6 +5,7 @@ package cyano.basemetals.registry;
  * @author Jasmine Iwanek
  *
  */
+@FunctionalInterface
 public interface IOreDictionaryEntry {
 
 	/**

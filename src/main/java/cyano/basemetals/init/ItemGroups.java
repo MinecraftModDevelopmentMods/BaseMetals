@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 /**
  * This class initializes all item groups in Base Metals.
- * 
+ *
  * @author DrCyano
  *
  */

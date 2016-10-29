@@ -206,6 +206,8 @@ public class BaseMetals {
 		cyano.basemetals.init.EnderIOPlugin.init();
 		if (Loader.isModLoaded("tconstruct"))
 			cyano.basemetals.init.TinkersConstructPlugin.init();
+		if (Loader.isModLoaded("Mekanism"))
+			cyano.basemetals.init.MekanismPlugin.init();
 		cyano.basemetals.init.VeinMinerPlugin.init();
 
 		final Path ALTPath = Paths.get(event.getSuggestedConfigurationFile().getParent(), "additional-loot-tables");

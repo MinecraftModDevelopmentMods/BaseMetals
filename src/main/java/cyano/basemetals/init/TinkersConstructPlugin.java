@@ -1,14 +1,11 @@
 package cyano.basemetals.init;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.collect.Lists;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.init.Fluids;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.Fluid;
@@ -31,7 +28,7 @@ import slimeknights.tconstruct.library.traits.ITrait;
 public class TinkersConstructPlugin {
 
 	private static final String TCONSTRUCT_MODID = "tconstruct";
-	private static HashMap<String, MaterialCorrelation> correlation = new HashMap<String, MaterialCorrelation>();
+	private static HashMap<String, MaterialCorrelation> correlation = new HashMap<>();
 	private static boolean initDone = false;
 
 //	private static List<MaterialIntegration> integrateList = Lists.newArrayList(); // List of materials needed to be integrated
@@ -45,13 +42,6 @@ public class TinkersConstructPlugin {
 			return;
 
 		if (Loader.isModLoaded(TCONSTRUCT_MODID)) {
-			final double d = 0; // durabilityFactorGeneral;
-			// System.out.println("DURABILITY FACTOR" + d);
-			final float s = 0;// (float) speedFactorGeneral;
-			// System.out.println("SPEED FACTOR" + s);
-			final float a = 0; // (float) attackFactorGeneral;
-			// System.out.println("ATTACK FACTOR" + a);
-
 			final Material adamantine = createTCMaterial("adamantine", Fluids.fluidAdamantine);
 			final Material antimony = createTCMaterial("antimony", Fluids.fluidAntimony);
 			final Material aquarium = createTCMaterial("aquarium", Fluids.fluidAquarium);
@@ -79,7 +69,7 @@ public class TinkersConstructPlugin {
 				if (null != correlation.get(name).getMeltFluid()) {
 				// skip items with no declared melt fluid - eg Aluminum, Aluminum Brass
 				// 		also skips items where the melt fluid process went awol, which is nice.
-					setupTConSmeltAndParts(name, d, s, a);
+					setupTConSmeltAndParts(name);
 				}
 			}
 
@@ -100,13 +90,13 @@ public class TinkersConstructPlugin {
 	 * @param speedFactor overall scaling factor of toolpart speed
 	 * @param attackFactor overall scaling factor of toolpart damage
 	 */
-	private static void setupTConSmeltAndParts(final String name, double durabilityFactor, float speedFactor, float attackFactor) {
+	private static void setupTConSmeltAndParts(final String name) {
 		final MaterialCorrelation metal = correlation.get(name);
-		
-		FMLLog.severe("TCONPLUGIN: setupTconSmeltAndParts, name was: %s", name);
+
+		FMLLog.severe("correlation found for %s", name);
 		registerFluid(metal.getMeltFluid(), true);
 		metal.getMetal().getBaseAttackDamage();
-		
+
 		registerTinkerMaterial(metal.getMaterial(), metal.getMeltFluid(),
 				(int) (metal.getMetal().getToolDurability()),
 				metal.getMetal().magicAffinity * 3 / 2,
@@ -129,7 +119,7 @@ public class TinkersConstructPlugin {
 	 * @return
 	 */
 	private static Material createTCMaterial(String name, Fluid meltFluid) {
-		MetalMaterial bmmaterial = Materials.getMetalByName(name);
+		MetalMaterial bmmaterial = Materials.getMaterialByName(name);
 		int tintColor = 0xFF000000;
 		if (bmmaterial != null) {
 			tintColor = bmmaterial.getTintColor();
@@ -151,6 +141,7 @@ public class TinkersConstructPlugin {
 	 * @param name Material identifier
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private static Material createTCMaterial(String name) {
 		return createTCMaterial(name, null);
 	}
@@ -212,28 +203,27 @@ public class TinkersConstructPlugin {
 	}
 
 	private static void registerTinkerMaterial(Material material, Fluid fluid, int headDura, float headSpeed, float headAttack, float handleMod, int handleDura, int extra, int headLevel, boolean craft, boolean cast, ITrait trait) {
-//		final List<MaterialIntegration> integrateList = Lists.newArrayList(); // List of materials needed to be integrated
+
+		MetalMaterial metal = Materials.getMaterialByName(material.identifier);
 
 		TinkerRegistry.addMaterialStats(material, new HeadMaterialStats(headDura, headSpeed, headAttack, headLevel)); // Sets stats for head
 		TinkerRegistry.addMaterialStats(material, new HandleMaterialStats(handleMod, handleDura)); // Sets Stats for handle
 		TinkerRegistry.addMaterialStats(material, new ExtraMaterialStats(extra)); // Sets stats for everything else
+
 		if (trait != null) {
 			String stats = "temporary placeholder"; // TODO: find out what goes here
 			TinkerRegistry.addMaterialTrait(material, trait, stats);
 		}
 
-		MetalMaterial metal = Materials.getMetalByName(material.identifier);
-		final Item item = metal.ingot; // Why do we need to get an item here?
 
 		// Set fluid used, Set whether craftable, set whether castable, adds the
 		// item with the value 144.
-		material.setFluid(fluid).setCraftable(craft).setCastable(cast).addItem(item, 1, Material.VALUE_Ingot);
-		material.setRepresentativeItem(item); // Uses item as the picture?
+		material.setFluid(fluid).setCraftable(craft).setCastable(cast);
+		material.addItem(metal.nugget, 1, Material.VALUE_Nugget);
+		material.addItem(metal.ingot, 1, Material.VALUE_Ingot);
+		material.setRepresentativeItem(metal.ingot); // Uses item as the picture?
 
-		// Probably don't need this
-		// proxy.setRenderInfo(material);
 		final MaterialIntegration integration = new MaterialIntegration(material, fluid, StringUtils.capitalize(fluid.getName()));
 		integration.integrate();
-//		integrateList.add(integration);
 	}
 }
