@@ -26,9 +26,9 @@ archivesBaseName = "BaseMetals_1.10.2"
 sourceCompatibility = targetCompatibility = "1.8"
 
 minecraft {
-    version = "1.10.2-12.18.1.2094"
+    version = "1.10.2-12.18.2.2099"
     runDir = "run"
-    mappings = "snapshot_20160927"
+    mappings = "snapshot_20161015"
 //    coreMod = "basemetals.asm.BaseMetalPlugin"
 }
 
@@ -49,16 +49,25 @@ repositories {
 		name "Ilexiconn"
 		url "https://maven.ilexiconn.net/"
 	}
+	maven {
+		name "amadornes"
+		url "http://maven.amadornes.com/"
+	}
 }
 
 dependencies {
-    compile "slimeknights:TConstruct:1.10.2-2.5.2.jenkins365:deobf"
-    compile "slimeknights.mantle:Mantle:1.10.2-1.0.0.jenkins170:deobf"
-    compile "mezz.jei:jei_1.10.2:3.11.2.280"
-    compile "codechicken:CodeChickenLib:1.10.2-2.2.3.85:deobf"
-    compile "codechicken:CodeChickenCore:1.10.2-2.1.8.79:deobf"
-    compile "codechicken:NotEnoughItems:1.10.2-2.1.1.147:deobf"
-	compile "mmd:orespawn:2.0.0.5-1.10.2:dev"
+    compile "slimeknights:TConstruct:${mc_version}-${tconstruct_version}:deobf"
+    compile "slimeknights.mantle:Mantle:${mc_version}-${mantle_version}:deobf"
+    compile "mezz.jei:jei_${mc_version}:${jei_version}"
+    compile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:deobf"
+    compile "codechicken:CodeChickenCore:${mc_version}-${ccc_version}:deobf"
+    compile "codechicken:NotEnoughItems:${mc_version}-${nei_version}:deobf"
+	compile "mmd:orespawn:${orespawn_version}-${mc_version}:dev"
+//	deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
+	compile "MCMultiPart:MCMultiPart:${mcmp_version}:deobf"
+//	deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
+//	compile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:deobf"
+//	compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 }
 
 processResources {
