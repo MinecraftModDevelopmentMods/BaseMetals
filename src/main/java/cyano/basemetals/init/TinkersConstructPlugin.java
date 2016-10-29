@@ -12,6 +12,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.ExtraMaterialStats;
@@ -56,7 +57,7 @@ public class TinkersConstructPlugin {
 			// final Material lead = createTCMaterial("lead", Fluids.fluidLead);
 //			final Material mercury = createTCMaterial("mercury", Fluids.fluidMercury); // Crashes
 			final Material mithril = createTCMaterial("mithril", Fluids.fluidMithril);
-			final Material nickel = createTCMaterial("nickel", Fluids.fluidNickel);
+//			final Material nickel = createTCMaterial("nickel", Fluids.fluidNickel);
 			final Material pewter = createTCMaterial("pewter", Fluids.fluidPewter);
 			final Material platinum = createTCMaterial("platinum", Fluids.fluidPlatinum);
 			// final Material silver = createTCMaterial("silver", Fluids.fluidSilver);
@@ -223,7 +224,8 @@ public class TinkersConstructPlugin {
 		material.addItem(metal.ingot, 1, Material.VALUE_Ingot);
 		material.setRepresentativeItem(metal.ingot); // Uses item as the picture?
 
-		final MaterialIntegration integration = new MaterialIntegration(material, fluid, StringUtils.capitalize(fluid.getName()));
-		integration.integrate();
+//		final MaterialIntegration integration = new MaterialIntegration(material, fluid, StringUtils.capitalize(fluid.getName()));
+//		integration.integrate();
+		TinkerIntegration.integrate(material);
 	}
 }
