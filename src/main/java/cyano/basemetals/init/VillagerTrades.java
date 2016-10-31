@@ -142,10 +142,10 @@ public abstract class VillagerTrades {
 						));
 			}
 			if (allArmors.containsKey(m)) {
-				tradesTable.computeIfAbsent(armorsmith,(Integer key) -> new ArrayList<>())
+				tradesTable.computeIfAbsent(armorsmith, (Integer key) -> new ArrayList<>())
 						.addAll(Arrays.asList(
 						makeTradePalette(
-						makePurchasePalette(emeraldPurch + (int)(m.hardness / 2), 1, allArmors.get(m).toArray(new Item[0]))
+						makePurchasePalette(emeraldPurch + (int) (m.hardness / 2), 1, allArmors.get(m).toArray(new Item[0]))
 						)));
 			}
 

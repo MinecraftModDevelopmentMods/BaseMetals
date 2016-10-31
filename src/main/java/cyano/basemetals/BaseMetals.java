@@ -256,7 +256,7 @@ public class BaseMetals {
 		cyano.basemetals.init.Achievements.init();
 
 		PROXY.init();
-		
+
 		MinecraftForge.EVENT_BUS.register(new cyano.basemetals.util.EventHandler());
 	}
 

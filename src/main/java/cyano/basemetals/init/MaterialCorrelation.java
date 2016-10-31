@@ -4,7 +4,7 @@ import cyano.basemetals.material.MetalMaterial;
 import net.minecraftforge.fluids.Fluid;
 import slimeknights.tconstruct.library.materials.Material;
 
-class MaterialCorrelation {
+public class MaterialCorrelation {
 	private Material material;
 	private MetalMaterial metal;
 	private Fluid meltFluid;

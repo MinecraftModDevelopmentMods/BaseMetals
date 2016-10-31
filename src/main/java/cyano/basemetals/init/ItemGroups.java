@@ -34,6 +34,7 @@ public class ItemGroups {
 			return;
 
 		// placeholders
+		// Item blockItem = Items.copper_crackhammer;
 		// Item itemItem = Items.copper_crackhammer;
 		// Item toolItem = Items.copper_crackhammer;
 

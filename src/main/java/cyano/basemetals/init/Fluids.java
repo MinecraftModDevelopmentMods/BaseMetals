@@ -117,28 +117,28 @@ public abstract class Fluids {
 			return;
 
 		// fluids
-		fluidAdamantine = addFluid("adamantine", 2000, 10000, 330, 10);
-		fluidAntimony = addFluid("antimony", 2000, 10000, 330, 10);
-		fluidAquarium = addFluid("aquarium", 2000, 10000, 330, 10);
-		fluidBismuth = addFluid("bismuth", 2000, 10000, 330, 10);
-		fluidBrass = addFluid("brass", 2000, 10000, 330, 10);
-		fluidBronze = addFluid("bronze", 2000, 10000, 330, 10);
-		fluidColdIron = addFluid("coldiron", 2000, 10000, 330, 10);
-		fluidCopper = addFluid("copper", 2000, 10000, 330, 10);
-		fluidCupronickel = addFluid("cupronickel", 2000, 10000, 330, 10);
-		fluidElectrum = addFluid("electrum", 2000, 10000, 330, 10);
-		fluidInvar = addFluid("invar", 2000, 10000, 330, 10);
-		fluidLead = addFluid("lead", 2000, 10000, 330, 10);
-		fluidMercury = addFluid("mercury", 13594, 2000, 300, 0);
-		fluidMithril = addFluid("mithril", 2000, 10000, 330, 10);
-		fluidNickel = addFluid("nickel", 2000, 10000, 330, 10);
-		fluidPewter = addFluid("pewter", 2000, 10000, 330, 10);
-		fluidPlatinum = addFluid("platinum", 2000, 10000, 330, 10);
-		fluidSilver = addFluid("silver", 2000, 10000, 330, 10);
-		fluidStarSteel = addFluid("starsteel", 2000, 10000, 330, 10);
-		fluidSteel = addFluid("steel", 2000, 10000, 330, 10);
-		fluidTin = addFluid("tin", 2000, 10000, 330, 10);
-		fluidZinc = addFluid("zinc", 2000, 10000, 330, 10);
+		fluidAdamantine = addFluid("adamantine", 2000, 10000, 769, 10);
+		fluidAntimony = addFluid("antimony", 2000, 10000, 769, 10);
+		fluidAquarium = addFluid("aquarium", 2000, 10000, 769, 10);
+		fluidBismuth = addFluid("bismuth", 2000, 10000, 769, 10);
+		fluidBrass = addFluid("brass", 2000, 10000, 769, 10);
+		fluidBronze = addFluid("bronze", 2000, 10000, 769, 10);
+		fluidColdIron = addFluid("coldiron", 2000, 10000, 769, 10);
+		fluidCopper = addFluid("copper", 2000, 10000, 769, 10);
+		fluidCupronickel = addFluid("cupronickel", 2000, 10000, 769, 10);
+		fluidElectrum = addFluid("electrum", 2000, 10000, 769, 10);
+		fluidInvar = addFluid("invar", 2000, 10000, 769, 10);
+		fluidLead = addFluid("lead", 2000, 10000, 769, 10);
+		fluidMercury = addFluid("mercury", 13594, 2000, 769, 0);
+		fluidMithril = addFluid("mithril", 2000, 10000, 769, 10);
+		fluidNickel = addFluid("nickel", 2000, 10000, 769, 10);
+		fluidPewter = addFluid("pewter", 2000, 10000, 769, 10);
+		fluidPlatinum = addFluid("platinum", 2000, 10000, 769, 10);
+		fluidSilver = addFluid("silver", 2000, 10000, 769, 10);
+		fluidStarSteel = addFluid("starsteel", 2000, 10000, 769, 10);
+		fluidSteel = addFluid("steel", 2000, 10000, 769, 10);
+		fluidTin = addFluid("tin", 2000, 10000, 769, 10);
+		fluidZinc = addFluid("zinc", 2000, 10000, 769, 10);
 
 		// fluid blocks
 		fluidBlockAdamantine = addFluidBlock("adamantine");

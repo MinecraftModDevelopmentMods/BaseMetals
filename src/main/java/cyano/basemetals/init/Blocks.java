@@ -402,7 +402,7 @@ public abstract class Blocks {
 		cyano.basemetals.init.ItemGroups.init();
 
 		String materialName;
-		
+
 		materialName = "adamantine";
 
 		adamantine_block = createBlock(materialName);
