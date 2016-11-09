@@ -12,11 +12,11 @@ import net.minecraft.item.ItemStack;
  */
 public class ItemGroups {
 
-	public static final java.util.function.BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (ItemStack a,
-			ItemStack b) -> {
+	public static final java.util.function.BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (ItemStack a, ItemStack b) -> {
 		final int delta = Items.getSortingValue(a) - Items.getSortingValue(b);
-		if (delta == 0)
+		if (delta == 0) {
 			return a.getItem().getUnlocalizedName().compareToIgnoreCase(b.getItem().getUnlocalizedName());
+		}
 		return delta;
 	};
 
@@ -30,16 +30,16 @@ public class ItemGroups {
 	 *
 	 */
 	public static void init() {
-		if (initDone)
+		if (initDone) {
 			return;
+		}
 
 		// placeholders
 		// Item blockItem = Items.copper_crackhammer;
 		// Item itemItem = Items.copper_crackhammer;
 		// Item toolItem = Items.copper_crackhammer;
 
-		tab_blocks = new GeneralizedCreativeTab(BaseMetals.MODID.concat(".blocks"), true,
-				() -> Items.copper_crackhammer);
+		tab_blocks = new GeneralizedCreativeTab(BaseMetals.MODID.concat(".blocks"), true, () -> Items.copper_crackhammer);
 
 		tab_items = tab_blocks;
 		tab_tools = tab_items;

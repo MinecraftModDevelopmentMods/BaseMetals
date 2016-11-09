@@ -2,12 +2,9 @@ package cyano.basemetals.jei;
 
 import cyano.basemetals.BaseMetals;
 import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IGuiItemStackGroup;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.recipe.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
@@ -16,6 +13,9 @@ import net.minecraft.util.text.translation.I18n;
  * @author Jasmine Iwanek
  *
  */
+@SuppressWarnings({
+		"rawtypes", "deprecation"
+})
 public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	private final ResourceLocation bgtex = new ResourceLocation(BaseMetals.MODID + ":textures/gui/nei/nei_crusher.png");
@@ -30,21 +30,23 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 	 * @param guiHelper
 	 */
 	public JEICrusherRecipeCategory(IGuiHelper guiHelper) {
-		this.background = guiHelper.createDrawable(this.bgtex, 24, 26, 128, 32);
+		background = guiHelper.createDrawable(bgtex, 24, 26, 128, 32);
 	}
 
 	@Override
 	public IDrawable getBackground() {
-		return this.background;
+		return background;
 	}
 
 	@Override
 	public String getTitle() {
 		final String key = "nei." + BaseMetals.MODID + ".recipehandler.crusher.name";
-		if (I18n.canTranslate(key))
+		if (I18n.canTranslate(key)) {
 			return net.minecraft.client.resources.I18n.format(key);
-		else
+		}
+		else {
 			return "Crusher";
+		}
 	}
 
 	@Override

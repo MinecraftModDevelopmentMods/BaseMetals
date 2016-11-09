@@ -3,8 +3,7 @@ package cyano.basemetals.init;
 import org.apache.logging.log4j.Level;
 
 import cyano.basemetals.BaseMetals;
-import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.*;
 import portablejim.veinminer.api.IMCMessage;
 
 /**
@@ -20,11 +19,12 @@ public class VeinMinerPlugin {
 	 *
 	 */
 	public static void init() {
-		if (initDone)
+		if (initDone) {
 			return;
+		}
 
 		if (Loader.isModLoaded("VeinMiner") || Loader.isModLoaded("veinminer")) {
-//			FMLLog.log(Level.ERROR, "%s: Activating VeinMiner Support", BaseMetals.MODID);
+			//			FMLLog.log(Level.ERROR, "%s: Activating VeinMiner Support", BaseMetals.MODID);
 			FMLLog.log(Level.ERROR, "%s: Activating VeinMiner Support", Loader.instance().activeModContainer().getModId());
 
 			addToolsForMetal("aluminum");

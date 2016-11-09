@@ -5,19 +5,14 @@ import java.util.HashMap;
 import org.apache.commons.lang3.StringUtils;
 
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.init.Fluids;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import cyano.basemetals.util.Config.Options;
+import net.minecraft.nbt.*;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
-import slimeknights.tconstruct.library.materials.ExtraMaterialStats;
-import slimeknights.tconstruct.library.materials.HandleMaterialStats;
-import slimeknights.tconstruct.library.materials.HeadMaterialStats;
-import slimeknights.tconstruct.library.materials.Material;
+import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.traits.ITrait;
 
 /**
@@ -25,50 +20,95 @@ import slimeknights.tconstruct.library.traits.ITrait;
  * @author Jasmine Iwanek
  *
  */
+@SuppressWarnings("unused")
 public class TinkersConstructPlugin {
 
 	private static final String TCONSTRUCT_MODID = "tconstruct";
 	private static HashMap<String, MaterialCorrelation> correlation = new HashMap<>();
 	private static boolean initDone = false;
 
-//	private static List<MaterialIntegration> integrateList = Lists.newArrayList(); // List of materials needed to be integrated
+	//	private static List<MaterialIntegration> integrateList = Lists.newArrayList(); // List of materials needed to be integrated
 
 	/**
 	 *
 	 */
-	@SuppressWarnings("unused")
 	public static void init() {
-		if (initDone)
+		if (initDone) {
 			return;
+		}
 
 		if (Loader.isModLoaded(TCONSTRUCT_MODID)) {
-			final Material adamantine = createTCMaterial("adamantine");
-			final Material antimony = createTCMaterial("antimony");
-			final Material aquarium = createTCMaterial("aquarium");
-			final Material bismuth = createTCMaterial("bismuth");
-			final Material brass = createTCMaterial("brass");
+			if (Options.ENABLE_ADAMANTINE) {
+				final Material adamantine = createTCMaterial("adamantine");
+			}
+			if (Options.ENABLE_ANTIMONY) {
+				final Material antimony = createTCMaterial("antimony");
+			}
+			if (Options.ENABLE_AQUARIUM) {
+				final Material aquarium = createTCMaterial("aquarium");
+			}
+			if (Options.ENABLE_BISMUTH) {
+				final Material bismuth = createTCMaterial("bismuth");
+			}
+			if (Options.ENABLE_BRASS) {
+				final Material brass = createTCMaterial("brass");
+			}
+			//if (Options.ENABLE_BRONZE) {
 			// final Material bronze = createTCMaterial("bronze");
-			final Material coldiron = createTCMaterial("coldiron");
+			//}
+			if (Options.ENABLE_COLDIRON) {
+				final Material coldiron = createTCMaterial("coldiron");
+			}
+			//if (Options.ENABLE_COPPERn) {
 			// final Material copper = createTCMaterial("copper");
-			final Material cupronickel = createTCMaterial("cupronickel");
+			//}
+			if (Options.ENABLE_CUPRONICKEL) {
+				final Material cupronickel = createTCMaterial("cupronickel");
+			}
+			//if (Options.ENABLE_ELECTRUM) {
 			// final Material electrum = createTCMaterial("electrum");
-			final Material invar = createTCMaterial("invar");
+			//}
+			if (Options.ENABLE_INVAR) {
+				final Material invar = createTCMaterial("invar");
+			}
+			//if (Options.ENABLE_LEAD) {
 			// final Material lead = createTCMaterial("lead");
-//			final Material mercury = createTCMaterial("mercury"); // Crashes
-			final Material mithril = createTCMaterial("mithril");
-//			final Material nickel = createTCMaterial("nickel");
-			final Material pewter = createTCMaterial("pewter");
-			final Material platinum = createTCMaterial("platinum");
+			//}
+			//if (Options.ENABLE_MERCURY) {
+			//			final Material mercury = createTCMaterial("mercury"); // Crashes
+			//}
+			if (Options.ENABLE_MITHRIL) {
+				final Material mithril = createTCMaterial("mithril");
+			}
+			//if (Options.ENABLE_NICKEL) {
+			//			final Material nickel = createTCMaterial("nickel");
+			//}
+			if (Options.ENABLE_PEWTER) {
+				final Material pewter = createTCMaterial("pewter");
+			}
+			if (Options.ENABLE_PLATINUM) {
+				final Material platinum = createTCMaterial("platinum");
+			}
+			//if (Options.ENABLE_SILVER) {
 			// final Material silver = createTCMaterial("silver");
-			final Material starsteel = createTCMaterial("starsteel");
-			// final Material steel = createTCMaterial("steel");
-			final Material tin = createTCMaterial("tin");
-			final Material zinc = createTCMaterial("zinc");
+			//}
+			if (Options.ENABLE_STARSTEEL) {
+				final Material starsteel = createTCMaterial("starsteel");
+			}
+			//if (Options.ENABLE_STEEL) {
+			// final Material steel = createTCMaterial("steel",  Fluids.fluidSteel);
+			//}
+			if (Options.ENABLE_TIN) {
+				final Material tin = createTCMaterial("tin");
+			}
+			if (Options.ENABLE_ZINC) {
+				final Material zinc = createTCMaterial("zinc");
+			}
 
-			for(String name : correlation.keySet()) {
+			for (String name : correlation.keySet()) {
 				if (null != correlation.get(name).getMeltFluid()) {
-				// skip items with no declared melt fluid - eg Aluminum, Aluminum Brass
-				// 		also skips items where the melt fluid process went awol, which is nice.
+					// skip items with no declared melt fluid - eg Aluminum, Aluminum Brass
+					// 		also skips items where the melt fluid process went awol, which is nice.
 					setupTConSmeltAndParts(name);
 				}
 			}
@@ -84,7 +124,7 @@ public class TinkersConstructPlugin {
 	}
 
 	/**
-	 * Factory method to convert MetalMaterial statistics to Tinkers Construct statistics and create the TCon material. 
+	 * Factory method to convert MetalMaterial statistics to Tinkers Construct statistics and create the TCon material.
 	 * @param name Material identifier
 	 */
 	protected static void setupTConSmeltAndParts(final String name) {
@@ -100,7 +140,7 @@ public class TinkersConstructPlugin {
 	}
 
 	/**
-	 * Creates a Tinkers Construct {@link slimeknights.tconstruct.library.materials.Material} and associates it with the link cyano.basemetals.Material.MetalMaterial and fluid net.minecraftforge.fluids.Fluid it goes with. This association is saved in the {@link #correlation} map so later we can just loop over the correlation for stuff. 
+	 * Creates a Tinkers Construct {@link slimeknights.tconstruct.library.materials.Material} and associates it with the link cyano.basemetals.Material.MetalMaterial and fluid net.minecraftforge.fluids.Fluid it goes with. This association is saved in the {@link #correlation} map so later we can just loop over the correlation for stuff.
 	 * @param name Material identifier
 	 * @return
 	 */
@@ -111,7 +151,8 @@ public class TinkersConstructPlugin {
 		int tintColor = 0xFF000000;
 		if (bmmaterial != null) {
 			tintColor = bmmaterial.getTintColor();
-		} else {
+		}
+		else {
 			tintColor = 0xFFD8D8D8; // Hack for Mercury as it doesn't have a metalMaterial
 		}
 
@@ -148,8 +189,9 @@ public class TinkersConstructPlugin {
 	 */
 	public static void registerAlloy(String outputName, int outputQty, String[] inputName, int[] inputQty) {
 		if (Loader.isModLoaded(TCONSTRUCT_MODID)) {
-			if (inputName.length != inputQty.length)
+			if (inputName.length != inputQty.length) {
 				throw new RuntimeException("Alloy must have the same amount of inputName and intQty");
+			}
 
 			final NBTTagList tagList = new NBTTagList();
 
@@ -182,13 +224,9 @@ public class TinkersConstructPlugin {
 		MetalMaterial material = Materials.getMaterialByName(tcmaterial.identifier);
 		Fluid fluid = Fluids.getFluidByName(tcmaterial.identifier);
 
-		HeadMaterialStats headStats = new HeadMaterialStats(material.getToolDurability(),
-															material.magicAffinity * 3 / 2,
-															material.getBaseAttackDamage() * 2,
-															material.getToolHarvestLevel());
+		HeadMaterialStats headStats = new HeadMaterialStats(material.getToolDurability(), material.magicAffinity * 3 / 2, material.getBaseAttackDamage() * 2, material.getToolHarvestLevel());
 
-		HandleMaterialStats handleStats = new HandleMaterialStats((int) (material.hardness + material.magicAffinity * 2) / 9,
-																  (int) (material.getToolDurability() / 6.8));
+		HandleMaterialStats handleStats = new HandleMaterialStats((int) (material.hardness + material.magicAffinity * 2) / 9, (int) (material.getToolDurability() / 6.8));
 
 		ExtraMaterialStats extraStats = new ExtraMaterialStats((material.getToolDurability() / 10));
 
@@ -203,14 +241,12 @@ public class TinkersConstructPlugin {
 
 		// Set fluid used, Set whether craftable, set whether castable, adds the
 		// item with the value 144.
-		tcmaterial.setFluid(fluid);
-		tcmaterial.setCraftable(craftable);
-		tcmaterial.setCastable(castable);
+		tcmaterial.setFluid(fluid).setCraftable(craftable).setCastable(castable);
 		tcmaterial.addItem(material.nugget, 1, Material.VALUE_Nugget);
 		tcmaterial.addItem(material.ingot, 1, Material.VALUE_Ingot);
 		tcmaterial.setRepresentativeItem(material.ingot); // Use this as the picture
 
-//		TinkerIntegration.integrate(tcmaterial);
+		//		TinkerIntegration.integrate(tcmaterial);
 		TinkerIntegration.integrate(tcmaterial, fluid, StringUtils.capitalize(fluid.getName()));
 	}
 }

@@ -8,11 +8,11 @@ public class MaterialCorrelation {
 	private Material material;
 	private MetalMaterial metal;
 	private Fluid meltFluid;
-	
+
 	public MaterialCorrelation(Material material, MetalMaterial metalByName, Fluid meltFluid) {
-		this.setMaterial(material);
-		this.setMetal(metalByName);
-		this.setMeltFluid(meltFluid);
+		setMaterial(material);
+		setMetal(metalByName);
+		setMeltFluid(meltFluid);
 	}
 
 	/**
@@ -56,5 +56,5 @@ public class MaterialCorrelation {
 	public void setMeltFluid(Fluid meltFluid) {
 		this.meltFluid = meltFluid;
 	}
-	
+
 }

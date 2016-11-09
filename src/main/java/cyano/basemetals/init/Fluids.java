@@ -2,24 +2,20 @@ package cyano.basemetals.init;
 
 import java.util.Map;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import com.google.common.collect.*;
 
 import cyano.basemetals.BaseMetals;
-import cyano.basemetals.blocks.BlockMoltenFluid;
-import cyano.basemetals.blocks.InteractiveFluidBlock;
+import cyano.basemetals.blocks.*;
 import cyano.basemetals.fluids.CustomFluid;
 import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.util.Config.Options;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.BlockFluidBase;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -113,56 +109,99 @@ public abstract class Fluids {
 	 *
 	 */
 	public static void init() {
-		if (initDone)
+		if (initDone) {
 			return;
+		}
 
-		// fluids
-		fluidAdamantine = addFluid("adamantine", 2000, 10000, 769, 10);
-		fluidAntimony = addFluid("antimony", 2000, 10000, 769, 10);
-		fluidAquarium = addFluid("aquarium", 2000, 10000, 769, 10);
-		fluidBismuth = addFluid("bismuth", 2000, 10000, 769, 10);
-		fluidBrass = addFluid("brass", 2000, 10000, 769, 10);
-		fluidBronze = addFluid("bronze", 2000, 10000, 769, 10);
-		fluidColdIron = addFluid("coldiron", 2000, 10000, 769, 10);
-		fluidCopper = addFluid("copper", 2000, 10000, 769, 10);
-		fluidCupronickel = addFluid("cupronickel", 2000, 10000, 769, 10);
-		fluidElectrum = addFluid("electrum", 2000, 10000, 769, 10);
-		fluidInvar = addFluid("invar", 2000, 10000, 769, 10);
-		fluidLead = addFluid("lead", 2000, 10000, 769, 10);
-		fluidMercury = addFluid("mercury", 13594, 2000, 769, 0);
-		fluidMithril = addFluid("mithril", 2000, 10000, 769, 10);
-		fluidNickel = addFluid("nickel", 2000, 10000, 769, 10);
-		fluidPewter = addFluid("pewter", 2000, 10000, 769, 10);
-		fluidPlatinum = addFluid("platinum", 2000, 10000, 769, 10);
-		fluidSilver = addFluid("silver", 2000, 10000, 769, 10);
-		fluidStarSteel = addFluid("starsteel", 2000, 10000, 769, 10);
-		fluidSteel = addFluid("steel", 2000, 10000, 769, 10);
-		fluidTin = addFluid("tin", 2000, 10000, 769, 10);
-		fluidZinc = addFluid("zinc", 2000, 10000, 769, 10);
-
-		// fluid blocks
-		fluidBlockAdamantine = addFluidBlock("adamantine");
-		fluidBlockAntimony = addFluidBlock("antimony");
-		fluidBlockAquarium = addFluidBlock("aquarium");
-		fluidBlockBismuth = addFluidBlock("bismuth");
-		fluidBlockBrass = addFluidBlock("brass");
-		fluidBlockBronze = addFluidBlock("bronze");
-		fluidBlockColdIron = addFluidBlock("coldiron");
-		fluidBlockCopper = addFluidBlock("copper");
-		fluidBlockCupronickel = addFluidBlock("cupronickel");
-		fluidBlockElectrum = addFluidBlock("electrum");
-		fluidBlockInvar = addFluidBlock("invar");
-		fluidBlockLead = addFluidBlock("lead");
-		fluidBlockMercury = addFluidBlock("mercury");
-		fluidBlockMithril = addFluidBlock("mithril");
-		fluidBlockNickel = addFluidBlock("nickel");
-		fluidBlockPewter = addFluidBlock("pewter");
-		fluidBlockPlatinum = addFluidBlock("platinum");
-		fluidBlockSilver = addFluidBlock("silver");
-		fluidBlockStarSteel = addFluidBlock("starsteel");
-		fluidBlockSteel = addFluidBlock("steel");
-		fluidBlockTin = addFluidBlock("tin");
-		fluidBlockZinc = addFluidBlock("zinc");
+		// fluids and fluid blocks
+		if (Options.ENABLE_ADAMANTINE) {
+			fluidAdamantine = addFluid("adamantine", 2000, 10000, 769, 10);
+			fluidBlockAdamantine = addFluidBlock("adamantine");
+		}
+		if (Options.ENABLE_ANTIMONY) {
+			fluidAntimony = addFluid("antimony", 2000, 10000, 769, 10);
+			fluidBlockAntimony = addFluidBlock("antimony");
+		}
+		if (Options.ENABLE_AQUARIUM) {
+			fluidAquarium = addFluid("aquarium", 2000, 10000, 769, 10);
+			fluidBlockAquarium = addFluidBlock("aquarium");
+		}
+		if (Options.ENABLE_BISMUTH) {
+			fluidBismuth = addFluid("bismuth", 2000, 10000, 769, 10);
+			fluidBlockBismuth = addFluidBlock("bismuth");
+		}
+		if (Options.ENABLE_BRASS) {
+			fluidBrass = addFluid("brass", 2000, 10000, 769, 10);
+			fluidBlockBrass = addFluidBlock("brass");
+		}
+		if (Options.ENABLE_BRONZE) {
+			fluidBronze = addFluid("bronze", 2000, 10000, 769, 10);
+			fluidBlockBronze = addFluidBlock("bronze");
+		}
+		if (Options.ENABLE_COLDIRON) {
+			fluidColdIron = addFluid("coldiron", 2000, 10000, 769, 10);
+			fluidBlockColdIron = addFluidBlock("coldiron");
+		}
+		if (Options.ENABLE_COPPER) {
+			fluidCopper = addFluid("copper", 2000, 10000, 769, 10);
+			fluidBlockCopper = addFluidBlock("copper");
+		}
+		if (Options.ENABLE_CUPRONICKEL) {
+			fluidCupronickel = addFluid("cupronickel", 2000, 10000, 769, 10);
+			fluidBlockCupronickel = addFluidBlock("cupronickel");
+		}
+		if (Options.ENABLE_ELECTRUM) {
+			fluidElectrum = addFluid("electrum", 2000, 10000, 769, 10);
+			fluidBlockElectrum = addFluidBlock("electrum");
+		}
+		if (Options.ENABLE_INVAR) {
+			fluidInvar = addFluid("invar", 2000, 10000, 769, 10);
+			fluidBlockInvar = addFluidBlock("invar");
+		}
+		if (Options.ENABLE_LEAD) {
+			fluidLead = addFluid("lead", 2000, 10000, 769, 10);
+			fluidBlockLead = addFluidBlock("lead");
+		}
+		if (Options.ENABLE_MERCURY) {
+			fluidMercury = addFluid("mercury", 13594, 2000, 769, 0);
+			fluidBlockMercury = addFluidBlock("mercury");
+		}
+		if (Options.ENABLE_MITHRIL) {
+			fluidMithril = addFluid("mithril", 2000, 10000, 769, 10);
+			fluidBlockMithril = addFluidBlock("mithril");
+		}
+		if (Options.ENABLE_NICKEL) {
+			fluidNickel = addFluid("nickel", 2000, 10000, 769, 10);
+			fluidBlockNickel = addFluidBlock("nickel");
+		}
+		if (Options.ENABLE_PEWTER) {
+			fluidPewter = addFluid("pewter", 2000, 10000, 769, 10);
+			fluidBlockPewter = addFluidBlock("pewter");
+		}
+		if (Options.ENABLE_PLATINUM) {
+			fluidPlatinum = addFluid("platinum", 2000, 10000, 769, 10);
+			fluidBlockPlatinum = addFluidBlock("platinum");
+		}
+		if (Options.ENABLE_SILVER) {
+			fluidSilver = addFluid("silver", 2000, 10000, 769, 10);
+			fluidBlockSilver = addFluidBlock("silver");
+		}
+		if (Options.ENABLE_STARSTEEL) {
+			fluidStarSteel = addFluid("starsteel", 2000, 10000, 769, 10);
+			fluidBlockStarSteel = addFluidBlock("starsteel");
+		}
+		if (Options.ENABLE_STEEL) {
+			fluidSteel = addFluid("steel", 2000, 10000, 769, 10);
+			fluidBlockSteel = addFluidBlock("steel");
+		}
+		if (Options.ENABLE_TIN) {
+			fluidTin = addFluid("tin", 2000, 10000, 769, 10);
+			fluidBlockTin = addFluidBlock("tin");
+		}
+		if (Options.ENABLE_ZINC) {
+			fluidZinc = addFluid("zinc", 2000, 10000, 769, 10);
+			fluidBlockZinc = addFluidBlock("zinc");
+		}
 
 		initDone = true;
 	}
@@ -170,9 +209,10 @@ public abstract class Fluids {
 	private static Fluid addFluid(String name, int density, int viscosity, int temperature, int luminosity) {
 		MetalMaterial metal = Materials.getMaterialByName(name);
 		int tintColor = 0xFF000000;
-		if (metal != null) { 
+		if (metal != null) {
 			tintColor = metal.getTintColor();
-		} else {
+		}
+		else {
 			tintColor = 0xFFD8D8D8; // Hack for Mercury as it doesn't have a metalMaterial
 		}
 
@@ -197,11 +237,13 @@ public abstract class Fluids {
 
 		if (name != "mercury") {
 			block = new BlockMoltenFluid(fluid);
-		} else {
+		}
+		else {
 			block = new InteractiveFluidBlock(fluid, false, (World w, EntityLivingBase e) -> {
-					if (w.rand.nextInt(32) == 0)
-						e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
-				}); // , "liquid_mercury")
+				if (w.rand.nextInt(32) == 0) {
+					e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
+				}
+			}); // , "liquid_mercury")
 		}
 
 		block.setRegistryName(location);

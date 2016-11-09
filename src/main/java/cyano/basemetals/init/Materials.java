@@ -1,12 +1,9 @@
 package cyano.basemetals.init;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.util.Config;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -63,8 +60,9 @@ public abstract class Materials {
 	 *
 	 */
 	public static void init() {
-		if (initDone)
+		if (initDone) {
 			return;
+		}
 
 		// Vanilla Materials
 		vanilla_wood = createMaterial("wood", 2, 2, 6, 0xFF000000);
@@ -74,27 +72,69 @@ public abstract class Materials {
 		vanilla_diamond = createMaterial("diamond", 10, 15, 4, 0xFF000000);
 
 		// Mod Metals
-		adamantine = createMaterial("adamantine", 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
-		antimony = createMaterial("antimony", 1, 1, 1, 0xFFD8E3DE);
-		aquarium = createMaterial("aquarium", 4, 10, 15, 0xFF000000);
-		bismuth = createMaterial("bismuth", 1, 1, 1, 0xFFDDD7CB);
-		brass = createMaterial("brass", 3.5, 3, 9, 0xFFFFE374);
-		bronze = createMaterial("bronze", 8, 4, 4.5, 0xFFF7A54F);
-		coldiron = createMaterial("coldiron", 7, 7, 7, 0xFFC7CEF0);
-		copper = createMaterial("copper", 4, 4, 5, 0xFFFF9F78);
-		cupronickel = createMaterial("cupronickel", 6, 6, 6, 0xFFC8AB6F);
-		electrum = createMaterial("electrum", 5, 4, 10, 0xFFFFF2B3);
-		invar = createMaterial("invar", 9, 10, 3, 0xFFD2CDB8);
-		lead = createMaterial("lead", 1, 1, 1, 0xFF7B7B7B).setBaseDamage(4f);
-		mithril = createMaterial("mithril", 9, 9, 9, 0xFFF4FFFF);
-		nickel = createMaterial("nickel", 4, 4, 7, 0xFFEEFFEB);
-		pewter = createMaterial("pewter", 1, 1, 1, 0xFF92969F);
-		platinum = createRareMaterial("platinum", 3, 5, 15, 0xFFF2FFFF);
-		silver = createMaterial("silver", 5, 4, 6, 0xFFFFFFFF);
-		starsteel = createMaterial("starsteel", 10, 25, 12, 0xFF53393F).setBlastResistance(2000f);
-		steel = createMaterial("steel", 8, 15, 2, 0xFFD5E3E5);
-		tin = createMaterial("tin", 3, 1, 2, 0xFFFFF7EE);
-		zinc = createMaterial("zinc", 1, 1, 1, 0xFFBCBCBC);
+		if (Config.Options.ENABLE_ADAMANTINE) {
+			adamantine = createMaterial("adamantine", 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
+		}
+		if (Config.Options.ENABLE_ANTIMONY) {
+			antimony = createMaterial("antimony", 1, 1, 1, 0xFFD8E3DE);
+		}
+		if (Config.Options.ENABLE_AQUARIUM) {
+			aquarium = createMaterial("aquarium", 4, 10, 15, 0xFF000000);
+		}
+		if (Config.Options.ENABLE_BISMUTH) {
+			bismuth = createMaterial("bismuth", 1, 1, 1, 0xFFDDD7CB);
+		}
+		if (Config.Options.ENABLE_BRASS) {
+			brass = createMaterial("brass", 3.5, 3, 9, 0xFFFFE374);
+		}
+		if (Config.Options.ENABLE_BRONZE) {
+			bronze = createMaterial("bronze", 8, 4, 4.5, 0xFFF7A54F);
+		}
+		if (Config.Options.ENABLE_COLDIRON) {
+			coldiron = createMaterial("coldiron", 7, 7, 7, 0xFFC7CEF0);
+		}
+		if (Config.Options.ENABLE_COPPER) {
+			copper = createMaterial("copper", 4, 4, 5, 0xFFFF9F78);
+		}
+		if (Config.Options.ENABLE_CUPRONICKEL) {
+			cupronickel = createMaterial("cupronickel", 6, 6, 6, 0xFFC8AB6F);
+		}
+		if (Config.Options.ENABLE_ELECTRUM) {
+			electrum = createMaterial("electrum", 5, 4, 10, 0xFFFFF2B3);
+		}
+		if (Config.Options.ENABLE_INVAR) {
+			invar = createMaterial("invar", 9, 10, 3, 0xFFD2CDB8);
+		}
+		if (Config.Options.ENABLE_LEAD) {
+			lead = createMaterial("lead", 1, 1, 1, 0xFF7B7B7B).setBaseDamage(4f);
+		}
+		if (Config.Options.ENABLE_MITHRIL) {
+			mithril = createMaterial("mithril", 9, 9, 9, 0xFFF4FFFF);
+		}
+		if (Config.Options.ENABLE_NICKEL) {
+			nickel = createMaterial("nickel", 4, 4, 7, 0xFFEEFFEB);
+		}
+		if (Config.Options.ENABLE_PEWTER) {
+			pewter = createMaterial("pewter", 1, 1, 1, 0xFF92969F);
+		}
+		if (Config.Options.ENABLE_PLATINUM) {
+			platinum = createRareMaterial("platinum", 3, 5, 15, 0xFFF2FFFF);
+		}
+		if (Config.Options.ENABLE_SILVER) {
+			silver = createMaterial("silver", 5, 4, 6, 0xFFFFFFFF);
+		}
+		if (Config.Options.ENABLE_STARSTEEL) {
+			starsteel = createMaterial("starsteel", 10, 25, 12, 0xFF53393F).setBlastResistance(2000f);
+		}
+		if (Config.Options.ENABLE_STEEL) {
+			steel = createMaterial("steel", 8, 15, 2, 0xFFD5E3E5);
+		}
+		if (Config.Options.ENABLE_TIN) {
+			tin = createMaterial("tin", 3, 1, 2, 0xFFFFF7EE);
+		}
+		if (Config.Options.ENABLE_ZINC) {
+			zinc = createMaterial("zinc", 1, 1, 1, 0xFFBCBCBC);
+		}
 
 		initDone = true;
 	}
@@ -107,6 +147,7 @@ public abstract class Materials {
 
 	protected static MetalMaterial createRareMaterial(String name, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, true);
+		//registerMaterial(name, m);
 
 		return registerMaterial(name, m);
 	}
@@ -120,29 +161,28 @@ public abstract class Materials {
 		final String texName = m.getName();
 		final int[] protection = m.getDamageReductionArray();
 		final int durability = m.getArmorMaxDamageFactor();
-		final ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection,
-				m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON,
-				m.hardness > 10 ? (int) (m.hardness / 5) : 0);
-		if (am == null)
+		final ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, m.hardness > 10 ? (int) (m.hardness / 5) : 0);
+		if (am == null) {
 			// uh-oh
 			FMLLog.severe("Failed to create armor material enum for " + m);
+		}
 		armorMaterialMap.put(m, am);
 		FMLLog.info("Created armor material enum " + am);
 
-		final ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(),
-				m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
-		if (tm == null)
+		final ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(), m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
+		if (tm == null) {
 			// uh-oh
 			FMLLog.severe("Failed to create tool material enum for " + m);
+		}
 		toolMaterialMap.put(m, tm);
 		FMLLog.info("Created tool material enum " + tm);
-		
+
 		return m;
 	}
 
 	/**
 	 * Gets the armor material for a given metal
-	 * 
+	 *
 	 * @param m
 	 *            The metal of interest
 	 * @return The armor material for this metal, or null if there isn't one
@@ -153,7 +193,7 @@ public abstract class Materials {
 
 	/**
 	 * Gets the tool material for a given metal
-	 * 
+	 *
 	 * @param m
 	 *            The metal of interest
 	 * @return The tool material for this metal, or null if there isn't one
@@ -165,7 +205,7 @@ public abstract class Materials {
 	/**
 	 * Returns a list of all materials in Base Metals. All of the materials
 	 * in this list are also available as static public members of this class.
-	 * 
+	 *
 	 * @return A Collection of MetalMaterial instances.
 	 */
 	public static Collection<MetalMaterial> getAllMaterials() {
@@ -174,7 +214,7 @@ public abstract class Materials {
 
 	/**
 	 * Gets a material by its name (e.g. "copper").
-	 * 
+	 *
 	 * @param materialName
 	 *            The name of a metal
 	 * @return The material representing the named material, or null if no materials
@@ -187,7 +227,7 @@ public abstract class Materials {
 	/**
 	 * Returns a list of all metal materials in Base Metals. All of the metals
 	 * in this list are also available as static public members of this class.
-	 * 
+	 *
 	 * @return A Collection of MetalMaterial instances.
 	 */
 	@Deprecated
@@ -197,7 +237,7 @@ public abstract class Materials {
 
 	/**
 	 * Gets a metal material by its name (e.g. "copper").
-	 * 
+	 *
 	 * @param metalName
 	 *            The name of a metal
 	 * @return The material representing the named metal, or null if no metals
