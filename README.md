@@ -1,6 +1,6 @@
-# Base Metals
+# Base Metals [![Build Status](https://travis-ci.org/jriwanek/ModernMetals.svg?branch=master)](https://travis-ci.org/jriwanek/BaseMetals)
 
-## DrCyano's Base Metals Mod
+## Base Metals Mod
 
 This mod adds historically commonly used metals to Minecraft, specifically silver, copper, tin, lead, zinc, mercury, and nickel. You will also find a number of metal alloys in this mod and a new tool: the Crack Hammer.
 
