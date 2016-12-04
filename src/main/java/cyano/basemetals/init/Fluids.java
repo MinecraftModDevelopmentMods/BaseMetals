@@ -211,8 +211,7 @@ public abstract class Fluids {
 		int tintColor = 0xFF000000;
 		if (metal != null) {
 			tintColor = metal.getTintColor();
-		}
-		else {
+		} else {
 			tintColor = 0xFFD8D8D8; // Hack for Mercury as it doesn't have a metalMaterial
 		}
 
@@ -237,8 +236,7 @@ public abstract class Fluids {
 
 		if (name != "mercury") {
 			block = new BlockMoltenFluid(fluid);
-		}
-		else {
+		} else {
 			block = new InteractiveFluidBlock(fluid, false, (World w, EntityLivingBase e) -> {
 				if (w.rand.nextInt(32) == 0) {
 					e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));

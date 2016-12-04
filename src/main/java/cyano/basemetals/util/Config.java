@@ -25,11 +25,14 @@ import net.minecraftforge.oredict.OreDictionary;
 public class Config {
 
 	public static Configuration CONFIG;
-	private static String METALS_CAT = "Metals";
-	private static String GENERAL_CAT = "General";
-	private static String VANILLA_CAT = "Vanilla";
-	private static String HAMMER_RECIPES_CAT = "Crack Hammer Recipse";
-	private static String ORESPANE_CFG_PATH = "config/orespawn";
+	private static final String CONFIG_FILE = "config/BaseMetals.cfg";
+	private static final String GENERAL_CAT = "General";
+	private static final String INTEGRATION_CAT = "Mod Integration";
+	private static final String METALS_CAT = "Metals";
+	private static final String VANILLA_CAT = "Vanilla";
+	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipies";
+	private static final String ALT_CFG_PATH = "config/additionalloottables";
+	private static final String ORESPAWN_CFG_PATH = "config/orespawn";
 	protected static List<String> USER_CRUSHER_RECIPES = new ArrayList<String>();
 
 	@SubscribeEvent
@@ -41,7 +44,7 @@ public class Config {
 
 	public static void init() {
 		if (CONFIG == null) {
-			CONFIG = new Configuration(new File(BaseMetals.CONFIG_FILE));
+			CONFIG = new Configuration(new File(CONFIG_FILE));
 			MinecraftForge.EVENT_BUS.register(new Config());
 		}
 
@@ -56,6 +59,14 @@ public class Config {
 		Options.STRONG_HAMMERS = CONFIG.getBoolean("strong_hammers", GENERAL_CAT, true, "If true, then the crack hammer can crush ingots/ores that a pickaxe of the same \n" + "material can harvest. If false, then your crack hammer must be made of a harder \n" + "material than the ore you are crushing.");
 		Options.AUTODETECT_RECIPES = CONFIG.getBoolean("automatic_recipes", GENERAL_CAT, true, "If true, then Base Metals will scan the Ore Dictionary to automatically add a \n" + "Crack Hammer recipe for every material that has an ore, dust, and ingot.");
 		Options.REQUIRE_ORESPAWN = CONFIG.getBoolean("using_orespawn", GENERAL_CAT, true, "If false, then Base Metals will not require DrCyano's Ore Spawn mod. \n" + "Set to false if using another mod to manually handle ore generation.");
+
+		// INTEGRATION
+		Options.ENABLE_ENDER_IO = CONFIG.getBoolean("ender_io_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Ender IO");
+		Options.ENABLE_IC2 = CONFIG.getBoolean("ic2_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with IC2");
+		Options.ENABLE_MEKANISM = CONFIG.getBoolean("mekanism_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Mekanism");
+		Options.ENABLE_THAUMCRAFT = CONFIG.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Thaumcraft");
+		Options.ENABLE_TINKERS_CONSTRUCT = CONFIG.getBoolean("tinkers_construct_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Tinkers Construct");
+		Options.ENABLE_VEINMINER = CONFIG.getBoolean("veinminer_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with VeinMiner");
 
 		// METALS
 		Options.ENABLE_ADAMANTINE = CONFIG.getBoolean("EnableAdamantine", METALS_CAT, true, "Enable Adamantine Items and Materials");
@@ -115,9 +126,9 @@ public class Config {
 			if (!Loader.isModLoaded("orespawn")) {
 				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
 				orespawnMod.add(new DefaultArtifactVersion("1.0.0"));
-				throw new MissingModsException(orespawnMod, "orespawn", "DrCyano's Ore Spawn Mod");
+				throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
 			}
-			Path oreSpawnFolder = Paths.get(ORESPANE_CFG_PATH);
+			Path oreSpawnFolder = Paths.get(ORESPAWN_CFG_PATH);
 			final Path oreSpawnFile = Paths.get(oreSpawnFolder.toString(), BaseMetals.MODID + ".json");
 			if (!(Files.exists(oreSpawnFile))) {
 				try {
@@ -143,6 +154,14 @@ public class Config {
 		public static boolean STRONG_HAMMERS = true;
 		public static boolean AUTODETECT_RECIPES = true;
 		public static boolean REQUIRE_ORESPAWN = true;
+
+		// INTEGRATION
+		public static boolean ENABLE_ENDER_IO = true;
+		public static boolean ENABLE_IC2 = true;
+		public static boolean ENABLE_MEKANISM = true;
+		public static boolean ENABLE_THAUMCRAFT = true;
+		public static boolean ENABLE_TINKERS_CONSTRUCT = true;
+		public static boolean ENABLE_VEINMINER = true;
 
 		// METALS
 		public static boolean ENABLE_ADAMANTINE = true;

@@ -143,6 +143,7 @@ public abstract class Recipes {
 			if (exceptions.contains(metal)) {
 				continue;
 			}
+
 			final String oreDictName = metal.getCapitalizedName();
 			final Item axe = metal.axe;
 			final Item blend = metal.blend;
@@ -181,7 +182,7 @@ public abstract class Recipes {
 			final Item slab = metal.slab;
 			final Block lever = metal.lever;
 			final Block pressure_plate = metal.pressure_plate;
-			//final Block stairs = metal.stairs;
+			final Block stairs = metal.stairs;
 			final Block wall = metal.wall;
 
 			// NOTE: smelting XP is based on output item, not input item
@@ -307,7 +308,7 @@ public abstract class Recipes {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe), "xx", " /", " /", 'x', "ingot" + oreDictName, '/', "stickWood"));
 			}
 
-			// if ((ingot != null) && (hoe != null))
+			// if ((ingot != null) && (hoe != null)) {
 			// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe), "xx", "/ ", "/ ", 'x', "ingot" + oreDictName, '/', "stickWood"));
 
 			if ((ingot != null) && (pickaxe != null)) {

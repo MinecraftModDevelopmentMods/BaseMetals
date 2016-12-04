@@ -71,7 +71,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 					int num = output.stackSize;
 					output.stackSize = 1;
 					for (int i = 0; i < num; i++) {
-						world.spawnEntityInWorld(new EntityItem(world, coord.getX() + 0.5, coord.getY() + 0.5, coord.getZ() + 0.5, output.copy()));
+						world.spawnEntity(new EntityItem(world, coord.getX() + 0.5, coord.getY() + 0.5, coord.getZ() + 0.5, output.copy()));
 					}
 				}
 			}
@@ -115,7 +115,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 							w.removeEntity(target);
 						}
 						for (int i = 0; i < count; i++) {
-							w.spawnEntityInWorld(new EntityItem(w, x, y, z, output.copy()));
+							w.spawnEntity(new EntityItem(w, x, y, z, output.copy()));
 						}
 						item.damageItem(1, player);
 					}

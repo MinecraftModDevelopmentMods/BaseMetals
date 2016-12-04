@@ -55,36 +55,30 @@ public abstract class VillagerTrades {
 			if (m == null) {
 				return;
 			}
+
 			for (final Item i : e.getValue()) {
 				if (i instanceof ItemArmor) {
 					allArmors.computeIfAbsent(m, (MetalMaterial g) -> new ArrayList<>()).add(i);
 					continue;
-				}
-				else if (i instanceof ItemMetalCrackHammer) {
+				} else if (i instanceof ItemMetalCrackHammer) {
 					allHammers.put(m, i);
 					continue;
-				}
-				else if (i instanceof ItemSword) {
+				} else if (i instanceof ItemSword) {
 					allSwords.put(m, i);
 					continue;
-				}
-				else if (i instanceof ItemHoe) {
+				} else if (i instanceof ItemHoe) {
 					allHoes.put(m, i);
 					continue;
-				}
-				else if (i instanceof ItemAxe) {
+				} else if (i instanceof ItemAxe) {
 					allAxes.put(m, i);
 					continue;
-				}
-				else if (i instanceof ItemPickaxe) {
+				} else if (i instanceof ItemPickaxe) {
 					allPickAxes.put(m, i);
 					continue;
-				}
-				else if (i instanceof ItemSpade) {
+				} else if (i instanceof ItemSpade) {
 					allShovels.put(m, i);
 					continue;
-				}
-				else if (i instanceof ItemMetalIngot) {
+				} else if (i instanceof ItemMetalIngot) {
 					allIngots.put(m, i);
 					continue;
 				}
@@ -158,8 +152,7 @@ public abstract class VillagerTrades {
 
 			try {
 				VillagerTradeHelper.insertTrades(profession, career, level, new MultiTradeGenerator(TRADES_PER_LEVEL, trades));
-			}
-			catch (NoSuchFieldException | IllegalAccessException ex) {
+			} catch (NoSuchFieldException | IllegalAccessException ex) {
 				FMLLog.log(Level.ERROR, ex, "Java Reflection Exception");
 			}
 		}

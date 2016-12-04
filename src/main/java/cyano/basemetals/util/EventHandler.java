@@ -34,7 +34,7 @@ public class EventHandler {
         }
         ItemStack activeItemStack = player.getActiveItemStack();
         if ((damage > 0.0F) && (activeItemStack != null) && ((activeItemStack.getItem() instanceof ItemMetalShield))) {
-            int i = 1 + MathHelper.floor_float(damage);
+            int i = 1 + MathHelper.floor(damage);
             activeItemStack.damageItem(i, player);
             if (activeItemStack.stackSize <= 0) {
                 EnumHand enumhand = player.getActiveHand();
@@ -47,7 +47,7 @@ public class EventHandler {
                 }
                 activeItemStack = null;
                 if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-                    player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, 0.8F, 0.8F + player.worldObj.rand.nextFloat() * 0.4F);
+                    player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, 0.8F, 0.8F + player.world.rand.nextFloat() * 0.4F);
                 }
             }
         }

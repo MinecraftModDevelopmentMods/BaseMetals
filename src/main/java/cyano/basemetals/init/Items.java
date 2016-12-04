@@ -1890,8 +1890,7 @@ public abstract class Items {
 		String fullName;
 		if (material != null) {
 			fullName = material.getName() + "_" + name;
-		}
-		else {
+		} else {
 			fullName = name;
 		}
 
@@ -2152,7 +2151,7 @@ public abstract class Items {
 		MetalMaterial material = Materials.getMaterialByName(materialName);
 		final Item i = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.tab_items);
 		OreDictionary.registerOre("crushedPurified" + material.getCapitalizedName(), i);
-		//		material.crushedpurified = i;
+		material.crushedpurified = i;
 		return i;
 	}
 
@@ -2206,8 +2205,7 @@ public abstract class Items {
 		if ((a.getItem() instanceof ItemBlock) && (((ItemBlock) a.getItem()).getBlock() instanceof IMetalObject)) {
 			classVal = classSortingValues.computeIfAbsent(((ItemBlock) a.getItem()).getBlock().getClass(), (Class<?> c) -> 990000);
 			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject) ((ItemBlock) a.getItem()).getBlock()).getMetalMaterial(), (MetalMaterial m) -> 9900);
-		}
-		else if (a.getItem() instanceof IMetalObject) {
+		} else if (a.getItem() instanceof IMetalObject) {
 			classVal = classSortingValues.computeIfAbsent(a.getItem().getClass(), (Class<?> c) -> 990000);
 			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject) a.getItem()).getMetalMaterial(), (MetalMaterial m) -> 9900);
 		}

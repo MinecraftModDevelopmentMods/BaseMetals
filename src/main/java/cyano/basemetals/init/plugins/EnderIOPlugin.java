@@ -1,4 +1,4 @@
-package cyano.basemetals.init;
+package cyano.basemetals.init.plugins;
 
 import cyano.basemetals.BaseMetals;
 import net.minecraftforge.fml.common.Loader;
@@ -15,6 +15,7 @@ public class EnderIOPlugin {
 
 	private static boolean initDone = false;
 
+	// // Loader.instance().activeModContainer().getModId()
 	private static String MODID = BaseMetals.MODID;
 
 	// @formatter:off

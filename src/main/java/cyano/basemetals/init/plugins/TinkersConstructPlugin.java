@@ -1,9 +1,12 @@
-package cyano.basemetals.init;
+package cyano.basemetals.init.plugins;
 
 import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
 
+import cyano.basemetals.init.Fluids;
+import cyano.basemetals.init.MaterialCorrelation;
+import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.util.Config.Options;
 import net.minecraft.nbt.*;
@@ -151,8 +154,7 @@ public class TinkersConstructPlugin {
 		int tintColor = 0xFF000000;
 		if (bmmaterial != null) {
 			tintColor = bmmaterial.getTintColor();
-		}
-		else {
+		} else {
 			tintColor = 0xFFD8D8D8; // Hack for Mercury as it doesn't have a metalMaterial
 		}
 

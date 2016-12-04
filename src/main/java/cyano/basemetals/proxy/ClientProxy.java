@@ -19,6 +19,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
  *
@@ -28,7 +31,8 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 public class ClientProxy extends CommonProxy {
 
 	@Override
-	public void preInit() {
+	public void preInit(FMLPreInitializationEvent event) {
+		super.preInit(event);
 		for (final String fluidBlockName : Fluids.getFluidBlockRegistry().keySet()) {
 			final BlockFluidBase block = Fluids.getFluidBlockByName(fluidBlockName);
 			final Item item = Item.getItemFromBlock(block);
@@ -47,7 +51,8 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void init() {
+	public void init(FMLInitializationEvent event) {
+		super.init(event);
 		final ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 
 		for (final String itemName : Items.getItemRegistry().keySet()) {
@@ -61,5 +66,13 @@ public class ClientProxy extends CommonProxy {
 				continue; // do not add door blocks
 			itemModelMesher.register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(BaseMetals.MODID, blockName), "inventory"));
 		}
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public void postInit(FMLPostInitializationEvent event) {
+		super.postInit(event);
 	}
 }

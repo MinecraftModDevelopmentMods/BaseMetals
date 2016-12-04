@@ -820,14 +820,11 @@ public abstract class Blocks {
 
 		if ((block instanceof BlockDoubleMetalSlab) && (material != null)) {
 			fullName = "double_" + material.getName() + "_" + name;
-		}
-		else if (block instanceof BlockDoubleMetalSlab) {
+		} else if (block instanceof BlockDoubleMetalSlab) {
 			fullName = "double_" + name;
-		}
-		else if (material != null) {
+		} else if (material != null) {
 			fullName = material.getName() + "_" + name;
-		}
-		else {
+		} else {
 			fullName = name;
 		}
 

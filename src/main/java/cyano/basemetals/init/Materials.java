@@ -147,7 +147,6 @@ public abstract class Materials {
 
 	protected static MetalMaterial createRareMaterial(String name, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, true);
-		//registerMaterial(name, m);
 
 		return registerMaterial(name, m);
 	}

@@ -112,7 +112,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 	}
 
 	@Override
-	public IBlockState onBlockPlaced(final World w, final BlockPos coord, final EnumFacing face,
+	public IBlockState getStateForPlacement(final World w, final BlockPos coord, final EnumFacing face,
 									 final float partialX, final float partialY, final float partialZ,
 									 final int i, final EntityLivingBase placer) {
 		final IBlockState defaultState = this.getDefaultState().withProperty(FACING, face);

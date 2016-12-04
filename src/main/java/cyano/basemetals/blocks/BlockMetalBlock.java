@@ -51,7 +51,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 
 	///// OVERRIDE OF ALL METHODS THAT DEPEND ON BLOCK MATERIAL: /////
 	@Override
-	public MapColor getMapColor(final IBlockState p_getMapColor_1_) {
+	public MapColor getMapColor(final IBlockState bs) {
 		return MapColor.IRON;
 	}
 
@@ -66,7 +66,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	}
 
 	@Override
-	public boolean isVisuallyOpaque() {
+	public boolean isFullyOpaque(IBlockState bs) {
 		return true;
 	}
 
@@ -76,7 +76,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	}
 
 	@Override
-	public boolean isPassable(final IBlockAccess p_isPassable_1_, final BlockPos p_isPassable_2_) {
+	public boolean isPassable(final IBlockAccess worldIn, final BlockPos pos) {
 		return false;
 	}
 

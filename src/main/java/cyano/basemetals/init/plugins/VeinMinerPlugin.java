@@ -1,6 +1,4 @@
-package cyano.basemetals.init;
-
-import org.apache.logging.log4j.Level;
+package cyano.basemetals.init.plugins;
 
 import cyano.basemetals.BaseMetals;
 import net.minecraftforge.fml.common.*;
@@ -24,8 +22,6 @@ public class VeinMinerPlugin {
 		}
 
 		if (Loader.isModLoaded("VeinMiner") || Loader.isModLoaded("veinminer")) {
-			//			FMLLog.log(Level.ERROR, "%s: Activating VeinMiner Support", BaseMetals.MODID);
-			FMLLog.log(Level.ERROR, "%s: Activating VeinMiner Support", Loader.instance().activeModContainer().getModId());
 
 			addToolsForMetal("aluminum");
 			addToolsForMetal("aluminumbrass");

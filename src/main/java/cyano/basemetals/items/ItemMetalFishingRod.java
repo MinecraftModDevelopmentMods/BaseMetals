@@ -68,7 +68,7 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 			worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / ((itemRand.nextFloat() * 0.4F) + 0.8F));
 
 			if (!worldIn.isRemote)
-				worldIn.spawnEntityInWorld(new EntityMetalFishHook(worldIn, playerIn));
+				worldIn.spawnEntity(new EntityMetalFishHook(worldIn, playerIn));
 
 			playerIn.swingArm(hand);
 			playerIn.addStat(StatList.getObjectUseStats(this));

@@ -1,5 +1,7 @@
-package cyano.basemetals.init;
+package cyano.basemetals.init.plugins;
 
+import cyano.basemetals.init.Blocks;
+import cyano.basemetals.init.Items;
 import cyano.basemetals.util.Config.Options;
 import mekanism.api.gas.*;
 import net.minecraft.item.ItemStack;
