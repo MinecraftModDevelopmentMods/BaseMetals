@@ -37,7 +37,7 @@ public class BaseMetals {
 	 * increased whenever a change is made that has the potential to break
 	 * compatibility with other mods that depend on this one.
 	 */
-	public static final String VERSION = "2.5.0";
+	public static final String VERSION = "2.5.0-beta1";
 
 	/** Configuration file location */
 	//public static final String CONFIG_FILE = "config/BaseMetals.cfg";

@@ -25,12 +25,13 @@ javadoc {
 }
 
 def mod_file = getModFile()
-version = getVersion("VERSION", mod_file)
+def short_version = getVersion("VERSION", mod_file)
+version = "1.10.2-" + short_version
 if (System.getenv().BUILD_NUMBER) {
     version += "." + System.getenv().BUILD_NUMBER
 }
-group= "cyano.basemetals"
-archivesBaseName = "BaseMetals_1.10.2"
+group= "cyano"
+archivesBaseName = "BaseMetals"
 sourceCompatibility = targetCompatibility = "1.8"
 
 class Secrets {
@@ -112,7 +113,7 @@ processResources {
 
     from (sourceSets.main.resources.srcDirs) {
         include "mcmod.info"
-        expand "version": project.version, "mcversion": project.minecraft.version
+        expand "version": short_version, "mcversion": project.minecraft.version
     }
 
     from (sourceSets.main.resources.srcDirs) {
@@ -155,14 +156,14 @@ publishing {
             artifactId project.archivesBaseName
             version project.version
             from components.java
-            artifact sourcesJar {
+            artifact sourceJar {
                 classifier "sources"
             }
             artifact apiJar {
                 classifier "api"
             }
-            artifact devJar {
-                classifier "dev"
+            artifact deobfJar {
+                classifier "deobf"
             }
             artifact javadocJar {
                 classifier "javadoc"
