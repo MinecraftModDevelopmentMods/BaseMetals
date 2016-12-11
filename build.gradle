@@ -25,8 +25,9 @@ javadoc {
 }
 
 def mod_file = getModFile()
+def mc_version = "1.10.2"
 def short_version = getVersion("VERSION", mod_file)
-version = "1.10.2-" + short_version
+version = mc_version + "-" + short_version
 if (System.getenv().BUILD_NUMBER) {
     version += "." + System.getenv().BUILD_NUMBER
 }
@@ -182,12 +183,12 @@ publishing {
 }
 
 curseforge {
-    apiKey = ""
+    apiKey = secret.curseforgeAPIKey
     project {
         id = "240967"
         changelog = file("CHANGELOG.txt")
         releaseType = "release"
-        addGameVersion("1.10.2")
+        addGameVersion(project.mc_version)
         def projName = "Base Metals"
         def displayVersion = getVersion("VERSION", mod_file)
         if (System.getenv().BUILD_NUMBER) {
