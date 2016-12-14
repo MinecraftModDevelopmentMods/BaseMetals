@@ -1,10 +1,12 @@
 package cyano.basemetals.items;
 
+import astro.lib.api.item.IHorseArmor;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.utils.HorseUtilities;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.HorseArmorType;
 import net.minecraft.entity.passive.HorseType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,10 +20,6 @@ public class ItemMetalHorseArmor extends Item implements IMetalObject, IHorseArm
 
 	private final MetalMaterial metal;
 
-	/**
-	 *
-	 * @param m
-	 */
 	public ItemMetalHorseArmor(MetalMaterial m) {
 		this.metal = m;
 		this.setCreativeTab(CreativeTabs.COMBAT);
@@ -29,8 +27,8 @@ public class ItemMetalHorseArmor extends Item implements IMetalObject, IHorseArm
 	}
 
 	@Override
-	public HorseType getArmorType() {
-		return HorseUtilities.getType("test", 1024);
+	public HorseArmorType getArmorType() {
+		return HorseUtilities.getType("test", 1024, "tes");
 	}
 
 	@Override

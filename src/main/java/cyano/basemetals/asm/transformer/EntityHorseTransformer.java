@@ -1,5 +1,6 @@
 package cyano.basemetals.asm.transformer;
 
+import astro.lib.api.integration.ITransformer;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
@@ -7,9 +8,12 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
+import javax.annotation.Nonnull;
+
 public class EntityHorseTransformer implements ITransformer {
 
 	@Override
+	@Nonnull
 	public String getTarget() {
 		return "net.minecraft.entity.passive.EntityHorse";
 	}
@@ -22,7 +26,7 @@ public class EntityHorseTransformer implements ITransformer {
 					if (insnNode.getOpcode() == RETURN) {
 						final InsnList inject = new InsnList();
 						inject.add(new VarInsnNode(ALOAD, 0));
-						inject.add(new MethodInsnNode(INVOKESTATIC, "cyano.basemetals/asm/BaseMetalHooks",
+						inject.add(new MethodInsnNode(INVOKESTATIC, "cyano/basemetals/asm/BaseMetalHooks",
 								"onInitHorse", "(Lnet/minecraft/entity/passive/EntityHorse;)V", false));
 						methodNode.instructions.insertBefore(insnNode, inject);
 					}
@@ -30,7 +34,7 @@ public class EntityHorseTransformer implements ITransformer {
 				final InsnList inject = new InsnList();
 				inject.add(new VarInsnNode(ALOAD, 0));
 				inject.add(new VarInsnNode(ALOAD, 1));
-				inject.add(new MethodInsnNode(INVOKESTATIC, "cyano.basemetals/asm/BaseMetalHooks", "setHorseArmorStack",
+				inject.add(new MethodInsnNode(INVOKESTATIC, "cyano/basemetals/asm/BaseMetalHooks", "setHorseArmorStack",
 						"(Lnet/minecraft/entity/passive/EntityHorse;Lnet/minecraft/item/ItemStack;)V", false));
 				methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), inject);
 			} else if (methodNode.name.equals(dev ? "setHorseTexturePaths" : "func_110247_cG"))
@@ -39,9 +43,9 @@ public class EntityHorseTransformer implements ITransformer {
 							&& ((MethodInsnNode) insnNode).name.equals(dev ? "getTextureName" : "func_188574_d")) {
 						final InsnList inject = new InsnList();
 						inject.add(new VarInsnNode(ALOAD, 0));
-						inject.add(new MethodInsnNode(INVOKESTATIC, "cyano.basemetals/asm/BaseMetalHooks",
+						inject.add(new MethodInsnNode(INVOKESTATIC, "cyano/basemetals/asm/BaseMetalHooks",
 								"getTextureName",
-								"(Lnet/minecraft/entity/passive/HorseType;Lnet/minecraft/entity/passive/EntityHorse;)Ljava/lang/String;",
+								"(Lnet/minecraft/entity/passive/HorseArmorType;Lnet/minecraft/entity/passive/EntityHorse;)Ljava/lang/String;",
 								false));
 						methodNode.instructions.insertBefore(insnNode, inject);
 						methodNode.instructions.remove(insnNode);

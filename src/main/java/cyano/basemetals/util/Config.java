@@ -122,6 +122,10 @@ public class Config {
 			}
 		}
 
+		if (CONFIG.hasChanged()) {
+			CONFIG.save();
+		}
+
 		if (Options.REQUIRE_ORESPAWN) {
 			if (!Loader.isModLoaded("orespawn")) {
 				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
@@ -139,10 +143,6 @@ public class Config {
 					FMLLog.severe(BaseMetals.MODID + ": Error: Failed to write file " + oreSpawnFile);
 				}
 			}
-		}
-
-		if (CONFIG.hasChanged()) {
-			CONFIG.save();
 		}
 	}
 
