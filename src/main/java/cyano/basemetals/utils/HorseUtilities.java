@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import net.minecraft.entity.passive.HorseArmorType;
 import net.minecraft.entity.passive.HorseType;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -14,21 +15,15 @@ import net.minecraftforge.common.util.EnumHelper;
  */
 public class HorseUtilities {
 
-	private static Map<String, HorseType> TYPES = new HashMap<>();
+	private static Map<String, HorseArmorType> TYPES = new HashMap<>();
 
-	/**
-	 *
-	 * @param name
-	 * @param protection
-	 * @return
-	 */
-	public static HorseType getType(String name, int protection) {
+	public static HorseArmorType getType(String name, int protection, String hash) {
 		name = name.toUpperCase(Locale.ENGLISH);
 
 		if (HorseUtilities.TYPES.containsKey(name))
 			return HorseUtilities.TYPES.get(name);
 
-		final HorseType type = null; // EnumHelper.addEnum(new Class[][]{{HorseType.class, int.class}}, HorseType.class, name, protection);
+		final HorseArmorType type = EnumHelper.addEnum(HorseArmorType.class, name, new Class[]{int.class, String.class, String.class}, protection, name.toLowerCase(), hash);
 		HorseUtilities.TYPES.put(name, type);
 
 		return type;
