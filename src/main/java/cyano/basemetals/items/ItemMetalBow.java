@@ -6,6 +6,7 @@ import cyano.basemetals.entity.EntityCustomArrow;
 import cyano.basemetals.init.Items;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.util.Config;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -45,7 +46,11 @@ public class ItemMetalBow extends ItemBow {
 		this.setMaxDamage(metal.getToolDurability());
 		this.setCreativeTab(CreativeTabs.COMBAT);
 		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		this.regenerates = metal.equals(Materials.starsteel);
+		if (Config.Options.ENABLE_STARSTEEL) {
+			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
+		} else {
+			this.regenerates = false;
+		}
 	}
 
 	@Override

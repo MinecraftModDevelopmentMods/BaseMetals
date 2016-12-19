@@ -10,6 +10,7 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  *
@@ -224,7 +225,7 @@ public class MetalMaterial {
 		this.tintColor = tintColor;
 		this.identifier = name;
 		this.titleName = StringUtils.capitalize(name);
-		this.enumName = (BaseMetals.MODID + "_" + name).toUpperCase(Locale.ENGLISH);
+		this.enumName = (Loader.instance().activeModContainer().getModId() + "_" + name).toUpperCase(Locale.ENGLISH);
 		this.isRare = isRare;
 		this.blastResistance = 2.5f * this.strength;
 		this.baseDamage = this.round(0.25f * this.hardness, 1);

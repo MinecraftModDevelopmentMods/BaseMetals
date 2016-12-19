@@ -6,6 +6,7 @@ import cyano.basemetals.entity.projectile.EntityMetalFishHook;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.util.Config;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -54,8 +55,11 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 				return entityIn == null ? 0.0F : ((entityIn.getHeldItemMainhand() == stack) && (entityIn instanceof EntityPlayer) && (((EntityPlayer) entityIn).fishEntity != null) ? 1.0F : 0.0F);
 			}
 		});
-
-		this.regenerates = metal.equals(Materials.starsteel);
+		if (Config.Options.ENABLE_STARSTEEL) {
+			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
+		} else {
+			this.regenerates = false;
+		}
 	}
 
 	@Override

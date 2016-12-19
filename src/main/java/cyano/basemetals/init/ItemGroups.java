@@ -1,8 +1,10 @@
 package cyano.basemetals.init;
 
-import cyano.basemetals.BaseMetals;
+import cyano.basemetals.init.Items;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
+import net.minecraftforge.fml.common.Loader;
+import cyano.basemetals.init.GeneralizedCreativeTab;
 
 /**
  * This class initializes all item groups in Base Metals.
@@ -39,7 +41,7 @@ public class ItemGroups {
 		// Item itemItem = Items.copper_crackhammer;
 		// Item toolItem = Items.copper_crackhammer;
 
-		tab_blocks = new GeneralizedCreativeTab(BaseMetals.MODID.concat(".blocks"), true, () -> Items.copper_crackhammer);
+		tab_blocks = new GeneralizedCreativeTab(Loader.instance().activeModContainer().getModId().concat(".blocks"), true, () -> Items.copper_crackhammer);
 
 		tab_items = tab_blocks;
 		tab_tools = tab_items;

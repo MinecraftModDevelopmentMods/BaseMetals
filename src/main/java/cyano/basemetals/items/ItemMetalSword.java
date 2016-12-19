@@ -5,6 +5,7 @@ import java.util.List;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.util.Config;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -40,7 +41,11 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 		// this.damageVsEntity = attackDamage + metal.getBaseAttackDamage(); // damageVsEntity is private, sadly
 		this.attackDamage = 3F + metal.getBaseAttackDamage();
 		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		this.regenerates = metal.equals(Materials.starsteel);
+		if (Config.Options.ENABLE_STARSTEEL) {
+			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
+		} else {
+			this.regenerates = false;
+		}
 		this.setCreativeTab(CreativeTabs.COMBAT);
 	}
 

@@ -8,6 +8,7 @@ import cyano.basemetals.init.Fluids;
 import cyano.basemetals.init.Items;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
@@ -17,7 +18,6 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -33,10 +33,15 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-		for (final String fluidBlockName : Fluids.getFluidBlockRegistry().keySet()) {
-			final BlockFluidBase block = Fluids.getFluidBlockByName(fluidBlockName);
+		for (final String name : Fluids.getFluidBlockRegistry().keySet()) {
+			final Block block = Fluids.getFluidBlockByName(name);
 			final Item item = Item.getItemFromBlock(block);
-			final ModelResourceLocation fluidModelLocation = new ModelResourceLocation(BaseMetals.MODID + ":" + fluidBlockName, "fluid");
+//			FMLLog.severe("FLUID RESOURCE DOMAIN IS " + item.getRegistryName().getResourceDomain());
+//			FMLLog.severe("FLUID RESOURCE PATH IS " + item.getRegistryName().getResourcePath());
+			if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
+				continue;
+//			FMLLog.severe("Registering");
+			final ModelResourceLocation fluidModelLocation = new ModelResourceLocation(item.getRegistryName().getResourceDomain() + ":" + name, "fluid");
 			ModelBakery.registerItemVariants(item);
 			ModelLoader.setCustomMeshDefinition(item, stack -> fluidModelLocation);
 			ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
@@ -45,6 +50,7 @@ public class ClientProxy extends CommonProxy {
 					return fluidModelLocation;
 				}
 			});
+//			FMLLog.severe("Registered");
 		}
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class, RenderCustomArrow::new);
@@ -55,16 +61,29 @@ public class ClientProxy extends CommonProxy {
 		super.init(event);
 		final ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 
-		for (final String itemName : Items.getItemRegistry().keySet()) {
-			final Item item = Items.getItemByName(itemName);
-			itemModelMesher.register(item, 0, new ModelResourceLocation(new ResourceLocation(BaseMetals.MODID, itemName), "inventory"));
+		for (final String name : Items.getItemRegistry().keySet()) {
+			final Item item = Items.getItemByName(name);
+//			FMLLog.severe("ITEM RESOURCE DOMAIN IS " + item.getRegistryName().getResourceDomain());
+			if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
+				continue;
+//			FMLLog.severe("Registering");
+			itemModelMesher.register(item, 0, new ModelResourceLocation(new ResourceLocation(item.getRegistryName().getResourceDomain(), name), "inventory"));
+//			FMLLog.severe("Registered");
 		}
 
-		for (final String blockName : Blocks.getBlockRegistry().keySet()) {
-			final Block block = Blocks.getBlockByName(blockName);
-			if (block instanceof BlockDoor)
+		for (final String name : Blocks.getBlockRegistry().keySet()) {
+			final Block block = Blocks.getBlockByName(name);
+			if ((block instanceof BlockDoor) || (block instanceof BlockSlab))
 				continue; // do not add door blocks
-			itemModelMesher.register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(BaseMetals.MODID, blockName), "inventory"));
+			final Item item = Item.getItemFromBlock(block);
+//			FMLLog.severe("BLOCK RESOURCE DOMAIN IS " + block.getRegistryName().getResourceDomain());
+//			FMLLog.severe("BLOCK RESOURCE PATH IS " + block.getRegistryName().getResourcePath());
+//			FMLLog.severe("ITEM RESOURCE PATH IS " + item.getRegistryName().getResourcePath());
+			if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
+				continue;
+//			FMLLog.severe("Registering");
+			itemModelMesher.register(item, 0, new ModelResourceLocation(new ResourceLocation(item.getRegistryName().getResourceDomain(), name), "inventory"));
+//			FMLLog.severe("Registered");
 		}
 	}
 

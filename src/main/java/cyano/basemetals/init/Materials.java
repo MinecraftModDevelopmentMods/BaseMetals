@@ -3,7 +3,7 @@ package cyano.basemetals.init;
 import java.util.*;
 
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.util.Config;
+import cyano.basemetals.util.Config.Options;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -20,30 +20,25 @@ import net.minecraftforge.fml.common.FMLLog;
  */
 public abstract class Materials {
 
-	private static Map<String, MetalMaterial> allMaterials = new HashMap<>();
-	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
-	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
-	protected static List<MetalMaterial> materials = new LinkedList<>();
-
-	public static MetalMaterial adamantine;
+	public static MetalMaterial adamantine; // Needs work
 	public static MetalMaterial antimony;
-	public static MetalMaterial aquarium;
+	public static MetalMaterial aquarium; // Needs work
 	public static MetalMaterial bismuth;
-	public static MetalMaterial brass;
-	public static MetalMaterial bronze;
-	public static MetalMaterial coldiron;
+	public static MetalMaterial brass; // Needs Work
+	public static MetalMaterial bronze; // needs work
+	public static MetalMaterial coldiron; // needs work
 	public static MetalMaterial copper;
-	public static MetalMaterial cupronickel;
-	public static MetalMaterial electrum;
-	public static MetalMaterial invar;
+	public static MetalMaterial cupronickel; // needs work
+	public static MetalMaterial electrum; // needs work
+	public static MetalMaterial invar; // needs work
 	public static MetalMaterial lead;
-	public static MetalMaterial mithril;
+	public static MetalMaterial mithril; // needs work
 	public static MetalMaterial nickel;
 	public static MetalMaterial pewter;
 	public static MetalMaterial platinum;
 	public static MetalMaterial silver;
-	public static MetalMaterial starsteel;
-	public static MetalMaterial steel;
+	public static MetalMaterial starsteel; // Needs work
+	public static MetalMaterial steel; // Needs work
 	public static MetalMaterial tin;
 	public static MetalMaterial zinc;
 
@@ -55,6 +50,11 @@ public abstract class Materials {
 	public static MetalMaterial vanilla_diamond;
 
 	private static boolean initDone = false;
+
+	private static Map<String, MetalMaterial> allMaterials = new HashMap<>();
+	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
+	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
+	private static List<MetalMaterial> materials = new LinkedList<>();
 
 	/**
 	 *
@@ -71,68 +71,68 @@ public abstract class Materials {
 		vanilla_gold = createMaterial("gold", 1, 1, 10, 0xFF000000);
 		vanilla_diamond = createMaterial("diamond", 10, 15, 4, 0xFF000000);
 
-		// Mod Metals
-		if (Config.Options.ENABLE_ADAMANTINE) {
+		// Mod Materials
+		if (Options.ENABLE_ADAMANTINE) {
 			adamantine = createMaterial("adamantine", 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
 		}
-		if (Config.Options.ENABLE_ANTIMONY) {
+		if (Options.ENABLE_ANTIMONY) {
 			antimony = createMaterial("antimony", 1, 1, 1, 0xFFD8E3DE);
 		}
-		if (Config.Options.ENABLE_AQUARIUM) {
+		if (Options.ENABLE_AQUARIUM) {
 			aquarium = createMaterial("aquarium", 4, 10, 15, 0xFF000000);
 		}
-		if (Config.Options.ENABLE_BISMUTH) {
+		if (Options.ENABLE_BISMUTH) {
 			bismuth = createMaterial("bismuth", 1, 1, 1, 0xFFDDD7CB);
 		}
-		if (Config.Options.ENABLE_BRASS) {
+		if (Options.ENABLE_BRASS) {
 			brass = createMaterial("brass", 3.5, 3, 9, 0xFFFFE374);
 		}
-		if (Config.Options.ENABLE_BRONZE) {
+		if (Options.ENABLE_BRONZE) {
 			bronze = createMaterial("bronze", 8, 4, 4.5, 0xFFF7A54F);
 		}
-		if (Config.Options.ENABLE_COLDIRON) {
+		if (Options.ENABLE_COLDIRON) {
 			coldiron = createMaterial("coldiron", 7, 7, 7, 0xFFC7CEF0);
 		}
-		if (Config.Options.ENABLE_COPPER) {
+		if (Options.ENABLE_COPPER) {
 			copper = createMaterial("copper", 4, 4, 5, 0xFFFF9F78);
 		}
-		if (Config.Options.ENABLE_CUPRONICKEL) {
+		if (Options.ENABLE_CUPRONICKEL) {
 			cupronickel = createMaterial("cupronickel", 6, 6, 6, 0xFFC8AB6F);
 		}
-		if (Config.Options.ENABLE_ELECTRUM) {
+		if (Options.ENABLE_ELECTRUM) {
 			electrum = createMaterial("electrum", 5, 4, 10, 0xFFFFF2B3);
 		}
-		if (Config.Options.ENABLE_INVAR) {
+		if (Options.ENABLE_INVAR) {
 			invar = createMaterial("invar", 9, 10, 3, 0xFFD2CDB8);
 		}
-		if (Config.Options.ENABLE_LEAD) {
+		if (Options.ENABLE_LEAD) {
 			lead = createMaterial("lead", 1, 1, 1, 0xFF7B7B7B).setBaseDamage(4f);
 		}
-		if (Config.Options.ENABLE_MITHRIL) {
+		if (Options.ENABLE_MITHRIL) {
 			mithril = createMaterial("mithril", 9, 9, 9, 0xFFF4FFFF);
 		}
-		if (Config.Options.ENABLE_NICKEL) {
+		if (Options.ENABLE_NICKEL) {
 			nickel = createMaterial("nickel", 4, 4, 7, 0xFFEEFFEB);
 		}
-		if (Config.Options.ENABLE_PEWTER) {
+		if (Options.ENABLE_PEWTER) {
 			pewter = createMaterial("pewter", 1, 1, 1, 0xFF92969F);
 		}
-		if (Config.Options.ENABLE_PLATINUM) {
+		if (Options.ENABLE_PLATINUM) {
 			platinum = createRareMaterial("platinum", 3, 5, 15, 0xFFF2FFFF);
 		}
-		if (Config.Options.ENABLE_SILVER) {
+		if (Options.ENABLE_SILVER) {
 			silver = createMaterial("silver", 5, 4, 6, 0xFFFFFFFF);
 		}
-		if (Config.Options.ENABLE_STARSTEEL) {
+		if (Options.ENABLE_STARSTEEL) {
 			starsteel = createMaterial("starsteel", 10, 25, 12, 0xFF53393F).setBlastResistance(2000f);
 		}
-		if (Config.Options.ENABLE_STEEL) {
+		if (Options.ENABLE_STEEL) {
 			steel = createMaterial("steel", 8, 15, 2, 0xFFD5E3E5);
 		}
-		if (Config.Options.ENABLE_TIN) {
+		if (Options.ENABLE_TIN) {
 			tin = createMaterial("tin", 3, 1, 2, 0xFFFFF7EE);
 		}
-		if (Config.Options.ENABLE_ZINC) {
+		if (Options.ENABLE_ZINC) {
 			zinc = createMaterial("zinc", 1, 1, 1, 0xFFBCBCBC);
 		}
 

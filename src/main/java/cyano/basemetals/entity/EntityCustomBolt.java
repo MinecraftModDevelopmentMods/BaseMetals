@@ -37,8 +37,10 @@ public class EntityCustomBolt extends EntityTippedArrow {
 
 	@Override
 	protected ItemStack getArrowStack() {
-		if (this.itemStack == null)
-			this.itemStack = new ItemStack(Items.getItemByName("aluminum_arrow"));
+		if (this.itemStack == null) {
+			// TODO: FIXME
+			this.itemStack = new ItemStack(Items.getItemByName("iron_bolt"));
+		}
 
 		return new ItemStack(this.itemStack.getItem(), 1, this.itemStack.getItemDamage());
 	}

@@ -4,6 +4,7 @@ import cyano.basemetals.init.Achievements;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
+import cyano.basemetals.util.Config.Options;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -95,8 +96,10 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 			final EntityLivingBase placer, final ItemStack src) {
 		super.onBlockPlacedBy(w, coord, bs, placer, src);
 		// achievement
-		if (placer instanceof EntityPlayer)
-			((EntityPlayer) placer).addStat(Achievements.blocktastic, 1);
+		if (Options.ENABLE_ACHIEVEMENTS) {
+			if (placer instanceof EntityPlayer)
+				((EntityPlayer) placer).addStat(Achievements.blocktastic, 1);
+		}
 	}
 
 	@Override

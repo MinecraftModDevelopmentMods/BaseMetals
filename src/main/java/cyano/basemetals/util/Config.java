@@ -5,7 +5,10 @@ import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.util.*;
 
+import org.apache.logging.log4j.Level;
+
 import cyano.basemetals.BaseMetals;
+import cyano.basemetals.data.AdditionalLootTables;
 import cyano.basemetals.data.DataConstants;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import net.minecraft.block.Block;
@@ -28,10 +31,10 @@ public class Config {
 	private static final String CONFIG_FILE = "config/BaseMetals.cfg";
 	private static final String GENERAL_CAT = "General";
 	private static final String INTEGRATION_CAT = "Mod Integration";
-	private static final String METALS_CAT = "Metals";
+	private static final String MATERIALS_CAT = "Metals";
 	private static final String VANILLA_CAT = "Vanilla";
 	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipies";
-	private static final String ALT_CFG_PATH = "config/additionalloottables";
+	private static final String ALT_CFG_PATH = "config/additional-loot-tables/" + BaseMetals.MODID;
 	private static final String ORESPAWN_CFG_PATH = "config/orespawn";
 	protected static List<String> USER_CRUSHER_RECIPES = new ArrayList<String>();
 
@@ -59,7 +62,7 @@ public class Config {
 		Options.STRONG_HAMMERS = CONFIG.getBoolean("strong_hammers", GENERAL_CAT, true, "If true, then the crack hammer can crush ingots/ores that a pickaxe of the same \n" + "material can harvest. If false, then your crack hammer must be made of a harder \n" + "material than the ore you are crushing.");
 		Options.AUTODETECT_RECIPES = CONFIG.getBoolean("automatic_recipes", GENERAL_CAT, true, "If true, then Base Metals will scan the Ore Dictionary to automatically add a \n" + "Crack Hammer recipe for every material that has an ore, dust, and ingot.");
 		Options.REQUIRE_ORESPAWN = CONFIG.getBoolean("using_orespawn", GENERAL_CAT, true, "If false, then Base Metals will not require DrCyano's Ore Spawn mod. \n" + "Set to false if using another mod to manually handle ore generation.");
-
+		Options.ENABLE_ACHIEVEMENTS = CONFIG.getBoolean("achievements", GENERAL_CAT, true, "If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals");
 		// INTEGRATION
 		Options.ENABLE_ENDER_IO = CONFIG.getBoolean("ender_io_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Ender IO");
 		Options.ENABLE_IC2 = CONFIG.getBoolean("ic2_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with IC2");
@@ -69,29 +72,30 @@ public class Config {
 		Options.ENABLE_VEINMINER = CONFIG.getBoolean("veinminer_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with VeinMiner");
 
 		// METALS
-		Options.ENABLE_ADAMANTINE = CONFIG.getBoolean("EnableAdamantine", METALS_CAT, true, "Enable Adamantine Items and Materials");
-		Options.ENABLE_ANTIMONY = CONFIG.getBoolean("EnableAntimony", METALS_CAT, true, "Enable Antimony Items and Materials");
-		Options.ENABLE_AQUARIUM = CONFIG.getBoolean("EnableAquarium", METALS_CAT, true, "Enable Aquarium Items and Materials");
-		Options.ENABLE_BISMUTH = CONFIG.getBoolean("EnableBismuth", METALS_CAT, true, "Enable Bismuth Items and Materials");
-		Options.ENABLE_BRASS = CONFIG.getBoolean("EnableBrass", METALS_CAT, true, "Enable Brass Items and Materials");
-		Options.ENABLE_BRONZE = CONFIG.getBoolean("EnableBronze", METALS_CAT, true, "Enable Bronze Items and Materials");
-		Options.ENABLE_CARBON = CONFIG.getBoolean("EnableCarbon", METALS_CAT, true, "Enable Carbon Items and Materials");
-		Options.ENABLE_COLDIRON = CONFIG.getBoolean("EnableColdIron", METALS_CAT, true, "Enable ColdIron Items and Materials");
-		Options.ENABLE_COPPER = CONFIG.getBoolean("EnableCopper", METALS_CAT, true, "Enable Copper Items and Materials");
-		Options.ENABLE_CUPRONICKEL = CONFIG.getBoolean("EnableCupronickel", METALS_CAT, true, "Enable Cupronickal Items and Materials");
-		Options.ENABLE_ELECTRUM = CONFIG.getBoolean("EnableElectrum", METALS_CAT, true, "Enable Electrum Items and Materials");
-		Options.ENABLE_INVAR = CONFIG.getBoolean("EnableInvar", METALS_CAT, true, "Enable Invar Items and Materials");
-		Options.ENABLE_LEAD = CONFIG.getBoolean("EnableLead", METALS_CAT, true, "Enable Lead Items and Materials");
-		Options.ENABLE_MERCURY = CONFIG.getBoolean("EnableMercury", METALS_CAT, true, "Enable Mercury Items and Materials");
-		Options.ENABLE_MITHRIL = CONFIG.getBoolean("EnableMitheril", METALS_CAT, true, "Enable Mithril Items and Materials");
-		Options.ENABLE_NICKEL = CONFIG.getBoolean("EnableNickerl", METALS_CAT, true, "Enable Nickel Items and Materials");
-		Options.ENABLE_PEWTER = CONFIG.getBoolean("EnablePewter", METALS_CAT, true, "Enable Pewter Items and Materials");
-		Options.ENABLE_PLATINUM = CONFIG.getBoolean("EnablePlatinum", METALS_CAT, true, "Enable Platinum Items and Materials");
-		Options.ENABLE_SILVER = CONFIG.getBoolean("EnableSilver", METALS_CAT, true, "Enable Silver Items and Materials");
-		Options.ENABLE_STARSTEEL = CONFIG.getBoolean("EnableStarSteel", METALS_CAT, true, "Enable StarSteel Items and Materials");
-		Options.ENABLE_STEEL = CONFIG.getBoolean("EnableSteel", METALS_CAT, true, "Enable Steel Items and Materials");
-		Options.ENABLE_TIN = CONFIG.getBoolean("EnableTin", METALS_CAT, true, "Enable Tin Items and Materials");
-		Options.ENABLE_ZINC = CONFIG.getBoolean("EnableZinc", METALS_CAT, true, "Enable Zinc Items and Materials");
+		Options.ENABLE_ADAMANTINE = CONFIG.getBoolean("EnableAdamantine", MATERIALS_CAT, true, "Enable Adamantine Items and Materials");
+		Options.ENABLE_ANTIMONY = CONFIG.getBoolean("EnableAntimony", MATERIALS_CAT, true, "Enable Antimony Items and Materials");
+		Options.ENABLE_AQUARIUM = CONFIG.getBoolean("EnableAquarium", MATERIALS_CAT, true, "Enable Aquarium Items and Materials");
+		Options.ENABLE_BISMUTH = CONFIG.getBoolean("EnableBismuth", MATERIALS_CAT, true, "Enable Bismuth Items and Materials");
+		Options.ENABLE_BRASS = CONFIG.getBoolean("EnableBrass", MATERIALS_CAT, true, "Enable Brass Items and Materials");
+		Options.ENABLE_BRONZE = CONFIG.getBoolean("EnableBronze", MATERIALS_CAT, true, "Enable Bronze Items and Materials");
+		Options.ENABLE_CHARCOAL = CONFIG.getBoolean("EnableCarbon", MATERIALS_CAT, true, "Enable Charcoal Items and Materials");
+		Options.ENABLE_COAL = CONFIG.getBoolean("EnableCarbon", MATERIALS_CAT, true, "Enable Coal Items and Materials");
+		Options.ENABLE_COLDIRON = CONFIG.getBoolean("EnableColdIron", MATERIALS_CAT, true, "Enable ColdIron Items and Materials");
+		Options.ENABLE_COPPER = CONFIG.getBoolean("EnableCopper", MATERIALS_CAT, true, "Enable Copper Items and Materials");
+		Options.ENABLE_CUPRONICKEL = CONFIG.getBoolean("EnableCupronickel", MATERIALS_CAT, true, "Enable Cupronickel Items and Materials");
+		Options.ENABLE_ELECTRUM = CONFIG.getBoolean("EnableElectrum", MATERIALS_CAT, true, "Enable Electrum Items and Materials");
+		Options.ENABLE_INVAR = CONFIG.getBoolean("EnableInvar", MATERIALS_CAT, true, "Enable Invar Items and Materials");
+		Options.ENABLE_LEAD = CONFIG.getBoolean("EnableLead", MATERIALS_CAT, true, "Enable Lead Items and Materials");
+		Options.ENABLE_MERCURY = CONFIG.getBoolean("EnableMercury", MATERIALS_CAT, true, "Enable Mercury Items and Materials");
+		Options.ENABLE_MITHRIL = CONFIG.getBoolean("EnableMitheril", MATERIALS_CAT, true, "Enable Mithril Items and Materials");
+		Options.ENABLE_NICKEL = CONFIG.getBoolean("EnableNickel", MATERIALS_CAT, true, "Enable Nickel Items and Materials");
+		Options.ENABLE_PEWTER = CONFIG.getBoolean("EnablePewter", MATERIALS_CAT, true, "Enable Pewter Items and Materials");
+		Options.ENABLE_PLATINUM = CONFIG.getBoolean("EnablePlatinum", MATERIALS_CAT, true, "Enable Platinum Items and Materials");
+		Options.ENABLE_SILVER = CONFIG.getBoolean("EnableSilver", MATERIALS_CAT, true, "Enable Silver Items and Materials");
+		Options.ENABLE_STARSTEEL = CONFIG.getBoolean("EnableStarSteel", MATERIALS_CAT, true, "Enable StarSteel Items and Materials");
+		Options.ENABLE_STEEL = CONFIG.getBoolean("EnableSteel", MATERIALS_CAT, true, "Enable Steel Items and Materials");
+		Options.ENABLE_TIN = CONFIG.getBoolean("EnableTin", MATERIALS_CAT, true, "Enable Tin Items and Materials");
+		Options.ENABLE_ZINC = CONFIG.getBoolean("EnableZinc", MATERIALS_CAT, true, "Enable Zinc Items and Materials");
 
 		//VANILLA
 		Options.ENABLE_DIAMOND = CONFIG.getBoolean("EnableDiamond", VANILLA_CAT, true, "Enable Diamond Items and Materials");
@@ -129,7 +133,7 @@ public class Config {
 		if (Options.REQUIRE_ORESPAWN) {
 			if (!Loader.isModLoaded("orespawn")) {
 				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
-				orespawnMod.add(new DefaultArtifactVersion("1.0.0"));
+				orespawnMod.add(new DefaultArtifactVersion("1.1.0"));
 				throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
 			}
 			Path oreSpawnFolder = Paths.get(ORESPAWN_CFG_PATH);
@@ -144,6 +148,25 @@ public class Config {
 				}
 			}
 		}
+
+		final Path myLootFolder = Paths.get(ALT_CFG_PATH);
+		if (Files.notExists(myLootFolder)) {
+			try {
+				Files.createDirectories(myLootFolder.resolve("chests"));
+				Files.write(myLootFolder.resolve("chests").resolve("abandoned_mineshaft.json"), Collections.singletonList(AdditionalLootTables.abandoned_mineshaft));
+				Files.write(myLootFolder.resolve("chests").resolve("desert_pyramid.json"), Collections.singletonList(AdditionalLootTables.desert_pyramid));
+				Files.write(myLootFolder.resolve("chests").resolve("end_city_treasure.json"), Collections.singletonList(AdditionalLootTables.end_city_treasure));
+				Files.write(myLootFolder.resolve("chests").resolve("jungle_temple.json"), Collections.singletonList(AdditionalLootTables.jungle_temple));
+				Files.write(myLootFolder.resolve("chests").resolve("nether_bridge.json"), Collections.singletonList(AdditionalLootTables.nether_bridge));
+				Files.write(myLootFolder.resolve("chests").resolve("simple_dungeon.json"), Collections.singletonList(AdditionalLootTables.simple_dungeon));
+				Files.write(myLootFolder.resolve("chests").resolve("spawn_bonus_chest.json"), Collections.singletonList(AdditionalLootTables.spawn_bonus_chest));
+				Files.write(myLootFolder.resolve("chests").resolve("stronghold_corridor.json"), Collections.singletonList(AdditionalLootTables.stronghold_corridor));
+				Files.write(myLootFolder.resolve("chests").resolve("stronghold_crossing.json"), Collections.singletonList(AdditionalLootTables.stronghold_crossing));
+				Files.write(myLootFolder.resolve("chests").resolve("village_blacksmith.json"), Collections.singletonList(AdditionalLootTables.village_blacksmith));
+			} catch (final IOException ex) {
+				FMLLog.log(Level.ERROR, ex, "%s: Failed to extract additional loot tables", BaseMetals.MODID);
+			}
+		}
 	}
 
 	public static class Options {
@@ -154,6 +177,7 @@ public class Config {
 		public static boolean STRONG_HAMMERS = true;
 		public static boolean AUTODETECT_RECIPES = true;
 		public static boolean REQUIRE_ORESPAWN = true;
+		public static boolean ENABLE_ACHIEVEMENTS = true;
 
 		// INTEGRATION
 		public static boolean ENABLE_ENDER_IO = true;
@@ -163,14 +187,15 @@ public class Config {
 		public static boolean ENABLE_TINKERS_CONSTRUCT = true;
 		public static boolean ENABLE_VEINMINER = true;
 
-		// METALS
+		// MATERIALS
 		public static boolean ENABLE_ADAMANTINE = true;
 		public static boolean ENABLE_ANTIMONY = true;
 		public static boolean ENABLE_AQUARIUM = true;
 		public static boolean ENABLE_BISMUTH = true;
 		public static boolean ENABLE_BRASS = true;
 		public static boolean ENABLE_BRONZE = true;
-		public static boolean ENABLE_CARBON = true;
+		public static boolean ENABLE_CHARCOAL = true;
+		public static boolean ENABLE_COAL = true;
 		public static boolean ENABLE_COLDIRON = true;
 		public static boolean ENABLE_COPPER = true;
 		public static boolean ENABLE_CUPRONICKEL = true;
@@ -195,6 +220,31 @@ public class Config {
 		public static boolean ENABLE_STONE = true;
 		public static boolean ENABLE_WOOD = true;
 
+		// THINGS
+		public static boolean ENABLE_BASICS = true; // Nugget, ingot, powder, blend, block, ore
+		public static boolean ENABLE_BASIC_TOOLS = true; // Axe, Hoe, Pickaxe, Shovel, Sword
+		public static boolean ENABLE_CROSSBOW_AND_BOLT = true; // crossbows, bolts
+		public static boolean ENABLE_BOW_AND_ARROW = true; // Bows, Arrows
+		public static boolean ENABLE_ARMOR = true; // Helmet, Chestplate, Leggings, Boots
+		public static boolean ENABLE_CRACKHAMMER = true;
+		public static boolean ENABLE_FISHING_ROD = true;
+		public static boolean ENABLE_HORSE_ARMOR = true;
+		public static boolean ENABLE_SHEARS = true;
+		public static boolean ENABLE_SMALL_DUSTS = true; // Small powder, small blend
+		public static boolean ENABLE_ROD = true;
+		public static boolean ENABLE_GEAR = true;
+		public static boolean ENABLE_SHIELD = true;
+		
+		public static boolean ENABLE_BARS = true;
+		public static boolean ENABLE_PLATE = true;
+		public static boolean ENABLE_DOOR = true; // Also item
+		public static boolean ENABLE_TRAPDOOR = true;
+		public static boolean ENABLE_BUTTON = true;
+		public static boolean ENABLE_SLAB = true; // Also item, double slab
+		public static boolean ENABLE_LEVER = true;
+		public static boolean ENABLE_PRESSURE_PLATE = true;
+		public static boolean ENABLE_STAIRS = true;
+		public static boolean ENABLE_WALL = true;
 	}
 
 	public static void postInit() {

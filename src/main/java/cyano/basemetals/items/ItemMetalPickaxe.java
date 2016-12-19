@@ -7,6 +7,7 @@ import java.util.Set;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.util.Config;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -42,7 +43,11 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("pickaxe");
 		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		this.regenerates = metal.equals(Materials.starsteel);
+		if (Config.Options.ENABLE_STARSTEEL) {
+			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
+		} else {
+			this.regenerates = false;
+		}
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.util.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +39,11 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * metal.strength);
 		this.efficiencyOnProperMaterial = metal.getToolEfficiency();
 		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		this.regenerates = metal.equals(Materials.starsteel);
+		if (Config.Options.ENABLE_STARSTEEL) {
+			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
+		} else {
+			this.regenerates = false;
+		}
 	}
 
 	@Override

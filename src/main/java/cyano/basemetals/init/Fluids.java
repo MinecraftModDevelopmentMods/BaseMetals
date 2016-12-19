@@ -98,12 +98,12 @@ public abstract class Fluids {
 	public static Fluid fluidZinc = null;
 	public static BlockFluidBase fluidBlockZinc = null;
 
+	private static boolean initDone = false;
+
 	private static final BiMap<String, Fluid> fluidRegistry = HashBiMap.create();
 	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create();
 
 	private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
-
-	private static boolean initDone = false;
 
 	/**
 	 *
@@ -206,7 +206,7 @@ public abstract class Fluids {
 		initDone = true;
 	}
 
-	private static Fluid addFluid(String name, int density, int viscosity, int temperature, int luminosity) {
+	protected static Fluid addFluid(String name, int density, int viscosity, int temperature, int luminosity) {
 		MetalMaterial metal = Materials.getMaterialByName(name);
 		int tintColor = 0xFF000000;
 		if (metal != null) {
@@ -228,7 +228,7 @@ public abstract class Fluids {
 		return fluid;
 	}
 
-	private static BlockFluidBase addFluidBlock(String name) {
+	protected static BlockFluidBase addFluidBlock(String name) {
 
 		final ResourceLocation location = new ResourceLocation(Loader.instance().activeModContainer().getModId(), name);
 		Fluid fluid = getFluidByName(name);
@@ -241,7 +241,7 @@ public abstract class Fluids {
 				if (w.rand.nextInt(32) == 0) {
 					e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
 				}
-			}); // , "liquid_mercury")
+			});
 		}
 
 		block.setRegistryName(location);

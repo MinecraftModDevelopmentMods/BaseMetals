@@ -4,6 +4,7 @@ import java.util.List;
 
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.util.Config;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,7 +34,11 @@ public class ItemMetalShears extends ItemShears {
 		this.setMaxDamage(metal.getToolDurability());
 		this.setCreativeTab(CreativeTabs.TOOLS);
 		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		this.regenerates = metal.equals(Materials.starsteel);
+		if (Config.Options.ENABLE_STARSTEEL) {
+			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
+		} else {
+			this.regenerates = false;
+		}
 	}
 
 	@Override

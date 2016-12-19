@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Level;
 
 import cyano.basemetals.items.*;
 import cyano.basemetals.material.MetalMaterial;
+import cyano.basemetals.util.Config.Options;
 import cyano.basemetals.util.VillagerTradeHelper;
 import net.minecraft.entity.passive.EntityVillager.*;
 import net.minecraft.item.*;
@@ -19,9 +20,9 @@ import net.minecraftforge.fml.common.FMLLog;
  */
 public abstract class VillagerTrades {
 
-	public static final int TRADES_PER_LEVEL = 4;
-
 	private static boolean initDone = false;
+
+	public static final int TRADES_PER_LEVEL = 4;
 
 	/**
 	 *
@@ -31,13 +32,13 @@ public abstract class VillagerTrades {
 			return;
 		}
 
-		cyano.basemetals.init.Materials.init();
-		cyano.basemetals.init.Items.init();
+		Materials.init();
+		Items.init();
 
 		// Minecraft stores trades in a 4D array:
 		// [Profession ID][Sub-profession ID][villager level - 1][trades]
 
-		final int size = cyano.basemetals.init.Materials.getAllMaterials().size();
+		final int size = Materials.getAllMaterials().size();
 		final Map<MetalMaterial, List<Item>> allArmors = new HashMap<>(size);
 		final Map<MetalMaterial, Item> allHammers = new HashMap<>(size);
 		final Map<MetalMaterial, Item> allSwords = new HashMap<>(size);
@@ -50,7 +51,7 @@ public abstract class VillagerTrades {
 		@SuppressWarnings("unused")
 		final Map<Item, Integer> tradeLevelMap = new HashMap<>();
 
-		cyano.basemetals.init.Items.getItemsByMetal().entrySet().stream().forEach((Map.Entry<MetalMaterial, List<Item>> e) -> {
+		Items.getItemsByMetal().entrySet().stream().forEach((Map.Entry<MetalMaterial, List<Item>> e) -> {
 			final MetalMaterial m = e.getKey();
 			if (m == null) {
 				return;
@@ -87,11 +88,12 @@ public abstract class VillagerTrades {
 
 		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>(); // integer is used as byte data: (unused) (profession) (career) (level)
 
-		for (final MetalMaterial m : cyano.basemetals.init.Materials.getAllMaterials()) {
+		for (final MetalMaterial m : Materials.getAllMaterials()) {
 			final float value = m.hardness + m.strength + m.magicAffinity + m.getToolHarvestLevel();
 			if (m.isRare) {
 				continue;
 			}
+
 			// for reference, iron has a value of 21.5, gold would be 14, copper
 			// is 14, and diamond is 30
 			final int emeraldPurch = emeraldPurchaseValue(value);
@@ -140,9 +142,18 @@ public abstract class VillagerTrades {
 				}
 			}
 		}
-		tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.carbon_powder)));
-		tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.carbon_powder)));
-		tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.carbon_powder)));
+
+		if (Options.ENABLE_CHARCOAL) {
+			tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
+			tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
+			tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
+		}
+
+		if (Options.ENABLE_COAL) {
+			tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
+			tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
+			tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
+		}
 
 		for (final Integer k : tradesTable.keySet()) {
 			final List<ITradeList> trades = tradesTable.get(k);
@@ -160,26 +171,26 @@ public abstract class VillagerTrades {
 		initDone = true;
 	}
 
-	private static int emeraldPurchaseValue(float value) {
+	protected static int emeraldPurchaseValue(float value) {
 		return Math.max(1, (int) (value * 0.2F));
 	}
 
-	private static int emeraldSaleValue(float value) {
+	protected static int emeraldSaleValue(float value) {
 		return Math.max(1, emeraldPurchaseValue(value) / 3);
 	}
 
-	private static int tradeLevel(float value) {
+	protected static int tradeLevel(float value) {
 		return Math.max(1, Math.min(4, (int) (value * 0.1F)));
 	}
 
-	private static int fluctuation(int baseValue) {
+	protected static int fluctuation(int baseValue) {
 		if (baseValue <= 1) {
 			return 0;
 		}
 		return Math.max(2, baseValue / 4);
 	}
 
-	private static ITradeList[] makePurchasePalette(int emeraldPrice, int stackSize, Item... items) {
+	protected static ITradeList[] makePurchasePalette(int emeraldPrice, int stackSize, Item... items) {
 		final ITradeList[] trades = new ITradeList[items.length];
 		for (int i = 0; i < items.length; i++) {
 			final Item item = items[i];
@@ -188,7 +199,7 @@ public abstract class VillagerTrades {
 		return trades;
 	}
 
-	private static ITradeList[] makeSalePalette(int emeraldValue, int stackSize, Item... items) {
+	protected static ITradeList[] makeSalePalette(int emeraldValue, int stackSize, Item... items) {
 		final ITradeList[] trades = new ITradeList[items.length];
 		for (int i = 0; i < items.length; i++) {
 			final Item item = items[i];
@@ -197,7 +208,7 @@ public abstract class VillagerTrades {
 		return trades;
 	}
 
-	private static ITradeList[] makeTradePalette(ITradeList[]... list) {
+	protected static ITradeList[] makeTradePalette(ITradeList[]... list) {
 		if (list.length == 1) {
 			return list[0];
 		}

@@ -342,47 +342,11 @@ public abstract class Blocks {
 
 	public static Block human_detector;
 
+
 	private static boolean initDone = false;
 
 	private static BiMap<String, Block> blockRegistry = HashBiMap.create(16);
 	private static Map<MetalMaterial, List<Block>> blocksByMetal = new HashMap<>();
-
-	/**
-	 * Gets an block by its name. The name is the name as it is registered in
-	 * the GameRegistry, not its unlocalized name (the unlocalized name is the
-	 * registered name plus the prefix "basemetals.")
-	 *
-	 * @param name The name of the block in question
-	 * @return The block matching that name, or null if there isn't one
-	 */
-	public static Block getBlockByName(String name) {
-		return blockRegistry.get(name);
-	}
-
-	/**
-	 * This is the reverse of the getBlockByName(...) method, returning the
-	 * registered name of an block instance (Base Metals blocks only).
-	 *
-	 * @param b The item in question
-	 * @return The name of the item, or null if the item is not a Base Metals
-	 * block.
-	 */
-	public static String getNameOfBlock(Block b) {
-		return blockRegistry.inverse().get(b);
-	}
-
-	public static Map<String, Block> getBlockRegistry() {
-		return blockRegistry;
-	}
-
-	/**
-	 * Gets a map of all blocks added, sorted by metal
-	 *
-	 * @return An unmodifiable map of added items catagorized by metal material
-	 */
-	public static Map<MetalMaterial, List<Block>> getBlocksByMetal() {
-		return Collections.unmodifiableMap(blocksByMetal);
-	}
 
 	/**
 	 *
@@ -392,8 +356,8 @@ public abstract class Blocks {
 			return;
 		}
 
-		cyano.basemetals.init.Materials.init();
-		cyano.basemetals.init.ItemGroups.init();
+		Materials.init();
+		ItemGroups.init();
 
 		String materialName;
 		if (Options.ENABLE_ADAMANTINE) {
@@ -814,7 +778,7 @@ public abstract class Blocks {
 		initDone = true;
 	}
 
-	private static Block addBlock(Block block, String name, MetalMaterial material, CreativeTabs tab) {
+	protected static Block addBlock(Block block, String name, MetalMaterial material, CreativeTabs tab) {
 
 		String fullName;
 
@@ -858,98 +822,187 @@ public abstract class Blocks {
 		return block;
 	}
 
-	private static Block createPlate(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockMetalPlate(material), "plate", material, ItemGroups.tab_blocks);
-		material.plate = b;
-		return b;
+	protected static Block createPlate(String materialName) {
+		if (Options.ENABLE_PLATE) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockMetalPlate(material), "plate", material, ItemGroups.tab_blocks);
+			material.plate = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static Block createBars(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockMetalBars(material), "bars", material, ItemGroups.tab_blocks);
-		material.bars = b;
-		return b;
+	protected static Block createBars(String materialName) {
+		if (Options.ENABLE_BARS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockMetalBars(material), "bars", material, ItemGroups.tab_blocks);
+			material.bars = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static Block createBlock(String materialName) {
+	protected static Block createBlock(String materialName) {
 		return createBlock(materialName, false);
 	}
 
-	private static Block createBlock(String materialName, boolean glow) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockMetalBlock(material, glow), "block", material, ItemGroups.tab_blocks);
-		material.block = b;
-		return b;
+	protected static Block createBlock(String materialName, boolean glow) {
+		if (Options.ENABLE_BASICS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockMetalBlock(material, glow), "block", material, ItemGroups.tab_blocks);
+			material.block = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static Block createButton(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockButtonMetal(material), "button", material, ItemGroups.tab_blocks);
-		material.button = b;
-		return b;
+	protected static Block createButton(String materialName) {
+		if (Options.ENABLE_BUTTON) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockButtonMetal(material), "button", material, ItemGroups.tab_blocks);
+			material.button = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static Block createLever(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockMetalLever(material), "lever", material, ItemGroups.tab_blocks);
-		material.lever = b;
-		return b;
+	protected static Block createLever(String materialName) {
+		if (Options.ENABLE_LEVER) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockMetalLever(material), "lever", material, ItemGroups.tab_blocks);
+			material.lever = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static Block createPressurePlate(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockMetalPressurePlate(material), "pressure_plate", material, ItemGroups.tab_blocks);
-		material.pressure_plate = b;
-		return b;
+	protected static Block createPressurePlate(String materialName) {
+		if (Options.ENABLE_PRESSURE_PLATE) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockMetalPressurePlate(material), "pressure_plate", material, ItemGroups.tab_blocks);
+			material.pressure_plate = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static BlockSlab createSlab(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final BlockSlab b = (BlockSlab) addBlock(new BlockHalfMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
-		material.half_slab = b;
-		return b;
+	protected static BlockSlab createSlab(String materialName) {
+		if (Options.ENABLE_SLAB) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final BlockSlab b = (BlockSlab) addBlock(new BlockHalfMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
+			material.half_slab = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static BlockSlab createDoubleSlab(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final BlockSlab b = (BlockSlab) addBlock(new BlockDoubleMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
-		material.double_slab = b;
-		return b;
+	protected static BlockSlab createDoubleSlab(String materialName) {
+		if (Options.ENABLE_SLAB) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final BlockSlab b = (BlockSlab) addBlock(new BlockDoubleMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
+			material.double_slab = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static Block createStairs(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockMetalStairs(material), "stairs", material, ItemGroups.tab_blocks);
-		material.stairs = b;
-		return b;
+	protected static Block createStairs(String materialName) {
+		if (Options.ENABLE_STAIRS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockMetalStairs(material), "stairs", material, ItemGroups.tab_blocks);
+			material.stairs = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static Block createWall(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockMetalWall(material), "wall", material, ItemGroups.tab_blocks);
-		material.wall = b;
-		return b;
+	protected static Block createWall(String materialName) {
+		if (Options.ENABLE_WALL) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockMetalWall(material), "wall", material, ItemGroups.tab_blocks);
+			material.wall = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static Block createOre(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockMetalOre(material), "ore", material, ItemGroups.tab_blocks);
-		material.ore = b;
-		return b;
+	protected static Block createOre(String materialName) {
+		if (Options.ENABLE_BASICS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockMetalOre(material), "ore", material, ItemGroups.tab_blocks);
+			material.ore = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static BlockDoor createDoor(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final BlockDoor b = (BlockDoor) addBlock(new BlockMetalDoor(material), "door", material, null);
-		material.doorBlock = b;
-		return b;
+	protected static BlockDoor createDoor(String materialName) {
+		if (Options.ENABLE_DOOR) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final BlockDoor b = (BlockDoor) addBlock(new BlockMetalDoor(material), "door", material, null);
+			material.doorBlock = b;
+			return b;
+		} else {
+			return null;
+		}
 	}
 
-	private static Block createTrapDoor(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Block b = addBlock(new BlockMetalTrapDoor(material), "trapdoor", material, ItemGroups.tab_blocks);
-		material.trapdoor = b;
-		return b;
+	protected static Block createTrapDoor(String materialName) {
+		if (Options.ENABLE_TRAPDOOR) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Block b = addBlock(new BlockMetalTrapDoor(material), "trapdoor", material, ItemGroups.tab_blocks);
+			material.trapdoor = b;
+			return b;
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Gets an block by its name. The name is the name as it is registered in
+	 * the GameRegistry, not its unlocalized name (the unlocalized name is the
+	 * registered name plus the prefix "basemetals.")
+	 *
+	 * @param name The name of the block in question
+	 * @return The block matching that name, or null if there isn't one
+	 */
+	public static Block getBlockByName(String name) {
+		return blockRegistry.get(name);
+	}
+
+	/**
+	 * This is the reverse of the getBlockByName(...) method, returning the
+	 * registered name of an block instance (Base Metals blocks only).
+	 *
+	 * @param b The item in question
+	 * @return The name of the item, or null if the item is not a Base Metals
+	 * block.
+	 */
+	public static String getNameOfBlock(Block b) {
+		return blockRegistry.inverse().get(b);
+	}
+
+	public static Map<String, Block> getBlockRegistry() {
+		return blockRegistry;
+	}
+
+	/**
+	 * Gets a map of all blocks added, sorted by metal
+	 *
+	 * @return An unmodifiable map of added items catagorized by metal material
+	 */
+	public static Map<MetalMaterial, List<Block>> getBlocksByMetal() {
+		return Collections.unmodifiableMap(blocksByMetal);
 	}
 }

@@ -7,6 +7,7 @@ import cyano.basemetals.material.*;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import cyano.basemetals.registry.recipe.ICrusherRecipe;
 import cyano.basemetals.util.Config;
+import cyano.basemetals.util.Config.Options;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -48,7 +49,11 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		toolTypes.add("crackhammer");
 		toolTypes.add("pickaxe");
 		repairOreDictName = "ingot" + metal.getCapitalizedName();
-		regenerates = metal.equals(Materials.starsteel);
+		if (Config.Options.ENABLE_STARSTEEL) {
+			regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
+		} else {
+			this.regenerates = false;
+		}
 	}
 
 	@Override
@@ -206,7 +211,9 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		super.onCreated(item, world, crafter);
 		MetalToolEffects.extraEffectsOnCrafting(metal, item, world, crafter);
 		// achievement
-		crafter.addStat(Achievements.geologist, 1);
+    	if (Options.ENABLE_ACHIEVEMENTS) {
+    		crafter.addStat(Achievements.geologist, 1);
+    	}
 	}
 
 	@Override

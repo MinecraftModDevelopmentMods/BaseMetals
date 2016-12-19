@@ -1,30 +1,27 @@
 package cyano.basemetals.proxy;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
-
-import org.apache.logging.log4j.Level;
-
 import cyano.basemetals.BaseMetals;
-import cyano.basemetals.data.AdditionalLootTables;
+import cyano.basemetals.init.Achievements;
 import cyano.basemetals.init.Blocks;
+import cyano.basemetals.init.DungeonLoot;
+import cyano.basemetals.init.Entities;
 import cyano.basemetals.init.Fluids;
 import cyano.basemetals.init.ItemGroups;
 import cyano.basemetals.init.Items;
 import cyano.basemetals.init.Materials;
+import cyano.basemetals.init.Recipes;
 import cyano.basemetals.init.VillagerTrades;
-import cyano.basemetals.init.plugins.EnderIOPlugin;
-import cyano.basemetals.init.plugins.MekanismPlugin;
-import cyano.basemetals.init.plugins.TinkersConstructPlugin;
-import cyano.basemetals.init.plugins.VeinMinerPlugin;
+import cyano.basemetals.init.WorldGen;
+import cyano.basemetals.init.plugins.*;
 import cyano.basemetals.util.Config;
+import cyano.basemetals.util.Config.Options;
+import cyano.basemetals.util.EventHandler;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
+import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -39,7 +36,7 @@ public class CommonProxy {
 	 *
 	 */
 	public void preInit(FMLPreInitializationEvent event) {
-		// load config
+
 		Config.init();
 
 		Fluids.init();
@@ -49,42 +46,42 @@ public class CommonProxy {
 		Items.init();
 		VillagerTrades.init();
 
-		if (Loader.isModLoaded("EnderIO")) {
-			EnderIOPlugin.init();
+		if ((Loader.isModLoaded("EnderIO")) && Options.ENABLE_ENDER_IO) {
+			EnderIO.init();
 		}
-		if (Loader.isModLoaded("IC2")) {
-			//IC2Plugin.init();
+		if ((Loader.isModLoaded("IC2")) && Options.ENABLE_IC2) {
+			//IC2.init();
 		}
-		if (Loader.isModLoaded("tconstruct")) {
-			TinkersConstructPlugin.init();
+		if ((Loader.isModLoaded("tconstruct")) && Options.ENABLE_TINKERS_CONSTRUCT) {
+			TinkersConstruct.init();
 		}
-		if (Loader.isModLoaded("Mekanism")) {
-			MekanismPlugin.init();
+		if ((Loader.isModLoaded("Mekanism")) && Options.ENABLE_MEKANISM) {
+			Mekanism.init();
 		}
-		if (Loader.isModLoaded("thaumcraft")) {
-			//ThaumcraftPlugin.init();
+		if ((Loader.isModLoaded("thaumcraft")) && Options.ENABLE_THAUMCRAFT) {
+			//Thaumcraft.init();
 		}
-		if (Loader.isModLoaded("veinminer")) {
-			VeinMinerPlugin.init();
+		if ((Loader.isModLoaded("veinminer")) && Options.ENABLE_VEINMINER) {
+			VeinMiner.init();
 		}
+	}
 
-		final Path ALTPATH = Paths.get(event.getSuggestedConfigurationFile().getParent(), "additional-loot-tables");
-		final Path myLootFolder = ALTPATH.resolve(BaseMetals.MODID);
-		if (Files.notExists(myLootFolder)) {
-			try {
-				Files.createDirectories(myLootFolder.resolve("chests"));
-				Files.write(myLootFolder.resolve("chests").resolve("abandoned_mineshaft.json"), Collections.singletonList(AdditionalLootTables.abandoned_mineshaft));
-				Files.write(myLootFolder.resolve("chests").resolve("desert_pyramid.json"), Collections.singletonList(AdditionalLootTables.desert_pyramid));
-				Files.write(myLootFolder.resolve("chests").resolve("end_city_treasure.json"), Collections.singletonList(AdditionalLootTables.end_city_treasure));
-				Files.write(myLootFolder.resolve("chests").resolve("jungle_temple.json"), Collections.singletonList(AdditionalLootTables.jungle_temple));
-				Files.write(myLootFolder.resolve("chests").resolve("nether_bridge.json"), Collections.singletonList(AdditionalLootTables.nether_bridge));
-				Files.write(myLootFolder.resolve("chests").resolve("simple_dungeon.json"), Collections.singletonList(AdditionalLootTables.simple_dungeon));
-				Files.write(myLootFolder.resolve("chests").resolve("spawn_bonus_chest.json"), Collections.singletonList(AdditionalLootTables.spawn_bonus_chest));
-				Files.write(myLootFolder.resolve("chests").resolve("stronghold_corridor.json"), Collections.singletonList(AdditionalLootTables.stronghold_corridor));
-				Files.write(myLootFolder.resolve("chests").resolve("stronghold_crossing.json"), Collections.singletonList(AdditionalLootTables.stronghold_crossing));
-				Files.write(myLootFolder.resolve("chests").resolve("village_blacksmith.json"), Collections.singletonList(AdditionalLootTables.village_blacksmith));
-			} catch (final IOException ex) {
-				FMLLog.log(Level.ERROR, ex, "%s: Failed to extract additional loot tables", BaseMetals.MODID);
+	public void onRemap(FMLMissingMappingsEvent event) {
+		for (final MissingMapping mapping : event.get()) {
+			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
+				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
+					if ((mapping.resourceLocation.getResourcePath().equals("liquid_mercury")) && (mapping.type.equals(GameRegistry.Type.BLOCK))) {
+						 if (Options.ENABLE_MERCURY) {
+							 mapping.remap(Fluids.fluidBlockMercury);
+						 }
+					}
+				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
+					if ((mapping.resourceLocation.getResourcePath().equals("carbon_powder"))) {
+						 if (Options.ENABLE_COAL) {
+							 mapping.remap(Items.coal_powder);
+						 }
+					}
+				}
 			}
 		}
 	}
@@ -93,20 +90,20 @@ public class CommonProxy {
 	 *
 	 */
 	public void init(FMLInitializationEvent event) {
-		cyano.basemetals.init.Recipes.init();
-		cyano.basemetals.init.DungeonLoot.init();
-		cyano.basemetals.init.Entities.init();
+		Recipes.init();
+		DungeonLoot.init();
+		Entities.init();
 
-		cyano.basemetals.init.Achievements.init();
+		Achievements.init();
 
-		MinecraftForge.EVENT_BUS.register(new cyano.basemetals.util.EventHandler());
+		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
 	/**
 	 *
 	 */
 	public void postInit(FMLPostInitializationEvent event) {
-		cyano.basemetals.init.WorldGen.init();
+		WorldGen.init();
 		Config.postInit();
 	}
 }

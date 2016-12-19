@@ -9,7 +9,6 @@ import cyano.basemetals.blocks.*;
 import cyano.basemetals.items.*;
 import cyano.basemetals.material.*;
 import cyano.basemetals.registry.IOreDictionaryEntry;
-import cyano.basemetals.util.Config;
 import cyano.basemetals.util.Config.Options;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
@@ -254,7 +253,8 @@ public abstract class Items {
 	public static Item bronze_crushed;
 	public static Item bronze_crushed_purified;
 
-	public static Item carbon_powder;
+	public static Item charcoal_powder;
+	public static Item coal_powder;
 
 	public static Item coldiron_arrow;
 	public static Item coldiron_axe;
@@ -366,6 +366,7 @@ public abstract class Items {
 
 	public static Item diamond_crackhammer;
 	public static Item diamond_gear;
+	public static Item diamond_rod;
 
 	public static Item electrum_arrow;
 	public static Item electrum_axe;
@@ -409,6 +410,7 @@ public abstract class Items {
 	public static Item gold_crackhammer;
 	public static Item gold_powder;
 	public static Item gold_rod;
+	public static Item gold_smallpowder;
 	public static Item gold_gear;
 
 	public static Item invar_arrow;
@@ -842,43 +844,6 @@ public abstract class Items {
 	private static Map<Class<?>, Integer> classSortingValues = new HashMap<>();
 	private static Map<MetalMaterial, Integer> materialSortingValues = new HashMap<>();
 
-	/**
-	 * Gets an item by its name. The name is the name as it is registered in the
-	 * GameRegistry, not its unlocalized name (the unlocalized name is the
-	 * registered name plus the prefix "basemetals.")
-	 *
-	 * @param name The name of the item in question
-	 * @return The item matching that name, or null if there isn't one
-	 */
-	public static Item getItemByName(String name) {
-		return itemRegistry.get(name);
-	}
-
-	/**
-	 * This is the reverse of the getItemByName(...) method, returning the
-	 * registered name of an item instance (Base Metals items only).
-	 *
-	 * @param i The item in question
-	 * @return The name of the item, or null if the item is not a Base Metals
-	 * item.
-	 */
-	public static String getNameOfItem(Item i) {
-		return itemRegistry.inverse().get(i);
-	}
-
-	public static Map<String, Item> getItemRegistry() {
-		return itemRegistry;
-	}
-
-	/**
-	 * Gets a map of all items added, sorted by metal
-	 *
-	 * @return An unmodifiable map of added items catagorized by metal material
-	 */
-	public static Map<MetalMaterial, List<Item>> getItemsByMetal() {
-		return Collections.unmodifiableMap(itemsByMetal);
-	}
-
 	// public static UniversalBucket universal_bucket; // now automatically added by Forge
 
 	/**
@@ -889,7 +854,7 @@ public abstract class Items {
 			return;
 		}
 
-		cyano.basemetals.init.Blocks.init();
+		Blocks.init();
 
 		try {
 			expandCombatArrays(net.minecraft.item.ItemAxe.class);
@@ -899,7 +864,7 @@ public abstract class Items {
 		}
 
 		String materialName;
-		if (Config.Options.ENABLE_ADAMANTINE) {
+		if (Options.ENABLE_ADAMANTINE) {
 			materialName = "adamantine";
 
 			adamantine_arrow = createArrow(materialName);
@@ -1153,10 +1118,15 @@ public abstract class Items {
 			bronze_crushed = createCrushed(materialName);
 			bronze_crushed_purified = createCrushedPurified(materialName);
 		}
-		if (Options.ENABLE_CARBON) {
-			carbon_powder = addItem(new Item(), "carbon_powder", null, ItemGroups.tab_items);
-			itemRegistry.put("carbon_powder", carbon_powder);
-			OreDictionary.registerOre("dustCarbon", carbon_powder);
+		if (Options.ENABLE_CHARCOAL) {
+			charcoal_powder = addItem(new Item(), "charcoal_powder", null, ItemGroups.tab_items);
+			itemRegistry.put("charcoal_powder", charcoal_powder);
+			OreDictionary.registerOre("dustCharcoal", charcoal_powder);
+		}
+		if (Options.ENABLE_COAL) {
+			coal_powder = addItem(new Item(), "coal_powder", null, ItemGroups.tab_items);
+			itemRegistry.put("coal_powder", coal_powder);
+			OreDictionary.registerOre("dustCoal", coal_powder);
 		}
 
 		if (Options.ENABLE_COLDIRON) {
@@ -1287,6 +1257,7 @@ public abstract class Items {
 
 			diamond_crackhammer = createCrackhammer(materialName);
 			diamond_gear = createGear(materialName);
+			//diamond_rod = createRod(materialName);
 		}
 
 		if (Options.ENABLE_ELECTRUM) {
@@ -1338,6 +1309,7 @@ public abstract class Items {
 
 			gold_crackhammer = createCrackhammer(materialName);
 			gold_powder = createPowder(materialName);
+//			gold_smallpowder = createSmallPowder(materialName);
 			gold_rod = createRod(materialName);
 			gold_gear = createGear(materialName);
 		}
@@ -1473,21 +1445,6 @@ public abstract class Items {
 			platinum_dense_plate = createDensePlate(materialName);
 			platinum_crushed = createCrushed(materialName);
 			platinum_crushed_purified = createCrushedPurified(materialName);
-		}
-
-		if (Options.ENABLE_STONE) {
-			materialName = "stone";
-
-			stone_crackhammer = createCrackhammer(materialName);
-			stone_rod = createRod(materialName);
-			stone_gear = createGear(materialName);
-		}
-
-		if (Options.ENABLE_WOOD) {
-			materialName = "wood";
-
-			wood_crackhammer = createCrackhammer(materialName);
-			wood_gear = createGear(materialName);
 		}
 
 		if (Options.ENABLE_MERCURY) {
@@ -1710,6 +1667,14 @@ public abstract class Items {
 			starsteel_crushed_purified = createCrushedPurified(materialName);
 		}
 
+		if (Options.ENABLE_STONE) {
+			materialName = "stone";
+
+			stone_crackhammer = createCrackhammer(materialName);
+			stone_rod = createRod(materialName);
+			stone_gear = createGear(materialName);
+		}
+
 		if (Options.ENABLE_STEEL) {
 			materialName = "steel";
 
@@ -1791,6 +1756,13 @@ public abstract class Items {
 			tin_crushed_purified = createCrushedPurified(materialName);
 		}
 
+		if (Options.ENABLE_WOOD) {
+			materialName = "wood";
+
+			wood_crackhammer = createCrackhammer(materialName);
+			wood_gear = createGear(materialName);
+		}
+
 		if (Options.ENABLE_ZINC) {
 			materialName = "zinc";
 
@@ -1832,6 +1804,13 @@ public abstract class Items {
 			zinc_crushed_purified = createCrushedPurified(materialName);
 		}
 
+		setSortingList();
+		addToMetList();
+		
+		initDone = true;
+	}
+
+	private static void setSortingList() {
 		int ss = 0;
 		classSortingValues.put(BlockMetalOre.class, ++ss * 10000);
 		classSortingValues.put(BlockMetalBlock.class, ++ss * 10000);
@@ -1874,18 +1853,18 @@ public abstract class Items {
 		classSortingValues.put(BlockMetalWall.class, ++ss * 10000);
 		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalSlab.class, ++ss * 10000);
+	}
 
+	protected static void addToMetList() {
 		final List<MetalMaterial> metlist = new ArrayList<>(Materials.getAllMaterials().size());
 		metlist.addAll(Materials.getAllMaterials());
 		metlist.sort((MetalMaterial a, MetalMaterial b) -> a.getName().compareToIgnoreCase(b.getName()));
 		for (int i = 0; i < metlist.size(); i++) {
 			materialSortingValues.put(metlist.get(i), i * 100);
 		}
-
-		initDone = true;
 	}
 
-	private static Item addItem(Item item, String name, MetalMaterial material, CreativeTabs tab) {
+	protected static Item addItem(Item item, String name, MetalMaterial material, CreativeTabs tab) {
 
 		String fullName;
 		if (material != null) {
@@ -1916,257 +1895,397 @@ public abstract class Items {
 		return item;
 	}
 
-	private static Item createIngot(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalIngot(material), "ingot", material, ItemGroups.tab_items);
-		material.ingot = i;
-		return i;
+	protected static Item createIngot(String materialName) {
+		if (Options.ENABLE_BASICS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalIngot(material), "ingot", material, ItemGroups.tab_items);
+			material.ingot = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createNugget(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalNugget(material), "nugget", material, ItemGroups.tab_items);
-		material.nugget = i;
-		return i;
+	protected static Item createNugget(String materialName) {
+		if (Options.ENABLE_BASICS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalNugget(material), "nugget", material, ItemGroups.tab_items);
+			material.nugget = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createPowder(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalPowder(material), "powder", material, ItemGroups.tab_items);
-		material.powder = i;
-		return i;
+	protected static Item createPowder(String materialName) {
+		if (Options.ENABLE_BASICS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalPowder(material), "powder", material, ItemGroups.tab_items);
+			material.powder = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createBlend(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalBlend(material), "blend", material, ItemGroups.tab_items);
-		material.blend = i;
-		return i;
+	protected static Item createBlend(String materialName) {
+		if (Options.ENABLE_BASICS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalBlend(material), "blend", material, ItemGroups.tab_items);
+			material.blend = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createRod(String materialName) {
+	protected static Item createRod(String materialName) {
+		if (Options.ENABLE_ROD) {
 		MetalMaterial material = Materials.getMaterialByName(materialName);
 		final Item i = addItem(new ItemMetalRod(material), "rod", material, ItemGroups.tab_items);
 		material.rod = i;
 		return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createGear(String materialName) {
+	protected static Item createGear(String materialName) {
+		if (Options.ENABLE_GEAR) {
 		MetalMaterial material = Materials.getMaterialByName(materialName);
 		final Item i = addItem(new ItemMetalGear(material), "gear", material, ItemGroups.tab_items);
 		material.gear = i;
 		return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createAxe(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalAxe(material), "axe", material, ItemGroups.tab_tools);
-		material.axe = i;
-		return i;
+	protected static Item createAxe(String materialName) {
+		if (Options.ENABLE_BASIC_TOOLS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalAxe(material), "axe", material, ItemGroups.tab_tools);
+			material.axe = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createCrackhammer(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalCrackHammer(material), "crackhammer", material, ItemGroups.tab_tools);
-		material.crackhammer = i;
-		return i;
+	protected static Item createCrackhammer(String materialName) {
+		if (Options.ENABLE_CRACKHAMMER) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalCrackHammer(material), "crackhammer", material, ItemGroups.tab_tools);
+			material.crackhammer = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createHoe(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalHoe(material), "hoe", material, ItemGroups.tab_tools);
-		material.hoe = i;
-		return i;
+	protected static Item createHoe(String materialName) {
+		if (Options.ENABLE_BASIC_TOOLS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalHoe(material), "hoe", material, ItemGroups.tab_tools);
+			material.hoe = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createPickaxe(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalPickaxe(material), "pickaxe", material, ItemGroups.tab_tools);
-		material.pickaxe = i;
-		return i;
+	protected static Item createPickaxe(String materialName) {
+		if (Options.ENABLE_BASIC_TOOLS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalPickaxe(material), "pickaxe", material, ItemGroups.tab_tools);
+			material.pickaxe = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createShovel(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalShovel(material), "shovel", material, ItemGroups.tab_tools);
-		material.shovel = i;
-		return i;
+	protected static Item createShovel(String materialName) {
+		if (Options.ENABLE_BASIC_TOOLS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalShovel(material), "shovel", material, ItemGroups.tab_tools);
+			material.shovel = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createSword(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalSword(material), "sword", material, ItemGroups.tab_tools);
-		material.sword = i;
-		return i;
+	protected static Item createSword(String materialName) {
+		if (Options.ENABLE_BASIC_TOOLS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalSword(material), "sword", material, ItemGroups.tab_tools);
+			material.sword = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createHelmet(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(ItemMetalArmor.createHelmet(material), "helmet", material, ItemGroups.tab_tools);
-		material.helmet = i;
-		return i;
+	protected static Item createHelmet(String materialName) {
+		if (Options.ENABLE_ARMOR) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(ItemMetalArmor.createHelmet(material), "helmet", material, ItemGroups.tab_tools);
+			material.helmet = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createChestplate(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(ItemMetalArmor.createChestplate(material), "chestplate", material, ItemGroups.tab_tools);
-		material.chestplate = i;
-		return i;
+	protected static Item createChestplate(String materialName) {
+		if (Options.ENABLE_ARMOR) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(ItemMetalArmor.createChestplate(material), "chestplate", material, ItemGroups.tab_tools);
+			material.chestplate = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createLeggings(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(ItemMetalArmor.createLeggings(material), "leggings", material, ItemGroups.tab_tools);
-		material.leggings = i;
-		return i;
+	protected static Item createLeggings(String materialName) {
+		if (Options.ENABLE_ARMOR) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(ItemMetalArmor.createLeggings(material), "leggings", material, ItemGroups.tab_tools);
+			material.leggings = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createBoots(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(ItemMetalArmor.createBoots(material), "boots", material, ItemGroups.tab_tools);
-		material.boots = i;
-		return i;
+	protected static Item createBoots(String materialName) {
+		if (Options.ENABLE_ARMOR) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(ItemMetalArmor.createBoots(material), "boots", material, ItemGroups.tab_tools);
+			material.boots = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createHorseArmor(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.tab_tools);
-		material.horsearmor = i;
-		return i;
+	protected static Item createHorseArmor(String materialName) {
+		if (Options.ENABLE_HORSE_ARMOR) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.tab_tools);
+			material.horsearmor = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createArrow(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalArrow(material), "arrow", material, ItemGroups.tab_tools);
-		material.arrow = i;
-		return i;
+	protected static Item createArrow(String materialName) {
+		if (Options.ENABLE_BOW_AND_ARROW) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalArrow(material), "arrow", material, ItemGroups.tab_tools);
+			material.arrow = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createBolt(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalBolt(material), "bolt", material, ItemGroups.tab_tools);
-		material.bolt = i;
-		return i;
+	protected static Item createBolt(String materialName) {
+		if (Options.ENABLE_CROSSBOW_AND_BOLT) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalBolt(material), "bolt", material, ItemGroups.tab_tools);
+			material.bolt = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createBow(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalBow(material), "bow", material, ItemGroups.tab_tools);
-		material.bow = i;
-		return i;
+	protected static Item createBow(String materialName) {
+		if (Options.ENABLE_BOW_AND_ARROW) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalBow(material), "bow", material, ItemGroups.tab_tools);
+			material.bow = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createCrossbow(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalCrossbow(material), "crossbow", material, ItemGroups.tab_tools);
-		material.crossbow = i;
-		return i;
+	protected static Item createCrossbow(String materialName) {
+		if (Options.ENABLE_CROSSBOW_AND_BOLT) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalCrossbow(material), "crossbow", material, ItemGroups.tab_tools);
+			material.crossbow = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createShears(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalShears(material), "shears", material, ItemGroups.tab_tools);
-		material.shears = i;
-		return i;
+	protected static Item createShears(String materialName) {
+		if (Options.ENABLE_SHEARS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalShears(material), "shears", material, ItemGroups.tab_tools);
+			material.shears = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createSmallBlend(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalSmallBlend(material), "smallblend", material, ItemGroups.tab_items);
-		material.smallblend = i;
-		return i;
+	protected static Item createSmallBlend(String materialName) {
+		if (Options.ENABLE_SMALL_DUSTS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalSmallBlend(material), "smallblend", material, ItemGroups.tab_items);
+			material.smallblend = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createFishingRod(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalFishingRod(material), "fishing_rod", material, ItemGroups.tab_tools);
-		material.fishing_rod = i;
-		return i;
+	protected static Item createFishingRod(String materialName) {
+		if (Options.ENABLE_FISHING_ROD) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalFishingRod(material), "fishing_rod", material, ItemGroups.tab_tools);
+			material.fishing_rod = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createSmallPowder(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalSmallPowder(material), "smallpowder", material, ItemGroups.tab_items);
-		material.smallpowder = i;
-		return i;
+	protected static Item createSmallPowder(String materialName) {
+		if (Options.ENABLE_SMALL_DUSTS) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalSmallPowder(material), "smallpowder", material, ItemGroups.tab_items);
+			material.smallpowder = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createShield(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalShield(material), "shield", material, ItemGroups.tab_items);
-		material.shield = i;
-		return i;
+	protected static Item createShield(String materialName) {
+		if (Options.ENABLE_SHIELD) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalShield(material), "shield", material, ItemGroups.tab_items);
+			material.shield = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createCrystal(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.tab_items);
-		OreDictionary.registerOre("crystal" + material.getCapitalizedName(), i);
-		material.crystal = i;
-		return i;
+	protected static Item createCrystal(String materialName) {
+		if (Options.ENABLE_MEKANISM) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.tab_items);
+			OreDictionary.registerOre("crystal" + material.getCapitalizedName(), i);
+			material.crystal = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createShard(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.tab_items);
-		OreDictionary.registerOre("shard" + material.getCapitalizedName(), i);
-		material.shard = i;
-		return i;
+	protected static Item createShard(String materialName) {
+		if (Options.ENABLE_MEKANISM) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.tab_items);
+			OreDictionary.registerOre("shard" + material.getCapitalizedName(), i);
+			material.shard = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createClump(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.tab_items);
-		OreDictionary.registerOre("clump" + material.getCapitalizedName(), i);
-		material.clump = i;
-		return i;
+	protected static Item createClump(String materialName) {
+		if (Options.ENABLE_MEKANISM) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.tab_items);
+			OreDictionary.registerOre("clump" + material.getCapitalizedName(), i);
+			material.clump = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createDirtyPowder(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.tab_items);
-		OreDictionary.registerOre("dustDirty" + material.getCapitalizedName(), i);
-		material.dirtypowder = i;
-		return i;
+	protected static Item createDirtyPowder(String materialName) {
+		if (Options.ENABLE_MEKANISM) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.tab_items);
+			OreDictionary.registerOre("dustDirty" + material.getCapitalizedName(), i);
+			material.dirtypowder = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
 	// TODO: Possibly make this a block, 1/2 of the normal plate.
-	private static Item createDensePlate(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.tab_items);
-		OreDictionary.registerOre("plateDense" + material.getCapitalizedName(), i);
-		material.denseplate = i;
-		return i;
+	protected static Item createDensePlate(String materialName) {
+		if (Options.ENABLE_IC2) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.tab_items);
+			OreDictionary.registerOre("plateDense" + material.getCapitalizedName(), i);
+			material.denseplate = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createCrushed(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.tab_items);
-		OreDictionary.registerOre("crushed" + material.getCapitalizedName(), i);
-		material.crushed = i;
-		return i;
+	protected static Item createCrushed(String materialName) {
+		if (Options.ENABLE_IC2) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.tab_items);
+			OreDictionary.registerOre("crushed" + material.getCapitalizedName(), i);
+			material.crushed = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createCrushedPurified(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.tab_items);
-		OreDictionary.registerOre("crushedPurified" + material.getCapitalizedName(), i);
-		material.crushedpurified = i;
-		return i;
+	protected static Item createCrushedPurified(String materialName) {
+		if (Options.ENABLE_IC2) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.tab_items);
+			OreDictionary.registerOre("crushedPurified" + material.getCapitalizedName(), i);
+			material.crushedpurified = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createSlab(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
-		material.slab = i;
-		return i;
+	protected static Item createSlab(String materialName) {
+		if (Options.ENABLE_SLAB) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
+			material.slab = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
-	private static Item createDoor(String materialName) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
-		final Item i = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.tab_blocks);
-		material.door = i;
-		return i;
+	protected static Item createDoor(String materialName) {
+		if (Options.ENABLE_DOOR) {
+			MetalMaterial material = Materials.getMaterialByName(materialName);
+			final Item i = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.tab_blocks);
+			material.door = i;
+			return i;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -2210,5 +2329,42 @@ public abstract class Items {
 			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject) a.getItem()).getMetalMaterial(), (MetalMaterial m) -> 9900);
 		}
 		return classVal + metalVal + (a.getMetadata() % 100);
+	}
+
+	/**
+	 * Gets an item by its name. The name is the name as it is registered in the
+	 * GameRegistry, not its unlocalized name (the unlocalized name is the
+	 * registered name plus the prefix "basemetals.")
+	 *
+	 * @param name The name of the item in question
+	 * @return The item matching that name, or null if there isn't one
+	 */
+	public static Item getItemByName(String name) {
+		return itemRegistry.get(name);
+	}
+
+	/**
+	 * This is the reverse of the getItemByName(...) method, returning the
+	 * registered name of an item instance (Base Metals items only).
+	 *
+	 * @param i The item in question
+	 * @return The name of the item, or null if the item is not a Base Metals
+	 * item.
+	 */
+	public static String getNameOfItem(Item i) {
+		return itemRegistry.inverse().get(i);
+	}
+
+	public static Map<String, Item> getItemRegistry() {
+		return itemRegistry;
+	}
+
+	/**
+	 * Gets a map of all items added, sorted by metal
+	 *
+	 * @return An unmodifiable map of added items catagorized by metal material
+	 */
+	public static Map<MetalMaterial, List<Item>> getItemsByMetal() {
+		return Collections.unmodifiableMap(itemsByMetal);
 	}
 }

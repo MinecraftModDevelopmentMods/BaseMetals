@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.event.*;
  */
 @Mod(modid = BaseMetals.MODID, name = BaseMetals.NAME, version = BaseMetals.VERSION, dependencies = "required-after:Forge;before:buildingbricks", acceptedMinecraftVersions = "[1.10.2,)", updateJSON = "https://raw.githubusercontent.com/MinecraftModDevelopment/BaseMetals/master/update.json")
 public class BaseMetals {
+
 	// TODO: use metal plates to modify or repair shields
 
 	@Instance
@@ -39,9 +40,6 @@ public class BaseMetals {
 	 */
 	public static final String VERSION = "2.5.0-beta1";
 
-	/** Configuration file location */
-	//public static final String CONFIG_FILE = "config/BaseMetals.cfg";
-
 	@SidedProxy(clientSide = "cyano.basemetals.proxy.ClientProxy", serverSide = "cyano.basemetals.proxy.ServerProxy")
 	public static CommonProxy PROXY = null;
 
@@ -56,10 +54,19 @@ public class BaseMetals {
 	 */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		// TODO: Is this needed?
+
 		INSTANCE = this;
 
 		PROXY.preInit(event);
+	}
+
+	/**
+	 *
+	 * @param event
+	 */
+	@EventHandler
+	public void onRemap(FMLMissingMappingsEvent event) {
+		PROXY.onRemap(event);
 	}
 
 	/**
