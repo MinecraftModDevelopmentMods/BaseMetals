@@ -55,6 +55,12 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

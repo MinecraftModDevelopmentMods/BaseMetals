@@ -272,8 +272,10 @@ public abstract class Recipes {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(gear, 4), " x ", "x/x", " x ", 'x', "ingot" + oreDictName, '/', "rod" + oreDictName));
 				OreDictionary.registerOre("gear", gear);
 
-				if (metal == Materials.steel) {
-					OreDictionary.registerOre("sprocket", gear);
+				if (Options.ENABLE_STEEL) {
+					if (metal == Materials.getMaterialByName("steel")) {
+						OreDictionary.registerOre("sprocket", gear);
+					}
 				}
 			}
 

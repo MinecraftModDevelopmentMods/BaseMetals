@@ -55,6 +55,12 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

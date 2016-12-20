@@ -251,6 +251,12 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}

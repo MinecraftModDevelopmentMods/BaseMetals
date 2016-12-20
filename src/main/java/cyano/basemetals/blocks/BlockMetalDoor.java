@@ -73,6 +73,12 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

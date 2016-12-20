@@ -105,6 +105,12 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

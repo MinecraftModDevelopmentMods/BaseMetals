@@ -356,6 +356,12 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return metal;
 	}

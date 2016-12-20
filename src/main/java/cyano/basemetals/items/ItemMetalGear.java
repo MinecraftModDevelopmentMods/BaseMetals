@@ -32,6 +32,12 @@ public class ItemMetalGear extends net.minecraft.item.Item implements IOreDictio
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

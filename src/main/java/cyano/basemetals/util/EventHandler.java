@@ -1,7 +1,6 @@
 package cyano.basemetals.util;
 
 import cyano.basemetals.init.Achievements;
-import cyano.basemetals.init.Materials;
 import cyano.basemetals.items.ItemMetalBlend;
 import cyano.basemetals.items.ItemMetalIngot;
 import cyano.basemetals.items.ItemMetalShield;
@@ -80,21 +79,21 @@ public class EventHandler {
 			if (item instanceof ItemMetalIngot) {
 		    	if (Options.ENABLE_ACHIEVEMENTS) {
 //					event.player.addStat(Achievements.this_is_new, 1);
-		    		if (material == Materials.aquarium) {
+		    		if (material.getName().equals("aquarium")) {
 						event.player.addStat(Achievements.aquarium_maker, 1);
-					} else if (material == Materials.brass) {
+					} else if (material.getName().equals("brass")) {
 						event.player.addStat(Achievements.brass_maker, 1);
-					} else if (material == Materials.bronze) {
+					} else if (material.getName().equals("bronze")) {
 						event.player.addStat(Achievements.bronze_maker, 1);
-					} else if (material == Materials.electrum) {
+					} else if (material.getName().equals("electrum")) {
 						event.player.addStat(Achievements.electrum_maker, 1);
-					} else if (material == Materials.steel) {
+					} else if (material.getName().equals("steel")) {
 						event.player.addStat(Achievements.steel_maker, 1);
-					} else if (material == Materials.invar) {
+					} else if (material.getName().equals("invar")) {
 						event.player.addStat(Achievements.invar_maker, 1);
-					} else if (material == Materials.mithril) {
+					} else if (material.getName().equals("mithril")) {
 						event.player.addStat(Achievements.mithril_maker, 1);
-					} else if (material == Materials.cupronickel) {
+					} else if (material.getName().equals("cupronickel")) {
 						event.player.addStat(Achievements.cupronickel_maker, 1);
 					}
 		    	}

@@ -52,26 +52,31 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 
 	///// OVERRIDE OF ALL METHODS THAT DEPEND ON BLOCK MATERIAL: /////
 	@Override
+	@Deprecated
 	public MapColor getMapColor(final IBlockState bs) {
 		return MapColor.IRON;
 	}
 
 	@Override
+	@Deprecated
 	public boolean isFullBlock(IBlockState bs) {
 		return true;
 	}
 
 	@Override
+	@Deprecated
 	public boolean isNormalCube(IBlockState bs) {
 		return true;
 	}
 
 	@Override
+	@Deprecated
 	public boolean isFullyOpaque(IBlockState bs) {
 		return true;
 	}
 
 	@Override
+	@Deprecated
 	public boolean isFullCube(IBlockState bs) {
 		return true;
 	}
@@ -88,7 +93,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 
 	@Override
 	public boolean isNormalCube(final IBlockState bs, final IBlockAccess w, final BlockPos coord) {
-		return this.isNormalCube(bs);
+		return true;
 	}
 
 	@Override
@@ -108,6 +113,12 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

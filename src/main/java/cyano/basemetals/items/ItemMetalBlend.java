@@ -46,6 +46,12 @@ public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDicti
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

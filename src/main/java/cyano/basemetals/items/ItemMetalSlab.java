@@ -38,6 +38,12 @@ public class ItemMetalSlab extends ItemSlab implements IOreDictionaryEntry, IMet
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

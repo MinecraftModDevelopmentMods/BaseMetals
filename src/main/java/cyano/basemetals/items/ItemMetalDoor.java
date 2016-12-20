@@ -40,6 +40,12 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

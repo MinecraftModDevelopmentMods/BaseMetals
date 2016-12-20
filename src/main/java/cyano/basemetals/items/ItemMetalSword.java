@@ -110,6 +110,12 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 	}
 
 	@Override
+	public MetalMaterial getMaterial() {
+		return this.metal;
+	}
+
+	@Override
+	@Deprecated
 	public MetalMaterial getMetalMaterial() {
 		return this.metal;
 	}

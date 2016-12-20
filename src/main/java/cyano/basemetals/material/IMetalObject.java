@@ -11,5 +11,8 @@ public interface IMetalObject {
 	 *
 	 * @return
 	 */
+	public MetalMaterial getMaterial();
+
+	@Deprecated
 	public MetalMaterial getMetalMaterial();
 }

@@ -11,34 +11,34 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.FMLLog;
 
 /**
- * This class initializes all of the metal materials in Base Metals. It also
+ * This class initializes all of the materials in Base Metals. It also
  * contains utility methods for looking up materials by name and finding the
- * tool and armor material equivalents for a given metal.
+ * tool and armor material equivalents for a given material.
  *
  * @author DrCyano
  *
  */
 public abstract class Materials {
 
-	public static MetalMaterial adamantine; // Needs work
+	public static MetalMaterial adamantine;
 	public static MetalMaterial antimony;
-	public static MetalMaterial aquarium; // Needs work
+	public static MetalMaterial aquarium;
 	public static MetalMaterial bismuth;
-	public static MetalMaterial brass; // Needs Work
-	public static MetalMaterial bronze; // needs work
-	public static MetalMaterial coldiron; // needs work
+	public static MetalMaterial brass;
+	public static MetalMaterial bronze;
+	public static MetalMaterial coldiron;
 	public static MetalMaterial copper;
-	public static MetalMaterial cupronickel; // needs work
-	public static MetalMaterial electrum; // needs work
-	public static MetalMaterial invar; // needs work
+	public static MetalMaterial cupronickel;
+	public static MetalMaterial electrum;
+	public static MetalMaterial invar;
 	public static MetalMaterial lead;
-	public static MetalMaterial mithril; // needs work
+	public static MetalMaterial mithril;
 	public static MetalMaterial nickel;
 	public static MetalMaterial pewter;
 	public static MetalMaterial platinum;
 	public static MetalMaterial silver;
-	public static MetalMaterial starsteel; // Needs work
-	public static MetalMaterial steel; // Needs work
+	public static MetalMaterial starsteel;
+	public static MetalMaterial steel;
 	public static MetalMaterial tin;
 	public static MetalMaterial zinc;
 
@@ -215,7 +215,7 @@ public abstract class Materials {
 	 * Gets a material by its name (e.g. "copper").
 	 *
 	 * @param materialName
-	 *            The name of a metal
+	 *            The name of a material
 	 * @return The material representing the named material, or null if no materials
 	 *         have been registered under that name.
 	 */
