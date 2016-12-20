@@ -1,5 +1,8 @@
-package cyano.basemetals.init.plugins;
+package cyano.basemetals.integration.plugins;
 
+import cyano.basemetals.integration.BaseMetalsPlugin;
+import cyano.basemetals.integration.IIntegration;
+import cyano.basemetals.util.Config;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
@@ -8,7 +11,8 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
  * @author Jasmine Iwanek
  *
  */
-public class EnderIO {
+@BaseMetalsPlugin(EnderIO.PLUGIN_MODID)
+public class EnderIO implements IIntegration {
 
 	protected static final String PLUGIN_MODID = "EnderIO";
 
@@ -20,8 +24,9 @@ public class EnderIO {
 	/**
 	 *
 	 */
-	public static void init() {
-		if (initDone) {
+	@Override
+	public void init() {
+		if (initDone || !Config.Options.ENABLE_ENDER_IO) {
 			return;
 		}
 
