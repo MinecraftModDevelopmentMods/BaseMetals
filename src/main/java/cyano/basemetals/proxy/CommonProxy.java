@@ -12,12 +12,11 @@ import cyano.basemetals.init.Materials;
 import cyano.basemetals.init.Recipes;
 import cyano.basemetals.init.VillagerTrades;
 import cyano.basemetals.init.WorldGen;
-import cyano.basemetals.init.plugins.*;
+import cyano.basemetals.integration.IntegrationManager;
 import cyano.basemetals.util.Config;
 import cyano.basemetals.util.Config.Options;
 import cyano.basemetals.util.EventHandler;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
@@ -26,15 +25,12 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
+ * Base Metals Common Proxy
  *
  * @author Jasmine Iwanek
- *
  */
 public class CommonProxy {
 
-	/**
-	 *
-	 */
 	public void preInit(FMLPreInitializationEvent event) {
 
 		Config.init();
@@ -46,24 +42,7 @@ public class CommonProxy {
 		Items.init();
 		VillagerTrades.init();
 
-		if ((Loader.isModLoaded("EnderIO")) && Options.ENABLE_ENDER_IO) {
-			EnderIO.init();
-		}
-		if ((Loader.isModLoaded("IC2")) && Options.ENABLE_IC2) {
-			//IC2.init();
-		}
-		if ((Loader.isModLoaded("tconstruct")) && Options.ENABLE_TINKERS_CONSTRUCT) {
-			TinkersConstruct.init();
-		}
-		if ((Loader.isModLoaded("Mekanism")) && Options.ENABLE_MEKANISM) {
-			Mekanism.init();
-		}
-		if ((Loader.isModLoaded("thaumcraft")) && Options.ENABLE_THAUMCRAFT) {
-			//Thaumcraft.init();
-		}
-		if ((Loader.isModLoaded("veinminer")) && Options.ENABLE_VEINMINER) {
-			VeinMiner.init();
-		}
+		IntegrationManager.INSTANCE.preInit(event);
 	}
 
 	public void onRemap(FMLMissingMappingsEvent event) {
@@ -86,9 +65,6 @@ public class CommonProxy {
 		}
 	}
 
-	/**
-	 *
-	 */
 	public void init(FMLInitializationEvent event) {
 		Recipes.init();
 		DungeonLoot.init();
@@ -99,9 +75,6 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
-	/**
-	 *
-	 */
 	public void postInit(FMLPostInitializationEvent event) {
 		WorldGen.init();
 		Config.postInit();
