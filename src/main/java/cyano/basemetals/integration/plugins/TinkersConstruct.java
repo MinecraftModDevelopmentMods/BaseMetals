@@ -36,7 +36,7 @@ public class TinkersConstruct implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone) {
+		if (initDone || !Options.ENABLE_TINKERS_CONSTRUCT) {
 			return;
 		}
 

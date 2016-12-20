@@ -2,7 +2,7 @@ package cyano.basemetals.integration.plugins;
 
 import cyano.basemetals.integration.BaseMetalsPlugin;
 import cyano.basemetals.integration.IIntegration;
-import cyano.basemetals.util.Config;
+import cyano.basemetals.util.Config.Options;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
@@ -26,29 +26,32 @@ public class EnderIO implements IIntegration {
 	 */
 	@Override
 	public void init() {
-		if (initDone || !Config.Options.ENABLE_ENDER_IO) {
+		if (initDone || !Options.ENABLE_ENDER_IO) {
 			return;
 		}
 
 		// TODO: Verify blocks, Slabs, Ingots, Oreblocks
-		addSagMillRecipe("aluminum", null, 3600);
-		addSagMillRecipe("aluminumbrass", null, 3600);
-		addSagMillRecipe("cadmium", null, 3600);
-		addSagMillRecipe("chromium", null, 3600);
-		addSagMillRecipe("galvanizedsteel", null, 3600);
-		addSagMillRecipe("iridium", null, 3600);
-		addSagMillRecipe("magnesium", null, 3600);
-		addSagMillRecipe("manganese", null, 3600);
-		addSagMillRecipe("nichrome", null, 3600);
-		addSagMillRecipe("osmium", null, 3600);
-		addSagMillRecipe("plutonium", null, 3600);
-		addSagMillRecipe("rutile", null, 3600);
-		addSagMillRecipe("stainlesssteel", null, 3600);
-		addSagMillRecipe("tantalum", null, 3600);
-		addSagMillRecipe("titanium", null, 3600);
-		addSagMillRecipe("tungsten", null, 3600);
-		addSagMillRecipe("uranium", null, 3600);
-		addSagMillRecipe("zirconium", null, 3600);
+		addSagMillRecipe("adamantine", null, 3600);
+		addSagMillRecipe("antimony", null, 3600);
+		addSagMillRecipe("aquarium", null, 3600);
+		addSagMillRecipe("bismuth", null, 3600);
+		addSagMillRecipe("brass", null, 3600);
+		addSagMillRecipe("bronze", null, 3600);
+		addSagMillRecipe("coldiron", null, 3600);
+		addSagMillRecipe("copper", null, 3600);
+		addSagMillRecipe("cupronickel", null, 3600);
+		addSagMillRecipe("electrum", null, 3600);
+		addSagMillRecipe("invar", null, 3600);
+		addSagMillRecipe("lead", null, 3600);
+		addSagMillRecipe("mithril", null, 3600);
+		addSagMillRecipe("nickel", null, 3600);
+		addSagMillRecipe("pewter", null, 3600);
+		addSagMillRecipe("platinum", null, 3600);
+		addSagMillRecipe("silver", null, 3600);
+		addSagMillRecipe("starsteel", null, 3600);
+		addSagMillRecipe("steel", null, 3600);
+		addSagMillRecipe("tin", null, 3600);
+		addSagMillRecipe("zinc", null, 3600);
 
 		initDone = true;
 	}

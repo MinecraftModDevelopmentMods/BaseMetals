@@ -2,7 +2,7 @@ package cyano.basemetals.integration.plugins;
 
 import cyano.basemetals.integration.BaseMetalsPlugin;
 import cyano.basemetals.integration.IIntegration;
-import cyano.basemetals.util.Config;
+import cyano.basemetals.util.Config.Options;
 import net.minecraftforge.fml.common.Loader;
 
 @BaseMetalsPlugin(Thaumcraft.PLUGIN_MODID)
@@ -16,7 +16,7 @@ public class Thaumcraft implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !Config.Options.ENABLE_THAUMCRAFT) {
+		if (initDone || !Options.ENABLE_THAUMCRAFT) {
 			return;
 		}
 

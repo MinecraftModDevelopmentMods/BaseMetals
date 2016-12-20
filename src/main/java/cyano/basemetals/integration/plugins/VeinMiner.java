@@ -2,7 +2,7 @@ package cyano.basemetals.integration.plugins;
 
 import cyano.basemetals.integration.BaseMetalsPlugin;
 import cyano.basemetals.integration.IIntegration;
-import cyano.basemetals.util.Config;
+import cyano.basemetals.util.Config.Options;
 import net.minecraftforge.fml.common.*;
 import portablejim.veinminer.api.IMCMessage;
 
@@ -22,7 +22,7 @@ public class VeinMiner implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || Config.Options.ENABLE_VEINMINER) {
+		if (initDone || Options.ENABLE_VEINMINER) {
 			return;
 		}
 
