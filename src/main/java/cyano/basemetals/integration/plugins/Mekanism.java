@@ -1,7 +1,9 @@
-package cyano.basemetals.init.plugins;
+package cyano.basemetals.integration.plugins;
 
 import cyano.basemetals.init.Blocks;
 import cyano.basemetals.init.Items;
+import cyano.basemetals.integration.BaseMetalsPlugin;
+import cyano.basemetals.integration.IIntegration;
 import cyano.basemetals.util.Config.Options;
 import mekanism.api.gas.*;
 import net.minecraft.item.ItemStack;
@@ -11,20 +13,18 @@ import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
-public class Mekanism {
+@BaseMetalsPlugin(Mekanism.PLUGIN_MODID)
+public class Mekanism implements IIntegration {
 
 	protected static final String PLUGIN_MODID = "Mekanism";
 
-	// protected static final String MODID = BaseMetals.MODID;
 	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
 	private static boolean initDone = false;
 
-	/**
-	 *
-	 */
-	public static void init() {
-		if (initDone) {
+	@Override
+	public void init() {
+		if (initDone || !Options.ENABLE_MEKANISM) {
 			return;
 		}
 

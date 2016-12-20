@@ -1,18 +1,23 @@
-package cyano.basemetals.init.plugins;
-
-import org.apache.commons.lang3.StringUtils;
+package cyano.basemetals.integration.plugins;
 
 import cyano.basemetals.init.Fluids;
 import cyano.basemetals.init.Materials;
+import cyano.basemetals.integration.BaseMetalsPlugin;
+import cyano.basemetals.integration.IIntegration;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.util.Config.Options;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import org.apache.commons.lang3.StringUtils;
 import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
-import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.materials.ExtraMaterialStats;
+import slimeknights.tconstruct.library.materials.HandleMaterialStats;
+import slimeknights.tconstruct.library.materials.HeadMaterialStats;
+import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.traits.ITrait;
 
 /**
@@ -20,19 +25,17 @@ import slimeknights.tconstruct.library.traits.ITrait;
  * @author Jasmine Iwanek
  *
  */
-public class TinkersConstruct {
+@BaseMetalsPlugin(TinkersConstruct.PLUGIN_MODID)
+public class TinkersConstruct implements IIntegration {
 
 	protected static final String PLUGIN_MODID = "tconstruct";
 
-	// protected static final String MODID = BaseMetals.MODID;
 	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
 	private static boolean initDone = false;
 
-	/**
-	 *
-	 */
-	public static void init() {
+	@Override
+	public void init() {
 		if (initDone) {
 			return;
 		}
@@ -171,7 +174,7 @@ public class TinkersConstruct {
 	 * @param name Material identifier
 	 * @param craftable If this be crafted
 	 * @param castable If this can be casted
-	 * @param Trait to apply
+	 * @param trait to apply
 	 * @return
 	 */
 	protected static void registerMaterial(String name, boolean craftable, boolean castable, ITrait trait) {

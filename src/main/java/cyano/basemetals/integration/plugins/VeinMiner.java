@@ -1,27 +1,28 @@
-package cyano.basemetals.init.plugins;
+package cyano.basemetals.integration.plugins;
 
+import cyano.basemetals.integration.BaseMetalsPlugin;
+import cyano.basemetals.integration.IIntegration;
+import cyano.basemetals.util.Config;
 import net.minecraftforge.fml.common.*;
 import portablejim.veinminer.api.IMCMessage;
 
 /**
+ * VeinMiner Integration Plugin
  *
  * @author Jasmine Iwanek
- *
  */
-public class VeinMiner {
+@BaseMetalsPlugin(VeinMiner.PLUGIN_MODID)
+public class VeinMiner implements IIntegration {
 
 	protected static final String PLUGIN_MODID = "veinminer";
 
-	// protected static final String MODID = BaseMetals.MODID;
 	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
 	private static boolean initDone = false;
 
-	/**
-	 *
-	 */
-	public static void init() {
-		if (initDone) {
+	@Override
+	public void init() {
+		if (initDone || Config.Options.ENABLE_VEINMINER) {
 			return;
 		}
 
@@ -48,8 +49,9 @@ public class VeinMiner {
 	}
 
 	/**
+	 * Add tools to the VeinMiner list from a Metal
 	 *
-	 * @param metal
+	 * @param metal Metal to add
 	 */
 	protected static void addToolsForMetal(String metal) {
 		IMCMessage.addTool("axe", OWNER_MODID + ":" + metal + "_axe");
