@@ -34,9 +34,9 @@ public class Config {
 	private static final String MATERIALS_CAT = "Metals";
 	private static final String VANILLA_CAT = "Vanilla";
 	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipies";
-	private static final String ALT_CFG_PATH = "config/additional-loot-tables/" + BaseMetals.MODID;
+	private static final String ALT_CFG_PATH = "config/additional-loot-tables"; // + BaseMetals.MODID;
 	private static final String ORESPAWN_CFG_PATH = "config/orespawn";
-	protected static List<String> USER_CRUSHER_RECIPES = new ArrayList<String>();
+	private static List<String> USER_CRUSHER_RECIPES = new ArrayList<String>();
 
 	@SubscribeEvent
 	public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent e) {
@@ -63,6 +63,7 @@ public class Config {
 		Options.AUTODETECT_RECIPES = CONFIG.getBoolean("automatic_recipes", GENERAL_CAT, true, "If true, then Base Metals will scan the Ore Dictionary to automatically add a \n" + "Crack Hammer recipe for every material that has an ore, dust, and ingot.");
 		Options.REQUIRE_ORESPAWN = CONFIG.getBoolean("using_orespawn", GENERAL_CAT, true, "If false, then Base Metals will not require DrCyano's Ore Spawn mod. \n" + "Set to false if using another mod to manually handle ore generation.");
 		Options.ENABLE_ACHIEVEMENTS = CONFIG.getBoolean("achievements", GENERAL_CAT, true, "If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals");
+
 		// INTEGRATION
 		Options.ENABLE_ENDER_IO = CONFIG.getBoolean("ender_io_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Ender IO");
 		Options.ENABLE_IC2 = CONFIG.getBoolean("ic2_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with IC2");
@@ -136,20 +137,20 @@ public class Config {
 				orespawnMod.add(new DefaultArtifactVersion("1.1.0"));
 				throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
 			}
-			Path oreSpawnFolder = Paths.get(ORESPAWN_CFG_PATH);
-			final Path oreSpawnFile = Paths.get(oreSpawnFolder.toString(), BaseMetals.MODID + ".json");
+			final Path oreSpawnFile = Paths.get(ORESPAWN_CFG_PATH, BaseMetals.MODID + ".json");
 			if (!(Files.exists(oreSpawnFile))) {
 				try {
 					Files.createDirectories(oreSpawnFile.getParent());
 					Files.write(oreSpawnFile, Arrays.asList(DataConstants.DEFAULT_ORESPAWN_JSON.split("\n")), Charset.forName("UTF-8"));
 				}
 				catch (final IOException e) {
-					FMLLog.severe(BaseMetals.MODID + ": Error: Failed to write file " + oreSpawnFile);
+					FMLLog.severe(Loader.instance().activeModContainer().getModId() + ": Error: Failed to write file " + oreSpawnFile);
 				}
 			}
 		}
 
-		final Path myLootFolder = Paths.get(ALT_CFG_PATH);
+//		final Path myLootFolder = Paths.get(ALT_CFG_PATH);
+		final Path myLootFolder = Paths.get(ALT_CFG_PATH, BaseMetals.MODID);
 		if (Files.notExists(myLootFolder)) {
 			try {
 				Files.createDirectories(myLootFolder.resolve("chests"));
@@ -164,7 +165,7 @@ public class Config {
 				Files.write(myLootFolder.resolve("chests").resolve("stronghold_crossing.json"), Collections.singletonList(AdditionalLootTables.stronghold_crossing));
 				Files.write(myLootFolder.resolve("chests").resolve("village_blacksmith.json"), Collections.singletonList(AdditionalLootTables.village_blacksmith));
 			} catch (final IOException ex) {
-				FMLLog.log(Level.ERROR, ex, "%s: Failed to extract additional loot tables", BaseMetals.MODID);
+				FMLLog.log(Level.ERROR, ex, "%s: Failed to extract additional loot tables", Loader.instance().activeModContainer().getModId());
 			}
 		}
 	}

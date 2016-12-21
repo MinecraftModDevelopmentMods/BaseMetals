@@ -16,10 +16,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
@@ -62,11 +59,11 @@ public class EventHandler {
 	void event(ItemCraftedEvent event) {
 		final Item item = event.crafting.getItem();
 		if (item instanceof IMetalObject) {
-			final MetalMaterial material = ((IMetalObject) item).getMetalMaterial();
+			final MetalMaterial material = ((IMetalObject) item).getMaterial();
 			if (item instanceof ItemMetalBlend) {
-//		    	if (Options.ENABLE_ACHIEVEMENTS) {
+				if (Options.ENABLE_ACHIEVEMENTS) {
 //					event.player.addStat(Achievements.metallurgy, 1);
-//		    	}
+				}
 			}
 		}
 	}
@@ -75,9 +72,9 @@ public class EventHandler {
 	void event(ItemSmeltedEvent event) {
 		final Item item = event.smelting.getItem();
 		if (item instanceof IMetalObject) {
-			final MetalMaterial material = ((IMetalObject) item).getMetalMaterial();
+			final MetalMaterial material = ((IMetalObject) item).getMaterial();
 			if (item instanceof ItemMetalIngot) {
-		    	if (Options.ENABLE_ACHIEVEMENTS) {
+				if (Options.ENABLE_ACHIEVEMENTS) {
 //					event.player.addStat(Achievements.this_is_new, 1);
 		    		if (material.getName().equals("aquarium")) {
 						event.player.addStat(Achievements.aquarium_maker, 1);
@@ -96,7 +93,7 @@ public class EventHandler {
 					} else if (material.getName().equals("cupronickel")) {
 						event.player.addStat(Achievements.cupronickel_maker, 1);
 					}
-		    	}
+				}
 			}
 		}
 	}

@@ -7,7 +7,6 @@ import cyano.basemetals.utils.HorseUtilities;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.HorseArmorType;
-import net.minecraft.entity.passive.HorseType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 
-import cyano.basemetals.BaseMetals;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;

@@ -1,33 +1,25 @@
 package cyano.basemetals.proxy;
 
 import cyano.basemetals.BaseMetals;
-import cyano.basemetals.init.Achievements;
-import cyano.basemetals.init.Blocks;
-import cyano.basemetals.init.DungeonLoot;
-import cyano.basemetals.init.Entities;
-import cyano.basemetals.init.Fluids;
-import cyano.basemetals.init.ItemGroups;
-import cyano.basemetals.init.Items;
-import cyano.basemetals.init.Materials;
-import cyano.basemetals.init.Recipes;
-import cyano.basemetals.init.VillagerTrades;
-import cyano.basemetals.init.WorldGen;
+import cyano.basemetals.init.*;
 import cyano.basemetals.integration.IntegrationManager;
 import cyano.basemetals.util.Config;
 import cyano.basemetals.util.Config.Options;
 import cyano.basemetals.util.EventHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Base Metals Common Proxy
  *
  * @author Jasmine Iwanek
+ *
  */
 public class CommonProxy {
 
@@ -42,6 +34,8 @@ public class CommonProxy {
 		Items.init();
 		VillagerTrades.init();
 
+		FMLInterModComms.sendFunctionMessage("orespawn", "api", "mmd.orespawn.BaseMetalsOreSpawn");
+		 
 		IntegrationManager.INSTANCE.preInit(event);
 	}
 
@@ -67,8 +61,8 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		Recipes.init();
-		DungeonLoot.init();
-		Entities.init();
+		//DungeonLoot.init();
+		//Entities.init();
 
 		Achievements.init();
 
@@ -76,7 +70,7 @@ public class CommonProxy {
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		WorldGen.init();
+//		WorldGen.init();
 		Config.postInit();
 	}
 }

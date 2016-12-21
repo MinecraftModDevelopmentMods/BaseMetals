@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 @BaseMetalsPlugin(EnderIO.PLUGIN_MODID)
 public class EnderIO implements IIntegration {
 
-	protected static final String PLUGIN_MODID = "EnderIO";
+	public static final String PLUGIN_MODID = "EnderIO";
 
 	// protected static final String MODID = BaseMetals.MODID;
 	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
@@ -26,7 +26,7 @@ public class EnderIO implements IIntegration {
 	 */
 	@Override
 	public void init() {
-		if (initDone || !Options.ENABLE_ENDER_IO) {
+		if (initDone || !cyano.basemetals.util.Config.Options.ENABLE_ENDER_IO) {
 			return;
 		}
 

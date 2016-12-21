@@ -113,94 +113,140 @@ public abstract class Fluids {
 			return;
 		}
 
+		String materialName;
+
 		// fluids and fluid blocks
 		if (Options.ENABLE_ADAMANTINE) {
-			fluidAdamantine = addFluid("adamantine", 2000, 10000, 769, 10);
-			fluidBlockAdamantine = addFluidBlock("adamantine");
+			materialName = "adamantine";
+
+			fluidAdamantine = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockAdamantine = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_ANTIMONY) {
-			fluidAntimony = addFluid("antimony", 2000, 10000, 769, 10);
-			fluidBlockAntimony = addFluidBlock("antimony");
+			materialName = "antimony";
+
+			fluidAntimony = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockAntimony = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_AQUARIUM) {
-			fluidAquarium = addFluid("aquarium", 2000, 10000, 769, 10);
-			fluidBlockAquarium = addFluidBlock("aquarium");
+			materialName = "aquarium";
+
+			fluidAquarium = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockAquarium = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_BISMUTH) {
-			fluidBismuth = addFluid("bismuth", 2000, 10000, 769, 10);
-			fluidBlockBismuth = addFluidBlock("bismuth");
+			materialName = "bismuth";
+
+			fluidBismuth = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockBismuth = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_BRASS) {
-			fluidBrass = addFluid("brass", 2000, 10000, 769, 10);
-			fluidBlockBrass = addFluidBlock("brass");
+			materialName = "brass";
+
+			fluidBrass = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockBrass = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_BRONZE) {
-			fluidBronze = addFluid("bronze", 2000, 10000, 769, 10);
-			fluidBlockBronze = addFluidBlock("bronze");
+			materialName = "bronze";
+
+			fluidBronze = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockBronze = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_COLDIRON) {
-			fluidColdIron = addFluid("coldiron", 2000, 10000, 769, 10);
-			fluidBlockColdIron = addFluidBlock("coldiron");
+			materialName = "coldiron";
+
+			fluidColdIron = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockColdIron = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_COPPER) {
-			fluidCopper = addFluid("copper", 2000, 10000, 769, 10);
-			fluidBlockCopper = addFluidBlock("copper");
+			materialName = "copper";
+
+			fluidCopper = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockCopper = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_CUPRONICKEL) {
-			fluidCupronickel = addFluid("cupronickel", 2000, 10000, 769, 10);
-			fluidBlockCupronickel = addFluidBlock("cupronickel");
+			materialName = "cupronickel";
+
+			fluidCupronickel = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockCupronickel = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_ELECTRUM) {
-			fluidElectrum = addFluid("electrum", 2000, 10000, 769, 10);
-			fluidBlockElectrum = addFluidBlock("electrum");
+			materialName = "electrum";
+
+			fluidElectrum = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockElectrum = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_INVAR) {
-			fluidInvar = addFluid("invar", 2000, 10000, 769, 10);
-			fluidBlockInvar = addFluidBlock("invar");
+			materialName = "invar";
+
+			fluidInvar = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockInvar = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_LEAD) {
-			fluidLead = addFluid("lead", 2000, 10000, 769, 10);
-			fluidBlockLead = addFluidBlock("lead");
+			materialName = "lead";
+
+			fluidLead = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockLead = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_MERCURY) {
-			fluidMercury = addFluid("mercury", 13594, 2000, 769, 0);
-			fluidBlockMercury = addFluidBlock("mercury");
+			materialName = "mercury";
+
+			fluidMercury = addFluid(materialName, 13594, 2000, 769, 0);
+			fluidBlockMercury = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_MITHRIL) {
-			fluidMithril = addFluid("mithril", 2000, 10000, 769, 10);
-			fluidBlockMithril = addFluidBlock("mithril");
+			materialName = "mithril";
+
+			fluidMithril = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockMithril = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_NICKEL) {
-			fluidNickel = addFluid("nickel", 2000, 10000, 769, 10);
-			fluidBlockNickel = addFluidBlock("nickel");
+			materialName = "nickel";
+
+			fluidNickel = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockNickel = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_PEWTER) {
-			fluidPewter = addFluid("pewter", 2000, 10000, 769, 10);
-			fluidBlockPewter = addFluidBlock("pewter");
+			materialName = "pewter";
+
+			fluidPewter = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockPewter = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_PLATINUM) {
-			fluidPlatinum = addFluid("platinum", 2000, 10000, 769, 10);
-			fluidBlockPlatinum = addFluidBlock("platinum");
+			materialName = "platinum";
+
+			fluidPlatinum = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockPlatinum = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_SILVER) {
-			fluidSilver = addFluid("silver", 2000, 10000, 769, 10);
-			fluidBlockSilver = addFluidBlock("silver");
+			materialName = "silver";
+
+			fluidSilver = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockSilver = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_STARSTEEL) {
-			fluidStarSteel = addFluid("starsteel", 2000, 10000, 769, 10);
-			fluidBlockStarSteel = addFluidBlock("starsteel");
+			materialName = "starsteel";
+
+			fluidStarSteel = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockStarSteel = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_STEEL) {
-			fluidSteel = addFluid("steel", 2000, 10000, 769, 10);
-			fluidBlockSteel = addFluidBlock("steel");
+			materialName = "steel";
+
+			fluidSteel = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockSteel = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_TIN) {
-			fluidTin = addFluid("tin", 2000, 10000, 769, 10);
-			fluidBlockTin = addFluidBlock("tin");
+			materialName = "tin";
+
+			fluidTin = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockTin = addFluidBlock(materialName);
 		}
 		if (Options.ENABLE_ZINC) {
-			fluidZinc = addFluid("zinc", 2000, 10000, 769, 10);
-			fluidBlockZinc = addFluidBlock("zinc");
+			materialName = "zinc";
+
+			fluidZinc = addFluid(materialName, 2000, 10000, 769, 10);
+			fluidBlockZinc = addFluidBlock(materialName);
 		}
 
 		initDone = true;

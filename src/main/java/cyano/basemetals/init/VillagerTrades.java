@@ -12,6 +12,7 @@ import net.minecraft.entity.passive.EntityVillager.*;
 import net.minecraft.item.*;
 import net.minecraft.village.*;
 import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  *
@@ -35,6 +36,14 @@ public abstract class VillagerTrades {
 		Materials.init();
 		Items.init();
 
+		registerCommonTrades();
+
+		initDone = true;
+	}
+
+	protected static void registerCommonTrades() {
+		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>(); // integer is used as byte data: (unused) (profession) (career) (level)
+
 		// Minecraft stores trades in a 4D array:
 		// [Profession ID][Sub-profession ID][villager level - 1][trades]
 
@@ -51,6 +60,7 @@ public abstract class VillagerTrades {
 		@SuppressWarnings("unused")
 		final Map<Item, Integer> tradeLevelMap = new HashMap<>();
 
+		String modid = Loader.instance().activeModContainer().getModId();
 		Items.getItemsByMetal().entrySet().stream().forEach((Map.Entry<MetalMaterial, List<Item>> e) -> {
 			final MetalMaterial m = e.getKey();
 			if (m == null) {
@@ -58,35 +68,43 @@ public abstract class VillagerTrades {
 			}
 
 			for (final Item i : e.getValue()) {
-				if (i instanceof ItemArmor) {
-					allArmors.computeIfAbsent(m, (MetalMaterial g) -> new ArrayList<>()).add(i);
-					continue;
-				} else if (i instanceof ItemMetalCrackHammer) {
-					allHammers.put(m, i);
-					continue;
-				} else if (i instanceof ItemSword) {
-					allSwords.put(m, i);
-					continue;
-				} else if (i instanceof ItemHoe) {
-					allHoes.put(m, i);
-					continue;
-				} else if (i instanceof ItemAxe) {
-					allAxes.put(m, i);
-					continue;
-				} else if (i instanceof ItemPickaxe) {
-					allPickAxes.put(m, i);
-					continue;
-				} else if (i instanceof ItemSpade) {
-					allShovels.put(m, i);
-					continue;
-				} else if (i instanceof ItemMetalIngot) {
-					allIngots.put(m, i);
-					continue;
+				if (i.getRegistryName().getResourceDomain().equals(modid)) {
+					if (i instanceof ItemArmor) {
+						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + "to allArmors");
+						allArmors.computeIfAbsent(m, (MetalMaterial g) -> new ArrayList<>()).add(i);
+						continue;
+					} else if (i instanceof ItemMetalCrackHammer) {
+						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allHammers");
+						allHammers.put(m, i);
+						continue;
+					} else if (i instanceof ItemSword) {
+						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allSwords");
+						allSwords.put(m, i);
+						continue;
+					} else if (i instanceof ItemHoe) {
+						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allHoes");
+						allHoes.put(m, i);
+						continue;
+					} else if (i instanceof ItemAxe) {
+						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allAxes");
+						allAxes.put(m, i);
+						continue;
+					} else if (i instanceof ItemPickaxe) {
+						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allAPickAxes");
+						allPickAxes.put(m, i);
+						continue;
+					} else if (i instanceof ItemSpade) {
+						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allShovels");
+						allShovels.put(m, i);
+						continue;
+					} else if (i instanceof ItemMetalIngot) {
+						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allIngots");
+						allIngots.put(m, i);
+						continue;
+					}
 				}
 			}
 		});
-
-		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>(); // integer is used as byte data: (unused) (profession) (career) (level)
 
 		for (final MetalMaterial m : Materials.getAllMaterials()) {
 			final float value = m.hardness + m.strength + m.magicAffinity + m.getToolHarvestLevel();
@@ -143,16 +161,18 @@ public abstract class VillagerTrades {
 			}
 		}
 
-		if (Options.ENABLE_CHARCOAL) {
-			tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
-			tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
-			tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
-		}
+		if (Loader.instance().activeModContainer().getModId().equals("basemetals")) {
+			if (Options.ENABLE_CHARCOAL) {
+				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
+			}
 
-		if (Options.ENABLE_COAL) {
-			tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
-			tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
-			tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
+			if (Options.ENABLE_COAL) {
+				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
+			}
 		}
 
 		for (final Integer k : tradesTable.keySet()) {
@@ -167,8 +187,6 @@ public abstract class VillagerTrades {
 				FMLLog.log(Level.ERROR, ex, "Java Reflection Exception");
 			}
 		}
-
-		initDone = true;
 	}
 
 	protected static int emeraldPurchaseValue(float value) {

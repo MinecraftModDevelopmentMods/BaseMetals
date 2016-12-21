@@ -2,7 +2,6 @@ package cyano.basemetals.integration.plugins;
 
 import cyano.basemetals.integration.BaseMetalsPlugin;
 import cyano.basemetals.integration.IIntegration;
-import cyano.basemetals.util.Config.Options;
 import net.minecraftforge.fml.common.*;
 import portablejim.veinminer.api.IMCMessage;
 
@@ -14,7 +13,7 @@ import portablejim.veinminer.api.IMCMessage;
 @BaseMetalsPlugin(VeinMiner.PLUGIN_MODID)
 public class VeinMiner implements IIntegration {
 
-	protected static final String PLUGIN_MODID = "veinminer";
+	public static final String PLUGIN_MODID = "veinminer";
 
 	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
@@ -22,44 +21,44 @@ public class VeinMiner implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || Options.ENABLE_VEINMINER) {
+		if (initDone || !cyano.basemetals.util.Config.Options.ENABLE_VEINMINER) {
 			return;
 		}
 
-		addToolsForMetal("aluminum");
-		addToolsForMetal("aluminumbrass");
-		addToolsForMetal("cadmium");
-		addToolsForMetal("chromium");
-		addToolsForMetal("galvanizedsteel");
-		addToolsForMetal("iridium");
-		addToolsForMetal("magnesium");
-		addToolsForMetal("manganese");
-		addToolsForMetal("nichrome");
-		addToolsForMetal("osmium");
-		addToolsForMetal("plutonium");
-		addToolsForMetal("rutile");
-		addToolsForMetal("stainlesssteel");
-		addToolsForMetal("tantalum");
-		addToolsForMetal("titanium");
-		addToolsForMetal("tungsten");
-		addToolsForMetal("uranium");
-		addToolsForMetal("zirconium");
+		addToolsForMaterial("aluminum");
+		addToolsForMaterial("aluminumbrass");
+		addToolsForMaterial("cadmium");
+		addToolsForMaterial("chromium");
+		addToolsForMaterial("galvanizedsteel");
+		addToolsForMaterial("iridium");
+		addToolsForMaterial("magnesium");
+		addToolsForMaterial("manganese");
+		addToolsForMaterial("nichrome");
+		addToolsForMaterial("osmium");
+		addToolsForMaterial("plutonium");
+		addToolsForMaterial("rutile");
+		addToolsForMaterial("stainlesssteel");
+		addToolsForMaterial("tantalum");
+		addToolsForMaterial("titanium");
+		addToolsForMaterial("tungsten");
+		addToolsForMaterial("uranium");
+		addToolsForMaterial("zirconium");
 
 		initDone = true;
 	}
 
 	/**
-	 * Add tools to the VeinMiner list from a Metal
+	 * Add tools to the VeinMiner list from a Material
 	 *
 	 * @param metal Metal to add
 	 */
-	protected static void addToolsForMetal(String metal) {
-		IMCMessage.addTool("axe", OWNER_MODID + ":" + metal + "_axe");
-		IMCMessage.addTool("hoe", OWNER_MODID + ":" + metal + "_hoe");
-		IMCMessage.addTool("pickaxe", OWNER_MODID + ":" + metal + "_pickaxe");
-		IMCMessage.addTool("shears", OWNER_MODID + ":" + metal + "_shears");
-		IMCMessage.addTool("shovel", OWNER_MODID + ":" + metal + "_shovel");
-		// IMCMessage.addTool("crook", OWNER_MODID + ":" + metal + "_crook");
-		IMCMessage.addTool("hammer", OWNER_MODID + ":" + metal + "_hammer");
+	protected static void addToolsForMaterial(String material) {
+		IMCMessage.addTool("axe", OWNER_MODID + ":" + material + "_axe");
+		IMCMessage.addTool("hoe", OWNER_MODID + ":" + material + "_hoe");
+		IMCMessage.addTool("pickaxe", OWNER_MODID + ":" + material + "_pickaxe");
+		IMCMessage.addTool("shears", OWNER_MODID + ":" + material + "_shears");
+		IMCMessage.addTool("shovel", OWNER_MODID + ":" + material + "_shovel");
+		// IMCMessage.addTool("crook", OWNER_MODID + ":" + material + "_crook");
+		IMCMessage.addTool("hammer", OWNER_MODID + ":" + material + "_hammer");
 	}
 }

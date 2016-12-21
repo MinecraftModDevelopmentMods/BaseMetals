@@ -2323,10 +2323,10 @@ public abstract class Items {
 		int metalVal = 9900;
 		if ((a.getItem() instanceof ItemBlock) && (((ItemBlock) a.getItem()).getBlock() instanceof IMetalObject)) {
 			classVal = classSortingValues.computeIfAbsent(((ItemBlock) a.getItem()).getBlock().getClass(), (Class<?> c) -> 990000);
-			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject) ((ItemBlock) a.getItem()).getBlock()).getMetalMaterial(), (MetalMaterial m) -> 9900);
+			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject) ((ItemBlock) a.getItem()).getBlock()).getMaterial(), (MetalMaterial m) -> 9900);
 		} else if (a.getItem() instanceof IMetalObject) {
 			classVal = classSortingValues.computeIfAbsent(a.getItem().getClass(), (Class<?> c) -> 990000);
-			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject) a.getItem()).getMetalMaterial(), (MetalMaterial m) -> 9900);
+			metalVal = materialSortingValues.computeIfAbsent(((IMetalObject) a.getItem()).getMaterial(), (MetalMaterial m) -> 9900);
 		}
 		return classVal + metalVal + (a.getMetadata() % 100);
 	}

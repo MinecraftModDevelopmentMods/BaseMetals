@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import net.minecraft.entity.passive.HorseArmorType;
-import net.minecraft.entity.passive.HorseType;
 import net.minecraftforge.common.util.EnumHelper;
 
 /**

@@ -1,7 +1,6 @@
 package cyano.basemetals.asm.transformer;
 
 import astro.lib.api.integration.ITransformer;
-import mcp.MethodsReturnNonnullByDefault;
 import org.objectweb.asm.tree.*;
 
 import javax.annotation.Nonnull;

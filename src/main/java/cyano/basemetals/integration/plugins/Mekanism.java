@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 @BaseMetalsPlugin(Mekanism.PLUGIN_MODID)
 public class Mekanism implements IIntegration {
 
-	protected static final String PLUGIN_MODID = "Mekanism";
+	public static final String PLUGIN_MODID = "Mekanism";
 
 	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
@@ -24,7 +24,7 @@ public class Mekanism implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !Options.ENABLE_MEKANISM) {
+		if (initDone || !cyano.basemetals.util.Config.Options.ENABLE_MEKANISM) {
 			return;
 		}
 

@@ -27,10 +27,10 @@ public class BaseMetals {
 	@Instance
 	public static BaseMetals INSTANCE = null;
 
-	/** ID of this mod */
+	/** ID of this Mod */
 	public static final String MODID = "basemetals";
 
-	/** display name of this mod */
+	/** Display name of this Mod */
 	public static final String NAME = "Base Metals";
 
 	/**
@@ -48,40 +48,22 @@ public class BaseMetals {
 		FluidRegistry.enableUniversalBucket();
 	}
 
-	/**
-	 *
-	 * @param event
-	 */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-
 		INSTANCE = this;
-
 		PROXY.preInit(event);
 	}
 
-	/**
-	 *
-	 * @param event
-	 */
 	@EventHandler
 	public void onRemap(FMLMissingMappingsEvent event) {
 		PROXY.onRemap(event);
 	}
 
-	/**
-	 *
-	 * @param event
-	 */
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		PROXY.init(event);
 	}
 
-	/**
-	 *
-	 * @param event
-	 */
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		PROXY.postInit(event);

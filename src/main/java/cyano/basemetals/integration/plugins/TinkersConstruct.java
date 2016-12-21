@@ -28,7 +28,7 @@ import slimeknights.tconstruct.library.traits.ITrait;
 @BaseMetalsPlugin(TinkersConstruct.PLUGIN_MODID)
 public class TinkersConstruct implements IIntegration {
 
-	protected static final String PLUGIN_MODID = "tconstruct";
+	public static final String PLUGIN_MODID = "tconstruct";
 
 	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
@@ -36,7 +36,7 @@ public class TinkersConstruct implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !Options.ENABLE_TINKERS_CONSTRUCT) {
+		if (initDone || !cyano.basemetals.util.Config.Options.ENABLE_TINKERS_CONSTRUCT) {
 			return;
 		}
 

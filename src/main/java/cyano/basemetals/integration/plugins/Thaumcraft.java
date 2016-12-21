@@ -2,13 +2,12 @@ package cyano.basemetals.integration.plugins;
 
 import cyano.basemetals.integration.BaseMetalsPlugin;
 import cyano.basemetals.integration.IIntegration;
-import cyano.basemetals.util.Config.Options;
 import net.minecraftforge.fml.common.Loader;
 
 @BaseMetalsPlugin(Thaumcraft.PLUGIN_MODID)
 public class Thaumcraft implements IIntegration {
 
-	protected static final String PLUGIN_MODID = "thaumcraft";
+	public static final String PLUGIN_MODID = "thaumcraft";
 
 	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
@@ -16,7 +15,7 @@ public class Thaumcraft implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !Options.ENABLE_THAUMCRAFT) {
+		if (initDone || !cyano.basemetals.util.Config.Options.ENABLE_THAUMCRAFT) {
 			return;
 		}
 
