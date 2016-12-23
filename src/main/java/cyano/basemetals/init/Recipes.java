@@ -171,44 +171,43 @@ public abstract class Recipes {
 			}
 
 			final String oreDictName = metal.getCapitalizedName();
+			final Item arrow = metal.arrow;
 			final Item axe = metal.axe;
 			final Item blend = metal.blend;
 			final Item boots = metal.boots;
+			final Item bolt = metal.bolt;
+			final Item bow = metal.bow;
 			final Item chestplate = metal.chestplate;
 			final Item crackhammer = metal.crackhammer;
+			final Item crossbow = metal.crossbow;
 			final Item door = metal.door;
+			final Item fishingrod = metal.fishing_rod;
+			final Item gear = metal.gear;
 			final Item helmet = metal.helmet;
 			final Item hoe = metal.hoe;
+			final Item horsearmor = metal.horsearmor;
 			final Item ingot = metal.ingot;
 			final Item leggings = metal.leggings;
 			final Item nugget = metal.nugget;
 			final Item pickaxe = metal.pickaxe;
 			final Item powder = metal.powder;
-			final Item shovel = metal.shovel;
-			final Item sword = metal.sword;
 			final Item rod = metal.rod;
-			final Item gear = metal.gear;
-			final Block bars = metal.bars;
-			final Block block = metal.block;
-			final Block plate = metal.plate;
-			final Block ore = metal.ore;
-			final Block trapdoor = metal.trapdoor;
-
-			final Item arrow = metal.arrow;
-			final Item bow = metal.bow;
-			final Item bolt = metal.bolt;
-			final Item crossbow = metal.crossbow;
 			final Item shears = metal.shears;
+			final Item shield = metal.shield;
+			final Item shovel = metal.shovel;
+			final Item slab = metal.slab;
 			final Item smallblend = metal.smallblend;
 			final Item smallpowder = metal.smallpowder;
-			final Item fishingrod = metal.fishing_rod;
-			final Item horsearmor = metal.horsearmor;
-
+			final Item sword = metal.sword;
+			final Block bars = metal.bars;
+			final Block block = metal.block;
 			final Block button = metal.button;
-			final Item slab = metal.slab;
 			final Block lever = metal.lever;
+			final Block ore = metal.ore;
+			final Block plate = metal.plate;
 			final Block pressure_plate = metal.pressure_plate;
 			final Block stairs = metal.stairs;
+			final Block trapdoor = metal.trapdoor;
 			final Block wall = metal.wall;
 
 			// NOTE: smelting XP is based on output item, not input item
@@ -340,6 +339,10 @@ public abstract class Recipes {
 				if (door != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(door, 3), "xx", "xx", "xx", 'x', "ingot" + oreDictName));
 					OreDictionary.registerOre("door", door);
+				}
+
+				if (shield != null) {
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(shield), "xyx", "xxx", " x ", 'y', "plankWood", 'x', "ingot" + oreDictName));
 				}
 
 				if (trapdoor != null) {
