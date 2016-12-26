@@ -3,7 +3,7 @@ package cyano.basemetals.items;
 import astro.lib.api.item.IHorseArmor;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.utils.HorseUtilities;
+import cyano.basemetals.util.HorseUtilities;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.HorseArmorType;

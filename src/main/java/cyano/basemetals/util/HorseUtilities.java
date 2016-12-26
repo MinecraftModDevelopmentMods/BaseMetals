@@ -1,4 +1,4 @@
-package cyano.basemetals.utils;
+package cyano.basemetals.util;
 
 import java.util.HashMap;
 import java.util.Locale;
