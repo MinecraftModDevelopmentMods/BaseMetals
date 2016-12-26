@@ -1,0 +1,6 @@
+{
+    "parent": "block/wall_nsew",
+    "textures": {
+        "wall": "minecraft:blocks/gold_block"
+    }
+}
