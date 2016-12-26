@@ -36,7 +36,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal  The material to make the crackhammer from
 	 */
 	public ItemMetalCrackHammer(MetalMaterial metal) {
 		super(1 + Materials.getToolMaterialFor(metal).getDamageVsEntity(), attack_speed, Materials.getToolMaterialFor(metal), new HashSet<Block>());
@@ -182,6 +182,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	}
 
 	@Override
+	@Deprecated
 	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
 		if (typeRequested != null && toolTypes.contains(typeRequested)) {
 			if (Config.Options.STRONG_HAMMERS) {

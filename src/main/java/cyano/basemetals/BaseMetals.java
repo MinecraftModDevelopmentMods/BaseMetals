@@ -25,7 +25,7 @@ public class BaseMetals {
 	// TODO: use metal plates to modify or repair shields
 
 	@Instance
-	public static BaseMetals INSTANCE = null;
+	public static BaseMetals INSTANCE = new BaseMetals();
 
 	/** ID of this Mod */
 	public static final String MODID = "basemetals";
@@ -50,7 +50,7 @@ public class BaseMetals {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		INSTANCE = this;
+//		INSTANCE = this;
 		PROXY.preInit(event);
 	}
 

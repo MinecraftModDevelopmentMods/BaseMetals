@@ -12,7 +12,7 @@ public class ProxyFunctions {
 
 	/**
 	 *
-	 * @return
+	 * @return IRenderFactory
 	 */
 	@SuppressWarnings("rawtypes")
 	public static net.minecraftforge.fml.client.registry.IRenderFactory<?> entityVillagerRenderer() {

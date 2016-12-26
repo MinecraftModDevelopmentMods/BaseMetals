@@ -10,28 +10,28 @@ import net.minecraft.block.BlockDoor;
  */
 public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDictionaryEntry, IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal
+	 * @param material The material to make the door from
 	 */
-	public ItemMetalDoor(MetalMaterial metal) {
-		super(metal.doorBlock);
-		this.metal = metal;
-		this.oreDict = "door" + metal.getCapitalizedName();
+	public ItemMetalDoor(MetalMaterial material) {
+		super(material.doorBlock);
+		this.material = material;
+		this.oreDict = "door" + material.getCapitalizedName();
 	}
 
 	/**
 	 *
-	 * @param block
-	 * @param metal
+	 * @param block The block to use to make the door
+	 * @param material The material to make the door from
 	 */
-	public ItemMetalDoor(BlockDoor block, MetalMaterial metal) {
+	public ItemMetalDoor(BlockDoor block, MetalMaterial material) {
 		super(block);
-		this.metal = metal;
-		this.oreDict = "door" + metal.getCapitalizedName();
+		this.material = material;
+		this.oreDict = "door" + material.getCapitalizedName();
 	}
 
 	@Override
@@ -41,12 +41,12 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

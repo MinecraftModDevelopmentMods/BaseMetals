@@ -18,7 +18,7 @@ public class ItemMetalSmallPowder extends Item implements IOreDictionaryEntry, I
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the small powder from
 	 */
 	public ItemMetalSmallPowder(MetalMaterial metal) {
 		this.metal = metal;

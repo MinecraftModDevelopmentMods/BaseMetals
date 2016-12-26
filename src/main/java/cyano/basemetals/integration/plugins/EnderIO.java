@@ -59,9 +59,9 @@ public class EnderIO implements IIntegration {
 	// TODO: Use Oredicts for inputs
 	/**
 	 *
-	 * @param metal
-	 * @param outputSecondary
-	 * @param energy
+	 * @param metal The Material
+	 * @param outputSecondary The secondary output
+	 * @param energy How much energy it costs to perform
 	 */
 	protected static void addAlloySmelterRecipe(String metal, String outputSecondary, int energy) {
 		// @formatter:off
@@ -84,9 +84,9 @@ public class EnderIO implements IIntegration {
 	// TODO: Use Oredicts for inputs
 	/**
 	 *
-	 * @param metal
-	 * @param outputSecondary
-	 * @param energy
+	 * @param metal The Material
+	 * @param outputSecondary The secondary output
+	 * @param energy How much energy it costs to perform
 	 */
 	protected static void addSagMillRecipe(String metal, String outputSecondary, int energy) {
 	// @formatter:off

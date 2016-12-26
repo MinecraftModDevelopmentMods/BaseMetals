@@ -20,7 +20,7 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material the ore is made from
 	 */
 	public BlockMetalOre(MetalMaterial metal) {
 		super();

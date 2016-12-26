@@ -18,7 +18,7 @@ public class ItemMetalSlab extends ItemSlab implements IOreDictionaryEntry, IMet
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the slab from
 	 */
 	public ItemMetalSlab(MetalMaterial metal) {
 		super(metal.half_slab, metal.half_slab, metal.double_slab);
@@ -27,10 +27,10 @@ public class ItemMetalSlab extends ItemSlab implements IOreDictionaryEntry, IMet
 
 	/**
 	 *
-	 * @param metal
-	 * @param block
-	 * @param slab
-	 * @param doubleslab
+	 * @param metal The material to make the slab from
+	 * @param block The block to use to make the slab
+	 * @param slab The half slab block to use to make the slab
+	 * @param doubleslab The double slab block to use to make the slab
 	 */
 	public ItemMetalSlab(MetalMaterial metal, Block block, BlockSlab slab, BlockSlab doubleslab) {
 		super(block, slab, doubleslab);

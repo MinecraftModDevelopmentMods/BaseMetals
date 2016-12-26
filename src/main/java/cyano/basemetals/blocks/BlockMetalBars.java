@@ -19,7 +19,7 @@ public class BlockMetalBars extends net.minecraft.block.BlockPane implements IOr
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material the bars are made from
 	 */
 	public BlockMetalBars(MetalMaterial metal) {
 		super(Material.IRON, true);

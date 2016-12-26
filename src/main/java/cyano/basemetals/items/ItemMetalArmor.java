@@ -261,8 +261,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 
 	/**
 	 *
-	 * @param metal
-	 * @return
+	 * @param metal The material to make the helmet from
+	 * @return The Helmet
 	 */
 	public static ItemMetalArmor createHelmet(MetalMaterial metal) {
 		ArmorMaterial material = Materials.getArmorMaterialFor(metal);
@@ -275,8 +275,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 
 	/**
 	 * 
-	 * @param metal
-	 * @return
+	 * @param metal The material to make the chestplate from
+	 * @return The Chestplate
 	 */
 	public static ItemMetalArmor createChestplate(MetalMaterial metal) {
 		ArmorMaterial material = Materials.getArmorMaterialFor(metal);
@@ -289,8 +289,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 
 	/**
 	 * 
-	 * @param metal
-	 * @return
+	 * @param metal The material to make the leggings from
+	 * @return The Leggings
 	 */
 	public static ItemMetalArmor createLeggings(MetalMaterial metal) {
 		ArmorMaterial material = Materials.getArmorMaterialFor(metal);
@@ -303,8 +303,8 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 
 	/**
 	 * 
-	 * @param metal
-	 * @return
+	 * @param metal The material to make the boots from
+	 * @return The Boots
 	 */
 	public static ItemMetalArmor createBoots(MetalMaterial metal) {
 		ArmorMaterial material = Materials.getArmorMaterialFor(metal);
@@ -328,16 +328,16 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 
 	/**
 	 * 
-	 * @param item
-	 * @param world
-	 * @param crafter
+	 * @param item The item
+	 * @param world The world
+	 * @param crafter The crafter
 	 */
 	public void extraEffectsOnCrafting(final ItemStack item, final World world, final EntityPlayer crafter) {
 		//
 	}
 
 	/**
-     * Return whether this item is repairable in an anvil.
+     * @return whether this item is repairable in an anvil.
      */
 	@Override public boolean getIsRepairable(ItemStack srcItemStack, ItemStack repairMaterial) {
 		// repair with string or wool

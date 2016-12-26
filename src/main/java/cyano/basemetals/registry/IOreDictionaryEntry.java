@@ -10,7 +10,7 @@ public interface IOreDictionaryEntry {
 
 	/**
 	 *
-	 * @return
+	 * @return The Ore Dictionary Name
 	 */
 	public abstract String getOreDictionaryName();
 }

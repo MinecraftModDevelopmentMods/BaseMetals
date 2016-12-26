@@ -24,7 +24,7 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material the trapdoor is made from
 	 */
 	public BlockMetalTrapDoor(MetalMaterial metal) {
 		super(Material.IRON);

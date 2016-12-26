@@ -22,7 +22,7 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the ingot from
 	 */
 	public ItemMetalIngot(MetalMaterial metal) {
 		this.metal = metal;

@@ -61,7 +61,7 @@ public abstract class VillagerTrades {
 		final Map<Item, Integer> tradeLevelMap = new HashMap<>();
 
 		String modid = Loader.instance().activeModContainer().getModId();
-		Items.getItemsByMetal().entrySet().stream().forEach((Map.Entry<MetalMaterial, List<Item>> e) -> {
+		Items.getItemsByMaterial().entrySet().stream().forEach((Map.Entry<MetalMaterial, List<Item>> e) -> {
 			final MetalMaterial m = e.getKey();
 			if (m == null) {
 				return;

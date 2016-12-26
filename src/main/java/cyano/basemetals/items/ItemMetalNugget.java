@@ -18,7 +18,7 @@ public class ItemMetalNugget extends net.minecraft.item.Item implements IOreDict
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the nugget from
 	 */
 	public ItemMetalNugget(MetalMaterial metal) {
 		this.metal = metal;

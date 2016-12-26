@@ -10,8 +10,8 @@ public class IMCMessage {
 
 	/**
 	 *
-	 * @param type
-	 * @param itemName
+	 * @param type The type to whitelist
+	 * @param itemName The Item name
 	 */
 	public static void addTool(String type, String itemName) {
 		sendWhitelistMessage("item", type, itemName);
@@ -19,8 +19,8 @@ public class IMCMessage {
 
 	/**
 	 *
-	 * @param type
-	 * @param blockName
+	 * @param type The type to whitelist
+	 * @param blockName The block name
 	 */
 	public static void addBlock(String type, String blockName) {
 		sendWhitelistMessage("block", type, blockName);
@@ -36,9 +36,9 @@ public class IMCMessage {
 
 	/**
 	 *
-	 * @param type
-	 * @param name
-	 * @param icon
+	 * @param type The type to add
+	 * @param name The name
+	 * @param icon The icon
 	 */
 	public static void addToolType(String type, String name, String icon) {
 		final NBTTagCompound message = new NBTTagCompound();
@@ -50,8 +50,8 @@ public class IMCMessage {
 
 	/**
 	 *
-	 * @param existingBlock
-	 * @param newBlock
+	 * @param existingBlock The existing block
+	 * @param newBlock The new block
 	 */
 	public static void addBlockEquivalence(String existingBlock, String newBlock) {
 		final NBTTagCompound message = new NBTTagCompound();

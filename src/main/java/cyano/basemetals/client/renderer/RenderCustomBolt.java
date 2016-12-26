@@ -19,7 +19,7 @@ public class RenderCustomBolt extends Render<EntityCustomBolt> {
 
 	/**
 	 *
-	 * @param renderManager
+	 * @param renderManager The render manager
 	 */
 	public RenderCustomBolt(RenderManager renderManager) {
 		super(renderManager);

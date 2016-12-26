@@ -32,7 +32,7 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the sword from
 	 */
 	public ItemMetalSword(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));

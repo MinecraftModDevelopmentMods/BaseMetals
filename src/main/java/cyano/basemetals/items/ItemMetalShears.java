@@ -27,7 +27,7 @@ public class ItemMetalShears extends ItemShears {
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the shears from
 	 */
 	public ItemMetalShears(MetalMaterial metal) {
 		this.metal = metal;

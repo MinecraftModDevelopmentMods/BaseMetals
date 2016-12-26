@@ -478,8 +478,8 @@ public abstract class Recipes {
 
 	/**
 	 *
-	 * @param oreDictEntries
-	 * @param name
+	 * @param oreDictEntries An array of oredict entries
+	 * @param name The block they are for
 	 */
 	public static void addOredicts(String[] oreDictEntries, Block name) {
 		addOredicts(oreDictEntries, new ItemStack(name));
@@ -489,8 +489,8 @@ public abstract class Recipes {
 
 	/**
 	 *
-	 * @param oreDictEntries
-	 * @param name
+	 * @param oreDictEntries An array of oredict entries
+	 * @param name The item they are for
 	 */
 	public static void addOredicts(String[] oreDictEntries, Item name) {
 		addOredicts(oreDictEntries, new ItemStack(name));
@@ -500,8 +500,8 @@ public abstract class Recipes {
 
 	/**
 	 *
-	 * @param oreDictEntries
-	 * @param itemStackName
+	 * @param oreDictEntries An array of oredict entries
+	 * @param itemStackName Itemstacy they are for
 	 */
 	public static void addOredicts(String[] oreDictEntries, ItemStack itemStackName) {
 		// for (int i = 0; i < oreDictEntries.length; i++)

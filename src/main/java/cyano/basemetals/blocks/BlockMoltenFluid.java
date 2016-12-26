@@ -16,7 +16,7 @@ public class BlockMoltenFluid extends BlockFluidClassic {
 
 	/**
 	 *
-	 * @param fluid
+	 * @param fluid The fluid
 	 */
 	public BlockMoltenFluid(Fluid fluid) {
 		super(fluid, Material.LAVA);

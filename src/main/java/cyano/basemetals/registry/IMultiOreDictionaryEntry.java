@@ -5,7 +5,7 @@ public interface IMultiOreDictionaryEntry {
 
 	/**
 	 *
-	 * @return
+	 * @return The Ore Dictionary Names
 	 */
 	public abstract String getOreDictionaryNames();
 

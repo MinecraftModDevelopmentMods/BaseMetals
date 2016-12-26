@@ -12,24 +12,24 @@ import net.minecraft.item.Item;
  */
 public class GenericMetalItem extends Item implements IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 
 	/**
 	 *
-	 * @param metal
+	 * @param material The material to make the item from
 	 */
-	public GenericMetalItem(MetalMaterial metal) {
-		this.metal = metal;
+	public GenericMetalItem(MetalMaterial material) {
+		this.material = material;
 	}
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

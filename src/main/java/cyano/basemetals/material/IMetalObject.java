@@ -9,7 +9,7 @@ public interface IMetalObject {
 
 	/**
 	 *
-	 * @return
+	 * @return The Material
 	 */
 	public MetalMaterial getMaterial();
 

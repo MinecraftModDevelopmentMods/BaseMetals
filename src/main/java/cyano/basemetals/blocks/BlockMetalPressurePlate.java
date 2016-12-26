@@ -18,7 +18,7 @@ public class BlockMetalPressurePlate extends BlockPressurePlate implements IOreD
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material the pressure plate is made from
 	 */
 	public BlockMetalPressurePlate(MetalMaterial metal) {
 		super(Material.IRON, BlockPressurePlate.Sensitivity.MOBS);

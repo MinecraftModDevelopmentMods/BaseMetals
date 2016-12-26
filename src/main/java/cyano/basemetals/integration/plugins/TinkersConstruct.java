@@ -118,8 +118,8 @@ public class TinkersConstruct implements IIntegration {
 
 	/**
 	 *
-	 * @param fluid
-	 * @param toolforge
+	 * @param fluid the fluid to register
+	 * @param toolforge Should this have a toolforge
 	 */
 	protected static void registerFluid(Fluid fluid, boolean toolforge) {
 		final NBTTagCompound message = new NBTTagCompound();
@@ -134,10 +134,10 @@ public class TinkersConstruct implements IIntegration {
 
 	/**
 	 *
-	 * @param outputName
-	 * @param outputQty
-	 * @param inputName
-	 * @param inputQty
+	 * @param outputName The alloy to output
+	 * @param outputQty The amount to output
+	 * @param inputName Array of input
+	 * @param inputQty Array of quantities for input
 	 */
 	protected static void registerAlloy(String outputName, int outputQty, String[] inputName, int[] inputQty) {
 		if (inputName.length != inputQty.length) {
@@ -175,7 +175,6 @@ public class TinkersConstruct implements IIntegration {
 	 * @param craftable If this be crafted
 	 * @param castable If this can be casted
 	 * @param trait to apply
-	 * @return
 	 */
 	protected static void registerMaterial(String name, boolean craftable, boolean castable, ITrait trait) {
 
@@ -199,7 +198,7 @@ public class TinkersConstruct implements IIntegration {
 
 		HandleMaterialStats handleStats = new HandleMaterialStats((int) (material.hardness + material.magicAffinity * 2) / 9, (int) (material.getToolDurability() / 6.8));
 
-		ExtraMaterialStats extraStats = new ExtraMaterialStats((material.getToolDurability() / 10));
+		ExtraMaterialStats extraStats = new ExtraMaterialStats(material.getToolDurability() / 10);
 
 		registerFluid(fluid, true); // Register the fluid with tinkers
 

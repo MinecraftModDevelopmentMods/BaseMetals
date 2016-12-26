@@ -27,7 +27,7 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	/**
 	 *
-	 * @param guiHelper
+	 * @param guiHelper IGuiHelper
 	 */
 	public JEICrusherRecipeCategory(IGuiHelper guiHelper) {
 		background = guiHelper.createDrawable(bgtex, 24, 26, 128, 32);

@@ -18,7 +18,7 @@ public class EntityCustomBolt extends EntityTippedArrow {
 
 	/**
 	 *
-	 * @param worldIn
+	 * @param worldIn The World
 	 */
 	public EntityCustomBolt(World worldIn) {
 		super(worldIn);
@@ -26,9 +26,9 @@ public class EntityCustomBolt extends EntityTippedArrow {
 
 	/**
 	 *
-	 * @param worldIn
-	 * @param stack
-	 * @param shooter
+	 * @param worldIn The World
+	 * @param stack The ItemStack
+	 * @param shooter The Shooter
 	 */
 	public EntityCustomBolt(World worldIn, ItemStack stack, EntityPlayer shooter) {
 		super(worldIn, shooter);

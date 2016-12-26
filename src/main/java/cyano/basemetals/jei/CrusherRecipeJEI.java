@@ -19,8 +19,8 @@ public class CrusherRecipeJEI extends BlankRecipeWrapper {
 
 	/**
 	 *
-	 * @param input
-	 * @param output
+	 * @param input The input
+	 * @param output The output
 	 */
 	public CrusherRecipeJEI(List<ItemStack> input, ItemStack output) {
 		this.input = Collections.singletonList(input);

@@ -2315,8 +2315,8 @@ public abstract class Items {
 
 	/**
 	 *
-	 * @param a
-	 * @return
+	 * @param a The itemstack
+	 * @return The output
 	 */
 	public static int getSortingValue(ItemStack a) {
 		int classVal = 990000;
@@ -2360,7 +2360,7 @@ public abstract class Items {
 	}
 
 	/**
-	 * Gets a map of all items added, sorted by metal
+	 * Gets a map of all items added, sorted by material
 	 *
 	 * @return An unmodifiable map of added items catagorized by metal material
 	 */

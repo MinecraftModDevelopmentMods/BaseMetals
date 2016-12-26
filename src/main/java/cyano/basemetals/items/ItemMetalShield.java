@@ -27,7 +27,7 @@ public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, 
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the shield from
 	 */
 	public ItemMetalShield(MetalMaterial metal) {
 		this.metal = metal;

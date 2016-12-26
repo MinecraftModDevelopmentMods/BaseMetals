@@ -23,7 +23,7 @@ public class VillagerTradeHelper {
 	};
 
 	/**
-	 * Inserts one or more trades to the defaul villager trade table using dark
+	 * Inserts one or more trades to the default villager trade table using dark
 	 * magic (aka java reflection).
 	 * 
 	 * @param professionID Villager profession ID (0-4)
@@ -47,7 +47,7 @@ public class VillagerTradeHelper {
 	}
 
 	/**
-	 * Inserts one or more trades to the defaul villager trade table using dark
+	 * Inserts one or more trades to the default villager trade table using dark
 	 * magic (aka java reflection).
 	 * 
 	 * @param profession Villager profession
@@ -62,9 +62,9 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param append
-	 * @param array
-	 * @param indices
+	 * @param append What to append to
+	 * @param array What
+	 * @param indices The indices
 	 */
 	public static void appendToMultidimensionalArray(Object append, Object array, int... indices) {
 		appendToMultidimensionalArray(Collections.singletonList(append).toArray(), array, indices);
@@ -72,9 +72,9 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param append
-	 * @param array
-	 * @param indices
+	 * @param append What to append to
+	 * @param array What
+	 * @param indices The indices
 	 */
 	public static void appendToMultidimensionalArray(Object[] append, Object array, int... indices) {
 		// get the lowest level array
@@ -113,10 +113,10 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param array
-	 * @param newSize
-	 * @param fill
-	 * @return
+	 * @param array The array
+	 * @param newSize The new size for the array
+	 * @param fill The Object
+	 * @return An Object
 	 */
 	public static Object expandArray(Object array, int newSize, Object fill) {
 		final Object newArray = Array.newInstance(array.getClass().getComponentType(), newSize);
@@ -130,9 +130,9 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param v
-	 * @throws NoSuchFieldException
-	 * @throws IllegalAccessException
+	 * @param v The Field
+	 * @throws NoSuchFieldException The Exception
+	 * @throws IllegalAccessException The Exception
 	 */
 	public static void unlockPrivateFinalField(Field v) throws NoSuchFieldException, IllegalAccessException {
 		v.setAccessible(true);
@@ -143,8 +143,8 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param c
-	 * @return
+	 * @param c The Class
+	 * @return A Field
 	 */
 	public static Field getTradeArrayFromClass(Class<?> c) {
 		// search for 4D array of ITradeList objects

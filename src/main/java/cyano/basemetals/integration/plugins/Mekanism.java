@@ -1,9 +1,9 @@
 package cyano.basemetals.integration.plugins;
 
-import cyano.basemetals.init.Blocks;
-import cyano.basemetals.init.Items;
+import cyano.basemetals.init.Materials;
 import cyano.basemetals.integration.BaseMetalsPlugin;
 import cyano.basemetals.integration.IIntegration;
+import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.util.Config.Options;
 import mekanism.api.gas.*;
 import net.minecraft.item.ItemStack;
@@ -34,17 +34,18 @@ public class Mekanism implements IIntegration {
 
 		// Combiner 8 dust to 1 ore
 		if (Options.ENABLE_ADAMANTINE) {
-			addCrusherRecipe(new ItemStack(Items.adamantine_clump), new ItemStack(Items.adamantine_powder_dirty)); // Verified
-			addCrusherRecipe(new ItemStack(Items.adamantine_ingot), new ItemStack(Items.adamantine_powder)); // Verified
+			MetalMaterial material = Materials.adamantine;
+			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty)); // Verified
+			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder)); // Verified
 
-			addEnrichmentChamberRecipe(new ItemStack(Blocks.adamantine_ore), new ItemStack(Items.adamantine_powder, 2)); // Verified
-			addEnrichmentChamberRecipe(new ItemStack(Items.adamantine_powder_dirty), new ItemStack(Items.adamantine_powder)); // Verified
+			addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2)); // Verified
+			addEnrichmentChamberRecipe(new ItemStack(material.powder_dirty), new ItemStack(material.powder)); // Verified
 
-			addPurificationChamberRecipe(new ItemStack(Blocks.adamantine_ore), new ItemStack(Items.adamantine_clump, 3)); // Verified
-			addPurificationChamberRecipe(new ItemStack(Items.adamantine_shard), new ItemStack(Items.adamantine_clump)); // Verified
+			addPurificationChamberRecipe(new ItemStack(material.ore), new ItemStack(material.clump, 3)); // Verified
+			addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump)); // Verified
 
-			addChemicalInjectionChamberRecipe(new ItemStack(Blocks.adamantine_ore), new ItemStack(Items.adamantine_shard, 4)); // Verified
-			addChemicalInjectionChamberRecipe(new ItemStack(Items.adamantine_crystal), new ItemStack(Items.adamantine_shard)); // Verified
+			addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4)); // Verified
+			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard)); // Verified
 		}
 
 		// Crystalizer

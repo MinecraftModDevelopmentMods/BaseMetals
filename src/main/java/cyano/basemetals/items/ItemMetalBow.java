@@ -39,7 +39,7 @@ public class ItemMetalBow extends ItemBow {
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the bow from
 	 */
 	public ItemMetalBow(MetalMaterial metal) {
 		this.metal = metal;

@@ -23,7 +23,7 @@ public class ItemMetalSmallBlend extends Item implements IOreDictionaryEntry, IM
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the small blend from
 	 */
 	public ItemMetalSmallBlend(MetalMaterial metal) {
 		this.metal = metal;

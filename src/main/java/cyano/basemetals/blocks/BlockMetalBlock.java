@@ -28,7 +28,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material the block is made from
 	 */
 	public BlockMetalBlock(MetalMaterial metal) {
 		this(metal, false);

@@ -115,7 +115,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 		/**
 		 *
-		 * @param container
+		 * @param container Container
 		 */
 		public GuiCrusher(Container container) {
 			super(container);
@@ -156,8 +156,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 		/**
 		 *
-		 * @param ingred
-		 * @param result
+		 * @param ingred ItemStack
+		 * @param result ItemStack
 		 */
 		public CrusherPair(ItemStack ingred, ItemStack result) {
 			if ((ingred == null) || (result == null)) {

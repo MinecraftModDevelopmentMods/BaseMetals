@@ -22,7 +22,7 @@ public class ItemMetalBolt extends Item implements IOreDictionaryEntry, IMetalOb
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the bolt from
 	 */
 	public ItemMetalBolt(MetalMaterial metal) {
 		this.metal = metal;
@@ -32,10 +32,10 @@ public class ItemMetalBolt extends Item implements IOreDictionaryEntry, IMetalOb
 
 	/**
 	 *
-	 * @param worldIn
-	 * @param stack
-	 * @param shooter
-	 * @return
+	 * @param worldIn The world
+	 * @param stack The itemstack
+	 * @param shooter The shooter
+	 * @return The Custom Bolt
 	 */
 	public EntityCustomBolt createBolt(World worldIn, ItemStack stack, EntityPlayer shooter) {
 		return new EntityCustomBolt(worldIn, stack, shooter);

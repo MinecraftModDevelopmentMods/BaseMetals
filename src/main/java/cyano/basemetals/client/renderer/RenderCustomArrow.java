@@ -19,7 +19,7 @@ public class RenderCustomArrow extends Render<EntityCustomArrow> {
 
 	/**
 	 *
-	 * @param renderManager
+	 * @param renderManager The render manager
 	 */
 	public RenderCustomArrow(RenderManager renderManager) {
 		super(renderManager);

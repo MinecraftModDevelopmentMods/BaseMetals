@@ -40,7 +40,7 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the fishing rod from
 	 */
 	public ItemMetalFishingRod(MetalMaterial metal) {
 		this.metal = metal;

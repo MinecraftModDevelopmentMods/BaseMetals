@@ -29,7 +29,7 @@ public class ItemMetalShovel extends ItemSpade implements IMetalObject {
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the shovel from
 	 */
 	public ItemMetalShovel(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));

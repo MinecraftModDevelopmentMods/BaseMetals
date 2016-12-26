@@ -50,7 +50,7 @@ public class VeinMiner implements IIntegration {
 	/**
 	 * Add tools to the VeinMiner list from a Material
 	 *
-	 * @param metal Metal to add
+	 * @param material Material to add
 	 */
 	protected static void addToolsForMaterial(String material) {
 		IMCMessage.addTool("axe", OWNER_MODID + ":" + material + "_axe");

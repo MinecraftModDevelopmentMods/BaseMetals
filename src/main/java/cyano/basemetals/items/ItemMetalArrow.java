@@ -22,7 +22,7 @@ public class ItemMetalArrow extends ItemArrow implements IOreDictionaryEntry, IM
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the arrow from
 	 */
 	public ItemMetalArrow(MetalMaterial metal) {
 		this.metal = metal;
@@ -32,10 +32,10 @@ public class ItemMetalArrow extends ItemArrow implements IOreDictionaryEntry, IM
 
 	/**
 	 *
-	 * @param worldIn
-	 * @param stack
-	 * @param shooter
-	 * @return
+	 * @param worldIn The world
+	 * @param stack The itemstack
+	 * @param shooter The shooter
+	 * @return The Custom Arrow
 	 */
 	public EntityCustomArrow createArrow(World worldIn, ItemStack stack, EntityPlayer shooter) {
 		return new EntityCustomArrow(worldIn, stack, shooter);

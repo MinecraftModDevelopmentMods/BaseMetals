@@ -33,7 +33,7 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the hoe from
 	 */
 	public ItemMetalHoe(MetalMaterial metal) {
 		super(Materials.getToolMaterialFor(metal));
@@ -59,6 +59,7 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 	}
 
 	@Override
+	@Deprecated
 	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
 		if ((typeRequested != null) && this.toolTypes.contains(typeRequested))
 			return this.metal.getToolHarvestLevel();

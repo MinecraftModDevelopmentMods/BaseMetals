@@ -23,7 +23,7 @@ public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDicti
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the blend from
 	 */
 	public ItemMetalBlend(MetalMaterial metal) {
 		this.metal = metal;

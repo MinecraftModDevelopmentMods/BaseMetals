@@ -18,7 +18,7 @@ public class ItemMetalGear extends net.minecraft.item.Item implements IOreDictio
 
 	/**
 	 *
-	 * @param metal
+	 * @param metal The material to make the gear from
 	 */
 	public ItemMetalGear(MetalMaterial metal) {
 		this.metal = metal;

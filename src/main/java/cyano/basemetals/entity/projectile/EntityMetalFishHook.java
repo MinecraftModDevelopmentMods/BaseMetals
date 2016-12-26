@@ -61,7 +61,7 @@ public class EntityMetalFishHook extends EntityFishHook {
 
 	/**
 	 *
-	 * @param worldIn
+	 * @param worldIn The World
 	 */
 	public EntityMetalFishHook(World worldIn) {
 		super(worldIn);
@@ -69,11 +69,11 @@ public class EntityMetalFishHook extends EntityFishHook {
 
 	/**
 	 *
-	 * @param worldIn
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param anglerIn
+	 * @param worldIn The World
+	 * @param x X
+	 * @param y Y
+	 * @param z Z
+	 * @param anglerIn The bobber
 	 */
 	@SideOnly(Side.CLIENT)
 	public EntityMetalFishHook(World worldIn, double x, double y, double z, EntityPlayer anglerIn) {
@@ -82,8 +82,8 @@ public class EntityMetalFishHook extends EntityFishHook {
 
 	/**
 	 *
-	 * @param worldIn
-	 * @param fishingPlayer
+	 * @param worldIn The World
+	 * @param fishingPlayer The player
 	 */
 	public EntityMetalFishHook(World worldIn, EntityPlayer fishingPlayer) {
 		super(worldIn, fishingPlayer);

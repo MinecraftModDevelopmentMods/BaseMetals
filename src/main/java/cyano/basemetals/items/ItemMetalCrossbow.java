@@ -32,23 +32,23 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class ItemMetalCrossbow extends ItemBow {
 
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
 	 *
-	 * @param metal
+	 * @param material The material to make the crossbow from
 	 */
-	public ItemMetalCrossbow(MetalMaterial metal) {
-		this.metal = metal;
+	public ItemMetalCrossbow(MetalMaterial material) {
+		this.material = material;
 		this.maxStackSize = 1;
-		this.setMaxDamage(metal.getToolDurability());
+		this.setMaxDamage(material.getToolDurability());
 		this.setCreativeTab(CreativeTabs.COMBAT);
-		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
+		this.repairOreDictName = "ingot" + material.getCapitalizedName();
 		if (Config.Options.ENABLE_STARSTEEL) {
-			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
+			this.regenerates = material.equals(Materials.getMaterialByName("starsteel"));
 		} else {
 			this.regenerates = false;
 		}
@@ -169,12 +169,12 @@ public class ItemMetalCrossbow extends ItemBow {
 	}
 
 	public String getMaterialName() {
-		return this.metal.getName();
+		return this.material.getName();
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(this.metal, list);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
 	}
 }

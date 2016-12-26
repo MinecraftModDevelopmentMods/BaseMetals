@@ -14,10 +14,10 @@ public class CustomFluid extends Fluid {
 
 	/**
 	 *
-	 * @param fluidName
-	 * @param still
-	 * @param flowing
-	 * @param tintARGB
+	 * @param fluidName The name of the fluid
+	 * @param still ResourceLocation for still fluid
+	 * @param flowing ResourceLocation for flowing fluid
+	 * @param tintARGB The color
 	 */
 	public CustomFluid(String fluidName, ResourceLocation still, ResourceLocation flowing, int tintARGB) {
 		super(fluidName, still, flowing);
