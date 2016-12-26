@@ -89,23 +89,35 @@ repositories {
     }
     maven {
         name "epoxide"
-        url "http://maven.epoxide.xyz"
+        url "http://maven.epoxide.org"
     }
+	maven {
+        name "jitpack"
+		url "https://jitpack.io"
+	}
 }
 
 dependencies {
-    compile "slimeknights:TConstruct:${mc_version}-${tconstruct_version}:deobf"
-    compile "slimeknights.mantle:Mantle:${mc_version}-${mantle_version}:deobf"
-    compile "mezz.jei:jei_${mc_version}:${jei_version}"
-    compile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:deobf"
-    compile "codechicken:CodeChickenCore:${mc_version}-${ccc_version}:deobf"
-    compile "codechicken:NotEnoughItems:${mc_version}-${nei_version}:deobf"
-    compile "mmd:orespawn:${orespawn_version}-${mc_version}:dev"
-//	deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
-	compile "MCMultiPart:MCMultiPart:${mcmp_version}:deobf"
-//	deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
-//	compile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:deobf"
-//	compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
+	// c510ce7d8c = https://github.com/aidancbrady/Mekanism/commit/c510ce7d8cf7810500e032e2f713796078d26c6f
+    deobfCompile "com.github.aidancbrady:Mekanism:c510ce7d8c"
+
+    deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
+        exclude group: 'mezz.jei'
+    }
+    deobfCompile "slimeknights.mantle:Mantle:${mc_version}-${mantle_version}"
+    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+    deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+    deobfCompile ("codechicken:CodeChickenCore:${mc_version}-${ccc_version}:universal") {
+        exclude group: 'codechicken'
+    }
+    deobfCompile ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
+        exclude group: 'mezz.jei'
+        exclude group: 'codechicken'
+    }
+    deobfCompile "mmd:orespawn:${orespawn_version}-${mc_version}"
+    deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
+//    deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
+//    compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 }
 
 processResources {
