@@ -115,7 +115,7 @@ dependencies {
         exclude group: 'codechicken'
     }
     deobfCompile "mmd:orespawn:${orespawn_version}-${mc_version}"
-    deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
+//    deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
 //    deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
 //    compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 }

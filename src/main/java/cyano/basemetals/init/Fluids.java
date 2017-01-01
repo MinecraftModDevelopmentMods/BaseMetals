@@ -32,29 +32,8 @@ public abstract class Fluids {
 		FluidRegistry.enableUniversalBucket();
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	public static Fluid fluidMercury = null;
 	public static BlockFluidBase fluidBlockMercury = null;
-
-
-
-
-
-
-
-
 
 	private static boolean initDone = false;
 
@@ -236,7 +215,7 @@ public abstract class Fluids {
 	}
 
 	protected static BlockFluidBase addFluidBlock(String name) {
-
+		MetalMaterial material = Materials.getMaterialByName(name);
 		final ResourceLocation location = new ResourceLocation(Loader.instance().activeModContainer().getModId(), name);
 		Fluid fluid = getFluidByName(name);
 		BlockFluidBase block;
@@ -278,7 +257,7 @@ public abstract class Fluids {
 	public static Fluid getFluidByName(String name) {
 		return fluidRegistry.get(name);
 	}
-		MetalMaterial material = Materials.getMaterialByName(name);
+
 	/**
 	 * This is the reverse of the getFluidByName(...) method, returning the
 	 * registered name of an fluid instance (Base Metals fluids only).
