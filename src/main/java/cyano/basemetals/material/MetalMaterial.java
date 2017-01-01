@@ -84,7 +84,7 @@ public class MetalMaterial {
 	public Item gear;
 	public Item helmet;
 	public Item hoe;
-	public Item horsearmor;
+	public Item horse_armor;
 	public Item ingot;
 	public Item leggings;
 	public Item nugget;
@@ -113,13 +113,17 @@ public class MetalMaterial {
 	public Block trapdoor;
 	public Block wall;
 
+	public Fluid fluid;
+	public BlockFluidBase fluidBlock;
+	
 	public Item crystal;
 	public Item shard;
 	public Item clump;
-	public Item dirtypowder;
-	public Item denseplate;
+	public Item powder_dirty;
+
+	public Item dense_plate;
 	public Item crushed;
-	public Item crushedpurified;
+	public Item crushed_purified;
 
 	/**
 	 * @deprecated

@@ -270,6 +270,9 @@ public abstract class Fluids {
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
 
+		if (material != null) {
+			material.fluid = fluid;
+		}
 		fluidRegistry.put(name, fluid);
 		return fluid;
 	}
@@ -299,7 +302,9 @@ public abstract class Fluids {
 		itemBlock.setRegistryName(location);
 		itemBlock.setUnlocalizedName(location.toString());
 		GameRegistry.register(itemBlock);
-
+		if (material != null) {
+			material.fluidBlock = block;
+		}
 		fluidBlockRegistry.put(name, block);
 		return block;
 	}

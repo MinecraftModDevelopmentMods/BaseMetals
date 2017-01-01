@@ -839,7 +839,7 @@ public abstract class Items {
 	private static boolean initDone = false;
 
 	private static BiMap<String, Item> itemRegistry = HashBiMap.create(34);
-	private static Map<MetalMaterial, List<Item>> itemsByMetal = new HashMap<>();
+	private static Map<MetalMaterial, List<Item>> itemsByMaterial = new HashMap<>();
 
 	private static Map<Class<?>, Integer> classSortingValues = new HashMap<>();
 	private static Map<MetalMaterial, Integer> materialSortingValues = new HashMap<>();
@@ -1884,8 +1884,8 @@ public abstract class Items {
 		}
 
 		if (material != null) {
-			itemsByMetal.computeIfAbsent(material, (MetalMaterial g) -> new ArrayList<>());
-			itemsByMetal.get(material).add(item);
+			itemsByMaterial.computeIfAbsent(material, (MetalMaterial g) -> new ArrayList<>());
+			itemsByMaterial.get(material).add(item);
 		}
 
 		if (item instanceof IOreDictionaryEntry) {
@@ -2364,7 +2364,17 @@ public abstract class Items {
 	 *
 	 * @return An unmodifiable map of added items catagorized by metal material
 	 */
+	public static Map<MetalMaterial, List<Item>> getItemsByMaterial() {
+		return Collections.unmodifiableMap(itemsByMaterial);
+	}
+
+	/**
+	 * Gets a map of all items added, sorted by material
+	 *
+	 * @return An unmodifiable map of added items catagorized by metal material
+	 */
+	@Deprecated
 	public static Map<MetalMaterial, List<Item>> getItemsByMetal() {
-		return Collections.unmodifiableMap(itemsByMetal);
+		return Collections.unmodifiableMap(itemsByMaterial);
 	}
 }
