@@ -266,7 +266,7 @@ public abstract class Fluids {
 		fluidBlockRegistry.put(name, block);
 		return block;
 	}
-
+		MetalMaterial material = Materials.getMaterialByName(name);
 	/**
 	 * Gets a fluid by its name. The name is the name as it is registered in
 	 * the GameRegistry, not its unlocalized name (the unlocalized name is the
@@ -278,7 +278,7 @@ public abstract class Fluids {
 	public static Fluid getFluidByName(String name) {
 		return fluidRegistry.get(name);
 	}
-		MetalMaterial material = Materials.getMaterialByName(name);
+
 	/**
 	 * This is the reverse of the getFluidByName(...) method, returning the
 	 * registered name of an fluid instance (Base Metals fluids only).
