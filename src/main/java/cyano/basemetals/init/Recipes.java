@@ -83,20 +83,20 @@ public abstract class Recipes {
 		OreDictionary.registerOre("door", net.minecraft.init.Items.ACACIA_DOOR);
 
 		if (Options.ENABLE_IRON) {
-			CrusherRecipeRegistry.addNewCrusherRecipe("oreIron", new ItemStack(Items.iron_powder, 2));
-			CrusherRecipeRegistry.addNewCrusherRecipe("blockIron", new ItemStack(Items.iron_powder, 9));
-			CrusherRecipeRegistry.addNewCrusherRecipe("ingotIron", new ItemStack(Items.iron_powder, 1));
+			CrusherRecipeRegistry.addNewCrusherRecipe("oreIron", new ItemStack(Materials.vanilla_iron.powder, 2));
+			CrusherRecipeRegistry.addNewCrusherRecipe("blockIron", new ItemStack(Materials.vanilla_iron.powder, 9));
+			CrusherRecipeRegistry.addNewCrusherRecipe("ingotIron", new ItemStack(Materials.vanilla_iron.powder, 1));
 
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.iron_nugget, 9), new ItemStack(net.minecraft.init.Items.IRON_INGOT)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.IRON_INGOT), "xxx", "xxx", "xxx", 'x', Items.iron_nugget));
-			GameRegistry.addSmelting(Items.iron_powder, new ItemStack(net.minecraft.init.Items.IRON_INGOT), 0f);
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.vanilla_iron.nugget, 9), new ItemStack(net.minecraft.init.Items.IRON_INGOT)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.IRON_INGOT), "xxx", "xxx", "xxx", 'x', Materials.vanilla_iron.nugget));
+			GameRegistry.addSmelting(Materials.vanilla_iron.powder, new ItemStack(net.minecraft.init.Items.IRON_INGOT), 0f);
 		}
 
 		if (Options.ENABLE_GOLD) {		
-			CrusherRecipeRegistry.addNewCrusherRecipe("oreGold", new ItemStack(Items.gold_powder, 2));
-			CrusherRecipeRegistry.addNewCrusherRecipe("blockGold", new ItemStack(Items.gold_powder, 9));
-			CrusherRecipeRegistry.addNewCrusherRecipe("ingotGold", new ItemStack(Items.gold_powder, 1));
-			GameRegistry.addSmelting(Items.gold_powder, new ItemStack(net.minecraft.init.Items.GOLD_INGOT), 0f);
+			CrusherRecipeRegistry.addNewCrusherRecipe("oreGold", new ItemStack(Materials.vanilla_gold.powder, 2));
+			CrusherRecipeRegistry.addNewCrusherRecipe("blockGold", new ItemStack(Materials.vanilla_gold.powder, 9));
+			CrusherRecipeRegistry.addNewCrusherRecipe("ingotGold", new ItemStack(Materials.vanilla_gold.powder, 1));
+			GameRegistry.addSmelting(Materials.vanilla_gold.powder, new ItemStack(net.minecraft.init.Items.GOLD_INGOT), 0f);
 		}
 
 		if (Options.ENABLE_CHARCOAL) {
@@ -120,14 +120,14 @@ public abstract class Recipes {
 		final List<MetalMaterial> exceptions = Arrays.asList(Materials.vanilla_iron, Materials.vanilla_gold, Materials.vanilla_diamond, Materials.vanilla_stone, Materials.vanilla_wood);
 
 		if (!Options.DISABLE_ALL_HAMMERS) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.wood_crackhammer), "x", "/", "/", 'x', "logWood", '/', "stickWood"));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_crackhammer), "x", "/", "/", 'x', net.minecraft.init.Blocks.STONEBRICK, '/', "stickWood"));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.iron_crackhammer), "x", "/", "/", 'x', "blockIron", '/', "stickWood"));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.gold_crackhammer), "x", "/", "/", 'x', "blockGold", '/', "stickWood"));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.diamond_crackhammer), "x", "/", "/", 'x', "blockDiamond", '/', "stickWood"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_wood.crackhammer), "x", "/", "/", 'x', "logWood", '/', "stickWood"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_stone.crackhammer), "x", "/", "/", 'x', net.minecraft.init.Blocks.STONEBRICK, '/', "stickWood"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_iron.crackhammer), "x", "/", "/", 'x', "blockIron", '/', "stickWood"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_gold.crackhammer), "x", "/", "/", 'x', "blockGold", '/', "stickWood"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_diamond.crackhammer), "x", "/", "/", 'x', "blockDiamond", '/', "stickWood"));
 		}
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.iron_plate, 3), "xxx", 'x', "ingotIron"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.gold_plate, 3), "xxx", 'x', "ingotGold"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_iron.plate, 3), "xxx", 'x', "ingotIron"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_gold.plate, 3), "xxx", 'x', "ingotGold"));
 
 		Item v_rod = null;
 		Item v_nugget = null;
@@ -137,9 +137,9 @@ public abstract class Recipes {
 
 		// Iron items
 		if (Options.ENABLE_IRON) {
-			v_rod = Items.iron_rod;
-			v_nugget = Items.iron_nugget;
-			v_gear = Items.iron_gear;
+			v_rod = Materials.vanilla_iron.rod;
+			v_nugget = Materials.vanilla_iron.nugget;
+			v_gear = Materials.vanilla_iron.gear;
 			v_bars = net.minecraft.init.Blocks.IRON_BARS;
 			v_oreDictName = "Iron";
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(v_rod, 4), "x", "x", 'x', "ingot" + v_oreDictName));
@@ -155,7 +155,7 @@ public abstract class Recipes {
 
 		// Gold items
 		if (Options.ENABLE_GOLD) {
-			v_rod = Items.gold_rod;
+			v_rod = Materials.vanilla_gold.rod;
 			v_nugget = net.minecraft.init.Items.GOLD_NUGGET;
 			v_oreDictName = "Gold";
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(v_rod, 4), "x", "x", 'x', "ingot" + v_oreDictName));
@@ -185,7 +185,7 @@ public abstract class Recipes {
 			final Item gear = metal.gear;
 			final Item helmet = metal.helmet;
 			final Item hoe = metal.hoe;
-			final Item horsearmor = metal.horsearmor;
+			final Item horse_armor = metal.horse_armor;
 			final Item ingot = metal.ingot;
 			final Item leggings = metal.leggings;
 			final Item nugget = metal.nugget;
@@ -350,8 +350,8 @@ public abstract class Recipes {
 					OreDictionary.registerOre("trapdoor", trapdoor);
 				}
 
-				if (horsearmor != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(horsearmor), "  x", "xyx", "xxx", 'x', "ingot" + oreDictName, 'y', net.minecraft.init.Blocks.WOOL));
+				if (horse_armor != null) {
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(horse_armor), "  x", "xyx", "xxx", 'x', "ingot" + oreDictName, 'y', net.minecraft.init.Blocks.WOOL));
 				}
 
 				if ((rod != null) && (gear != null)) {
@@ -427,15 +427,15 @@ public abstract class Recipes {
 	private static void initModSpecificRecipes() {
 		// alloy blends
 		// TODO: Fix this
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.brass_blend, 3), "dustCopper", "dustCopper", "dustZinc"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.bronze_blend, 4), "dustCopper", "dustCopper", "dustCopper", "dustTin"));
-//		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.steel_blend, 8), "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustCarbon"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.steel_blend, 8), "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustCoal"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.invar_blend, 3), "dustIron", "dustIron", "dustNickel"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.cupronickel_blend, 4), "dustCopper", "dustCopper", "dustCopper", "dustNickel"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.electrum_blend, 2), "dustSilver", "dustGold"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.mithril_blend, 3), "dustSilver", "dustSilver", "dustColdiron", "ingotMercury"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.aquarium_blend, 3), "dustCopper", "dustCopper", "dustZinc", net.minecraft.init.Items.PRISMARINE_CRYSTALS, net.minecraft.init.Items.PRISMARINE_CRYSTALS, net.minecraft.init.Items.PRISMARINE_CRYSTALS));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.brass.blend, 3), "dustCopper", "dustCopper", "dustZinc"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.bronze.blend, 4), "dustCopper", "dustCopper", "dustCopper", "dustTin"));
+//		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.blend, 8), "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustCarbon"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.blend, 8), "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustIron", "dustCoal"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.invar.blend, 3), "dustIron", "dustIron", "dustNickel"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.cupronickel.blend, 4), "dustCopper", "dustCopper", "dustCopper", "dustNickel"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.electrum.blend, 2), "dustSilver", "dustGold"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.mithril.blend, 3), "dustSilver", "dustSilver", "dustColdiron", "ingotMercury"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.aquarium.blend, 3), "dustCopper", "dustCopper", "dustZinc", net.minecraft.init.Items.PRISMARINE_CRYSTALS, net.minecraft.init.Items.PRISMARINE_CRYSTALS, net.minecraft.init.Items.PRISMARINE_CRYSTALS));
 
 		if (Options.ENABLE_MERCURY) {
 			if (FluidRegistry.isUniversalBucketEnabled()) {
