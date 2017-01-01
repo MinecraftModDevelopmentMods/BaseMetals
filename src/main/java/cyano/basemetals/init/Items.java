@@ -1450,12 +1450,12 @@ public abstract class Items {
 		if (Options.ENABLE_MERCURY) {
 			// mercury is special
 			mercury_ingot = addItem(new Item(), "mercury_ingot", null, ItemGroups.tab_items);
-			itemRegistry.put("mercury_ingot", mercury_ingot);
+//			itemRegistry.put("mercury_ingot", mercury_ingot);
 			OreDictionary.registerOre("ingotMercury", mercury_ingot);
 			OreDictionary.registerOre("quicksilver", mercury_ingot);
 
 			mercury_powder = addItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
-			itemRegistry.put("mercury_powder", mercury_powder);
+//			itemRegistry.put("mercury_powder", mercury_powder);
 			OreDictionary.registerOre("dustMercury", mercury_powder);
 		}
 
@@ -2075,7 +2075,7 @@ public abstract class Items {
 		if (Options.ENABLE_HORSE_ARMOR) {
 			MetalMaterial material = Materials.getMaterialByName(materialName);
 			final Item i = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.tab_tools);
-			material.horsearmor = i;
+			material.horse_armor = i;
 			return i;
 		} else {
 			return null;
@@ -2222,7 +2222,7 @@ public abstract class Items {
 			MetalMaterial material = Materials.getMaterialByName(materialName);
 			final Item i = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.tab_items);
 			OreDictionary.registerOre("dustDirty" + material.getCapitalizedName(), i);
-			material.dirtypowder = i;
+			material.powder_dirty = i;
 			return i;
 		} else {
 			return null;
@@ -2235,7 +2235,7 @@ public abstract class Items {
 			MetalMaterial material = Materials.getMaterialByName(materialName);
 			final Item i = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.tab_items);
 			OreDictionary.registerOre("plateDense" + material.getCapitalizedName(), i);
-			material.denseplate = i;
+			material.dense_plate = i;
 			return i;
 		} else {
 			return null;
@@ -2259,7 +2259,7 @@ public abstract class Items {
 			MetalMaterial material = Materials.getMaterialByName(materialName);
 			final Item i = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.tab_items);
 			OreDictionary.registerOre("crushedPurified" + material.getCapitalizedName(), i);
-			material.crushedpurified = i;
+			material.crushed_purified = i;
 			return i;
 		} else {
 			return null;

@@ -32,71 +32,29 @@ public abstract class Fluids {
 		FluidRegistry.enableUniversalBucket();
 	}
 
-	public static Fluid fluidAntimony = null;
-	public static BlockFluidBase fluidBlockAntimony = null;
 
-	public static Fluid fluidAdamantine = null;
-	public static BlockFluidBase fluidBlockAdamantine = null;
 
-	public static Fluid fluidAquarium = null;
-	public static BlockFluidBase fluidBlockAquarium = null;
 
-	public static Fluid fluidBismuth = null;
-	public static BlockFluidBase fluidBlockBismuth = null;
 
-	public static Fluid fluidBrass = null;
-	public static BlockFluidBase fluidBlockBrass = null;
 
-	public static Fluid fluidBronze = null;
-	public static BlockFluidBase fluidBlockBronze = null;
 
-	public static Fluid fluidColdIron = null;
-	public static BlockFluidBase fluidBlockColdIron = null;
 
-	public static Fluid fluidCopper = null;
-	public static BlockFluidBase fluidBlockCopper = null;
 
-	public static Fluid fluidCupronickel = null;
-	public static BlockFluidBase fluidBlockCupronickel = null;
 
-	public static Fluid fluidElectrum = null;
-	public static BlockFluidBase fluidBlockElectrum = null;
 
-	public static Fluid fluidInvar = null;
-	public static BlockFluidBase fluidBlockInvar = null;
 
-	public static Fluid fluidLead = null;
-	public static BlockFluidBase fluidBlockLead = null;
 
-	public static Fluid fluidMithril = null;
-	public static BlockFluidBase fluidBlockMithril = null;
 
 	public static Fluid fluidMercury = null;
 	public static BlockFluidBase fluidBlockMercury = null;
 
-	public static Fluid fluidNickel = null;
-	public static BlockFluidBase fluidBlockNickel = null;
 
-	public static Fluid fluidPewter = null;
-	public static BlockFluidBase fluidBlockPewter = null;
 
-	public static Fluid fluidPlatinum = null;
-	public static BlockFluidBase fluidBlockPlatinum = null;
 
-	public static Fluid fluidSilver = null;
-	public static BlockFluidBase fluidBlockSilver = null;
 
-	public static Fluid fluidStarSteel = null;
-	public static BlockFluidBase fluidBlockStarSteel = null;
 
-	public static Fluid fluidSteel = null;
-	public static BlockFluidBase fluidBlockSteel = null;
 
-	public static Fluid fluidTin = null;
-	public static BlockFluidBase fluidBlockTin = null;
 
-	public static Fluid fluidZinc = null;
-	public static BlockFluidBase fluidBlockZinc = null;
 
 	private static boolean initDone = false;
 
@@ -113,150 +71,150 @@ public abstract class Fluids {
 			return;
 		}
 
-		String materialName;
+		String material;
 
 		// fluids and fluid blocks
 		if (Options.ENABLE_ADAMANTINE) {
-			materialName = "adamantine";
+			material = "adamantine";
 
-			fluidAdamantine = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockAdamantine = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_ANTIMONY) {
-			materialName = "antimony";
+			material = "antimony";
 
-			fluidAntimony = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockAntimony = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_AQUARIUM) {
-			materialName = "aquarium";
+			material = "aquarium";
 
-			fluidAquarium = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockAquarium = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_BISMUTH) {
-			materialName = "bismuth";
+			material = "bismuth";
 
-			fluidBismuth = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockBismuth = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_BRASS) {
-			materialName = "brass";
+			material = "brass";
 
-			fluidBrass = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockBrass = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_BRONZE) {
-			materialName = "bronze";
+			material = "bronze";
 
-			fluidBronze = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockBronze = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_COLDIRON) {
-			materialName = "coldiron";
+			material = "coldiron";
 
-			fluidColdIron = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockColdIron = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_COPPER) {
-			materialName = "copper";
+			material = "copper";
 
-			fluidCopper = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockCopper = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_CUPRONICKEL) {
-			materialName = "cupronickel";
+			material = "cupronickel";
 
-			fluidCupronickel = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockCupronickel = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_ELECTRUM) {
-			materialName = "electrum";
+			material = "electrum";
 
-			fluidElectrum = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockElectrum = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_INVAR) {
-			materialName = "invar";
+			material = "invar";
 
-			fluidInvar = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockInvar = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_LEAD) {
-			materialName = "lead";
+			material = "lead";
 
-			fluidLead = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockLead = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_MERCURY) {
-			materialName = "mercury";
+			material = "mercury";
 
-			fluidMercury = addFluid(materialName, 13594, 2000, 769, 0);
-			fluidBlockMercury = addFluidBlock(materialName);
+			fluidMercury = addFluid(material, 13594, 2000, 769, 0);
+			fluidBlockMercury = addFluidBlock(material);
 		}
 		if (Options.ENABLE_MITHRIL) {
-			materialName = "mithril";
+			material = "mithril";
 
-			fluidMithril = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockMithril = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_NICKEL) {
-			materialName = "nickel";
+			material = "nickel";
 
-			fluidNickel = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockNickel = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_PEWTER) {
-			materialName = "pewter";
+			material = "pewter";
 
-			fluidPewter = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockPewter = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_PLATINUM) {
-			materialName = "platinum";
+			material = "platinum";
 
-			fluidPlatinum = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockPlatinum = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_SILVER) {
-			materialName = "silver";
+			material = "silver";
 
-			fluidSilver = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockSilver = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_STARSTEEL) {
-			materialName = "starsteel";
+			material = "starsteel";
 
-			fluidStarSteel = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockStarSteel = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_STEEL) {
-			materialName = "steel";
+			material = "steel";
 
-			fluidSteel = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockSteel = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_TIN) {
-			materialName = "tin";
+			material = "tin";
 
-			fluidTin = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockTin = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 		if (Options.ENABLE_ZINC) {
-			materialName = "zinc";
+			material = "zinc";
 
-			fluidZinc = addFluid(materialName, 2000, 10000, 769, 10);
-			fluidBlockZinc = addFluidBlock(materialName);
+			addFluid(material, 2000, 10000, 769, 10);
+			addFluidBlock(material);
 		}
 
 		initDone = true;
 	}
 
 	protected static Fluid addFluid(String name, int density, int viscosity, int temperature, int luminosity) {
-		MetalMaterial metal = Materials.getMaterialByName(name);
+		MetalMaterial material = Materials.getMaterialByName(name);
 		int tintColor = 0xFF000000;
-		if (metal != null) {
-			tintColor = metal.getTintColor();
+		if (material != null) {
+			tintColor = material.getTintColor();
 		} else {
 			tintColor = 0xFFD8D8D8; // Hack for Mercury as it doesn't have a metalMaterial
 		}
@@ -320,7 +278,7 @@ public abstract class Fluids {
 	public static Fluid getFluidByName(String name) {
 		return fluidRegistry.get(name);
 	}
-
+		MetalMaterial material = Materials.getMaterialByName(name);
 	/**
 	 * This is the reverse of the getFluidByName(...) method, returning the
 	 * registered name of an fluid instance (Base Metals fluids only).
