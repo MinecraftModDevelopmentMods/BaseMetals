@@ -99,7 +99,9 @@ repositories {
 
 dependencies {
 	// c510ce7d8c = https://github.com/aidancbrady/Mekanism/commit/c510ce7d8cf7810500e032e2f713796078d26c6f
-    deobfCompile "com.github.aidancbrady:Mekanism:c510ce7d8c"
+    deobfCompile ("com.github.aidancbrady:Mekanism:c510ce7d8c") {
+        exclude group: 'MCMultiPart'
+    }
 
     deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
         exclude group: 'mezz.jei'
@@ -116,7 +118,7 @@ dependencies {
     }
     deobfCompile "mmd:orespawn:${orespawn_version}-${mc_version}"
 //    deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
-//    deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
+      deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
 //    compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 }
 
