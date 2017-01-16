@@ -17,10 +17,10 @@ import net.minecraft.item.ItemStack;
  */
 public class ItemMetalHorseArmor extends Item implements IMetalObject, IHorseArmor {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 
-	public ItemMetalHorseArmor(MetalMaterial m) {
-		this.metal = m;
+	public ItemMetalHorseArmor(MetalMaterial material) {
+		this.material = material;
 		this.setCreativeTab(CreativeTabs.COMBAT);
 		this.setMaxStackSize(1);
 	}
@@ -32,17 +32,17 @@ public class ItemMetalHorseArmor extends Item implements IMetalObject, IHorseArm
 
 	@Override
 	public String getArmorTexture(EntityHorse entity, ItemStack stack) {
-		return stack.getItem().getRegistryName().getResourceDomain() + ":textures/entity/horse/armor/horse_armor_" + this.metal.getName() + ".png";
+		return stack.getItem().getRegistryName().getResourceDomain() + ":textures/entity/horse/armor/horse_armor_" + this.material.getName() + ".png";
 	}
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

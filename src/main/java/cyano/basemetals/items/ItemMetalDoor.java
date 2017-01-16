@@ -20,7 +20,7 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 	public ItemMetalDoor(MetalMaterial material) {
 		super(material.doorBlock);
 		this.material = material;
-		this.oreDict = "door" + material.getCapitalizedName();
+		this.oreDict = "door" + this.material.getCapitalizedName();
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 	public ItemMetalDoor(BlockDoor block, MetalMaterial material) {
 		super(block);
 		this.material = material;
-		this.oreDict = "door" + material.getCapitalizedName();
+		this.oreDict = "door" + this.material.getCapitalizedName();
 	}
 
 	@Override

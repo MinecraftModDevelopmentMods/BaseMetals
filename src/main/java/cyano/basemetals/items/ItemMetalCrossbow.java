@@ -3,10 +3,9 @@ package cyano.basemetals.items;
 import java.util.List;
 
 import cyano.basemetals.entity.EntityCustomBolt;
-import cyano.basemetals.init.Items;
 import cyano.basemetals.init.Materials;
+import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.util.Config;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -30,7 +29,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMetalCrossbow extends ItemBow {
+public class ItemMetalCrossbow extends ItemBow implements IMetalObject {
 
 	protected final MetalMaterial material;
 	protected final String repairOreDictName;
@@ -44,14 +43,10 @@ public class ItemMetalCrossbow extends ItemBow {
 	public ItemMetalCrossbow(MetalMaterial material) {
 		this.material = material;
 		this.maxStackSize = 1;
-		this.setMaxDamage(material.getToolDurability());
+		this.setMaxDamage(this.material.getToolDurability());
 		this.setCreativeTab(CreativeTabs.COMBAT);
-		this.repairOreDictName = "ingot" + material.getCapitalizedName();
-		if (Config.Options.ENABLE_STARSTEEL) {
-			this.regenerates = material.equals(Materials.getMaterialByName("starsteel"));
-		} else {
-			this.regenerates = false;
-		}
+		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -68,7 +63,8 @@ public class ItemMetalCrossbow extends ItemBow {
 
 			if ((itemstack != null) || flag) {
 				if (itemstack == null)
-					itemstack = new ItemStack(Items.getItemByName("aluminum_bolt"));
+					// TODO: FIXME
+					itemstack = new ItemStack(Materials.vanilla_iron.bolt);
 
 				final float f = getArrowVelocity(i);
 
@@ -76,7 +72,7 @@ public class ItemMetalCrossbow extends ItemBow {
 					final boolean flag1 = flag && (itemstack.getItem() instanceof ItemMetalBolt); // Forge: Fix consuming custom arrows.
 
 					if (!worldIn.isRemote) {
-						final ItemMetalBolt itemMetalBolt = (ItemMetalBolt) (itemstack.getItem() instanceof ItemMetalBolt ? itemstack.getItem() : Items.getItemByName("aluminum_bolt"));
+						final ItemMetalBolt itemMetalBolt = (ItemMetalBolt) (itemstack.getItem() instanceof ItemMetalBolt ? itemstack.getItem() : Materials.vanilla_iron.bolt);
 						final EntityCustomBolt entitybolt = itemMetalBolt.createBolt(worldIn, itemstack, entityplayer);
 						entitybolt.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
@@ -176,5 +172,16 @@ public class ItemMetalCrossbow extends ItemBow {
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
 		MetalToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
+	}
+
+	@Override
+	public MetalMaterial getMaterial() {
+		return this.material;
+	}
+
+	@Override
+	@Deprecated
+	public MetalMaterial getMetalMaterial() {
+		return this.material;
 	}
 }

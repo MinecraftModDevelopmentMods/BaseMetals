@@ -23,29 +23,29 @@ import net.minecraft.world.World;
  */
 public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material the block is made from
+	 * @param material The material the block is made from
 	 */
-	public BlockMetalBlock(MetalMaterial metal) {
-		this(metal, false);
+	public BlockMetalBlock(MetalMaterial material) {
+		this(material, false);
 	}
 
-	public BlockMetalBlock(MetalMaterial metal, boolean glows) {
+	public BlockMetalBlock(MetalMaterial material, boolean glows) {
 		super(Material.IRON);
 		this.setSoundType(SoundType.METAL);
 		this.fullBlock = true;
 		this.lightOpacity = 255;
 		this.translucent = false;
-		this.metal = metal;
+		this.material = material;
 		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		this.oreDict = "block" + metal.getCapitalizedName();
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.oreDict = "block" + material.getCapitalizedName();
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 		if (glows)
 			this.setLightLevel(0.5f);
 	}
@@ -101,8 +101,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 			final EntityLivingBase placer, final ItemStack src) {
 		super.onBlockPlacedBy(w, coord, bs, placer, src);
 		// achievement
-		if (Options.ENABLE_ACHIEVEMENTS) {
-			if (placer instanceof EntityPlayer)
+		if ((Options.ENABLE_ACHIEVEMENTS) && (placer instanceof EntityPlayer)) {
 				((EntityPlayer) placer).addStat(Achievements.blocktastic, 1);
 		}
 	}
@@ -114,12 +113,12 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

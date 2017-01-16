@@ -28,7 +28,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	private static final float attack_speed = -3.0F;
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final Set<String> toolTypes;
 	private final String repairOreDictName;
 	private final boolean regenerates;
@@ -36,30 +36,26 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 
 	/**
 	 *
-	 * @param metal  The material to make the crackhammer from
+	 * @param material The material to make the crackhammer from
 	 */
-	public ItemMetalCrackHammer(MetalMaterial metal) {
-		super(1 + Materials.getToolMaterialFor(metal).getDamageVsEntity(), attack_speed, Materials.getToolMaterialFor(metal), new HashSet<Block>());
-		this.metal = metal;
-		damageVsEntity = 5F + 2F * metal.getBaseAttackDamage();
+	public ItemMetalCrackHammer(MetalMaterial material) {
+		super(1 + Materials.getToolMaterialFor(material).getDamageVsEntity(), attack_speed, Materials.getToolMaterialFor(material), new HashSet<Block>());
+		this.material = material;
+		damageVsEntity = 5F + 2F * this.material.getBaseAttackDamage();
 		attackSpeed = -3.5F;
-		setMaxDamage((int) (0.75 * metal.getToolDurability()));
-		efficiencyOnProperMaterial = metal.getToolEfficiency();
+		setMaxDamage((int) (0.75 * this.material.getToolDurability()));
+		efficiencyOnProperMaterial = this.material.getToolEfficiency();
 		toolTypes = new HashSet<>();
 		toolTypes.add("crackhammer");
 		toolTypes.add("pickaxe");
-		repairOreDictName = "ingot" + metal.getCapitalizedName();
-		if (Config.Options.ENABLE_STARSTEEL) {
-			regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
-		} else {
-			this.regenerates = false;
-		}
+		repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
 	public float getStrVsBlock(final ItemStack tool, final IBlockState target) {
 		if (isCrushableBlock(target) && canHarvestBlock(target)) {
-			return Math.max(1.0f, 0.5f * metal.getToolEfficiency());
+			return Math.max(1.0f, 0.5f * this.material.getToolEfficiency());
 		}
 		return 1.0f;
 	}
@@ -97,13 +93,11 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 				ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(targetItem);
 				if (recipe != null) {
 					// hardness check
-					if (Config.Options.ENFORCE_HARDNESS) {
-						if (targetItem.getItem() instanceof ItemBlock) {
-							Block b = ((ItemBlock) targetItem.getItem()).getBlock();
-							if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
-								// cannot harvest the block, no crush for you!
-								return EnumActionResult.PASS;
-							}
+					if ((Config.Options.ENFORCE_HARDNESS) && (targetItem.getItem() instanceof ItemBlock)) {
+						Block b = ((ItemBlock) targetItem.getItem()).getBlock();
+						if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
+							// cannot harvest the block, no crush for you!
+							return EnumActionResult.PASS;
 						}
 					}
 					// crush the item (server side only)
@@ -186,10 +180,10 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
 		if (typeRequested != null && toolTypes.contains(typeRequested)) {
 			if (Config.Options.STRONG_HAMMERS) {
-				return metal.getToolHarvestLevel();
+				return material.getToolHarvestLevel();
 			}
 			else {
-				return metal.getToolHarvestLevel() - 1;
+				return material.getToolHarvestLevel() - 1;
 			}
 		}
 		return -1;
@@ -203,14 +197,14 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	@Override
 	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		super.hitEntity(item, target, attacker);
-		MetalToolEffects.extraEffectsOnAttack(metal, item, target, attacker);
+		MetalToolEffects.extraEffectsOnAttack(material, item, target, attacker);
 		return true;
 	}
 
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		MetalToolEffects.extraEffectsOnCrafting(metal, item, world, crafter);
+		MetalToolEffects.extraEffectsOnCrafting(material, item, world, crafter);
 		// achievement
     	if (Options.ENABLE_ACHIEVEMENTS) {
     		crafter.addStat(Achievements.geologist, 1);
@@ -240,25 +234,25 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		// return true if block doesn't need tools
 		return target.getHarvestLevel(target.getDefaultState()) == -1;
 	}
-
+/*
 	public String getMaterialName() {
-		return metal.getName();
+		return this.material.getName();
 	}
-
+*/
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(metal, list);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
 	}
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return metal;
+		return this.material;
 	}
 }

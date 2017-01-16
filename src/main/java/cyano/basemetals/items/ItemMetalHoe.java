@@ -7,7 +7,6 @@ import java.util.Set;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.util.Config;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,7 +24,7 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	protected final Set<String> toolTypes;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
@@ -33,20 +32,16 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 
 	/**
 	 *
-	 * @param metal The material to make the hoe from
+	 * @param material The material to make the hoe from
 	 */
-	public ItemMetalHoe(MetalMaterial metal) {
-		super(Materials.getToolMaterialFor(metal));
-		this.metal = metal;
-		this.setMaxDamage(metal.getToolDurability());
+	public ItemMetalHoe(MetalMaterial material) {
+		super(Materials.getToolMaterialFor(material));
+		this.material = material;
+		this.setMaxDamage(this.material.getToolDurability());
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("hoe");
-		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		if (Config.Options.ENABLE_STARSTEEL) {
-			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
-		} else {
-			this.regenerates = false;
-		}
+		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -62,7 +57,7 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 	@Deprecated
 	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
 		if ((typeRequested != null) && this.toolTypes.contains(typeRequested))
-			return this.metal.getToolHarvestLevel();
+			return this.material.getToolHarvestLevel();
 		return -1;
 	}
 
@@ -74,7 +69,7 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 	@Override
 	public float getStrVsBlock(final ItemStack tool, final IBlockState target) {
 		if (this.canHarvestBlock(target, tool))
-			return Math.max(1.0f, this.metal.getToolEfficiency());
+			return Math.max(1.0f, this.material.getToolEfficiency());
 		else
 			return 1.0f;
 	}
@@ -82,21 +77,21 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 	@Override
 	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		super.hitEntity(item, target, attacker);
-		MetalToolEffects.extraEffectsOnAttack(this.metal, item, target, attacker);
+		MetalToolEffects.extraEffectsOnAttack(this.material, item, target, attacker);
 		return true;
 	}
 
 	@Override
 	public boolean canHarvestBlock(final IBlockState target) {
 		if (this.toolTypes.contains(target.getBlock().getHarvestTool(target)))
-			return this.metal.getToolHarvestLevel() >= target.getBlock().getHarvestLevel(target);
+			return this.material.getToolHarvestLevel() >= target.getBlock().getHarvestLevel(target);
 		return false;
 	}
 
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		MetalToolEffects.extraEffectsOnCrafting(this.metal, item, world, crafter);
+		MetalToolEffects.extraEffectsOnCrafting(this.material, item, world, crafter);
 	}
 
 	@Override
@@ -107,17 +102,17 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	public String getMaterialName() {
-		return this.metal.getName();
+		return this.material.getName();
 	}
 }

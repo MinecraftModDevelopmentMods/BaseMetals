@@ -3,10 +3,8 @@ package cyano.basemetals.items;
 import java.util.List;
 
 import cyano.basemetals.entity.projectile.EntityMetalFishHook;
-import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.util.Config;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,21 +31,21 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
 	 *
-	 * @param metal The material to make the fishing rod from
+	 * @param material The material to make the fishing rod from
 	 */
-	public ItemMetalFishingRod(MetalMaterial metal) {
-		this.metal = metal;
+	public ItemMetalFishingRod(MetalMaterial material) {
+		this.material = material;
 		this.setMaxDamage(64);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(CreativeTabs.TOOLS);
-		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
+		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
 		this.addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
 			@Override
@@ -55,11 +53,7 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 				return entityIn == null ? 0.0F : ((entityIn.getHeldItemMainhand() == stack) && (entityIn instanceof EntityPlayer) && (((EntityPlayer) entityIn).fishEntity != null) ? 1.0F : 0.0F);
 			}
 		});
-		if (Config.Options.ENABLE_STARSTEEL) {
-			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
-		} else {
-			this.regenerates = false;
-		}
+		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -97,25 +91,25 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
-
+/*
 	public String getMaterialName() {
-		return this.metal.getName();
+		return this.material.getName();
 	}
-
+*/
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(this.metal, list);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
 	}
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

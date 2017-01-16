@@ -2,7 +2,6 @@ package cyano.basemetals.blocks;
 
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.registry.IOreDictionaryEntry;
 import net.minecraft.block.BlockPressurePlate;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -12,36 +11,31 @@ import net.minecraft.block.material.Material;
  * @author Jasmine Iwanek
  *
  */
-public class BlockMetalPressurePlate extends BlockPressurePlate implements IOreDictionaryEntry, IMetalObject {
+public class BlockMetalPressurePlate extends BlockPressurePlate implements IMetalObject {
 
-	final MetalMaterial metal;
+	final MetalMaterial material;
 
 	/**
 	 *
-	 * @param metal The material the pressure plate is made from
+	 * @param material The material the pressure plate is made from
 	 */
-	public BlockMetalPressurePlate(MetalMaterial metal) {
+	public BlockMetalPressurePlate(MetalMaterial material) {
 		super(Material.IRON, BlockPressurePlate.Sensitivity.MOBS);
 		this.setSoundType(SoundType.METAL);
-		this.metal = metal;
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.material = material;
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return "pressure" + this.metal.getCapitalizedName();
+		return this.material;
 	}
 }

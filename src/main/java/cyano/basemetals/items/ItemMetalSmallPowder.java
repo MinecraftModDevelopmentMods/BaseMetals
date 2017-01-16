@@ -13,17 +13,17 @@ import net.minecraft.item.Item;
  */
 public class ItemMetalSmallPowder extends Item implements IOreDictionaryEntry, IMetalObject {
 
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material to make the small powder from
+	 * @param material The material to make the small powder from
 	 */
-	public ItemMetalSmallPowder(MetalMaterial metal) {
-		this.metal = metal;
+	public ItemMetalSmallPowder(MetalMaterial material) {
+		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "dustTiny" + metal.getCapitalizedName();
+		this.oreDict = "dustTiny" + this.material.getCapitalizedName();
 	}
 
 	@Override
@@ -33,12 +33,12 @@ public class ItemMetalSmallPowder extends Item implements IOreDictionaryEntry, I
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

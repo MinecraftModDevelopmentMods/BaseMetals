@@ -13,15 +13,17 @@ import net.minecraft.world.World;
 
 public class BlockButtonMetal extends BlockButton implements IOreDictionaryEntry, IMetalObject {
 
-	final MetalMaterial metal;
+	final MetalMaterial material;
+	private final String oreDict;
 
-	public BlockButtonMetal(MetalMaterial metal) {
+	public BlockButtonMetal(MetalMaterial material) {
 		super(false);
 		this.setSoundType(SoundType.METAL);
-		this.metal = metal;
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.material = material;
+		this.oreDict = "button" + this.material.getCapitalizedName();
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}
 
 	@Override
@@ -36,17 +38,17 @@ public class BlockButtonMetal extends BlockButton implements IOreDictionaryEntry
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	public String getOreDictionaryName() {
-		return "button" + this.metal.getCapitalizedName();
+		return this.oreDict;
 	}
 }

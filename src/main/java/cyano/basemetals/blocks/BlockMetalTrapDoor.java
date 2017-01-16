@@ -19,21 +19,21 @@ import net.minecraft.world.World;
  */
 public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implements IOreDictionaryEntry, IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material the trapdoor is made from
+	 * @param material The material the trapdoor is made from
 	 */
-	public BlockMetalTrapDoor(MetalMaterial metal) {
+	public BlockMetalTrapDoor(MetalMaterial material) {
 		super(Material.IRON);
-		this.metal = metal;
-		this.oreDict = "trapdoor" + metal.getCapitalizedName();
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
+		this.material = material;
+		this.oreDict = "trapdoor" + material.getCapitalizedName();
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
 		this.blockSoundType = SoundType.METAL;
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 
@@ -41,7 +41,7 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 	public boolean onBlockActivated(final World world, final BlockPos coord, IBlockState state,
 									final EntityPlayer player, EnumHand hand, ItemStack heldItem, final EnumFacing facing,
 									final float partialX, final float partialY, final float partialZ) {
-		if (this.metal.getToolHarvestLevel() > 1)
+		if (this.material.getToolHarvestLevel() > 1)
 			return true;
 		state = state.cycleProperty(BlockTrapDoor.OPEN);
 		world.setBlockState(coord, state, 2);
@@ -56,12 +56,12 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

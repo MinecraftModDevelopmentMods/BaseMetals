@@ -17,17 +17,17 @@ import net.minecraft.world.World;
  */
 public class ItemMetalArrow extends ItemArrow implements IOreDictionaryEntry, IMetalObject {
 
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material to make the arrow from
+	 * @param material The material to make the arrow from
 	 */
-	public ItemMetalArrow(MetalMaterial metal) {
-		this.metal = metal;
+	public ItemMetalArrow(MetalMaterial material) {
+		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "arrow" + metal.getCapitalizedName();
+		this.oreDict = "arrow" + this.material.getCapitalizedName();
 	}
 
 	/**
@@ -48,12 +48,12 @@ public class ItemMetalArrow extends ItemArrow implements IOreDictionaryEntry, IM
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

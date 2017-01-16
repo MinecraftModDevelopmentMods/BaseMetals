@@ -1,7 +1,6 @@
 package cyano.basemetals.items;
 
 import cyano.basemetals.init.Achievements;
-import cyano.basemetals.init.Items;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
@@ -45,7 +44,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
     private static final ResourceLocation fireproofPotionKey = new ResourceLocation("fire_resistance");
 
     private final String customTexture;
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final String repairOreDictName;
 
 	private static final int UPDATE_INTERVAL = 11;
@@ -57,12 +56,12 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	private static final Map<EntityPlayer, AtomicInteger> adamantineUpdateCache = new HashMap<>();
 	private static final Map<EntityPlayer, AtomicInteger> leadUpdateCache = new HashMap<>();
 
-	protected ItemMetalArmor(MetalMaterial metal, ArmorMaterial armorMat, int renderIndex,
+	protected ItemMetalArmor(MetalMaterial material, ArmorMaterial armorMat, int renderIndex,
 							 EntityEquipmentSlot slot) {
 		super(armorMat, renderIndex, slot);
-		this.metal = metal;
-		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		this.customTexture = Loader.instance().activeModContainer().getModId() + ":textures/models/armor/" + metal.getName() + "_layer_" + (slot == EntityEquipmentSlot.LEGS ? 2 : 1) + ".png";
+		this.material = material;
+		this.repairOreDictName = "ingot" + material.getCapitalizedName();
+		this.customTexture = Loader.instance().activeModContainer().getModId() + ":textures/models/armor/" + material.getName() + "_layer_" + (slot == EntityEquipmentSlot.LEGS ? 2 : 1) + ".png";
 	}
 
 	@Override
@@ -73,7 +72,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			return;
 		}
 		if(!w.isRemote && w.getTotalWorldTime() > playerUpdateTimestampMap.get(player).get()) {
-	//		FMLLog.info("onArmorTick update triggered at time=" + w.getTotalWorldTime() + " (update target was " + playerUpdateTimestampMap.get(player).get() + ") for player " + player.getName() + " by item " + armor); // debug code
 			playerUpdateTimestampMap.get(player).set(w.getTotalWorldTime() + UPDATE_INTERVAL);
 			int updateCount = playerUpdateCountMap.get(player).getAndIncrement();
 			for(int i = 0; i < 4; i++) {
@@ -84,8 +82,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		}
 	}
 
-	protected void doArmorUpdate(final World w, final EntityPlayer player, final ItemStack armor,
-			int i) {
+	protected void doArmorUpdate(final World w, final EntityPlayer player, final ItemStack armor, int i) {
 		// some sanity checks
 		if(armor == null)
 			return;
@@ -96,45 +93,39 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		Item armorItem = armor.getItem();
 		if(i % 2 == 0) {
 			// count armor pieces
-			if (Options.ENABLE_STARSTEEL) {
-				if(((ItemMetalArmor)armorItem).metal.equals(Materials.getMaterialByName("starsteel"))) {
-					starsteel: {
-						// used to count up the starsteel armor items
-						if(!(starsteelUpdateCache.containsKey(player))) {
-							starsteelUpdateCache.put(player, new AtomicInteger(0));
-						}
-						starsteelUpdateCache.get(player).incrementAndGet();
-						// Achievement
-                    	if (Options.ENABLE_ACHIEVEMENTS) {
-                    		if(armorItem == Items.starsteel_boots)
-                    			player.addStat(Achievements.moon_boots, 1);
-                    	}
-						break starsteel;
+			if ((Options.ENABLE_STARSTEEL) && (((ItemMetalArmor)armorItem).material.getName().equals("starsteel"))) {
+				starsteel: {
+					// used to count up the starsteel armor items
+					if(!(starsteelUpdateCache.containsKey(player))) {
+						starsteelUpdateCache.put(player, new AtomicInteger(0));
 					}
+					starsteelUpdateCache.get(player).incrementAndGet();
+					// Achievement
+                   	if (Options.ENABLE_ACHIEVEMENTS) {
+                   		if(armorItem == Materials.starsteel.boots)
+                   			player.addStat(Achievements.moon_boots, 1);
+                   	}
+					break starsteel;
 				}
 			}
-			if (Options.ENABLE_LEAD) {
-				if(((ItemMetalArmor)armorItem).metal.equals(Materials.getMaterialByName("lead"))) {
-					lead: {
-						// used to count up the starsteel armor items
-						if(!(leadUpdateCache.containsKey(player))) {
-							leadUpdateCache.put(player, new AtomicInteger(0));
-						}
-						leadUpdateCache.get(player).incrementAndGet();
-						break lead;
+			if ((Options.ENABLE_LEAD) && (((ItemMetalArmor)armorItem).material.getName().equals("lead"))) {
+				lead: {
+					// used to count up the starsteel armor items
+					if(!(leadUpdateCache.containsKey(player))) {
+						leadUpdateCache.put(player, new AtomicInteger(0));
 					}
+					leadUpdateCache.get(player).incrementAndGet();
+					break lead;
 				}
 			}
-			if (Options.ENABLE_ADAMANTINE) {
-				if(((ItemMetalArmor)armorItem).metal.equals(Materials.getMaterialByName("adamantine"))) {
-					adamantine: {
-						// used to count up the adamantine armor items
-						if(!(adamantineUpdateCache.containsKey(player))) {
-							adamantineUpdateCache.put(player, new AtomicInteger(0));
-						}
-						adamantineUpdateCache.get(player).incrementAndGet();
-						break adamantine;
+			if ((Options.ENABLE_ADAMANTINE) && (((ItemMetalArmor)armorItem).material.getName().equals("adamantine"))) {
+				adamantine: {
+					// used to count up the adamantine armor items
+					if(!(adamantineUpdateCache.containsKey(player))) {
+						adamantineUpdateCache.put(player, new AtomicInteger(0));
 					}
+					adamantineUpdateCache.get(player).incrementAndGet();
+					break adamantine;
 				}
 			}
 		} else {
@@ -182,25 +173,23 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 						player.addPotionEffect(protection);
 					}
 					// Achievement
-                	if (Options.ENABLE_ACHIEVEMENTS) {
-                		if(num == 4) {
-                			player.addStat(Achievements.juggernaut, 1);
-                		}
+                	if ((Options.ENABLE_ACHIEVEMENTS) && (num == 4)) {
+                		player.addStat(Achievements.juggernaut, 1);
                 	}
 					break adamantine;
 				}
 			}
 			// full suit of cold-iron makes you fire-proof
 			if (Options.ENABLE_COLDIRON) {
-				if(armorItem == Items.coldiron_helmet) {
-					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Items.coldiron_chestplate
-							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Items.coldiron_leggings
-							&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Items.coldiron_boots) {
+				if(armorItem == Materials.coldiron.helmet) {
+					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.coldiron.chestplate
+							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.coldiron.leggings
+							&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.coldiron.boots) {
 						final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
 						player.addPotionEffect(fireProtection);
 						// Achievement
                     	if (Options.ENABLE_ACHIEVEMENTS) {
-                    		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Items.coldiron_sword) {
+                    		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.coldiron.sword) {
                     			player.addStat(Achievements.demon_slayer, 1);
                     		}
                     	}
@@ -209,10 +198,10 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			}
 			// full suit of mithril protects you from withering, poison, nausea, and hunger effects
 			if (Options.ENABLE_MITHRIL) {
-				if(armorItem == Items.mithril_helmet) {
-					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Items.mithril_chestplate
-							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Items.mithril_leggings
-							&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Items.mithril_boots) {
+				if(armorItem == Materials.mithril.helmet) {
+					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.mithril.chestplate
+							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.mithril.leggings
+							&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.mithril.boots) {
                     	final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
                     	Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
                     	while(effectIterator.hasNext()) {
@@ -227,7 +216,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
                     	}
                     	// Achievement
                     	if (Options.ENABLE_ACHIEVEMENTS) {
-                    		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Items.mithril_sword) {
+                    		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.mithril.sword) {
 								player.addStat(Achievements.angel_of_death, 1);
 							}
                     	}
@@ -236,10 +225,10 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			}
 			// full suit of aquarium makes you breathe and heal underwater
 			if (Options.ENABLE_AQUARIUM) {
-				if(armorItem == Items.aquarium_helmet && player.posY > 0 && player.posY < 255) {
-					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Items.aquarium_chestplate
-							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Items.aquarium_leggings
-							&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Items.aquarium_boots) {
+				if(armorItem == Materials.aquarium.helmet && player.posY > 0 && player.posY < 255) {
+					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.aquarium.chestplate
+							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.aquarium.leggings
+							&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.aquarium.boots) {
 						Block b1 = w.getBlockState(new BlockPos(player.posX,player.posY, player.posZ)).getBlock();
 						Block b2 = w.getBlockState(new BlockPos(player.posX,player.posY + 1, player.posZ)).getBlock();
 						if(b1 == Blocks.WATER && b2 == Blocks.WATER) {
@@ -259,71 +248,99 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		}
 	}
 
+	
 	/**
 	 *
-	 * @param metal The material to make the helmet from
+	 * @param material The material to make the armor from
+	 * @param slot Type of armor
+	 * @return The armor
+	 */
+	protected static ItemMetalArmor createArmorBase(MetalMaterial material, EntityEquipmentSlot slot) {
+		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
+		if(amaterial == null) {
+			// uh-oh
+			FMLLog.severe("Failed to load armor material enum for " + material);
+		}
+		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), slot);
+	}
+
+	/**
+	 *
+	 * @param material The material to make the helmet from
 	 * @return The Helmet
 	 */
-	public static ItemMetalArmor createHelmet(MetalMaterial metal) {
-		ArmorMaterial material = Materials.getArmorMaterialFor(metal);
-		if(material == null) {
+	public static ItemMetalArmor createHelmet(MetalMaterial material) {
+		return createArmorBase(material, EntityEquipmentSlot.HEAD);
+		/*
+		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
+		if(amaterial == null) {
 			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for " + metal);
+			FMLLog.severe("Failed to load armor material enum for " + material);
 		}
-		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.HEAD);
+		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), EntityEquipmentSlot.HEAD);
+		*/
 	}
 
 	/**
 	 * 
-	 * @param metal The material to make the chestplate from
+	 * @param material The material to make the chestplate from
 	 * @return The Chestplate
 	 */
-	public static ItemMetalArmor createChestplate(MetalMaterial metal) {
-		ArmorMaterial material = Materials.getArmorMaterialFor(metal);
-		if(material == null) {
+	public static ItemMetalArmor createChestplate(MetalMaterial material) {
+		return createArmorBase(material, EntityEquipmentSlot.CHEST);
+		/*
+		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
+		if(amaterial == null) {
 			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for " + metal);
+			FMLLog.severe("Failed to load armor material enum for " + material);
 		}
-		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.CHEST);
+		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), EntityEquipmentSlot.CHEST);
+		*/
 	}
 
 	/**
 	 * 
-	 * @param metal The material to make the leggings from
+	 * @param material The material to make the leggings from
 	 * @return The Leggings
 	 */
-	public static ItemMetalArmor createLeggings(MetalMaterial metal) {
-		ArmorMaterial material = Materials.getArmorMaterialFor(metal);
-		if(material == null) {
+	public static ItemMetalArmor createLeggings(MetalMaterial material) {
+		return createArmorBase(material, EntityEquipmentSlot.LEGS);
+		/*
+		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
+		if(amaterial == null) {
 			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for " + metal);
+			FMLLog.severe("Failed to load armor material enum for " + material);
 		}
-		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.LEGS);
+		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), EntityEquipmentSlot.LEGS);
+		*/
 	}
 
 	/**
 	 * 
-	 * @param metal The material to make the boots from
+	 * @param material The material to make the boots from
 	 * @return The Boots
 	 */
-	public static ItemMetalArmor createBoots(MetalMaterial metal) {
-		ArmorMaterial material = Materials.getArmorMaterialFor(metal);
-		if(material == null) {
+	public static ItemMetalArmor createBoots(MetalMaterial material) {
+		return createArmorBase(material, EntityEquipmentSlot.FEET);
+		/*
+		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
+		if(amaterial == null) {
 			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for " + metal);
+			FMLLog.severe("Failed to load armor material enum for " + material);
 		}
-		return new ItemMetalArmor(metal, material, material.ordinal(), EntityEquipmentSlot.FEET);
+		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), EntityEquipmentSlot.FEET);
+		*/
 	}
 
 	@SideOnly(Side.CLIENT)
-	@Override public String getArmorTexture(ItemStack stack, Entity e, EntityEquipmentSlot slot, String layer){
+	@Override public String getArmorTexture(ItemStack stack, Entity e, EntityEquipmentSlot slot, String layer) {
 		return customTexture;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b){
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
-		MetalToolEffects.addArmorSpecialPropertiesToolTip(metal, list);
+		MetalToolEffects.addArmorSpecialPropertiesToolTip(material, list);
 	}
 
 	/**
@@ -357,12 +374,12 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return metal;
+		return this.material;
 	}
 }

@@ -3,10 +3,9 @@ package cyano.basemetals.items;
 import java.util.List;
 
 import cyano.basemetals.entity.EntityCustomArrow;
-import cyano.basemetals.init.Items;
 import cyano.basemetals.init.Materials;
+import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.util.Config;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -30,27 +29,23 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMetalBow extends ItemBow {
+public class ItemMetalBow extends ItemBow implements IMetalObject {
 
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
 	 *
-	 * @param metal The material to make the bow from
+	 * @param material The material to make the bow from
 	 */
-	public ItemMetalBow(MetalMaterial metal) {
-		this.metal = metal;
-		this.setMaxDamage(metal.getToolDurability());
+	public ItemMetalBow(MetalMaterial material) {
+		this.material = material;
+		this.setMaxDamage(this.material.getToolDurability());
 		this.setCreativeTab(CreativeTabs.COMBAT);
-		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		if (Config.Options.ENABLE_STARSTEEL) {
-			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
-		} else {
-			this.regenerates = false;
-		}
+		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -67,7 +62,8 @@ public class ItemMetalBow extends ItemBow {
 
 			if ((itemstack != null) || flag) {
 				if (itemstack == null)
-					itemstack = new ItemStack(Items.getItemByName("aluminum_arrow"));
+					// TODO: FIXME
+					itemstack = new ItemStack(Materials.vanilla_iron.arrow);
 
 				final float f = getArrowVelocity(i);
 
@@ -75,7 +71,8 @@ public class ItemMetalBow extends ItemBow {
 					final boolean flag1 = flag && (itemstack.getItem() instanceof ItemMetalArrow); // Forge: Fix consuming custom arrows.
 
 					if (!worldIn.isRemote) {
-						final ItemMetalArrow itemMetalArrow = (ItemMetalArrow) (itemstack.getItem() instanceof ItemMetalArrow ? itemstack.getItem() : Items.getItemByName("aluminum_arrow"));
+						// TODO: FIXME
+						final ItemMetalArrow itemMetalArrow = (ItemMetalArrow) (itemstack.getItem() instanceof ItemMetalArrow ? itemstack.getItem() : Materials.vanilla_iron.arrow);
 						final EntityCustomArrow entityarrow = itemMetalArrow.createArrow(worldIn, itemstack, entityplayer);
 						entityarrow.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
@@ -169,12 +166,23 @@ public class ItemMetalBow extends ItemBow {
 	}
 
 	public String getMaterialName() {
-		return this.metal.getName();
+		return this.material.getName();
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(this.metal, list);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
+	}
+
+	@Override
+	public MetalMaterial getMaterial() {
+		return this.material;
+	}
+
+	@Override
+	@Deprecated
+	public MetalMaterial getMetalMaterial() {
+		return this.material;
 	}
 }

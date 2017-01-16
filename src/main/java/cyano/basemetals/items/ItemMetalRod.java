@@ -13,17 +13,17 @@ import net.minecraft.creativetab.CreativeTabs;
  */
 public class ItemMetalRod extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material to make the rod from
+	 * @param material The material to make the rod from
 	 */
-	public ItemMetalRod(MetalMaterial metal) {
-		this.metal = metal;
+	public ItemMetalRod(MetalMaterial material) {
+		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "rod" + metal.getCapitalizedName();
+		this.oreDict = "rod" + this.material.getCapitalizedName();
 	}
 
 	@Override
@@ -33,12 +33,12 @@ public class ItemMetalRod extends net.minecraft.item.Item implements IOreDiction
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

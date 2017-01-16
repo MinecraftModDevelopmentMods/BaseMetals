@@ -4,8 +4,8 @@ import cyano.basemetals.material.MetalMaterial;
 
 public class BlockDoubleMetalSlab extends BlockMetalSlab {
 
-	public BlockDoubleMetalSlab(MetalMaterial metal) {
-		super(metal);
+	public BlockDoubleMetalSlab(MetalMaterial material) {
+		super(material);
 	}
 
 	@Override

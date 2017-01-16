@@ -21,33 +21,36 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class BlockMetalWall extends BlockWall implements IOreDictionaryEntry, IMetalObject {
 
-	final MetalMaterial metal;
+	final MetalMaterial material;
+	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal
+	 * @param material The material the wall is made from
 	 */
-	public BlockMetalWall(MetalMaterial metal) {
-		super(metal.block);
+	public BlockMetalWall(MetalMaterial material) {
+		super(material.block);
 		this.setSoundType(SoundType.METAL);
-		this.metal = metal;
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.material = material;
+		this.oreDict = "wall" + this.material.getCapitalizedName();
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}
 
 	/**
 	 *
-	 * @param metal
-	 * @param modelBlock
+	 * @param material The material the wall is made from
+	 * @param modelBlock The block to get the model from
 	 */
-	public BlockMetalWall(MetalMaterial metal, Block modelBlock) {
+	public BlockMetalWall(MetalMaterial material, Block modelBlock) {
 		super(modelBlock);
 		this.setSoundType(SoundType.METAL);
-		this.metal = metal;
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.material = material;
+		this.oreDict = "wall" + this.material.getCapitalizedName();
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}
 
 	@Override
@@ -58,17 +61,17 @@ public class BlockMetalWall extends BlockWall implements IOreDictionaryEntry, IM
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	public String getOreDictionaryName() {
-		return "wall" + this.metal.getCapitalizedName();
+		return this.oreDict;
 	}
 }

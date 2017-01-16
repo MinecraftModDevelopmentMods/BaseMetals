@@ -1,6 +1,6 @@
 package cyano.basemetals.entity;
 
-import cyano.basemetals.init.Items;
+import cyano.basemetals.init.Materials;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.item.ItemStack;
@@ -39,7 +39,7 @@ public class EntityCustomBolt extends EntityTippedArrow {
 	protected ItemStack getArrowStack() {
 		if (this.itemStack == null) {
 			// TODO: FIXME
-			this.itemStack = new ItemStack(Items.getItemByName("iron_bolt"));
+			this.itemStack = new ItemStack(Materials.vanilla_iron.bolt);
 		}
 
 		return new ItemStack(this.itemStack.getItem(), 1, this.itemStack.getItemDamage());

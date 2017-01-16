@@ -1,5 +1,6 @@
 package cyano.basemetals.blocks;
 
+import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
 import cyano.basemetals.registry.IOreDictionaryEntry;
@@ -15,22 +16,22 @@ import net.minecraft.world.IBlockAccess;
  */
 public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material the ore is made from
+	 * @param material The material the ore is made from
 	 */
-	public BlockMetalOre(MetalMaterial metal) {
+	public BlockMetalOre(MetalMaterial material) {
 		super();
 		this.setSoundType(SoundType.STONE);
-		this.metal = metal;
-		this.blockHardness = Math.max(5f, metal.getOreBlockHardness());
-		this.blockResistance = Math.max(1.5f, metal.getBlastResistance() * 0.75f);
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
-		this.oreDict = "ore" + metal.getCapitalizedName();
-		// FMLLog.info(metal.getName() + " ore harvest level set to " + metal.getRequiredHarvestLevel());
+		this.material = material;
+		this.blockHardness = Math.max(5f, material.getOreBlockHardness());
+		this.blockResistance = Math.max(1.5f, material.getBlastResistance() * 0.75f);
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.oreDict = "ore" + material.getCapitalizedName();
+		// FMLLog.info(material.getName() + " ore harvest level set to " + material.getRequiredHarvestLevel());
 	}
 
 	@Override
@@ -40,13 +41,13 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 
 	@Override
 	public boolean canEntityDestroy(IBlockState bs, IBlockAccess w, BlockPos coord, Entity entity) {
-		if ((this == cyano.basemetals.init.Blocks.starsteel_ore) && (entity instanceof net.minecraft.entity.boss.EntityDragon))
+		if ((this == Materials.starsteel.ore) && (entity instanceof net.minecraft.entity.boss.EntityDragon))
 			return false;
 		return super.canEntityDestroy(bs, w, coord, entity);
 	}
 
 	public MetalMaterial getMetal() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
@@ -56,12 +57,12 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

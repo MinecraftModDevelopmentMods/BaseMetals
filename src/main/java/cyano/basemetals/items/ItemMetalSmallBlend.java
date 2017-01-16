@@ -18,17 +18,17 @@ import net.minecraft.world.World;
  */
 public class ItemMetalSmallBlend extends Item implements IOreDictionaryEntry, IMetalObject {
 
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material to make the small blend from
+	 * @param material The material to make the small blend from
 	 */
-	public ItemMetalSmallBlend(MetalMaterial metal) {
-		this.metal = metal;
+	public ItemMetalSmallBlend(MetalMaterial material) {
+		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "dustTiny" + metal.getCapitalizedName(); // same oreDict entry as powder
+		this.oreDict = "dustTiny" + this.material.getCapitalizedName(); // same oreDict entry as powder
 	}
 
 	@Override
@@ -47,12 +47,12 @@ public class ItemMetalSmallBlend extends Item implements IOreDictionaryEntry, IM
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

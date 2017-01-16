@@ -14,15 +14,17 @@ import net.minecraft.item.ItemSlab;
  */
 public class ItemMetalSlab extends ItemSlab implements IOreDictionaryEntry, IMetalObject {
 
-	final MetalMaterial metal;
+	final MetalMaterial material;
+	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material to make the slab from
+	 * @param material The material to make the slab from
 	 */
-	public ItemMetalSlab(MetalMaterial metal) {
-		super(metal.half_slab, metal.half_slab, metal.double_slab);
-		this.metal = metal;
+	public ItemMetalSlab(MetalMaterial material) {
+		super(material.half_slab, material.half_slab, material.double_slab);
+		this.material = material;
+		this.oreDict = "slab" + this.material.getCapitalizedName();
 	}
 
 	/**
@@ -34,22 +36,23 @@ public class ItemMetalSlab extends ItemSlab implements IOreDictionaryEntry, IMet
 	 */
 	public ItemMetalSlab(MetalMaterial metal, Block block, BlockSlab slab, BlockSlab doubleslab) {
 		super(block, slab, doubleslab);
-		this.metal = metal;
+		this.material = metal;
+		this.oreDict = "slab" + this.material.getCapitalizedName();
 	}
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	public String getOreDictionaryName() {
-		return "slab" + this.metal.getCapitalizedName();
+		return this.oreDict;
 	}
 }

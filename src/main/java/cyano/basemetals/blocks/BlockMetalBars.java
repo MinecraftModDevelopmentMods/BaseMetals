@@ -14,21 +14,21 @@ import net.minecraft.block.material.Material;
  */
 public class BlockMetalBars extends net.minecraft.block.BlockPane implements IOreDictionaryEntry, IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material the bars are made from
+	 * @param material The material the bars are made from
 	 */
-	public BlockMetalBars(MetalMaterial metal) {
+	public BlockMetalBars(MetalMaterial material) {
 		super(Material.IRON, true);
 		this.setSoundType(SoundType.METAL);
-		this.metal = metal;
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
-		this.oreDict = "bars" + metal.getCapitalizedName();
+		this.material = material;
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.oreDict = "bars" + material.getCapitalizedName();
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class BlockMetalBars extends net.minecraft.block.BlockPane implements IOr
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

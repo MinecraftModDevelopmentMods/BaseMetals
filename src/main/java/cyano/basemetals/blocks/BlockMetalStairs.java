@@ -14,48 +14,51 @@ import net.minecraft.block.SoundType;
  */
 public class BlockMetalStairs extends BlockStairs implements IOreDictionaryEntry, IMetalObject {
 
-	final MetalMaterial metal;
+	final MetalMaterial material;
+	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal
+	 * @param material The material the stairs are made from
 	 */
-	public BlockMetalStairs(MetalMaterial metal) {
-		super(metal.block.getDefaultState());
+	public BlockMetalStairs(MetalMaterial material) {
+		super(material.block.getDefaultState());
 		this.setSoundType(SoundType.METAL);
-		this.metal = metal;
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.material = material;
+		this.oreDict = "stairs" + this.material.getCapitalizedName();
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}
 
 	/**
 	 *
-	 * @param metal
-	 * @param modelBlock
+	 * @param material The material the stairs are made from
+	 * @param modelBlock The block to use for the model
 	 */
-	public BlockMetalStairs(MetalMaterial metal, Block modelBlock) {
+	public BlockMetalStairs(MetalMaterial material, Block modelBlock) {
 		super(modelBlock.getDefaultState());
 		this.setSoundType(SoundType.METAL);
-		this.metal = metal;
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.material = material;
+		this.oreDict = "stairs" + this.material.getCapitalizedName();
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	public String getOreDictionaryName() {
-		return "stairs" + this.metal.getCapitalizedName();
+		return this.oreDict;
 	}
 }

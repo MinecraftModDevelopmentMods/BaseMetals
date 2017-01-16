@@ -34,22 +34,42 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 	 */
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
-	@Override
-	public IBlockState withRotation(IBlockState state, Rotation rot) {
-		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
-	}
-
-	@Override
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
-	}
-
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final String oreDict;
 
 	private static final float thickness = 1.0f / 16.0f;
 
 	private static final AxisAlignedBB[] BOXES = new AxisAlignedBB[EnumFacing.values().length];
+
+	/**
+	 *
+	 * @param material The Material the plate is made from
+	 */
+	public BlockMetalPlate(MetalMaterial material) {
+		super(Material.IRON);
+		this.blockSoundType = SoundType.METAL;
+		this.material = material;
+		this.oreDict = "plate" + material.getCapitalizedName();
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.setDefaultState(this.blockState.getBaseState()
+				.withProperty(FACING, EnumFacing.NORTH));
+		this.useNeighborBrightness = true;
+	}
+
+	@Override
+	@Deprecated
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
+		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+	}
+
+	@Override
+	@Deprecated
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
+	}
+
 	static {
 		for (int i = 0; i < EnumFacing.values().length; i++) {
 			final EnumFacing orientation = EnumFacing.values()[i];
@@ -84,34 +104,20 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 		}
 	}
 
-	/**
-	 *
-	 * @param metal
-	 */
-	public BlockMetalPlate(MetalMaterial metal) {
-		super(Material.IRON);
-		this.blockSoundType = SoundType.METAL;
-		this.metal = metal;
-		this.oreDict = "plate" + metal.getCapitalizedName();
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
-		this.setDefaultState(this.blockState.getBaseState()
-				.withProperty(FACING, EnumFacing.NORTH));
-		this.useNeighborBrightness = true;
-	}
-
 	@Override
+	@Deprecated
 	public boolean isOpaqueCube(IBlockState bs) {
 		return false;
 	}
 
 	@Override
+	@Deprecated
 	public boolean isFullCube(IBlockState bs) {
 		return false;
 	}
 
 	@Override
+	@Deprecated
 	public IBlockState getStateForPlacement(final World w, final BlockPos coord, final EnumFacing face,
 									 final float partialX, final float partialY, final float partialZ,
 									 final int i, final EntityLivingBase placer) {
@@ -188,14 +194,14 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 	}
 
 	@Override
+	@Deprecated
 	public IBlockState getStateFromMeta(final int meta) {
 		return this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
 	}
 
 	@Override
 	public int getMetaFromState(final IBlockState bs) {
-		final int i = (bs.getValue(FACING)).getIndex();
-		return i;
+		return (bs.getValue(FACING)).getIndex();
 	}
 
 	@Override
@@ -204,12 +210,14 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 	}
 
 	@Override
+	@Deprecated
 	public AxisAlignedBB getBoundingBox(final IBlockState bs, final IBlockAccess world, final BlockPos coord) {
 		final EnumFacing orientation = bs.getValue(FACING);
 		return BOXES[orientation.ordinal()];
 	}
 
 	@Override
+	@Deprecated
 	public void addCollisionBoxToList(final IBlockState bs, final World world, final BlockPos coord,
 									  final AxisAlignedBB box, final List<AxisAlignedBB> collisionBoxList,
 									  final Entity entity) {
@@ -225,12 +233,12 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

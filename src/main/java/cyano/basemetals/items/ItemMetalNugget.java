@@ -13,17 +13,17 @@ import net.minecraft.creativetab.CreativeTabs;
  */
 public class ItemMetalNugget extends net.minecraft.item.Item implements IOreDictionaryEntry, IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material to make the nugget from
+	 * @param material The material to make the nugget from
 	 */
-	public ItemMetalNugget(MetalMaterial metal) {
-		this.metal = metal;
+	public ItemMetalNugget(MetalMaterial material) {
+		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "nugget" + metal.getCapitalizedName();
+		this.oreDict = "nugget" + this.material.getCapitalizedName();
 	}
 
 	@Override
@@ -33,12 +33,12 @@ public class ItemMetalNugget extends net.minecraft.item.Item implements IOreDict
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

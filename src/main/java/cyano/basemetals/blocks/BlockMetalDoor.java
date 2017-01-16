@@ -26,19 +26,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMetalObject {
 
-	private final MetalMaterial metal;
+	private final MetalMaterial material;
 
 	/**
 	 *
-	 * @param metal The material the door is made from
+	 * @param material The material the door is made from
 	 */
-	public BlockMetalDoor(MetalMaterial metal) {
-		super((metal.getToolHarvestLevel() > 0) ? Material.IRON : Material.ROCK);
+	public BlockMetalDoor(MetalMaterial material) {
+		super((material.getToolHarvestLevel() > 0) ? Material.IRON : Material.ROCK);
 		this.setSoundType(SoundType.METAL);
-		this.metal = metal;
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.material = material;
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 
@@ -46,12 +46,12 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 	@Override
 	@Deprecated
 	public ItemStack getItem(final World w, final BlockPos c, final IBlockState bs) {
-		return new ItemStack(this.metal.door);
+		return new ItemStack(this.material.door);
 	}
 
 	@Override
 	public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
-		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null : this.metal.door;
+		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null : this.material.door;
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 									final EnumHand hand, ItemStack heldItem,
 									final EnumFacing face,
 									final float partialX, final float partialY, final float partialZ) {
-		if (this.metal.getToolHarvestLevel() > 1)
+		if (this.material.getToolHarvestLevel() > 1)
 			return false;
 		final BlockPos pos = (blockstate.getValue(BlockDoor.HALF) == EnumDoorHalf.LOWER) ? coord : coord.down();
 		final IBlockState bs = coord.equals(pos) ? blockstate : world.getBlockState(pos);
@@ -75,12 +75,12 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

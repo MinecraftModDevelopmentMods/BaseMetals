@@ -5,7 +5,6 @@ import java.util.List;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.util.Config;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -24,7 +23,7 @@ import net.minecraftforge.oredict.OreDictionary;
  *
  */
 public class ItemMetalSword extends ItemSword implements IMetalObject {
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
 	protected final long regenInterval = 200;
@@ -32,27 +31,23 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 
 	/**
 	 *
-	 * @param metal The material to make the sword from
+	 * @param material The material to make the sword from
 	 */
-	public ItemMetalSword(MetalMaterial metal) {
-		super(Materials.getToolMaterialFor(metal));
-		this.metal = metal;
-		this.setMaxDamage(metal.getToolDurability());
+	public ItemMetalSword(MetalMaterial material) {
+		super(Materials.getToolMaterialFor(material));
+		this.material = material;
+		this.setMaxDamage(this.material.getToolDurability());
 		// this.damageVsEntity = attackDamage + metal.getBaseAttackDamage(); // damageVsEntity is private, sadly
-		this.attackDamage = 3F + metal.getBaseAttackDamage();
-		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		if (Config.Options.ENABLE_STARSTEEL) {
-			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
-		} else {
-			this.regenerates = false;
-		}
+		this.attackDamage = 3F + this.material.getBaseAttackDamage();
+		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.regenerates = this.material.regenerates;
 		this.setCreativeTab(CreativeTabs.COMBAT);
 	}
 
 	@Override
 	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		item.damageItem(1, attacker);
-		MetalToolEffects.extraEffectsOnAttack(this.metal, item, target, attacker);
+		MetalToolEffects.extraEffectsOnAttack(this.material, item, target, attacker);
 		return true;
 	}
 
@@ -66,7 +61,7 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 
 	@Override
 	public int getItemEnchantability() {
-		return this.metal.getEnchantability();
+		return this.material.getEnchantability();
 	}
 
 	@Override
@@ -81,7 +76,7 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		MetalToolEffects.extraEffectsOnCrafting(this.metal, item, world, crafter);
+		MetalToolEffects.extraEffectsOnCrafting(this.material, item, world, crafter);
 	}
 
 	@Override
@@ -98,25 +93,25 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 	public float getAttackDamage() {
 		return this.attackDamage;
 	}
-
+/*
 	public String getMaterialName() {
-		return this.metal.getName();
+		return this.material.getName();
 	}
-
+*/
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(this.metal, list);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
 	}
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }

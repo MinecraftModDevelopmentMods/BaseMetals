@@ -2,9 +2,8 @@ package cyano.basemetals.items;
 
 import java.util.List;
 
-import cyano.basemetals.init.Materials;
+import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.util.Config;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,27 +17,23 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMetalShears extends ItemShears {
+public class ItemMetalShears extends ItemShears implements IMetalObject {
 
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
 	 *
-	 * @param metal The material to make the shears from
+	 * @param material The material to make the shears from
 	 */
-	public ItemMetalShears(MetalMaterial metal) {
-		this.metal = metal;
-		this.setMaxDamage(metal.getToolDurability());
+	public ItemMetalShears(MetalMaterial material) {
+		this.material = material;
+		this.setMaxDamage(this.material.getToolDurability());
 		this.setCreativeTab(CreativeTabs.TOOLS);
-		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		if (Config.Options.ENABLE_STARSTEEL) {
-			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
-		} else {
-			this.regenerates = false;
-		}
+		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -58,12 +53,23 @@ public class ItemMetalShears extends ItemShears {
 	}
 
 	public String getMaterialName() {
-		return this.metal.getName();
+		return this.material.getName();
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(this.metal, list);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
+	}
+
+	@Override
+	public MetalMaterial getMaterial() {
+		return this.material;
+	}
+
+	@Override
+	@Deprecated
+	public MetalMaterial getMetalMaterial() {
+		return this.material;
 	}
 }

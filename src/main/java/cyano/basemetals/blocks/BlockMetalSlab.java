@@ -26,19 +26,19 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 
 	public static final PropertyEnum<BlockMetalSlab.Variant> VARIANT = PropertyEnum.<BlockMetalSlab.Variant>create("variant", BlockMetalSlab.Variant.class);
 
-	final MetalMaterial metal;
+	final MetalMaterial material;
 
 	/**
 	 *
-	 * @param metal The material the slab is made from
+	 * @param material The material the slab is made from
 	 */
-	public BlockMetalSlab(MetalMaterial metal) {
+	public BlockMetalSlab(MetalMaterial material) {
 		super(Material.IRON);
 		this.setSoundType(SoundType.METAL);
-		this.metal = metal;
-		this.blockHardness = metal.getMetalBlockHardness();
-		this.blockResistance = metal.getBlastResistance();
-		this.setHarvestLevel("pickaxe", metal.getRequiredHarvestLevel());
+		this.material = material;
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 
 		IBlockState iblockstate = this.blockState.getBaseState();
 
@@ -102,13 +102,13 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 	 */
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return this.metal.slab;
+		return this.material.slab;
 	}
 
 	@Override
 	@Deprecated
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(this.metal.slab);
+		return new ItemStack(this.material.slab);
 	}
 
 	/**
@@ -126,17 +126,17 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	// @Override
 	// public String getOreDictionaryName() {
-	// return "slab" + metal.getCapitalizedName();
+	// return "slab" + material.getCapitalizedName();
 	// }
 }

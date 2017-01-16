@@ -5,7 +5,6 @@ import java.util.List;
 import cyano.basemetals.init.Materials;
 import cyano.basemetals.material.IMetalObject;
 import cyano.basemetals.material.MetalMaterial;
-import cyano.basemetals.util.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,28 +21,24 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
 	protected final long regenInterval = 200;
 
 	/**
 	 *
-	 * @param metal The material to make the axe from
+	 * @param material The material to make the axe from
 	 */
-	public ItemMetalAxe(MetalMaterial metal) {
-		super(Materials.getToolMaterialFor(metal));
-		this.metal = metal;
-		this.setMaxDamage(metal.getToolDurability());
-		this.damageVsEntity = 4F + (2F * metal.getBaseAttackDamage());
-		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * metal.strength);
-		this.efficiencyOnProperMaterial = metal.getToolEfficiency();
-		this.repairOreDictName = "ingot" + metal.getCapitalizedName();
-		if (Config.Options.ENABLE_STARSTEEL) {
-			this.regenerates = metal.equals(Materials.getMaterialByName("starsteel"));
-		} else {
-			this.regenerates = false;
-		}
+	public ItemMetalAxe(MetalMaterial material) {
+		super(Materials.getToolMaterialFor(material));
+		this.material = material;
+		this.setMaxDamage(this.material.getToolDurability());
+		this.damageVsEntity = 4F + (2F * this.material.getBaseAttackDamage());
+		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * this.material.strength);
+		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
+		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -73,14 +68,14 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 	@Override
 	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		super.hitEntity(item, target, attacker);
-		MetalToolEffects.extraEffectsOnAttack(this.metal, item, target, attacker);
+		MetalToolEffects.extraEffectsOnAttack(this.material, item, target, attacker);
 		return true;
 	}
 
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		MetalToolEffects.extraEffectsOnCrafting(this.metal, item, world, crafter);
+		MetalToolEffects.extraEffectsOnCrafting(this.material, item, world, crafter);
 	}
 
 	@Override
@@ -88,25 +83,25 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % this.regenInterval) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
-
+/*
 	public String getMaterialName() {
-		return this.metal.getName();
+		return this.material.getName();
 	}
-
+*/
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
-		MetalToolEffects.addToolSpecialPropertiesToolTip(this.metal, list);
+		MetalToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
 	}
 }

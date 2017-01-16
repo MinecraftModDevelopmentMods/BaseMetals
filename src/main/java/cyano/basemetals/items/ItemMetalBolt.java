@@ -17,15 +17,15 @@ import net.minecraft.world.World;
  */
 public class ItemMetalBolt extends Item implements IOreDictionaryEntry, IMetalObject {
 
-	protected final MetalMaterial metal;
+	protected final MetalMaterial material;
 	private final String oreDict;
 
 	/**
 	 *
-	 * @param metal The material to make the bolt from
+	 * @param material The material to make the bolt from
 	 */
-	public ItemMetalBolt(MetalMaterial metal) {
-		this.metal = metal;
+	public ItemMetalBolt(MetalMaterial material) {
+		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
 		this.oreDict = "ammoBolt";
 	}
@@ -48,12 +48,12 @@ public class ItemMetalBolt extends Item implements IOreDictionaryEntry, IMetalOb
 
 	@Override
 	public MetalMaterial getMaterial() {
-		return this.metal;
+		return this.material;
 	}
 
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {
-		return this.metal;
+		return this.material;
 	}
 }
