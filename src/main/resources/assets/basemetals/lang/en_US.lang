@@ -829,6 +829,29 @@ tile.basemetals.zinc_block.name=Block of Zinc
 #Fluids
     #Fluid
 fluid.basemetals.mercury=Liquid Mercury
+fluid.basemetals.adamantine=Molten Adamantine
+fluid.basemetals.antimony=Molten Antimony
+fluid.basemetals.aquarium=Molten Aquarium
+fluid.basemetals.bismuth=Molten Bismuth
+fluid.basemetals.brass=Molten Brass
+fluid.basemetals.bronze=Molten Bronze
+fluid.basemetals.coldiron=Molten Cold-Iron
+fluid.basemetals.copper=Molten Copper
+fluid.basemetals.cupronickel=Molten Cupronickel
+fluid.basemetals.electrum=Molten Electrum
+fluid.basemetals.invar=Molten Invar
+fluid.basemetals.lead=Molten Lead
+fluid.basemetals.mithril=Molten Mithril
+fluid.basemetals.nickel=Molten Nickel
+fluid.basemetals.pewter=Molten Pewter
+fluid.basemetals.platinum=Molten Platinum
+fluid.basemetals.silver=Molten Silver
+fluid.basemetals.starsteel=Molten Star-Steel
+fluid.basemetals.steel=Molten Steel
+fluid.basemetals.tin=Molten Tin
+fluid.basemetals.zinc=Molten Zinc
+	#Fluid.name
+fluid.basemetals.mercury.name=Liquid Mercury
 fluid.basemetals.adamantine.name=Molten Adamantine
 fluid.basemetals.antimony.name=Molten Antimony
 fluid.basemetals.aquarium.name=Molten Aquarium
@@ -896,7 +919,30 @@ item.bucket.starsteel=Bucket of Star-Steel
 item.bucket.steel=Bucket of Steel
 item.bucket.tin=Bucket of Tin
 item.bucket.zinc=Bucket of Zinc
- 
+	Material
+material.mercury=Mercury
+material.adamantine=Adamantine
+material.antimony=Antimony
+material.aquarium=Aquarium
+material.bismuth=Bismuth
+material.brass=Brass
+material.bronze=Bronze
+material.coldiron=Cold-Iron
+material.copper=Copper
+material.cupronickel=Cupronickel
+material.electrum=Electrum
+material.invar=Invar
+material.lead=Lead
+material.mithril=Mithril
+material.nickel=Nickel
+material.pewter=Pewter
+material.platinum=Platinum
+material.silver=Silver
+material.starsteel=Star-Steel
+material.steel=Steel
+material.tin=Tin
+material.zinc=Zinc
+
 #Doors
     #Item
 item.basemetals.adamantine_door.name=Adamantine Door

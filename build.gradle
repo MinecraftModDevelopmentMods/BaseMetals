@@ -99,7 +99,8 @@ repositories {
 
 dependencies {
 	// c510ce7d8c = https://github.com/aidancbrady/Mekanism/commit/c510ce7d8cf7810500e032e2f713796078d26c6f
-    deobfCompile ("com.github.aidancbrady:Mekanism:c510ce7d8c") {
+	// 7e3c806a8f = https://github.com/aidancbrady/Mekanism/commit/7e3c806a8f136526129967ba1b25946d8f05ccd9
+    deobfCompile ("com.github.aidancbrady:Mekanism:7e3c806a8f") {
         exclude group: 'MCMultiPart'
     }
 
