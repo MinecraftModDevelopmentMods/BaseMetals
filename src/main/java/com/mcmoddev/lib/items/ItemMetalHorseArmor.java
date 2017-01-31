@@ -2,9 +2,9 @@ package com.mcmoddev.lib.items;
 
 import com.mcmoddev.basemetals.material.IMetalObject;
 import com.mcmoddev.basemetals.material.MetalMaterial;
-import com.mcmoddev.basemetals.util.HorseUtilities;
+import com.mcmoddev.lib.common.item.IHorseArmor;
+import com.mcmoddev.lib.util.HorseArmorUtils;
 
-import astro.lib.api.item.IHorseArmor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.HorseArmorType;
@@ -28,7 +28,8 @@ public class ItemMetalHorseArmor extends Item implements IMetalObject, IHorseArm
 
 	@Override
 	public HorseArmorType getArmorType() {
-		return HorseUtilities.getType("test", 1024, "tes");
+//		return HorseArmorType.DIAMOND;
+		return HorseArmorUtils.getArmorType( 1024, "test","tes");
 	}
 
 	@Override

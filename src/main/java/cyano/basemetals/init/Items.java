@@ -50,10 +50,10 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 
 	public static Item carbon_powder;
 	public static Item carbon_smallpowder;
-	public static Item charcoal_powder;
-	public static Item charcoal_smallpowder;
-	public static Item coal_powder;
-	public static Item coal_smallpowder;
+//	public static Item charcoal_powder;
+//	public static Item charcoal_smallpowder;
+//	public static Item coal_powder;
+//	public static Item coal_smallpowder;
 
 	public static Item coldiron_boots;
 	public static Item coldiron_chestplate;

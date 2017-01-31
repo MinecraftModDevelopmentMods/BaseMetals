@@ -1,13 +1,7 @@
 package com.mcmoddev.basemetals.proxy;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.init.Achievements;
-import com.mcmoddev.basemetals.init.Blocks;
-import com.mcmoddev.basemetals.init.Fluids;
-import com.mcmoddev.basemetals.init.ItemGroups;
-import com.mcmoddev.basemetals.init.Items;
-import com.mcmoddev.basemetals.init.Recipes;
-import com.mcmoddev.basemetals.init.VillagerTrades;
+import com.mcmoddev.basemetals.init.*;
 import com.mcmoddev.basemetals.integration.IntegrationManager;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
@@ -44,7 +38,7 @@ public class CommonProxy {
 		VillagerTrades.init();
 
 		FMLInterModComms.sendFunctionMessage("orespawn", "api", "com.mcmoddev.orespawn.BaseMetalsOreSpawn");
-		 
+
 		IntegrationManager.INSTANCE.preInit(event);
 	}
 
@@ -58,7 +52,7 @@ public class CommonProxy {
 						 }
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
-					if ((mapping.resourceLocation.getResourcePath().equals("carbon_powder"))) {
+					if (mapping.resourceLocation.getResourcePath().equals("carbon_powder")) {
 						 if (Options.ENABLE_COAL) {
 							 mapping.remap(Items.coal_powder);
 						 }

@@ -1,6 +1,6 @@
 package com.mcmoddev.basemetals.client.renderer;
 
-import com.mcmoddev.basemetals.entity.EntityCustomArrow;
+import com.mcmoddev.lib.entity.EntityCustomArrow;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

@@ -1,9 +1,9 @@
 package com.mcmoddev.lib.items;
 
-import com.mcmoddev.basemetals.entity.EntityCustomArrow;
 import com.mcmoddev.basemetals.material.IMetalObject;
 import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.entity.EntityCustomArrow;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

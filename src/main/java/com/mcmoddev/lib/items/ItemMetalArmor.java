@@ -22,6 +22,8 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
 import com.mcmoddev.basemetals.material.IMetalObject;
@@ -59,7 +61,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	private static final Map<EntityPlayer, AtomicInteger> adamantineUpdateCache = new HashMap<>();
 	private static final Map<EntityPlayer, AtomicInteger> leadUpdateCache = new HashMap<>();
 
-	protected ItemMetalArmor(MetalMaterial material, ArmorMaterial armorMat, int renderIndex,
+	protected ItemMetalArmor(@Nonnull MetalMaterial material, @Nonnull ArmorMaterial armorMat, int renderIndex,
 							 EntityEquipmentSlot slot) {
 		super(armorMat, renderIndex, slot);
 		this.material = material;
@@ -258,11 +260,12 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	 * @param slot Type of armor
 	 * @return The armor
 	 */
-	protected static ItemMetalArmor createArmorBase(MetalMaterial material, EntityEquipmentSlot slot) {
+	protected static ItemMetalArmor createArmorBase(@Nonnull MetalMaterial material, EntityEquipmentSlot slot) {
 		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
 		if(amaterial == null) {
 			// uh-oh
 			FMLLog.severe("Failed to load armor material enum for " + material);
+			return null;
 		}
 		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), slot);
 	}
@@ -274,14 +277,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	 */
 	public static ItemMetalArmor createHelmet(MetalMaterial material) {
 		return createArmorBase(material, EntityEquipmentSlot.HEAD);
-		/*
-		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
-		if(amaterial == null) {
-			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for " + material);
-		}
-		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), EntityEquipmentSlot.HEAD);
-		*/
 	}
 
 	/**
@@ -291,14 +286,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	 */
 	public static ItemMetalArmor createChestplate(MetalMaterial material) {
 		return createArmorBase(material, EntityEquipmentSlot.CHEST);
-		/*
-		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
-		if(amaterial == null) {
-			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for " + material);
-		}
-		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), EntityEquipmentSlot.CHEST);
-		*/
 	}
 
 	/**
@@ -308,14 +295,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	 */
 	public static ItemMetalArmor createLeggings(MetalMaterial material) {
 		return createArmorBase(material, EntityEquipmentSlot.LEGS);
-		/*
-		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
-		if(amaterial == null) {
-			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for " + material);
-		}
-		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), EntityEquipmentSlot.LEGS);
-		*/
 	}
 
 	/**
@@ -325,14 +304,6 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 	 */
 	public static ItemMetalArmor createBoots(MetalMaterial material) {
 		return createArmorBase(material, EntityEquipmentSlot.FEET);
-		/*
-		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
-		if(amaterial == null) {
-			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for " + material);
-		}
-		return new ItemMetalArmor(material, amaterial, amaterial.ordinal(), EntityEquipmentSlot.FEET);
-		*/
 	}
 
 	@SideOnly(Side.CLIENT)

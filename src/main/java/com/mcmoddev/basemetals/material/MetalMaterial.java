@@ -2,8 +2,6 @@ package com.mcmoddev.basemetals.material;
 
 import java.util.Locale;
 
-import javax.annotation.Nullable;
-
 import org.apache.commons.lang3.StringUtils;
 
 import net.minecraft.block.Block;
@@ -117,109 +115,59 @@ public class MetalMaterial {
 	 */
 	private float baseDamage;
 
-	@Nullable
 	public Item arrow;
-	@Nullable
 	public Item axe;
-	@Nullable
 	public Item blend;
-	@Nullable
 	public Item boots;
-	@Nullable
 	public Item bolt;
-	@Nullable
 	public Item bow;
-	@Nullable
 	public Item chestplate;
-	@Nullable
 	public Item crackhammer;
-	@Nullable
 	public Item crossbow;
-	@Nullable
 	public Item door;
-	@Nullable
 	public Item fishing_rod;
-	@Nullable
 	public Item gear;
-	@Nullable
 	public Item helmet;
-	@Nullable
 	public Item hoe;
-	@Nullable
 	public Item horse_armor;
-	@Nullable
 	public Item ingot;
-	@Nullable
 	public Item leggings;
-	@Nullable
 	public Item nugget;
-	@Nullable
 	public Item pickaxe;
-	@Nullable
 	public Item powder;
-	@Nullable
 	public Item rod;
-	@Nullable
 	public Item shears;
-	@Nullable
 	public Item shield;
-	@Nullable
 	public Item shovel;
-	@Nullable
 	public Item slab;
-	@Nullable
 	public Item smallblend;
-	@Nullable
 	public Item smallpowder;
-	@Nullable
 	public Item sword;
 
-	@Nullable
 	public Block bars;
-	@Nullable
 	public Block block;
-	@Nullable
 	public Block button;
-	@Nullable
 	public BlockDoor doorBlock;
-	@Nullable
 	public BlockSlab double_slab;
-	@Nullable
 	public BlockSlab half_slab;
-	@Nullable
 	public Block lever;
-	@Nullable
 	public Block ore;
-	@Nullable
 	public Block plate;
-	@Nullable
 	public Block pressure_plate;
-	@Nullable
 	public Block stairs;
-	@Nullable
 	public Block trapdoor;
-	@Nullable
 	public Block wall;
 
-	@Nullable
 	public Fluid fluid;
-	@Nullable
 	public BlockFluidBase fluidBlock;
 	
-	@Nullable
 	public Item crystal;
-	@Nullable
 	public Item shard;
-	@Nullable
 	public Item clump;
-	@Nullable
 	public Item powder_dirty;
 
-	@Nullable
 	public Item dense_plate;
-	@Nullable
 	public Item crushed;
-	@Nullable
 	public Item crushed_purified;
 
 	/**

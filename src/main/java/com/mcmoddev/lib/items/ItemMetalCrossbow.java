@@ -2,27 +2,14 @@ package com.mcmoddev.lib.items;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.entity.EntityCustomBolt;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
 import com.mcmoddev.basemetals.material.IMetalObject;
 import com.mcmoddev.basemetals.material.MetalMaterial;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -51,6 +38,7 @@ public class ItemMetalCrossbow extends ItemBow implements IMetalObject {
 		this.regenerates = this.material.regenerates;
 	}
 
+	/*
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
 		if (entityLiving instanceof EntityPlayer) {
@@ -116,7 +104,8 @@ public class ItemMetalCrossbow extends ItemBow implements IMetalObject {
 			}
 		}
 	}
-
+*/
+/*
 	private ItemStack findAmmo(EntityPlayer player) {
 		if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND)))
 			return player.getHeldItem(EnumHand.OFF_HAND);
@@ -133,11 +122,13 @@ public class ItemMetalCrossbow extends ItemBow implements IMetalObject {
 			return null;
 		}
 	}
-
+*/
+/*
 	protected boolean isBolt(ItemStack stack) {
 		return (stack != null) && (stack.getItem() instanceof ItemMetalBolt);
 	}
-
+*/
+/*
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		final boolean flag = this.findAmmo(playerIn) != null;
@@ -149,6 +140,7 @@ public class ItemMetalCrossbow extends ItemBow implements IMetalObject {
 			return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 		}
 	}
+*/
 
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {

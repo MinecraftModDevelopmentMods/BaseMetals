@@ -1,13 +1,12 @@
 package com.mcmoddev.lib.items;
 
-import com.mcmoddev.basemetals.entity.EntityCustomBolt;
 import com.mcmoddev.basemetals.material.IMetalObject;
 import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.entity.EntityCustomBolt;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -16,7 +15,7 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMetalBolt extends Item implements IOreDictionaryEntry, IMetalObject {
+public class ItemMetalBolt extends ItemBolt implements IOreDictionaryEntry, IMetalObject {
 
 	protected final MetalMaterial material;
 	private final String oreDict;
@@ -38,6 +37,7 @@ public class ItemMetalBolt extends Item implements IOreDictionaryEntry, IMetalOb
 	 * @param shooter The shooter
 	 * @return The Custom Bolt
 	 */
+	@Override
 	public EntityCustomBolt createBolt(World worldIn, ItemStack stack, EntityPlayer shooter) {
 		return new EntityCustomBolt(worldIn, stack, shooter);
 	}

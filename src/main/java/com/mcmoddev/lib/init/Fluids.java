@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  * This class initializes all fluids in Base Metals and provides some utility
  * methods for looking up fluids.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public abstract class Fluids {
@@ -70,9 +70,8 @@ public abstract class Fluids {
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
 
-		if (material != null) {
-			material.fluid = fluid;
-		}
+		material.fluid = fluid;
+
 		fluidRegistry.put(material.getName(), fluid);
 		return fluid;
 	}
@@ -134,9 +133,7 @@ public abstract class Fluids {
 		itemBlock.setRegistryName(location);
 		itemBlock.setUnlocalizedName(location.toString());
 		GameRegistry.register(itemBlock);
-		if (material != null) {
-			material.fluidBlock = block;
-		}
+		material.fluidBlock = block;
 		fluidBlockRegistry.put(material.getName(), block);
 		return block;
 	}

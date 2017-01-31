@@ -10,6 +10,7 @@ import portablejim.veinminer.api.IMCMessage;
  * VeinMiner Integration Plugin
  *
  * @author Jasmine Iwanek
+ *
  */
 @BaseMetalsPlugin(VeinMiner.PLUGIN_MODID)
 public class VeinMiner implements IIntegration {

@@ -1,16 +1,14 @@
 package com.mcmoddev.basemetals.proxy;
 
-import javax.annotation.Nullable;
-
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.client.renderer.RenderCustomArrow;
-import com.mcmoddev.basemetals.entity.EntityCustomArrow;
+import com.mcmoddev.basemetals.client.renderer.RenderCustomBolt;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.entity.EntityCustomArrow;
+import com.mcmoddev.lib.entity.EntityCustomBolt;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -22,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+//import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -54,12 +53,13 @@ public class ClientProxy extends CommonProxy {
 		}
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class, RenderCustomArrow::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCustomBolt.class, RenderCustomBolt::new);
 	}
 
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-
+/*
 		for (MetalMaterial material : Materials.getAllMaterials()) {
 			// Items
 			registerRenderOuter(material.arrow);
@@ -129,48 +129,34 @@ public class ClientProxy extends CommonProxy {
 			registerRenderOuter(Blocks.mercury_ore);
 			registerRenderOuter(Blocks.human_detector);
 		}
-
-//		final ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+*/
 
 		for (final String name : Items.getItemRegistry().keySet()) {
-			registerRender(Items.getItemByName(name), name);
-			/*
-			final Item item = Items.getItemByName(name);
-			if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
-				continue;
-			itemModelMesher.register(item, 0, new ModelResourceLocation(new ResourceLocation(item.getRegistryName().getResourceDomain(), name), "inventory"));
-			*/
+			registerRenderOuter(Items.getItemByName(name));
 		}
 
 		for (final String name : Blocks.getBlockRegistry().keySet()) {
-			final Block block = Blocks.getBlockByName(name);
-			if ((block instanceof BlockDoor) || (block instanceof BlockSlab))
-				continue; // do not add door blocks
-			registerRender(Item.getItemFromBlock(block), name);
-			/*
-			final Item item = Item.getItemFromBlock(block);
-			if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
-				continue;
-			itemModelMesher.register(item, 0, new ModelResourceLocation(new ResourceLocation(item.getRegistryName().getResourceDomain(), name), "inventory"));
-			*/
+			registerRenderOuter(Blocks.getBlockByName(name));
 		}
 	}
 
-	/**
-	 *
-	 */
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
 		super.postInit(event);
 	}
 	public void registerRenderOuter(Item item) {
 		if (item != null) {
+//			FMLLog.severe("Name of Item was: " + Items.getNameOfItem(item));
 			registerRender(item, Items.getNameOfItem(item));
 		}
 	}
 
 	public void registerRenderOuter(Block block) {
-		if ((block != null) && (!(block instanceof BlockDoor)) || (block instanceof BlockSlab)) {
+		if ((block instanceof BlockDoor) || (block instanceof BlockSlab))
+			return; // do not add door blocks or slabs
+
+		if (block != null) {
+//			FMLLog.severe("Name of Block was: " + Blocks.getNameOfBlock(block));
 			registerRender(Item.getItemFromBlock(block), Blocks.getNameOfBlock(block));
 		}
 	}

@@ -18,7 +18,7 @@ public class BlockMoltenFluid extends BlockFluidClassic {
 	 *
 	 * @param fluid The fluid
 	 */
-	public BlockMoltenFluid(Fluid fluid) {
+	public BlockMoltenFluid(@Nonnull Fluid fluid) {
 		super(fluid, Material.LAVA);
 
 		// setCreativeTab(TinkerRegistry.tabSmeltery);

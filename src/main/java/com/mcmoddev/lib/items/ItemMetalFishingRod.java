@@ -2,28 +2,14 @@ package com.mcmoddev.lib.items;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.entity.projectile.EntityMetalFishHook;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
 import com.mcmoddev.basemetals.material.IMetalObject;
 import com.mcmoddev.basemetals.material.MetalMaterial;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -43,21 +29,23 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 	 * @param material The material to make the fishing rod from
 	 */
 	public ItemMetalFishingRod(MetalMaterial material) {
+		super();
 		this.material = material;
-		this.setMaxDamage(64);
-		this.setMaxStackSize(1);
-		this.setCreativeTab(CreativeTabs.TOOLS);
+//		this.setMaxDamage(64);
+//		this.setMaxStackSize(1);
+//		this.setCreativeTab(CreativeTabs.TOOLS);
 		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
-		this.addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter() {
-			@SideOnly(Side.CLIENT)
-			@Override
-			public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn) {
-				return entityIn == null ? 0.0F : ((entityIn.getHeldItemMainhand() == stack) && (entityIn instanceof EntityPlayer) && (((EntityPlayer) entityIn).fishEntity != null) ? 1.0F : 0.0F);
-			}
-		});
+//		this.addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter() {
+//			@SideOnly(Side.CLIENT)
+//			@Override
+//			public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn) {
+//				return entityIn == null ? 0.0F : ((entityIn.getHeldItemMainhand() == stack) && (entityIn instanceof EntityPlayer) && (((EntityPlayer) entityIn).fishEntity != null) ? 1.0F : 0.0F);
+//			}
+//		});
 		this.regenerates = this.material.regenerates;
 	}
 
+	/*
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		if (playerIn.fishEntity != null) {
@@ -76,6 +64,7 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
 	}
+	*/
 
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {

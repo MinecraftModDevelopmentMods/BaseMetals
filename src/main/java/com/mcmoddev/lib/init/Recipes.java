@@ -2,6 +2,7 @@ package com.mcmoddev.lib.init;
 
 import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.CrusherRecipeRegistry;
+import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -12,14 +13,14 @@ import net.minecraftforge.oredict.*;
 
 /**
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public abstract class Recipes {
 
-	static final Item PRISMARINE_CRYSTALS = net.minecraft.init.Items.PRISMARINE_CRYSTALS;
-	static final Item PRISMARINE_SHARD = net.minecraft.init.Items.PRISMARINE_SHARD;
-	static final Block PRISMARINE = net.minecraft.init.Blocks.PRISMARINE;
+	private static final Item PRISMARINE_CRYSTALS = net.minecraft.init.Items.PRISMARINE_CRYSTALS;
+	private static final Item PRISMARINE_SHARD = net.minecraft.init.Items.PRISMARINE_SHARD;
+	private static final Block PRISMARINE = net.minecraft.init.Blocks.PRISMARINE;
 
 	private static boolean initDone = false;
 
@@ -67,6 +68,23 @@ public abstract class Recipes {
 	}
 
 	private static void initVanillaRecipes() {
+		// TODO
+		OreDictionary.registerOre(Oredicts.BARSIRON, net.minecraft.init.Blocks.IRON_BARS);
+		OreDictionary.registerOre(Oredicts.BARS, net.minecraft.init.Blocks.IRON_BARS);
+		OreDictionary.registerOre(Oredicts.DOORIRON, net.minecraft.init.Items.IRON_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.IRON_DOOR);
+		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.OAK_DOOR);
+		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.JUNGLE_DOOR);
+		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.SPRUCE_DOOR);
+		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.DARK_OAK_DOOR);
+		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.BIRCH_DOOR);
+		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.ACACIA_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.OAK_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.JUNGLE_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.SPRUCE_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.DARK_OAK_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.BIRCH_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.ACACIA_DOOR);
 	}
 
 	private static void initGeneralRecipes() {
@@ -102,11 +120,11 @@ public abstract class Recipes {
 				if ((material.rod != null) && (material.lever != null)) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.lever), "x", "y", 'x', Oredicts.ROD + oreDictName, 'y', Oredicts.BLOCK + oreDictName));
 				}
-
+				/*
 				if (material.stairs != null) { // Crashes
-					//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.stairs, 4), "x", "xx", "xxx", 'x', BLOCK + oreDictName));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.stairs, 4), "x", "xx", "xxx", 'x', BLOCK + oreDictName));
 				}
-
+				*/
 				if (material.wall != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.wall, 6), "xxx", "xxx", 'x', Oredicts.BLOCK + oreDictName));
 				}
@@ -186,7 +204,7 @@ public abstract class Recipes {
 				}
 
 				if (material.plate != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.plate, 3), "xxx", 'x', Oredicts.INGOT + oreDictName));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.plate, Config.Options.PLATE_QTY), "xxx", 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(material.plate, new ItemStack(material.ingot, 1), oreSmeltXP);
 				}
 
@@ -224,7 +242,7 @@ public abstract class Recipes {
 				}
 
 				if ((material.rod != null) && (material.gear != null)) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.gear, 4), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.gear, Config.Options.GEAR_QTY), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
 					OreDictionary.registerOre(Oredicts.GEAR, material.gear);
 
 //					if (Options.ENABLE_STEEL) {
@@ -234,11 +252,11 @@ public abstract class Recipes {
 //					}
 				}
 
-				// misc recipes
-				if (material.pickaxe != null) {
-					// TODO
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.BUCKET), "x x", " x ", 'x', Oredicts.INGOT + oreDictName));
-				}
+//				// misc recipes
+//				if (material.pickaxe != null) {
+//					// TODO
+//					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.BUCKET), "x x", " x ", 'x', Oredicts.INGOT + oreDictName));
+//				}
 			}
 
 			if ((material.nugget != null) && (material.button != null)) {

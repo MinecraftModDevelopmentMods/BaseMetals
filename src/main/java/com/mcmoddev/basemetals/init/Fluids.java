@@ -9,13 +9,12 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
 /**
- * This class initializes all fluids in Base Metals and provides some utility
- * methods for looking up fluids.
+ * This class initializes all fluids in Base Metals.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
-public abstract class Fluids extends com.mcmoddev.lib.init.Fluids {
+public class Fluids extends com.mcmoddev.lib.init.Fluids {
 
 	static {
 		FluidRegistry.enableUniversalBucket();

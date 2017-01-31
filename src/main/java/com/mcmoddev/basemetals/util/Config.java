@@ -182,6 +182,7 @@ public class Config {
 		public static boolean ENABLE_ACHIEVEMENTS = true;
 		// TODO: Add this to config file
 		public static int GEAR_QTY = 4;
+		public static int PLATE_QTY = 3;
 
 		// INTEGRATION
 		public static boolean ENABLE_ENDER_IO = true;

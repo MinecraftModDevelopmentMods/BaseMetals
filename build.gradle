@@ -1,3 +1,5 @@
+def corePlugin = "com.mcmoddev.lib.asm.ASMPlugin"
+
 buildscript {
     repositories {
         jcenter()
@@ -63,7 +65,9 @@ minecraft {
     version = "1.10.2-12.18.3.2185"
     runDir = "run"
     mappings = "stable_29"
-//    coreMod = "basemetals.asm.BaseMetalPlugin"
+//  coreMod = corePlugin
+    clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
+    serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
 }
 
 repositories {
@@ -139,7 +143,8 @@ processResources {
 
 jar {
     manifest {
-//        attributes("FMLCorePluginContainsFMLMod": "true", "FMLCorePlugin": "basemetals.asm.BaseMetalPlugin")
+        attributes "FMLCorePluginContainsFMLMod": "true"
+        attributes "FMLCorePlugin": corePlugin
     }
 }
 

@@ -1,6 +1,6 @@
 package com.mcmoddev.basemetals.client.renderer;
 
-import com.mcmoddev.basemetals.entity.EntityCustomBolt;
+import com.mcmoddev.lib.entity.EntityCustomBolt;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

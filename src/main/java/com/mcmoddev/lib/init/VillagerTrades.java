@@ -72,28 +72,28 @@ public abstract class VillagerTrades {
 				if (i.getRegistryName().getResourceDomain().equals(modid)) {
 					if (i instanceof ItemArmor) {
 						allArmors.computeIfAbsent(m, (MetalMaterial g) -> new ArrayList<>()).add(i);
-						continue;
+//						continue;
 					} else if (i instanceof ItemMetalCrackHammer) {
 						allHammers.put(m, i);
-						continue;
+//						continue;
 					} else if (i instanceof ItemSword) {
 						allSwords.put(m, i);
-						continue;
+//						continue;
 					} else if (i instanceof ItemHoe) {
 						allHoes.put(m, i);
-						continue;
+//						continue;
 					} else if (i instanceof ItemAxe) {
 						allAxes.put(m, i);
-						continue;
+//						continue;
 					} else if (i instanceof ItemPickaxe) {
 						allPickAxes.put(m, i);
-						continue;
+//						continue;
 					} else if (i instanceof ItemSpade) {
 						allShovels.put(m, i);
-						continue;
+//						continue;
 					} else if (i instanceof ItemMetalIngot) {
 						allIngots.put(m, i);
-						continue;
+//						continue;
 					}
 				}
 			}

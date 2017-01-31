@@ -1,28 +1,19 @@
 package com.mcmoddev.basemetals.init;
 
-import java.lang.reflect.*;
-import java.util.*;
-
-import javax.annotation.Nonnull;
-
 import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.blocks.*;
-import com.mcmoddev.lib.items.*;
 
 import cyano.basemetals.init.Materials;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
- * This class initializes all items in Base Metals and provides some utility
- * methods for looking up items.
+ * This class initializes all items in Base Metals.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
-public abstract class Items extends com.mcmoddev.lib.init.Items {
+public class Items extends com.mcmoddev.lib.init.Items {
 
 	public static Item charcoal_powder;
 	public static Item charcoal_smallpowder;
@@ -35,11 +26,6 @@ public abstract class Items extends com.mcmoddev.lib.init.Items {
 
 	private static boolean initDone = false;
 
-	private static Map<Class<?>, Integer> classSortingValues = new HashMap<>();
-//	private static Map<MetalMaterial, Integer> materialSortingValues = new HashMap<>();
-
-	// public static UniversalBucket universal_bucket; // now automatically added by Forge
-
 	/**
 	 *
 	 */
@@ -49,15 +35,8 @@ public abstract class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		Blocks.init();
+		com.mcmoddev.lib.init.Items.init();
 
-		try {
-			expandCombatArrays(net.minecraft.item.ItemAxe.class);
-		}
-		catch (IllegalAccessException | NoSuchFieldException ex) {
-			FMLLog.severe("Error modifying item classes: %s", ex);
-		}
-
-		@Nonnull
 		MetalMaterial material;
 
 		if (Options.ENABLE_ADAMANTINE) {
@@ -267,6 +246,10 @@ public abstract class Items extends com.mcmoddev.lib.init.Items {
 			mercury_powder = addItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
 //			itemRegistry.put("mercury_powder", mercury_powder);
 			OreDictionary.registerOre("dustMercury", mercury_powder);
+
+//			mercury_smallpowder = addItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
+////			itemRegistry.put("mercury_powder", mercury_smallpowder);
+//			OreDictionary.registerOre("dustMercury", mercury_smallpowder);
 		}
 
 		if (Options.ENABLE_MITHRIL) {
@@ -318,7 +301,7 @@ public abstract class Items extends com.mcmoddev.lib.init.Items {
 //			material.nugget = net.minecraft.init.Items.STONE_NUGGET;
 //			material.bars = net.minecraft.init.Blocks.STONE_BARS;
 			material.block = net.minecraft.init.Blocks.STONE;
-//			material.slab = net.minecraft.init.Items.SLA;
+//			material.slab = net.minecraft.init.Items.SLAB;
 			material.half_slab = net.minecraft.init.Blocks.STONE_SLAB;
 			material.double_slab = net.minecraft.init.Blocks.DOUBLE_STONE_SLAB;
 			material.stairs = net.minecraft.init.Blocks.STONE_STAIRS;
@@ -375,79 +358,8 @@ public abstract class Items extends com.mcmoddev.lib.init.Items {
 			createItemsModSupport(material);
 		}
 
-		setSortingList();
 		addToMetList();
 		
 		initDone = true;
-	}
-
-	private static void setSortingList() {
-		int ss = 0;
-		classSortingValues.put(BlockMetalOre.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalBlock.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalPlate.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalBars.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalDoor.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalTrapDoor.class, ++ss * 10000);
-		classSortingValues.put(InteractiveFluidBlock.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalIngot.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalNugget.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalPowder.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalBlend.class, classSortingValues.get(ItemMetalPowder.class));
-		classSortingValues.put(ItemMetalSmallPowder.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalSmallBlend.class, classSortingValues.get(ItemMetalSmallPowder.class));
-		classSortingValues.put(ItemMetalCrackHammer.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalPickaxe.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalShovel.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalAxe.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalHoe.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalSword.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalArmor.class, ++ss * 10000);
-		classSortingValues.put(GenericMetalItem.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalArrow.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalBolt.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalBow.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalCrossbow.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalFishingRod.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalHorseArmor.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalShears.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalShield.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalDoor.class, classSortingValues.get(BlockMetalDoor.class));
-
-		classSortingValues.put(BlockButtonMetal.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalSlab.class, ++ss * 10000);
-		classSortingValues.put(BlockDoubleMetalSlab.class, ++ss * 10000); // Probably not needed
-		classSortingValues.put(BlockHalfMetalSlab.class, ++ss * 10000); // Probably not needed
-		classSortingValues.put(BlockMetalLever.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalPressurePlate.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalStairs.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalWall.class, ++ss * 10000);
-		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalSlab.class, ++ss * 10000);
-	}
-
-	/**
-	 * Uses reflection to expand the size of the combat damage and attack speed
-	 * arrays to prevent initialization index-out-of-bounds errors
-	 *
-	 * @param itemClass The class to modify
-	 */
-	private static void expandCombatArrays(Class<?> itemClass) throws IllegalAccessException, NoSuchFieldException {
-		// WARNING: this method contains black magic
-		final int expandedSize = 256;
-		final Field[] fields = itemClass.getDeclaredFields();
-		for (final Field f : fields) {
-			if (Modifier.isStatic(f.getModifiers()) && f.getType().isArray() && f.getType().getComponentType().equals(float.class)) {
-				FMLLog.info("%s: Expanding array variable %s.%s to size %s", Thread.currentThread().getStackTrace()[0], itemClass.getSimpleName(), f.getName(), expandedSize);
-				f.setAccessible(true); // bypass 'private' key word
-				final Field modifiersField = Field.class.getDeclaredField("modifiers");
-				modifiersField.setAccessible(true);
-				modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL); // bypass 'final' key word
-				final float[] newArray = new float[expandedSize];
-				Arrays.fill(newArray, 0F);
-				System.arraycopy(f.get(null), 0, newArray, 0, Array.getLength(f.get(null)));
-				f.set(null, newArray);
-			}
-		}
 	}
 }

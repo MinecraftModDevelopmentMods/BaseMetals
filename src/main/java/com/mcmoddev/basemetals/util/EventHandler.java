@@ -36,7 +36,7 @@ public class EventHandler {
             return;
         }
         ItemStack activeItemStack = player.getActiveItemStack();
-        if ((damage > 0.0F) && (activeItemStack != null) && ((activeItemStack.getItem() instanceof ItemMetalShield))) {
+        if ((damage > 0.0F) && (activeItemStack != null) && (activeItemStack.getItem() instanceof ItemMetalShield)) {
             int i = 1 + MathHelper.floor(damage);
             activeItemStack.damageItem(i, player);
             if (activeItemStack.stackSize <= 0) {
@@ -77,7 +77,7 @@ public class EventHandler {
 			if (item instanceof ItemMetalIngot) {
 				if (Options.ENABLE_ACHIEVEMENTS) {
 //					event.player.addStat(Achievements.this_is_new, 1);
-		    		if (material.getName().equals("aquarium")) {
+					if (material.getName().equals("aquarium")) {
 						event.player.addStat(Achievements.aquarium_maker, 1);
 					} else if (material.getName().equals("brass")) {
 						event.player.addStat(Achievements.brass_maker, 1);

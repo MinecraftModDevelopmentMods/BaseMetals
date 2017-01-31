@@ -1,7 +1,5 @@
 package com.mcmoddev.basemetals.init;
 
-import javax.annotation.Nonnull;
-
 import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.blocks.BlockHumanDetector;
@@ -11,13 +9,12 @@ import net.minecraft.block.*;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
- * This class initializes all blocks in Base Metals and provides some utility
- * methods for looking up blocks.
+ * This class initializes all blocks in Base Metals.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
-public abstract class Blocks extends com.mcmoddev.lib.init.Blocks {
+public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	public static Block charcoal_block;
 
@@ -38,7 +35,6 @@ public abstract class Blocks extends com.mcmoddev.lib.init.Blocks {
 		Materials.init();
 		ItemGroups.init();
 
-		@Nonnull
 		MetalMaterial material;
 
 		if (Options.ENABLE_ADAMANTINE) {
@@ -229,7 +225,7 @@ public abstract class Blocks extends com.mcmoddev.lib.init.Blocks {
 			material = Materials.steel;
 			createBlocksFull(material);
 		}
-		
+
 		if (Options.ENABLE_STONE) {
 			material = Materials.vanilla_stone;
 

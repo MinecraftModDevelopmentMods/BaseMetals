@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mcmoddev.basemetals.init.GeneralizedCreativeTab;
-import com.mcmoddev.basemetals.init.Items;
+import com.mcmoddev.lib.init.Items;
 import com.mcmoddev.basemetals.material.MetalMaterial;
 
 /**
@@ -49,8 +49,7 @@ public class ItemGroups {
 	}
 
 	protected static GeneralizedCreativeTab addTab(String name, boolean searchable, MetalMaterial material) {
-		String MODID = Loader.instance().activeModContainer().getModId();
-		GeneralizedCreativeTab tab = new GeneralizedCreativeTab(name, searchable, material);
+		GeneralizedCreativeTab tab = new GeneralizedCreativeTab(Loader.instance().activeModContainer().getModId() + name, searchable, material);
 //		itemGroupsByModID.get(name).add(tab);
 		return tab;
 	}

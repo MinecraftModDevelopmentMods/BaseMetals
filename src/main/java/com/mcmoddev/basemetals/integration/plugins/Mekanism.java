@@ -10,7 +10,6 @@ import mekanism.api.gas.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
@@ -29,9 +28,9 @@ public class Mekanism implements IIntegration {
 			return;
 		}
 
-		for (Gas gas : GasRegistry.getRegisteredGasses()) {
+/*		for (Gas gas : GasRegistry.getRegisteredGasses()) {
 			FMLLog.severe("BASEMETALS: PEEKING FOR GASSES: %s", gas.getName());
-		}
+		}*/
 
 		MetalMaterial material;
 

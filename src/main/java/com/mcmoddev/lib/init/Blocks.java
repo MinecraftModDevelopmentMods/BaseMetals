@@ -18,7 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * This class initializes all blocks in Base Metals and provides some utility
  * methods for looking up blocks.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public abstract class Blocks {

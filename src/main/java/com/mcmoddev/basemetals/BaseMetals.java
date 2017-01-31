@@ -3,27 +3,30 @@ package com.mcmoddev.basemetals;
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.*;
-import net.minecraftforge.fml.common.Mod.*;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
  * This is the entry point for this mod. If you are writing your own mod that
  * uses this mod, the classes of interest to you are the init classes (classes
- * in package cyano.basemetals.init) and the CrusherRecipeRegistry class (in
- * package cyano.basemetals.registry). Note that you should add 'dependencies =
+ * in package com.mcmoddev.basemetals.init) and the CrusherRecipeRegistry class (in
+ * package com.mcmoddev.basemetals.registry). Note that you should add 'dependencies =
  * "required-after:basemetals"' to your &#64;Mod annotation (e.g. <br>
  * &#64;Mod(modid = "moremetals", name="More Metals!", version = "1.2.3",
  * dependencies = "required-after:basemetals") <br>
  * )
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
-@Mod(modid = BaseMetals.MODID, name = BaseMetals.NAME, version = BaseMetals.VERSION, dependencies = "required-after:Forge;before:buildingbricks", acceptedMinecraftVersions = "[1.10.2,)", updateJSON = "https://raw.githubusercontent.com/MinecraftModDevelopment/BaseMetals/master/update.json")
+@Mod(modid = BaseMetals.MODID, name = BaseMetals.NAME, version = BaseMetals.VERSION, dependencies = "required-after:Forge;before:buildingbricks", acceptedMinecraftVersions = "[1.10.2,)", updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {
-
-	// TODO: use metal plates to modify or repair shields
 
 	@Instance
 	public static BaseMetals INSTANCE;
@@ -41,8 +44,10 @@ public class BaseMetals {
 	 */
 	public static final String VERSION = "2.5.0-beta1";
 
+	public static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopment/BaseMetals/master/update.json";
+
 	@SidedProxy(clientSide = "com.mcmoddev.basemetals.proxy.ClientProxy", serverSide = "com.mcmoddev.basemetals.proxy.ServerProxy")
-	public static CommonProxy PROXY = null;
+	public static CommonProxy PROXY;
 
 	static {
 		// Forge says this needs to be statically initialized here.
@@ -55,11 +60,6 @@ public class BaseMetals {
 	}
 
 	@EventHandler
-	public void onRemap(FMLMissingMappingsEvent event) {
-		PROXY.onRemap(event);
-	}
-
-	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		PROXY.init(event);
 	}
@@ -67,5 +67,10 @@ public class BaseMetals {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		PROXY.postInit(event);
+	}
+
+	@EventHandler
+	public void onRemap(FMLMissingMappingsEvent event) {
+		PROXY.onRemap(event);
 	}
 }

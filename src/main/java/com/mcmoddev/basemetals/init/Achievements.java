@@ -3,34 +3,48 @@ package com.mcmoddev.basemetals.init;
 import com.mcmoddev.basemetals.util.Config.Options;
 
 import cyano.basemetals.init.Materials;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.fml.common.Loader;
 
 /** initializer for achievements */
-public abstract class Achievements {
+public class Achievements extends com.mcmoddev.lib.init.Achievements {
 
-	public static Achievement this_is_new; // smelt a new metal ingot
-	public static Achievement blocktastic; // make a metal block
-	public static Achievement geologist; // make a crack hammer
-	public static Achievement brass_maker; // make blend
-	public static Achievement bronze_maker; // make blend
-	public static Achievement electrum_maker; // make blend
-	public static Achievement cupronickel_maker; // make blend
-	public static Achievement steel_maker; // make blend
-	public static Achievement invar_maker; // make blend
-	public static Achievement mithril_maker; // make blend
-	public static Achievement aquarium_maker; // make blend
-	public static Achievement metallurgy; // make any alloy ingot
-	public static Achievement demon_slayer; // decked out completely in cold-iron
-	public static Achievement angel_of_death; // decked out fully in mithril
-	public static Achievement scuba_diver; // full suit of aquarium armor
-	public static Achievement moon_boots; // craft star-steel boots
-	public static Achievement juggernaut; // full adamantine armor
+	/** smelt a new metal ingot */
+	public static Achievement this_is_new;
+	/** make a metal block */
+	public static Achievement blocktastic;
+	/** make a crack hammer */
+	public static Achievement geologist;
+	/** make brass blend */
+	public static Achievement brass_maker;
+	/** make bronze blend */
+	public static Achievement bronze_maker;
+	/** make electrum blend */
+	public static Achievement electrum_maker;
+	/** make cupronickel blend */
+	public static Achievement cupronickel_maker;
+	/** make steel blend */
+	public static Achievement steel_maker;
+	/** make invar blend */
+	public static Achievement invar_maker;
+	/** make mithril blend */
+	public static Achievement mithril_maker;
+	/** make aquarium blend */
+	public static Achievement aquarium_maker;
+	/** make any alloy ingot */
+	public static Achievement metallurgy;
+	/** decked out completely in cold-iron */
+	public static Achievement demon_slayer;
+	/** decked out fully in mithril */
+	public static Achievement angel_of_death;
+	/** full suit of aquarium armor */
+	public static Achievement scuba_diver;
+	/** craft star-steel boots */
+	public static Achievement moon_boots;
+	/** full suit of adamantine armor */
+	public static Achievement juggernaut;
 
 	private static boolean initDone = false;
 
@@ -92,19 +106,5 @@ public abstract class Achievements {
 		}
 
 		initDone = true;
-	}
-
-	protected static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, Item icon, AchievementPage page) {
-		return makeAchievement(baseName, requirement, x, y, new ItemStack(icon), page);
-	}
-
-	protected static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, Block icon, AchievementPage page) {
-		return makeAchievement(baseName, requirement, x, y, new ItemStack(icon), page);
-	}
-
-	protected static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, ItemStack icon, AchievementPage page) {
-		final Achievement a = new Achievement(baseName, baseName, x, y, icon, requirement).registerStat();
-		page.getAchievements().add(a);
-		return a;
 	}
 }

@@ -13,7 +13,7 @@ import com.mcmoddev.lib.items.ItemMetalIngot;
 import cyano.basemetals.init.Materials;
 import net.minecraft.entity.passive.EntityVillager.*;
 import net.minecraft.item.*;
-import net.minecraft.village.*;
+//import net.minecraft.village.*;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 
@@ -22,11 +22,11 @@ import net.minecraftforge.fml.common.Loader;
  * @author DrCyano
  *
  */
-public abstract class VillagerTrades {
+public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 
 	private static boolean initDone = false;
 
-	public static final int TRADES_PER_LEVEL = 4;
+//	public static final int TRADES_PER_LEVEL = 4;
 
 	/**
 	 *
@@ -73,35 +73,27 @@ public abstract class VillagerTrades {
 			for (final Item i : e.getValue()) {
 				if (i.getRegistryName().getResourceDomain().equals(modid)) {
 					if (i instanceof ItemArmor) {
-						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + "to allArmors");
 						allArmors.computeIfAbsent(m, (MetalMaterial g) -> new ArrayList<>()).add(i);
 //						continue;
 					} else if (i instanceof ItemMetalCrackHammer) {
-						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allHammers");
 						allHammers.put(m, i);
 //						continue;
 					} else if (i instanceof ItemSword) {
-						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allSwords");
 						allSwords.put(m, i);
 //						continue;
 					} else if (i instanceof ItemHoe) {
-						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allHoes");
 						allHoes.put(m, i);
 //						continue;
 					} else if (i instanceof ItemAxe) {
-						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allAxes");
 						allAxes.put(m, i);
 //						continue;
 					} else if (i instanceof ItemPickaxe) {
-						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allAPickAxes");
 						allPickAxes.put(m, i);
 //						continue;
 					} else if (i instanceof ItemSpade) {
-						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allShovels");
 						allShovels.put(m, i);
 //						continue;
 					} else if (i instanceof ItemMetalIngot) {
-						FMLLog.severe(modid + ": Adding " + i.getUnlocalizedName() + " to allIngots");
 						allIngots.put(m, i);
 //						continue;
 					}
@@ -191,7 +183,7 @@ public abstract class VillagerTrades {
 			}
 		}
 	}
-
+/*
 	protected static int emeraldPurchaseValue(float value) {
 		return Math.max(1, (int) (value * 0.2F));
 	}
@@ -247,49 +239,55 @@ public abstract class VillagerTrades {
 		}
 		return concat;
 	}
-
+*/
 	/**
 	 * This ITradeList object holds a list of ITradeLists and picks a few at random to place in a merchant's trade menu.
 	 */
+	/*
 	public static class MultiTradeGenerator implements ITradeList {
 		private final int numberOfTrades;
 		private final ITradeList[] trades;
-
+*/
 		/**
 		 * Creates an ITradeList instanec that randomly adds multiple trades at a time
 		 * @param tradeCount Number of trades to add to the merchant's trade menu
 		 * @param tradePalette The trades to randomly choose from
 		 */
+	/*
 		public MultiTradeGenerator(int tradeCount, List<ITradeList> tradePalette) {
 			numberOfTrades = Math.min(tradeCount, tradePalette.size());
 			trades = tradePalette.toArray(new ITradeList[tradePalette.size()]);
 		}
-
+*/
 		/**
 		 * Invoked when the merchant generates its trade menu
 		 * @param recipeList existing trade menu
 		 * @param random a psuedorandom number generator instance
 		 */
+	/*
 		@Override
 		public void modifyMerchantRecipeList(MerchantRecipeList recipeList, Random random) {
 			for (int n = 0; n < numberOfTrades; n++) {
 				trades[random.nextInt(trades.length)].modifyMerchantRecipeList(recipeList, random);
 			}
 		}
-
+*/
 		/**
 		 * For debugging purposes only
 		 * @return String representation
 		 */
+	/*
 		@Override
 		public String toString() {
 			return MultiTradeGenerator.class.getSimpleName() + ": " + numberOfTrades + " trades chosen from " + Arrays.toString(trades);
 		}
+		*/
 	}
 
 	/**
 	 * A simple, easy to use ITradeList class that holds a single trade recipe
 	 */
+/*
 	public static class SimpleTrade implements ITradeList {
 
 		private final ItemStack input1;
@@ -300,7 +298,7 @@ public abstract class VillagerTrades {
 		private final int maxOutputMarkup;
 		private final int maxTrades;
 		private final int maxTradeVariation;
-
+*/
 		/**
 		 * Full constructor for making a trade recipe
 		 * @param in1 Item for the left purchase price trade slot
@@ -312,6 +310,7 @@ public abstract class VillagerTrades {
 		 * @param numberTrades Max number of trades before this recipe is invalidated (-1 for infinite trading)
 		 * @param tradeNumberVariation  range of variation in value of <code>numberTrades</code> (-1 to disable)
 		 */
+/*
 		public SimpleTrade(ItemStack in1, int variation1, ItemStack in2, int variation2, ItemStack out, int variationOut, int numberTrades, int tradeNumberVariation) {
 			input1 = in1;
 			maxInputMarkup1 = variation1;
@@ -322,7 +321,7 @@ public abstract class VillagerTrades {
 			maxTrades = numberTrades;
 			maxTradeVariation = tradeNumberVariation;
 		}
-
+*/
 		/**
 		 * Constructor for making a simple two-for-one trade recipe with price variation
 		 * @param in1 Item for the left purchase price trade slot
@@ -332,10 +331,11 @@ public abstract class VillagerTrades {
 		 * @param out The item to be purchased (trade recipe output slot)
 		 * @param vout range of variation in quantity of <code>out</code>
 		 */
+/*
 		public SimpleTrade(ItemStack in1, int v1, ItemStack in2, int v2, ItemStack out, int vout) {
 			this(in1, v1, in2, v2, out, vout, -1, -1);
 		}
-
+*/
 		/**
 		 * Constructor for making a simple one-for-one trade with price variation
 		 * @param in1 Item for the left purchase price trade slot
@@ -343,15 +343,17 @@ public abstract class VillagerTrades {
 		 * @param out The item to be purchased (trade recipe output slot)
 		 * @param vout range of variation in quantity of <code>out</code>
 		 */
+/*
 		public SimpleTrade(ItemStack in1, int v1, ItemStack out, int vout) {
 			this(in1, v1, null, 0, out, vout, -1, -1);
 		}
-
+*/
 		/**
 		 * Constructor for making a simple one-for-one trade
 		 * @param in1 Item for the left purchase price trade slot
 		 * @param out The item to be purchased (trade recipe output slot)
 		 */
+/*
 		public SimpleTrade(ItemStack in1, ItemStack out) {
 			this(in1, 0, null, 0, out, 0, -1, -1);
 		}
@@ -360,12 +362,13 @@ public abstract class VillagerTrades {
 		public String toString() {
 			return input1 + " + " + input2 + " => " + output;
 		}
-
+*/
 		/**
 		 * Invoked when the merchant generates its trade menu
 		 * @param recipeList existing trade menu
 		 * @param random a psuedorandom number generator instance
 		 */
+/*
 		@Override
 		public void modifyMerchantRecipeList(MerchantRecipeList recipeList, Random random) {
 			int numTrades = -1;
@@ -402,3 +405,4 @@ public abstract class VillagerTrades {
 		}
 	}
 }
+*/
