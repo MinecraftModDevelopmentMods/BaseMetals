@@ -2,8 +2,8 @@ package com.mcmoddev.lib.blocks;
 
 import java.util.Random;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.SoundType;
@@ -138,6 +138,6 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 
 	// @Override
 	// public String getOreDictionaryName() {
-	// return "slab" + material.getCapitalizedName();
+	// return Oredicts.SLAB + material.getCapitalizedName();
 	// }
 }

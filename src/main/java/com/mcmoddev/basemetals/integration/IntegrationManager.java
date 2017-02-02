@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.integration;
 
 import com.google.common.collect.Lists;
+import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.util.AnnotationChecker;
 
 import net.minecraftforge.fml.common.FMLLog;

@@ -2,7 +2,7 @@ package com.mcmoddev.lib.init;
 
 import java.util.*;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;

@@ -1,7 +1,8 @@
 package com.mcmoddev.basemetals.init;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import cyano.basemetals.init.Materials;
 import net.minecraft.item.Item;
@@ -22,7 +23,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	public static Item coal_smallpowder;
 
 	public static Item mercury_ingot;
+	public static Item mercury_nugget;
 	public static Item mercury_powder;
+	public static Item mercury_smallpowder;
 
 	private static boolean initDone = false;
 
@@ -74,18 +77,20 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 		if (Options.ENABLE_CHARCOAL) {
 			charcoal_powder = addItem(new Item(), "charcoal_powder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre("dustCharcoal", charcoal_powder);
+			OreDictionary.registerOre(Oredicts.DUSTCHARCOAL, charcoal_powder);
 
 			charcoal_smallpowder = addItem(new Item(), "charcoal_smallpowder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre("dustCharcoal", charcoal_smallpowder);
+			OreDictionary.registerOre(Oredicts.DUSTTINYCHARCOAL, charcoal_smallpowder);
+			OreDictionary.registerOre(Oredicts.DUSTSMALLCHARCOAL, charcoal_smallpowder);
 		}
 
 		if (Options.ENABLE_COAL) {
 			coal_powder = addItem(new Item(), "coal_powder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre("dustCoal", coal_powder);
+			OreDictionary.registerOre(Oredicts.DUSTCOAL, coal_powder);
 
 			coal_smallpowder = addItem(new Item(), "coal_smallpowder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre("dustCoal", coal_smallpowder);
+			OreDictionary.registerOre(Oredicts.DUSTTINYCOAL, coal_smallpowder);
+			OreDictionary.registerOre(Oredicts.DUSTSMALLCOAL, coal_smallpowder);
 		}
 
 		if (Options.ENABLE_COLDIRON) {
@@ -240,16 +245,22 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			// mercury is special
 			mercury_ingot = addItem(new Item(), "mercury_ingot", null, ItemGroups.tab_items);
 //			itemRegistry.put("mercury_ingot", mercury_ingot);
-			OreDictionary.registerOre("ingotMercury", mercury_ingot);
-			OreDictionary.registerOre("quicksilver", mercury_ingot);
+			OreDictionary.registerOre(Oredicts.INGOTMERCURY, mercury_ingot);
+			OreDictionary.registerOre(Oredicts.QUICKSILVER, mercury_ingot);
+
+			mercury_nugget = addItem(new Item(), "mercury_nugget", null, ItemGroups.tab_items);
+//			itemRegistry.put("mercury_ingot", mercury_nugget);
+			OreDictionary.registerOre(Oredicts.NUGGETMERCURY, mercury_nugget);
+//			OreDictionary.registerOre(Oredicts.QUICKSILVER, mercury_nugget);
 
 			mercury_powder = addItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
 //			itemRegistry.put("mercury_powder", mercury_powder);
-			OreDictionary.registerOre("dustMercury", mercury_powder);
+			OreDictionary.registerOre(Oredicts.DUSTMERCURY, mercury_powder);
 
-//			mercury_smallpowder = addItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
-////			itemRegistry.put("mercury_powder", mercury_smallpowder);
-//			OreDictionary.registerOre("dustMercury", mercury_smallpowder);
+			mercury_smallpowder = addItem(new Item(), "mercury_smallpowder", null, ItemGroups.tab_items);
+//			itemRegistry.put("mercury_smallpowder", mercury_smallpowder);
+			OreDictionary.registerOre(Oredicts.DUSTTINYMERCURY, mercury_smallpowder);
+			OreDictionary.registerOre(Oredicts.DUSTSMALLMERCURY, mercury_smallpowder);
 		}
 
 		if (Options.ENABLE_MITHRIL) {

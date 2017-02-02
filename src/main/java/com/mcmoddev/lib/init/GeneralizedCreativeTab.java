@@ -1,4 +1,4 @@
-package com.mcmoddev.basemetals.init;
+package com.mcmoddev.lib.init;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -9,7 +9,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Comparator;
 import java.util.List;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.basemetals.init.Items;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 public class GeneralizedCreativeTab extends CreativeTabs {
 

@@ -1,8 +1,9 @@
 package com.mcmoddev.basemetals.init;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.blocks.BlockHumanDetector;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import cyano.basemetals.init.Materials;
 import net.minecraft.block.*;
@@ -182,7 +183,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.ENABLE_MERCURY) {
 			mercury_ore = addBlock(new BlockOre(), "mercury_ore", null, ItemGroups.tab_blocks);
 			mercury_ore.setHardness(3.0f).setResistance(5.0f);
-			OreDictionary.registerOre("oreMercury", mercury_ore);
+			OreDictionary.registerOre(Oredicts.OREMERCURY, mercury_ore);
 		}
 
 		if (Options.ENABLE_MITHRIL) {

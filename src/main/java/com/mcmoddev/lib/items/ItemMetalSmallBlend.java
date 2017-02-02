@@ -1,10 +1,11 @@
 package com.mcmoddev.lib.items;
 
 import com.mcmoddev.basemetals.init.Achievements;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,7 +30,7 @@ public class ItemMetalSmallBlend extends Item implements IOreDictionaryEntry, IM
 	public ItemMetalSmallBlend(MetalMaterial material) {
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "dustTiny" + this.material.getCapitalizedName(); // same oreDict entry as powder
+		this.oreDict = Oredicts.DUSTTINY + this.material.getCapitalizedName(); // same oreDict entry as powder
 	}
 
 	@Override

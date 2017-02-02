@@ -3,8 +3,9 @@ package com.mcmoddev.lib.items;
 import java.util.List;
 
 import com.mcmoddev.basemetals.items.MetalToolEffects;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -34,7 +35,7 @@ public class ItemMetalShears extends ItemShears implements IMetalObject {
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
 		this.setCreativeTab(CreativeTabs.TOOLS);
-		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 		this.regenerates = this.material.regenerates;
 	}
 

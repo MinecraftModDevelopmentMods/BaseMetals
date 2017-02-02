@@ -4,12 +4,13 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import com.google.common.collect.*;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.blocks.*;
 import com.mcmoddev.lib.items.*;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
@@ -65,9 +66,10 @@ public abstract class Items {
 		classSortingValues.put(BlockMetalBlock.class, ++ss * 10000);
 		classSortingValues.put(BlockMetalPlate.class, ++ss * 10000);
 		classSortingValues.put(BlockMetalBars.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalDoor.class, ++ss * 10000);
+		classSortingValues.put(BlockMetalDoor.class, ++ss * 10000); // Is this needed? (ItemMetalDoor)
 		classSortingValues.put(BlockMetalTrapDoor.class, ++ss * 10000);
 		classSortingValues.put(InteractiveFluidBlock.class, ++ss * 10000);
+		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalIngot.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalNugget.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalPowder.class, ++ss * 10000);
@@ -81,7 +83,6 @@ public abstract class Items {
 		classSortingValues.put(ItemMetalHoe.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalSword.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalArmor.class, ++ss * 10000);
-		classSortingValues.put(GenericMetalItem.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalArrow.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalBolt.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalBow.class, ++ss * 10000);
@@ -90,18 +91,21 @@ public abstract class Items {
 		classSortingValues.put(ItemMetalHorseArmor.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalShears.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalShield.class, ++ss * 10000);
+		classSortingValues.put(ItemMetalGear.class, ++ss * 10000);
+		classSortingValues.put(ItemMetalRod.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalDoor.class, classSortingValues.get(BlockMetalDoor.class));
+		classSortingValues.put(GenericMetalItem.class, ++ss * 10000);
 
 		classSortingValues.put(BlockButtonMetal.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalSlab.class, ++ss * 10000);
-		classSortingValues.put(BlockDoubleMetalSlab.class, ++ss * 10000); // Probably not needed
-		classSortingValues.put(BlockHalfMetalSlab.class, ++ss * 10000); // Probably not needed
+		classSortingValues.put(BlockMetalSlab.class, ++ss * 10000); // Is this needed? (ItemMetalSlab)
+		classSortingValues.put(BlockDoubleMetalSlab.class, ++ss * 10000); // Probably not needed (ItemMetalSlab)
+		classSortingValues.put(BlockHalfMetalSlab.class, ++ss * 10000); // Probably not needed (ItemMetalSlab)
 		classSortingValues.put(BlockMetalLever.class, ++ss * 10000);
 		classSortingValues.put(BlockMetalPressurePlate.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalStairs.class, ++ss * 10000);
+		classSortingValues.put(BlockMetalStairs.class, ++ss * 10000); // Is this needed?
 		classSortingValues.put(BlockMetalWall.class, ++ss * 10000);
 		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalSlab.class, ++ss * 10000);
+		classSortingValues.put(ItemMetalSlab.class, classSortingValues.get(BlockMetalSlab.class));
 	}
 
 	protected static void addToMetList() {
@@ -114,40 +118,12 @@ public abstract class Items {
 	}
 
 	protected static void createItemsBasic(MetalMaterial material) {
-		//createBlend(material); // hasBlend Check
+		createBlend(material);
 		createIngot(material);
 		createNugget(material);
 		createPowder(material);
-		//createSmallBlend(material); // hasBlend Check
+		createSmallBlend(material);
 		createSmallPowder(material);
-	}
-
-	protected static void createItemsModSupport(MetalMaterial material) {
-		//Mekanism
-		createCrystal(material);
-		createShard(material);
-		createClump(material);
-		createDirtyPowder(material);
-
-		// IC2
-		createDensePlate(material);
-		createCrushed(material);
-		createCrushedPurified(material);
-	}
-
-	protected static void createItemsModMekanism(MetalMaterial material) {
-		//Mekanism
-		createCrystal(material);
-		createShard(material);
-		createClump(material);
-		createDirtyPowder(material);
-	}
-
-	protected static void createItemsModIC2(MetalMaterial material) {
-		// IC2
-		createDensePlate(material);
-		createCrushed(material);
-		createCrushedPurified(material);
 	}
 
 	protected static void createItemsFull(MetalMaterial material) {
@@ -179,17 +155,24 @@ public abstract class Items {
 		createSword(material);
 		createRod(material);
 		createGear(material);
+	}
 
-		//Mekanism
-//		createCrystal(material);
-//		createShard(material);
-//		createClump(material);
-//		createDirtyPowder(material);
+	protected static void createItemsModSupport(MetalMaterial material) {
+		createItemsModMekanism(material);
+		createItemsModIC2(material);
+	}
 
-		// IC2
-//		createDensePlate(material);
-//		createCrushed(material);
-//		createCrushedPurified(material);
+	protected static void createItemsModIC2(MetalMaterial material) {
+		createDensePlate(material);
+		createCrushed(material);
+		createCrushedPurified(material);
+	}
+
+	protected static void createItemsModMekanism(MetalMaterial material) {
+		createCrystal(material);
+		createShard(material);
+		createClump(material);
+		createDirtyPowder(material);
 	}
 
 	protected static Item addItem(Item item, String name, MetalMaterial material, CreativeTabs tab) {
@@ -278,6 +261,8 @@ public abstract class Items {
 
 		if ((Options.ENABLE_ROD) && (material.rod == null)) {
 			material.rod = addItem(new ItemMetalRod(material), "rod", material, ItemGroups.tab_items);
+			OreDictionary.registerOre(Oredicts.STICK + material.getCapitalizedName(), material.rod);
+			OreDictionary.registerOre(Oredicts.ROD, material.rod);
 		}
 
 		return material.rod;
@@ -290,6 +275,7 @@ public abstract class Items {
 
 		if ((Options.ENABLE_GEAR) && (material.gear == null)) {
 			material.gear = addItem(new ItemMetalGear(material), "gear", material, ItemGroups.tab_items);
+			OreDictionary.registerOre(Oredicts.GEAR, material.gear);
 		}
 
 		return material.gear;
@@ -542,7 +528,7 @@ public abstract class Items {
 
 		if ((Options.ENABLE_MEKANISM) && (material.crystal == null)) {
 			material.crystal = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.tab_items);
-			OreDictionary.registerOre("crystal" + material.getCapitalizedName(), material.crystal);
+			OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), material.crystal);
 		}
 
 		return material.crystal;
@@ -555,7 +541,7 @@ public abstract class Items {
 
 		if ((Options.ENABLE_MEKANISM) && (material.shard == null)) {
 			material.shard = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.tab_items);
-			OreDictionary.registerOre("shard" + material.getCapitalizedName(), material.shard);
+			OreDictionary.registerOre(Oredicts.SHARD + material.getCapitalizedName(), material.shard);
 		}
 
 		return material.shard;
@@ -568,7 +554,7 @@ public abstract class Items {
 
 		if ((Options.ENABLE_MEKANISM) && (material.clump == null)) {
 			material.clump = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.tab_items);
-			OreDictionary.registerOre("clump" + material.getCapitalizedName(), material.clump);
+			OreDictionary.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), material.clump);
 		}
 
 		return material.clump;
@@ -581,7 +567,7 @@ public abstract class Items {
 
 		if ((Options.ENABLE_MEKANISM) && (material.powder_dirty == null)) {
 			material.powder_dirty = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.tab_items);
-			OreDictionary.registerOre("dustDirty" + material.getCapitalizedName(), material.powder_dirty);
+			OreDictionary.registerOre(Oredicts.DUSTDIRTY + material.getCapitalizedName(), material.powder_dirty);
 		}
 
 		return material.powder_dirty;
@@ -595,7 +581,7 @@ public abstract class Items {
 
 		if ((Options.ENABLE_IC2) && (material.dense_plate == null)) {
 			material.dense_plate = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.tab_items);
-			OreDictionary.registerOre("plateDense" + material.getCapitalizedName(), material.dense_plate);
+			OreDictionary.registerOre(Oredicts.PLATEDENSE + material.getCapitalizedName(), material.dense_plate);
 		}
 
 		return material.dense_plate;
@@ -608,7 +594,7 @@ public abstract class Items {
 
 		if ((Options.ENABLE_IC2) && (material.crushed == null)) {
 			material.crushed = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.tab_items);
-			OreDictionary.registerOre("crushed" + material.getCapitalizedName(), material.crushed);
+			OreDictionary.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), material.crushed);
 		}
 
 		return material.crushed;
@@ -621,7 +607,7 @@ public abstract class Items {
 
 		if ((Options.ENABLE_IC2) && (material.crushed_purified == null)) {
 			material.crushed_purified = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.tab_items);
-			OreDictionary.registerOre("crushedPurified" + material.getCapitalizedName(), material.crushed_purified);
+			OreDictionary.registerOre(Oredicts.CRUSHEDPURIFIED + material.getCapitalizedName(), material.crushed_purified);
 		}
 
 		return material.crushed_purified;
@@ -650,6 +636,7 @@ public abstract class Items {
 		if ((Options.ENABLE_DOOR) && (material.door == null)) {
 			if (material.doorBlock != null) {
 				material.door = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.tab_blocks);
+				OreDictionary.registerOre(Oredicts.DOOR, material.door);
 			}
 		}
 

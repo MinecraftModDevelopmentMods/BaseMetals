@@ -1,11 +1,11 @@
 package com.mcmoddev.basemetals.proxy;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.client.renderer.RenderCustomArrow;
-import com.mcmoddev.basemetals.client.renderer.RenderCustomBolt;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
+import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
+import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
 import com.mcmoddev.lib.entity.EntityCustomArrow;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
 

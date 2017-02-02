@@ -1,9 +1,10 @@
 package com.mcmoddev.lib.items;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +28,7 @@ public class ItemMetalBolt extends ItemBolt implements IOreDictionaryEntry, IMet
 	public ItemMetalBolt(MetalMaterial material) {
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "ammoBolt";
+		this.oreDict = Oredicts.AMMOBOLT;
 	}
 
 	/**

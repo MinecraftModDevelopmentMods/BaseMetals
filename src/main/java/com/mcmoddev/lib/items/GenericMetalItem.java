@@ -1,7 +1,7 @@
 package com.mcmoddev.lib.items;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.item.Item;
 

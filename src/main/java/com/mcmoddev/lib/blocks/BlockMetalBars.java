@@ -1,8 +1,9 @@
 package com.mcmoddev.lib.blocks;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -29,7 +30,7 @@ public class BlockMetalBars extends net.minecraft.block.BlockPane implements IOr
 		this.blockHardness = material.getMetalBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
-		this.oreDict = "bars" + material.getCapitalizedName();
+		this.oreDict = Oredicts.BARS + material.getCapitalizedName();
 	}
 
 	@Override

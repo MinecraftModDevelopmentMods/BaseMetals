@@ -164,19 +164,41 @@ public class Oredicts {
 
 	
 	// Custom
+	public static final String ARROW = "arrow";
+	public static final String AMMOBOLT = "ammoBolt";
+	public static final String BUTTON = "button";
+	public static final String BLEND = "blend";
+	public static final String BLENDTINY = "blendTiny";
 	public static final String DUST = "dust";
+	public static final String DUSTTINY = "dustTiny";
+	public static final String DUSTSMALL = "dustSmall";
 	public static final String BLOCK = "block";
 	public static final String INGOT = "ingot";
 	public static final String NUGGET = "nugget";
 	public static final String ORE = "ore";
+	public static final String LEVER = "lever";
 	public static final String DOOR = "door";
+	public static final String PLATE = "plate";
 	public static final String STICK = "stick";
+	public static final String STAIRS = "stairs";
+	public static final String SHIELD = "shield";
+	public static final String SLAB = "slab";
 	public static final String SPROCKET = "sprocket";
 	public static final String TRAPDOOR = "trapdoor";
 	public static final String ROD = "rod";
 	public static final String GEAR = "gear";
+	public static final String GEM = "gem";
 	public static final String BARS = "bars";
+	public static final String WALL = "wall";
 
+	public static final String CLUMP = "clump";
+	public static final String DUSTDIRTY = "dustDirty";
+	public static final String CRYSTAL = "crystal";
+	public static final String SHARD = "shard";
+	public static final String PLATEDENSE = "plateDense";
+	public static final String CRUSHED = "crushed";
+	public static final String CRUSHEDPURIFIED = "crushedPurified";
+	
 	public static final String DUSTCARBON = "dustCarbon";
 	public static final String DUSTCHARCOAL = "dustCharcoal";
 	public static final String DUSTCOAL = "dustCoal";
@@ -185,18 +207,41 @@ public class Oredicts {
 	public static final String DUSTZINC = "dustZinc";
 	public static final String DUSTNICKEL = "dustNickel";
 
+	public static final String DUSTTINYCHARCOAL = "dustTinyCharcoal";
+	public static final String DUSTTINYCOAL = "dustTinyCoal";
+	public static final String DUSTTINYMERCURY = "dustTinyMercury";
+	public static final String DUSTTINYCOLDIRON = "dustTinyColdiron";
+	public static final String DUSTTINYCOPPER = "dustTinyCopper";
+	public static final String DUSTTINYGOLD = "dustTinyGold";
+	public static final String DUSTTINYIRON = "dustTinyIron";
+	public static final String DUSTTINYNICKEL = "dustTinyNickel";
+	public static final String DUSTTINYSILVER = "dustTinySilver";
+	public static final String DUSTTINYTIN = "dustTinyTin";
+	public static final String DUSTTINYZINC = "dustTinyZinc";
+
+	public static final String DUSTSMALLCHARCOAL = "dustSmallCharcoal";
+	public static final String DUSTSMALLCOAL = "dustSmallCoal";
+	public static final String DUSTSMALLMERCURY = "dustSmallMercury";
+
 	public static final String OREMERCURY = "oreMercury";
 
 	public static final String INGOTMERCURY = "ingotMercury";
 	public static final String INGOTSTEEL = "ingotSteel";
 
+	public static final String NUGGETMERCURY = "nuggetMercury";
+
 	public static final String DUSTCOLDIRON = "dustColdiron";
 	public static final String DUSTIRON = "dustIron";
 	public static final String DUSTSILVER = "dustSilver";
 	public static final String DUSTGOLD = "dustGold";
+	public static final String DUSTMERCURY = "dustMercury";
 
 	public static final String DOORWOOD = "doorWood";
 	public static final String DOORIRON = "doorIron";
 
 	public static final String BARSIRON = "barsIron";
+
+	public static final String COAL = "Coal";
+	public static final String CHARCOAL = "Charcoal";
+	public static final String QUICKSILVER = "quicksilver";	
 }

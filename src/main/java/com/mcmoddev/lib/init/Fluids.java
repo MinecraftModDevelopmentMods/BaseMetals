@@ -4,10 +4,10 @@ import java.util.Map;
 
 import com.google.common.collect.*;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.lib.blocks.BlockMoltenFluid;
 import com.mcmoddev.lib.blocks.InteractiveFluidBlock;
 import com.mcmoddev.lib.fluids.CustomFluid;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;

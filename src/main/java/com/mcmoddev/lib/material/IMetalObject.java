@@ -1,4 +1,4 @@
-package com.mcmoddev.basemetals.material;
+package com.mcmoddev.lib.material;
 
 /**
  *

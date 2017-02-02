@@ -1,8 +1,9 @@
 package com.mcmoddev.lib.blocks;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.SoundType;
@@ -21,7 +22,7 @@ public class BlockButtonMetal extends BlockButton implements IOreDictionaryEntry
 		super(false);
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.oreDict = "button" + this.material.getCapitalizedName();
+		this.oreDict = Oredicts.BUTTON + this.material.getCapitalizedName();
 		this.blockHardness = material.getMetalBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());

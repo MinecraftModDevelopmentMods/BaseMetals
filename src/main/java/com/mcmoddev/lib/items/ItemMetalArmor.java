@@ -26,9 +26,9 @@ import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import cyano.basemetals.init.Materials;
 

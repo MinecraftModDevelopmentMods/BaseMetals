@@ -1,7 +1,7 @@
 package com.mcmoddev.basemetals.init;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import cyano.basemetals.init.Materials;
 import net.minecraftforge.fluids.BlockFluidBase;

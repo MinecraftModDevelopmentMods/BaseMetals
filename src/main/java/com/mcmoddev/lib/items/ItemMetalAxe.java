@@ -3,8 +3,8 @@ package com.mcmoddev.lib.items;
 import java.util.List;
 
 import com.mcmoddev.basemetals.items.MetalToolEffects;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import cyano.basemetals.init.Materials;
 import net.minecraft.entity.Entity;

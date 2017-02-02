@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.mcmoddev.basemetals.items.MetalToolEffects;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import cyano.basemetals.init.Materials;
 import net.minecraft.block.state.IBlockState;
@@ -43,7 +44,7 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("pickaxe");
-		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 		this.regenerates = this.material.regenerates;
 	}
 

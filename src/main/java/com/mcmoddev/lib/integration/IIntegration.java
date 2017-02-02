@@ -1,4 +1,4 @@
-package com.mcmoddev.basemetals.integration;
+package com.mcmoddev.lib.integration;
 
 public interface IIntegration {
     void init();

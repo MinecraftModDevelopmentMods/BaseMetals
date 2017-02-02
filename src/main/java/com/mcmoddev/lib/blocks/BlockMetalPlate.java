@@ -2,9 +2,10 @@ package com.mcmoddev.lib.blocks;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -50,7 +51,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 		super(Material.IRON);
 		this.blockSoundType = SoundType.METAL;
 		this.material = material;
-		this.oreDict = "plate" + material.getCapitalizedName();
+		this.oreDict = Oredicts.PLATE + material.getCapitalizedName();
 		this.blockHardness = material.getMetalBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());

@@ -2,9 +2,10 @@ package com.mcmoddev.lib.blocks;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
@@ -33,7 +34,7 @@ public class BlockMetalWall extends BlockWall implements IOreDictionaryEntry, IM
 		super(material.block);
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.oreDict = "wall" + this.material.getCapitalizedName();
+		this.oreDict = Oredicts.WALL + this.material.getCapitalizedName();
 		this.blockHardness = material.getMetalBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());

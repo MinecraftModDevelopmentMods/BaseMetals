@@ -1,4 +1,4 @@
-package com.mcmoddev.basemetals.client.renderer;
+package com.mcmoddev.lib.client.renderer;
 
 import com.mcmoddev.lib.entity.EntityCustomBolt;
 
@@ -103,6 +103,6 @@ public class RenderCustomBolt extends Render<EntityCustomBolt> {
 
 	@Override
 	protected ResourceLocation getEntityTexture(EntityCustomBolt entity) {
-		return new ResourceLocation("textures/entity/projectiles/arrow.png");
+		return new ResourceLocation("textures/entity/projectiles/bolt.png");
 	}
 }

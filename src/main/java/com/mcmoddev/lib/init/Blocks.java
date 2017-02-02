@@ -3,10 +3,11 @@ package com.mcmoddev.lib.init;
 import java.util.*;
 
 import com.google.common.collect.*;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.blocks.*;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.*;
 import net.minecraft.creativetab.CreativeTabs;
@@ -96,13 +97,12 @@ public abstract class Blocks {
 			fullName = name;
 		}
 
-		// Loader.instance().activeModContainer().getModId()
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 		GameRegistry.register(block);
 		blockRegistry.put(fullName, block);
 
-		if (!(block instanceof BlockMetalDoor) && !(block instanceof BlockMetalSlab)) {
+		if (!(block instanceof BlockDoor) && !(block instanceof BlockSlab)) {
 			final ItemBlock itemBlock = new ItemBlock(block);
 			itemBlock.setRegistryName(fullName);
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
@@ -145,6 +145,7 @@ public abstract class Blocks {
 
 		if ((Options.ENABLE_BARS) && (material.bars == null)) {
 			material.bars = addBlock(new BlockMetalBars(material), "bars", material, ItemGroups.tab_blocks);
+			OreDictionary.registerOre(Oredicts.BARS, material.bars);
 		}
 
 		return material.bars;
@@ -283,6 +284,7 @@ public abstract class Blocks {
 
 		if ((Options.ENABLE_TRAPDOOR) && (material.trapdoor == null)) {
 			material.trapdoor = addBlock(new BlockMetalTrapDoor(material), "trapdoor", material, ItemGroups.tab_blocks);
+			OreDictionary.registerOre(Oredicts.TRAPDOOR, material.trapdoor);
 		}
 
 		return material.trapdoor;

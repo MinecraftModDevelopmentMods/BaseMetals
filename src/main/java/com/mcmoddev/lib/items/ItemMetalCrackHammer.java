@@ -4,12 +4,13 @@ import java.util.*;
 
 import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.CrusherRecipeRegistry;
 import com.mcmoddev.basemetals.registry.recipe.ICrusherRecipe;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import cyano.basemetals.init.Materials;
 import net.minecraft.block.Block;
@@ -52,7 +53,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		toolTypes = new HashSet<>();
 		toolTypes.add("crackhammer");
 		toolTypes.add("pickaxe");
-		repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 		this.regenerates = this.material.regenerates;
 	}
 

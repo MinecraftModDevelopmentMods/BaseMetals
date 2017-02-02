@@ -1,10 +1,11 @@
 package com.mcmoddev.lib.blocks;
 
 import com.mcmoddev.basemetals.init.Achievements;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -43,7 +44,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		this.translucent = false;
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		this.oreDict = "block" + material.getCapitalizedName();
+		this.oreDict = Oredicts.BLOCK + material.getCapitalizedName();
 		this.blockHardness = material.getMetalBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());

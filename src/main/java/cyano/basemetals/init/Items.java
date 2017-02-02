@@ -3,8 +3,8 @@ package cyano.basemetals.init;
 import java.util.List;
 import java.util.Map;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.item.Item;
 

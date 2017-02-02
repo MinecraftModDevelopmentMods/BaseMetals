@@ -1,12 +1,12 @@
 package com.mcmoddev.basemetals.util;
 
 import com.mcmoddev.basemetals.init.Achievements;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.items.ItemMetalBlend;
 import com.mcmoddev.lib.items.ItemMetalIngot;
 import com.mcmoddev.lib.items.ItemMetalShield;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;

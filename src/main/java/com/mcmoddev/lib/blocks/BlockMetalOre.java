@@ -1,8 +1,9 @@
 package com.mcmoddev.lib.blocks;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import cyano.basemetals.init.Materials;
 import net.minecraft.block.BlockOre;
@@ -31,7 +32,7 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 		this.blockHardness = Math.max(5f, material.getOreBlockHardness());
 		this.blockResistance = Math.max(1.5f, material.getBlastResistance() * 0.75f);
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
-		this.oreDict = "ore" + material.getCapitalizedName();
+		this.oreDict = Oredicts.ORE + material.getCapitalizedName();
 		// FMLLog.info(material.getName() + " ore harvest level set to " + material.getRequiredHarvestLevel());
 	}
 

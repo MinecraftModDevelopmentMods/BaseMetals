@@ -6,8 +6,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.init.ItemGroups;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.block.Block;
 

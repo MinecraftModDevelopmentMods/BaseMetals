@@ -1,8 +1,9 @@
 package com.mcmoddev.lib.blocks;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.SoundType;
@@ -30,7 +31,7 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 	public BlockMetalTrapDoor(MetalMaterial material) {
 		super(Material.IRON);
 		this.material = material;
-		this.oreDict = "trapdoor" + material.getCapitalizedName();
+		this.oreDict = Oredicts.TRAPDOOR + material.getCapitalizedName();
 		this.blockHardness = material.getMetalBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.blockSoundType = SoundType.METAL;

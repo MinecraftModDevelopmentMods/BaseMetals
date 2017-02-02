@@ -1,8 +1,9 @@
 package com.mcmoddev.lib.items;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.BlockDoor;
 
@@ -21,7 +22,7 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 	public ItemMetalDoor(MetalMaterial material) {
 		super(material.doorBlock);
 		this.material = material;
-		this.oreDict = "door" + this.material.getCapitalizedName();
+		this.oreDict = Oredicts.DOOR + this.material.getCapitalizedName();
 	}
 
 	/**
@@ -32,7 +33,7 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 	public ItemMetalDoor(BlockDoor block, MetalMaterial material) {
 		super(block);
 		this.material = material;
-		this.oreDict = "door" + this.material.getCapitalizedName();
+		this.oreDict = Oredicts.DOOR + this.material.getCapitalizedName();
 	}
 
 	@Override

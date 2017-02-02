@@ -1,9 +1,10 @@
-package com.mcmoddev.basemetals.integration.plugins;
+package com.mcmoddev.lib.integration.plugins;
 
-import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
+//import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 
-//import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.*;
+import portablejim.veinminer.api.IMCMessage;
 
 /**
  * VeinMiner Integration Plugin
@@ -11,10 +12,10 @@ import com.mcmoddev.lib.integration.IIntegration;
  * @author Jasmine Iwanek
  *
  */
-@BaseMetalsPlugin(VeinMiner.PLUGIN_MODID)
-public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMiner implements IIntegration {
+//@BaseMetalsPlugin(VeinMiner.PLUGIN_MODID)
+public class VeinMiner implements IIntegration {
 
-//	public static final String PLUGIN_MODID = "veinminer";
+	public static final String PLUGIN_MODID = "veinminer";
 
 //	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
@@ -26,25 +27,6 @@ public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMiner im
 			return;
 		}
 
-		addToolsForMaterial("aluminum");
-		addToolsForMaterial("aluminumbrass");
-		addToolsForMaterial("cadmium");
-		addToolsForMaterial("chromium");
-		addToolsForMaterial("galvanizedsteel");
-		addToolsForMaterial("iridium");
-		addToolsForMaterial("magnesium");
-		addToolsForMaterial("manganese");
-		addToolsForMaterial("nichrome");
-		addToolsForMaterial("osmium");
-		addToolsForMaterial("plutonium");
-		addToolsForMaterial("rutile");
-		addToolsForMaterial("stainlesssteel");
-		addToolsForMaterial("tantalum");
-		addToolsForMaterial("titanium");
-		addToolsForMaterial("tungsten");
-		addToolsForMaterial("uranium");
-		addToolsForMaterial("zirconium");
-
 		initDone = true;
 	}
 
@@ -53,8 +35,8 @@ public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMiner im
 	 *
 	 * @param material Material to add
 	 */
-	/*
 	protected static void addToolsForMaterial(String material) {
+		final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 		IMCMessage.addTool("axe", OWNER_MODID + ":" + material + "_axe");
 		IMCMessage.addTool("hoe", OWNER_MODID + ":" + material + "_hoe");
 		IMCMessage.addTool("pickaxe", OWNER_MODID + ":" + material + "_pickaxe");
@@ -63,5 +45,4 @@ public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMiner im
 		// IMCMessage.addTool("crook", OWNER_MODID + ":" + material + "_crook");
 		IMCMessage.addTool("hammer", OWNER_MODID + ":" + material + "_hammer");
 	}
-	*/
 }

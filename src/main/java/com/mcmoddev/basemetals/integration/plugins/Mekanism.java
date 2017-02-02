@@ -1,24 +1,20 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
-import com.mcmoddev.basemetals.integration.IIntegration;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import cyano.basemetals.init.Materials;
-import mekanism.api.gas.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
+//import net.minecraft.item.ItemStack;
+//import net.minecraftforge.fml.common.Loader;
 
 @BaseMetalsPlugin(Mekanism.PLUGIN_MODID)
-public class Mekanism implements IIntegration {
+public class Mekanism extends com.mcmoddev.lib.integration.plugins.Mekanism implements IIntegration {
 
-	public static final String PLUGIN_MODID = "Mekanism";
+//	public static final String PLUGIN_MODID = "Mekanism";
 
-	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
+//	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
 	private static boolean initDone = false;
 
@@ -28,16 +24,12 @@ public class Mekanism implements IIntegration {
 			return;
 		}
 
-/*		for (Gas gas : GasRegistry.getRegisteredGasses()) {
-			FMLLog.severe("BASEMETALS: PEEKING FOR GASSES: %s", gas.getName());
-		}*/
-
 		MetalMaterial material;
 
-		// Combiner 8 dust to 1 ore
 		if (Options.ENABLE_ADAMANTINE) {
 			material = Materials.adamantine;
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+			addOreMultiplicationRecipes(material);
+/*			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
 			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
 
 			addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
@@ -47,12 +39,13 @@ public class Mekanism implements IIntegration {
 			addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
 
 			addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
-			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));*/
 		}
 
 		if (Options.ENABLE_ANTIMONY) {
 			material = Materials.antimony;
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+			addOreMultiplicationRecipes(material);
+/*			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
 			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
 
 			addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
@@ -62,12 +55,13 @@ public class Mekanism implements IIntegration {
 			addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
 
 			addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
-			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));*/
 		}
 
 		if (Options.ENABLE_BISMUTH) {
 			material = Materials.bismuth;
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+			addOreMultiplicationRecipes(material);
+/*			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
 			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
 
 			addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
@@ -77,12 +71,13 @@ public class Mekanism implements IIntegration {
 			addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
 
 			addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
-			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));*/
 		}
 
 		if (Options.ENABLE_COLDIRON) {
 			material = Materials.coldiron;
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+			addOreMultiplicationRecipes(material);
+/*			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
 			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
 
 			addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
@@ -92,12 +87,13 @@ public class Mekanism implements IIntegration {
 			addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
 
 			addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
-			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));*/
 		}
 
 		if (Options.ENABLE_PLATINUM) {
 			material = Materials.platinum;
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+			addOreMultiplicationRecipes(material);
+/*			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
 			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
 
 			addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
@@ -107,12 +103,13 @@ public class Mekanism implements IIntegration {
 			addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
 
 			addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
-			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));*/
 		}
 
 		if (Options.ENABLE_NICKEL) {
 			material = Materials.nickel;
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+			addOreMultiplicationRecipes(material);
+/*			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
 			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
 
 			addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
@@ -122,12 +119,13 @@ public class Mekanism implements IIntegration {
 			addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
 
 			addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
-			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));*/
 		}
 
 		if (Options.ENABLE_STARSTEEL) {
 			material = Materials.starsteel;
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+			addOreMultiplicationRecipes(material);
+/*			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
 			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
 
 			addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
@@ -137,12 +135,13 @@ public class Mekanism implements IIntegration {
 			addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
 
 			addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
-			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));*/
 		}
 
 		if (Options.ENABLE_ZINC) {
 			material = Materials.zinc;
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+			addOreMultiplicationRecipes(material);
+/*			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
 			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
 
 			addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
@@ -152,7 +151,7 @@ public class Mekanism implements IIntegration {
 			addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
 
 			addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
-			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));*/
 		}
 
 		// Crystalizer
@@ -173,7 +172,7 @@ public class Mekanism implements IIntegration {
 
 		initDone = true;
 	}
-
+/*
 	protected static void addMetallurgicInfuserRecipe() {
 		NBTTagCompound recipeTag = new NBTTagCompound();
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "MetallurgicInfuserRecipe", recipeTag);
@@ -258,4 +257,5 @@ public class Mekanism implements IIntegration {
 		recipeTag.setTag("gasOutput", new GasStack(GasRegistry.getGas(outputGas), outputGasQty).write(new NBTTagCompound()));
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "PressurizedReactionChamberRecipe", recipeTag);
 	}
+	*/
 }

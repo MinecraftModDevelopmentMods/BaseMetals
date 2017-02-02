@@ -1,8 +1,9 @@
 package com.mcmoddev.lib.blocks;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
@@ -26,7 +27,7 @@ public class BlockMetalStairs extends BlockStairs implements IOreDictionaryEntry
 		super(material.block.getDefaultState());
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.oreDict = "stairs" + this.material.getCapitalizedName();
+		this.oreDict = Oredicts.STAIRS + this.material.getCapitalizedName();
 		this.blockHardness = material.getMetalBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
@@ -41,7 +42,7 @@ public class BlockMetalStairs extends BlockStairs implements IOreDictionaryEntry
 		super(modelBlock.getDefaultState());
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.oreDict = "stairs" + this.material.getCapitalizedName();
+		this.oreDict = Oredicts.STAIRS + this.material.getCapitalizedName();
 		this.blockHardness = material.getMetalBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());

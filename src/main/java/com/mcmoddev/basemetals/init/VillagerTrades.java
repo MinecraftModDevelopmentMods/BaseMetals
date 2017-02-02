@@ -4,11 +4,11 @@ import java.util.*;
 
 import org.apache.logging.log4j.Level;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.items.ItemMetalCrackHammer;
 import com.mcmoddev.lib.items.ItemMetalIngot;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import cyano.basemetals.init.Materials;
 import net.minecraft.entity.passive.EntityVillager.*;

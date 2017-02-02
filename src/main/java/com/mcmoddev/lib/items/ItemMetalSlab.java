@@ -1,8 +1,9 @@
 package com.mcmoddev.lib.items;
 
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -25,7 +26,7 @@ public class ItemMetalSlab extends ItemSlab implements IOreDictionaryEntry, IMet
 	public ItemMetalSlab(MetalMaterial material) {
 		super(material.half_slab, material.half_slab, material.double_slab);
 		this.material = material;
-		this.oreDict = "slab" + this.material.getCapitalizedName();
+		this.oreDict = Oredicts.SLAB + this.material.getCapitalizedName();
 	}
 
 	/**

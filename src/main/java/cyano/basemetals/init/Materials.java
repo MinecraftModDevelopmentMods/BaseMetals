@@ -1,7 +1,7 @@
 package cyano.basemetals.init;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 /**
  * This class initializes all of the materials in Base Metals. It also

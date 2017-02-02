@@ -1,9 +1,10 @@
 package com.mcmoddev.lib.items;
 
 import com.mcmoddev.basemetals.init.Achievements;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +29,7 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 	public ItemMetalIngot(MetalMaterial material) {
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = "ingot" + this.material.getCapitalizedName();
+		this.oreDict = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 
 	@Override

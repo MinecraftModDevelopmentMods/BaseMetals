@@ -1,6 +1,6 @@
 package cyano.basemetals.init;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 public abstract class MaterialsOLD extends com.mcmoddev.lib.init.Materials {
 

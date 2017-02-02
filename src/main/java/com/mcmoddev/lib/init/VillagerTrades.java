@@ -4,10 +4,10 @@ import java.util.*;
 
 import org.apache.logging.log4j.Level;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.lib.items.ItemMetalCrackHammer;
 import com.mcmoddev.lib.items.ItemMetalIngot;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.entity.passive.EntityVillager.*;
 import net.minecraft.item.*;

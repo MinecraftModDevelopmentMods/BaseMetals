@@ -9,9 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.mcmoddev.basemetals.init.GeneralizedCreativeTab;
 import com.mcmoddev.lib.init.Items;
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 /**
  * This class initializes all item groups in Base Metals.

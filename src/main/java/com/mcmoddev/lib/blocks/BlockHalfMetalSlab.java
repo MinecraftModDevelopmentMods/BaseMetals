@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.blocks;
 
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.MetalMaterial;
 
 public class BlockHalfMetalSlab extends BlockMetalSlab {
 

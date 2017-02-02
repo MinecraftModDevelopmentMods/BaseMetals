@@ -3,8 +3,9 @@ package com.mcmoddev.lib.items;
 import java.util.List;
 
 import com.mcmoddev.basemetals.items.MetalToolEffects;
-import com.mcmoddev.basemetals.material.IMetalObject;
-import com.mcmoddev.basemetals.material.MetalMaterial;
+import com.mcmoddev.lib.material.IMetalObject;
+import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import cyano.basemetals.init.Materials;
 import net.minecraft.block.state.IBlockState;
@@ -41,7 +42,7 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 		this.setMaxDamage(this.material.getToolDurability());
 		// this.damageVsEntity = attackDamage + metal.getBaseAttackDamage(); // damageVsEntity is private, sadly
 		this.attackDamage = 3F + this.material.getBaseAttackDamage();
-		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
+		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 		this.regenerates = this.material.regenerates;
 		this.setCreativeTab(CreativeTabs.COMBAT);
 	}

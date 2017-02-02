@@ -183,6 +183,8 @@ public class Config {
 		// TODO: Add this to config file
 		public static int GEAR_QTY = 4;
 		public static int PLATE_QTY = 3;
+		public static boolean FURNACE_CHEESE = true;
+		public static boolean FURNACE_1112 = true; // Overridden by FURNACE_CHEESE
 
 		// INTEGRATION
 		public static boolean ENABLE_ENDER_IO = true;

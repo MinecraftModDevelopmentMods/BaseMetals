@@ -1,4 +1,4 @@
-package com.mcmoddev.basemetals.client.renderer;
+package com.mcmoddev.lib.client.renderer;
 
 import com.mcmoddev.lib.entity.EntityCustomArrow;
 
