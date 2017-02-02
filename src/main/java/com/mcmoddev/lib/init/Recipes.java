@@ -102,9 +102,14 @@ public abstract class Recipes {
 		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 2), new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 8));
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SEA_LANTERN, new ItemStack(net.minecraft.init.Items.PRISMARINE_CRYSTALS, 5));
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SLIME_BLOCK, new ItemStack(net.minecraft.init.Items.SLIME_BALL, 9));
+		
 		// Samples
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.MAGMA, new ItemStack(net.minecraft.init.Items.MAGMA_CREAM, 4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.NETHER_WART_BLOCK, new ItemStack(net.minecraft.init.Items.NETHER_WART, 9));
+//		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.MAGMA, new ItemStack(net.minecraft.init.Items.MAGMA_CREAM, 4));
+//		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.NETHER_WART_BLOCK, new ItemStack(net.minecraft.init.Items.NETHER_WART, 9));
+//		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.NETHERRACK, new ItemStack(net.minecraft.init.Blocks.SOUL_SAND, 1));
+//		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.NETHER_BRICK, new ItemStack(net.minecraft.init.Blocks.NETHERRACK, 1));
+//		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.RED_NETHER_BRICK, new ItemStack(net.minecraft.init.Blocks.NETHERRACK, 1));
+//		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.NETHER_BRICK_FENCE, new ItemStack(net.minecraft.init.Blocks.NETHERRACK, 1));
 	}
 
 	protected static void initVanillaRecipes() {
