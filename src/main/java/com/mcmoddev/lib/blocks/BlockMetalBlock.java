@@ -53,30 +53,45 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	}
 
 	///// OVERRIDE OF ALL METHODS THAT DEPEND ON BLOCK MATERIAL: /////
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MapColor getMapColor(final IBlockState bs) {
 		return MapColor.IRON;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public boolean isFullBlock(IBlockState bs) {
 		return true;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public boolean isNormalCube(IBlockState bs) {
 		return true;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public boolean isFullyOpaque(IBlockState bs) {
 		return true;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public boolean isFullCube(IBlockState bs) {
@@ -103,7 +118,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 			final EntityLivingBase placer, final ItemStack src) {
 		super.onBlockPlacedBy(w, coord, bs, placer, src);
 		// achievement
-		if ((Options.ENABLE_ACHIEVEMENTS) && (placer instanceof EntityPlayer)) {
+		if ((Options.enableAchievements) && (placer instanceof EntityPlayer)) {
 				((EntityPlayer) placer).addStat(Achievements.blocktastic, 1);
 		}
 	}
@@ -118,6 +133,9 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

@@ -16,7 +16,7 @@ public class IC2 implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.ENABLE_IC2) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableIC2) {
 			return;
 		}
 

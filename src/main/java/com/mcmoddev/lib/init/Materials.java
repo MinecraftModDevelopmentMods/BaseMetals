@@ -2,13 +2,13 @@ package com.mcmoddev.lib.init;
 
 import java.util.*;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.FMLLog;
 
 /**
  * This class initializes all of the materials in Base Metals. It also
@@ -26,6 +26,10 @@ public abstract class Materials {
 	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 	private static List<MetalMaterial> materials = new LinkedList<>();
+
+	protected Materials() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 
 	/**
 	 *
@@ -122,14 +126,16 @@ public abstract class Materials {
 		final ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, m.hardness > 10 ? (int) (m.hardness / 5) : 0);
 		if (am == null) {
 			// uh-oh
-			FMLLog.severe("Failed to create armor material enum for " + m);
+			BaseMetals.logger.error("Failed to create armor material enum for " + m);
+//			FMLLog.severe("Failed to create armor material enum for " + m);
 		}
 		armorMaterialMap.put(m, am);
 
 		final ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(), m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
 		if (tm == null) {
 			// uh-oh
-			FMLLog.severe("Failed to create tool material enum for " + m);
+			BaseMetals.logger.error("Failed to create tool material enum for " + m);
+//			FMLLog.severe("Failed to create tool material enum for " + m);
 		}
 		toolMaterialMap.put(m, tm);
 

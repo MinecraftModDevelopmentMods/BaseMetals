@@ -43,6 +43,9 @@ public class BlockMetalBars extends net.minecraft.block.BlockPane implements IOr
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

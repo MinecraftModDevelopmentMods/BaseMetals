@@ -43,6 +43,9 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 		this.disableStats();
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@SideOnly(Side.CLIENT)
 	@Override
 	@Deprecated
@@ -79,6 +82,9 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

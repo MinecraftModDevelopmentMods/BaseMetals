@@ -5,7 +5,6 @@ import com.mcmoddev.lib.blocks.BlockHumanDetector;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.block.*;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -25,6 +24,10 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	private static boolean initDone = false;
 
+	protected Blocks() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 */
@@ -36,85 +39,58 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		Materials.init();
 		ItemGroups.init();
 
-		MetalMaterial material;
-
-		if (Options.ENABLE_ADAMANTINE) {
-			material = Materials.adamantine;
-			createBlocksFull(material);
+		if (Options.enableAdamantine) {
+			createBlocksFull(Materials.adamantine);
 		}
 
-		if (Options.ENABLE_ANTIMONY) {
-			material = Materials.antimony;
-			createBlocksFull(material);
+		if (Options.enableAntimony) {
+			createBlocksFull(Materials.antimony);
 		}
 
-		if (Options.ENABLE_AQUARIUM) {
-			material = Materials.aquarium;
-			createBlocksFull(material);
+		if (Options.enableAquarium) {
+			createBlocksFull(Materials.aquarium);
 		}
 
-		if (Options.ENABLE_BISMUTH) {
-			material = Materials.bismuth;
-			createBlocksFull(material);
+		if (Options.enableBismuth) {
+			createBlocksFull(Materials.bismuth);
 		}
 
-		if (Options.ENABLE_BRASS) {
-			material = Materials.brass;
-			createBlocksFull(material);
+		if (Options.enableBrass) {
+			createBlocksFull(Materials.brass);
 		}
 
-		if (Options.ENABLE_BRONZE) {
-			material = Materials.bronze;
-			createBlocksFull(material);
+		if (Options.enableBronze) {
+			createBlocksFull(Materials.bronze);
 		}
 
-		if (Options.ENABLE_CHARCOAL) {
-//			material = Materials.charcoal;
-
-//			charcoal_block = createBlock(material);
-//			charcoal_plate = createPlate(material); // Dubious
-//			charcoal_bars = createBars(material); // Dubious
-//			charcoal_door = createDoor(material); // Dubious
-//			charcoal_trapdoor = createTrapDoor(material); // Dubious
-
-//			createBlocksAdditional(material);
+		if (Options.enableCharcoal) {
+//			charcoal_block = createBlock(Materials.charcoal);
+//			charcoal_block = addBlock(new Block(), "charcoal_block", null, ItemGroups.tab_blocks);
 		}
 
-		if (Options.ENABLE_COAL) {
-//			material = Materials.coal;
-
-//			coal_block = createBlock(material); // In Vanilla
-//			coal_plate = createPlate(material); // Dubious
-//			coal_bars = createBars(material); // Dubious
-//			coal_door = createDoor(material); // Dubious
-//			coal_trapdoor = createTrapDoor(material); // Dubious
-
-//			createBlocksAdditional(material);
+		if (Options.enableCoal) {
+//			Materials.vanilla_coal.block = net.minecraft.init.Blocks.COAL_BLOCK;
+//			Materials.vanilla_coal.ore = net.minecraft.init.Blocks.COAL_ORE;
 		}
 
-		if (Options.ENABLE_COLDIRON) {
-			material = Materials.coldiron;
-			createBlocksFull(material);
+		if (Options.enableColdIron) {
+			createBlocksFull(Materials.coldiron);
 		}
 
-		if (Options.ENABLE_COPPER) {
-			material = Materials.copper;
-			createBlocksFull(material);
+		if (Options.enableCopper) {
+			createBlocksFull(Materials.copper);
 		}
 
-		if (Options.ENABLE_CUPRONICKEL) {
-			material = Materials.cupronickel;
-			createBlocksFull(material);
+		if (Options.enableCupronickel) {
+			createBlocksFull(Materials.cupronickel);
 		}
 		
-		if (Options.ENABLE_DIAMOND) {
-			material = Materials.vanilla_diamond;
+		if (Options.enableDiamond) {
+			final MetalMaterial material = Materials.vanilla_diamond;
 
-//			diamond_block = createBlock(material); // In Vanilla
-			Materials.vanilla_diamond.block = net.minecraft.init.Blocks.DIAMOND_BLOCK;
-//			createPlate(material); // Dubious
-			// diamond_ore = createOre(material); // In Vanilla
-			Materials.vanilla_diamond.ore = net.minecraft.init.Blocks.DIAMOND_ORE;
+			material.block = net.minecraft.init.Blocks.DIAMOND_BLOCK;
+			material.ore = net.minecraft.init.Blocks.DIAMOND_ORE;
+
 			createBars(material);
 			createDoor(material);
 			createTrapDoor(material);
@@ -122,143 +98,112 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksAdditional(material);
 		}
 
-		if (Options.ENABLE_ELECTRUM) {
-			material = Materials.electrum;
-			createBlocksFull(material);
+		if (Options.enableElectrum) {
+			createBlocksFull(Materials.electrum);
 		}
 
-		if (Options.ENABLE_GOLD) {
+		if (Options.enableGold) {
+			final MetalMaterial material = Materials.vanilla_gold;
 
-			material = Materials.vanilla_gold;
+			material.block = net.minecraft.init.Blocks.GOLD_BLOCK;
+			material.ore = net.minecraft.init.Blocks.GOLD_ORE;
+			material.pressure_plate = net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE;
 
-//			gold_block = createBlock(material); // In Vanilla
-			Materials.vanilla_gold.block = net.minecraft.init.Blocks.GOLD_BLOCK;
 			createPlate(material);
-			// gold_ore = createOre(material); // In Vanilla
-			Materials.vanilla_gold.ore = net.minecraft.init.Blocks.GOLD_ORE;
 			createBars(material);
 			createDoor(material);
 			createTrapDoor(material);
 
-			createButton(material);
-			createSlab(material);
-			createDoubleSlab(material);
-			createLever(material);
-//			createPressurePlate(material); // In Vanilla
-			createStairs(material);
-			createWall(material);
+			createBlocksAdditional(material);
+//			createButton(material);
+//			createSlab(material);
+//			createDoubleSlab(material);
+//			createLever(material);
+//			createStairs(material);
+//			createWall(material);
 		}
 
-		if (Options.ENABLE_INVAR) {
-			material = Materials.invar;
-			createBlocksFull(material);
+		if (Options.enableInvar) {
+			createBlocksFull(Materials.invar);
 		}
 
-		if (Options.ENABLE_IRON) {
-			material = Materials.vanilla_iron;
+		if (Options.enableIron) {
+			final MetalMaterial material = Materials.vanilla_iron;
 
-//			iron_block = createBlock(material); // In Vanilla
-			Materials.vanilla_iron.block = net.minecraft.init.Blocks.IRON_BLOCK;
+			material.block = net.minecraft.init.Blocks.IRON_BLOCK;
+			material.ore = net.minecraft.init.Blocks.IRON_ORE;
+			material.bars = net.minecraft.init.Blocks.IRON_BARS;
+			material.doorBlock = net.minecraft.init.Blocks.IRON_DOOR;
+			material.trapdoor = net.minecraft.init.Blocks.IRON_TRAPDOOR;
+			material.pressure_plate = net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE;
+
 			createPlate(material);
-//			iron_ore = createBlock(material); // In Vanilla
-			Materials.vanilla_iron.ore = net.minecraft.init.Blocks.IRON_ORE;
-//			createBars(material); // In Vanilla
-//			createDoor(material); // In Vanilla
-//			createTrapDoor(material); // In Vanilla
 
-			createButton(material);
-			createSlab(material);
-			createDoubleSlab(material);
-			createLever(material);
-//			createPressurePlate(material); // In Vanilla
-			createStairs(material);
-			createWall(material);
+			createBlocksAdditional(material);
+//			createButton(material);
+//			createSlab(material);
+//			createDoubleSlab(material);
+//			createLever(material);
+//			createStairs(material);
+//			createWall(material);
 		}
 
-		if (Options.ENABLE_LEAD) {
-			material = Materials.lead;
-			createBlocksFull(material);
+		if (Options.enableLead) {
+			createBlocksFull(Materials.lead);
 		}
 
-		if (Options.ENABLE_MERCURY) {
+		if (Options.enableMercury) {
 			mercury_ore = addBlock(new BlockOre(), "mercury_ore", null, ItemGroups.tab_blocks);
 			mercury_ore.setHardness(3.0f).setResistance(5.0f);
 			OreDictionary.registerOre(Oredicts.OREMERCURY, mercury_ore);
 		}
 
-		if (Options.ENABLE_MITHRIL) {
-			material = Materials.mithril;
-			createBlocksFull(material);
+		if (Options.enableMithril) {
+			createBlocksFull(Materials.mithril);
 		}
 
-		if (Options.ENABLE_NICKEL) {
-			material = Materials.nickel;
-			createBlocksFull(material);
+		if (Options.enableNickel) {
+			createBlocksFull(Materials.nickel);
 		}
 
-		if (Options.ENABLE_PEWTER) {
-			material = Materials.pewter;
-			createBlocksFull(material);
+		if (Options.enablePewter) {
+			createBlocksFull(Materials.pewter);
 		}
 
-		if (Options.ENABLE_PLATINUM) {
-			material = Materials.platinum;
-			createBlocksFull(material);
+		if (Options.enablePlatinum) {
+			createBlocksFull(Materials.platinum);
 		}
 
-		if (Options.ENABLE_SILVER) {
-			material = Materials.silver;
-			createBlocksFull(material);
+		if (Options.enableSilver) {
+			createBlocksFull(Materials.silver);
 		}
 
-		if (Options.ENABLE_STARSTEEL) {
-			material = Materials.starsteel;
-			createBlocksFull(material);
-			material.block.setLightLevel(0.5f);
-			material.plate.setLightLevel(0.5f);
-			material.ore.setLightLevel(0.5f);
-			material.bars.setLightLevel(0.5f);
-			material.doorBlock.setLightLevel(0.5f);
-			material.trapdoor.setLightLevel(0.5f);
+		if (Options.enableStarSteel) {
+			createBlocksFull(Materials.starsteel);
+			Materials.starsteel.block.setLightLevel(0.5f);
+			Materials.starsteel.plate.setLightLevel(0.5f);
+			Materials.starsteel.ore.setLightLevel(0.5f);
+			Materials.starsteel.bars.setLightLevel(0.5f);
+			Materials.starsteel.doorBlock.setLightLevel(0.5f);
+			Materials.starsteel.trapdoor.setLightLevel(0.5f);
 		}
 
-		if (Options.ENABLE_STEEL) {
-			material = Materials.steel;
-			createBlocksFull(material);
+		if (Options.enableSteel) {
+			createBlocksFull(Materials.steel);
 		}
 
-		if (Options.ENABLE_STONE) {
-			material = Materials.vanilla_stone;
-
-//			stone_block = createBlock(material);
-//			createPlate(material);
-//			createBars(material);
-//			createDoor(material);
-//			createTrapDoor(material);
-
-//			createBlocksAdditional(material);
+		if (Options.enableStone) {
 		}
 
-		if (Options.ENABLE_TIN) {
-			material = Materials.tin;
-			createBlocksFull(material);
+		if (Options.enableTin) {
+			createBlocksFull(Materials.tin);
 		}
 
-		if (Options.ENABLE_WOOD) {
-			material = Materials.vanilla_wood;
-
-//			wood_block = createBlock(material);
-//			createPlate(material);
-//			createBars(material);
-//			createDoor(material);
-//			createTrapDoor(material);
-
-//			createBlocksAdditional(material);
+		if (Options.enableWood) {
 		}
 
-		if (Options.ENABLE_ZINC) {
-			material = Materials.zinc;
-			createBlocksFull(material);
+		if (Options.enableZinc) {
+			createBlocksFull(Materials.zinc);
 		}
 
 		human_detector = addBlock(new BlockHumanDetector(), "human_detector", null, ItemGroups.tab_blocks);

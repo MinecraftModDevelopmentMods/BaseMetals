@@ -53,6 +53,9 @@ public class ItemMetalBolt extends ItemBolt implements IOreDictionaryEntry, IMet
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

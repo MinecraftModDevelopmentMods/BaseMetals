@@ -1,11 +1,11 @@
 package com.mcmoddev.lib.blocks;
 
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -62,6 +62,9 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

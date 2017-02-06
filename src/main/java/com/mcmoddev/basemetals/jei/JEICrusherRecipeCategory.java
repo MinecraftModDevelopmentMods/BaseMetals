@@ -55,6 +55,9 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 		return ID;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Deprecated
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper) {

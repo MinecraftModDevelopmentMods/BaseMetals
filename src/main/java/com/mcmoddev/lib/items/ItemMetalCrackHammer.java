@@ -3,6 +3,7 @@ package com.mcmoddev.lib.items;
 import java.util.*;
 
 import com.mcmoddev.basemetals.init.Achievements;
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
 import com.mcmoddev.basemetals.registry.CrusherRecipeRegistry;
 import com.mcmoddev.basemetals.registry.recipe.ICrusherRecipe;
@@ -12,7 +13,6 @@ import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -31,20 +31,20 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 @SuppressWarnings("deprecation")
 public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
-	private static final float attack_speed = -3.0F;
+	private static final float ATTACK_SPEED = -3.0F;
 
 	private final MetalMaterial material;
 	private final Set<String> toolTypes;
 	private final String repairOreDictName;
 	private final boolean regenerates;
-	private final long regenInterval = 200;
+	private static final long regenInterval = 200;
 
 	/**
 	 *
 	 * @param material The material to make the crackhammer from
 	 */
 	public ItemMetalCrackHammer(MetalMaterial material) {
-		super(1 + Materials.getToolMaterialFor(material).getDamageVsEntity(), attack_speed, Materials.getToolMaterialFor(material), new HashSet<Block>());
+		super(1 + Materials.getToolMaterialFor(material).getDamageVsEntity(), ATTACK_SPEED, Materials.getToolMaterialFor(material), new HashSet<Block>());
 		this.material = material;
 		damageVsEntity = 5F + 2F * this.material.getBaseAttackDamage();
 		attackSpeed = -3.5F;
@@ -98,7 +98,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 				ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(targetItem);
 				if (recipe != null) {
 					// hardness check
-					if ((Config.Options.ENFORCE_HARDNESS) && (targetItem.getItem() instanceof ItemBlock)) {
+					if ((Config.Options.enforceHardness) && (targetItem.getItem() instanceof ItemBlock)) {
 						Block b = ((ItemBlock) targetItem.getItem()).getBlock();
 						if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
 							// cannot harvest the block, no crush for you!
@@ -180,11 +180,14 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		return false;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
 		if (typeRequested != null && toolTypes.contains(typeRequested)) {
-			if (Config.Options.STRONG_HAMMERS) {
+			if (Config.Options.strongHammers) {
 				return material.getToolHarvestLevel();
 			}
 			else {
@@ -211,7 +214,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		super.onCreated(item, world, crafter);
 		MetalToolEffects.extraEffectsOnCrafting(material, item, world, crafter);
 		// achievement
-    	if (Options.ENABLE_ACHIEVEMENTS) {
+    	if (Options.enableAchievements) {
     		crafter.addStat(Achievements.geologist, 1);
     	}
 	}
@@ -255,6 +258,9 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

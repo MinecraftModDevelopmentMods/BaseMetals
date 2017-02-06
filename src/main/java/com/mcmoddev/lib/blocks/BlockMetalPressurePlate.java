@@ -34,6 +34,9 @@ public class BlockMetalPressurePlate extends BlockPressurePlate implements IMeta
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

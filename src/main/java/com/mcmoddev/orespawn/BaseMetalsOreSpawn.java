@@ -2,8 +2,8 @@ package com.mcmoddev.orespawn;
 
 import com.google.common.base.Function;
 import com.mcmoddev.basemetals.init.Blocks;
+import com.mcmoddev.basemetals.init.Materials;
 
-import cyano.basemetals.init.Materials;
 import mmd.orespawn.api.OreSpawnAPI;
 import mmd.orespawn.api.SpawnLogic;
 

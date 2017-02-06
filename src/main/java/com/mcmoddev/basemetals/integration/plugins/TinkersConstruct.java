@@ -1,11 +1,10 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.init.Fluids;
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
-
-import cyano.basemetals.init.Materials;
 
 /**
  *
@@ -15,112 +14,121 @@ import cyano.basemetals.init.Materials;
 @BaseMetalsPlugin(TinkersConstruct.PLUGIN_MODID)
 public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstruct implements IIntegration {
 
-//	public static final String PLUGIN_MODID = "tconstruct";
-
-//	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
-
 	private static boolean initDone = false;
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.ENABLE_TINKERS_CONSTRUCT) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
 			return;
 		}
 
-		if (Options.ENABLE_ADAMANTINE) {
+		if (Options.enableAdamantine) {
 			registerMaterial(Materials.adamantine.getName(), false, true);
 		}
 
-		if (Options.ENABLE_ANTIMONY) {
+		if (Options.enableAntimony) {
 			registerMaterial(Materials.antimony.getName(), false, true);
 		}
 
-		if (Options.ENABLE_AQUARIUM) {
+		if (Options.enableAquarium) {
 			registerMaterial(Materials.aquarium.getName(), false, true);
 			// registerAlloy(Materials.aquarium.getName(), 3, new String[] { "copper", "zinc", "prismarine" }, new int[] { 2, 1, 3}); // Not possible currently
 		}
 
-		if (Options.ENABLE_BISMUTH) {
+		if (Options.enableBismuth) {
 			registerMaterial(Materials.bismuth.getName(), false, true);
 		}
 
-		if (Options.ENABLE_BRASS) {
+		if (Options.enableBrass) {
 			registerMaterial(Materials.brass.getName(), false, true);
 			// registerAlloy(Materials.brass.getName(), 3, new String[] { "copper", "zinc" }, new int[] { 2, 1 }); // TCon already has Brass alloy
 		}
 
-		//if (Options.ENABLE_BRONZE) {
-			// registerMaterial(Materials.bronze.getName(), false, true);
-			// registerAlloy(Materials.bronze.getName(), 4, new String[] { "copper", "tin" }, new int[] { 3, 1 }); // TCon already has Bronze alloy
-		//}
+		/*
+		if (Options.ENABLE_BRONZE) {
+			registerMaterial(Materials.bronze.getName(), false, true);
+			registerAlloy(Materials.bronze.getName(), 4, new String[] { "copper", "tin" }, new int[] { 3, 1 }); // TCon already has Bronze alloy
+		}
+		*/
 
-		if (Options.ENABLE_COLDIRON) {
+		if (Options.enableColdIron) {
 			registerMaterial(Materials.coldiron.getName(), false, true);
 		}
 
-		//if (Options.ENABLE_COPPER) {
-			// registerMaterial(Materials.copper.getName(), false, true);
-		//}
+		/*
+		if (Options.ENABLE_COPPER) {
+			registerMaterial(Materials.copper.getName(), false, true);
+		}
+		*/
 
-		if (Options.ENABLE_CUPRONICKEL) {
+		if (Options.enableCupronickel) {
 			registerMaterial(Materials.cupronickel.getName(), false, true);
 			registerAlloy(Materials.cupronickel.getName(), 4, new String[] { "copper", "nickel" }, new int[] { 3, 1 });
 		}
 
-		//if (Options.ENABLE_ELECTRUM) {
-			// registerMaterial(Materials.electrum.getName(), false, true);
-		// registerAlloy(Materials.electrum.getName(), 2, new String[] { "silver", "gold" }, new int[] { 2, 1 }); // TCon already has Electrum alloy
-		//}
+		/*
+		if (Options.ENABLE_ELECTRUM) {
+			registerMaterial(Materials.electrum.getName(), false, true);
+			registerAlloy(Materials.electrum.getName(), 2, new String[] { "silver", "gold" }, new int[] { 2, 1 }); // TCon already has Electrum alloy
+		}
+		*/
 
-		if (Options.ENABLE_INVAR) {
+		if (Options.enableInvar) {
 			registerMaterial(Materials.invar.getName(), false, true);
 			// registerAlloy(Materials.invar.getName(), 3, new String[] { "iron", "nickel" }, new int[] { 2, 1 }); // TCon already has Invar alloy
 		}
 
-		//if (Options.ENABLE_LEAD) {
-			// registerTinkerMaterial(Materials.lead.getName(), false, true);
-		//}
+		/*
+		if (Options.ENABLE_LEAD) {
+			registerTinkerMaterial(Materials.lead.getName(), false, true);
+		}
+		*/
 
-		if (Options.ENABLE_MERCURY) {
+		if (Options.enableMercury) {
 			//registerMaterial(Materials.mercury.getName(), false, true); // Crashes
 			registerFluid(Fluids.fluidMercury, false);
 		}
 
-		if (Options.ENABLE_MITHRIL) {
+		if (Options.enableMithril) {
 			registerMaterial(Materials.mithril.getName(), false, true);
 			registerAlloy(Materials.mithril.getName(), 3, new String[] { "silver", "coldiron", "mercury" }, new int[] { 2, 1, 1});
 		}
 
-		if (Options.ENABLE_NICKEL) {
+		if (Options.enableNickel) {
 			 registerMaterial(Materials.nickel.getName(), false, true);
 		}
 
-		if (Options.ENABLE_PEWTER) {
+		if (Options.enablePewter) {
 			registerMaterial(Materials.pewter.getName(), false, true);
 		}
 
-		if (Options.ENABLE_PLATINUM) {
+		if (Options.enablePlatinum) {
 			registerMaterial(Materials.platinum.getName(), false, true);
 		}
 
-		//if (Options.ENABLE_SILVER) {
-			// registerMaterial(Materials.silver.getName(), false, true);
-		//}
+		/*
+		if (Options.ENABLE_SILVER) {
+			registerMaterial(Materials.silver.getName(), false, true);
+		}
+		*/
 
-		if (Options.ENABLE_STARSTEEL) {
+
+		if (Options.enableStarSteel) {
 			registerMaterial(Materials.starsteel.getName(), false, true);
 		}
 
-		//if (Options.ENABLE_STEEL) {
-			// registerMaterial(Materials.steel.getName(), false, true);
-			// registerAlloy(Materials.steel.getName(), 8, new String[] { "iron", "coal" }, new int[] { 8, 1 }); // TCon already has Steel alloy?
-		//}
+		/*
+		if (Options.ENABLE_STEEL) {
+			registerMaterial(Materials.steel.getName(), false, true);
+			registerAlloy(Materials.steel.getName(), 8, new String[] { "iron", "coal" }, new int[] { 8, 1 }); // TCon already has Steel alloy?
+		}
+		*/
 
-		if (Options.ENABLE_TIN) {
+		if (Options.enableTin) {
 			registerMaterial(Materials.tin.getName(), false, true);
 		}
 
-		if (Options.ENABLE_ZINC) {
+		if (Options.enableZinc) {
 			registerMaterial(Materials.zinc.getName(), false, true);
 		}
 

@@ -15,6 +15,10 @@ public class HorseArmorUtils {
 
 	private static Map<String, HorseArmorType> TYPES = new HashMap<>();
 
+	private HorseArmorUtils() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	public static HorseArmorType getArmorType(int protection, @Nonnull String name, @Nonnull String hash) {
 		name = name.toUpperCase(Locale.ENGLISH);
 

@@ -3,12 +3,9 @@ package com.mcmoddev.lib.integration.plugins;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.Fluid;
-//import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import org.apache.commons.lang3.StringUtils;
 
-import com.mcmoddev.lib.init.Fluids;
-//import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.init.Materials;
@@ -31,18 +28,15 @@ import slimeknights.tconstruct.library.traits.ITrait;
  * @author Jasmine Iwanek
  *
  */
-//@BaseMetalsPlugin(TinkersConstruct.PLUGIN_MODID)
 public class TinkersConstruct implements IIntegration {
 
 	public static final String PLUGIN_MODID = "tconstruct";
-
-//	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
 	private static boolean initDone = false;
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.ENABLE_TINKERS_CONSTRUCT) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
 			return;
 		}
 
@@ -99,35 +93,39 @@ public class TinkersConstruct implements IIntegration {
 	}
 
 	protected static void registerMaterial(String name, boolean craftable, boolean castable) {
-		registerMaterial(name, craftable, castable, null);
+		registerMaterial(Materials.getMaterialByName(name), craftable, castable, null);
 	}
 
 	/**
 	 * Creates a Tinkers Construct {@link slimeknights.tconstruct.library.materials.Material}
-	 * @param name Material identifier
+	 * @param material Material identifier
 	 * @param craftable If this be crafted
 	 * @param castable If this can be casted
 	 * @param trait to apply
 	 */
-	protected static void registerMaterial(String name, boolean craftable, boolean castable, ITrait trait) {
+	protected static void registerMaterial(MetalMaterial material, boolean craftable, boolean castable, ITrait trait) {
 
-		MetalMaterial material = Materials.getMaterialByName(name);
-		Fluid fluid;
-		int tintColor;
-
-		if (material != null) {
-			tintColor = material.getTintColor();
-			fluid = material.fluid;
-		} else {
-			tintColor = 0xFFD8D8D8; // Hack for Mercury as it doesn't have a metalMaterial
-			fluid = Fluids.getFluidByName(name);
-		}
-
-		if (fluid == null) {
+//		MetalMaterial material = Materials.getMaterialByName(name);
+		if (material == null) {
 			return;
 		}
 
-		final Material tcmaterial = new Material(name, tintColor);
+		if (material.fluid == null) {
+			return;
+		}
+
+//		Fluid fluid;
+//		int tintColor;
+
+//		if (material != null) {
+//		tintColor = material.getTintColor();
+//		fluid = material.fluid;
+//		} else {
+//			tintColor = 0xFFD8D8D8; // Hack for Mercury as it doesn't have a metalMaterial
+//			fluid = Fluids.getFluidByName(name);
+//		}
+
+		final Material tcmaterial = new Material(material.getName(), material.getTintColor());
 
 		final HeadMaterialStats headStats = new HeadMaterialStats(material.getToolDurability(), material.magicAffinity * 3 / 2, material.getBaseAttackDamage() * 2, material.getToolHarvestLevel());
 
@@ -142,7 +140,7 @@ public class TinkersConstruct implements IIntegration {
 	    final ProjectileMaterialStats projectileStats = new ProjectileMaterialStats();
 	    */
 
-		registerFluid(fluid, true); // Register the fluid with tinkers
+		registerFluid(material.fluid, true); // Register the fluid with tinkers
 
 		TinkerRegistry.addMaterialStats(tcmaterial, headStats); // Sets stats for head
 		TinkerRegistry.addMaterialStats(tcmaterial, handleStats); // Sets Stats for handle
@@ -162,12 +160,12 @@ public class TinkersConstruct implements IIntegration {
 
 		// Set fluid used, Set whether craftable, set whether castable, adds the
 		// item with the value 144.
-		tcmaterial.setFluid(fluid).setCraftable(craftable).setCastable(castable);
+		tcmaterial.setFluid(material.fluid).setCraftable(craftable).setCastable(castable);
 		tcmaterial.addItem(material.nugget, 1, Material.VALUE_Nugget);
 		tcmaterial.addItem(material.ingot, 1, Material.VALUE_Ingot);
 		tcmaterial.setRepresentativeItem(material.ingot); // Use this as the picture
 
 		// TinkerIntegration.integrate(tcmaterial);
-		TinkerIntegration.integrate(tcmaterial, fluid, StringUtils.capitalize(fluid.getName()));
+		TinkerIntegration.integrate(tcmaterial, material.fluid, StringUtils.capitalize(material.fluid.getName()));
 	}
 }

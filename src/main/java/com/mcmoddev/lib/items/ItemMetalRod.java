@@ -38,6 +38,9 @@ public class ItemMetalRod extends net.minecraft.item.Item implements IOreDiction
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

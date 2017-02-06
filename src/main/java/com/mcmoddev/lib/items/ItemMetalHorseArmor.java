@@ -42,6 +42,9 @@ public class ItemMetalHorseArmor extends Item implements IMetalObject, IHorseArm
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

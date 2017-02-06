@@ -28,6 +28,9 @@ public class GenericMetalItem extends Item implements IMetalObject {
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

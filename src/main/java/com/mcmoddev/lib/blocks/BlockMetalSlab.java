@@ -49,6 +49,9 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 		this.setDefaultState(iblockstate.withProperty(VARIANT, BlockMetalSlab.Variant.DEFAULT));
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public IBlockState getStateFromMeta(int meta) {
@@ -106,6 +109,9 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 		return this.material.slab;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
@@ -130,6 +136,9 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

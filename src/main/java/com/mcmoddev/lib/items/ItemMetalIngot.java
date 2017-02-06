@@ -48,6 +48,9 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

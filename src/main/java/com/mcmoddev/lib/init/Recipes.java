@@ -9,7 +9,6 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-//import net.minecraftforge.oredict.*;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -21,6 +20,10 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public abstract class Recipes {
 
 	private static boolean initDone = false;
+
+	protected Recipes() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 
 	/**
 	 *
@@ -64,44 +67,58 @@ public abstract class Recipes {
 
 	// TODO
 	protected static void initPureVanillaCrusherRecipes() {
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.STONE, new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.STONEBRICK, new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1));
-		// stone slab (0) to cobblestone slab (3)
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 0), new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 3));
-		// stone bricks slab (5) to cobblestone slab (3)
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 5), new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 3));
-		// cobble/mossy cobble wall to gravel
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.COBBLESTONE_WALL, new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.COBBLESTONE, new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.GRAVEL, new ItemStack(net.minecraft.init.Blocks.SAND, 1));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SANDSTONE, new ItemStack(net.minecraft.init.Blocks.SAND, 4));
-		// Sandstone slab (1) to 2 sand
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 1), new ItemStack(net.minecraft.init.Blocks.SAND, 2));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.RED_SANDSTONE, new ItemStack(net.minecraft.init.Blocks.SAND, 4, 1));
-		// Red Sandstone slab (slab2 0) to 2 red sand
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB2, 1, 0), new ItemStack(net.minecraft.init.Blocks.SAND, 2, 1));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.GLOWSTONE, new ItemStack(net.minecraft.init.Items.GLOWSTONE_DUST, 4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORELAPIS, new ItemStack(net.minecraft.init.Items.DYE, 8, 4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCKLAPIS, new ItemStack(net.minecraft.init.Items.DYE, 9, 4));
-//		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.REDSTONE_ORE, new ItemStack(net.minecraft.init.Items.REDSTONE, 8));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.OREREDSTONE, new ItemStack(net.minecraft.init.Items.REDSTONE, 8));
-//		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.REDSTONE_BLOCK, new ItemStack(net.minecraft.init.Items.REDSTONE, 9));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCKREDSTONE, new ItemStack(net.minecraft.init.Items.REDSTONE, 9));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.REEDS, new ItemStack(net.minecraft.init.Items.SUGAR, 2));
-		// Bone Block to 9 bonemeal
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.BONE_BLOCK, new ItemStack(net.minecraft.init.Items.DYE, 9, 15));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.BONE, new ItemStack(net.minecraft.init.Items.DYE, 3, 15));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.BLAZE_ROD, new ItemStack(net.minecraft.init.Items.BLAZE_POWDER, 2));
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.OREQUARTZ, new ItemStack(net.minecraft.init.Items.QUARTZ, 2));
-//		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCKQUARTZ, new ItemStack(net.minecraft.init.Items.QUARTZ, 4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.QUARTZ_BLOCK, new ItemStack(net.minecraft.init.Items.QUARTZ, 4));
-		// Quartz Slab (7) to 2 Quartz
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 7), new ItemStack(net.minecraft.init.Items.QUARTZ, 2));
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 0), new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 4));
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 1), new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 9));
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 2), new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 8));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SEA_LANTERN, new ItemStack(net.minecraft.init.Items.PRISMARINE_CRYSTALS, 5));
-		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SLIME_BLOCK, new ItemStack(net.minecraft.init.Items.SLIME_BALL, 9));
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.STONE, new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1)); // Stone to Cobblestone
+		//CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.STONE, new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1)); // Stone to Cobblestone
+//		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONEBRICK, 1), new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1)); // Stone Bricks to Cobblestone
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.STONEBRICK, new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1)); // Stone Bricks to Cobblestone
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 0), new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 3)); // Stone Slab to Cobblestone Slab
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 5), new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 3)); // Stone Bricks Slab to Cobblestone Slab
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.COBBLESTONE, new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1)); // Cobblestone to Gravel
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.MOSSY_COBBLESTONE, new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1)); // Mossy Cobblestone to Gravel
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.COBBLESTONE_WALL, 1, 0), new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1)); // Cobblestone Wall to Gravel
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.COBBLESTONE_WALL, 1, 1), new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1)); // Mossy Cobblestone Wall to Gravel
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.GRAVEL, new ItemStack(net.minecraft.init.Blocks.SAND, 1)); // Gravel to Sand
+//		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.SANDSTONE, 1), new ItemStack(net.minecraft.init.Blocks.SAND, 4)); // Sandstone to Sand
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SANDSTONE, new ItemStack(net.minecraft.init.Blocks.SAND, 4)); // Sandstone to Sand
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 1), new ItemStack(net.minecraft.init.Blocks.SAND, 2)); // Sandstone Slab to 2 Sand
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.GLASS, new ItemStack(net.minecraft.init.Blocks.SAND, 1)); // Glass to Sand
+
+//		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.RED_SANDSTONE, 1), new ItemStack(net.minecraft.init.Blocks.SAND, 4, 1)); // Red Sandstone to Red Sand
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.RED_SANDSTONE, new ItemStack(net.minecraft.init.Blocks.SAND, 4, 1)); // Red Sandstone to Red Sand
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB2, 1, 0), new ItemStack(net.minecraft.init.Blocks.SAND, 2, 1)); // Red Sandstone Slab to 2 Red Sand
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.STAINED_GLASS, new ItemStack(net.minecraft.init.Blocks.SAND, 4, 1)); // Red Stained Glass to Red Sand
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.GLOWSTONE, new ItemStack(net.minecraft.init.Items.GLOWSTONE_DUST, 4)); // Glowstone to 4 Glowstone Dust
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORELAPIS, new ItemStack(net.minecraft.init.Items.DYE, 8, 4)); // Lapis Ore to 8 Lapis
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCKLAPIS, new ItemStack(net.minecraft.init.Items.DYE, 9, 4)); // Lapis Block to 9 Lapis
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.OREREDSTONE, new ItemStack(net.minecraft.init.Items.REDSTONE, 8)); // Redstone Ore to 8 Redstone
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCKREDSTONE, new ItemStack(net.minecraft.init.Items.REDSTONE, 9)); // Redstone Block to 9 Redstone
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.REEDS, new ItemStack(net.minecraft.init.Items.SUGAR, 2)); // Sugar Cane to 2 Sugar
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.BONE_BLOCK, new ItemStack(net.minecraft.init.Items.DYE, 9, 15)); // Bone Block to 9 Bonemeal
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.BONE, new ItemStack(net.minecraft.init.Items.DYE, 3, 15)); // Bone to 3 Bonemeal
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.BLAZE_ROD, new ItemStack(net.minecraft.init.Items.BLAZE_POWDER, 2)); // Blaze Rod to 2 Blaze Powder
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.OREQUARTZ, new ItemStack(net.minecraft.init.Items.QUARTZ, 2)); // Nether Quartz Ore to 2 Quartz
+		//CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCKQUARTZ, new ItemStack(net.minecraft.init.Items.QUARTZ, 4)); // Quartz Block to 4 Quartz
+//		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.QUARTZ_BLOCK, 1), new ItemStack(net.minecraft.init.Items.QUARTZ, 4)); // Quartz Block to 4 Quartz
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.QUARTZ_BLOCK, new ItemStack(net.minecraft.init.Items.QUARTZ, 4)); // Quartz Block to 4 Quartz
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 7), new ItemStack(net.minecraft.init.Items.QUARTZ, 2)); // Quartz Slab to 2 Quartz
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 0), new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 4)); // Prismarine to Prismarine Shard
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 1), new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 9)); // Brismarine Bricks to Prismarine Shard
+		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 2), new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 8)); // Dark Prismarine to Prismarine Shard
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SEA_LANTERN, new ItemStack(net.minecraft.init.Items.PRISMARINE_CRYSTALS, 5)); // Sea Lantern to 5 Prismarine Crystals to Prismarine Shard
+
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SLIME_BLOCK, new ItemStack(net.minecraft.init.Items.SLIME_BALL, 9)); // Slime Block to 9 Slime Balls
+
 		
 		// Samples
 //		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.MAGMA, new ItemStack(net.minecraft.init.Items.MAGMA_CREAM, 4));
@@ -161,11 +178,11 @@ public abstract class Recipes {
 					GameRegistry.addSmelting(material.wall, new ItemStack(material.block, 1), 0);
 				}
 
-				if ((material.crackhammer != null) && (!Options.DISABLE_ALL_HAMMERS)) {
+				if ((material.crackhammer != null) && (!Options.disableAllHammerRecipes)) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.crackhammer), "x", "/", "/", 'x', Oredicts.BLOCK + oreDictName, '/', Oredicts.STICKWOOD));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.crackhammer, new ItemStack(material.block, 1), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.crackhammer, new ItemStack(material.nugget, 1), 0);
 					}
 				}
@@ -175,36 +192,36 @@ public abstract class Recipes {
 				// armor and tools
 				if (material.boots != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.boots), "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.boots, new ItemStack(material.ingot, 4), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.boots, new ItemStack(material.nugget, 1), 0);
 					}
 				}
 
 				if (material.helmet != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.helmet), "xxx", "x x", 'x', Oredicts.INGOT + oreDictName));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.helmet, new ItemStack(material.ingot, 5), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.helmet, new ItemStack(material.nugget, 1), 0);
 					}
 				}
 
 				if (material.chestplate != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.chestplate), "x x", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.chestplate, new ItemStack(material.ingot, 8), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.chestplate, new ItemStack(material.nugget, 1), 0);
 					}
 				}
 
 				if (material.leggings != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.leggings), "xxx", "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.chestplate, new ItemStack(material.leggings, 7), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.leggings, new ItemStack(material.nugget, 1), 0);
 					}
 				}
@@ -212,9 +229,9 @@ public abstract class Recipes {
 				if (material.axe != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "x/", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
 					// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "/x", "/ ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.axe, new ItemStack(material.ingot, 3), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.axe, new ItemStack(material.nugget, 1), 0);
 					}
 				}
@@ -222,36 +239,36 @@ public abstract class Recipes {
 				if (material.hoe != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", " /", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
 					// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", "/ ", "/ ", 'x', INGOT + oreDictName, '/', STICKWOOD));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.hoe, new ItemStack(material.ingot, 2), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.hoe, new ItemStack(material.nugget, 1), 0);
 					}
 				}
 
 				if (material.pickaxe != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.pickaxe), "xxx", " / ", " / ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.pickaxe, new ItemStack(material.ingot, 3), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.pickaxe, new ItemStack(material.nugget, 1), 0);
 					}
 				}
 
 				if (material.shovel != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shovel), "x", "/", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.shovel, new ItemStack(material.ingot, 1), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.shovel, new ItemStack(material.nugget, 1), 0);
 					}
 				}
 
 				if (material.sword != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.sword), "x", "x", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					if (Config.Options.FURNACE_CHEESE) {
+					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(material.sword, new ItemStack(material.ingot, 2), 0);
-					} else if (Config.Options.FURNACE_1112) {						
+					} else if (Config.Options.furnace1112) {						
 						GameRegistry.addSmelting(material.sword, new ItemStack(material.nugget, 1), 0);
 					}
 				}
@@ -283,7 +300,7 @@ public abstract class Recipes {
 				}
 
 				if (material.plate != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.plate, Config.Options.PLATE_QTY), "xxx", 'x', Oredicts.INGOT + oreDictName));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.plate, Config.Options.plateQuantity), "xxx", 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(material.plate, new ItemStack(material.ingot, 1), 0);
 				}
 
@@ -327,16 +344,18 @@ public abstract class Recipes {
 				}
 
 				if ((material.rod != null) && (material.gear != null)) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.gear, Config.Options.GEAR_QTY), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
-					GameRegistry.addSmelting(material.gear, new ItemStack(material.ingot, Config.Options.GEAR_QTY), 0); // you lose the rod
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.gear, Config.Options.gearQuantity), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
+					GameRegistry.addSmelting(material.gear, new ItemStack(material.ingot, Config.Options.gearQuantity), 0); // you lose the rod
 //					OreDictionary.registerOre(Oredicts.GEAR, material.gear);
 				}
 
 //				// Buckets
-//				if (material.pickaxe != null) {
-//					// TODO
-//					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.BUCKET), "x x", " x ", 'x', Oredicts.INGOT + oreDictName));
-//				}
+				/*
+				if (material.pickaxe != null) {
+					// TODO
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.BUCKET), "x x", " x ", 'x', Oredicts.INGOT + oreDictName));
+				}
+				*/
 			}
 
 			if ((material.nugget != null) && (material.button != null)) {
@@ -365,7 +384,7 @@ public abstract class Recipes {
 
 				if ((material.gear != null) && (material.crossbow != null)) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.crossbow), "zxx", " yx", "x z", 'x', Oredicts.ROD + oreDictName, 'y', Oredicts.GEAR + oreDictName, 'z', Oredicts.STRING));
-					GameRegistry.addSmelting(material.crossbow, new ItemStack(material.ingot, 2 + Config.Options.GEAR_QTY), 0);
+					GameRegistry.addSmelting(material.crossbow, new ItemStack(material.ingot, 2 + Config.Options.gearQuantity), 0);
 				}
 
 				if (material.bolt != null) {

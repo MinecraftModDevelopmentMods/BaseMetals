@@ -13,6 +13,10 @@ public class Platform {
 
     private static int devEnv = 0;
 
+	private Platform() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
     /**
      * Check if the code is running on the server instance
      *

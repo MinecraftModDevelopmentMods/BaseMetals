@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.data;
 
 /**
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public abstract class DataConstants {
@@ -133,4 +133,8 @@ public abstract class DataConstants {
 			+ "\n	]"
 			+ "\n}";
 	//@formatter:on
+
+	private DataConstants() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 }

@@ -2,12 +2,12 @@ package com.mcmoddev.lib.items;
 
 import java.util.List;
 
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
 import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -29,7 +29,7 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 	protected final MetalMaterial material;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
-	protected final long regenInterval = 200;
+	protected static final long regenInterval = 200;
 	protected final float attackDamage;
 
 	/**
@@ -84,7 +84,7 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % this.regenInterval) == 0))
+		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % regenInterval) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 
@@ -112,6 +112,9 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

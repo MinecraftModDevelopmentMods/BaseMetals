@@ -27,6 +27,9 @@ public class BlockMetalLever extends BlockLever implements IOreDictionaryEntry, 
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

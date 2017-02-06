@@ -1,12 +1,9 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.material.MetalMaterial;
 
-import cyano.basemetals.init.Materials;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * This class initializes all fluids in Base Metals.
@@ -16,14 +13,14 @@ import net.minecraftforge.fluids.FluidRegistry;
  */
 public class Fluids extends com.mcmoddev.lib.init.Fluids {
 
-	static {
-		FluidRegistry.enableUniversalBucket();
-	}
-
 	public static Fluid fluidMercury = null;
 	public static BlockFluidBase fluidBlockMercury = null;
 
 	private static boolean initDone = false;
+
+	private Fluids() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 
 	/**
 	 *
@@ -33,140 +30,114 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 			return;
 		}
 
-		MetalMaterial material;
-
-		// fluids and fluid blocks
-		if (Options.ENABLE_ADAMANTINE) {
-			material = Materials.adamantine;
-
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableAdamantine) {
+			addFluid(Materials.adamantine, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.adamantine);
 		}
-		if (Options.ENABLE_ANTIMONY) {
-			material = Materials.antimony;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableAntimony) {
+			addFluid(Materials.antimony, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.antimony);
 		}
-		if (Options.ENABLE_AQUARIUM) {
-			material = Materials.aquarium;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableAquarium) {
+			addFluid(Materials.aquarium, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.aquarium);
 		}
-		if (Options.ENABLE_BISMUTH) {
-			material = Materials.bismuth;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableBismuth) {
+			addFluid(Materials.bismuth, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.bismuth);
 		}
-		if (Options.ENABLE_BRASS) {
-			material = Materials.brass;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableBrass) {
+			addFluid(Materials.brass, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.brass);
 		}
-		if (Options.ENABLE_BRONZE) {
-			material = Materials.bronze;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableBronze) {
+			addFluid(Materials.bronze, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.bronze);
 		}
-		if (Options.ENABLE_COLDIRON) {
-			material = Materials.coldiron;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableColdIron) {
+			addFluid(Materials.coldiron, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.coldiron);
 		}
-		if (Options.ENABLE_COPPER) {
-			material = Materials.copper;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableCopper) {
+			addFluid(Materials.copper, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.copper);
 		}
-		if (Options.ENABLE_CUPRONICKEL) {
-			material = Materials.cupronickel;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableCupronickel) {
+			addFluid(Materials.cupronickel, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.cupronickel);
 		}
-		if (Options.ENABLE_ELECTRUM) {
-			material = Materials.electrum;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableElectrum) {
+			addFluid(Materials.electrum, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.electrum);
 		}
-		if (Options.ENABLE_INVAR) {
-			material = Materials.invar;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableInvar) {
+			addFluid(Materials.invar, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.invar);
 		}
-		if (Options.ENABLE_LEAD) {
-			material = Materials.lead;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableLead) {
+			addFluid(Materials.lead, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.lead);
 		}
-		if (Options.ENABLE_MERCURY) {
-//			material = Materials.mercury;
 
+		if (Options.enableMercury) {
 			fluidMercury = addFluid("mercury", 13594, 2000, 769, 0);
 			fluidBlockMercury = addFluidBlock("mercury");
 		}
-		if (Options.ENABLE_MITHRIL) {
-			material = Materials.mithril;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableMithril) {
+			addFluid(Materials.mithril, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.mithril);
 		}
-		if (Options.ENABLE_NICKEL) {
-			material = Materials.nickel;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableNickel) {
+			addFluid(Materials.nickel, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.nickel);
 		}
-		if (Options.ENABLE_PEWTER) {
-			material = Materials.pewter;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enablePewter) {
+			addFluid(Materials.pewter, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.pewter);
 		}
-		if (Options.ENABLE_PLATINUM) {
-			material = Materials.platinum;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enablePlatinum) {
+			addFluid(Materials.platinum, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.platinum);
 		}
-		if (Options.ENABLE_SILVER) {
-			material = Materials.silver;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableSilver) {
+			addFluid(Materials.silver, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.silver);
 		}
-		if (Options.ENABLE_STARSTEEL) {
-			material = Materials.starsteel;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableStarSteel) {
+			addFluid(Materials.starsteel, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.starsteel);
 		}
-		if (Options.ENABLE_STEEL) {
-			material = Materials.steel;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableSteel) {
+			addFluid(Materials.steel, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.steel);
 		}
-		if (Options.ENABLE_TIN) {
-			material = Materials.tin;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableTin) {
+			addFluid(Materials.tin, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.tin);
 		}
-		if (Options.ENABLE_ZINC) {
-			material = Materials.zinc;
 
-			addFluid(material, 2000, 10000, 769, 10);
-			addFluidBlock(material);
+		if (Options.enableZinc) {
+			addFluid(Materials.zinc, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.zinc);
 		}
 
 		initDone = true;

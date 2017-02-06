@@ -61,6 +61,9 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

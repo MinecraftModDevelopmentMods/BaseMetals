@@ -7,7 +7,6 @@ import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.basemetals.util.Config.Options;
 
-import cyano.basemetals.init.Materials;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
@@ -30,7 +29,7 @@ public class CommonProxy {
 		Config.init();
 
 		Materials.init();
-		cyano.basemetals.init.MaterialsOLD.init();
+		cyano.basemetals.init.Materials.init();
 		Fluids.init();
 		ItemGroups.init();
 		Blocks.init();
@@ -47,13 +46,13 @@ public class CommonProxy {
 			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
 					if ((mapping.resourceLocation.getResourcePath().equals("liquid_mercury")) && (mapping.type.equals(GameRegistry.Type.BLOCK))) {
-						 if (Options.ENABLE_MERCURY) {
+						 if (Options.enableMercury) {
 							 mapping.remap(Fluids.fluidBlockMercury);
 						 }
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
 					if (mapping.resourceLocation.getResourcePath().equals("carbon_powder")) {
-						 if (Options.ENABLE_COAL) {
+						 if (Options.enableCoal) {
 							 mapping.remap(Items.coal_powder);
 						 }
 					}
@@ -73,7 +72,7 @@ public class CommonProxy {
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-//		WorldGen.init();
+		//WorldGen.init();
 		Config.postInit();
 	}
 }

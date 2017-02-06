@@ -4,6 +4,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import com.google.common.collect.*;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.blocks.*;
@@ -37,6 +38,10 @@ public abstract class Items {
 
 	// public static UniversalBucket universal_bucket; // now automatically added by Forge
 
+	protected Items() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 */
@@ -51,7 +56,8 @@ public abstract class Items {
 			expandCombatArrays(net.minecraft.item.ItemAxe.class);
 		}
 		catch (IllegalAccessException | NoSuchFieldException ex) {
-			FMLLog.severe("Error modifying item classes: %s", ex);
+			BaseMetals.logger.error("Error modifying item classes", ex);
+//			FMLLog.severe("Error modifying item classes: %s", ex);
 		}
 
 		setSortingList();
@@ -184,7 +190,6 @@ public abstract class Items {
 			fullName = name;
 		}
 
-		// Loader.instance().activeModContainer().getModId()
 		item.setRegistryName(fullName);
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
 		GameRegistry.register(item);
@@ -211,7 +216,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASICS) && (material.ingot == null)) {
+		if ((Options.enableBasics) && (material.ingot == null)) {
 			material.ingot = addItem(new ItemMetalIngot(material), "ingot", material, ItemGroups.tab_items);
 		}
 
@@ -223,7 +228,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASICS) && (material.nugget == null)) {
+		if ((Options.enableBasics) && (material.nugget == null)) {
 			material.nugget = addItem(new ItemMetalNugget(material), "nugget", material, ItemGroups.tab_items);
 		}
 
@@ -235,7 +240,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASICS) && (material.powder == null)) {
+		if ((Options.enableBasics) && (material.powder == null)) {
 			material.powder = addItem(new ItemMetalPowder(material), "powder", material, ItemGroups.tab_items);
 		}
 
@@ -247,7 +252,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASICS) && (material.hasBlend) && (material.blend == null)) {
+		if ((Options.enableBasics) && (material.hasBlend) && (material.blend == null)) {
 			material.blend = addItem(new ItemMetalBlend(material), "blend", material, ItemGroups.tab_items);
 		}
 
@@ -259,7 +264,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_ROD) && (material.rod == null)) {
+		if ((Options.enableRod) && (material.rod == null)) {
 			material.rod = addItem(new ItemMetalRod(material), "rod", material, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.STICK + material.getCapitalizedName(), material.rod);
 			OreDictionary.registerOre(Oredicts.ROD, material.rod);
@@ -273,7 +278,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_GEAR) && (material.gear == null)) {
+		if ((Options.enableGear) && (material.gear == null)) {
 			material.gear = addItem(new ItemMetalGear(material), "gear", material, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.GEAR, material.gear);
 		}
@@ -286,7 +291,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASIC_TOOLS) && (material.axe == null)) {
+		if ((Options.enableBasicTools) && (material.axe == null)) {
 			material.axe = addItem(new ItemMetalAxe(material), "axe", material, ItemGroups.tab_tools);
 		}
 
@@ -298,7 +303,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_CRACKHAMMER) && (material.crackhammer == null)) {
+		if ((Options.enableCrackHammer) && (material.crackhammer == null)) {
 			material.crackhammer = addItem(new ItemMetalCrackHammer(material), "crackhammer", material, ItemGroups.tab_tools);
 		}
 
@@ -310,7 +315,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASIC_TOOLS) && (material.hoe == null)) {
+		if ((Options.enableBasicTools) && (material.hoe == null)) {
 			material.hoe = addItem(new ItemMetalHoe(material), "hoe", material, ItemGroups.tab_tools);
 		}
 
@@ -322,7 +327,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASIC_TOOLS) && (material.pickaxe == null)) {
+		if ((Options.enableBasicTools) && (material.pickaxe == null)) {
 			material.pickaxe = addItem(new ItemMetalPickaxe(material), "pickaxe", material, ItemGroups.tab_tools);
 		}
 
@@ -334,7 +339,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASIC_TOOLS) && (material.shovel == null)) {
+		if ((Options.enableBasicTools) && (material.shovel == null)) {
 			material.shovel = addItem(new ItemMetalShovel(material), "shovel", material, ItemGroups.tab_tools);
 		}
 
@@ -346,7 +351,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASIC_TOOLS) && (material.sword == null)) {
+		if ((Options.enableBasicTools) && (material.sword == null)) {
 			material.sword = addItem(new ItemMetalSword(material), "sword", material, ItemGroups.tab_tools);
 		}
 
@@ -358,7 +363,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_ARMOR) && (material.helmet == null)) {
+		if ((Options.enableArmor) && (material.helmet == null)) {
 			material.helmet = addItem(ItemMetalArmor.createHelmet(material), "helmet", material, ItemGroups.tab_tools);
 		}
 
@@ -370,7 +375,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_ARMOR) && (material.chestplate == null)) {
+		if ((Options.enableArmor) && (material.chestplate == null)) {
 			material.chestplate = addItem(ItemMetalArmor.createChestplate(material), "chestplate", material, ItemGroups.tab_tools);
 		}
 
@@ -382,7 +387,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_ARMOR) && (material.leggings == null)) {
+		if ((Options.enableArmor) && (material.leggings == null)) {
 			material.leggings = addItem(ItemMetalArmor.createLeggings(material), "leggings", material, ItemGroups.tab_tools);
 		}
 
@@ -394,7 +399,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_ARMOR) && (material.boots == null)) {
+		if ((Options.enableArmor) && (material.boots == null)) {
 			material.boots = addItem(ItemMetalArmor.createBoots(material), "boots", material, ItemGroups.tab_tools);
 		}
 
@@ -406,7 +411,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_HORSE_ARMOR) && (material.horse_armor == null)) {
+		if ((Options.enableHorseArmor) && (material.horse_armor == null)) {
 			material.horse_armor = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.tab_tools);
 		}
 
@@ -418,7 +423,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BOW_AND_ARROW) && (material.arrow == null)) {
+		if ((Options.enableBowAndArrow) && (material.arrow == null)) {
 			material.arrow = addItem(new ItemMetalArrow(material), "arrow", material, ItemGroups.tab_tools);
 		}
 
@@ -430,7 +435,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_CROSSBOW_AND_BOLT) && (material.bolt == null)) {
+		if ((Options.enableCrossbowAndBolt) && (material.bolt == null)) {
 			material.bolt = addItem(new ItemMetalBolt(material), "bolt", material, ItemGroups.tab_tools);
 		}
 
@@ -442,7 +447,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_BOW_AND_ARROW) && (material.bow == null)) {
+		if ((Options.enableBowAndArrow) && (material.bow == null)) {
 			material.bow = addItem(new ItemMetalBow(material), "bow", material, ItemGroups.tab_tools);
 		}
 
@@ -454,7 +459,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_CROSSBOW_AND_BOLT) && (material.crossbow == null)) {
+		if ((Options.enableCrossbowAndBolt) && (material.crossbow == null)) {
 			material.crossbow = addItem(new ItemMetalCrossbow(material), "crossbow", material, ItemGroups.tab_tools);
 		}
 
@@ -466,7 +471,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_SHEARS) && (material.shears == null)) {
+		if ((Options.enableShears) && (material.shears == null)) {
 			material.shears = addItem(new ItemMetalShears(material), "shears", material, ItemGroups.tab_tools);
 		}
 
@@ -478,7 +483,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_SMALL_DUSTS) && (material.hasBlend) && (material.smallblend == null)) {
+		if ((Options.enableSmallDust) && (material.hasBlend) && (material.smallblend == null)) {
 			material.smallblend = addItem(new ItemMetalSmallBlend(material), "smallblend", material, ItemGroups.tab_items);
 		}
 
@@ -490,7 +495,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_FISHING_ROD) && (material.fishing_rod == null)) {
+		if ((Options.enableFishingRod) && (material.fishing_rod == null)) {
 			material.fishing_rod = addItem(new ItemMetalFishingRod(material), "fishing_rod", material, ItemGroups.tab_tools);
 		}
 
@@ -502,7 +507,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_SMALL_DUSTS) && (material.smallpowder == null)) {
+		if ((Options.enableSmallDust) && (material.smallpowder == null)) {
 			material.smallpowder = addItem(new ItemMetalSmallPowder(material), "smallpowder", material, ItemGroups.tab_items);
 		}
 
@@ -514,7 +519,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_SHIELD) && (material.shield == null)) {
+		if ((Options.enableShield) && (material.shield == null)) {
 			material.shield = addItem(new ItemMetalShield(material), "shield", material, ItemGroups.tab_items);
 		}
 
@@ -526,7 +531,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_MEKANISM) && (material.crystal == null)) {
+		if ((Options.enableMekanism) && (material.crystal == null)) {
 			material.crystal = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), material.crystal);
 		}
@@ -539,7 +544,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_MEKANISM) && (material.shard == null)) {
+		if ((Options.enableMekanism) && (material.shard == null)) {
 			material.shard = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.SHARD + material.getCapitalizedName(), material.shard);
 		}
@@ -552,7 +557,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_MEKANISM) && (material.clump == null)) {
+		if ((Options.enableMekanism) && (material.clump == null)) {
 			material.clump = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), material.clump);
 		}
@@ -565,7 +570,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_MEKANISM) && (material.powder_dirty == null)) {
+		if ((Options.enableMekanism) && (material.powder_dirty == null)) {
 			material.powder_dirty = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.DUSTDIRTY + material.getCapitalizedName(), material.powder_dirty);
 		}
@@ -579,7 +584,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_IC2) && (material.dense_plate == null)) {
+		if ((Options.enableIC2) && (material.dense_plate == null)) {
 			material.dense_plate = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.PLATEDENSE + material.getCapitalizedName(), material.dense_plate);
 		}
@@ -592,7 +597,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_IC2) && (material.crushed == null)) {
+		if ((Options.enableIC2) && (material.crushed == null)) {
 			material.crushed = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), material.crushed);
 		}
@@ -605,7 +610,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_IC2) && (material.crushed_purified == null)) {
+		if ((Options.enableIC2) && (material.crushed_purified == null)) {
 			material.crushed_purified = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.CRUSHEDPURIFIED + material.getCapitalizedName(), material.crushed_purified);
 		}
@@ -618,8 +623,8 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_SLAB) && (material.slab == null)) {
-			// Do we need to check for the block too?
+		if ((Options.enableSlab) && (material.slab == null)) {
+			// TODO: Do we need to check for the block too?
 			if ((material.half_slab != null) && (material.double_slab != null)) {
 				material.slab = addItem(new ItemMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
 			}
@@ -633,7 +638,7 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.ENABLE_DOOR) && (material.door == null)) {
+		if ((Options.enableDoor) && (material.door == null)) {
 			if (material.doorBlock != null) {
 				material.door = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.tab_blocks);
 				OreDictionary.registerOre(Oredicts.DOOR, material.door);
@@ -655,7 +660,8 @@ public abstract class Items {
 		final Field[] fields = itemClass.getDeclaredFields();
 		for (final Field f : fields) {
 			if (Modifier.isStatic(f.getModifiers()) && f.getType().isArray() && f.getType().getComponentType().equals(float.class)) {
-				FMLLog.info("%s: Expanding array variable %s.%s to size %s", Thread.currentThread().getStackTrace()[0], itemClass.getSimpleName(), f.getName(), expandedSize);
+				BaseMetals.logger.info("%s: Expanding array variable %s.%s to size %d", Thread.currentThread().getStackTrace()[0].toString(), itemClass.getSimpleName(), f.getName(), expandedSize);
+				           FMLLog.info("%s: Expanding array variable %s.%s to size %s", Thread.currentThread().getStackTrace()[0], itemClass.getSimpleName(), f.getName(), expandedSize);
 				f.setAccessible(true); // bypass 'private' key word
 				final Field modifiersField = Field.class.getDeclaredField("modifiers");
 				modifiersField.setAccessible(true);

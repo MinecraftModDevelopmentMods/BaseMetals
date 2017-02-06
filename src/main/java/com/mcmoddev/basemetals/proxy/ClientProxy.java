@@ -20,9 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-//import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
@@ -140,13 +138,8 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
-	@Override
-	public void postInit(FMLPostInitializationEvent event) {
-		super.postInit(event);
-	}
 	public void registerRenderOuter(Item item) {
 		if (item != null) {
-//			FMLLog.severe("Name of Item was: " + Items.getNameOfItem(item));
 			registerRender(item, Items.getNameOfItem(item));
 		}
 	}
@@ -156,7 +149,6 @@ public class ClientProxy extends CommonProxy {
 			return; // do not add door blocks or slabs
 
 		if (block != null) {
-//			FMLLog.severe("Name of Block was: " + Blocks.getNameOfBlock(block));
 			registerRender(Item.getItemFromBlock(block), Blocks.getNameOfBlock(block));
 		}
 	}

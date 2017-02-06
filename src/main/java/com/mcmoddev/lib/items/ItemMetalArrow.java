@@ -53,6 +53,9 @@ public class ItemMetalArrow extends ItemArrow implements IOreDictionaryEntry, IM
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

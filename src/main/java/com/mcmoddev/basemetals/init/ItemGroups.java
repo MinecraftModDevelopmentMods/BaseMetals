@@ -1,13 +1,9 @@
 package com.mcmoddev.basemetals.init;
 
-//import net.minecraft.creativetab.CreativeTabs;
-
-import cyano.basemetals.init.Materials;
-
 /**
  * This class initializes all item groups in Base Metals.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
@@ -17,6 +13,10 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 //	public static CreativeTabs tab_tools;
 
 	private static boolean initDone = false;
+
+	private ItemGroups() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 
 	/**
 	 *

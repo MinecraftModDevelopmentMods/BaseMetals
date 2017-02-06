@@ -43,6 +43,9 @@ public class BlockButtonMetal extends BlockButton implements IOreDictionaryEntry
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

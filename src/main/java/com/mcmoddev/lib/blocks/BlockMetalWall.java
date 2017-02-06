@@ -66,6 +66,9 @@ public class BlockMetalWall extends BlockWall implements IOreDictionaryEntry, IM
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

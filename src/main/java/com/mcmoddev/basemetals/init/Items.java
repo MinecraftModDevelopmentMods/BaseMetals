@@ -4,7 +4,6 @@ import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.item.Item;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -16,9 +15,11 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class Items extends com.mcmoddev.lib.init.Items {
 
+	public static Item charcoal_nugget;
 	public static Item charcoal_powder;
 	public static Item charcoal_smallpowder;
 
+	public static Item coal_nugget;
 	public static Item coal_powder;
 	public static Item coal_smallpowder;
 
@@ -29,6 +30,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 	private static boolean initDone = false;
 
+	protected Items() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 */
@@ -38,44 +43,39 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		Blocks.init();
-		com.mcmoddev.lib.init.Items.init();
+		com.mcmoddev.lib.init.Items.init(); // TODO
 
-		MetalMaterial material;
-
-		if (Options.ENABLE_ADAMANTINE) {
-			material = Materials.adamantine;
-			createItemsFull(material);
-			createItemsModSupport(material);
+		if (Options.enableAdamantine) {
+			createItemsFull(Materials.adamantine);
+			createItemsModSupport(Materials.adamantine);
 		}
 
-		if (Options.ENABLE_ANTIMONY) {
-			material = Materials.antimony;
-			createItemsFull(material);
-			createItemsModSupport(material);
+		if (Options.enableAntimony) {
+			createItemsFull(Materials.antimony);
+			createItemsModSupport(Materials.antimony);
 		}
 
-		if (Options.ENABLE_AQUARIUM) {
-			material = Materials.aquarium;
-			createItemsFull(material);
+		if (Options.enableAquarium) {
+			createItemsFull(Materials.aquarium);
 		}
 
-		if (Options.ENABLE_BISMUTH) {
-			material = Materials.bismuth;
-			createItemsFull(material);
-			createItemsModSupport(material);
+		if (Options.enableBismuth) {
+			createItemsFull(Materials.bismuth);
+			createItemsModSupport(Materials.bismuth);
 		}
 
-		if (Options.ENABLE_BRASS) {
-			material = Materials.brass;
-			createItemsFull(material);
+		if (Options.enableBrass) {
+			createItemsFull(Materials.brass);
 		}
 
-		if (Options.ENABLE_BRONZE) {
-			material = Materials.bronze;
-			createItemsFull(material);
+		if (Options.enableBronze) {
+			createItemsFull(Materials.bronze);
 		}
 
-		if (Options.ENABLE_CHARCOAL) {
+		if (Options.enableCharcoal) {
+			charcoal_nugget = addItem(new Item(), "charcoal_nugget", null, ItemGroups.tab_items);
+			OreDictionary.registerOre(Oredicts.NUGGETCHARCOAL, charcoal_nugget);
+
 			charcoal_powder = addItem(new Item(), "charcoal_powder", null, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.DUSTCHARCOAL, charcoal_powder);
 
@@ -84,7 +84,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			OreDictionary.registerOre(Oredicts.DUSTSMALLCHARCOAL, charcoal_smallpowder);
 		}
 
-		if (Options.ENABLE_COAL) {
+		if (Options.enableCoal) {
+			coal_nugget = addItem(new Item(), "coal_nugget", null, ItemGroups.tab_items);
+			OreDictionary.registerOre(Oredicts.NUGGETCOAL, coal_nugget);
+
 			coal_powder = addItem(new Item(), "coal_powder", null, ItemGroups.tab_items);
 			OreDictionary.registerOre(Oredicts.DUSTCOAL, coal_powder);
 
@@ -93,27 +96,23 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			OreDictionary.registerOre(Oredicts.DUSTSMALLCOAL, coal_smallpowder);
 		}
 
-		if (Options.ENABLE_COLDIRON) {
-			material = Materials.coldiron;
-			createItemsFull(material);
-			createItemsModSupport(material);
+		if (Options.enableColdIron) {
+			createItemsFull(Materials.coldiron);
+			createItemsModSupport(Materials.coldiron);
 		}
 
-		if (Options.ENABLE_COPPER) {
-			material = Materials.copper;
-			createItemsFull(material);
+		if (Options.enableCopper) {
+			createItemsFull(Materials.copper);
 		}
 
-		if (Options.ENABLE_CUPRONICKEL) {
-			material = Materials.cupronickel;
-			createItemsFull(material);
+		if (Options.enableCupronickel) {
+			createItemsFull(Materials.cupronickel);
 		}
 
-		if (Options.ENABLE_DIAMOND) {
-			material = Materials.vanilla_diamond;
+		if (Options.enableDiamond) {
+			final MetalMaterial material = Materials.vanilla_diamond;
 
 			material.axe = net.minecraft.init.Items.DIAMOND_AXE;
-//			material.door = net.minecraft.init.Items.DIAMOND_DOOR;
 			material.hoe = net.minecraft.init.Items.DIAMOND_HOE;
 			material.horse_armor = net.minecraft.init.Items.DIAMOND_HORSE_ARMOR;
 			material.pickaxe = net.minecraft.init.Items.DIAMOND_PICKAXE;
@@ -123,38 +122,31 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.chestplate = net.minecraft.init.Items.DIAMOND_CHESTPLATE;
 			material.helmet = net.minecraft.init.Items.DIAMOND_HELMET;
 			material.leggings = net.minecraft.init.Items.DIAMOND_LEGGINGS;
-//			material.doorBlock = net.minecraft.init.Blocks.DIAMOND_DOOR;
-			material.ore = net.minecraft.init.Blocks.DIAMOND_ORE;
-//			material.trapdoor = net.minecraft.init.Blocks.DIAMOND_TRAPDOOR;
 			material.ingot = net.minecraft.init.Items.DIAMOND;
-//			material.nugget = net.minecraft.init.Items.DIAMOND_NUGGET;
-//			material.bars = net.minecraft.init.Blocks.DIAMOND_BARS;
-			material.block = net.minecraft.init.Blocks.DIAMOND_BLOCK;
 
-			createArrow(material);
-			createBolt(material);
-			createBow(material);
-			createCrossbow(material);
-			createFishingRod(material);
-			createShears(material);
-			createCrackhammer(material);
-			createDoor(material);
-			createGear(material);
-			//diamond_rod = createRod(material);
-
-			createSlab(material);
-		}
-
-		if (Options.ENABLE_ELECTRUM) {
-			material = Materials.electrum;
 			createItemsFull(material);
+//			createArrow(material);
+//			createBolt(material);
+//			createBow(material);
+//			createCrossbow(material);
+//			createFishingRod(material);
+//			createShears(material);
+//			createCrackhammer(material);
+//			createDoor(material);
+//			createGear(material);
+//			createRod(material);
+
+//			createSlab(material);
 		}
 
-		if (Options.ENABLE_GOLD) {
-			material = Materials.vanilla_gold;
+		if (Options.enableElectrum) {
+			createItemsFull(Materials.electrum);
+		}
+
+		if (Options.enableGold) {
+			final MetalMaterial material = Materials.vanilla_gold;
 
 			material.axe = net.minecraft.init.Items.GOLDEN_AXE;
-//			material.door = net.minecraft.init.Items.GOLDEN_DOOR;
 			material.hoe = net.minecraft.init.Items.GOLDEN_HOE;
 			material.horse_armor = net.minecraft.init.Items.GOLDEN_HORSE_ARMOR;
 			material.pickaxe = net.minecraft.init.Items.GOLDEN_PICKAXE;
@@ -164,38 +156,32 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.chestplate = net.minecraft.init.Items.GOLDEN_CHESTPLATE;
 			material.helmet = net.minecraft.init.Items.GOLDEN_HELMET;
 			material.leggings = net.minecraft.init.Items.GOLDEN_LEGGINGS;
-//			material.doorBlock = net.minecraft.init.Blocks.GOLDEN_DOOR;
-			material.ore = net.minecraft.init.Blocks.GOLD_ORE;
-//			material.trapdoor = net.minecraft.init.Blocks.GOLDEN_TRAPDOOR;
-
 			material.ingot = net.minecraft.init.Items.GOLD_INGOT;
 			material.nugget = net.minecraft.init.Items.GOLD_NUGGET;
-//			material.bars = net.minecraft.init.Blocks.GOLD_BARS;
-			material.block = net.minecraft.init.Blocks.GOLD_BLOCK;
 
-			createArrow(material);
-			createBolt(material);
-			createBow(material);
-			createCrossbow(material);
-			createFishingRod(material);
-			createShears(material);
-			createCrackhammer(material);
-			createDoor(material);
-			createPowder(material);
-			createSmallPowder(material);
-			createRod(material);
-			createGear(material);
-
-			createSlab(material);
-		}
-
-		if (Options.ENABLE_INVAR) {
-			material = Materials.invar;
 			createItemsFull(material);
+//			createArrow(material);
+//			createBolt(material);
+//			createBow(material);
+//			createCrossbow(material);
+//			createFishingRod(material);
+//			createShears(material);
+//			createCrackhammer(material);
+//			createDoor(material);
+//			createPowder(material);
+//			createSmallPowder(material);
+//			createRod(material);
+//			createGear(material);
+
+//			createSlab(material);
 		}
 
-		if (Options.ENABLE_IRON) {
-			material = Materials.vanilla_iron;
+		if (Options.enableInvar) {
+			createItemsFull(Materials.invar);
+		}
+
+		if (Options.enableIron) {
+			final MetalMaterial material = Materials.vanilla_iron;
 			material.axe = net.minecraft.init.Items.IRON_AXE;
 			material.door = net.minecraft.init.Items.IRON_DOOR;
 			material.hoe = net.minecraft.init.Items.IRON_HOE;
@@ -207,41 +193,37 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.chestplate = net.minecraft.init.Items.IRON_CHESTPLATE;
 			material.helmet = net.minecraft.init.Items.IRON_HELMET;
 			material.leggings = net.minecraft.init.Items.IRON_LEGGINGS;
-			material.doorBlock = net.minecraft.init.Blocks.IRON_DOOR;
-			material.ore = net.minecraft.init.Blocks.IRON_ORE;
-			material.trapdoor = net.minecraft.init.Blocks.IRON_TRAPDOOR;
+			material.door = net.minecraft.init.Items.IRON_DOOR;
 			material.ingot = net.minecraft.init.Items.IRON_INGOT;
 			material.shears = net.minecraft.init.Items.SHEARS;
 //			material.nugget = net.minecraft.init.Items.IRON_NUGGET; // Not till after 1.11
-			material.bars = net.minecraft.init.Blocks.IRON_BARS;
-			material.block = net.minecraft.init.Blocks.IRON_BLOCK;
-			createArrow(material);
-			createBolt(material);
-			createBow(material);
-			createCrossbow(material);
-			createFishingRod(material);
-			createCrackhammer(material);
-			createGear(material);
-			createNugget(material);
-			createPowder(material);
-			createRod(material);
-			createSmallPowder(material);
+
+			createItemsFull(material);
+//			createArrow(material);
+//			createBolt(material);
+//			createBow(material);
+//			createCrossbow(material);
+//			createFishingRod(material);
+//			createCrackhammer(material);
+//			createGear(material);
+//			createNugget(material);
+//			createPowder(material);
+//			createRod(material);
+//			createSmallPowder(material);
 			
-			createSlab(material);
+//			createSlab(material);
 		}
 
-		if (Options.ENABLE_LEAD) {
-			material = Materials.lead;
-			createItemsFull(material);
+		if (Options.enableLead) {
+			createItemsFull(Materials.lead);
 		}
 
-		if (Options.ENABLE_PLATINUM) {
-			material = Materials.platinum;
-			createItemsFull(material);
-			createItemsModSupport(material);
+		if (Options.enablePlatinum) {
+			createItemsFull(Materials.platinum);
+			createItemsModSupport(Materials.platinum);
 		}
 
-		if (Options.ENABLE_MERCURY) {
+		if (Options.enableMercury) {
 			// mercury is special
 			mercury_ingot = addItem(new Item(), "mercury_ingot", null, ItemGroups.tab_items);
 //			itemRegistry.put("mercury_ingot", mercury_ingot);
@@ -263,56 +245,37 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			OreDictionary.registerOre(Oredicts.DUSTSMALLMERCURY, mercury_smallpowder);
 		}
 
-		if (Options.ENABLE_MITHRIL) {
-			material = Materials.mithril;
-			createItemsFull(material);
+		if (Options.enableMithril) {
+			createItemsFull(Materials.mithril);
 		}
 
-		if (Options.ENABLE_NICKEL) {
-			material = Materials.nickel;
-			createItemsFull(material);
-			createItemsModSupport(material);
+		if (Options.enableNickel) {
+			createItemsFull(Materials.nickel);
+			createItemsModSupport(Materials.nickel);
 		}
 
-		if (Options.ENABLE_PEWTER) {
-			material = Materials.pewter;
-			createItemsFull(material);
+		if (Options.enablePewter) {
+			createItemsFull(Materials.pewter);
 		}
 
-		if (Options.ENABLE_SILVER) {
-			material = Materials.silver;
-			createItemsFull(material);
+		if (Options.enableSilver) {
+			createItemsFull(Materials.silver);
 		}
 
-		if (Options.ENABLE_STARSTEEL) {
-			material = Materials.starsteel;
-			createItemsFull(material);
-			createItemsModSupport(material);
+		if (Options.enableStarSteel) {
+			createItemsFull(Materials.starsteel);
+			createItemsModSupport(Materials.starsteel);
 		}
 
-		if (Options.ENABLE_STONE) {
-			material = Materials.vanilla_stone;
+		if (Options.enableStone) {
+			final MetalMaterial material = Materials.vanilla_stone;
 
 			material.axe = net.minecraft.init.Items.STONE_AXE;
-//			material.door = net.minecraft.init.Items.STONE_DOOR;
 			material.hoe = net.minecraft.init.Items.STONE_HOE;
-//			material.horse_armor = net.minecraft.init.Items.STONE_HORSE_ARMOR;
 			material.pickaxe = net.minecraft.init.Items.STONE_PICKAXE;
 			material.shovel = net.minecraft.init.Items.STONE_SHOVEL;
 			material.sword = net.minecraft.init.Items.STONE_SWORD;
-//			material.boots = net.minecraft.init.Items.STONE_BOOTS;
-//			material.chestplate = net.minecraft.init.Items.STONE_CHESTPLATE;
-//			material.helmet = net.minecraft.init.Items.STONE_HELMET;
-//			material.leggings = net.minecraft.init.Items.STONE_LEGGINGS;
-//			material.doorBlock = net.minecraft.init.Blocks.STONE_DOOR;
-//			material.ore = net.minecraft.init.Blocks.STONE_ORE;
-//			material.trapdoor = net.minecraft.init.Blocks.STONE_TRAPDOOR;
-//			material.ingot = net.minecraft.init.Items.STONE_INGOT;
-//			material.shears = net.minecraft.init.Items.SHEARS;
-//			material.nugget = net.minecraft.init.Items.STONE_NUGGET;
-//			material.bars = net.minecraft.init.Blocks.STONE_BARS;
 			material.block = net.minecraft.init.Blocks.STONE;
-//			material.slab = net.minecraft.init.Items.SLAB;
 			material.half_slab = net.minecraft.init.Blocks.STONE_SLAB;
 			material.double_slab = net.minecraft.init.Blocks.DOUBLE_STONE_SLAB;
 			material.stairs = net.minecraft.init.Blocks.STONE_STAIRS;
@@ -322,39 +285,28 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createGear(material);
 		}
 
-		if (Options.ENABLE_STEEL) {
-			material = Materials.steel;
-			createItemsFull(material);
+		if (Options.enableSteel) {
+			createItemsFull(Materials.steel);
 		}
 
-		if (Options.ENABLE_TIN) {
-			material = Materials.tin;
-			createItemsFull(material);
+		if (Options.enableTin) {
+			createItemsFull(Materials.tin);
 		}
 
-		if (Options.ENABLE_WOOD) {
-			material = Materials.vanilla_wood;
+		if (Options.enableWood) {
+			final MetalMaterial material = Materials.vanilla_wood;
 
 			material.axe = net.minecraft.init.Items.WOODEN_AXE;
 			material.door = net.minecraft.init.Items.OAK_DOOR;
 			material.hoe = net.minecraft.init.Items.WOODEN_HOE;
-//			material.horse_armor = net.minecraft.init.Items.WOODEN_HORSE_ARMOR;
 			material.pickaxe = net.minecraft.init.Items.WOODEN_PICKAXE;
 			material.shovel = net.minecraft.init.Items.WOODEN_SHOVEL;
 			material.sword = net.minecraft.init.Items.WOODEN_SWORD;
-//			material.boots = net.minecraft.init.Items.WOODEN_BOOTS;
-//			material.chestplate = net.minecraft.init.Items.WOODEN_CHESTPLATE;
-//			material.helmet = net.minecraft.init.Items.WOODEN_HELMET;
-//			material.leggings = net.minecraft.init.Items.WOODEN_LEGGINGS;
 			material.doorBlock = net.minecraft.init.Blocks.OAK_DOOR;
 			material.ore = net.minecraft.init.Blocks.LOG;
 			material.trapdoor = net.minecraft.init.Blocks.TRAPDOOR;
-//			material.ingot = net.minecraft.init.Items.WOODEN_INGOT;
 			material.shears = net.minecraft.init.Items.SHEARS;
-//			material.nugget = net.minecraft.init.Items.WOOD_NUGGET; // Not till after 1.11
-//			material.bars = net.minecraft.init.Blocks.WOODEN_BARS;
 			material.block = net.minecraft.init.Blocks.PLANKS;
-//			material.slab = net.minecraft.init.Items.SLA;
 			material.half_slab = net.minecraft.init.Blocks.WOODEN_SLAB;
 			material.double_slab = net.minecraft.init.Blocks.DOUBLE_WOODEN_SLAB;
 			material.stairs = net.minecraft.init.Blocks.OAK_STAIRS;
@@ -363,13 +315,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createGear(material);
 		}
 
-		if (Options.ENABLE_ZINC) {
-			material = Materials.zinc;
-			createItemsFull(material);
-			createItemsModSupport(material);
+		if (Options.enableZinc) {
+			createItemsFull(Materials.zinc);
+			createItemsModSupport(Materials.zinc);
 		}
 
-		addToMetList();
+		addToMetList(); // TODO
 		
 		initDone = true;
 	}

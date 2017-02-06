@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.entity;
 
-import cyano.basemetals.init.Materials;
+import com.mcmoddev.basemetals.init.Materials;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.item.ItemStack;

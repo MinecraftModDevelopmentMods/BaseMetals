@@ -38,6 +38,9 @@ public class ItemMetalSmallPowder extends Item implements IOreDictionaryEntry, I
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

@@ -2,7 +2,6 @@ package com.mcmoddev.basemetals.util;
 
 import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.items.ItemMetalBlend;
 import com.mcmoddev.lib.items.ItemMetalIngot;
 import com.mcmoddev.lib.items.ItemMetalShield;
 import com.mcmoddev.lib.material.IMetalObject;
@@ -19,7 +18,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -56,6 +54,7 @@ public class EventHandler {
         }
     }
 
+/*
 	@SubscribeEvent
 	void event(ItemCraftedEvent event) {
 		final Item item = event.crafting.getItem();
@@ -68,6 +67,7 @@ public class EventHandler {
 			}
 		}
 	}
+*/
 
 	@SubscribeEvent
 	void event(ItemSmeltedEvent event) {
@@ -75,7 +75,7 @@ public class EventHandler {
 		if (item instanceof IMetalObject) {
 			final MetalMaterial material = ((IMetalObject) item).getMaterial();
 			if (item instanceof ItemMetalIngot) {
-				if (Options.ENABLE_ACHIEVEMENTS) {
+				if (Options.enableAchievements) {
 //					event.player.addStat(Achievements.this_is_new, 1);
 					if (material.getName().equals("aquarium")) {
 						event.player.addStat(Achievements.aquarium_maker, 1);

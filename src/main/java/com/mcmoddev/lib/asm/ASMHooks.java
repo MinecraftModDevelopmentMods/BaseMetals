@@ -16,6 +16,10 @@ public class ASMHooks {
 
 	public static final DataParameter<Optional<ItemStack>> ARMOR_STACK = EntityDataManager.createKey(EntityHorse.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
+	private ASMHooks() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	public static void onInitHorse(EntityHorse entity) {
 		entity.getDataManager().register(ASMHooks.ARMOR_STACK, Optional.absent());
 	}

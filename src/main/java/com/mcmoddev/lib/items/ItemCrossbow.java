@@ -2,9 +2,9 @@ package com.mcmoddev.lib.items;
 
 import javax.annotation.Nullable;
 
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

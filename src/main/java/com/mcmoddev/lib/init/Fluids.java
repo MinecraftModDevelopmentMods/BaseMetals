@@ -2,6 +2,8 @@ package com.mcmoddev.lib.init;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.collect.*;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.blocks.BlockMoltenFluid;
@@ -28,9 +30,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public abstract class Fluids {
 
-	static {
-		FluidRegistry.enableUniversalBucket();
-	}
+//	static {
+//		FluidRegistry.enableUniversalBucket();
+//	}
 
 	private static boolean initDone = false;
 
@@ -38,6 +40,10 @@ public abstract class Fluids {
 	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create();
 
 	private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
+
+	protected Fluids() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 
 	/**
 	 *
@@ -104,11 +110,13 @@ public abstract class Fluids {
 		return fluid;
 	}
 
-	protected static BlockFluidBase addFluidBlock(MetalMaterial material) {
-		if (material != null) {
-			if (material.fluidBlock != null) {
-				return material.fluidBlock;
-			}
+	protected static BlockFluidBase addFluidBlock(@Nonnull MetalMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if (material.fluidBlock != null) {
+			return material.fluidBlock;
 		}
 
 		final ResourceLocation location = new ResourceLocation(Loader.instance().activeModContainer().getModId(), material.getName());
@@ -149,7 +157,7 @@ public abstract class Fluids {
 		final ResourceLocation location = new ResourceLocation(Loader.instance().activeModContainer().getModId(), name);
 		BlockFluidBase block;
 
-		if (name != "mercury") {
+		if ((name != "mercury") && (material != null)) {
 			block = new BlockMoltenFluid(material.fluid);
 		} else {
 			block = new InteractiveFluidBlock(getFluidByName(name), false, (World w, EntityLivingBase e) -> {

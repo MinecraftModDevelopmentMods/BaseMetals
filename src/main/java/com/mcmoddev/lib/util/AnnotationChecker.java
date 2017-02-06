@@ -9,6 +9,10 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 public class AnnotationChecker {
 
+	private AnnotationChecker() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
     public static <T> List<T> getInstances(ASMDataTable asmDataTable, Class<? extends Annotation> annotationClass, Class<T> instanceClass) {
         final String annotationClassName = annotationClass.getCanonicalName();
         final Set<ASMDataTable.ASMData> asmDatas = asmDataTable.getAll(annotationClassName);

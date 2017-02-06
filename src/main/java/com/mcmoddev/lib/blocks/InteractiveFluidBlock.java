@@ -97,6 +97,9 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 
 	// TODO: remove the block overrides and see if fluids are working correctly
 	// yet
+	/**
+	 * @deprecated
+	 */
 	@Override // block override
 	@Deprecated
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {

@@ -36,6 +36,10 @@ public class ItemGroups {
 
 	private static boolean initDone = false;
 
+	protected ItemGroups() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 */

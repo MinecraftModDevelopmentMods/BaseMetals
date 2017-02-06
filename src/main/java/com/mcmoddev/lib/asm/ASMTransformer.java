@@ -8,6 +8,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.util.Platform;
 
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -42,8 +43,11 @@ public class ASMTransformer implements IClassTransformer {
 				final FileOutputStream out = new FileOutputStream(output);
 				out.write(cw.toByteArray());
 				out.close();
-			} catch (final IOException e) {
-				e.printStackTrace();
+			} catch (final IOException ex) {
+//				ex.printStackTrace();
+				BaseMetals.logger.error(ex);
+			} finally {
+				
 			}
 	}
 }

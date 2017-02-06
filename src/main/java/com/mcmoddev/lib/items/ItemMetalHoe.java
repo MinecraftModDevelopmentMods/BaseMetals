@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
 import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,7 +31,7 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 	protected final Set<String> toolTypes;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
-	protected final long regenInterval = 200;
+	protected static final long regenInterval = 200;
 
 	/**
 	 *
@@ -56,6 +56,9 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 		return false;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
@@ -99,7 +102,7 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % this.regenInterval) == 0))
+		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % regenInterval) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 
@@ -108,6 +111,9 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

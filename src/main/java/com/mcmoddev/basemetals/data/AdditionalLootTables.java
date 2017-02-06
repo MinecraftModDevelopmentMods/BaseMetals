@@ -3,13 +3,13 @@ package com.mcmoddev.basemetals.data;
 /**
  * Loot Tables
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public abstract class AdditionalLootTables {
 
 	// @formatter:off
-	public static final String abandoned_mineshaft = "{\n" +
+	public static final String ABANDONED_MINESHAFT = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"25% chance per roll of common metal ingots\",\n" +
@@ -389,7 +389,7 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-	public static final String nether_bridge = "{\n" +
+	public static final String NETHER_BRIDGE = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"25% chance of an uncommon metal tool\",\n" +
@@ -1063,7 +1063,7 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-	public static final String stronghold_crossing = "{\n" +
+	public static final String STRONGHOLD_CROSSING = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"25% chance of a common-metal tool\",\n" +
@@ -1429,7 +1429,7 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-	public static final String desert_pyramid = "{\n" +
+	public static final String DESERT_PYRAMID = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"25% chance of an uncommon metal tool\",\n" +
@@ -2107,7 +2107,7 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-	public static final String simple_dungeon = "{\n" +
+	public static final String SIMPLE_DUNGEON = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"25% chance of an uncommon metal tool\",\n" +
@@ -2785,7 +2785,7 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-	public static final String village_blacksmith = "{\n" +
+	public static final String VILLAGE_BLACKSMITH = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"25% chance of a common-metal tool\",\n" +
@@ -3165,7 +3165,7 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-	public static final String end_city_treasure = "{\n" +
+	public static final String END_CITY_TREASURE = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"25% chance of a rare metal tool\",\n" +
@@ -3858,7 +3858,7 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-	public static final String spawn_bonus_chest = "{\n" +
+	public static final String SPAWN_BONUS_CHEST = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"100% chance of one common-metal tool\",\n" +
@@ -4122,7 +4122,7 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-	public static final String jungle_temple = "{\n" +
+	public static final String JUNGLE_TEMPLE = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"25% chance of an uncommon metal tool\",\n" +
@@ -4800,7 +4800,7 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-	public static final String stronghold_corridor = "{\n" +
+	public static final String STRONGHOLD_CORRIDOR = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
 			"            \"__comment\":\"25% chance of an uncommon metal tool\",\n" +
@@ -5475,4 +5475,8 @@ public abstract class AdditionalLootTables {
 			"    ]\n" +
 			"}";
 	// @formatter:on
+
+	private AdditionalLootTables() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 }

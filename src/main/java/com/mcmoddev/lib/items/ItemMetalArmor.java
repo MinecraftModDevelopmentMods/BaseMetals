@@ -25,12 +25,11 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.init.Achievements;
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.material.MetalMaterial;
-
-import cyano.basemetals.init.Materials;
 
 /**
  * Armor
@@ -98,7 +97,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		Item armorItem = armor.getItem();
 		if(i % 2 == 0) {
 			// count armor pieces
-			if ((Options.ENABLE_STARSTEEL) && (((ItemMetalArmor)armorItem).material.getName().equals("starsteel"))) {
+			if ((Options.enableStarSteel) && (((ItemMetalArmor)armorItem).material.getName().equals("starsteel"))) {
 				starsteel: {
 					// used to count up the starsteel armor items
 					if(!(starsteelUpdateCache.containsKey(player))) {
@@ -106,14 +105,14 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 					}
 					starsteelUpdateCache.get(player).incrementAndGet();
 					// Achievement
-                   	if (Options.ENABLE_ACHIEVEMENTS) {
+                   	if (Options.enableAchievements) {
                    		if(armorItem == Materials.starsteel.boots)
                    			player.addStat(Achievements.moon_boots, 1);
                    	}
 					break starsteel;
 				}
 			}
-			if ((Options.ENABLE_LEAD) && (((ItemMetalArmor)armorItem).material.getName().equals("lead"))) {
+			if ((Options.enableLead) && (((ItemMetalArmor)armorItem).material.getName().equals("lead"))) {
 				lead: {
 					// used to count up the starsteel armor items
 					if(!(leadUpdateCache.containsKey(player))) {
@@ -123,7 +122,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 					break lead;
 				}
 			}
-			if ((Options.ENABLE_ADAMANTINE) && (((ItemMetalArmor)armorItem).material.getName().equals("adamantine"))) {
+			if ((Options.enableAdamantine) && (((ItemMetalArmor)armorItem).material.getName().equals("adamantine"))) {
 				adamantine: {
 					// used to count up the adamantine armor items
 					if(!(adamantineUpdateCache.containsKey(player))) {
@@ -135,23 +134,23 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 			}
 		} else {
 			// apply potion effects. Note that "Level I" is actually effect level 0 in the effect constructor 
-			if (Options.ENABLE_STARSTEEL) {
+			if (Options.enableStarSteel) {
 				starsteel: {
 					if(!starsteelUpdateCache.containsKey(player))
 						break starsteel;
 					int num = starsteelUpdateCache.get(player).getAndSet(0);
 					if(num == 0)
 						break starsteel;
-					final PotionEffect jumpBoost = new PotionEffect(Potion.REGISTRY.getObject(jumpPotionKey), EFFECT_DURATION, num-1, false, false);
+					final PotionEffect jumpBoost = new PotionEffect(Potion.REGISTRY.getObject(jumpPotionKey), EFFECT_DURATION, num - 1, false, false);
 					player.addPotionEffect(jumpBoost);
 					if(num > 1) {
-						final PotionEffect speedBoost = new PotionEffect(Potion.REGISTRY.getObject(speedPotionKey), EFFECT_DURATION, num-2, false, false);
+						final PotionEffect speedBoost = new PotionEffect(Potion.REGISTRY.getObject(speedPotionKey), EFFECT_DURATION, num - 2, false, false);
 						player.addPotionEffect(speedBoost);
 					}
 					break starsteel;
 				}
 			}
-			if (Options.ENABLE_LEAD) {
+			if (Options.enableLead) {
 				lead: {
 					if(!(leadUpdateCache.containsKey(player)))
 						break lead;
@@ -159,13 +158,13 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 					if(level == 0)
 						break lead;
 					if(level > 0) {
-						final PotionEffect speedLoss = new PotionEffect(Potion.REGISTRY.getObject(slowPotionKey), EFFECT_DURATION, level-1, false, false);
+						final PotionEffect speedLoss = new PotionEffect(Potion.REGISTRY.getObject(slowPotionKey), EFFECT_DURATION, level - 1, false, false);
 						player.addPotionEffect(speedLoss);
 					}
 					break lead;
 				}
 			}
-			if (Options.ENABLE_ADAMANTINE) {
+			if (Options.enableAdamantine) {
 				adamantine: {
 					if(!(adamantineUpdateCache.containsKey(player)))
 						break adamantine;
@@ -174,18 +173,18 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 					if(level == 0)
 						break adamantine;
 					if(level > 0) {
-						final PotionEffect protection = new PotionEffect(Potion.REGISTRY.getObject(protectionPotionKey), EFFECT_DURATION, level-1, false, false);
+						final PotionEffect protection = new PotionEffect(Potion.REGISTRY.getObject(protectionPotionKey), EFFECT_DURATION, level - 1, false, false);
 						player.addPotionEffect(protection);
 					}
 					// Achievement
-                	if ((Options.ENABLE_ACHIEVEMENTS) && (num == 4)) {
+                	if ((Options.enableAchievements) && (num == 4)) {
                 		player.addStat(Achievements.juggernaut, 1);
                 	}
 					break adamantine;
 				}
 			}
 			// full suit of cold-iron makes you fire-proof
-			if (Options.ENABLE_COLDIRON) {
+			if (Options.enableColdIron) {
 				if(armorItem == Materials.coldiron.helmet) {
 					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.coldiron.chestplate
 							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.coldiron.leggings
@@ -193,7 +192,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 						final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
 						player.addPotionEffect(fireProtection);
 						// Achievement
-                    	if (Options.ENABLE_ACHIEVEMENTS) {
+                    	if (Options.enableAchievements) {
                     		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.coldiron.sword) {
                     			player.addStat(Achievements.demon_slayer, 1);
                     		}
@@ -202,7 +201,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 				}
 			}
 			// full suit of mithril protects you from withering, poison, nausea, and hunger effects
-			if (Options.ENABLE_MITHRIL) {
+			if (Options.enableMithril) {
 				if(armorItem == Materials.mithril.helmet) {
 					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.mithril.chestplate
 							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.mithril.leggings
@@ -220,7 +219,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
                     		player.removePotionEffect(p);
                     	}
                     	// Achievement
-                    	if (Options.ENABLE_ACHIEVEMENTS) {
+                    	if (Options.enableAchievements) {
                     		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.mithril.sword) {
 								player.addStat(Achievements.angel_of_death, 1);
 							}
@@ -229,7 +228,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 				}
 			}
 			// full suit of aquarium makes you breathe and heal underwater
-			if (Options.ENABLE_AQUARIUM) {
+			if (Options.enableAquarium) {
 				if(armorItem == Materials.aquarium.helmet && player.posY > 0 && player.posY < 255) {
 					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.aquarium.chestplate
 							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.aquarium.leggings
@@ -243,7 +242,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 							player.addPotionEffect(protection);
                         	player.removePotionEffect(Potion.REGISTRY.getObject(fatiguePotionKey));
                         	// Achievement
-                        	if (Options.ENABLE_ACHIEVEMENTS) {
+                        	if (Options.enableAchievements) {
                         		player.addStat(Achievements.scuba_diver, 1);
                         	}
 						}
@@ -351,6 +350,9 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

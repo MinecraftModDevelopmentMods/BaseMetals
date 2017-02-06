@@ -27,12 +27,20 @@ public class CrusherRecipeJEI extends BlankRecipeWrapper {
 		this.outputs = Collections.singletonList(output);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
+	@Deprecated
 	public List<List<ItemStack>> getInputs() {
 		return this.input;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
+	@Deprecated
 	public List<ItemStack> getOutputs() {
 		return this.outputs;
 	}

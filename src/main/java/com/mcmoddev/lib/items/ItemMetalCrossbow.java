@@ -174,6 +174,9 @@ public class ItemMetalCrossbow extends ItemBow implements IMetalObject {
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

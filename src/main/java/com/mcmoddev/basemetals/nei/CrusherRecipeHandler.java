@@ -30,9 +30,10 @@ import net.minecraftforge.fml.common.FMLLog;
  */
 public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
+	private static final String CRUSHER = "crusher";
 	@Override
 	public String getOverlayIdentifier() {
-		return "crusher";
+		return CRUSHER;
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadUsageRecipes(String inputId, Object... ingredients) {
-		if (inputId.equals("crusher") && (this.getClass() == CrusherRecipeHandler.class))
+		if (inputId.equals(CRUSHER) && (this.getClass() == CrusherRecipeHandler.class))
 			this.loadCraftingRecipes("smelting");
 		else
 			super.loadUsageRecipes(inputId, ingredients);
@@ -67,7 +68,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
-		if (outputId.equals("crusher") && (this.getClass() == CrusherRecipeHandler.class)) { // we don't want overstep subclasses
+		if (outputId.equals(CRUSHER) && (this.getClass() == CrusherRecipeHandler.class)) { // we don't want overstep subclasses
 			// add all crusher recipes
 			final Collection<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance().getAllRecipes();
 			if (recipes == null)
@@ -97,7 +98,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadTransferRects() {
-		this.transferRects.add(new RecipeTransferRect(new Rectangle(95, 23, 18, 18), "crusher"));
+		this.transferRects.add(new RecipeTransferRect(new Rectangle(95, 23, 18, 18), CRUSHER));
 	}
 
 	@Override

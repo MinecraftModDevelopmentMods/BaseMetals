@@ -3,12 +3,14 @@ package cyano.basemetals.init;
 import java.util.List;
 import java.util.Map;
 
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.item.Item;
 
 public class Items extends com.mcmoddev.basemetals.init.Items {
+
 	// Backwards Compatibility
 	public static Item adamantine_boots;
 	public static Item adamantine_chestplate;
@@ -157,6 +159,10 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 
 	private static boolean initDone = false;
 
+	private Items() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	public static void init() {
 		if (initDone) {
 			return;
@@ -164,7 +170,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 
 		MetalMaterial material;
 
-		if (Options.ENABLE_ADAMANTINE) {
+		if (Options.enableAdamantine) {
 			material = Materials.adamantine;
 			adamantine_boots = material.boots;
 			adamantine_chestplate = material.chestplate;
@@ -176,7 +182,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			adamantine_sword = material.sword;
 		}
 
-		if (Options.ENABLE_ANTIMONY) {
+		if (Options.enableAntimony) {
 			material = Materials.antimony;
 			antimony_helmet = material.helmet;
 			antimony_ingot = material.ingot;
@@ -184,7 +190,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			antimony_powder = material.powder;
 		}
 
-		if (Options.ENABLE_AQUARIUM) {
+		if (Options.enableAquarium) {
 			material = Materials.aquarium;
 			aquarium_boots = material.boots;
 			aquarium_chestplate = material.chestplate;
@@ -196,7 +202,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			aquarium_sword = material.sword;
 		}
 
-		if (Options.ENABLE_BISMUTH) {
+		if (Options.enableBismuth) {
 			material = Materials.bismuth;
 			bismuth_helmet = material.helmet;
 			bismuth_ingot = material.ingot;
@@ -204,7 +210,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			bismuth_powder = material.powder;
 		}
 
-		if (Options.ENABLE_BRASS) {
+		if (Options.enableBrass) {
 			material = Materials.brass;
 			brass_helmet = material.helmet;
 			brass_ingot = material.ingot;
@@ -212,7 +218,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			brass_powder = material.powder;
 		}
 
-		if (Options.ENABLE_BRONZE) {
+		if (Options.enableBronze) {
 			material = Materials.bronze;
 			bronze_helmet = material.helmet;
 			bronze_ingot = material.ingot;
@@ -220,12 +226,12 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			bronze_powder = material.powder;
 		}
 
-		if (Options.ENABLE_COAL) {
+		if (Options.enableCoal) {
 			carbon_powder = coal_powder;
 			carbon_smallpowder = coal_smallpowder;
 		}
 
-		if (Options.ENABLE_COLDIRON) {
+		if (Options.enableColdIron) {
 			material = Materials.coldiron;
 			coldiron_boots = material.boots;
 			coldiron_chestplate = material.chestplate;
@@ -237,7 +243,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			coldiron_sword = material.sword;
 		}
 
-		if (Options.ENABLE_COPPER) {
+		if (Options.enableCopper) {
 			material = Materials.copper;
 			copper_helmet = material.helmet;
 			copper_ingot = material.ingot;
@@ -245,7 +251,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			copper_powder = material.powder;
 		}
 
-		if (Options.ENABLE_CUPRONICKEL) {
+		if (Options.enableCupronickel) {
 			material = Materials.cupronickel;
 			cupronickel_helmet = material.helmet;
 			cupronickel_ingot = material.ingot;
@@ -253,7 +259,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			cupronickel_powder = material.powder;
 		}
 
-		if (Options.ENABLE_ELECTRUM) {
+		if (Options.enableElectrum) {
 			material = Materials.electrum;
 			electrum_helmet = material.helmet;
 			electrum_ingot = material.ingot;
@@ -261,12 +267,12 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			electrum_powder = material.powder;
 		}
 
-		if (Options.ENABLE_GOLD) {
+		if (Options.enableGold) {
 			material = Materials.vanilla_gold;
 			gold_powder = material.powder;
 		}
 
-		if (Options.ENABLE_INVAR) {
+		if (Options.enableInvar) {
 			material = Materials.invar;
 			invar_helmet = material.helmet;
 			invar_ingot = material.ingot;
@@ -274,13 +280,13 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			invar_powder = material.powder;
 		}
 
-		if (Options.ENABLE_IRON) {
+		if (Options.enableIron) {
 			material = Materials.vanilla_iron;
 			iron_nugget = material.nugget;
 			iron_powder = material.powder;
 		}
 
-		if (Options.ENABLE_LEAD) {
+		if (Options.enableLead) {
 			material = Materials.lead;
 			lead_boots = material.boots;
 			lead_chestplate = material.chestplate;
@@ -292,7 +298,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			lead_sword = material.sword;
 		}
 
-		if (Options.ENABLE_PLATINUM) {
+		if (Options.enablePlatinum) {
 			material = Materials.platinum;
 			platinum_helmet = material.helmet;
 			platinum_ingot = material.ingot;
@@ -300,7 +306,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			platinum_powder = material.powder;
 		}
 
-		if (Options.ENABLE_MITHRIL) {
+		if (Options.enableMithril) {
 			material = Materials.mithril;
 			mithril_boots = material.boots;
 			mithril_chestplate = material.chestplate;
@@ -312,7 +318,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			mithril_sword = material.sword;
 		}
 
-		if (Options.ENABLE_NICKEL) {
+		if (Options.enableNickel) {
 			material = Materials.nickel;
 			nickel_helmet = material.helmet;
 			nickel_ingot = material.ingot;
@@ -320,7 +326,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			nickel_powder = material.powder;
 		}
 
-		if (Options.ENABLE_PEWTER) {
+		if (Options.enablePewter) {
 			material = Materials.pewter;
 			pewter_helmet = material.helmet;
 			pewter_ingot = material.ingot;
@@ -328,7 +334,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			pewter_powder = material.powder;
 		}
 
-		if (Options.ENABLE_SILVER) {
+		if (Options.enableSilver) {
 			material = Materials.silver;
 			silver_helmet = material.helmet;
 			silver_ingot = material.ingot;
@@ -336,7 +342,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			silver_powder = material.powder;
 		}
 
-		if (Options.ENABLE_STARSTEEL) {
+		if (Options.enableStarSteel) {
 			material = Materials.starsteel;
 			starsteel_boots = material.boots;
 			starsteel_chestplate = material.chestplate;
@@ -348,7 +354,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			starsteel_sword = material.sword;
 		}
 
-		if (Options.ENABLE_STEEL) {
+		if (Options.enableSteel) {
 			material = Materials.steel;
 			steel_helmet = material.helmet;
 			steel_ingot = material.ingot;
@@ -356,7 +362,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			steel_powder = material.powder;
 		}
 
-		if (Options.ENABLE_TIN) {
+		if (Options.enableTin) {
 			material = Materials.tin;
 			tin_helmet = material.helmet;
 			tin_ingot = material.ingot;
@@ -364,7 +370,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			tin_powder = material.powder;
 		}
 
-		if (Options.ENABLE_ZINC) {
+		if (Options.enableZinc) {
 			material = Materials.zinc;
 			createItemsFull(material);
 			createItemsModSupport(material);

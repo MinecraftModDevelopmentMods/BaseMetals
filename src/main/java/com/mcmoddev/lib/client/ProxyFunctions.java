@@ -10,6 +10,10 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
  */
 public class ProxyFunctions {
 
+	private ProxyFunctions() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 * @return IRenderFactory

@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MetalToolEffects;
 import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,7 +31,7 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 	private final Set<String> toolTypes;
 	private final String repairOreDictName;
 	private final boolean regenerates;
-	private final long regenInterval = 200;
+	private static final long regenInterval = 200;
 
 	/**
 	 *
@@ -94,7 +94,7 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % this.regenInterval) == 0))
+		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % regenInterval) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 
@@ -113,6 +113,9 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

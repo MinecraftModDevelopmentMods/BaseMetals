@@ -2,17 +2,23 @@ package com.mcmoddev.lib.init;
 
 import java.util.*;
 
-import org.apache.logging.log4j.Level;
-
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.lib.items.ItemMetalCrackHammer;
 import com.mcmoddev.lib.items.ItemMetalIngot;
 import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.entity.passive.EntityVillager.*;
-import net.minecraft.item.*;
-import net.minecraft.village.*;
-import net.minecraftforge.fml.common.FMLLog;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.fml.common.Loader;
 
 /**
@@ -24,7 +30,11 @@ public abstract class VillagerTrades {
 
 	private static boolean initDone = false;
 
-	public static final int TRADES_PER_LEVEL = 4;
+	protected static final int TRADES_PER_LEVEL = 4;
+
+	protected VillagerTrades() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 
 	/**
 	 *
@@ -72,28 +82,20 @@ public abstract class VillagerTrades {
 				if (i.getRegistryName().getResourceDomain().equals(modid)) {
 					if (i instanceof ItemArmor) {
 						allArmors.computeIfAbsent(m, (MetalMaterial g) -> new ArrayList<>()).add(i);
-//						continue;
 					} else if (i instanceof ItemMetalCrackHammer) {
 						allHammers.put(m, i);
-//						continue;
 					} else if (i instanceof ItemSword) {
 						allSwords.put(m, i);
-//						continue;
 					} else if (i instanceof ItemHoe) {
 						allHoes.put(m, i);
-//						continue;
 					} else if (i instanceof ItemAxe) {
 						allAxes.put(m, i);
-//						continue;
 					} else if (i instanceof ItemPickaxe) {
 						allPickAxes.put(m, i);
-//						continue;
 					} else if (i instanceof ItemSpade) {
 						allShovels.put(m, i);
-//						continue;
 					} else if (i instanceof ItemMetalIngot) {
 						allIngots.put(m, i);
-//						continue;
 					}
 				}
 			}
@@ -179,7 +181,8 @@ public abstract class VillagerTrades {
 			try {
 				VillagerTradeHelper.insertTrades(profession, career, level, new MultiTradeGenerator(TRADES_PER_LEVEL, trades));
 			} catch (NoSuchFieldException | IllegalAccessException ex) {
-				FMLLog.log(Level.ERROR, ex, "Java Reflection Exception");
+				BaseMetals.logger.error("Java Reflection Exception", ex);
+//				FMLLog.log(Level.ERROR, ex, "Java Reflection Exception");
 			}
 		}
 	}

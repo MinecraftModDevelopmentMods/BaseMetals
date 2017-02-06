@@ -12,6 +12,10 @@ public abstract class DungeonLoot {
 
 	private static boolean initDone = false;
 
+	private DungeonLoot() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 */

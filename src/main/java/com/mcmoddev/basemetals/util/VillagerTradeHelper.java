@@ -22,6 +22,10 @@ public class VillagerTradeHelper {
 			new ResourceLocation("minecraft:butcher")
 	};
 
+	protected VillagerTradeHelper() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 * Inserts one or more trades to the default villager trade table using dark
 	 * magic (aka java reflection).

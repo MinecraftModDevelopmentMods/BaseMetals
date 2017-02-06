@@ -176,6 +176,8 @@ public class Oredicts {
 	public static final String INGOT = "ingot";
 	public static final String NUGGET = "nugget";
 	public static final String ORE = "ore";
+	public static final String OREEND = "oreEnd";
+	public static final String ORENETHER = "oreNether";
 	public static final String LEVER = "lever";
 	public static final String DOOR = "door";
 	public static final String PLATE = "plate";
@@ -228,6 +230,8 @@ public class Oredicts {
 	public static final String INGOTMERCURY = "ingotMercury";
 	public static final String INGOTSTEEL = "ingotSteel";
 
+	public static final String NUGGETCHARCOAL = "nuggetCoal";
+	public static final String NUGGETCOAL = "nuggetCoal";
 	public static final String NUGGETMERCURY = "nuggetMercury";
 
 	public static final String DUSTCOLDIRON = "dustColdiron";
@@ -244,4 +248,8 @@ public class Oredicts {
 	public static final String COAL = "Coal";
 	public static final String CHARCOAL = "Charcoal";
 	public static final String QUICKSILVER = "quicksilver";	
+
+	private Oredicts() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 }

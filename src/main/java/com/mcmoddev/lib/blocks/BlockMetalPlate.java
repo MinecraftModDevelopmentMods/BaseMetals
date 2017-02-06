@@ -39,7 +39,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 	private final MetalMaterial material;
 	private final String oreDict;
 
-	private static final float thickness = 1.0f / 16.0f;
+	private static final float THICKNESS = 1.0f / 16.0f;
 
 	private static final AxisAlignedBB[] BOXES = new AxisAlignedBB[EnumFacing.values().length];
 
@@ -60,12 +60,18 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 		this.useNeighborBrightness = true;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public IBlockState withRotation(IBlockState state, Rotation rot) {
 		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
@@ -83,41 +89,50 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 			float z2 = 1;
 			switch (orientation) {
 				case DOWN:
-					y1 = 1f - thickness;
+					y1 = 1f - THICKNESS;
 					break;
 				case SOUTH:
-					z2 = thickness;
+					z2 = THICKNESS;
 					break;
 				case NORTH:
-					z1 = 1f - thickness;
+					z1 = 1f - THICKNESS;
 					break;
 				case EAST:
-					x2 = thickness;
+					x2 = THICKNESS;
 					break;
 				case WEST:
-					x1 = 1f - thickness;
+					x1 = 1f - THICKNESS;
 					break;
 				case UP:
 				default:
-					y2 = thickness;
+					y2 = THICKNESS;
 					break;
 			}
 			BOXES[orientation.ordinal()] = new AxisAlignedBB(x1, y1, z1, x2, y2, z2);
 		}
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public boolean isOpaqueCube(IBlockState bs) {
 		return false;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public boolean isFullCube(IBlockState bs) {
 		return false;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public IBlockState getStateForPlacement(final World w, final BlockPos coord, final EnumFacing face,
@@ -195,6 +210,9 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 		}
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public IBlockState getStateFromMeta(final int meta) {
@@ -211,6 +229,9 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 		return new BlockStateContainer(this, new IProperty[] { FACING });
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public AxisAlignedBB getBoundingBox(final IBlockState bs, final IBlockAccess world, final BlockPos coord) {
@@ -218,6 +239,9 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 		return BOXES[orientation.ordinal()];
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public void addCollisionBoxToList(final IBlockState bs, final World world, final BlockPos coord,
@@ -238,6 +262,9 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

@@ -250,6 +250,29 @@ public class MetalMaterial {
 		this(name, hardness, strength, magic, 0x00000000, false, true, true);
 	}
 
+	/**
+	 * @deprecated
+	 * @param name
+	 *            String used to identify items and blocks using this material
+	 * @param hardness
+	 *            hardness on a scale from 0 to 10 (or more), where 0 is
+	 *            non-solid and diamond is 10. For reference, wood is 3, stone
+	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
+	 *            protection, and tool effectiveness calculations
+	 * @param strength
+	 *            durability on a scale from 0 to 10 (or more). For reference,
+	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
+	 *            minecraft diamond is 10. Used for item durability calculations
+	 *            and blast resistance
+	 * @param magic
+	 *            Scale from 0 to 10 (or more) on how magical the material is.
+	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
+	 *            6, gold is 10. Used to calculate enchantibility
+	 * @param tintColor
+	 *            Color Info for the metal
+	 * @param isRare
+	 *            If true, this metal is designated as an extremely rare metal
+	 */
 	@Deprecated
 	public MetalMaterial(String name, float hardness, float strength, float magic, int tintColor, boolean isRare) {
 		this(name, hardness, strength, magic, tintColor, false, true, true);
@@ -316,8 +339,12 @@ public class MetalMaterial {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == this)
+		if (o == this) {
 			return true;
+		} else if (o == null) {
+			return false;
+		}
+		
 		if ((o.hashCode() == this.hashCode()) && (o instanceof MetalMaterial)) {
 			final MetalMaterial other = (MetalMaterial) o;
 			return this.identifier.equals(other.identifier);

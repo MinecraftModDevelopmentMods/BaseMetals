@@ -9,6 +9,10 @@ public abstract class Entities {
 
 	private static boolean initDone = false;
 
+	private Entities() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 */

@@ -29,6 +29,10 @@ public abstract class Blocks {
 	private static BiMap<String, Block> blockRegistry = HashBiMap.create(16);
 	private static Map<MetalMaterial, List<Block>> blocksByMaterial = new HashMap<>();
 
+	protected Blocks() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 */
@@ -131,7 +135,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_PLATE) && (material.plate == null)) {
+		if ((Options.enablePlate) && (material.plate == null)) {
 			material.plate = addBlock(new BlockMetalPlate(material), "plate", material, ItemGroups.tab_blocks);
 		}
 
@@ -143,7 +147,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_BARS) && (material.bars == null)) {
+		if ((Options.enableBars) && (material.bars == null)) {
 			material.bars = addBlock(new BlockMetalBars(material), "bars", material, ItemGroups.tab_blocks);
 			OreDictionary.registerOre(Oredicts.BARS, material.bars);
 		}
@@ -160,7 +164,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASICS) && (material.block == null)) {
+		if ((Options.enableBasics) && (material.block == null)) {
 			material.block = addBlock(new BlockMetalBlock(material, glow), "block", material, ItemGroups.tab_blocks);
 		}
 		return material.block;
@@ -171,7 +175,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_BUTTON) && (material.button == null)) {
+		if ((Options.enableButton) && (material.button == null)) {
 			material.button = addBlock(new BlockButtonMetal(material), "button", material, ItemGroups.tab_blocks);
 		}
 
@@ -183,7 +187,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_LEVER) && (material.lever == null)) {
+		if ((Options.enableLever) && (material.lever == null)) {
 			material.lever = addBlock(new BlockMetalLever(material), "lever", material, ItemGroups.tab_blocks);
 		}
 
@@ -195,7 +199,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_PRESSURE_PLATE) && (material.pressure_plate == null)) {
+		if ((Options.enablePressurePlate) && (material.pressure_plate == null)) {
 			material.pressure_plate = addBlock(new BlockMetalPressurePlate(material), "pressure_plate", material, ItemGroups.tab_blocks);
 		}
 		return material.pressure_plate;
@@ -206,7 +210,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_SLAB) && (material.half_slab == null)) {
+		if ((Options.enableSlab) && (material.half_slab == null)) {
 			material.half_slab = (BlockSlab) addBlock(new BlockHalfMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
 		}
 
@@ -218,7 +222,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_SLAB) && (material.double_slab == null)) {
+		if ((Options.enableSlab) && (material.double_slab == null)) {
 			material.double_slab = (BlockSlab) addBlock(new BlockDoubleMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
 		}
 
@@ -230,8 +234,8 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_STAIRS) && (material.stairs == null)) {
-			if (((material.block != null) || (material.isVanilla)) && (material.stairs == null)) {
+		if ((Options.enableStairs) && (material.stairs == null)) {
+			if ((material.block != null) || (material.isVanilla)) {
 				material.stairs = addBlock(new BlockMetalStairs(material), "stairs", material, ItemGroups.tab_blocks);
 			}
 		}
@@ -244,7 +248,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_WALL) && (material.wall == null)) {
+		if ((Options.enableWall) && (material.wall == null)) {
 			if ((material.block != null) || (material.isVanilla)) {
 				material.wall = addBlock(new BlockMetalWall(material), "wall", material, ItemGroups.tab_blocks);
 			}
@@ -258,7 +262,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_BASICS) && (material.hasOre) && (material.ore == null)) {
+		if ((Options.enableBasics) && (material.hasOre) && (material.ore == null)) {
 			material.ore = addBlock(new BlockMetalOre(material), "ore", material, ItemGroups.tab_blocks);
 		}
 
@@ -270,7 +274,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_DOOR) && (material.doorBlock == null)) {
+		if ((Options.enableDoor) && (material.doorBlock == null)) {
 			material.doorBlock = (BlockDoor) addBlock(new BlockMetalDoor(material), "door", material, null);
 		}
 
@@ -282,7 +286,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.ENABLE_TRAPDOOR) && (material.trapdoor == null)) {
+		if ((Options.enableTrapdoor) && (material.trapdoor == null)) {
 			material.trapdoor = addBlock(new BlockMetalTrapDoor(material), "trapdoor", material, ItemGroups.tab_blocks);
 			OreDictionary.registerOre(Oredicts.TRAPDOOR, material.trapdoor);
 		}

@@ -37,7 +37,7 @@ public class ItemMetalSmallBlend extends Item implements IOreDictionaryEntry, IM
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
 		// achievement
-    	if (Options.ENABLE_ACHIEVEMENTS) {
+    	if (Options.enableAchievements) {
     		crafter.addStat(Achievements.metallurgy, 1);
     	}
 	}
@@ -52,6 +52,9 @@ public class ItemMetalSmallBlend extends Item implements IOreDictionaryEntry, IM
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

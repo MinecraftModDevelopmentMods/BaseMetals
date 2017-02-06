@@ -99,6 +99,9 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	@Deprecated
 	public MetalMaterial getMetalMaterial() {

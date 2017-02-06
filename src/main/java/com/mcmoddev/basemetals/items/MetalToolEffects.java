@@ -1,9 +1,9 @@
 package com.mcmoddev.basemetals.items;
 
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
 
-import cyano.basemetals.init.Materials;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +19,10 @@ import net.minecraft.world.World;
  */
 public abstract class MetalToolEffects {
 
+	private MetalToolEffects() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 * @param material The material
@@ -27,21 +31,21 @@ public abstract class MetalToolEffects {
 	 * @param attacker The attacker
 	 */
 	public static void extraEffectsOnAttack(final MetalMaterial material, final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
-		if (Options.ENABLE_COLDIRON) {
+		if (Options.enableColdIron) {
 			if (material.equals(Materials.coldiron)) {
 				if (target.isImmuneToFire()) {
 					final DamageSource extraDamage = DamageSource.generic;
 					target.attackEntityFrom(extraDamage, 3f);
 				}
 			}
-		} else if (Options.ENABLE_ADAMANTINE) {
+		} else if (Options.enableAdamantine) {
 			if (material.equals(Materials.adamantine)) {
 				if (target.getMaxHealth() > 20f) {
 					final DamageSource extraDamage = DamageSource.generic;
 					target.attackEntityFrom(extraDamage, 4f);
 				}
 			}
-		} else if (Options.ENABLE_MITHRIL) {
+		} else if (Options.enableMithril) {
 			if (material.equals(Materials.mithril)) {
 				if (target.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD) {
 					final ResourceLocation witherKey = new ResourceLocation("wither");
@@ -52,7 +56,7 @@ public abstract class MetalToolEffects {
 					target.addPotionEffect(blind);
 				}
 			}
-		} else if (Options.ENABLE_AQUARIUM) {
+		} else if (Options.enableAquarium) {
 			if (material.equals(Materials.aquarium)) {
 				if (target.canBreatheUnderwater()) {
 					final DamageSource extraDamage = DamageSource.generic;
@@ -79,27 +83,27 @@ public abstract class MetalToolEffects {
 	 * @param tooltipList The tooltip list
 	 */
 	public static void addToolSpecialPropertiesToolTip(MetalMaterial material, java.util.List<String> tooltipList) {
-		if (Options.ENABLE_ADAMANTINE) {
+		if (Options.enableAdamantine) {
 			if (material.equals(Materials.adamantine)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.adamantine.tool").replace("%x", String.valueOf(4)));
 			}
 		}
-		if (Options.ENABLE_AQUARIUM) {
+		if (Options.enableAquarium) {
 			if (material.equals(Materials.aquarium)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.aquarium.tool").replace("%x", String.valueOf(4)));
 			}
 		}
-		if (Options.ENABLE_COLDIRON) {
+		if (Options.enableColdIron) {
 			if (material.equals(Materials.coldiron)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.coldiron.tool").replace("%x", String.valueOf(3)));
 			}
 		}
-		if (Options.ENABLE_MITHRIL) {
+		if (Options.enableMithril) {
 			if (material.equals(Materials.mithril)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.mithril.tool"));
 			}
 		}
-		if (Options.ENABLE_STARSTEEL) {
+		if (Options.enableStarSteel) {
 			if (material.equals(Materials.starsteel)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.starsteel.tool").replace("%x", String.valueOf(10)));
 			}
@@ -112,27 +116,27 @@ public abstract class MetalToolEffects {
 	 * @param tooltipList The tooltip list
 	 */
 	public static void addArmorSpecialPropertiesToolTip(MetalMaterial material, java.util.List<String> tooltipList) {
-		if (Options.ENABLE_ADAMANTINE) {
+		if (Options.enableAdamantine) {
 			if (material.equals(Materials.adamantine)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.adamantine.armor").replace("%x", String.valueOf(4)));
 			}
 		}
-		if (Options.ENABLE_AQUARIUM) {
+		if (Options.enableAquarium) {
 			if (material.equals(Materials.aquarium)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.aquarium.armor").replace("%x", String.valueOf(4)));
 			}
 		}
-		if (Options.ENABLE_COLDIRON) {
+		if (Options.enableColdIron) {
 			if (material.equals(Materials.coldiron)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.coldiron.armor").replace("%x", String.valueOf(3)));
 			}
 		}
-		if (Options.ENABLE_MITHRIL) {
+		if (Options.enableMithril) {
 			if (material.equals(Materials.mithril)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.mithril.armor"));
 			}
 		}
-		if (Options.ENABLE_STARSTEEL) {
+		if (Options.enableStarSteel) {
 			if (material.equals(Materials.starsteel)) {
 				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.starsteel.armor").replace("%x", String.valueOf(10)));
 			}

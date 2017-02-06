@@ -13,6 +13,10 @@ public abstract class Achievements {
 
 	private static boolean initDone = false;
 
+	protected Achievements() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
+
 	/**
 	 *
 	 */
@@ -21,7 +25,7 @@ public abstract class Achievements {
 			return;
 		}
 
-		if (Options.ENABLE_ACHIEVEMENTS) {
+		if (Options.enableAchievements) {
 
 		}
 
