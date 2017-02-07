@@ -64,7 +64,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		if (Options.enableIron) {
 			material = Materials.vanilla_iron;
 			oreDictName = material.getCapitalizedName();
-			runVanillaMaterialRecipe(material);
 
 			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.nugget, 9), new ItemStack(material.ingot))); // Not needed for 1.11.1+
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.ingot), "xxx", "xxx", "xxx", 'x', material.nugget)); // Not needed for 1.11.1+
@@ -74,14 +73,12 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		if (Options.enableDiamond) {
 			material = Materials.vanilla_diamond;
 			oreDictName = material.getCapitalizedName();
-			runVanillaMaterialRecipe(material);
 		}
 
 		// Gold items
 		if (Options.enableGold) {
 			material = Materials.vanilla_gold;
 			oreDictName = material.getCapitalizedName();
-			runVanillaMaterialRecipe(material);
 		}
 
 		if (Options.enableCharcoal) {
@@ -235,52 +232,5 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		// TODO
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.LEVER, 1), "x", "y", 'x', Oredicts.ROD, 'y', Oredicts.COBBLESTONE));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.human_detector, 1), "xx", "yy", 'x', Oredicts.INGOTBRICK, 'y', Oredicts.GEAR));
-	}
-	
-	private static void runVanillaMaterialRecipe(MetalMaterial material) {
-		final String oreDictName = material.getCapitalizedName();
-
-		if (!Options.disableAllHammerRecipes) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.crackhammer), "x", "/", "/", 'x', Oredicts.BLOCK + oreDictName, '/', Oredicts.STICKWOOD));
-		}
-		if (material.powder != null) {
-			CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, new ItemStack(material.powder, 2));
-			if (material.block != null) {
-				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.powder, 9));
-			}
-			if (material.ingot != null) {
-				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.INGOT + oreDictName, new ItemStack(material.powder, 1));
-				GameRegistry.addSmelting(material.powder, new ItemStack(material.ingot), 0f);
-			}
-			if (material.smallpowder != null) {
-				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallpowder, 9), new ItemStack(material.powder)));
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.powder), "xxx", "xxx", "xxx", 'x', new ItemStack(material.smallpowder)));
-				if (material.nugget != null) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.smallpowder, 1));
-				}
-			}
-		}
-		if (material.rod != null) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.rod, 4), "x", "x", 'x', Oredicts.INGOT + oreDictName));
-			OreDictionary.registerOre(Oredicts.STICK + oreDictName, material.rod);
-			OreDictionary.registerOre(Oredicts.ROD + oreDictName, material.rod);
-			OreDictionary.registerOre(Oredicts.ROD, material.rod);
-			if (material.nugget != null) {
-				GameRegistry.addSmelting(material.rod, new ItemStack(material.nugget, 4), 0);
-			}
-			if (material.bars != null) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.bars, 4), "xxx", 'x', Oredicts.ROD + oreDictName));
-			}
-		}
-		if (material.gear != null) {
-			if (material.rod != null) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.gear, Config.Options.gearQuantity), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
-			}
-			OreDictionary.registerOre(Oredicts.GEAR + oreDictName, material.gear);
-			OreDictionary.registerOre(Oredicts.GEAR, material.gear);
-		}
-		if (material.plate != null) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.plate, Config.Options.plateQuantity), "xxx", 'x', Oredicts.INGOT + oreDictName));
-		}
 	}
 }
