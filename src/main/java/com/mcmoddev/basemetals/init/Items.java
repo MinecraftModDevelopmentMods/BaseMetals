@@ -5,6 +5,7 @@ import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -73,15 +74,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableCharcoal) {
-			charcoal_nugget = addItem(new Item(), "charcoal_nugget", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.NUGGETCHARCOAL, charcoal_nugget);
-
-			charcoal_powder = addItem(new Item(), "charcoal_powder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.DUSTCHARCOAL, charcoal_powder);
-
-			charcoal_smallpowder = addItem(new Item(), "charcoal_smallpowder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.DUSTTINYCHARCOAL, charcoal_smallpowder);
-			OreDictionary.registerOre(Oredicts.DUSTSMALLCHARCOAL, charcoal_smallpowder);
+			final MetalMaterial material = Materials.vanilla_charcoal;
+			material.ingot = new ItemStack( net.minecraft.init.Items.COAL, 1, 1 ).getItem();
+			
+			charcoal_nugget = createNugget(material);
+			charcoal_powder = createPowder(material);
+			charcoal_smallpowder = createSmallPowder(material);
 		}
 
 		if (Options.enableCoal) {
