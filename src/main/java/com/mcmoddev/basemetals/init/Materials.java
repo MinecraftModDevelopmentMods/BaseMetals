@@ -25,6 +25,7 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 	public static MetalMaterial electrum;
 	public static MetalMaterial invar;
 	public static MetalMaterial lead;
+	public static MetalMaterial mercury;
 	public static MetalMaterial mithril;
 	public static MetalMaterial nickel;
 	public static MetalMaterial pewter;
@@ -142,6 +143,12 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 			lead = createMaterial("lead", 1, 1, 1, 0xFF7B7B7B).setBaseDamage(4f);
 			lead.materialType = MetalMaterial.MaterialType.METAL;
 		}
+		
+		if (Options.enableMercury) {
+			mercury = createMaterial("mercury", 1, 1, 1, 0);
+			mercury.materialType = MetalMaterial.MaterialType.METAL;
+		}
+		
 		if (Options.enableMithril) {
 			mithril = createAlloyMaterial("mithril", 9, 9, 9, 0xFFF4FFFF);
 			mithril.materialType = MetalMaterial.MaterialType.METAL;

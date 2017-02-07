@@ -295,7 +295,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			if (FluidRegistry.isUniversalBucketEnabled()) {
 				final UniversalBucket universalBucket = ForgeModContainer.getInstance().universalBucket;
 				final ItemStack bucketMercury = new ItemStack(universalBucket, 1, 0);
-				universalBucket.fill(bucketMercury, new FluidStack(Fluids.fluidMercury, universalBucket.getCapacity()), true);
+				universalBucket.fill(bucketMercury, new FluidStack(Materials.mercury.fluid, universalBucket.getCapacity()), true);
 				GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY));
 			}
 		}
@@ -315,12 +315,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 //			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), "x ", " x", 'x', Oredicts.INGOTSTEEL));
 //			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), " x", "x ", 'x', Oredicts.INGOTSTEEL));
 //			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHIELD), "wxw", "www", " w ", 'w', Oredicts.PLANKWOOD, 'x', Oredicts.INGOTSTEEL));
-		}
-
-		if (Options.enableMercury) {
-			CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.OREMERCURY, new ItemStack(Items.mercury_powder, 2));
-			GameRegistry.addSmelting(Items.mercury_powder, new ItemStack(Items.mercury_ingot, 1), 0);
-			GameRegistry.addSmelting(Blocks.mercury_ore, new ItemStack(Items.mercury_ingot, 1), 1);
 		}
 
 		// new recipes using rods and gears

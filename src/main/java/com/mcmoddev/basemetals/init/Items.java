@@ -221,25 +221,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableMercury) {
-			// mercury is special
-			mercury_ingot = addItem(new Item(), "mercury_ingot", null, ItemGroups.tab_items);
-//			itemRegistry.put("mercury_ingot", mercury_ingot);
-			OreDictionary.registerOre(Oredicts.INGOTMERCURY, mercury_ingot);
-			OreDictionary.registerOre(Oredicts.QUICKSILVER, mercury_ingot);
+			final MetalMaterial material = Materials.mercury;
+			material.ingot = createIngot( material );
 
-			mercury_nugget = addItem(new Item(), "mercury_nugget", null, ItemGroups.tab_items);
-//			itemRegistry.put("mercury_ingot", mercury_nugget);
-			OreDictionary.registerOre(Oredicts.NUGGETMERCURY, mercury_nugget);
-//			OreDictionary.registerOre(Oredicts.QUICKSILVER, mercury_nugget);
-
-			mercury_powder = addItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
-//			itemRegistry.put("mercury_powder", mercury_powder);
-			OreDictionary.registerOre(Oredicts.DUSTMERCURY, mercury_powder);
-
-			mercury_smallpowder = addItem(new Item(), "mercury_smallpowder", null, ItemGroups.tab_items);
-//			itemRegistry.put("mercury_smallpowder", mercury_smallpowder);
-			OreDictionary.registerOre(Oredicts.DUSTTINYMERCURY, mercury_smallpowder);
-			OreDictionary.registerOre(Oredicts.DUSTSMALLMERCURY, mercury_smallpowder);
+			mercury_nugget = createNugget(material);
+			mercury_powder = createPowder(material);
+			mercury_smallpowder = createSmallPowder(material);
 		}
 
 		if (Options.enableMithril) {

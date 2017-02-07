@@ -14,9 +14,6 @@ import net.minecraftforge.fluids.FluidRegistry;
  */
 public class Fluids extends com.mcmoddev.lib.init.Fluids {
 
-	public static Fluid fluidMercury = null;
-	public static BlockFluidBase fluidBlockMercury = null;
-
 	private static boolean initDone = false;
 
 	private Fluids() {
@@ -97,8 +94,8 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		}
 
 		if (Options.enableMercury) {
-			fluidMercury = addFluid("mercury", 13594, 2000, 769, 0);
-			fluidBlockMercury = addFluidBlock("mercury");
+			addFluid("mercury", 13594, 2000, 769, 0);
+			addFluidBlock("mercury");
 		}
 
 		if (Options.enableMithril) {
