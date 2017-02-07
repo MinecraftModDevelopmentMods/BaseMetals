@@ -170,7 +170,7 @@ public abstract class Recipes {
 				}
 				/*
 				if (material.stairs != null) { // Crashes
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.stairs, 4), "x", "xx", "xxx", 'x', BLOCK + oreDictName));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.stairs, 4), "x", "xx", "xxx", 'x', Oredicts.BLOCK + oreDictName));
 				}
 				*/
 				if (material.wall != null) {
@@ -190,92 +190,96 @@ public abstract class Recipes {
 
 			if (material.ingot != null) {
 				// armor and tools
-				if (material.boots != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.boots), "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
-					if (Config.Options.furnaceCheese) {
-						GameRegistry.addSmelting(material.boots, new ItemStack(material.ingot, 4), 0);
-					} else if (Config.Options.furnace1112) {						
-						GameRegistry.addSmelting(material.boots, new ItemStack(material.nugget, 1), 0);
-					}
-				}
 
-				if (material.helmet != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.helmet), "xxx", "x x", 'x', Oredicts.INGOT + oreDictName));
-					if (Config.Options.furnaceCheese) {
-						GameRegistry.addSmelting(material.helmet, new ItemStack(material.ingot, 5), 0);
-					} else if (Config.Options.furnace1112) {						
-						GameRegistry.addSmelting(material.helmet, new ItemStack(material.nugget, 1), 0);
+				// Vanilla has all these things where they matter, may want some handling for Emerald & Obsidian in future however, maybe move this block to a seperate function?
+				if (!(material.isVanilla)) {
+					if (material.boots != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.boots), "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
+						if (Config.Options.furnaceCheese) {
+							GameRegistry.addSmelting(material.boots, new ItemStack(material.ingot, 4), 0);
+						} else if (Config.Options.furnace1112) {						
+							GameRegistry.addSmelting(material.boots, new ItemStack(material.nugget, 1), 0);
+						}
 					}
-				}
 
-				if (material.chestplate != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.chestplate), "x x", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
-					if (Config.Options.furnaceCheese) {
-						GameRegistry.addSmelting(material.chestplate, new ItemStack(material.ingot, 8), 0);
-					} else if (Config.Options.furnace1112) {						
-						GameRegistry.addSmelting(material.chestplate, new ItemStack(material.nugget, 1), 0);
+					if (material.helmet != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.helmet), "xxx", "x x", 'x', Oredicts.INGOT + oreDictName));
+						if (Config.Options.furnaceCheese) {
+							GameRegistry.addSmelting(material.helmet, new ItemStack(material.ingot, 5), 0);
+						} else if (Config.Options.furnace1112) {						
+							GameRegistry.addSmelting(material.helmet, new ItemStack(material.nugget, 1), 0);
+						}
 					}
-				}
 
-				if (material.leggings != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.leggings), "xxx", "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
-					if (Config.Options.furnaceCheese) {
-						GameRegistry.addSmelting(material.chestplate, new ItemStack(material.leggings, 7), 0);
-					} else if (Config.Options.furnace1112) {						
-						GameRegistry.addSmelting(material.leggings, new ItemStack(material.nugget, 1), 0);
+					if (material.chestplate != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.chestplate), "x x", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
+						if (Config.Options.furnaceCheese) {
+							GameRegistry.addSmelting(material.chestplate, new ItemStack(material.ingot, 8), 0);
+						} else if (Config.Options.furnace1112) {						
+							GameRegistry.addSmelting(material.chestplate, new ItemStack(material.nugget, 1), 0);
+						}
 					}
-				}
 
-				if (material.axe != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "x/", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "/x", "/ ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					if (Config.Options.furnaceCheese) {
-						GameRegistry.addSmelting(material.axe, new ItemStack(material.ingot, 3), 0);
-					} else if (Config.Options.furnace1112) {						
-						GameRegistry.addSmelting(material.axe, new ItemStack(material.nugget, 1), 0);
+					if (material.leggings != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.leggings), "xxx", "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
+						if (Config.Options.furnaceCheese) {
+							GameRegistry.addSmelting(material.chestplate, new ItemStack(material.leggings, 7), 0);
+						} else if (Config.Options.furnace1112) {						
+							GameRegistry.addSmelting(material.leggings, new ItemStack(material.nugget, 1), 0);
+						}
 					}
-				}
 
-				if (material.hoe != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", " /", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", "/ ", "/ ", 'x', INGOT + oreDictName, '/', STICKWOOD));
-					if (Config.Options.furnaceCheese) {
-						GameRegistry.addSmelting(material.hoe, new ItemStack(material.ingot, 2), 0);
-					} else if (Config.Options.furnace1112) {						
-						GameRegistry.addSmelting(material.hoe, new ItemStack(material.nugget, 1), 0);
+					if (material.axe != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "x/", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+						// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "/x", "/ ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+						if (Config.Options.furnaceCheese) {
+							GameRegistry.addSmelting(material.axe, new ItemStack(material.ingot, 3), 0);
+						} else if (Config.Options.furnace1112) {						
+							GameRegistry.addSmelting(material.axe, new ItemStack(material.nugget, 1), 0);
+						}
 					}
-				}
 
-				if (material.pickaxe != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.pickaxe), "xxx", " / ", " / ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					if (Config.Options.furnaceCheese) {
-						GameRegistry.addSmelting(material.pickaxe, new ItemStack(material.ingot, 3), 0);
-					} else if (Config.Options.furnace1112) {						
-						GameRegistry.addSmelting(material.pickaxe, new ItemStack(material.nugget, 1), 0);
+					if (material.hoe != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", " /", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+						// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", "/ ", "/ ", 'x', INGOT + oreDictName, '/', STICKWOOD));
+						if (Config.Options.furnaceCheese) {
+							GameRegistry.addSmelting(material.hoe, new ItemStack(material.ingot, 2), 0);
+						} else if (Config.Options.furnace1112) {						
+							GameRegistry.addSmelting(material.hoe, new ItemStack(material.nugget, 1), 0);
+						}
 					}
-				}
 
-				if (material.shovel != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shovel), "x", "/", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					if (Config.Options.furnaceCheese) {
-						GameRegistry.addSmelting(material.shovel, new ItemStack(material.ingot, 1), 0);
-					} else if (Config.Options.furnace1112) {						
-						GameRegistry.addSmelting(material.shovel, new ItemStack(material.nugget, 1), 0);
+					if (material.pickaxe != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.pickaxe), "xxx", " / ", " / ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+						if (Config.Options.furnaceCheese) {
+							GameRegistry.addSmelting(material.pickaxe, new ItemStack(material.ingot, 3), 0);
+						} else if (Config.Options.furnace1112) {						
+							GameRegistry.addSmelting(material.pickaxe, new ItemStack(material.nugget, 1), 0);
+						}
 					}
-				}
 
-				if (material.sword != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.sword), "x", "x", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-					if (Config.Options.furnaceCheese) {
-						GameRegistry.addSmelting(material.sword, new ItemStack(material.ingot, 2), 0);
-					} else if (Config.Options.furnace1112) {						
-						GameRegistry.addSmelting(material.sword, new ItemStack(material.nugget, 1), 0);
+					if (material.shovel != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shovel), "x", "/", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+						if (Config.Options.furnaceCheese) {
+							GameRegistry.addSmelting(material.shovel, new ItemStack(material.ingot, 1), 0);
+						} else if (Config.Options.furnace1112) {						
+							GameRegistry.addSmelting(material.shovel, new ItemStack(material.nugget, 1), 0);
+						}
 					}
-				}
 
-				if (material.shears != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shears), " x", "x ", 'x', Oredicts.INGOT + oreDictName));
-					GameRegistry.addSmelting(material.shears, new ItemStack(material.ingot, 2), 0);
+					if (material.sword != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.sword), "x", "x", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+						if (Config.Options.furnaceCheese) {
+							GameRegistry.addSmelting(material.sword, new ItemStack(material.ingot, 2), 0);
+						} else if (Config.Options.furnace1112) {						
+							GameRegistry.addSmelting(material.sword, new ItemStack(material.nugget, 1), 0);
+						}
+					}
+
+					if (material.shears != null) {
+						GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shears), " x", "x ", 'x', Oredicts.INGOT + oreDictName));
+						GameRegistry.addSmelting(material.shears, new ItemStack(material.ingot, 2), 0);
+					}
 				}
 
 				if (material.powder != null) {
@@ -338,7 +342,8 @@ public abstract class Recipes {
 //					OreDictionary.registerOre(Oredicts.TRAPDOOR, material.trapdoor);
 				}
 
-				if (material.horse_armor != null) {
+				// Diamond, Gold & Iron Horse armor are in vanilla so dont do them for vanilla mats
+				if (!(material.isVanilla) && (material.horse_armor != null)) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.horse_armor), "  x", "xyx", "xxx", 'x', Oredicts.INGOT + oreDictName, 'y', net.minecraft.init.Blocks.WOOL));
 					GameRegistry.addSmelting(material.horse_armor, new ItemStack(material.ingot, 6), 0); // 1 wool loss
 				}
