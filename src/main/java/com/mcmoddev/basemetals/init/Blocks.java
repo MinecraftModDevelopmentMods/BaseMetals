@@ -3,10 +3,8 @@ package com.mcmoddev.basemetals.init;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.blocks.BlockHumanDetector;
 import com.mcmoddev.lib.material.MetalMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.block.*;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.block.Block;
 
 /**
  * This class initializes all blocks in Base Metals.
@@ -15,10 +13,6 @@ import net.minecraftforge.oredict.OreDictionary;
  *
  */
 public class Blocks extends com.mcmoddev.lib.init.Blocks {
-
-	public static Block charcoal_block;
-
-	public static Block mercury_ore;
 
 	public static Block human_detector;
 
@@ -64,13 +58,12 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableCharcoal) {
-//			charcoal_block = createBlock(Materials.charcoal);
-//			charcoal_block = addBlock(new Block(), "charcoal_block", null, ItemGroups.tab_blocks);
+//			createBlock(Materials.vanilla_charcoal);
 		}
 
 		if (Options.enableCoal) {
 			final MetalMaterial material = Materials.vanilla_coal;
-			
+
 			material.block = net.minecraft.init.Blocks.COAL_BLOCK;
 			material.ore = net.minecraft.init.Blocks.COAL_ORE;
 		}
@@ -155,9 +148,9 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableMercury) {
-			mercury_ore = addBlock(new BlockOre(), "mercury_ore", null, ItemGroups.tab_blocks);
-			mercury_ore.setHardness(3.0f).setResistance(5.0f);
-			OreDictionary.registerOre(Oredicts.OREMERCURY, mercury_ore);
+			createOre(Materials.mercury);
+			//TODO: Use this info in the Material
+			//Materials.mercury.ore.setHardness(3.0f).setResistance(5.0f);
 		}
 
 		if (Options.enableMithril) {

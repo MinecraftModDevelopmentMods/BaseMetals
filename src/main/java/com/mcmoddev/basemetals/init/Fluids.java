@@ -2,10 +2,6 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
 
-import net.minecraftforge.fluids.BlockFluidBase;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-
 /**
  * This class initializes all fluids in Base Metals.
  *
@@ -28,11 +24,6 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 			return;
 		}
 
-		if( Options.enableCoal ) {
-			addFluid(Materials.vanilla_coal, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_coal);
-		}
-		
 		if (Options.enableAdamantine) {
 			addFluid(Materials.adamantine, 2000, 10000, 769, 10);
 			addFluidBlock(Materials.adamantine);
@@ -61,6 +52,11 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		if (Options.enableBronze) {
 			addFluid(Materials.bronze, 2000, 10000, 769, 10);
 			addFluidBlock(Materials.bronze);
+		}
+
+		if (Options.enableCoal) {
+			addFluid(Materials.vanilla_coal, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanilla_coal);
 		}
 
 		if (Options.enableColdIron) {

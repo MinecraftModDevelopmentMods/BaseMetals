@@ -1,6 +1,5 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
-import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
@@ -86,7 +85,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 		if (Options.enableMercury) {
 			//registerMaterial(Materials.mercury.getName(), false, true); // Crashes
-			registerFluid(Fluids.fluidMercury, false);
+			registerFluid(Materials.mercury.fluid, false);
 		}
 
 		if (Options.enableMithril) {

@@ -53,7 +53,7 @@ public class CommonProxy {
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
 					if (mapping.resourceLocation.getResourcePath().equals("carbon_powder")) {
 						 if (Options.enableCoal) {
-							 mapping.remap(Items.coal_powder);
+							 mapping.remap(Materials.vanilla_coal.powder);
 						 }
 					}
 				}

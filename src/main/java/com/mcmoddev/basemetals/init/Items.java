@@ -2,9 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -15,19 +13,6 @@ import net.minecraftforge.oredict.OreDictionary;
  *
  */
 public class Items extends com.mcmoddev.lib.init.Items {
-
-	public static Item charcoal_nugget;
-	public static Item charcoal_powder;
-	public static Item charcoal_smallpowder;
-
-	public static Item coal_nugget;
-	public static Item coal_powder;
-	public static Item coal_smallpowder;
-
-	public static Item mercury_ingot;
-	public static Item mercury_nugget;
-	public static Item mercury_powder;
-	public static Item mercury_smallpowder;
 
 	private static boolean initDone = false;
 
@@ -75,21 +60,21 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 		if (Options.enableCharcoal) {
 			final MetalMaterial material = Materials.vanilla_charcoal;
-			material.ingot = new ItemStack( net.minecraft.init.Items.COAL, 1, 1 ).getItem();
-			
-			charcoal_nugget = createNugget(material);
-			charcoal_powder = createPowder(material);
-			charcoal_smallpowder = createSmallPowder(material);
+			material.ingot = new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem();
+
+			createNugget(material);
+			createPowder(material);
+			createSmallPowder(material);
 		}
 
 		if (Options.enableCoal) {
 			final MetalMaterial material = Materials.vanilla_coal;
 			material.ingot = net.minecraft.init.Items.COAL;
-			
-			coal_nugget = createNugget(material);
-			coal_powder = createPowder(material);
-			coal_smallpowder = createSmallPowder(material);
-			// quick&dirty fix for Coal not working directly in the smeltery
+
+			createNugget(material);
+			createPowder(material);
+			createSmallPowder(material);
+			// Quick & dirty fix for Coal not working directly in the Smeltery
 			OreDictionary.registerOre("ingotCoal", Materials.vanilla_coal.ingot);
 		}
 
@@ -122,18 +107,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.ingot = net.minecraft.init.Items.DIAMOND;
 
 			createItemsFull(material);
-//			createArrow(material);
-//			createBolt(material);
-//			createBow(material);
-//			createCrossbow(material);
-//			createFishingRod(material);
-//			createShears(material);
-//			createCrackhammer(material);
-//			createDoor(material);
-//			createGear(material);
-//			createRod(material);
-
-//			createSlab(material);
 		}
 
 		if (Options.enableElectrum) {
@@ -157,20 +130,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.nugget = net.minecraft.init.Items.GOLD_NUGGET;
 
 			createItemsFull(material);
-//			createArrow(material);
-//			createBolt(material);
-//			createBow(material);
-//			createCrossbow(material);
-//			createFishingRod(material);
-//			createShears(material);
-//			createCrackhammer(material);
-//			createDoor(material);
-//			createPowder(material);
-//			createSmallPowder(material);
-//			createRod(material);
-//			createGear(material);
-
-//			createSlab(material);
 		}
 
 		if (Options.enableInvar) {
@@ -196,19 +155,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 //			material.nugget = net.minecraft.init.Items.IRON_NUGGET; // Not till after 1.11
 
 			createItemsFull(material);
-//			createArrow(material);
-//			createBolt(material);
-//			createBow(material);
-//			createCrossbow(material);
-//			createFishingRod(material);
-//			createCrackhammer(material);
-//			createGear(material);
-//			createNugget(material);
-//			createPowder(material);
-//			createRod(material);
-//			createSmallPowder(material);
-			
-//			createSlab(material);
 		}
 
 		if (Options.enableLead) {
@@ -222,11 +168,11 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 		if (Options.enableMercury) {
 			final MetalMaterial material = Materials.mercury;
-			material.ingot = createIngot( material );
 
-			mercury_nugget = createNugget(material);
-			mercury_powder = createPowder(material);
-			mercury_smallpowder = createSmallPowder(material);
+			createIngot(material);
+			createNugget(material);
+			createPowder(material);
+			createSmallPowder(material);
 		}
 
 		if (Options.enableMithril) {

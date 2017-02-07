@@ -6,8 +6,7 @@ import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -51,16 +50,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	protected static void initVanillaRecipes() {
 		MetalMaterial material;
 		String oreDictName;
-		Item ingot;
-		Item nugget;
-		Item powder;
-		Item smallpowder;
-//		Item rod;
-//		Item gear;
-		Block block;
-//		Block bars;
-//		Block plate;
-		Block ore;
 
 		if (!Options.disableAllHammerRecipes) {
 			if (Options.enableWood) {
@@ -171,62 +160,62 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 
 		if (Options.enableCharcoal) {
-			material = null; // Materials.charcoal;
-//			oreDictName = material.getCapitalizedName();
-			oreDictName = Oredicts.CHARCOAL;
+			material = Materials.vanilla_charcoal;
+			oreDictName = material.getCapitalizedName();
+//			oreDictName = Oredicts.CHARCOAL;
 			// TODO
-			ingot = net.minecraft.init.Items.COAL;
-			nugget = Items.charcoal_nugget; // material.nugget;
-			powder = Items.charcoal_powder; // material.powder;
-			smallpowder = Items.charcoal_smallpowder; // material.smallpowder;
-			block = net.minecraft.init.Blocks.COAL_BLOCK; //material.block; // Minecraft does not provide a block of charcoal
+//			ingot = net.minecraft.init.Items.COAL;
+//			nugget = .charcoal_nugget; // material.nugget;
+//			powder = Items.charcoal_powder; // material.powder;
+//			smallpowder = Items.charcoal_smallpowder; // material.smallpowder;
+//			block = net.minecraft.init.Blocks.COAL_BLOCK; //material.block; // Minecraft does not provide a block of charcoal
 
-			if (powder != null) {
+			if (material.powder != null) {
 				//if (block != null) {
-					//CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(powder, 9)); // Minecraft does not provide a block of charcoal
-					//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(block), "xxx", "xxx", "xxx", 'x', powder)); // Minecraft does not provide a block of charcoal
+					//CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.powder, 9)); // Minecraft does not provide a block of charcoal
+					//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.block), "xxx", "xxx", "xxx", 'x', material.powder)); // Minecraft does not provide a block of charcoal
 				//}
-				if (ingot != null) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(ingot, 1, 1), new ItemStack(powder, 1));
+				if (material.ingot != null) {
+					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(material.ingot, 1, 1), new ItemStack(material.powder, 1));
 				}
-				if (smallpowder != null) {
-					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(smallpowder, 9), new ItemStack(powder)));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(powder), "xxx", "xxx", "xxx", 'x', new ItemStack(smallpowder)));
-					if (nugget != null) {
-						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(smallpowder, 1));
+				if (material.smallpowder != null) {
+					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallpowder, 9), new ItemStack(material.powder)));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.powder), "xxx", "xxx", "xxx", 'x', new ItemStack(material.smallpowder)));
+					if (material.nugget != null) {
+						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.smallpowder, 1));
 					}
 				}
 			}
 		}
 
 		if (Options.enableCoal) {
-			material = null; //Materials.coal;
-//			oreDictName = material.getCapitalizedName();
-			oreDictName = Oredicts.COAL;
+			material = Materials.vanilla_coal;
+			oreDictName = material.getCapitalizedName();
+//			oreDictName = Oredicts.COAL;
 			// TODO
-			ingot = net.minecraft.init.Items.COAL;
-			nugget = Items.coal_nugget; // material.nugget;
-			powder = Items.coal_powder; // material.powder;
-			smallpowder = Items.coal_smallpowder; // material.smallpowder;
-			block = net.minecraft.init.Blocks.COAL_BLOCK;
-			ore = net.minecraft.init.Blocks.COAL_ORE;
+//			ingot = net.minecraft.init.Items.COAL;
+//			nugget = Items.coal_nugget; // material.nugget;
+//			powder = Items.coal_powder; // material.powder;
+//			smallpowder = Items.coal_smallpowder; // material.smallpowder;
+//			block = net.minecraft.init.Blocks.COAL_BLOCK;
+//			ore = net.minecraft.init.Blocks.COAL_ORE;
 
-			if (powder != null) {
-				if (ore != null) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, new ItemStack(powder, 2));
+			if (material.powder != null) {
+				if (material.ore != null) {
+					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, new ItemStack(material.powder, 2));
 				}
-				if (block != null) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(powder, 9));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(block), "xxx", "xxx", "xxx", 'x', powder));
+				if (material.block != null) {
+					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.powder, 9));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.block), "xxx", "xxx", "xxx", 'x', material.powder));
 				}
-				if (ingot != null) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(ingot, 1, 0), new ItemStack(powder, 1));
+				if (material.ingot != null) {
+					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(material.ingot, 1, 0), new ItemStack(material.powder, 1));
 				}
-				if (smallpowder != null) {
-					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(smallpowder, 9), new ItemStack(powder)));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(powder), "xxx", "xxx", "xxx", 'x', new ItemStack(smallpowder)));
-					if (nugget != null) {
-						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(smallpowder, 1));
+				if (material.smallpowder != null) {
+					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallpowder, 9), new ItemStack(material.powder)));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.powder), "xxx", "xxx", "xxx", 'x', new ItemStack(material.smallpowder)));
+					if (material.nugget != null) {
+						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.smallpowder, 1));
 					}
 				}
 			}

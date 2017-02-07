@@ -82,18 +82,18 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 		vanilla_diamond.isVanilla = true;
 		vanilla_diamond.materialType = MetalMaterial.MaterialType.GEM;
 
-		if( Options.enableCoal ) {
+		if (Options.enableCoal) {
 			vanilla_coal = createMaterial("coal", 4, 4, 2, 0xFF000000);
 			vanilla_coal.isVanilla = true;
 			vanilla_coal.materialType = MetalMaterial.MaterialType.MINERAL;
 		}		
 
-		if( Options.enableCharcoal ) {
+		if (Options.enableCharcoal) {
 			vanilla_charcoal = createOrelessMaterial("charcoal", 4, 4, 2, 0xFF000000);
 			vanilla_charcoal.isVanilla = true;
 			vanilla_charcoal.materialType = MetalMaterial.MaterialType.MINERAL;
 		}		
-		
+
 		// Mod Materials
 		if (Options.enableAdamantine) {
 			adamantine = createMaterial("adamantine", 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
@@ -143,12 +143,12 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 			lead = createMaterial("lead", 1, 1, 1, 0xFF7B7B7B).setBaseDamage(4f);
 			lead.materialType = MetalMaterial.MaterialType.METAL;
 		}
-		
+
 		if (Options.enableMercury) {
 			mercury = createMaterial("mercury", 1, 1, 1, 0);
 			mercury.materialType = MetalMaterial.MaterialType.METAL;
 		}
-		
+
 		if (Options.enableMithril) {
 			mithril = createAlloyMaterial("mithril", 9, 9, 9, 0xFFF4FFFF);
 			mithril.materialType = MetalMaterial.MaterialType.METAL;

@@ -227,8 +227,8 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 		}
 
 		if (Options.enableCoal) {
-			carbon_powder = coal_powder;
-			carbon_smallpowder = coal_smallpowder;
+			carbon_powder = Materials.vanilla_coal.powder;
+			carbon_smallpowder = Materials.vanilla_coal.smallpowder;
 		}
 
 		if (Options.enableColdIron) {
