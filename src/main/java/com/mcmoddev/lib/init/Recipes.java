@@ -137,10 +137,6 @@ public abstract class Recipes {
 	protected static void initGeneralRecipes() {
 
 		for (final MetalMaterial material : Materials.getAllMaterials()) {
-/*			if (material.isVanilla) {
-				continue;
-			}
-*/
 			final String oreDictName = material.getCapitalizedName();
 			// NOTE: smelting XP is based on output item, not input item
 			final float oreSmeltXP = material.getOreSmeltXP();
@@ -193,9 +189,7 @@ public abstract class Recipes {
 				// armor and tools
 
 				// Vanilla has all these things where they matter, may want some handling for Emerald & Obsidian in future however, maybe move this block to a seperate function?
-				if (!(material.isVanilla)) {
-					generateBaseTools(material, oreDictName);
-				}
+				generateBaseTools(material);
 
 				if (material.powder != null) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.INGOT + oreDictName, new ItemStack(material.powder, 1));
@@ -341,8 +335,9 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void generateBaseTools(final MetalMaterial material, final String oreDictName) {
-		if (material.boots != null) {
+	private static void generateBaseTools(final MetalMaterial material) {
+		final String oreDictName = material.getCapitalizedName();
+		if ((material.boots != null) && (material.boots instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.boots), "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.boots, new ItemStack(material.ingot, 4), 0);
@@ -351,7 +346,7 @@ public abstract class Recipes {
 			}
 		}
 
-		if (material.helmet != null) {
+		if ((material.helmet != null) && (material.helmet instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.helmet), "xxx", "x x", 'x', Oredicts.INGOT + oreDictName));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.helmet, new ItemStack(material.ingot, 5), 0);
@@ -360,7 +355,7 @@ public abstract class Recipes {
 			}
 		}
 
-		if (material.chestplate != null) {
+		if ((material.chestplate != null) && (material.chestplate instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.chestplate), "x x", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.chestplate, new ItemStack(material.ingot, 8), 0);
@@ -369,7 +364,7 @@ public abstract class Recipes {
 			}
 		}
 
-		if (material.leggings != null) {
+		if ((material.leggings != null) && (material.leggings instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.leggings), "xxx", "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.chestplate, new ItemStack(material.leggings, 7), 0);
@@ -378,7 +373,7 @@ public abstract class Recipes {
 			}
 		}
 
-		if (material.axe != null) {
+		if ((material.axe != null) && (material.axe instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "x/", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
 			// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "/x", "/ ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
 			if (Config.Options.furnaceCheese) {
@@ -388,7 +383,7 @@ public abstract class Recipes {
 			}
 		}
 
-		if (material.hoe != null) {
+		if ((material.hoe != null) && (material.hoe instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", " /", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
 			// 	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", "/ ", "/ ", 'x', INGOT + oreDictName, '/', STICKWOOD));
 			if (Config.Options.furnaceCheese) {
@@ -398,7 +393,7 @@ public abstract class Recipes {
 			}
 		}
 
-		if (material.pickaxe != null) {
+		if ((material.pickaxe != null) && (material.pickaxe instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.pickaxe), "xxx", " / ", " / ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.pickaxe, new ItemStack(material.ingot, 3), 0);
@@ -407,7 +402,7 @@ public abstract class Recipes {
 			}
 		}
 
-		if (material.shovel != null) {
+		if ((material.shovel != null) && (material.shovel instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shovel), "x", "/", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.shovel, new ItemStack(material.ingot, 1), 0);
@@ -416,7 +411,7 @@ public abstract class Recipes {
 			}
 		}
 
-		if (material.sword != null) {
+		if ((material.sword != null) && (material.sword instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.sword), "x", "x", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.sword, new ItemStack(material.ingot, 2), 0);
@@ -425,7 +420,7 @@ public abstract class Recipes {
 			}
 		}
 
-		if (material.shears != null) {
+		if ((material.shears != null) && (material.shears instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shears), " x", "x ", 'x', Oredicts.INGOT + oreDictName));
 			GameRegistry.addSmelting(material.shears, new ItemStack(material.ingot, 2), 0);
 		}
