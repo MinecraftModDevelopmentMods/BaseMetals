@@ -3,7 +3,10 @@ package com.mcmoddev.lib.integration.plugins;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.mcmoddev.lib.integration.IIntegration;
@@ -71,25 +74,13 @@ public class TinkersConstruct implements IIntegration {
 			throw new RuntimeException("Alloy must have the same amount of inputName and intQty");
 		}
 
-		final NBTTagList tagList = new NBTTagList();
-
-		// if you have access to the fluid-instance you can also do FluidStack.writeToNBT
-		NBTTagCompound fluid = new NBTTagCompound();
-		fluid.setString("FluidName", outputName);
-		fluid.setInteger("Amount", outputQty); // 144 = 1 ingot, 16 = 1 nugget
-		tagList.appendTag(fluid);
-
-		// alloy fluid
-		for (int i = 0; i < inputName.length; i++) {
-			fluid = new NBTTagCompound();
-			fluid.setString("FluidName", inputName[i]);
-			fluid.setInteger("Amount", inputQty[i]);
-			tagList.appendTag(fluid);
+		FluidStack output = FluidRegistry.getFluidStack(outputName, outputQty);
+		FluidStack[] input = new FluidStack[inputName.length];
+		for( int i = 0; i < inputName.length; i++ ) {
+			input[i] = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
 		}
-
-		final NBTTagCompound message = new NBTTagCompound();
-		message.setTag("alloy", tagList);
-		FMLInterModComms.sendMessage(PLUGIN_MODID, "alloy", message);
+		
+		TinkerRegistry.registerAlloy(output, input);
 	}
 
 	protected static void registerMaterial(String name, boolean craftable, boolean castable) {

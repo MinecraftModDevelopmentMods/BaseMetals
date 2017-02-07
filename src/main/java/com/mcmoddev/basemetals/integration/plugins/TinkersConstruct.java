@@ -4,6 +4,10 @@ import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.material.MetalMaterial;
+
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  *
@@ -105,12 +109,11 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			registerMaterial(Materials.platinum.getName(), false, true);
 		}
 
-		/*
-		if (Options.ENABLE_SILVER) {
-			registerMaterial(Materials.silver.getName(), false, true);
+		if( Options.enableSteel) {
+			registerAlloy(Materials.steel.fluid.getName(), 8, 
+					new String[] { "iron","coal" }, 
+					new int[]{8,1});
 		}
-		*/
-
 
 		if (Options.enableStarSteel) {
 			registerMaterial(Materials.starsteel.getName(), false, true);
