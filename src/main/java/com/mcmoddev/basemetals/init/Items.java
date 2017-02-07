@@ -5,6 +5,7 @@ import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -73,27 +74,23 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableCharcoal) {
-			charcoal_nugget = addItem(new Item(), "charcoal_nugget", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.NUGGETCHARCOAL, charcoal_nugget);
-
-			charcoal_powder = addItem(new Item(), "charcoal_powder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.DUSTCHARCOAL, charcoal_powder);
-
-			charcoal_smallpowder = addItem(new Item(), "charcoal_smallpowder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.DUSTTINYCHARCOAL, charcoal_smallpowder);
-			OreDictionary.registerOre(Oredicts.DUSTSMALLCHARCOAL, charcoal_smallpowder);
+			final MetalMaterial material = Materials.vanilla_charcoal;
+			material.ingot = new ItemStack( net.minecraft.init.Items.COAL, 1, 1 ).getItem();
+			
+			charcoal_nugget = createNugget(material);
+			charcoal_powder = createPowder(material);
+			charcoal_smallpowder = createSmallPowder(material);
 		}
 
 		if (Options.enableCoal) {
-			coal_nugget = addItem(new Item(), "coal_nugget", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.NUGGETCOAL, coal_nugget);
-
-			coal_powder = addItem(new Item(), "coal_powder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.DUSTCOAL, coal_powder);
-
-			coal_smallpowder = addItem(new Item(), "coal_smallpowder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.DUSTTINYCOAL, coal_smallpowder);
-			OreDictionary.registerOre(Oredicts.DUSTSMALLCOAL, coal_smallpowder);
+			final MetalMaterial material = Materials.vanilla_coal;
+			material.ingot = net.minecraft.init.Items.COAL;
+			
+			coal_nugget = createNugget(material);
+			coal_powder = createPowder(material);
+			coal_smallpowder = createSmallPowder(material);
+			// quick&dirty fix for Coal not working directly in the smeltery
+			OreDictionary.registerOre("ingotCoal", Materials.vanilla_coal.ingot);
 		}
 
 		if (Options.enableColdIron) {
@@ -224,25 +221,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableMercury) {
-			// mercury is special
-			mercury_ingot = addItem(new Item(), "mercury_ingot", null, ItemGroups.tab_items);
-//			itemRegistry.put("mercury_ingot", mercury_ingot);
-			OreDictionary.registerOre(Oredicts.INGOTMERCURY, mercury_ingot);
-			OreDictionary.registerOre(Oredicts.QUICKSILVER, mercury_ingot);
+			final MetalMaterial material = Materials.mercury;
+			material.ingot = createIngot( material );
 
-			mercury_nugget = addItem(new Item(), "mercury_nugget", null, ItemGroups.tab_items);
-//			itemRegistry.put("mercury_ingot", mercury_nugget);
-			OreDictionary.registerOre(Oredicts.NUGGETMERCURY, mercury_nugget);
-//			OreDictionary.registerOre(Oredicts.QUICKSILVER, mercury_nugget);
-
-			mercury_powder = addItem(new Item(), "mercury_powder", null, ItemGroups.tab_items);
-//			itemRegistry.put("mercury_powder", mercury_powder);
-			OreDictionary.registerOre(Oredicts.DUSTMERCURY, mercury_powder);
-
-			mercury_smallpowder = addItem(new Item(), "mercury_smallpowder", null, ItemGroups.tab_items);
-//			itemRegistry.put("mercury_smallpowder", mercury_smallpowder);
-			OreDictionary.registerOre(Oredicts.DUSTTINYMERCURY, mercury_smallpowder);
-			OreDictionary.registerOre(Oredicts.DUSTSMALLMERCURY, mercury_smallpowder);
+			mercury_nugget = createNugget(material);
+			mercury_powder = createPowder(material);
+			mercury_smallpowder = createSmallPowder(material);
 		}
 
 		if (Options.enableMithril) {

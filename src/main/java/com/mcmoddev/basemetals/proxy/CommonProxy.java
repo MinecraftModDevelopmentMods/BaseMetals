@@ -47,7 +47,7 @@ public class CommonProxy {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
 					if ((mapping.resourceLocation.getResourcePath().equals("liquid_mercury")) && (mapping.type.equals(GameRegistry.Type.BLOCK))) {
 						 if (Options.enableMercury) {
-							 mapping.remap(Fluids.fluidBlockMercury);
+							 mapping.remap(Materials.mercury.fluidBlock);
 						 }
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
