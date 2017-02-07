@@ -41,7 +41,8 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 	public static MetalMaterial vanilla_iron;
 	public static MetalMaterial vanilla_gold;
 	public static MetalMaterial vanilla_diamond;
-
+	public static MetalMaterial vanilla_coal;
+	
 	private static boolean initDone = false;
 
 	protected Materials() {
@@ -79,6 +80,11 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 		vanilla_diamond.isVanilla = true;
 		vanilla_diamond.materialType = MetalMaterial.MaterialType.GEM;
 
+		if( Options.enableCoal ) {
+			vanilla_coal = createMaterial("coal", 5, 4, 2, 0xFF000000);
+			vanilla_coal.isVanilla = true;
+			vanilla_coal.materialType = MetalMaterial.MaterialType.MINERAL;
+		}		
 		// Mod Materials
 		if (Options.enableAdamantine) {
 			adamantine = createMaterial("adamantine", 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);

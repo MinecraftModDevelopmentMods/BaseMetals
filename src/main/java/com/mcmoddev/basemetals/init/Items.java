@@ -85,15 +85,14 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableCoal) {
-			coal_nugget = addItem(new Item(), "coal_nugget", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.NUGGETCOAL, coal_nugget);
-
-			coal_powder = addItem(new Item(), "coal_powder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.DUSTCOAL, coal_powder);
-
-			coal_smallpowder = addItem(new Item(), "coal_smallpowder", null, ItemGroups.tab_items);
-			OreDictionary.registerOre(Oredicts.DUSTTINYCOAL, coal_smallpowder);
-			OreDictionary.registerOre(Oredicts.DUSTSMALLCOAL, coal_smallpowder);
+			final MetalMaterial material = Materials.vanilla_coal;
+			material.ingot = net.minecraft.init.Items.COAL;
+			
+			coal_nugget = createNugget(material);
+			coal_powder = createPowder(material);
+			coal_smallpowder = createSmallPowder(material);
+			// quick&dirty fix for Coal not working directly in the smeltery
+			OreDictionary.registerOre("ingotCoal", Materials.vanilla_coal.ingot);
 		}
 
 		if (Options.enableColdIron) {

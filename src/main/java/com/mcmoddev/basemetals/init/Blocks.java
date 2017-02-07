@@ -69,8 +69,10 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableCoal) {
-//			Materials.vanilla_coal.block = net.minecraft.init.Blocks.COAL_BLOCK;
-//			Materials.vanilla_coal.ore = net.minecraft.init.Blocks.COAL_ORE;
+			final MetalMaterial material = Materials.vanilla_coal;
+			
+			material.block = net.minecraft.init.Blocks.COAL_BLOCK;
+			material.ore = net.minecraft.init.Blocks.COAL_ORE;
 		}
 
 		if (Options.enableColdIron) {
