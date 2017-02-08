@@ -186,9 +186,7 @@ public abstract class Recipes {
 			}
 
 			if (material.ingot != null) {
-				// armor and tools
-
-				// Vanilla has all these things where they matter, may want some handling for Emerald & Obsidian in future however, maybe move this block to a seperate function?
+				// Vanilla has all the base tools & armors where they currently matter.
 				generateBaseTools(material);
 
 				if (material.powder != null) {
@@ -201,13 +199,11 @@ public abstract class Recipes {
 				}
 
 				if ((material.nugget != null) && (material.nugget instanceof IMetalObject)) {
-//2017					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.nugget, 9), new ItemStack(material.ingot)));
 					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.nugget, 9), Oredicts.INGOT + oreDictName));
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.ingot), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName));
 				}
 
 				if ( (material.block) != null && (material.block instanceof IMetalObject)) {
-//2017					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.ingot, 9), new ItemStack(material.block)));
 					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.ingot, 9), Oredicts.BLOCK + oreDictName));
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.block), "xxx", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
 				}
@@ -225,19 +221,15 @@ public abstract class Recipes {
 				if ((material.bars != null) && (material.bars instanceof IMetalObject)) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.bars, 16), "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(material.bars, new ItemStack(material.nugget, 3), 0); // roughly half a nugget loss
-//					OreDictionary.registerOre(Oredicts.BARS, material.bars);
 				}
 
 				if (material.rod != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.rod, 4), "x", "x", 'x', Oredicts.INGOT + oreDictName));
-//					OreDictionary.registerOre(Oredicts.STICK + oreDictName, material.rod);
-//					OreDictionary.registerOre(Oredicts.ROD, material.rod);
 				}
 
 				if ((material.door != null) && (material.door instanceof IMetalObject)) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.door, 3), "xx", "xx", "xx", 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(material.door, new ItemStack(material.ingot, 2), 0);
-//					OreDictionary.registerOre(Oredicts.DOOR, material.door);
 				}
 
 				if (material.shield != null) {
@@ -248,7 +240,6 @@ public abstract class Recipes {
 				if ((material.trapdoor != null) && (material.trapdoor instanceof IMetalObject)) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.trapdoor), "xx", "xx", 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(material.trapdoor, new ItemStack(material.ingot, 4), 0);
-//					OreDictionary.registerOre(Oredicts.TRAPDOOR, material.trapdoor);
 				}
 
 				// Diamond, Gold & Iron Horse armor are in vanilla so dont do them for vanilla mats
@@ -260,13 +251,11 @@ public abstract class Recipes {
 				if ((material.rod != null) && (material.gear != null)) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.gear, Config.Options.gearQuantity), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
 					GameRegistry.addSmelting(material.gear, new ItemStack(material.ingot, Config.Options.gearQuantity), 0); // you lose the rod
-//					OreDictionary.registerOre(Oredicts.GEAR, material.gear);
 				}
 
-//				// Buckets
+//				// TODO: (Possibly) Buckets
 				/*
-				if (material.pickaxe != null) {
-					// TODO
+				if ((material.ingot != null) && material.fluid != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.BUCKET), "x x", " x ", 'x', Oredicts.INGOT + oreDictName));
 				}
 				*/
