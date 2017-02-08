@@ -99,6 +99,10 @@ repositories {
         name "jitpack"
 		url "https://jitpack.io"
 	}
+	maven {
+		name "industrialcraft"
+		url "http://maven.ic2.player.to"
+	}
 }
 
 dependencies {
@@ -125,6 +129,8 @@ dependencies {
 //    deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
       deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
 //    compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
+
+    deobfCompile "net.industrial-craft:industrialcraft-2:2.6.161-ex110:api"
 }
 
 processResources {
