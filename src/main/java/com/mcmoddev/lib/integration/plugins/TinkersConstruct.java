@@ -103,6 +103,19 @@ public class TinkersConstruct implements IIntegration {
 	 * @param trait to apply
 	 */
 	protected static void registerMaterial(MetalMaterial material, boolean craftable, boolean castable, ITrait trait) {
+		registerMaterial(material, new HashMap<String, Float>(), craftable, castable, true, trait);
+	}
+	
+	/**
+	 * Creates a Tinkers Construct {@link slimeknights.tconstruct.library.materials.Material}
+	 * @param material Material identifier
+	 * @param stats Material Stats
+	 * @param craftable If this be crafted
+	 * @param castable If this can be casted
+	 * @param toolforge If this can have a Tool Forge made of it
+	 * @param trait to apply
+	 */
+	protected static void registerMaterial(MetalMaterial material, HashMap<String,Float> stats, boolean craftable, boolean castable, boolean toolforge, ITrait trait ) {
 		if (material == null) {
 			return;
 		}
@@ -126,14 +139,15 @@ public class TinkersConstruct implements IIntegration {
 
 		// register the material as being a possible Tool Forge material
 		// somewhat hacky, but we need to keep the API changes minimal
-		TinkerTools.registerToolForgeBlock(Oredicts.BLOCK+material.getCapitalizedName());
-
+		if( toolforge ) {
+			TinkerTools.registerToolForgeBlock(Oredicts.BLOCK+material.getCapitalizedName());
+		}
+		
 		// in here we should always have a nugget and an ingot
 		tcmat.addItem(material.nugget, 1, Material.VALUE_Nugget);
 		tcmat.addItem(material.ingot, 1, Material.VALUE_Ingot);
 		tcmat.setRepresentativeItem(material.ingot);
 
-		HashMap<String, Float> stats = new HashMap<String, Float>();
 		completeMaterialStats(material, stats);
 
 		// setup the stats for the item - first the tool part stats
