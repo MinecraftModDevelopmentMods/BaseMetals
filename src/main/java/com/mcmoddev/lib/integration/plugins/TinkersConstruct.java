@@ -63,6 +63,8 @@ public class TinkersConstruct implements IIntegration {
 		
 		if( base.hasOre ) 
 			TinkerRegistry.registerMelting(Oredicts.ORE+oreDictName, output, amountPer*2);
+		if( base.block != null )
+			TinkerRegistry.registerMelting(Oredicts.BLOCK+oreDictName, output, amountPer*9);
 		if( base.ingot != null ) 
 			TinkerRegistry.registerMelting(Oredicts.INGOT+oreDictName, output, amountPer);
 		if( base.nugget != null )
