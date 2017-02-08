@@ -52,7 +52,7 @@ public class ItemGroups {
 	}
 
 	protected static GeneralizedCreativeTab addTab(String name, boolean searchable, MetalMaterial material) {
-		GeneralizedCreativeTab tab = new GeneralizedCreativeTab(Loader.instance().activeModContainer().getModId() + name, searchable, material);
+		GeneralizedCreativeTab tab = new GeneralizedCreativeTab(Loader.instance().activeModContainer().getModId() + "." + name, searchable, material);
 //		itemGroupsByModID.get(name).add(tab);
 		return tab;
 	}
