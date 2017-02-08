@@ -4,7 +4,6 @@ import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * This class initializes all items in Base Metals.

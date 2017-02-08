@@ -1,7 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.registry.CrusherRecipeRegistry;
-import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
@@ -65,32 +64,13 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			material = Materials.vanilla_iron;
 			oreDictName = material.getCapitalizedName();
 
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.nugget, 9), new ItemStack(material.ingot))); // Not needed for 1.11.1+
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.ingot), "xxx", "xxx", "xxx", 'x', material.nugget)); // Not needed for 1.11.1+
-		}
-
-		// Diamond items
-		if (Options.enableDiamond) {
-			material = Materials.vanilla_diamond;
-			oreDictName = material.getCapitalizedName();
-		}
-
-		// Gold items
-		if (Options.enableGold) {
-			material = Materials.vanilla_gold;
-			oreDictName = material.getCapitalizedName();
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.nugget, 9), Oredicts.INGOT + oreDictName)); // Not needed for 1.11.1+
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.ingot), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName)); // Not needed for 1.11.1+
 		}
 
 		if (Options.enableCharcoal) {
 			material = Materials.vanilla_charcoal;
 			oreDictName = material.getCapitalizedName();
-//			oreDictName = Oredicts.CHARCOAL;
-			// TODO
-//			ingot = net.minecraft.init.Items.COAL;
-//			nugget = .charcoal_nugget; // material.nugget;
-//			powder = Items.charcoal_powder; // material.powder;
-//			smallpowder = Items.charcoal_smallpowder; // material.smallpowder;
-//			block = net.minecraft.init.Blocks.COAL_BLOCK; //material.block; // Minecraft does not provide a block of charcoal
 
 			if (material.powder != null) {
 				//if (block != null) {
@@ -113,14 +93,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		if (Options.enableCoal) {
 			material = Materials.vanilla_coal;
 			oreDictName = material.getCapitalizedName();
-//			oreDictName = Oredicts.COAL;
-			// TODO
-//			ingot = net.minecraft.init.Items.COAL;
-//			nugget = Items.coal_nugget; // material.nugget;
-//			powder = Items.coal_powder; // material.powder;
-//			smallpowder = Items.coal_smallpowder; // material.smallpowder;
-//			block = net.minecraft.init.Blocks.COAL_BLOCK;
-//			ore = net.minecraft.init.Blocks.COAL_ORE;
 
 			if (material.powder != null) {
 				if (material.ore != null) {
