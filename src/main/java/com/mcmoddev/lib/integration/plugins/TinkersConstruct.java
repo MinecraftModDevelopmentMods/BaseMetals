@@ -59,23 +59,23 @@ public class TinkersConstruct implements IIntegration {
 		String oreDictName = base.getCapitalizedName();
 
 		// hacky fix for Coal being itemCoal and not ingotCoal
-		if( base.getName() == "coal" )
+		if (base.getName() == "coal")
 			TinkerRegistry.registerMelting("itemCoal", output, 144);
-		
-		if( base.hasOre ) 
-			TinkerRegistry.registerMelting(Oredicts.ORE+oreDictName, output, amountPer*2);
-		if( base.block != null )
-			TinkerRegistry.registerMelting(Oredicts.BLOCK+oreDictName, output, amountPer*9);
-		if( base.ingot != null ) 
-			TinkerRegistry.registerMelting(Oredicts.INGOT+oreDictName, output, amountPer);
-		if( base.nugget != null )
-			TinkerRegistry.registerMelting(Oredicts.NUGGET+oreDictName, output, amountPer/9);
-		if( base.powder != null )
-			TinkerRegistry.registerMelting(Oredicts.DUST+oreDictName, output, amountPer);
-		if( base.smallpowder != null )
-			TinkerRegistry.registerMelting(Oredicts.DUSTSMALL+oreDictName, output, amountPer/9);
+
+		if (base.hasOre)
+			TinkerRegistry.registerMelting(Oredicts.ORE + oreDictName, output, amountPer * 2);
+		if (base.block != null)
+			TinkerRegistry.registerMelting(Oredicts.BLOCK + oreDictName, output, amountPer * 9);
+		if (base.ingot != null)
+			TinkerRegistry.registerMelting(Oredicts.INGOT + oreDictName, output, amountPer);
+		if (base.nugget != null)
+			TinkerRegistry.registerMelting(Oredicts.NUGGET + oreDictName, output, amountPer / 9);
+		if (base.powder != null)
+			TinkerRegistry.registerMelting(Oredicts.DUST + oreDictName, output, amountPer);
+		if (base.smallpowder != null)
+			TinkerRegistry.registerMelting(Oredicts.DUSTSMALL + oreDictName, output, amountPer / 9);
 	}
-	
+
 	/**
 	 *
 	 * @param outputName The alloy to output
@@ -93,7 +93,7 @@ public class TinkersConstruct implements IIntegration {
 		for( int i = 0; i < inputName.length; i++ ) {
 			input[i] = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
 		}
-		
+
 		TinkerRegistry.registerAlloy(output, input);
 	}
 
@@ -126,7 +126,7 @@ public class TinkersConstruct implements IIntegration {
 		// Set fluid used, Set whether craftable, set whether castable, adds the
 		// item with the value 144.
 		tcmat.setFluid(material.fluid).setCraftable(craftable).setCastable(castable);
-		
+
 		// register the fluid for the material, 1 ingot is 144mB
 		registerFluid( material, 144 );
 
@@ -140,16 +140,16 @@ public class TinkersConstruct implements IIntegration {
 		tcmat.setRepresentativeItem(material.ingot);
 
 		HashMap<String, Float> stats = new HashMap<String, Float>();
-		completeMaterialStats( material, stats );
-		
+		completeMaterialStats(material, stats);
+
 		// setup the stats for the item - first the tool part stats
-		final HeadMaterialStats headStats = new HeadMaterialStats( stats.get("head_durability").intValue(), stats.get("mining_speed").floatValue(), stats.get("head_attack").floatValue(), stats.get("harvest_level").intValue() );
+		final HeadMaterialStats headStats = new HeadMaterialStats( stats.get("head_durability").intValue(), stats.get("mining_speed").floatValue(), stats.get("head_attack").floatValue(), stats.get("harvest_level").intValue());
 		final HandleMaterialStats handleStats = new HandleMaterialStats(stats.get("body_modifier").floatValue(), stats.get("body_durability").intValue());
 		final ExtraMaterialStats extraStats = new ExtraMaterialStats(stats.get("extra_durability").intValue());
 
 		/*
 		 * Things are oddly broken in this chunk 
-		 
+ 
 		// then the bow-part stats
 		final BowMaterialStats bowStats = new BowMaterialStats( stats.get("draw_speed").floatValue(), stats.get("range").floatValue(), stats.get("bow_damage").floatValue());
 		final BowStringMaterialStats bowStringStats = new BowStringMaterialStats(stats.get("bowstring_modifier").floatValue());
@@ -162,7 +162,7 @@ public class TinkersConstruct implements IIntegration {
 		TinkerRegistry.addMaterialStats(tcmat, headStats); // Sets stats for head
 		TinkerRegistry.addMaterialStats(tcmat, handleStats); // Sets Stats for handle
 		TinkerRegistry.addMaterialStats(tcmat, extraStats); // Sets stats for everything else
-		
+
 		/*
 		// now add the extended stats for bow/projectile
 		TinkerRegistry.addMaterialStats(tcmat, bowStats); // Sets stats for Bow
@@ -171,19 +171,19 @@ public class TinkersConstruct implements IIntegration {
 		TinkerRegistry.addMaterialStats(tcmat, fletchingStats); // Sets stats for Fletching 
 		TinkerRegistry.addMaterialStats(tcmat, projectileStats); // Sets stats for Projectile
 		 */		
-		
+
 /*		if (trait != null) {
 			String stats = "temporary placeholder"; // TODO: find out what goes here
 			TinkerRegistry.addMaterialTrait(tcmat, trait, stats);
 		}
 */
 	}
-	
-	protected static void completeMaterialStats( MetalMaterial material, HashMap<String,Float> baseStats ) {
+
+	protected static void completeMaterialStats(MetalMaterial material, HashMap<String,Float> baseStats) {
 		if( baseStats == null ) {
 			throw new Error("baseStats cannot be null");
 		}
-		
+
 		String[] possibleStats = new String[] { "head_durability", "mining_speed", "head_attack", "harvest_level",
 												"body_modifier", "body_durability", 
 												"extra_durability",
@@ -217,10 +217,10 @@ public class TinkersConstruct implements IIntegration {
 					val = material.getToolDurability() / 10;
 					break;
 				case "draw_speed":
-					if( material.getToolDurability() < 204 ) {
+					if (material.getToolDurability() < 204) {
 						val = 1;
 					} else {
-						val = ((material.getToolDurability() - 200)+1)/10.0f;
+						val = ((material.getToolDurability() - 200) + 1) / 10.0f;
 						val -= Math.floor(val);
 					}
 					break;
@@ -248,7 +248,7 @@ public class TinkersConstruct implements IIntegration {
 				default:
 					val = 0;
 				}
-				val = Math.round(val * 100.0f)/100.0f;
+				val = Math.round(val * 100.0f) / 100.0f;
 				baseStats.put(s, val);
 			}
 		}
