@@ -22,6 +22,7 @@ import slimeknights.tconstruct.library.materials.HandleMaterialStats;
 import slimeknights.tconstruct.library.materials.HeadMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.materials.MaterialTypes;
+import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.tools.TinkerTools;
 
@@ -129,18 +130,9 @@ public class TinkersConstruct implements IIntegration {
 		Material tcmat = new Material( material.metalmaterial.getName(), TextFormatting.WHITE);
 		
 		if (material.hasTraits) {
-			ITrait t;
-			
-			String[] traitLocs = new String[] { null, MaterialTypes.HEAD, MaterialTypes.HANDLE, MaterialTypes.EXTRA, MaterialTypes.BOW, MaterialTypes.BOWSTRING, MaterialTypes.PROJECTILE, MaterialTypes.SHAFT, MaterialTypes.FLETCHING };
-
-			for( String tLoc : traitLocs ) {
-				t = material.getTrait(tLoc);
-				if( t != null ) {
-					if( tLoc == null ) {
-						tcmat.addTrait(t);
-					} else {
-						tcmat.addTrait(t, tLoc);
-					}
+			for( String s : material.getTraitLocs() ) {
+				for( AbstractTrait t : material.getTraits(s) ) {
+					tcmat.addTrait(t, s=="general"?null:s);
 				}
 			}
 		}

@@ -102,6 +102,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			invarTC.craftable = false;
 			
 			registerMaterial(invarTC);
+			registerAlloy(Materials.invar.fluid.getName(), 3, new String[] { "iron", "nickel" }, new int[] {2,1});
 		}
 
 		// As much as we'd like to, we cannot do this like this.
