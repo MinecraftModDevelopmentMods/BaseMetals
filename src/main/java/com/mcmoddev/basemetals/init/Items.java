@@ -74,8 +74,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createNugget(material);
 			createPowder(material);
 			createSmallPowder(material);
-			// Quick & dirty fix for Coal not working directly in the Smeltery
-			OreDictionary.registerOre("ingotCoal", Materials.vanilla_coal.ingot);
 		}
 
 		if (Options.enableColdIron) {
