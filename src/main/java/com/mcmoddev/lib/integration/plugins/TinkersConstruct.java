@@ -10,6 +10,7 @@ import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.util.Oredicts;
+import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
 
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
@@ -20,6 +21,7 @@ import slimeknights.tconstruct.library.materials.FletchingMaterialStats;
 import slimeknights.tconstruct.library.materials.HandleMaterialStats;
 import slimeknights.tconstruct.library.materials.HeadMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
+import slimeknights.tconstruct.library.materials.MaterialTypes;
 import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.tools.TinkerTools;
 
@@ -103,75 +105,64 @@ public class TinkersConstruct implements IIntegration {
 	 * @param trait to apply
 	 */
 	protected static void registerMaterial(MetalMaterial material, boolean craftable, boolean castable, ITrait trait) {
-		registerMaterial(material, new HashMap<String, Float>(), craftable, castable, true, trait);
+		TCMetalMaterial m = new TCMetalMaterial(material);
+		m.craftable = craftable;
+		m.castable = castable;
+		if( trait != null ) m.addTrait(trait);
+		
+		registerMaterial(m);
 	}
 	
 	/**
 	 * Creates a Tinkers Construct {@link slimeknights.tconstruct.library.materials.Material}
-	 * @param material Material identifier
-	 * @param stats Material Stats
-	 * @param craftable If this be crafted
-	 * @param castable If this can be casted
-	 * @param toolforge If this can have a Tool Forge made of it
-	 * @param trait to apply
+	 * @param material Information about the material and the material itself
 	 */
-	protected static void registerMaterial(MetalMaterial material, HashMap<String,Float> stats, boolean craftable, boolean castable, boolean toolforge, ITrait trait ) {
+	protected static void registerMaterial(TCMetalMaterial material) {
 		if (material == null) {
 			return;
 		}
 
-		if (material.fluid == null) {
+		if (material.metalmaterial.fluid == null) {
 			return;
 		}
 
-		Material tcmat = TinkerRegistry.getMaterial(material.getName());
+		Material tcmat = TinkerRegistry.getMaterial(material.metalmaterial.getName());
 		if( tcmat == Material.UNKNOWN ) {
-			tcmat = new Material(material.getName(), material.getTintColor());
+			tcmat = new Material(material.metalmaterial.getName(), material.metalmaterial.getTintColor());
 			TinkerRegistry.addMaterial(tcmat);
 		}
 
 		// Set fluid used, Set whether craftable, set whether castable, adds the
 		// item with the value 144.
-		tcmat.setFluid(material.fluid).setCraftable(craftable).setCastable(castable);
+		tcmat.setFluid(material.metalmaterial.fluid).setCraftable(material.craftable).setCastable(material.castable);
 
 		// register the fluid for the material, 1 ingot is 144mB
-		registerFluid( material, 144 );
+		registerFluid( material.metalmaterial, 144 );
 
 		// register the material as being a possible Tool Forge material
 		// somewhat hacky, but we need to keep the API changes minimal
-		if( toolforge ) {
-			TinkerTools.registerToolForgeBlock(Oredicts.BLOCK+material.getCapitalizedName());
+		if( material.toolforge ) {
+			TinkerTools.registerToolForgeBlock(Oredicts.BLOCK+material.metalmaterial.getCapitalizedName());
 		}
 		
 		// in here we should always have a nugget and an ingot
-		tcmat.addItem(material.nugget, 1, Material.VALUE_Nugget);
-		tcmat.addItem(material.ingot, 1, Material.VALUE_Ingot);
-		tcmat.setRepresentativeItem(material.ingot);
-
-		completeMaterialStats(material, stats);
+		tcmat.addItem(material.metalmaterial.nugget, 1, Material.VALUE_Nugget);
+		tcmat.addItem(material.metalmaterial.ingot, 1, Material.VALUE_Ingot);
+		tcmat.setRepresentativeItem(material.metalmaterial.ingot);
 
 		// setup the stats for the item - first the tool part stats
-		final HeadMaterialStats headStats = new HeadMaterialStats( stats.get("head_durability").intValue(), stats.get("mining_speed").floatValue(), stats.get("head_attack").floatValue(), stats.get("harvest_level").intValue());
-		final HandleMaterialStats handleStats = new HandleMaterialStats(stats.get("body_modifier").floatValue(), stats.get("body_durability").intValue());
-		final ExtraMaterialStats extraStats = new ExtraMaterialStats(stats.get("extra_durability").intValue());
+		final HeadMaterialStats headStats = new HeadMaterialStats( material.headDurability, material.miningSpeed, material.headAttackDamage, material.miningLevel);
+		final HandleMaterialStats handleStats = new HandleMaterialStats(material.bodyModifier, material.bodyDurability);
+		final ExtraMaterialStats extraStats = new ExtraMaterialStats(material.extraDurability);
 
 		/*
 		 * Things are oddly broken in this chunk 
          */
 		// then the bow-part stats
-		final BowMaterialStats bowStats = new BowMaterialStats( stats.get("draw_speed").floatValue(), stats.get("range").floatValue(), stats.get("bow_damage").floatValue());
-		final BowStringMaterialStats bowStringStats = new BowStringMaterialStats(stats.get("bowstring_modifier").floatValue());
-		
-		float shaftModifier = 1.0f;
-		if( stats.get("shaft_modifier") != null ) shaftModifier = stats.get("shaft_modifier").floatValue();
-		else com.mcmoddev.basemetals.BaseMetals.logger.error("HashMap.get(\"shaft_modifier\") returned null");
-		
-		int bonusAmmo = 1;
-		if( stats.get("shaft_ammo") != null ) bonusAmmo = stats.get("shaft_ammo").intValue();
-		else com.mcmoddev.basemetals.BaseMetals.logger.error("HashMap.get(\"shaft_ammo\") returned null");
-		
-		final ArrowShaftMaterialStats arrowShaftStats = new ArrowShaftMaterialStats( shaftModifier, bonusAmmo );
-		final FletchingMaterialStats fletchingStats = new FletchingMaterialStats(stats.get("fletching_accuracy").floatValue(), stats.get("fletching_modifier").floatValue());
+		final BowMaterialStats bowStats = new BowMaterialStats( material.bowDrawingSpeed, material.bowRange, material.bowDamage);
+		final BowStringMaterialStats bowStringStats = new BowStringMaterialStats(material.bowstringModifier);
+		final ArrowShaftMaterialStats arrowShaftStats = new ArrowShaftMaterialStats( material.shaftModifier, material.shaftBonusAmmo );
+		final FletchingMaterialStats fletchingStats = new FletchingMaterialStats(material.fletchingAccuracy, material.fletchingModifier);
 		
 		// add the base tool stats
 		TinkerRegistry.addMaterialStats(tcmat, headStats); // Sets stats for head
@@ -184,86 +175,17 @@ public class TinkersConstruct implements IIntegration {
 		TinkerRegistry.addMaterialStats(tcmat, arrowShaftStats); // Sets stats for Arrow Shaft
 		TinkerRegistry.addMaterialStats(tcmat, fletchingStats); // Sets stats for Fletching 
 
-		if (trait != null) {
-			// the 'stats' parameter of addMaterialTrait is unused in TiC at this time
-			// in fact, it is passed as null, just as I'm doing here
-			TinkerRegistry.addMaterialTrait(tcmat, trait, null);
-		}
+		if (material.hasTraits) {
+			ITrait t;
+			
+			String[] traitLocs = new String[] { null, MaterialTypes.HEAD, MaterialTypes.HANDLE, MaterialTypes.EXTRA, MaterialTypes.BOW, MaterialTypes.BOWSTRING, MaterialTypes.PROJECTILE, MaterialTypes.SHAFT, MaterialTypes.FLETCHING };
 
-	}
-
-	protected static void completeMaterialStats(MetalMaterial material, HashMap<String,Float> baseStats) {
-		if( baseStats == null ) {
-			throw new Error("baseStats cannot be null");
-		}
-
-		String[] possibleStats = new String[] { "head_durability", "mining_speed", "head_attack", "harvest_level",
-												"body_modifier", "body_durability", 
-												"extra_durability",
-												"draw_speed", "range", "bow_damage",
-												"bowstring_modifier",
-												"fletching_accuracy", "fletching_modifier",
-												"shaft_modifier", "shaft_ammo" };
-		for( String s : possibleStats ) {
-			if( !baseStats.containsKey(s) ) {
-				float val;
-				switch(s) {
-				case "head_durability":
-					val = material.getToolDurability();
-					break;
-				case "mining_speed":
-					val = material.magicAffinity * 3 / 2;
-					break;
-				case "harvest_level":
-					val = material.getToolHarvestLevel();
-					break;
-				case "head_attack":
-					val = material.getBaseAttackDamage() * 2;
-					break;
-				case "body_durability":
-					val = material.getToolDurability() / 6.8f;
-					break;
-				case "body_modifier":
-					val = (material.hardness + material.magicAffinity * 2) / 9;
-					break;
-				case "extra_durability":
-					val = material.getToolDurability() / 10;
-					break;
-				case "draw_speed":
-					if (material.getToolDurability() < 204) {
-						val = 1;
-					} else {
-						val = ((material.getToolDurability() - 200) + 1) / 10.0f;
-						val -= Math.floor(val);
-					}
-					break;
-				case "range":
-					val = 15;
-					break;
-				case "bow_damage":
-					val = material.getBaseAttackDamage() + 3;
-					break;
-				case "bowstring_modifier":
-					val = 1;
-					break;
-				case "fletching_accuracy":
-					val = 1;
-					break;
-				case "fletching_modifier":
-					val = 1;
-					break;
-				case "shaft_modifier":
-					val = 1;
-					break;
-				case "shaft_ammo":
-					val = 1;
-					break;
-				default:
-					val = 0;
-				}
-				val = Math.round(val * 100.0f) / 100.0f;
-				baseStats.put(s, val);
+			for( String tLoc : traitLocs ) {
+				t = material.getTrait(tLoc);
+				if( t != null ) TinkerRegistry.addMaterialTrait(tcmat, t, null);
 			}
 		}
+
 	}
+
 }
