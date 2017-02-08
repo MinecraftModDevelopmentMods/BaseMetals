@@ -10,9 +10,13 @@ import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.library.materials.MaterialTypes;
 
 /**
- * @author madman
- *
+ * @author Daniel Hazelton <dshadowwolf@gmail.com>
+ * @since 8-FEB-2017
+ * 
+ * Wrapper for all the data that the TiC plugin needs to generate a TiC material
+ * and tell TiC how the various parts are to act.
  */
+
 public class TCMetalMaterial {
 	// integer values
 	// durabilities...
@@ -47,7 +51,10 @@ public class TCMetalMaterial {
 		}
 		return val;
 	}
-	
+
+	/**
+	 * @param material MetalMaterial this represents
+	 */
 	public TCMetalMaterial(MetalMaterial material) {
 		headDurability = material.getToolDurability();
 		miningSpeed = material.magicAffinity * 3 / 2;
@@ -67,7 +74,11 @@ public class TCMetalMaterial {
 		fletchingModifier = 1.0f;
 		shaftBonusAmmo = 1;
 	}
-	
+
+	/**
+	 * Add a TiC default or custom trait to the material in general
+	 * @param trait the AbstractTrait to add
+	 */
 	public void addTrait(ITrait trait) {
 		addTrait(trait, null);
 	}
@@ -94,7 +105,13 @@ public class TCMetalMaterial {
 			return 128;
 		}
 	}
-	
+
+	/**
+	 * Add a TiC default or custom trait to the material when used as a specific tool part
+	 * @param trait the AbstractTrait to add
+	 * @param loc the MaterialType for the tool part {@link slimeknights.tconstruct.library.material.MaterialType}
+	 * @throws
+	 */
 	public void addTrait(ITrait trait, String loc) {
 		if( loc == null ) {
 			if( traits[0] != null ) return;
@@ -108,6 +125,12 @@ public class TCMetalMaterial {
 		traits[iLoc] = (AbstractTrait) trait;
 	}
 	
+	/**
+	 * Get the trait for a given location
+	 * @param loc the MaterialType for the tool part of the trait, null for the overall one
+	 * @return the instance of the trait that was originally stored
+	 * @throws
+	 */
 	public ITrait getTrait(String loc) {
 		if( loc == null ) return traits[0];
 
