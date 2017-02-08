@@ -1,13 +1,13 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.HashMap;
-
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
+//import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
@@ -125,13 +125,30 @@ public class TinkersConstruct implements IIntegration {
 		if (material.metalmaterial.fluid == null) {
 			return;
 		}
+		
+		Material tcmat = new Material( material.metalmaterial.getName(), TextFormatting.WHITE);
+		
+		if (material.hasTraits) {
+			ITrait t;
+			
+			String[] traitLocs = new String[] { null, MaterialTypes.HEAD, MaterialTypes.HANDLE, MaterialTypes.EXTRA, MaterialTypes.BOW, MaterialTypes.BOWSTRING, MaterialTypes.PROJECTILE, MaterialTypes.SHAFT, MaterialTypes.FLETCHING };
 
-		Material tcmat = TinkerRegistry.getMaterial(material.metalmaterial.getName());
-		if( tcmat == Material.UNKNOWN ) {
-			tcmat = new Material(material.metalmaterial.getName(), material.metalmaterial.getTintColor());
-			TinkerRegistry.addMaterial(tcmat);
+			for( String tLoc : traitLocs ) {
+				t = material.getTrait(tLoc);
+				if( t != null ) {
+					if( tLoc == null ) {
+						tcmat.addTrait(t);
+					} else {
+						tcmat.addTrait(t, tLoc);
+					}
+				}
+			}
 		}
 
+		if( TinkerRegistry.getMaterial(tcmat.identifier) != Material.UNKNOWN ) {
+			return;
+		}
+		
 		// Set fluid used, Set whether craftable, set whether castable, adds the
 		// item with the value 144.
 		tcmat.setFluid(material.metalmaterial.fluid).setCraftable(material.craftable).setCastable(material.castable);
@@ -144,7 +161,7 @@ public class TinkersConstruct implements IIntegration {
 		if( material.toolforge ) {
 			TinkerTools.registerToolForgeBlock(Oredicts.BLOCK+material.metalmaterial.getCapitalizedName());
 		}
-		
+
 		// in here we should always have a nugget and an ingot
 		tcmat.addItem(material.metalmaterial.nugget, 1, Material.VALUE_Nugget);
 		tcmat.addItem(material.metalmaterial.ingot, 1, Material.VALUE_Ingot);
@@ -155,15 +172,12 @@ public class TinkersConstruct implements IIntegration {
 		final HandleMaterialStats handleStats = new HandleMaterialStats(material.bodyModifier, material.bodyDurability);
 		final ExtraMaterialStats extraStats = new ExtraMaterialStats(material.extraDurability);
 
-		/*
-		 * Things are oddly broken in this chunk 
-         */
 		// then the bow-part stats
 		final BowMaterialStats bowStats = new BowMaterialStats( material.bowDrawingSpeed, material.bowRange, material.bowDamage);
 		final BowStringMaterialStats bowStringStats = new BowStringMaterialStats(material.bowstringModifier);
 		final ArrowShaftMaterialStats arrowShaftStats = new ArrowShaftMaterialStats( material.shaftModifier, material.shaftBonusAmmo );
 		final FletchingMaterialStats fletchingStats = new FletchingMaterialStats(material.fletchingAccuracy, material.fletchingModifier);
-		
+
 		// add the base tool stats
 		TinkerRegistry.addMaterialStats(tcmat, headStats); // Sets stats for head
 		TinkerRegistry.addMaterialStats(tcmat, handleStats); // Sets Stats for handle
@@ -175,17 +189,8 @@ public class TinkersConstruct implements IIntegration {
 		TinkerRegistry.addMaterialStats(tcmat, arrowShaftStats); // Sets stats for Arrow Shaft
 		TinkerRegistry.addMaterialStats(tcmat, fletchingStats); // Sets stats for Fletching 
 
-		if (material.hasTraits) {
-			ITrait t;
-			
-			String[] traitLocs = new String[] { null, MaterialTypes.HEAD, MaterialTypes.HANDLE, MaterialTypes.EXTRA, MaterialTypes.BOW, MaterialTypes.BOWSTRING, MaterialTypes.PROJECTILE, MaterialTypes.SHAFT, MaterialTypes.FLETCHING };
-
-			for( String tLoc : traitLocs ) {
-				t = material.getTrait(tLoc);
-				if( t != null ) TinkerRegistry.addMaterialTrait(tcmat, t, null);
-			}
-		}
-
+		// register the material
+		TinkerRegistry.addMaterial(tcmat);
 	}
 
 }
