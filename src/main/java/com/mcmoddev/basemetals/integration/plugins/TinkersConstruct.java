@@ -1,12 +1,14 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
+//import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
+import com.mcmoddev.lib.integration.plugins.tinkers.traits.*;
 
-import slimeknights.tconstruct.tools.traits.*;
+import slimeknights.tconstruct.tools.TinkerTraits;
 import slimeknights.tconstruct.library.materials.MaterialTypes;
 
 /**
@@ -33,8 +35,8 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			 */
 			TCMetalMaterial adamantTC = new TCMetalMaterial(Materials.adamantine);
 			adamantTC.craftable = false;
-			adamantTC.addTrait(new TraitColdblooded());
-			adamantTC.addTrait(new TraitInsatiable(), MaterialTypes.HEAD);
+			adamantTC.addTrait(TinkerTraits.coldblooded);
+			adamantTC.addTrait(TinkerTraits.insatiable, MaterialTypes.HEAD);
 			registerMaterial(adamantTC);
 		}
 
@@ -48,7 +50,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableAquarium) {
 			TCMetalMaterial aquaTC = new TCMetalMaterial(Materials.aquarium);
 			aquaTC.craftable = false;
-			aquaTC.addTrait(new TraitAquadynamic());
+			aquaTC.addTrait(TinkerTraits.aquadynamic);
 			
 			registerMaterial(aquaTC);
 			// When FMe is out we can probably do the alloy.
@@ -68,7 +70,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			TCMetalMaterial brassTC = new TCMetalMaterial(Materials.brass);
 			brassTC.craftable = false;
 			
-			brassTC.addTrait(new TraitDense());
+			brassTC.addTrait(TinkerTraits.dense);
 			
 			registerMaterial(brassTC);
 		}
@@ -81,7 +83,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			TCMetalMaterial coldironTC = new TCMetalMaterial(Materials.coldiron);
 			coldironTC.craftable = false;
 			
-			coldironTC.addTrait(new TraitFreezing());
+			coldironTC.addTrait(TinkerTraits.freezing);
 			registerMaterial(coldironTC);
 		}
 
@@ -102,23 +104,28 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			registerMaterial(invarTC);
 		}
 
-		// Needs the 'Soft' trait
-		if (Options.enableLead) {
+		// As much as we'd like to, we cannot do this like this.
+		// At some point between this code running and it getting
+		// up to the point of registration, the state changes and
+		// lead is suddenly registered.
+		// There will have to be another means of making this work...
+/*		if (Options.enableLead) {
 			TCMetalMaterial leadTC = new TCMetalMaterial(Materials.lead);
 			leadTC.craftable = false;
+			leadTC.addTrait(MMDTraits.soft);
 			
 			registerMaterial(leadTC);
-		}
-
+		} 
+*/
 		if (Options.enableMercury) {
 			registerFluid(Materials.mercury, 144);
 		}
 
 		if (Options.enableMithril) {
-			TCMetalMaterial mithrilTC = new TCMetalMaterial(Materials.mithril;
+			TCMetalMaterial mithrilTC = new TCMetalMaterial(Materials.mithril);
 			mithrilTC.craftable = false;
 			
-			mithrilTC.addTrait(new TraitHoly());
+			mithrilTC.addTrait(TinkerTraits.holy);
 			registerMaterial(mithrilTC);
 			
 			registerAlloy(Materials.mithril.getName(), 3,
@@ -138,6 +145,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			TCMetalMaterial pewterTC = new TCMetalMaterial(Materials.pewter);
 			pewterTC.craftable = false;
 			
+			pewterTC.addTrait(MMDTraits.soft);
 			registerMaterial(pewterTC);
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
 			registerAlloy(Materials.pewter.getName(), 144,
@@ -164,7 +172,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			TCMetalMaterial starsteelTC = new TCMetalMaterial(Materials.starsteel);
 			starsteelTC.craftable = false;
 			
-			starsteelTC.addTrait(new TraitEnderference(), MaterialTypes.HEAD);
+			starsteelTC.addTrait(TinkerTraits.enderference, MaterialTypes.HEAD);
 			registerMaterial(starsteelTC);
 		}
 
