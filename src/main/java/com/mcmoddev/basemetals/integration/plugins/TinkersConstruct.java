@@ -4,8 +4,10 @@ import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
 
 import slimeknights.tconstruct.tools.traits.*;
+import slimeknights.tconstruct.library.materials.MaterialTypes;
 
 /**
  *
@@ -24,8 +26,11 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		if (Options.enableAdamantine) {
-			registerMaterial(Materials.adamantine, false, true, new TraitColdblooded());
-			// also needs trait on 'HEAD' of insatiable
+			TCMetalMaterial adamantTC = new TCMetalMaterial(Materials.adamantine);
+			adamantTC.craftable = false;
+			adamantTC.addTrait(new TraitColdblooded());
+			adamantTC.addTrait(new TraitInsatiable(), MaterialTypes.HEAD);
+			registerMaterial(adamantTC);
 		}
 
 		if (Options.enableAntimony) {

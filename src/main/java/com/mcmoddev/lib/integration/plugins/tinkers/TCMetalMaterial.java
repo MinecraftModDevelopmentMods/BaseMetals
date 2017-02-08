@@ -10,7 +10,7 @@ import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.library.materials.MaterialTypes;
 
 /**
- * @author Daniel Hazelton <dshadowwolf@gmail.com>
+ * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  * @since 8-FEB-2017
  * 
  * Wrapper for all the data that the TiC plugin needs to generate a TiC material
@@ -40,12 +40,14 @@ public class TCMetalMaterial {
 	public float fletchingModifier;
 
 	// for reference and simplifying the API
-	public MetalMaterial metalmaterial;
+	final public MetalMaterial metalmaterial;
 	
 	// craftable, castable, toolforge - does this allow it ?
 	public boolean craftable;
 	public boolean castable;
 	public boolean toolforge;
+
+	public boolean hasTraits;
 	
 	private AbstractTrait[] traits = new AbstractTrait[9];
 	
@@ -83,6 +85,11 @@ public class TCMetalMaterial {
 		shaftBonusAmmo = 1;
 		
 		metalmaterial = material;
+		
+		castable = true;
+		craftable = true;
+		toolforge = true;
+		hasTraits = false;
 	}
 
 	/**
@@ -90,6 +97,7 @@ public class TCMetalMaterial {
 	 * @param trait the AbstractTrait to add
 	 */
 	public void addTrait(ITrait trait) {
+		hasTraits = true;
 		addTrait(trait, null);
 	}
 	
@@ -122,10 +130,12 @@ public class TCMetalMaterial {
 	 * @param loc the MaterialType for the tool part {@link slimeknights.tconstruct.library.material.MaterialType}
 	 * @throws
 	 */
-	public void addTrait(ITrait trait, String loc) {
+	public void addTrait(ITrait trait, String loc) {	
+		hasTraits = true;
 		if( loc == null ) {
 			if( traits[0] != null ) return;
 			traits[0] = (AbstractTrait)trait;
+			return;
 		}
 		
 		int iLoc = getIndexForName(loc);
@@ -142,6 +152,8 @@ public class TCMetalMaterial {
 	 * @throws
 	 */
 	public ITrait getTrait(String loc) {
+		if( !hasTraits ) return null;
+		
 		if( loc == null ) return traits[0];
 
 		int iLoc = getIndexForName(loc);
