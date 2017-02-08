@@ -3,6 +3,12 @@
  */
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
 import com.mcmoddev.lib.material.MetalMaterial;
 
 import slimeknights.tconstruct.library.traits.AbstractTrait;
@@ -49,7 +55,8 @@ public class TCMetalMaterial {
 
 	public boolean hasTraits;
 	
-	private AbstractTrait[] traits = new AbstractTrait[9];
+	private HashMap<String, List<AbstractTrait>> traits = new HashMap<String, List<AbstractTrait>>();
+	//private AbstractTrait[] traits = new AbstractTrait[9];
 	
 	private float calcDrawSpeed(int durability) {
 		float val;
@@ -98,51 +105,27 @@ public class TCMetalMaterial {
 	 */
 	public void addTrait(ITrait trait) {
 		hasTraits = true;
-		addTrait(trait, null);
+		addTrait(trait, "general");
 	}
 	
-	private int getIndexForName( String name ) {
-		switch( name.toLowerCase() ) {
-		case MaterialTypes.HEAD:
-			return 1;
-		case MaterialTypes.HANDLE:
-			return 2;
-		case MaterialTypes.EXTRA:
-			return 3;
-		case MaterialTypes.BOW:
-			return 4;
-		case MaterialTypes.BOWSTRING:
-			return 5;
-		case MaterialTypes.PROJECTILE:
-			return 6;
-		case MaterialTypes.SHAFT:
-			return 7;
-		case MaterialTypes.FLETCHING:
-			return 8;
-		default:
-			return 128;
-		}
-	}
-
 	/**
 	 * Add a TiC default or custom trait to the material when used as a specific tool part
 	 * @param trait the AbstractTrait to add
 	 * @param loc the MaterialType for the tool part {@link slimeknights.tconstruct.library.material.MaterialType}
 	 * @throws
 	 */
-	public void addTrait(ITrait trait, String loc) {	
-		hasTraits = true;
-		if( loc == null ) {
-			if( traits[0] != null ) return;
-			traits[0] = (AbstractTrait)trait;
-			return;
+	public void addTrait(ITrait trait, String loc) {
+		if( traits.keySet().contains(loc) ) {
+			if( !traits.get(loc).add((AbstractTrait)trait) ) { 
+				throw new Error("Unable to add trait!");
+			}
+		} else {
+			List<AbstractTrait> t = new ArrayList<AbstractTrait>();
+			t.add((AbstractTrait)trait);
+			traits.put(loc, t);
 		}
 		
-		int iLoc = getIndexForName(loc);
-		if( iLoc > 8 ) throw new Error("Unkown MaterialType "+loc+" used for specifying a TiC Trait!");
-		
-		if( traits[iLoc] != null ) return;
-		traits[iLoc] = (AbstractTrait) trait;
+		hasTraits = true;
 	}
 	
 	/**
@@ -151,13 +134,20 @@ public class TCMetalMaterial {
 	 * @return the instance of the trait that was originally stored
 	 * @throws
 	 */
-	public ITrait getTrait(String loc) {
+	public List<AbstractTrait> getTraits(String loc) {
 		if( !hasTraits ) return null;
 		
-		if( loc == null ) return traits[0];
-
-		int iLoc = getIndexForName(loc);
-		if( iLoc > 8 ) throw new Error("Trait for unknown MaterialType "+loc+" requested!");
-		return traits[iLoc];
+		if( loc == null ) return traits.get("general");
+		else if( traits.keySet().contains(loc) ) return traits.get(loc);
+		else throw new Error("Unkown trait location "+loc);
 	}
+	
+	/**
+	 * Get the names of the keys in the traits HashMap
+	 * @return Set<String>
+	 */
+	public Set<String> getTraitLocs() {
+		return traits.keySet();
+	}
+	
 }
