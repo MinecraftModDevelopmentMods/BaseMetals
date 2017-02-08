@@ -11,6 +11,7 @@ import com.mcmoddev.lib.blocks.InteractiveFluidBlock;
 import com.mcmoddev.lib.fluids.CustomFluid;
 import com.mcmoddev.lib.material.MetalMaterial;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemBlock;
@@ -81,7 +82,7 @@ public abstract class Fluids {
 		fluidRegistry.put(material.getName(), fluid);
 		return fluid;
 	}
-
+/*
 	protected static Fluid addFluid(String name, int density, int viscosity, int temperature, int luminosity) {
 		MetalMaterial material = Materials.getMaterialByName(name);
 		int tintColor;
@@ -109,8 +110,8 @@ public abstract class Fluids {
 		fluidRegistry.put(name, fluid);
 		return fluid;
 	}
-
-	protected static BlockFluidBase addFluidBlock(@Nonnull MetalMaterial material) {
+*/
+	protected static BlockFluidClassic addFluidBlock(@Nonnull MetalMaterial material) {
 		if (material == null) {
 			return null;
 		}
@@ -120,10 +121,10 @@ public abstract class Fluids {
 		}
 
 		final ResourceLocation location = new ResourceLocation(Loader.instance().activeModContainer().getModId(), material.getName());
-		BlockFluidBase block;
+		BlockFluidClassic block;
 
 		if (material.getName() != "mercury") {
-			block = new BlockMoltenFluid(material.fluid);
+			block = new BlockFluidClassic(material.fluid, Material.LAVA);
 		} else {
 			block = new InteractiveFluidBlock(getFluidByName(material.getName()), false, (World w, EntityLivingBase e) -> {
 				if (w.rand.nextInt(32) == 0) {
@@ -132,20 +133,21 @@ public abstract class Fluids {
 			});
 		}
 
+		String fluidUnlocal = material.fluid.getUnlocalizedName();
 		block.setRegistryName(location);
-		block.setUnlocalizedName(location.toString());
+		block.setUnlocalizedName(fluidUnlocal);
 		GameRegistry.register(block);
 		block.setCreativeTab(CreativeTabs.MISC);
 
 		final ItemBlock itemBlock = new ItemBlock(block);
 		itemBlock.setRegistryName(location);
 		itemBlock.setUnlocalizedName(location.toString());
-		GameRegistry.register(itemBlock);
+		GameRegistry.register(itemBlock); 
 		material.fluidBlock = block;
 		fluidBlockRegistry.put(material.getName(), block);
 		return block;
 	}
-
+/*
 	protected static BlockFluidBase addFluidBlock(String name) {
 		MetalMaterial material = Materials.getMaterialByName(name);
 		if (material != null) {
@@ -182,7 +184,7 @@ public abstract class Fluids {
 		fluidBlockRegistry.put(name, block);
 		return block;
 	}
-
+*/
 	/**
 	 * Gets a fluid by its name. The name is the name as it is registered in
 	 * the GameRegistry, not its unlocalized name (the unlocalized name is the

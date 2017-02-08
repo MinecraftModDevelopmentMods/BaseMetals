@@ -24,7 +24,7 @@ public class BlockMoltenFluid extends BlockFluidClassic {
 		// setCreativeTab(TinkerRegistry.tabSmeltery);
 	}
 
-	@Nonnull
+/*	@Nonnull
 	@Override
 	public String getUnlocalizedName() {
 		final Fluid fluid = FluidRegistry.getFluid(this.fluidName);
@@ -32,4 +32,4 @@ public class BlockMoltenFluid extends BlockFluidClassic {
 			return fluid.getUnlocalizedName();
 		return super.getUnlocalizedName();
 	}
-}
+*/}

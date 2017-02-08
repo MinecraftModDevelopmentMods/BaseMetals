@@ -184,11 +184,12 @@ public class TinkersConstruct implements IIntegration {
 		TinkerRegistry.addMaterialStats(tcmat, arrowShaftStats); // Sets stats for Arrow Shaft
 		TinkerRegistry.addMaterialStats(tcmat, fletchingStats); // Sets stats for Fletching 
 
-/*		if (trait != null) {
-			String stats = "temporary placeholder"; // TODO: find out what goes here
-			TinkerRegistry.addMaterialTrait(tcmat, trait, stats);
+		if (trait != null) {
+			// the 'stats' parameter of addMaterialTrait is unused in TiC at this time
+			// in fact, it is passed as null, just as I'm doing here
+			TinkerRegistry.addMaterialTrait(tcmat, trait, null);
 		}
-*/
+
 	}
 
 	protected static void completeMaterialStats(MetalMaterial material, HashMap<String,Float> baseStats) {

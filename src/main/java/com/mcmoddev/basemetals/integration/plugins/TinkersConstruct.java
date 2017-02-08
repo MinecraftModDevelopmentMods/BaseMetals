@@ -5,6 +5,9 @@ import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
 
+import slimeknights.tconstruct.library.traits.AbstractTrait;
+import slimeknights.tconstruct.tools.traits.TraitFreezing;
+
 /**
  *
  * @author Jasmine Iwanek
@@ -61,7 +64,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 		
 		if (Options.enableColdIron) {
-			registerMaterial(Materials.coldiron.getName(), false, true);
+			registerMaterial(Materials.coldiron, false, true, new TraitFreezing());
 		}
 
 		/*
