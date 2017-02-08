@@ -39,6 +39,14 @@ public class TCMetalMaterial {
 	public float fletchingAccuracy;
 	public float fletchingModifier;
 
+	// for reference and simplifying the API
+	public MetalMaterial metalmaterial;
+	
+	// craftable, castable, toolforge - does this allow it ?
+	public boolean craftable;
+	public boolean castable;
+	public boolean toolforge;
+	
 	private AbstractTrait[] traits = new AbstractTrait[9];
 	
 	private float calcDrawSpeed(int durability) {
@@ -73,6 +81,8 @@ public class TCMetalMaterial {
 		fletchingAccuracy = 1.0f;
 		fletchingModifier = 1.0f;
 		shaftBonusAmmo = 1;
+		
+		metalmaterial = material;
 	}
 
 	/**
