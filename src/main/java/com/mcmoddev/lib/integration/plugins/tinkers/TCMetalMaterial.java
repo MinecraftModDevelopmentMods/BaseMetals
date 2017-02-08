@@ -5,6 +5,10 @@ package com.mcmoddev.lib.integration.plugins.tinkers;
 
 import com.mcmoddev.lib.material.MetalMaterial;
 
+import slimeknights.tconstruct.library.traits.AbstractTrait;
+import slimeknights.tconstruct.library.traits.ITrait;
+import slimeknights.tconstruct.library.materials.MaterialTypes;
+
 /**
  * @author madman
  *
@@ -30,6 +34,8 @@ public class TCMetalMaterial {
 	public float shaftModifier;
 	public float fletchingAccuracy;
 	public float fletchingModifier;
+
+	private AbstractTrait[] traits = new AbstractTrait[9];
 	
 	private float calcDrawSpeed(int durability) {
 		float val;
@@ -60,5 +66,53 @@ public class TCMetalMaterial {
 		fletchingAccuracy = 1.0f;
 		fletchingModifier = 1.0f;
 		shaftBonusAmmo = 1;
+	}
+	
+	public void addTrait(ITrait trait) {
+		addTrait(trait, null);
+	}
+	
+	private int getIndexForName( String name ) {
+		switch( name.toLowerCase() ) {
+		case MaterialTypes.HEAD:
+			return 1;
+		case MaterialTypes.HANDLE:
+			return 2;
+		case MaterialTypes.EXTRA:
+			return 3;
+		case MaterialTypes.BOW:
+			return 4;
+		case MaterialTypes.BOWSTRING:
+			return 5;
+		case MaterialTypes.PROJECTILE:
+			return 6;
+		case MaterialTypes.SHAFT:
+			return 7;
+		case MaterialTypes.FLETCHING:
+			return 8;
+		default:
+			return 128;
+		}
+	}
+	
+	public void addTrait(ITrait trait, String loc) {
+		if( loc == null ) {
+			if( traits[0] != null ) return;
+			traits[0] = (AbstractTrait)trait;
+		}
+		
+		int iLoc = getIndexForName(loc);
+		if( iLoc > 8 ) throw new Error("Unkown MaterialType "+loc+" used for specifying a TiC Trait!");
+		
+		if( traits[iLoc] != null ) return;
+		traits[iLoc] = (AbstractTrait) trait;
+	}
+	
+	public ITrait getTrait(String loc) {
+		if( loc == null ) return traits[0];
+
+		int iLoc = getIndexForName(loc);
+		if( iLoc > 8 ) throw new Error("Trait for unknown MaterialType "+loc+" requested!");
+		return traits[iLoc];
 	}
 }
