@@ -54,6 +54,10 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 		*/
 
+		if (Options.enableCoal) {
+			registerFluid(Materials.vanilla_coal, 144);
+		}
+		
 		if (Options.enableColdIron) {
 			registerMaterial(Materials.coldiron.getName(), false, true);
 		}
@@ -88,8 +92,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		*/
 
 		if (Options.enableMercury) {
-			//registerMaterial(Materials.mercury.getName(), false, true); // Crashes
-			registerFluid(Materials.mercury.fluid, false);
+			registerFluid(Materials.mercury, 144);
 		}
 
 		if (Options.enableMithril) {
@@ -118,13 +121,6 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableStarSteel) {
 			registerMaterial(Materials.starsteel.getName(), false, true);
 		}
-
-		/*
-		if (Options.ENABLE_STEEL) {
-			registerMaterial(Materials.steel.getName(), false, true);
-			registerAlloy(Materials.steel.getName(), 8, new String[] { "iron", "coal" }, new int[] { 8, 1 }); // TCon already has Steel alloy?
-		}
-		*/
 
 		if (Options.enableTin) {
 			registerMaterial(Materials.tin.getName(), false, true);

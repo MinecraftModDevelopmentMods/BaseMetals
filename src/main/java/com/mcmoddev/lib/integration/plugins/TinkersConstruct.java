@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.util.Oredicts;
 
 import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
@@ -25,6 +26,7 @@ import slimeknights.tconstruct.library.materials.HeadMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.materials.ProjectileMaterialStats;
 import slimeknights.tconstruct.library.traits.ITrait;
+import slimeknights.tconstruct.tools.TinkerTools;
 
 /**
  *
@@ -47,21 +49,30 @@ public class TinkersConstruct implements IIntegration {
 	}
 
 	/**
-	 *
-	 * @param fluid the fluid to register
-	 * @param toolforge Should this have a toolforge
+	 * @param base Material being melted
+	 * @param amountPer Amount of fluid per ingot
 	 */
-	protected static void registerFluid(Fluid fluid, boolean toolforge) {
-		final NBTTagCompound message = new NBTTagCompound();
-		message.setString("fluid", fluid.getName());
-		message.setString("ore", StringUtils.capitalize(fluid.getName()));
-		message.setBoolean("toolforge", toolforge);
-		// message.setTag("alloy", alloysTagList); // you can also send an alloy with the registration (see below)
+	protected static void registerFluid(MetalMaterial base, int amountPer) {
+		String materialName = base.getName();
+		Fluid output = FluidRegistry.getFluid(materialName);
+		String oreDictName = base.getCapitalizedName();
 
-		// send the NBT to TCon
-		FMLInterModComms.sendMessage(PLUGIN_MODID, "integrateSmeltery", message);
+		// hacky fix for Coal being itemCoal and not ingotCoal
+		if( base.getName() == "coal" )
+			TinkerRegistry.registerMelting("itemCoal", output, 144);
+		
+		if( base.hasOre ) 
+			TinkerRegistry.registerMelting(Oredicts.ORE+oreDictName, output, amountPer*2);
+		if( base.ingot != null ) 
+			TinkerRegistry.registerMelting(Oredicts.INGOT+oreDictName, output, amountPer);
+		if( base.nugget != null )
+			TinkerRegistry.registerMelting(Oredicts.NUGGET+oreDictName, output, amountPer/9);
+		if( base.powder != null )
+			TinkerRegistry.registerMelting(Oredicts.DUST+oreDictName, output, amountPer);
+		if( base.smallpowder != null )
+			TinkerRegistry.registerMelting(Oredicts.DUSTSMALL+oreDictName, output, amountPer/9);
 	}
-
+	
 	/**
 	 *
 	 * @param outputName The alloy to output
@@ -95,8 +106,6 @@ public class TinkersConstruct implements IIntegration {
 	 * @param trait to apply
 	 */
 	protected static void registerMaterial(MetalMaterial material, boolean craftable, boolean castable, ITrait trait) {
-
-//		MetalMaterial material = Materials.getMaterialByName(name);
 		if (material == null) {
 			return;
 		}
@@ -105,24 +114,40 @@ public class TinkersConstruct implements IIntegration {
 			return;
 		}
 
-//		Fluid fluid;
-//		int tintColor;
+		Material tcmat = TinkerRegistry.getMaterial(material.getName());
+		if( tcmat == Material.UNKNOWN ) {
+			tcmat = new Material(material.getName(), material.getTintColor());
+			TinkerRegistry.addMaterial(tcmat);
+		}
 
-//		if (material != null) {
-//		tintColor = material.getTintColor();
-//		fluid = material.fluid;
-//		} else {
-//			tintColor = 0xFFD8D8D8; // Hack for Mercury as it doesn't have a metalMaterial
-//			fluid = Fluids.getFluidByName(name);
-//		}
+		// Set fluid used, Set whether craftable, set whether castable, adds the
+		// item with the value 144.
+		tcmat.setFluid(material.fluid).setCraftable(craftable).setCastable(castable);
+		
+		// register the fluid for the material, 1 ingot is 144mB
+		registerFluid( material, 144 );
+		
+		// in here we should always have a nugget and an ingot
+		tcmat.addItem(material.nugget, 1, Material.VALUE_Nugget);
+		tcmat.addItem(material.ingot, 1, Material.VALUE_Ingot);
+		tcmat.setRepresentativeItem(material.ingot);
 
-		final Material tcmaterial = new Material(material.getName(), material.getTintColor());
-
+		// setup the stats for the item when used as a tool head
 		final HeadMaterialStats headStats = new HeadMaterialStats(material.getToolDurability(), material.magicAffinity * 3 / 2, material.getBaseAttackDamage() * 2, material.getToolHarvestLevel());
-
+		
+		// when used as a handle
 		final HandleMaterialStats handleStats = new HandleMaterialStats((int) (material.hardness + material.magicAffinity * 2) / 9, (int) (material.getToolDurability() / 6.8));
 
+		// when used for anything else
 		final ExtraMaterialStats extraStats = new ExtraMaterialStats(material.getToolDurability() / 10);
+
+		TinkerRegistry.addMaterialStats(tcmat, headStats); // Sets stats for head
+		TinkerRegistry.addMaterialStats(tcmat, handleStats); // Sets Stats for handle
+		TinkerRegistry.addMaterialStats(tcmat, extraStats); // Sets stats for everything else
+
+		// register the material as being a possible Tool Forge material
+		TinkerTools.registerToolForgeBlock(Oredicts.BLOCK+material.getCapitalizedName());
+		
 		/*
 	    final BowMaterialStats bowStats = new BowMaterialStats(1f, 1f, 0f);
 	    final BowStringMaterialStats bowStringStats = new BowStringMaterialStats(1f);
@@ -131,11 +156,7 @@ public class TinkersConstruct implements IIntegration {
 	    final ProjectileMaterialStats projectileStats = new ProjectileMaterialStats();
 	    */
 
-		registerFluid(material.fluid, true); // Register the fluid with tinkers
 
-		TinkerRegistry.addMaterialStats(tcmaterial, headStats); // Sets stats for head
-		TinkerRegistry.addMaterialStats(tcmaterial, handleStats); // Sets Stats for handle
-		TinkerRegistry.addMaterialStats(tcmaterial, extraStats); // Sets stats for everything else
 		/*
 		TinkerRegistry.addMaterialStats(tcmaterial, bowStats); // Sets stats for Bow
 		TinkerRegistry.addMaterialStats(tcmaterial, bowStringStats); // Sets stats for Bow String
@@ -144,19 +165,10 @@ public class TinkersConstruct implements IIntegration {
 		TinkerRegistry.addMaterialStats(tcmaterial, projectileStats); // Sets stats for Projectile
 		*/
 
-		if (trait != null) {
+/*		if (trait != null) {
 			String stats = "temporary placeholder"; // TODO: find out what goes here
-			TinkerRegistry.addMaterialTrait(tcmaterial, trait, stats);
+			TinkerRegistry.addMaterialTrait(tcmat, trait, stats);
 		}
-
-		// Set fluid used, Set whether craftable, set whether castable, adds the
-		// item with the value 144.
-		tcmaterial.setFluid(material.fluid).setCraftable(craftable).setCastable(castable);
-		tcmaterial.addItem(material.nugget, 1, Material.VALUE_Nugget);
-		tcmaterial.addItem(material.ingot, 1, Material.VALUE_Ingot);
-		tcmaterial.setRepresentativeItem(material.ingot); // Use this as the picture
-
-		// TinkerIntegration.integrate(tcmaterial);
-		TinkerIntegration.integrate(tcmaterial, material.fluid, StringUtils.capitalize(material.fluid.getName()));
+*/
 	}
 }
