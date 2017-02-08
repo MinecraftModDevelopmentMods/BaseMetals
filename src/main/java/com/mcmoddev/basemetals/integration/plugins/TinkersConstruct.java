@@ -5,8 +5,7 @@ import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
 
-import slimeknights.tconstruct.library.traits.AbstractTrait;
-import slimeknights.tconstruct.tools.traits.TraitFreezing;
+import slimeknights.tconstruct.tools.traits.*;
 
 /**
  *
@@ -25,7 +24,8 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		if (Options.enableAdamantine) {
-			registerMaterial(Materials.adamantine.getName(), false, true);
+			registerMaterial(Materials.adamantine, false, true, new TraitColdblooded());
+			// also needs trait on 'HEAD' of insatiable
 		}
 
 		if (Options.enableAntimony) {
@@ -33,7 +33,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		if (Options.enableAquarium) {
-			registerMaterial(Materials.aquarium.getName(), false, true);
+			registerMaterial(Materials.aquarium, false, true, new TraitAquadynamic());
 			// registerAlloy(Materials.aquarium.getName(), 3,
 			//		new String[] { "copper", "zinc", "prismarine" },
 			//		new int[] { 2, 1, 3}); // Not possible currently
@@ -107,7 +107,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		if (Options.enableMithril) {
-			registerMaterial(Materials.mithril.getName(), false, true);
+			registerMaterial(Materials.mithril, false, true, new TraitHoly());
 			registerAlloy(Materials.mithril.getName(), 3,
 					new String[] { "silver", "coldiron", "mercury" },
 					new int[] { 2, 1, 1});
