@@ -197,6 +197,8 @@ public class Oredicts {
 	public static final String DUSTDIRTY = "dustDirty";
 	public static final String CRYSTAL = "crystal";
 	public static final String SHARD = "shard";
+
+	public static final String CASING = "casing";
 	public static final String PLATEDENSE = "plateDense";
 	public static final String CRUSHED = "crushed";
 	public static final String CRUSHEDPURIFIED = "crushedPurified";

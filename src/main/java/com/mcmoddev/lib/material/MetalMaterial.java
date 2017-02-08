@@ -166,6 +166,7 @@ public class MetalMaterial {
 	public Item clump;
 	public Item powder_dirty;
 
+	public Item casing;
 	public Item dense_plate;
 	public Item crushed;
 	public Item crushed_purified;

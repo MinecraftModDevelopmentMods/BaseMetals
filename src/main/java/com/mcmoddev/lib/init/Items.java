@@ -169,16 +169,26 @@ public abstract class Items {
 	}
 
 	protected static void createItemsModIC2(MetalMaterial material) {
-		createDensePlate(material);
-		createCrushed(material);
-		createCrushedPurified(material);
+		final boolean enableModderSupportThings = true;
+
+		if (material.hasOre) {
+			createCrushed(material);
+			createCrushedPurified(material);
+		}
+
+		if (enableModderSupportThings) {
+			createCasing(material);
+			createDensePlate(material);
+		}
 	}
 
 	protected static void createItemsModMekanism(MetalMaterial material) {
-		createCrystal(material);
-		createShard(material);
-		createClump(material);
-		createDirtyPowder(material);
+		if (material.hasOre) {
+			createCrystal(material);
+			createShard(material);
+			createClump(material);
+			createDirtyPowder(material);
+		}
 	}
 
 	protected static Item addItem(Item item, String name, MetalMaterial material, CreativeTabs tab) {
@@ -576,6 +586,19 @@ public abstract class Items {
 		}
 
 		return material.powder_dirty;
+	}
+
+	protected static Item createCasing(MetalMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableIC2) && (material.casing == null)) {
+			material.casing = addItem(new GenericMetalItem(material), "casing", material, ItemGroups.tab_items);
+			OreDictionary.registerOre(Oredicts.CASING + material.getCapitalizedName(), material.casing);
+		}
+
+		return material.casing;
 	}
 
 	// TODO: Possibly make this a block, 1/2 of the normal plate.

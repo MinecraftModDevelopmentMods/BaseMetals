@@ -1,16 +1,16 @@
 package com.mcmoddev.lib.integration.plugins;
 
-//import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.material.MetalMaterial;
 
-//import net.minecraftforge.fml.common.Loader;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-//@BaseMetalsPlugin(IC2.PLUGIN_MODID)
 public class IC2 implements IIntegration {
 
 	public static final String PLUGIN_MODID = "IC2";
-
-//	protected static final String OWNER_MODID = Loader.instance().activeModContainer().getModId();
 
 	private static boolean initDone = false;
 
@@ -22,4 +22,13 @@ public class IC2 implements IIntegration {
 
 		initDone = true;
 	}
+
+	protected void registerPluginRecipes(MetalMaterial material) {
+		final Item forgeHammer = new ItemStack(Item.getByNameOrId("ic2:forge_hammer"), 1).getItem();
+
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.casing, 2), material.plate, forgeHammer));
+		// Move these to main recipe loop?
+		GameRegistry.addSmelting(material.crushed, new ItemStack(material.ingot, 1), 0);
+		GameRegistry.addSmelting(material.crushed_purified, new ItemStack(material.ingot, 1), 0);
+	}	
 }
