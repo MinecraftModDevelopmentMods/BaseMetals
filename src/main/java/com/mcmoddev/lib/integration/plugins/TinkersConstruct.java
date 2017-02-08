@@ -1,13 +1,9 @@
 package com.mcmoddev.lib.integration.plugins;
 
-//import net.minecraft.nbt.NBTTagCompound;
-//import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-//import net.minecraftforge.fml.common.event.FMLInterModComms;
 
-//import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 
 import com.mcmoddev.lib.integration.IIntegration;
@@ -15,7 +11,6 @@ import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.util.Oredicts;
 
-//import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
 import slimeknights.tconstruct.library.materials.BowMaterialStats;
@@ -25,7 +20,6 @@ import slimeknights.tconstruct.library.materials.FletchingMaterialStats;
 import slimeknights.tconstruct.library.materials.HandleMaterialStats;
 import slimeknights.tconstruct.library.materials.HeadMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
-import slimeknights.tconstruct.library.materials.ProjectileMaterialStats;
 import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.tools.TinkerTools;
 
@@ -149,28 +143,32 @@ public class TinkersConstruct implements IIntegration {
 
 		/*
 		 * Things are oddly broken in this chunk 
- 
+         */
 		// then the bow-part stats
 		final BowMaterialStats bowStats = new BowMaterialStats( stats.get("draw_speed").floatValue(), stats.get("range").floatValue(), stats.get("bow_damage").floatValue());
 		final BowStringMaterialStats bowStringStats = new BowStringMaterialStats(stats.get("bowstring_modifier").floatValue());
-		// The ArrowShaftMaterialStats line here isn't working...
-		final ArrowShaftMaterialStats arrowShaftStats = new ArrowShaftMaterialStats(stats.get("shaft_modifer").floatValue(), stats.get("shaft_ammo").intValue() );
+		
+		float shaftModifier = 1.0f;
+		if( stats.get("shaft_modifier") != null ) shaftModifier = stats.get("shaft_modifier").floatValue();
+		else com.mcmoddev.basemetals.BaseMetals.logger.error("HashMap.get(\"shaft_modifier\") returned null");
+		
+		int bonusAmmo = 1;
+		if( stats.get("shaft_ammo") != null ) bonusAmmo = stats.get("shaft_ammo").intValue();
+		else com.mcmoddev.basemetals.BaseMetals.logger.error("HashMap.get(\"shaft_ammo\") returned null");
+		
+		final ArrowShaftMaterialStats arrowShaftStats = new ArrowShaftMaterialStats( shaftModifier, bonusAmmo );
 		final FletchingMaterialStats fletchingStats = new FletchingMaterialStats(stats.get("fletching_accuracy").floatValue(), stats.get("fletching_modifier").floatValue());
-		final ProjectileMaterialStats projectileStats = new ProjectileMaterialStats();
-		*/
+		
 		// add the base tool stats
 		TinkerRegistry.addMaterialStats(tcmat, headStats); // Sets stats for head
 		TinkerRegistry.addMaterialStats(tcmat, handleStats); // Sets Stats for handle
 		TinkerRegistry.addMaterialStats(tcmat, extraStats); // Sets stats for everything else
 
-		/*
 		// now add the extended stats for bow/projectile
 		TinkerRegistry.addMaterialStats(tcmat, bowStats); // Sets stats for Bow
 		TinkerRegistry.addMaterialStats(tcmat, bowStringStats); // Sets stats for Bow String
 		TinkerRegistry.addMaterialStats(tcmat, arrowShaftStats); // Sets stats for Arrow Shaft
 		TinkerRegistry.addMaterialStats(tcmat, fletchingStats); // Sets stats for Fletching 
-		TinkerRegistry.addMaterialStats(tcmat, projectileStats); // Sets stats for Projectile
-		 */		
 
 /*		if (trait != null) {
 			String stats = "temporary placeholder"; // TODO: find out what goes here
