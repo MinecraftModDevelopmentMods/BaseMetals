@@ -90,8 +90,8 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		}
 
 		if (Options.enableMercury) {
-			addFluid("mercury", 13594, 2000, 769, 0);
-			addFluidBlock("mercury");
+			addFluid(Materials.mercury, 13594, 2000, 769, 0);
+			addFluidBlock(Materials.mercury);
 		}
 
 		if (Options.enableMithril) {

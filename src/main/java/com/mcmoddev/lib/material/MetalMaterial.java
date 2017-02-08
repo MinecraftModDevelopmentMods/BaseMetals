@@ -10,6 +10,7 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.Loader;
 
@@ -159,7 +160,7 @@ public class MetalMaterial {
 	public Block wall;
 
 	public Fluid fluid;
-	public BlockFluidBase fluidBlock;
+	public BlockFluidClassic fluidBlock;
 	
 	public Item crystal;
 	public Item shard;
