@@ -15,9 +15,9 @@ public class TraitSparkly extends AbstractTrait {
 	
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if(!world.isRemote && entity instanceof EntityLivingBase && random.nextInt(40) == 0 ) {
+		if(!world.isRemote && entity instanceof EntityLivingBase && random.nextInt(200) == 0 ) {
 			if(((EntityLivingBase)entity).getActiveItemStack() != tool) {
-				ToolHelper.healTool(tool, 10, (EntityLivingBase) entity);
+				ToolHelper.healTool(tool, 1, (EntityLivingBase) entity);
 			}
 		}
 	}

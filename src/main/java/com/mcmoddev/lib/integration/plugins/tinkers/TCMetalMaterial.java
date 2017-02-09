@@ -3,7 +3,6 @@
  */
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +12,6 @@ import com.mcmoddev.lib.material.MetalMaterial;
 
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
-import slimeknights.tconstruct.library.materials.MaterialTypes;
 
 /**
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
