@@ -13,27 +13,49 @@ import com.mcmoddev.lib.material.MetalMaterial;
  */
 public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 
+	/** Adamantine */
 	public static MetalMaterial adamantine;
+	/** Antimony */
 	public static MetalMaterial antimony;
+	/** Aquarium */
 	public static MetalMaterial aquarium;
+	/** Bismuth */
 	public static MetalMaterial bismuth;
+	/** Brass */
 	public static MetalMaterial brass;
+	/** Bronze */
 	public static MetalMaterial bronze;
+	/** Cold-Iron */
 	public static MetalMaterial coldiron;
+	/** Copper */
 	public static MetalMaterial copper;
+	/** Cupronickel */
 	public static MetalMaterial cupronickel;
+	/** Electrum */
 	public static MetalMaterial electrum;
+	/** Invar */
 	public static MetalMaterial invar;
+	/** Lead */
 	public static MetalMaterial lead;
+	/** Mercury */
 	public static MetalMaterial mercury;
+	/** Mithril */
 	public static MetalMaterial mithril;
+	/** Nickel */
 	public static MetalMaterial nickel;
+	/** Pewter */
 	public static MetalMaterial pewter;
+	/** Platinum */
 	public static MetalMaterial platinum;
+	/** Silver */
 	public static MetalMaterial silver;
+	/** Star-Steel */
 	public static MetalMaterial starsteel;
+	/** Steel */
 	public static MetalMaterial steel;
+	/** Tin */
 	public static MetalMaterial tin;
+	/** Zinc */
 	public static MetalMaterial zinc;
 
 	// vanilla imports

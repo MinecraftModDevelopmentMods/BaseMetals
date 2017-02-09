@@ -8,19 +8,18 @@ import net.minecraftforge.event.world.BlockEvent;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.utils.ToolHelper;
 
-
-
 public class TraitBrittle extends AbstractTrait {
+
 	TraitBrittle() {
 		super("brittle", TextFormatting.RED);
 	}
-	
+
 	@Override
 	public void beforeBlockBreak(ItemStack tool, BlockEvent.BreakEvent event) {
 		Block block = event.getState().getBlock();
-		if ( block.getDefaultState().getMaterial() == Material.ROCK ) {
+		if (block.getDefaultState().getMaterial() == Material.ROCK) {
 			Integer durability = ToolHelper.getCurrentDurability(tool);
-			Integer damageDone = random.nextInt(Math.min(5, durability-1));
+			Integer damageDone = random.nextInt(Math.min(5, durability - 1));
 			ToolHelper.damageTool(tool, damageDone.intValue(), event.getPlayer());
 		}
 	}
