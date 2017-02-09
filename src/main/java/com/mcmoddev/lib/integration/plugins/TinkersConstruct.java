@@ -108,7 +108,8 @@ public class TinkersConstruct implements IIntegration {
 		TCMetalMaterial m = new TCMetalMaterial(material);
 		m.craftable = craftable;
 		m.castable = castable;
-		if( trait != null ) m.addTrait(trait);
+		if (trait != null)
+			m.addTrait(trait);
 		
 		registerMaterial(m);
 	}

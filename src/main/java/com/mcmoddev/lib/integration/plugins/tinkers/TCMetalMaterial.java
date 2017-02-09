@@ -57,18 +57,6 @@ public class TCMetalMaterial {
 	private HashMap<String, List<AbstractTrait>> traits = new HashMap<String, List<AbstractTrait>>();
 	//private AbstractTrait[] traits = new AbstractTrait[9];
 
-	private float calcDrawSpeed(int durability) {
-		float val;
-		if (durability < 204) {
-			val = 1.0f;
-		} else {
-			val = ((durability - 200) + 1) / 10.0f;
-			val -= Math.floor(val);
-		}
-
-		return val;
-	}
-
 	/**
 	 * @param material MetalMaterial this represents
 	 */
@@ -97,6 +85,18 @@ public class TCMetalMaterial {
 		craftable = true;
 		toolforge = true;
 		hasTraits = false;
+	}
+
+	private float calcDrawSpeed(int durability) {
+		float val;
+		if (durability < 204) {
+			val = 1.0f;
+		} else {
+			val = ((durability - 200) + 1) / 10.0f;
+			val -= Math.floor(val);
+		}
+
+		return val;
 	}
 
 	/**
