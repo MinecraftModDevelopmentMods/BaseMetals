@@ -37,13 +37,14 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			adamantTC.craftable = false;
 			adamantTC.addTrait(TinkerTraits.coldblooded);
 			adamantTC.addTrait(TinkerTraits.insatiable, MaterialTypes.HEAD);
+
 			registerMaterial(adamantTC);
 		}
 
 		if (Options.enableAntimony) {
 			TCMetalMaterial antimonyTC = new TCMetalMaterial(Materials.antimony);
 			antimonyTC.craftable = false;
-			
+
 			registerMaterial(antimonyTC);
 		}
 
@@ -53,7 +54,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			aquaTC.addTrait(TinkerTraits.aquadynamic);
 			aquaTC.addTrait(TinkerTraits.jagged, MaterialTypes.HEAD);
 			aquaTC.addTrait(TinkerTraits.aquadynamic, MaterialTypes.HEAD);
-			
+
 			registerMaterial(aquaTC);
 			// When FMe is out we can probably do the alloy.
 			// registerAlloy(Materials.aquarium.getName(), 3,
@@ -64,35 +65,34 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableBismuth) {
 			TCMetalMaterial bismuthTC = new TCMetalMaterial(Materials.bismuth);
 			bismuthTC.craftable = false;
-			
+
 			registerMaterial(bismuthTC);
 		}
 
 		if (Options.enableBrass) {
 			TCMetalMaterial brassTC = new TCMetalMaterial(Materials.brass);
 			brassTC.craftable = false;
-			
 			brassTC.addTrait(TinkerTraits.dense);
-			
+
 			registerMaterial(brassTC);
 		}
 
 		if (Options.enableCoal) {
 			registerFluid(Materials.vanilla_coal, 144);
 		}
-		
+
 		if (Options.enableColdIron) {
 			TCMetalMaterial coldironTC = new TCMetalMaterial(Materials.coldiron);
 			coldironTC.craftable = false;
-			
 			coldironTC.addTrait(TinkerTraits.freezing);
+
 			registerMaterial(coldironTC);
 		}
 
 		if (Options.enableCupronickel) {
 			TCMetalMaterial cuproTC = new TCMetalMaterial(Materials.cupronickel);
 			cuproTC.craftable = false;
-			
+
 			registerMaterial(cuproTC);
 			registerAlloy(Materials.cupronickel.getName(), 4,
 					new String[] { "copper", "nickel" },
@@ -102,9 +102,11 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableInvar) {
 			TCMetalMaterial invarTC = new TCMetalMaterial(Materials.invar);
 			invarTC.craftable = false;
-			
+
 			registerMaterial(invarTC);
-			registerAlloy(Materials.invar.fluid.getName(), 3, new String[] { "iron", "nickel" }, new int[] {2,1});
+			registerAlloy(Materials.invar.fluid.getName(), 3,
+					new String[] { "iron", "nickel" },
+					new int[] { 2, 1 });
 		}
 
 		// As much as we'd like to, we cannot do this like this.
@@ -127,19 +129,21 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableMithril) {
 			TCMetalMaterial mithrilTC = new TCMetalMaterial(Materials.mithril);
 			mithrilTC.craftable = false;
-			
 			mithrilTC.addTrait(TinkerTraits.holy);
+
 			registerMaterial(mithrilTC);
-			
+			// *
+			// Appears to be broken currently
 			registerAlloy(Materials.mithril.getName(), 3,
 					new String[] { "silver", "coldiron", "mercury" },
-					new int[] { 2, 1, 1});
+					new int[] { 2, 1, 1 });
+			// */
 		}
 
 		if (Options.enableNickel) {
 			TCMetalMaterial nickelTC = new TCMetalMaterial(Materials.nickel);
 			nickelTC.craftable = false;
-			
+
 			registerMaterial(nickelTC);
 		}
 
@@ -147,8 +151,8 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enablePewter) {
 			TCMetalMaterial pewterTC = new TCMetalMaterial(Materials.pewter);
 			pewterTC.craftable = false;
-			
 			pewterTC.addTrait(MMDTraits.soft);
+
 			registerMaterial(pewterTC);
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
 			registerAlloy(Materials.pewter.getName(), 144,
@@ -159,38 +163,42 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enablePlatinum) {
 			TCMetalMaterial platinumTC = new TCMetalMaterial(Materials.platinum);
 			platinumTC.craftable = false;
-			
+
 			registerMaterial(platinumTC);
+		}
+
+		if (Options.enableSilver) {
+			// Anything needed?
 		}
 
 		// Steel has 'Sharp' and 'Stiff'
 		if (Options.enableSteel) {
 			registerAlloy(Materials.steel.fluid.getName(), 8, 
-					new String[] { "iron","coal" },
-					new int[]{8,1});
+					new String[] { "iron", "coal" },
+					new int[]{ 8, 1 });
 		}
 
 		// needs Custom 'sparkly' - autorepair
 		if (Options.enableStarSteel) {
 			TCMetalMaterial starsteelTC = new TCMetalMaterial(Materials.starsteel);
 			starsteelTC.craftable = false;
-			
 			starsteelTC.addTrait(TinkerTraits.enderference, MaterialTypes.HEAD);
 			starsteelTC.addTrait(MMDTraits.sparkly);
+
 			registerMaterial(starsteelTC);
 		}
 
 		if (Options.enableTin) {
 			TCMetalMaterial tinTC = new TCMetalMaterial(Materials.tin);
 			tinTC.craftable = false;
-			
+
 			registerMaterial(tinTC);
 		}
 
 		if (Options.enableZinc) {
 			TCMetalMaterial zincTC = new TCMetalMaterial(Materials.zinc);
 			zincTC.craftable = false;
-			
+
 			registerMaterial(zincTC);
 		}
 

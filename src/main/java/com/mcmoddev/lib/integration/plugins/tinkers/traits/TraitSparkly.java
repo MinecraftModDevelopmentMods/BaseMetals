@@ -9,14 +9,15 @@ import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.utils.ToolHelper;
 
 public class TraitSparkly extends AbstractTrait {
+
 	public TraitSparkly() {
 		super("sparkly", TextFormatting.OBFUSCATED);
 	}
-	
+
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if(!world.isRemote && entity instanceof EntityLivingBase && random.nextInt(200) == 0 ) {
-			if(((EntityLivingBase)entity).getActiveItemStack() != tool) {
+		if (!world.isRemote && entity instanceof EntityLivingBase && random.nextInt(200) == 0) {
+			if (((EntityLivingBase)entity).getActiveItemStack() != tool) {
 				ToolHelper.healTool(tool, 1, (EntityLivingBase) entity);
 			}
 		}

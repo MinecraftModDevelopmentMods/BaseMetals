@@ -22,6 +22,7 @@ import slimeknights.tconstruct.library.traits.ITrait;
  */
 
 public class TCMetalMaterial {
+
 	// integer values
 	// durabilities...
 	public int headDurability;
@@ -30,7 +31,7 @@ public class TCMetalMaterial {
 	// Other ints...
 	public int miningLevel;
 	public int shaftBonusAmmo;
-	
+
 	// float values
 	public float miningSpeed;
 	public float headAttackDamage;
@@ -45,17 +46,17 @@ public class TCMetalMaterial {
 
 	// for reference and simplifying the API
 	final public MetalMaterial metalmaterial;
-	
+
 	// craftable, castable, toolforge - does this allow it ?
 	public boolean craftable;
 	public boolean castable;
 	public boolean toolforge;
 
 	public boolean hasTraits;
-	
+
 	private HashMap<String, List<AbstractTrait>> traits = new HashMap<String, List<AbstractTrait>>();
 	//private AbstractTrait[] traits = new AbstractTrait[9];
-	
+
 	private float calcDrawSpeed(int durability) {
 		float val;
 		if (durability < 204) {
@@ -64,6 +65,7 @@ public class TCMetalMaterial {
 			val = ((durability - 200) + 1) / 10.0f;
 			val -= Math.floor(val);
 		}
+
 		return val;
 	}
 
@@ -80,7 +82,7 @@ public class TCMetalMaterial {
 		extraDurability = material.getToolDurability() / 10;
 		bowDrawingSpeed = calcDrawSpeed(material.getToolDurability());
 		bowDamage = material.getBaseAttackDamage() + 3;
-		
+
 		// From here on its fixed values as defaults
 		bowRange = 15.0f;
 		bowstringModifier = 1.0f;
@@ -88,9 +90,9 @@ public class TCMetalMaterial {
 		fletchingAccuracy = 1.0f;
 		fletchingModifier = 1.0f;
 		shaftBonusAmmo = 1;
-		
+
 		metalmaterial = material;
-		
+
 		castable = true;
 		craftable = true;
 		toolforge = true;
@@ -105,7 +107,7 @@ public class TCMetalMaterial {
 		hasTraits = true;
 		addTrait(trait, "general");
 	}
-	
+
 	/**
 	 * Add a TiC default or custom trait to the material when used as a specific tool part
 	 * @param trait the AbstractTrait to add
@@ -113,8 +115,8 @@ public class TCMetalMaterial {
 	 * @throws
 	 */
 	public void addTrait(ITrait trait, String loc) {
-		if( traits.keySet().contains(loc) ) {
-			if( !traits.get(loc).add((AbstractTrait)trait) ) { 
+		if (traits.keySet().contains(loc)) {
+			if (!traits.get(loc).add((AbstractTrait)trait)) { 
 				throw new Error("Unable to add trait!");
 			}
 		} else {
@@ -122,10 +124,10 @@ public class TCMetalMaterial {
 			t.add((AbstractTrait)trait);
 			traits.put(loc, t);
 		}
-		
+
 		hasTraits = true;
 	}
-	
+
 	/**
 	 * Get the trait for a given location
 	 * @param loc the MaterialType for the tool part of the trait, null for the overall one
@@ -133,19 +135,24 @@ public class TCMetalMaterial {
 	 * @throws
 	 */
 	public List<AbstractTrait> getTraits(String loc) {
-		if( !hasTraits ) return null;
-		
-		if( loc == null ) return traits.get("general");
-		else if( traits.keySet().contains(loc) ) return traits.get(loc);
-		else throw new Error("Unkown trait location "+loc);
+		if (!hasTraits) {
+			return null;
+		}
+
+		if( loc == null ) {
+			return traits.get("general");
+		} else if (traits.keySet().contains(loc)) {
+			return traits.get(loc);
+		} else {
+			throw new Error("Unkown trait location " + loc);
+		}
 	}
-	
+
 	/**
 	 * Get the names of the keys in the traits HashMap
 	 * @return Set<String>
 	 */
 	public Set<String> getTraitLocs() {
 		return traits.keySet();
-	}
-	
+	}	
 }

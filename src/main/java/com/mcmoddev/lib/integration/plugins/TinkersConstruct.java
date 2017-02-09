@@ -112,7 +112,7 @@ public class TinkersConstruct implements IIntegration {
 		
 		registerMaterial(m);
 	}
-	
+
 	/**
 	 * Creates a Tinkers Construct {@link slimeknights.tconstruct.library.materials.Material}
 	 * @param material Information about the material and the material itself
@@ -125,9 +125,9 @@ public class TinkersConstruct implements IIntegration {
 		if (material.metalmaterial.fluid == null) {
 			return;
 		}
-		
+
 		Material tcmat = new Material( material.metalmaterial.getName(), TextFormatting.WHITE);
-		
+
 		if (material.hasTraits) {
 			for( String s : material.getTraitLocs() ) {
 				for( AbstractTrait t : material.getTraits(s) ) {
@@ -139,17 +139,17 @@ public class TinkersConstruct implements IIntegration {
 		if( TinkerRegistry.getMaterial(tcmat.identifier) != Material.UNKNOWN ) {
 			return;
 		}
-		
+
 		// Set fluid used, Set whether craftable, set whether castable, adds the
 		// item with the value 144.
 		tcmat.setFluid(material.metalmaterial.fluid).setCraftable(material.craftable).setCastable(material.castable);
 
 		// register the fluid for the material, 1 ingot is 144mB
-		registerFluid( material.metalmaterial, 144 );
+		registerFluid(material.metalmaterial, 144);
 
 		// register the material as being a possible Tool Forge material
 		// somewhat hacky, but we need to keep the API changes minimal
-		if( material.toolforge ) {
+		if (material.toolforge) {
 			TinkerTools.registerToolForgeBlock(Oredicts.BLOCK+material.metalmaterial.getCapitalizedName());
 		}
 
@@ -183,5 +183,4 @@ public class TinkersConstruct implements IIntegration {
 		// register the material
 		TinkerRegistry.addMaterial(tcmat);
 	}
-
 }
