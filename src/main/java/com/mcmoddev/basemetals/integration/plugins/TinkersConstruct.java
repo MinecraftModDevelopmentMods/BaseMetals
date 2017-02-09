@@ -131,9 +131,11 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			mithrilTC.addTrait(TinkerTraits.holy);
 			registerMaterial(mithrilTC);
 			
-			registerAlloy(Materials.mithril.getName(), 3,
-					new String[] { "silver", "coldiron", "mercury" },
-					new int[] { 2, 1, 1});
+			if( Options.enableMercury && Options.enableSilver ) {
+				registerAlloy(Materials.mithril.getName(), 3,
+						new String[] { "silver", "coldiron", "mercury" },
+						new int[] { 2, 1, 1});
+			}
 		}
 
 		if (Options.enableNickel) {
