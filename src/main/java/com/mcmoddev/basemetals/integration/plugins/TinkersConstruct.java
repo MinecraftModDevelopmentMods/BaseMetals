@@ -133,7 +133,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 			registerMaterial(mithrilTC);
 			
-			if( Options.enableMercury && Options.enableSilver ) {
+			if( Options.enableMercury && Options.enableSilver && Options.enableColdIron ) {
 				registerAlloy(Materials.mithril.getName(), 3,
 						new String[] { "silver", "coldiron", "mercury" },
 						new int[] { 2, 1, 1});
