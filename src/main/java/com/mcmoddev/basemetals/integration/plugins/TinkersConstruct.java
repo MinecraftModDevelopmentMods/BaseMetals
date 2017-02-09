@@ -51,6 +51,8 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			TCMetalMaterial aquaTC = new TCMetalMaterial(Materials.aquarium);
 			aquaTC.craftable = false;
 			aquaTC.addTrait(TinkerTraits.aquadynamic);
+			aquaTC.addTrait(TinkerTraits.jagged, MaterialTypes.HEAD);
+			aquaTC.addTrait(TinkerTraits.aquadynamic, MaterialTypes.HEAD);
 			
 			registerMaterial(aquaTC);
 			// When FMe is out we can probably do the alloy.
@@ -174,6 +176,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			starsteelTC.craftable = false;
 			
 			starsteelTC.addTrait(TinkerTraits.enderference, MaterialTypes.HEAD);
+			starsteelTC.addTrait(MMDTraits.sparkly);
 			registerMaterial(starsteelTC);
 		}
 

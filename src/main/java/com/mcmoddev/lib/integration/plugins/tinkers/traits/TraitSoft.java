@@ -16,7 +16,6 @@ public class TraitSoft extends AbstractTrait {
 
 	public TraitSoft() {
 		super("soft", 0xffffff);
-		com.mcmoddev.basemetals.BaseMetals.logger.error("In TraitSoft constructor");
 	}
 
 	@Override
