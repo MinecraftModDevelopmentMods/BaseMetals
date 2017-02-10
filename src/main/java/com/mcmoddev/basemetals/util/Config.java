@@ -37,6 +37,7 @@ public class Config {
 	private static final String MATERIALS_CAT = "Metals";
 	private static final String VANILLA_CAT = "Vanilla";
 	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipies";
+	private static final String TOOLS_CAT = "Tools and Items";
 	private static final String ALT_CFG_PATH = "config/additional-loot-tables"; // + BaseMetals.MODID;
 	private static final String ORESPAWN_CFG_PATH = "config/orespawn";
 	private static List<String> USER_CRUSHER_RECIPES = new ArrayList<String>();
@@ -66,6 +67,7 @@ public class Config {
 		Options.autodetectRecipes = configuration.getBoolean("automatic_recipes", GENERAL_CAT, true, "If true, then Base Metals will scan the Ore Dictionary to automatically add a \n" + "Crack Hammer recipe for every material that has an ore, dust, and ingot.");
 		Options.requireMMDOreSpawn = configuration.getBoolean("using_orespawn", GENERAL_CAT, true, "If false, then Base Metals will not require DrCyano's Ore Spawn mod. \n" + "Set to false if using another mod to manually handle ore generation.");
 		Options.enableAchievements = configuration.getBoolean("achievements", GENERAL_CAT, true, "If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals");
+		Options.crackhammerFullStack = configuration.getBoolean("crackhammer_full_stacks", GENERAL_CAT, false, "If true then you can crackhammer full stacks of dropped items.");
 
 		// INTEGRATION
 		Options.enableEnderIO = configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Ender IO");
@@ -109,6 +111,35 @@ public class Config {
 		Options.enableStone = configuration.getBoolean("EnableStone", VANILLA_CAT, true, "Enable Stone Items and Materials");
 		Options.enableWood = configuration.getBoolean("EnableWood", VANILLA_CAT, true, "Enable Wood Items and Materials");
 
+		//RECIPE AMOUNTS/TOOL&ITEM DISABLING
+		Options.gearQuantity = configuration.getInt("Gear Quantity", TOOLS_CAT, 4, 1, 64, "Number of Gears per recipe");
+		Options.plateQuantity = configuration.getInt("Plate Quantity", TOOLS_CAT, 3, 1, 64, "Number of Plates per recipe");
+		Options.furnaceCheese = configuration.getBoolean("Furnace Cheese", TOOLS_CAT, true, "Melt down armor and tools for full value");
+		Options.furnace1112 = configuration.getBoolean("Furnace1112", TOOLS_CAT, true, "Mimic 1.11.2 armor and tool melting.\n Overridden by Furnace Cheese");
+		Options.enableBasics = configuration.getBoolean("Enable Basics", TOOLS_CAT, true, "Set to false to disable: Nuggest, Ingots, Powders, Blends, Blocks and Ores");
+		Options.enableBasicTools = configuration.getBoolean("Enable Basic Tools", TOOLS_CAT, true, "Set to false to disable: Axe, Hoe, Pickaxe, Shovel and Sword");
+		Options.enableBowAndArrow = configuration.getBoolean("Enable Bow and Arrow", TOOLS_CAT, true, "Set to false to turn off custom bows and arrows");
+		Options.enableCrossbowAndBolt = configuration.getBoolean("Enable Crossbow and Bolts", TOOLS_CAT, true, "Set to false to disable custom crossbows and bolts");
+		Options.enableArmor = configuration.getBoolean("Enable Armor", TOOLS_CAT, true, "Set to false to disable: Helmet, Chestplate, Leggings and Boots");
+		Options.enableCrackHammer = configuration.getBoolean("Enable Crackhammer", TOOLS_CAT, true, "Why would you want to disable a valuable early-game tool ?\nThe question we're all asking though is will it blend?");
+		Options.enableFishingRod = configuration.getBoolean("Enable Fishing Rod", TOOLS_CAT, true, "Set to false to turn off added fishing rods");
+		Options.enableHorseArmor = configuration.getBoolean("Enable Horse Armor", TOOLS_CAT, true, "Set to false to disable extra Horse Armor");
+		Options.enableShears = configuration.getBoolean("Enable Shears", TOOLS_CAT, true, "I love Shears, do you? If you're a Shears hater, set this to false");
+		Options.enableSmallDust = configuration.getBoolean("Enable Small Dust", TOOLS_CAT, true, "Turn this off to disable nugget-sized piles of dust.\n(Dust is a drug and drugs are bad. Don't do drugs, mmm-kay ?");
+		Options.enableRod = configuration.getBoolean("Enable Rod", TOOLS_CAT, true, "Spare the Rod... Wait, no, that's Biblical...\nThis controls whether or not rods of various materials (similar to Tinkers' Construct Tool Rod) sare available"); 
+		Options.enableGear = configuration.getBoolean("Enable Gear", TOOLS_CAT, true, "A lot of mods have Gears, we can provide them. Turn this off if you think you don't need them.");
+		Options.enableShield = configuration.getBoolean("Enable Shield", TOOLS_CAT, true, "The Combat Update brought Shields to Vanilla Minecraft. Turn this off if you don't want them to multiply");
+		Options.enableBars = configuration.getBoolean("Enable Bars", TOOLS_CAT, true, "No, not the kind you drink at. The kind you find on jail-cells.");
+		Options.enablePlate = configuration.getBoolean("Enable Plates", TOOLS_CAT, true, "IC2, Tech Reborn and a number of other mods require plates of material. This provides recipes for them.");
+		Options.enableDoor = configuration.getBoolean("Enable Door", TOOLS_CAT, true, "Doors of many wonderous materials");
+		Options.enableTrapdoor = configuration.getBoolean("Enable Trapdoors", TOOLS_CAT, true, "Do you want trapdoors? Because that's how you get trapdoors!");
+		Options.enableButton = configuration.getBoolean("Enable Buttons", TOOLS_CAT, true, "Ooooh, what does this button do?");
+		Options.enableSlab = configuration.getBoolean("Enable Slab", TOOLS_CAT, true, "Slabs of all the materials that get added");
+		Options.enableLever = configuration.getBoolean("Enable Lever", TOOLS_CAT, true, "Levers of all different materials - they even have different hardnesses");
+		Options.enablePressurePlate = configuration.getBoolean("Enable Pressure-plates", TOOLS_CAT, true, "Now your traps can be hidden in even more places!");
+		Options.enableStairs = configuration.getBoolean("Enable Stairs", TOOLS_CAT, true, "Stairs of our wonderful metals! Come and get your own - or don't. It's up to you.");
+		Options.enableWall = configuration.getBoolean("Enable Wall", TOOLS_CAT, true, "Hey, Teachers! Leave those kids alone!");
+		
 		//CRACK HAMMER RECIPES
 		final ConfigCategory userRecipeCat = configuration.getCategory(HAMMER_RECIPES_CAT);
 		userRecipeCat.setComment("This section allows you to add your own recipes for the Crack Hammer (and other rock \n" + "crushers). Recipes are specified in semicolon (;) delimited lists of formulas in the \n" + "format modid:name#y->x*modid:name#y, where x is the number of items in a stack and y \n" + "is the metadata value. Note that both x and y are optional, so you can use the \n" + "formula modid:name->modid:name for most items/blocks. \n\n" + "All properties in this section will be parsed for formulas, regardless their name. \n" + "This lets you organize your recipe lists for easier reading.");
@@ -187,7 +218,9 @@ public class Config {
 		public static boolean autodetectRecipes = true;
 		public static boolean requireMMDOreSpawn = true;
 		public static boolean enableAchievements = true;
-		// TODO: Add these to config file
+		public static boolean crackhammerFullStack = false;
+		
+		// RECIPE AMOUNTS
 		public static int gearQuantity = 4;
 		public static int plateQuantity = 3;
 		public static boolean furnaceCheese = true;

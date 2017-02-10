@@ -109,19 +109,30 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 					if (!w.isRemote) {
 						ItemStack output = recipe.getOutput().copy();
 						int count = output.stackSize;
-						output.stackSize = 1;
+						int toolDamage;
+						if(Options.crackhammerFullStack) {
+							output.stackSize = targetItem.stackSize;
+							toolDamage = targetItem.stackSize;
+						} else {
+							output.stackSize = 1;
+							toolDamage = 1;
+						}
 						double x = target.posX;
 						double y = target.posY;
 						double z = target.posZ;
 
-						targetItem.stackSize--;
+						if(Options.crackhammerFullStack) {
+							targetItem.stackSize = 0;
+						} else {
+							targetItem.stackSize--;
+						}
 						if (targetItem.stackSize <= 0) {
 							w.removeEntity(target);
 						}
 						for (int i = 0; i < count; i++) {
 							w.spawnEntity(new EntityItem(w, x, y, z, output.copy()));
 						}
-						item.damageItem(1, player);
+						item.damageItem(toolDamage, player);
 					}
 					success = true;
 					break;
