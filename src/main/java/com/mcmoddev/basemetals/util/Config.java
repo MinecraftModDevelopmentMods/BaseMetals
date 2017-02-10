@@ -121,7 +121,7 @@ public class Config {
 		Options.enableBowAndArrow = configuration.getBoolean("Enable Bow and Arrow", TOOLS_CAT, true, "Set to false to turn off custom bows and arrows");
 		Options.enableCrossbowAndBolt = configuration.getBoolean("Enable Crossbow and Bolts", TOOLS_CAT, true, "Set to false to disable custom crossbows and bolts");
 		Options.enableArmor = configuration.getBoolean("Enable Armor", TOOLS_CAT, true, "Set to false to disable: Helmet, Chestplate, Leggings and Boots");
-		Options.enableCrackHammer = configuration.getBoolean("Enable Crackhammer", TOOLS_CAT, true, "Why would you want to disable a valuable early-game tool ?");
+		Options.enableCrackHammer = configuration.getBoolean("Enable Crackhammer", TOOLS_CAT, true, "Why would you want to disable a valuable early-game tool ?\nThe question we're all asking though is will it blend?");
 		Options.enableFishingRod = configuration.getBoolean("Enable Fishing Rod", TOOLS_CAT, true, "Set to false to turn off added fishing rods");
 		Options.enableHorseArmor = configuration.getBoolean("Enable Horse Armor", TOOLS_CAT, true, "Set to false to disable extra Horse Armor");
 		Options.enableShears = configuration.getBoolean("Enable Shears", TOOLS_CAT, true, "I love Shears, do you? If you're a Shears hater, set this to false");
