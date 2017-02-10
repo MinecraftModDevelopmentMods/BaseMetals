@@ -1,14 +1,14 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
 public final class TraitLocations {
-	public final String HEAD = "head";
-	public final String HANDLE = "handle";
-	public final String EXTRA = "extra";
+	public static final String HEAD = "head";
+	public static final String HANDLE = "handle";
+	public static final String EXTRA = "extra";
 
-	public final String BOW = "bow";
-	public final String BOWSTRING = "bowstring";
+	public static final String BOW = "bow";
+	public static final String BOWSTRING = "bowstring";
 
-	public final String PROJECTILE = "projectile";
-	public final String SHAFT = "shaft";
-	public final String FLETCHING = "fletching";
+	public static final String PROJECTILE = "projectile";
+	public static final String SHAFT = "shaft";
+	public static final String FLETCHING = "fletching";
 }
