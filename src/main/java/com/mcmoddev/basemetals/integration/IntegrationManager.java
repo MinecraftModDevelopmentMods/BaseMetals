@@ -1,9 +1,7 @@
 package com.mcmoddev.basemetals.integration;
 
 import com.google.common.collect.Lists;
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.util.AnnotationChecker;
 
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
@@ -31,17 +29,5 @@ public enum IntegrationManager {
 				}
     		}
     	}
-//    	throw new Error("Take off and nuke it from orbit, it's the only way to be sure");
-/*        AnnotationChecker.getInstances(event.getAsmData(), BaseMetalsPlugin.class, IIntegration.class).stream()
-                .forEachOrdered(integration -> {
-                    Class<? extends IIntegration> integrationClass = integration.getClass();
-                    BaseMetalsPlugin plugin = integrationClass.getAnnotation(BaseMetalsPlugin.class);
-                    if (Loader.isModLoaded(plugin.value())) {
-                    	BaseMetals.logger.debug("Loaded " + plugin.value());
-//                    	FMLLog.severe("BASEMETALS: Loaded " + plugin.value());
-                        integrations.add(integration);
-                        integration.init();
-                    }
-                });*/
     }
 }
