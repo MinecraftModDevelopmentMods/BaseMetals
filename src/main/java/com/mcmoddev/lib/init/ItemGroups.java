@@ -28,9 +28,9 @@ public class ItemGroups {
 		return delta;
 	};
 
-	public static CreativeTabs tab_blocks;
-	public static CreativeTabs tab_items;
-	public static CreativeTabs tab_tools;
+	public static CreativeTabs blocksTab;
+	public static CreativeTabs ItemsTab;
+	public static CreativeTabs toolsTab;
 
 	private static Map<String, List<GeneralizedCreativeTab>> itemGroupsByModID = new HashMap<>();
 

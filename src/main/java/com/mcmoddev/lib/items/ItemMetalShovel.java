@@ -27,7 +27,7 @@ public class ItemMetalShovel extends ItemSpade implements IMetalObject {
 	private final MetalMaterial material;
 	private final String repairOreDictName;
 	private final boolean regenerates;
-	private static final long regenInterval = 200;
+	private static final long REGEN_INTERVAL = 200;
 
 	/**
 	 *
@@ -82,7 +82,7 @@ public class ItemMetalShovel extends ItemSpade implements IMetalObject {
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
 		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0)
-				&& ((world.getTotalWorldTime() % regenInterval) == 0))
+				&& ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 

@@ -12,17 +12,17 @@ import mezz.jei.api.recipe.IRecipeWrapper;
  */
 public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeJEI> {
 
-	private final String id = BaseMetalsJEIPlugin.JEIUID;
+	private static final String ID = BaseMetalsJEIPlugin.JEIUID;
 
 	@Nonnull
 	@Override
 	public String getRecipeCategoryUid(@Nonnull CrusherRecipeJEI recipe) {
-		return this.id;
+		return ID;
 	}
 
 	@Override
 	public String getRecipeCategoryUid() {
-		return this.id;
+		return ID;
 	}
 
 	@Override

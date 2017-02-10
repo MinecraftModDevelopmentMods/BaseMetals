@@ -2,7 +2,7 @@ package com.mcmoddev.lib.util;
 
 public class Oredicts {
 
-	//see net.minecraftforge.oredict.OreDictionary.initVanillaEntries() for vanilla oreDict names
+	// See net.minecraftforge.oredict.OreDictionary.initVanillaEntries() for vanilla oreDict names
 
 	// tree- and wood-related things
 	public static final String LOGWOOD = "logWood";
@@ -35,8 +35,8 @@ public class Oredicts {
 	public static final String GEMDIAMOND = "gemDiamond";
 	public static final String GEMEMERALD = "gemEmerald";
 	public static final String GEMQUARTZ = "gemQuartz";
-	public static final String GEMPRISMARINE = "gemPrismarine"; // Items.PRISMARINE_SHARD);
-	public static final String DUSTPRISMARINE = "dustPrismarine"; // Items.PRISMARINE_CRYSTALS);
+	public static final String GEMPRISMARINE = "gemPrismarine";
+	public static final String DUSTPRISMARINE = "dustPrismarine";
 	public static final String DUSTREDSTONE = "dustRedstone";
 	public static final String DUSTGLOWSTONE = "dustGlowstone";
 	public static final String GEMLAPIS = "gemLapis";

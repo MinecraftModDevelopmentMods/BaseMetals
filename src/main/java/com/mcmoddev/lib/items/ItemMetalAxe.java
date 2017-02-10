@@ -26,7 +26,7 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 	protected final MetalMaterial material;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
-	protected static final long regenInterval = 200;
+	protected static final long REGEN_INTERVAL = 200;
 
 	/**
 	 *
@@ -82,7 +82,7 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % regenInterval) == 0))
+		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 /*

@@ -8,10 +8,6 @@ package com.mcmoddev.basemetals.init;
  */
 public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
-//	public static CreativeTabs tab_blocks;
-//	public static CreativeTabs tab_items;
-//	public static CreativeTabs tab_tools;
-
 	private static boolean initDone = false;
 
 	private ItemGroups() {
@@ -26,9 +22,9 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 			return;
 		}
 
-		tab_blocks = addTab("blocks", true, Materials.vanilla_iron);
-		tab_items = addTab("items", true, Materials.vanilla_iron);
-		tab_tools = addTab("tools", true, Materials.vanilla_iron);
+		blocksTab = addTab("blocks", true, Materials.vanilla_iron);
+		ItemsTab = addTab("items", true, Materials.vanilla_iron);
+		toolsTab = addTab("tools", true, Materials.vanilla_iron);
 
 		initDone = true;
 	}

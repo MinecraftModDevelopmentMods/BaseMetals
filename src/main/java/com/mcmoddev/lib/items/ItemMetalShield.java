@@ -24,7 +24,7 @@ public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, 
 	private final String oreDict;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
-	protected static final long regenInterval = 200;
+	protected static final long REGEN_INTERVAL = 200;
 
 	/**
 	 *

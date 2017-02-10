@@ -227,7 +227,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasics) && (material.ingot == null)) {
-			material.ingot = addItem(new ItemMetalIngot(material), "ingot", material, ItemGroups.tab_items);
+			material.ingot = addItem(new ItemMetalIngot(material), "ingot", material, ItemGroups.ItemsTab);
 		}
 
 		return material.ingot;
@@ -239,7 +239,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasics) && (material.nugget == null)) {
-			material.nugget = addItem(new ItemMetalNugget(material), "nugget", material, ItemGroups.tab_items);
+			material.nugget = addItem(new ItemMetalNugget(material), "nugget", material, ItemGroups.ItemsTab);
 		}
 
 		return material.nugget;
@@ -251,7 +251,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasics) && (material.powder == null)) {
-			material.powder = addItem(new ItemMetalPowder(material), "powder", material, ItemGroups.tab_items);
+			material.powder = addItem(new ItemMetalPowder(material), "powder", material, ItemGroups.ItemsTab);
 		}
 
 		return material.powder;
@@ -263,7 +263,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasics) && (material.hasBlend) && (material.blend == null)) {
-			material.blend = addItem(new ItemMetalBlend(material), "blend", material, ItemGroups.tab_items);
+			material.blend = addItem(new ItemMetalBlend(material), "blend", material, ItemGroups.ItemsTab);
 		}
 
 		return material.blend;
@@ -275,7 +275,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableRod) && (material.rod == null)) {
-			material.rod = addItem(new ItemMetalRod(material), "rod", material, ItemGroups.tab_items);
+			material.rod = addItem(new ItemMetalRod(material), "rod", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.STICK + material.getCapitalizedName(), material.rod);
 			OreDictionary.registerOre(Oredicts.ROD, material.rod);
 		}
@@ -289,7 +289,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableGear) && (material.gear == null)) {
-			material.gear = addItem(new ItemMetalGear(material), "gear", material, ItemGroups.tab_items);
+			material.gear = addItem(new ItemMetalGear(material), "gear", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.GEAR, material.gear);
 		}
 
@@ -302,7 +302,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasicTools) && (material.axe == null)) {
-			material.axe = addItem(new ItemMetalAxe(material), "axe", material, ItemGroups.tab_tools);
+			material.axe = addItem(new ItemMetalAxe(material), "axe", material, ItemGroups.toolsTab);
 		}
 
 		return material.axe;
@@ -314,7 +314,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableCrackHammer) && (material.crackhammer == null)) {
-			material.crackhammer = addItem(new ItemMetalCrackHammer(material), "crackhammer", material, ItemGroups.tab_tools);
+			material.crackhammer = addItem(new ItemMetalCrackHammer(material), "crackhammer", material, ItemGroups.toolsTab);
 		}
 
 		return material.crackhammer;
@@ -326,7 +326,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasicTools) && (material.hoe == null)) {
-			material.hoe = addItem(new ItemMetalHoe(material), "hoe", material, ItemGroups.tab_tools);
+			material.hoe = addItem(new ItemMetalHoe(material), "hoe", material, ItemGroups.toolsTab);
 		}
 
 		return material.hoe;
@@ -338,7 +338,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasicTools) && (material.pickaxe == null)) {
-			material.pickaxe = addItem(new ItemMetalPickaxe(material), "pickaxe", material, ItemGroups.tab_tools);
+			material.pickaxe = addItem(new ItemMetalPickaxe(material), "pickaxe", material, ItemGroups.toolsTab);
 		}
 
 		return material.pickaxe;
@@ -350,7 +350,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasicTools) && (material.shovel == null)) {
-			material.shovel = addItem(new ItemMetalShovel(material), "shovel", material, ItemGroups.tab_tools);
+			material.shovel = addItem(new ItemMetalShovel(material), "shovel", material, ItemGroups.toolsTab);
 		}
 
 		return material.shovel;
@@ -362,7 +362,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasicTools) && (material.sword == null)) {
-			material.sword = addItem(new ItemMetalSword(material), "sword", material, ItemGroups.tab_tools);
+			material.sword = addItem(new ItemMetalSword(material), "sword", material, ItemGroups.toolsTab);
 		}
 
 		return material.sword;
@@ -374,7 +374,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableArmor) && (material.helmet == null)) {
-			material.helmet = addItem(ItemMetalArmor.createHelmet(material), "helmet", material, ItemGroups.tab_tools);
+			material.helmet = addItem(ItemMetalArmor.createHelmet(material), "helmet", material, ItemGroups.toolsTab);
 		}
 
 		return material.helmet;
@@ -386,7 +386,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableArmor) && (material.chestplate == null)) {
-			material.chestplate = addItem(ItemMetalArmor.createChestplate(material), "chestplate", material, ItemGroups.tab_tools);
+			material.chestplate = addItem(ItemMetalArmor.createChestplate(material), "chestplate", material, ItemGroups.toolsTab);
 		}
 
 		return material.chestplate;
@@ -398,7 +398,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableArmor) && (material.leggings == null)) {
-			material.leggings = addItem(ItemMetalArmor.createLeggings(material), "leggings", material, ItemGroups.tab_tools);
+			material.leggings = addItem(ItemMetalArmor.createLeggings(material), "leggings", material, ItemGroups.toolsTab);
 		}
 
 		return material.leggings;
@@ -410,7 +410,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableArmor) && (material.boots == null)) {
-			material.boots = addItem(ItemMetalArmor.createBoots(material), "boots", material, ItemGroups.tab_tools);
+			material.boots = addItem(ItemMetalArmor.createBoots(material), "boots", material, ItemGroups.toolsTab);
 		}
 
 		return material.boots;
@@ -422,7 +422,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableHorseArmor) && (material.horse_armor == null)) {
-			material.horse_armor = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.tab_tools);
+			material.horse_armor = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.toolsTab);
 		}
 
 		return material.horse_armor;
@@ -434,7 +434,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBowAndArrow) && (material.arrow == null)) {
-			material.arrow = addItem(new ItemMetalArrow(material), "arrow", material, ItemGroups.tab_tools);
+			material.arrow = addItem(new ItemMetalArrow(material), "arrow", material, ItemGroups.toolsTab);
 		}
 
 		return material.arrow;
@@ -446,7 +446,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableCrossbowAndBolt) && (material.bolt == null)) {
-			material.bolt = addItem(new ItemMetalBolt(material), "bolt", material, ItemGroups.tab_tools);
+			material.bolt = addItem(new ItemMetalBolt(material), "bolt", material, ItemGroups.toolsTab);
 		}
 
 		return material.bolt;
@@ -458,7 +458,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBowAndArrow) && (material.bow == null)) {
-			material.bow = addItem(new ItemMetalBow(material), "bow", material, ItemGroups.tab_tools);
+			material.bow = addItem(new ItemMetalBow(material), "bow", material, ItemGroups.toolsTab);
 		}
 
 		return material.bow;
@@ -470,7 +470,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableCrossbowAndBolt) && (material.crossbow == null)) {
-			material.crossbow = addItem(new ItemMetalCrossbow(material), "crossbow", material, ItemGroups.tab_tools);
+			material.crossbow = addItem(new ItemMetalCrossbow(material), "crossbow", material, ItemGroups.toolsTab);
 		}
 
 		return material.crossbow;
@@ -482,7 +482,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableShears) && (material.shears == null)) {
-			material.shears = addItem(new ItemMetalShears(material), "shears", material, ItemGroups.tab_tools);
+			material.shears = addItem(new ItemMetalShears(material), "shears", material, ItemGroups.toolsTab);
 		}
 
 		return material.shears;
@@ -494,7 +494,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableSmallDust) && (material.hasBlend) && (material.smallblend == null)) {
-			material.smallblend = addItem(new ItemMetalSmallBlend(material), "smallblend", material, ItemGroups.tab_items);
+			material.smallblend = addItem(new ItemMetalSmallBlend(material), "smallblend", material, ItemGroups.ItemsTab);
 		}
 
 		return material.smallblend;
@@ -506,7 +506,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableFishingRod) && (material.fishing_rod == null)) {
-			material.fishing_rod = addItem(new ItemMetalFishingRod(material), "fishing_rod", material, ItemGroups.tab_tools);
+			material.fishing_rod = addItem(new ItemMetalFishingRod(material), "fishing_rod", material, ItemGroups.toolsTab);
 		}
 
 		return material.fishing_rod;
@@ -518,7 +518,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableSmallDust) && (material.smallpowder == null)) {
-			material.smallpowder = addItem(new ItemMetalSmallPowder(material), "smallpowder", material, ItemGroups.tab_items);
+			material.smallpowder = addItem(new ItemMetalSmallPowder(material), "smallpowder", material, ItemGroups.ItemsTab);
 		}
 
 		return material.smallpowder;
@@ -530,7 +530,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableShield) && (material.shield == null)) {
-			material.shield = addItem(new ItemMetalShield(material), "shield", material, ItemGroups.tab_items);
+			material.shield = addItem(new ItemMetalShield(material), "shield", material, ItemGroups.ItemsTab);
 		}
 
 		return material.shield;
@@ -542,7 +542,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableMekanism) && (material.crystal == null)) {
-			material.crystal = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.tab_items);
+			material.crystal = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), material.crystal);
 		}
 
@@ -555,7 +555,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableMekanism) && (material.shard == null)) {
-			material.shard = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.tab_items);
+			material.shard = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.SHARD + material.getCapitalizedName(), material.shard);
 		}
 
@@ -568,7 +568,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableMekanism) && (material.clump == null)) {
-			material.clump = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.tab_items);
+			material.clump = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), material.clump);
 		}
 
@@ -581,7 +581,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableMekanism) && (material.powder_dirty == null)) {
-			material.powder_dirty = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.tab_items);
+			material.powder_dirty = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.DUSTDIRTY + material.getCapitalizedName(), material.powder_dirty);
 		}
 
@@ -594,7 +594,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableIC2) && (material.casing == null)) {
-			material.casing = addItem(new GenericMetalItem(material), "casing", material, ItemGroups.tab_items);
+			material.casing = addItem(new GenericMetalItem(material), "casing", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.CASING + material.getCapitalizedName(), material.casing);
 		}
 
@@ -608,7 +608,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableIC2) && (material.dense_plate == null)) {
-			material.dense_plate = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.tab_items);
+			material.dense_plate = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.PLATEDENSE + material.getCapitalizedName(), material.dense_plate);
 		}
 
@@ -621,7 +621,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableIC2) && (material.crushed == null)) {
-			material.crushed = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.tab_items);
+			material.crushed = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), material.crushed);
 		}
 
@@ -634,7 +634,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableIC2) && (material.crushed_purified == null)) {
-			material.crushed_purified = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.tab_items);
+			material.crushed_purified = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.ItemsTab);
 			OreDictionary.registerOre(Oredicts.CRUSHEDPURIFIED + material.getCapitalizedName(), material.crushed_purified);
 		}
 
@@ -649,7 +649,7 @@ public abstract class Items {
 		if ((Options.enableSlab) && (material.slab == null)) {
 			// TODO: Do we need to check for the block too?
 			if ((material.half_slab != null) && (material.double_slab != null)) {
-				material.slab = addItem(new ItemMetalSlab(material), "slab", material, ItemGroups.tab_blocks);
+				material.slab = addItem(new ItemMetalSlab(material), "slab", material, ItemGroups.blocksTab);
 			}
 		}
 
@@ -663,7 +663,7 @@ public abstract class Items {
 
 		if ((Options.enableDoor) && (material.door == null)) {
 			if (material.doorBlock != null) {
-				material.door = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.tab_blocks);
+				material.door = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.blocksTab);
 				OreDictionary.registerOre(Oredicts.DOOR, material.door);
 			}
 		}

@@ -190,7 +190,8 @@ public class CrusherRecipeRegistry {
 		if (this.recipeByOutputCache.containsKey(ref)) {
 			final List<ICrusherRecipe> recipeCache = this.recipeByOutputCache.get(ref);
 			if (recipeCache.isEmpty())
-				return null;
+				return Collections.emptyList();
+//				return null;
 			return recipeCache;
 		} else {
 			// add recipe cache
@@ -200,7 +201,8 @@ public class CrusherRecipeRegistry {
 					recipeCache.add(r);
 			this.recipeByOutputCache.put(ref, recipeCache);
 			if (recipeCache.isEmpty())
-				return null;
+				return Collections.emptyList();
+//				return null;
 			return recipeCache;
 		}
 	}
@@ -219,7 +221,8 @@ public class CrusherRecipeRegistry {
 		if (this.recipeByOutputCache.containsKey(ref)) {
 			final List<ICrusherRecipe> recipeCache = this.recipeByOutputCache.get(ref);
 			if (recipeCache.isEmpty())
-				return null;
+				return Collections.emptyList();
+//				return null;
 			return recipeCache;
 		} else {
 			// add recipe cache
@@ -229,7 +232,8 @@ public class CrusherRecipeRegistry {
 					recipeCache.add(r);
 			this.recipeByOutputCache.put(ref, recipeCache);
 			if (recipeCache.isEmpty())
-				return null;
+				return Collections.emptyList();
+//				return null;
 			return recipeCache;
 		}
 	}

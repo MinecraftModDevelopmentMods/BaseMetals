@@ -78,21 +78,21 @@ public class EventHandler {
 				if (Options.enableAchievements) {
 //					event.player.addStat(Achievements.this_is_new, 1);
 					if (material.getName().equals("aquarium")) {
-						event.player.addStat(Achievements.aquarium_maker, 1);
+						event.player.addStat(Achievements.aquariumMaker, 1);
 					} else if (material.getName().equals("brass")) {
-						event.player.addStat(Achievements.brass_maker, 1);
+						event.player.addStat(Achievements.brassMaker, 1);
 					} else if (material.getName().equals("bronze")) {
-						event.player.addStat(Achievements.bronze_maker, 1);
+						event.player.addStat(Achievements.bronzeMaker, 1);
 					} else if (material.getName().equals("electrum")) {
-						event.player.addStat(Achievements.electrum_maker, 1);
+						event.player.addStat(Achievements.electrumMaker, 1);
 					} else if (material.getName().equals("steel")) {
-						event.player.addStat(Achievements.steel_maker, 1);
+						event.player.addStat(Achievements.steelMaker, 1);
 					} else if (material.getName().equals("invar")) {
-						event.player.addStat(Achievements.invar_maker, 1);
+						event.player.addStat(Achievements.invarMaker, 1);
 					} else if (material.getName().equals("mithril")) {
-						event.player.addStat(Achievements.mithril_maker, 1);
+						event.player.addStat(Achievements.mithrilMaker, 1);
 					} else if (material.getName().equals("cupronickel")) {
-						event.player.addStat(Achievements.cupronickel_maker, 1);
+						event.player.addStat(Achievements.cupronickelMaker, 1);
 					}
 				}
 			}

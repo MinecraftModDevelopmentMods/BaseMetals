@@ -4,7 +4,7 @@ import org.objectweb.asm.tree.*;
 
 class EntityHorseTransformer implements ITransformer {
 
-	private static String ASMHOOKS_INTERFACE = "com/mcmoddev/lib/asm/ASMHooks";
+	private static final String ASMHOOKS_INTERFACE = "com/mcmoddev/lib/asm/ASMHooks";
 
 	@Override
 	public String getTarget() {

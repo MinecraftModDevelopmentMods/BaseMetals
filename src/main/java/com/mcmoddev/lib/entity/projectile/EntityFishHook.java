@@ -130,7 +130,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 		} else {
 			final ItemStack itemstack = this.angler.getHeldItemMainhand();
 
-			// We had to chage this due to hardcoding
+			// We had to change this due to hardcoding
 			if (this.angler.isDead || !this.angler.isEntityAlive() || (itemstack == null) || !(itemstack.getItem() instanceof ItemFishingRod) || (this.getDistanceSqToEntity(this.angler) > 1024.0D)) {
 				this.setDead();
 				this.angler.fishEntity = null;

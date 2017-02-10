@@ -107,7 +107,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 					// Achievement
                    	if (Options.enableAchievements) {
                    		if(armorItem == Materials.starsteel.boots)
-                   			player.addStat(Achievements.moon_boots, 1);
+                   			player.addStat(Achievements.moonBoots, 1);
                    	}
 					break starsteel;
 				}
@@ -194,7 +194,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 						// Achievement
                     	if (Options.enableAchievements) {
                     		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.coldiron.sword) {
-                    			player.addStat(Achievements.demon_slayer, 1);
+                    			player.addStat(Achievements.demonSlayer, 1);
                     		}
                     	}
 					}
@@ -221,7 +221,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
                     	// Achievement
                     	if (Options.enableAchievements) {
                     		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.mithril.sword) {
-								player.addStat(Achievements.angel_of_death, 1);
+								player.addStat(Achievements.angelOfDeath, 1);
 							}
                     	}
 					}
@@ -243,7 +243,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
                         	player.removePotionEffect(Potion.REGISTRY.getObject(fatiguePotionKey));
                         	// Achievement
                         	if (Options.enableAchievements) {
-                        		player.addStat(Achievements.scuba_diver, 1);
+                        		player.addStat(Achievements.scubaDiver, 1);
                         	}
 						}
 					}

@@ -35,7 +35,7 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		crafter.addStat(Achievements.this_is_new, 1);
+		crafter.addStat(Achievements.thisIsNew, 1);
 	}
 
 	@Override
