@@ -26,7 +26,6 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		
 		TraitRegistry.initTiCTraits();
 		TraitRegistry.initMetalsTraits();
-		TraitRegistry.dumpRegistry();
 
 		if (Options.enableAdamantine) {
 			/*

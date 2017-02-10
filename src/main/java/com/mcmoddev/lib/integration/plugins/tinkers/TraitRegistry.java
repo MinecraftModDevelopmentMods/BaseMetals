@@ -12,6 +12,10 @@ public class TraitRegistry {
 
 	private static Map<String, ITrait> registeredTraits = new HashMap<>();
 	
+	private TraitRegistry() {
+		throw new IllegalAccessError("Not an instantiable class");
+	}
+	
 	public static void addTrait(String name, ITrait trait) {
 		registeredTraits.put(name, trait);
 	}
@@ -30,19 +34,21 @@ public class TraitRegistry {
 	
 	public static void initTiCTraits() {
 		Field[] fields = slimeknights.tconstruct.tools.TinkerTraits.class.getDeclaredFields();
-		for( Field f : fields ) {
-			Class<?> clazz= f.getType();
-			try {
-				registeredTraits.put(f.getName(), (ITrait)f.get(clazz));
-			} catch (final Exception e) {
-				// do nothing
-			}
-		}
+		registerFieldArray(fields);
 	}
 	
 	public static void initMetalsTraits() {
 		Field[] fields = com.mcmoddev.lib.integration.plugins.tinkers.traits.MMDTraits.class.getDeclaredFields();
-		for( Field f : fields ) {
+		registerFieldArray(fields);
+	}
+	
+	public static void initTAIGATraits() {
+		Field[] fields = com.sosnitzka.taiga.MaterialTraits.class.getDeclaredFields();
+		registerFieldArray(fields);
+	}
+	
+	private static void registerFieldArray(Field[] regList) {
+		for( Field f : regList ) {
 			Class<?> clazz = f.getType();
 			try {
 				registeredTraits.put(f.getName(), (ITrait)f.get(clazz));
@@ -59,7 +65,4 @@ public class TraitRegistry {
 		}
 	}
 	
-	public TraitRegistry() {
-		throw new IllegalAccessError("Not an instantiable class");
-	}
 }
