@@ -124,7 +124,7 @@ dependencies {
         exclude group: 'mezz.jei'
     }
     deobfCompile "slimeknights.mantle:Mantle:${mc_version}-${mantle_version}"
-    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
     deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
     deobfCompile ("codechicken:CodeChickenCore:${mc_version}-${ccc_version}:universal") {
         exclude group: 'codechicken'
