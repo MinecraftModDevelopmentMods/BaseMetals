@@ -74,7 +74,8 @@ public class Config {
 		Options.enableThaumcraft = configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Thaumcraft");
 		Options.enableTinkersConstruct = configuration.getBoolean("tinkers_construct_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Tinkers Construct");
 		Options.enableVeinminer = configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with VeinMiner");
-
+		Options.enableTAIGA = configuration.getBoolean("taiga_integration", INTEGRATION_CAT, true, "Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals");
+		
 		// METALS
 		Options.enableAdamantine = configuration.getBoolean("EnableAdamantine", MATERIALS_CAT, true, "Enable Adamantine Items and Materials");
 		Options.enableAntimony = configuration.getBoolean("EnableAntimony", MATERIALS_CAT, true, "Enable Antimony Items and Materials");
@@ -199,7 +200,8 @@ public class Config {
 		public static boolean enableThaumcraft = true;
 		public static boolean enableTinkersConstruct = true;
 		public static boolean enableVeinminer = true;
-
+		public static boolean enableTAIGA = true;
+		
 		// MATERIALS
 		public static boolean enableAdamantine = true;
 		public static boolean enableAntimony = true;

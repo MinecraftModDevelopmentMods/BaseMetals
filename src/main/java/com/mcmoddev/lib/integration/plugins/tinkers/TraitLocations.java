@@ -11,4 +11,6 @@ public final class TraitLocations {
 	public static final String PROJECTILE = "projectile";
 	public static final String SHAFT = "shaft";
 	public static final String FLETCHING = "fletching";
+	
+	private TraitLocations() {}
 }
