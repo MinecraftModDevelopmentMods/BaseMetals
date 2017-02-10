@@ -105,7 +105,7 @@ public class Platform {
             final IProperty<?> iproperty = entry.getKey();
             stringbuilder.append(iproperty.getName());
             stringbuilder.append("=");
-            stringbuilder.append(getPropertyName(iproperty, (Comparable) entry.getValue()));
+            stringbuilder.append(getPropertyName(iproperty, (Comparable<?>) entry.getValue()));
         }
         if (stringbuilder.length() == 0)
             stringbuilder.append("inventory");

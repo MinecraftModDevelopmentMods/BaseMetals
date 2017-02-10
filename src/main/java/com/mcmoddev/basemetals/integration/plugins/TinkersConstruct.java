@@ -6,8 +6,7 @@ import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
-
-import slimeknights.tconstruct.library.materials.MaterialTypes;
+import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 
 /**
  *
@@ -38,7 +37,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			TCMetalMaterial adamantTC = new TCMetalMaterial(Materials.adamantine);
 			adamantTC.craftable = false;
 			adamantTC.addTrait("coldblooded");
-			adamantTC.addTrait("insatiable", MaterialTypes.HEAD);
+			adamantTC.addTrait("insatiable", TraitLocations.HEAD);
 
 			registerMaterial(adamantTC);
 		}
@@ -54,8 +53,8 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			TCMetalMaterial aquaTC = new TCMetalMaterial(Materials.aquarium);
 			aquaTC.craftable = false;
 			aquaTC.addTrait("aquadynamic");
-			aquaTC.addTrait("jagged", MaterialTypes.HEAD);
-			aquaTC.addTrait("aquadynamic", MaterialTypes.HEAD);
+			aquaTC.addTrait("jagged", TraitLocations.HEAD);
+			aquaTC.addTrait("aquadynamic", TraitLocations.HEAD);
 
 			registerMaterial(aquaTC);
 			// When FMe is out we can probably do the alloy.
@@ -184,7 +183,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableStarSteel) {
 			TCMetalMaterial starsteelTC = new TCMetalMaterial(Materials.starsteel);
 			starsteelTC.craftable = false;
-			starsteelTC.addTrait("enderference", MaterialTypes.HEAD);
+			starsteelTC.addTrait("enderference", TraitLocations.HEAD);
 			starsteelTC.addTrait("sparkly");
 
 			registerMaterial(starsteelTC);

@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.integration;
 
 import com.google.common.collect.Lists;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.IIntegration;
 
 import net.minecraftforge.fml.common.Loader;
@@ -22,6 +23,7 @@ public enum IntegrationManager {
     			IIntegration integration;
 				try {
 					integration = Class.forName(className).asSubclass(IIntegration.class).newInstance();
+					BaseMetals.logger.info("BASEMETALS Loaded: "+modId);
 					integrations.add(integration);
 					integration.init();
 				} catch (final Exception e) {
