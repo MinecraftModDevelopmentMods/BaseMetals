@@ -109,12 +109,20 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 					if (!w.isRemote) {
 						ItemStack output = recipe.getOutput().copy();
 						int count = output.stackSize;
-						output.stackSize = 1;
+						if(Options.crackhammerFullStack) {
+							output.stackSize = targetItem.stackSize;
+						} else {
+							output.stackSize = 1;
+						}
 						double x = target.posX;
 						double y = target.posY;
 						double z = target.posZ;
 
-						targetItem.stackSize--;
+						if(Options.crackhammerFullStack) {
+							targetItem.stackSize = 0;
+						} else {
+							targetItem.stackSize--;
+						}
 						if (targetItem.stackSize <= 0) {
 							w.removeEntity(target);
 						}
