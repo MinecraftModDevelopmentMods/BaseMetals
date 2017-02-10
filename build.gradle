@@ -95,14 +95,18 @@ repositories {
         name "epoxide"
         url "http://maven.epoxide.org"
     }
-	maven {
+    maven { // CraftTweaker
+        name 'jared maven'
+        url "http://blamejared.com/maven"
+    }
+    maven {
         name "jitpack"
-		url "https://jitpack.io"
-	}
-	maven {
-		name "industrialcraft"
-		url "http://maven.ic2.player.to"
-	}
+        url "https://jitpack.io"
+    }
+    maven {
+        name "industrialcraft"
+        url "http://maven.ic2.player.to"
+    }
 }
 
 dependencies {
@@ -135,6 +139,7 @@ dependencies {
 //    compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
     deobfCompile "net.industrial-craft:industrialcraft-2:2.6.161-ex110:api"
+    deobfCompile "MineTweaker3:MineTweaker3-API:3.+"
 }
 
 processResources {
