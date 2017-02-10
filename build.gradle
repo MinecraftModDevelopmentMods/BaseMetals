@@ -33,7 +33,7 @@ version = mc_version + "-" + short_version
 if (System.getenv().BUILD_NUMBER) {
     version += "." + System.getenv().BUILD_NUMBER
 }
-group= "cyano"
+group= "mmd"
 archivesBaseName = "BaseMetals"
 sourceCompatibility = targetCompatibility = "1.8"
 
