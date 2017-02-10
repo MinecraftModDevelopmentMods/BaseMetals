@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
@@ -45,7 +47,7 @@ public class TCMetalMaterial {
 	public float fletchingModifier;
 
 	// for reference and simplifying the API
-	final public MetalMaterial metalmaterial;
+	public final MetalMaterial metalmaterial;
 
 	// craftable, castable, toolforge - does this allow it ?
 	public boolean craftable;
@@ -54,8 +56,7 @@ public class TCMetalMaterial {
 
 	public boolean hasTraits;
 
-	private HashMap<String, List<AbstractTrait>> traits = new HashMap<String, List<AbstractTrait>>();
-	//private AbstractTrait[] traits = new AbstractTrait[9];
+	private HashMap<String,List<AbstractTrait>> traits = new HashMap<>();
 
 	/**
 	 * @param material MetalMaterial this represents
@@ -103,9 +104,8 @@ public class TCMetalMaterial {
 	 * Add a TiC default or custom trait to the material in general
 	 * @param trait the AbstractTrait to add
 	 */
-	public void addTrait(ITrait trait) {
-		hasTraits = true;
-		addTrait(trait, "general");
+	public void addTrait(String traitName) {
+		addTrait(traitName, "general");
 	}
 
 	/**
@@ -114,13 +114,19 @@ public class TCMetalMaterial {
 	 * @param loc the MaterialType for the tool part {@link slimeknights.tconstruct.library.material.MaterialType}
 	 * @throws
 	 */
-	public void addTrait(ITrait trait, String loc) {
+	public void addTrait(String traitName, String loc) {
+		ITrait trait = TraitRegistry.get(traitName);
+		if( trait == null ) {
+			String s = String.format("BaseMetals-TCon: Asked for trait %s that does not exist", traitName);
+			BaseMetals.logger.error(s);
+			return;
+		}
 		if (traits.keySet().contains(loc)) {
 			if (!traits.get(loc).add((AbstractTrait)trait)) { 
-				throw new Error("Unable to add trait!");
+				throw new RuntimeException("Unable to add trait!");
 			}
 		} else {
-			List<AbstractTrait> t = new ArrayList<AbstractTrait>();
+			List<AbstractTrait> t = new ArrayList<>();
 			t.add((AbstractTrait)trait);
 			traits.put(loc, t);
 		}
@@ -136,7 +142,7 @@ public class TCMetalMaterial {
 	 */
 	public List<AbstractTrait> getTraits(String loc) {
 		if (!hasTraits) {
-			return null;
+			return new ArrayList<>();
 		}
 
 		if( loc == null ) {
@@ -144,15 +150,15 @@ public class TCMetalMaterial {
 		} else if (traits.keySet().contains(loc)) {
 			return traits.get(loc);
 		} else {
-			throw new Error("Unkown trait location " + loc);
+			throw new RuntimeException("Unkown trait location " + loc);
 		}
 	}
-
+	
 	/**
 	 * Get the names of the keys in the traits HashMap
 	 * @return Set<String>
 	 */
 	public Set<String> getTraitLocs() {
 		return traits.keySet();
-	}	
+	}
 }

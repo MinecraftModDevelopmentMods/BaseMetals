@@ -7,10 +7,14 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
-//import com.mcmoddev.basemetals.BaseMetals;
+
+import java.util.Random;
+
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
+import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
@@ -41,6 +45,7 @@ public class TinkersConstruct implements IIntegration {
 		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
 			return;
 		}
+
 
 		initDone = true;
 	}
@@ -87,7 +92,14 @@ public class TinkersConstruct implements IIntegration {
 		FluidStack output = FluidRegistry.getFluidStack(outputName, outputQty);
 		FluidStack[] input = new FluidStack[inputName.length];
 		for( int i = 0; i < inputName.length; i++ ) {
-			input[i] = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
+			FluidStack temp = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
+			if ( temp != null ) {
+				input[i] = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
+			} else {
+				String mess = String.format("BaseMetals-TCon: material %s is not a registered fluid, alloy recipe %s ignored.", inputName[i], outputName);
+				BaseMetals.logger.error(mess);
+				return;
+			}
 		}
 
 		TinkerRegistry.registerAlloy(output, input);
@@ -108,8 +120,11 @@ public class TinkersConstruct implements IIntegration {
 		TCMetalMaterial m = new TCMetalMaterial(material);
 		m.craftable = craftable;
 		m.castable = castable;
-		if (trait != null)
-			m.addTrait(trait);
+		if (trait != null) {
+			String randName = ((Integer)(new Random()).nextInt()).toString();
+			TraitRegistry.addTrait(randName, trait);
+			m.addTrait(randName);
+		}
 		
 		registerMaterial(m);
 	}

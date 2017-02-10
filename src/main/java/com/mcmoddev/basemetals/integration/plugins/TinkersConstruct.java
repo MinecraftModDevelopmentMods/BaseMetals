@@ -1,14 +1,12 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
-//import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
-import com.mcmoddev.lib.integration.plugins.tinkers.traits.*;
+import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 
-import slimeknights.tconstruct.tools.TinkerTraits;
 import slimeknights.tconstruct.library.materials.MaterialTypes;
 
 /**
@@ -26,6 +24,10 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
 			return;
 		}
+		
+		TraitRegistry.initTiCTraits();
+		TraitRegistry.initMetalsTraits();
+		TraitRegistry.dumpRegistry();
 
 		if (Options.enableAdamantine) {
 			/*
@@ -35,8 +37,8 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			 */
 			TCMetalMaterial adamantTC = new TCMetalMaterial(Materials.adamantine);
 			adamantTC.craftable = false;
-			adamantTC.addTrait(TinkerTraits.coldblooded);
-			adamantTC.addTrait(TinkerTraits.insatiable, MaterialTypes.HEAD);
+			adamantTC.addTrait("coldblooded");
+			adamantTC.addTrait("insatiable", MaterialTypes.HEAD);
 
 			registerMaterial(adamantTC);
 		}
@@ -51,9 +53,9 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableAquarium) {
 			TCMetalMaterial aquaTC = new TCMetalMaterial(Materials.aquarium);
 			aquaTC.craftable = false;
-			aquaTC.addTrait(TinkerTraits.aquadynamic);
-			aquaTC.addTrait(TinkerTraits.jagged, MaterialTypes.HEAD);
-			aquaTC.addTrait(TinkerTraits.aquadynamic, MaterialTypes.HEAD);
+			aquaTC.addTrait("aquadynamic");
+			aquaTC.addTrait("jagged", MaterialTypes.HEAD);
+			aquaTC.addTrait("aquadynamic", MaterialTypes.HEAD);
 
 			registerMaterial(aquaTC);
 			// When FMe is out we can probably do the alloy.
@@ -72,7 +74,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableBrass) {
 			TCMetalMaterial brassTC = new TCMetalMaterial(Materials.brass);
 			brassTC.craftable = false;
-			brassTC.addTrait(TinkerTraits.dense);
+			brassTC.addTrait("dense");
 
 			registerMaterial(brassTC);
 		}
@@ -84,7 +86,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableColdIron) {
 			TCMetalMaterial coldironTC = new TCMetalMaterial(Materials.coldiron);
 			coldironTC.craftable = false;
-			coldironTC.addTrait(TinkerTraits.freezing);
+			coldironTC.addTrait("freezing");
 
 			registerMaterial(coldironTC);
 		}
@@ -114,10 +116,12 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		// up to the point of registration, the state changes and
 		// lead is suddenly registered.
 		// There will have to be another means of making this work...
+		// There is an event TiC has that covers material registration
+		// we could hook that...
 /*		if (Options.enableLead) {
 			TCMetalMaterial leadTC = new TCMetalMaterial(Materials.lead);
 			leadTC.craftable = false;
-			leadTC.addTrait(MMDTraits.soft);
+			leadTC.addTrait("soft");
 			
 			registerMaterial(leadTC);
 		} 
@@ -129,15 +133,13 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableMithril) {
 			TCMetalMaterial mithrilTC = new TCMetalMaterial(Materials.mithril);
 			mithrilTC.craftable = false;
-			mithrilTC.addTrait(TinkerTraits.holy);
+			mithrilTC.addTrait("holy");
 
 			registerMaterial(mithrilTC);
 			
-			if( Options.enableMercury && Options.enableSilver && Options.enableColdIron ) {
 				registerAlloy(Materials.mithril.getName(), 3,
 						new String[] { "silver", "coldiron", "mercury" },
 						new int[] { 2, 1, 1});
-			}
 		}
 
 		if (Options.enableNickel) {
@@ -151,7 +153,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enablePewter) {
 			TCMetalMaterial pewterTC = new TCMetalMaterial(Materials.pewter);
 			pewterTC.craftable = false;
-			pewterTC.addTrait(MMDTraits.soft);
+			pewterTC.addTrait("soft");
 
 			registerMaterial(pewterTC);
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
@@ -182,8 +184,8 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (Options.enableStarSteel) {
 			TCMetalMaterial starsteelTC = new TCMetalMaterial(Materials.starsteel);
 			starsteelTC.craftable = false;
-			starsteelTC.addTrait(TinkerTraits.enderference, MaterialTypes.HEAD);
-			starsteelTC.addTrait(MMDTraits.sparkly);
+			starsteelTC.addTrait("enderference", MaterialTypes.HEAD);
+			starsteelTC.addTrait("sparkly");
 
 			registerMaterial(starsteelTC);
 		}
