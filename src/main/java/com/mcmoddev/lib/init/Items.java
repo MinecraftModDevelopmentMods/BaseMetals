@@ -123,6 +123,10 @@ public abstract class Items {
 		}
 	}
 
+	/**
+	 * 
+	 * @param material
+	 */
 	protected static void createItemsBasic(MetalMaterial material) {
 		createBlend(material);
 		createIngot(material);
@@ -132,6 +136,10 @@ public abstract class Items {
 		createSmallPowder(material);
 	}
 
+	/**
+	 * 
+	 * @param material
+	 */
 	protected static void createItemsFull(MetalMaterial material) {
 		createArrow(material);
 		createAxe(material);
@@ -163,11 +171,19 @@ public abstract class Items {
 		createGear(material);
 	}
 
+	/**
+	 * 
+	 * @param material
+	 */
 	protected static void createItemsModSupport(MetalMaterial material) {
 		createItemsModMekanism(material);
 		createItemsModIC2(material);
 	}
 
+	/**
+	 * 
+	 * @param material
+	 */
 	protected static void createItemsModIC2(MetalMaterial material) {
 		final boolean enableModderSupportThings = true;
 
@@ -182,6 +198,10 @@ public abstract class Items {
 		}
 	}
 
+	/**
+	 * 
+	 * @param material
+	 */
 	protected static void createItemsModMekanism(MetalMaterial material) {
 		if (material.hasOre) {
 			createCrystal(material);
@@ -191,6 +211,14 @@ public abstract class Items {
 		}
 	}
 
+	/**
+	 * 
+	 * @param item
+	 * @param name
+	 * @param material
+	 * @param tab
+	 * @return
+	 */
 	protected static Item addItem(Item item, String name, MetalMaterial material, CreativeTabs tab) {
 
 		String fullName;
@@ -221,6 +249,11 @@ public abstract class Items {
 		return item;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createIngot(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -233,6 +266,11 @@ public abstract class Items {
 		return material.ingot;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createNugget(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -245,6 +283,11 @@ public abstract class Items {
 		return material.nugget;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createPowder(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -257,6 +300,11 @@ public abstract class Items {
 		return material.powder;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createBlend(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -269,6 +317,11 @@ public abstract class Items {
 		return material.blend;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createRod(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -283,6 +336,11 @@ public abstract class Items {
 		return material.rod;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createGear(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -296,6 +354,11 @@ public abstract class Items {
 		return material.gear;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createAxe(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -308,6 +371,11 @@ public abstract class Items {
 		return material.axe;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createCrackhammer(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -320,6 +388,11 @@ public abstract class Items {
 		return material.crackhammer;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createHoe(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -332,6 +405,11 @@ public abstract class Items {
 		return material.hoe;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createPickaxe(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -344,6 +422,11 @@ public abstract class Items {
 		return material.pickaxe;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createShovel(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -356,6 +439,11 @@ public abstract class Items {
 		return material.shovel;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createSword(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -368,6 +456,11 @@ public abstract class Items {
 		return material.sword;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createHelmet(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -380,6 +473,11 @@ public abstract class Items {
 		return material.helmet;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createChestplate(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -392,6 +490,11 @@ public abstract class Items {
 		return material.chestplate;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createLeggings(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -404,6 +507,11 @@ public abstract class Items {
 		return material.leggings;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createBoots(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -416,6 +524,11 @@ public abstract class Items {
 		return material.boots;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createHorseArmor(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -428,6 +541,11 @@ public abstract class Items {
 		return material.horse_armor;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createArrow(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -440,6 +558,11 @@ public abstract class Items {
 		return material.arrow;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createBolt(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -452,6 +575,11 @@ public abstract class Items {
 		return material.bolt;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createBow(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -464,6 +592,11 @@ public abstract class Items {
 		return material.bow;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createCrossbow(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -476,6 +609,11 @@ public abstract class Items {
 		return material.crossbow;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createShears(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -488,6 +626,11 @@ public abstract class Items {
 		return material.shears;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createSmallBlend(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -500,6 +643,11 @@ public abstract class Items {
 		return material.smallblend;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createFishingRod(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -512,6 +660,11 @@ public abstract class Items {
 		return material.fishing_rod;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createSmallPowder(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -524,6 +677,11 @@ public abstract class Items {
 		return material.smallpowder;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createShield(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -536,6 +694,11 @@ public abstract class Items {
 		return material.shield;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createCrystal(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -549,6 +712,11 @@ public abstract class Items {
 		return material.crystal;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createShard(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -562,6 +730,11 @@ public abstract class Items {
 		return material.shard;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createClump(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -575,6 +748,11 @@ public abstract class Items {
 		return material.clump;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createDirtyPowder(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -588,6 +766,11 @@ public abstract class Items {
 		return material.powder_dirty;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createCasing(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -602,6 +785,11 @@ public abstract class Items {
 	}
 
 	// TODO: Possibly make this a block, 1/2 of the normal plate.
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createDensePlate(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -615,6 +803,11 @@ public abstract class Items {
 		return material.dense_plate;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createCrushed(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -628,6 +821,11 @@ public abstract class Items {
 		return material.crushed;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createCrushedPurified(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -641,6 +839,11 @@ public abstract class Items {
 		return material.crushed_purified;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createSlab(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -656,6 +859,11 @@ public abstract class Items {
 		return material.slab;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Item createDoor(MetalMaterial material) {
 		if (material == null) {
 			return null;

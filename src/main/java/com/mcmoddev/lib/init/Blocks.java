@@ -47,6 +47,10 @@ public abstract class Blocks {
 		initDone = true;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 */
 	protected static void createBlocksBasic(MetalMaterial material) {
 		createBlock(material); // Not Gold, Not Iron, Not Diamond, Not Stone
 		createPlate(material);
@@ -56,6 +60,10 @@ public abstract class Blocks {
 		createTrapDoor(material); // Not Iron
 	}
 
+	/**
+	 * 
+	 * @param material
+	 */
 	protected static void createBlocksAdditional(MetalMaterial material) {
 		createButton(material);
 		createSlab(material);
@@ -66,6 +74,10 @@ public abstract class Blocks {
 		createWall(material);
 	}
 
+	/**
+	 * 
+	 * @param material
+	 */
 	protected static void createBlocksFull(MetalMaterial material) {
 		createBlock(material);
 		createPlate(material);
@@ -83,6 +95,14 @@ public abstract class Blocks {
 		createWall(material);
 	}
 
+	/**
+	 * 
+	 * @param block
+	 * @param name
+	 * @param material
+	 * @param tab
+	 * @return
+	 */
 	protected static Block addBlock(Block block, String name, MetalMaterial material, CreativeTabs tab) {
 
 		String fullName;
@@ -130,6 +150,11 @@ public abstract class Blocks {
 		return block;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createPlate(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -142,6 +167,11 @@ public abstract class Blocks {
 		return material.plate;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createBars(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -155,10 +185,21 @@ public abstract class Blocks {
 		return material.bars;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createBlock(MetalMaterial material) {
 		return createBlock(material, false);
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @param glow
+	 * @return
+	 */
 	protected static Block createBlock(MetalMaterial material, boolean glow) {
 		if (material == null) {
 			return null;
@@ -170,6 +211,11 @@ public abstract class Blocks {
 		return material.block;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createButton(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -182,6 +228,11 @@ public abstract class Blocks {
 		return material.button;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createLever(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -194,6 +245,11 @@ public abstract class Blocks {
 		return material.lever;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createPressurePlate(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -205,6 +261,11 @@ public abstract class Blocks {
 		return material.pressure_plate;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static BlockSlab createSlab(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -217,6 +278,11 @@ public abstract class Blocks {
 		return material.half_slab;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static BlockSlab createDoubleSlab(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -229,6 +295,11 @@ public abstract class Blocks {
 		return material.double_slab;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createStairs(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -243,6 +314,11 @@ public abstract class Blocks {
 		return material.stairs;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createWall(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -257,6 +333,11 @@ public abstract class Blocks {
 		return material.wall;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createOre(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -269,6 +350,47 @@ public abstract class Blocks {
 		return material.ore;
 	}
 
+	/**
+	 * This is here purely for End Metals
+	 * 
+	 * @param material 
+	 * @return
+	 */
+	protected static Block createEndOre(MetalMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableBasics) && (material.hasOre) && (material.ore == null)) {
+			material.oreEnd = addBlock(new BlockMetalOre(material), "oreEnd", material, ItemGroups.blocksTab);
+		}
+
+		return material.oreEnd;
+	}
+
+	/**
+	 * This is here purely for Nether Metals
+	 * 
+	 * @param material
+	 * @return
+	 */
+	protected static Block createNetherOre(MetalMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableBasics) && (material.hasOre) && (material.ore == null)) {
+			material.oreNether = addBlock(new BlockMetalOre(material), "oreNether", material, ItemGroups.blocksTab);
+		}
+
+		return material.oreNether;
+	}
+
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static BlockDoor createDoor(MetalMaterial material) {
 		if (material == null) {
 			return null;
@@ -281,6 +403,11 @@ public abstract class Blocks {
 		return material.doorBlock;
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @return
+	 */
 	protected static Block createTrapDoor(MetalMaterial material) {
 		if (material == null) {
 			return null;

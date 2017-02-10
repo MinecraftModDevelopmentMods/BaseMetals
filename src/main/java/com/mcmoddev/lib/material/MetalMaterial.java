@@ -171,6 +171,9 @@ public class MetalMaterial {
 	public Item dense_plate;
 	public Item crushed;
 	public Item crushed_purified;
+	
+	public Block oreEnd;
+	public Block oreNether;
 
 	/**
 	 * @deprecated
