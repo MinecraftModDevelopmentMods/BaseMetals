@@ -11,7 +11,6 @@ public class TAIGAItems extends Items {
 	
 	public static void init(List<MetalMaterial> materials) {
 		for( MetalMaterial m : materials ) {
-			BaseMetals.logger.error(String.format("BME-TAIGA> calling createItemsFull(%s)", m.getName()));
 			createItemsFull(m);
 		}
 		

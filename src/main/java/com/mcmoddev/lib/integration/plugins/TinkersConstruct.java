@@ -16,6 +16,7 @@ import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 
+import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
 import slimeknights.tconstruct.library.materials.BowMaterialStats;
@@ -27,6 +28,7 @@ import slimeknights.tconstruct.library.materials.HeadMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
+import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.tools.TinkerTools;
 
 /**
@@ -172,6 +174,7 @@ public class TinkersConstruct implements IIntegration {
 		// in here we should always have a nugget and an ingot
 		tcmat.addItem(material.metalmaterial.nugget, 1, Material.VALUE_Nugget);
 		tcmat.addItem(material.metalmaterial.ingot, 1, Material.VALUE_Ingot);
+		tcmat.addItemIngot(Oredicts.INGOT+material.metalmaterial.getName());
 		tcmat.setRepresentativeItem(material.metalmaterial.ingot);
 
 		// setup the stats for the item - first the tool part stats
@@ -196,7 +199,15 @@ public class TinkersConstruct implements IIntegration {
 		TinkerRegistry.addMaterialStats(tcmat, arrowShaftStats); // Sets stats for Arrow Shaft
 		TinkerRegistry.addMaterialStats(tcmat, fletchingStats); // Sets stats for Fletching 
 
+		
 		// register the material
 		TinkerRegistry.addMaterial(tcmat);
+/*		MaterialIntegration matInt = new MaterialIntegration(tcmat, material.metalmaterial.fluid, material.metalmaterial.getCapitalizedName());
+		if( material.toolforge ) matInt.toolforge();
+		matInt.integrate();
+		matInt.integrateRecipes();
+*/		
+		TinkerSmeltery.registerToolpartMeltingCasting(tcmat);
+		TinkerSmeltery.registerOredictMeltingCasting(material.metalmaterial.fluid, material.metalmaterial.getCapitalizedName());
 	}
 }
