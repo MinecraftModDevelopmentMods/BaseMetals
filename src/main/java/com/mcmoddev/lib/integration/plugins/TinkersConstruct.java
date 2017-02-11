@@ -16,6 +16,8 @@ import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 
+import slimeknights.tconstruct.TinkerIntegration;
+import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
 import slimeknights.tconstruct.library.materials.BowMaterialStats;
@@ -27,8 +29,6 @@ import slimeknights.tconstruct.library.materials.HeadMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
-import slimeknights.tconstruct.smeltery.TinkerSmeltery;
-import slimeknights.tconstruct.tools.TinkerTools;
 
 /**
  *
@@ -50,7 +50,7 @@ public class TinkersConstruct implements IIntegration {
 
 		initDone = true;
 	}
-
+	
 	/**
 	 * @param base Material being melted
 	 * @param amountPer Amount of fluid per ingot
@@ -143,7 +143,8 @@ public class TinkersConstruct implements IIntegration {
 			return;
 		}
 
-		Material tcmat = new Material( material.metalmaterial.getName(), TextFormatting.WHITE);
+		// make sure the name used here is all lower case
+		Material tcmat = new Material( material.metalmaterial.getName().toLowerCase(), TextFormatting.WHITE);
 
 		if (material.hasTraits) {
 			for( String s : material.getTraitLocs() ) {
@@ -157,23 +158,13 @@ public class TinkersConstruct implements IIntegration {
 			return;
 		}
 
-		// Set fluid used, Set whether craftable, set whether castable, adds the
-		// item with the value 144.
-		tcmat.setFluid(material.metalmaterial.fluid).setCraftable(material.craftable).setCastable(material.castable);
-
 		// register the fluid for the material, 1 ingot is 144mB
-		registerFluid(material.metalmaterial, 144);
-
-		// register the material as being a possible Tool Forge material
-		// somewhat hacky, but we need to keep the API changes minimal
-		if (material.toolforge) {
-			TinkerTools.registerToolForgeBlock(Oredicts.BLOCK+material.metalmaterial.getCapitalizedName());
-		}
+		//registerFluid(material.metalmaterial, material.amountPerOre/2);
 
 		// in here we should always have a nugget and an ingot
-		tcmat.addItem(material.metalmaterial.nugget, 1, Material.VALUE_Nugget);
+/*		tcmat.addItem(material.metalmaterial.nugget, 1, Material.VALUE_Nugget);
 		tcmat.addItem(material.metalmaterial.ingot, 1, Material.VALUE_Ingot);
-		tcmat.addItemIngot(Oredicts.INGOT+material.metalmaterial.getName());
+		tcmat.addItemIngot(Oredicts.INGOT+material.metalmaterial.getName());*/
 		tcmat.setRepresentativeItem(material.metalmaterial.ingot);
 
 		// setup the stats for the item - first the tool part stats
@@ -187,26 +178,27 @@ public class TinkersConstruct implements IIntegration {
 		final ArrowShaftMaterialStats arrowShaftStats = new ArrowShaftMaterialStats( material.shaftModifier, material.shaftBonusAmmo );
 		final FletchingMaterialStats fletchingStats = new FletchingMaterialStats(material.fletchingAccuracy, material.fletchingModifier);
 
-		// add the base tool stats
-		TinkerRegistry.addMaterialStats(tcmat, headStats); // Sets stats for head
-		TinkerRegistry.addMaterialStats(tcmat, handleStats); // Sets Stats for handle
-		TinkerRegistry.addMaterialStats(tcmat, extraStats); // Sets stats for everything else
+		TinkerRegistry.addMaterialStats( tcmat, headStats);
+		TinkerRegistry.addMaterialStats( tcmat, handleStats);
+		TinkerRegistry.addMaterialStats( tcmat, extraStats);
+		TinkerRegistry.addMaterialStats( tcmat, bowStats);
+		TinkerRegistry.addMaterialStats( tcmat, bowStringStats);
+		TinkerRegistry.addMaterialStats( tcmat, arrowShaftStats);
+		TinkerRegistry.addMaterialStats( tcmat, fletchingStats);
 
-		// now add the extended stats for bow/projectile
-		TinkerRegistry.addMaterialStats(tcmat, bowStats); // Sets stats for Bow
-		TinkerRegistry.addMaterialStats(tcmat, bowStringStats); // Sets stats for Bow String
-		TinkerRegistry.addMaterialStats(tcmat, arrowShaftStats); // Sets stats for Arrow Shaft
-		TinkerRegistry.addMaterialStats(tcmat, fletchingStats); // Sets stats for Fletching 
-
-		
-		// register the material
 		TinkerRegistry.addMaterial(tcmat);
-/*		MaterialIntegration matInt = new MaterialIntegration(tcmat, material.metalmaterial.fluid, material.metalmaterial.getCapitalizedName());
-		if( material.toolforge ) matInt.toolforge();
-		matInt.integrate();
-		matInt.integrateRecipes();
-*/		
-		TinkerSmeltery.registerToolpartMeltingCasting(tcmat);
-		TinkerSmeltery.registerOredictMeltingCasting(material.metalmaterial.fluid, material.metalmaterial.getCapitalizedName());
+		
+		// everything we send through here has a fluid - fluid and craftable are opposites
+		tcmat.setFluid(material.metalmaterial.fluid).setCastable(material.castable).setCraftable(material.craftable);
+		
+		String base = material.metalmaterial.getName();
+		String suffix = base.substring(0, 1).toUpperCase()+base.substring(1);
+		MaterialIntegration m = new MaterialIntegration(null, material.metalmaterial.fluid, suffix);
+		if( material.toolforge ) {
+			m.toolforge();
+		}
+		
+		TinkerIntegration.integrationList.add(m);
+		m.integrate();
 	}
 }
