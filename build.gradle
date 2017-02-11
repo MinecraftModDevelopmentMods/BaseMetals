@@ -107,6 +107,10 @@ repositories {
         name "industrialcraft"
         url "http://maven.ic2.player.to"
     }
+    maven { // Waila is here
+    	name "tehnut"
+    	url "http://tehnut.info/maven"
+    }
 }
 
 dependencies {
@@ -140,6 +144,7 @@ dependencies {
 
     deobfCompile "net.industrial-craft:industrialcraft-2:2.6.161-ex110:api"
     deobfCompile "MineTweaker3:MineTweaker3-API:3.+"
+    deobfCompile "mcp.mobius.waila:Hwyla:+"
 }
 
 processResources {
