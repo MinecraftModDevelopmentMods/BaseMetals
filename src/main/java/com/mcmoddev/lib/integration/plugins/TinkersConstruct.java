@@ -16,7 +16,6 @@ import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 
-import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
 import slimeknights.tconstruct.library.materials.BowMaterialStats;
