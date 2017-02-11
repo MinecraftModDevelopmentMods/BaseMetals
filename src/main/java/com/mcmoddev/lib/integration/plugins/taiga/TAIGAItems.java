@@ -2,7 +2,6 @@ package com.mcmoddev.lib.integration.plugins.taiga;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.init.Items;
 import com.mcmoddev.lib.material.MetalMaterial;
 
