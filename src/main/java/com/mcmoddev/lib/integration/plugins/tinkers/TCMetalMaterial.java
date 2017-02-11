@@ -46,6 +46,10 @@ public class TCMetalMaterial {
 	public float fletchingAccuracy;
 	public float fletchingModifier;
 
+	// Because some *metals need to change this
+	// this is in mB
+	public int amountPerOre = 288;
+	
 	// for reference and simplifying the API
 	public final MetalMaterial metalmaterial;
 

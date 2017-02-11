@@ -162,7 +162,7 @@ public class TinkersConstruct implements IIntegration {
 		tcmat.setFluid(material.metalmaterial.fluid).setCraftable(material.craftable).setCastable(material.castable);
 
 		// register the fluid for the material, 1 ingot is 144mB
-		registerFluid(material.metalmaterial, 144);
+		registerFluid(material.metalmaterial, material.amountPerOre/2);
 
 		// register the material as being a possible Tool Forge material
 		// somewhat hacky, but we need to keep the API changes minimal
