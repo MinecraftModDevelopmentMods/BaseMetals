@@ -57,6 +57,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
+		com.mcmoddev.basemetals.waila.Waila.init();
 /*
 		for (MetalMaterial material : Materials.getAllMaterials()) {
 			// Items

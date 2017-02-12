@@ -2,15 +2,18 @@ package com.mcmoddev.basemetals.waila;
 
 import java.util.List;
 
+import com.mcmoddev.basemetals.BaseMetals;
+
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
+
 import net.minecraft.world.World;
 
 public class leverInfoController implements IWailaDataProvider {
@@ -27,11 +30,10 @@ public class leverInfoController implements IWailaDataProvider {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
 			IWailaConfigHandler config) {
-		String redstoneOn = (accessor.getMetadata() & 8) == 0 ? I18n.translateToLocal("hud.msg.off") : I18n.translateToLocal("hud.msg.on");
-		currenttip.add(String.format("%s : %s", I18n.translateToLocal("hud.msg.state"), redstoneOn));
+		String redstoneOn = (accessor.getMetadata() & 8) == 0 ? I18n.format("hud.msg.off") : I18n.format("hud.msg.on");
+		currenttip.add(I18n.format("%s : %s", I18n.format("hud.msg.state"), redstoneOn));
         return currenttip;
 	}
 	
