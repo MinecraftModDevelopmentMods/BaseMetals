@@ -20,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -57,7 +58,9 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		com.mcmoddev.basemetals.waila.Waila.init();
+		if( Loader.isModLoaded("waila") ) {
+			com.mcmoddev.basemetals.waila.Waila.init();
+		}
 /*
 		for (MetalMaterial material : Materials.getAllMaterials()) {
 			// Items
