@@ -64,16 +64,16 @@ public class TinkersConstruct implements IIntegration {
 		Fluid output = FluidRegistry.getFluid(materialName);
 
 		try {
-		if (base.oreNether != null)
-			TinkerRegistry.registerMelting(base.oreNether, output, amountPer);
+			if (base.oreNether != null)
+				TinkerRegistry.registerMelting(base.oreNether, output, amountPer);
 		} catch( final Exception e) {
-			
+
 		}
 		try {
-		if (base.oreEnd != null)
-			TinkerRegistry.registerMelting(base.oreEnd, output, amountPer);
+			if (base.oreEnd != null)
+				TinkerRegistry.registerMelting(base.oreEnd, output, amountPer);
 		} catch( final Exception e) {
-			
+
 		}
 	}
 	/**
