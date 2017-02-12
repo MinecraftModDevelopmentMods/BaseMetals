@@ -2,7 +2,6 @@ package com.mcmoddev.basemetals.waila;
 
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.blocks.BlockMetalLever;
 
 import mcp.mobius.waila.api.IWailaRegistrar;
