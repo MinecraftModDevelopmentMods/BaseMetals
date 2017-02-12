@@ -2,8 +2,6 @@ package com.mcmoddev.basemetals.waila;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.BaseMetals;
-
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;

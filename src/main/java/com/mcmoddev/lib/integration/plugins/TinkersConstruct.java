@@ -52,6 +52,31 @@ public class TinkersConstruct implements IIntegration {
 	}
 	
 	/**
+	 * Variant of fluid registration to allow for late registration of specific materials
+	 * that have a different amount of fluid per block than normal. Setup specifically for
+	 * NetherMetals and EndMetals.
+	 * 
+	 * @param base MetalMaterial that is the base material for this
+	 * @param amountPer the amount of fluid per this block
+	 */
+	protected static void registerExtraFluids(MetalMaterial base, int amountPer) {
+		String materialName = base.getName();
+		Fluid output = FluidRegistry.getFluid(materialName);
+
+		try {
+		if (base.oreNether != null)
+			TinkerRegistry.registerMelting(base.oreNether, output, amountPer);
+		} catch( final Exception e) {
+			
+		}
+		try {
+		if (base.oreEnd != null)
+			TinkerRegistry.registerMelting(base.oreEnd, output, amountPer);
+		} catch( final Exception e) {
+			
+		}
+	}
+	/**
 	 * @param base Material being melted
 	 * @param amountPer Amount of fluid per ingot
 	 */
@@ -76,6 +101,10 @@ public class TinkersConstruct implements IIntegration {
 			TinkerRegistry.registerMelting(Oredicts.DUST + oreDictName, output, amountPer);
 		if (base.smallpowder != null)
 			TinkerRegistry.registerMelting(Oredicts.DUSTSMALL + oreDictName, output, amountPer / 9);
+		if (base.oreNether != null)
+			TinkerRegistry.registerMelting(base.oreNether, output, amountPer*4);
+		if (base.oreEnd != null)
+			TinkerRegistry.registerMelting(base.oreEnd, output, amountPer*4);
 	}
 
 	/**
@@ -159,7 +188,7 @@ public class TinkersConstruct implements IIntegration {
 		}
 
 		// register the fluid for the material, 1 ingot is 144mB
-		//registerFluid(material.metalmaterial, material.amountPerOre/2);
+		registerFluid(material.metalmaterial, material.amountPerOre);
 
 		// in here we should always have a nugget and an ingot
 /*		tcmat.addItem(material.metalmaterial.nugget, 1, Material.VALUE_Nugget);
