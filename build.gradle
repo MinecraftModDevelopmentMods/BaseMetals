@@ -114,21 +114,32 @@ repositories {
 }
 
 dependencies {
-	// c510ce7d8c = https://github.com/aidancbrady/Mekanism/commit/c510ce7d8cf7810500e032e2f713796078d26c6f
-	// 7e3c806a8f = https://github.com/aidancbrady/Mekanism/commit/7e3c806a8f136526129967ba1b25946d8f05ccd9
-    deobfCompile ("com.github.aidancbrady:Mekanism:7e3c806a8f") {
+    // c510ce7d8c = https://github.com/aidancbrady/Mekanism/commit/c510ce7d8cf7810500e032e2f713796078d26c6f
+    // 7e3c806a8f = https://github.com/aidancbrady/Mekanism/commit/7e3c806a8f136526129967ba1b25946d8f05ccd9
+    compileOnly ("com.github.aidancbrady:Mekanism:7e3c806a8f") {
         exclude group: 'MCMultiPart'
+        exclude group: 'mezz.jei'
     }
 
-	deobfCompile ("com.github.TeamFRM:TAIGA:4db215fc65") {
-		exclude group: 'MCMultiPart'
-	}
-	
+    deobfCompile ("com.github.TeamFRM:TAIGA:4db215fc65") {
+        exclude group: 'MCMultiPart'
+        exclude group: 'mezz.jei'
+        exclude group: 'slimeknights.mantle'
+        exclude group: 'slimeknights'
+    }
+
     deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
         exclude group: 'mezz.jei'
     }
-    deobfCompile "slimeknights.mantle:Mantle:${mc_version}-${mantle_version}"
-    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
+    deobfCompile ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
+        exclude group: 'mezz.jei'
+    }
+	
+//  We do this to make NEI happy as there is no deobf or dev JEI jar for the deobf instance
+//  deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
+    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+//  runtime "mezz.jei:jei_${mc_version}:${jei_version}:dev"
+
     deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
     deobfCompile ("codechicken:CodeChickenCore:${mc_version}-${ccc_version}:universal") {
         exclude group: 'codechicken'
@@ -138,13 +149,19 @@ dependencies {
         exclude group: 'codechicken'
     }
     deobfCompile "mmd:orespawn:${orespawn_version}-${mc_version}"
-//    deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
-      deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
-//    compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
+//  deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
+    deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
+//  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
-    deobfCompile "net.industrial-craft:industrialcraft-2:2.6.161-ex110:api"
-    deobfCompile "MineTweaker3:MineTweaker3-API:3.+"
-    deobfCompile "mcp.mobius.waila:Hwyla:+"
+    deobfCompile ("net.industrial-craft:industrialcraft-2:2.6.161-ex110:api") {
+        exclude group: 'mezz.jei'
+    }
+    deobfCompile ("MineTweaker3:MineTweaker3-API:3.+") {
+        exclude group: 'mezz.jei'
+    }
+    deobfCompile ("mcp.mobius.waila:Hwyla:+") {
+        exclude group: 'mezz.jei'
+    }
 }
 
 processResources {
@@ -168,10 +185,12 @@ jar {
     }
 }
 
+/*
 task apiJar(type: Jar) {
     from apiClasses
     classifier = 'apiClasses'
 }
+*/
 
 task deobfJar(type: Jar) {
     classifier = "deobf"
@@ -200,9 +219,11 @@ publishing {
             artifact sourceJar {
                 classifier "sources"
             }
+/*
             artifact apiJar {
                 classifier "api"
             }
+*/
             artifact deobfJar {
                 classifier "deobf"
             }
