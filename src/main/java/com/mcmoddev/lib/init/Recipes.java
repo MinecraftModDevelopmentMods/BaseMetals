@@ -4,6 +4,7 @@ import com.mcmoddev.basemetals.registry.CrusherRecipeRegistry;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.recipe.ShieldRepairRecipe;
 import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -235,6 +236,9 @@ public abstract class Recipes {
 				if (material.shield != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shield), "xyx", "xxx", " x ", 'y', Oredicts.PLANKWOOD, 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(material.shield, new ItemStack(material.ingot, 6), 0); // 1 wood loss
+					if( material.plate != null ) {
+						GameRegistry.addRecipe(new ShieldRepairRecipe(material));
+					}
 				}
 
 				if ((material.trapdoor != null) && (material.trapdoor instanceof IMetalObject)) {
