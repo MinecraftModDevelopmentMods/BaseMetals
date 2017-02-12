@@ -210,7 +210,7 @@ public abstract class Blocks {
 		}
 
 		if ((Options.enableBasics) && (material.block == null)) {
-			material.block = addBlock(new BlockMetalBlock(material, glow), "block", material, ItemGroups.blocksTab);
+			material.block = addBlock(new BlockMetalBlock(material, glow, true), "block", material, ItemGroups.blocksTab);
 		}
 		return material.block;
 	}
