@@ -13,6 +13,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,8 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 
 	private final MetalMaterial material;
 	private final String oreDict;
-
+	private final boolean beaconBase;
+	
 	/**
 	 *
 	 * @param material The material the block is made from
@@ -37,6 +39,10 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	}
 
 	public BlockMetalBlock(MetalMaterial material, boolean glows) {
+		this(material,glows,false);
+	}
+	
+	public BlockMetalBlock(MetalMaterial material, boolean glows, boolean isBeacon) {
 		super(Material.IRON);
 		this.setSoundType(SoundType.METAL);
 		this.fullBlock = true;
@@ -48,10 +54,17 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		this.blockHardness = material.getMetalBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.beaconBase = isBeacon;
+		
 		if (glows)
 			this.setLightLevel(0.5f);
 	}
-
+	
+    @Override
+    public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
+        return beaconBase;
+    }
+    
 	///// OVERRIDE OF ALL METHODS THAT DEPEND ON BLOCK MATERIAL: /////
 	/**
 	 * @deprecated
