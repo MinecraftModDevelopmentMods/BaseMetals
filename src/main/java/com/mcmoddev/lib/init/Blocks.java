@@ -116,7 +116,11 @@ public abstract class Blocks {
 		} else if (block instanceof BlockDoubleMetalSlab) {
 			fullName = "double_" + name;
 		} else if (material != null) {
-			fullName = material.getName() + "_" + name;
+			if (((name == "nether") || (name == "end")) && (block instanceof BlockMetalOre)) {
+				fullName = name + "_" + material.getName() + "_" + "ore";
+			} else {
+				fullName = material.getName() + "_" + name;
+			}
 		} else {
 			fullName = name;
 		}
@@ -362,7 +366,7 @@ public abstract class Blocks {
 		}
 
 		if ((Options.enableBasics) && (material.hasOre) && (material.ore == null)) {
-			material.oreEnd = addBlock(new BlockMetalOre(material), "oreEnd", material, ItemGroups.blocksTab);
+			material.oreEnd = addBlock(new BlockMetalOre(material), "end", material, ItemGroups.blocksTab);
 		}
 
 		return material.oreEnd;
@@ -380,7 +384,7 @@ public abstract class Blocks {
 		}
 
 		if ((Options.enableBasics) && (material.hasOre) && (material.ore == null)) {
-			material.oreNether = addBlock(new BlockMetalOre(material), "oreNether", material, ItemGroups.blocksTab);
+			material.oreNether = addBlock(new BlockMetalOre(material), "nether", material, ItemGroups.blocksTab);
 		}
 
 		return material.oreNether;

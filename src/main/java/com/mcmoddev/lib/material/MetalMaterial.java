@@ -331,6 +331,14 @@ public class MetalMaterial {
 	public String getCapitalizedName() {
 		return this.titleName;
 	}
+	
+	/**
+	 * 
+	 * @return MaterialType The type of material this is
+	 */
+	public MaterialType getType() {
+		return this.materialType;
+	}
 
 	@Override
 	public String toString() {
