@@ -59,26 +59,13 @@ public class MetalMaterial {
 
 	/**
 	 * Does this Material have an Ore?
-	 * May go away
 	 */
 	public final boolean hasOre;
+
 	/**
 	 * Does this Material have a blend?
-	 * May go away
 	 */
 	public final boolean hasBlend;
-
-	/**
-	 * Set for Vanilla Materials
-	 * May go away
-	 */
-	public boolean isVanilla = false;
-
-	/**
-	 * Set for Materials which only have the basic things.
-	 * May go away
-	 */
-	public boolean isBasic = false;
 
 	/**
 	 * ENUM of all the types of Materials
@@ -93,7 +80,7 @@ public class MetalMaterial {
 	/**
 	 * The type of material this is
 	 */
-	public MaterialType materialType;
+	private final MaterialType materialType;
 
 	/**
 	 * String used to identify items and blocks using this material
@@ -176,114 +163,6 @@ public class MetalMaterial {
 	public Block oreNether;
 
 	/**
-	 * @deprecated
-	 * @param name
-	 *            String used to identify items and blocks using this material
-	 * @param hardness
-	 *            hardness on a scale from 0 to 10 (or more), where 0 is
-	 *            non-solid and diamond is 10. For reference, wood is 3, stone
-	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
-	 *            protection, and tool effectiveness calculations
-	 * @param strength
-	 *            durability on a scale from 0 to 10 (or more). For reference,
-	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
-	 *            minecraft diamond is 10. Used for item durability calculations
-	 *            and blast resistance
-	 * @param magic
-	 *            Scale from 0 to 10 (or more) on how magical the material is.
-	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
-	 *            6, gold is 10. Used to calculate enchantibility
-	 */
-	@Deprecated
-	public MetalMaterial(String name, float hardness, float strength, float magic) {
-		this(name, hardness, strength, magic, 0x00000000);
-	}
-
-	/**
-	 * @param name
-	 *            String used to identify items and blocks using this material
-	 * @param hardness
-	 *            hardness on a scale from 0 to 10 (or more), where 0 is
-	 *            non-solid and diamond is 10. For reference, wood is 3, stone
-	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
-	 *            protection, and tool effectiveness calculations
-	 * @param strength
-	 *            durability on a scale from 0 to 10 (or more). For reference,
-	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
-	 *            minecraft diamond is 10. Used for item durability calculations
-	 *            and blast resistance
-	 * @param magic
-	 *            Scale from 0 to 10 (or more) on how magical the material is.
-	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
-	 *            6, gold is 10. Used to calculate enchantibility
-	 * @param tintColor
-	 *            Color Info for the metal
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public MetalMaterial(String name, float hardness, float strength, float magic, int tintColor) {
-		this(name, hardness, strength, magic, tintColor, false, true, true);
-	}
-
-	public MetalMaterial(String name, float hardness, float strength, float magic, int tintColor, boolean hasOre, boolean hasBlend) {
-		this(name, hardness, strength, magic, tintColor, false, hasOre, hasBlend);
-	}
-	/**
-	 * @deprecated
-	 * @param name
-	 *            String used to identify items and blocks using this material
-	 * @param hardness
-	 *            hardness on a scale from 0 to 10 (or more), where 0 is
-	 *            non-solid and diamond is 10. For reference, wood is 3, stone
-	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
-	 *            protection, and tool effectiveness calculations
-	 * @param strength
-	 *            durability on a scale from 0 to 10 (or more). For reference,
-	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
-	 *            minecraft diamond is 10. Used for item durability calculations
-	 *            and blast resistance
-	 * @param magic
-	 *            Scale from 0 to 10 (or more) on how magical the material is.
-	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
-	 *            6, gold is 10. Used to calculate enchantibility
-	 * @param isRare
-	 *            If true, this metal is designated as an extremely rare metal
-	 */
-	@Deprecated
-	public MetalMaterial(String name, float hardness, float strength, float magic, boolean isRare) {
-		this(name, hardness, strength, magic, 0x00000000, false, true, true);
-	}
-
-	/**
-	 * @deprecated
-	 * @param name
-	 *            String used to identify items and blocks using this material
-	 * @param hardness
-	 *            hardness on a scale from 0 to 10 (or more), where 0 is
-	 *            non-solid and diamond is 10. For reference, wood is 3, stone
-	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
-	 *            protection, and tool effectiveness calculations
-	 * @param strength
-	 *            durability on a scale from 0 to 10 (or more). For reference,
-	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
-	 *            minecraft diamond is 10. Used for item durability calculations
-	 *            and blast resistance
-	 * @param magic
-	 *            Scale from 0 to 10 (or more) on how magical the material is.
-	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
-	 *            6, gold is 10. Used to calculate enchantibility
-	 * @param tintColor
-	 *            Color Info for the metal
-	 * @param isRare
-	 *            If true, this metal is designated as an extremely rare metal
-	 */
-	@Deprecated
-	public MetalMaterial(String name, float hardness, float strength, float magic, int tintColor, boolean isRare) {
-		this(name, hardness, strength, magic, tintColor, false, true, true);
-	}
-
-	/**
 	 * @param name
 	 *            String used to identify items and blocks using this material
 	 * @param hardness
@@ -309,7 +188,7 @@ public class MetalMaterial {
 	 * @param hasBlend
 	 *            If true this material has a blend
 	 */
-	public MetalMaterial(String name, float hardness, float strength, float magic, int tintColor, boolean isRare, boolean hasOre, boolean hasBlend) {
+	public MetalMaterial(String name, MaterialType type, float hardness, float strength, float magic, int tintColor, boolean isRare, boolean hasOre, boolean hasBlend) {
 		this.hardness = hardness;
 		this.strength = strength;
 		this.magicAffinity = magic;
@@ -322,6 +201,7 @@ public class MetalMaterial {
 		this.isRare = isRare;
 		this.blastResistance = 2.5f * this.strength;
 		this.baseDamage = this.round(0.25f * this.hardness, 1);
+		this.materialType = type;
 	}
 
 	public String getName() {

@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
@@ -42,114 +43,177 @@ public abstract class Materials {
 		initDone = true;
 	}
 
-	/*
+	/**
 	 * Create a oreless material
+	 * 
+	 * @param name
+	 * @param hardness
+	 * @param strength
+	 * @param magic
+	 * @param tintColor
+	 * @return
 	 */
-	protected static MetalMaterial createOrelessMaterial(String name, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, false, false, false);
+	protected static MetalMaterial createOrelessMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, false, false, false);
 
-		return registerMaterial(m);
+		return registerMaterial(material);
 	}
 
-	/*
+	/**
 	 * Create a standard material
+	 * 
+	 * @param name
+	 * @param hardness
+	 * @param strength
+	 * @param magic
+	 * @param tintColor
+	 * @return
 	 */
-	protected static MetalMaterial createMaterial(String name, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, false, true, false);
+	protected static MetalMaterial createMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, false, true, false);
 
-		return registerMaterial(m);
+		return registerMaterial(material);
 	}
 
-	/*
+	/**
 	 * Create an alloy material
+	 * 
+	 * @param name
+	 * @param hardness
+	 * @param strength
+	 * @param magic
+	 * @param tintColor
+	 * @return
 	 */
-	protected static MetalMaterial createAlloyMaterial(String name, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, false, false, true);
+	protected static MetalMaterial createAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, false, false, true);
 
-		return registerMaterial(m);
+		return registerMaterial(material);
 	}
 
-	/*
+	/**
 	 * Create a special alloy material which has an ore block
+	 * 
+	 * @param name
+	 * @param hardness
+	 * @param strength
+	 * @param magic
+	 * @param tintColor
+	 * @return
 	 */
-	protected static MetalMaterial createSpecialMaterial(String name, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, false, true, true);
+	protected static MetalMaterial createSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, false, true, true);
 
-		return registerMaterial(m);
+		return registerMaterial(material);
 	}
 
-	/*
+	/**
 	 * Create a rare, oreless  material
+	 * 
+	 * @param name
+	 * @param hardness
+	 * @param strength
+	 * @param magic
+	 * @param tintColor
+	 * @return
 	 */
-	protected static MetalMaterial createOrelessRareMaterial(String name, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, true, false, false);
+	protected static MetalMaterial createOrelessRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, true, false, false);
 
-		return registerMaterial(m);
+		return registerMaterial(material);
 	}
 
-	/*
+	/**
 	 * Create a rare material
+	 * 
+	 * @param name
+	 * @param hardness
+	 * @param strength
+	 * @param magic
+	 * @param tintColor
+	 * @return
 	 */
-	protected static MetalMaterial createRareMaterial(String name, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, true, true, false);
+	protected static MetalMaterial createRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, true, true, false);
 
-		return registerMaterial(m);
+		return registerMaterial(material);
 	}
 
-	/*
+	/**
 	 * Create a rare alloy material
+	 * 
+	 * @param name
+	 * @param hardness
+	 * @param strength
+	 * @param magic
+	 * @param tintColor
+	 * @return
 	 */
-	protected static MetalMaterial createRareAlloyMaterial(String name, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, true, false, true);
+	protected static MetalMaterial createRareAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, true, false, true);
 
-		return registerMaterial(m);
+		return registerMaterial(material);
 	}
 
-	/*
+	/**
 	 * Create a special rare alloy material
+	 * 
+	 * @param name
+	 * @param hardness
+	 * @param strength
+	 * @param magic
+	 * @param tintColor
+	 * @return
 	 */
-	protected static MetalMaterial createRareSpecialMaterial(String name, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial m = new MetalMaterial(name, (float) hardness, (float) strength, (float) magic, tintColor, true, true, true);
+	protected static MetalMaterial createRareSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, true, true, true);
 
-		return registerMaterial(m);
+		return registerMaterial(material);
 	}
 
-	protected static MetalMaterial registerMaterial(MetalMaterial m) {
 
-		if (m == null) {
+	/**
+	 * Register a material
+	 * 
+	 * @param material
+	 * @return
+	 */
+	protected static MetalMaterial registerMaterial(MetalMaterial material) {
+
+		if (material == null) {
 			BaseMetals.logger.error("Null material passed to registermaterial(), Don't do that!");
 			return (MetalMaterial) null;
 		}
 
-		if (Materials.getAllMaterials().contains(m)) {
+		if (Materials.getAllMaterials().contains(material)) {
 			BaseMetals.logger.error("You asked registermaterial() to register an existing material, Don't do that! (Returning pre existing material instead");
-			return Materials.getMaterialByName(m.getName());
+			return Materials.getMaterialByName(material.getName());
 		}
 
-		allMaterials.put(m.getName(), m);
-		materials.add(m);
+		allMaterials.put(material.getName(), material);
+		materials.add(material);
 
-		final String enumName = m.getEnumName();
-		final String texName = m.getName();
-		final int[] protection = m.getDamageReductionArray();
-		final int durability = m.getArmorMaxDamageFactor();
-		final ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, m.hardness > 10 ? (int) (m.hardness / 5) : 0);
-		if (am == null) {
+		final String enumName = material.getEnumName();
+		final String texName = material.getName();
+		final int[] protection = material.getDamageReductionArray();
+		final int durability = material.getArmorMaxDamageFactor();
+		final ArmorMaterial armorMaterial = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, material.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, material.hardness > 10 ? (int) (material.hardness / 5) : 0);
+		if (armorMaterial == null) {
 			// uh-oh
-			BaseMetals.logger.error("Failed to create armor material enum for " + m);
-//			FMLLog.severe("Failed to create armor material enum for " + m);
+			BaseMetals.logger.error("Failed to create armor material enum for " + material);
+//			FMLLog.severe("Failed to create armor material enum for " + material);
 		}
-		armorMaterialMap.put(m, am);
+		armorMaterialMap.put(material, armorMaterial);
 
-		final ToolMaterial tm = EnumHelper.addToolMaterial(enumName, m.getToolHarvestLevel(), m.getToolDurability(), m.getToolEfficiency(), m.getBaseAttackDamage(), m.getEnchantability());
-		if (tm == null) {
+		final ToolMaterial toolMaterial = EnumHelper.addToolMaterial(enumName, material.getToolHarvestLevel(), material.getToolDurability(), material.getToolEfficiency(), material.getBaseAttackDamage(), material.getEnchantability());
+		if (toolMaterial == null) {
 			// uh-oh
-			BaseMetals.logger.error("Failed to create tool material enum for " + m);
-//			FMLLog.severe("Failed to create tool material enum for " + m);
+			BaseMetals.logger.error("Failed to create tool material enum for " + material);
+//			FMLLog.severe("Failed to create tool material enum for " + material);
 		}
-		toolMaterialMap.put(m, tm);
+		toolMaterialMap.put(material, toolMaterial);
 
-		return m;
+		return material;
 	}
 
 	/**
@@ -159,8 +223,8 @@ public abstract class Materials {
 	 *            The metal of interest
 	 * @return The armor material for this metal, or null if there isn't one
 	 */
-	public static ArmorMaterial getArmorMaterialFor(MetalMaterial m) {
-		return armorMaterialMap.get(m);
+	public static ArmorMaterial getArmorMaterialFor(MetalMaterial material) {
+		return armorMaterialMap.get(material);
 	}
 
 	/**
@@ -170,8 +234,8 @@ public abstract class Materials {
 	 *            The metal of interest
 	 * @return The tool material for this metal, or null if there isn't one
 	 */
-	public static ToolMaterial getToolMaterialFor(MetalMaterial m) {
-		return toolMaterialMap.get(m);
+	public static ToolMaterial getToolMaterialFor(MetalMaterial material) {
+		return toolMaterialMap.get(material);
 	}
 
 	/**
@@ -211,7 +275,7 @@ public abstract class Materials {
 	/**
 	 * Gets a metal material by its name (e.g. "copper").
 	 *
-	 * @param metalName
+	 * @param materialName
 	 *            The name of a metal
 	 * 
 	 * @deprecated
@@ -219,7 +283,7 @@ public abstract class Materials {
 	 *         have been registered under that name.
 	 */
 	@Deprecated
-	public static MetalMaterial getMetalByName(String metalName) {
-		return allMaterials.get(metalName);
+	public static MetalMaterial getMetalByName(String materialName) {
+		return allMaterials.get(materialName);
 	}
 }
