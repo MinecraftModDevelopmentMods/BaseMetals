@@ -86,6 +86,8 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 	public static MetalMaterial vanilla_prismarine;
 	/** Redstone */
 	public static MetalMaterial vanilla_redstone;
+	/** Ender */
+	public static MetalMaterial vanilla_ender;
 	
 	private static boolean initDone = false;
 
@@ -123,6 +125,10 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 		if (Options.enableEmerald) {
 			vanilla_emerald = createMaterial("emerald", MaterialType.GEM, 10, 15, 4, 0xFF000000);
 		}		
+
+		if (Options.enableEnder) {
+			vanilla_ender = createMaterial("ender", MaterialType.GEM, 2, 2, 6, 0xFF000000);
+		}
 
 		if (Options.enableQuartz) {
 			vanilla_quartz = createMaterial("quartz", MaterialType.GEM, 5, 4, 2, 0xFF000000);

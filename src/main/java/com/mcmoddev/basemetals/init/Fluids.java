@@ -79,6 +79,11 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 			addFluidBlock(Materials.electrum);
 		}
 
+		if (Options.enableEnder) {
+			addFluid(Materials.vanilla_ender, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanilla_ender);
+		}
+
 		if (Options.enableInvar) {
 			addFluid(Materials.invar, 2000, 10000, 769, 10);
 			addFluidBlock(Materials.invar);

@@ -286,6 +286,7 @@ public class Config {
 		public static boolean enablePrismarine = true;
 		public static boolean enableRedstone = true;
 		public static boolean enableLapis = true;
+		public static boolean enableEnder = true;
 
 		// THINGS
 		public static boolean enableBasics = true; // Nugget, ingot, powder, blend, block, ore
