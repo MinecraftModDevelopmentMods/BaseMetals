@@ -13,21 +13,21 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public class ShieldRepairRecipe extends ShapelessOreRecipe implements IRecipe {
+public class HelmetRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 
-	private ItemStack baseShield;
+	private ItemStack baseHelmet;
 	private String matName;
 	
-	public ShieldRepairRecipe(MetalMaterial mat) {
-		super(new ItemStack(mat.shield,1), new Object[] {Oredicts.SHIELD+mat.getCapitalizedName(), Oredicts.PLATE+mat.getCapitalizedName()});
-		baseShield = new ItemStack(mat.shield, 1, OreDictionary.WILDCARD_VALUE);
+	public HelmetRepairRecipe(MetalMaterial mat) {
+		super(new ItemStack(mat.helmet,1), new Object[] {mat.getName()+"_helmet", Oredicts.PLATE+mat.getCapitalizedName()});
+		baseHelmet = new ItemStack(mat.helmet, 1, OreDictionary.WILDCARD_VALUE);
 		matName = new String(mat.getCapitalizedName());
 	}
 
     @Override
     public boolean matches(InventoryCrafting inv, World worldIn) {
     	List<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE+matName);
-        boolean shieldMatched = false;
+        boolean helmetMatched = false;
         boolean repairMatched = false;
         
         for( int i = 0; i < inv.getSizeInventory(); i++ ) {
@@ -35,16 +35,16 @@ public class ShieldRepairRecipe extends ShapelessOreRecipe implements IRecipe {
             if( !repairMatched ) {
             	repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
             }
-            if( !shieldMatched ) {
-            	shieldMatched = (OreDictionary.itemMatches(baseShield, item, false))?(item.getItemDamage()>0?true:false):false;
+            if( !helmetMatched ) {
+            	helmetMatched = (OreDictionary.itemMatches(baseHelmet, item, false))?(item.getItemDamage()>0?true:false):false;
             }
         }
-        return shieldMatched?repairMatched:false;
+        return helmetMatched?repairMatched:false;
     }
 
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		return new ItemStack(baseShield.getItem(),1, 0);
+		return new ItemStack(baseHelmet.getItem(),1, 0);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class ShieldRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return new ItemStack(baseShield.getItem(), 1, 0);
+		return new ItemStack(baseHelmet.getItem(), 1, 0);
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class ShieldRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	@Override
 	public ArrayList<Object> getInput() {
 		ArrayList<Object> inputs = new ArrayList<>();
-		inputs.add(baseShield);
+		inputs.add(baseHelmet);
 		inputs.addAll(OreDictionary.getOres(Oredicts.PLATE+matName));
 		return inputs;
 	}
