@@ -275,6 +275,7 @@ public class Config {
 		public static boolean enableZinc = true;
 
 		//VANILLA
+		public static boolean enableEmerald = true;
 		public static boolean enableDiamond = true;
 		public static boolean enableGold = true;
 		public static boolean enableIron = true;

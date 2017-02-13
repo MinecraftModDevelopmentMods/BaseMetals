@@ -70,6 +70,8 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 	public static MetalMaterial vanilla_gold;
 	/** Diamond */
 	public static MetalMaterial vanilla_diamond;
+	/** Emerald */
+	public static MetalMaterial vanilla_emerald;
 	/** Coal */
 	public static MetalMaterial vanilla_coal;
 	/** Charcoal */
@@ -112,6 +114,10 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 
 		if (Options.enableCharcoal) {
 			vanilla_charcoal = createOrelessMaterial("charcoal", MaterialType.MINERAL, 4, 4, 2, 0xFF000000);
+		}		
+
+		if (Options.enableEmerald) {
+			vanilla_emerald = createMaterial("emerald", MaterialType.GEM, 10, 15, 4, 0xFF000000);
 		}		
 
 		if (Options.enableLapis) {
