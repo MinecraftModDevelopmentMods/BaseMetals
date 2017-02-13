@@ -114,6 +114,16 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 			addFluidBlock(Materials.platinum);
 		}
 
+		if (Options.enablePrismarine) {
+			addFluid(Materials.vanilla_prismarine, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanilla_prismarine);
+		}
+
+		if (Options.enableRedstone) {
+			addFluid(Materials.vanilla_redstone, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanilla_redstone);
+		}
+
 		if (Options.enableSilver) {
 			addFluid(Materials.silver, 2000, 10000, 769, 10);
 			addFluidBlock(Materials.silver);

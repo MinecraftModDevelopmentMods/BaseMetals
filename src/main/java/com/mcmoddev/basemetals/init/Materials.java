@@ -66,6 +66,9 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 	public static MetalMaterial vanilla_diamond;
 	public static MetalMaterial vanilla_coal;
 	public static MetalMaterial vanilla_charcoal;
+	public static MetalMaterial vanilla_lapis;
+	public static MetalMaterial vanilla_prismarine;
+	public static MetalMaterial vanilla_redstone;
 	
 	private static boolean initDone = false;
 
@@ -161,6 +164,12 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 			invar = createAlloyMaterial("invar", 9, 10, 3, 0xFFD2CDB8);
 			invar.materialType = MetalMaterial.MaterialType.METAL;
 		}
+
+		if (Options.enableLapis) {
+			vanilla_lapis = createMaterial("lapis", 1, 1, 1, 0xFF7B7B7B);
+			vanilla_lapis.materialType = MetalMaterial.MaterialType.MINERAL;
+		}
+
 		if (Options.enableLead) {
 			lead = createMaterial("lead", 1, 1, 1, 0xFF7B7B7B).setBaseDamage(4f);
 			lead.materialType = MetalMaterial.MaterialType.METAL;
@@ -187,6 +196,17 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 			platinum = createRareMaterial("platinum", 3, 5, 15, 0xFFF2FFFF);
 			platinum.materialType = MetalMaterial.MaterialType.METAL;
 		}
+
+		if (Options.enablePrismarine) {
+			vanilla_prismarine = createMaterial("prismarine", 1, 1, 1, 0xFF7B7B7B);
+			vanilla_prismarine.materialType = MetalMaterial.MaterialType.MINERAL;
+		}
+
+		if (Options.enableRedstone) {
+			vanilla_redstone = createMaterial("redstone", 1, 1, 1, 0xFF7B7B7B);
+			vanilla_redstone.materialType = MetalMaterial.MaterialType.MINERAL;
+		}
+
 		if (Options.enableSilver) {
 			silver = createMaterial("silver", 5, 4, 6, 0xFFFFFFFF);
 			silver.materialType = MetalMaterial.MaterialType.METAL;
