@@ -60,15 +60,25 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 	public static MetalMaterial zinc;
 
 	// vanilla imports
+	/** Wood */
 	public static MetalMaterial vanilla_wood;
+	/** Stone */
 	public static MetalMaterial vanilla_stone;
+	/** Iron */
 	public static MetalMaterial vanilla_iron;
+	/** Gold */
 	public static MetalMaterial vanilla_gold;
+	/** Diamond */
 	public static MetalMaterial vanilla_diamond;
+	/** Coal */
 	public static MetalMaterial vanilla_coal;
+	/** Charcoal */
 	public static MetalMaterial vanilla_charcoal;
+	/** Lapis */
 	public static MetalMaterial vanilla_lapis;
+	/** Prismarine */
 	public static MetalMaterial vanilla_prismarine;
+	/** Redstone */
 	public static MetalMaterial vanilla_redstone;
 	
 	private static boolean initDone = false;
