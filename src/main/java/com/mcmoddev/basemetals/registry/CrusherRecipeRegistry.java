@@ -14,12 +14,14 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.registry.recipe.ArbitraryCrusherRecipe;
 import com.mcmoddev.basemetals.registry.recipe.ICrusherRecipe;
 import com.mcmoddev.basemetals.registry.recipe.OreDictionaryCrusherRecipe;
+import com.mcmoddev.basemetals.util.Config.Options;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * This class handles all of the recipes for the crack hammer, collectively
@@ -43,8 +45,8 @@ public class CrusherRecipeRegistry {
 
 	private final List<ICrusherRecipe> recipes = new ArrayList<>();
 
-	private final Map<ItemLookupReference, ICrusherRecipe> recipeByInputCache = new HashMap<>();
-	private final Map<ItemLookupReference, List<ICrusherRecipe>> recipeByOutputCache = new HashMap<>();
+	private final Map<Integer, ICrusherRecipe> recipeByInputCache = new HashMap<>();
+	private final Map<Integer, List<ICrusherRecipe>> recipeByOutputCache = new HashMap<>();
 
 	private static final Lock initLock = new ReentrantLock();
 	private static CrusherRecipeRegistry instance = null;
@@ -186,23 +188,35 @@ public class CrusherRecipeRegistry {
 	 *         such recipes exist
 	 */
 	public List<ICrusherRecipe> getRecipesForOutputItem(ItemStack output) {
-		final ItemLookupReference ref = new ItemLookupReference(output);
-		if (this.recipeByOutputCache.containsKey(ref)) {
-			final List<ICrusherRecipe> recipeCache = this.recipeByOutputCache.get(ref);
-			if (recipeCache.isEmpty())
+		Integer hashKey = output.getItem().getUnlocalizedName().hashCode() + (56 * output.getMetadata());
+		if (this.recipeByOutputCache.containsKey(hashKey)) {
+			final List<ICrusherRecipe> recipeCache = this.recipeByOutputCache.get(hashKey);
+			if (recipeCache.isEmpty()) {
 				return Collections.emptyList();
-//				return null;
+			}
 			return recipeCache;
 		} else {
-			// add recipe cache
 			final List<ICrusherRecipe> recipeCache = new ArrayList<>();
-			for (final ICrusherRecipe r : this.recipes)
-				if (ItemStack.areItemsEqual(r.getOutput(), output))
+			for (final ICrusherRecipe r : this.recipes) {
+				if (ItemStack.areItemsEqual(r.getOutput(), output)) {
+					for( final String s : Options.disabledRecipes ) {
+						List<ItemStack> ores = OreDictionary.getOres(s);
+						for( ItemStack input : r.getValidInputs() ) {
+							if( OreDictionary.containsMatch(false, ores, input) ) {
+								this.recipeByInputCache.put(hashKey, null);
+								return null;
+							}
+						}
+					}					
 					recipeCache.add(r);
-			this.recipeByOutputCache.put(ref, recipeCache);
-			if (recipeCache.isEmpty())
+				}
+			}
+			
+			if (recipeCache.isEmpty()) {
+				this.recipeByOutputCache.put(hashKey, Collections.emptyList());
 				return Collections.emptyList();
-//				return null;
+			}
+			this.recipeByOutputCache.put(hashKey, recipeCache);
 			return recipeCache;
 		}
 	}
@@ -217,25 +231,7 @@ public class CrusherRecipeRegistry {
 	 * such recipes exist
 	 */
 	public List<ICrusherRecipe> getRecipesForOutputItem(IBlockState output) {
-		final ItemLookupReference ref = new ItemLookupReference(output);
-		if (this.recipeByOutputCache.containsKey(ref)) {
-			final List<ICrusherRecipe> recipeCache = this.recipeByOutputCache.get(ref);
-			if (recipeCache.isEmpty())
-				return Collections.emptyList();
-//				return null;
-			return recipeCache;
-		} else {
-			// add recipe cache
-			final List<ICrusherRecipe> recipeCache = new ArrayList<>();
-			for (final ICrusherRecipe r : this.recipes)
-				if (ref.equals(r.getOutput()))
-					recipeCache.add(r);
-			this.recipeByOutputCache.put(ref, recipeCache);
-			if (recipeCache.isEmpty())
-				return Collections.emptyList();
-//				return null;
-			return recipeCache;
-		}
+		return getRecipesForOutputItem(new ItemStack(output.getBlock(), 1, output.getBlock().getMetaFromState(output)));
 	}
 
 	/**
@@ -246,22 +242,29 @@ public class CrusherRecipeRegistry {
 	 * @return The crusher recipe for crushing this item/block, or null if no
 	 * such recipe exists
 	 */
-	public ICrusherRecipe getRecipeForInputItem(ItemStack input) {
-		final ItemLookupReference ref = new ItemLookupReference(input);
-		if (this.recipeByInputCache.containsKey(ref))
-			return this.recipeByInputCache.get(ref);
-		else {
-			for (final ICrusherRecipe r : this.recipes)
-				if (r.isValidInput(input)) {
-					this.recipeByInputCache.put(ref, r);
+	public ICrusherRecipe getRecipeForInputItem(ItemStack input ) {
+		Integer hashKey = input.getItem().getUnlocalizedName().hashCode() + (56 * input.getMetadata());
+		if( this.recipeByInputCache.containsKey(hashKey) ) {
+			return this.recipeByInputCache.get(hashKey);
+		} else {
+			for( final ICrusherRecipe r : this.recipes ) {
+				if( r.isValidInput(input) ) {
+					for( final String s : Options.disabledRecipes ) {
+						List<ItemStack> ores = OreDictionary.getOres(s);
+						if( OreDictionary.containsMatch(false, ores, input) ) {
+							this.recipeByInputCache.put(hashKey, null);
+							return null;
+						}
+					}
+					this.recipeByInputCache.put(hashKey, r);
 					return r;
 				}
-			// no recipes, cache null result
-			this.recipeByInputCache.put(ref, null);
+			}
+			this.recipeByInputCache.put(hashKey, null);
 			return null;
 		}
 	}
-
+	
 	/**
 	 * Gets the recipe for crushing the specified item, or null if ther is no
 	 * recipe accepting the item.
@@ -271,20 +274,7 @@ public class CrusherRecipeRegistry {
 	 * such recipe exists
 	 */
 	public ICrusherRecipe getRecipeForInputItem(IBlockState input) {
-		final ItemLookupReference ref = new ItemLookupReference(input);
-		final ItemStack stack = new ItemStack(input.getBlock(), 1, ref.metaData);
-		if (this.recipeByInputCache.containsKey(ref))
-			return this.recipeByInputCache.get(ref);
-		else {
-			for (final ICrusherRecipe r : this.recipes)
-				if (r.isValidInput(stack)) {
-					this.recipeByInputCache.put(ref, r);
-					return r;
-				}
-			// no recipes, cache null result
-			this.recipeByInputCache.put(ref, null);
-			return null;
-		}
+		return getRecipeForInputItem(new ItemStack(input.getBlock(), 1, input.getBlock().getMetaFromState(input)));
 	}
 
 	/**
@@ -293,42 +283,22 @@ public class CrusherRecipeRegistry {
 	 * @return An unmodifiable list of all registered crusher recipes
 	 */
 	public Collection<ICrusherRecipe> getAllRecipes() {
-		return Collections.unmodifiableList(this.recipes);
-	}
-
-	private static final class ItemLookupReference {
-		final Item item;
-		final int metaData;
-		final int hashCache;
-
-		public ItemLookupReference(ItemStack inputItem) {
-			this.item = inputItem.getItem();
-			this.metaData = inputItem.getMetadata();
-			this.hashCache = this.item.getUnlocalizedName().hashCode() + (57 * this.metaData);
+		List<ICrusherRecipe> filtered = new ArrayList<>();
+		for( final ICrusherRecipe r : this.recipes ) {
+			boolean matched = false;
+			for( final String s : Options.disabledRecipes ) {
+				List<ItemStack> ores = OreDictionary.getOres(s);
+				for( ItemStack ore : ores ) {
+					if( r.isValidInput(ore) ) {
+						matched = true;
+						continue;
+					}
+				}
+			}
+			if( !matched ) {
+				filtered.add(r);
+			}
 		}
-
-		public ItemLookupReference(IBlockState inputBlock) {
-			this.item = Item.getItemFromBlock(inputBlock.getBlock());
-			this.metaData = inputBlock.getBlock().getMetaFromState(inputBlock);
-			this.hashCache = inputBlock.getBlock().getUnlocalizedName().hashCode() + (57 * this.metaData);
-		}
-
-		@Override
-		public boolean equals(Object other) {
-			if (other instanceof ItemLookupReference) {
-				final ItemLookupReference that = (ItemLookupReference) other;
-				return (this.hashCache == that.hashCache) && (this.item == that.item)
-						&& (this.metaData == that.metaData);
-			} else if (other instanceof ItemStack) {
-				final ItemStack that = (ItemStack) other;
-				return (this.item == that.getItem()) && (this.metaData == that.getMetadata());
-			} else
-				return false;
-		}
-
-		@Override
-		public int hashCode() {
-			return this.hashCache;
-		}
+		return Collections.unmodifiableList(filtered);
 	}
 }

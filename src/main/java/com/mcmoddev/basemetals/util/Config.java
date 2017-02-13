@@ -68,7 +68,9 @@ public class Config {
 		Options.requireMMDOreSpawn = configuration.getBoolean("using_orespawn", GENERAL_CAT, true, "If false, then Base Metals will not require DrCyano's Ore Spawn mod. \n" + "Set to false if using another mod to manually handle ore generation.");
 		Options.enableAchievements = configuration.getBoolean("achievements", GENERAL_CAT, true, "If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals");
 		Options.crackhammerFullStack = configuration.getBoolean("crackhammer_full_stacks", GENERAL_CAT, false, "If true then you can crackhammer full stacks of dropped items.");
-
+		Options.enablePlateRepairs = configuration.getBoolean("repair_using_plates", GENERAL_CAT, true, "Repair shields and armor with metal plates of the same type");
+		Options.enableShieldUpgrades = configuration.getBoolean("upgrade_shields", GENERAL_CAT, true, "Upgrade a fully repaired shield to a material at least as hard as the shields current one using a plate of that material in the Anvil");
+		
 		// INTEGRATION
 		Options.enableEnderIO = configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Ender IO");
 		Options.enableIC2 = configuration.getBoolean("ic2_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with IC2");
@@ -139,6 +141,14 @@ public class Config {
 		Options.enablePressurePlate = configuration.getBoolean("Enable Pressure-plates", TOOLS_CAT, true, "Now your traps can be hidden in even more places!");
 		Options.enableStairs = configuration.getBoolean("Enable Stairs", TOOLS_CAT, true, "Stairs of our wonderful metals! Come and get your own - or don't. It's up to you.");
 		Options.enableWall = configuration.getBoolean("Enable Wall", TOOLS_CAT, true, "Hey, Teachers! Leave those kids alone!");
+		
+		// DISABLE CRACK HAMMER RECIPES
+		String disabledRecipesRaw = configuration.getString("DisabledCrackhammerRecipes", GENERAL_CAT, "", "Disable the recipes by putting the input materials ore dictionary name ore registry name in this key.\nThe format is a semicolon (;) separate list of ore dictionary names (ie:  oreGold;oreIron;oreCopper - this would blacklist Gold, Iron and Copper ores from working");
+		if( !disabledRecipesRaw.isEmpty() && disabledRecipesRaw.contains(";") ) {
+			Options.disabledRecipes = disabledRecipesRaw.split(";");
+		} else { 
+			Options.disabledRecipes = new String[] { disabledRecipesRaw };
+		}
 		
 		//CRACK HAMMER RECIPES
 		final ConfigCategory userRecipeCat = configuration.getCategory(HAMMER_RECIPES_CAT);
@@ -219,6 +229,9 @@ public class Config {
 		public static boolean requireMMDOreSpawn = true;
 		public static boolean enableAchievements = true;
 		public static boolean crackhammerFullStack = false;
+		public static boolean enableShieldUpgrades = true;
+		public static boolean enablePlateRepairs = true;
+		public static String[] disabledRecipes = null;
 		
 		// RECIPE AMOUNTS
 		public static int gearQuantity = 4;
