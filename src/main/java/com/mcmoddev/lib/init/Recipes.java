@@ -238,6 +238,7 @@ public abstract class Recipes {
 					GameRegistry.addSmelting(material.shield, new ItemStack(material.ingot, 6), 0); // 1 wood loss
 					if( material.plate != null ) {
 						GameRegistry.addRecipe(new ShieldRepairRecipe(material));
+						GameRegistry.addRecipe(new ShieldUpgradeRecipe(material));
 					}
 				}
 
@@ -504,4 +505,5 @@ public abstract class Recipes {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.blend, outputQty), Oredicts.DUST + oredict1, Oredicts.DUST + oredict2));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallblend, outputQty), Oredicts.DUSTTINY + oredict1, Oredicts.DUSTTINY + oredict2));
 	}
+		
 }

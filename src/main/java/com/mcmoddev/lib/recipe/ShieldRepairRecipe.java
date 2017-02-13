@@ -27,7 +27,7 @@ public class ShieldRepairRecipe extends ShapelessOreRecipe implements IRecipe {
     @Override
     public boolean matches(InventoryCrafting inv, World worldIn) {
     	List<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE+matName);
-        boolean shieldMatched = false;
+        boolean ShieldMatched = false;
         boolean repairMatched = false;
         
         for( int i = 0; i < inv.getSizeInventory(); i++ ) {
@@ -35,11 +35,11 @@ public class ShieldRepairRecipe extends ShapelessOreRecipe implements IRecipe {
             if( !repairMatched ) {
             	repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
             }
-            if( !shieldMatched ) {
-            	shieldMatched = (OreDictionary.itemMatches(baseShield, item, false))?(item.getItemDamage()>0?true:false):false;
+            if( !ShieldMatched ) {
+            	ShieldMatched = (OreDictionary.itemMatches(baseShield, item, false))?(item.getItemDamage()>0?true:false):false;
             }
         }
-        return shieldMatched?repairMatched:false;
+        return ShieldMatched?repairMatched:false;
     }
 
 	@Override
