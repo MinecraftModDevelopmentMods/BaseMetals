@@ -237,8 +237,13 @@ public abstract class Recipes {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shield), "xyx", "xxx", " x ", 'y', Oredicts.PLANKWOOD, 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(material.shield, new ItemStack(material.ingot, 6), 0); // 1 wood loss
 					if( material.plate != null ) {
-						GameRegistry.addRecipe(new ShieldRepairRecipe(material));
-						GameRegistry.addRecipe(new ShieldUpgradeRecipe(material));
+						if(Options.enablePlateRepairs) {
+							GameRegistry.addRecipe(new ShieldRepairRecipe(material));
+						}
+						
+						if(Options.enableShieldUpgrades) {
+							GameRegistry.addRecipe(new ShieldUpgradeRecipe(material));
+						}
 					}
 				}
 
@@ -334,7 +339,9 @@ public abstract class Recipes {
 		if ((material.boots != null) && (material.boots instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.boots), "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
 			if( material.plate != null ) {
-				GameRegistry.addRecipe(new BootsRepairRecipe(material));
+				if(Options.enablePlateRepairs) {
+					GameRegistry.addRecipe(new BootsRepairRecipe(material));
+				}
 			}
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.boots, new ItemStack(material.ingot, 4), 0);
@@ -346,7 +353,9 @@ public abstract class Recipes {
 		if ((material.helmet != null) && (material.helmet instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.helmet), "xxx", "x x", 'x', Oredicts.INGOT + oreDictName));
 			if( material.plate != null ) {
-				GameRegistry.addRecipe(new HelmetRepairRecipe(material));
+				if(Options.enablePlateRepairs) {
+					GameRegistry.addRecipe(new HelmetRepairRecipe(material));
+				}
 			}
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.helmet, new ItemStack(material.ingot, 5), 0);
@@ -358,7 +367,9 @@ public abstract class Recipes {
 		if ((material.chestplate != null) && (material.chestplate instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.chestplate), "x x", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
 			if( material.plate != null ) {
-				GameRegistry.addRecipe(new ChestplateRepairRecipe(material));
+				if(Options.enablePlateRepairs) {
+					GameRegistry.addRecipe(new ChestplateRepairRecipe(material));
+				}
 			}
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.chestplate, new ItemStack(material.ingot, 8), 0);
@@ -370,7 +381,9 @@ public abstract class Recipes {
 		if ((material.leggings != null) && (material.leggings instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.leggings), "xxx", "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
 			if( material.plate != null ) {
-				GameRegistry.addRecipe(new LeggingsRepairRecipe(material));
+				if(Options.enablePlateRepairs) {
+					GameRegistry.addRecipe(new LeggingsRepairRecipe(material));
+				}
 			}
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.chestplate, new ItemStack(material.leggings, 7), 0);
