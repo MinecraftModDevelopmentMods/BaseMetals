@@ -72,6 +72,10 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 	public static MetalMaterial vanilla_diamond;
 	/** Emerald */
 	public static MetalMaterial vanilla_emerald;
+	/** Quartz */
+	public static MetalMaterial vanilla_quartz;
+	/** Obsidian */
+	public static MetalMaterial vanilla_obsidian;
 	/** Coal */
 	public static MetalMaterial vanilla_coal;
 	/** Charcoal */
@@ -114,10 +118,18 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 
 		if (Options.enableCharcoal) {
 			vanilla_charcoal = createOrelessMaterial("charcoal", MaterialType.MINERAL, 4, 4, 2, 0xFF000000);
-		}		
+		}
 
 		if (Options.enableEmerald) {
 			vanilla_emerald = createMaterial("emerald", MaterialType.GEM, 10, 15, 4, 0xFF000000);
+		}		
+
+		if (Options.enableQuartz) {
+			vanilla_quartz = createMaterial("quartz", MaterialType.GEM, 5, 4, 2, 0xFF000000);
+		}
+
+		if (Options.enableObsidian) {
+			vanilla_obsidian = createMaterial("obsidian", MaterialType.ROCK, 10, 15, 4, 0xFF000000);
 		}		
 
 		if (Options.enableLapis) {
@@ -136,33 +148,43 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 		if (Options.enableAdamantine) {
 			adamantine = createMaterial("adamantine", MaterialType.METAL, 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
 		}
+
 		if (Options.enableAntimony) {
 			antimony = createMaterial("antimony", MaterialType.METAL, 1, 1, 1, 0xFFD8E3DE);
 		}
+
 		if (Options.enableAquarium) {
 			aquarium = createAlloyMaterial("aquarium", MaterialType.METAL, 4, 10, 15, 0xFF000000);
 		}
+
 		if (Options.enableBismuth) {
 			bismuth = createMaterial("bismuth", MaterialType.METAL, 1, 1, 1, 0xFFDDD7CB);
 		}
+
 		if (Options.enableBrass) {
 			brass = createAlloyMaterial("brass", MaterialType.METAL, 3.5, 3, 9, 0xFFFFE374);
 		}
+
 		if (Options.enableBronze) {
 			bronze = createAlloyMaterial("bronze", MaterialType.METAL, 8, 4, 4.5, 0xFFF7A54F);
 		}
+
 		if (Options.enableColdIron) {
 			coldiron = createMaterial("coldiron", MaterialType.METAL, 7, 7, 7, 0xFFC7CEF0);
 		}
+
 		if (Options.enableCopper) {
 			copper = createMaterial("copper", MaterialType.METAL, 4, 4, 5, 0xFFFF9F78);
 		}
+
 		if (Options.enableCupronickel) {
 			cupronickel = createAlloyMaterial("cupronickel", MaterialType.METAL, 6, 6, 6, 0xFFC8AB6F);
 		}
+
 		if (Options.enableElectrum) {
 			electrum = createAlloyMaterial("electrum", MaterialType.METAL, 5, 4, 10, 0xFFFFF2B3);
 		}
+
 		if (Options.enableInvar) {
 			invar = createAlloyMaterial("invar", MaterialType.METAL, 9, 10, 3, 0xFFD2CDB8);
 		}
