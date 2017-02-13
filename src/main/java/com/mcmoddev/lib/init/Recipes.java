@@ -468,10 +468,9 @@ public abstract class Recipes {
 			}
 		}
 		if (material.ingot != null) {
-			
-			if (material.materialType == MetalMaterial.MaterialType.METAL) {
+			if (material.getType() == MetalMaterial.MaterialType.METAL) {
 				OreDictionary.registerOre(Oredicts.INGOT + oreDictName, material.ingot); // For Metal based
-			} else if (material.materialType == MetalMaterial.MaterialType.GEM) {
+			} else if (material.getType() == MetalMaterial.MaterialType.GEM) {
 				OreDictionary.registerOre(Oredicts.GEM + oreDictName, material.ingot); // For Gem based
 			} else {
 				OreDictionary.registerOre(Oredicts.INGOT + oreDictName, material.ingot); // For Other 
