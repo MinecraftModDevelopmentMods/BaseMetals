@@ -1,15 +1,24 @@
 package com.mcmoddev.basemetals.init;
 
+import java.util.List;
+
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.registry.CrusherRecipeRegistry;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 import com.mcmoddev.lib.util.Oredicts;
 
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.*;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  *

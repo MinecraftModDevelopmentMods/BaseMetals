@@ -1,19 +1,28 @@
 package com.mcmoddev.basemetals.util;
 
+import java.util.List;
+
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.items.ItemMetalIngot;
 import com.mcmoddev.lib.items.ItemMetalShield;
 import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -98,4 +107,41 @@ public class EventHandler {
 			}
 		}
 	}
+
+	public static InventoryCrafting getDummyCraftingInv()
+	{
+		Container tempContainer = new Container() {
+			@Override
+			public boolean canInteractWith(EntityPlayer player)
+			{
+				return false;
+			}
+		};
+		
+		return new InventoryCrafting(tempContainer, 2, 1);
+	}
+	
+	@SubscribeEvent
+	public void handleAnvilEvent(AnvilUpdateEvent evt) {
+		ItemStack left = evt.getLeft();
+		ItemStack right = evt.getRight();
+		
+		if( left == null || right == null || left.stackSize != 1 || right.stackSize != 1) {
+			return;
+		}
+		
+		InventoryCrafting recipeInput = getDummyCraftingInv();
+		recipeInput.setInventorySlotContents(0, left);
+		recipeInput.setInventorySlotContents(1, right);
+		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+		for( IRecipe r : recipes ) {
+			if( r instanceof ShieldUpgradeRecipe ) {
+				if( ((ShieldUpgradeRecipe)r).matches(recipeInput, null) ) {
+					evt.setOutput(r.getCraftingResult(recipeInput));
+					evt.setCost(5);
+				}
+			}
+		}
+	}
+
 }
