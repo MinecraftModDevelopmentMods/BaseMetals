@@ -1,5 +1,8 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -13,6 +16,7 @@ import java.util.Random;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.util.Oredicts;
+import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 
@@ -229,5 +233,17 @@ public class TinkersConstruct implements IIntegration {
 		
 		TinkerIntegration.integrationList.add(m);
 		m.integrate();
+	}
+	
+	public void registerModifierRecipe( String name, ItemStack... recipe ) {
+		ModifierRegistry.setModifierRecipe(name, recipe);
+	}
+	
+	public void registerModifierItem( String name, ItemStack item ) {
+		ModifierRegistry.setModifierItem(name, item);
+	}
+	
+	public void registerModifierItem( String name, Item item ) {
+		ModifierRegistry.setModifierItem(name, item);
 	}
 }
