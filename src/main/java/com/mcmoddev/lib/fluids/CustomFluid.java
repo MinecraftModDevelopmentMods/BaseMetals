@@ -81,7 +81,6 @@ public class CustomFluid extends Fluid {
 		return this.color;
 	}
 
-	@SuppressWarnings(value = "deprecation")
 	@Override
 	public String getLocalizedName(FluidStack stack) {
 		String s = this.getUnlocalizedName();

@@ -116,14 +116,10 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		// There will have to be another means of making this work...
 		// There is an event TiC has that covers material registration
 		// we could hook that...
-/*		if (Options.enableLead) {
-			TCMetalMaterial leadTC = new TCMetalMaterial(Materials.lead);
-			leadTC.craftable = false;
-			leadTC.addTrait("soft");
-			
-			registerMaterial(leadTC);
+		if (Options.enableLead) {
+			// Lead itself is added by TiC
 		} 
-*/
+
 		if (Options.enableMercury) {
 			registerFluid(Materials.mercury, 144);
 		}
@@ -178,7 +174,6 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 					new int[]{ 8, 1 });
 		}
 
-		// needs Custom 'sparkly' - autorepair
 		if (Options.enableStarSteel) {
 			TCMetalMaterial starsteelTC = new TCMetalMaterial(Materials.starsteel);
 			starsteelTC.craftable = false;
