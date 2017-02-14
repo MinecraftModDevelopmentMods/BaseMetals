@@ -42,9 +42,28 @@ public class LeggingsRepairRecipe extends ShapelessOreRecipe implements IRecipe 
         return leggingsMatched?repairMatched:false;
     }
 
+    private ItemStack findBaseItem(InventoryCrafting inv) {
+    	for( int i = 0; i < inv.getSizeInventory(); i++ ) {
+    		ItemStack a = inv.getStackInSlot(i);
+    		if( a != null ) {
+    			ItemStack comp = new ItemStack(a.getItem(),1,a.getMetadata());
+    			if( OreDictionary.itemMatches(baseLeggings, comp, false) ) {
+    				return a;
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		return new ItemStack(baseLeggings.getItem(),1, 0);
+		ItemStack target = findBaseItem(inv);
+		if( target == null ) {
+			return new ItemStack(baseLeggings.getItem(),1, 0);
+		} else {
+			target.setItemDamage(0);
+			return target;
+		}
 	}
 
 	@Override

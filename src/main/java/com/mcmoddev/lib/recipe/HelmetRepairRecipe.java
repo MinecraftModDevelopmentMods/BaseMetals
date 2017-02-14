@@ -6,6 +6,7 @@ import java.util.List;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -42,9 +43,30 @@ public class HelmetRepairRecipe extends ShapelessOreRecipe implements IRecipe {
         return helmetMatched?repairMatched:false;
     }
 
+    private ItemStack findBaseItem(InventoryCrafting inv) {
+    	for( int i = 0; i < inv.getSizeInventory(); i++ ) {
+    		ItemStack a = inv.getStackInSlot(i);
+    		if( a != null ) {
+    			ItemStack comp = new ItemStack(a.getItem(),1,a.getMetadata());
+    			if( OreDictionary.itemMatches(baseHelmet, comp, false) ) {
+    				return a;
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		return new ItemStack(baseHelmet.getItem(),1, 0);
+		ItemStack target = findBaseItem(inv);
+		if( target == null ) {
+			return new ItemStack(baseHelmet.getItem(),1, 0);
+		} else {
+			ItemStack rv = new ItemStack(target.getItem(), 1, target.getMetadata());
+			EnchantmentHelper.setEnchantments( EnchantmentHelper.getEnchantments(target), rv );
+			rv.setItemDamage(0);
+			return rv;
+		}
 	}
 
 	@Override
