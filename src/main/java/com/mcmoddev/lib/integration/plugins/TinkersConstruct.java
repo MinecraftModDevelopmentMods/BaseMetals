@@ -191,9 +191,9 @@ public class TinkersConstruct implements IIntegration {
 		registerFluid(material.metalmaterial, material.amountPerOre);
 
 		// in here we should always have a nugget and an ingot
-/*		tcmat.addItem(material.metalmaterial.nugget, 1, Material.VALUE_Nugget);
+//		tcmat.addItem(material.metalmaterial.nugget, 1, Material.VALUE_Nugget);
 		tcmat.addItem(material.metalmaterial.ingot, 1, Material.VALUE_Ingot);
-		tcmat.addItemIngot(Oredicts.INGOT+material.metalmaterial.getName());*/
+		tcmat.addItemIngot(Oredicts.INGOT+material.metalmaterial.getName());
 		tcmat.setRepresentativeItem(material.metalmaterial.ingot);
 
 		// setup the stats for the item - first the tool part stats
