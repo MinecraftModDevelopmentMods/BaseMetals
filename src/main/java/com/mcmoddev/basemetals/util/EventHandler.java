@@ -2,7 +2,6 @@ package com.mcmoddev.basemetals.util;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.items.ItemMetalIngot;
@@ -138,7 +137,7 @@ public class EventHandler {
 			if( r instanceof ShieldUpgradeRecipe ) {
 				if( ((ShieldUpgradeRecipe)r).matches(recipeInput, null) ) {
 					evt.setOutput(r.getCraftingResult(recipeInput));
-					evt.setCost(5);
+					evt.setCost(((ShieldUpgradeRecipe) r).getCost(recipeInput));
 				}
 			}
 		}

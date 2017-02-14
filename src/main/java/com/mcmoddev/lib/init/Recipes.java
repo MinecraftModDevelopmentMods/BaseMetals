@@ -11,6 +11,8 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -239,10 +241,12 @@ public abstract class Recipes {
 					if( material.plate != null ) {
 						if(Options.enablePlateRepairs) {
 							GameRegistry.addRecipe(new ShieldRepairRecipe(material));
+							RecipeSorter.register("mmd:shieldrepair", ShieldRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
 						}
 						
 						if(Options.enableShieldUpgrades) {
 							GameRegistry.addRecipe(new ShieldUpgradeRecipe(material));
+							RecipeSorter.register("mmd:shieldupgrade", ShieldUpgradeRecipe.class, Category.UNKNOWN, "after:minecraft:shapeless");
 						}
 					}
 				}
@@ -341,6 +345,7 @@ public abstract class Recipes {
 			if( material.plate != null ) {
 				if(Options.enablePlateRepairs) {
 					GameRegistry.addRecipe(new BootsRepairRecipe(material));
+					RecipeSorter.register("mmd:bootsrepair", BootsRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
 				}
 			}
 			if (Config.Options.furnaceCheese) {
@@ -355,6 +360,7 @@ public abstract class Recipes {
 			if( material.plate != null ) {
 				if(Options.enablePlateRepairs) {
 					GameRegistry.addRecipe(new HelmetRepairRecipe(material));
+					RecipeSorter.register("mmd:helmetrepair", HelmetRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
 				}
 			}
 			if (Config.Options.furnaceCheese) {
@@ -369,6 +375,7 @@ public abstract class Recipes {
 			if( material.plate != null ) {
 				if(Options.enablePlateRepairs) {
 					GameRegistry.addRecipe(new ChestplateRepairRecipe(material));
+					RecipeSorter.register("mmd:chestplaterepair", ChestplateRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
 				}
 			}
 			if (Config.Options.furnaceCheese) {
@@ -383,6 +390,7 @@ public abstract class Recipes {
 			if( material.plate != null ) {
 				if(Options.enablePlateRepairs) {
 					GameRegistry.addRecipe(new LeggingsRepairRecipe(material));
+					RecipeSorter.register("mmd:leggingsrepair", LeggingsRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
 				}
 			}
 			if (Config.Options.furnaceCheese) {
