@@ -275,11 +275,18 @@ public class Config {
 		public static boolean enableZinc = true;
 
 		//VANILLA
+		public static boolean enableObsidian = true;
+		public static boolean enableQuartz = true;
+		public static boolean enableEmerald = true;
 		public static boolean enableDiamond = true;
 		public static boolean enableGold = true;
 		public static boolean enableIron = true;
 		public static boolean enableStone = true;
 		public static boolean enableWood = true;
+		public static boolean enablePrismarine = true;
+		public static boolean enableRedstone = true;
+		public static boolean enableLapis = true;
+		public static boolean enableEnder = true;
 
 		// THINGS
 		public static boolean enableBasics = true; // Nugget, ingot, powder, blend, block, ore

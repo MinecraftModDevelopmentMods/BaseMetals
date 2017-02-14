@@ -310,7 +310,7 @@ public abstract class Blocks {
 		}
 
 		if ((Options.enableStairs) && (material.stairs == null)) {
-			if ((material.block != null) || (material.isVanilla)) {
+			if (material.block != null) {
 				material.stairs = addBlock(new BlockMetalStairs(material), "stairs", material, ItemGroups.blocksTab);
 			}
 		}
@@ -329,7 +329,7 @@ public abstract class Blocks {
 		}
 
 		if ((Options.enableWall) && (material.wall == null)) {
-			if ((material.block != null) || (material.isVanilla)) {
+			if (material.block != null) {
 				material.wall = addBlock(new BlockMetalWall(material), "wall", material, ItemGroups.blocksTab);
 			}
 		}

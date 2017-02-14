@@ -394,7 +394,7 @@ public abstract class Recipes {
 				}
 			}
 			if (Config.Options.furnaceCheese) {
-				GameRegistry.addSmelting(material.chestplate, new ItemStack(material.leggings, 7), 0);
+				GameRegistry.addSmelting(material.leggings, new ItemStack(material.ingot, 7), 0);
 			} else if (Config.Options.furnace1112) {						
 				GameRegistry.addSmelting(material.leggings, new ItemStack(material.nugget, 1), 0);
 			}
@@ -490,10 +490,9 @@ public abstract class Recipes {
 			}
 		}
 		if (material.ingot != null) {
-			
-			if (material.materialType == MetalMaterial.MaterialType.METAL) {
+			if (material.getType() == MetalMaterial.MaterialType.METAL) {
 				OreDictionary.registerOre(Oredicts.INGOT + oreDictName, material.ingot); // For Metal based
-			} else if (material.materialType == MetalMaterial.MaterialType.GEM) {
+			} else if (material.getType() == MetalMaterial.MaterialType.GEM) {
 				OreDictionary.registerOre(Oredicts.GEM + oreDictName, material.ingot); // For Gem based
 			} else {
 				OreDictionary.registerOre(Oredicts.INGOT + oreDictName, material.ingot); // For Other 
