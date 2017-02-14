@@ -394,7 +394,7 @@ public abstract class Recipes {
 				}
 			}
 			if (Config.Options.furnaceCheese) {
-				GameRegistry.addSmelting(material.chestplate, new ItemStack(material.leggings, 7), 0);
+				GameRegistry.addSmelting(material.leggings, new ItemStack(material.ingot, 7), 0);
 			} else if (Config.Options.furnace1112) {						
 				GameRegistry.addSmelting(material.leggings, new ItemStack(material.nugget, 1), 0);
 			}
