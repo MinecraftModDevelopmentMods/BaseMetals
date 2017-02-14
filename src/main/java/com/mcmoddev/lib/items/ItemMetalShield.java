@@ -70,7 +70,6 @@ public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, 
 		return false;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
 		return I18n.translateToLocal(this.getUnlocalizedName() + ".name");
