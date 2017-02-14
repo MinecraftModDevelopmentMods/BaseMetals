@@ -4,8 +4,12 @@ import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
+
+import net.minecraft.item.Item;
+
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 
 /**
@@ -26,7 +30,8 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		
 		TraitRegistry.initTiCTraits();
 		TraitRegistry.initMetalsTraits();
-
+		ModifierRegistry.initModifiers();
+		
 		if (Options.enableAdamantine) {
 			/*
 			 * Newly Suggested:
@@ -118,10 +123,16 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		// we could hook that...
 		if (Options.enableLead) {
 			// Lead itself is added by TiC
+			if( Options.enablePlate ) {
+				registerModifierItem("plated", Item.getItemFromBlock(Materials.lead.plate));
+			}
 		} 
 
 		if (Options.enableMercury) {
 			registerFluid(Materials.mercury, 144);
+			if( Options.enableBasics ) {
+				registerModifierItem("toxic", Materials.mercury.powder);
+			}
 		}
 
 		if (Options.enableMithril) {
