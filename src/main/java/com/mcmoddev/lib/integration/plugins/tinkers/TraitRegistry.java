@@ -3,9 +3,11 @@ package com.mcmoddev.lib.integration.plugins.tinkers;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.mcmoddev.basemetals.BaseMetals;
 
+import net.minecraftforge.fml.common.FMLLog;
 import slimeknights.tconstruct.library.traits.ITrait;
 
 public class TraitRegistry {
@@ -53,14 +55,14 @@ public class TraitRegistry {
 			try {
 				registeredTraits.put(f.getName(), (ITrait)f.get(clazz));
 			} catch( final Exception e ) {
-				// do nothing
+				FMLLog.severe("tried to register trait %s, caught exception: %s", f.getName(), e.getMessage());
 			}
 		}
 	}
 	
 	public static void dumpRegistry() {
-		for( String s : registeredTraits.keySet()) {
-			String t = String.format("BaseMetals-TCon> Trait: %s - class %s", s, registeredTraits.get(s).getClass().getName());
+		for( Entry<String,ITrait> e : registeredTraits.entrySet()) {
+			String t = String.format("BaseMetals-TCon> Trait: %s - class %s", e.getKey(), e.getValue().getClass().getName());
 			BaseMetals.logger.info(t);
 		}
 	}
