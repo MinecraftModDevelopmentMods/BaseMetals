@@ -175,11 +175,14 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			addAdditionalOredicts(Materials.adamantine, "Adamant");
 		}
 
-		if ( Options.enableMercury &&  (FluidRegistry.isUniversalBucketEnabled()) ) {
+		if (Options.enableMercury) { 
+			if (FluidRegistry.isUniversalBucketEnabled()) {
 				final UniversalBucket universalBucket = ForgeModContainer.getInstance().universalBucket;
 				final ItemStack bucketMercury = new ItemStack(universalBucket, 1, 0);
 				universalBucket.fill(bucketMercury, new FluidStack(Materials.mercury.fluid, universalBucket.getCapacity()), true);
 				GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY));
+			}
+			addAdditionalOredicts(Materials.mercury, "Quicksilver");				
 		}
 
 		// misc recipes

@@ -185,6 +185,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createItemsFull(Materials.pewter);
 		}
 
+		if (Options.enableRedstone) {
+			Materials.vanilla_redstone.powder = net.minecraft.init.Items.REDSTONE;
+			createIngot(Materials.vanilla_redstone);
+			createSmallPowder(Materials.vanilla_redstone);
+		}
+
 		if (Options.enableSilver) {
 			createItemsFull(Materials.silver);
 		}

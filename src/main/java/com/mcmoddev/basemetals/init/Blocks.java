@@ -169,6 +169,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksFull(Materials.platinum);
 		}
 
+		if (Options.enableRedstone) {
+			Materials.vanilla_redstone.block = net.minecraft.init.Blocks.REDSTONE_BLOCK;
+			Materials.vanilla_redstone.ore = net.minecraft.init.Blocks.REDSTONE_ORE;
+		}
+
 		if (Options.enableSilver) {
 			createBlocksFull(Materials.silver);
 		}
