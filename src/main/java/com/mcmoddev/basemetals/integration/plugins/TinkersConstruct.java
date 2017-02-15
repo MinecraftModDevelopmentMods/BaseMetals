@@ -62,9 +62,9 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 			registerMaterial(aquaTC);
 			// When FMe is out we can probably do the alloy.
-			// registerAlloy(Materials.aquarium.getName(), 3,
-			//		new String[] { "copper", "zinc", "prismarine" },
-			//		new int[] { 2, 1, 3}); // Not possible currently
+			registerAlloy(Materials.aquarium.getName(), 3,
+					new String[] { "copper", "zinc", "prismarine" },
+					new int[] { 2, 1, 3}); // Not possible currently
 		}
 
 		if (Options.enableBismuth) {
