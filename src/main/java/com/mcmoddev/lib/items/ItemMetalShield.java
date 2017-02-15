@@ -10,7 +10,7 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -72,7 +72,7 @@ public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, 
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		return I18n.translateToLocal(this.getUnlocalizedName() + ".name");
+		return I18n.format(String.format("%s.name", this.getUnlocalizedName()));
 	}
 
 }
