@@ -106,9 +106,49 @@ public class TinkersConstruct implements IIntegration {
 		if (base.smallpowder != null)
 			TinkerRegistry.registerMelting(Oredicts.DUSTSMALL + oreDictName, output, amountPer / 9);
 		if (base.oreNether != null)
-			TinkerRegistry.registerMelting(base.oreNether, output, amountPer*4);
+			TinkerRegistry.registerMelting(base.oreNether, output, amountPer * 4);
 		if (base.oreEnd != null)
-			TinkerRegistry.registerMelting(base.oreEnd, output, amountPer*4);
+			TinkerRegistry.registerMelting(base.oreEnd, output, amountPer * 4);
+
+
+		if (base.half_slab != null)
+			TinkerRegistry.registerMelting(base.half_slab, output, (amountPer * 4) + (amountPer / 2));
+
+		if (base.wall != null)
+			TinkerRegistry.registerMelting(base.wall, output, amountPer * 9);
+
+		if (base.boots != null)
+			TinkerRegistry.registerMelting(base.boots, output, amountPer * 4);
+
+		if (base.helmet != null)
+			TinkerRegistry.registerMelting(base.helmet, output, amountPer * 5);
+
+		if (base.chestplate != null)
+			TinkerRegistry.registerMelting(base.chestplate, output, amountPer * 8);
+
+		if (base.leggings != null)
+			TinkerRegistry.registerMelting(base.leggings, output, amountPer * 7);
+
+		if (base.shears != null)
+			TinkerRegistry.registerMelting(base.shears, output, amountPer * 2);
+
+		if (base.pressure_plate != null)
+			TinkerRegistry.registerMelting(base.pressure_plate, output, amountPer * 2);
+
+		if (base.bars != null)
+			TinkerRegistry.registerMelting(base.bars, output, ((amountPer / 9) * 3) + 6); // Fun math
+
+		if (base.rod != null)
+			TinkerRegistry.registerMelting(base.rod, output, amountPer / 2);
+
+		if (base.door != null)
+			TinkerRegistry.registerMelting(base.door, output, amountPer * 2);
+
+		if (base.trapdoor != null)
+			TinkerRegistry.registerMelting(base.trapdoor, output, amountPer * 4);
+
+		if (base.button != null)
+			TinkerRegistry.registerMelting(base.button, output, (amountPer / 9) * 2);
 	}
 
 	/**
