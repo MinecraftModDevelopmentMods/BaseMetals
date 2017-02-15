@@ -2,11 +2,11 @@ package com.mcmoddev.lib.integration.plugins;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.FMLLog;
 
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
@@ -71,13 +71,13 @@ public class TinkersConstruct implements IIntegration {
 			if (base.oreNether != null)
 				TinkerRegistry.registerMelting(base.oreNether, output, amountPer);
 		} catch( final Exception e) {
-
+			FMLLog.severe("Tried registering Nether Ore %s, caught exception: %s", base.getName(), e.getMessage());
 		}
 		try {
 			if (base.oreEnd != null)
 				TinkerRegistry.registerMelting(base.oreEnd, output, amountPer);
 		} catch( final Exception e) {
-
+			FMLLog.severe("Tried registering End Ore %s, caught exception: %s", base.getName(), e.getMessage());
 		}
 	}
 	/**
@@ -194,8 +194,6 @@ public class TinkersConstruct implements IIntegration {
 		// register the fluid for the material, 1 ingot is 144mB
 		registerFluid(material.metalmaterial, material.amountPerOre);
 
-		// in here we should always have a nugget and an ingot
-//		tcmat.addItem(material.metalmaterial.nugget, 1, Material.VALUE_Nugget);
 		tcmat.addItem(material.metalmaterial.ingot, 1, Material.VALUE_Ingot);
 		tcmat.addItemIngot(Oredicts.INGOT+material.metalmaterial.getName());
 		tcmat.setRepresentativeItem(material.metalmaterial.ingot);

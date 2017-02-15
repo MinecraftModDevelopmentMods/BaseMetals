@@ -1,24 +1,15 @@
 package com.mcmoddev.basemetals.init;
 
-import java.util.List;
-
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.registry.CrusherRecipeRegistry;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
-import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.*;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  *
@@ -82,6 +73,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			oreDictName = material.getCapitalizedName();
 
 			if (material.powder != null) {
+				// why is this here still ?
 				//if (block != null) {
 					//CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.powder, 9)); // Minecraft does not provide a block of charcoal
 					//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.block), "xxx", "xxx", "xxx", 'x', material.powder)); // Minecraft does not provide a block of charcoal
@@ -183,18 +175,15 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			addAdditionalOredicts(Materials.adamantine, "Adamant");
 		}
 
-		if (Options.enableMercury) {
-			if (FluidRegistry.isUniversalBucketEnabled()) {
+		if ( Options.enableMercury &&  (FluidRegistry.isUniversalBucketEnabled()) ) {
 				final UniversalBucket universalBucket = ForgeModContainer.getInstance().universalBucket;
 				final ItemStack bucketMercury = new ItemStack(universalBucket, 1, 0);
 				universalBucket.fill(bucketMercury, new FluidStack(Materials.mercury.fluid, universalBucket.getCapacity()), true);
 				GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY));
-			}
 		}
 
 		// misc recipes
 		if (Options.enableSteel) {
-			// TODO
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.ACTIVATOR_RAIL, 6), "x/x", "x*x", "x/x", 'x', Oredicts.INGOTSTEEL, '/', Oredicts.STICKWOOD, '*', net.minecraft.init.Blocks.REDSTONE_TORCH));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.DETECTOR_RAIL, 6), "x x", "x-x", "x*x", 'x', Oredicts.INGOTSTEEL, '/', Oredicts.STICKWOOD, '-', net.minecraft.init.Blocks.STONE_PRESSURE_PLATE, '*', Oredicts.DUSTREDSTONE));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.RAIL, 16), "x x", "x/x", "x x", 'x', Oredicts.INGOTSTEEL, '/', Oredicts.STICKWOOD));
@@ -210,7 +199,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 
 		// new recipes using rods and gears
-		// TODO
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.LEVER, 1), "x", "y", 'x', Oredicts.ROD, 'y', Oredicts.COBBLESTONE));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.human_detector, 1), "xx", "yy", 'x', Oredicts.INGOTBRICK, 'y', Oredicts.GEAR));
 	}
