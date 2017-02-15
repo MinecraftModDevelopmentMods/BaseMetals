@@ -11,19 +11,19 @@ itemGroup.basemetals.tools=Base Metals
 itemGroup.basemetals.blocks=Base Metals
 
 #ToolTips
-tooltip.adamantine.tool=+%x damage against tough enemies
+tooltip.adamantine.tool=+%d damage against tough enemies
 tooltip.adamantine.armor=Reduces damage taken
 
-tooltip.aquarium.tool=+%x damage against aquatic enemies
+tooltip.aquarium.tool=+%d damage against aquatic enemies
 tooltip.aquarium.armor=Full suit: breathe underwater
 
-tooltip.coldiron.tool=+%x damage against firey enemies
+tooltip.coldiron.tool=+%d damage against fiery enemies
 tooltip.coldiron.armor=Full suit: fire immunity
 
 tooltip.mithril.tool=Blinds and withers undead
 tooltip.mithril.armor=Full suit: protection from poison & wither
 
-tooltip.starsteel.tool=Repairs 1 damage every %x seconds
+tooltip.starsteel.tool=Repairs 1 damage every %d seconds
 tooltip.starsteel.armor=Reduces your weight
 
 #Achievements

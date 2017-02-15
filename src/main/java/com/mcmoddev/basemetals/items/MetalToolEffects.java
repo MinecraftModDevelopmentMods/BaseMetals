@@ -13,6 +13,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.client.resources.I18n;
 
 /**
  * Tool Effects
@@ -85,27 +86,27 @@ public abstract class MetalToolEffects {
 	public static void addToolSpecialPropertiesToolTip(MetalMaterial material, java.util.List<String> tooltipList) {
 		if (Options.enableAdamantine) {
 			if (material.equals(Materials.adamantine)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.adamantine.tool").replace("%x", String.valueOf(4)));
+				tooltipList.add(I18n.format("tooltip.adamantine.tool", 4));
 			}
 		}
 		if (Options.enableAquarium) {
 			if (material.equals(Materials.aquarium)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.aquarium.tool").replace("%x", String.valueOf(4)));
+				tooltipList.add(I18n.format("tooltip.aquarium.tool", 4));
 			}
 		}
 		if (Options.enableColdIron) {
 			if (material.equals(Materials.coldiron)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.coldiron.tool").replace("%x", String.valueOf(3)));
+				tooltipList.add(I18n.format("tooltip.coldiron.tool", 3));
 			}
 		}
 		if (Options.enableMithril) {
 			if (material.equals(Materials.mithril)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.mithril.tool"));
+				tooltipList.add(I18n.format("tooltip.mithril.tool"));
 			}
 		}
 		if (Options.enableStarSteel) {
 			if (material.equals(Materials.starsteel)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.starsteel.tool").replace("%x", String.valueOf(10)));
+				tooltipList.add(I18n.format("tooltip.starsteel.tool", 10));
 			}
 		}
 	}
@@ -118,27 +119,27 @@ public abstract class MetalToolEffects {
 	public static void addArmorSpecialPropertiesToolTip(MetalMaterial material, java.util.List<String> tooltipList) {
 		if (Options.enableAdamantine) {
 			if (material.equals(Materials.adamantine)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.adamantine.armor").replace("%x", String.valueOf(4)));
+				tooltipList.add(I18n.format("tooltip.adamantine.armor", 4));
 			}
 		}
 		if (Options.enableAquarium) {
 			if (material.equals(Materials.aquarium)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.aquarium.armor").replace("%x", String.valueOf(4)));
+				tooltipList.add(I18n.format("tooltip.aquarium.armor", 4));
 			}
 		}
 		if (Options.enableColdIron) {
 			if (material.equals(Materials.coldiron)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.coldiron.armor").replace("%x", String.valueOf(3)));
+				tooltipList.add(I18n.format("tooltip.coldiron.armor", 3));
 			}
 		}
 		if (Options.enableMithril) {
 			if (material.equals(Materials.mithril)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.mithril.armor"));
+				tooltipList.add(I18n.format("tooltip.mithril.armor"));
 			}
 		}
 		if (Options.enableStarSteel) {
 			if (material.equals(Materials.starsteel)) {
-				tooltipList.add(net.minecraft.client.resources.I18n.format("tooltip.starsteel.armor").replace("%x", String.valueOf(10)));
+				tooltipList.add(I18n.format("tooltip.starsteel.armor", 10));
 			}
 		}
 	}
