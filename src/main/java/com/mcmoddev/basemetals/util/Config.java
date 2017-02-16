@@ -79,6 +79,7 @@ public class Config {
 		Options.enableTinkersConstruct = configuration.getBoolean("tinkers_construct_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Tinkers Construct");
 		Options.enableVeinminer = configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with VeinMiner");
 		Options.enableTAIGA = configuration.getBoolean("taiga_integration", INTEGRATION_CAT, true, "Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals");
+		Options.enableDenseOres = configuration.getBoolean("denseores", INTEGRATION_CAT, true, "If DenseOres is available, this will allow automatic integration");
 		
 		// METALS
 		Options.enableAdamantine = configuration.getBoolean("EnableAdamantine", MATERIALS_CAT, true, "Enable Adamantine Items and Materials");
@@ -313,6 +314,7 @@ public class Config {
 		public static boolean enablePressurePlate = true;
 		public static boolean enableStairs = true;
 		public static boolean enableWall = true;
+		public static boolean enableDenseOres = true;
 
 		private Options() {
 			throw new IllegalAccessError("Not a instantiable class");
