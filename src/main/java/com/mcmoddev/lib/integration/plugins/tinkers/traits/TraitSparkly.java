@@ -10,16 +10,16 @@ import slimeknights.tconstruct.library.utils.ToolHelper;
 
 public class TraitSparkly extends AbstractTrait {
 
+	private final static int REGEN_INTERVAL = 200;
+	
 	public TraitSparkly() {
 		super("sparkly", TextFormatting.OBFUSCATED);
 	}
 
 	@Override
-	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!world.isRemote && entity instanceof EntityLivingBase && random.nextInt(200) == 0) {
-			if (((EntityLivingBase)entity).getActiveItemStack() != tool) {
-				ToolHelper.healTool(tool, 1, (EntityLivingBase) entity);
-			}
+	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isHeld) {
+		if ( !world.isRemote && isHeld && tool.isItemDamaged() && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
+			ToolHelper.healTool(tool, 1, (EntityLivingBase) entity);
 		}
 	}
 }
