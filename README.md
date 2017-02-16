@@ -88,7 +88,6 @@ Q: Why make this mod?
 A: Minecraft appears to have a pre-industrial fantasy setting, but the fantasy literature (and pre-industrial history) is full of references to silver and copper as well as gold.
 
 
-
 Q: What does the Crack Hammer do?
 
 A: When you break ores with the Crack Hammer, you get two piles of metal powders instead of a single block of ore. This is necessary to make metal alloys, which is done by combining the powders of the verious components and then smelting the alloy mix.
