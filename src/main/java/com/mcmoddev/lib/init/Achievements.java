@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.init;
 
-//import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.basemetals.util.Config.Options;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
