@@ -1,6 +1,5 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.init.Materials;
@@ -45,8 +44,6 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOres im
 				case "coldiron":
 					baseMaterial = "netherrack";
 					break;
-				default:
-					baseMaterial = "stone";
 				}
 				registerOre(String.format("%s_%s", ore, Oredicts.ORE), "basemetals", baseMaterial, 0);
 			}
