@@ -215,7 +215,7 @@ artifacts {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "file:///var/www/html/maven.mcmoddev.com")
+            repository(url: "file:///var/www/maven.mcmoddev.com")
         }
     }
 }
