@@ -8,9 +8,6 @@ buildscript {
             url = "http://files.minecraftforge.net/maven"
         }
         maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-        maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/groups/public"
         }
@@ -23,7 +20,7 @@ buildscript {
 
 apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "com.matthewprenger.cursegradle"
-apply plugin: "maven"
+apply plugin: "maven-publish"
 
 javadoc {
     failOnError = false
@@ -212,10 +209,36 @@ artifacts {
     archives javadocJar
 }
 
-uploadArchives {
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
+            artifact sourceJar {
+                classifier "sources"
+            }
+/*
+            artifact apiJar {
+                classifier "api"
+            }
+*/
+            artifact deobfJar {
+                classifier "deobf"
+            }
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+        }
+    }
     repositories {
-        mavenDeployer {
-            repository(url: "file:///var/www/maven.mcmoddev.com")
+        maven {
+            credentials {
+                username secret.username
+                password secret.password
+            }
+            url secret.url
         }
     }
 }
