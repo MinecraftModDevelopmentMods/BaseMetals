@@ -36,7 +36,7 @@ version = mc_version + "-" + short_version
 if (System.getenv().BUILD_NUMBER) {
     version += "." + System.getenv().BUILD_NUMBER
 }
-group= "mmd"
+group= "com.mcmoddev.basemetals"
 archivesBaseName = "BaseMetals"
 sourceCompatibility = targetCompatibility = "1.8"
 
