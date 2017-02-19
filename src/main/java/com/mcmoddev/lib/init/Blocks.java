@@ -366,7 +366,7 @@ public abstract class Blocks {
 		}
 
 		if ((Options.enableBasics) && (material.hasOre) && (material.oreEnd == null)) {
-			material.oreEnd = addBlock(new BlockMetalOre(material), "end", material, ItemGroups.blocksTab);
+			material.oreEnd = addBlock(new BlockMetalEndOre(material), "end", material, ItemGroups.blocksTab);
 		}
 
 		return material.oreEnd;
@@ -384,7 +384,7 @@ public abstract class Blocks {
 		}
 
 		if ((Options.enableBasics) && (material.hasOre) && (material.oreNether == null)) {
-			material.oreNether = addBlock(new BlockMetalOre(material), "nether", material, ItemGroups.blocksTab);
+			material.oreNether = addBlock(new BlockMetalNetherOre(material), "nether", material, ItemGroups.blocksTab);
 		}
 
 		return material.oreNether;
