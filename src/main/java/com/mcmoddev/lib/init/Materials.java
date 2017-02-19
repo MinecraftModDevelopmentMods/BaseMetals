@@ -54,7 +54,7 @@ public abstract class Materials {
 	 * @return
 	 */
 	protected static MetalMaterial createOrelessMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, false, false, false);
+		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, false, false);
 
 		return registerMaterial(material);
 	}
@@ -70,7 +70,7 @@ public abstract class Materials {
 	 * @return
 	 */
 	protected static MetalMaterial createMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, false, true, false);
+		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, true, false);
 
 		return registerMaterial(material);
 	}
@@ -86,7 +86,7 @@ public abstract class Materials {
 	 * @return
 	 */
 	protected static MetalMaterial createAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, false, false, true);
+		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, false, true);
 
 		return registerMaterial(material);
 	}
@@ -102,7 +102,7 @@ public abstract class Materials {
 	 * @return
 	 */
 	protected static MetalMaterial createSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, false, true, true);
+		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, true, true);
 
 		return registerMaterial(material);
 	}
@@ -118,7 +118,7 @@ public abstract class Materials {
 	 * @return
 	 */
 	protected static MetalMaterial createOrelessRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, true, false, false);
+		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, false, false);
 
 		return registerMaterial(material);
 	}
@@ -134,7 +134,7 @@ public abstract class Materials {
 	 * @return
 	 */
 	protected static MetalMaterial createRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, true, true, false);
+		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, true, false);
 
 		return registerMaterial(material);
 	}
@@ -150,7 +150,7 @@ public abstract class Materials {
 	 * @return
 	 */
 	protected static MetalMaterial createRareAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, true, false, true);
+		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, false, true);
 
 		return registerMaterial(material);
 	}
@@ -166,7 +166,7 @@ public abstract class Materials {
 	 * @return
 	 */
 	protected static MetalMaterial createRareSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
-		final MetalMaterial material = new MetalMaterial(name, MaterialType.METAL, (float) hardness, (float) strength, (float) magic, tintColor, true, true, true);
+		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, true, true);
 
 		return registerMaterial(material);
 	}

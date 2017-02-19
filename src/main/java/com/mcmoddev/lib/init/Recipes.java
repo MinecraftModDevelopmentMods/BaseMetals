@@ -448,7 +448,11 @@ public abstract class Recipes {
 		}
 
 		if ((material.shears != null) && (material.shears instanceof IMetalObject)) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shears), " x", "x ", 'x', Oredicts.INGOT + oreDictName));
+			String oredict = Oredicts.INGOT;
+			if( material.getType() == MetalMaterial.MaterialType.GEM ) {
+				oredict = Oredicts.GEM;
+			}
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shears), " x", "x ", 'x', oredict + oreDictName));
 			GameRegistry.addSmelting(material.shears, new ItemStack(material.ingot, 2), 0);
 		}
 	}
