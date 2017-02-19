@@ -188,7 +188,12 @@ public abstract class Recipes {
 				}
 			}
 
-			if (material.ingot != null) {
+			if( material.getType() == MetalMaterial.MaterialType.MINERAL && material.powder != null ) {
+				if( material.block != null && material.block instanceof IMetalObject) {
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.block), "xxx", "xxx", "xxx", 'x', Oredicts.DUST + oreDictName));
+					GameRegistry.addRecipe(new ShapelessOreRecipe( new ItemStack(material.powder, 9), Oredicts.BLOCK + oreDictName));
+				}
+			} else if ( material.ingot != null ) {
 				// Vanilla has all the base tools & armors where they currently matter.
 				generateBaseTools(material);
 
@@ -208,7 +213,7 @@ public abstract class Recipes {
 
 				if ( (material.block) != null && (material.block instanceof IMetalObject)) {
 					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.ingot, 9), Oredicts.BLOCK + oreDictName));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.block), "xxx", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.block), "xxx", "xxx", "xxx", 'x', (material.getType()==MetalMaterial.MaterialType.GEM?Oredicts.GEM:Oredicts.INGOT) + oreDictName));
 				}
 
 				if (material.plate != null) {
