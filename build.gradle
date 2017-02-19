@@ -285,7 +285,7 @@ String getModFile() {
         if (element.file.isFile()) {
             element.file.eachLine { String s ->
                 s = s.trim();
-                if (s.startsWith("@Mod")) {
+                if (s.startsWith("@Mod(")) {
                     path = "src/main/java/$element.relativePath"
                 }
             }
