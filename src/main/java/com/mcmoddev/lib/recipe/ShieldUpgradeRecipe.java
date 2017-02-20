@@ -25,7 +25,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 	protected String matName;
-	
+
 	public ShieldUpgradeRecipe(MetalMaterial input) {
 		matName = input.getName();
 	}
@@ -36,78 +36,80 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		List<ItemStack> upgradeMats = new ArrayList<>();
 		Collection<MetalMaterial> allmats = Materials.getAllMaterials();
 		MetalMaterial input = Materials.getMaterialByName(matName);
-		base = new ItemStack( input.shield, 1, 0);
-		
-		for( MetalMaterial mat : allmats ) {
-			if( mat.hardness >= input.hardness && mat.getName() != matName ) {
-				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE+mat.getCapitalizedName());
+		base = new ItemStack(input.shield, 1, 0);
+
+		for (MetalMaterial mat : allmats) {
+			if (mat.hardness >= input.hardness && mat.getName() != matName) {
+				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				upgradeMats.addAll(mats);
 			}
 		}
-		
+
 		boolean[] matches = new boolean[] { false, false };
-		
-		for( int i = 0; i < inv.getSizeInventory(); i++ ) {
+
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack curItem = inv.getStackInSlot(i);
-			
-			if( curItem != null ) {
+
+			if (curItem != null) {
 				ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getItemDamage());
-				if( OreDictionary.itemMatches(base, comp, false) ) {
+				if (OreDictionary.itemMatches(base, comp, false)) {
 					matches[0] = true;
-				} else if( OreDictionary.containsMatch(false, upgradeMats, comp) ) {
+				} else if (OreDictionary.containsMatch(false, upgradeMats, comp)) {
 					matches[1] = true;
 				}
 			}
 		}
-		return matches[0]?matches[1]:false;
+		return matches[0] ? matches[1] : false;
 	}
-	
+
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		Map<String,List<ItemStack>> plates = new HashMap<>();
-		
+		Map<String, List<ItemStack>> plates = new HashMap<>();
+
 		Collection<MetalMaterial> allmats = Materials.getAllMaterials();
-		int hardness = ((Float)Materials.getMaterialByName(matName).hardness).intValue();
-		
-		for( MetalMaterial mat : allmats ) {
-			if( mat.hardness >= hardness && mat.getName() != matName ) {
-				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE+mat.getCapitalizedName());
+		int hardness = ((Float) Materials.getMaterialByName(matName).hardness).intValue();
+
+		for (MetalMaterial mat : allmats) {
+			if (mat.hardness >= hardness && mat.getName() != matName) {
+				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				plates.put(mat.getName(), mats);
 			}
 		}
-		
+
 		ItemStack plateMatched = null;
-		Map<Enchantment,Integer> enchants = Collections.emptyMap();
+		Map<Enchantment, Integer> enchants = Collections.emptyMap();
 		ItemStack matcher = new ItemStack(Materials.getMaterialByName(matName).shield, 1, 0);
-		
-		for( int i = 0; i < inv.getSizeInventory(); i++ ) {
+
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack curItem = inv.getStackInSlot(i);
-			
-			if( curItem != null ) {
+
+			if (curItem != null) {
 				ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getMetadata());
-				for( Entry<String, List<ItemStack>> ent : plates.entrySet() ) {
-					if( OreDictionary.containsMatch(false, ent.getValue(), comp) ) {
-						plateMatched = new ItemStack( Materials.getMaterialByName(ent.getKey().toLowerCase()).shield, 1, 0 );
+				for (Entry<String, List<ItemStack>> ent : plates.entrySet()) {
+					if (OreDictionary.containsMatch(false, ent.getValue(), comp)) {
+						plateMatched = new ItemStack(Materials.getMaterialByName(ent.getKey().toLowerCase()).shield, 1,
+								0);
 					}
 				}
-				if( OreDictionary.itemMatches(matcher, comp, false) ) {
+				if (OreDictionary.itemMatches(matcher, comp, false)) {
 					enchants = EnchantmentHelper.getEnchantments(curItem);
 				}
 			}
 		}
 
-		FMLLog.severe("Adding %d enchantments to output item", enchants.size() );
-		EnchantmentHelper.setEnchantments( enchants, plateMatched);
+		FMLLog.severe("Adding %d enchantments to output item", enchants.size());
+		EnchantmentHelper.setEnchantments(enchants, plateMatched);
 		return plateMatched;
 	}
-	
+
 	private MetalMaterial getUpgradeMat(InventoryCrafting inv) {
-		for( int i = 0; i < inv.getSizeInventory(); i++ ) {
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack curItem = inv.getStackInSlot(i);
-			
-			if( curItem != null ) {
-				for( MetalMaterial e : Materials.getAllMaterials() ) {
-					if( OreDictionary.containsMatch(false, OreDictionary.getOres(Oredicts.PLATE+e.getName()), curItem) ) {
+
+			if (curItem != null) {
+				for (MetalMaterial e : Materials.getAllMaterials()) {
+					if (OreDictionary.containsMatch(false, OreDictionary.getOres(Oredicts.PLATE + e.getName()),
+							curItem)) {
 						return e;
 					}
 				}
@@ -116,45 +118,45 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		return Materials.getMaterialByName(matName);
 	}
 
-    private ItemStack findBaseItem(InventoryCrafting inv) {
-    	ItemStack input = new ItemStack(Materials.getMaterialByName(matName).shield, 1, 0);
-    	
-    	for( int i = 0; i < inv.getSizeInventory(); i++ ) {
-    		ItemStack a = inv.getStackInSlot(i);
-    		if( a != null ) {
-    			ItemStack comp = new ItemStack(a.getItem(),1,a.getMetadata());
-    			if( OreDictionary.itemMatches(input, comp, false) ) {
-    				return a;
-    			}
-    		}
-    	}
-    	return null;
-    }
+	private ItemStack findBaseItem(InventoryCrafting inv) {
+		ItemStack input = new ItemStack(Materials.getMaterialByName(matName).shield, 1, 0);
+
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			ItemStack a = inv.getStackInSlot(i);
+			if (a != null) {
+				ItemStack comp = new ItemStack(a.getItem(), 1, a.getMetadata());
+				if (OreDictionary.itemMatches(input, comp, false)) {
+					return a;
+				}
+			}
+		}
+		return null;
+	}
 
 	private int getEnchantCount(InventoryCrafting inv) {
 		ItemStack k = findBaseItem(inv);
-		if( k != null ) {
+		if (k != null) {
 			return EnchantmentHelper.getEnchantments(findBaseItem(inv)).size();
 		} else {
 			return 0;
 		}
 	}
-	
+
 	public int getCost(InventoryCrafting inv) {
 		MetalMaterial shieldMat = Materials.getMaterialByName(matName);
 		MetalMaterial upgradeMat = getUpgradeMat(inv);
 
 		float hardDiff = upgradeMat.hardness - shieldMat.hardness;
 		int enchantCount = getEnchantCount(inv);
-		
+
 		float diffVal = hardDiff * 5;
 		float enchantVal = upgradeMat.magicAffinity * enchantCount;
 		Float finalVal = diffVal + enchantVal;
-		
-		if( finalVal < 5.0f) {
+
+		if (finalVal < 5.0f) {
 			finalVal = 5.0f;
 		}
-		
+
 		return finalVal.intValue();
 	}
 }

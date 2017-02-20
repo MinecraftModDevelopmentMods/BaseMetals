@@ -18,52 +18,52 @@ public class HelmetRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 
 	private ItemStack baseHelmet;
 	private String matName;
-	
+
 	public HelmetRepairRecipe(MetalMaterial mat) {
-		super(new ItemStack(mat.helmet,1), new Object[] {mat.getName()+"_helmet", Oredicts.PLATE+mat.getCapitalizedName()});
+		super(new ItemStack(mat.helmet, 1), new Object[] { mat.getName() + "_helmet", Oredicts.PLATE + mat.getCapitalizedName() });
 		baseHelmet = new ItemStack(mat.helmet, 1, OreDictionary.WILDCARD_VALUE);
 		matName = new String(mat.getCapitalizedName());
 	}
 
-    @Override
-    public boolean matches(InventoryCrafting inv, World worldIn) {
-    	List<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE+matName);
-        boolean helmetMatched = false;
-        boolean repairMatched = false;
-        
-        for( int i = 0; i < inv.getSizeInventory(); i++ ) {
-            ItemStack item = inv.getStackInSlot(i);
-            if( !repairMatched ) {
-            	repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
-            }
-            if( !helmetMatched ) {
-            	helmetMatched = (OreDictionary.itemMatches(baseHelmet, item, false))?(item.getItemDamage()>0?true:false):false;
-            }
-        }
-        return helmetMatched?repairMatched:false;
-    }
+	@Override
+	public boolean matches(InventoryCrafting inv, World worldIn) {
+		List<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE + matName);
+		boolean helmetMatched = false;
+		boolean repairMatched = false;
 
-    private ItemStack findBaseItem(InventoryCrafting inv) {
-    	for( int i = 0; i < inv.getSizeInventory(); i++ ) {
-    		ItemStack a = inv.getStackInSlot(i);
-    		if( a != null ) {
-    			ItemStack comp = new ItemStack(a.getItem(),1,a.getMetadata());
-    			if( OreDictionary.itemMatches(baseHelmet, comp, false) ) {
-    				return a;
-    			}
-    		}
-    	}
-    	return null;
-    }
-    
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			ItemStack item = inv.getStackInSlot(i);
+			if (!repairMatched) {
+				repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
+			}
+			if (!helmetMatched) {
+				helmetMatched = (OreDictionary.itemMatches(baseHelmet, item, false)) ? (item.getItemDamage() > 0 ? true : false) : false;
+			}
+		}
+		return helmetMatched ? repairMatched : false;
+	}
+
+	private ItemStack findBaseItem(InventoryCrafting inv) {
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			ItemStack a = inv.getStackInSlot(i);
+			if (a != null) {
+				ItemStack comp = new ItemStack(a.getItem(), 1, a.getMetadata());
+				if (OreDictionary.itemMatches(baseHelmet, comp, false)) {
+					return a;
+				}
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
 		ItemStack target = findBaseItem(inv);
-		if( target == null ) {
-			return new ItemStack(baseHelmet.getItem(),1, 0);
+		if (target == null) {
+			return new ItemStack(baseHelmet.getItem(), 1, 0);
 		} else {
 			ItemStack rv = new ItemStack(target.getItem(), 1, target.getMetadata());
-			EnchantmentHelper.setEnchantments( EnchantmentHelper.getEnchantments(target), rv );
+			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(target), rv);
 			rv.setItemDamage(0);
 			return rv;
 		}
@@ -72,7 +72,7 @@ public class HelmetRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	@Override
 	public int getRecipeSize() {
 		int count = 1;
-		count += OreDictionary.getOres(Oredicts.PLATE+matName).size();
+		count += OreDictionary.getOres(Oredicts.PLATE + matName).size();
 		return count;
 	}
 
@@ -84,13 +84,13 @@ public class HelmetRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	@Override
 	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
 		ItemStack[] outputStacks = new ItemStack[inv.getSizeInventory()];
-    	List<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE+matName);
-		
-		for( int i = 0; i < inv.getSizeInventory(); i++ ) {
+		List<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE + matName);
+
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack item = inv.getStackInSlot(i);
-			if( OreDictionary.containsMatch(true, repairMaterials, item) ) {
+			if (OreDictionary.containsMatch(true, repairMaterials, item)) {
 				item.stackSize--;
-				if( item.stackSize <= 0 ) {
+				if (item.stackSize <= 0) {
 					outputStacks[i] = null;
 				} else {
 					outputStacks[i] = item;
@@ -106,7 +106,7 @@ public class HelmetRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	public ArrayList<Object> getInput() {
 		ArrayList<Object> inputs = new ArrayList<>();
 		inputs.add(baseHelmet);
-		inputs.addAll(OreDictionary.getOres(Oredicts.PLATE+matName));
+		inputs.addAll(OreDictionary.getOres(Oredicts.PLATE + matName));
 		return inputs;
 	}
 }
