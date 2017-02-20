@@ -76,8 +76,10 @@ public class CrusherRecipeRegistry {
 	 * registered with the OreDictionary will be converted into the specified
 	 * output item.
 	 * 
-	 * @param oreDictionaryName Name in the ore dictionary (e.g. "logWood")
-	 * @param output The item to create as the result of this crusher recipe.
+	 * @param oreDictionaryName
+	 *            Name in the ore dictionary (e.g. "logWood")
+	 * @param output
+	 *            The item to create as the result of this crusher recipe.
 	 */
 	public static void addNewCrusherRecipe(final String oreDictionaryName, final ItemStack output) { // preferred method
 		getInstance().addRecipe(new OreDictionaryCrusherRecipe(oreDictionaryName, output));
@@ -88,15 +90,16 @@ public class CrusherRecipeRegistry {
 	 * where the input item is specified by an ItemStack. This means that only
 	 * the specified item will be converted into the specified output item.
 	 * 
-	 * @param input Item to be crushed
-	 * @param output The item to create as the result of this crusher recipe.
+	 * @param input
+	 *            Item to be crushed
+	 * @param output
+	 *            The item to create as the result of this crusher recipe.
 	 */
 	public static void addNewCrusherRecipe(final ItemStack input, final ItemStack output) {
-		if ((input == null) || (output == null))
-			FMLLog.severe("%s: %s: Crusher recipe not registered because of null input or output. \n %s",
-				BaseMetals.MODID, CrusherRecipeRegistry.class,
-				Arrays.toString(Thread.currentThread().getStackTrace()).replace(", ", "\n").replace("[", "").replace("]", "")
-				);
+		if ((input == null) || (output == null)) {
+			FMLLog.severe("%s: %s: Crusher recipe not registered because of null input or output. \n %s", BaseMetals.MODID, CrusherRecipeRegistry.class, Arrays.toString(Thread.currentThread().getStackTrace()).replace(", ", "\n").replace("[", "").replace("]", ""));
+		}
+
 		getInstance().addRecipe(new ArbitraryCrusherRecipe(input, output));
 	}
 
@@ -106,8 +109,10 @@ public class CrusherRecipeRegistry {
 	 * only the specified item will be converted into the specified output item.
 	 * Note that this will assume an item metadata value of 0.
 	 * 
-	 * @param input Item to be crushed
-	 * @param output The item to create as the result of this crusher recipe.
+	 * @param input
+	 *            Item to be crushed
+	 * @param output
+	 *            The item to create as the result of this crusher recipe.
 	 */
 	public static void addNewCrusherRecipe(final Item input, final ItemStack output) {
 		getInstance().addRecipe(new ICrusherRecipe() {
@@ -136,8 +141,10 @@ public class CrusherRecipeRegistry {
 	 * the block inputs to certain metadata values, convert the block into an
 	 * ItemStack instead of providing it as a block instance.
 	 * 
-	 * @param input Block to be crushed
-	 * @param output The item to create as the result of this crusher recipe.
+	 * @param input
+	 *            Block to be crushed
+	 * @param output
+	 *            The item to create as the result of this crusher recipe.
 	 */
 	public static void addNewCrusherRecipe(final Block input, final ItemStack output) {
 		getInstance().addRecipe(new ICrusherRecipe() {
@@ -171,7 +178,8 @@ public class CrusherRecipeRegistry {
 	/**
 	 * This is the universal method for adding new crusher recipes
 	 * 
-	 * @param crusherRecipe An implementation of the ICrusherRecipe interface.
+	 * @param crusherRecipe
+	 *            An implementation of the ICrusherRecipe interface.
 	 */
 	public void addRecipe(ICrusherRecipe crusherRecipe) {
 		this.recipes.add(crusherRecipe);
@@ -199,19 +207,19 @@ public class CrusherRecipeRegistry {
 			final List<ICrusherRecipe> recipeCache = new ArrayList<>();
 			for (final ICrusherRecipe r : this.recipes) {
 				if (ItemStack.areItemsEqual(r.getOutput(), output)) {
-					for( final String s : Options.disabledRecipes ) {
+					for (final String s : Options.disabledRecipes) {
 						List<ItemStack> ores = OreDictionary.getOres(s);
-						for( ItemStack input : r.getValidInputs() ) {
-							if( OreDictionary.containsMatch(false, ores, input) ) {
+						for (ItemStack input : r.getValidInputs()) {
+							if (OreDictionary.containsMatch(false, ores, input)) {
 								this.recipeByInputCache.put(hashKey, null);
 								return null;
 							}
 						}
-					}					
+					}
 					recipeCache.add(r);
 				}
 			}
-			
+
 			if (recipeCache.isEmpty()) {
 				this.recipeByOutputCache.put(hashKey, Collections.emptyList());
 				return Collections.emptyList();
@@ -226,9 +234,10 @@ public class CrusherRecipeRegistry {
 	 * output item. If there are no such recipes, then null is returned (instead
 	 * of an empty list).
 	 * 
-	 * @param output The block resulting from the crushing of another item or block
+	 * @param output
+	 *            The block resulting from the crushing of another item or block
 	 * @return A list of recipes producing the requested item, or null if no
-	 * such recipes exist
+	 *         such recipes exist
 	 */
 	public List<ICrusherRecipe> getRecipesForOutputItem(IBlockState output) {
 		return getRecipesForOutputItem(new ItemStack(output.getBlock(), 1, output.getBlock().getMetaFromState(output)));
@@ -238,20 +247,21 @@ public class CrusherRecipeRegistry {
 	 * Gets the recipe for crushing the specified item, or null if ther is no
 	 * recipe accepting the item.
 	 * 
-	 * @param input The item/block to crush
+	 * @param input
+	 *            The item/block to crush
 	 * @return The crusher recipe for crushing this item/block, or null if no
-	 * such recipe exists
+	 *         such recipe exists
 	 */
-	public ICrusherRecipe getRecipeForInputItem(ItemStack input ) {
+	public ICrusherRecipe getRecipeForInputItem(ItemStack input) {
 		Integer hashKey = input.getItem().getUnlocalizedName().hashCode() + (56 * input.getMetadata());
-		if( this.recipeByInputCache.containsKey(hashKey) ) {
+		if (this.recipeByInputCache.containsKey(hashKey)) {
 			return this.recipeByInputCache.get(hashKey);
 		} else {
-			for( final ICrusherRecipe r : this.recipes ) {
-				if( r.isValidInput(input) ) {
-					for( final String s : Options.disabledRecipes ) {
+			for (final ICrusherRecipe r : this.recipes) {
+				if (r.isValidInput(input)) {
+					for (final String s : Options.disabledRecipes) {
 						List<ItemStack> ores = OreDictionary.getOres(s);
-						if( OreDictionary.containsMatch(false, ores, input) ) {
+						if (OreDictionary.containsMatch(false, ores, input)) {
 							this.recipeByInputCache.put(hashKey, null);
 							return null;
 						}
@@ -264,14 +274,15 @@ public class CrusherRecipeRegistry {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Gets the recipe for crushing the specified item, or null if ther is no
 	 * recipe accepting the item.
 	 * 
-	 * @param input The item/block to crush
+	 * @param input
+	 *            The item/block to crush
 	 * @return The crusher recipe for crushing this item/block, or null if no
-	 * such recipe exists
+	 *         such recipe exists
 	 */
 	public ICrusherRecipe getRecipeForInputItem(IBlockState input) {
 		return getRecipeForInputItem(new ItemStack(input.getBlock(), 1, input.getBlock().getMetaFromState(input)));
@@ -284,18 +295,18 @@ public class CrusherRecipeRegistry {
 	 */
 	public Collection<ICrusherRecipe> getAllRecipes() {
 		List<ICrusherRecipe> filtered = new ArrayList<>();
-		for( final ICrusherRecipe r : this.recipes ) {
+		for (final ICrusherRecipe r : this.recipes) {
 			boolean matched = false;
-			for( final String s : Options.disabledRecipes ) {
+			for (final String s : Options.disabledRecipes) {
 				List<ItemStack> ores = OreDictionary.getOres(s);
-				for( ItemStack ore : ores ) {
-					if( r.isValidInput(ore) ) {
+				for (ItemStack ore : ores) {
+					if (r.isValidInput(ore)) {
 						matched = true;
 						continue;
 					}
 				}
 			}
-			if( !matched ) {
+			if (!matched) {
 				filtered.add(r);
 			}
 		}

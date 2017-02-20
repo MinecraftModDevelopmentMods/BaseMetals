@@ -25,8 +25,10 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	 * will be ignored when testing an item for being a valid input for this
 	 * recipe.
 	 * 
-	 * @param input The input item as a direct ItemStack reference.
-	 * @param output The result of applying this recipe to an input item
+	 * @param input
+	 *            The input item as a direct ItemStack reference.
+	 * @param output
+	 *            The result of applying this recipe to an input item
 	 */
 	public ArbitraryCrusherRecipe(ItemStack input, ItemStack output) {
 		this.input = input;
@@ -50,8 +52,10 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	/**
 	 * Checks if the given ItemStack instance is the input for this recipe.
 	 * 
-	 * @param input An ItemStack to test
-	 * @return Returns true if and only if this recipe should produce an output item from the given input.
+	 * @param input
+	 *            An ItemStack to test
+	 * @return Returns true if and only if this recipe should produce an output
+	 *         item from the given input.
 	 */
 	@Override
 	public boolean isValidInput(ItemStack input) {

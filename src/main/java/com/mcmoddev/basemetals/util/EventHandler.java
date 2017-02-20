@@ -32,50 +32,48 @@ import net.minecraftforge.fml.relauncher.Side;
 public class EventHandler {
 
 	@SubscribeEvent
-    public void attackEvent(LivingAttackEvent e) {
-        float damage = e.getAmount();
-        if (!(e.getEntityLiving() instanceof EntityPlayer)) {
-            return;
-        }
-        EntityPlayer player = (EntityPlayer) e.getEntityLiving();
-        if (player.getActiveItemStack() == null) {
-            return;
-        }
-        ItemStack activeItemStack = player.getActiveItemStack();
-        if ((damage > 0.0F) && (activeItemStack != null) && (activeItemStack.getItem() instanceof ItemMetalShield)) {
-            int i = 1 + MathHelper.floor(damage);
-            activeItemStack.damageItem(i, player);
-            if (activeItemStack.stackSize <= 0) {
-                EnumHand enumhand = player.getActiveHand();
-                ForgeEventFactory.onPlayerDestroyItem(player, activeItemStack, enumhand);
-                if (enumhand == EnumHand.MAIN_HAND) {
-                    player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, (ItemStack) null);
-                }
-                else {
-                    player.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, (ItemStack) null);
-                }
-                activeItemStack = null;
-                if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-                    player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, 0.8F, 0.8F + player.world.rand.nextFloat() * 0.4F);
-                }
-            }
-        }
-    }
+	public void attackEvent(LivingAttackEvent e) {
+		float damage = e.getAmount();
+		if (!(e.getEntityLiving() instanceof EntityPlayer)) {
+			return;
+		}
+		EntityPlayer player = (EntityPlayer) e.getEntityLiving();
+		if (player.getActiveItemStack() == null) {
+			return;
+		}
+		ItemStack activeItemStack = player.getActiveItemStack();
+		if ((damage > 0.0F) && (activeItemStack != null) && (activeItemStack.getItem() instanceof ItemMetalShield)) {
+			int i = 1 + MathHelper.floor(damage);
+			activeItemStack.damageItem(i, player);
+			if (activeItemStack.stackSize <= 0) {
+				EnumHand enumhand = player.getActiveHand();
+				ForgeEventFactory.onPlayerDestroyItem(player, activeItemStack, enumhand);
+				if (enumhand == EnumHand.MAIN_HAND) {
+					player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, (ItemStack) null);
+				} else {
+					player.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, (ItemStack) null);
+				}
+				activeItemStack = null;
+				if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+					player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, 0.8F, 0.8F + player.world.rand.nextFloat() * 0.4F);
+				}
+			}
+		}
+	}
 
-/*
-	@SubscribeEvent
-	void event(ItemCraftedEvent event) {
+	/*
+	@SubscribeEvent void event(ItemCraftedEvent event) {
 		final Item item = event.crafting.getItem();
 		if (item instanceof IMetalObject) {
 			final MetalMaterial material = ((IMetalObject) item).getMaterial();
 			if (item instanceof ItemMetalBlend) {
 				if (Options.ENABLE_ACHIEVEMENTS) {
-//					event.player.addStat(Achievements.metallurgy, 1);
+					// event.player.addStat(Achievements.metallurgy, 1);
 				}
 			}
 		}
 	}
-*/
+	*/
 
 	@SubscribeEvent
 	void event(ItemSmeltedEvent event) {
@@ -84,7 +82,7 @@ public class EventHandler {
 			final MetalMaterial material = ((IMetalObject) item).getMaterial();
 			if (item instanceof ItemMetalIngot) {
 				if (Options.enableAchievements) {
-//					event.player.addStat(Achievements.this_is_new, 1);
+					// event.player.addStat(Achievements.this_is_new, 1);
 					if (material.getName().equals("aquarium")) {
 						event.player.addStat(Achievements.aquariumMaker, 1);
 					} else if (material.getName().equals("brass")) {
@@ -107,35 +105,33 @@ public class EventHandler {
 		}
 	}
 
-	public static InventoryCrafting getDummyCraftingInv()
-	{
+	public static InventoryCrafting getDummyCraftingInv() {
 		Container tempContainer = new Container() {
 			@Override
-			public boolean canInteractWith(EntityPlayer player)
-			{
+			public boolean canInteractWith(EntityPlayer player) {
 				return false;
 			}
 		};
-		
+
 		return new InventoryCrafting(tempContainer, 2, 1);
 	}
-	
+
 	@SubscribeEvent
 	public void handleAnvilEvent(AnvilUpdateEvent evt) {
 		ItemStack left = evt.getLeft();
 		ItemStack right = evt.getRight();
-		
-		if( left == null || right == null || left.stackSize != 1 || right.stackSize != 1) {
+
+		if (left == null || right == null || left.stackSize != 1 || right.stackSize != 1) {
 			return;
 		}
-		
+
 		InventoryCrafting recipeInput = getDummyCraftingInv();
 		recipeInput.setInventorySlotContents(0, left);
 		recipeInput.setInventorySlotContents(1, right);
 		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-		for( IRecipe r : recipes ) {
-			if( r instanceof ShieldUpgradeRecipe ) {
-				if( ((ShieldUpgradeRecipe)r).matches(recipeInput, null) ) {
+		for (IRecipe r : recipes) {
+			if (r instanceof ShieldUpgradeRecipe) {
+				if (((ShieldUpgradeRecipe) r).matches(recipeInput, null)) {
 					evt.setOutput(r.getCraftingResult(recipeInput));
 					evt.setCost(((ShieldUpgradeRecipe) r).getCost(recipeInput));
 				}

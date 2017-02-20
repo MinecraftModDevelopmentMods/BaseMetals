@@ -30,12 +30,18 @@ public class VillagerTradeHelper {
 	 * Inserts one or more trades to the default villager trade table using dark
 	 * magic (aka java reflection).
 	 * 
-	 * @param professionID Villager profession ID (0-4)
-	 * @param careerID Villager career ID (1-3)
-	 * @param tradeLevel Level of trade (1+)
-	 * @param trades Trades to add to the given level
-	 * @throws NoSuchFieldException Thrown if java reflection has been disabled for security reasons
-	 * @throws IllegalAccessException Thrown if java reflection has been disabled for security reasons
+	 * @param professionID
+	 *            Villager profession ID (0-4)
+	 * @param careerID
+	 *            Villager career ID (1-3)
+	 * @param tradeLevel
+	 *            Level of trade (1+)
+	 * @param trades
+	 *            Trades to add to the given level
+	 * @throws NoSuchFieldException
+	 *             Thrown if java reflection has been disabled for security reasons
+	 * @throws IllegalAccessException
+	 *             Thrown if java reflection has been disabled for security reasons
 	 */
 	public static void insertTrades(int professionID, int careerID, int tradeLevel, EntityVillager.ITradeList... trades)
 			throws NoSuchFieldException, IllegalAccessException {
@@ -54,10 +60,14 @@ public class VillagerTradeHelper {
 	 * Inserts one or more trades to the default villager trade table using dark
 	 * magic (aka java reflection).
 	 * 
-	 * @param profession Villager profession
-	 * @param careerID Villager career ID (1-3)
-	 * @param tradeLevel Level of trade (1+)
-	 * @param trades Trades to add to the given level
+	 * @param profession
+	 *            Villager profession
+	 * @param careerID
+	 *            Villager career ID (1-3)
+	 * @param tradeLevel
+	 *            Level of trade (1+)
+	 * @param trades
+	 *            Trades to add to the given level
 	 */
 	public static void insertTrades(ResourceLocation profession, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
 		for (final EntityVillager.ITradeList trade : trades)
@@ -66,9 +76,12 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param append What to append to
-	 * @param array What
-	 * @param indices The indices
+	 * @param append
+	 *            What to append to
+	 * @param array
+	 *            What
+	 * @param indices
+	 *            The indices
 	 */
 	public static void appendToMultidimensionalArray(Object append, Object array, int... indices) {
 		appendToMultidimensionalArray(Collections.singletonList(append).toArray(), array, indices);
@@ -76,9 +89,12 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param append What to append to
-	 * @param array What
-	 * @param indices The indices
+	 * @param append
+	 *            What to append to
+	 * @param array
+	 *            What
+	 * @param indices
+	 *            The indices
 	 */
 	public static void appendToMultidimensionalArray(Object[] append, Object array, int... indices) {
 		// get the lowest level array
@@ -117,9 +133,12 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param array The array
-	 * @param newSize The new size for the array
-	 * @param fill The Object
+	 * @param array
+	 *            The array
+	 * @param newSize
+	 *            The new size for the array
+	 * @param fill
+	 *            The Object
 	 * @return An Object
 	 */
 	public static Object expandArray(Object array, int newSize, Object fill) {
@@ -134,9 +153,12 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param v The Field
-	 * @throws NoSuchFieldException The Exception
-	 * @throws IllegalAccessException The Exception
+	 * @param v
+	 *            The Field
+	 * @throws NoSuchFieldException
+	 *             The Exception
+	 * @throws IllegalAccessException
+	 *             The Exception
 	 */
 	public static void unlockPrivateFinalField(Field v) throws NoSuchFieldException, IllegalAccessException {
 		v.setAccessible(true);
@@ -147,7 +169,8 @@ public class VillagerTradeHelper {
 
 	/**
 	 *
-	 * @param c The Class
+	 * @param c
+	 *            The Class
 	 * @return A Field
 	 */
 	public static Field getTradeArrayFromClass(Class<?> c) {

@@ -25,8 +25,10 @@ public interface ICrusherRecipe {
 	/**
 	 * Checks if the given ItemStack instance is the input for this recipe.
 	 * 
-	 * @param input An ItemStack to test
-	 * @return Returns true if and only if this recipe should produce an output item from the given input.
+	 * @param input
+	 *            An ItemStack to test
+	 * @return Returns true if and only if this recipe should produce an output
+	 *         item from the given input.
 	 */
 	public abstract boolean isValidInput(ItemStack input);
 

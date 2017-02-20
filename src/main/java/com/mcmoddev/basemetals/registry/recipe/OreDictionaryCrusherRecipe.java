@@ -22,8 +22,10 @@ public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
 	 * Constructs a new instance of this ICrusherRecipe class representing a
 	 * recipe with an input and an output.
 	 * 
-	 * @param oreDictionaryID The input item(s), described by an OreDictionary name
-	 * @param results The result of applying this recipe to an input item
+	 * @param oreDictionaryID
+	 *            The input item(s), described by an OreDictionary name
+	 * @param results
+	 *            The result of applying this recipe to an input item
 	 */
 	public OreDictionaryCrusherRecipe(String oreDictionaryID, ItemStack results) {
 		this.oreDictSource = oreDictionaryID;
@@ -43,7 +45,8 @@ public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
 	/**
 	 * Checks if the given ItemStack instance is the input for this recipe.
 	 * 
-	 * @param input An ItemStack to test
+	 * @param input
+	 *            An ItemStack to test
 	 * @return Returns true if and only if this recipe should produce an output
 	 *         item from the given input.
 	 */
