@@ -2,7 +2,7 @@ package com.mcmoddev.lib.util;
 
 public class Oredicts {
 
-	// See net.minecraftforge.oredict.OreDictionary.initVanillaEntries() for vanilla oreDict names
+	// See net.minecraftforge.oredict.OreDictionary.initVanillaEntries() for Vanilla oreDict names
 
 	// tree- and wood-related things
 	public static final String LOGWOOD = "logWood";
@@ -14,7 +14,7 @@ public class Oredicts {
 	public static final String TREELEAVES = "treeLeaves";
 	public static final String VINE = "vine";
 
-    // Ores
+	// Ores
 	public static final String OREGOLD = "oreGold";
 	public static final String OREIRON = "oreIron";
 	public static final String ORELAPIS = "oreLapis";
@@ -24,14 +24,15 @@ public class Oredicts {
 	public static final String OREQUARTZ = "oreQuartz";
 	public static final String ORECOAL = "oreCoal";
 
-    // ingots/nuggets
+	// Ingots/Nuggets
 	public static final String INGOTIRON = "ingotIron";
 	public static final String INGOTGOLD = "ingotGold";
 	public static final String INGOTBRICK = "IngotBrick";
 	public static final String INGOTBRICKNETHER = "IngotBrickNether";
+	public static final String NUGGETIRON = "nuggetIron";
 	public static final String NUGGETGOLD = "nuggetGold";
 
-	// gems and dusts
+	// Gems/Dusts
 	public static final String GEMDIAMOND = "gemDiamond";
 	public static final String GEMEMERALD = "gemEmerald";
 	public static final String GEMQUARTZ = "gemQuartz";
@@ -41,68 +42,68 @@ public class Oredicts {
 	public static final String DUSTGLOWSTONE = "dustGlowstone";
 	public static final String GEMLAPIS = "gemLapis";
 
-    // storage blocks
+	// Storage Blocks
 	public static final String BLOCKGOLD = "blockGold";
 	public static final String BLOCKIRON = "blockIron";
 	public static final String BLOCKLAPIS = "blockLapis";
-    public static final String BLOCKDIAMOND = "blockDiamond";
+	public static final String BLOCKDIAMOND = "blockDiamond";
 	public static final String BLOCKREDSTONE = "blockRedstone";
 	public static final String BLOCKEMERALD = "blockEmerald";
-    public static final String BLOCKQUARTZ = "blockQuartz";
+	public static final String BLOCKQUARTZ = "blockQuartz";
 	public static final String BLOCKCOAL = "blockCoal";
-	
-    // crops
-    public static final String CROPWHEAT = "cropWheat";
-    public static final String CROPPOTATO = "cropPotato";
-    public static final String CROPCARROT = "cropCarrot";
-    public static final String CROPNETHERWART = "cropNetherWart";
-    public static final String SUGARCANE = "sugarcane";
-    public static final String BLOCKCACTUS = "blockCactus";
-	
-    // misc materials
-    public static final String DYE = "dye";
-    public static final String PAPER = "paper";
-	
-    // mob drops
+
+	// Crops
+	public static final String CROPWHEAT = "cropWheat";
+	public static final String CROPPOTATO = "cropPotato";
+	public static final String CROPCARROT = "cropCarrot";
+	public static final String CROPNETHERWART = "cropNetherWart";
+	public static final String SUGARCANE = "sugarcane";
+	public static final String BLOCKCACTUS = "blockCactus";
+
+	// Miscellaneous Materials
+	public static final String DYE = "dye";
+	public static final String PAPER = "paper";
+
+	// Mob Drops
 	public static final String SLIMEBALL = "slimeball";
 	public static final String ENDERPEARL = "enderpearl";
-    public static final String BONE = "bone";
-    public static final String GUNPOWDER = "gunpowder";
-    public static final String STRING = "string";
-    public static final String NETHERSTAR = "netherStar";
-    public static final String LEATHER = "leather";
-    public static final String FEATHER = "feather";
-    public static final String EGG = "egg";
-	
-    // records
+	public static final String BONE = "bone";
+	public static final String GUNPOWDER = "gunpowder";
+	public static final String STRING = "string";
+	public static final String NETHERSTAR = "netherStar";
+	public static final String LEATHER = "leather";
+	public static final String FEATHER = "feather";
+	public static final String EGG = "egg";
+
+	// Records
 	public static final String RECORD = "record";
-	
-    // blocks
-    public static final String DIRT = "dirt";
-    public static final String GRASS = "grass";
-    public static final String STONE = "stone";
-    public static final String COBBLESTONE = "cobblestone";
-    public static final String GRAVEL = "gravel";
-    public static final String SAND = "sand";
-    public static final String SANDSTONE = "sandstone";
-    public static final String NETHERRACK = "netherrack";
-    public static final String OBSIDIAN = "obsidian";
-    public static final String GLOWSTONE = "glowstone";
-    public static final String ENDSTONE = "endstone";
-    public static final String TORCH = "torch";
-    public static final String WORKBENCH = "workbench";
-    public static final String BLOCKSLIME = "blockSlime";
-    public static final String BLOCKPRISMARINE = "blockPrismarine";
-    public static final String BLOCKPRISMARINEBRICK = "blockPrismarineBrick";
-    public static final String BLOCKPRISMARINEDARK = "blockPrismarineDark";
-    public static final String STONEGRANITE = "stoneGranite";
-    public static final String STONEGRANITEPOLISHED = "stoneGranitePolished";
-    public static final String STONEDIORITE = "stoneDiorite";
-    public static final String STONEDIORITEPOLISHED = "stoneDioritePolished";
-    public static final String STONEANDESITE = "stoneAndesite";
-    public static final String STONEANDESITEPOLISHED = "stoneAndesitePolished";
-    public static final String BLOCKGLASSCOLORLESS = "blockGlassColorless";
-    public static final String BLOCKGLASS = "blockGlass";
+
+	// Blocks
+	public static final String DIRT = "dirt";
+	public static final String GRASS = "grass";
+	public static final String STONE = "stone";
+	public static final String COBBLESTONE = "cobblestone";
+	public static final String GRAVEL = "gravel";
+	public static final String SAND = "sand";
+	public static final String SANDSTONE = "sandstone";
+	public static final String NETHERRACK = "netherrack";
+	public static final String OBSIDIAN = "obsidian";
+	public static final String GLOWSTONE = "glowstone";
+	public static final String ENDSTONE = "endstone";
+	public static final String TORCH = "torch";
+	public static final String WORKBENCH = "workbench";
+	public static final String BLOCKSLIME = "blockSlime";
+	public static final String BLOCKPRISMARINE = "blockPrismarine";
+	public static final String BLOCKPRISMARINEBRICK = "blockPrismarineBrick";
+	public static final String BLOCKPRISMARINEDARK = "blockPrismarineDark";
+	public static final String STONEGRANITE = "stoneGranite";
+	public static final String STONEGRANITEPOLISHED = "stoneGranitePolished";
+	public static final String STONEDIORITE = "stoneDiorite";
+	public static final String STONEDIORITEPOLISHED = "stoneDioritePolished";
+	public static final String STONEANDESITE = "stoneAndesite";
+	public static final String STONEANDESITEPOLISHED = "stoneAndesitePolished";
+	public static final String BLOCKGLASSCOLORLESS = "blockGlassColorless";
+	public static final String BLOCKGLASS = "blockGlass";
 	public static final String BLOCKGLASSBLACK = "blockGlassBlack";
 	public static final String BLOCKGLASSRED = "blockGlassRed";
 	public static final String BLOCKGLASSGREEN = "blockGlassGreen";
@@ -119,8 +120,8 @@ public class Oredicts {
 	public static final String BLOCKGLASSMAGENTA = "blockGlassMagenta";
 	public static final String BLOCKGLASSORANGE = "blockGlassOrange";
 	public static final String BLOCKGLASSWHITE = "blockGlassWhite";
-    public static final String PANEGLASSCOLORLESS = "paneGlassColorless";
-    public static final String PANEGLASS = "paneGlass";
+	public static final String PANEGLASSCOLORLESS = "paneGlassColorless";
+	public static final String PANEGLASS = "paneGlass";
 	public static final String PANEGLASSBLACK = "paneGlassBlack";
 	public static final String PANEGLASSRED = "paneGlassRed";
 	public static final String PANEGLASSGREEN = "paneGlassGreen";
@@ -138,13 +139,13 @@ public class Oredicts {
 	public static final String PANEGLASSORANGE = "paneGlassOrange";
 	public static final String PANEGLASSWHITE = "paneGlassWhite";
 
-    // chests
-    public static final String CHEST = "chest";
-    public static final String CHESTWOOD = "chestWood";
-    public static final String CHESTENDER = "chestEnder";
-    public static final String CHESTTRAPPED = "chestTrapped";
+	// Chests
+	public static final String CHEST = "chest";
+	public static final String CHESTWOOD = "chestWood";
+	public static final String CHESTENDER = "chestEnder";
+	public static final String CHESTTRAPPED = "chestTrapped";
 
-	// dyes
+	// Dyes
 	public static final String DYEBLACK = "dyeBlack";
 	public static final String DYERED = "dyeRed";
 	public static final String DYEGREEN = "dyeGreen";
@@ -162,7 +163,6 @@ public class Oredicts {
 	public static final String DYEORANGE = "dyeOrange";
 	public static final String DYEWHITE = "dyeWhite";
 
-	
 	// Custom
 	public static final String ARROW = "arrow";
 	public static final String AMMOBOLT = "ammoBolt";
@@ -202,7 +202,7 @@ public class Oredicts {
 	public static final String PLATEDENSE = "plateDense";
 	public static final String CRUSHED = "crushed";
 	public static final String CRUSHEDPURIFIED = "crushedPurified";
-	
+
 	public static final String DUSTCARBON = "dustCarbon";
 	public static final String DUSTCHARCOAL = "dustCharcoal";
 	public static final String DUSTCOAL = "dustCoal";
@@ -249,7 +249,7 @@ public class Oredicts {
 
 	public static final String COAL = "Coal";
 	public static final String CHARCOAL = "Charcoal";
-	public static final String QUICKSILVER = "quicksilver";	
+	public static final String QUICKSILVER = "quicksilver";
 
 	private Oredicts() {
 		throw new IllegalAccessError("Not a instantiable class");
