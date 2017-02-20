@@ -3,6 +3,7 @@ package com.mcmoddev.lib.integration.plugins;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraftforge.fml.common.Loader;
@@ -42,6 +43,20 @@ public class EnderIO implements IIntegration {
 	 *            How much energy it costs to perform
 	 */
 	protected static void addAlloySmelterRecipe(String materialName, String outputSecondary, int energy) {
+		addAlloySmelterRecipe(materialName, 2, outputSecondary, energy);
+	}
+
+	// TODO: Use Oredicts for inputs
+	/**
+	 *
+	 * @param material
+	 *            The Material
+	 * @param outputSecondary
+	 *            The secondary output
+	 * @param energy
+	 *            How much energy it costs to perform
+	 */
+	protected static void addAlloySmelterRecipe(String materialName, int primaryQty, String outputSecondary, int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
 		MetalMaterial material = Materials.getMaterialByName(materialName);
@@ -85,6 +100,29 @@ public class EnderIO implements IIntegration {
 	 *            How much energy it costs to perform
 	 */
 	protected static void addSagMillRecipe(String materialName, String outputSecondary, int energy) {
+		MetalMaterial material = Materials.getMaterialByName(materialName);
+		int primaryQty = 2;
+
+		if (material.getType() == MaterialType.MINERAL) {
+			primaryQty = 4;
+		}
+
+		addSagMillRecipe(materialName, primaryQty, outputSecondary, energy);
+	}
+
+	// TODO: Use Oredicts for inputs
+	/**
+	 *
+	 * @param material
+	 *            The Material
+	 * @param primaryQty
+	 *            How much to make
+	 * @param outputSecondary
+	 *            The secondary output
+	 * @param energy
+	 *            How much energy it costs to perform
+	 */
+	protected static void addSagMillRecipe(String materialName, int primaryQty, String outputSecondary, int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
 		MetalMaterial material = Materials.getMaterialByName(materialName);
@@ -93,11 +131,15 @@ public class EnderIO implements IIntegration {
 		final String inputOredict = Oredicts.ORE + material.getCapitalizedName();
 		// final int inputMeta = 0;
 
-		final String outputPrimary = materialName + "_powder";
+		String outputPrimary = materialName + "_powder";
+		if (material.getType() == MaterialType.GEM) {
+			outputPrimary = materialName + "_ingot";
+		}
+
 		// final String outputPrimaryOredict = Oredicts.DUST +
 		// material.getCapitalizedName();
 		// final int primaryMeta = 0;
-		final int primaryQty = 2;
+
 		final String primaryChance = "1.0";
 
 		// final String outputSecondaryOredict = Oredicts.DUST +
