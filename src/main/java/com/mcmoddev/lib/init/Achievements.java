@@ -8,7 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 
-/** initializer for achievements */
+/**
+ * Initializer for Achievements
+ *
+ * @author Jasmine Iwanek
+ *
+ */
 public abstract class Achievements {
 
 	private static boolean initDone = false;

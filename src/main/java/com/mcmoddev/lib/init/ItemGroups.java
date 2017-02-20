@@ -15,7 +15,7 @@ import com.mcmoddev.lib.material.MetalMaterial;
 /**
  * This class initializes all item groups in Base Metals.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public class ItemGroups {
@@ -53,7 +53,7 @@ public class ItemGroups {
 
 	protected static GeneralizedCreativeTab addTab(String name, boolean searchable, MetalMaterial material) {
 		GeneralizedCreativeTab tab = new GeneralizedCreativeTab(Loader.instance().activeModContainer().getModId() + "." + name, searchable, material);
-//		itemGroupsByModID.get(name).add(tab);
+		// itemGroupsByModID.get(name).add(tab);
 		return tab;
 	}
 

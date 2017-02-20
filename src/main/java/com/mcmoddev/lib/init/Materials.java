@@ -12,11 +12,11 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 
 /**
- * This class initializes all of the materials in Base Metals. It also
- * contains utility methods for looking up materials by name and finding the
- * tool and armor material equivalents for a given material.
+ * This class initializes all of the materials in Base Metals. It also contains
+ * utility methods for looking up materials by name and finding the tool and
+ * armor material equivalents for a given material.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public abstract class Materials {
@@ -26,7 +26,6 @@ public abstract class Materials {
 	private static Map<String, MetalMaterial> allMaterials = new HashMap<>();
 	private static Map<MetalMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MetalMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
-	private static List<MetalMaterial> materials = new LinkedList<>();
 
 	protected Materials() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -108,7 +107,7 @@ public abstract class Materials {
 	}
 
 	/**
-	 * Create a rare, oreless  material
+	 * Create a rare, oreless material
 	 * 
 	 * @param name
 	 * @param hardness
@@ -171,7 +170,6 @@ public abstract class Materials {
 		return registerMaterial(material);
 	}
 
-
 	/**
 	 * Register a material
 	 * 
@@ -191,7 +189,6 @@ public abstract class Materials {
 		}
 
 		allMaterials.put(material.getName(), material);
-		materials.add(material);
 
 		final String enumName = material.getEnumName();
 		final String texName = material.getName();
@@ -201,7 +198,7 @@ public abstract class Materials {
 		if (armorMaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to create armor material enum for " + material);
-//			FMLLog.severe("Failed to create armor material enum for " + material);
+			// FMLLog.severe("Failed to create armor material enum for " + material);
 		}
 		armorMaterialMap.put(material, armorMaterial);
 
@@ -209,7 +206,7 @@ public abstract class Materials {
 		if (toolMaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to create tool material enum for " + material);
-//			FMLLog.severe("Failed to create tool material enum for " + material);
+			// FMLLog.severe("Failed to create tool material enum for " + material);
 		}
 		toolMaterialMap.put(material, toolMaterial);
 
@@ -239,8 +236,8 @@ public abstract class Materials {
 	}
 
 	/**
-	 * Returns a list of all materials in Base Metals. All of the materials
-	 * in this list are also available as static public members of this class.
+	 * Returns a list of all materials in Base Metals. All of the materials in
+	 * this list are also available as static public members of this class.
 	 *
 	 * @return A Collection of MetalMaterial instances.
 	 */
@@ -253,8 +250,8 @@ public abstract class Materials {
 	 *
 	 * @param materialName
 	 *            The name of a material
-	 * @return The material representing the named material, or null if no materials
-	 *         have been registered under that name.
+	 * @return The material representing the named material, or null if no
+	 *         materials have been registered under that name.
 	 */
 	public static MetalMaterial getMaterialByName(String materialName) {
 		return allMaterials.get(materialName);

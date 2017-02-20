@@ -357,7 +357,7 @@ public abstract class Blocks {
 	/**
 	 * This is here purely for End Metals
 	 * 
-	 * @param material 
+	 * @param material
 	 * @return
 	 */
 	protected static Block createEndOre(MetalMaterial material) {
@@ -430,7 +430,8 @@ public abstract class Blocks {
 	 * the GameRegistry, not its unlocalized name (the unlocalized name is the
 	 * registered name plus the prefix "basemetals.")
 	 *
-	 * @param name The name of the block in question
+	 * @param name
+	 *            The name of the block in question
 	 * @return The block matching that name, or null if there isn't one
 	 */
 	public static Block getBlockByName(String name) {
@@ -441,9 +442,10 @@ public abstract class Blocks {
 	 * This is the reverse of the getBlockByName(...) method, returning the
 	 * registered name of an block instance (Base Metals blocks only).
 	 *
-	 * @param b The item in question
+	 * @param b
+	 *            The item in question
 	 * @return The name of the item, or null if the item is not a Base Metals
-	 * block.
+	 *         block.
 	 */
 	public static String getNameOfBlock(Block b) {
 		return blockRegistry.inverse().get(b);

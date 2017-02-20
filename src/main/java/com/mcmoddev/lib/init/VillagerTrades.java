@@ -53,7 +53,8 @@ public abstract class VillagerTrades {
 	}
 
 	protected static void registerCommonTrades() {
-		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>(); // integer is used as byte data: (unused) (profession) (career) (level)
+		// integer is used as byte data: (unused) (profession) (career) (level)
+		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>();
 
 		// Minecraft stores trades in a 4D array:
 		// [Profession ID][Sub-profession ID][villager level - 1][trades]
@@ -68,42 +69,42 @@ public abstract class VillagerTrades {
 		final Map<MetalMaterial, Item> allShovels = new HashMap<>(size);
 		final Map<MetalMaterial, Item> allIngots = new HashMap<>(size);
 
-//		@SuppressWarnings("unused")
-//		final Map<Item, Integer> tradeLevelMap = new HashMap<>();
+		// @SuppressWarnings("unused")
+		// final Map<Item, Integer> tradeLevelMap = new HashMap<>();
 
 		String modid = Loader.instance().activeModContainer().getModId();
-		Items.getItemsByMaterial().entrySet().stream().forEach((Map.Entry<MetalMaterial, List<Item>> e) -> {
-			final MetalMaterial m = e.getKey();
-			if (m == null) {
+		Items.getItemsByMaterial().entrySet().stream().forEach((Map.Entry<MetalMaterial, List<Item>> entry) -> {
+			final MetalMaterial material = entry.getKey();
+			if (material == null) {
 				return;
 			}
 
-			for (final Item i : e.getValue()) {
-				if (i.getRegistryName().getResourceDomain().equals(modid)) {
-					if (i instanceof ItemArmor) {
-						allArmors.computeIfAbsent(m, (MetalMaterial g) -> new ArrayList<>()).add(i);
-					} else if (i instanceof ItemMetalCrackHammer) {
-						allHammers.put(m, i);
-					} else if (i instanceof ItemSword) {
-						allSwords.put(m, i);
-					} else if (i instanceof ItemHoe) {
-						allHoes.put(m, i);
-					} else if (i instanceof ItemAxe) {
-						allAxes.put(m, i);
-					} else if (i instanceof ItemPickaxe) {
-						allPickAxes.put(m, i);
-					} else if (i instanceof ItemSpade) {
-						allShovels.put(m, i);
-					} else if (i instanceof ItemMetalIngot) {
-						allIngots.put(m, i);
+			for (final Item item : entry.getValue()) {
+				if (item.getRegistryName().getResourceDomain().equals(modid)) {
+					if (item instanceof ItemArmor) {
+						allArmors.computeIfAbsent(material, (MetalMaterial g) -> new ArrayList<>()).add(item);
+					} else if (item instanceof ItemMetalCrackHammer) {
+						allHammers.put(material, item);
+					} else if (item instanceof ItemSword) {
+						allSwords.put(material, item);
+					} else if (item instanceof ItemHoe) {
+						allHoes.put(material, item);
+					} else if (item instanceof ItemAxe) {
+						allAxes.put(material, item);
+					} else if (item instanceof ItemPickaxe) {
+						allPickAxes.put(material, item);
+					} else if (item instanceof ItemSpade) {
+						allShovels.put(material, item);
+					} else if (item instanceof ItemMetalIngot) {
+						allIngots.put(material, item);
 					}
 				}
 			}
 		});
 
-		for (final MetalMaterial m : Materials.getAllMaterials()) {
-			final float value = m.hardness + m.strength + m.magicAffinity + m.getToolHarvestLevel();
-			if (m.isRare) {
+		for (final MetalMaterial material : Materials.getAllMaterials()) {
+			final float value = material.hardness + material.strength + material.magicAffinity + material.getToolHarvestLevel();
+			if (material.isRare) {
 				continue;
 			}
 
@@ -121,37 +122,70 @@ public abstract class VillagerTrades {
 			final int weaponsmith = (3 << 16) | (2 << 8) | (tradeLevel);
 			final int toolsmith = (3 << 16) | (3 << 8) | (tradeLevel);
 
-			if (allIngots.containsKey(m)) {
-				final ITradeList[] ingotTrades = makeTradePalette(makePurchasePalette(emeraldPurch, 12, allIngots.get(m)), makeSalePalette(emeraldSale, 12, allIngots.get(m)));
-				tradesTable.computeIfAbsent(armorsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(ingotTrades));
-				tradesTable.computeIfAbsent(weaponsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(ingotTrades));
-				tradesTable.computeIfAbsent(toolsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(ingotTrades));
+			if (allIngots.containsKey(material)) {
+				final ITradeList[] ingotTrades = makeTradePalette(
+						makePurchasePalette(emeraldPurch, 12, allIngots.get(material)),
+						makeSalePalette(emeraldSale, 12, allIngots.get(material)));
+				tradesTable.computeIfAbsent(armorsmith, (Integer key) -> new ArrayList<>())
+						.addAll(Arrays.asList(ingotTrades));
+				tradesTable.computeIfAbsent(weaponsmith, (Integer key) -> new ArrayList<>())
+						.addAll(Arrays.asList(ingotTrades));
+				tradesTable.computeIfAbsent(toolsmith, (Integer key) -> new ArrayList<>())
+						.addAll(Arrays.asList(ingotTrades));
 			}
-			if (allHammers.containsKey(m) && allPickAxes.containsKey(m) && allAxes.containsKey(m) && allShovels.containsKey(m) && allHoes.containsKey(m)) {
-				tradesTable.computeIfAbsent(toolsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch, 1, allPickAxes.get(m), allAxes.get(m), allShovels.get(m), allHoes.get(m)))));
-				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch, 1, allHammers.get(m)))));
+			if (allHammers.containsKey(material) && allPickAxes.containsKey(material) && allAxes.containsKey(material)
+					&& allShovels.containsKey(material) && allHoes.containsKey(material)) {
+				tradesTable.computeIfAbsent(toolsmith, (Integer key) -> new ArrayList<>())
+						.addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch, 1, allPickAxes.get(material),
+								allAxes.get(material), allShovels.get(material), allHoes.get(material)))));
+				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel + 1), (Integer key) -> new ArrayList<>())
+						.addAll(Arrays
+								.asList(makeTradePalette(makePurchasePalette(emeraldPurch, 1, allHammers.get(material)))));
 			}
-			if (allSwords.containsKey(m)) {
-				tradesTable.computeIfAbsent(weaponsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette((emeraldPurch + (int) (m.getBaseAttackDamage() / 2)) - 1, 1, allSwords.get(m)))));
+			if (allSwords.containsKey(material)) {
+				tradesTable.computeIfAbsent(weaponsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(
+						makeTradePalette(makePurchasePalette((emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1,
+								1, allSwords.get(material)))));
 			}
-			if (allArmors.containsKey(m)) {
-				tradesTable.computeIfAbsent(armorsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch + (int) (m.hardness / 2), 1, allArmors.get(m).toArray(new Item[0])))));
+			if (allArmors.containsKey(material)) {
+				tradesTable.computeIfAbsent(armorsmith, (Integer key) -> new ArrayList<>()).addAll(
+						Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.hardness / 2), 1,
+								allArmors.get(material).toArray(new Item[0])))));
 			}
 
-			if (m.magicAffinity > 5) {
-				if (allHammers.containsKey(m)) {
-					tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel + 2), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allHammers.get(m), new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
+			if (material.magicAffinity > 5) {
+				if (allHammers.containsKey(material)) {
+					tradesTable
+							.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel + 2),
+									(Integer key) -> new ArrayList<>())
+							.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allHammers.get(material),
+									new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
 				}
-				if (allPickAxes.containsKey(m)) {
-					tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allPickAxes.get(m), new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
+				if (allPickAxes.containsKey(material)) {
+					tradesTable
+							.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel + 1),
+									(Integer key) -> new ArrayList<>())
+							.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allPickAxes.get(material),
+									new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
 				}
-				if (allArmors.containsKey(m)) {
-					for (int i = 0; i < allArmors.get(m).size(); i++) {
-						tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allArmors.get(m).get(i), new PriceInfo(emeraldPurch + 7 + (int) (m.hardness / 2), emeraldPurch + 12 + (int) (m.hardness / 2)))));
+				if (allArmors.containsKey(material)) {
+					for (int i = 0; i < allArmors.get(material).size(); i++) {
+						tradesTable
+								.computeIfAbsent((3 << 16) | (1 << 8) | (tradeLevel + 1),
+										(Integer key) -> new ArrayList<>())
+								.addAll(Collections
+										.singletonList(new ListEnchantedItemForEmeralds(allArmors.get(material).get(i),
+												new PriceInfo(emeraldPurch + 7 + (int) (material.hardness / 2),
+														emeraldPurch + 12 + (int) (material.hardness / 2)))));
 					}
 				}
-				if (allSwords.containsKey(m)) {
-					tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allSwords.get(m), new PriceInfo(emeraldPurch + 7 + (int) (m.getBaseAttackDamage() / 2) - 1, emeraldPurch + 12 + (int) (m.getBaseAttackDamage() / 2) - 1))));
+				if (allSwords.containsKey(material)) {
+					tradesTable
+							.computeIfAbsent((3 << 16) | (2 << 8) | (tradeLevel + 1),
+									(Integer key) -> new ArrayList<>())
+							.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allSwords.get(material),
+									new PriceInfo(emeraldPurch + 7 + (int) (material.getBaseAttackDamage() / 2) - 1,
+											emeraldPurch + 12 + (int) (material.getBaseAttackDamage() / 2) - 1))));
 				}
 			}
 		}
@@ -159,15 +193,14 @@ public abstract class VillagerTrades {
 		/*
 		if (Loader.instance().activeModContainer().getModId().equals("basemetals")) {
 			if (Options.ENABLE_CHARCOAL) {
-				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
-				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
-				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.charcoal_powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
 			}
-
 			if (Options.ENABLE_COAL) {
-				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
-				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
-				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Items.coal_powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_coal.powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_coal.powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_coal.powder)));
 			}
 		}
 		*/
@@ -182,7 +215,7 @@ public abstract class VillagerTrades {
 				VillagerTradeHelper.insertTrades(profession, career, level, new MultiTradeGenerator(TRADES_PER_LEVEL, trades));
 			} catch (NoSuchFieldException | IllegalAccessException ex) {
 				BaseMetals.logger.error("Java Reflection Exception", ex);
-//				FMLLog.log(Level.ERROR, ex, "Java Reflection Exception");
+				// FMLLog.log(Level.ERROR, ex, "Java Reflection Exception");
 			}
 		}
 	}
@@ -210,7 +243,8 @@ public abstract class VillagerTrades {
 		final ITradeList[] trades = new ITradeList[items.length];
 		for (int i = 0; i < items.length; i++) {
 			final Item item = items[i];
-			trades[i] = new SimpleTrade(new ItemStack(net.minecraft.init.Items.EMERALD, emeraldPrice, 0), fluctuation(emeraldPrice), null, 0, new ItemStack(item, stackSize, 0), 0);
+			trades[i] = new SimpleTrade(new ItemStack(net.minecraft.init.Items.EMERALD, emeraldPrice, 0),
+					fluctuation(emeraldPrice), null, 0, new ItemStack(item, stackSize, 0), 0);
 		}
 		return trades;
 	}
@@ -219,7 +253,8 @@ public abstract class VillagerTrades {
 		final ITradeList[] trades = new ITradeList[items.length];
 		for (int i = 0; i < items.length; i++) {
 			final Item item = items[i];
-			trades[i] = new SimpleTrade(new ItemStack(item, stackSize, 0), fluctuation(stackSize), null, 0, new ItemStack(net.minecraft.init.Items.EMERALD, emeraldValue, 0), 0);
+			trades[i] = new SimpleTrade(new ItemStack(item, stackSize, 0), fluctuation(stackSize), null, 0,
+					new ItemStack(net.minecraft.init.Items.EMERALD, emeraldValue, 0), 0);
 		}
 		return trades;
 	}
@@ -244,16 +279,21 @@ public abstract class VillagerTrades {
 	}
 
 	/**
-	 * This ITradeList object holds a list of ITradeLists and picks a few at random to place in a merchant's trade menu.
+	 * This ITradeList object holds a list of ITradeLists and picks a few at
+	 * random to place in a merchant's trade menu.
 	 */
 	public static class MultiTradeGenerator implements ITradeList {
 		private final int numberOfTrades;
 		private final ITradeList[] trades;
 
 		/**
-		 * Creates an ITradeList instanec that randomly adds multiple trades at a time
-		 * @param tradeCount Number of trades to add to the merchant's trade menu
-		 * @param tradePalette The trades to randomly choose from
+		 * Creates an ITradeList instanec that randomly adds multiple trades at
+		 * a time
+		 * 
+		 * @param tradeCount
+		 *            Number of trades to add to the merchant's trade menu
+		 * @param tradePalette
+		 *            The trades to randomly choose from
 		 */
 		public MultiTradeGenerator(int tradeCount, List<ITradeList> tradePalette) {
 			numberOfTrades = Math.min(tradeCount, tradePalette.size());
@@ -262,8 +302,11 @@ public abstract class VillagerTrades {
 
 		/**
 		 * Invoked when the merchant generates its trade menu
-		 * @param recipeList existing trade menu
-		 * @param random a psuedorandom number generator instance
+		 * 
+		 * @param recipeList
+		 *            existing trade menu
+		 * @param random
+		 *            a psuedorandom number generator instance
 		 */
 		@Override
 		public void modifyMerchantRecipeList(MerchantRecipeList recipeList, Random random) {
@@ -274,11 +317,13 @@ public abstract class VillagerTrades {
 
 		/**
 		 * For debugging purposes only
+		 * 
 		 * @return String representation
 		 */
 		@Override
 		public String toString() {
-			return MultiTradeGenerator.class.getSimpleName() + ": " + numberOfTrades + " trades chosen from " + Arrays.toString(trades);
+			return MultiTradeGenerator.class.getSimpleName() + ": " + numberOfTrades + " trades chosen from "
+					+ Arrays.toString(trades);
 		}
 	}
 
@@ -298,16 +343,29 @@ public abstract class VillagerTrades {
 
 		/**
 		 * Full constructor for making a trade recipe
-		 * @param in1 Item for the left purchase price trade slot
-		 * @param variation1 range of variation in quantity of <code>in1</code>
-		 * @param in2 Item for the right purchase price trade slot. Can be <code>null</code> (and usually is)
-		 * @param variation2 range of variation in quantity of <code>in2</code>
-		 * @param out The item to be purchased (trade recipe output slot)
-		 * @param variationOut range of variation in quantity of <code>out</code>
-		 * @param numberTrades Max number of trades before this recipe is invalidated (-1 for infinite trading)
-		 * @param tradeNumberVariation  range of variation in value of <code>numberTrades</code> (-1 to disable)
+		 * 
+		 * @param in1
+		 *            Item for the left purchase price trade slot
+		 * @param variation1
+		 *            range of variation in quantity of <code>in1</code>
+		 * @param in2
+		 *            Item for the right purchase price trade slot. Can be
+		 *            <code>null</code> (and usually is)
+		 * @param variation2
+		 *            range of variation in quantity of <code>in2</code>
+		 * @param out
+		 *            The item to be purchased (trade recipe output slot)
+		 * @param variationOut
+		 *            range of variation in quantity of <code>out</code>
+		 * @param numberTrades
+		 *            Max number of trades before this recipe is invalidated (-1
+		 *            for infinite trading)
+		 * @param tradeNumberVariation
+		 *            range of variation in value of <code>numberTrades</code>
+		 *            (-1 to disable)
 		 */
-		public SimpleTrade(ItemStack in1, int variation1, ItemStack in2, int variation2, ItemStack out, int variationOut, int numberTrades, int tradeNumberVariation) {
+		public SimpleTrade(ItemStack in1, int variation1, ItemStack in2, int variation2, ItemStack out,
+				int variationOut, int numberTrades, int tradeNumberVariation) {
 			input1 = in1;
 			maxInputMarkup1 = variation1;
 			input2 = in2;
@@ -319,24 +377,39 @@ public abstract class VillagerTrades {
 		}
 
 		/**
-		 * Constructor for making a simple two-for-one trade recipe with price variation
-		 * @param in1 Item for the left purchase price trade slot
-		 * @param v1 range of variation in quantity of <code>in1</code>
-		 * @param in2 Item for the right purchase price trade slot. Can be <code>null</code> (and usually is)
-		 * @param v2 range of variation in quantity of <code>in2</code>
-		 * @param out The item to be purchased (trade recipe output slot)
-		 * @param vout range of variation in quantity of <code>out</code>
+		 * Constructor for making a simple two-for-one trade recipe with price
+		 * variation
+		 * 
+		 * @param in1
+		 *            Item for the left purchase price trade slot
+		 * @param v1
+		 *            range of variation in quantity of <code>in1</code>
+		 * @param in2
+		 *            Item for the right purchase price trade slot. Can be
+		 *            <code>null</code> (and usually is)
+		 * @param v2
+		 *            range of variation in quantity of <code>in2</code>
+		 * @param out
+		 *            The item to be purchased (trade recipe output slot)
+		 * @param vout
+		 *            range of variation in quantity of <code>out</code>
 		 */
 		public SimpleTrade(ItemStack in1, int v1, ItemStack in2, int v2, ItemStack out, int vout) {
 			this(in1, v1, in2, v2, out, vout, -1, -1);
 		}
 
 		/**
-		 * Constructor for making a simple one-for-one trade with price variation
-		 * @param in1 Item for the left purchase price trade slot
-		 * @param v1 range of variation in quantity of <code>in1</code>
-		 * @param out The item to be purchased (trade recipe output slot)
-		 * @param vout range of variation in quantity of <code>out</code>
+		 * Constructor for making a simple one-for-one trade with price
+		 * variation
+		 * 
+		 * @param in1
+		 *            Item for the left purchase price trade slot
+		 * @param v1
+		 *            range of variation in quantity of <code>in1</code>
+		 * @param out
+		 *            The item to be purchased (trade recipe output slot)
+		 * @param vout
+		 *            range of variation in quantity of <code>out</code>
 		 */
 		public SimpleTrade(ItemStack in1, int v1, ItemStack out, int vout) {
 			this(in1, v1, null, 0, out, vout, -1, -1);
@@ -344,8 +417,11 @@ public abstract class VillagerTrades {
 
 		/**
 		 * Constructor for making a simple one-for-one trade
-		 * @param in1 Item for the left purchase price trade slot
-		 * @param out The item to be purchased (trade recipe output slot)
+		 * 
+		 * @param in1
+		 *            Item for the left purchase price trade slot
+		 * @param out
+		 *            The item to be purchased (trade recipe output slot)
 		 */
 		public SimpleTrade(ItemStack in1, ItemStack out) {
 			this(in1, 0, null, 0, out, 0, -1, -1);
@@ -358,8 +434,11 @@ public abstract class VillagerTrades {
 
 		/**
 		 * Invoked when the merchant generates its trade menu
-		 * @param recipeList existing trade menu
-		 * @param random a psuedorandom number generator instance
+		 * 
+		 * @param recipeList
+		 *            existing trade menu
+		 * @param random
+		 *            a psuedorandom number generator instance
 		 */
 		@Override
 		public void modifyMerchantRecipeList(MerchantRecipeList recipeList, Random random) {
@@ -367,8 +446,7 @@ public abstract class VillagerTrades {
 			if (maxTrades > 0) {
 				if (maxTradeVariation > 0) {
 					numTrades = Math.max(1, maxTrades + random.nextInt(maxTradeVariation) - maxTradeVariation / 2);
-				}
-				else {
+				} else {
 					numTrades = maxTrades;
 				}
 			}
@@ -390,8 +468,7 @@ public abstract class VillagerTrades {
 
 			if (numTrades > 0) {
 				recipeList.add(new MerchantRecipe(in1, in2, out, 0, numTrades));
-			}
-			else {
+			} else {
 				recipeList.add(new MerchantRecipe(in1, in2, out));
 			}
 		}

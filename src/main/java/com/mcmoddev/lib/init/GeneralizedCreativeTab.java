@@ -12,6 +12,12 @@ import java.util.List;
 import com.mcmoddev.basemetals.init.Items;
 import com.mcmoddev.lib.material.MetalMaterial;
 
+/**
+ * This class is a MetalMaterial based Wrapper for making a CreativeTab.
+ *
+ * @author Jasmine Iwanek
+ *
+ */
 public class GeneralizedCreativeTab extends CreativeTabs {
 
 	private MetalMaterial material;
@@ -21,7 +27,7 @@ public class GeneralizedCreativeTab extends CreativeTabs {
 
 	public GeneralizedCreativeTab(String unlocalizedName, boolean searchable, MetalMaterial material) {
 		super(unlocalizedName);
-//		this.itemSupplier = itemSupplier;
+		// this.itemSupplier = itemSupplier;
 		this.material = material;
 		this.searchable = searchable;
 		this.setSortingAlgorithm(DEFAULT);

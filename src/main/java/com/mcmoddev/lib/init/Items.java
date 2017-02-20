@@ -23,7 +23,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * This class initializes all items in Base Metals and provides some utility
  * methods for looking up items.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public abstract class Items {
@@ -54,15 +54,14 @@ public abstract class Items {
 
 		try {
 			expandCombatArrays(net.minecraft.item.ItemAxe.class);
-		}
-		catch (IllegalAccessException | NoSuchFieldException ex) {
+		} catch (IllegalAccessException | NoSuchFieldException ex) {
 			BaseMetals.logger.error("Error modifying item classes", ex);
-//			FMLLog.severe("Error modifying item classes: %s", ex);
+			// FMLLog.severe("Error modifying item classes: %s", ex);
 		}
 
 		setSortingList();
 		addToMetList();
-		
+
 		initDone = true;
 	}
 
@@ -72,7 +71,7 @@ public abstract class Items {
 		classSortingValues.put(BlockMetalBlock.class, ++ss * 10000);
 		classSortingValues.put(BlockMetalPlate.class, ++ss * 10000);
 		classSortingValues.put(BlockMetalBars.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalDoor.class, ++ss * 10000); // Is this needed? (ItemMetalDoor)
+		classSortingValues.put(BlockMetalDoor.class, ++ss * 10000); // TODO: Is this needed? (ItemMetalDoor)
 		classSortingValues.put(BlockMetalTrapDoor.class, ++ss * 10000);
 		classSortingValues.put(InteractiveFluidBlock.class, ++ss * 10000);
 		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
@@ -103,12 +102,12 @@ public abstract class Items {
 		classSortingValues.put(GenericMetalItem.class, ++ss * 10000);
 
 		classSortingValues.put(BlockButtonMetal.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalSlab.class, ++ss * 10000); // Is this needed? (ItemMetalSlab)
-		classSortingValues.put(BlockDoubleMetalSlab.class, ++ss * 10000); // Probably not needed (ItemMetalSlab)
-		classSortingValues.put(BlockHalfMetalSlab.class, ++ss * 10000); // Probably not needed (ItemMetalSlab)
+		classSortingValues.put(BlockMetalSlab.class, ++ss * 10000); // TODO: Is this needed? (ItemMetalSlab)
+		classSortingValues.put(BlockDoubleMetalSlab.class, ++ss * 10000); // TODO: Probably not needed (ItemMetalSlab)
+		classSortingValues.put(BlockHalfMetalSlab.class, ++ss * 10000); // TODO: Probably not needed (ItemMetalSlab)
 		classSortingValues.put(BlockMetalLever.class, ++ss * 10000);
 		classSortingValues.put(BlockMetalPressurePlate.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalStairs.class, ++ss * 10000); // Is this needed?
+		classSortingValues.put(BlockMetalStairs.class, ++ss * 10000); // TODO: Is this needed?
 		classSortingValues.put(BlockMetalWall.class, ++ss * 10000);
 		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
 		classSortingValues.put(ItemMetalSlab.class, classSortingValues.get(BlockMetalSlab.class));
@@ -766,6 +765,7 @@ public abstract class Items {
 		return material.powder_dirty;
 	}
 
+	// TODO: Possibly make this a Block, double of the normal plate.
 	/**
 	 * 
 	 * @param material
@@ -784,7 +784,7 @@ public abstract class Items {
 		return material.casing;
 	}
 
-	// TODO: Possibly make this a block, 1/2 of the normal plate.
+	// TODO: Possibly make this a Block, double of the normal plate.
 	/**
 	 * 
 	 * @param material
@@ -883,44 +883,46 @@ public abstract class Items {
 	 * Uses reflection to expand the size of the combat damage and attack speed
 	 * arrays to prevent initialization index-out-of-bounds errors
 	 *
-	 * @param itemClass The class to modify
+	 * @param itemClass
+	 *            The class to modify
 	 */
 	private static void expandCombatArrays(Class<?> itemClass) throws IllegalAccessException, NoSuchFieldException {
 		// WARNING: this method contains black magic
 		final int expandedSize = 256;
 		final Field[] fields = itemClass.getDeclaredFields();
-		for (final Field f : fields) {
-			if (Modifier.isStatic(f.getModifiers()) && f.getType().isArray() && f.getType().getComponentType().equals(float.class)) {
-				BaseMetals.logger.info("%s: Expanding array variable %s.%s to size %d", Thread.currentThread().getStackTrace()[0].toString(), itemClass.getSimpleName(), f.getName(), expandedSize);
-				           FMLLog.info("%s: Expanding array variable %s.%s to size %s", Thread.currentThread().getStackTrace()[0], itemClass.getSimpleName(), f.getName(), expandedSize);
-				f.setAccessible(true); // bypass 'private' key word
+		for (final Field field : fields) {
+			if (Modifier.isStatic(field.getModifiers()) && field.getType().isArray() && field.getType().getComponentType().equals(float.class)) {
+				BaseMetals.logger.info("%s: Expanding array variable %s.%s to size %d", Thread.currentThread().getStackTrace()[0].toString(), itemClass.getSimpleName(), field.getName(), expandedSize);
+				//           FMLLog.info("%s: Expanding array variable %s.%s to size %s", Thread.currentThread().getStackTrace()[0],            itemClass.getSimpleName(), field.getName(), expandedSize);
+				field.setAccessible(true); // bypass 'private' key word
 				final Field modifiersField = Field.class.getDeclaredField("modifiers");
 				modifiersField.setAccessible(true);
-				modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL); // bypass 'final' key word
+				modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL); // bypass 'final' keyword
 				final float[] newArray = new float[expandedSize];
 				Arrays.fill(newArray, 0F);
-				System.arraycopy(f.get(null), 0, newArray, 0, Array.getLength(f.get(null)));
-				f.set(null, newArray);
+				System.arraycopy(field.get(null), 0, newArray, 0, Array.getLength(field.get(null)));
+				field.set(null, newArray);
 			}
 		}
 	}
 
 	/**
 	 *
-	 * @param a The itemstack
+	 * @param itemStack
+	 *            The ItemStack
 	 * @return The output
 	 */
-	public static int getSortingValue(ItemStack a) {
+	public static int getSortingValue(ItemStack itemStack) {
 		int classVal = 990000;
 		int materialVal = 9900;
-		if ((a.getItem() instanceof ItemBlock) && (((ItemBlock) a.getItem()).getBlock() instanceof IMetalObject)) {
-			classVal = classSortingValues.computeIfAbsent(((ItemBlock) a.getItem()).getBlock().getClass(), (Class<?> c) -> 990000);
-			materialVal = materialSortingValues.computeIfAbsent(((IMetalObject) ((ItemBlock) a.getItem()).getBlock()).getMaterial(), (MetalMaterial m) -> 9900);
-		} else if (a.getItem() instanceof IMetalObject) {
-			classVal = classSortingValues.computeIfAbsent(a.getItem().getClass(), (Class<?> c) -> 990000);
-			materialVal = materialSortingValues.computeIfAbsent(((IMetalObject) a.getItem()).getMaterial(), (MetalMaterial m) -> 9900);
+		if ((itemStack.getItem() instanceof ItemBlock) && (((ItemBlock) itemStack.getItem()).getBlock() instanceof IMetalObject)) {
+			classVal = classSortingValues.computeIfAbsent(((ItemBlock) itemStack.getItem()).getBlock().getClass(), (Class<?> clazz) -> 990000);
+			materialVal = materialSortingValues.computeIfAbsent(((IMetalObject) ((ItemBlock) itemStack.getItem()).getBlock()).getMaterial(), (MetalMaterial material) -> 9900);
+		} else if (itemStack.getItem() instanceof IMetalObject) {
+			classVal = classSortingValues.computeIfAbsent(itemStack.getItem().getClass(), (Class<?> clazz) -> 990000);
+			materialVal = materialSortingValues.computeIfAbsent(((IMetalObject) itemStack.getItem()).getMaterial(), (MetalMaterial material) -> 9900);
 		}
-		return classVal + materialVal + (a.getMetadata() % 100);
+		return classVal + materialVal + (itemStack.getMetadata() % 100);
 	}
 
 	/**
@@ -928,7 +930,8 @@ public abstract class Items {
 	 * GameRegistry, not its unlocalized name (the unlocalized name is the
 	 * registered name plus the prefix "basemetals.")
 	 *
-	 * @param name The name of the item in question
+	 * @param name
+	 *            The name of the item in question
 	 * @return The item matching that name, or null if there isn't one
 	 */
 	public static Item getItemByName(String name) {
@@ -939,12 +942,13 @@ public abstract class Items {
 	 * This is the reverse of the getItemByName(...) method, returning the
 	 * registered name of an item instance (Base Metals items only).
 	 *
-	 * @param i The item in question
+	 * @param item
+	 *            The item in question
 	 * @return The name of the item, or null if the item is not a Base Metals
-	 * item.
+	 *         item.
 	 */
-	public static String getNameOfItem(Item i) {
-		return itemRegistry.inverse().get(i);
+	public static String getNameOfItem(Item item) {
+		return itemRegistry.inverse().get(item);
 	}
 
 	public static Map<String, Item> getItemRegistry() {
@@ -954,7 +958,7 @@ public abstract class Items {
 	/**
 	 * Gets a map of all items added, sorted by material
 	 *
-	 * @return An unmodifiable map of added items catagorized by metal material
+	 * @return An unmodifiable map of added items categorized by metal material
 	 */
 	public static Map<MetalMaterial, List<Item>> getItemsByMaterial() {
 		return Collections.unmodifiableMap(itemsByMaterial);
