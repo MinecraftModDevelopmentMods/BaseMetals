@@ -97,6 +97,6 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 		if( this.material.getType() == MetalMaterial.MaterialType.MINERAL ) {
 			return this.material.powder;
 		}
-		return this.material.ingot;
+		return Item.getItemFromBlock(this);
 	}
 }
