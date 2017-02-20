@@ -11,25 +11,25 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import java.util.List;
 
 public enum IntegrationManager {
-    INSTANCE;
+	INSTANCE;
 
-    private List<IIntegration> integrations = Lists.newArrayList();
+	private List<IIntegration> integrations = Lists.newArrayList();
 
-    public void preInit(FMLPreInitializationEvent event) {
-    	for( final ASMData asmDataItem : event.getAsmData().getAll(BaseMetalsPlugin.class.getCanonicalName()) ) {
-    		String modId = asmDataItem.getAnnotationInfo().get("value").toString();
-    		String className = asmDataItem.getClassName();
-    		if (Loader.isModLoaded(modId)) {
-    			IIntegration integration;
+	public void preInit(FMLPreInitializationEvent event) {
+		for (final ASMData asmDataItem : event.getAsmData().getAll(BaseMetalsPlugin.class.getCanonicalName())) {
+			String modId = asmDataItem.getAnnotationInfo().get("value").toString();
+			String className = asmDataItem.getClassName();
+			if (Loader.isModLoaded(modId)) {
+				IIntegration integration;
 				try {
 					integration = Class.forName(className).asSubclass(IIntegration.class).newInstance();
-					BaseMetals.logger.info("BASEMETALS Loaded: "+modId);
+					BaseMetals.logger.info("BASEMETALS Loaded: " + modId);
 					integrations.add(integration);
 					integration.init();
 				} catch (final Exception e) {
-					// do nothing 
+					// do nothing
 				}
-    		}
-    	}
-    }
+			}
+		}
+	}
 }

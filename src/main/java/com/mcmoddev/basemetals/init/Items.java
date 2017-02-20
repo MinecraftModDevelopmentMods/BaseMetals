@@ -149,7 +149,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.door = net.minecraft.init.Items.IRON_DOOR;
 			material.ingot = net.minecraft.init.Items.IRON_INGOT;
 			material.shears = net.minecraft.init.Items.SHEARS;
-//			material.nugget = net.minecraft.init.Items.IRON_NUGGET; // Not till after 1.11
+			// material.nugget = net.minecraft.init.Items.IRON_NUGGET; // Not till after 1.11
 
 			createItemsFull(material);
 		}
@@ -254,7 +254,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		addToMetList(); // TODO
-		
+
 		initDone = true;
 	}
 }

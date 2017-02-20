@@ -18,9 +18,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 /**
  * This is the entry point for this mod. If you are writing your own mod that
  * uses this mod, the classes of interest to you are the init classes (classes
- * in package com.mcmoddev.basemetals.init) and the CrusherRecipeRegistry class (in
- * package com.mcmoddev.basemetals.registry). Note that you should add 'dependencies =
- * "required-after:basemetals"' to your &#64;Mod annotation (e.g. <br>
+ * in package com.mcmoddev.basemetals.init) and the CrusherRecipeRegistry class
+ * (in package com.mcmoddev.basemetals.registry). Note that you should add
+ * 'dependencies = "required-after:basemetals"' to your &#64;Mod annotation
+ * (e.g. <br>
  * &#64;Mod(modid = "moremetals", name="More Metals!", version = "1.2.3",
  * dependencies = "required-after:basemetals") <br>
  * )
@@ -28,7 +29,13 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * @author Jasmine Iwanek
  *
  */
-@Mod(modid = BaseMetals.MODID, name = BaseMetals.NAME, version = BaseMetals.VERSION, dependencies = "required-after:Forge@[12.18.3.2185,);after:taiga;before:buildingbricks", acceptedMinecraftVersions = "[1.10.2,)", updateJSON = BaseMetals.UPDATEJSON)
+@Mod(
+		modid = BaseMetals.MODID,
+		name = BaseMetals.NAME,
+		version = BaseMetals.VERSION,
+		dependencies = "required-after:Forge@[12.18.3.2185,);after:taiga;before:buildingbricks",
+		acceptedMinecraftVersions = "[1.10.2,)",
+		updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {
 
 	@Instance
@@ -61,14 +68,9 @@ public class BaseMetals {
 		FluidRegistry.enableUniversalBucket();
 	}
 
-/*
-	private BaseMetals() {
-		throw new IllegalAccessError("Not a instantiable class");
-	}
-*/
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {
-//		logger = event.getModLog();
+		// logger = event.getModLog();
 		logger = LogManager.getFormatterLogger(BaseMetals.MODID);
 
 		proxy.preInit(event);

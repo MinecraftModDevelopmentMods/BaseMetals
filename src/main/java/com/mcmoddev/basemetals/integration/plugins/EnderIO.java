@@ -47,6 +47,4 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIO implem
 
 		initDone = true;
 	}
-
-
 }

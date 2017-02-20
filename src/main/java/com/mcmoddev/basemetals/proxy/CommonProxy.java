@@ -46,15 +46,15 @@ public class CommonProxy {
 			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
 					if ((mapping.resourceLocation.getResourcePath().equals("liquid_mercury")) && (mapping.type.equals(GameRegistry.Type.BLOCK))) {
-						 if (Options.enableMercury) {
-							 mapping.remap(Materials.mercury.fluidBlock);
-						 }
+						if (Options.enableMercury) {
+							mapping.remap(Materials.mercury.fluidBlock);
+						}
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
 					if (mapping.resourceLocation.getResourcePath().equals("carbon_powder")) {
-						 if (Options.enableCoal) {
-							 mapping.remap(Materials.vanilla_coal.powder);
-						 }
+						if (Options.enableCoal) {
+							mapping.remap(Materials.vanilla_coal.powder);
+						}
 					}
 				}
 			}
@@ -63,8 +63,8 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		Recipes.init();
-		//DungeonLoot.init();
-		//Entities.init();
+		// DungeonLoot.init();
+		// Entities.init();
 
 		Achievements.init();
 
@@ -72,7 +72,7 @@ public class CommonProxy {
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		//WorldGen.init();
+		// WorldGen.init();
 		Config.postInit();
 	}
 }

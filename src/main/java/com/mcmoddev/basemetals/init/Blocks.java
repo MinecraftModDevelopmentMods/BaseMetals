@@ -58,7 +58,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableCharcoal) {
-//			createBlock(Materials.vanilla_charcoal);
+			createBlock(Materials.vanilla_charcoal);
 		}
 
 		if (Options.enableCoal) {
@@ -79,7 +79,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableCupronickel) {
 			createBlocksFull(Materials.cupronickel);
 		}
-		
+
 		if (Options.enableDiamond) {
 			final MetalMaterial material = Materials.vanilla_diamond;
 
@@ -110,12 +110,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createTrapDoor(material);
 
 			createBlocksAdditional(material);
-//			createButton(material);
-//			createSlab(material);
-//			createDoubleSlab(material);
-//			createLever(material);
-//			createStairs(material);
-//			createWall(material);
 		}
 
 		if (Options.enableInvar) {
@@ -135,12 +129,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createPlate(material);
 
 			createBlocksAdditional(material);
-//			createButton(material);
-//			createSlab(material);
-//			createDoubleSlab(material);
-//			createLever(material);
-//			createStairs(material);
-//			createWall(material);
 		}
 
 		if (Options.enableLead) {
@@ -149,8 +137,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.enableMercury) {
 			createOre(Materials.mercury);
-			//TODO: Use this info in the Material
-			//Materials.mercury.ore.setHardness(3.0f).setResistance(5.0f);
+			// TODO: Use this info in the Material
+			// Materials.mercury.ore.setHardness(3.0f).setResistance(5.0f);
 		}
 
 		if (Options.enableMithril) {

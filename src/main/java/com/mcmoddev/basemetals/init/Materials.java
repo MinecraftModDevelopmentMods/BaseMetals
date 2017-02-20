@@ -5,11 +5,11 @@ import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
 
 /**
- * This class initializes all of the materials in Base Metals. It also
- * contains utility methods for looking up materials by name and finding the
- * tool and armor material equivalents for a given material.
+ * This class initializes all of the materials in Base Metals. It also contains
+ * utility methods for looking up materials by name and finding the tool and
+ * armor material equivalents for a given material.
  *
- * @author DrCyano
+ * @author Jasmine Iwanek
  *
  */
 public abstract class Materials extends com.mcmoddev.lib.init.Materials {
@@ -88,7 +88,7 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 	public static MetalMaterial vanilla_redstone;
 	/** Ender */
 	public static MetalMaterial vanilla_ender;
-	
+
 	private static boolean initDone = false;
 
 	protected Materials() {
@@ -116,7 +116,7 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 
 		if (Options.enableCoal) {
 			vanilla_coal = createMaterial("coal", MaterialType.MINERAL, 4, 4, 2, 0xFF000000);
-		}		
+		}
 
 		if (Options.enableCharcoal) {
 			vanilla_charcoal = createOrelessMaterial("charcoal", MaterialType.MINERAL, 4, 4, 2, 0xFF000000);
@@ -124,7 +124,7 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 
 		if (Options.enableEmerald) {
 			vanilla_emerald = createMaterial("emerald", MaterialType.GEM, 10, 15, 4, 0xFF000000);
-		}		
+		}
 
 		if (Options.enableEnder) {
 			vanilla_ender = createMaterial("ender", MaterialType.GEM, 2, 2, 6, 0xFF000000);
@@ -136,7 +136,7 @@ public abstract class Materials extends com.mcmoddev.lib.init.Materials {
 
 		if (Options.enableObsidian) {
 			vanilla_obsidian = createMaterial("obsidian", MaterialType.ROCK, 10, 15, 4, 0xFF000000);
-		}		
+		}
 
 		if (Options.enableLapis) {
 			vanilla_lapis = createMaterial("lapis", MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);

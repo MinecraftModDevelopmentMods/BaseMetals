@@ -29,27 +29,27 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGA implements
 			return;
 		}
 
-		TraitRegistry.initTAIGATraits();		
+		TraitRegistry.initTAIGATraits();
 		TAIGAMaterials.init();
 		TAIGAItems.init(TAIGAMaterials.materials);
 
-//		TraitRegistry.dumpRegistry();
-		
+		// TraitRegistry.dumpRegistry();
+
 		initDone = true;
 	}
-	
+
 	private static class TAIGAMaterials extends com.mcmoddev.lib.init.Materials {
 		private static Field[] allBlocks = Blocks.class.getDeclaredFields();
-		
+
 		public static List<MetalMaterial> materials = new ArrayList<>();
-		
+
 		public static void init() {
 			try {
 				for (Field f : allBlocks) {
 					String t = f.getName();
 
 					if (t.endsWith("Block") && t != "basaltBlock") {
-						String name = new String(t.substring(0,  t.length() - 5));
+						String name = new String(t.substring(0, t.length() - 5));
 
 						Block k = (Block) f.get(f.getClass());
 						float harvestlevel = k.getHarvestLevel(null);
@@ -58,14 +58,14 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGA implements
 						MetalMaterial repThis = createOrelessMaterial(name, MaterialType.METAL, harvestlevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);
 
 						repThis.block = k;
-						repThis.ingot = new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Ingot").get(Items.class), 1 ).getItem();
+						repThis.ingot = new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Ingot").get(Items.class), 1).getItem();
 						repThis.powder = new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Dust").get(Items.class), 1).getItem();
 						repThis.nugget = new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Nugget").get(Items.class), 1).getItem();
 
 						materials.add(repThis);
 					}
 				}
-			} catch( final Exception ex ) {
+			} catch (final Exception ex) {
 				throw new Error(ex.getMessage());
 				// do nought
 			}

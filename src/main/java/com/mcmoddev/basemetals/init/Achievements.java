@@ -63,7 +63,7 @@ public class Achievements extends com.mcmoddev.lib.init.Achievements {
 			AchievementPage page = new AchievementPage(Loader.instance().activeModContainer().getModId());
 			AchievementPage.registerAchievementPage(page);
 
-			thisIsNew = makeAchievement("this_is_new", AchievementList.BUILD_FURNACE, 0, 0, Materials.copper.ingot, page);  // TODO: Make this check for all ingots
+			thisIsNew = makeAchievement("this_is_new", AchievementList.BUILD_FURNACE, 0, 0, Materials.copper.ingot, page); // TODO: Make this check for all ingots
 			blocktastic = makeAchievement("blocktastic", thisIsNew, 2, 0, Materials.copper.block, page); // TODO: Make this checks for all blocks
 			geologist = makeAchievement("geologist", thisIsNew, 4, 2, Materials.vanilla_iron.crackhammer, page); // TODO: Make this check for all crackhammers
 			metallurgy = makeAchievement("metallurgy", geologist, 6, 2, Materials.brass.blend, page); // TODO: Make this check for all blends

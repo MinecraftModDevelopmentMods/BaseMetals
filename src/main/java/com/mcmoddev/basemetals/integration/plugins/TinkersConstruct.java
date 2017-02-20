@@ -27,11 +27,11 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
 			return;
 		}
-		
+
 		TraitRegistry.initTiCTraits();
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
-		
+
 		if (Options.enableAdamantine) {
 			/*
 			 * Newly Suggested:
@@ -61,10 +61,9 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			aquaTC.addTrait("aquadynamic", TraitLocations.HEAD);
 
 			registerMaterial(aquaTC);
-			// When FMe is out we can probably do the alloy.
 			registerAlloy(Materials.aquarium.getName(), 3,
 					new String[] { "copper", "zinc", "prismarine" },
-					new int[] { 2, 1, 3}); // Not possible currently
+					new int[] { 2, 1, 3 });
 		}
 
 		if (Options.enableBismuth) {
@@ -123,14 +122,14 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		// we could hook that...
 		if (Options.enableLead) {
 			// Lead itself is added by TiC
-			if( Options.enablePlate ) {
+			if (Options.enablePlate) {
 				registerModifierItem("plated", Item.getItemFromBlock(Materials.lead.plate));
 			}
-		} 
+		}
 
 		if (Options.enableMercury) {
 			registerFluid(Materials.mercury, 144);
-			if( Options.enableBasics ) {
+			if (Options.enableBasics) {
 				registerModifierItem("toxic", Materials.mercury.powder);
 			}
 		}
@@ -141,10 +140,10 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			mithrilTC.addTrait("holy");
 
 			registerMaterial(mithrilTC);
-			
-				registerAlloy(Materials.mithril.getName(), 3,
-						new String[] { "silver", "coldiron", "mercury" },
-						new int[] { 2, 1, 1});
+
+			registerAlloy(Materials.mithril.getName(), 3,
+					new String[] { "silver", "coldiron", "mercury" },
+					new int[] { 2, 1, 1 });
 		}
 
 		if (Options.enableNickel) {
@@ -164,7 +163,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
 			registerAlloy(Materials.pewter.getName(), 144,
 					new String[] { "tin", "copper", "lead" },
-					new int[] { 137, 2, 5 } );
+					new int[] { 137, 2, 5 });
 		}
 
 		if (Options.enablePlatinum) {
@@ -180,9 +179,9 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 		// Steel has 'Sharp' and 'Stiff'
 		if (Options.enableSteel) {
-			registerAlloy(Materials.steel.fluid.getName(), 8, 
+			registerAlloy(Materials.steel.fluid.getName(), 8,
 					new String[] { "iron", "coal" },
-					new int[]{ 8, 1 });
+					new int[] { 8, 1 });
 		}
 
 		if (Options.enableStarSteel) {

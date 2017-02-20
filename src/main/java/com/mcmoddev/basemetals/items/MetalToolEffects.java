@@ -26,10 +26,14 @@ public abstract class MetalToolEffects {
 
 	/**
 	 *
-	 * @param material The material
-	 * @param item The item
-	 * @param target The target
-	 * @param attacker The attacker
+	 * @param material
+	 *            The material
+	 * @param item
+	 *            The item
+	 * @param target
+	 *            The target
+	 * @param attacker
+	 *            The attacker
 	 */
 	public static void extraEffectsOnAttack(final MetalMaterial material, final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		if (Options.enableColdIron) {
@@ -69,19 +73,25 @@ public abstract class MetalToolEffects {
 
 	/**
 	 *
-	 * @param material The material
-	 * @param item The item
-	 * @param world The world
-	 * @param crafter The crafter
+	 * @param material
+	 *            The material
+	 * @param item
+	 *            The item
+	 * @param world
+	 *            The world
+	 * @param crafter
+	 *            The crafter
 	 */
 	public static void extraEffectsOnCrafting(final MetalMaterial material, final ItemStack item, final World world, final EntityPlayer crafter) {
-		// do nothing for now. This would be where achievements or automatic enchantments could appear
+		// TODO: do nothing for now. This would be where achievements or automatic enchantments could appear
 	}
 
 	/**
 	 *
-	 * @param material The material
-	 * @param tooltipList The tooltip list
+	 * @param material
+	 *            The material
+	 * @param tooltipList
+	 *            The tooltip list
 	 */
 	public static void addToolSpecialPropertiesToolTip(MetalMaterial material, java.util.List<String> tooltipList) {
 		if (Options.enableAdamantine) {
@@ -113,8 +123,10 @@ public abstract class MetalToolEffects {
 
 	/**
 	 *
-	 * @param material The material
-	 * @param tooltipList The tooltip list
+	 * @param material
+	 *            The material
+	 * @param tooltipList
+	 *            The tooltip list
 	 */
 	public static void addArmorSpecialPropertiesToolTip(MetalMaterial material, java.util.List<String> tooltipList) {
 		if (Options.enableAdamantine) {

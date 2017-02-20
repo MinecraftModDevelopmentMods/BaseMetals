@@ -15,8 +15,8 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2 implements IIn
 			return;
 		}
 
-//		registerVanillaRecipes(Materials.adamantine);
-//		addMaceratorRecipes(Materials.adamantine);
+		// registerVanillaRecipes(Materials.adamantine);
+		// addMaceratorRecipes(Materials.adamantine);
 
 		initDone = true;
 	}

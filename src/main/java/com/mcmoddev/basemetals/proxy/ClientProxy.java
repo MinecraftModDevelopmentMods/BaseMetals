@@ -58,10 +58,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		if( Loader.isModLoaded("waila") ) {
+		if (Loader.isModLoaded("waila")) {
 			com.mcmoddev.basemetals.waila.Waila.init();
 		}
-/*
+		/*
 		for (MetalMaterial material : Materials.getAllMaterials()) {
 			// Items
 			registerRenderOuter(material.arrow);
@@ -97,9 +97,9 @@ public class ClientProxy extends CommonProxy {
 			registerRenderOuter(material.bars);
 			registerRenderOuter(material.block);
 			registerRenderOuter(material.button);
-//			registerRenderOuter(material.doorBlock);
-//			registerRenderOuter(material.double_slab);
-//			registerRenderOuter(material.half_slab);
+			// registerRenderOuter(material.doorBlock);
+			// registerRenderOuter(material.double_slab);
+			// registerRenderOuter(material.half_slab);
 			registerRenderOuter(material.lever);
 			registerRenderOuter(material.ore);
 			registerRenderOuter(material.plate);
@@ -118,20 +118,11 @@ public class ClientProxy extends CommonProxy {
 			registerRenderOuter(material.dense_plate);
 			registerRenderOuter(material.crushed);
 			registerRenderOuter(material.crushed_purified);
-
-			registerRenderOuter(Items.charcoal_powder);
-			registerRenderOuter(Items.charcoal_smallpowder);
-			registerRenderOuter(Items.coal_powder);
-			registerRenderOuter(Items.coal_smallpowder);
-
-			registerRenderOuter(Items.mercury_ingot);
-			registerRenderOuter(Items.mercury_powder);
-//			registerRenderOuter(Items.mercury_smallpowder);
-
-			registerRenderOuter(Blocks.mercury_ore);
+			
+			// Misc
 			registerRenderOuter(Blocks.human_detector);
 		}
-*/
+		*/
 
 		for (final String name : Items.getItemRegistry().keySet()) {
 			registerRenderOuter(Items.getItemByName(name));
