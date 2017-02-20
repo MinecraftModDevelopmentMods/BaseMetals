@@ -13,7 +13,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
-//@BaseMetalsPlugin(Mekanism.PLUGIN_MODID)
 public class Mekanism implements IIntegration {
 
 	public static final String PLUGIN_MODID = "Mekanism";
@@ -26,15 +25,15 @@ public class Mekanism implements IIntegration {
 	// AdvancedMachineInput
 	// Also input
 	private static final String GAS_TYPE = "gasType";
-	
+
 	// ChemicalPairInput
-	//private static final String LEFT_INPUT = "leftInput";
-	//private static final String RIGHT_INPUT = "rightInput";
+	// private static final String LEFT_INPUT = "leftInput";
+	// private static final String RIGHT_INPUT = "rightInput";
 
 	// InfusionInput (Metallurgic Infuser)
 	// Also input
-	//private static final String INFUSE_TYPE = "infuseType";
-	//private static final String INFUSE_AMOUNT = "infuseAmount";
+	// private static final String INFUSE_TYPE = "infuseType";
+	// private static final String INFUSE_AMOUNT = "infuseAmount";
 
 	// PressurizedInput (Pressurized Reaction Chamber)
 	private static final String ITEM_INPUT = "itemInput";
@@ -45,14 +44,14 @@ public class Mekanism implements IIntegration {
 	private static final String OUTPUT = "output";
 
 	// ChemicalPairOutput
-	//private static final String LEFT_OUTPUT = "leftOutput";
-	//private static final String RIGHT_OUTPUT = "rightOutput";
+	// private static final String LEFT_OUTPUT = "leftOutput";
+	// private static final String RIGHT_OUTPUT = "rightOutput";
 
 	// ChanceOutput
-	//private static final String PRIMARY_OUTPUT = "primaryOutput";
-	//private static final String SECONDARY_OUTPUT = "secondaryOutput";
-	//private static final String SECONDARY_CHANCE = "secondaryChance";
-	
+	// private static final String PRIMARY_OUTPUT = "primaryOutput";
+	// private static final String SECONDARY_OUTPUT = "secondaryOutput";
+	// private static final String SECONDARY_CHANCE = "secondaryChance";
+
 	// PressurizedOutput (Pressurized Reaction Chamber)
 	private static final String ITEM_OUTPUT = "itemOutput";
 	private static final String GAS_OUTPUT = "gasOutput";
@@ -62,11 +61,11 @@ public class Mekanism implements IIntegration {
 		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableMekanism) {
 			return;
 		}
-// *
+		/*
 		for (Gas gas : GasRegistry.getRegisteredGasses()) {
 			BaseMetals.logger.info("BASEMETALS: PEEKING FOR GASSES: %s", gas.getName());
 		}
-// * /
+		*/
 
 		initDone = true;
 	}
@@ -153,8 +152,8 @@ public class Mekanism implements IIntegration {
 	// 5x, Slurry to Crystal
 	protected static void addChemicalCrystallizerRecipe(String inputGas, int inputGasQty, ItemStack outputItem) {
 		NBTTagCompound recipeTag = new NBTTagCompound();
-				recipeTag.setTag(INPUT, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
-				recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
+		recipeTag.setTag(INPUT, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
+		recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ChemicalCrystallizerRecipe", recipeTag);
 	}
 
@@ -164,9 +163,9 @@ public class Mekanism implements IIntegration {
 		FluidStack inputFluid = FluidRegistry.getFluidStack("water", 1000);
 
 		NBTTagCompound recipeTag = new NBTTagCompound();
-				recipeTag.setTag(INPUT, inputFluid.writeToNBT(new NBTTagCompound()));
-				recipeTag.setTag(GAS_TYPE, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
-				recipeTag.setTag(GAS_OUTPUT, new GasStack(GasRegistry.getGas(outputGas), 1000).write(new NBTTagCompound()));
+		recipeTag.setTag(INPUT, inputFluid.writeToNBT(new NBTTagCompound()));
+		recipeTag.setTag(GAS_TYPE, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
+		recipeTag.setTag(GAS_OUTPUT, new GasStack(GasRegistry.getGas(outputGas), 1000).write(new NBTTagCompound()));
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ChemicalWasherChamberRecipe", recipeTag);
 	}
 
@@ -177,9 +176,9 @@ public class Mekanism implements IIntegration {
 		int inputGasQty = 1000;
 
 		NBTTagCompound recipeTag = new NBTTagCompound();
-				recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
-				recipeTag.setTag(GAS_TYPE, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
-				recipeTag.setTag(GAS_OUTPUT, new GasStack(GasRegistry.getGas(outputGas), 1000).write(new NBTTagCompound()));
+		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
+		recipeTag.setTag(GAS_TYPE, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
+		recipeTag.setTag(GAS_OUTPUT, new GasStack(GasRegistry.getGas(outputGas), 1000).write(new NBTTagCompound()));
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ChemicalDissolutionChamberRecipe", recipeTag);
 	}
 
@@ -187,8 +186,7 @@ public class Mekanism implements IIntegration {
 		NBTTagCompound recipeTag = new NBTTagCompound();
 		recipeTag.setTag(ITEM_INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(FLUID_INPUT, inputFluid.writeToNBT(new NBTTagCompound()));
-		recipeTag.setTag(GAS_INPUT, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
-
+		recipeTag.setTag(GAS_INPUT,	new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
 		recipeTag.setTag(ITEM_OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(GAS_OUTPUT, new GasStack(GasRegistry.getGas(outputGas), outputGasQty).write(new NBTTagCompound()));
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "PressurizedReactionChamberRecipe", recipeTag);

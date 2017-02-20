@@ -10,7 +10,8 @@ public class MMDTraits {
 	public static final AbstractTrait toxic = new TraitToxic();
 	public static final AbstractTrait radioactive = new TraitRadioactive();
 	public static final AbstractTrait reactive = new TraitReactive();
+
 	private MMDTraits() {
-		
+
 	}
 }

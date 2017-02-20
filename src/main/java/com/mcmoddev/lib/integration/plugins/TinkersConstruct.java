@@ -51,17 +51,18 @@ public class TinkersConstruct implements IIntegration {
 			return;
 		}
 
-
 		initDone = true;
 	}
-	
+
 	/**
-	 * Variant of fluid registration to allow for late registration of specific materials
-	 * that have a different amount of fluid per block than normal. Setup specifically for
-	 * NetherMetals and EndMetals.
+	 * Variant of fluid registration to allow for late registration of specific
+	 * materials that have a different amount of fluid per block than normal.
+	 * Setup specifically for NetherMetals and EndMetals.
 	 * 
-	 * @param base MetalMaterial that is the base material for this
-	 * @param amountPer the amount of fluid per this block
+	 * @param base
+	 *            MetalMaterial that is the base material for this
+	 * @param amountPer
+	 *            the amount of fluid per this block
 	 */
 	protected static void registerExtraFluids(MetalMaterial base, int amountPer) {
 		String materialName = base.getName();
@@ -70,19 +71,22 @@ public class TinkersConstruct implements IIntegration {
 		try {
 			if (base.oreNether != null)
 				TinkerRegistry.registerMelting(base.oreNether, output, amountPer);
-		} catch( final Exception e) {
+		} catch (final Exception e) {
 			FMLLog.severe("Tried registering Nether Ore %s, caught exception: %s", base.getName(), e.getMessage());
 		}
 		try {
 			if (base.oreEnd != null)
 				TinkerRegistry.registerMelting(base.oreEnd, output, amountPer);
-		} catch( final Exception e) {
+		} catch (final Exception e) {
 			FMLLog.severe("Tried registering End Ore %s, caught exception: %s", base.getName(), e.getMessage());
 		}
 	}
+
 	/**
-	 * @param base Material being melted
-	 * @param amountPer Amount of fluid per ingot
+	 * @param base
+	 *            Material being melted
+	 * @param amountPer
+	 *            Amount of fluid per ingot
 	 */
 	protected static void registerFluid(MetalMaterial base, int amountPer) {
 		String materialName = base.getName();
@@ -109,7 +113,6 @@ public class TinkersConstruct implements IIntegration {
 			TinkerRegistry.registerMelting(base.oreNether, output, amountPer * 4);
 		if (base.oreEnd != null)
 			TinkerRegistry.registerMelting(base.oreEnd, output, amountPer * 4);
-
 
 		if (base.half_slab != null)
 			TinkerRegistry.registerMelting(base.half_slab, output, (amountPer * 4) + (amountPer / 2));
@@ -153,10 +156,14 @@ public class TinkersConstruct implements IIntegration {
 
 	/**
 	 *
-	 * @param outputName The alloy to output
-	 * @param outputQty The amount to output
-	 * @param inputName Array of input
-	 * @param inputQty Array of quantities for input
+	 * @param outputName
+	 *            The alloy to output
+	 * @param outputQty
+	 *            The amount to output
+	 * @param inputName
+	 *            Array of input
+	 * @param inputQty
+	 *            Array of quantities for input
 	 */
 	protected static void registerAlloy(String outputName, int outputQty, String[] inputName, int[] inputQty) {
 		if (inputName.length != inputQty.length) {
@@ -165,9 +172,9 @@ public class TinkersConstruct implements IIntegration {
 
 		FluidStack output = FluidRegistry.getFluidStack(outputName, outputQty);
 		FluidStack[] input = new FluidStack[inputName.length];
-		for( int i = 0; i < inputName.length; i++ ) {
+		for (int i = 0; i < inputName.length; i++) {
 			FluidStack temp = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
-			if ( temp != null ) {
+			if (temp != null) {
 				input[i] = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
 			} else {
 				String mess = String.format("BaseMetals-TCon: material %s is not a registered fluid, alloy recipe %s ignored.", inputName[i], outputName);
@@ -184,28 +191,37 @@ public class TinkersConstruct implements IIntegration {
 	}
 
 	/**
-	 * Creates a Tinkers Construct {@link slimeknights.tconstruct.library.materials.Material}
-	 * @param material Material identifier
-	 * @param craftable If this be crafted
-	 * @param castable If this can be casted
-	 * @param trait to apply
+	 * Creates a Tinkers Construct
+	 * {@link slimeknights.tconstruct.library.materials.Material}
+	 * 
+	 * @param material
+	 *            Material identifier
+	 * @param craftable
+	 *            If this be crafted
+	 * @param castable
+	 *            If this can be casted
+	 * @param trait
+	 *            to apply
 	 */
 	protected static void registerMaterial(MetalMaterial material, boolean craftable, boolean castable, ITrait trait) {
 		TCMetalMaterial m = new TCMetalMaterial(material);
 		m.craftable = craftable;
 		m.castable = castable;
 		if (trait != null) {
-			String randName = ((Integer)(new Random()).nextInt()).toString();
+			String randName = ((Integer) (new Random()).nextInt()).toString();
 			TraitRegistry.addTrait(randName, trait);
 			m.addTrait(randName);
 		}
-		
+
 		registerMaterial(m);
 	}
 
 	/**
-	 * Creates a Tinkers Construct {@link slimeknights.tconstruct.library.materials.Material}
-	 * @param material Information about the material and the material itself
+	 * Creates a Tinkers Construct
+	 * {@link slimeknights.tconstruct.library.materials.Material}
+	 * 
+	 * @param material
+	 *            Information about the material and the material itself
 	 */
 	protected static void registerMaterial(TCMetalMaterial material) {
 		if (material == null) {
@@ -217,17 +233,17 @@ public class TinkersConstruct implements IIntegration {
 		}
 
 		// make sure the name used here is all lower case
-		Material tcmat = new Material( material.metalmaterial.getName().toLowerCase(), TextFormatting.WHITE);
+		Material tcmat = new Material(material.metalmaterial.getName().toLowerCase(), TextFormatting.WHITE);
 
 		if (material.hasTraits) {
-			for( String s : material.getTraitLocs() ) {
-				for( AbstractTrait t : material.getTraits(s) ) {
-					tcmat.addTrait(t, s=="general"?null:s);
+			for (String s : material.getTraitLocs()) {
+				for (AbstractTrait t : material.getTraits(s)) {
+					tcmat.addTrait(t, s == "general" ? null : s);
 				}
 			}
 		}
 
-		if( TinkerRegistry.getMaterial(tcmat.identifier) != Material.UNKNOWN ) {
+		if (TinkerRegistry.getMaterial(tcmat.identifier) != Material.UNKNOWN) {
 			return;
 		}
 
@@ -235,53 +251,53 @@ public class TinkersConstruct implements IIntegration {
 		registerFluid(material.metalmaterial, material.amountPerOre);
 
 		tcmat.addItem(material.metalmaterial.ingot, 1, Material.VALUE_Ingot);
-		tcmat.addItemIngot(Oredicts.INGOT+material.metalmaterial.getName());
+		tcmat.addItemIngot(Oredicts.INGOT + material.metalmaterial.getName());
 		tcmat.setRepresentativeItem(material.metalmaterial.ingot);
 
 		// setup the stats for the item - first the tool part stats
-		final HeadMaterialStats headStats = new HeadMaterialStats( material.headDurability, material.miningSpeed, material.headAttackDamage, material.miningLevel);
+		final HeadMaterialStats headStats = new HeadMaterialStats(material.headDurability, material.miningSpeed, material.headAttackDamage, material.miningLevel);
 		final HandleMaterialStats handleStats = new HandleMaterialStats(material.bodyModifier, material.bodyDurability);
 		final ExtraMaterialStats extraStats = new ExtraMaterialStats(material.extraDurability);
 
 		// then the bow-part stats
-		final BowMaterialStats bowStats = new BowMaterialStats( material.bowDrawingSpeed, material.bowRange, material.bowDamage);
+		final BowMaterialStats bowStats = new BowMaterialStats(material.bowDrawingSpeed, material.bowRange, material.bowDamage);
 		final BowStringMaterialStats bowStringStats = new BowStringMaterialStats(material.bowstringModifier);
-		final ArrowShaftMaterialStats arrowShaftStats = new ArrowShaftMaterialStats( material.shaftModifier, material.shaftBonusAmmo );
+		final ArrowShaftMaterialStats arrowShaftStats = new ArrowShaftMaterialStats(material.shaftModifier, material.shaftBonusAmmo);
 		final FletchingMaterialStats fletchingStats = new FletchingMaterialStats(material.fletchingAccuracy, material.fletchingModifier);
 
-		TinkerRegistry.addMaterialStats( tcmat, headStats);
-		TinkerRegistry.addMaterialStats( tcmat, handleStats);
-		TinkerRegistry.addMaterialStats( tcmat, extraStats);
-		TinkerRegistry.addMaterialStats( tcmat, bowStats);
-		TinkerRegistry.addMaterialStats( tcmat, bowStringStats);
-		TinkerRegistry.addMaterialStats( tcmat, arrowShaftStats);
-		TinkerRegistry.addMaterialStats( tcmat, fletchingStats);
+		TinkerRegistry.addMaterialStats(tcmat, headStats);
+		TinkerRegistry.addMaterialStats(tcmat, handleStats);
+		TinkerRegistry.addMaterialStats(tcmat, extraStats);
+		TinkerRegistry.addMaterialStats(tcmat, bowStats);
+		TinkerRegistry.addMaterialStats(tcmat, bowStringStats);
+		TinkerRegistry.addMaterialStats(tcmat, arrowShaftStats);
+		TinkerRegistry.addMaterialStats(tcmat, fletchingStats);
 
 		TinkerRegistry.addMaterial(tcmat);
-		
+
 		// everything we send through here has a fluid - fluid and craftable are opposites
 		tcmat.setFluid(material.metalmaterial.fluid).setCastable(material.castable).setCraftable(material.craftable);
-		
+
 		String base = material.metalmaterial.getName();
-		String suffix = base.substring(0, 1).toUpperCase()+base.substring(1);
+		String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
 		MaterialIntegration m = new MaterialIntegration(null, material.metalmaterial.fluid, suffix);
-		if( material.toolforge ) {
+		if (material.toolforge) {
 			m.toolforge();
 		}
-		
+
 		TinkerIntegration.integrationList.add(m);
 		m.integrate();
 	}
-	
-	public void registerModifierRecipe( String name, ItemStack... recipe ) {
+
+	public void registerModifierRecipe(String name, ItemStack... recipe) {
 		ModifierRegistry.setModifierRecipe(name, recipe);
 	}
-	
-	public void registerModifierItem( String name, ItemStack item ) {
+
+	public void registerModifierItem(String name, ItemStack item) {
 		ModifierRegistry.setModifierItem(name, item);
 	}
-	
-	public void registerModifierItem( String name, Item item ) {
+
+	public void registerModifierItem(String name, Item item) {
 		ModifierRegistry.setModifierItem(name, item);
 	}
 }

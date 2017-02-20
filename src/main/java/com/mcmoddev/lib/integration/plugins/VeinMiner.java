@@ -29,7 +29,8 @@ public class VeinMiner implements IIntegration {
 	/**
 	 * Add tools to the VeinMiner list from a Material
 	 *
-	 * @param material Material to add
+	 * @param material
+	 *            Material to add
 	 */
 	protected static void addToolsForMaterial(String material) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();

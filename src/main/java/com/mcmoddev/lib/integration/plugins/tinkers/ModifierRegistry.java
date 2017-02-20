@@ -24,50 +24,50 @@ import slimeknights.tconstruct.library.modifiers.Modifier;
 public class ModifierRegistry {
 
 	private static Map<String, Modifier> modifiers = new HashMap<>();
-	
+
 	private ModifierRegistry() {
 		throw new IllegalAccessError("Not an instantiable class");
 	}
 
-	public static void setModifierRecipe( String name, ItemStack... ingredients ) {
+	public static void setModifierRecipe(String name, ItemStack... ingredients) {
 		Modifier t = modifiers.get(name);
-		if( t == null ) {
+		if (t == null) {
 			FMLLog.severe("Trying to add a recipe to unknown modifier %s, ignoring.", name);
 			return;
 		}
-		
+
 		t.addRecipeMatch(new RecipeMatch.ItemCombination(1, ingredients));
 	}
 
-	public static void setModifierItem( String name, ItemStack item ) {
+	public static void setModifierItem(String name, ItemStack item) {
 		setModifierItem(name, item.getItem());
 	}
-	
-	public static void setModifierItem( String name, Item item ) {
+
+	public static void setModifierItem(String name, Item item) {
 		Modifier t = modifiers.get(name);
-		if( t == null ) {
+		if (t == null) {
 			FMLLog.severe("Trying to add an item to unknown modifier %s, ignoring.", name);
 			return;
 		}
 
 		t.addItem(item);
 	}
-	
+
 	public static void initModifiers() {
 		modifiers.put("toxic", new ModifierToxic());
 		modifiers.put("plated", new ModifierLeadPlated());
 		modifiers.put("fake-diamond", new ModifierFakeDiamond());
 	}
-	
+
 	public static void registerModifiers() {
-		for( Entry<String, Modifier> ent : modifiers.entrySet() ) {
+		for (Entry<String, Modifier> ent : modifiers.entrySet()) {
 			TinkerRegistry.registerModifier(ent.getValue());
 		}
 	}
-	
-	public static Map<String, String> getModifierDetails( String name ) {
+
+	public static Map<String, String> getModifierDetails(String name) {
 		Map<String, String> rv = new HashMap<>();
-		if( modifiers.containsKey(name) ) {
+		if (modifiers.containsKey(name)) {
 			Modifier t = modifiers.get(name);
 			rv.put("name", t.getLocalizedName());
 			rv.put("desc", t.getLocalizedDesc());

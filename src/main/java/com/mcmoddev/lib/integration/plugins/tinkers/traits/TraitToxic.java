@@ -15,9 +15,9 @@ public class TraitToxic extends AbstractTrait {
 
 	@Override
 	public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {
-		if( wasHit && target.isEntityAlive()) {
+		if (wasHit && target.isEntityAlive()) {
 			target.addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 2));
-			target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 50 ));
+			target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 50));
 		}
 	}
 }

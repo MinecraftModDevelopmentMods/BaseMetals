@@ -34,19 +34,22 @@ public class EnderIO implements IIntegration {
 	// TODO: Use Oredicts for inputs
 	/**
 	 *
-	 * @param material The Material
-	 * @param outputSecondary The secondary output
-	 * @param energy How much energy it costs to perform
+	 * @param material
+	 *            The Material
+	 * @param outputSecondary
+	 *            The secondary output
+	 * @param energy
+	 *            How much energy it costs to perform
 	 */
 	protected static void addAlloySmelterRecipe(String materialName, String outputSecondary, int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
 		MetalMaterial material = Materials.getMaterialByName(materialName);
-		
-//		final String inputName = materialName + "_ore";
+
+		// final String inputName = materialName + "_ore";
 		final String inputOredict = Oredicts.ORE + material.getCapitalizedName();
 		final String outputName = materialName + "_ingot";
-//		final String outputOredict = Oredicts.INGOT + material.getCapitalizedName();
+		// final String outputOredict = Oredicts.INGOT + material.getCapitalizedName();
 
 		if (material.hasOre == false)
 			return; // Only run for Ore types
@@ -74,33 +77,38 @@ public class EnderIO implements IIntegration {
 	// TODO: Use Oredicts for inputs
 	/**
 	 *
-	 * @param material The Material
-	 * @param outputSecondary The secondary output
-	 * @param energy How much energy it costs to perform
+	 * @param material
+	 *            The Material
+	 * @param outputSecondary
+	 *            The secondary output
+	 * @param energy
+	 *            How much energy it costs to perform
 	 */
 	protected static void addSagMillRecipe(String materialName, String outputSecondary, int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
 		MetalMaterial material = Materials.getMaterialByName(materialName);
 
-//		final String inputName = materialName + "_ore";
+		// final String inputName = materialName + "_ore";
 		final String inputOredict = Oredicts.ORE + material.getCapitalizedName();
-//		final int inputMeta = 0;
+		// final int inputMeta = 0;
 
 		final String outputPrimary = materialName + "_powder";
-//		final String outputPrimaryOredict = Oredicts.DUST + material.getCapitalizedName();
-//		final int primaryMeta = 0;
+		// final String outputPrimaryOredict = Oredicts.DUST +
+		// material.getCapitalizedName();
+		// final int primaryMeta = 0;
 		final int primaryQty = 2;
 		final String primaryChance = "1.0";
 
-//		final String outputSecondaryOredict = Oredicts.DUST + outputSecondary;
-//		final int secondaryMeta = 0;
+		// final String outputSecondaryOredict = Oredicts.DUST +
+		// outputSecondary;
+		// final int secondaryMeta = 0;
 		final int secondaryQty = 1;
 		final String secondaryChance = "0.1";
 
 		final String rockModID = "minecraft";
 		final String rockName = "cobblestone";
-//		final int rockMeta = 0;
+		// final int rockMeta = 0;
 		final int rockQty = 1;
 		final String rockChance = "0.15";
 

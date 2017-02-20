@@ -11,12 +11,12 @@ public class ModifierToxic extends ModifierTrait {
 	public ModifierToxic() {
 		super("toxic-modifier", 0xFFFFFF, 1, 0);
 	}
-	
+
 	@Override
 	public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {
-		if( wasHit && target.isEntityAlive()) {
+		if (wasHit && target.isEntityAlive()) {
 			target.addPotionEffect(new PotionEffect(MobEffects.POISON, 50, 1));
-			target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 10 ));
+			target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 10));
 		}
 	}
 }

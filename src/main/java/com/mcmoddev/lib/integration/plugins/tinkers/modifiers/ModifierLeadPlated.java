@@ -14,7 +14,7 @@ public class ModifierLeadPlated extends ModifierTrait {
 
 	@Override
 	public void applyEffect(NBTTagCompound rootCompound, NBTTagCompound modifierTag) {
-		modifierTag.setBoolean("plated", true );
+		modifierTag.setBoolean("plated", true);
 		TagUtil.setExtraTag(rootCompound, modifierTag);
 	}
 }
