@@ -41,6 +41,25 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		this(material,glows,false);
 	}
 
+	public BlockMetalBlock(MetalMaterial material, boolean glows, boolean isBeacon) {
+		super( getMaterialFromMetalMaterial(material) );
+
+		this.setSoundType(getSoundFromMetalMaterial(material));
+		this.fullBlock = true;
+		this.lightOpacity = 255;
+		this.translucent = false;
+		this.material = material;
+		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		this.oreDict = Oredicts.BLOCK + material.getCapitalizedName();
+		this.blockHardness = material.getMetalBlockHardness();
+		this.blockResistance = material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.beaconBase = isBeacon;
+		
+		if (glows)
+			this.setLightLevel(0.5f);
+	}
+	
 	private static final Material getMaterialFromMetalMaterial( MetalMaterial material ) {
 		switch(material.getType()) {
 			case METAL:
@@ -74,25 +93,6 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		}
 	}
 
-	public BlockMetalBlock(MetalMaterial material, boolean glows, boolean isBeacon) {
-		super( getMaterialFromMetalMaterial(material) );
-
-		this.setSoundType(getSoundFromMetalMaterial(material));
-		this.fullBlock = true;
-		this.lightOpacity = 255;
-		this.translucent = false;
-		this.material = material;
-		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		this.oreDict = Oredicts.BLOCK + material.getCapitalizedName();
-		this.blockHardness = material.getMetalBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
-		this.beaconBase = isBeacon;
-		
-		if (glows)
-			this.setLightLevel(0.5f);
-	}
-	
     @Override
     public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
         return beaconBase;

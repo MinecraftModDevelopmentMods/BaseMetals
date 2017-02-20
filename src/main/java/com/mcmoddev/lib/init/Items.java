@@ -15,7 +15,6 @@ import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -259,7 +258,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasics) && (material.ingot == null)) {
-			material.ingot = addItem(new ItemMetalIngot(material), "ingot", material, ItemGroups.ItemsTab);
+			material.ingot = addItem(new ItemMetalIngot(material), "ingot", material, ItemGroups.itemsTab);
 		}
 
 		return material.ingot;
@@ -276,7 +275,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasics) && (material.nugget == null)) {
-			material.nugget = addItem(new ItemMetalNugget(material), "nugget", material, ItemGroups.ItemsTab);
+			material.nugget = addItem(new ItemMetalNugget(material), "nugget", material, ItemGroups.itemsTab);
 		}
 
 		return material.nugget;
@@ -293,7 +292,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasics) && (material.powder == null)) {
-			material.powder = addItem(new ItemMetalPowder(material), "powder", material, ItemGroups.ItemsTab);
+			material.powder = addItem(new ItemMetalPowder(material), "powder", material, ItemGroups.itemsTab);
 		}
 
 		return material.powder;
@@ -310,7 +309,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableBasics) && (material.hasBlend) && (material.blend == null)) {
-			material.blend = addItem(new ItemMetalBlend(material), "blend", material, ItemGroups.ItemsTab);
+			material.blend = addItem(new ItemMetalBlend(material), "blend", material, ItemGroups.itemsTab);
 		}
 
 		return material.blend;
@@ -327,7 +326,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableRod) && (material.rod == null)) {
-			material.rod = addItem(new ItemMetalRod(material), "rod", material, ItemGroups.ItemsTab);
+			material.rod = addItem(new ItemMetalRod(material), "rod", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.STICK + material.getCapitalizedName(), material.rod);
 			OreDictionary.registerOre(Oredicts.ROD, material.rod);
 		}
@@ -346,7 +345,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableGear) && (material.gear == null)) {
-			material.gear = addItem(new ItemMetalGear(material), "gear", material, ItemGroups.ItemsTab);
+			material.gear = addItem(new ItemMetalGear(material), "gear", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.GEAR, material.gear);
 		}
 
@@ -636,7 +635,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableSmallDust) && (material.hasBlend) && (material.smallblend == null)) {
-			material.smallblend = addItem(new ItemMetalSmallBlend(material), "smallblend", material, ItemGroups.ItemsTab);
+			material.smallblend = addItem(new ItemMetalSmallBlend(material), "smallblend", material, ItemGroups.itemsTab);
 		}
 
 		return material.smallblend;
@@ -670,7 +669,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableSmallDust) && (material.smallpowder == null)) {
-			material.smallpowder = addItem(new ItemMetalSmallPowder(material), "smallpowder", material, ItemGroups.ItemsTab);
+			material.smallpowder = addItem(new ItemMetalSmallPowder(material), "smallpowder", material, ItemGroups.itemsTab);
 		}
 
 		return material.smallpowder;
@@ -687,7 +686,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableShield) && (material.shield == null)) {
-			material.shield = addItem(new ItemMetalShield(material), "shield", material, ItemGroups.ItemsTab);
+			material.shield = addItem(new ItemMetalShield(material), "shield", material, ItemGroups.itemsTab);
 		}
 
 		return material.shield;
@@ -704,7 +703,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableMekanism) && (material.crystal == null)) {
-			material.crystal = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.ItemsTab);
+			material.crystal = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), material.crystal);
 		}
 
@@ -722,7 +721,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableMekanism) && (material.shard == null)) {
-			material.shard = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.ItemsTab);
+			material.shard = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.SHARD + material.getCapitalizedName(), material.shard);
 		}
 
@@ -740,7 +739,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableMekanism) && (material.clump == null)) {
-			material.clump = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.ItemsTab);
+			material.clump = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), material.clump);
 		}
 
@@ -758,7 +757,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableMekanism) && (material.powder_dirty == null)) {
-			material.powder_dirty = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.ItemsTab);
+			material.powder_dirty = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.DUSTDIRTY + material.getCapitalizedName(), material.powder_dirty);
 		}
 
@@ -777,7 +776,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableIC2) && (material.casing == null)) {
-			material.casing = addItem(new GenericMetalItem(material), "casing", material, ItemGroups.ItemsTab);
+			material.casing = addItem(new GenericMetalItem(material), "casing", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CASING + material.getCapitalizedName(), material.casing);
 		}
 
@@ -796,7 +795,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableIC2) && (material.dense_plate == null)) {
-			material.dense_plate = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.ItemsTab);
+			material.dense_plate = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.PLATEDENSE + material.getCapitalizedName(), material.dense_plate);
 		}
 
@@ -814,7 +813,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableIC2) && (material.crushed == null)) {
-			material.crushed = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.ItemsTab);
+			material.crushed = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), material.crushed);
 		}
 
@@ -832,7 +831,7 @@ public abstract class Items {
 		}
 
 		if ((Options.enableIC2) && (material.crushed_purified == null)) {
-			material.crushed_purified = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.ItemsTab);
+			material.crushed_purified = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CRUSHEDPURIFIED + material.getCapitalizedName(), material.crushed_purified);
 		}
 

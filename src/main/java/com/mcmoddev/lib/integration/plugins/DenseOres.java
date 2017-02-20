@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.integration.plugins;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.IIntegration;
 
 import net.minecraft.nbt.NBTTagCompound;

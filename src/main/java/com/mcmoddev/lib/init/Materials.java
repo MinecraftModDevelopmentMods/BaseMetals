@@ -180,7 +180,7 @@ public abstract class Materials {
 
 		if (material == null) {
 			BaseMetals.logger.error("Null material passed to registermaterial(), Don't do that!");
-			return (MetalMaterial) null;
+			return null;
 		}
 
 		if (Materials.getAllMaterials().contains(material)) {

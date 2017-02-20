@@ -25,6 +25,14 @@ public class GeneralizedCreativeTab extends CreativeTabs {
 	private List<ItemStack> cache;
 	private Comparator<ItemStack> comparator;
 
+	private static final Comparator<ItemStack> DEFAULT = new Comparator<ItemStack>() {
+		@Override
+		public int compare(ItemStack first, ItemStack second) {
+			final int delta = Items.getSortingValue(first) - Items.getSortingValue(second);
+			return (delta == 0) ? first.getUnlocalizedName().compareToIgnoreCase(second.getUnlocalizedName()) : delta;
+		}
+	};
+
 	public GeneralizedCreativeTab(String unlocalizedName, boolean searchable, MetalMaterial material) {
 		super(unlocalizedName);
 		// this.itemSupplier = itemSupplier;
@@ -71,12 +79,4 @@ public class GeneralizedCreativeTab extends CreativeTabs {
 		if (this.cache != null)
 			cache.sort(comparator);
 	}
-
-	private static final Comparator<ItemStack> DEFAULT = new Comparator<ItemStack>() {
-		@Override
-		public int compare(ItemStack first, ItemStack second) {
-			final int delta = Items.getSortingValue(first) - Items.getSortingValue(second);
-			return (delta == 0) ? first.getUnlocalizedName().compareToIgnoreCase(second.getUnlocalizedName()) : delta;
-		}
-	};
 }

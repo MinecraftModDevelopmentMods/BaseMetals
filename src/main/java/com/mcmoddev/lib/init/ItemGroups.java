@@ -29,7 +29,7 @@ public class ItemGroups {
 	};
 
 	public static CreativeTabs blocksTab;
-	public static CreativeTabs ItemsTab;
+	public static CreativeTabs itemsTab;
 	public static CreativeTabs toolsTab;
 
 	private static Map<String, List<GeneralizedCreativeTab>> itemGroupsByModID = new HashMap<>();
