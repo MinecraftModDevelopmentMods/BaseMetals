@@ -32,9 +32,9 @@ public class leverInfoController implements IWailaDataProvider {
 			IWailaConfigHandler config) {
 		String redstoneOn = (accessor.getMetadata() & 8) == 0 ? I18n.format("hud.msg.off") : I18n.format("hud.msg.on");
 		currenttip.add(I18n.format("%s : %s", I18n.format("hud.msg.state"), redstoneOn));
-        return currenttip;
+		return currenttip;
 	}
-	
+
 	@Override
 	public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
 			IWailaConfigHandler config) {

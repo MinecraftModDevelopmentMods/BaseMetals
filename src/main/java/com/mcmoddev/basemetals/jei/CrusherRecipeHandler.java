@@ -18,7 +18,7 @@ public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeWrapper
 	@Nonnull
 	@Override
 	public String getRecipeCategoryUid(@Nonnull CrusherRecipeWrapper recipe) {
-		return ID+".crackhammer";
+		return ID + ".crackhammer";
 	}
 
 	@Override

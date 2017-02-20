@@ -18,11 +18,11 @@ import com.mcmoddev.basemetals.registry.recipe.ICrusherRecipe;
 public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecipeWrapper {
 
 	private ICrusherRecipe theRecipe;
-	
-    public CrusherRecipeWrapper(ICrusherRecipe recipe) {
-    	theRecipe = recipe;
-    }
-    
+
+	public CrusherRecipeWrapper(ICrusherRecipe recipe) {
+		theRecipe = recipe;
+	}
+
 	@Override
 	public void getIngredients(IIngredients ingredients) {
 		// TODO Auto-generated method stub
@@ -64,7 +64,6 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 	@Override
 	public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -81,6 +80,5 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 
 	@Override
 	public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
-		
 	}
 }

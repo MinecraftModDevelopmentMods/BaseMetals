@@ -31,6 +31,7 @@ import net.minecraftforge.fml.common.FMLLog;
 public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	private static final String CRUSHER = "crusher";
+
 	@Override
 	public String getOverlayIdentifier() {
 		return CRUSHER;
@@ -44,26 +45,30 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
 		final ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(ingredient);
-		if (recipe == null)
+		if (recipe == null) {
 			return;
+		}
 		this.arecipes.add(new CrusherPair(ingredient.copy(), recipe.getOutput()));
 	}
 
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
 		final List<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance().getRecipesForOutputItem(result);
-		if (recipes == null)
+		if (recipes == null) {
 			return; // no crusher recipes
-		for (final ICrusherRecipe r : recipes)
+		}
+		for (final ICrusherRecipe r : recipes) {
 			this.arecipes.addAll(r.getValidInputs().stream().map(input -> new CrusherPair(input.copy(), r.getOutput().copy())).collect(Collectors.toList()));
+		}
 	}
 
 	@Override
 	public void loadUsageRecipes(String inputId, Object... ingredients) {
-		if (inputId.equals(CRUSHER) && (this.getClass() == CrusherRecipeHandler.class))
+		if (inputId.equals(CRUSHER) && (this.getClass() == CrusherRecipeHandler.class)) {
 			this.loadCraftingRecipes("smelting");
-		else
+		} else {
 			super.loadUsageRecipes(inputId, ingredients);
+		}
 	}
 
 	@Override
@@ -71,11 +76,13 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 		if (outputId.equals(CRUSHER) && (this.getClass() == CrusherRecipeHandler.class)) { // we don't want overstep subclasses
 			// add all crusher recipes
 			final Collection<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance().getAllRecipes();
-			if (recipes == null)
+			if (recipes == null) {
 				return;
+			}
 			for (final ICrusherRecipe r : recipes) {
-				if (r == null)
+				if (r == null) {
 					continue;
+				}
 				this.arecipes.addAll(r.getValidInputs().stream().map(input -> new CrusherPair(input.copy(), r.getOutput().copy())).collect(Collectors.toList()));
 			}
 		} else
@@ -90,10 +97,11 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public String getRecipeName() {
 		final String key = "nei." + BaseMetals.MODID + ".recipehandler.crusher.name";
-		if (I18n.canTranslate(key))
+		if (I18n.canTranslate(key)) {
 			return net.minecraft.client.resources.I18n.format(key);
-		else
+		} else {
 			return "Crusher";
+		}
 	}
 
 	@Override
@@ -117,7 +125,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 		/**
 		 *
-		 * @param container Container
+		 * @param container
+		 *            Container
 		 */
 		public GuiCrusher(Container container) {
 			super(container);
@@ -158,16 +167,20 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 		/**
 		 *
-		 * @param ingred ItemStack
-		 * @param result ItemStack
+		 * @param ingred
+		 *            ItemStack
+		 * @param result
+		 *            ItemStack
 		 */
 		public CrusherPair(ItemStack ingred, ItemStack result) {
 			if ((ingred == null) || (result == null)) {
 				FMLLog.warning("Added null item to NEI GUI: " + ingred + " -> " + result);
-				if (ingred == null)
+				if (ingred == null) {
 					ingred = new ItemStack(Blocks.AIR);
-				if (result == null)
+				}
+				if (result == null) {
 					result = new ItemStack(Blocks.AIR);
+				}
 			}
 			ingred.stackSize = 1;
 			this.ingred = new PositionedStack(ingred, 65, 23);
@@ -176,7 +189,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 		@Override
 		public List<PositionedStack> getIngredients() {
-			return this.getCycledIngredients(CrusherRecipeHandler.this.cycleticks / 48, Collections.singletonList(this.ingred));
+			return this.getCycledIngredients(CrusherRecipeHandler.this.cycleticks / 48,
+					Collections.singletonList(this.ingred));
 		}
 
 		@Override

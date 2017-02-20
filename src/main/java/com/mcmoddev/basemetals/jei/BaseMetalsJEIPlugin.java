@@ -21,20 +21,18 @@ import mezz.jei.api.JEIPlugin;
 @JEIPlugin
 public class BaseMetalsJEIPlugin extends BlankModPlugin {
 
-	public static final String JEIUID = BaseMetals.MODID;//.concat(".crusher");
+	public static final String JEIUID = BaseMetals.MODID;// .concat(".crusher");
 
 	@Override
 	public void register(IModRegistry registry) {
-		
+
 		IJeiHelpers jeiHelpers = registry.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
-		
-		registry.addRecipeCategories( new CrusherRecipeCategory(guiHelper) );
-		registry.addRecipeHandlers( new CrusherRecipeHandler() );
-		
-		registry.addRecipes(CrusherRecipeRegistry.getInstance().getAllRecipes().stream()
-				.map((ICrusherRecipe in) -> new CrusherRecipeWrapper(in))
-				.collect(Collectors.toList()));
-		
+
+		registry.addRecipeCategories(new CrusherRecipeCategory(guiHelper));
+		registry.addRecipeHandlers(new CrusherRecipeHandler());
+
+		registry.addRecipes(CrusherRecipeRegistry.getInstance().getAllRecipes().stream().map((ICrusherRecipe in) -> new CrusherRecipeWrapper(in)).collect(Collectors.toList()));
+
 	}
 }

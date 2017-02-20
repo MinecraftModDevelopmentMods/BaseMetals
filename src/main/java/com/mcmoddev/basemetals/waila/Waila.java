@@ -8,10 +8,10 @@ import mcp.mobius.waila.api.IWailaRegistrar;
 
 public class Waila {
 	public static void init() {
-		FMLInterModComms.sendMessage("Waila",  "register", "com.mcmoddev.basemetals.waila.Waila.register");
+		FMLInterModComms.sendMessage("Waila", "register", "com.mcmoddev.basemetals.waila.Waila.register");
 	}
-	
+
 	public static void register(IWailaRegistrar registrar) {
-		registrar.registerBodyProvider( new leverInfoController(), BlockMetalLever.class);
+		registrar.registerBodyProvider(new leverInfoController(), BlockMetalLever.class);
 	}
 }
