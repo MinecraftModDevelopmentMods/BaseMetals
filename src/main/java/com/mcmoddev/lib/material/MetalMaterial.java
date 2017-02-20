@@ -9,7 +9,7 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-//import net.minecraftforge.fluids.BlockFluidBase;
+// import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.Loader;
@@ -50,7 +50,7 @@ public class MetalMaterial {
 	 * Color Info for metal
 	 */
 	public final int tintColor;
-	
+
 	/**
 	 * Rare metals, like platinum, are never found in villager trades and
 	 * unusually uncommon in world generation
@@ -74,9 +74,9 @@ public class MetalMaterial {
 	 *
 	 */
 	public enum MaterialType {
-	    WOOD, ROCK, METAL, MINERAL, GEM
+		WOOD, ROCK, METAL, MINERAL, GEM
 	}
-	
+
 	/**
 	 * The type of material this is
 	 */
@@ -148,7 +148,7 @@ public class MetalMaterial {
 
 	public Fluid fluid;
 	public BlockFluidClassic fluidBlock;
-	
+
 	public Item crystal;
 	public Item shard;
 	public Item clump;
@@ -158,7 +158,7 @@ public class MetalMaterial {
 	public Item dense_plate;
 	public Item crushed;
 	public Item crushed_purified;
-	
+
 	public Block oreEnd;
 	public Block oreNether;
 
@@ -211,7 +211,7 @@ public class MetalMaterial {
 	public String getCapitalizedName() {
 		return this.titleName;
 	}
-	
+
 	/**
 	 * 
 	 * @return MaterialType The type of material this is
@@ -237,7 +237,7 @@ public class MetalMaterial {
 		} else if (o == null) {
 			return false;
 		}
-		
+
 		if ((o.hashCode() == this.hashCode()) && (o instanceof MetalMaterial)) {
 			final MetalMaterial other = (MetalMaterial) o;
 			return this.identifier.equals(other.identifier);
@@ -409,7 +409,7 @@ public class MetalMaterial {
 	public String getEnumName() {
 		return this.enumName;
 	}
-	
+
 	/**
 	 * Gets the tint color for this material
 	 * 
