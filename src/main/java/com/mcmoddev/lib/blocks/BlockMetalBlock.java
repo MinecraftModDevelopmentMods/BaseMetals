@@ -40,10 +40,44 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	public BlockMetalBlock(MetalMaterial material, boolean glows) {
 		this(material,glows,false);
 	}
-	
+
+	private static final Material getMaterialFromMetalMaterial( MetalMaterial material ) {
+		switch(material.getType()) {
+			case METAL:
+				return Material.IRON;
+			case GEM:
+			case ROCK:
+				return Material.ROCK;
+			case MINERAL:
+				return Material.GRASS;
+			case WOOD:
+				return Material.WOOD;
+			default:
+				return Material.GROUND;
+		}
+	}
+
+	private static final SoundType getSoundFromMetalMaterial( MetalMaterial material ) {
+		switch(material.getType()) {
+			case METAL:
+				return SoundType.METAL;
+			case GEM:
+				return SoundType.GLASS;
+			case ROCK:
+				return SoundType.STONE;
+			case MINERAL:
+				return SoundType.SAND;
+			case WOOD:
+				return SoundType.WOOD;
+			default:
+				return SoundType.GROUND;
+		}
+	}
+
 	public BlockMetalBlock(MetalMaterial material, boolean glows, boolean isBeacon) {
-		super(Material.IRON);
-		this.setSoundType(SoundType.METAL);
+		super( getMaterialFromMetalMaterial(material) );
+
+		this.setSoundType(getSoundFromMetalMaterial(material));
 		this.fullBlock = true;
 		this.lightOpacity = 255;
 		this.translucent = false;
