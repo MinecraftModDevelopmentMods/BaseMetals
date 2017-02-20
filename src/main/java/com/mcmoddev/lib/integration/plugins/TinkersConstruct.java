@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -58,27 +59,23 @@ public class TinkersConstruct implements IIntegration {
 	 * Variant of fluid registration to allow for late registration of specific
 	 * materials that have a different amount of fluid per block than normal.
 	 * Setup specifically for NetherMetals and EndMetals.
-	 * 
+	 *
 	 * @param base
 	 *            MetalMaterial that is the base material for this
+	 * @param block
+	 *            Block to register
 	 * @param amountPer
 	 *            the amount of fluid per this block
 	 */
-	protected static void registerExtraFluids(MetalMaterial base, int amountPer) {
+	protected static void registerExtraMelting(MetalMaterial base, Block block, int amountPer) {
 		String materialName = base.getName();
 		Fluid output = FluidRegistry.getFluid(materialName);
 
 		try {
-			if (base.oreNether != null)
-				TinkerRegistry.registerMelting(base.oreNether, output, amountPer);
-		} catch (final Exception e) {
-			FMLLog.severe("Tried registering Nether Ore %s, caught exception: %s", base.getName(), e.getMessage());
-		}
-		try {
-			if (base.oreEnd != null)
-				TinkerRegistry.registerMelting(base.oreEnd, output, amountPer);
-		} catch (final Exception e) {
-			FMLLog.severe("Tried registering End Ore %s, caught exception: %s", base.getName(), e.getMessage());
+			if (block != null)
+				TinkerRegistry.registerMelting(Item.getItemFromBlock(block), output, amountPer);
+		} catch (final Exception ex) {
+			FMLLog.severe("Tried registering %s for melting, caught exception: %s", block.getUnlocalizedName(), ex.getMessage());
 		}
 	}
 
@@ -152,6 +149,15 @@ public class TinkersConstruct implements IIntegration {
 
 		if (base.button != null)
 			TinkerRegistry.registerMelting(base.button, output, (amountPer / 9) * 2);
+	}
+
+	protected static void registerCasting(MetalMaterial base, int amountPer) {
+		if (base.block != null)
+			TinkerRegistry.registerBasinCasting(new ItemStack(base.block), null, base.fluid, amountPer * 9);
+		if (base.ingot != null)
+			TinkerRegistry.registerTableCasting(new ItemStack(base.ingot), null, base.fluid, amountPer);
+		if (base.nugget != null)
+			TinkerRegistry.registerTableCasting(new ItemStack(base.nugget), null, base.fluid, amountPer / 9);
 	}
 
 	/**
