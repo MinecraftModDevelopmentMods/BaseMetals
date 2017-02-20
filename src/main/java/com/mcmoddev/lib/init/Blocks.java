@@ -116,7 +116,7 @@ public abstract class Blocks {
 		} else if (block instanceof BlockDoubleMetalSlab) {
 			fullName = "double_" + name;
 		} else if (material != null) {
-			if (((name == "nether") || (name == "end")) && (block instanceof BlockMetalOre)) {
+			if ((name == "nether") || (name == "end")) {
 				fullName = name + "_" + material.getName() + "_" + "ore";
 			} else {
 				fullName = material.getName() + "_" + name;
