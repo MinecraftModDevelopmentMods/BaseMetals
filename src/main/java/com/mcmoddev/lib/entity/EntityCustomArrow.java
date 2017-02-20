@@ -18,7 +18,8 @@ public class EntityCustomArrow extends EntityTippedArrow {
 
 	/**
 	 *
-	 * @param worldIn The World
+	 * @param worldIn
+	 *            The World
 	 */
 	public EntityCustomArrow(World worldIn) {
 		super(worldIn);
@@ -26,20 +27,27 @@ public class EntityCustomArrow extends EntityTippedArrow {
 
 	/**
 	 *
-	 * @param worldIn The World
-	 * @param x X
-	 * @param y Y
-	 * @param z Z
+	 * @param worldIn
+	 *            The World
+	 * @param x
+	 *            X
+	 * @param y
+	 *            Y
+	 * @param z
+	 *            Z
 	 */
-    public EntityCustomArrow(World worldIn, double x, double y, double z) {
-    	super(worldIn, x, y, z);
-    }
+	public EntityCustomArrow(World worldIn, double x, double y, double z) {
+		super(worldIn, x, y, z);
+	}
 
 	/**
 	 *
-	 * @param worldIn The World
-	 * @param stack The itemstack
-	 * @param shooter The Shooter
+	 * @param worldIn
+	 *            The World
+	 * @param stack
+	 *            The itemstack
+	 * @param shooter
+	 *            The Shooter
 	 */
 	public EntityCustomArrow(World worldIn, ItemStack stack, EntityPlayer shooter) {
 		super(worldIn, shooter);

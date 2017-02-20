@@ -19,7 +19,8 @@ public class EntityCustomBolt extends EntityTippedArrow {
 
 	/**
 	 *
-	 * @param worldIn The World
+	 * @param worldIn
+	 *            The World
 	 */
 	public EntityCustomBolt(World worldIn) {
 		super(worldIn);
@@ -27,10 +28,14 @@ public class EntityCustomBolt extends EntityTippedArrow {
 
 	/**
 	 *
-	 * @param worldIn The World
-	 * @param x X
-	 * @param y Y
-	 * @param z Z
+	 * @param worldIn
+	 *            The World
+	 * @param x
+	 *            X
+	 * @param y
+	 *            Y
+	 * @param z
+	 *            Z
 	 */
 	public EntityCustomBolt(World worldIn, double x, double y, double z) {
 		super(worldIn, x, y, z);
@@ -38,9 +43,12 @@ public class EntityCustomBolt extends EntityTippedArrow {
 
 	/**
 	 *
-	 * @param worldIn The World
-	 * @param stack The ItemStack
-	 * @param shooter The Shooter
+	 * @param worldIn
+	 *            The World
+	 * @param stack
+	 *            The ItemStack
+	 * @param shooter
+	 *            The Shooter
 	 */
 	public EntityCustomBolt(World worldIn, ItemStack stack, EntityPlayer shooter) {
 		super(worldIn, shooter);

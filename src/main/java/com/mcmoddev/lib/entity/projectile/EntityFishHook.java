@@ -61,7 +61,8 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 
 	/**
 	 *
-	 * @param worldIn The World
+	 * @param worldIn
+	 *            The World
 	 */
 	public EntityFishHook(World worldIn) {
 		super(worldIn);
@@ -69,11 +70,16 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 
 	/**
 	 *
-	 * @param worldIn The World
-	 * @param x X
-	 * @param y Y
-	 * @param z Z
-	 * @param anglerIn The bobber
+	 * @param worldIn
+	 *            The World
+	 * @param x
+	 *            X
+	 * @param y
+	 *            Y
+	 * @param z
+	 *            Z
+	 * @param anglerIn
+	 *            The bobber
 	 */
 	@SideOnly(Side.CLIENT)
 	public EntityFishHook(World worldIn, double x, double y, double z, EntityPlayer anglerIn) {
@@ -82,8 +88,10 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 
 	/**
 	 *
-	 * @param worldIn The World
-	 * @param fishingPlayer The player
+	 * @param worldIn
+	 *            The World
+	 * @param fishingPlayer
+	 *            The player
 	 */
 	public EntityFishHook(World worldIn, EntityPlayer fishingPlayer) {
 		super(worldIn, fishingPlayer);
