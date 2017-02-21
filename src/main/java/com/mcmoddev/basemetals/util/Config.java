@@ -437,7 +437,8 @@ public class Config {
 			final Set<String> dictionary = new HashSet<>();
 			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()));
 			for (final String entry : dictionary) {
-				if (entry.contains("Mercury")) {
+				// TODO: Make this better
+				if ((entry.contains("Mercury")) || (entry.contains("Redstone"))) {
 					continue;
 				}
 				if (entry.startsWith("dust")) {
