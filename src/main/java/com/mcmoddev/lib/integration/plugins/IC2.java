@@ -4,13 +4,10 @@ import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import ic2.api.item.IC2Items;
 import ic2.api.recipe.RecipeInputOreDict;
 import ic2.api.recipe.Recipes;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class IC2 implements IIntegration {
 
@@ -37,8 +34,8 @@ public class IC2 implements IIntegration {
 
 		// Move these to main recipe loop?
 		GameRegistry.addSmelting(material.crushed, new ItemStack(material.ingot, 1), 0);
-		GameRegistry.addSmelting(material.crushed_purified, new ItemStack(material.ingot, 1), 0);
-		
+		GameRegistry.addSmelting(material.crushedPurified, new ItemStack(material.ingot, 1), 0);
+
 		// TODO: Figure out Dense Plate & Casing
 	}
 

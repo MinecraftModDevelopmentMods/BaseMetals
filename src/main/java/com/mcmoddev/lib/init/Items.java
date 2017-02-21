@@ -55,7 +55,6 @@ public abstract class Items {
 			expandCombatArrays(net.minecraft.item.ItemAxe.class);
 		} catch (IllegalAccessException | NoSuchFieldException ex) {
 			BaseMetals.logger.error("Error modifying item classes", ex);
-			// FMLLog.severe("Error modifying item classes: %s", ex);
 		}
 
 		setSortingList();
@@ -174,6 +173,11 @@ public abstract class Items {
 	 * @param material
 	 */
 	protected static void createItemsModSupport(MetalMaterial material) {
+		if (Options.enableModderSupportThings) {
+			createCasing(material);
+			createDensePlate(material);
+		}
+
 		createItemsModMekanism(material);
 		createItemsModIC2(material);
 	}
@@ -183,16 +187,9 @@ public abstract class Items {
 	 * @param material
 	 */
 	protected static void createItemsModIC2(MetalMaterial material) {
-		final boolean enableModderSupportThings = true;
-
 		if (material.hasOre) {
 			createCrushed(material);
 			createCrushedPurified(material);
-		}
-
-		if (enableModderSupportThings) {
-			createCasing(material);
-			createDensePlate(material);
 		}
 	}
 
@@ -532,11 +529,11 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.enableHorseArmor) && (material.horse_armor == null)) {
-			material.horse_armor = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.toolsTab);
+		if ((Options.enableHorseArmor) && (material.horseArmor == null)) {
+			material.horseArmor = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.toolsTab);
 		}
 
-		return material.horse_armor;
+		return material.horseArmor;
 	}
 
 	/**
@@ -651,11 +648,11 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.enableFishingRod) && (material.fishing_rod == null)) {
-			material.fishing_rod = addItem(new ItemMetalFishingRod(material), "fishing_rod", material, ItemGroups.toolsTab);
+		if ((Options.enableFishingRod) && (material.fishingRod == null)) {
+			material.fishingRod = addItem(new ItemMetalFishingRod(material), "fishing_rod", material, ItemGroups.toolsTab);
 		}
 
-		return material.fishing_rod;
+		return material.fishingRod;
 	}
 
 	/**
@@ -756,12 +753,12 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.enableMekanism) && (material.powder_dirty == null)) {
-			material.powder_dirty = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.DUSTDIRTY + material.getCapitalizedName(), material.powder_dirty);
+		if ((Options.enableMekanism) && (material.powderDirty == null)) {
+			material.powderDirty = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.itemsTab);
+			OreDictionary.registerOre(Oredicts.DUSTDIRTY + material.getCapitalizedName(), material.powderDirty);
 		}
 
-		return material.powder_dirty;
+		return material.powderDirty;
 	}
 
 	// TODO: Possibly make this a Block, double of the normal plate.
@@ -794,12 +791,12 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.enableIC2) && (material.dense_plate == null)) {
-			material.dense_plate = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.PLATEDENSE + material.getCapitalizedName(), material.dense_plate);
+		if ((Options.enableIC2) && (material.densePlate == null)) {
+			material.densePlate = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.itemsTab);
+			OreDictionary.registerOre(Oredicts.PLATEDENSE + material.getCapitalizedName(), material.densePlate);
 		}
 
-		return material.dense_plate;
+		return material.densePlate;
 	}
 
 	/**
@@ -830,12 +827,12 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.enableIC2) && (material.crushed_purified == null)) {
-			material.crushed_purified = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.CRUSHEDPURIFIED + material.getCapitalizedName(), material.crushed_purified);
+		if ((Options.enableIC2) && (material.crushedPurified == null)) {
+			material.crushedPurified = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.itemsTab);
+			OreDictionary.registerOre(Oredicts.CRUSHEDPURIFIED + material.getCapitalizedName(), material.crushedPurified);
 		}
 
-		return material.crushed_purified;
+		return material.crushedPurified;
 	}
 
 	/**
@@ -848,11 +845,9 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.enableSlab) && (material.slab == null)) {
-			// TODO: Do we need to check for the block too?
-			if ((material.half_slab != null) && (material.double_slab != null)) {
-				material.slab = addItem(new ItemMetalSlab(material), "slab", material, ItemGroups.blocksTab);
-			}
+		// TODO: Do we need to check for the block too?
+		if ((Options.enableSlab) && (material.slab == null) && (material.halfSlab != null) && (material.doubleSlab != null)) {
+			material.slab = addItem(new ItemMetalSlab(material), "slab", material, ItemGroups.blocksTab);
 		}
 
 		return material.slab;
@@ -868,11 +863,9 @@ public abstract class Items {
 			return null;
 		}
 
-		if ((Options.enableDoor) && (material.door == null)) {
-			if (material.doorBlock != null) {
-				material.door = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.blocksTab);
-				OreDictionary.registerOre(Oredicts.DOOR, material.door);
-			}
+		if (((Options.enableDoor) && (material.door == null)) && (material.doorBlock != null)) {
+			material.door = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.blocksTab);
+			OreDictionary.registerOre(Oredicts.DOOR, material.door);
 		}
 
 		return material.door;
@@ -892,7 +885,6 @@ public abstract class Items {
 		for (final Field field : fields) {
 			if (Modifier.isStatic(field.getModifiers()) && field.getType().isArray() && field.getType().getComponentType().equals(float.class)) {
 				BaseMetals.logger.info("%s: Expanding array variable %s.%s to size %d", Thread.currentThread().getStackTrace()[0].toString(), itemClass.getSimpleName(), field.getName(), expandedSize);
-				//           FMLLog.info("%s: Expanding array variable %s.%s to size %s", Thread.currentThread().getStackTrace()[0],            itemClass.getSimpleName(), field.getName(), expandedSize);
 				field.setAccessible(true); // bypass 'private' key word
 				final Field modifiersField = Field.class.getDeclaredField("modifiers");
 				modifiersField.setAccessible(true);

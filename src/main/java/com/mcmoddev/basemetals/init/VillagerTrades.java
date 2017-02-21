@@ -144,7 +144,7 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 			}
 		}
 
-		if (Loader.instance().activeModContainer().getModId().equals("basemetals")) {
+		if ("basemetals".equals(Loader.instance().activeModContainer().getModId())) {
 			if (Options.enableCharcoal) {
 				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
 				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
@@ -168,7 +168,6 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 				VillagerTradeHelper.insertTrades(profession, career, level, new MultiTradeGenerator(TRADES_PER_LEVEL, trades));
 			} catch (NoSuchFieldException | IllegalAccessException ex) {
 				BaseMetals.logger.error("Java Reflection Exception", ex);
-				// FMLLog.log(Level.ERROR, ex, "Java Reflection Exception");
 			}
 		}
 	}

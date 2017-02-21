@@ -24,7 +24,7 @@ public class ItemMetalSlab extends ItemSlab implements IOreDictionaryEntry, IMet
 	 * @param material The material to make the slab from
 	 */
 	public ItemMetalSlab(MetalMaterial material) {
-		super(material.half_slab, material.half_slab, material.double_slab);
+		super(material.halfSlab, material.halfSlab, material.doubleSlab);
 		this.material = material;
 		this.oreDict = Oredicts.SLAB + this.material.getCapitalizedName();
 	}

@@ -93,7 +93,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 			material.axe = net.minecraft.init.Items.DIAMOND_AXE;
 			material.hoe = net.minecraft.init.Items.DIAMOND_HOE;
-			material.horse_armor = net.minecraft.init.Items.DIAMOND_HORSE_ARMOR;
+			material.horseArmor = net.minecraft.init.Items.DIAMOND_HORSE_ARMOR;
 			material.pickaxe = net.minecraft.init.Items.DIAMOND_PICKAXE;
 			material.shovel = net.minecraft.init.Items.DIAMOND_SHOVEL;
 			material.sword = net.minecraft.init.Items.DIAMOND_SWORD;
@@ -115,7 +115,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 			material.axe = net.minecraft.init.Items.GOLDEN_AXE;
 			material.hoe = net.minecraft.init.Items.GOLDEN_HOE;
-			material.horse_armor = net.minecraft.init.Items.GOLDEN_HORSE_ARMOR;
+			material.horseArmor = net.minecraft.init.Items.GOLDEN_HORSE_ARMOR;
 			material.pickaxe = net.minecraft.init.Items.GOLDEN_PICKAXE;
 			material.shovel = net.minecraft.init.Items.GOLDEN_SHOVEL;
 			material.sword = net.minecraft.init.Items.GOLDEN_SWORD;
@@ -138,7 +138,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.axe = net.minecraft.init.Items.IRON_AXE;
 			material.door = net.minecraft.init.Items.IRON_DOOR;
 			material.hoe = net.minecraft.init.Items.IRON_HOE;
-			material.horse_armor = net.minecraft.init.Items.IRON_HORSE_ARMOR;
+			material.horseArmor = net.minecraft.init.Items.IRON_HORSE_ARMOR;
 			material.pickaxe = net.minecraft.init.Items.IRON_PICKAXE;
 			material.shovel = net.minecraft.init.Items.IRON_SHOVEL;
 			material.sword = net.minecraft.init.Items.IRON_SWORD;
@@ -209,8 +209,8 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.shovel = net.minecraft.init.Items.STONE_SHOVEL;
 			material.sword = net.minecraft.init.Items.STONE_SWORD;
 			material.block = net.minecraft.init.Blocks.STONE;
-			material.half_slab = net.minecraft.init.Blocks.STONE_SLAB;
-			material.double_slab = net.minecraft.init.Blocks.DOUBLE_STONE_SLAB;
+			material.halfSlab = net.minecraft.init.Blocks.STONE_SLAB;
+			material.doubleSlab = net.minecraft.init.Blocks.DOUBLE_STONE_SLAB;
 			material.stairs = net.minecraft.init.Blocks.STONE_STAIRS;
 
 			createCrackhammer(material);
@@ -240,8 +240,8 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.trapdoor = net.minecraft.init.Blocks.TRAPDOOR;
 			material.shears = net.minecraft.init.Items.SHEARS;
 			material.block = net.minecraft.init.Blocks.PLANKS;
-			material.half_slab = net.minecraft.init.Blocks.WOODEN_SLAB;
-			material.double_slab = net.minecraft.init.Blocks.DOUBLE_WOODEN_SLAB;
+			material.halfSlab = net.minecraft.init.Blocks.WOODEN_SLAB;
+			material.doubleSlab = net.minecraft.init.Blocks.DOUBLE_WOODEN_SLAB;
 			material.stairs = net.minecraft.init.Blocks.OAK_STAIRS;
 
 			createCrackhammer(material);

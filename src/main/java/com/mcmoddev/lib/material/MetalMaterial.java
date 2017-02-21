@@ -113,11 +113,11 @@ public class MetalMaterial {
 	public Item crackhammer;
 	public Item crossbow;
 	public Item door;
-	public Item fishing_rod;
+	public Item fishingRod;
 	public Item gear;
 	public Item helmet;
 	public Item hoe;
-	public Item horse_armor;
+	public Item horseArmor;
 	public Item ingot;
 	public Item leggings;
 	public Item nugget;
@@ -136,12 +136,12 @@ public class MetalMaterial {
 	public Block block;
 	public Block button;
 	public BlockDoor doorBlock;
-	public BlockSlab double_slab;
-	public BlockSlab half_slab;
+	public BlockSlab doubleSlab;
+	public BlockSlab halfSlab;
 	public Block lever;
 	public Block ore;
 	public Block plate;
-	public Block pressure_plate;
+	public Block pressurePlate;
 	public Block stairs;
 	public Block trapdoor;
 	public Block wall;
@@ -152,12 +152,12 @@ public class MetalMaterial {
 	public Item crystal;
 	public Item shard;
 	public Item clump;
-	public Item powder_dirty;
+	public Item powderDirty;
 
 	public Item casing;
-	public Item dense_plate;
+	public Item densePlate;
 	public Item crushed;
-	public Item crushed_purified;
+	public Item crushedPurified;
 
 	public Block oreEnd;
 	public Block oreNether;

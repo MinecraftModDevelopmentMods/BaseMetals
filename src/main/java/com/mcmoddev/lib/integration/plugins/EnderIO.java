@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.integration.plugins;
 
-import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
@@ -38,7 +38,7 @@ public class EnderIO implements IIntegration {
 	 *            The Material
 	 */
 	protected static void addAlloySmelterRecipe(String materialName) {
-		addAlloySmelterRecipe(materialName, null, 3600);
+		addAlloySmelterRecipe(materialName, null, 2000);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class EnderIO implements IIntegration {
 		final String input = Oredicts.ORE + capitalizedName;
 		final String output = Oredicts.INGOT + capitalizedName;
 
-		if (material.hasOre == false)
+		if (!(material.hasOre))
 			return; // Only run for Ore types
 
 		// @formatter:off
@@ -96,7 +96,7 @@ public class EnderIO implements IIntegration {
 	 *            The Material
 	 */
 	protected static void addSagMillRecipe(String materialName) {
-		addSagMillRecipe(materialName, null, 3600);
+		addSagMillRecipe(materialName, null, 2400);
 	}
 
 	/**
@@ -170,9 +170,14 @@ public class EnderIO implements IIntegration {
 		// final String rockName = "end_stone";
 		final int rockQty = 1;
 		final String rockChance = "0.15";
+		String messageSecondary = "";
 
-		if (material.hasOre == false)
+		if (!(material.hasOre))
 			return; // Only run for Ore types
+
+		if (outputSecondary != null)
+			messageSecondary = "<itemStack oreDictionary=\"" + secondaryOutput + "\" number=\"" + secondaryQty + "\" chance=\"" + secondaryChance + "\" />";
+			// messageSecondary = "<itemStack oreDictionary=\"" + rockOredict + "\" number=\"" + rockQty + "\" chance=\"" + rockChance + "\" />" +
 
 		// @formatter:off
 		String messageSAGMill =
@@ -182,13 +187,10 @@ public class EnderIO implements IIntegration {
 			   "<itemStack oreDictionary="+ input + "\" />" +
 			  "</input>" +
 			  "<output>" +
-			   "<itemStack oreDictionary=\"" + primaryOutput + "\" number=\"" + primaryQty + "\" chance=\"" + primaryChance + "\" />";
-		if (outputSecondary != null)
-			messageSAGMill +=
-			   "<itemStack oreDictionary=\"" + secondaryOutput + "\" number=\"" + secondaryQty + "\" chance=\"" + secondaryChance + "\" />";
-			messageSAGMill +=
+			   "<itemStack oreDictionary=\"" + primaryOutput + "\" number=\"" + primaryQty + "\" chance=\"" + primaryChance + "\" />" +
+			   messageSecondary +
+			   "<itemStack oreDictionary=\"" + secondaryOutput + "\" number=\"" + secondaryQty + "\" chance=\"" + secondaryChance + "\" />" +
 			   "<itemStack modID=\"" + rockModID + "\" itemName=\"" + rockName + "\" number=\"" + rockQty + "\" chance=\"" + rockChance + "\" />" +
-//			   "<itemStack oreDictionary=\"" + rockOredict + "\" number=\"" + rockQty + "\" chance=\"" + rockChance + "\" />" +
 			  "</output>" +
 			 "</recipe>" +
 			"</recipeGroup>";

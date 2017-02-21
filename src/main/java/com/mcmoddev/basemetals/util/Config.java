@@ -40,7 +40,7 @@ public class Config {
 	private static final String TOOLS_CAT = "Tools and Items";
 	private static final String ALT_CFG_PATH = "config/additional-loot-tables"; // + BaseMetals.MODID;
 	private static final String ORESPAWN_CFG_PATH = "config/orespawn";
-	private static List<String> USER_CRUSHER_RECIPES = new ArrayList<String>();
+	private static List<String> UserCrusherRecipes = new ArrayList<String>();
 
 	@SubscribeEvent
 	public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent e) {
@@ -94,8 +94,8 @@ public class Config {
 				"If false, then Base Metals will not try and integrate with Mekanism");
 		Options.enableThaumcraft = configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Thaumcraft");
-		Options.enableTinkersConstruct = configuration.getBoolean("tinkers_construct_integration", INTEGRATION_CAT,
-				true, "If false, then Base Metals will not try and integrate with Tinkers Construct");
+		Options.enableTinkersConstruct = configuration.getBoolean("tinkers_construct_integration", INTEGRATION_CAT, true,
+				"If false, then Base Metals will not try and integrate with Tinkers Construct");
 		Options.enableVeinminer = configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with VeinMiner");
 		Options.enableTAIGA = configuration.getBoolean("taiga_integration", INTEGRATION_CAT, true,
@@ -239,8 +239,6 @@ public class Config {
 						+ "formula modid:name->modid:name for most items/blocks. \n\n"
 						+ "All properties in this section will be parsed for formulas, regardless their name. \n"
 						+ "This lets you organize your recipe lists for easier reading.");
-		// TODO: verify
-		// if (userRecipeCat.keySet().size() == 0) {
 		if (userRecipeCat.keySet().isEmpty()) {
 			final Property prop = new Property("custom", "", Property.Type.STRING);
 			prop.setComment("Example: minecraft:stained_glass#11->minecraft:dye#4; minecraft:wool->4*minecraft:string");
@@ -256,7 +254,7 @@ public class Config {
 				if (!(recipe.contains("->"))) {
 					throw new IllegalArgumentException("Malformed hammer recipe expression '" + recipe + "'. Should be in format 'modid:itemname->modid:itemname'");
 				}
-				USER_CRUSHER_RECIPES.add(recipe);
+				UserCrusherRecipes.add(recipe);
 			}
 		}
 
@@ -277,7 +275,6 @@ public class Config {
 					Files.write(oreSpawnFile, Arrays.asList(DataConstants.DEFAULT_ORESPAWN_JSON.split("\n")), Charset.forName("UTF-8"));
 				} catch (final IOException ex) {
 					BaseMetals.logger.error("Failed to write file " + oreSpawnFile, ex);
-					// FMLLog.log(Level.ERROR, ex, "%s: Failed to write file " + oreSpawnFile, Loader.instance().activeModContainer().getModId());
 				}
 			}
 		}
@@ -309,7 +306,6 @@ public class Config {
 						Collections.singletonList(AdditionalLootTables.VILLAGE_BLACKSMITH));
 			} catch (final IOException ex) {
 				BaseMetals.logger.error("Failed to extract additional loot tables", ex);
-				// FMLLog.log(Level.ERROR, ex, "%s: Failed to extract additional loot tables", Loader.instance().activeModContainer().getModId());
 			}
 		}
 	}
@@ -410,15 +406,16 @@ public class Config {
 		public static boolean enableWall = true;
 		public static boolean enableDenseOres = true;
 
+		public static boolean enableModderSupportThings = true;
+
 		private Options() {
 			throw new IllegalAccessError("Not a instantiable class");
 		}
 	}
 
 	public static void postInit() {
-		for (final String recipe : USER_CRUSHER_RECIPES) {
+		for (final String recipe : UserCrusherRecipes) {
 			BaseMetals.logger.info("Adding custom crusher recipe '%s'", recipe);
-			// FMLLog.info(BaseMetals.MODID + ": adding custom crusher recipe '" + recipe + "'");
 			final int i = recipe.indexOf("->");
 			final String inputStr = recipe.substring(0, i);
 			final String outputStr = recipe.substring(i + 2, recipe.length());
@@ -426,7 +423,6 @@ public class Config {
 			final ItemStack output = parseStringAsItemStack(outputStr, false);
 			if ((input == null) || (output == null)) {
 				BaseMetals.logger.error("Failed to add recipe formula '%s' because the blocks/items could not be found", recipe);
-				// FMLLog.severe("Failed to add recipe formula '" + recipe + "' because the blocks/items could not be found");
 			} else {
 				CrusherRecipeRegistry.addNewCrusherRecipe(input, output);
 			}
@@ -464,12 +460,10 @@ public class Config {
 						}
 						if (!alreadyHasOreRecipe) {
 							BaseMetals.logger.info("Automatically adding custom crusher recipe '%s' -> %s", oreX, dustX2);
-							// FMLLog.info(BaseMetals.MODID + ": automatically adding custom crusher recipe \"%s\" -> %s", oreX, dustX2);
 							CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX2);
 						}
 						if (!alreadyHasIngotRecipe) {
 							BaseMetals.logger.info("Automatically adding custom crusher recipe '%s' -> %s", ingotX, dustX1);
-							// FMLLog.info(BaseMetals.MODID + ": automatically adding custom crusher recipe \"%s\" -> %s", ingotX, dustX1);
 							CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX1);
 						}
 					}
@@ -524,7 +518,6 @@ public class Config {
 		} else {
 			// item not found
 			BaseMetals.logger.info("Failed to find item or block for ID '%s'", id);
-			// FMLLog.severe("Failed to find item or block for ID '" + id + "'");
 			return null;
 		}
 	}

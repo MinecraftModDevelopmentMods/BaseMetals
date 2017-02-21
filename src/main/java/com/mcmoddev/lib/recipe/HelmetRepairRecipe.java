@@ -37,7 +37,7 @@ public class HelmetRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 				repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
 			}
 			if (!helmetMatched) {
-				helmetMatched = (OreDictionary.itemMatches(baseHelmet, item, false)) ? (item.getItemDamage() > 0 ? true : false) : false;
+				helmetMatched = OreDictionary.itemMatches(baseHelmet, item, false) ? (item.getItemDamage() > 0 ? true : false) : false;
 			}
 		}
 		return helmetMatched ? repairMatched : false;

@@ -259,10 +259,10 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.enablePressurePlate) && (material.pressure_plate == null)) {
-			material.pressure_plate = addBlock(new BlockMetalPressurePlate(material), "pressure_plate", material, ItemGroups.blocksTab);
+		if ((Options.enablePressurePlate) && (material.pressurePlate == null)) {
+			material.pressurePlate = addBlock(new BlockMetalPressurePlate(material), "pressure_plate", material, ItemGroups.blocksTab);
 		}
-		return material.pressure_plate;
+		return material.pressurePlate;
 	}
 
 	/**
@@ -275,11 +275,11 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.enableSlab) && (material.half_slab == null)) {
-			material.half_slab = (BlockSlab) addBlock(new BlockHalfMetalSlab(material), "slab", material, ItemGroups.blocksTab);
+		if ((Options.enableSlab) && (material.halfSlab == null)) {
+			material.halfSlab = (BlockSlab) addBlock(new BlockHalfMetalSlab(material), "slab", material, ItemGroups.blocksTab);
 		}
 
-		return material.half_slab;
+		return material.halfSlab;
 	}
 
 	/**
@@ -292,11 +292,11 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.enableSlab) && (material.double_slab == null)) {
-			material.double_slab = (BlockSlab) addBlock(new BlockDoubleMetalSlab(material), "slab", material, ItemGroups.blocksTab);
+		if ((Options.enableSlab) && (material.doubleSlab == null)) {
+			material.doubleSlab = (BlockSlab) addBlock(new BlockDoubleMetalSlab(material), "slab", material, ItemGroups.blocksTab);
 		}
 
-		return material.double_slab;
+		return material.doubleSlab;
 	}
 
 	/**
@@ -309,10 +309,8 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.enableStairs) && (material.stairs == null)) {
-			if (material.block != null) {
-				material.stairs = addBlock(new BlockMetalStairs(material), "stairs", material, ItemGroups.blocksTab);
-			}
+		if ((Options.enableStairs) && (material.stairs == null) && (material.block != null)) {
+			material.stairs = addBlock(new BlockMetalStairs(material), "stairs", material, ItemGroups.blocksTab);
 		}
 
 		return material.stairs;
@@ -328,10 +326,8 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.enableWall) && (material.wall == null)) {
-			if (material.block != null) {
-				material.wall = addBlock(new BlockMetalWall(material), "wall", material, ItemGroups.blocksTab);
-			}
+		if ((Options.enableWall) && (material.wall == null) && (material.block != null)) {
+			material.wall = addBlock(new BlockMetalWall(material), "wall", material, ItemGroups.blocksTab);
 		}
 
 		return material.wall;

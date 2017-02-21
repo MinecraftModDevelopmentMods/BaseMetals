@@ -2,10 +2,10 @@ package com.mcmoddev.basemetals.proxy;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.*;
-import com.mcmoddev.basemetals.integration.IntegrationManager;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -45,16 +45,12 @@ public class CommonProxy {
 		for (final MissingMapping mapping : event.get()) {
 			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
-					if ((mapping.resourceLocation.getResourcePath().equals("liquid_mercury")) && (mapping.type.equals(GameRegistry.Type.BLOCK))) {
-						if (Options.enableMercury) {
-							mapping.remap(Materials.mercury.fluidBlock);
-						}
+					if ((Options.enableMercury) && ("liquid_mercury".equals(mapping.resourceLocation.getResourcePath()))) {
+						mapping.remap(Materials.mercury.fluidBlock);
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
-					if (mapping.resourceLocation.getResourcePath().equals("carbon_powder")) {
-						if (Options.enableCoal) {
-							mapping.remap(Materials.vanilla_coal.powder);
-						}
+					if ((Options.enableCoal) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
+						mapping.remap(Materials.vanilla_coal.powder);
 					}
 				}
 			}

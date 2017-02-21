@@ -37,7 +37,7 @@ public class BootsRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 				repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
 			}
 			if (!bootsMatched) {
-				bootsMatched = (OreDictionary.itemMatches(baseBoots, item, false)) ? (item.getItemDamage() > 0 ? true : false) : false;
+				bootsMatched = OreDictionary.itemMatches(baseBoots, item, false) ? (item.getItemDamage() > 0 ? true : false) : false;
 			}
 		}
 		return bootsMatched ? repairMatched : false;

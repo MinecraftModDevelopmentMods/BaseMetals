@@ -18,7 +18,7 @@ import net.minecraft.util.text.translation.I18n;
 @SuppressWarnings({ "rawtypes", "deprecation" })
 public class CrusherRecipeCategory implements IRecipeCategory {
 
-	public static final @Nonnull String UID = BaseMetalsJEIPlugin.JEIUID + ".crackhammer";
+	@Nonnull public static final String UID = BaseMetalsJEIPlugin.JEIUID + ".crackhammer";
 
 	private final String title;
 	private final IDrawable background;
@@ -27,11 +27,11 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 
 	public CrusherRecipeCategory(IGuiHelper guiHelper) {
 		title = I18n.translateToLocalFormatted(UID);
-		ResourceLocation RL = new ResourceLocation("basemetals", "textures/jei/JEIhammeroverlay.png");
-		background = guiHelper.createDrawable(RL, 0, 0, 166, 130);
-		icon = guiHelper.createDrawable(RL, 170, 2, 16, 16);
+		ResourceLocation resourceLocation = new ResourceLocation("basemetals", "textures/jei/JEIhammeroverlay.png");
+		background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
+		icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
 
-		IDrawableStatic hammerDrawable = guiHelper.createDrawable(RL, 169, 17, 32, 32);
+		IDrawableStatic hammerDrawable = guiHelper.createDrawable(resourceLocation, 169, 17, 32, 32);
 		hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 200, IDrawableAnimated.StartDirection.BOTTOM, false);
 	}
 
@@ -61,6 +61,7 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 
 	@Override
 	public void drawExtras(Minecraft minecraft) {
+		// TODO Auto-generated method stub
 	}
 
 	@Override

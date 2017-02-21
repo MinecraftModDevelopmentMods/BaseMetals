@@ -215,7 +215,6 @@ public abstract class VillagerTrades {
 				VillagerTradeHelper.insertTrades(profession, career, level, new MultiTradeGenerator(TRADES_PER_LEVEL, trades));
 			} catch (NoSuchFieldException | IllegalAccessException ex) {
 				BaseMetals.logger.error("Java Reflection Exception", ex);
-				// FMLLog.log(Level.ERROR, ex, "Java Reflection Exception");
 			}
 		}
 	}

@@ -7,7 +7,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.FMLLog;
 
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
@@ -75,7 +74,7 @@ public class TinkersConstruct implements IIntegration {
 			if (block != null)
 				TinkerRegistry.registerMelting(Item.getItemFromBlock(block), output, amountPer);
 		} catch (final Exception ex) {
-			FMLLog.severe("Tried registering %s for melting, caught exception: %s", block.getUnlocalizedName(), ex.getMessage());
+			BaseMetals.logger.error("Tried registering " + block.getUnlocalizedName() + " for melting, caught exception", ex);
 		}
 	}
 
@@ -111,8 +110,8 @@ public class TinkersConstruct implements IIntegration {
 		if (base.oreEnd != null)
 			TinkerRegistry.registerMelting(base.oreEnd, output, amountPer * 4);
 
-		if (base.half_slab != null)
-			TinkerRegistry.registerMelting(base.half_slab, output, (amountPer * 4) + (amountPer / 2));
+		if (base.halfSlab != null)
+			TinkerRegistry.registerMelting(base.halfSlab, output, (amountPer * 4) + (amountPer / 2));
 
 		if (base.wall != null)
 			TinkerRegistry.registerMelting(base.wall, output, amountPer * 9);
@@ -132,8 +131,8 @@ public class TinkersConstruct implements IIntegration {
 		if (base.shears != null)
 			TinkerRegistry.registerMelting(base.shears, output, amountPer * 2);
 
-		if (base.pressure_plate != null)
-			TinkerRegistry.registerMelting(base.pressure_plate, output, amountPer * 2);
+		if (base.pressurePlate != null)
+			TinkerRegistry.registerMelting(base.pressurePlate, output, amountPer * 2);
 
 		if (base.bars != null)
 			TinkerRegistry.registerMelting(base.bars, output, ((amountPer / 9) * 3) + 6); // Fun math

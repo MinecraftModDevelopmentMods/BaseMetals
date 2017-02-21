@@ -4,7 +4,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 import com.mcmoddev.lib.material.MetalMaterial;
@@ -18,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import com.sosnitzka.taiga.Blocks;
 import com.sosnitzka.taiga.Items;
 
-@BaseMetalsPlugin(TAIGA.PLUGIN_MODID)
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TAIGA.PLUGIN_MODID)
 public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGA implements IIntegration {
 
 	private static boolean initDone = false;

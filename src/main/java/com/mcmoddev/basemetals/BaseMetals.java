@@ -61,7 +61,7 @@ public class BaseMetals {
 	@SidedProxy(clientSide = PROXY_BASE + "ClientProxy", serverSide = PROXY_BASE + "ServerProxy")
 	public static CommonProxy proxy;
 
-	public static Logger logger;
+	public static final Logger logger = LogManager.getFormatterLogger(BaseMetals.MODID);
 
 	static {
 		// Forge says this needs to be statically initialized here.
@@ -70,9 +70,6 @@ public class BaseMetals {
 
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {
-		// logger = event.getModLog();
-		logger = LogManager.getFormatterLogger(BaseMetals.MODID);
-
 		proxy.preInit(event);
 	}
 

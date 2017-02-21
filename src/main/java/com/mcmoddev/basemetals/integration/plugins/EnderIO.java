@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
-import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 
 /**
@@ -8,7 +9,7 @@ import com.mcmoddev.lib.integration.IIntegration;
  * @author Jasmine Iwanek
  *
  */
-@BaseMetalsPlugin(EnderIO.PLUGIN_MODID)
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = EnderIO.PLUGIN_MODID)
 public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIO implements IIntegration {
 
 	private static boolean initDone = false;

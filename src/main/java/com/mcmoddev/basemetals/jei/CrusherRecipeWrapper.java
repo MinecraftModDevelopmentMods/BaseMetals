@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 
 import com.mcmoddev.basemetals.registry.recipe.ICrusherRecipe;
 
+
 @SuppressWarnings("rawtypes")
 public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecipeWrapper {
 
@@ -69,7 +70,7 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -80,5 +81,6 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 
 	@Override
 	public void onTooltip(int slotIndex, boolean input, @Nonnull ItemStack ingredient, @Nonnull List<String> tooltip) {
+		// TODO Auto-generated method stub
 	}
 }

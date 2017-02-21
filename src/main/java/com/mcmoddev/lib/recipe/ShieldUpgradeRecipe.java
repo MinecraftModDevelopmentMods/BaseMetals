@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
@@ -19,7 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeRepairItem;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
@@ -97,7 +97,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 			}
 		}
 
-		FMLLog.severe("Adding %d enchantments to output item", enchants.size());
+		BaseMetals.logger.debug("Adding %d enchantments to output item", enchants.size());
 		EnchantmentHelper.setEnchantments(enchants, plateMatched);
 		return plateMatched;
 	}

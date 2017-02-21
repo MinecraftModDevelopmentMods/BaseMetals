@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
-import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 
 /**
@@ -9,7 +10,7 @@ import com.mcmoddev.lib.integration.IIntegration;
  * @author Jasmine Iwanek
  *
  */
-@BaseMetalsPlugin(VeinMiner.PLUGIN_MODID)
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = VeinMiner.PLUGIN_MODID)
 public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMiner implements IIntegration {
 
 	private static boolean initDone = false;

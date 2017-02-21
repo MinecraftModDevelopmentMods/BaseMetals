@@ -1,10 +1,10 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
-import com.mcmoddev.basemetals.init.Materials;
-import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 
-@BaseMetalsPlugin(IC2.PLUGIN_MODID)
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID)
 public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2 implements IIntegration {
 
 	private static boolean initDone = false;

@@ -36,7 +36,7 @@ public class LeggingsRepairRecipe extends ShapelessOreRecipe implements IRecipe 
 				repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
 			}
 			if (!leggingsMatched) {
-				leggingsMatched = (OreDictionary.itemMatches(baseLeggings, item, false)) ? (item.getItemDamage() > 0 ? true : false) : false;
+				leggingsMatched = OreDictionary.itemMatches(baseLeggings, item, false) ? (item.getItemDamage() > 0 ? true : false) : false;
 			}
 		}
 		return leggingsMatched ? repairMatched : false;

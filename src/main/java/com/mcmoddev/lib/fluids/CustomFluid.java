@@ -1,11 +1,9 @@
 package com.mcmoddev.lib.fluids;
 
-// import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Materials;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.client.resources.I18n;
-// import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;

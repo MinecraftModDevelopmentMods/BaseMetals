@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 
 import com.mcmoddev.basemetals.BaseMetals;
 
-import net.minecraftforge.fml.common.FMLLog;
 import slimeknights.tconstruct.library.traits.ITrait;
 
 public class TraitRegistry {
@@ -54,8 +53,8 @@ public class TraitRegistry {
 			Class<?> clazz = f.getType();
 			try {
 				registeredTraits.put(f.getName(), (ITrait) f.get(clazz));
-			} catch (final Exception e) {
-				FMLLog.severe("tried to register trait %s, caught exception: %s", f.getName(), e.getMessage());
+			} catch (final Exception ex) {
+				BaseMetals.logger.error("tried to register trait " + f.getName() + ", caught exception", ex);
 			}
 		}
 	}

@@ -198,7 +198,6 @@ public abstract class Materials {
 		if (armorMaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to create armor material enum for " + material);
-			// FMLLog.severe("Failed to create armor material enum for " + material);
 		}
 		armorMaterialMap.put(material, armorMaterial);
 
@@ -206,7 +205,6 @@ public abstract class Materials {
 		if (toolMaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to create tool material enum for " + material);
-			// FMLLog.severe("Failed to create tool material enum for " + material);
 		}
 		toolMaterialMap.put(material, toolMaterial);
 

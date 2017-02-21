@@ -37,7 +37,7 @@ public class ChestplateRepairRecipe extends ShapelessOreRecipe implements IRecip
 				repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
 			}
 			if (!chestplateMatched) {
-				chestplateMatched = (OreDictionary.itemMatches(baseChestplate, item, false)) ? (item.getItemDamage() > 0 ? true : false) : false;
+				chestplateMatched = OreDictionary.itemMatches(baseChestplate, item, false) ? (item.getItemDamage() > 0 ? true : false) : false;
 			}
 		}
 		return chestplateMatched ? repairMatched : false;

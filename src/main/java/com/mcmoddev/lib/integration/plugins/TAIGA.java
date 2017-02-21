@@ -1,8 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.IIntegration;
-
-import net.minecraftforge.fml.common.FMLLog;
 
 public class TAIGA implements IIntegration {
 
@@ -14,7 +13,7 @@ public class TAIGA implements IIntegration {
 	public void init() {
 		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTAIGA) {
 			if (!com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
-				FMLLog.severe("BASEMETALS TAIGA Plugin requires the TinkersConstruct Plugin");
+				BaseMetals.logger.error("TAIGA Plugin requires the TinkersConstruct Plugin");
 			}
 			return;
 		}

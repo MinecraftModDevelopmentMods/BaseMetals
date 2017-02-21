@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Collections;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.*;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.FMLLog;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.modifiers.Modifier;
@@ -32,7 +32,7 @@ public class ModifierRegistry {
 	public static void setModifierRecipe(String name, ItemStack... ingredients) {
 		Modifier t = modifiers.get(name);
 		if (t == null) {
-			FMLLog.severe("Trying to add a recipe to unknown modifier %s, ignoring.", name);
+			BaseMetals.logger.error("Trying to add a recipe to unknown modifier %s, ignoring.", name);
 			return;
 		}
 
@@ -46,7 +46,7 @@ public class ModifierRegistry {
 	public static void setModifierItem(String name, Item item) {
 		Modifier t = modifiers.get(name);
 		if (t == null) {
-			FMLLog.severe("Trying to add an item to unknown modifier %s, ignoring.", name);
+			BaseMetals.logger.error("Trying to add an item to unknown modifier %s, ignoring.", name);
 			return;
 		}
 

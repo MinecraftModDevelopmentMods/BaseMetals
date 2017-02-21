@@ -35,7 +35,7 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 		this.blockResistance = Math.max(1.5f, material.getBlastResistance() * 0.75f);
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 		this.oreDict = Oredicts.ORE + material.getCapitalizedName();
-		// FMLLog.info(material.getName() + " ore harvest level set to " + material.getRequiredHarvestLevel());
+		// BaseMetals.logger.info(material.getName() + " ore harvest level set to " + material.getRequiredHarvestLevel());
 	}
 
 	@Override
@@ -78,7 +78,13 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 		int most = 1;
 		int least = 1;
 		int total;
-		switch( this.material.getType() ) {
+		switch (this.material.getType()) {
+			case WOOD:
+			case ROCK:
+			case METAL:
+				most = 1;
+				least = 1;
+				break;
 			case MINERAL:
 				most = 4;
 				least = 2;
@@ -94,8 +100,10 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
-		if( this.material.getType() == MetalMaterial.MaterialType.MINERAL ) {
+		if (this.material.getType() == MetalMaterial.MaterialType.MINERAL) {
 			return this.material.powder;
+		} else if (this.material.getType() == MetalMaterial.MaterialType.GEM) {
+			return this.material.ingot;
 		}
 		return Item.getItemFromBlock(this);
 	}

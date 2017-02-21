@@ -10,7 +10,7 @@ import slimeknights.tconstruct.library.utils.ToolHelper;
 
 public class TraitSparkly extends AbstractTrait {
 
-	private final static int REGEN_INTERVAL = 200;
+	private static final int REGEN_INTERVAL = 200;
 
 	public TraitSparkly() {
 		super("sparkly", TextFormatting.OBFUSCATED);

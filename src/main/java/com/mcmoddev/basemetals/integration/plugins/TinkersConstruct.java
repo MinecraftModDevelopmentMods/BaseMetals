@@ -1,8 +1,9 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Materials;
-import com.mcmoddev.basemetals.integration.BaseMetalsPlugin;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMetalMaterial;
@@ -17,7 +18,7 @@ import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
  * @author Jasmine Iwanek
  *
  */
-@BaseMetalsPlugin(TinkersConstruct.PLUGIN_MODID)
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID)
 public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstruct implements IIntegration {
 
 	private static boolean initDone = false;
@@ -120,11 +121,10 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		// There will have to be another means of making this work...
 		// There is an event TiC has that covers material registration
 		// we could hook that...
-		if (Options.enableLead) {
-			// Lead itself is added by TiC
-			if (Options.enablePlate) {
-				registerModifierItem("plated", Item.getItemFromBlock(Materials.lead.plate));
-			}
+
+		// Lead itself is added by TiC
+		if ((Options.enableLead) && (Options.enablePlate)) {
+			registerModifierItem("plated", Item.getItemFromBlock(Materials.lead.plate));
 		}
 
 		if (Options.enableMercury) {

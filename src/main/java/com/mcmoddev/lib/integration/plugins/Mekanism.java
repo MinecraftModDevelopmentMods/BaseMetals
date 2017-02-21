@@ -83,8 +83,8 @@ public class Mekanism implements IIntegration {
 		// Combiner 8 dust to 1 ore
 		// Clump to dirty IC2: Macerator)
 
-		if ((material.clump != null) && (material.powder_dirty != null)) {
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+		if ((material.clump != null) && (material.powderDirty != null)) {
+			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powderDirty));
 		}
 		if ((material.ingot != null) && (material.powder != null)) {
 			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
@@ -94,8 +94,8 @@ public class Mekanism implements IIntegration {
 			if (material.ore != null) {
 				addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
 			}
-			if (material.powder_dirty != null) {
-				addEnrichmentChamberRecipe(new ItemStack(material.powder_dirty), new ItemStack(material.powder));
+			if (material.powderDirty != null) {
+				addEnrichmentChamberRecipe(new ItemStack(material.powderDirty), new ItemStack(material.powder));
 			}
 		}
 

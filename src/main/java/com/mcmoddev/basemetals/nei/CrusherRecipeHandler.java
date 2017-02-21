@@ -21,7 +21,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.fml.common.FMLLog;
 
 /**
  *
@@ -174,7 +173,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 		 */
 		public CrusherPair(ItemStack ingred, ItemStack result) {
 			if ((ingred == null) || (result == null)) {
-				FMLLog.warning("Added null item to NEI GUI: " + ingred + " -> " + result);
+				BaseMetals.logger.warn("Added null item to NEI GUI: " + ingred + " -> " + result);
 				if (ingred == null) {
 					ingred = new ItemStack(Blocks.AIR);
 				}

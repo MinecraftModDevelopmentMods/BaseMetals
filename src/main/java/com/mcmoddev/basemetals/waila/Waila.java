@@ -12,6 +12,6 @@ public class Waila {
 	}
 
 	public static void register(IWailaRegistrar registrar) {
-		registrar.registerBodyProvider(new leverInfoController(), BlockMetalLever.class);
+		registrar.registerBodyProvider(new LeverInfoController(), BlockMetalLever.class);
 	}
 }

@@ -48,7 +48,7 @@ public class VillagerTradeHelper {
 		final ResourceLocation profession = professionList[professionID];
 		insertTrades(profession, careerID, tradeLevel, trades);
 		/*
-		FMLLog.info("%s: injecting villager trades %s into default trade array table at position [%s][%s][%s][*]", BaseMetals.MODID, Arrays.toString(trades), professionID, careerID - 1, tradeLevel - 1);
+		BaseMetals.logger.info("%s: injecting villager trades %s into default trade array table at position [%s][%s][%s][*]", BaseMetals.MODID, Arrays.toString(trades), professionID, careerID - 1, tradeLevel - 1);
 		Field vanillaTradeField = getTradeArrayFromClass(EntityVillager.class);
 		unlockPrivateFinalField(vanillaTradeField);
 		Object tradeTable = vanillaTradeField.get(null); // is static
