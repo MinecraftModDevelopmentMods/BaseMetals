@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.integration.plugins;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MetalMaterial;
 
@@ -84,17 +83,39 @@ public class Mekanism implements IIntegration {
 		// Combiner 8 dust to 1 ore
 		// Clump to dirty IC2: Macerator)
 
-		addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
-		addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
+		if ((material.clump != null) && (material.powder_dirty != null)) {
+			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powder_dirty));
+		}
+		if ((material.ingot != null) && (material.powder != null)) {
+			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
+		}
 
-		addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
-		addEnrichmentChamberRecipe(new ItemStack(material.powder_dirty), new ItemStack(material.powder));
+		if (material.powder != null) {
+			if (material.ore != null) {
+				addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
+			}
+			if (material.powder_dirty != null) {
+				addEnrichmentChamberRecipe(new ItemStack(material.powder_dirty), new ItemStack(material.powder));
+			}
+		}
 
-		addPurificationChamberRecipe(new ItemStack(material.ore), new ItemStack(material.clump, 3));
-		addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
+		if (material.clump != null) {
+			if (material.ore != null) {
+				addPurificationChamberRecipe(new ItemStack(material.ore), new ItemStack(material.clump, 3));
+			}
+			if (material.shard != null) {
+				addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
+			}
+		}
 
-		addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
-		addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+		if (material.shard != null) {
+			if (material.ore != null) {
+				addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
+			}
+			if (material.crystal != null) {
+				addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			}
+		}
 
 		/*
 		addChemicalCrystallizerRecipe("clean" + material.getCapitalizedName(), 1000, new ItemStack(material.crystal));
