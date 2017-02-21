@@ -61,68 +61,6 @@ public class ClientProxy extends CommonProxy {
 		if (Loader.isModLoaded("waila")) {
 			com.mcmoddev.basemetals.waila.Waila.init();
 		}
-		/*
-		for (MetalMaterial material : Materials.getAllMaterials()) {
-			// Items
-			registerRenderOuter(material.arrow);
-			registerRenderOuter(material.axe);
-			registerRenderOuter(material.blend);
-			registerRenderOuter(material.boots);
-			registerRenderOuter(material.bolt);
-			registerRenderOuter(material.bow);
-			registerRenderOuter(material.chestplate);
-			registerRenderOuter(material.crackhammer);
-			registerRenderOuter(material.crossbow);
-			registerRenderOuter(material.door);
-			registerRenderOuter(material.fishing_rod);
-			registerRenderOuter(material.gear);
-			registerRenderOuter(material.helmet);
-			registerRenderOuter(material.hoe);
-			registerRenderOuter(material.horse_armor);
-			registerRenderOuter(material.ingot);
-			registerRenderOuter(material.leggings);
-			registerRenderOuter(material.nugget);
-			registerRenderOuter(material.pickaxe);
-			registerRenderOuter(material.powder);
-			registerRenderOuter(material.rod);
-			registerRenderOuter(material.shears);
-			registerRenderOuter(material.shield);
-			registerRenderOuter(material.shovel);
-			registerRenderOuter(material.slab);
-			registerRenderOuter(material.smallblend);
-			registerRenderOuter(material.smallpowder);
-			registerRenderOuter(material.sword);
-
-			// Blocks
-			registerRenderOuter(material.bars);
-			registerRenderOuter(material.block);
-			registerRenderOuter(material.button);
-			// registerRenderOuter(material.doorBlock);
-			// registerRenderOuter(material.double_slab);
-			// registerRenderOuter(material.half_slab);
-			registerRenderOuter(material.lever);
-			registerRenderOuter(material.ore);
-			registerRenderOuter(material.plate);
-			registerRenderOuter(material.pressure_plate);
-			registerRenderOuter(material.stairs);
-			registerRenderOuter(material.trapdoor);
-			registerRenderOuter(material.wall);
-
-			// Mekanism
-			registerRenderOuter(material.crystal);
-			registerRenderOuter(material.shard);
-			registerRenderOuter(material.clump);
-			registerRenderOuter(material.powder_dirty);
-
-			// IC2
-			registerRenderOuter(material.dense_plate);
-			registerRenderOuter(material.crushed);
-			registerRenderOuter(material.crushed_purified);
-			
-			// Misc
-			registerRenderOuter(Blocks.human_detector);
-		}
-		*/
 
 		for (final String name : Items.getItemRegistry().keySet()) {
 			registerRenderOuter(Items.getItemByName(name));

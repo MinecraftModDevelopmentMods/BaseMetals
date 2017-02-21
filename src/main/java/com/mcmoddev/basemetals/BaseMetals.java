@@ -16,8 +16,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * This is the entry point for this mod. If you are writing your own mod that
- * uses this mod, the classes of interest to you are the init classes (classes
+ * This is the entry point for this Mod. If you are writing your own Mod that
+ * uses this Mod, the classes of interest to you are the init classes (classes
  * in package com.mcmoddev.basemetals.init) and the CrusherRecipeRegistry class
  * (in package com.mcmoddev.basemetals.registry). Note that you should add
  * 'dependencies = "required-after:basemetals"' to your &#64;Mod annotation

@@ -59,8 +59,6 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		Recipes.init();
-		// DungeonLoot.init();
-		// Entities.init();
 
 		Achievements.init();
 
@@ -68,7 +66,6 @@ public class CommonProxy {
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		// WorldGen.init();
 		Config.postInit();
 	}
 }

@@ -5,14 +5,12 @@ import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
 
 /**
- * This class initializes all of the materials in Base Metals. It also contains
- * utility methods for looking up materials by name and finding the tool and
- * armor material equivalents for a given material.
+ * This class initializes all of the materials in Base Metals.
  *
  * @author Jasmine Iwanek
  *
  */
-public abstract class Materials extends com.mcmoddev.lib.init.Materials {
+public class Materials extends com.mcmoddev.lib.init.Materials {
 
 	/** Adamantine */
 	public static MetalMaterial adamantine;

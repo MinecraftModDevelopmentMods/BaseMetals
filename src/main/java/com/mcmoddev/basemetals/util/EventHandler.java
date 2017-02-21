@@ -66,8 +66,8 @@ public class EventHandler {
 		final Item item = event.crafting.getItem();
 		if (item instanceof IMetalObject) {
 			final MetalMaterial material = ((IMetalObject) item).getMaterial();
-			if (item instanceof ItemMetalBlend) {
-				if (Options.ENABLE_ACHIEVEMENTS) {
+			if (Options.enableAchievements) {
+				if (item instanceof ItemMetalBlend) {
 					// event.player.addStat(Achievements.metallurgy, 1);
 				}
 			}
@@ -138,5 +138,4 @@ public class EventHandler {
 			}
 		}
 	}
-
 }
