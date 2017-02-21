@@ -238,7 +238,7 @@ public class TinkersConstruct implements IIntegration {
 		}
 
 		// make sure the name used here is all lower case
-		Material tcmat = new Material(material.metalmaterial.getName().toLowerCase(), TextFormatting.WHITE);
+		Material tcmat = new Material(material.metalmaterial.getName().toLowerCase(), material.metalmaterial.getTintColor());
 
 		if (material.hasTraits) {
 			for (String s : material.getTraitLocs()) {
