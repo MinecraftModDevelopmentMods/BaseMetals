@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 
 import net.minecraft.world.World;
 
-public class ILeverInfoController implements IWailaDataProvider {
+public class LeverInfoController implements IWailaDataProvider {
 
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
