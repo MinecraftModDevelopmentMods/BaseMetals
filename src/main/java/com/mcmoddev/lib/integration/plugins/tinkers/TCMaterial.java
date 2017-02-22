@@ -39,7 +39,7 @@ public class TCMaterial {
      * Internal reference/future expansion stuff
      */
     private MetalMaterial metalmaterial;
-    private String name = "FixMe";
+    private String name;
     private HashMap<String, List<AbstractTrait>> traits = new HashMap<>();
 
     /*
@@ -126,7 +126,7 @@ public class TCMaterial {
         this.fletchingAccuracy = 1.0f;
         this.fletchingModifier = 1.0f;
         this.shaftBonusAmmo = 1;
-        if( this.name.equals("FixMe") ) {
+        if( this.name == null ) {
             this.name = this.metalmaterial.getName();
         }
         return this;
@@ -228,6 +228,10 @@ public class TCMaterial {
         return this;
     }
 
+    public TCMaterial setMaterial(MetalMaterial mm) {
+    	return this.setMetalMaterial(mm);
+    }
+    
     public TCMaterial setCraftable(boolean iscraftable) {
         // castable and craftable are exclusive
         // you can either cast the material or craft it into parts
