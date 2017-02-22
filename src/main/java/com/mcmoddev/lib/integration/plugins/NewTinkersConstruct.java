@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.material.MetalMaterial;
+import net.minecraft.util.WeightedRandom;
 import slimeknights.mantle.util.RecipeMatch;
 // wrap/replace TCMetalMaterial
 // import com.mcmoddev.lib.integration.tinkers.TCMaterial;
@@ -8,6 +9,7 @@ import slimeknights.mantle.util.RecipeMatch;
 // import com.mcmoddev.lib.integration.tinkers.TCCode;
 
 import net.minecraft.item.Item;
+import net.minecraft.block.Block;
 import net.minecraftforge.fluids.Fluid;
 
 import java.util.HashMap;
@@ -107,7 +109,14 @@ public class NewTinkersConstruct {
         // register an alloy recipe
     }
 
-    public TCCode registerBasin(/* ... */) {
+    /**
+     * Register the ability to cast a block of material from a specified quantity of a fluid
+     * @param block Block that is created
+     * @param source Fluid being poured
+     * @param sourceQty Amount of fluid being poured
+     * @return Any TCCode that represents an error or TCCode.SUCCESS
+     */
+    public TCCode registerBasin(Block block, Fluid source, int sourceQty) {
         // blargh
     }
 
