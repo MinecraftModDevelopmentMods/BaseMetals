@@ -1,4 +1,4 @@
-package com.mcmoddev.lib.integration.tinkers;
+package com.mcmoddev.lib.integration.plugins.tinkers;
 
 public enum TCCode {
   SUCCESS(1), // base success

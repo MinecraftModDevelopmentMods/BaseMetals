@@ -2,8 +2,8 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
+import com.mcmoddev.lib.integration.plugins.tinkers.TCCode;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
-import com.mcmoddev.lib.integration.tinkers.TCCode;
 
 import net.minecraft.item.Item;
 import net.minecraft.block.Block;
