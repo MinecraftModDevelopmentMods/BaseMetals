@@ -92,15 +92,15 @@ public class TCMaterial {
         if( this.metalmaterial == null ) {
             return this;
         }
-        this.headDurability = material.getToolDurability();
-        this.miningSpeed = material.magicAffinity * 3 / 2;
-        this.miningLevel = material.getToolHarvestLevel();
-        this.headAttackDamage = material.getBaseAttackDamage() * 2;
-        this.bodyDurability = material.getToolDurability() / 7;
-        this.bodyModifier = (material.hardness + material.magicAffinity * 2) / 9;
-        this.extraDurability = material.getToolDurability() / 10;
-        this.bowDrawingSpeed = calcDrawSpeed(material.getToolDurability());
-        this.bowDamage = material.getBaseAttackDamage() + 3;
+        this.headDurability = this.metalmaterial.getToolDurability();
+        this.miningSpeed = this.metalmaterial.magicAffinity * 3 / 2;
+        this.miningLevel = this.metalmaterial.getToolHarvestLevel();
+        this.headAttackDamage = this.metalmaterial.getBaseAttackDamage() * 2;
+        this.bodyDurability = this.metalmaterial.getToolDurability() / 7;
+        this.bodyModifier = (this.metalmaterial.hardness + this.metalmaterial.magicAffinity * 2) / 9;
+        this.extraDurability = this.metalmaterial.getToolDurability() / 10;
+        this.bowDrawingSpeed = calcDrawSpeed(this.metalmaterial.getToolDurability());
+        this.bowDamage = this.metalmaterial.getBaseAttackDamage() + 3;
         this.bowRange = 15.0f;
         this.bowstringModifier = 1.0f;
         this.shaftModifier = 1.0f;
