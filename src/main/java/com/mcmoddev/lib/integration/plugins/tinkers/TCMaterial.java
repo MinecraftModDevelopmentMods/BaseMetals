@@ -327,6 +327,12 @@ public class TCMaterial {
         return this.name;
     }
 
+    /**
+     * Add a trait for a given tool part/use - "general" for overall/any undefined
+     * @param name Trait name - can be any that are available in TiC or one of the customs ones added by this plugin
+     * @param loc Location/part to attach trait to
+     * @return The material
+     */
     public TCMaterial addTrait(String name, String loc) {
         ITrait trait = TraitRegistry.get(name);
         if (trait == null) {
@@ -345,10 +351,20 @@ public class TCMaterial {
         return this;
     }
 
+    /**
+     * Add the named trait to general/overall use, covers only those positions that do not have traits specifically attached
+     * @param name Name of the trait to add
+     * @return The material
+     */
     public TCMaterial addTrait(String name) {
         return this.addTrait(name, "general");
     }
 
+    /**
+     * Get a list of all traits on a given location
+     * @param loc Location to get traits for, null/unsupplied means the same as "general"
+     * @return Either an unmodifiable list of traits or the empty list
+     */
     public List<AbstractTrait> getTraits( String loc ) {
         String location = loc==null?"general":loc;
         if(this.traits.isEmpty() || this.traits.get(location).isEmpty() ) {
@@ -358,6 +374,10 @@ public class TCMaterial {
         return Collections.unmodifiableList(this.traits.get(location));
     }
 
+    /**
+     * Get the complete set of locations that have defined traits in this material
+     * @return Either the full set of locations with defined traits or the empty set
+     */
     public Set<String> getTraitLocations() {
         if( this.traits.isEmpty() ) {
             return Collections.emptySet();
