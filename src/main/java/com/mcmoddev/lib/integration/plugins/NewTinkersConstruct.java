@@ -8,7 +8,7 @@ import slimeknights.mantle.util.RecipeMatch;
 // import com.mcmoddev.lib.integration.tinkers.TCCode;
 
 import net.minecraft.item.Item;
-import net.minecraft.fluids.Fluid;
+import net.minecraftforge.fluids.Fluid;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +50,20 @@ public class NewTinkersConstruct {
     }
 
     /**
+     * Get a material of a given name based on a given MetalMaterial
+     * @param name name of the material
+     * @param material MetalMaterial it is based on
+     * @return Any TCCode that represents an error or TCCode.SUCCESS
+     */
+    public TCCode getMaterial(String name, MetalMaterial material) {
+        if( REGISTRY.containsKey(name) ) {
+            return REGISTRY.get(name).setMaterial(material);
+        } else {
+            return this.getMaterial(name).setMaterial(material);
+        }
+    }
+
+    /**
      * Register all materials in the registry
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
@@ -81,7 +95,15 @@ public class NewTinkersConstruct {
         // same as above, but ore-dicted
     }
 
-    public TCCode registerAlloy(/* same as before */) {
+    /**
+     * Register an alloy with the given recipe, name and output fluid in the specified amount
+     * @param name Name of the alloy
+     * @param output Output fluid
+     * @param outputAmount Amount of fluid produced
+     * @param recipe A chunk of String/Fluid/MetalMaterial/TCMaterial followed by an amount - must be at least two entries (4 items)
+     * @return Any TCCode that represents an error or TCCode.SUCCESS
+     */
+    public TCCode registerAlloy(String name, Fluid output, int outputAmount, Object... recipe) {
         // register an alloy recipe
     }
 
@@ -93,14 +115,4 @@ public class NewTinkersConstruct {
         // ...
     }
 
-    /**
-     * Get a material of a given name based on a given MetalMaterial
-     * @param name name of the material
-     * @param material MetalMaterial it is based on
-     * @return Any TCCode that represents an error or TCCode.SUCCESS
-     */
-    public TCCode getMaterial(String name, MetalMaterial material) {
-        // gen a new TCMaterial
-        // add it to the registry
-    }
 }
