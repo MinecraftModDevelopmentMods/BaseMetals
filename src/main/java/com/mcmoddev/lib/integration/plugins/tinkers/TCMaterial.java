@@ -407,7 +407,7 @@ public class TCMaterial {
     /**
      * Sets applies the changes and sets up stuff internally to assist with the material registration
      */
-    public void finalize() {
+    public void settle() {
         this.headStats =  new HeadMaterialStats(headDurability, miningSpeed, headAttackDamage, miningLevel);
         this.handleStats =  new HandleMaterialStats(bodyModifier, bodyDurability);
         this.extraStats =  new ExtraMaterialStats(extraDurability);
@@ -415,5 +415,32 @@ public class TCMaterial {
         this.bowStringStats =  new BowStringMaterialStats(bowstringModifier);
         this.arrowShaftStats =  new ArrowShaftMaterialStats(shaftModifier, shaftBonusAmmo);
         this.fletchingStats =  new FletchingMaterialStats(fletchingAccuracy, fletchingModifier);
+    }
+
+    public HeadMaterialStats getHeadStats() {
+        return this.headStats;
+    }
+
+    public HandleMaterialStats getHandleStats() {
+        return this.handleStats;
+    }
+
+    public ExtraMaterialStats getExtraStats() {
+        return this.extraStats;
+    }
+    public BowMaterialStats getBowStats() {
+        return this.bowStats;
+    }
+
+    public BowStringMaterialStats getBowStringStats() {
+        return this.bowStringStats;
+    }
+
+    public ArrowShaftMaterialStats getArrowShaftStats() {
+        return this.arrowShaftStats;
+    }
+
+    public FletchingMaterialStats getFletchingStats() {
+        return this.fletchingStats;
     }
 }
