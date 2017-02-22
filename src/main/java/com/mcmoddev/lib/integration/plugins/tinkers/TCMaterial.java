@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
 import com.mcmoddev.lib.material.MetalMaterial;
+import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
 
@@ -11,28 +12,46 @@ import java.util.*;
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  */
 public class TCMaterial {
-    private static int headDurability = 1;
-    private static int bodyDurability = 1;
-    private static int extraDurability = 1;
-    private static int miningLevel = 1;
-    private static int shaftBonusAmmo = 1;
-    private static float miningSpeed = 1.0f;
-    private static float headAttackDamage = 1.0f;
-    private static float bodyModifier = 1.0f;
-    private static float bowDrawingSpeed = 1.0f;
-    private static float bowRange = 1.0f;
-    private static float bowDamage = 1.0f;
-    private static float bowstringModifier = 1.0f;
-    private static float shaftModifier = 1.0f;
-    private static float fletchingAccuracy = 1.0f;
-    private static float fletchingModifier = 1.0f;
-    private static int amountPer = 144;
-    private static MetalMaterial metalmaterial;
-    private static boolean craftable = false;
-    private static boolean castable = true;
-    private static boolean toolforge = true;
-    private static String name = "FixMe";
-    private static HashMap<String, List<AbstractTrait>> traits = new HashMap<>();
+    /*
+     * General bookkeeping variables
+     */
+    private int headDurability = 1;
+    private int bodyDurability = 1;
+    private int extraDurability = 1;
+    private int miningLevel = 1;
+    private int shaftBonusAmmo = 1;
+    private float miningSpeed = 1.0f;
+    private float headAttackDamage = 1.0f;
+    private float bodyModifier = 1.0f;
+    private float bowDrawingSpeed = 1.0f;
+    private float bowRange = 1.0f;
+    private float bowDamage = 1.0f;
+    private float bowstringModifier = 1.0f;
+    private float shaftModifier = 1.0f;
+    private float fletchingAccuracy = 1.0f;
+    private float fletchingModifier = 1.0f;
+    private int amountPer = 144;
+    private boolean craftable = false;
+    private boolean castable = true;
+    private boolean toolforge = true;
+
+    /*
+     * Internal reference/future expansion stuff
+     */
+    private MetalMaterial metalmaterial;
+    private String name = "FixMe";
+    private HashMap<String, List<AbstractTrait>> traits = new HashMap<>();
+
+    /*
+     * TiC material stats
+     */
+    private HeadMaterialStats headStats;
+    private HandleMaterialStats handleStats;
+    private ExtraMaterialStats extraStats;
+    private BowMaterialStats bowStats;
+    private BowStringMaterialStats bowStringStats;
+    private ArrowShaftMaterialStats arrowShaftStats;
+    private FletchingMaterialStats fletchingStats;
 
     /**
      * Barebones, minimalist constructor.
@@ -120,7 +139,7 @@ public class TCMaterial {
      */
     public TCMaterial genFromMaterial( MetalMaterial mat ) {
         this.metalmaterial = mat;
-        return this.genFromMaterial();
+        return genFromMaterial();
     }
 
     // TODO: Add JavaDoc for the getters and setters
@@ -194,52 +213,52 @@ public class TCMaterial {
         return this;
     }
 
-    public TCMaterial setFletchingModifier(float fletchingModifier) {
-        this.fletchingModifier = fletchingModifier;
+    public TCMaterial setFletchingModifier(float fletchingMod) {
+        this.fletchingModifier = fletchingMod;
         return this;
     }
 
-    public TCMaterial setAmountPer(int amountPer) {
-        this.amountPer = amountPer;
+    public TCMaterial setAmountPer(int amount) {
+        this.amountPer = amount;
         return this;
     }
 
-    public TCMaterial setMetalMaterial(MetalMaterial metalmaterial) {
-        this.metalmaterial = metalmaterial;
+    public TCMaterial setMetalMaterial(MetalMaterial mm) {
+        this.metalmaterial = mm;
         return this;
     }
 
-    public TCMaterial setCraftable(boolean craftable) {
+    public TCMaterial setCraftable(boolean iscraftable) {
         // castable and craftable are exclusive
         // you can either cast the material or craft it into parts
         // at a part crafter, not both
-        if( this.castable && craftable ) {
+        if( this.castable && iscraftable ) {
             this.castable = false;
         }
 
-        this.craftable = craftable;
+        this.craftable = iscraftable;
         return this;
     }
 
-    public TCMaterial setCastable(boolean castable) {
+    public TCMaterial setCastable(boolean iscastable) {
         // castable and craftable are exclusive
         // you can either cast the material or craft it into parts
         // at a part crafter, not both
-        if( this.craftable && castable ) {
+        if( this.craftable && iscastable ) {
             this.craftable = false;
         }
 
-        this.castable = castable;
+        this.castable = iscastable;
         return this;
     }
 
-    public TCMaterial setToolForge(boolean toolforge) {
-        this.toolforge = toolforge;
+    public TCMaterial setToolForge(boolean toolForge) {
+        this.toolforge = toolForge;
         return this;
     }
 
-    public TCMaterial setName(String name) {
-        this.name = name;
+    public TCMaterial setName(String newName) {
+        this.name = newName;
         return this;
     }
 
@@ -338,14 +357,14 @@ public class TCMaterial {
         if (trait == null) {
             return this;
         }
-        if (traits.keySet().contains(loc)) {
-            if (!traits.get(loc).add((AbstractTrait) trait)) {
+        if (this.traits.keySet().contains(loc)) {
+            if (!this.traits.get(loc).add((AbstractTrait) trait)) {
                 return this;
             }
         } else {
             List<AbstractTrait> t = new ArrayList<>();
             t.add((AbstractTrait) trait);
-            traits.put(loc, t);
+            this.traits.put(loc, t);
         }
 
         return this;
@@ -383,5 +402,18 @@ public class TCMaterial {
             return Collections.emptySet();
         }
         return Collections.unmodifiableSet(this.traits.keySet());
+    }
+
+    /**
+     * Sets applies the changes and sets up stuff internally to assist with the material registration
+     */
+    public void finalize() {
+        this.headStats =  new HeadMaterialStats(headDurability, miningSpeed, headAttackDamage, miningLevel);
+        this.handleStats =  new HandleMaterialStats(bodyModifier, bodyDurability);
+        this.extraStats =  new ExtraMaterialStats(extraDurability);
+        this.bowStats =  new BowMaterialStats(bowDrawingSpeed, bowRange, bowDamage);
+        this.bowStringStats =  new BowStringMaterialStats(bowstringModifier);
+        this.arrowShaftStats =  new ArrowShaftMaterialStats(shaftModifier, shaftBonusAmmo);
+        this.fletchingStats =  new FletchingMaterialStats(fletchingAccuracy, fletchingModifier);
     }
 }
