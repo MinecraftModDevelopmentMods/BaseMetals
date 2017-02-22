@@ -210,11 +210,25 @@ public class TCMaterial {
     }
 
     public TCMaterial setCraftable(boolean craftable) {
+        // castable and craftable are exclusive
+        // you can either cast the material or craft it into parts
+        // at a part crafter, not both
+        if( this.castable && craftable ) {
+            this.castable = false;
+        }
+
         this.craftable = craftable;
         return this;
     }
 
     public TCMaterial setCastable(boolean castable) {
+        // castable and craftable are exclusive
+        // you can either cast the material or craft it into parts
+        // at a part crafter, not both
+        if( this.craftable && castable ) {
+            this.craftable = false;
+        }
+
         this.castable = castable;
         return this;
     }
