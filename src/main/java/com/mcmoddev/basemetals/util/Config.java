@@ -8,7 +8,7 @@ import java.util.*;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.AdditionalLootTables;
 import com.mcmoddev.basemetals.data.DataConstants;
-import com.mcmoddev.basemetals.registry.CrusherRecipeRegistry;
+import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.*;

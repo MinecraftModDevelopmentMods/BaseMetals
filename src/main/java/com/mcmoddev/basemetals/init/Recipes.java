@@ -1,8 +1,8 @@
 package com.mcmoddev.basemetals.init;
 
-import com.mcmoddev.basemetals.registry.CrusherRecipeRegistry;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;

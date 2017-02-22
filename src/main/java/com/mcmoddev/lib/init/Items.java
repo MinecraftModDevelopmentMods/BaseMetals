@@ -5,12 +5,12 @@ import java.util.*;
 
 import com.google.common.collect.*;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.registry.IOreDictionaryEntry;
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.blocks.*;
-import com.mcmoddev.lib.items.*;
+import com.mcmoddev.lib.block.*;
+import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;

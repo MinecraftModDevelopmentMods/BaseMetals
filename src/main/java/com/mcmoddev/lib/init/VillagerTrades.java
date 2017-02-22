@@ -4,8 +4,8 @@ import java.util.*;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
-import com.mcmoddev.lib.items.ItemMetalCrackHammer;
-import com.mcmoddev.lib.items.ItemMetalIngot;
+import com.mcmoddev.lib.item.ItemMetalCrackHammer;
+import com.mcmoddev.lib.item.ItemMetalIngot;
 import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.entity.passive.EntityVillager.*;

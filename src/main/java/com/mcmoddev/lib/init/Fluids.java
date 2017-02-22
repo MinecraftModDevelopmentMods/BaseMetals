@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.*;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.blocks.InteractiveFluidBlock;
+import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.fluids.CustomFluid;
 import com.mcmoddev.lib.material.MetalMaterial;
 

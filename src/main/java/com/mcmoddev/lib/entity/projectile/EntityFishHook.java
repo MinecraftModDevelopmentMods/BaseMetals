@@ -2,7 +2,7 @@ package com.mcmoddev.lib.entity.projectile;
 
 import java.util.List;
 
-import com.mcmoddev.lib.items.ItemFishingRod;
+import com.mcmoddev.lib.item.ItemFishingRod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

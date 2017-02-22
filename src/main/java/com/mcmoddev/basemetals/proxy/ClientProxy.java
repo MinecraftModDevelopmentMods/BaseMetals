@@ -59,7 +59,7 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		if (Loader.isModLoaded("waila")) {
-			com.mcmoddev.basemetals.waila.Waila.init();
+			com.mcmoddev.lib.waila.Waila.init();
 		}
 
 		for (final String name : Items.getItemRegistry().keySet()) {

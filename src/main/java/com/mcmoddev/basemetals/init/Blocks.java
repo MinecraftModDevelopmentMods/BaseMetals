@@ -1,7 +1,7 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.blocks.BlockHumanDetector;
+import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.block.Block;

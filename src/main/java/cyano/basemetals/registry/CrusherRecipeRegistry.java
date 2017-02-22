@@ -1,5 +1,5 @@
 package cyano.basemetals.registry;
 
-public class CrusherRecipeRegistry extends com.mcmoddev.basemetals.registry.CrusherRecipeRegistry {
+public class CrusherRecipeRegistry extends com.mcmoddev.lib.registry.CrusherRecipeRegistry {
 	// Backwards Compatibility
 }
