@@ -1,10 +1,9 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.material.MetalMaterial;
-import net.minecraft.util.WeightedRandom;
-import slimeknights.mantle.util.RecipeMatch;
+
 // wrap/replace TCMetalMaterial
-// import com.mcmoddev.lib.integration.tinkers.TCMaterial;
+import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 // return values and other important numbers
 // import com.mcmoddev.lib.integration.tinkers.TCCode;
 
@@ -120,7 +119,14 @@ public class NewTinkersConstruct {
         // blargh
     }
 
-    public TCCode registerCasting(/* ... */) {
+    /**
+     * Register a casting table piece. This is either an ingot, a nugget or a gem
+     * @param output Item that is output
+     * @param source source material/fluid
+     * @param sourceQty Amount
+     * @return Any TCCode that represents an error or TCCode.SUCCESS
+     */
+    public TCCode registerCasting(Item output, Fluid source, int sourceQty) {
         // ...
     }
 
