@@ -30,7 +30,7 @@ import java.util.Map.Entry;
  */
 
 public class NewTinkersConstruct {
-    private final Map<String,TCMaterial> REGISTRY = new HashMap<>();
+    private final Map<String,TCMaterial> registry = new HashMap<>();
     private final List<MaterialIntegration> integrations = new ArrayList<>();
     
     private static NewTinkersConstruct instance;
@@ -61,7 +61,7 @@ public class NewTinkersConstruct {
      * @return Boolean truth value of whether or not the item has been registered
      */
     public boolean isRegistered(String name) {
-        return REGISTRY.containsKey(name);
+        return registry.containsKey(name);
     }
 
     /**
@@ -72,9 +72,9 @@ public class NewTinkersConstruct {
      */
     private TCMaterial put(String name, TCMaterial mat) {
         if( isRegistered(name) ) {
-            return REGISTRY.get(name);
+            return registry.get(name);
         }
-        REGISTRY.put(name,mat);
+        registry.put(name,mat);
         return mat;
     }
 
@@ -84,7 +84,7 @@ public class NewTinkersConstruct {
      * @return the request material
      */
     private TCMaterial get(String name) {
-    	return getInstance().REGISTRY.get(name);
+    	return getInstance().registry.get(name);
     }
     /**
      * Get a the named material, returning a new one of the correct name if an existing one is not available
@@ -187,7 +187,7 @@ public class NewTinkersConstruct {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCCode registerAll() {
-        for( Entry<String,TCMaterial> ent : REGISTRY.entrySet() ) {
+        for( Entry<String,TCMaterial> ent : registry.entrySet() ) {
         	// log ent.getKey() - the material name - here ?
         	TCCode rv = register(ent.getValue());
         	if( rv != TCCode.SUCCESS ) {
@@ -306,7 +306,7 @@ public class NewTinkersConstruct {
      * @param amountPer How much per ingot/single item of the material
      * @return TCCode.SUCCESS - at this point there are no failure points in this routine
      */
-    public static TCCode registerFluid(MetalMaterial base, int amountPer) {
+    public TCCode registerFluid(MetalMaterial base, int amountPer) {
 		String materialName = base.getName();
 		Fluid output = FluidRegistry.getFluid(materialName);
 		String oreDictName = base.getCapitalizedName();
@@ -315,62 +315,58 @@ public class NewTinkersConstruct {
 		if (base.getName() == "coal")
 			TinkerRegistry.registerMelting("itemCoal", output, amountPer);
 
-		if (base.hasOre)
-			TinkerRegistry.registerMelting(Oredicts.ORE + oreDictName, output, amountPer * 2);
-		if (base.block != null)
-			TinkerRegistry.registerMelting(Oredicts.BLOCK + oreDictName, output, amountPer * 9);
-		if (base.ingot != null)
-			TinkerRegistry.registerMelting(Oredicts.INGOT + oreDictName, output, amountPer);
-		if (base.nugget != null)
-			TinkerRegistry.registerMelting(Oredicts.NUGGET + oreDictName, output, amountPer / 9);
-		if (base.powder != null)
-			TinkerRegistry.registerMelting(Oredicts.DUST + oreDictName, output, amountPer);
-		if (base.smallpowder != null)
-			TinkerRegistry.registerMelting(Oredicts.DUSTSMALL + oreDictName, output, amountPer / 9);
-		if (base.oreNether != null)
-			TinkerRegistry.registerMelting(base.oreNether, output, amountPer * 4);
-		if (base.oreEnd != null)
-			TinkerRegistry.registerMelting(base.oreEnd, output, amountPer * 4);
+		
+		meltingHelper(Oredicts.ORE + oreDictName, output, amountPer * 2);
+		meltingHelper(Oredicts.BLOCK + oreDictName, output, amountPer * 9);
+		meltingHelper(Oredicts.INGOT + oreDictName, output, amountPer);
+		meltingHelper(Oredicts.NUGGET + oreDictName, output, amountPer / 9);
+		meltingHelper(Oredicts.DUST + oreDictName, output, amountPer);
+		meltingHelper(Oredicts.DUSTSMALL + oreDictName, output, amountPer / 9);
+		meltingHelper(base.oreNether, output, amountPer * 4);
+		meltingHelper(base.oreEnd, output, amountPer * 4);
 
-		if (base.halfSlab != null)
-			TinkerRegistry.registerMelting(base.halfSlab, output, (amountPer * 4) + (amountPer / 2));
-
-		if (base.wall != null)
-			TinkerRegistry.registerMelting(base.wall, output, amountPer * 9);
-
-		if (base.boots != null)
-			TinkerRegistry.registerMelting(base.boots, output, amountPer * 4);
-
-		if (base.helmet != null)
-			TinkerRegistry.registerMelting(base.helmet, output, amountPer * 5);
-
-		if (base.chestplate != null)
-			TinkerRegistry.registerMelting(base.chestplate, output, amountPer * 8);
-
-		if (base.leggings != null)
-			TinkerRegistry.registerMelting(base.leggings, output, amountPer * 7);
-
-		if (base.shears != null)
-			TinkerRegistry.registerMelting(base.shears, output, amountPer * 2);
-
-		if (base.pressurePlate != null)
-			TinkerRegistry.registerMelting(base.pressurePlate, output, amountPer * 2);
-
-		if (base.bars != null)
-			TinkerRegistry.registerMelting(base.bars, output, ((amountPer / 9) * 3) + 6); // Fun math
-
-		if (base.rod != null)
-			TinkerRegistry.registerMelting(base.rod, output, amountPer / 2);
-
-		if (base.door != null)
-			TinkerRegistry.registerMelting(base.door, output, amountPer * 2);
-
-		if (base.trapdoor != null)
-			TinkerRegistry.registerMelting(base.trapdoor, output, amountPer * 4);
-
-		if (base.button != null)
-			TinkerRegistry.registerMelting(base.button, output, (amountPer / 9) * 2);    	
+		meltingHelper(base.halfSlab, output, (amountPer * 4) + (amountPer / 2));
+		meltingHelper(base.wall, output, amountPer * 9);
+		meltingHelper(base.boots, output, amountPer * 4);
+		meltingHelper(base.helmet, output, amountPer * 5);
+		meltingHelper(base.chestplate, output, amountPer * 8);
+		meltingHelper(base.leggings, output, amountPer * 7);
+		meltingHelper(base.shears, output, amountPer * 2);
+		meltingHelper(base.pressurePlate, output, amountPer * 2);
+		meltingHelper(base.bars, output, ((amountPer / 9) * 3) + 6); // Fun math
+		meltingHelper(base.rod, output, amountPer / 2);
+		meltingHelper(base.door, output, amountPer * 2);
+		meltingHelper(base.trapdoor, output, amountPer * 4);
+		meltingHelper(base.button, output, (amountPer / 9) * 2);    	
 		
 		return TCCode.SUCCESS;
     }
+    
+    /*
+     * The following functions are helpers to help make the registerMelting function a touch less complex
+     */
+    private void meltingHelper( Item item, Fluid output, int amount ) {
+    	if( item == null || output == null ) {
+    		return;
+    	}
+    	
+    	TinkerRegistry.registerMelting(item, output, amount);
+    }
+    
+    private void meltingHelper( String itemName, Fluid output, int amount ) {
+    	if( itemName == null || output == null ) {
+    		return;
+    	}
+    	
+    	TinkerRegistry.registerMelting(itemName, output, amount);
+    }
+
+    private void meltingHelper( Block block, Fluid output, int amount ) {
+    	if( block == null || output == null ) {
+    		return;
+    	}
+    	
+    	TinkerRegistry.registerMelting(block, output, amount);
+    }
+
 }

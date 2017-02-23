@@ -142,96 +142,191 @@ public class TCMaterial {
         return genFromMaterial();
     }
 
-    // TODO: Add JavaDoc for the getters and setters
+    /**
+     * @setter
+     * @param headDurability durability of material when used as a tool head
+     * @return the material
+     */
     public TCMaterial setHeadDurability(int headDurability) {
         this.headDurability = headDurability;
         return this;
     }
 
+    /**
+     * @setter
+     * @param bodyDurability durability of material when used as a tool rod/body
+     * @return the material
+     */
     public TCMaterial setBodyDurability(int bodyDurability) {
         this.bodyDurability = bodyDurability;
         return this;
     }
 
+    /**
+     * @setter
+     * @param extraDurability durability of material when used as a tool extra part (binding, large plate, etc...)
+     * @return the material
+     */
     public TCMaterial setExtraDurability(int extraDurability) {
         this.extraDurability = extraDurability;
         return this;
     }
 
+    /**
+     * @setter
+     * @param miningLevel Mining Level of the material
+     * @return the material
+     */
     public TCMaterial setMiningLevel(int miningLevel) {
         this.miningLevel = miningLevel;
         return this;
     }
 
+    /**
+     * @setter
+     * @param shaftBonusAmmo Amount of ammo you get when crafting arrows/bolts with this material as the shaft
+     * @return the material
+     */
     public TCMaterial setShaftBonusAmmo(int shaftBonusAmmo) {
         this.shaftBonusAmmo = shaftBonusAmmo;
         return this;
     }
 
+    /**
+     * @setter
+     * @param miningSpeed Speed of mining with this material
+     * @return the material
+     */
     public TCMaterial setMiningSpeed(float miningSpeed) {
         this.miningSpeed = miningSpeed;
         return this;
     }
 
+    /**
+     * @setter
+     * @param headAttackDamage Attack damage when used as a tool/weapon head
+     * @return the material
+     */
     public TCMaterial setHeadAttackDamage(float headAttackDamage) {
         this.headAttackDamage = headAttackDamage;
         return this;
     }
 
+    /**
+     * @setter
+     * @param bodyModifier Modifier amount applied when used for a tool/weapon body
+     * @return the material
+     */
     public TCMaterial setBodyModifier(float bodyModifier) {
         this.bodyModifier = bodyModifier;
         return this;
     }
 
+    /**
+     * @setter
+     * @param bowDrawingSpeed draw speed of bows made from this material
+     * @return the material
+     */
     public TCMaterial setBowDrawingSpeed(float bowDrawingSpeed) {
         this.bowDrawingSpeed = bowDrawingSpeed;
         return this;
     }
 
+    /**
+     * @setter
+     * @param bowRange range of bows made from this material
+     * @return the material
+     */
     public TCMaterial setBowRange(float bowRange) {
         this.bowRange = bowRange;
         return this;
     }
 
+    /**
+     * @setter
+     * @param bowDamage base damage of bows made from this material
+     * @return the material
+     */
     public TCMaterial setBowDamage(float bowDamage) {
         this.bowDamage = bowDamage;
         return this;
     }
 
+    /**
+     * @setter
+     * @param bowstringModifier Modifier when this material is used to make a bow string
+     * @return the material
+     */
     public TCMaterial setBowstringModifier(float bowstringModifier) {
         this.bowstringModifier = bowstringModifier;
         return this;
     }
 
+    /**
+     * @setter
+     * @param shaftModifier Modifier when used as bolt/arrow shaft
+     * @return the material
+     */
     public TCMaterial setShaftModifier(float shaftModifier) {
         this.shaftModifier = shaftModifier;
         return this;
     }
 
+    /**
+     * @setter
+     * @param fletchingAccuracy accuracy modifier when material is used to make fletching
+     * @return the material
+     */
     public TCMaterial setFletchingAccuracy(float fletchingAccuracy) {
         this.fletchingAccuracy = fletchingAccuracy;
         return this;
     }
 
+    /**
+     * @setter
+     * @param fletchingMod base modifier when used as fletching
+     */
     public TCMaterial setFletchingModifier(float fletchingMod) {
         this.fletchingModifier = fletchingMod;
         return this;
     }
 
+    /**
+     * @setter
+     * @param amount amount of fluid per ingot
+     * @return the material
+     */
     public TCMaterial setAmountPer(int amount) {
         this.amountPer = amount;
         return this;
     }
 
+    /**
+     * @setter
+     * @param mm MetalMaterial this wrapper represents
+     * @return the material
+     */
     public TCMaterial setMetalMaterial(MetalMaterial mm) {
         this.metalmaterial = mm;
         return this;
     }
 
+    /**
+     * Wrapper around {setMetalMaterial}
+     * @setter
+     * @param mm MetalMaterial this represents
+     * @return the material
+     */
     public TCMaterial setMaterial(MetalMaterial mm) {
     	return this.setMetalMaterial(mm);
     }
     
+    /**
+     * Craftable and Castable are mutually exclusive, this will unset castable if it is set and the parameter is 'true'
+     * @setter
+     * @param iscraftable boolean true/false - is this material capable of being crafted into parts at a part maker ?
+     * @return the material
+     */
     public TCMaterial setCraftable(boolean iscraftable) {
         // castable and craftable are exclusive
         // you can either cast the material or craft it into parts
@@ -244,6 +339,12 @@ public class TCMaterial {
         return this;
     }
 
+    /**
+     * Craftable and Castable are mutually exclusive, this will unset craftable if it is set and the parameter is 'true'
+	 * @setter
+     * @param iscrastable boolean true/false - is this material capable of being cast into parts at the smeltery ?
+     * @return the material
+     */
     public TCMaterial setCastable(boolean iscastable) {
         // castable and craftable are exclusive
         // you can either cast the material or craft it into parts
@@ -256,16 +357,28 @@ public class TCMaterial {
         return this;
     }
 
+    /**
+     * @setter
+     * @param toolForge is this material capable of being a ToolForge base material ?
+     * @return the material
+     */
     public TCMaterial setToolForge(boolean toolForge) {
         this.toolforge = toolForge;
         return this;
     }
 
+    /**
+     * the 'Name' parameter is not used, at this time
+     * @setter
+     * @param newName name for the material
+     * @return the material
+     */
     public TCMaterial setName(String newName) {
         this.name = newName;
         return this;
     }
 
+    // what follows are getters - they shouldn't need documentation
     public int getHeadDurability() {
         return this.headDurability;
     }
