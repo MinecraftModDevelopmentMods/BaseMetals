@@ -269,6 +269,29 @@ public class TinkersConstructRegistry {
     }
 
     /**
+     * Variant for backwards compat
+     * @param output Oredict name of output fluid
+     * @param outputQty Amount of output produced
+     * @param inputNames Array of oredict names of inputs
+     * @param inputQty Array of quantities matching those inputs
+     * @return TCCode.SUCCESS or TCCode.FAILURE_PARAMETER_ERROR
+     */
+    public TCCode registerAlloy(String output, int outputQty, String[] inputNames, int[] inputQty) {
+    	if( inputNames.length != inputQty.length ) {
+    		return TCCode.FAILURE_PARAMETER_ERROR;
+    	}
+    	
+    	FluidStack outputs = getFluidStack(output, outputQty);
+    	FluidStack[] inputs = new FluidStack[inputNames.length];
+    	
+    	for( int i = 0; i < inputNames.length; i++ ) {
+    		inputs[i] = getFluidStack(inputNames[i], inputQty[i]);
+    	}
+    	TinkerRegistry.registerAlloy(outputs,inputs);
+        return TCCode.SUCCESS;
+    }
+
+    /**
      * Register the ability to cast a block of material from a specified quantity of a fluid
      * @param block Block that is created
      * @param source Fluid being poured
