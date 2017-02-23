@@ -91,83 +91,49 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		if (Options.enableMercury) {
-			registry.registerFluid(Materials.getMaterialByName("mercury").fluid, 144);
+			registry.registerFluid(Materials.getMaterialByName("mercury"), 144);
 			if (Options.enableBasics) {
 				registerModifierItem("toxic", Materials.mercury.powder);
 			}
 		}
 
 		if (Options.enableMithril) {
-			TCMetalMaterial mithrilTC = new TCMetalMaterial(Materials.mithril);
-			mithrilTC.craftable = false;
-			mithrilTC.addTrait("holy");
-
-			registerMaterial(mithrilTC);
-
-			registerAlloy(Materials.mithril.getName(), 3,
-					new String[] { "silver", "coldiron", "mercury" },
-					new int[] { 2, 1, 1 });
+			registry.getMaterial("mithril", Materials.getMaterialByName("mithril")).setCastable(true).addTrait("holy").settle();
+			registry.registerAlloy("mithril", Materials.getMaterialByName("mithril").fluid, 3, "silver", 2, "coldiron", 1, "mercury", 1);
 		}
 
 		if (Options.enableNickel) {
-			TCMetalMaterial nickelTC = new TCMetalMaterial(Materials.nickel);
-			nickelTC.craftable = false;
-
-			registerMaterial(nickelTC);
+			registry.getMaterial("nickel", Materials.getMaterialByName("nickel")).setCastable(true).settle();
 		}
 
-		// Maybe give this 'soft' as well ?
 		if (Options.enablePewter) {
-			TCMetalMaterial pewterTC = new TCMetalMaterial(Materials.pewter);
-			pewterTC.craftable = false;
-			pewterTC.addTrait("soft");
-
-			registerMaterial(pewterTC);
+			registry.getMaterial("pewter", Materials.getMaterialByName("pewter")).setCastable(true).addTrait("soft").settle();
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
-			registerAlloy(Materials.pewter.getName(), 144,
-					new String[] { "tin", "copper", "lead" },
-					new int[] { 137, 2, 5 });
+			registry.registerAlloy("pewter", Materials.getMaterialByName("pewter").fluid, 144, "tin", 137, "copper", 2, "lead", 5);
 		}
 
 		if (Options.enablePlatinum) {
-			TCMetalMaterial platinumTC = new TCMetalMaterial(Materials.platinum);
-			platinumTC.craftable = false;
-
-			registerMaterial(platinumTC);
+			registry.getMaterial("platinum", Materials.getMaterialByName("platinum")).setCastable(true).settle();
 		}
 
 		if (Options.enableSilver) {
 			// Anything needed?
 		}
 
-		// Steel has 'Sharp' and 'Stiff'
 		if (Options.enableSteel) {
-			registerAlloy(Materials.steel.fluid.getName(), 8,
-					new String[] { "iron", "coal" },
-					new int[] { 8, 1 });
+			registry.registerAlloy("steel", Materials.getMaterialByName("steel").fluid, 8, "iron", 8, "coal", 1);
 		}
 
 		if (Options.enableStarSteel) {
-			TCMetalMaterial starsteelTC = new TCMetalMaterial(Materials.starsteel);
-			starsteelTC.craftable = false;
-			starsteelTC.addTrait("enderference", TraitLocations.HEAD);
-			starsteelTC.addTrait("sparkly");
-
-			registerMaterial(starsteelTC);
+			registry.getMaterial("starsteel", Materials.getMaterialByName("starsteel")).setCastable(true).addTrait("enderference", TraitLocations.HEAD).addTrait("sparkly").settle();
 		}
 
 		if (Options.enableTin) {
-			TCMetalMaterial tinTC = new TCMetalMaterial(Materials.tin);
-			tinTC.craftable = false;
-
-			registerMaterial(tinTC);
+			registry.getMaterial("tin", Materials.getMaterialByName("tin")).setCastable(true).settle();
 		}
 
 		if (Options.enableZinc) {
-			TCMetalMaterial zincTC = new TCMetalMaterial(Materials.zinc);
-			zincTC.craftable = false;
-
-			registerMaterial(zincTC);
+			registry.getMaterial("zinc", Materials.getMaterialByName("zinc")).setCastable(true).settle();
 		}
 
 		initDone = true;
