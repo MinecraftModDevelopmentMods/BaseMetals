@@ -39,47 +39,24 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			 * Savage (ignore up to 10 points of damage)
 			 * Petrarmor
 			 */
-			TCMetalMaterial adamantTC = new TCMetalMaterial(Materials.adamantine);
-			adamantTC.craftable = false;
-			adamantTC.addTrait("coldblooded");
-			adamantTC.addTrait("insatiable", TraitLocations.HEAD);
-
-			registerMaterial(adamantTC);
+			registry.getMaterial("adamant", Materials.getMaterialByName("adamantine")).setCastable(true).addTrait("coldblooded").addTrait("insatiable").settle();
 		}
 
 		if (Options.enableAntimony) {
-			TCMetalMaterial antimonyTC = new TCMetalMaterial(Materials.antimony);
-			antimonyTC.craftable = false;
-
-			registerMaterial(antimonyTC);
+			registry.getMaterial("antimony", Materials.getMaterialByName("antimony")).setCastable(true).settle();
 		}
 
 		if (Options.enableAquarium) {
-			TCMetalMaterial aquaTC = new TCMetalMaterial(Materials.aquarium);
-			aquaTC.craftable = false;
-			aquaTC.addTrait("aquadynamic");
-			aquaTC.addTrait("jagged", TraitLocations.HEAD);
-			aquaTC.addTrait("aquadynamic", TraitLocations.HEAD);
-
-			registerMaterial(aquaTC);
-			registerAlloy(Materials.aquarium.getName(), 3,
-					new String[] { "copper", "zinc", "prismarine" },
-					new int[] { 2, 1, 3 });
+			registry.getMaterial("aquarium", Materials.getMaterialByName("aquarium")).setCastable(true).addTrait("aquadynamic").addTrait("jagged",TraitLocations.HEAD).addTrait("aquadynamic",TraitLocations.HEAD).settle();
+			registry.registerAlloy("Aquarium", Materials.getMaterialByName("aquarium").fluid, 3, "copper", 2, "zinc", 1, "prismarine", 3);
 		}
 
 		if (Options.enableBismuth) {
-			TCMetalMaterial bismuthTC = new TCMetalMaterial(Materials.bismuth);
-			bismuthTC.craftable = false;
-
-			registerMaterial(bismuthTC);
+			registry.getMaterial("bismuth", Materials.getMaterialByName("bismuth")).setCastable(true).settle();
 		}
 
 		if (Options.enableBrass) {
-			TCMetalMaterial brassTC = new TCMetalMaterial(Materials.brass);
-			brassTC.craftable = false;
-			brassTC.addTrait("dense");
-
-			registerMaterial(brassTC);
+			registry.getMaterial("brass", com.mcmoddev.lib.init.Materials.getMaterialByName("brass")).addTrait("dense").setCastable(true).settle();
 		}
 
 		if (Options.enableCoal) {
@@ -87,31 +64,17 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		if (Options.enableColdIron) {
-			TCMetalMaterial coldironTC = new TCMetalMaterial(Materials.coldiron);
-			coldironTC.craftable = false;
-			coldironTC.addTrait("freezing");
-
-			registerMaterial(coldironTC);
+			registry.getMaterial("coldiron", Materials.getMaterialByName("coldiron")).setCastable(true).addTrait("freezing").settle();
 		}
 
 		if (Options.enableCupronickel) {
-			TCMetalMaterial cuproTC = new TCMetalMaterial(Materials.cupronickel);
-			cuproTC.craftable = false;
-
-			registerMaterial(cuproTC);
-			registerAlloy(Materials.cupronickel.getName(), 4,
-					new String[] { "copper", "nickel" },
-					new int[] { 3, 1 });
+			registry.getMaterial("cupronickel", com.mcmoddev.lib.init.Materials.getMaterialByName("cupronickel")).setCastable(true).settle();
+			registry.registerAlloy("cupronickel", Materials.getMaterialByName("cupronickel").fluid, 4, "copper", 3, "nickel", 1 );
 		}
 
 		if (Options.enableInvar) {
-			TCMetalMaterial invarTC = new TCMetalMaterial(Materials.invar);
-			invarTC.craftable = false;
-
-			registerMaterial(invarTC);
-			registerAlloy(Materials.invar.fluid.getName(), 3,
-					new String[] { "iron", "nickel" },
-					new int[] { 2, 1 });
+			registry.getMaterial("invar", Materials.getMaterialByName("invar")).setCastable(true).settle();
+			registry.registerAlloy("invar", Materials.getMaterialByName("invar").fluid, 3, "iron", 2, "nickel", 1);
 		}
 
 		// As much as we'd like to, we cannot do this like this.
@@ -128,7 +91,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		if (Options.enableMercury) {
-			registerFluid(Materials.mercury, 144);
+			registry.registerFluid(Materials.getMaterialByName("mercury").fluid, 144);
 			if (Options.enableBasics) {
 				registerModifierItem("toxic", Materials.mercury.powder);
 			}
