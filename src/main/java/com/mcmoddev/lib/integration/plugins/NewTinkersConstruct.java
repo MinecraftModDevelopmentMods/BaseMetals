@@ -35,11 +35,19 @@ public class NewTinkersConstruct {
     
     private static NewTinkersConstruct instance;
 
+    /**
+     * Hacky-ass shit constructor. Be warned that this creates a semi-circular data structure.
+     * @constructor
+     */
     private NewTinkersConstruct() {
     	if( instance == null )
     		instance = this;
     }
 
+    /**
+     * Return the existing instance or create a new one - if one doesn't exist - and return it
+     * @return an instance of the registry
+     */
     public static NewTinkersConstruct getInstance() {
     	if( instance == null )
     		instance = new NewTinkersConstruct();
@@ -47,11 +55,22 @@ public class NewTinkersConstruct {
     	return instance;
     }
     
+    /**
+     * Has a material with the given name been registered ?
+     * @param name The name to test for
+     * @return Boolean truth value of whether or not the item has been registered
+     */
     public boolean isRegistered(String name) {
         return REGISTRY.containsKey(name);
     }
 
-    public TCMaterial put(String name, TCMaterial mat) {
+    /**
+     * Used internally to add an entry to the registry
+     * @param name name of material being registered
+     * @param mat Material to be registered
+     * @return the material
+     */
+    private TCMaterial put(String name, TCMaterial mat) {
         if( isRegistered(name) ) {
             return REGISTRY.get(name);
         }
@@ -59,6 +78,11 @@ public class NewTinkersConstruct {
         return mat;
     }
 
+    /**
+     * Used internally to access the registry and grab an entry. Helps to minimize some potential issues.
+     * @param name name used for material during registration
+     * @return the request material
+     */
     private TCMaterial get(String name) {
     	return getInstance().REGISTRY.get(name);
     }
@@ -93,10 +117,20 @@ public class NewTinkersConstruct {
         return getMaterial(name).setMaterial(material);
     }
 
+    /**
+     * Private internal function for adding a MaterialIntegration to said list
+     * @param m The MaterialIntegration to add to the list
+     */
     private static void addIntegration(MaterialIntegration m) {
     	getInstance().integrations.add(m);
     }
     
+    /**
+     * Private internal that handles actual material registration and creates the MaterialIntegration objects
+     * used to make sure that our materials are properly registered with TiC
+     * @param mat The material being registered.
+     * @return Hopefully TCCode.SUCCESS, but can be any number of the various error code returns
+     */
     private TCCode register(TCMaterial mat) {
     	Boolean hasTraits = !mat.getTraitLocations().isEmpty();
     	
@@ -194,6 +228,12 @@ public class NewTinkersConstruct {
         return TCCode.SUCCESS;
     }
 
+    /**
+     * Internal helper to get a FluidStack from a pair of parameters to the variadic 'registerAlloy' function
+     * @param fluid String, Fluid or MetalMaterial representing the fluid
+     * @param amt passed in as an Object, but actually an Integer representing the amount of the fluid, in mB, that is in the stack
+     * @return a FluidStack representing the Fluid+Amount pair of parameters passed in
+     */
     private static FluidStack getFluidStack( Object fluid, Object amt ) {
     	Integer amount = (Integer)amt;
     	if( fluid instanceof String ) {
@@ -205,6 +245,7 @@ public class NewTinkersConstruct {
     	}
     	return null;
     }
+    
     /**
      * Register an alloy with the given recipe, name and output fluid in the specified amount
      * @param name Name of the alloy
