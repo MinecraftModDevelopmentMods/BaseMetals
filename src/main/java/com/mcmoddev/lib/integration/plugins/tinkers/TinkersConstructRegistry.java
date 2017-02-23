@@ -1,9 +1,7 @@
-package com.mcmoddev.lib.integration.plugins;
+package com.mcmoddev.lib.integration.plugins.tinkers;
 
 import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.integration.plugins.tinkers.TCCode;
-import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 
 import net.minecraft.item.Item;
 import net.minecraft.block.Block;
@@ -29,17 +27,17 @@ import java.util.Map.Entry;
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  */
 
-public class NewTinkersConstruct {
+public class TinkersConstructRegistry {
     private final Map<String,TCMaterial> registry = new HashMap<>();
     private final List<MaterialIntegration> integrations = new ArrayList<>();
     
-    private static NewTinkersConstruct instance;
+    private static TinkersConstructRegistry instance;
 
     /**
      * Hacky-ass shit constructor. Be warned that this creates a semi-circular data structure.
      * @constructor
      */
-    private NewTinkersConstruct() {
+    private TinkersConstructRegistry() {
     	if( instance == null )
     		instance = this;
     }
@@ -48,9 +46,9 @@ public class NewTinkersConstruct {
      * Return the existing instance or create a new one - if one doesn't exist - and return it
      * @return an instance of the registry
      */
-    public static NewTinkersConstruct getInstance() {
+    public static TinkersConstructRegistry getInstance() {
     	if( instance == null )
-    		instance = new NewTinkersConstruct();
+    		instance = new TinkersConstructRegistry();
     	
     	return instance;
     }
