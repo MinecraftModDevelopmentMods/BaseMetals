@@ -15,11 +15,9 @@ import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
-import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,25 +30,28 @@ import java.util.Map.Entry;
  */
 
 public class NewTinkersConstruct {
-    private static Map<String,TCMaterial> REGISTRY = new HashMap<>();
-    private static List<MaterialIntegration> integrations = new ArrayList<>();
+    private final Map<String,TCMaterial> REGISTRY = new HashMap<>();
+    private final List<MaterialIntegration> integrations = new ArrayList<>();
     
     private static NewTinkersConstruct instance;
 
-    private NewTinkersConstruct() {}
-
-    public static NewTinkersConstruct getInstance() {
-        if( instance == null ) {
-            instance = new NewTinkersConstruct();
-        }
-        return instance;
+    private NewTinkersConstruct() {
+    	if( instance == null )
+    		instance = this;
     }
 
-    public static boolean isRegistered(String name) {
+    public static NewTinkersConstruct getInstance() {
+    	if( instance == null )
+    		instance = new NewTinkersConstruct();
+    	
+    	return instance;
+    }
+    
+    public boolean isRegistered(String name) {
         return REGISTRY.containsKey(name);
     }
 
-    public static TCMaterial put(String name, TCMaterial mat) {
+    public TCMaterial put(String name, TCMaterial mat) {
         if( isRegistered(name) ) {
             return REGISTRY.get(name);
         }
@@ -58,17 +59,20 @@ public class NewTinkersConstruct {
         return mat;
     }
 
+    private TCMaterial get(String name) {
+    	return getInstance().REGISTRY.get(name);
+    }
     /**
      * Get a the named material, returning a new one of the correct name if an existing one is not available
      * @param name Name of the material
      * @return Reference to the material asked for or a new one of the correct name
      */
-    public static TCMaterial getMaterial(String name) {
+    public TCMaterial getMaterial(String name) {
         String n = name==null?"FixYourCode":name;
-        if( getInstance().REGISTRY.containsKey(n) ) {
-            return getInstance().REGISTRY.get(n);
+        if( getInstance().isRegistered(n) ) {
+            return getInstance().get(n);
         }
-        return put( name, new TCMaterial(n) );
+        return getInstance().put( n, new TCMaterial(n) );
     }
 
     /**
@@ -77,10 +81,10 @@ public class NewTinkersConstruct {
      * @param material MetalMaterial it is based on
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
-    public static TCCode getMaterial(String name, MetalMaterial material) {
+    public TCMaterial getMaterial(String name, MetalMaterial material) {
         String n = name==null?(material==null?"FixYourCode":material.getName()):name;
         if( material == null ) {
-            return TCCode.FAILURE_PARAMETER_ERROR;
+            return null;
         }
 
         if( getInstance().isRegistered(n) ) {
@@ -92,61 +96,69 @@ public class NewTinkersConstruct {
     private static void addIntegration(MaterialIntegration m) {
     	getInstance().integrations.add(m);
     }
+    
+    private TCCode register(TCMaterial mat) {
+    	Boolean hasTraits = !mat.getTraitLocations().isEmpty();
+    	
+    	if( mat.getMetalMaterial().fluid == null ) {
+    		return TCCode.BAD_MATERIAL;
+    	}
+    	
+		// make sure the name used here is all lower case
+		Material tcmat = new Material(mat.getName().toLowerCase(), mat.getMetalMaterial().getTintColor());
+
+		if (hasTraits) {
+			for (String s : mat.getTraitLocations()) {
+				for (AbstractTrait t : mat.getTraits(s)) {
+					tcmat.addTrait(t, s == "general" ? null : s);
+				}
+			}
+		}
+
+		if (TinkerRegistry.getMaterial(tcmat.identifier) != Material.UNKNOWN) {
+			return TCCode.MATERIAL_ALREADY_REGISTERED;
+		}
+    	
+		registerFluid(mat.getMetalMaterial(), mat.getAmountPer());
+		tcmat.addItem(mat.getMetalMaterial().ingot, 1, Material.VALUE_Ingot);
+		tcmat.addItemIngot(Oredicts.INGOT + mat.getMetalMaterial().getName());
+		tcmat.setRepresentativeItem(mat.getMetalMaterial().ingot);
+
+		TinkerRegistry.addMaterialStats(tcmat, mat.getHeadStats());
+		TinkerRegistry.addMaterialStats(tcmat, mat.getHandleStats());
+		TinkerRegistry.addMaterialStats(tcmat, mat.getExtraStats());
+		TinkerRegistry.addMaterialStats(tcmat, mat.getBowStats());
+		TinkerRegistry.addMaterialStats(tcmat, mat.getBowStringStats());
+		TinkerRegistry.addMaterialStats(tcmat, mat.getArrowShaftStats());
+		TinkerRegistry.addMaterialStats(tcmat, mat.getFletchingStats());
+		TinkerRegistry.addMaterial(tcmat);
+
+		tcmat.setFluid(mat.getMetalMaterial().fluid).setCastable(mat.getCastable()).setCraftable(mat.getCraftable());
+
+		String base = mat.getMetalMaterial().getName();
+		String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
+		MaterialIntegration m = new MaterialIntegration(null, mat.getMetalMaterial().fluid, suffix);
+		if (mat.getToolForge()) {
+			m.toolforge();
+		}
+
+		TinkerIntegration.integrationList.add(m);
+		addIntegration(m);
+		m.integrate();
+		return TCCode.SUCCESS;
+    }
+    
     /**
      * Register all materials in the registry
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCCode registerAll() {
         for( Entry<String,TCMaterial> ent : REGISTRY.entrySet() ) {
-            // log 'name' here ?
-        	TCMaterial work = ent.getValue();
-        	Boolean hasTraits = work.getTraitLocations()!=Collections.EMPTY_LIST;
-        	
-        	if( work.getMetalMaterial().fluid == null ) {
-        		return TCCode.BAD_MATERIAL;
+        	// log ent.getKey() - the material name - here ?
+        	TCCode rv = register(ent.getValue());
+        	if( rv != TCCode.SUCCESS ) {
+        		return rv;
         	}
-        	
-    		// make sure the name used here is all lower case
-    		Material tcmat = new Material(work.getName().toLowerCase(), work.getMetalMaterial().getTintColor());
-
-    		if (hasTraits) {
-    			for (String s : work.getTraitLocations()) {
-    				for (AbstractTrait t : work.getTraits(s)) {
-    					tcmat.addTrait(t, s == "general" ? null : s);
-    				}
-    			}
-    		}
-
-    		if (TinkerRegistry.getMaterial(tcmat.identifier) != Material.UNKNOWN) {
-    			return TCCode.MATERIAL_ALREADY_REGISTERED;
-    		}
-        	
-    		registerFluid(work.getMetalMaterial(), work.getAmountPer());
-    		tcmat.addItem(work.getMetalMaterial().ingot, 1, Material.VALUE_Ingot);
-    		tcmat.addItemIngot(Oredicts.INGOT + work.getMetalMaterial().getName());
-    		tcmat.setRepresentativeItem(work.getMetalMaterial().ingot);
-
-    		TinkerRegistry.addMaterialStats(tcmat, work.getHeadStats());
-    		TinkerRegistry.addMaterialStats(tcmat, work.getHandleStats());
-    		TinkerRegistry.addMaterialStats(tcmat, work.getExtraStats());
-    		TinkerRegistry.addMaterialStats(tcmat, work.getBowStats());
-    		TinkerRegistry.addMaterialStats(tcmat, work.getBowStringStats());
-    		TinkerRegistry.addMaterialStats(tcmat, work.getArrowShaftStats());
-    		TinkerRegistry.addMaterialStats(tcmat, work.getFletchingStats());
-    		TinkerRegistry.addMaterial(tcmat);
-
-    		tcmat.setFluid(work.getMetalMaterial().fluid).setCastable(work.getCastable()).setCraftable(work.getCraftable());
-
-    		String base = work.getMetalMaterial().getName();
-    		String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
-    		MaterialIntegration m = new MaterialIntegration(null, work.getMetalMaterial().fluid, suffix);
-    		if (work.getToolForge()) {
-    			m.toolforge();
-    		}
-
-    		TinkerIntegration.integrationList.add(m);
-    		addIntegration(m);
-    		m.integrate();
         }
         return TCCode.SUCCESS;
     }
@@ -182,6 +194,17 @@ public class NewTinkersConstruct {
         return TCCode.SUCCESS;
     }
 
+    private static FluidStack getFluidStack( Object fluid, Object amt ) {
+    	Integer amount = (Integer)amt;
+    	if( fluid instanceof String ) {
+    		return new FluidStack(FluidRegistry.getFluid((String)fluid), amount.intValue());
+    	} else if( fluid instanceof MetalMaterial ) {
+    		return new FluidStack(FluidRegistry.getFluid(((MetalMaterial)fluid).getName()), amount.intValue());
+    	} else if( fluid instanceof Fluid ) {
+    		return new FluidStack(FluidRegistry.getFluid(((Fluid)fluid).getName()), amount.intValue());    		
+    	}
+    	return null;
+    }
     /**
      * Register an alloy with the given recipe, name and output fluid in the specified amount
      * @param name Name of the alloy
@@ -196,38 +219,14 @@ public class NewTinkersConstruct {
         }
 
         FluidStack outputStack = new FluidStack(output, outputAmount);
-        List<FluidStack> inputList = new ArrayList<>();
+        FluidStack[] inputs = new FluidStack[recipe.length/2];
 
-        Boolean expectAmount = false;
-        for( Object arg : recipe ) {
-            Fluid curFluid;
-            if( !expectAmount ) {
-                if (arg instanceof String) {
-                    curFluid = FluidRegistry.getFluid((String) arg);
-                } else if (arg instanceof Fluid) {
-                    curFluid = new Fluid((Fluid) arg);
-                } else if (arg instanceof MetalMaterial) {
-                    curFluid = FluidRegistry.getFluid(((MetalMaterial) arg).getName());
-                } else {
-                    curFluid = null;
-                }
-
-                if (curFluid == null) {
-                    return TCCode.UNKNOWN_MATERIAL_ERROR;
-                }
-                expectAmount = true;
-            } else {
-                if( arg instanceof Integer ) {
-                    inputList.add( new FluidStack( curFluid, (Integer)arg) );
-                    expectAmount = false;
-                } else {
-                    return TCCode.FAILURE_PARAMETER_ERROR;
-                }
-            }
+        for( int i = 0, j = 0; i < recipe.length; i += 2, j++ ) {
+        	inputs[j] = getFluidStack(recipe[i], recipe[i+1]);
         }
-
-        TinkerRegistry.registerAlloy(outputStack, inputList.toArray(new FluidStack[]));
-        return TCCode.SUCCEESS;
+        
+        TinkerRegistry.registerAlloy(outputStack, inputs);
+        return TCCode.SUCCESS;
     }
 
     /**
@@ -257,7 +256,7 @@ public class NewTinkersConstruct {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
         TinkerRegistry.registerTableCasting( new ItemStack(output), null, source, sourceQty);
-        return TCCode.SUCCEESS;
+        return TCCode.SUCCESS;
     }
 
     /**
