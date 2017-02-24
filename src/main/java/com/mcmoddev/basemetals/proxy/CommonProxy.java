@@ -39,6 +39,7 @@ public class CommonProxy {
 		FMLInterModComms.sendFunctionMessage("orespawn", "api", "com.mcmoddev.orespawn.BaseMetalsOreSpawn");
 
 		IntegrationManager.INSTANCE.preInit(event);
+		IntegrationManager.INSTANCE.runCallbacks("preInit");
 	}
 
 	public void onRemap(FMLMissingMappingsEvent event) {
@@ -62,10 +63,12 @@ public class CommonProxy {
 
 		Achievements.init();
 
+		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
+		IntegrationManager.INSTANCE.runCallbacks("postInit");
 		Config.postInit();
 	}
 }
