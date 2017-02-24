@@ -19,4 +19,22 @@ public @interface MMDPlugin {
      * @return The id of the plugin (ModID it supports)
      */
 	String pluginId() default "";
+	
+	/**
+	 * 
+	 * @return The preInit phase callback name for the plugin
+	 */
+	String preInitCallback() default "";
+	
+	/**
+	 * 
+	 * @return The init phase callback name for the plugin
+	 */
+	String initCallback() default "";
+
+	/**
+	 * 
+	 * @return The postInit phase callback name for the plugin
+	 */
+	String postInitCallback() default "";
 }
