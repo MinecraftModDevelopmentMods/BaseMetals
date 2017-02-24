@@ -9,6 +9,7 @@ import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.FMLLog;
 
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 
@@ -135,6 +136,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			registry.getMaterial("zinc", Materials.getMaterialByName("zinc")).setCastable(true).settle();
 		}
 
+		registry.registerAll();
 		initDone = true;
 	}
 }
