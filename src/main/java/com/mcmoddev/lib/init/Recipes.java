@@ -9,6 +9,7 @@ import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
@@ -133,9 +134,9 @@ public abstract class Recipes {
 	}
 
 	protected static void initVanillaRecipes() {
-		// STUB
+		// stub
 	}
-
+	
 	protected static void initGeneralRecipes() {
 
 		for (final MetalMaterial material : Materials.getAllMaterials()) {
