@@ -389,5 +389,10 @@ public class TinkersConstructRegistry {
     	
     	TinkerRegistry.registerMelting(block, output, amount);
     }
-
+    
+    public void integrateRecipes() {
+    	for( MaterialIntegration m : integrations ) {
+    		m.integrateRecipes();
+    	}
+    }
 }
