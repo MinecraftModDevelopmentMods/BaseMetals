@@ -113,6 +113,68 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 				}
 			}
 		}
+		// furnace cheese all the things!
+		for( MetalMaterial mat : Materials.getAllMaterials() ) {
+			if( (mat.ingot) != null && !(mat.ingot instanceof com.mcmoddev.lib.material.IMetalObject) && mat.hasOre ) {
+				if (Options.furnaceCheese) {
+					if( mat.boots != null )
+						GameRegistry.addSmelting(mat.boots, new ItemStack(mat.ingot, 4), 0);
+					
+					if( mat.helmet != null )
+						GameRegistry.addSmelting(mat.helmet, new ItemStack(mat.ingot, 5), 0);
+					
+					if( mat.sword != null )
+						GameRegistry.addSmelting(mat.sword, new ItemStack(mat.ingot, 2), 0);
+
+					if( mat.shovel != null )
+						GameRegistry.addSmelting(mat.shovel, new ItemStack(mat.ingot, 1), 0);
+					
+					if( mat.pickaxe != null )
+						GameRegistry.addSmelting(mat.pickaxe, new ItemStack(mat.ingot, 3), 0);
+
+					if( mat.hoe != null )
+						GameRegistry.addSmelting(mat.hoe, new ItemStack(mat.ingot, 2), 0);
+					
+					if( mat.axe != null )
+						GameRegistry.addSmelting(mat.axe, new ItemStack(mat.ingot, 3), 0);
+					
+					if( mat.leggings != null )
+						GameRegistry.addSmelting(mat.leggings, new ItemStack(mat.ingot, 7), 0);
+					
+					if( mat.chestplate != null )
+						GameRegistry.addSmelting(mat.chestplate, new ItemStack(mat.ingot, 8), 0);
+					
+				} else if (Options.furnace1112) {
+					if( mat.boots != null )
+						GameRegistry.addSmelting(mat.boots, new ItemStack(mat.nugget, 1), 0);
+					
+					if( mat.helmet != null )
+						GameRegistry.addSmelting(mat.helmet, new ItemStack(mat.nugget, 1), 0);
+					
+					if( mat.sword != null )
+						GameRegistry.addSmelting(mat.sword, new ItemStack(mat.nugget, 1), 0);
+
+					if( mat.shovel != null )
+						GameRegistry.addSmelting(mat.shovel, new ItemStack(mat.nugget, 1), 0);
+					
+					if( mat.pickaxe != null )
+						GameRegistry.addSmelting(mat.pickaxe, new ItemStack(mat.nugget, 1), 0);
+
+					if( mat.hoe != null )
+						GameRegistry.addSmelting(mat.hoe, new ItemStack(mat.nugget, 1), 0);
+					
+					if( mat.axe != null )
+						GameRegistry.addSmelting(mat.axe, new ItemStack(mat.nugget, 1), 0);
+					
+					if( mat.leggings != null )
+						GameRegistry.addSmelting(mat.leggings, new ItemStack(mat.nugget, 1), 0);
+					
+					if( mat.chestplate != null )
+						GameRegistry.addSmelting(mat.chestplate, new ItemStack(mat.nugget, 1), 0);
+				}
+			}
+		}		
+
 	}
 
 	private static void initModSpecificRecipes() {
