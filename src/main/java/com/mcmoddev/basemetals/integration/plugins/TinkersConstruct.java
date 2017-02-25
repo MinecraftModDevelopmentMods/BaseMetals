@@ -8,6 +8,7 @@ import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
+import com.mcmoddev.basemetals.data.MaterialNames;
 
 import net.minecraft.item.Item;
 
@@ -33,21 +34,21 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
 
-		registerMaterial(Options.enableAdamantine, "adamantine", true, false, "coldblooded", "insatiable" );
-		registerMaterial(Options.enableAntimony, "antimony", true, false);
-		registerMaterial(Options.enableAquarium, "aquarium", true, false, "aquadynamic", "jagged", TraitLocations.HEAD, "aquadynamic", TraitLocations.HEAD);
-		registerMaterial(Options.enableBismuth,"bismuth", true, false);
-		registerMaterial(Options.enableBrass, "brass", true, false, "dense");
-		registerMaterial(Options.enableColdIron, "coldiron", true, false, "freezing");
-		registerMaterial(Options.enableCupronickel, "cupronickel", true, false);
-		registerMaterial(Options.enableInvar, "invar", true, false);
-		registerMaterial(Options.enableMithril, "mithril", true, false, "holy");
-		registerMaterial(Options.enableNickel, "nickel", true, false);
-		registerMaterial(Options.enablePewter, "pewter", true, false, "soft");
-		registerMaterial(Options.enablePlatinum, "platinum", true, false);
-		registerMaterial(Options.enableStarSteel, "starsteel", true, false, "enderference", TraitLocations.HEAD, "sparkly");
-		registerMaterial(Options.enableTin, "tin", true, false);
-		registerMaterial(Options.enableZinc, "zinc", true, false);
+		registerMaterial(Options.enableAdamantine, MaterialNames.ADAMANTINE, true, false, "coldblooded", "insatiable" );
+		registerMaterial(Options.enableAntimony, MaterialNames.ANTIMONY, true, false);
+		registerMaterial(Options.enableAquarium, MaterialNames.AQUARIUM, true, false, "aquadynamic", "jagged", TraitLocations.HEAD, "aquadynamic", TraitLocations.HEAD);
+		registerMaterial(Options.enableBismuth, MaterialNames.BISMUTH, true, false);
+		registerMaterial(Options.enableBrass, MaterialNames.BRASS, true, false, "dense");
+		registerMaterial(Options.enableColdIron, MaterialNames.COLDIRON, true, false, "freezing");
+		registerMaterial(Options.enableCupronickel, MaterialNames.CUPRONICKEL, true, false);
+		registerMaterial(Options.enableInvar, MaterialNames.INVAR, true, false);
+		registerMaterial(Options.enableMithril, MaterialNames.MITHRIL, true, false, "holy");
+		registerMaterial(Options.enableNickel, MaterialNames.NICKEL, true, false);
+		registerMaterial(Options.enablePewter, MaterialNames.PEWTER, true, false, "soft");
+		registerMaterial(Options.enablePlatinum, MaterialNames.PLATINUM, true, false);
+		registerMaterial(Options.enableStarSteel, MaterialNames.STARSTEEL, true, false, "enderference", TraitLocations.HEAD, "sparkly");
+		registerMaterial(Options.enableTin, MaterialNames.TIN, true, false);
+		registerMaterial(Options.enableZinc, MaterialNames.ZINC, true, false);
 		
 		registerAlloys();
 		
@@ -70,7 +71,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		if (Options.enableMercury) {
-			registry.registerFluid(Materials.getMaterialByName("mercury"), 144);
+			registry.registerFluid(Materials.getMaterialByName(MaterialNames.MERCURY), 144);
 			if (Options.enableBasics) {
 				registerModifierItem("toxic", Materials.mercury.powder);
 			}
@@ -134,28 +135,28 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 	private void registerAlloys() {
 		if (Options.enableAquarium) {
-			registry.registerAlloy("Aquarium", Materials.getMaterialByName("aquarium").fluid, 3, "copper", 2, "zinc", 1, "prismarine", 3);
+			registry.registerAlloy(MaterialNames.AQUARIUM, Materials.getMaterialByName(MaterialNames.AQUARIUM).fluid, 3, MaterialNames.COPPER, 2, MaterialNames.ZINC, 1, MaterialNames.PRISMARINE, 3);
 		}
 
 		if (Options.enableCupronickel) {
-			registry.registerAlloy("cupronickel", Materials.getMaterialByName("cupronickel").fluid, 4, "copper", 3, "nickel", 1 );
+			registry.registerAlloy(MaterialNames.CUPRONICKEL, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).fluid, 4, MaterialNames.COPPER, 3, MaterialNames.NICKEL, 1 );
 		}
 
 		if (Options.enableInvar) {
-			registry.registerAlloy("invar", Materials.getMaterialByName("invar").fluid, 3, "iron", 2, "nickel", 1);
+			registry.registerAlloy(MaterialNames.INVAR, Materials.getMaterialByName(MaterialNames.INVAR).fluid, 3, MaterialNames.IRON, 2, MaterialNames.NICKEL, 1);
 		}
 
 		if (Options.enableMithril) {
-			registry.registerAlloy("mithril", Materials.getMaterialByName("mithril").fluid, 3, "silver", 2, "coldiron", 1, "mercury", 1);
+			registry.registerAlloy(MaterialNames.MITHRIL, Materials.getMaterialByName(MaterialNames.MITHRIL).fluid, 3, MaterialNames.SILVER, 2, MaterialNames.COLDIRON, 1, MaterialNames.MERCURY, 1);
 		}
 
 		if (Options.enablePewter) {
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
-			registry.registerAlloy("pewter", Materials.getMaterialByName("pewter").fluid, 144, "tin", 137, "copper", 2, "lead", 5);
+			registry.registerAlloy(MaterialNames.PEWTER, Materials.getMaterialByName(MaterialNames.PEWTER).fluid, 144, MaterialNames.TIN, 137, MaterialNames.COPPER, 2, MaterialNames.LEAD, 5);
 		}
 
 		if (Options.enableSteel) {
-			registry.registerAlloy("steel", Materials.getMaterialByName("steel").fluid, 8, "iron", 8, "coal", 1);
+			registry.registerAlloy(MaterialNames.STEEL, Materials.getMaterialByName(MaterialNames.STEEL).fluid, 8, MaterialNames.IRON, 8, MaterialNames.COAL, 1);
 		}
 	}
 	
