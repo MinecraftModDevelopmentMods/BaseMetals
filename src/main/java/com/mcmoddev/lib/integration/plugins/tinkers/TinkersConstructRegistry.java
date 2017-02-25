@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.FMLLog;
 import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
@@ -130,6 +131,11 @@ public class TinkersConstructRegistry {
      * @return Hopefully TCCode.SUCCESS, but can be any number of the various error code returns
      */
     private TCCode register(TCMaterial mat) {
+		if (TinkerRegistry.getMaterial(mat.getName().toLowerCase()) != Material.UNKNOWN) {
+			FMLLog.severe("In register() - Material %s already known", mat.getName());
+			return TCCode.MATERIAL_ALREADY_REGISTERED;
+		}
+    	FMLLog.severe("Registering material %s", mat.getName());
     	Boolean hasTraits = !mat.getTraitLocations().isEmpty();
     	
     	if( mat.getMetalMaterial().fluid == null ) {
@@ -145,10 +151,6 @@ public class TinkersConstructRegistry {
 					tcmat.addTrait(t, s == "general" ? null : s);
 				}
 			}
-		}
-
-		if (TinkerRegistry.getMaterial(tcmat.identifier) != Material.UNKNOWN) {
-			return TCCode.MATERIAL_ALREADY_REGISTERED;
 		}
     	
 		registerFluid(mat.getMetalMaterial(), mat.getAmountPer());
@@ -188,7 +190,7 @@ public class TinkersConstructRegistry {
         for( Entry<String,TCMaterial> ent : registry.entrySet() ) {
         	// log ent.getKey() - the material name - here ?
         	TCCode rv = register(ent.getValue());
-        	if( rv != TCCode.SUCCESS ) {
+        	if( rv != TCCode.SUCCESS && rv != TCCode.MATERIAL_ALREADY_REGISTERED ) {
         		return rv;
         	}
         }
