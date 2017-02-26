@@ -154,10 +154,7 @@ public class TinkersConstructRegistry {
 		}
     	
 		registerFluid(mat.getMetalMaterial(), mat.getAmountPer());
-		tcmat.addItem(mat.getMetalMaterial().ingot, 1, Material.VALUE_Ingot);
-		tcmat.addItemIngot(Oredicts.INGOT + mat.getMetalMaterial().getName());
-		tcmat.setRepresentativeItem(mat.getMetalMaterial().ingot);
-
+		
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHeadStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHandleStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getExtraStats());
@@ -165,18 +162,19 @@ public class TinkersConstructRegistry {
 		TinkerRegistry.addMaterialStats(tcmat, mat.getBowStringStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getArrowShaftStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getFletchingStats());
-		TinkerRegistry.addMaterial(tcmat);
 
-		tcmat.setFluid(mat.getMetalMaterial().fluid).setCastable(mat.getCastable()).setCraftable(mat.getCraftable());
-
+		tcmat.setFluid(mat.getMetalMaterial().fluid).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(mat.getMetalMaterial().ingot, 1, Material.VALUE_Ingot);
+		tcmat.setRepresentativeItem(mat.getMetalMaterial().ingot);
+		
 		String base = mat.getMetalMaterial().getName();
 		String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
-		MaterialIntegration m = new MaterialIntegration(null, mat.getMetalMaterial().fluid, suffix);
+		MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMetalMaterial().fluid, suffix);
+		
 		if (mat.getToolForge()) {
 			m.toolforge();
 		}
 
-		TinkerIntegration.integrationList.add(m);
+//		TinkerIntegration.integrationList.add(m);
 		addIntegration(m);
 		m.integrate();
 		return TCCode.SUCCESS;
