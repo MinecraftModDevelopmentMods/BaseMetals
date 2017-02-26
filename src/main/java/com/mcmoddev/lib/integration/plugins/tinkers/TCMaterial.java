@@ -143,7 +143,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param headDurability durability of material when used as a tool head
      * @return the material
      */
@@ -153,7 +152,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param bodyDurability durability of material when used as a tool rod/body
      * @return the material
      */
@@ -163,7 +161,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param extraDurability durability of material when used as a tool extra part (binding, large plate, etc...)
      * @return the material
      */
@@ -173,7 +170,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param miningLevel Mining Level of the material
      * @return the material
      */
@@ -183,7 +179,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param shaftBonusAmmo Amount of ammo you get when crafting arrows/bolts with this material as the shaft
      * @return the material
      */
@@ -193,7 +188,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param miningSpeed Speed of mining with this material
      * @return the material
      */
@@ -203,7 +197,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param headAttackDamage Attack damage when used as a tool/weapon head
      * @return the material
      */
@@ -213,7 +206,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param bodyModifier Modifier amount applied when used for a tool/weapon body
      * @return the material
      */
@@ -223,7 +215,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param bowDrawingSpeed draw speed of bows made from this material
      * @return the material
      */
@@ -233,7 +224,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param bowRange range of bows made from this material
      * @return the material
      */
@@ -243,7 +233,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param bowDamage base damage of bows made from this material
      * @return the material
      */
@@ -253,7 +242,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param bowstringModifier Modifier when this material is used to make a bow string
      * @return the material
      */
@@ -263,7 +251,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param shaftModifier Modifier when used as bolt/arrow shaft
      * @return the material
      */
@@ -273,7 +260,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param fletchingAccuracy accuracy modifier when material is used to make fletching
      * @return the material
      */
@@ -283,8 +269,8 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param fletchingMod base modifier when used as fletching
+     * @return the material
      */
     public TCMaterial setFletchingModifier(float fletchingMod) {
         this.fletchingModifier = fletchingMod;
@@ -292,7 +278,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param amount amount of fluid per ingot
      * @return the material
      */
@@ -302,7 +287,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param mm MetalMaterial this wrapper represents
      * @return the material
      */
@@ -313,7 +297,6 @@ public class TCMaterial {
 
     /**
      * Wrapper around {setMetalMaterial}
-     * @setter
      * @param mm MetalMaterial this represents
      * @return the material
      */
@@ -323,7 +306,6 @@ public class TCMaterial {
     
     /**
      * Craftable and Castable are mutually exclusive, this will unset castable if it is set and the parameter is 'true'
-     * @setter
      * @param iscraftable boolean true/false - is this material capable of being crafted into parts at a part maker ?
      * @return the material
      */
@@ -341,8 +323,7 @@ public class TCMaterial {
 
     /**
      * Craftable and Castable are mutually exclusive, this will unset craftable if it is set and the parameter is 'true'
-	 * @setter
-     * @param iscrastable boolean true/false - is this material capable of being cast into parts at the smeltery ?
+     * @param iscastable boolean true/false - is this material capable of being cast into parts at the smeltery ?
      * @return the material
      */
     public TCMaterial setCastable(boolean iscastable) {
@@ -358,7 +339,6 @@ public class TCMaterial {
     }
 
     /**
-     * @setter
      * @param toolForge is this material capable of being a ToolForge base material ?
      * @return the material
      */
@@ -369,7 +349,6 @@ public class TCMaterial {
 
     /**
      * the 'Name' parameter is not used, at this time
-     * @setter
      * @param newName name for the material
      * @return the material
      */

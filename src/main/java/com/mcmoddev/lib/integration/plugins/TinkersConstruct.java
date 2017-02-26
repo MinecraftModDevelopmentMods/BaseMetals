@@ -96,6 +96,7 @@ public class TinkersConstruct implements IIntegration {
 	 *            If this be crafted
 	 * @param castable
 	 *            If this can be casted
+	 * @return a handle for potential, further manipulation of the material
 	 */
 	protected static TCMaterial registerMaterial(MetalMaterial material, boolean craftable, boolean castable ) {
 		return registry.getMaterial(material.getName(), material).setCraftable(craftable).setCastable(castable).setToolForge(true);

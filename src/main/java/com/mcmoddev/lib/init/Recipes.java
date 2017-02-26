@@ -9,7 +9,6 @@ import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
@@ -25,7 +24,8 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public abstract class Recipes {
 
 	private static boolean initDone = false;
-
+	private static final String SORTLOC = "after:minecraft:shapeless";
+	
 	protected Recipes() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -124,13 +124,6 @@ public abstract class Recipes {
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SLIME_BLOCK, new ItemStack(net.minecraft.init.Items.SLIME_BALL, 9)); // Slime Block to 9 Slime Balls
 
-		// Samples
-		// CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.MAGMA, new ItemStack(net.minecraft.init.Items.MAGMA_CREAM, 4));
-		// CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.NETHER_WART_BLOCK, new ItemStack(net.minecraft.init.Items.NETHER_WART, 9));
-		// CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.NETHERRACK, new ItemStack(net.minecraft.init.Blocks.SOUL_SAND, 1));
-		// CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.NETHER_BRICK, new ItemStack(net.minecraft.init.Blocks.NETHERRACK, 1));
-		// CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.RED_NETHER_BRICK, new ItemStack(net.minecraft.init.Blocks.NETHERRACK, 1));
-		// CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.NETHER_BRICK_FENCE, new ItemStack(net.minecraft.init.Blocks.NETHERRACK, 1));
 	}
 
 	protected static void initVanillaRecipes() {
@@ -168,7 +161,9 @@ public abstract class Recipes {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.lever), "x", "y", 'x', Oredicts.ROD + oreDictName, 'y', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(material.lever, new ItemStack(material.ingot, 1), 0); // you lose the rod
 				}
+				
 				/*
+				 * TODO: Figure out why this crashes
 				if (material.stairs != null) { // Crashes
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.stairs, 4), "x", "xx", "xxx", 'x', Oredicts.BLOCK + oreDictName));
 				}
@@ -247,12 +242,12 @@ public abstract class Recipes {
 					if (material.plate != null) {
 						if (Options.enablePlateRepairs) {
 							GameRegistry.addRecipe(new ShieldRepairRecipe(material));
-							RecipeSorter.register("mmd:shieldrepair", ShieldRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
+							RecipeSorter.register("mmd:shieldrepair", ShieldRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 						}
 
 						if (Options.enableShieldUpgrades) {
 							GameRegistry.addRecipe(new ShieldUpgradeRecipe(material));
-							RecipeSorter.register("mmd:shieldupgrade", ShieldUpgradeRecipe.class, Category.UNKNOWN, "after:minecraft:shapeless");
+							RecipeSorter.register("mmd:shieldupgrade", ShieldUpgradeRecipe.class, Category.UNKNOWN, SORTLOC);
 						}
 					}
 				}
@@ -324,8 +319,6 @@ public abstract class Recipes {
 			if ((material.blend != null) && (material.smallblend != null)) {
 				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallblend, 9), new ItemStack(material.blend)));
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.blend), "xxx", "xxx", "xxx", 'x', new ItemStack(material.smallblend)));
-				// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallblend, 9), Oredicts.BLEND + oreDictName));
-				// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.blend), "xxx", "xxx", "xxx", 'x', Oredicts.BLENDTINY + oreDictName));
 				if (material.nugget != null) {
 					GameRegistry.addSmelting(material.smallblend, new ItemStack(material.nugget, 1), 0);
 				}
@@ -334,8 +327,6 @@ public abstract class Recipes {
 			if ((material.powder != null) && (material.smallpowder != null)) {
 				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallpowder, 9), new ItemStack(material.powder)));
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.powder), "xxx", "xxx", "xxx", 'x', new ItemStack(material.smallpowder)));
-				// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallpowder, 9), Oredicts.DUST + oreDictName));
-				// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.powder), "xxx", "xxx", "xxx", 'x', Oredicts.DUSTTINY + oreDictName));
 				if (material.nugget != null) {
 					GameRegistry.addSmelting(material.smallpowder, new ItemStack(material.nugget, 1), 0);
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.smallpowder, 1));
@@ -350,7 +341,7 @@ public abstract class Recipes {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.boots), "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
 			if ((material.plate != null) && (Options.enablePlateRepairs)) {
 				GameRegistry.addRecipe(new BootsRepairRecipe(material));
-				RecipeSorter.register("mmd:bootsrepair", BootsRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
+				RecipeSorter.register("mmd:bootsrepair", BootsRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 			}
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.boots, new ItemStack(material.ingot, 4), 0);
@@ -363,7 +354,7 @@ public abstract class Recipes {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.helmet), "xxx", "x x", 'x', Oredicts.INGOT + oreDictName));
 			if ((material.plate != null) && (Options.enablePlateRepairs)) {
 				GameRegistry.addRecipe(new HelmetRepairRecipe(material));
-				RecipeSorter.register("mmd:helmetrepair", HelmetRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
+				RecipeSorter.register("mmd:helmetrepair", HelmetRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 			}
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.helmet, new ItemStack(material.ingot, 5), 0);
@@ -376,7 +367,7 @@ public abstract class Recipes {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.chestplate), "x x", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
 			if ((material.plate != null) && (Options.enablePlateRepairs)) {
 				GameRegistry.addRecipe(new ChestplateRepairRecipe(material));
-				RecipeSorter.register("mmd:chestplaterepair", ChestplateRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
+				RecipeSorter.register("mmd:chestplaterepair", ChestplateRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 			}
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.chestplate, new ItemStack(material.ingot, 8), 0);
@@ -389,7 +380,7 @@ public abstract class Recipes {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.leggings), "xxx", "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
 			if ((material.plate != null) && (Options.enablePlateRepairs)) {
 				GameRegistry.addRecipe(new LeggingsRepairRecipe(material));
-				RecipeSorter.register("mmd:leggingsrepair", LeggingsRepairRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
+				RecipeSorter.register("mmd:leggingsrepair", LeggingsRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 			}
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.leggings, new ItemStack(material.ingot, 7), 0);
@@ -400,7 +391,6 @@ public abstract class Recipes {
 
 		if ((material.axe != null) && (material.axe instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "x/", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "/x", "/ ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.axe, new ItemStack(material.ingot, 3), 0);
 			} else if (Config.Options.furnace1112) {
@@ -410,7 +400,6 @@ public abstract class Recipes {
 
 		if ((material.hoe != null) && (material.hoe instanceof IMetalObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", " /", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
-			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", "/ ", "/ ", 'x', INGOT + oreDictName, '/', STICKWOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(material.hoe, new ItemStack(material.ingot, 2), 0);
 			} else if (Config.Options.furnace1112) {
