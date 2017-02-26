@@ -122,7 +122,7 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
+	 * @param material The material base of these items
 	 */
 	protected static void createItemsBasic(MetalMaterial material) {
 		createBlend(material);
@@ -135,7 +135,7 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
+	 * @param material The material base of these items
 	 */
 	protected static void createItemsFull(MetalMaterial material) {
 		createArrow(material);
@@ -170,7 +170,7 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
+	 * @param material The material base of these items
 	 */
 	protected static void createItemsModSupport(MetalMaterial material) {
 		if (Options.enableModderSupportThings) {
@@ -184,7 +184,7 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
+	 * @param material The material base of these items
 	 */
 	protected static void createItemsModIC2(MetalMaterial material) {
 		if (material.hasOre) {
@@ -195,7 +195,7 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
+	 * @param material The material base of these items
 	 */
 	protected static void createItemsModMekanism(MetalMaterial material) {
 		if (material.hasOre) {
@@ -208,11 +208,11 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param item
-	 * @param name
-	 * @param material
-	 * @param tab
-	 * @return
+	 * @param item The item to add
+	 * @param name Name of the item
+	 * @param material Material it is made from
+	 * @param tab which creative tab it is in
+	 * @return the item that was added
 	 */
 	protected static Item addItem(Item item, String name, MetalMaterial material, CreativeTabs tab) {
 
@@ -246,8 +246,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this ingot
+	 * @return the item this function created
 	 */
 	protected static Item createIngot(MetalMaterial material) {
 		if (material == null) {
@@ -263,8 +263,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this nugget
+	 * @return the item this function created
 	 */
 	protected static Item createNugget(MetalMaterial material) {
 		if (material == null) {
@@ -280,8 +280,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this powder
+	 * @return the item this function created
 	 */
 	protected static Item createPowder(MetalMaterial material) {
 		if (material == null) {
@@ -297,8 +297,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this blend
+	 * @return the item this function created
 	 */
 	protected static Item createBlend(MetalMaterial material) {
 		if (material == null) {
@@ -314,8 +314,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this rod
+	 * @return the item this function created
 	 */
 	protected static Item createRod(MetalMaterial material) {
 		if (material == null) {
@@ -333,8 +333,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this gear
+	 * @return the item this function created
 	 */
 	protected static Item createGear(MetalMaterial material) {
 		if (material == null) {
@@ -351,8 +351,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this axe
+	 * @return the item this function created
 	 */
 	protected static Item createAxe(MetalMaterial material) {
 		if (material == null) {
@@ -368,8 +368,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this crackhammer
+	 * @return the item this function created
 	 */
 	protected static Item createCrackhammer(MetalMaterial material) {
 		if (material == null) {
@@ -385,8 +385,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createHoe(MetalMaterial material) {
 		if (material == null) {
@@ -402,8 +402,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createPickaxe(MetalMaterial material) {
 		if (material == null) {
@@ -419,8 +419,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createShovel(MetalMaterial material) {
 		if (material == null) {
@@ -436,8 +436,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createSword(MetalMaterial material) {
 		if (material == null) {
@@ -453,8 +453,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createHelmet(MetalMaterial material) {
 		if (material == null) {
@@ -470,8 +470,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createChestplate(MetalMaterial material) {
 		if (material == null) {
@@ -487,8 +487,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createLeggings(MetalMaterial material) {
 		if (material == null) {
@@ -504,8 +504,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createBoots(MetalMaterial material) {
 		if (material == null) {
@@ -521,8 +521,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createHorseArmor(MetalMaterial material) {
 		if (material == null) {
@@ -538,8 +538,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createArrow(MetalMaterial material) {
 		if (material == null) {
@@ -555,8 +555,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createBolt(MetalMaterial material) {
 		if (material == null) {
@@ -572,8 +572,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createBow(MetalMaterial material) {
 		if (material == null) {
@@ -589,8 +589,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createCrossbow(MetalMaterial material) {
 		if (material == null) {
@@ -606,8 +606,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createShears(MetalMaterial material) {
 		if (material == null) {
@@ -623,8 +623,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createSmallBlend(MetalMaterial material) {
 		if (material == null) {
@@ -640,8 +640,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createFishingRod(MetalMaterial material) {
 		if (material == null) {
@@ -657,8 +657,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createSmallPowder(MetalMaterial material) {
 		if (material == null) {
@@ -674,8 +674,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createShield(MetalMaterial material) {
 		if (material == null) {
@@ -691,8 +691,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createCrystal(MetalMaterial material) {
 		if (material == null) {
@@ -709,8 +709,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createShard(MetalMaterial material) {
 		if (material == null) {
@@ -727,8 +727,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createClump(MetalMaterial material) {
 		if (material == null) {
@@ -745,8 +745,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createDirtyPowder(MetalMaterial material) {
 		if (material == null) {
@@ -764,8 +764,8 @@ public abstract class Items {
 	// TODO: Possibly make this a Block, double of the normal plate.
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createCasing(MetalMaterial material) {
 		if (material == null) {
@@ -783,8 +783,8 @@ public abstract class Items {
 	// TODO: Possibly make this a Block, double of the normal plate.
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createDensePlate(MetalMaterial material) {
 		if (material == null) {
@@ -801,8 +801,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createCrushed(MetalMaterial material) {
 		if (material == null) {
@@ -819,8 +819,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createCrushedPurified(MetalMaterial material) {
 		if (material == null) {
@@ -837,8 +837,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createSlab(MetalMaterial material) {
 		if (material == null) {
@@ -855,8 +855,8 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material
-	 * @return
+	 * @param material The material base of this item
+	 * @return the item this function created
 	 */
 	protected static Item createDoor(MetalMaterial material) {
 		if (material == null) {

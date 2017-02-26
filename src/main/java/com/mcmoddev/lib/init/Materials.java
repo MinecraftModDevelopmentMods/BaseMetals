@@ -45,12 +45,13 @@ public abstract class Materials {
 	/**
 	 * Create a oreless material
 	 * 
-	 * @param name
-	 * @param hardness
-	 * @param strength
-	 * @param magic
-	 * @param tintColor
-	 * @return
+	 * @param name Name of the material
+	 * @param type the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness Scaled hardness of the material, based on the Mohs scale
+	 * @param strength material strength
+	 * @param magic material magic affinity
+	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @return the new material
 	 */
 	protected static MetalMaterial createOrelessMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, false, false);
@@ -61,12 +62,13 @@ public abstract class Materials {
 	/**
 	 * Create a standard material
 	 * 
-	 * @param name
-	 * @param hardness
-	 * @param strength
-	 * @param magic
-	 * @param tintColor
-	 * @return
+	 * @param name Name of the material
+	 * @param type the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness Scaled hardness of the material, based on the Mohs scale
+	 * @param strength material strength
+	 * @param magic material magic affinity
+	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @return the new material
 	 */
 	protected static MetalMaterial createMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, true, false);
@@ -77,12 +79,13 @@ public abstract class Materials {
 	/**
 	 * Create an alloy material
 	 * 
-	 * @param name
-	 * @param hardness
-	 * @param strength
-	 * @param magic
-	 * @param tintColor
-	 * @return
+	 * @param name Name of the material
+	 * @param type the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness Scaled hardness of the material, based on the Mohs scale
+	 * @param strength material strength
+	 * @param magic material magic affinity
+	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @return the new material
 	 */
 	protected static MetalMaterial createAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, false, true);
@@ -93,12 +96,13 @@ public abstract class Materials {
 	/**
 	 * Create a special alloy material which has an ore block
 	 * 
-	 * @param name
-	 * @param hardness
-	 * @param strength
-	 * @param magic
-	 * @param tintColor
-	 * @return
+	 * @param name Name of the material
+	 * @param type the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness Scaled hardness of the material, based on the Mohs scale
+	 * @param strength material strength
+	 * @param magic material magic affinity
+	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @return the new material
 	 */
 	protected static MetalMaterial createSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, true, true);
@@ -109,12 +113,13 @@ public abstract class Materials {
 	/**
 	 * Create a rare, oreless material
 	 * 
-	 * @param name
-	 * @param hardness
-	 * @param strength
-	 * @param magic
-	 * @param tintColor
-	 * @return
+	 * @param name Name of the material
+	 * @param type the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness Scaled hardness of the material, based on the Mohs scale
+	 * @param strength material strength
+	 * @param magic material magic affinity
+	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @return the new material
 	 */
 	protected static MetalMaterial createOrelessRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, false, false);
@@ -125,12 +130,13 @@ public abstract class Materials {
 	/**
 	 * Create a rare material
 	 * 
-	 * @param name
-	 * @param hardness
-	 * @param strength
-	 * @param magic
-	 * @param tintColor
-	 * @return
+	 * @param name Name of the material
+	 * @param type the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness Scaled hardness of the material, based on the Mohs scale
+	 * @param strength material strength
+	 * @param magic material magic affinity
+	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @return the new material
 	 */
 	protected static MetalMaterial createRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, true, false);
@@ -141,12 +147,13 @@ public abstract class Materials {
 	/**
 	 * Create a rare alloy material
 	 * 
-	 * @param name
-	 * @param hardness
-	 * @param strength
-	 * @param magic
-	 * @param tintColor
-	 * @return
+	 * @param name Name of the material
+	 * @param type the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness Scaled hardness of the material, based on the Mohs scale
+	 * @param strength material strength
+	 * @param magic material magic affinity
+	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @return the new material
 	 */
 	protected static MetalMaterial createRareAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, false, true);
@@ -157,12 +164,13 @@ public abstract class Materials {
 	/**
 	 * Create a special rare alloy material
 	 * 
-	 * @param name
-	 * @param hardness
-	 * @param strength
-	 * @param magic
-	 * @param tintColor
-	 * @return
+	 * @param name Name of the material
+	 * @param type the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness Scaled hardness of the material, based on the Mohs scale
+	 * @param strength material strength
+	 * @param magic material magic affinity
+	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @return the new material
 	 */
 	protected static MetalMaterial createRareSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
 		final MetalMaterial material = new MetalMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, true, true);
@@ -173,8 +181,8 @@ public abstract class Materials {
 	/**
 	 * Register a material
 	 * 
-	 * @param material
-	 * @return
+	 * @param material the material to register
+	 * @return the material
 	 */
 	protected static MetalMaterial registerMaterial(MetalMaterial material) {
 
@@ -214,7 +222,7 @@ public abstract class Materials {
 	/**
 	 * Gets the armor material for a given metal
 	 *
-	 * @param m
+	 * @param material
 	 *            The metal of interest
 	 * @return The armor material for this metal, or null if there isn't one
 	 */
@@ -225,7 +233,7 @@ public abstract class Materials {
 	/**
 	 * Gets the tool material for a given metal
 	 *
-	 * @param m
+	 * @param material
 	 *            The metal of interest
 	 * @return The tool material for this metal, or null if there isn't one
 	 */

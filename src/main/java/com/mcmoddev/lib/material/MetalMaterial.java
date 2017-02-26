@@ -165,6 +165,8 @@ public class MetalMaterial {
 	/**
 	 * @param name
 	 *            String used to identify items and blocks using this material
+	 * @param type
+	 *            Base type of the material - is it a metal, a mineral, a gem ?
 	 * @param hardness
 	 *            hardness on a scale from 0 to 10 (or more), where 0 is
 	 *            non-solid and diamond is 10. For reference, wood is 3, stone

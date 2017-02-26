@@ -34,8 +34,8 @@ public class EnderIO implements IIntegration {
 
 	/**
 	 *
-	 * @param material
-	 *            The Material
+	 * @param materialName
+	 *            The Material's name
 	 */
 	protected static void addAlloySmelterRecipe(String materialName) {
 		addAlloySmelterRecipe(materialName, null, 2000);
@@ -43,8 +43,8 @@ public class EnderIO implements IIntegration {
 
 	/**
 	 *
-	 * @param material
-	 *            The Material
+	 * @param materialName
+	 *            The Material's name
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
@@ -54,8 +54,8 @@ public class EnderIO implements IIntegration {
 
 	/**
 	 *
-	 * @param material
-	 *            The Material
+	 * @param materialName
+	 *            The Material's name
 	 * @param outputSecondary
 	 *            The secondary output
 	 * @param energy
@@ -92,8 +92,8 @@ public class EnderIO implements IIntegration {
 
 	/**
 	 *
-	 * @param material
-	 *            The Material
+	 * @param materialName
+	 *            The Material's name
 	 */
 	protected static void addSagMillRecipe(String materialName) {
 		addSagMillRecipe(materialName, null, 2400);
@@ -101,8 +101,8 @@ public class EnderIO implements IIntegration {
 
 	/**
 	 *
-	 * @param material
-	 *            The Material
+	 * @param materialName
+	 *            The Material's name
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
@@ -112,8 +112,8 @@ public class EnderIO implements IIntegration {
 
 	/**
 	 *
-	 * @param material
-	 *            The Material
+	 * @param materialName
+	 *            The Material's name
 	 * @param outputSecondary
 	 *            The secondary output
 	 * @param energy
@@ -133,8 +133,8 @@ public class EnderIO implements IIntegration {
 
 	/**
 	 *
-	 * @param material
-	 *            The Material
+	 * @param materialName
+	 *            The Material's name
 	 * @param primaryQty
 	 *            How much to make
 	 * @param outputSecondary
