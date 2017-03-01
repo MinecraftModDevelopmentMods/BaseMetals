@@ -1,0 +1,8 @@
+{
+    "parent": "basemetals:block/plate",
+    "textures": {
+        "top": "basemetals:blocks/quartz_plate",
+        "side": "basemetals:blocks/quartz_plate",
+        "bottom": "basemetals:blocks/quartz_plate"
+    }
+}

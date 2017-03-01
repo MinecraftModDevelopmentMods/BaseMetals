@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "variant=default": { "model": "minecraft:emerald_block" }
+    }
+}

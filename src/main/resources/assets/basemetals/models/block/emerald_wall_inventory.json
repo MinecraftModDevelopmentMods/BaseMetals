@@ -1,0 +1,6 @@
+{
+    "parent": "block/wall_inventory",
+    "textures": {
+        "wall": "basemetals:blocks/emerald_block"
+    }
+}

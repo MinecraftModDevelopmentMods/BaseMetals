@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "basemetals:blocks/obsidian_block",
+        "top": "basemetals:blocks/obsidian_block",
+        "side": "basemetals:blocks/obsidian_block"
+    }
+}

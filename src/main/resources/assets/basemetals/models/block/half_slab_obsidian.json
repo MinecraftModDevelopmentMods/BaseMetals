@@ -1,0 +1,8 @@
+{
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "minecraft:blocks/obsidian_block",
+        "top": "minecraft:blocks/obsidian_block",
+        "side": "minecraft:blocks/obsidian_block"
+    }
+}
