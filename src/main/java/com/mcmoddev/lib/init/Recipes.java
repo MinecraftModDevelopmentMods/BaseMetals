@@ -161,13 +161,10 @@ public abstract class Recipes {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.lever), "x", "y", 'x', Oredicts.ROD + oreDictName, 'y', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(material.lever, new ItemStack(material.ingot, 1), 0); // you lose the rod
 				}
-				
-				/*
-				 * TODO: Figure out why this crashes
-				if (material.stairs != null) { // Crashes
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.stairs, 4), "x", "xx", "xxx", 'x', Oredicts.BLOCK + oreDictName));
+
+				if (material.stairs != null) {
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.stairs, 4), "x  ", "xx ", "xxx", 'x', Oredicts.BLOCK + oreDictName));
 				}
-				*/
 				 
 				if (material.wall != null) {
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.wall, 6), "xxx", "xxx", 'x', Oredicts.BLOCK + oreDictName));
