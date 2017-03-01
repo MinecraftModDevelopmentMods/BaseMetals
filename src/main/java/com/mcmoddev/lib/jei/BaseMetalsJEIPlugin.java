@@ -21,7 +21,7 @@ import mezz.jei.api.JEIPlugin;
 @JEIPlugin
 public class BaseMetalsJEIPlugin extends BlankModPlugin {
 
-	public static final String JEIUID = BaseMetals.MODID;// .concat(".crusher");
+	public static final String JEIUID = BaseMetals.MODID;
 
 	@Override
 	public void register(IModRegistry registry) {

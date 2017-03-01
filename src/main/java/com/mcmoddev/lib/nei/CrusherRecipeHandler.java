@@ -27,6 +27,7 @@ import net.minecraft.util.text.translation.I18n;
  * @author Jasmine Iwanek
  *
  */
+@SuppressWarnings("deprecation")
 public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	private static final String CRUSHER = "crusher";
@@ -95,7 +96,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public String getRecipeName() {
-		final String key = "nei." + BaseMetals.MODID + ".recipehandler.crusher.name";
+		final String key = BaseMetals.MODID + ".crusher";
 		if (I18n.canTranslate(key)) {
 			return net.minecraft.client.resources.I18n.format(key);
 		} else {

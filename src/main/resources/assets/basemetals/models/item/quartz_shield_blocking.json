@@ -1,0 +1,6 @@
+{
+  "parent": "basemetals:item/shield_blocking",
+  "textures": {
+    "shield": "basemetals:blocks/quartz_block"
+    }
+}

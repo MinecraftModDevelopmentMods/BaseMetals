@@ -106,6 +106,14 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createItemsFull(material);
 		}
 
+		if (Options.enableEmerald) {
+			final MetalMaterial material = Materials.vanilla_emerald;
+
+			material.ingot = net.minecraft.init.Items.EMERALD;
+
+			createItemsFull(material);
+		}
+
 		if (Options.enableElectrum) {
 			createItemsFull(Materials.electrum);
 		}
@@ -154,8 +162,21 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createItemsFull(material);
 		}
 
+		if (Options.enableLapis) {
+			final MetalMaterial material = Materials.vanilla_lapis;
+			material.powder = net.minecraft.init.Items.DYE;
+
+			createSmallPowder(material);
+
+		}
+
 		if (Options.enableLead) {
 			createItemsFull(Materials.lead);
+		}
+
+		if (Options.enableObsidian) {
+			final MetalMaterial material = Materials.vanilla_obsidian;
+			createItemsFull(material);
 		}
 
 		if (Options.enablePlatinum) {
@@ -186,9 +207,19 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableRedstone) {
-			Materials.vanilla_redstone.powder = net.minecraft.init.Items.REDSTONE;
-			createIngot(Materials.vanilla_redstone);
-			createSmallPowder(Materials.vanilla_redstone);
+			final MetalMaterial material = Materials.vanilla_obsidian;
+			material.powder = net.minecraft.init.Items.REDSTONE;
+
+			createIngot(material);
+			createSmallPowder(material);
+		}
+
+		if (Options.enableQuartz) {
+			final MetalMaterial material = Materials.vanilla_quartz;
+			material.ingot = net.minecraft.init.Items.QUARTZ;
+			// material.slab = ;
+
+			createItemsFull(material);
 		}
 
 		if (Options.enableSilver) {

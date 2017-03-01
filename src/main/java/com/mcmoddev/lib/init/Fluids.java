@@ -85,6 +85,7 @@ public abstract class Fluids {
 	}
 
 	protected static BlockFluidClassic addFluidBlock(@Nonnull MetalMaterial material) {
+
 		if (material == null) {
 			return null;
 		}
@@ -93,14 +94,13 @@ public abstract class Fluids {
 			return material.fluidBlock;
 		}
 
-		final ResourceLocation location = new ResourceLocation(Loader.instance().activeModContainer().getModId(),
-				material.getName());
 		BlockFluidClassic block;
+		String name = material.getName();
 
-		if (material.getName() != "mercury") {
+		if (name != "mercury") {
 			block = new BlockFluidClassic(material.fluid, Material.LAVA);
 		} else {
-			block = new InteractiveFluidBlock(getFluidByName(material.getName()), false,
+			block = new InteractiveFluidBlock(getFluidByName(name), false,
 					(World w, EntityLivingBase e) -> {
 						if (w.rand.nextInt(32) == 0) {
 							e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
@@ -108,18 +108,18 @@ public abstract class Fluids {
 					});
 		}
 
-		String fluidUnlocal = material.fluid.getUnlocalizedName();
-		block.setRegistryName(location);
-		block.setUnlocalizedName(fluidUnlocal);
+		block.setRegistryName(name); // fullName
+		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
 		GameRegistry.register(block);
 		block.setCreativeTab(CreativeTabs.MISC);
 
 		final ItemBlock itemBlock = new ItemBlock(block);
-		itemBlock.setRegistryName(location);
-		itemBlock.setUnlocalizedName(location.toString());
+		itemBlock.setRegistryName(name); // fullName
+		itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
 		GameRegistry.register(itemBlock);
+
 		material.fluidBlock = block;
-		fluidBlockRegistry.put(material.getName(), block);
+		fluidBlockRegistry.put(name, block);
 		return block;
 	}
 

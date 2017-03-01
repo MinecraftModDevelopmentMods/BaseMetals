@@ -125,7 +125,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		}
 
 		if (Options.enableEnder) {
-			vanilla_ender = createMaterial("ender", MaterialType.GEM, 2, 2, 6, 0xFF000000);
+			vanilla_ender = createOrelessMaterial("ender", MaterialType.GEM, 2, 2, 6, 0xFF000000);
 		}
 
 		if (Options.enableQuartz) {
@@ -133,7 +133,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		}
 
 		if (Options.enableObsidian) {
-			vanilla_obsidian = createMaterial("obsidian", MaterialType.ROCK, 10, 15, 4, 0xFF000000);
+			vanilla_obsidian = createOrelessMaterial("obsidian", MaterialType.ROCK, 10, 15, 4, 0xFF000000);
 		}
 
 		if (Options.enableLapis) {

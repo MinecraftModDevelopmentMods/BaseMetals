@@ -97,6 +97,19 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksFull(Materials.electrum);
 		}
 
+		if (Options.enableEmerald) {
+			final MetalMaterial material = Materials.vanilla_emerald;
+
+			material.block = net.minecraft.init.Blocks.EMERALD_BLOCK;
+			material.ore = net.minecraft.init.Blocks.EMERALD_ORE;
+
+			createBars(material);
+			createDoor(material);
+			createTrapDoor(material);
+
+			createBlocksAdditional(material);
+		}
+
 		if (Options.enableGold) {
 			final MetalMaterial material = Materials.vanilla_gold;
 
@@ -131,6 +144,13 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksAdditional(material);
 		}
 
+		if (Options.enableLapis) {
+			final MetalMaterial material = Materials.vanilla_lapis;
+
+			material.block = net.minecraft.init.Blocks.LAPIS_BLOCK;
+			material.ore = net.minecraft.init.Blocks.LAPIS_ORE;
+		}
+
 		if (Options.enableLead) {
 			createBlocksFull(Materials.lead);
 		}
@@ -149,6 +169,18 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksFull(Materials.nickel);
 		}
 
+		if (Options.enableObsidian) {
+			final MetalMaterial material = Materials.vanilla_obsidian;
+
+			material.block = net.minecraft.init.Blocks.OBSIDIAN;
+
+			createBars(material);
+			createDoor(material);
+			createTrapDoor(material);
+
+			createBlocksAdditional(material);
+		}
+
 		if (Options.enablePewter) {
 			createBlocksFull(Materials.pewter);
 		}
@@ -157,9 +189,30 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksFull(Materials.platinum);
 		}
 
+		if (Options.enableQuartz) {
+			final MetalMaterial material = Materials.vanilla_quartz;
+
+			material.block = net.minecraft.init.Blocks.QUARTZ_BLOCK;
+			material.ore = net.minecraft.init.Blocks.QUARTZ_ORE;
+			// material.halfSlab = ;
+			// material.doubleSlab = ;
+			// material.stairs = ;
+
+			createBars(material);
+			createDoor(material);
+			createTrapDoor(material);
+
+			createButton(material);
+			createLever(material);
+			createPressurePlate(material);
+			createWall(material);
+		}
+
 		if (Options.enableRedstone) {
-			Materials.vanilla_redstone.block = net.minecraft.init.Blocks.REDSTONE_BLOCK;
-			Materials.vanilla_redstone.ore = net.minecraft.init.Blocks.REDSTONE_ORE;
+			final MetalMaterial material = Materials.vanilla_redstone;
+
+			material.block = net.minecraft.init.Blocks.REDSTONE_BLOCK;
+			material.ore = net.minecraft.init.Blocks.REDSTONE_ORE;
 		}
 
 		if (Options.enableSilver) {
@@ -181,6 +234,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableStone) {
+			// Stub
 		}
 
 		if (Options.enableTin) {
@@ -188,6 +242,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableWood) {
+			// Stub
 		}
 
 		if (Options.enableZinc) {

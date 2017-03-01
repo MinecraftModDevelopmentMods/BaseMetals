@@ -18,6 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
+@SuppressWarnings("deprecation")
 public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, IMetalObject {
 
 	final MetalMaterial material;

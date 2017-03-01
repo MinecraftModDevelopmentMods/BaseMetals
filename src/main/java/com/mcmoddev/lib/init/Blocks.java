@@ -12,6 +12,7 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.block.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -27,6 +28,7 @@ public abstract class Blocks {
 	private static boolean initDone = false;
 
 	private static BiMap<String, Block> blockRegistry = HashBiMap.create(16);
+	private static BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create(16);
 	private static Map<MetalMaterial, List<Block>> blocksByMaterial = new HashMap<>();
 
 	protected Blocks() {
@@ -128,7 +130,11 @@ public abstract class Blocks {
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 		GameRegistry.register(block);
-		blockRegistry.put(fullName, block);
+		if (block instanceof BlockFluidBase) {
+			fluidBlockRegistry.put(fullName, (BlockFluidBase) block);
+		} else {
+			blockRegistry.put(fullName, block);
+		}
 
 		if (!(block instanceof BlockDoor) && !(block instanceof BlockSlab)) {
 			final ItemBlock itemBlock = new ItemBlock(block);

@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/obsidian_bow",
+    "textures": {
+        "layer0": "basemetals:items/obsidian_bow_pulling_0"
+    }
+}

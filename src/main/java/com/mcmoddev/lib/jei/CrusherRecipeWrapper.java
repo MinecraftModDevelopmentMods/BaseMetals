@@ -32,13 +32,11 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 
 	@Override
 	public List getInputs() {
-		// TODO Auto-generated method stub
 		return new ArrayList<>(theRecipe.getValidInputs());
 	}
 
 	@Override
 	public List getOutputs() {
-		// TODO Auto-generated method stub
 		List<ItemStack> rv = new ArrayList<>();
 		rv.add(theRecipe.getOutput());
 		return rv;
@@ -46,13 +44,11 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 
 	@Override
 	public List<FluidStack> getFluidInputs() {
-		// TODO Auto-generated method stub
 		return new ArrayList<>();
 	}
 
 	@Override
 	public List<FluidStack> getFluidOutputs() {
-		// TODO Auto-generated method stub
 		return new ArrayList<>();
 	}
 
@@ -69,13 +65,11 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 
 	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
-		// TODO Auto-generated method stub
 		return new ArrayList<>();
 	}
 
 	@Override
 	public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
