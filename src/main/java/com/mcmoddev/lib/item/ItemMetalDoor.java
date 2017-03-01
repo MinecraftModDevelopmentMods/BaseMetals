@@ -17,7 +17,8 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 
 	/**
 	 *
-	 * @param material The material to make the door from
+	 * @param material
+	 *            The material to make the door from
 	 */
 	public ItemMetalDoor(MetalMaterial material) {
 		super(material.doorBlock);
@@ -27,8 +28,10 @@ public class ItemMetalDoor extends net.minecraft.item.ItemDoor implements IOreDi
 
 	/**
 	 *
-	 * @param block The block to use to make the door
-	 * @param material The material to make the door from
+	 * @param block
+	 *            The block to use to make the door
+	 * @param material
+	 *            The material to make the door from
 	 */
 	public ItemMetalDoor(BlockDoor block, MetalMaterial material) {
 		super(block);

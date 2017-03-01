@@ -115,7 +115,7 @@ public class ItemCrossbow extends ItemBow {
 			for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 				final ItemStack itemstack = player.inventory.getStackInSlot(i);
 
-				if (this.isBolt(itemstack)) {					
+				if (this.isBolt(itemstack)) {
 					return itemstack;
 				}
 			}

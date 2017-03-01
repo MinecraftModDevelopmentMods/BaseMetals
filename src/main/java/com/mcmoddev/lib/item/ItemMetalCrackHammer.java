@@ -41,7 +41,8 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 
 	/**
 	 *
-	 * @param material The material to make the crackhammer from
+	 * @param material
+	 *            The material to make the crackhammer from
 	 */
 	public ItemMetalCrackHammer(MetalMaterial material) {
 		super(1 + Materials.getToolMaterialFor(material).getDamageVsEntity(), ATTACK_SPEED, Materials.getToolMaterialFor(material), new HashSet<Block>());
@@ -110,9 +111,9 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 						ItemStack output = recipe.getOutput().copy();
 						int count = output.stackSize;
 						int toolDamage;
-						if(Options.crackhammerFullStack) {
+						if (Options.crackhammerFullStack) {
 							output.stackSize = targetItem.stackSize;
-							if( item.getItemDamage() < output.stackSize ) {
+							if (item.getItemDamage() < output.stackSize) {
 								output.stackSize = item.getItemDamage();
 							}
 							toolDamage = output.stackSize;
@@ -124,7 +125,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 						double y = target.posY;
 						double z = target.posZ;
 
-						if(Options.crackhammerFullStack) {
+						if (Options.crackhammerFullStack) {
 							targetItem.stackSize -= output.stackSize;
 						} else {
 							targetItem.stackSize--;
@@ -203,8 +204,7 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		if (typeRequested != null && toolTypes.contains(typeRequested)) {
 			if (Config.Options.strongHammers) {
 				return material.getToolHarvestLevel();
-			}
-			else {
+			} else {
 				return material.getToolHarvestLevel() - 1;
 			}
 		}
@@ -228,9 +228,9 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 		super.onCreated(item, world, crafter);
 		MetalToolEffects.extraEffectsOnCrafting(material, item, world, crafter);
 		// achievement
-    	if (Options.enableAchievements) {
-    		crafter.addStat(Achievements.geologist, 1);
-    	}
+		if (Options.enableAchievements) {
+			crafter.addStat(Achievements.geologist, 1);
+		}
 	}
 
 	@Override
@@ -243,13 +243,13 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 	@Override
 	public boolean canHarvestBlock(final IBlockState targetBS) {
 		Block target = targetBS.getBlock();
-		// go to net.minecraftforge.common.ForgeHooks.initTools(); to see all tool type strings
+		// go to net.minecraftforge.common.ForgeHooks.initTools(); to see all
+		// tool type strings
 		String toolType = target.getHarvestTool(target.getDefaultState());
 		if (toolTypes.contains(toolType) || target.getMaterial(targetBS) == Material.ROCK) {
 			// can mine like a Pickaxe
 			return this.getHarvestLevel(null, "pickaxe") >= target.getHarvestLevel(target.getDefaultState());
-		}
-		else if ("shovel".equals(toolType) && target.getHarvestLevel(target.getDefaultState()) <= 0) {
+		} else if ("shovel".equals(toolType) && target.getHarvestLevel(target.getDefaultState()) <= 0) {
 			// can be dug with wooden shovel
 			return true;
 		}

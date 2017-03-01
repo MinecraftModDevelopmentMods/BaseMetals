@@ -17,7 +17,8 @@ public class GenericMetalItem extends Item implements IMetalObject {
 
 	/**
 	 *
-	 * @param material The material to make the item from
+	 * @param material
+	 *            The material to make the item from
 	 */
 	public GenericMetalItem(MetalMaterial material) {
 		this.material = material;

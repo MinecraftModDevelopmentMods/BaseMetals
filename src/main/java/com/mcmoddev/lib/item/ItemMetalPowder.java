@@ -20,7 +20,8 @@ public class ItemMetalPowder extends net.minecraft.item.Item implements IOreDict
 
 	/**
 	 *
-	 * @param material The material to make the powder from
+	 * @param material
+	 *            The material to make the powder from
 	 */
 	public ItemMetalPowder(MetalMaterial material) {
 		this.material = material;

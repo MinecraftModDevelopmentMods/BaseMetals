@@ -19,14 +19,17 @@ public class ItemBolt extends Item {
 	 *
 	 */
 	public ItemBolt() {
-        this.setCreativeTab(CreativeTabs.COMBAT);
+		this.setCreativeTab(CreativeTabs.COMBAT);
 	}
 
 	/**
 	 *
-	 * @param worldIn The world
-	 * @param stack The itemstack
-	 * @param shooter The shooter
+	 * @param worldIn
+	 *            The world
+	 * @param stack
+	 *            The itemstack
+	 * @param shooter
+	 *            The shooter
 	 * @return The Bolt
 	 */
 	public EntityCustomBolt createBolt(World worldIn, ItemStack stack, EntityPlayer shooter) {

@@ -31,7 +31,8 @@ public class BlockMetalDoor extends net.minecraft.block.BlockDoor implements IMe
 
 	/**
 	 *
-	 * @param material The material the door is made from
+	 * @param material
+	 *            The material the door is made from
 	 */
 	public BlockMetalDoor(MetalMaterial material) {
 		super((material.getToolHarvestLevel() > 0) ? Material.IRON : Material.ROCK);

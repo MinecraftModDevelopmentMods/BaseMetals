@@ -27,9 +27,13 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	/**
 	 * Constructor for this fluid block.
 	 * 
-	 * @param fluid The Fluid of this fluid block
-	 * @param flammable If true, then this block can burn
-	 * @param immersionEffect A function to define what happens to swimming entities. Can be null.
+	 * @param fluid
+	 *            The Fluid of this fluid block
+	 * @param flammable
+	 *            If true, then this block can burn
+	 * @param immersionEffect
+	 *            A function to define what happens to swimming entities. Can be
+	 *            null.
 	 */
 	public InteractiveFluidBlock(Fluid fluid, boolean flammable, java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect) {
 		super(fluid, Material.WATER);
@@ -40,8 +44,11 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	/**
 	 * Constructor for this fluid block.
 	 * 
-	 * @param fluid The Fluid of this fluid block
-	 * @param immersionEffect A function to define what happens to swimming entities. Can be null.
+	 * @param fluid
+	 *            The Fluid of this fluid block
+	 * @param immersionEffect
+	 *            A function to define what happens to swimming entities. Can be
+	 *            null.
 	 */
 	public InteractiveFluidBlock(Fluid fluid, java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect) {
 		this(fluid, false, immersionEffect);
@@ -50,7 +57,8 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	/**
 	 * Constructor for this fluid block.
 	 * 
-	 * @param fluid The Fluid of this fluid block
+	 * @param fluid
+	 *            The Fluid of this fluid block
 	 */
 	public InteractiveFluidBlock(Fluid fluid) {
 		this(fluid, false, null);
@@ -67,10 +75,14 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	 * Chance that fire will spread and consume this block. 300 being a 100%
 	 * chance, 0, being a 0% chance.
 	 *
-	 * @param world The current world
-	 * @param pos Block position in world
-	 * @param face The face that the fire is coming from
-	 * @return A number ranging from 0 to 300 relating used to determine if the block will be consumed by fire
+	 * @param world
+	 *            The current world
+	 * @param pos
+	 *            Block position in world
+	 * @param face
+	 *            The face that the fire is coming from
+	 * @return A number ranging from 0 to 300 relating used to determine if the
+	 *         block will be consumed by fire
 	 */
 	@Override
 	public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
@@ -83,10 +95,14 @@ public class InteractiveFluidBlock extends BlockFluidClassic {
 	 * Called when fire is updating on a neighbor block. The higher the number
 	 * returned, the faster fire will spread around this block.
 	 *
-	 * @param world The current world
-	 * @param pos Block position in world
-	 * @param face The face that the fire is coming from
-	 * @return A number that is used to determine the speed of fire growth around the block
+	 * @param world
+	 *            The current world
+	 * @param pos
+	 *            Block position in world
+	 * @param face
+	 *            The face that the fire is coming from
+	 * @return A number that is used to determine the speed of fire growth
+	 *         around the block
 	 */
 	@Override
 	public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face) {

@@ -28,7 +28,8 @@ public class ItemMetalBow extends ItemBow implements IMetalObject {
 
 	/**
 	 *
-	 * @param material The material to make the bow from
+	 * @param material
+	 *            The material to make the bow from
 	 */
 	public ItemMetalBow(MetalMaterial material) {
 		this.material = material;

@@ -25,7 +25,8 @@ public class ItemMetalSmallBlend extends Item implements IOreDictionaryEntry, IM
 
 	/**
 	 *
-	 * @param material The material to make the small blend from
+	 * @param material
+	 *            The material to make the small blend from
 	 */
 	public ItemMetalSmallBlend(MetalMaterial material) {
 		this.material = material;
@@ -37,9 +38,9 @@ public class ItemMetalSmallBlend extends Item implements IOreDictionaryEntry, IM
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
 		// achievement
-    	if (Options.enableAchievements) {
-    		crafter.addStat(Achievements.metallurgy, 1);
-    	}
+		if (Options.enableAchievements) {
+			crafter.addStat(Achievements.metallurgy, 1);
+		}
 	}
 
 	@Override

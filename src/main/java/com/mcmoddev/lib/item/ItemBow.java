@@ -115,7 +115,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 			for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 				final ItemStack itemstack = player.inventory.getStackInSlot(i);
 
-				if (this.isArrow(itemstack)) {					
+				if (this.isArrow(itemstack)) {
 					return itemstack;
 				}
 			}

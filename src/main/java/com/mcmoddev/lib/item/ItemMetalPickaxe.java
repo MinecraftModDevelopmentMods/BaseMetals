@@ -35,7 +35,8 @@ public class ItemMetalPickaxe extends ItemPickaxe implements IMetalObject {
 
 	/**
 	 *
-	 * @param material The material to make the pickaxe from
+	 * @param material
+	 *            The material to make the pickaxe from
 	 */
 	public ItemMetalPickaxe(MetalMaterial material) {
 		super(Materials.getToolMaterialFor(material));

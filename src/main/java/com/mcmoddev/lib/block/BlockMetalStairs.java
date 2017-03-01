@@ -21,7 +21,8 @@ public class BlockMetalStairs extends BlockStairs implements IOreDictionaryEntry
 
 	/**
 	 *
-	 * @param material The material the stairs are made from
+	 * @param material
+	 *            The material the stairs are made from
 	 */
 	public BlockMetalStairs(MetalMaterial material) {
 		super(material.block.getDefaultState());
@@ -35,8 +36,10 @@ public class BlockMetalStairs extends BlockStairs implements IOreDictionaryEntry
 
 	/**
 	 *
-	 * @param material The material the stairs are made from
-	 * @param modelBlock The block to use for the model
+	 * @param material
+	 *            The material the stairs are made from
+	 * @param modelBlock
+	 *            The block to use for the model
 	 */
 	public BlockMetalStairs(MetalMaterial material, Block modelBlock) {
 		super(modelBlock.getDefaultState());

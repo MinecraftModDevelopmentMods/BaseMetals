@@ -45,7 +45,8 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 
 	/**
 	 *
-	 * @param material The Material the plate is made from
+	 * @param material
+	 *            The Material the plate is made from
 	 */
 	public BlockMetalPlate(MetalMaterial material) {
 		super(Material.IRON);
@@ -198,7 +199,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
 				// right
 				return defaultState.withProperty(FACING, face.rotateAround(rightRotationAxis).getOpposite());
 			}
-		} else { 
+		} else {
 			// down or left
 			if (upOrLeft) {
 				// left

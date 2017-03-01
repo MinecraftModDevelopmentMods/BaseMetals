@@ -31,7 +31,8 @@ public class BlockMetalSlab extends BlockSlab implements IMetalObject {
 
 	/**
 	 *
-	 * @param material The material the slab is made from
+	 * @param material
+	 *            The material the slab is made from
 	 */
 	public BlockMetalSlab(MetalMaterial material) {
 		super(Material.IRON);

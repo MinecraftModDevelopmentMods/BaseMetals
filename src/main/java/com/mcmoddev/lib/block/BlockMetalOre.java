@@ -25,11 +25,12 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 
 	/**
 	 *
-	 * @param material The material the ore is made from
+	 * @param material
+	 *            The material the ore is made from
 	 */
 	public BlockMetalOre(MetalMaterial material) {
 		super();
-//		this.setSoundType(SoundType.STONE);
+		// this.setSoundType(SoundType.STONE);
 		this.material = material;
 		this.blockHardness = Math.max(5f, material.getOreBlockHardness());
 		this.blockResistance = Math.max(1.5f, material.getBlastResistance() * 0.75f);

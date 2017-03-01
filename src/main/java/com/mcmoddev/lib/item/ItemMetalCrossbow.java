@@ -28,7 +28,8 @@ public class ItemMetalCrossbow extends ItemBow implements IMetalObject {
 
 	/**
 	 *
-	 * @param material The material to make the crossbow from
+	 * @param material
+	 *            The material to make the crossbow from
 	 */
 	public ItemMetalCrossbow(MetalMaterial material) {
 		this.material = material;

@@ -28,7 +28,8 @@ public class BlockMetalWall extends BlockWall implements IOreDictionaryEntry, IM
 
 	/**
 	 *
-	 * @param material The material the wall is made from
+	 * @param material
+	 *            The material the wall is made from
 	 */
 	public BlockMetalWall(MetalMaterial material) {
 		super(material.block);
@@ -42,8 +43,10 @@ public class BlockMetalWall extends BlockWall implements IOreDictionaryEntry, IM
 
 	/**
 	 *
-	 * @param material The material the wall is made from
-	 * @param modelBlock The block to get the model from
+	 * @param material
+	 *            The material the wall is made from
+	 * @param modelBlock
+	 *            The block to get the model from
 	 */
 	public BlockMetalWall(MetalMaterial material, Block modelBlock) {
 		super(modelBlock);

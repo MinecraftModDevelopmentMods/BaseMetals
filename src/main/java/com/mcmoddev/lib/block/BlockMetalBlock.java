@@ -28,21 +28,22 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	private final MetalMaterial material;
 	private final String oreDict;
 	private final boolean beaconBase;
-	
+
 	/**
 	 *
-	 * @param material The material the block is made from
+	 * @param material
+	 *            The material the block is made from
 	 */
 	public BlockMetalBlock(MetalMaterial material) {
 		this(material, false);
 	}
 
 	public BlockMetalBlock(MetalMaterial material, boolean glows) {
-		this(material,glows,false);
+		this(material, glows, false);
 	}
 
 	public BlockMetalBlock(MetalMaterial material, boolean glows, boolean isBeacon) {
-		super( getMaterialFromMetalMaterial(material) );
+		super(getMaterialFromMetalMaterial(material));
 
 		this.setSoundType(getSoundFromMetalMaterial(material));
 		this.fullBlock = true;
@@ -55,13 +56,13 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 		this.beaconBase = isBeacon;
-		
+
 		if (glows)
 			this.setLightLevel(0.5f);
 	}
-	
-	private static final Material getMaterialFromMetalMaterial( MetalMaterial material ) {
-		switch(material.getType()) {
+
+	private static final Material getMaterialFromMetalMaterial(MetalMaterial material) {
+		switch (material.getType()) {
 			case METAL:
 				return Material.IRON;
 			case GEM:
@@ -76,8 +77,8 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		}
 	}
 
-	private static final SoundType getSoundFromMetalMaterial( MetalMaterial material ) {
-		switch(material.getType()) {
+	private static final SoundType getSoundFromMetalMaterial(MetalMaterial material) {
+		switch (material.getType()) {
 			case METAL:
 				return SoundType.METAL;
 			case GEM:
@@ -93,11 +94,11 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		}
 	}
 
-    @Override
-    public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
-        return beaconBase;
-    }
-    
+	@Override
+	public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
+		return beaconBase;
+	}
+
 	///// OVERRIDE OF ALL METHODS THAT DEPEND ON BLOCK MATERIAL: /////
 	/**
 	 * @deprecated
@@ -165,7 +166,7 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 		super.onBlockPlacedBy(w, coord, bs, placer, src);
 		// achievement
 		if ((Options.enableAchievements) && (placer instanceof EntityPlayer)) {
-				((EntityPlayer) placer).addStat(Achievements.blocktastic, 1);
+			((EntityPlayer) placer).addStat(Achievements.blocktastic, 1);
 		}
 	}
 

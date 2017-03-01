@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
-//import net.minecraftforge.fluids.FluidRegistry;
+// import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  *
@@ -16,7 +16,8 @@ public class BlockMoltenFluid extends BlockFluidClassic {
 
 	/**
 	 *
-	 * @param fluid The fluid
+	 * @param fluid
+	 *            The fluid
 	 */
 	public BlockMoltenFluid(@Nonnull Fluid fluid) {
 		super(fluid, Material.LAVA);

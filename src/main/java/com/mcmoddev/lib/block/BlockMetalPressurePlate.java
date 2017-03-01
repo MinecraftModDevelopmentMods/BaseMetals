@@ -18,7 +18,8 @@ public class BlockMetalPressurePlate extends BlockPressurePlate implements IMeta
 
 	/**
 	 *
-	 * @param material The material the pressure plate is made from
+	 * @param material
+	 *            The material the pressure plate is made from
 	 */
 	public BlockMetalPressurePlate(MetalMaterial material) {
 		super(Material.IRON, BlockPressurePlate.Sensitivity.MOBS);

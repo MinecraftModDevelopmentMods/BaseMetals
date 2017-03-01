@@ -34,7 +34,8 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 
 	/**
 	 *
-	 * @param material The material to make the sword from
+	 * @param material
+	 *            The material to make the sword from
 	 */
 	public ItemMetalSword(MetalMaterial material) {
 		super(Materials.getToolMaterialFor(material));
@@ -91,7 +92,7 @@ public class ItemMetalSword extends ItemSword implements IMetalObject {
 	/**
 	 *
 	 * @return The amount of damage dealt to an entity when attacked by this
-	 * item
+	 *         item
 	 */
 	public float getAttackDamage() {
 		return this.attackDamage;

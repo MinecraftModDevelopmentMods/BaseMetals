@@ -20,7 +20,8 @@ public class ItemMetalRod extends net.minecraft.item.Item implements IOreDiction
 
 	/**
 	 *
-	 * @param material The material to make the rod from
+	 * @param material
+	 *            The material to make the rod from
 	 */
 	public ItemMetalRod(MetalMaterial material) {
 		this.material = material;

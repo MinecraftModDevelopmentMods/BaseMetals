@@ -23,7 +23,8 @@ public class BlockMetalEndOre extends BlockOre implements IOreDictionaryEntry, I
 
 	/**
 	 *
-	 * @param material The material the ore is made from
+	 * @param material
+	 *            The material the ore is made from
 	 */
 	public BlockMetalEndOre(MetalMaterial material) {
 		super();

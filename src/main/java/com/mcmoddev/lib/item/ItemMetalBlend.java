@@ -25,7 +25,8 @@ public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDicti
 
 	/**
 	 *
-	 * @param material The material to make the blend from
+	 * @param material
+	 *            The material to make the blend from
 	 */
 	public ItemMetalBlend(MetalMaterial material) {
 		this.material = material;
@@ -37,9 +38,9 @@ public class ItemMetalBlend extends net.minecraft.item.Item implements IOreDicti
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
 		// achievement
-    	if (Options.enableAchievements) {
-    		crafter.addStat(Achievements.metallurgy, 1);
-    	}
+		if (Options.enableAchievements) {
+			crafter.addStat(Achievements.metallurgy, 1);
+		}
 	}
 
 	@Override

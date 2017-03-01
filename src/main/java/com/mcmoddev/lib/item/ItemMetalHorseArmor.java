@@ -28,8 +28,8 @@ public class ItemMetalHorseArmor extends Item implements IMetalObject, IHorseArm
 
 	@Override
 	public HorseArmorType getArmorType() {
-//		return HorseArmorType.DIAMOND;
-		return HorseArmorUtils.getArmorType( 1024, "test","tes");
+		// return HorseArmorType.DIAMOND;
+		return HorseArmorUtils.getArmorType(1024, "test", "tes");
 	}
 
 	@Override

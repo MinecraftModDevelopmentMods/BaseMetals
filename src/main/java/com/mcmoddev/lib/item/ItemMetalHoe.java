@@ -35,7 +35,8 @@ public class ItemMetalHoe extends ItemHoe implements IMetalObject {
 
 	/**
 	 *
-	 * @param material The material to make the hoe from
+	 * @param material
+	 *            The material to make the hoe from
 	 */
 	public ItemMetalHoe(MetalMaterial material) {
 		super(Materials.getToolMaterialFor(material));

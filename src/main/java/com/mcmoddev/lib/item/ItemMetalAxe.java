@@ -30,7 +30,8 @@ public class ItemMetalAxe extends ItemAxe implements IMetalObject {
 
 	/**
 	 *
-	 * @param material The material to make the axe from
+	 * @param material
+	 *            The material to make the axe from
 	 */
 	public ItemMetalAxe(MetalMaterial material) {
 		super(Materials.getToolMaterialFor(material));

@@ -27,14 +27,15 @@ public class ItemMetalFishingRod extends ItemFishingRod implements IMetalObject 
 
 	/**
 	 *
-	 * @param material The material to make the fishing rod from
+	 * @param material
+	 *            The material to make the fishing rod from
 	 */
 	public ItemMetalFishingRod(MetalMaterial material) {
 		super();
 		this.material = material;
-//		this.setMaxDamage(64);
-//		this.setMaxStackSize(1);
-//		this.setCreativeTab(CreativeTabs.TOOLS);
+		// this.setMaxDamage(64);
+		// this.setMaxStackSize(1);
+		// this.setCreativeTab(CreativeTabs.TOOLS);
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 //		this.addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter() {
 //			@SideOnly(Side.CLIENT)

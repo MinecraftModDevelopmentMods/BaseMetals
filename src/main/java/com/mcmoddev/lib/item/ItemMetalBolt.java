@@ -23,7 +23,8 @@ public class ItemMetalBolt extends ItemBolt implements IOreDictionaryEntry, IMet
 
 	/**
 	 *
-	 * @param material The material to make the bolt from
+	 * @param material
+	 *            The material to make the bolt from
 	 */
 	public ItemMetalBolt(MetalMaterial material) {
 		this.material = material;
@@ -33,9 +34,12 @@ public class ItemMetalBolt extends ItemBolt implements IOreDictionaryEntry, IMet
 
 	/**
 	 *
-	 * @param worldIn The world
-	 * @param stack The itemstack
-	 * @param shooter The shooter
+	 * @param worldIn
+	 *            The world
+	 * @param stack
+	 *            The itemstack
+	 * @param shooter
+	 *            The shooter
 	 * @return The Custom Bolt
 	 */
 	@Override
