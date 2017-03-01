@@ -8,9 +8,9 @@ import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -73,8 +73,18 @@ public class ItemMetalShield extends ItemShield implements IOreDictionaryEntry, 
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public String getItemStackDisplayName(ItemStack stack) {
-		return I18n.translateToLocal(String.format("%s.name", this.getUnlocalizedName()));
+		String name = String.format("%s.name", this.getUnlocalizedName());
+		if( net.minecraft.util.text.translation.I18n.canTranslate(name) ) {
+			if( stack.getSubCompound("BlockEntityTag", false) != null ) {
+				String colored_name = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
+				return net.minecraft.util.text.translation.I18n.translateToLocal(colored_name);
+			} else {
+				return name;
+			}
+		}
+		return name;
 	}
 
 }

@@ -292,7 +292,7 @@ public class TCMaterial {
      */
     public TCMaterial setMetalMaterial(MetalMaterial mm) {
         this.metalmaterial = mm;
-        return this;
+        return genFromMaterial();
     }
 
     /**
