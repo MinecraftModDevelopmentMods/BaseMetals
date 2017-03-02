@@ -113,8 +113,8 @@ public class ItemMetalCrackHammer extends ItemTool implements IMetalObject {
 						int toolDamage;
 						if (Options.crackhammerFullStack) {
 							output.stackSize = targetItem.stackSize;
-							if (item.getItemDamage() < output.stackSize) {
-								output.stackSize = item.getItemDamage();
+							if (item.isItemDamaged() && (item.getItemDamage() < output.stackSize)) {
+									output.stackSize = item.getItemDamage();
 							}
 							toolDamage = output.stackSize;
 						} else {
