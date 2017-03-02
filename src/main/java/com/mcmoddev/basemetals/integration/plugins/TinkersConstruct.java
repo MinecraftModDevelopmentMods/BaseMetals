@@ -39,6 +39,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerMaterial(Options.enableAquarium, MaterialNames.AQUARIUM, true, false, "aquadynamic", "jagged", TraitLocations.HEAD, "aquadynamic", TraitLocations.HEAD);
 		registerMaterial(Options.enableBismuth, MaterialNames.BISMUTH, true, false);
 		registerMaterial(Options.enableBrass, MaterialNames.BRASS, true, false, "dense");
+		//registerMaterial(Options.enableBronze, MaterialNames.BRONZE, true, false);
 		registerMaterial(Options.enableColdIron, MaterialNames.COLDIRON, true, false, "freezing");
 		registerMaterial(Options.enableCupronickel, MaterialNames.CUPRONICKEL, true, false);
 		registerMaterial(Options.enableInvar, MaterialNames.INVAR, true, false);
