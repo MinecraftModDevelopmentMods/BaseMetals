@@ -22,7 +22,7 @@ public class ShieldRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	public ShieldRepairRecipe(MetalMaterial mat) {
 		super(new ItemStack(mat.shield, 1), new Object[] { Oredicts.SHIELD + mat.getCapitalizedName(), Oredicts.PLATE + mat.getCapitalizedName() });
 		baseShield = new ItemStack(mat.shield, 1, OreDictionary.WILDCARD_VALUE);
-		matName = new String(mat.getCapitalizedName());
+		matName = mat.getCapitalizedName();
 	}
 
 	@Override

@@ -98,7 +98,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 		Item armorItem = armor.getItem();
 		if (i % 2 == 0) {
 			// count armor pieces
-			if ((Options.enableStarSteel) && (((ItemMetalArmor) armorItem).material.getName().equals("starsteel"))) {
+			if ((Options.enableStarSteel) && ("starsteel".equals(((ItemMetalArmor) armorItem).material.getName()))) {
 				starsteel: {
 					// used to count up the starsteel armor items
 					if (!(starsteelUpdateCache.containsKey(player))) {
@@ -113,7 +113,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 					break starsteel;
 				}
 			}
-			if ((Options.enableLead) && (((ItemMetalArmor) armorItem).material.getName().equals("lead"))) {
+			if ((Options.enableLead) && ("lead".equals(((ItemMetalArmor) armorItem).material.getName()))) {
 				lead: {
 					// used to count up the starsteel armor items
 					if (!(leadUpdateCache.containsKey(player))) {
@@ -123,7 +123,7 @@ public class ItemMetalArmor extends net.minecraft.item.ItemArmor implements IMet
 					break lead;
 				}
 			}
-			if ((Options.enableAdamantine) && (((ItemMetalArmor) armorItem).material.getName().equals("adamantine"))) {
+			if ((Options.enableAdamantine) && ("adamantine".equals(((ItemMetalArmor) armorItem).material.getName()))) {
 				adamantine: {
 					// used to count up the adamantine armor items
 					if (!(adamantineUpdateCache.containsKey(player))) {

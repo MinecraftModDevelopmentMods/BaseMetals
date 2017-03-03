@@ -21,7 +21,7 @@ public class LeggingsRepairRecipe extends ShapelessOreRecipe implements IRecipe 
 	public LeggingsRepairRecipe(MetalMaterial mat) {
 		super(new ItemStack(mat.leggings, 1), new Object[] { mat.getName() + "_leggings", Oredicts.PLATE + mat.getCapitalizedName() });
 		baseLeggings = new ItemStack(mat.leggings, 1, OreDictionary.WILDCARD_VALUE);
-		matName = new String(mat.getCapitalizedName());
+		matName = mat.getCapitalizedName();
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class BootsRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	public BootsRepairRecipe(MetalMaterial mat) {
 		super(new ItemStack(mat.boots, 1), new Object[] { mat.getName() + "_boots", Oredicts.PLATE + mat.getCapitalizedName() });
 		baseBoots = new ItemStack(mat.boots, 1, OreDictionary.WILDCARD_VALUE);
-		matName = new String(mat.getCapitalizedName());
+		matName = mat.getCapitalizedName();
 	}
 
 	@Override

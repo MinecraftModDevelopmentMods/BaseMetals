@@ -22,7 +22,7 @@ public class ChestplateRepairRecipe extends ShapelessOreRecipe implements IRecip
 	public ChestplateRepairRecipe(MetalMaterial mat) {
 		super(new ItemStack(mat.chestplate, 1), new Object[] { mat.getName() + "_chestplate", Oredicts.PLATE + mat.getCapitalizedName() });
 		baseChestplate = new ItemStack(mat.chestplate, 1, OreDictionary.WILDCARD_VALUE);
-		matName = new String(mat.getCapitalizedName());
+		matName = mat.getCapitalizedName();
 	}
 
 	@Override
