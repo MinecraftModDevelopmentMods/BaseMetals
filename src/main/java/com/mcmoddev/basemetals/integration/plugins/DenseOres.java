@@ -29,14 +29,14 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOres im
 	 * 
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
-	public static void registerOres() {
+	private static void registerOres() {
 		String[] baseNames = new String[] { "adamantine", "antimony", "bismuth", "coldiron", "copper", "lead", "mercury", "nickel", "platinum", "silver", "tin", "zinc" };
 		boolean[] baseEnabled = new boolean[] { Options.enableAdamantine, Options.enableAntimony, Options.enableBismuth, Options.enableColdIron, Options.enableCopper, Options.enableLead, Options.enableMercury, Options.enableNickel, Options.enablePlatinum, Options.enableSilver, Options.enableTin, Options.enableZinc };
 		for (int i = 0; i < baseNames.length; i++) {
 			String ore = baseNames[i];
 			MetalMaterial mat = Materials.getMaterialByName(ore);
 			if (mat != null && baseEnabled[i]) {
-				String baseMaterial = "stone";
+				String baseMaterial;
 				switch (ore) {
 					case "adamantine":
 					case "coldiron":

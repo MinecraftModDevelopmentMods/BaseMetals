@@ -45,7 +45,7 @@ public class BaseMetals {
 	public static final String MODID = "basemetals";
 
 	/** Display name of this Mod */
-	public static final String NAME = "Base Metals";
+	static final String NAME = "Base Metals";
 
 	/**
 	 * Version number, in Major.Minor.Build format. The minor number is
@@ -54,7 +54,7 @@ public class BaseMetals {
 	 */
 	public static final String VERSION = "2.5.0-beta1";
 
-	public static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopment/BaseMetals/master/update.json";
+	static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopment/BaseMetals/master/update.json";
 
 	private static final String PROXY_BASE = "com.mcmoddev." + MODID + ".proxy.";
 

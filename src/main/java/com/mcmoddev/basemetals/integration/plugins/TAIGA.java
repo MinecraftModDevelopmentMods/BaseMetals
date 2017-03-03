@@ -42,15 +42,15 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGA implements
 	private static class TAIGAMaterials extends com.mcmoddev.lib.init.Materials {
 		private static Field[] allBlocks = Blocks.class.getDeclaredFields();
 
-		public static List<MetalMaterial> materials = new ArrayList<>();
+		private static final List<MetalMaterial> materials = new ArrayList<>();
 
 		public static void init() {
 			try {
 				for (Field f : allBlocks) {
 					String t = f.getName();
 
-					if (t.endsWith("Block") && t != "basaltBlock") {
-						String name = new String(t.substring(0, t.length() - 5));
+					if (t.endsWith("Block") && !("basaltBlock".equals(t))) {
+						String name = t.substring(0, t.length() - 5);
 
 						Block k = (Block) f.get(f.getClass());
 						float harvestlevel = k.getHarvestLevel(null);

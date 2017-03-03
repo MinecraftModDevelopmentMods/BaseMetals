@@ -38,8 +38,9 @@ public class ClientProxy extends CommonProxy {
 		for (final String name : Fluids.getFluidBlockRegistry().keySet()) {
 			final Block block = Fluids.getFluidBlockByName(name);
 			final Item item = Item.getItemFromBlock(block);
-			if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
+			if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {
 				continue;
+			}
 			final ModelResourceLocation fluidModelLocation = new ModelResourceLocation(item.getRegistryName().getResourceDomain() + ":" + name, "fluid");
 			ModelBakery.registerItemVariants(item);
 			ModelLoader.setCustomMeshDefinition(item, stack -> fluidModelLocation);
@@ -78,8 +79,9 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	public void registerRenderOuter(Block block) {
-		if ((block instanceof BlockDoor) || (block instanceof BlockSlab))
+		if ((block instanceof BlockDoor) || (block instanceof BlockSlab)) {
 			return; // do not add door blocks or slabs
+		}
 
 		if (block != null) {
 			registerRender(Item.getItemFromBlock(block), Blocks.getNameOfBlock(block));
@@ -88,8 +90,10 @@ public class ClientProxy extends CommonProxy {
 
 	public void registerRender(Item item, String name) {
 		final ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-		if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
+		if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {
 			return;
+		}
+
 		itemModelMesher.register(item, 0, new ModelResourceLocation(new ResourceLocation(item.getRegistryName().getResourceDomain(), name), "inventory"));
 	}
 }
