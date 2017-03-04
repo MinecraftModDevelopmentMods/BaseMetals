@@ -1,7 +1,9 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;
 
@@ -64,6 +66,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createNugget(material);
 			createPowder(material);
 			createSmallPowder(material);
+			FuelRegistry.addFuel(Oredicts.NUGGETCHARCOAL, 200);
+			FuelRegistry.addFuel(Oredicts.DUSTCHARCOAL, 1600);
+			FuelRegistry.addFuel(Oredicts.DUSTSMALLCHARCOAL, 200);
+			FuelRegistry.addFuel(Oredicts.DUSTTINYCHARCOAL, 200);
 		}
 
 		if (Options.enableCoal) {
@@ -73,6 +79,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createNugget(material);
 			createPowder(material);
 			createSmallPowder(material);
+			FuelRegistry.addFuel(Oredicts.NUGGETCOAL, 200);
+			FuelRegistry.addFuel(Oredicts.DUSTCOAL, 1600);
+			FuelRegistry.addFuel(Oredicts.DUSTSMALLCOAL, 200);
+			FuelRegistry.addFuel(Oredicts.DUSTTINYCOAL, 200);
 		}
 
 		if (Options.enableColdIron) {

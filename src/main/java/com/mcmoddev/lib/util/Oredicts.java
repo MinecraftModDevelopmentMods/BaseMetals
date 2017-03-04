@@ -232,7 +232,7 @@ public class Oredicts {
 	public static final String INGOTMERCURY = "ingotMercury";
 	public static final String INGOTSTEEL = "ingotSteel";
 
-	public static final String NUGGETCHARCOAL = "nuggetCoal";
+	public static final String NUGGETCHARCOAL = "nuggetCharcoal";
 	public static final String NUGGETCOAL = "nuggetCoal";
 	public static final String NUGGETMERCURY = "nuggetMercury";
 
