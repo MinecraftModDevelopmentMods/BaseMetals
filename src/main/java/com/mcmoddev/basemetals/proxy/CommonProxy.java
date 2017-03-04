@@ -5,6 +5,7 @@ import com.mcmoddev.basemetals.init.*;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -29,6 +30,7 @@ public class CommonProxy {
 		Config.init();
 
 		Materials.init();
+		FuelRegistry.init();
 		cyano.basemetals.init.Materials.init();
 		Fluids.init();
 		ItemGroups.init();
@@ -62,7 +64,7 @@ public class CommonProxy {
 		Recipes.init();
 
 		Achievements.init();
-
+		FuelRegistry.register();
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
