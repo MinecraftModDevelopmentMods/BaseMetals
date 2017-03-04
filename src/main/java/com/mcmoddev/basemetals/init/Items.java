@@ -70,6 +70,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			FuelRegistry.addFuel(Oredicts.DUSTCHARCOAL, 1600);
 			FuelRegistry.addFuel(Oredicts.DUSTSMALLCHARCOAL, 200);
 			FuelRegistry.addFuel(Oredicts.DUSTTINYCHARCOAL, 200);
+			FuelRegistry.addFuel(Oredicts.BLOCK+"Charcoal", 16000);
 		}
 
 		if (Options.enableCoal) {
