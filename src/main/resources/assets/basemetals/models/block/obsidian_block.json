@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "basemetals:blocks/obsidian_block"
+        "all": "minecraft:blocks/obsidian_block"
     }
 }

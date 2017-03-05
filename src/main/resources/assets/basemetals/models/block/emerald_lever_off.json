@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "basemetals:blocks/emerald_block",
-        "base": "basemetals:blocks/emerald_block",
+        "particle": "minecraft:blocks/emerald_block",
+        "base": "minecraft:blocks/emerald_block",
         "lever": "blocks/lever"
     },
     "elements": [

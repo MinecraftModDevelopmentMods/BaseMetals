@@ -1,6 +1,6 @@
 {
     "parent": "block/button_inventory",
     "textures": {
-        "texture": "basemetals:blocks/quartz_block"
+        "texture": "minecraft:blocks/quartz_block"
     }
 }

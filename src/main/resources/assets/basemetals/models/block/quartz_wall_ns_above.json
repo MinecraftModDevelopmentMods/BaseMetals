@@ -1,6 +1,6 @@
 {
     "parent": "block/wall_ns_above",
     "textures": {
-        "wall": "basemetals:blocks/quartz_block"
+        "wall": "minecraft:blocks/quartz_block"
     }
 }

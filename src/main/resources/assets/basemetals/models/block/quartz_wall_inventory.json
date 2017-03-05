@@ -1,6 +1,6 @@
 {
     "parent": "block/wall_inventory",
     "textures": {
-        "wall": "basemetals:blocks/quartz_block"
+        "wall": "minecraft:blocks/quartz_block"
     }
 }
