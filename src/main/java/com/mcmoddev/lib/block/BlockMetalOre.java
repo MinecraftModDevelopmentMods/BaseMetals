@@ -83,9 +83,7 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 			case WOOD:
 			case ROCK:
 			case METAL:
-				most = 1;
-				least = 1;
-				break;
+				return 1;
 			case MINERAL:
 				most = 4;
 				least = 2;
