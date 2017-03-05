@@ -1,6 +1,6 @@
 {
     "parent": "block/pressure_plate_down",
     "textures": {
-        "texture": "basemetals:blocks/emerald_block"
+        "texture": "minecraft:blocks/emerald_block"
     }
 }

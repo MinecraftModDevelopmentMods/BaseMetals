@@ -1,6 +1,6 @@
 {
     "parent": "block/button",
     "textures": {
-        "texture": "basemetals:blocks/emerald_block"
+        "texture": "minecraft:blocks/emerald_block"
     }
 }

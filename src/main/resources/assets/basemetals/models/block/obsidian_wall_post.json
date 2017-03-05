@@ -1,6 +1,6 @@
 {
     "parent": "block/wall_post",
     "textures": {
-        "wall": "basemetals:blocks/obsidian_block"
+        "wall": "minecraft:blocks/obsidian_block"
     }
 }

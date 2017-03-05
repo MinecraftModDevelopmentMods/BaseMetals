@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "basemetals:blocks/quartz_block",
-        "base": "basemetals:blocks/quartz_block",
+        "particle": "minecraft:blocks/quartz_block",
+        "base": "minecraft:blocks/quartz_block",
         "lever": "blocks/lever"
     },
     "elements": [

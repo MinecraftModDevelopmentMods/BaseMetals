@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "basemetals:blocks/obsidian_block",
-        "base": "basemetals:blocks/obsidian_block",
+        "particle": "minecraft:blocks/obsidian_block",
+        "base": "minecraft:blocks/obsidian_block",
         "lever": "blocks/lever"
     },
     "elements": [
