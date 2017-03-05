@@ -83,9 +83,10 @@ public class BlockMetalOre extends BlockOre implements IOreDictionaryEntry, IMet
 			case WOOD:
 			case ROCK:
 			case METAL:
-				most = 1;
-				least = 1;
-				break;
+				// stupid hack - but at least this doesn't get into a race where
+				// users have figured out how to subvert putting a "this was placed by the user"
+				// chunk of data on the ores situation to get around the fortune drops
+				return 1;
 			case MINERAL:
 				most = 4;
 				least = 2;
