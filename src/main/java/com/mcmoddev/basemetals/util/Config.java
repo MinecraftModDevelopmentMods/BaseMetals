@@ -102,7 +102,9 @@ public class Config {
 				"Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals");
 		Options.enableDenseOres = configuration.getBoolean("denseores", INTEGRATION_CAT, true,
 				"If DenseOres is available, this will allow automatic integration");
-
+		Options.enableThermalExpansion = configuration.getBoolean("thermal_expansion", INTEGRATION_CAT, true, 
+				"If Thermal Expansion is available, this wil automatically integrate materials with the various machines");
+		
 		// METALS
 		Options.enableAdamantine = configuration.getBoolean("EnableAdamantine", MATERIALS_CAT, true,
 				"Enable Adamantine Items and Materials");
@@ -338,6 +340,7 @@ public class Config {
 		public static boolean enableTinkersConstruct = true;
 		public static boolean enableVeinminer = true;
 		public static boolean enableTAIGA = true;
+		public static boolean enableThermalExpansion = true;
 
 		// MATERIALS
 		public static boolean enableAdamantine = true;

@@ -113,6 +113,10 @@ repositories {
     	name "tehnut"
     	url "http://tehnut.info/maven"
     }
+    maven { // CoFH stuff is here
+    	name "Covers Maven"
+    	url "http://maven.covers1624.net"
+    }
 }
 
 dependencies {
@@ -163,6 +167,11 @@ dependencies {
     }
     deobfCompile ("mcp.mobius.waila:Hwyla:+") {
         exclude group: 'mezz.jei'
+    }
+    
+    // CoFHCore for TE integration
+    compile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:deobf") {
+    	exclude group: 'mezz.jei'
     }
 }
 
