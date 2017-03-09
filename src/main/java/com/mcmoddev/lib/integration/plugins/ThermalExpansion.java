@@ -169,4 +169,39 @@ public class ThermalExpansion implements IIntegration {
 			addCompactorStorageRecipe( ENERGY, nuggets, ingot );
 		}
 	}
+	
+	/* SMELTER */
+	public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput, ItemStack primaryOutput) {
+
+		addSmelterRecipe(energy, primaryInput, secondaryInput, primaryOutput, null, 0);
+	}
+
+	public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput) {
+
+		addSmelterRecipe(energy, primaryInput, secondaryInput, primaryOutput, secondaryOutput, 100);
+	}
+
+	public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance) {
+
+		if (primaryInput == null || secondaryInput == null || primaryOutput == null) {
+			return;
+		}
+		NBTTagCompound toSend = new NBTTagCompound();
+
+		toSend.setInteger("energy", energy);
+		toSend.setTag("primaryInput", new NBTTagCompound());
+		toSend.setTag("secondaryInput", new NBTTagCompound());
+		toSend.setTag("primaryOutput", new NBTTagCompound());
+
+		primaryInput.writeToNBT(toSend.getCompoundTag("primaryInput"));
+		secondaryInput.writeToNBT(toSend.getCompoundTag("secondaryInput"));
+		primaryOutput.writeToNBT(toSend.getCompoundTag("primaryOutput"));
+
+		if (secondaryOutput != null) {
+			toSend.setTag("secondaryOutput", new NBTTagCompound());
+			secondaryOutput.writeToNBT(toSend.getCompoundTag("secondaryOutput"));
+			toSend.setInteger("secondaryChance", secondaryChance);
+		}
+		FMLInterModComms.sendMessage("thermalexpansion", "AddSmelterRecipe", toSend);
+	}
 }

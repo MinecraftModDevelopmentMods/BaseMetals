@@ -4,9 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+
+//import cofh.api.util.ThermalExpansionHelper;
+import net.minecraft.item.ItemStack;
 
 @MMDPlugin( addonId = BaseMetals.MODID, pluginId = ThermalExpansion.PLUGIN_MODID )
 public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansion implements IIntegration {
@@ -49,6 +53,8 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			addPressStorage(e.getValue(), e.getKey());
 		}
 
+		addSmelterRecipe(4000, new ItemStack(Materials.copper.ingot, 2), new ItemStack(Materials.zinc.ingot, 1), new ItemStack( Materials.brass.ingot, 3));
+		addSmelterRecipe(4000, new ItemStack(Materials.copper.ingot, 3), new ItemStack(Materials.nickel.ingot, 1), new ItemStack( Materials.cupronickel.ingot, 4));
 		initDone = true;
 	}		
 }
