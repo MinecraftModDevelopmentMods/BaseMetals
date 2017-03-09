@@ -9,9 +9,11 @@ import com.mcmoddev.lib.material.MetalMaterial;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import cofh.api.util.ThermalExpansionHelper;
 
 @MMDPlugin( addonId = BaseMetals.MODID, pluginId = ThermalExpansion.PLUGIN_MODID )
@@ -127,6 +129,24 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		}
 	}
 	
+	/* CRUCIBLE */
+	public static void addCrucibleRecipe(int energy, ItemStack input, FluidStack output) {
+
+		if (input == null || output == null) {
+			return;
+		}
+		NBTTagCompound toSend = new NBTTagCompound();
+
+		toSend.setInteger("energy", energy);
+		toSend.setTag("input", new NBTTagCompound());
+		toSend.setTag("output", new NBTTagCompound());
+
+		input.writeToNBT(toSend.getCompoundTag("input"));
+		output.writeToNBT(toSend.getCompoundTag("output"));
+
+		FMLInterModComms.sendMessage("thermalexpansion", "AddCrucibleRecipe", toSend);
+	}
+	
 	protected void addCrucible(boolean enabled, String materialName) {
 		if( enabled ) {
 			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
@@ -146,15 +166,16 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			
 			if( mat.ore != null ) {
 				ItemStack ore = new ItemStack( mat.ore, 1 );
-				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ore, oreFluid );
+				addCrucibleRecipe( ENERGY, ore, oreFluid );
 			}
 			
-			ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ingot, baseFluid );
+			addCrucibleRecipe( ENERGY, ingot, baseFluid );
 			
 			if( Options.enableBasics && mat.powder != null ) {
 				ItemStack dust = new ItemStack( mat.powder, 1 );
-				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, dust, baseFluid );
+				addCrucibleRecipe( ENERGY, dust, baseFluid );
 			}
+			
 			addCrucibleExtra( Options.enablePlate, Item.getItemFromBlock(mat.plate), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY );
 			addCrucibleExtra( Options.enableBasics, mat.nugget, FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY );
 		}
@@ -163,7 +184,7 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 	private void addCrucibleExtra(boolean enabled, Item input, FluidStack output, int energy ) {
 		if( enabled && input != null && output != null ) {
 			ItemStack inItems = new ItemStack( input, 1 );
-			ThermalExpansionHelper.addCrucibleRecipe( energy, inItems, output );
+			addCrucibleRecipe( energy, inItems, output );
 		}
 	}
 

@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 public class ThermalExpansion implements IIntegration {
 
 	public static final String PLUGIN_MODID = "thermalexpansion";
-	public static boolean initDone = false;
+	private static boolean initDone = false;
 	
 	@Override
 	public void init() {
