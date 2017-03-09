@@ -20,6 +20,7 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		}
 
 		Map<String, Boolean> materials = new HashMap<>();
+		
 		materials.put("Adamantine", Options.enableAdamantine);
 		materials.put("Adamantine", Options.enableAdamantine);
 		materials.put("Antimony", Options.enableAntimony);
@@ -49,5 +50,5 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		}
 
 		initDone = true;
-	}	
+	}		
 }

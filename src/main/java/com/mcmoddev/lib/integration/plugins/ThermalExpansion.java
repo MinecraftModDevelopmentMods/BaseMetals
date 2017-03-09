@@ -169,5 +169,4 @@ public class ThermalExpansion implements IIntegration {
 			addCompactorStorageRecipe( ENERGY, nuggets, ingot );
 		}
 	}
-
 }
