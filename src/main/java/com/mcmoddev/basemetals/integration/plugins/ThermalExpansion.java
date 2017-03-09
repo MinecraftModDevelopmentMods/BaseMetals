@@ -10,7 +10,9 @@ import com.mcmoddev.lib.material.MetalMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import cofh.api.util.ThermalExpansionHelper;
 
 @MMDPlugin( addonId = BaseMetals.MODID, pluginId = ThermalExpansion.PLUGIN_MODID )
 public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansion implements IIntegration {
@@ -22,7 +24,7 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
 			return;
 		}
-
+		
 		addFurnace(Options.enableAdamantine, "Adamantine");
 		addFurnace(Options.enableAntimony, "Antimony");
 		addFurnace(Options.enableAquarium, "Aquarium");
@@ -117,10 +119,10 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			int ENERGY_DUST = 1400;
 			ItemStack ore = new ItemStack( mat.ore, 1 );
 			ItemStack ingot = new ItemStack( mat.ingot, 1 );
-			addFurnaceRecipe( ENERGY_ORE, ore, ingot );
+			ThermalExpansionHelper.addFurnaceRecipe( ENERGY_ORE, ore, ingot );
 			if( Options.enableBasics && mat.powder != null ) {
 				ItemStack dust = new ItemStack( mat.powder, 1 );
-				addFurnaceRecipe( ENERGY_DUST, dust, ingot );
+				ThermalExpansionHelper.addFurnaceRecipe( ENERGY_DUST, dust, ingot );
 			}
 		}
 	}
@@ -138,28 +140,30 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			 */
 			int ENERGY = 8000;
 			
-			ItemStack ore = new ItemStack( mat.ore, 1 );
 			ItemStack ingot = new ItemStack( mat.ingot, 1 );
-			FluidStack oreFluid = new FluidStack( mat.fluid, 288 );
-			FluidStack baseFluid = new FluidStack( mat.fluid, 144 );
+			FluidStack oreFluid = FluidRegistry.getFluidStack( mat.getName(), 288 );
+			FluidStack baseFluid = FluidRegistry.getFluidStack( mat.getName(), 144 );
 			
-			addCrucibleRecipe( ENERGY, ore, oreFluid );
-			addCrucibleRecipe( ENERGY, ingot, baseFluid );
+			if( mat.ore != null ) {
+				ItemStack ore = new ItemStack( mat.ore, 1 );
+				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ore, oreFluid );
+			}
+			
+			ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ingot, baseFluid );
 			
 			if( Options.enableBasics && mat.powder != null ) {
 				ItemStack dust = new ItemStack( mat.powder, 1 );
-				addCrucibleRecipe( ENERGY, dust, baseFluid );
+				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, dust, baseFluid );
 			}
-			addCrucibleExtra( Options.enablePlate, Item.getItemFromBlock(mat.plate), mat.fluid, 144, ENERGY );
-			addCrucibleExtra( Options.enableBasics, mat.nugget, mat.fluid, 16, ENERGY );
+			addCrucibleExtra( Options.enablePlate, Item.getItemFromBlock(mat.plate), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY );
+			addCrucibleExtra( Options.enableBasics, mat.nugget, FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY );
 		}
 	}
 
-	private void addCrucibleExtra(boolean enabled, Item input, Fluid output, int amount, int energy ) {
+	private void addCrucibleExtra(boolean enabled, Item input, FluidStack output, int energy ) {
 		if( enabled && input != null && output != null ) {
 			ItemStack inItems = new ItemStack( input, 1 );
-			FluidStack outFluids = new FluidStack( output, amount );
-			addCrucibleRecipe( energy, inItems, outFluids );
+			ThermalExpansionHelper.addCrucibleRecipe( energy, inItems, output );
 		}
 	}
 
