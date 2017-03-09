@@ -113,10 +113,10 @@ repositories {
     	name "tehnut"
     	url "http://tehnut.info/maven"
     }
-//    maven { // CoFH stuff is here
-//    	name "Covers Maven"
-//    	url "http://maven.covers1624.net"
-//    }
+    maven { // CoFH stuff is here
+    	name "Covers Maven"
+    	url "http://maven.covers1624.net"
+    }
 }
 
 dependencies {
@@ -169,10 +169,10 @@ dependencies {
         exclude group: 'mezz.jei'
     }
     
-    // CoFHLib for TE integration
- //   compile ("cofh:CoFHLib:${mc_version}-${cofhlib_version}:deobf") {
- //   	exclude group: 'mezz.jei'
- //   }
+    // CoFHCore for TE integration
+    compile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:deobf") {
+    	exclude group: 'mezz.jei'
+    }
 }
 
 processResources {
