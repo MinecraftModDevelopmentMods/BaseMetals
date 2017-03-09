@@ -1,10 +1,16 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.material.MetalMaterial;
 
-
+import cofh.api.util.ThermalExpansionHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 // Parts of this are based on code from older versions of CoFHLib
@@ -55,4 +61,113 @@ public class ThermalExpansion implements IIntegration {
 		FMLInterModComms.sendMessage("thermalexpansion", "addcompactorstoragerecipe", toSend);
 		
 	}
+	
+	public void addFurnace(boolean enabled, String materialName) {
+		if( enabled ) {
+			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+			/*
+			 * Ore -> Ingot default, according to TE source, is 2000
+			 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
+			 */
+			int ENERGY_ORE = 2000;
+			int ENERGY_DUST = 1400;
+			ItemStack ore = new ItemStack( mat.ore, 1 );
+			ItemStack ingot = new ItemStack( mat.ingot, 1 );
+			ThermalExpansionHelper.addFurnaceRecipe( ENERGY_ORE, ore, ingot );
+			if( Options.enableBasics && mat.powder != null ) {
+				ItemStack dust = new ItemStack( mat.powder, 1 );
+				ThermalExpansionHelper.addFurnaceRecipe( ENERGY_DUST, dust, ingot );
+			}
+		}
+	}
+	
+	/* CRUCIBLE */
+	public static void addCrucibleRecipe(int energy, ItemStack input, FluidStack output) {
+
+		if (input == null || output == null) {
+			return;
+		}
+		NBTTagCompound toSend = new NBTTagCompound();
+
+		toSend.setInteger("energy", energy);
+		toSend.setTag("input", new NBTTagCompound());
+		toSend.setTag("output", new NBTTagCompound());
+
+		input.writeToNBT(toSend.getCompoundTag("input"));
+		output.writeToNBT(toSend.getCompoundTag("output"));
+
+		FMLInterModComms.sendMessage("thermalexpansion", "AddCrucibleRecipe", toSend);
+	}
+	
+	public void addCrucible(boolean enabled, String materialName) {
+		if( enabled ) {
+			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+			/*
+			 * Default power, according to TE source, is 8000
+			 * This is used for Pyrotheum, Cryotheum, Aerotheum, Petrotheum and Redstone.
+			 * Redstone Block is 72000
+			 * Glowstone and Ender Pearl are 20000
+			 * Glowstone block is 80000
+			 * Cobblestone/Stone/Obsidian is 320000
+			 */
+			int ENERGY = 8000;
+			
+			ItemStack ingot = new ItemStack( mat.ingot, 1 );
+			FluidStack oreFluid = FluidRegistry.getFluidStack( mat.getName(), 288 );
+			FluidStack baseFluid = FluidRegistry.getFluidStack( mat.getName(), 144 );
+			
+			if( mat.ore != null ) {
+				ItemStack ore = new ItemStack( mat.ore, 1 );
+				addCrucibleRecipe( ENERGY, ore, oreFluid );
+			}
+			
+			addCrucibleRecipe( ENERGY, ingot, baseFluid );
+			
+			if( Options.enableBasics && mat.powder != null ) {
+				ItemStack dust = new ItemStack( mat.powder, 1 );
+				addCrucibleRecipe( ENERGY, dust, baseFluid );
+			}
+			
+			addCrucibleExtra( Options.enablePlate, Item.getItemFromBlock(mat.plate), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY );
+			addCrucibleExtra( Options.enableBasics, mat.nugget, FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY );
+		}
+	}
+
+	private void addCrucibleExtra(boolean enabled, Item input, FluidStack output, int energy ) {
+		if( enabled && input != null && output != null ) {
+			ItemStack inItems = new ItemStack( input, 1 );
+			addCrucibleRecipe( energy, inItems, output );
+		}
+	}
+
+	public void addPlatePress(boolean enabled, String materialName) {
+		if( enabled && Options.enablePlate ) {
+			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+			
+			/*
+			 * Compactors default is 4000RF per operation
+			 */
+			int ENERGY = 4000;
+			addCompactorPressRecipe( ENERGY, new ItemStack( mat.ingot, 1), new ItemStack( mat.plate, 1) );
+		}
+	}
+
+	public void addPressStorage(boolean enabled, String materialName) {
+		if( enabled ) {
+			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+			
+			/*
+			 * Compactors default is 4000RF per operation
+			 */
+			int ENERGY = 4000;
+			ItemStack ingots = new ItemStack( mat.ingot, 9 );
+			ItemStack nuggets = new ItemStack( mat.nugget, 9 );
+			ItemStack block = new ItemStack( mat.block, 1 );
+			ItemStack ingot = new ItemStack( mat.ingot, 1 );
+			
+			addCompactorStorageRecipe( ENERGY, ingots, block );
+			addCompactorStorageRecipe( ENERGY, nuggets, ingot );
+		}
+	}
+
 }
