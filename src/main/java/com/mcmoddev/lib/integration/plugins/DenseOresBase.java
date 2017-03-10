@@ -5,7 +5,7 @@ import com.mcmoddev.lib.integration.IIntegration;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
-public class DenseOres implements IIntegration {
+public class DenseOresBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "denseores";
 

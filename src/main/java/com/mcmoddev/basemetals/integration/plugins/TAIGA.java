@@ -20,7 +20,7 @@ import com.sosnitzka.taiga.Blocks;
 import com.sosnitzka.taiga.Items;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TAIGA.PLUGIN_MODID)
-public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGA implements IIntegration {
+public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implements IIntegration {
 
 	private static boolean initDone = false;
 

@@ -2,7 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.integration.IIntegration;
 
-public class Thaumcraft implements IIntegration {
+public class ThaumcraftBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "thaumcraft";
 

@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.FluidRegistry;
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  *
  */
-public class TinkersConstruct implements IIntegration {
+public class TinkersConstructBase implements IIntegration {
 	
 	public static final String PLUGIN_MODID = "tconstruct";
 

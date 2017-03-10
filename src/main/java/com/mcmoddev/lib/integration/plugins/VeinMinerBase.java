@@ -11,7 +11,7 @@ import portablejim.veinminer.api.IMCMessage;
  * @author Jasmine Iwanek
  *
  */
-public class VeinMiner implements IIntegration {
+public class VeinMinerBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "veinminer";
 

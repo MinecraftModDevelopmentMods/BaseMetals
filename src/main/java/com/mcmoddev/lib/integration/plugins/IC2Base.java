@@ -9,7 +9,7 @@ import ic2.api.recipe.Recipes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class IC2 implements IIntegration {
+public class IC2Base implements IIntegration {
 
 	public static final String PLUGIN_MODID = "IC2";
 

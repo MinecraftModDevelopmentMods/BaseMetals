@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 // of CoFHLib - they were efficient and did the integration in the simplest
 // manner. Why they've been removed, I don't know.
 
-public class ThermalExpansion implements IIntegration {
+public class ThermalExpansionBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "thermalexpansion";
 	private static boolean initDone = false;
@@ -62,7 +62,7 @@ public class ThermalExpansion implements IIntegration {
 		
 	}
 	
-	public void addFurnace(boolean enabled, String materialName) {
+	public static void addFurnace(boolean enabled, String materialName) {
 		if( enabled ) {
 			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			/*
@@ -99,7 +99,7 @@ public class ThermalExpansion implements IIntegration {
 		FMLInterModComms.sendMessage("thermalexpansion", "AddCrucibleRecipe", toSend);
 	}
 	
-	public void addCrucible(boolean enabled, String materialName) {
+	public static void addCrucible(boolean enabled, String materialName) {
 		if( enabled ) {
 			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			/*
@@ -133,14 +133,14 @@ public class ThermalExpansion implements IIntegration {
 		}
 	}
 
-	private void addCrucibleExtra(boolean enabled, Item input, FluidStack output, int energy ) {
+	private static void addCrucibleExtra(boolean enabled, Item input, FluidStack output, int energy ) {
 		if( enabled && input != null && output != null ) {
 			ItemStack inItems = new ItemStack( input, 1 );
 			addCrucibleRecipe( energy, inItems, output );
 		}
 	}
 
-	public void addPlatePress(boolean enabled, String materialName) {
+	public static void addPlatePress(boolean enabled, String materialName) {
 		if( enabled && Options.enablePlate ) {
 			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			
@@ -152,7 +152,7 @@ public class ThermalExpansion implements IIntegration {
 		}
 	}
 
-	public void addPressStorage(boolean enabled, String materialName) {
+	public static void addPressStorage(boolean enabled, String materialName) {
 		if( enabled ) {
 			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			

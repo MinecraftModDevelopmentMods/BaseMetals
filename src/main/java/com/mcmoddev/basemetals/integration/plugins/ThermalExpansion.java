@@ -13,7 +13,7 @@ import com.mcmoddev.lib.integration.MMDPlugin;
 import net.minecraft.item.ItemStack;
 
 @MMDPlugin( addonId = BaseMetals.MODID, pluginId = ThermalExpansion.PLUGIN_MODID )
-public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansion implements IIntegration {
+public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansionBase implements IIntegration {
 
 	private static boolean initDone = false;
 

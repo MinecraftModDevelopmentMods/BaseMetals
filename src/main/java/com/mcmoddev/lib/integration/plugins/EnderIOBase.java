@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
  * @author Jasmine Iwanek
  *
  */
-public class EnderIO implements IIntegration {
+public class EnderIOBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "EnderIO";
 
