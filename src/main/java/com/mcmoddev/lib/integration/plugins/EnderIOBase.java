@@ -121,6 +121,12 @@ public class EnderIOBase implements IIntegration {
 	 */
 	protected static void addSagMillRecipe(String materialName, String outputSecondary, int energy) {
 		MetalMaterial material = Materials.getMaterialByName(materialName);
+
+		// we need to be sure the material is enabled, a null check is the best way
+		if( material == null ) {
+			return;
+		}
+		
 		int primaryQty = 2;
 		int secondaryQty = 1;
 
