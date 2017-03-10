@@ -9,7 +9,7 @@ import com.mcmoddev.lib.material.MetalMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = DenseOres.PLUGIN_MODID)
-public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOres implements IIntegration {
+public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBase implements IIntegration {
 
 	private static boolean initDone = false;
 

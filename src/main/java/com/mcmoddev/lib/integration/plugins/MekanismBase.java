@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
-public class Mekanism implements IIntegration {
+public class MekanismBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "Mekanism";
 

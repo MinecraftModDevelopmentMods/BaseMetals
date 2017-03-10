@@ -3,7 +3,7 @@ package com.mcmoddev.lib.integration.plugins;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.IIntegration;
 
-public class TAIGA implements IIntegration {
+public class TAIGABase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "taiga";
 

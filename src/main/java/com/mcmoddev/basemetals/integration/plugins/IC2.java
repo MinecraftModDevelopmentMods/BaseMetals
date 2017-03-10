@@ -5,7 +5,7 @@ import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID)
-public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2 implements IIntegration {
+public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements IIntegration {
 
 	private static boolean initDone = false;
 
