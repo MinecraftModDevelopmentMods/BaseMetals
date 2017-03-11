@@ -74,18 +74,13 @@ public class EnderIOBase implements IIntegration {
 			return; // Only run for Ore types
 
 		// @formatter:off
-		final String messageAlloySmelter =
-			"<recipeGroup name=\"" + ownerModID + "\" >" +
-			 "<recipe name=\"" + material + "\" energyCost=\"" + energy + "\" >" +
-			  "<input>" +
-			   "<itemStack oreDictionary="+ input + "\" />" +
-			  "</input>" +
-			  "<output>" +
-			   "<itemStack oreDictionary=\"" + output + "\" />" +
-			   // TODO: account for number="int", exp="float" and chance="float" too
-			  "</output>" +
-			 "</recipe>" +
-			"</recipeGroup>";
+		// TODO: account for number="int", exp="float" and chance="float" too
+		final String messageAlloySmelter = String.format( "<recipeGroup name=\"%s\">\n\t"
+															+ "<recipe name=\"%s\" energyCost=\"%d\">\n\t\t"
+																+ "<input>\n\t\t\t<itemStack oreDictionary=\"%s\"/>\n\t\t</input>\n\t\t"
+																+ "<output>\n\t\t\t<itemStack oreDictionary=\"%s\" />\n\t\t</output>\n\t"
+															+ "</recipe>\n</recipeGroup>",
+															ownerModID, material, energy, input, output );
 		// @formatter:on
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:alloysmelter", messageAlloySmelter);
 	}
@@ -182,24 +177,22 @@ public class EnderIOBase implements IIntegration {
 			return; // Only run for Ore types
 
 		if (outputSecondary != null)
-			messageSecondary = "<itemStack oreDictionary=\"" + secondaryOutput + "\" number=\"" + secondaryQty + "\" chance=\"" + secondaryChance + "\" />";
+			messageSecondary = String.format("<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%f\" />", secondaryOutput, secondaryQty, secondaryChance);
 			// messageSecondary = "<itemStack oreDictionary=\"" + rockOredict + "\" number=\"" + rockQty + "\" chance=\"" + rockChance + "\" />" +
 
 		// @formatter:off
-		String messageSAGMill =
-			"<recipeGroup name=\"" + ownerModID + "\" >" +
-			 "<recipe name=\"" + materialName + "\" energyCost=\"" + energy + "\" >" +
-			  "<input>" +
-			   "<itemStack oreDictionary="+ input + "\" />" +
-			  "</input>" +
-			  "<output>" +
-			   "<itemStack oreDictionary=\"" + primaryOutput + "\" number=\"" + primaryQty + "\" chance=\"" + primaryChance + "\" />" +
-			   messageSecondary +
-			   "<itemStack oreDictionary=\"" + secondaryOutput + "\" number=\"" + secondaryQty + "\" chance=\"" + secondaryChance + "\" />" +
-			   "<itemStack modID=\"" + rockModID + "\" itemName=\"" + rockName + "\" number=\"" + rockQty + "\" chance=\"" + rockChance + "\" />" +
-			  "</output>" +
-			 "</recipe>" +
-			"</recipeGroup>";
+		String messageSAGMill = String.format( "<recipeGroup name=\"%s\">\n\t"
+											     +"<recipe name=\"%s\" energyCost=\"%d\">\n\t\t"
+											     	+"<input>\n\t\t\t<itemStack oreDictionary=\"%s\" />\n\t\t</input>\n\t\t"
+											     	+"<output>\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%f\"/>\n\t\t\t"
+											     		+"%s\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%f\"/>\n\t\t\t"
+											     		+"<itemStack modId=\"%s\" itemName=\"%s\" number=\"%d\" chance=\"%f\"/>\n\t\t</output>"
+											     +"</recipe>"
+											    +"</recipeGroup>",
+											    ownerModID, materialName, energy, input, primaryOutput, primaryQty, primaryChance,
+											    messageSecondary, secondaryOutput, secondaryQty, secondaryChance, rockModID, 
+											    rockName, rockQty, rockChance );
+											       
 		// @formatter:on
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:sagmill", messageSAGMill);
 	}
