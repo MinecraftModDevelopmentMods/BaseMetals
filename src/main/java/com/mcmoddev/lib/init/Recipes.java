@@ -503,6 +503,27 @@ public abstract class Recipes {
 		}
 	}
 
+	protected static void addAlloyRecipe( MetalMaterial material, int outputQty, Object...ingredients ) {
+		if( material == null ) {
+			return;
+		}
+		
+		if( ingredients.length == 2 && ingredients[0] instanceof String && ingredients[1] instanceof String ) {
+			addSimpleAlloyRecipe( material, outputQty, (String)ingredients[0], (String)ingredients[1] );
+		}
+		
+		Object[] dustIngredients = new String[ingredients.length];
+		Object[] tinyDustIngredients = new String[ingredients.length];
+		
+		for( int i = 0; i < ingredients.length; i++ ) {
+				dustIngredients[i] = String.format( "%s%s", Oredicts.DUST, (String)ingredients[i] );
+				tinyDustIngredients[i] = String.format( "%s%s", Oredicts.DUSTTINY, (String)ingredients[i] );
+		}
+		
+		GameRegistry.addRecipe( new ShapelessOreRecipe( new ItemStack( material.blend, outputQty ), dustIngredients ) );
+		GameRegistry.addRecipe( new ShapelessOreRecipe( new ItemStack( material.blend, outputQty ), tinyDustIngredients ) );
+	}
+	
 	protected static void addSimpleAlloyRecipe(MetalMaterial material, int outputQty, String oredict1, String oredict2) {
 		if (material == null) {
 			return;
