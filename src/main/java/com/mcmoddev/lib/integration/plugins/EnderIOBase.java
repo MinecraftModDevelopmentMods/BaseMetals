@@ -184,9 +184,9 @@ public class EnderIOBase implements IIntegration {
 		String messageSAGMill = String.format( "<recipeGroup name=\"%s\">\n\t"
 											     +"<recipe name=\"%s\" energyCost=\"%d\">\n\t\t"
 											     	+"<input>\n\t\t\t<itemStack oreDictionary=\"%s\" />\n\t\t</input>\n\t\t"
-											     	+"<output>\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%f\"/>\n\t\t\t"
-											     		+"%s\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%f\"/>\n\t\t\t"
-											     		+"<itemStack modId=\"%s\" itemName=\"%s\" number=\"%d\" chance=\"%f\"/>\n\t\t</output>"
+											     	+"<output>\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>\n\t\t\t"
+											     		+"%s\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>\n\t\t\t"
+											     		+"<itemStack modId=\"%s\" itemName=\"%s\" number=\"%d\" chance=\"%s\"/>\n\t\t</output>"
 											     +"</recipe>"
 											    +"</recipeGroup>",
 											    ownerModID, materialName, energy, input, primaryOutput, primaryQty, primaryChance,
