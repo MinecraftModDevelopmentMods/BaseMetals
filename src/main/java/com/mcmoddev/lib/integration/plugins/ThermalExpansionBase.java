@@ -31,7 +31,7 @@ public class ThermalExpansionBase implements IIntegration {
 
 		initDone = true;
 	}
-
+	
 	public static void addCompactorPressRecipe(int energy, ItemStack input, ItemStack output) {
 		if (input == null || output == null) {
 			return;
@@ -61,7 +61,7 @@ public class ThermalExpansionBase implements IIntegration {
 		FMLInterModComms.sendMessage("thermalexpansion", "addcompactorstoragerecipe", toSend);
 		
 	}
-	
+
 	public static void addFurnace(boolean enabled, String materialName) {
 		if( enabled ) {
 			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
@@ -71,32 +71,14 @@ public class ThermalExpansionBase implements IIntegration {
 			 */
 			int ENERGY_ORE = 2000;
 			int ENERGY_DUST = 1400;
-			ItemStack ore = new ItemStack( mat.ore, 1 );
-			ItemStack ingot = new ItemStack( mat.ingot, 1 );
+			ItemStack ore = new ItemStack( mat.ore );
+			ItemStack ingot = new ItemStack( mat.ingot );
 			ThermalExpansionHelper.addFurnaceRecipe( ENERGY_ORE, ore, ingot );
 			if( Options.enableBasics && mat.powder != null ) {
-				ItemStack dust = new ItemStack( mat.powder, 1 );
+				ItemStack dust = new ItemStack( mat.powder );
 				ThermalExpansionHelper.addFurnaceRecipe( ENERGY_DUST, dust, ingot );
 			}
 		}
-	}
-	
-	/* CRUCIBLE */
-	public static void addCrucibleRecipe(int energy, ItemStack input, FluidStack output) {
-
-		if (input == null || output == null) {
-			return;
-		}
-		NBTTagCompound toSend = new NBTTagCompound();
-
-		toSend.setInteger("energy", energy);
-		toSend.setTag("input", new NBTTagCompound());
-		toSend.setTag("output", new NBTTagCompound());
-
-		input.writeToNBT(toSend.getCompoundTag("input"));
-		output.writeToNBT(toSend.getCompoundTag("output"));
-
-		FMLInterModComms.sendMessage("thermalexpansion", "AddCrucibleRecipe", toSend);
 	}
 	
 	public static void addCrucible(boolean enabled, String materialName) {
@@ -112,20 +94,20 @@ public class ThermalExpansionBase implements IIntegration {
 			 */
 			int ENERGY = 8000;
 			
-			ItemStack ingot = new ItemStack( mat.ingot, 1 );
+			ItemStack ingot = new ItemStack( mat.ingot );
 			FluidStack oreFluid = FluidRegistry.getFluidStack( mat.getName(), 288 );
 			FluidStack baseFluid = FluidRegistry.getFluidStack( mat.getName(), 144 );
 			
 			if( mat.ore != null ) {
-				ItemStack ore = new ItemStack( mat.ore, 1 );
-				addCrucibleRecipe( ENERGY, ore, oreFluid );
+				ItemStack ore = new ItemStack( mat.ore );
+				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ore, oreFluid );
 			}
 			
-			addCrucibleRecipe( ENERGY, ingot, baseFluid );
+			ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ingot, baseFluid );
 			
 			if( Options.enableBasics && mat.powder != null ) {
-				ItemStack dust = new ItemStack( mat.powder, 1 );
-				addCrucibleRecipe( ENERGY, dust, baseFluid );
+				ItemStack dust = new ItemStack( mat.powder );
+				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, dust, baseFluid );
 			}
 			
 			addCrucibleExtra( Options.enablePlate, Item.getItemFromBlock(mat.plate), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY );
@@ -135,8 +117,8 @@ public class ThermalExpansionBase implements IIntegration {
 
 	private static void addCrucibleExtra(boolean enabled, Item input, FluidStack output, int energy ) {
 		if( enabled && input != null && output != null ) {
-			ItemStack inItems = new ItemStack( input, 1 );
-			addCrucibleRecipe( energy, inItems, output );
+			ItemStack inItems = new ItemStack( input );
+			ThermalExpansionHelper.addCrucibleRecipe( energy, inItems, output );
 		}
 	}
 
@@ -148,7 +130,7 @@ public class ThermalExpansionBase implements IIntegration {
 			 * Compactors default is 4000RF per operation
 			 */
 			int ENERGY = 4000;
-			addCompactorPressRecipe( ENERGY, new ItemStack( mat.ingot, 1), new ItemStack( mat.plate, 1) );
+			addCompactorPressRecipe( ENERGY, new ItemStack( mat.ingot ), new ItemStack( mat.plate ) );
 		}
 	}
 
@@ -168,40 +150,5 @@ public class ThermalExpansionBase implements IIntegration {
 			addCompactorStorageRecipe( ENERGY, ingots, block );
 			addCompactorStorageRecipe( ENERGY, nuggets, ingot );
 		}
-	}
-	
-	/* SMELTER */
-	public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput, ItemStack primaryOutput) {
-
-		addSmelterRecipe(energy, primaryInput, secondaryInput, primaryOutput, null, 0);
-	}
-
-	public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput) {
-
-		addSmelterRecipe(energy, primaryInput, secondaryInput, primaryOutput, secondaryOutput, 100);
-	}
-
-	public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance) {
-
-		if (primaryInput == null || secondaryInput == null || primaryOutput == null) {
-			return;
-		}
-		NBTTagCompound toSend = new NBTTagCompound();
-
-		toSend.setInteger("energy", energy);
-		toSend.setTag("primaryInput", new NBTTagCompound());
-		toSend.setTag("secondaryInput", new NBTTagCompound());
-		toSend.setTag("primaryOutput", new NBTTagCompound());
-
-		primaryInput.writeToNBT(toSend.getCompoundTag("primaryInput"));
-		secondaryInput.writeToNBT(toSend.getCompoundTag("secondaryInput"));
-		primaryOutput.writeToNBT(toSend.getCompoundTag("primaryOutput"));
-
-		if (secondaryOutput != null) {
-			toSend.setTag("secondaryOutput", new NBTTagCompound());
-			secondaryOutput.writeToNBT(toSend.getCompoundTag("secondaryOutput"));
-			toSend.setInteger("secondaryChance", secondaryChance);
-		}
-		FMLInterModComms.sendMessage("thermalexpansion", "AddSmelterRecipe", toSend);
 	}
 }
