@@ -7,7 +7,7 @@
   "mcversion": "${mcversion}",
   "url": "https://github.com/MineCraftModDevelopment/BaseMetals",
   "updateUrl": "",
-  "authorList": ["jriwanek"],
+  "authorList": ["jriwanek", "dshadowwolf" ],
   "credits": "Cyanobacterium (aka DrCyano) For starting the project & geologists everywhere. SeqSEE for helping with shields.",
   "logoFile": "",
   "screenshots": [],
