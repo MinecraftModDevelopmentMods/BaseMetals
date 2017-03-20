@@ -192,7 +192,7 @@ public abstract class Recipes {
 
 				if (material.powder != null) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.INGOT + oreDictName, new ItemStack(material.powder, 1));
-					GameRegistry.addSmelting(new ItemStack(material.powder), new ItemStack(material.ingot, 1), oreSmeltXP);
+					GameRegistry.addSmelting(new ItemStack(material.powder, 1, 0), new ItemStack(material.ingot, 1), oreSmeltXP);
 				}
 
 				if (material.blend != null) {
