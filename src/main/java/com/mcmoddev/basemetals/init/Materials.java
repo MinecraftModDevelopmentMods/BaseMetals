@@ -102,38 +102,38 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		}
 
 		// Vanilla Materials
-		vanilla_wood = createOrelessMaterial("wood", MaterialType.WOOD, 2, 2, 6, 0xFF000000);
+		vanilla_wood = createOrelessMaterial("wood", MaterialType.WOOD, 2, 2, 6, 0xFF695433);
 
-		vanilla_stone = createOrelessMaterial("stone", MaterialType.ROCK, 5, 4, 2, 0xFF000000);
+		vanilla_stone = createOrelessMaterial("stone", MaterialType.ROCK, 5, 4, 2, 0xFF8F8F8F);
 
-		vanilla_iron = createMaterial("iron", MaterialType.METAL, 8, 8, 4.5, 0xFF000000);
+		vanilla_iron = createMaterial("iron", MaterialType.METAL, 8, 8, 4.5, 0xFFD8D8D8);
 
-		vanilla_gold = createMaterial("gold", MaterialType.METAL, 1, 1, 10, 0xFF000000);
+		vanilla_gold = createMaterial("gold", MaterialType.METAL, 1, 1, 10, 0xFFFFFF8B);
 
-		vanilla_diamond = createMaterial("diamond", MaterialType.GEM, 10, 15, 4, 0xFF000000);
+		vanilla_diamond = createMaterial("diamond", MaterialType.GEM, 10, 15, 4, 0xFF8CF4E1);
 
 		if (Options.enableCoal) {
-			vanilla_coal = createMaterial("coal", MaterialType.MINERAL, 4, 4, 2, 0xFF000000);
+			vanilla_coal = createMaterial("coal", MaterialType.MINERAL, 4, 4, 2, 0xFF151515);
 		}
 
 		if (Options.enableCharcoal) {
-			vanilla_charcoal = createOrelessMaterial("charcoal", MaterialType.MINERAL, 4, 4, 2, 0xFF000000);
+			vanilla_charcoal = createOrelessMaterial("charcoal", MaterialType.MINERAL, 4, 4, 2, 0xFF231F18);
 		}
 
 		if (Options.enableEmerald) {
-			vanilla_emerald = createMaterial("emerald", MaterialType.GEM, 10, 15, 4, 0xFF000000);
+			vanilla_emerald = createMaterial("emerald", MaterialType.GEM, 10, 15, 4, 0xFF82F6AC);
 		}
 
 		if (Options.enableEnder) {
-			vanilla_ender = createOrelessMaterial("ender", MaterialType.GEM, 2, 2, 6, 0xFF000000);
+			vanilla_ender = createOrelessMaterial("ender", MaterialType.GEM, 2, 2, 6, 0xFF063931);
 		}
 
 		if (Options.enableQuartz) {
-			vanilla_quartz = createMaterial("quartz", MaterialType.GEM, 5, 4, 2, 0xFF000000);
+			vanilla_quartz = createMaterial("quartz", MaterialType.GEM, 5, 4, 2, 0xFFEAE3DB);
 		}
 
 		if (Options.enableObsidian) {
-			vanilla_obsidian = createOrelessMaterial("obsidian", MaterialType.ROCK, 10, 15, 4, 0xFF000000);
+			vanilla_obsidian = createOrelessMaterial("obsidian", MaterialType.ROCK, 10, 15, 4, 0xFF101019);
 		}
 
 		if (Options.enableLapis) {
