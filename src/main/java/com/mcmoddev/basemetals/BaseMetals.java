@@ -100,25 +100,25 @@ public class BaseMetals {
 		proxy.onRemap(event);
 	}
 	
-    public static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
-    public static final FMLControlledNamespacedRegistry<Item> ITEM_REGISTRY = GameData.getItemRegistry();
-
-    private String getName(final Item item) {
-        if (item instanceof ItemBlock) {
-            return String.valueOf(BLOCK_REGISTRY.getNameForObject(((ItemBlock) item).block));
-        }
-
-        return String.valueOf(ITEM_REGISTRY.getNameForObject(item));
-    }
-    
-    private String getMeta( ItemStack s ) {
-    	int m = s.getItemDamage();
-    	if( m != OreDictionary.WILDCARD_VALUE ) {
-    		return String.format("- %s", s.getItem().getItemStackDisplayName(s));
-    	}
-    	
-    	return "- *";
-    }
+//    public static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
+//    public static final FMLControlledNamespacedRegistry<Item> ITEM_REGISTRY = GameData.getItemRegistry();
+//
+//    private String getName(final Item item) {
+//        if (item instanceof ItemBlock) {
+//            return String.valueOf(BLOCK_REGISTRY.getNameForObject(((ItemBlock) item).block));
+//        }
+//
+//        return String.valueOf(ITEM_REGISTRY.getNameForObject(item));
+//    }
+//    
+//    private String getMeta( ItemStack s ) {
+//    	int m = s.getItemDamage();
+//    	if( m != OreDictionary.WILDCARD_VALUE ) {
+//    		return String.format("- %s", s.getItem().getItemStackDisplayName(s));
+//    	}
+//    	
+//    	return "- *";
+//    }
     
 //	@EventHandler
 //	public void serverStarted(FMLLoadCompleteEvent event) {
