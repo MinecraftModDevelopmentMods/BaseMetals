@@ -119,7 +119,6 @@ public class BaseMetals {
 //    	
 //    	return "- *";
 //    }
-    
 //	@EventHandler
 //	public void serverStarted(FMLLoadCompleteEvent event) {
 //		for( Map.Entry<ItemStack, ItemStack> ent : FurnaceRecipes.instance().getSmeltingList().entrySet() ) {
