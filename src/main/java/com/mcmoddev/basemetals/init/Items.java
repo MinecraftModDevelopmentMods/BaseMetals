@@ -218,7 +218,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableRedstone) {
-			final MetalMaterial material = Materials.vanilla_obsidian;
+			final MetalMaterial material = Materials.vanilla_redstone;
 			material.powder = net.minecraft.init.Items.REDSTONE;
 
 			createIngot(material);
