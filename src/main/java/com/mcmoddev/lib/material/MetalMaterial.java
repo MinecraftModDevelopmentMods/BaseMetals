@@ -74,7 +74,7 @@ public class MetalMaterial {
 	 *
 	 */
 	public enum MaterialType {
-		WOOD, ROCK, METAL, MINERAL, GEM
+		WOOD, ROCK, METAL, MINERAL, GEM, CRYSTAL
 	}
 
 	/**

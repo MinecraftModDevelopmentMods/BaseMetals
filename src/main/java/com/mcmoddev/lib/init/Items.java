@@ -246,6 +246,23 @@ public abstract class Items {
 
 	/**
 	 * 
+	 * @param material The material base of this gem
+	 * @return the item this function created
+	 */
+	protected static Item createGem(MetalMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableBasics) && (material.ingot == null)) {
+			material.ingot = addItem(new ItemMetalIngot(material), "gem", material, ItemGroups.itemsTab);
+		}
+
+		return material.ingot;
+	}
+
+	/**
+	 * 
 	 * @param material The material base of this ingot
 	 * @return the item this function created
 	 */

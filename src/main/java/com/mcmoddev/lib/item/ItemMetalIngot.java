@@ -33,6 +33,8 @@ public class ItemMetalIngot extends net.minecraft.item.Item implements IOreDicti
 		this.setCreativeTab(CreativeTabs.MATERIALS);
 		if (this.material.getType() == MaterialType.GEM) {
 			this.oreDict = Oredicts.GEM + this.material.getCapitalizedName();
+		} else if (this.material.getType() == MaterialType.CRYSTAL) {
+				this.oreDict = Oredicts.CRYSTAL + this.material.getCapitalizedName();
 		} else {
 			this.oreDict = Oredicts.INGOT + this.material.getCapitalizedName();
 		}
