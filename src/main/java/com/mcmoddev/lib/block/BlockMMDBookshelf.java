@@ -10,7 +10,7 @@ import net.minecraft.block.state.IBlockState;
 public class BlockMMDBookshelf extends BlockBookshelf implements IMMDObject {
 
 	final MMDMaterial material;
-	private boolean fullBlock = false;
+	private boolean fullBlock = true;
 	
 	public BlockMMDBookshelf(MMDMaterial material) {
         this.setSoundType(SoundType.METAL);
