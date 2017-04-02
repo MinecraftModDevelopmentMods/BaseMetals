@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mcmoddev.lib.init.Items;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
  * This class initializes all item groups in Base Metals.
@@ -51,7 +51,7 @@ public class ItemGroups {
 		initDone = true;
 	}
 
-	protected static GeneralizedCreativeTab addTab(String name, boolean searchable, MetalMaterial material) {
+	protected static GeneralizedCreativeTab addTab(String name, boolean searchable, MMDMaterial material) {
 		GeneralizedCreativeTab tab = new GeneralizedCreativeTab(Loader.instance().activeModContainer().getModId() + "." + name, searchable, material);
 		// itemGroupsByModID.get(name).add(tab);
 		return tab;

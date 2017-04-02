@@ -127,7 +127,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	@Override
 	protected boolean isArrow(@Nullable ItemStack stack) {
 		// Changed ItemArrow to ItemMetalArrow
-		return (stack != null) && (stack.getItem() instanceof ItemMetalArrow);
+		return (stack != null) && (stack.getItem() instanceof ItemMMDArrow);
 	}
 
 	// TODO: This may not be needed

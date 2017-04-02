@@ -1,7 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
@@ -69,7 +69,7 @@ public class MekanismBase implements IIntegration {
 		initDone = true;
 	}
 
-	protected static void addGassesForMaterial(MetalMaterial material) {
+	protected static void addGassesForMaterial(MMDMaterial material) {
 		final Gas gas1 = new Gas(material.getName(), material.getName() + "-Icon");
 		gas1.setUnlocalizedName("gas" + material.getName());
 		GasRegistry.register(gas1);
@@ -79,7 +79,7 @@ public class MekanismBase implements IIntegration {
 		GasRegistry.register(gas2);
 	}
 
-	protected static void addOreMultiplicationRecipes(MetalMaterial material) {
+	protected static void addOreMultiplicationRecipes(MMDMaterial material) {
 		// Combiner 8 dust to 1 ore
 		// Clump to dirty IC2: Macerator)
 

@@ -1,38 +1,38 @@
 package cyano.basemetals.init;
 
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 public class Materials {
 
 	// Backwards Compatibility
-	public static MetalMaterial adamantine;
-	public static MetalMaterial antimony;
-	public static MetalMaterial aquarium;
-	public static MetalMaterial bismuth;
-	public static MetalMaterial brass;
-	public static MetalMaterial bronze;
-	public static MetalMaterial coldiron;
-	public static MetalMaterial copper;
-	public static MetalMaterial cupronickel;
-	public static MetalMaterial electrum;
-	public static MetalMaterial invar;
-	public static MetalMaterial lead;
-	public static MetalMaterial mithril;
-	public static MetalMaterial nickel;
-	public static MetalMaterial pewter;
-	public static MetalMaterial platinum;
-	public static MetalMaterial silver;
-	public static MetalMaterial starsteel;
-	public static MetalMaterial steel;
-	public static MetalMaterial tin;
-	public static MetalMaterial zinc;
+	public static MMDMaterial adamantine;
+	public static MMDMaterial antimony;
+	public static MMDMaterial aquarium;
+	public static MMDMaterial bismuth;
+	public static MMDMaterial brass;
+	public static MMDMaterial bronze;
+	public static MMDMaterial coldiron;
+	public static MMDMaterial copper;
+	public static MMDMaterial cupronickel;
+	public static MMDMaterial electrum;
+	public static MMDMaterial invar;
+	public static MMDMaterial lead;
+	public static MMDMaterial mithril;
+	public static MMDMaterial nickel;
+	public static MMDMaterial pewter;
+	public static MMDMaterial platinum;
+	public static MMDMaterial silver;
+	public static MMDMaterial starsteel;
+	public static MMDMaterial steel;
+	public static MMDMaterial tin;
+	public static MMDMaterial zinc;
 
 	// vanilla imports
-	public static MetalMaterial vanilla_wood;
-	public static MetalMaterial vanilla_stone;
-	public static MetalMaterial vanilla_iron;
-	public static MetalMaterial vanilla_gold;
-	public static MetalMaterial vanilla_diamond;
+	public static MMDMaterial vanilla_wood;
+	public static MMDMaterial vanilla_stone;
+	public static MMDMaterial vanilla_iron;
+	public static MMDMaterial vanilla_gold;
+	public static MMDMaterial vanilla_diamond;
 
 	private static boolean initDone = false;
 

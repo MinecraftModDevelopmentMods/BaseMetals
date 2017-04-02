@@ -3,7 +3,7 @@ package com.mcmoddev.lib.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,7 +19,7 @@ public class HelmetRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	private ItemStack baseHelmet;
 	private String matName;
 
-	public HelmetRepairRecipe(MetalMaterial mat) {
+	public HelmetRepairRecipe(MMDMaterial mat) {
 		super(new ItemStack(mat.helmet, 1), new Object[] { mat.getName() + "_helmet", Oredicts.PLATE + mat.getCapitalizedName() });
 		baseHelmet = new ItemStack(mat.helmet, 1, OreDictionary.WILDCARD_VALUE);
 		matName = mat.getCapitalizedName();

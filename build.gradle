@@ -73,15 +73,15 @@ minecraft {
 }
 
 repositories {
-    maven {
+    maven { // Mantle, TCon, JEI
         name "DVS1 Maven FS"
         url "http://dvs1.progwml6.com/files/maven"
     }
-    maven {
+    maven { // CCL, CCC, NEI
         name "Chickenbones Repo"
         url "http://chickenbones.net/maven/"
     }
-    maven {
+    maven { // The One Probe
         name "tterrag"
         url "http://maven.tterrag.com/"
     }
@@ -89,45 +89,43 @@ repositories {
         name "MMD"
         url "https://maven.mcmoddev.com/"
     }
-    maven {
+    maven { // MCMultipart
         name "amadornes"
         url "http://maven.amadornes.com/"
     }
-    maven {
+    maven { // Tesla
         name "epoxide"
         url "http://maven.epoxide.org"
     }
-    maven { // CraftTweaker
+    maven { // CraftTweaker, ZenScript
         name 'jared maven'
         url "http://blamejared.com/maven"
     }
-    maven {
+    maven { // Mekanism, TAIGA
         name "jitpack"
         url "https://jitpack.io"
     }
-    maven {
+    maven { // IC2
         name "industrialcraft"
         url "http://maven.ic2.player.to"
     }
-    maven { // Waila is here
+    maven { // Waila
     	name "tehnut"
     	url "http://tehnut.info/maven"
     }
-    maven { // CoFH stuff is here
+    maven { // CoFH
     	name "Covers Maven"
     	url "http://maven.covers1624.net"
     }
 }
 
 dependencies {
-    // c510ce7d8c = https://github.com/aidancbrady/Mekanism/commit/c510ce7d8cf7810500e032e2f713796078d26c6f
-    // 7e3c806a8f = https://github.com/aidancbrady/Mekanism/commit/7e3c806a8f136526129967ba1b25946d8f05ccd9
-    compileOnly ("com.github.aidancbrady:Mekanism:7e3c806a8f") {
+    compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
     }
 
-    deobfCompile ("com.github.TeamFRM:TAIGA:4db215fc65") {
+    deobfCompile ("com.github.TeamFRM:TAIGA:${taiga_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
         exclude group: 'slimeknights.mantle'
@@ -156,16 +154,16 @@ dependencies {
     }
     deobfCompile "mmd:orespawn:${orespawn_version}-${mc_version}"
 //  deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
-    deobfCompile "MCMultiPart:MCMultiPart-experimental:${mcmp_experimental_version}:universal"
+    deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
-    deobfCompile ("net.industrial-craft:industrialcraft-2:2.6.161-ex110:api") {
+    deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
         exclude group: 'mezz.jei'
     }
-    deobfCompile ("MineTweaker3:MineTweaker3-API:3.+") {
+    deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
         exclude group: 'mezz.jei'
     }
-    deobfCompile ("mcp.mobius.waila:Hwyla:+") {
+    deobfCompile ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
         exclude group: 'mezz.jei'
     }
     

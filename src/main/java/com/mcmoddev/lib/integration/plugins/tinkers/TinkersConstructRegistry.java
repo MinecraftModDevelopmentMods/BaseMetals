@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;
@@ -102,7 +102,7 @@ public class TinkersConstructRegistry {
      * @param material MetalMaterial it is based on
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
-    public TCMaterial getMaterial(String name, MetalMaterial material) {
+    public TCMaterial getMaterial(String name, MMDMaterial material) {
         String n = name==null?(material==null?"FixYourCode":material.getName()):name;
         if( material == null ) {
             return null;
@@ -236,8 +236,8 @@ public class TinkersConstructRegistry {
     	Integer amount = (Integer)amt;
     	if( fluid instanceof String ) {
     		return new FluidStack(FluidRegistry.getFluid((String)fluid), amount.intValue());
-    	} else if( fluid instanceof MetalMaterial ) {
-    		return new FluidStack(FluidRegistry.getFluid(((MetalMaterial)fluid).getName()), amount.intValue());
+    	} else if( fluid instanceof MMDMaterial ) {
+    		return new FluidStack(FluidRegistry.getFluid(((MMDMaterial)fluid).getName()), amount.intValue());
     	} else if( fluid instanceof Fluid ) {
     		return new FluidStack(FluidRegistry.getFluid(((Fluid)fluid).getName()), amount.intValue());    		
     	}
@@ -327,7 +327,7 @@ public class TinkersConstructRegistry {
      * @param amountPer How much per ingot/single item of the material
      * @return TCCode.SUCCESS - at this point there are no failure points in this routine
      */
-    public TCCode registerFluid(MetalMaterial base, int amountPer) {
+    public TCCode registerFluid(MMDMaterial base, int amountPer) {
 		String materialName = base.getName();
 		Fluid output = FluidRegistry.getFluid(materialName);
 		String oreDictName = base.getCapitalizedName();
