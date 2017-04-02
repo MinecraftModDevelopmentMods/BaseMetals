@@ -100,35 +100,24 @@ public class BaseMetals {
 		proxy.onRemap(event);
 	}
     
-//	@EventHandler
-//	public void serverStarted(FMLLoadCompleteEvent event) {
-//		for( Map.Entry<ItemStack, ItemStack> ent : FurnaceRecipes.instance().getSmeltingList().entrySet() ) {
-//			ItemStack stack = ent.getKey();
-//			ItemStack outStack = ent.getValue();
-//			logger.fatal("%s => %s", stack, outStack);
-//			String orenames = "";
-//			for( int i : OreDictionary.getOreIDs(stack))
-//				orenames += " " + OreDictionary.getOreName(i);
-//			logger.fatal("Ore 1: %s", orenames == "" ? "No Ores" : orenames);
-//			
-//			
-//			orenames = "";
-//			for( int i : OreDictionary.getOreIDs(new ItemStack(stack.getItem())))
-//				orenames += " " + OreDictionary.getOreName(i);
-//			logger.fatal("Ore 2: %s", orenames == "" ? "No Ores" : orenames);
-//		}
-//		
-//		logger.fatal("=========== ORE DICTIONARY DUMP START ===========");
-//		String[] odNames = OreDictionary.getOreNames();
-//		Arrays.sort(odNames);
-//		
-//		for( String name : odNames ) {
-//			logger.fatal("Entries for Ore Dictionary Name %s", name);
-//			for( ItemStack stack : OreDictionary.getOres(name) ) {
-//				logger.fatal("%s %s", getName(stack.getItem()), getMeta(stack));
-//			}
-//		}
-//		logger.fatal("=========== ORE DICTIONARY DUMP END ===========");
-//	}
+//    public static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
+//    public static final FMLControlledNamespacedRegistry<Item> ITEM_REGISTRY = GameData.getItemRegistry();
+//
+//    private String getName(final Item item) {
+//        if (item instanceof ItemBlock) {
+//            return String.valueOf(BLOCK_REGISTRY.getNameForObject(((ItemBlock) item).block));
+//        }
+//
+//        return String.valueOf(ITEM_REGISTRY.getNameForObject(item));
+//    }
+//    
+//    private String getMeta( ItemStack s ) {
+//    	int m = s.getItemDamage();
+//    	if( m != OreDictionary.WILDCARD_VALUE ) {
+//    		return String.format("- %s", s.getItem().getItemStackDisplayName(s));
+//    	}
+//    	
+//    	return "- *";
+//    }
 
 }
