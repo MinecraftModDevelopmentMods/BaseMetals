@@ -91,6 +91,10 @@ public class BlockMMDOre extends BlockOre implements IOreDictionaryEntry, IMMDOb
 				most = 4;
 				least = 2;
 				break;
+			case CRYSTAL:
+				most = 4;
+				least = 1;
+				break;
 			case GEM:
 				most = 3;
 				least = 2;
@@ -104,6 +108,8 @@ public class BlockMMDOre extends BlockOre implements IOreDictionaryEntry, IMMDOb
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
 		if (this.material.getType() == MMDMaterial.MaterialType.MINERAL) {
 			return this.material.powder;
+		} else if (this.material.getType() == MMDMaterial.MaterialType.CRYSTAL) {
+			return this.material.ingot;
 		} else if (this.material.getType() == MMDMaterial.MaterialType.GEM) {
 			return this.material.ingot;
 		}
