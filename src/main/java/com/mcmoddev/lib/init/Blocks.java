@@ -361,6 +361,40 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
+	protected static Block createFence(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableWall) && (material.fence == null) && (material.block != null)) {
+			material.fence = addBlock(new BlockMMDFence(material), "fence", material, ItemGroups.blocksTab);
+		}
+
+		return material.fence;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createFenceGate(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableWall) && (material.fenceGate == null) && (material.block != null)) {
+			material.fenceGate = addBlock(new BlockMMDFenceGate(material), "fence_gate", material, ItemGroups.blocksTab);
+		}
+
+		return material.fenceGate;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
 	protected static Block createOre(MMDMaterial material) {
 		if (material == null) {
 			return null;

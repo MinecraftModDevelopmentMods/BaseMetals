@@ -146,6 +146,8 @@ public class MMDMaterial {
 	public Block stairs;
 	public Block trapdoor;
 	public Block wall;
+	public Block fence;
+	public Block fenceGate;
 
 	public Fluid fluid;
 	public BlockFluidClassic fluidBlock;
