@@ -17,7 +17,7 @@ public class BlockMMDLever extends BlockLever implements IOreDictionaryEntry, IM
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.oreDict = Oredicts.LEVER + this.material.getCapitalizedName();
-		this.blockHardness = material.getMetalBlockHardness();
+		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}

@@ -335,7 +335,7 @@ public class MMDMaterial {
 	 * 
 	 * @return the hardness for blocks made from this material
 	 */
-	public float getMetalBlockHardness() {
+	public float getBlockHardness() {
 		return 2.0f * this.hardness;
 	}
 

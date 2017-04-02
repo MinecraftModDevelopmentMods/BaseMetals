@@ -25,7 +25,7 @@ public class BlockMMDPressurePlate extends BlockPressurePlate implements IMMDObj
 		super(Material.IRON, BlockPressurePlate.Sensitivity.MOBS);
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.blockHardness = material.getMetalBlockHardness();
+		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}

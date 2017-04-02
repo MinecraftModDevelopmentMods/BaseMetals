@@ -13,7 +13,7 @@ public class BlockMMDBookshelf extends BlockBookshelf implements IMMDObject {
 	public BlockMMDBookshelf(MMDMaterial material) {
         this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.blockHardness = material.getMetalBlockHardness();
+		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("axe", material.getRequiredHarvestLevel());
 	}

@@ -38,7 +38,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 		super(Material.IRON);
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.blockHardness = material.getMetalBlockHardness();
+		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 

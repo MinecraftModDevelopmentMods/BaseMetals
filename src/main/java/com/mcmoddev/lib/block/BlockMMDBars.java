@@ -28,7 +28,7 @@ public class BlockMMDBars extends net.minecraft.block.BlockPane implements IOreD
 		super(Material.IRON, true);
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.blockHardness = material.getMetalBlockHardness();
+		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 		this.oreDict = Oredicts.BARS + material.getCapitalizedName();

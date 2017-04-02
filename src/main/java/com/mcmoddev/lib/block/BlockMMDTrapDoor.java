@@ -33,7 +33,7 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 		super(Material.IRON);
 		this.material = material;
 		this.oreDict = Oredicts.TRAPDOOR + material.getCapitalizedName();
-		this.blockHardness = material.getMetalBlockHardness();
+		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.blockSoundType = SoundType.METAL;
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());

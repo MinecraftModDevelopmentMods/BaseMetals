@@ -52,7 +52,7 @@ public class BlockMMDBlock extends Block implements IOreDictionaryEntry, IMMDObj
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		this.oreDict = Oredicts.BLOCK + material.getCapitalizedName();
-		this.blockHardness = material.getMetalBlockHardness();
+		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 		this.beaconBase = isBeacon;

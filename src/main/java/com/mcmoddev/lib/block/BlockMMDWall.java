@@ -36,7 +36,7 @@ public class BlockMMDWall extends BlockWall implements IOreDictionaryEntry, IMMD
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.oreDict = Oredicts.WALL + this.material.getCapitalizedName();
-		this.blockHardness = material.getMetalBlockHardness();
+		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}
@@ -53,7 +53,7 @@ public class BlockMMDWall extends BlockWall implements IOreDictionaryEntry, IMMD
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.oreDict = "wall" + this.material.getCapitalizedName();
-		this.blockHardness = material.getMetalBlockHardness();
+		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
 	}
