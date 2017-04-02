@@ -132,6 +132,7 @@ public class MMDMaterial {
 	public Item smallpowder;
 	public Item sword;
 
+	public Block anvil;
 	public Block bars;
 	public Block block;
 	public Block bookshelf;
@@ -139,12 +140,15 @@ public class MMDMaterial {
 	public BlockDoor doorBlock;
 	public BlockSlab doubleSlab;
 	public BlockSlab halfSlab;
+	public Block flowerPot;
+	public Block ladder;
 	public Block lever;
 	public Block ore;
 	public Block plate;
 	public Block pressurePlate;
 	public Block stairs;
 	public Block trapdoor;
+	public Block tripwireHook;
 	public Block wall;
 	public Block fence;
 	public Block fenceGate;

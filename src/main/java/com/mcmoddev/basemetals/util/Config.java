@@ -333,6 +333,7 @@ public class Config {
 		public static boolean furnace1112 = true; // Overridden by FURNACE_CHEESE
 
 		// INTEGRATION
+		public static boolean enableDenseOres = true;
 		public static boolean enableEnderIO = true;
 		public static boolean enableIC2 = true;
 		public static boolean enableMekanism = true;
@@ -397,18 +398,21 @@ public class Config {
 		public static boolean enableGear = true;
 		public static boolean enableShield = true;
 
+		public static boolean enableAnvil = true;
 		public static boolean enableBars = true;
 		public static boolean enableBookshelf = true;
-		public static boolean enablePlate = true;
-		public static boolean enableDoor = true; // Also item
-		public static boolean enableTrapdoor = true;
 		public static boolean enableButton = true;
-		public static boolean enableSlab = true; // Also item, double slab
+		public static boolean enableDoor = true; // Also item
+		public static boolean enableFlowerPot = true;
+		public static boolean enableLadder = true;
 		public static boolean enableLever = true;
+		public static boolean enablePlate = true;
 		public static boolean enablePressurePlate = true;
+		public static boolean enableSlab = true; // Also item, double slab
 		public static boolean enableStairs = true;
+		public static boolean enableTrapdoor = true;
+		public static boolean enableTripWire = true;
 		public static boolean enableWall = true;
-		public static boolean enableDenseOres = true;
 
 		public static boolean enableModderSupportThings = true;
 

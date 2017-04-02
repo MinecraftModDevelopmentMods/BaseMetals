@@ -395,6 +395,74 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
+	protected static Block createAnvil(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableAnvil) && (material.anvil == null) && (material.block != null)) {
+			material.anvil = addBlock(new BlockMMDAnvil(material), "anvil", material, ItemGroups.blocksTab);
+		}
+
+		return material.anvil;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createFlowerPot(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableFlowerPot) && (material.flowerPot == null) && (material.block != null)) {
+			material.flowerPot = addBlock(new BlockMMDFence(material), "flower_pot", material, ItemGroups.blocksTab);
+		}
+
+		return material.flowerPot;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createLadder(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableLadder) && (material.ladder == null) && (material.block != null)) {
+			material.ladder = addBlock(new BlockMMDLadder(material), "ladder", material, ItemGroups.blocksTab);
+		}
+
+		return material.ladder;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createTripWireHook(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableTripWire) && (material.tripwireHook == null) && (material.block != null)) {
+			material.tripwireHook = addBlock(new BlockMMDTripWireHook(material), "tripwire_hook", material, ItemGroups.blocksTab);
+		}
+
+		return material.tripwireHook;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
 	protected static Block createOre(MMDMaterial material) {
 		if (material == null) {
 			return null;
