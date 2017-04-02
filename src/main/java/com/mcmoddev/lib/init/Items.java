@@ -8,9 +8,9 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.item.*;
-import com.mcmoddev.lib.material.IMetalObject;
-import com.mcmoddev.lib.material.MetalMaterial;
-import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
+import com.mcmoddev.lib.material.IMMDObject;
+import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -31,10 +31,10 @@ public abstract class Items {
 	private static boolean initDone = false;
 
 	private static BiMap<String, Item> itemRegistry = HashBiMap.create(34);
-	private static Map<MetalMaterial, List<Item>> itemsByMaterial = new HashMap<>();
+	private static Map<MMDMaterial, List<Item>> itemsByMaterial = new HashMap<>();
 
 	private static Map<Class<?>, Integer> classSortingValues = new HashMap<>();
-	private static Map<MetalMaterial, Integer> materialSortingValues = new HashMap<>();
+	private static Map<MMDMaterial, Integer> materialSortingValues = new HashMap<>();
 
 	// public static UniversalBucket universal_bucket; // now automatically added by Forge
 
@@ -66,56 +66,56 @@ public abstract class Items {
 
 	private static void setSortingList() {
 		int ss = 0;
-		classSortingValues.put(BlockMetalOre.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalBlock.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalPlate.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalBars.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalDoor.class, ++ss * 10000); // TODO: Is this needed? (ItemMetalDoor)
-		classSortingValues.put(BlockMetalTrapDoor.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDOre.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDBlock.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDPlate.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDBars.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDDoor.class, ++ss * 10000); // TODO: Is this needed? (ItemMetalDoor)
+		classSortingValues.put(BlockMMDTrapDoor.class, ++ss * 10000);
 		classSortingValues.put(InteractiveFluidBlock.class, ++ss * 10000);
 		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalIngot.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalNugget.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalPowder.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalBlend.class, classSortingValues.get(ItemMetalPowder.class));
-		classSortingValues.put(ItemMetalSmallPowder.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalSmallBlend.class, classSortingValues.get(ItemMetalSmallPowder.class));
-		classSortingValues.put(ItemMetalCrackHammer.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalPickaxe.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalShovel.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalAxe.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalHoe.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalSword.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalArmor.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalArrow.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalBolt.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalBow.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalCrossbow.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalFishingRod.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalHorseArmor.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalShears.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalShield.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalGear.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalRod.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalDoor.class, classSortingValues.get(BlockMetalDoor.class));
-		classSortingValues.put(GenericMetalItem.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDIngot.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDNugget.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDPowder.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDBlend.class, classSortingValues.get(ItemMMDPowder.class));
+		classSortingValues.put(ItemMMDSmallPowder.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDSmallBlend.class, classSortingValues.get(ItemMMDSmallPowder.class));
+		classSortingValues.put(ItemMMDCrackHammer.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDPickaxe.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDShovel.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDAxe.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDHoe.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDSword.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDArmor.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDArrow.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDBolt.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDBow.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDCrossbow.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDFishingRod.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDHorseArmor.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDShears.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDShield.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDGear.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDRod.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDDoor.class, classSortingValues.get(BlockMMDDoor.class));
+		classSortingValues.put(GenericMMDItem.class, ++ss * 10000);
 
-		classSortingValues.put(BlockButtonMetal.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalSlab.class, ++ss * 10000); // TODO: Is this needed? (ItemMetalSlab)
-		classSortingValues.put(BlockDoubleMetalSlab.class, ++ss * 10000); // TODO: Probably not needed (ItemMetalSlab)
-		classSortingValues.put(BlockHalfMetalSlab.class, ++ss * 10000); // TODO: Probably not needed (ItemMetalSlab)
-		classSortingValues.put(BlockMetalLever.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalPressurePlate.class, ++ss * 10000);
-		classSortingValues.put(BlockMetalStairs.class, ++ss * 10000); // TODO: Is this needed?
-		classSortingValues.put(BlockMetalWall.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDButton.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDSlab.class, ++ss * 10000); // TODO: Is this needed? (ItemMetalSlab)
+		classSortingValues.put(BlockMMDDoubleSlab.class, ++ss * 10000); // TODO: Probably not needed (ItemMetalSlab)
+		classSortingValues.put(BlockMMDHalfSlab.class, ++ss * 10000); // TODO: Probably not needed (ItemMetalSlab)
+		classSortingValues.put(BlockMMDLever.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDPressurePlate.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDStairs.class, ++ss * 10000); // TODO: Is this needed?
+		classSortingValues.put(BlockMMDWall.class, ++ss * 10000);
 		classSortingValues.put(BlockMoltenFluid.class, ++ss * 10000);
-		classSortingValues.put(ItemMetalSlab.class, classSortingValues.get(BlockMetalSlab.class));
+		classSortingValues.put(ItemMMDSlab.class, classSortingValues.get(BlockMMDSlab.class));
 	}
 
 	protected static void addToMetList() {
-		final List<MetalMaterial> metlist = new ArrayList<>(Materials.getAllMaterials().size());
+		final List<MMDMaterial> metlist = new ArrayList<>(Materials.getAllMaterials().size());
 		metlist.addAll(Materials.getAllMaterials());
-		metlist.sort((MetalMaterial a, MetalMaterial b) -> a.getName().compareToIgnoreCase(b.getName()));
+		metlist.sort((MMDMaterial a, MMDMaterial b) -> a.getName().compareToIgnoreCase(b.getName()));
 		for (int i = 0; i < metlist.size(); i++) {
 			materialSortingValues.put(metlist.get(i), i * 100);
 		}
@@ -125,7 +125,7 @@ public abstract class Items {
 	 * 
 	 * @param material The material base of these items
 	 */
-	protected static void createItemsBasic(MetalMaterial material) {
+	protected static void createItemsBasic(MMDMaterial material) {
 		createBlend(material);
 		createIngot(material);
 		createNugget(material);
@@ -138,7 +138,7 @@ public abstract class Items {
 	 * 
 	 * @param material The material base of these items
 	 */
-	protected static void createItemsFull(MetalMaterial material) {
+	protected static void createItemsFull(MMDMaterial material) {
 		createArrow(material);
 		createAxe(material);
 		createBlend(material);
@@ -173,7 +173,7 @@ public abstract class Items {
 	 * 
 	 * @param material The material base of these items
 	 */
-	protected static void createItemsModSupport(MetalMaterial material) {
+	protected static void createItemsModSupport(MMDMaterial material) {
 		if (Options.enableModderSupportThings) {
 			createCasing(material);
 			createDensePlate(material);
@@ -187,7 +187,7 @@ public abstract class Items {
 	 * 
 	 * @param material The material base of these items
 	 */
-	protected static void createItemsModIC2(MetalMaterial material) {
+	protected static void createItemsModIC2(MMDMaterial material) {
 		if (material.hasOre) {
 			createCrushed(material);
 			createCrushedPurified(material);
@@ -198,7 +198,7 @@ public abstract class Items {
 	 * 
 	 * @param material The material base of these items
 	 */
-	protected static void createItemsModMekanism(MetalMaterial material) {
+	protected static void createItemsModMekanism(MMDMaterial material) {
 		if (material.hasOre) {
 			createMekCrystal(material);
 			createMekShard(material);
@@ -215,7 +215,7 @@ public abstract class Items {
 	 * @param tab which creative tab it is in
 	 * @return the item that was added
 	 */
-	protected static Item addItem(Item item, String name, MetalMaterial material, CreativeTabs tab) {
+	protected static Item addItem(Item item, String name, MMDMaterial material, CreativeTabs tab) {
 
 		String fullName;
 		if (material != null) {
@@ -234,7 +234,7 @@ public abstract class Items {
 		}
 
 		if (material != null) {
-			itemsByMaterial.computeIfAbsent(material, (MetalMaterial g) -> new ArrayList<>());
+			itemsByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
 			itemsByMaterial.get(material).add(item);
 		}
 
@@ -250,13 +250,13 @@ public abstract class Items {
 	 * @param material The material base of this crystal
 	 * @return the item this function created
 	 */
-	protected static Item createCrystal(MetalMaterial material) {
+	protected static Item createCrystal(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.ingot == null)) {
-			material.ingot = addItem(new ItemMetalIngot(material), "crystal", material, ItemGroups.itemsTab);
+			material.ingot = addItem(new ItemMMDIngot(material), "crystal", material, ItemGroups.itemsTab);
 		}
 
 		return material.ingot;
@@ -267,13 +267,13 @@ public abstract class Items {
 	 * @param material The material base of this gem
 	 * @return the item this function created
 	 */
-	protected static Item createGem(MetalMaterial material) {
+	protected static Item createGem(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.ingot == null)) {
-			material.ingot = addItem(new ItemMetalIngot(material), "gem", material, ItemGroups.itemsTab);
+			material.ingot = addItem(new ItemMMDIngot(material), "gem", material, ItemGroups.itemsTab);
 		}
 
 		return material.ingot;
@@ -284,13 +284,13 @@ public abstract class Items {
 	 * @param material The material base of this ingot
 	 * @return the item this function created
 	 */
-	protected static Item createIngot(MetalMaterial material) {
+	protected static Item createIngot(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.ingot == null)) {
-			material.ingot = addItem(new ItemMetalIngot(material), "ingot", material, ItemGroups.itemsTab);
+			material.ingot = addItem(new ItemMMDIngot(material), "ingot", material, ItemGroups.itemsTab);
 		}
 
 		return material.ingot;
@@ -301,13 +301,13 @@ public abstract class Items {
 	 * @param material The material base of this nugget
 	 * @return the item this function created
 	 */
-	protected static Item createNugget(MetalMaterial material) {
+	protected static Item createNugget(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.nugget == null)) {
-			material.nugget = addItem(new ItemMetalNugget(material), "nugget", material, ItemGroups.itemsTab);
+			material.nugget = addItem(new ItemMMDNugget(material), "nugget", material, ItemGroups.itemsTab);
 		}
 
 		return material.nugget;
@@ -318,13 +318,13 @@ public abstract class Items {
 	 * @param material The material base of this powder
 	 * @return the item this function created
 	 */
-	protected static Item createPowder(MetalMaterial material) {
+	protected static Item createPowder(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.powder == null)) {
-			material.powder = addItem(new ItemMetalPowder(material), "powder", material, ItemGroups.itemsTab);
+			material.powder = addItem(new ItemMMDPowder(material), "powder", material, ItemGroups.itemsTab);
 		}
 
 		return material.powder;
@@ -335,13 +335,13 @@ public abstract class Items {
 	 * @param material The material base of this blend
 	 * @return the item this function created
 	 */
-	protected static Item createBlend(MetalMaterial material) {
+	protected static Item createBlend(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.hasBlend) && (material.blend == null)) {
-			material.blend = addItem(new ItemMetalBlend(material), "blend", material, ItemGroups.itemsTab);
+			material.blend = addItem(new ItemMMDBlend(material), "blend", material, ItemGroups.itemsTab);
 		}
 
 		return material.blend;
@@ -352,13 +352,13 @@ public abstract class Items {
 	 * @param material The material base of this rod
 	 * @return the item this function created
 	 */
-	protected static Item createRod(MetalMaterial material) {
+	protected static Item createRod(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableRod) && (material.rod == null)) {
-			material.rod = addItem(new ItemMetalRod(material), "rod", material, ItemGroups.itemsTab);
+			material.rod = addItem(new ItemMMDRod(material), "rod", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.STICK + material.getCapitalizedName(), material.rod);
 			OreDictionary.registerOre(Oredicts.ROD, material.rod);
 		}
@@ -371,13 +371,13 @@ public abstract class Items {
 	 * @param material The material base of this gear
 	 * @return the item this function created
 	 */
-	protected static Item createGear(MetalMaterial material) {
+	protected static Item createGear(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableGear) && (material.gear == null)) {
-			material.gear = addItem(new ItemMetalGear(material), "gear", material, ItemGroups.itemsTab);
+			material.gear = addItem(new ItemMMDGear(material), "gear", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.GEAR, material.gear);
 		}
 
@@ -389,13 +389,13 @@ public abstract class Items {
 	 * @param material The material base of this axe
 	 * @return the item this function created
 	 */
-	protected static Item createAxe(MetalMaterial material) {
+	protected static Item createAxe(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasicTools) && (material.axe == null)) {
-			material.axe = addItem(new ItemMetalAxe(material), "axe", material, ItemGroups.toolsTab);
+			material.axe = addItem(new ItemMMDAxe(material), "axe", material, ItemGroups.toolsTab);
 		}
 
 		return material.axe;
@@ -406,13 +406,13 @@ public abstract class Items {
 	 * @param material The material base of this crackhammer
 	 * @return the item this function created
 	 */
-	protected static Item createCrackhammer(MetalMaterial material) {
+	protected static Item createCrackhammer(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableCrackHammer) && (material.crackhammer == null)) {
-			material.crackhammer = addItem(new ItemMetalCrackHammer(material), "crackhammer", material, ItemGroups.toolsTab);
+			material.crackhammer = addItem(new ItemMMDCrackHammer(material), "crackhammer", material, ItemGroups.toolsTab);
 		}
 
 		return material.crackhammer;
@@ -423,13 +423,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createHoe(MetalMaterial material) {
+	protected static Item createHoe(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasicTools) && (material.hoe == null)) {
-			material.hoe = addItem(new ItemMetalHoe(material), "hoe", material, ItemGroups.toolsTab);
+			material.hoe = addItem(new ItemMMDHoe(material), "hoe", material, ItemGroups.toolsTab);
 		}
 
 		return material.hoe;
@@ -440,13 +440,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createPickaxe(MetalMaterial material) {
+	protected static Item createPickaxe(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasicTools) && (material.pickaxe == null)) {
-			material.pickaxe = addItem(new ItemMetalPickaxe(material), "pickaxe", material, ItemGroups.toolsTab);
+			material.pickaxe = addItem(new ItemMMDPickaxe(material), "pickaxe", material, ItemGroups.toolsTab);
 		}
 
 		return material.pickaxe;
@@ -457,13 +457,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createShovel(MetalMaterial material) {
+	protected static Item createShovel(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasicTools) && (material.shovel == null)) {
-			material.shovel = addItem(new ItemMetalShovel(material), "shovel", material, ItemGroups.toolsTab);
+			material.shovel = addItem(new ItemMMDShovel(material), "shovel", material, ItemGroups.toolsTab);
 		}
 
 		return material.shovel;
@@ -474,13 +474,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createSword(MetalMaterial material) {
+	protected static Item createSword(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasicTools) && (material.sword == null)) {
-			material.sword = addItem(new ItemMetalSword(material), "sword", material, ItemGroups.toolsTab);
+			material.sword = addItem(new ItemMMDSword(material), "sword", material, ItemGroups.toolsTab);
 		}
 
 		return material.sword;
@@ -491,13 +491,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createHelmet(MetalMaterial material) {
+	protected static Item createHelmet(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableArmor) && (material.helmet == null)) {
-			material.helmet = addItem(ItemMetalArmor.createHelmet(material), "helmet", material, ItemGroups.toolsTab);
+			material.helmet = addItem(ItemMMDArmor.createHelmet(material), "helmet", material, ItemGroups.toolsTab);
 		}
 
 		return material.helmet;
@@ -508,13 +508,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createChestplate(MetalMaterial material) {
+	protected static Item createChestplate(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableArmor) && (material.chestplate == null)) {
-			material.chestplate = addItem(ItemMetalArmor.createChestplate(material), "chestplate", material, ItemGroups.toolsTab);
+			material.chestplate = addItem(ItemMMDArmor.createChestplate(material), "chestplate", material, ItemGroups.toolsTab);
 		}
 
 		return material.chestplate;
@@ -525,13 +525,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createLeggings(MetalMaterial material) {
+	protected static Item createLeggings(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableArmor) && (material.leggings == null)) {
-			material.leggings = addItem(ItemMetalArmor.createLeggings(material), "leggings", material, ItemGroups.toolsTab);
+			material.leggings = addItem(ItemMMDArmor.createLeggings(material), "leggings", material, ItemGroups.toolsTab);
 		}
 
 		return material.leggings;
@@ -542,13 +542,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createBoots(MetalMaterial material) {
+	protected static Item createBoots(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableArmor) && (material.boots == null)) {
-			material.boots = addItem(ItemMetalArmor.createBoots(material), "boots", material, ItemGroups.toolsTab);
+			material.boots = addItem(ItemMMDArmor.createBoots(material), "boots", material, ItemGroups.toolsTab);
 		}
 
 		return material.boots;
@@ -559,13 +559,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createHorseArmor(MetalMaterial material) {
+	protected static Item createHorseArmor(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableHorseArmor) && (material.horseArmor == null)) {
-			material.horseArmor = addItem(new ItemMetalHorseArmor(material), "horsearmor", material, ItemGroups.toolsTab);
+			material.horseArmor = addItem(new ItemMMDHorseArmor(material), "horsearmor", material, ItemGroups.toolsTab);
 		}
 
 		return material.horseArmor;
@@ -576,13 +576,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createArrow(MetalMaterial material) {
+	protected static Item createArrow(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBowAndArrow) && (material.arrow == null)) {
-			material.arrow = addItem(new ItemMetalArrow(material), "arrow", material, ItemGroups.toolsTab);
+			material.arrow = addItem(new ItemMMDArrow(material), "arrow", material, ItemGroups.toolsTab);
 		}
 
 		return material.arrow;
@@ -593,13 +593,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createBolt(MetalMaterial material) {
+	protected static Item createBolt(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableCrossbowAndBolt) && (material.bolt == null)) {
-			material.bolt = addItem(new ItemMetalBolt(material), "bolt", material, ItemGroups.toolsTab);
+			material.bolt = addItem(new ItemMMDBolt(material), "bolt", material, ItemGroups.toolsTab);
 		}
 
 		return material.bolt;
@@ -610,13 +610,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createBow(MetalMaterial material) {
+	protected static Item createBow(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBowAndArrow) && (material.bow == null)) {
-			material.bow = addItem(new ItemMetalBow(material), "bow", material, ItemGroups.toolsTab);
+			material.bow = addItem(new ItemMMDBow(material), "bow", material, ItemGroups.toolsTab);
 		}
 
 		return material.bow;
@@ -627,13 +627,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createCrossbow(MetalMaterial material) {
+	protected static Item createCrossbow(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableCrossbowAndBolt) && (material.crossbow == null)) {
-			material.crossbow = addItem(new ItemMetalCrossbow(material), "crossbow", material, ItemGroups.toolsTab);
+			material.crossbow = addItem(new ItemMMDCrossbow(material), "crossbow", material, ItemGroups.toolsTab);
 		}
 
 		return material.crossbow;
@@ -644,13 +644,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createShears(MetalMaterial material) {
+	protected static Item createShears(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableShears) && (material.shears == null)) {
-			material.shears = addItem(new ItemMetalShears(material), "shears", material, ItemGroups.toolsTab);
+			material.shears = addItem(new ItemMMDShears(material), "shears", material, ItemGroups.toolsTab);
 		}
 
 		return material.shears;
@@ -661,13 +661,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createSmallBlend(MetalMaterial material) {
+	protected static Item createSmallBlend(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableSmallDust) && (material.hasBlend) && (material.smallblend == null)) {
-			material.smallblend = addItem(new ItemMetalSmallBlend(material), "smallblend", material, ItemGroups.itemsTab);
+			material.smallblend = addItem(new ItemMMDSmallBlend(material), "smallblend", material, ItemGroups.itemsTab);
 		}
 
 		return material.smallblend;
@@ -678,13 +678,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createFishingRod(MetalMaterial material) {
+	protected static Item createFishingRod(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableFishingRod) && (material.fishingRod == null)) {
-			material.fishingRod = addItem(new ItemMetalFishingRod(material), "fishing_rod", material, ItemGroups.toolsTab);
+			material.fishingRod = addItem(new ItemMMDFishingRod(material), "fishing_rod", material, ItemGroups.toolsTab);
 		}
 
 		return material.fishingRod;
@@ -695,13 +695,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createSmallPowder(MetalMaterial material) {
+	protected static Item createSmallPowder(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableSmallDust) && (material.smallpowder == null)) {
-			material.smallpowder = addItem(new ItemMetalSmallPowder(material), "smallpowder", material, ItemGroups.itemsTab);
+			material.smallpowder = addItem(new ItemMMDSmallPowder(material), "smallpowder", material, ItemGroups.itemsTab);
 		}
 
 		return material.smallpowder;
@@ -712,13 +712,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createShield(MetalMaterial material) {
+	protected static Item createShield(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableShield) && (material.shield == null)) {
-			material.shield = addItem(new ItemMetalShield(material), "shield", material, ItemGroups.itemsTab);
+			material.shield = addItem(new ItemMMDShield(material), "shield", material, ItemGroups.itemsTab);
 		}
 
 		return material.shield;
@@ -729,13 +729,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createMekCrystal(MetalMaterial material) {
+	protected static Item createMekCrystal(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableMekanism) && (material.crystal == null) && (material.getType() != MaterialType.CRYSTAL)) {
-			material.crystal = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.itemsTab);
+			material.crystal = addItem(new GenericMMDItem(material), "crystal", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), material.crystal);
 		}
 
@@ -747,13 +747,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createMekShard(MetalMaterial material) {
+	protected static Item createMekShard(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableMekanism) && (material.shard == null)) {
-			material.shard = addItem(new GenericMetalItem(material), "shard", material, ItemGroups.itemsTab);
+			material.shard = addItem(new GenericMMDItem(material), "shard", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.SHARD + material.getCapitalizedName(), material.shard);
 		}
 
@@ -765,13 +765,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createMekClump(MetalMaterial material) {
+	protected static Item createMekClump(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableMekanism) && (material.clump == null)) {
-			material.clump = addItem(new GenericMetalItem(material), "clump", material, ItemGroups.itemsTab);
+			material.clump = addItem(new GenericMMDItem(material), "clump", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), material.clump);
 		}
 
@@ -783,13 +783,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createMekDirtyPowder(MetalMaterial material) {
+	protected static Item createMekDirtyPowder(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableMekanism) && (material.powderDirty == null)) {
-			material.powderDirty = addItem(new GenericMetalItem(material), "powder_dirty", material, ItemGroups.itemsTab);
+			material.powderDirty = addItem(new GenericMMDItem(material), "powder_dirty", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.DUSTDIRTY + material.getCapitalizedName(), material.powderDirty);
 		}
 
@@ -802,13 +802,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createCasing(MetalMaterial material) {
+	protected static Item createCasing(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableIC2) && (material.casing == null)) {
-			material.casing = addItem(new GenericMetalItem(material), "casing", material, ItemGroups.itemsTab);
+			material.casing = addItem(new GenericMMDItem(material), "casing", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CASING + material.getCapitalizedName(), material.casing);
 		}
 
@@ -821,13 +821,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createDensePlate(MetalMaterial material) {
+	protected static Item createDensePlate(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableIC2) && (material.densePlate == null)) {
-			material.densePlate = addItem(new GenericMetalItem(material), "dense_plate", material, ItemGroups.itemsTab);
+			material.densePlate = addItem(new GenericMMDItem(material), "dense_plate", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.PLATEDENSE + material.getCapitalizedName(), material.densePlate);
 		}
 
@@ -839,13 +839,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createCrushed(MetalMaterial material) {
+	protected static Item createCrushed(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableIC2) && (material.crushed == null)) {
-			material.crushed = addItem(new GenericMetalItem(material), "crushed", material, ItemGroups.itemsTab);
+			material.crushed = addItem(new GenericMMDItem(material), "crushed", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), material.crushed);
 		}
 
@@ -857,13 +857,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createCrushedPurified(MetalMaterial material) {
+	protected static Item createCrushedPurified(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableIC2) && (material.crushedPurified == null)) {
-			material.crushedPurified = addItem(new GenericMetalItem(material), "crushed_purified", material, ItemGroups.itemsTab);
+			material.crushedPurified = addItem(new GenericMMDItem(material), "crushed_purified", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CRUSHEDPURIFIED + material.getCapitalizedName(), material.crushedPurified);
 		}
 
@@ -875,14 +875,14 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createSlab(MetalMaterial material) {
+	protected static Item createSlab(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		// TODO: Do we need to check for the block too?
 		if ((Options.enableSlab) && (material.slab == null) && (material.halfSlab != null) && (material.doubleSlab != null)) {
-			material.slab = addItem(new ItemMetalSlab(material), "slab", material, ItemGroups.blocksTab);
+			material.slab = addItem(new ItemMMDSlab(material), "slab", material, ItemGroups.blocksTab);
 		}
 
 		return material.slab;
@@ -893,13 +893,13 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createDoor(MetalMaterial material) {
+	protected static Item createDoor(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if (((Options.enableDoor) && (material.door == null)) && (material.doorBlock != null)) {
-			material.door = addItem(new ItemMetalDoor(material), "door", material, ItemGroups.blocksTab);
+			material.door = addItem(new ItemMMDDoor(material), "door", material, ItemGroups.blocksTab);
 			OreDictionary.registerOre(Oredicts.DOOR, material.door);
 		}
 
@@ -941,12 +941,12 @@ public abstract class Items {
 	public static int getSortingValue(ItemStack itemStack) {
 		int classVal = 990000;
 		int materialVal = 9900;
-		if ((itemStack.getItem() instanceof ItemBlock) && (((ItemBlock) itemStack.getItem()).getBlock() instanceof IMetalObject)) {
+		if ((itemStack.getItem() instanceof ItemBlock) && (((ItemBlock) itemStack.getItem()).getBlock() instanceof IMMDObject)) {
 			classVal = classSortingValues.computeIfAbsent(((ItemBlock) itemStack.getItem()).getBlock().getClass(), (Class<?> clazz) -> 990000);
-			materialVal = materialSortingValues.computeIfAbsent(((IMetalObject) ((ItemBlock) itemStack.getItem()).getBlock()).getMaterial(), (MetalMaterial material) -> 9900);
-		} else if (itemStack.getItem() instanceof IMetalObject) {
+			materialVal = materialSortingValues.computeIfAbsent(((IMMDObject) ((ItemBlock) itemStack.getItem()).getBlock()).getMaterial(), (MMDMaterial material) -> 9900);
+		} else if (itemStack.getItem() instanceof IMMDObject) {
 			classVal = classSortingValues.computeIfAbsent(itemStack.getItem().getClass(), (Class<?> clazz) -> 990000);
-			materialVal = materialSortingValues.computeIfAbsent(((IMetalObject) itemStack.getItem()).getMaterial(), (MetalMaterial material) -> 9900);
+			materialVal = materialSortingValues.computeIfAbsent(((IMMDObject) itemStack.getItem()).getMaterial(), (MMDMaterial material) -> 9900);
 		}
 		return classVal + materialVal + (itemStack.getMetadata() % 100);
 	}
@@ -986,7 +986,7 @@ public abstract class Items {
 	 *
 	 * @return An unmodifiable map of added items categorized by metal material
 	 */
-	public static Map<MetalMaterial, List<Item>> getItemsByMaterial() {
+	public static Map<MMDMaterial, List<Item>> getItemsByMaterial() {
 		return Collections.unmodifiableMap(itemsByMaterial);
 	}
 }

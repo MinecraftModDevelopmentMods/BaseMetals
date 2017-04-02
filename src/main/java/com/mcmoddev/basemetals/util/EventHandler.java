@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.item.ItemMetalIngot;
-import com.mcmoddev.lib.item.ItemMetalShield;
-import com.mcmoddev.lib.material.IMetalObject;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.item.ItemMMDIngot;
+import com.mcmoddev.lib.item.ItemMMDShield;
+import com.mcmoddev.lib.material.IMMDObject;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +42,7 @@ public class EventHandler {
 			return;
 		}
 		ItemStack activeItemStack = player.getActiveItemStack();
-		if ((damage > 0.0F) && (activeItemStack != null) && (activeItemStack.getItem() instanceof ItemMetalShield)) {
+		if ((damage > 0.0F) && (activeItemStack != null) && (activeItemStack.getItem() instanceof ItemMMDShield)) {
 			int i = 1 + MathHelper.floor(damage);
 			activeItemStack.damageItem(i, player);
 			if (activeItemStack.stackSize <= 0) {
@@ -78,10 +78,10 @@ public class EventHandler {
 	@SubscribeEvent
 	void event(ItemSmeltedEvent event) {
 		final Item item = event.smelting.getItem();
-		if (item instanceof IMetalObject) {
-			final MetalMaterial material = ((IMetalObject) item).getMaterial();
+		if (item instanceof IMMDObject) {
+			final MMDMaterial material = ((IMMDObject) item).getMaterial();
 			if (Options.enableAchievements) {
-				if (item instanceof ItemMetalIngot) {
+				if (item instanceof ItemMMDIngot) {
 					// event.player.addStat(Achievements.this_is_new, 1);
 					if ("aquarium".equals(material.getName())) {
 						event.player.addStat(Achievements.aquariumMaker, 1);
