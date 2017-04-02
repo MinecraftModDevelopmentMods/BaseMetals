@@ -10,6 +10,7 @@ import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.material.IMetalObject;
 import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -199,10 +200,10 @@ public abstract class Items {
 	 */
 	protected static void createItemsModMekanism(MetalMaterial material) {
 		if (material.hasOre) {
-			createCrystal(material);
-			createShard(material);
-			createClump(material);
-			createDirtyPowder(material);
+			createMekCrystal(material);
+			createMekShard(material);
+			createMekClump(material);
+			createMekDirtyPowder(material);
 		}
 	}
 
@@ -242,6 +243,23 @@ public abstract class Items {
 		}
 
 		return item;
+	}
+
+	/**
+	 * 
+	 * @param material The material base of this crystal
+	 * @return the item this function created
+	 */
+	protected static Item createCrystal(MetalMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableBasics) && (material.ingot == null)) {
+			material.ingot = addItem(new ItemMetalIngot(material), "crystal", material, ItemGroups.itemsTab);
+		}
+
+		return material.ingot;
 	}
 
 	/**
@@ -711,12 +729,12 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createCrystal(MetalMaterial material) {
+	protected static Item createMekCrystal(MetalMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
-		if ((Options.enableMekanism) && (material.crystal == null)) {
+		if ((Options.enableMekanism) && (material.crystal == null) && (material.getType() != MaterialType.CRYSTAL)) {
 			material.crystal = addItem(new GenericMetalItem(material), "crystal", material, ItemGroups.itemsTab);
 			OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), material.crystal);
 		}
@@ -729,7 +747,7 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createShard(MetalMaterial material) {
+	protected static Item createMekShard(MetalMaterial material) {
 		if (material == null) {
 			return null;
 		}
@@ -747,7 +765,7 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createClump(MetalMaterial material) {
+	protected static Item createMekClump(MetalMaterial material) {
 		if (material == null) {
 			return null;
 		}
@@ -765,7 +783,7 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
-	protected static Item createDirtyPowder(MetalMaterial material) {
+	protected static Item createMekDirtyPowder(MetalMaterial material) {
 		if (material == null) {
 			return null;
 		}
