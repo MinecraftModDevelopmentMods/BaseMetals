@@ -398,6 +398,7 @@ public class Config {
 		public static boolean enableShield = true;
 
 		public static boolean enableBars = true;
+		public static boolean enableBookshelf = true;
 		public static boolean enablePlate = true;
 		public static boolean enableDoor = true; // Also item
 		public static boolean enableTrapdoor = true;

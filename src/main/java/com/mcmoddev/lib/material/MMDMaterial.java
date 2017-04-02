@@ -134,6 +134,7 @@ public class MMDMaterial {
 
 	public Block bars;
 	public Block block;
+	public Block bookshelf;
 	public Block button;
 	public BlockDoor doorBlock;
 	public BlockSlab doubleSlab;

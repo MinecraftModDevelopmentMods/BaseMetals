@@ -165,6 +165,23 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
+	protected static Block createBookshelf(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableBookshelf) && (material.bookshelf == null)) {
+			material.bookshelf = addBlock(new BlockMMDBookshelf(material), "bookshelf", material, ItemGroups.blocksTab);
+		}
+
+		return material.bookshelf;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
 	protected static Block createPlate(MMDMaterial material) {
 		if (material == null) {
 			return null;
