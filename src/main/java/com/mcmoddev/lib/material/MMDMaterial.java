@@ -103,6 +103,7 @@ public class MMDMaterial {
 	 */
 	private float baseDamage;
 
+	public Item anvil;
 	public Item arrow;
 	public Item axe;
 	public Item blend;
@@ -132,7 +133,7 @@ public class MMDMaterial {
 	public Item smallpowder;
 	public Item sword;
 
-	public Block anvil;
+	public Block anvilBlock;
 	public Block bars;
 	public Block block;
 	public Block bookshelf;

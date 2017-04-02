@@ -893,6 +893,23 @@ public abstract class Items {
 	 * @param material The material base of this item
 	 * @return the item this function created
 	 */
+	protected static Item createAnvil(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if (((Options.enableAnvil) && (material.anvil == null)) && (material.anvilBlock != null)) {
+			material.anvil = addItem(new ItemMMDAnvilBlock(material), "anvil", material, ItemGroups.blocksTab);
+		}
+
+		return material.anvil;
+	}
+
+	/**
+	 * 
+	 * @param material The material base of this item
+	 * @return the item this function created
+	 */
 	protected static Item createDoor(MMDMaterial material) {
 		if (material == null) {
 			return null;

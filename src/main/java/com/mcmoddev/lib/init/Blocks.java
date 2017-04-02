@@ -136,7 +136,7 @@ public abstract class Blocks {
 			blockRegistry.put(fullName, block);
 		}
 
-		if (!(block instanceof BlockDoor) && !(block instanceof BlockSlab)) {
+		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab)) {
 			final ItemBlock itemBlock = new ItemBlock(block);
 			itemBlock.setRegistryName(fullName);
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
@@ -400,11 +400,11 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.enableAnvil) && (material.anvil == null) && (material.block != null)) {
-			material.anvil = addBlock(new BlockMMDAnvil(material), "anvil", material, ItemGroups.blocksTab);
+		if ((Options.enableAnvil) && (material.anvilBlock == null) && (material.block != null)) {
+			material.anvilBlock = addBlock(new BlockMMDAnvil(material), "anvil", material, ItemGroups.blocksTab);
 		}
 
-		return material.anvil;
+		return material.anvilBlock;
 	}
 
 	/**
