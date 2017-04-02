@@ -3,7 +3,7 @@ package com.mcmoddev.lib.integration.plugins;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import cofh.api.util.ThermalExpansionHelper;
 import net.minecraft.item.Item;
@@ -64,7 +64,7 @@ public class ThermalExpansionBase implements IIntegration {
 
 	public static void addFurnace(boolean enabled, String materialName) {
 		if( enabled ) {
-			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			/*
 			 * Ore -> Ingot default, according to TE source, is 2000
 			 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
@@ -83,7 +83,7 @@ public class ThermalExpansionBase implements IIntegration {
 	
 	public static void addCrucible(boolean enabled, String materialName) {
 		if( enabled ) {
-			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			/*
 			 * Default power, according to TE source, is 8000
 			 * This is used for Pyrotheum, Cryotheum, Aerotheum, Petrotheum and Redstone.
@@ -124,7 +124,7 @@ public class ThermalExpansionBase implements IIntegration {
 
 	public static void addPlatePress(boolean enabled, String materialName) {
 		if( enabled && Options.enablePlate ) {
-			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			
 			/*
 			 * Compactors default is 4000RF per operation
@@ -136,7 +136,7 @@ public class ThermalExpansionBase implements IIntegration {
 
 	public static void addPressStorage(boolean enabled, String materialName) {
 		if( enabled ) {
-			MetalMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			
 			/*
 			 * Compactors default is 4000RF per operation

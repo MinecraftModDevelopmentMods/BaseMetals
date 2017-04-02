@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import com.mcmoddev.basemetals.init.ItemGroups;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
 
@@ -88,7 +88,7 @@ public class Blocks extends com.mcmoddev.basemetals.init.Blocks {
 		ItemGroups.init();
 
 		@Nonnull
-		MetalMaterial material;
+		MMDMaterial material;
 
 		if (Options.enableAdamantine) {
 			material = Materials.adamantine;
@@ -219,7 +219,7 @@ public class Blocks extends com.mcmoddev.basemetals.init.Blocks {
 	 * @return An unmodifiable map of added items catagorized by material
 	 */
 	@Deprecated
-	public static Map<MetalMaterial, List<Block>> getBlocksByMetal() {
+	public static Map<MMDMaterial, List<Block>> getBlocksByMetal() {
 		return getBlocksByMaterial();
 	}
 }

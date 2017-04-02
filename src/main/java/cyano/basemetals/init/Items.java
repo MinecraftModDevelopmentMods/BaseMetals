@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.item.Item;
 
@@ -168,7 +168,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 			return;
 		}
 
-		MetalMaterial material;
+		MMDMaterial material;
 
 		if (Options.enableAdamantine) {
 			material = Materials.adamantine;
@@ -392,7 +392,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 	 * @return An unmodifiable map of added items catagorized by metal material
 	 */
 	@Deprecated
-	public static Map<MetalMaterial, List<Item>> getItemsByMetal() {
+	public static Map<MMDMaterial, List<Item>> getItemsByMetal() {
 		return getItemsByMaterial();
 	}
 }

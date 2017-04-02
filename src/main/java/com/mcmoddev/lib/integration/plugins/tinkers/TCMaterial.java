@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
@@ -38,7 +38,7 @@ public class TCMaterial {
     /*
      * Internal reference/future expansion stuff
      */
-    private MetalMaterial metalmaterial;
+    private MMDMaterial metalmaterial;
     private String name;
     private HashMap<String, List<AbstractTrait>> traits = new HashMap<>();
 
@@ -66,7 +66,7 @@ public class TCMaterial {
      * @param name name of the material
      * @param material MetalMaterial that this TCMaterial represents
      */
-    public TCMaterial(String name, MetalMaterial material) {
+    public TCMaterial(String name, MMDMaterial material) {
         this.headDurability = material.getToolDurability();
         this.miningSpeed = material.magicAffinity * 3 / 2;
         this.miningLevel = material.getToolHarvestLevel();
@@ -137,7 +137,7 @@ public class TCMaterial {
      * @param mat The MetalMaterial to set this material to represent
      * @return the material
      */
-    public TCMaterial genFromMaterial( MetalMaterial mat ) {
+    public TCMaterial genFromMaterial( MMDMaterial mat ) {
         this.metalmaterial = mat;
         return genFromMaterial();
     }
@@ -290,7 +290,7 @@ public class TCMaterial {
      * @param mm MetalMaterial this wrapper represents
      * @return the material
      */
-    public TCMaterial setMetalMaterial(MetalMaterial mm) {
+    public TCMaterial setMetalMaterial(MMDMaterial mm) {
         this.metalmaterial = mm;
         return genFromMaterial();
     }
@@ -300,7 +300,7 @@ public class TCMaterial {
      * @param mm MetalMaterial this represents
      * @return the material
      */
-    public TCMaterial setMaterial(MetalMaterial mm) {
+    public TCMaterial setMaterial(MMDMaterial mm) {
     	return this.setMetalMaterial(mm);
     }
     
@@ -422,7 +422,7 @@ public class TCMaterial {
         return this.amountPer;
     }
 
-    public MetalMaterial getMetalMaterial() {
+    public MMDMaterial getMetalMaterial() {
         return this.metalmaterial;
     }
 

@@ -3,7 +3,7 @@ package com.mcmoddev.lib.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.inventory.InventoryCrafting;
@@ -18,7 +18,7 @@ public class LeggingsRepairRecipe extends ShapelessOreRecipe implements IRecipe 
 	private ItemStack baseLeggings;
 	private String matName;
 
-	public LeggingsRepairRecipe(MetalMaterial mat) {
+	public LeggingsRepairRecipe(MMDMaterial mat) {
 		super(new ItemStack(mat.leggings, 1), new Object[] { mat.getName() + "_leggings", Oredicts.PLATE + mat.getCapitalizedName() });
 		baseLeggings = new ItemStack(mat.leggings, 1, OreDictionary.WILDCARD_VALUE);
 		matName = mat.getCapitalizedName();

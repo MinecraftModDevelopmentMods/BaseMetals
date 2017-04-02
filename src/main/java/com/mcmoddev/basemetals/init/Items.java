@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.fuels.FuelRegistry;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;
@@ -60,7 +60,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableCharcoal) {
-			final MetalMaterial material = Materials.vanilla_charcoal;
+			final MMDMaterial material = Materials.vanilla_charcoal;
 			material.ingot = new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem();
 
 			createNugget(material);
@@ -74,7 +74,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableCoal) {
-			final MetalMaterial material = Materials.vanilla_coal;
+			final MMDMaterial material = Materials.vanilla_coal;
 			material.ingot = net.minecraft.init.Items.COAL;
 
 			createNugget(material);
@@ -100,7 +100,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableDiamond) {
-			final MetalMaterial material = Materials.vanilla_diamond;
+			final MMDMaterial material = Materials.vanilla_diamond;
 
 			material.axe = net.minecraft.init.Items.DIAMOND_AXE;
 			material.hoe = net.minecraft.init.Items.DIAMOND_HOE;
@@ -118,7 +118,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableEmerald) {
-			final MetalMaterial material = Materials.vanilla_emerald;
+			final MMDMaterial material = Materials.vanilla_emerald;
 
 			material.ingot = net.minecraft.init.Items.EMERALD;
 
@@ -130,7 +130,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableGold) {
-			final MetalMaterial material = Materials.vanilla_gold;
+			final MMDMaterial material = Materials.vanilla_gold;
 
 			material.axe = net.minecraft.init.Items.GOLDEN_AXE;
 			material.hoe = net.minecraft.init.Items.GOLDEN_HOE;
@@ -153,7 +153,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableIron) {
-			final MetalMaterial material = Materials.vanilla_iron;
+			final MMDMaterial material = Materials.vanilla_iron;
 			material.axe = net.minecraft.init.Items.IRON_AXE;
 			material.door = net.minecraft.init.Items.IRON_DOOR;
 			material.hoe = net.minecraft.init.Items.IRON_HOE;
@@ -174,7 +174,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableLapis) {
-			final MetalMaterial material = Materials.vanilla_lapis;
+			final MMDMaterial material = Materials.vanilla_lapis;
 			material.powder = net.minecraft.init.Items.DYE;
 
 			createSmallPowder(material);
@@ -186,7 +186,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableObsidian) {
-			final MetalMaterial material = Materials.vanilla_obsidian;
+			final MMDMaterial material = Materials.vanilla_obsidian;
 			createItemsFull(material);
 		}
 
@@ -196,7 +196,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableMercury) {
-			final MetalMaterial material = Materials.mercury;
+			final MMDMaterial material = Materials.mercury;
 
 			createIngot(material);
 			createNugget(material);
@@ -218,7 +218,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableRedstone) {
-			final MetalMaterial material = Materials.vanilla_redstone;
+			final MMDMaterial material = Materials.vanilla_redstone;
 			material.powder = net.minecraft.init.Items.REDSTONE;
 
 			createIngot(material);
@@ -226,7 +226,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableQuartz) {
-			final MetalMaterial material = Materials.vanilla_quartz;
+			final MMDMaterial material = Materials.vanilla_quartz;
 			material.ingot = net.minecraft.init.Items.QUARTZ;
 			// material.slab = ;
 
@@ -243,7 +243,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableStone) {
-			final MetalMaterial material = Materials.vanilla_stone;
+			final MMDMaterial material = Materials.vanilla_stone;
 
 			material.axe = net.minecraft.init.Items.STONE_AXE;
 			material.hoe = net.minecraft.init.Items.STONE_HOE;
@@ -269,7 +269,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableWood) {
-			final MetalMaterial material = Materials.vanilla_wood;
+			final MMDMaterial material = Materials.vanilla_wood;
 
 			material.axe = net.minecraft.init.Items.WOODEN_AXE;
 			material.door = net.minecraft.init.Items.OAK_DOOR;
