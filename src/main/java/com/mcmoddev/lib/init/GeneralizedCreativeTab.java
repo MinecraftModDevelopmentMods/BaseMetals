@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.mcmoddev.basemetals.init.Items;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
  * This class is a MetalMaterial based Wrapper for making a CreativeTab.
@@ -20,7 +20,7 @@ import com.mcmoddev.lib.material.MetalMaterial;
  */
 public class GeneralizedCreativeTab extends CreativeTabs {
 
-	private MetalMaterial material;
+	private MMDMaterial material;
 	private final boolean searchable;
 	private List<ItemStack> cache;
 	private Comparator<ItemStack> comparator;
@@ -33,7 +33,7 @@ public class GeneralizedCreativeTab extends CreativeTabs {
 		}
 	};
 
-	public GeneralizedCreativeTab(String unlocalizedName, boolean searchable, MetalMaterial material) {
+	public GeneralizedCreativeTab(String unlocalizedName, boolean searchable, MMDMaterial material) {
 		super(unlocalizedName);
 		// this.itemSupplier = itemSupplier;
 		this.material = material;

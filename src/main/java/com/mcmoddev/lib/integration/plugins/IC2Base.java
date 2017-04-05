@@ -1,7 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import ic2.api.recipe.RecipeInputOreDict;
@@ -24,7 +24,7 @@ public class IC2Base implements IIntegration {
 		initDone = true;
 	}
 
-	protected void registerVanillaRecipes(MetalMaterial material) {
+	protected void registerVanillaRecipes(MMDMaterial material) {
 //		final Item forgeHammer = new ItemStack(Item.getByNameOrId("ic2:forge_hammer"), 1).getItem();
 //		final Item forgeHammer = IC2Items.getItem("forge_hammer").getItem(); // crashes
 
@@ -39,7 +39,7 @@ public class IC2Base implements IIntegration {
 		// TODO: Figure out Dense Plate & Casing
 	}
 
-	protected void addMaceratorRecipes(MetalMaterial material) {
+	protected void addMaceratorRecipes(MMDMaterial material) {
 		String oreDictName = material.getCapitalizedName();
 		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.ORE + oreDictName, 0), null, false, new ItemStack(material.crushed, 2));
 		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.PLATEDENSE + oreDictName, 0), null, false, new ItemStack(material.powder, 8));

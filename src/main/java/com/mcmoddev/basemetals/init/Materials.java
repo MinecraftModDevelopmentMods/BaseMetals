@@ -1,8 +1,8 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.material.MetalMaterial;
-import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 
 /**
  * This class initializes all of the materials in Base Metals.
@@ -13,79 +13,79 @@ import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
 public class Materials extends com.mcmoddev.lib.init.Materials {
 
 	/** Adamantine */
-	public static MetalMaterial adamantine;
+	public static MMDMaterial adamantine;
 	/** Antimony */
-	public static MetalMaterial antimony;
+	public static MMDMaterial antimony;
 	/** Aquarium */
-	public static MetalMaterial aquarium;
+	public static MMDMaterial aquarium;
 	/** Bismuth */
-	public static MetalMaterial bismuth;
+	public static MMDMaterial bismuth;
 	/** Brass */
-	public static MetalMaterial brass;
+	public static MMDMaterial brass;
 	/** Bronze */
-	public static MetalMaterial bronze;
+	public static MMDMaterial bronze;
 	/** Cold-Iron */
-	public static MetalMaterial coldiron;
+	public static MMDMaterial coldiron;
 	/** Copper */
-	public static MetalMaterial copper;
+	public static MMDMaterial copper;
 	/** Cupronickel */
-	public static MetalMaterial cupronickel;
+	public static MMDMaterial cupronickel;
 	/** Electrum */
-	public static MetalMaterial electrum;
+	public static MMDMaterial electrum;
 	/** Invar */
-	public static MetalMaterial invar;
+	public static MMDMaterial invar;
 	/** Lead */
-	public static MetalMaterial lead;
+	public static MMDMaterial lead;
 	/** Mercury */
-	public static MetalMaterial mercury;
+	public static MMDMaterial mercury;
 	/** Mithril */
-	public static MetalMaterial mithril;
+	public static MMDMaterial mithril;
 	/** Nickel */
-	public static MetalMaterial nickel;
+	public static MMDMaterial nickel;
 	/** Pewter */
-	public static MetalMaterial pewter;
+	public static MMDMaterial pewter;
 	/** Platinum */
-	public static MetalMaterial platinum;
+	public static MMDMaterial platinum;
 	/** Silver */
-	public static MetalMaterial silver;
+	public static MMDMaterial silver;
 	/** Star-Steel */
-	public static MetalMaterial starsteel;
+	public static MMDMaterial starsteel;
 	/** Steel */
-	public static MetalMaterial steel;
+	public static MMDMaterial steel;
 	/** Tin */
-	public static MetalMaterial tin;
+	public static MMDMaterial tin;
 	/** Zinc */
-	public static MetalMaterial zinc;
+	public static MMDMaterial zinc;
 
 	// vanilla imports
 	/** Wood */
-	public static MetalMaterial vanilla_wood;
+	public static MMDMaterial vanilla_wood;
 	/** Stone */
-	public static MetalMaterial vanilla_stone;
+	public static MMDMaterial vanilla_stone;
 	/** Iron */
-	public static MetalMaterial vanilla_iron;
+	public static MMDMaterial vanilla_iron;
 	/** Gold */
-	public static MetalMaterial vanilla_gold;
+	public static MMDMaterial vanilla_gold;
 	/** Diamond */
-	public static MetalMaterial vanilla_diamond;
+	public static MMDMaterial vanilla_diamond;
 	/** Emerald */
-	public static MetalMaterial vanilla_emerald;
+	public static MMDMaterial vanilla_emerald;
 	/** Quartz */
-	public static MetalMaterial vanilla_quartz;
+	public static MMDMaterial vanilla_quartz;
 	/** Obsidian */
-	public static MetalMaterial vanilla_obsidian;
+	public static MMDMaterial vanilla_obsidian;
 	/** Coal */
-	public static MetalMaterial vanilla_coal;
+	public static MMDMaterial vanilla_coal;
 	/** Charcoal */
-	public static MetalMaterial vanilla_charcoal;
+	public static MMDMaterial vanilla_charcoal;
 	/** Lapis */
-	public static MetalMaterial vanilla_lapis;
+	public static MMDMaterial vanilla_lapis;
 	/** Prismarine */
-	public static MetalMaterial vanilla_prismarine;
+	public static MMDMaterial vanilla_prismarine;
 	/** Redstone */
-	public static MetalMaterial vanilla_redstone;
+	public static MMDMaterial vanilla_redstone;
 	/** Ender */
-	public static MetalMaterial vanilla_ender;
+	public static MMDMaterial vanilla_ender;
 
 	private static boolean initDone = false;
 

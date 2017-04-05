@@ -8,7 +8,7 @@ import com.google.common.collect.*;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.fluids.CustomFluid;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -56,7 +56,7 @@ public abstract class Fluids {
 		initDone = true;
 	}
 
-	protected static Fluid addFluid(MetalMaterial material, int density, int viscosity, int temperature, int luminosity) {
+	protected static Fluid addFluid(MMDMaterial material, int density, int viscosity, int temperature, int luminosity) {
 		int tintColor;
 		if (material != null) {
 			if (material.fluid != null) {
@@ -84,7 +84,7 @@ public abstract class Fluids {
 		return fluid;
 	}
 
-	protected static BlockFluidClassic addFluidBlock(@Nonnull MetalMaterial material) {
+	protected static BlockFluidClassic addFluidBlock(@Nonnull MMDMaterial material) {
 
 		if (material == null) {
 			return null;

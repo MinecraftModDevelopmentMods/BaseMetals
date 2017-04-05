@@ -2,8 +2,8 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.material.MetalMaterial;
-import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraftforge.fml.common.Loader;
@@ -64,7 +64,7 @@ public class EnderIOBase implements IIntegration {
 	protected static void addAlloySmelterRecipe(String materialName, String outputSecondary, int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
-		final MetalMaterial material = Materials.getMaterialByName(materialName);
+		final MMDMaterial material = Materials.getMaterialByName(materialName);
 		final String capitalizedName = material.getCapitalizedName();
 
 		final String input = Oredicts.ORE + capitalizedName;
@@ -115,7 +115,7 @@ public class EnderIOBase implements IIntegration {
 	 *            How much energy it costs to perform
 	 */
 	protected static void addSagMillRecipe(String materialName, String outputSecondary, int energy) {
-		MetalMaterial material = Materials.getMaterialByName(materialName);
+		MMDMaterial material = Materials.getMaterialByName(materialName);
 
 		// we need to be sure the material is enabled, a null check is the best way
 		if( material == null ) {
@@ -148,7 +148,7 @@ public class EnderIOBase implements IIntegration {
 	protected static void addSagMillRecipe(String materialName, int primaryQty, String outputSecondary, int secondaryQty, int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
-		final MetalMaterial material = Materials.getMaterialByName(materialName);
+		final MMDMaterial material = Materials.getMaterialByName(materialName);
 		final String capitalizedName = material.getCapitalizedName();
 
 		final String input = Oredicts.ORE + capitalizedName;

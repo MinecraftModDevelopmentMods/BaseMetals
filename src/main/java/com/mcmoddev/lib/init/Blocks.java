@@ -5,7 +5,7 @@ import java.util.*;
 import com.google.common.collect.*;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.block.*;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -29,7 +29,7 @@ public abstract class Blocks {
 
 	private static BiMap<String, Block> blockRegistry = HashBiMap.create(16);
 	private static BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create(16);
-	private static Map<MetalMaterial, List<Block>> blocksByMaterial = new HashMap<>();
+	private static Map<MMDMaterial, List<Block>> blocksByMaterial = new HashMap<>();
 
 	protected Blocks() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -53,7 +53,7 @@ public abstract class Blocks {
 	 * 
 	 * @param material The material of interest
 	 */
-	protected static void createBlocksBasic(MetalMaterial material) {
+	protected static void createBlocksBasic(MMDMaterial material) {
 		createBlock(material); // Not Gold, Not Iron, Not Diamond, Not Stone
 		createPlate(material);
 		createOre(material); // Not Gold, Not Iron, Not Diamond, Not Stone
@@ -66,7 +66,7 @@ public abstract class Blocks {
 	 * 
 	 * @param material The material of interest
 	 */
-	protected static void createBlocksAdditional(MetalMaterial material) {
+	protected static void createBlocksAdditional(MMDMaterial material) {
 		createButton(material);
 		createSlab(material);
 		createDoubleSlab(material);
@@ -80,7 +80,7 @@ public abstract class Blocks {
 	 * 
 	 * @param material The material of interest
 	 */
-	protected static void createBlocksFull(MetalMaterial material) {
+	protected static void createBlocksFull(MMDMaterial material) {
 		createBlock(material);
 		createPlate(material);
 		createOre(material);
@@ -105,7 +105,7 @@ public abstract class Blocks {
 	 * @param tab which creative tab is it on
 	 * @return a new block
 	 */
-	protected static Block addBlock(Block block, String name, MetalMaterial material, CreativeTabs tab) {
+	protected static Block addBlock(Block block, String name, MMDMaterial material, CreativeTabs tab) {
 
 		String fullName;
 
@@ -113,9 +113,9 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((block instanceof BlockDoubleMetalSlab) && (material != null)) {
+		if ((block instanceof BlockMMDDoubleSlab) && (material != null)) {
 			fullName = "double_" + material.getName() + "_" + name;
-		} else if (block instanceof BlockDoubleMetalSlab) {
+		} else if (block instanceof BlockMMDDoubleSlab) {
 			fullName = "double_" + name;
 		} else if (material != null) {
 			if ((name == "nether") || (name == "end")) {
@@ -136,7 +136,7 @@ public abstract class Blocks {
 			blockRegistry.put(fullName, block);
 		}
 
-		if (!(block instanceof BlockDoor) && !(block instanceof BlockSlab)) {
+		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab)) {
 			final ItemBlock itemBlock = new ItemBlock(block);
 			itemBlock.setRegistryName(fullName);
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
@@ -148,7 +148,7 @@ public abstract class Blocks {
 		}
 
 		if (material != null) {
-			blocksByMaterial.computeIfAbsent(material, (MetalMaterial g) -> new ArrayList<>());
+			blocksByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
 			blocksByMaterial.get(material).add(block);
 		}
 
@@ -165,13 +165,42 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createPlate(MetalMaterial material) {
+	protected static Block createBookshelf(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableBookshelf) && (material.bookshelf == null)) {
+			material.bookshelf = addBlock(new BlockMMDBookshelf(material), "bookshelf", material, ItemGroups.blocksTab);
+		}
+
+		return material.bookshelf;
+	}
+
+	protected static Block createBookshelf(MMDMaterial material, boolean fullBlock) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableBookshelf) && (material.bookshelf == null)) {
+			material.bookshelf = addBlock(new BlockMMDBookshelf(material), "bookshelf", material, ItemGroups.blocksTab);
+		}
+
+		((BlockMMDBookshelf)material.bookshelf).setFullBlock(fullBlock);
+		return material.bookshelf;
+	}
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createPlate(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enablePlate) && (material.plate == null)) {
-			material.plate = addBlock(new BlockMetalPlate(material), "plate", material, ItemGroups.blocksTab);
+			material.plate = addBlock(new BlockMMDPlate(material), "plate", material, ItemGroups.blocksTab);
 		}
 
 		return material.plate;
@@ -182,13 +211,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createBars(MetalMaterial material) {
+	protected static Block createBars(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBars) && (material.bars == null)) {
-			material.bars = addBlock(new BlockMetalBars(material), "bars", material, ItemGroups.blocksTab);
+			material.bars = addBlock(new BlockMMDBars(material), "bars", material, ItemGroups.blocksTab);
 			OreDictionary.registerOre(Oredicts.BARS, material.bars);
 		}
 
@@ -200,7 +229,7 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createBlock(MetalMaterial material) {
+	protected static Block createBlock(MMDMaterial material) {
 		return createBlock(material, false);
 	}
 
@@ -210,13 +239,13 @@ public abstract class Blocks {
 	 * @param glow Does it have a glow ?
 	 * @return the block this function created
 	 */
-	protected static Block createBlock(MetalMaterial material, boolean glow) {
+	protected static Block createBlock(MMDMaterial material, boolean glow) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.block == null)) {
-			material.block = addBlock(new BlockMetalBlock(material, glow, true), "block", material, ItemGroups.blocksTab);
+			material.block = addBlock(new BlockMMDBlock(material, glow, true), "block", material, ItemGroups.blocksTab);
 		}
 		return material.block;
 	}
@@ -226,13 +255,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createButton(MetalMaterial material) {
+	protected static Block createButton(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableButton) && (material.button == null)) {
-			material.button = addBlock(new BlockButtonMetal(material), "button", material, ItemGroups.blocksTab);
+			material.button = addBlock(new BlockMMDButton(material), "button", material, ItemGroups.blocksTab);
 		}
 
 		return material.button;
@@ -243,13 +272,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createLever(MetalMaterial material) {
+	protected static Block createLever(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableLever) && (material.lever == null)) {
-			material.lever = addBlock(new BlockMetalLever(material), "lever", material, ItemGroups.blocksTab);
+			material.lever = addBlock(new BlockMMDLever(material), "lever", material, ItemGroups.blocksTab);
 		}
 
 		return material.lever;
@@ -260,13 +289,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createPressurePlate(MetalMaterial material) {
+	protected static Block createPressurePlate(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enablePressurePlate) && (material.pressurePlate == null)) {
-			material.pressurePlate = addBlock(new BlockMetalPressurePlate(material), "pressure_plate", material, ItemGroups.blocksTab);
+			material.pressurePlate = addBlock(new BlockMMDPressurePlate(material), "pressure_plate", material, ItemGroups.blocksTab);
 		}
 		return material.pressurePlate;
 	}
@@ -276,13 +305,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static BlockSlab createSlab(MetalMaterial material) {
+	protected static BlockSlab createSlab(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableSlab) && (material.halfSlab == null)) {
-			material.halfSlab = (BlockSlab) addBlock(new BlockHalfMetalSlab(material), "slab", material, ItemGroups.blocksTab);
+			material.halfSlab = (BlockSlab) addBlock(new BlockMMDHalfSlab(material), "slab", material, ItemGroups.blocksTab);
 		}
 
 		return material.halfSlab;
@@ -293,13 +322,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static BlockSlab createDoubleSlab(MetalMaterial material) {
+	protected static BlockSlab createDoubleSlab(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableSlab) && (material.doubleSlab == null)) {
-			material.doubleSlab = (BlockSlab) addBlock(new BlockDoubleMetalSlab(material), "slab", material, ItemGroups.blocksTab);
+			material.doubleSlab = (BlockSlab) addBlock(new BlockMMDDoubleSlab(material), "slab", material, ItemGroups.blocksTab);
 		}
 
 		return material.doubleSlab;
@@ -310,13 +339,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createStairs(MetalMaterial material) {
+	protected static Block createStairs(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableStairs) && (material.stairs == null) && (material.block != null)) {
-			material.stairs = addBlock(new BlockMetalStairs(material), "stairs", material, ItemGroups.blocksTab);
+			material.stairs = addBlock(new BlockMMDStairs(material), "stairs", material, ItemGroups.blocksTab);
 		}
 
 		return material.stairs;
@@ -327,13 +356,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createWall(MetalMaterial material) {
+	protected static Block createWall(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableWall) && (material.wall == null) && (material.block != null)) {
-			material.wall = addBlock(new BlockMetalWall(material), "wall", material, ItemGroups.blocksTab);
+			material.wall = addBlock(new BlockMMDWall(material), "wall", material, ItemGroups.blocksTab);
 		}
 
 		return material.wall;
@@ -344,13 +373,115 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createOre(MetalMaterial material) {
+	protected static Block createFence(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableWall) && (material.fence == null) && (material.block != null)) {
+			material.fence = addBlock(new BlockMMDFence(material), "fence", material, ItemGroups.blocksTab);
+		}
+
+		return material.fence;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createFenceGate(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableWall) && (material.fenceGate == null) && (material.block != null)) {
+			material.fenceGate = addBlock(new BlockMMDFenceGate(material), "fence_gate", material, ItemGroups.blocksTab);
+		}
+
+		return material.fenceGate;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createAnvil(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableAnvil) && (material.anvilBlock == null) && (material.block != null)) {
+			material.anvilBlock = addBlock(new BlockMMDAnvil(material), "anvil", material, ItemGroups.blocksTab);
+		}
+
+		return material.anvilBlock;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createFlowerPot(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableFlowerPot) && (material.flowerPot == null) && (material.block != null)) {
+			material.flowerPot = addBlock(new BlockMMDFence(material), "flower_pot", material, ItemGroups.blocksTab);
+		}
+
+		return material.flowerPot;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createLadder(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableLadder) && (material.ladder == null) && (material.block != null)) {
+			material.ladder = addBlock(new BlockMMDLadder(material), "ladder", material, ItemGroups.blocksTab);
+		}
+
+		return material.ladder;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createTripWireHook(MMDMaterial material) {
+		if (material == null) {
+			return null;
+		}
+
+		if ((Options.enableTripWire) && (material.tripwireHook == null) && (material.block != null)) {
+			material.tripwireHook = addBlock(new BlockMMDTripWireHook(material), "tripwire_hook", material, ItemGroups.blocksTab);
+		}
+
+		return material.tripwireHook;
+	}
+
+	/**
+	 * 
+	 * @param material The material this is made from
+	 * @return the block this function created
+	 */
+	protected static Block createOre(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.hasOre) && (material.ore == null)) {
-			material.ore = addBlock(new BlockMetalOre(material), "ore", material, ItemGroups.blocksTab);
+			material.ore = addBlock(new BlockMMDOre(material), "ore", material, ItemGroups.blocksTab);
 		}
 
 		return material.ore;
@@ -362,13 +493,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createEndOre(MetalMaterial material) {
+	protected static Block createEndOre(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.hasOre) && (material.oreEnd == null)) {
-			material.oreEnd = addBlock(new BlockMetalEndOre(material), "end", material, ItemGroups.blocksTab);
+			material.oreEnd = addBlock(new BlockMMDEndOre(material), "end", material, ItemGroups.blocksTab);
 		}
 
 		return material.oreEnd;
@@ -380,13 +511,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createNetherOre(MetalMaterial material) {
+	protected static Block createNetherOre(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableBasics) && (material.hasOre) && (material.oreNether == null)) {
-			material.oreNether = addBlock(new BlockMetalNetherOre(material), "nether", material, ItemGroups.blocksTab);
+			material.oreNether = addBlock(new BlockMMDNetherOre(material), "nether", material, ItemGroups.blocksTab);
 		}
 
 		return material.oreNether;
@@ -397,13 +528,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static BlockDoor createDoor(MetalMaterial material) {
+	protected static BlockDoor createDoor(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableDoor) && (material.doorBlock == null)) {
-			material.doorBlock = (BlockDoor) addBlock(new BlockMetalDoor(material), "door", material, null);
+			material.doorBlock = (BlockDoor) addBlock(new BlockMMDDoor(material), "door", material, null);
 		}
 
 		return material.doorBlock;
@@ -414,13 +545,13 @@ public abstract class Blocks {
 	 * @param material The material this is made from
 	 * @return the block this function created
 	 */
-	protected static Block createTrapDoor(MetalMaterial material) {
+	protected static Block createTrapDoor(MMDMaterial material) {
 		if (material == null) {
 			return null;
 		}
 
 		if ((Options.enableTrapdoor) && (material.trapdoor == null)) {
-			material.trapdoor = addBlock(new BlockMetalTrapDoor(material), "trapdoor", material, ItemGroups.blocksTab);
+			material.trapdoor = addBlock(new BlockMMDTrapDoor(material), "trapdoor", material, ItemGroups.blocksTab);
 			OreDictionary.registerOre(Oredicts.TRAPDOOR, material.trapdoor);
 		}
 
@@ -462,7 +593,7 @@ public abstract class Blocks {
 	 *
 	 * @return An unmodifiable map of added items catagorized by material
 	 */
-	public static Map<MetalMaterial, List<Block>> getBlocksByMaterial() {
+	public static Map<MMDMaterial, List<Block>> getBlocksByMaterial() {
 		return Collections.unmodifiableMap(blocksByMaterial);
 	}
 }

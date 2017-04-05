@@ -1,7 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkersConstructRegistry;
@@ -46,7 +46,7 @@ public class TinkersConstructBase implements IIntegration {
 	 * @param amountPer
 	 *            the amount of fluid per this block
 	 */
-	protected static void registerExtraMelting(MetalMaterial base, Block block, int amountPer) {
+	protected static void registerExtraMelting(MMDMaterial base, Block block, int amountPer) {
 		String materialName = base.getName();
 		Fluid output = FluidRegistry.getFluid(materialName);
 
@@ -61,11 +61,11 @@ public class TinkersConstructBase implements IIntegration {
 	 * @param amountPer
 	 *            Amount of fluid per ingot
 	 */
-	protected static void registerFluid(MetalMaterial base, int amountPer) {
+	protected static void registerFluid(MMDMaterial base, int amountPer) {
 		registry.registerFluid(base, amountPer);
 	}
 	
-	protected static void registerCasting(MetalMaterial base, int amountPer) {
+	protected static void registerCasting(MMDMaterial base, int amountPer) {
 		registry.registerBasin(base.block, base.fluid, amountPer * 9);
 		registry.registerCasting(base.ingot, base.fluid, amountPer);
 		registry.registerCasting(base.nugget, base.fluid, amountPer/9 );
@@ -98,7 +98,7 @@ public class TinkersConstructBase implements IIntegration {
 	 *            If this can be casted
 	 * @return a handle for potential, further manipulation of the material
 	 */
-	protected static TCMaterial registerMaterial(MetalMaterial material, boolean craftable, boolean castable ) {
+	protected static TCMaterial registerMaterial(MMDMaterial material, boolean craftable, boolean castable ) {
 		return registry.getMaterial(material.getName(), material).setCraftable(craftable).setCastable(castable).setToolForge(true);
 	}
 	

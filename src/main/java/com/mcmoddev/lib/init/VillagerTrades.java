@@ -4,9 +4,9 @@ import java.util.*;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
-import com.mcmoddev.lib.item.ItemMetalCrackHammer;
-import com.mcmoddev.lib.item.ItemMetalIngot;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.item.ItemMMDCrackHammer;
+import com.mcmoddev.lib.item.ItemMMDIngot;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.entity.passive.EntityVillager.*;
 import net.minecraft.item.Item;
@@ -60,21 +60,21 @@ public abstract class VillagerTrades {
 		// [Profession ID][Sub-profession ID][villager level - 1][trades]
 
 		final int size = Materials.getAllMaterials().size();
-		final Map<MetalMaterial, List<Item>> allArmors = new HashMap<>(size);
-		final Map<MetalMaterial, Item> allHammers = new HashMap<>(size);
-		final Map<MetalMaterial, Item> allSwords = new HashMap<>(size);
-		final Map<MetalMaterial, Item> allHoes = new HashMap<>(size);
-		final Map<MetalMaterial, Item> allAxes = new HashMap<>(size);
-		final Map<MetalMaterial, Item> allPickAxes = new HashMap<>(size);
-		final Map<MetalMaterial, Item> allShovels = new HashMap<>(size);
-		final Map<MetalMaterial, Item> allIngots = new HashMap<>(size);
+		final Map<MMDMaterial, List<Item>> allArmors = new HashMap<>(size);
+		final Map<MMDMaterial, Item> allHammers = new HashMap<>(size);
+		final Map<MMDMaterial, Item> allSwords = new HashMap<>(size);
+		final Map<MMDMaterial, Item> allHoes = new HashMap<>(size);
+		final Map<MMDMaterial, Item> allAxes = new HashMap<>(size);
+		final Map<MMDMaterial, Item> allPickAxes = new HashMap<>(size);
+		final Map<MMDMaterial, Item> allShovels = new HashMap<>(size);
+		final Map<MMDMaterial, Item> allIngots = new HashMap<>(size);
 
 		// @SuppressWarnings("unused")
 		// final Map<Item, Integer> tradeLevelMap = new HashMap<>();
 
 		String modid = Loader.instance().activeModContainer().getModId();
-		Items.getItemsByMaterial().entrySet().stream().forEach((Map.Entry<MetalMaterial, List<Item>> entry) -> {
-			final MetalMaterial material = entry.getKey();
+		Items.getItemsByMaterial().entrySet().stream().forEach((Map.Entry<MMDMaterial, List<Item>> entry) -> {
+			final MMDMaterial material = entry.getKey();
 			if (material == null) {
 				return;
 			}
@@ -82,8 +82,8 @@ public abstract class VillagerTrades {
 			for (final Item item : entry.getValue()) {
 				if (item.getRegistryName().getResourceDomain().equals(modid)) {
 					if (item instanceof ItemArmor) {
-						allArmors.computeIfAbsent(material, (MetalMaterial g) -> new ArrayList<>()).add(item);
-					} else if (item instanceof ItemMetalCrackHammer) {
+						allArmors.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>()).add(item);
+					} else if (item instanceof ItemMMDCrackHammer) {
 						allHammers.put(material, item);
 					} else if (item instanceof ItemSword) {
 						allSwords.put(material, item);
@@ -95,14 +95,14 @@ public abstract class VillagerTrades {
 						allPickAxes.put(material, item);
 					} else if (item instanceof ItemSpade) {
 						allShovels.put(material, item);
-					} else if (item instanceof ItemMetalIngot) {
+					} else if (item instanceof ItemMMDIngot) {
 						allIngots.put(material, item);
 					}
 				}
 			}
 		});
 
-		for (final MetalMaterial material : Materials.getAllMaterials()) {
+		for (final MMDMaterial material : Materials.getAllMaterials()) {
 			final float value = material.hardness + material.strength + material.magicAffinity + material.getToolHarvestLevel();
 			if (material.isRare) {
 				continue;

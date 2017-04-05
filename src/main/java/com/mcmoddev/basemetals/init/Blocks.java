@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.block.BlockHumanDetector;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
 
@@ -62,7 +62,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableCoal) {
-			final MetalMaterial material = Materials.vanilla_coal;
+			final MMDMaterial material = Materials.vanilla_coal;
 
 			material.block = net.minecraft.init.Blocks.COAL_BLOCK;
 			material.ore = net.minecraft.init.Blocks.COAL_ORE;
@@ -81,7 +81,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableDiamond) {
-			final MetalMaterial material = Materials.vanilla_diamond;
+			final MMDMaterial material = Materials.vanilla_diamond;
 
 			material.block = net.minecraft.init.Blocks.DIAMOND_BLOCK;
 			material.ore = net.minecraft.init.Blocks.DIAMOND_ORE;
@@ -98,7 +98,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableEmerald) {
-			final MetalMaterial material = Materials.vanilla_emerald;
+			final MMDMaterial material = Materials.vanilla_emerald;
 
 			material.block = net.minecraft.init.Blocks.EMERALD_BLOCK;
 			material.ore = net.minecraft.init.Blocks.EMERALD_ORE;
@@ -111,7 +111,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableGold) {
-			final MetalMaterial material = Materials.vanilla_gold;
+			final MMDMaterial material = Materials.vanilla_gold;
 
 			material.block = net.minecraft.init.Blocks.GOLD_BLOCK;
 			material.ore = net.minecraft.init.Blocks.GOLD_ORE;
@@ -130,7 +130,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableIron) {
-			final MetalMaterial material = Materials.vanilla_iron;
+			final MMDMaterial material = Materials.vanilla_iron;
 
 			material.block = net.minecraft.init.Blocks.IRON_BLOCK;
 			material.ore = net.minecraft.init.Blocks.IRON_ORE;
@@ -145,7 +145,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableLapis) {
-			final MetalMaterial material = Materials.vanilla_lapis;
+			final MMDMaterial material = Materials.vanilla_lapis;
 
 			material.block = net.minecraft.init.Blocks.LAPIS_BLOCK;
 			material.ore = net.minecraft.init.Blocks.LAPIS_ORE;
@@ -170,7 +170,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableObsidian) {
-			final MetalMaterial material = Materials.vanilla_obsidian;
+			final MMDMaterial material = Materials.vanilla_obsidian;
 
 			material.block = net.minecraft.init.Blocks.OBSIDIAN;
 
@@ -190,7 +190,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableQuartz) {
-			final MetalMaterial material = Materials.vanilla_quartz;
+			final MMDMaterial material = Materials.vanilla_quartz;
 
 			material.block = net.minecraft.init.Blocks.QUARTZ_BLOCK;
 			material.ore = net.minecraft.init.Blocks.QUARTZ_ORE;
@@ -209,7 +209,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableRedstone) {
-			final MetalMaterial material = Materials.vanilla_redstone;
+			final MMDMaterial material = Materials.vanilla_redstone;
 
 			material.block = net.minecraft.init.Blocks.REDSTONE_BLOCK;
 			material.ore = net.minecraft.init.Blocks.REDSTONE_ORE;

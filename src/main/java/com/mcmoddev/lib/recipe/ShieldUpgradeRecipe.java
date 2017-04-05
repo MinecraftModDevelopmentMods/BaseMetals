@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.enchantment.Enchantment;
@@ -26,7 +26,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 	protected String matName;
 
-	public ShieldUpgradeRecipe(MetalMaterial input) {
+	public ShieldUpgradeRecipe(MMDMaterial input) {
 		matName = input.getName();
 	}
 
@@ -34,11 +34,11 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 	public boolean matches(InventoryCrafting inv, World worldIn) {
 		ItemStack base;
 		List<ItemStack> upgradeMats = new ArrayList<>();
-		Collection<MetalMaterial> allmats = Materials.getAllMaterials();
-		MetalMaterial input = Materials.getMaterialByName(matName);
+		Collection<MMDMaterial> allmats = Materials.getAllMaterials();
+		MMDMaterial input = Materials.getMaterialByName(matName);
 		base = new ItemStack(input.shield, 1, 0);
 
-		for (MetalMaterial mat : allmats) {
+		for (MMDMaterial mat : allmats) {
 			if (mat.hardness >= input.hardness && mat.getName() != matName) {
 				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				upgradeMats.addAll(mats);
@@ -66,10 +66,10 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
 		Map<String, List<ItemStack>> plates = new HashMap<>();
 
-		Collection<MetalMaterial> allmats = Materials.getAllMaterials();
+		Collection<MMDMaterial> allmats = Materials.getAllMaterials();
 		int hardness = ((Float) Materials.getMaterialByName(matName).hardness).intValue();
 
-		for (MetalMaterial mat : allmats) {
+		for (MMDMaterial mat : allmats) {
 			if (mat.hardness >= hardness && mat.getName() != matName) {
 				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				plates.put(mat.getName(), mats);
@@ -102,12 +102,12 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		return plateMatched;
 	}
 
-	private MetalMaterial getUpgradeMat(InventoryCrafting inv) {
+	private MMDMaterial getUpgradeMat(InventoryCrafting inv) {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack curItem = inv.getStackInSlot(i);
 
 			if (curItem != null) {
-				for (MetalMaterial e : Materials.getAllMaterials()) {
+				for (MMDMaterial e : Materials.getAllMaterials()) {
 					if (OreDictionary.containsMatch(false, OreDictionary.getOres(Oredicts.PLATE + e.getName()),
 							curItem)) {
 						return e;
@@ -143,8 +143,8 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 	}
 
 	public int getCost(InventoryCrafting inv) {
-		MetalMaterial shieldMat = Materials.getMaterialByName(matName);
-		MetalMaterial upgradeMat = getUpgradeMat(inv);
+		MMDMaterial shieldMat = Materials.getMaterialByName(matName);
+		MMDMaterial upgradeMat = getUpgradeMat(inv);
 
 		float hardDiff = upgradeMat.hardness - shieldMat.hardness;
 		int enchantCount = getEnchantCount(inv);

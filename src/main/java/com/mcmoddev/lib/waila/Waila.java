@@ -2,7 +2,7 @@ package com.mcmoddev.lib.waila;
 
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
-import com.mcmoddev.lib.block.BlockMetalLever;
+import com.mcmoddev.lib.block.BlockMMDLever;
 
 import mcp.mobius.waila.api.IWailaRegistrar;
 
@@ -12,6 +12,6 @@ public class Waila {
 	}
 
 	public static void register(IWailaRegistrar registrar) {
-		registrar.registerBodyProvider(new LeverInfoController(), BlockMetalLever.class);
+		registrar.registerBodyProvider(new LeverInfoController(), BlockMMDLever.class);
 	}
 }

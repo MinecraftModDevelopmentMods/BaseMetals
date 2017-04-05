@@ -1,7 +1,7 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.material.MetalMaterial;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -46,7 +46,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	protected static void initVanillaRecipes() {
-		MetalMaterial material;
+		MMDMaterial material;
 		String oreDictName;
 
 		if (!Options.disableAllHammerRecipes) {
@@ -114,8 +114,8 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			}
 		}
 		// furnace cheese all the things!
-		for( MetalMaterial mat : Materials.getAllMaterials() ) {
-			if( (mat.ingot) != null && !(mat.ingot instanceof com.mcmoddev.lib.material.IMetalObject) && mat.hasOre ) {
+		for( MMDMaterial mat : Materials.getAllMaterials() ) {
+			if( (mat.ingot) != null && !(mat.ingot instanceof com.mcmoddev.lib.material.IMMDObject) && mat.hasOre ) {
 				if (Options.furnaceCheese) {
 					if( mat.boots != null )
 						GameRegistry.addSmelting(mat.boots, new ItemStack(mat.ingot, 4), 0);

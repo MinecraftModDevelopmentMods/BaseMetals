@@ -8,8 +8,8 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
-import com.mcmoddev.lib.material.MetalMaterial;
-import com.mcmoddev.lib.material.MetalMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.integration.plugins.taiga.TAIGAItems;
 
 import net.minecraft.block.Block;
@@ -42,7 +42,7 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 	private static class TAIGAMaterials extends com.mcmoddev.lib.init.Materials {
 		private static Field[] allBlocks = Blocks.class.getDeclaredFields();
 
-		private static final List<MetalMaterial> materials = new ArrayList<>();
+		private static final List<MMDMaterial> materials = new ArrayList<>();
 
 		public static void init() {
 			try {
@@ -56,7 +56,7 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 						float harvestlevel = k.getHarvestLevel(null);
 						float resist = k.getExplosionResistance(null);
 
-						MetalMaterial repThis = createOrelessMaterial(name, MaterialType.METAL, harvestlevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);
+						MMDMaterial repThis = createOrelessMaterial(name, MaterialType.METAL, harvestlevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);
 
 						repThis.block = k;
 						repThis.ingot = new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Ingot").get(Items.class), 1).getItem();
