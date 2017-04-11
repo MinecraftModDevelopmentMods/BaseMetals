@@ -15,6 +15,7 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
 
+	private List<ItemStack> inputs;
 	private final ItemStack output;
 	private final String oreDictSource;
 
@@ -29,7 +30,18 @@ public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
 	 */
 	public OreDictionaryCrusherRecipe(String oreDictionaryID, ItemStack results) {
 		this.oreDictSource = oreDictionaryID;
+		this.inputs = OreDictionary.getOres(this.oreDictSource);
 		this.output = results;
+	}
+
+	/**
+	 * Gets the output item from applying this recipe.
+	 * 
+	 * @return An ItemStack instance of the result of this recipe
+	 */
+	@Override
+	public List<ItemStack> getInputs() {
+		return this.inputs;
 	}
 
 	/**
@@ -52,14 +64,15 @@ public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
 	 */
 	@Override
 	public boolean isValidInput(ItemStack input) {
-		final List<ItemStack> validInputs = OreDictionary.getOres(this.oreDictSource);
-		for (int i = 0; i < validInputs.size(); i++)
-			if (validInputs.get(i).getMetadata() == OreDictionary.WILDCARD_VALUE) {
+		for (int i = 0; i < inputs.size(); i++) {
+			if (inputs.get(i).getMetadata() == OreDictionary.WILDCARD_VALUE) {
 				// do not compare metadata values
-				if (validInputs.get(i).getItem() == input.getItem())
+				if (inputs.get(i).getItem() == input.getItem())
 					return true;
-			} else if (ItemStack.areItemsEqual(validInputs.get(i), input))
+			} else if (ItemStack.areItemsEqual(inputs.get(i), input)) {
 				return true;
+			}
+		}
 		return false;
 	}
 

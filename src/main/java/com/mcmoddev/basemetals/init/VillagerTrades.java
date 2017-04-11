@@ -95,14 +95,14 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 				continue;
 			}
 
-			// for reference, iron has a value of 21.5, gold would be 14, copper
-			// is 14, and diamond is 30
+			// For reference, Iron has a value of 21.5, Gold would be 14, Copper
+			// is 14, and Diamond is 30
 			final int emeraldPurch = emeraldPurchaseValue(value);
 			final int emeraldSale = emeraldSaleValue(value);
 			final int tradeLevel = tradeLevel(value);
 
 			if ((emeraldPurch > 64) || (emeraldSale > 64)) {
-				continue; // too expensive
+				continue; // Too expensive
 			}
 
 			final int armorsmith = (3 << 16) | (1 << 8) | (tradeLevel);

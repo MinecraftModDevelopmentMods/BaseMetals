@@ -1,13 +1,16 @@
 package com.mcmoddev.lib.jei;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import mezz.jei.api.IGuiHelper;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IRecipeLayout;
-import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -18,16 +21,12 @@ import net.minecraft.util.text.translation.I18n;
 @SuppressWarnings({ "rawtypes", "deprecation" })
 public class CrusherRecipeCategory implements IRecipeCategory {
 
-	@Nonnull public static final String UID = BaseMetalsJEIPlugin.JEIUID + ".crackhammer";
-
-	private final String title;
+	private final ResourceLocation resourceLocation = new ResourceLocation("basemetals", "textures/jei/JEIhammeroverlay.png");
 	private final IDrawable background;
 	private final IDrawable icon;
 	protected final IDrawableAnimated hammer;
 
 	public CrusherRecipeCategory(IGuiHelper guiHelper) {
-		title = I18n.translateToLocalFormatted(UID);
-		ResourceLocation resourceLocation = new ResourceLocation("basemetals", "textures/jei/JEIhammeroverlay.png");
 		background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
 		icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
 
@@ -38,13 +37,13 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 	@Nonnull
 	@Override
 	public String getUid() {
-		return UID;
+		return BaseMetalsJEIPlugin.JEIUID + ".crackhammer";
 	}
 
 	@Nonnull
 	@Override
 	public String getTitle() {
-		return title;
+		return I18n.translateToLocalFormatted(getUid());
 	}
 
 	@Nonnull
@@ -61,7 +60,6 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 
 	@Override
 	public void drawExtras(Minecraft minecraft) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override

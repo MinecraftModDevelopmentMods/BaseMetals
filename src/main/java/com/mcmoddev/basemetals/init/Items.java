@@ -66,11 +66,11 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createNugget(material);
 			createPowder(material);
 			createSmallPowder(material);
-			FuelRegistry.addFuel(Oredicts.NUGGETCHARCOAL, 200);
-			FuelRegistry.addFuel(Oredicts.DUSTCHARCOAL, 1600);
-			FuelRegistry.addFuel(Oredicts.DUSTSMALLCHARCOAL, 200);
-			FuelRegistry.addFuel(Oredicts.DUSTTINYCHARCOAL, 200);
-			FuelRegistry.addFuel(Oredicts.BLOCK+"Charcoal", 16000);
+			FuelRegistry.addFuel(Oredicts.NUGGET_CHARCOAL, 200);
+			FuelRegistry.addFuel(Oredicts.DUST_CHARCOAL, 1600);
+			FuelRegistry.addFuel(Oredicts.DUST_SMALL_CHARCOAL, 200);
+			FuelRegistry.addFuel(Oredicts.DUST_TINY_CHARCOAL, 200);
+			FuelRegistry.addFuel(Oredicts.BLOCK_CHARCOAL, 16000);
 		}
 
 		if (Options.enableCoal) {
@@ -80,10 +80,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createNugget(material);
 			createPowder(material);
 			createSmallPowder(material);
-			FuelRegistry.addFuel(Oredicts.NUGGETCOAL, 200);
-			FuelRegistry.addFuel(Oredicts.DUSTCOAL, 1600);
-			FuelRegistry.addFuel(Oredicts.DUSTSMALLCOAL, 200);
-			FuelRegistry.addFuel(Oredicts.DUSTTINYCOAL, 200);
+			FuelRegistry.addFuel(Oredicts.NUGGET_COAL, 200);
+			FuelRegistry.addFuel(Oredicts.DUST_COAL, 1600);
+			FuelRegistry.addFuel(Oredicts.DUST_SMALL_COAL, 200);
+			FuelRegistry.addFuel(Oredicts.DUST_TINY_COAL, 200);
 		}
 
 		if (Options.enableColdIron) {

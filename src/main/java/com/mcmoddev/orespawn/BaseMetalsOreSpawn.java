@@ -50,7 +50,7 @@ public class BaseMetalsOreSpawn implements Function<OreSpawnAPI, SpawnLogic> {
 		}
 		
 /*	Currently broken
- * 		if( Options.enablePlatinum ) {
+		if( Options.enablePlatinum ) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.platinum.ore.getDefaultState(), 8, 4, 0.125f, 1, 32);
 		}
 */

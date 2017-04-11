@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 /**
- * Created by Chris on 3/30/2016.
+ * @author Chris on 3/30/2016.
  */
 public class VillagerTradeHelper {
 

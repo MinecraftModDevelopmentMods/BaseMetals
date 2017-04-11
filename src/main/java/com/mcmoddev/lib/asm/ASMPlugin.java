@@ -11,6 +11,8 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 
+import javax.annotation.Nullable;
+
 @Name("BaseMetals")
 @MCVersion("1.10.2")
 @SortingIndex(1001)
@@ -33,6 +35,7 @@ public class ASMPlugin implements IFMLLoadingPlugin {
 		return null;
 	}
 
+	@Nullable
 	@Override
 	public String getSetupClass() {
 		return null;

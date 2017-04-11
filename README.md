@@ -1,8 +1,8 @@
-# Base Metals [![Build Status](https://ci.mcmoddev.com/job/Base Metals/badge/icon)](https://ci.mcmoddev.com/job/Base Metals) [![Curseforge](http://cf.way2muchnoise.eu/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals) [![Versions](http://cf.way2muchnoise.eu/versions/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals)
+# Base Metals [![Build Status](https://ci.mcmoddev.com/job/Base Metals/badge/icon)](https://ci.mcmoddev.com/job/Base Metals) [![CurseForge](http://cf.way2muchnoise.eu/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals) [![Versions](http://cf.way2muchnoise.eu/versions/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals)
 
 ## Base Metals Mod
 
-This mod adds historically commonly used metals to Minecraft, specifically silver, copper, tin, lead, zinc, mercury, and nickel. You will also find a number of metal alloys in this mod and a new tool: the Crack Hammer.
+This mod adds historically commonly used metals to Minecraft, specifically Silver, Copper, Tin, Lead, Zinc, Mercury, and Nickel. You will also find a number of metal alloys in this mod and a new tool: the Crack Hammer.
 
 Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Adamantine, and Star Steel
 
@@ -14,7 +14,7 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 
 **Copper**: Copper is soft, easy to work, and fairly abundant. It is needed to make bronze and brass metal alloys.
 
-**Silver**: Silver is a soft, shiney metal that is valued for both is beauty and its alchemical uses.
+**Silver**: Silver is a soft, shiny metal that is valued for both is beauty and its alchemical uses.
 
 **Tin**: Tin is an extremely soft metal that is not useful by itself, but can be combined with copper to make bronze, a metal alloy nearly as strong as iron.
 
@@ -22,7 +22,7 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 
 **Zinc**: Like tin, zinc is worthless on its own, but can be used to make the metal ally brass.
 
-**Mercury**: This toxic liquid metal has many alchemical uses. The Mirthril metal alloys requires mercury.
+**Mercury**: This toxic liquid metal has many alchemical uses. The Mithril metal alloys requires mercury.
 
 **Nickel**: This metal is as soft as copper, but it has alchemical properties and forms the invar metal alloy when mixed with iron.
 
@@ -49,7 +49,7 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 
 **Adamantine** (found in the Nether): Adamantine is a rare magical metal that is as strong as diamond, maybe even stronger. Armor made from Adamantine grants resistance to damage and tools made from adamantine are extra effective against monsters that have more than 10 hearts of health.
 
-**Mithril**: Mithril is an alloy of alloy of silver, mercury, and cold-iron (2:1:1 ratio). It is as strong as steel and Mithral weapons are extra effective against undead.
+**Mithril**: Mithril is an alloy of alloy of silver, mercury, and cold-iron (2:1:1 ratio). It is as strong as steel and Mithril weapons are extra effective against undead.
 
 **Star-Steel** (found in the End): Armor made from Star Steel reduces the weight of the wearer, allowing the wearer to jump higher and fall slower. Star-Steel tools slowly repair themselves while held.
 
@@ -63,7 +63,7 @@ Also known as a sledgehammer, this tool is designed for pulverizing rocks. Using
 
 ## Requirements
 
-This mod requires that you install Minecraft Forge version 1.9-12.16.1.1887 or later (ealier versions of Forge for Minecraft 1.9 may work, but no guarentees).
+This mod requires that you install Minecraft Forge version 1.9-12.16.1.1887 or later (earlier versions of Forge for Minecraft 1.9 may work, but no guarantees).
 
 
 
@@ -78,7 +78,7 @@ The Crack Hammer recipes from this mod will appear in NEI if you have NEI instal
 
 ## Mod API
 
-Check the developer releases to download the files *basemetals-#.#.#-dev.jar*, *basemetals-#.#.#-src.jar*, *basemetals-#.#.#-javadoc.jar*. In your Eclipse project (and *build.gradle* file), add *basemetals-#.#.#-dev.jar* as a library dependency. All items and blocks can be conveniently accessed via classes in the *cyano.basemetals.init* package. New recipes for the Crack Hammer can be added via the *cyano.basemetals.registry.CrusherRecipeRegistry* class.
+Check the developer releases to download the files *basemetals-#.#.#-dev.jar*, *basemetals-#.#.#-src.jar*, *basemetals-#.#.#-javadoc.jar*. In your Eclipse project (and *build.gradle* file), add *basemetals-#.#.#-dev.jar* as a library dependency. All items and blocks can be conveniently accessed via classes in the *com.mcmoddev.basemetals.init* package. New recipes for the Crack Hammer can be added via the *com.mcmoddev.lib.registry.CrusherRecipeRegistry* class.
 
 
 ## Q&A
@@ -91,6 +91,6 @@ A: Minecraft appears to have a pre-industrial fantasy setting, but the fantasy l
 
 Q: What does the Crack Hammer do?
 
-A: When you break ores with the Crack Hammer, you get two piles of metal powders instead of a single block of ore. This is necessary to make metal alloys, which is done by combining the powders of the verious components and then smelting the alloy mix.
+A: When you break ores with the Crack Hammer, you get two piles of metal powders instead of a single block of ore. This is necessary to make metal alloys, which is done by combining the powders of the various components and then smelting the alloy mix.
 
 

@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.registry.recipe;
 
 import java.util.Collection;
+import java.util.List;
 
 import net.minecraft.item.ItemStack;
 
@@ -14,6 +15,13 @@ import net.minecraft.item.ItemStack;
  *
  */
 public interface ICrusherRecipe {
+
+	/**
+	 * Gets the input item(s) from applying this recipe.
+	 * 
+	 * @return An ItemStack instance of the result of this recipe
+	 */
+	public abstract List<ItemStack> getInputs();
 
 	/**
 	 * Gets the output item from applying this recipe.

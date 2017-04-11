@@ -8,6 +8,7 @@ import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.basemetals.data.MaterialNames;
 
 import cofh.api.util.ThermalExpansionHelper;
 import net.minecraft.item.ItemStack;
@@ -24,8 +25,7 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		}
 
 		Map<String, Boolean> materials = new HashMap<>();
-		
-		materials.put("Adamantine", Options.enableAdamantine);
+
 		materials.put("Adamantine", Options.enableAdamantine);
 		materials.put("Antimony", Options.enableAntimony);
 		materials.put("Aquarium", Options.enableAquarium);

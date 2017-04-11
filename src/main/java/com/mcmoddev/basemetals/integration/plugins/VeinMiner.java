@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 
@@ -21,24 +22,31 @@ public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBas
 			return;
 		}
 
-		addToolsForMaterial("aluminum");
-		addToolsForMaterial("aluminumbrass");
-		addToolsForMaterial("cadmium");
-		addToolsForMaterial("chromium");
-		addToolsForMaterial("galvanizedsteel");
-		addToolsForMaterial("iridium");
-		addToolsForMaterial("magnesium");
-		addToolsForMaterial("manganese");
-		addToolsForMaterial("nichrome");
-		addToolsForMaterial("osmium");
-		addToolsForMaterial("plutonium");
-		addToolsForMaterial("rutile");
-		addToolsForMaterial("stainlesssteel");
-		addToolsForMaterial("tantalum");
-		addToolsForMaterial("titanium");
-		addToolsForMaterial("tungsten");
-		addToolsForMaterial("uranium");
-		addToolsForMaterial("zirconium");
+		addToolsForMaterial(MaterialNames.ADAMANTINE);
+		addToolsForMaterial(MaterialNames.ANTIMONY);
+		addToolsForMaterial(MaterialNames.AQUARIUM);
+		addToolsForMaterial(MaterialNames.BISMUTH);
+		addToolsForMaterial(MaterialNames.BRASS);
+		addToolsForMaterial(MaterialNames.BRONZE);
+		addToolsForMaterial(MaterialNames.COLDIRON);
+		addToolsForMaterial(MaterialNames.COPPER);
+		addToolsForMaterial(MaterialNames.CUPRONICKEL);
+		addToolsForMaterial(MaterialNames.DIAMOND);
+		addToolsForMaterial(MaterialNames.ELECTRUM);
+		addToolsForMaterial(MaterialNames.GOLD);
+		addToolsForMaterial(MaterialNames.INVAR);
+		addToolsForMaterial(MaterialNames.IRON);
+		addToolsForMaterial(MaterialNames.LEAD);
+		addToolsForMaterial(MaterialNames.MITHRIL);
+		addToolsForMaterial(MaterialNames.NICKEL);
+		addToolsForMaterial(MaterialNames.PEWTER);
+		addToolsForMaterial(MaterialNames.PLATINUM);
+		addToolsForMaterial(MaterialNames.SILVER);
+		addToolsForMaterial(MaterialNames.STARSTEEL);
+		addToolsForMaterial(MaterialNames.STEEL);
+		addToolsForMaterial(MaterialNames.TIN);
+		addToolsForMaterial(MaterialNames.WOOD);
+		addToolsForMaterial(MaterialNames.ZINC);
 
 		initDone = true;
 	}

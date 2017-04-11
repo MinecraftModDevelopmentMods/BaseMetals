@@ -13,22 +13,20 @@ import mezz.jei.api.recipe.IRecipeWrapper;
  */
 public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeWrapper> {
 
-	private static final String ID = BaseMetalsJEIPlugin.JEIUID;
+	@Override
+	public Class<CrusherRecipeWrapper> getRecipeClass() {
+		return CrusherRecipeWrapper.class;
+	}
 
 	@Nonnull
 	@Override
 	public String getRecipeCategoryUid(@Nonnull CrusherRecipeWrapper recipe) {
-		return ID + ".crackhammer";
+		return BaseMetalsJEIPlugin.JEIUID + ".crackhammer";
 	}
 
 	@Override
 	public String getRecipeCategoryUid() {
-		return ID;
-	}
-
-	@Override
-	public Class<CrusherRecipeWrapper> getRecipeClass() {
-		return CrusherRecipeWrapper.class;
+		return BaseMetalsJEIPlugin.JEIUID;
 	}
 
 	@Override

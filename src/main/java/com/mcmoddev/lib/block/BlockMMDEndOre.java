@@ -33,7 +33,7 @@ public class BlockMMDEndOre extends BlockOre implements IOreDictionaryEntry, IMM
 		this.blockHardness = Math.max(5f, material.getOreBlockHardness());
 		this.blockResistance = Math.max(1.5f, material.getBlastResistance() * 0.75f);
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
-		this.oreDict = Oredicts.OREEND + material.getCapitalizedName();
+		this.oreDict = Oredicts.ORE_END + material.getCapitalizedName();
 		// FMLLog.info(material.getName() + " ore harvest level set to " + material.getRequiredHarvestLevel());
 	}
 
