@@ -10,39 +10,39 @@ import net.minecraftforge.fml.common.Loader;
 /** initializer for achievements */
 public class Achievements extends com.mcmoddev.lib.init.Achievements {
 
-	/** smelt a new metal ingot */
+	/** Smelt a new metal ingot */
 	public static Achievement thisIsNew;
-	/** make a metal block */
+	/** Make a metal block */
 	public static Achievement blocktastic;
-	/** make a crack hammer */
+	/** Make a Crack Hammer */
 	public static Achievement geologist;
-	/** make any alloy ingot */
+	/** Make any alloy ingot */
 	public static Achievement metallurgy;
-	/** make brass blend */
+	/** Make Brass blend */
 	public static Achievement brassMaker;
-	/** make bronze blend */
+	/** Make Bronze blend */
 	public static Achievement bronzeMaker;
-	/** make electrum blend */
+	/** Make Electrum blend */
 	public static Achievement electrumMaker;
-	/** make cupronickel blend */
+	/** Make Cupronickel blend */
 	public static Achievement cupronickelMaker;
-	/** make steel blend */
+	/** Make Steel blend */
 	public static Achievement steelMaker;
-	/** make invar blend */
+	/** Make Invar blend */
 	public static Achievement invarMaker;
-	/** make mithril blend */
+	/** Make Mithril blend */
 	public static Achievement mithrilMaker;
-	/** make aquarium blend */
+	/** Make Aquarium blend */
 	public static Achievement aquariumMaker;
-	/** decked out completely in cold-iron */
+	/** Decked out completely in Cold-Iron */
 	public static Achievement demonSlayer;
-	/** decked out fully in mithril */
+	/** Decked out fully in Mithril */
 	public static Achievement angelOfDeath;
-	/** full suit of aquarium armor */
+	/** Full suit of Aquarium armor */
 	public static Achievement scubaDiver;
-	/** craft star-steel boots */
+	/** Craft Star-Steel boots */
 	public static Achievement moonBoots;
-	/** full suit of adamantine armor */
+	/** Full suit of Adamantine armor */
 	public static Achievement juggernaut;
 
 	private static boolean initDone = false;

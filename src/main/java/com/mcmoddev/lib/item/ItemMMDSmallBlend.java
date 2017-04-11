@@ -31,7 +31,7 @@ public class ItemMMDSmallBlend extends Item implements IOreDictionaryEntry, IMMD
 	public ItemMMDSmallBlend(MMDMaterial material) {
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = Oredicts.DUSTTINY + this.material.getCapitalizedName(); // same oreDict entry as powder
+		this.oreDict = Oredicts.DUST_TINY + this.material.getCapitalizedName(); // same oreDict entry as powder
 	}
 
 	@Override

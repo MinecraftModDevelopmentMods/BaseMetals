@@ -14,6 +14,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Tool Effects
@@ -85,6 +87,7 @@ public abstract class MMDToolEffects {
 	 * @param tooltipList
 	 *            The tooltip list
 	 */
+	@SideOnly(Side.CLIENT)
 	public static void addToolSpecialPropertiesToolTip(MMDMaterial material, java.util.List<String> tooltipList) {
 		if ((Options.enableAdamantine) && (material.equals(Materials.adamantine))) {
 			tooltipList.add(I18n.format("tooltip.adamantine.tool", 4));
@@ -110,6 +113,7 @@ public abstract class MMDToolEffects {
 	 * @param tooltipList
 	 *            The tooltip list
 	 */
+	@SideOnly(Side.CLIENT)
 	public static void addArmorSpecialPropertiesToolTip(MMDMaterial material, java.util.List<String> tooltipList) {
 		if ((Options.enableAdamantine) && (material.equals(Materials.adamantine))) {
 			tooltipList.add(I18n.format("tooltip.adamantine.armor", 4));

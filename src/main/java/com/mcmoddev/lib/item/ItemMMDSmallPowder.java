@@ -26,7 +26,7 @@ public class ItemMMDSmallPowder extends Item implements IOreDictionaryEntry, IMM
 	public ItemMMDSmallPowder(MMDMaterial material) {
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = Oredicts.DUSTTINY + this.material.getCapitalizedName();
+		this.oreDict = Oredicts.DUST_TINY + this.material.getCapitalizedName();
 	}
 
 	@Override

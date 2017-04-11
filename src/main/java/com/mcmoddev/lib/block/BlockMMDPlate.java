@@ -2,6 +2,8 @@ package com.mcmoddev.lib.block;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
@@ -247,7 +249,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IOreDict
 	@Deprecated
 	public void addCollisionBoxToList(final IBlockState bs, final World world, final BlockPos coord,
 									  final AxisAlignedBB box, final List<AxisAlignedBB> collisionBoxList,
-									  final Entity entity) {
+									  @Nullable final Entity entity) {
 
 		final EnumFacing orientation = world.getBlockState(coord).getValue(FACING);
 		super.addCollisionBoxToList(coord, box, collisionBoxList, BOXES[orientation.ordinal()]);

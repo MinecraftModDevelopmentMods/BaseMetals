@@ -790,7 +790,7 @@ public abstract class Items {
 
 		if ((Options.enableMekanism) && (material.powderDirty == null)) {
 			material.powderDirty = addItem(new GenericMMDItem(material), "powder_dirty", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.DUSTDIRTY + material.getCapitalizedName(), material.powderDirty);
+			OreDictionary.registerOre(Oredicts.DUST_DIRTY + material.getCapitalizedName(), material.powderDirty);
 		}
 
 		return material.powderDirty;
@@ -828,7 +828,7 @@ public abstract class Items {
 
 		if ((Options.enableIC2) && (material.densePlate == null)) {
 			material.densePlate = addItem(new GenericMMDItem(material), "dense_plate", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.PLATEDENSE + material.getCapitalizedName(), material.densePlate);
+			OreDictionary.registerOre(Oredicts.PLATE_DENSE + material.getCapitalizedName(), material.densePlate);
 		}
 
 		return material.densePlate;
@@ -864,7 +864,7 @@ public abstract class Items {
 
 		if ((Options.enableIC2) && (material.crushedPurified == null)) {
 			material.crushedPurified = addItem(new GenericMMDItem(material), "crushed_purified", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.CRUSHEDPURIFIED + material.getCapitalizedName(), material.crushedPurified);
+			OreDictionary.registerOre(Oredicts.CRUSHED_PURIFIED + material.getCapitalizedName(), material.crushedPurified);
 		}
 
 		return material.crushedPurified;

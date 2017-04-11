@@ -1,31 +1,19 @@
 package com.mcmoddev.basemetals;
 
-import java.util.Arrays;
-import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
-import net.minecraftforge.fml.common.registry.GameData;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * This is the entry point for this Mod. If you are writing your own Mod that
@@ -60,7 +48,7 @@ public class BaseMetals {
 	static final String NAME = "Base Metals";
 
 	/**
-	 * Version number, in Major.Minor.Build format. The minor number is
+	 * Version number, in Major.Minor.Patch format. The minor number is
 	 * increased whenever a change is made that has the potential to break
 	 * compatibility with other mods that depend on this one.
 	 */
@@ -125,16 +113,16 @@ public class BaseMetals {
 //			ItemStack stack = ent.getKey();
 //			ItemStack outStack = ent.getValue();
 //			logger.fatal("%s => %s", stack, outStack);
-//			String orenames = "";
+//			String oreNames = "";
 //			for( int i : OreDictionary.getOreIDs(stack))
-//				orenames += " " + OreDictionary.getOreName(i);
-//			logger.fatal("Ore 1: %s", orenames == "" ? "No Ores" : orenames);
+//				oreNames += " " + OreDictionary.getOreName(i);
+//			logger.fatal("Ore 1: %s", oreNames == "" ? "No Ores" : oreNames);
 //			
 //			
-//			orenames = "";
+//			oreNames = "";
 //			for( int i : OreDictionary.getOreIDs(new ItemStack(stack.getItem())))
-//				orenames += " " + OreDictionary.getOreName(i);
-//			logger.fatal("Ore 2: %s", orenames == "" ? "No Ores" : orenames);
+//				oreNames += " " + OreDictionary.getOreName(i);
+//			logger.fatal("Ore 2: %s", oreNames == "" ? "No Ores" : oreNames);
 //		}
 //		
 //		logger.fatal("=========== ORE DICTIONARY DUMP START ===========");
@@ -149,5 +137,4 @@ public class BaseMetals {
 //		}
 //		logger.fatal("=========== ORE DICTIONARY DUMP END ===========");
 //	}
-
 }

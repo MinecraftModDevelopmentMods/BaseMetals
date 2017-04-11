@@ -2,7 +2,10 @@ package com.mcmoddev.lib.registry.recipe;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -15,8 +18,8 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 
-	private final ItemStack output;
 	private final ItemStack input;
+	private final ItemStack output;
 
 	/**
 	 * Constructs a new instance of this ICrusherRecipe class representing a
@@ -37,6 +40,58 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 			throw new NullPointerException(this.getClass().getName() + ": cannot have null input item");
 		if (output == null)
 			throw new NullPointerException(this.getClass().getName() + ": cannot have null output item");
+	}
+
+	/**
+	 * Constructs a new instance of this ICrusherRecipe class representing a
+	 * recipe with an input and an output. If the input ItemStack has
+	 * OreDictionary.WILDCARD_VALUE as its damage value, then metadata values
+	 * will be ignored when testing an item for being a valid input for this
+	 * recipe.
+	 * 
+	 * @param input
+	 *            The input item as an Item reference.
+	 * @param output
+	 *            The result of applying this recipe to an input item
+	 */
+	public ArbitraryCrusherRecipe(Item input, ItemStack output) {
+		this.input = new ItemStack(input);
+		this.output = output;
+		if (input == null)
+			throw new NullPointerException(this.getClass().getName() + ": cannot have null input item");
+		if (output == null)
+			throw new NullPointerException(this.getClass().getName() + ": cannot have null output item");
+	}
+
+	/**
+	 * Constructs a new instance of this ICrusherRecipe class representing a
+	 * recipe with an input and an output. If the input ItemStack has
+	 * OreDictionary.WILDCARD_VALUE as its damage value, then metadata values
+	 * will be ignored when testing an item for being a valid input for this
+	 * recipe.
+	 * 
+	 * @param input
+	 *            The input item as an Item reference.
+	 * @param output
+	 *            The result of applying this recipe to an input item
+	 */
+	public ArbitraryCrusherRecipe(Block input, ItemStack output) {
+		this.input = new ItemStack(input);
+		this.output = output;
+		if (input == null)
+			throw new NullPointerException(this.getClass().getName() + ": cannot have null input item");
+		if (output == null)
+			throw new NullPointerException(this.getClass().getName() + ": cannot have null output item");
+	}
+
+	/**
+	 * Gets the output item from applying this recipe.
+	 * 
+	 * @return An ItemStack instance of the result of this recipe
+	 */
+	@Override
+	public List<ItemStack> getInputs() {
+		return Collections.singletonList(this.input.copy());
 	}
 
 	/**

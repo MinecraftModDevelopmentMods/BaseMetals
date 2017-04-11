@@ -42,6 +42,6 @@ public class IC2Base implements IIntegration {
 	protected void addMaceratorRecipes(MMDMaterial material) {
 		String oreDictName = material.getCapitalizedName();
 		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.ORE + oreDictName, 0), null, false, new ItemStack(material.crushed, 2));
-		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.PLATEDENSE + oreDictName, 0), null, false, new ItemStack(material.powder, 8));
+		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.PLATE_DENSE + oreDictName, 0), null, false, new ItemStack(material.powder, 8));
 	}
 }

@@ -20,22 +20,25 @@ import net.minecraft.world.World;
 public class ItemFishingRod extends net.minecraft.item.ItemFishingRod {
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		if (playerIn.fishEntity != null) {
 			final int i = playerIn.fishEntity.handleHookRetraction();
-			itemStackIn.damageItem(i, playerIn);
+			itemStack.damageItem(i, playerIn);
 			playerIn.swingArm(hand);
 		} else {
 			worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / ((itemRand.nextFloat() * 0.4F) + 0.8F));
 
-			if (!worldIn.isRemote)
+			if (!worldIn.isRemote) {
 				// Changed from MC EntityFishHook to BMe EntityFishHook
-				worldIn.spawnEntity(new EntityFishHook(worldIn, playerIn));
+				EntityFishHook entityfishhook = new EntityFishHook(worldIn, playerIn);
+
+				worldIn.spawnEntity(entityfishhook);
+			}
 
 			playerIn.swingArm(hand);
 			playerIn.addStat(StatList.getObjectUseStats(this));
 		}
 
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
 	}
 }

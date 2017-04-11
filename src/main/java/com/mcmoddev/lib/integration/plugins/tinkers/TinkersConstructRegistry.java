@@ -342,7 +342,7 @@ public class TinkersConstructRegistry {
 		meltingHelper(Oredicts.INGOT + oreDictName, output, amountPer);
 		meltingHelper(Oredicts.NUGGET + oreDictName, output, amountPer / 9);
 		meltingHelper(Oredicts.DUST + oreDictName, output, amountPer);
-		meltingHelper(Oredicts.DUSTSMALL + oreDictName, output, amountPer / 9);
+		meltingHelper(Oredicts.DUST_SMALL + oreDictName, output, amountPer / 9);
 		meltingHelper(base.oreNether, output, amountPer * 4);
 		meltingHelper(base.oreEnd, output, amountPer * 4);
 

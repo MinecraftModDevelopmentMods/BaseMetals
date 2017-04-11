@@ -389,7 +389,7 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 	 *
 	 * 
 	 * @deprecated
-	 * @return An unmodifiable map of added items catagorized by metal material
+	 * @return An unmodifiable map of added items categorized by metal material
 	 */
 	@Deprecated
 	public static Map<MMDMaterial, List<Item>> getItemsByMetal() {

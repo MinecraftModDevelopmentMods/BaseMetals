@@ -174,21 +174,21 @@ public class MMDMaterial {
 	 * @param name
 	 *            String used to identify items and blocks using this material
 	 * @param type
-	 *            Base type of the material - is it a metal, a mineral, a gem ?
+	 *            Base type of the material - is it a Metal, a Mineral, a Gem ?
 	 * @param hardness
 	 *            hardness on a scale from 0 to 10 (or more), where 0 is
-	 *            non-solid and diamond is 10. For reference, wood is 3, stone
-	 *            is 5, iron is 8, diamond is 10. Used for damage, armor
+	 *            non-solid and Diamond is 10. For reference, Wood is 3, Stone
+	 *            is 5, Iron is 8, Diamond is 10. Used for damage, armor
 	 *            protection, and tool effectiveness calculations
 	 * @param strength
 	 *            durability on a scale from 0 to 10 (or more). For reference,
-	 *            leather is 2.5, gold is 3, wood is 2, stone is 4, iron is 8,
-	 *            minecraft diamond is 10. Used for item durability calculations
+	 *            Leather is 2.5, Gold is 3, Wood is 2, Stone is 4, Iron is 8,
+	 *            Diamond is 10. Used for item durability calculations
 	 *            and blast resistance
 	 * @param magic
 	 *            Scale from 0 to 10 (or more) on how magical the material is.
-	 *            For reference, stone is 2, iron is 4.5, diamond is 4, wood is
-	 *            6, gold is 10. Used to calculate enchantibility
+	 *            For reference, Stone is 2, Iron is 4.5, Diamond is 4, Wood is
+	 *            6, Gold is 10. Used to calculate enchantability
 	 * @param tintColor
 	 *            Color Info for the metal
 	 * @param isRare
@@ -408,9 +408,9 @@ public class MMDMaterial {
 	}
 
 	/**
-	 * Gets the enchantibility score for this material
+	 * Gets the enchantability score for this material
 	 * 
-	 * @return the enchantibility score for this material
+	 * @return the enchantability score for this material
 	 */
 	public int getEnchantability() {
 		return (int) (2.5f * this.magicAffinity);

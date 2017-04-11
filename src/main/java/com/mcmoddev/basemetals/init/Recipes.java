@@ -51,10 +51,10 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 		if (!Options.disableAllHammerRecipes) {
 			if (Options.enableWood) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_wood.crackhammer), "x", "/", "/", 'x', Oredicts.LOGWOOD, '/', Oredicts.STICKWOOD));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_wood.crackhammer), "x", "/", "/", 'x', Oredicts.LOG_WOOD, '/', Oredicts.STICK_WOOD));
 			}
 			if (Options.enableStone) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_stone.crackhammer), "x", "/", "/", 'x', net.minecraft.init.Blocks.STONEBRICK, '/', Oredicts.STICKWOOD));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.vanilla_stone.crackhammer), "x", "/", "/", 'x', net.minecraft.init.Blocks.STONEBRICK, '/', Oredicts.STICK_WOOD));
 			}
 		}
 
@@ -179,45 +179,45 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 	private static void initModSpecificRecipes() {
 		if (Options.enableBrass) {
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.brass.blend, 3), Oredicts.DUSTCOPPER, Oredicts.DUSTCOPPER, Oredicts.DUSTZINC));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.brass.smallblend, 3), Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYZINC));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.brass.blend, 3), Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_ZINC));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.brass.smallblend, 3), Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_ZINC));
 		}
 		if (Options.enableBronze) {
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.bronze.blend, 4), Oredicts.DUSTCOPPER, Oredicts.DUSTCOPPER, Oredicts.DUSTCOPPER, Oredicts.DUSTTIN));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.bronze.smallblend, 4), Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYTIN));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.bronze.blend, 4), Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_TIN));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.bronze.smallblend, 4), Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_TIN));
 		}
 		if (Options.enableSteel) {
 			OreDictionary.registerOre(Oredicts.SPROCKET, Materials.steel.gear);
 
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.blend, 8), Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTCARBON));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.smallblend, 8), Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYCARBON));
+			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.blend, 8), Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_CARBON));
+			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.smallblend, 8), Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_CARBON));
 
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.blend, 8), Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTCHARCOAL));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.smallblend, 8), Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYCHARCOAL));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.blend, 8), Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_CHARCOAL));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.smallblend, 8), Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_CHARCOAL));
 
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.blend, 8), Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTCOAL));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.smallblend, 8), Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYCOAL));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.blend, 8), Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_COAL));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.steel.smallblend, 8), Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_COAL));
 		}
 		if (Options.enableInvar) {
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.invar.blend, 3), Oredicts.DUSTIRON, Oredicts.DUSTIRON, Oredicts.DUSTNICKEL));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.invar.smallblend, 3), Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYIRON, Oredicts.DUSTTINYNICKEL));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.invar.blend, 3), Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_NICKEL));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.invar.smallblend, 3), Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_NICKEL));
 		}
 		if (Options.enableCupronickel) {
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.cupronickel.blend, 4), Oredicts.DUSTCOPPER, Oredicts.DUSTCOPPER, Oredicts.DUSTCOPPER, Oredicts.DUSTNICKEL));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.cupronickel.smallblend, 4), Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYNICKEL));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.cupronickel.blend, 4), Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_NICKEL));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.cupronickel.smallblend, 4), Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_NICKEL));
 		}
 		if (Options.enableElectrum) {
 			addSimpleAlloyRecipe(Materials.electrum, 2, "Gold", "Silver");
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.electrum.blend, 2), Oredicts.DUSTSILVER, Oredicts.DUSTGOLD));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.electrum.smallblend, 2), Oredicts.DUSTTINYSILVER, Oredicts.DUSTTINYGOLD));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.electrum.blend, 2), Oredicts.DUST_SILVER, Oredicts.DUST_GOLD));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.electrum.smallblend, 2), Oredicts.DUST_TINY_SILVER, Oredicts.DUST_TINY_GOLD));
 		}
 		if (Options.enableMithril) {
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.mithril.blend, 3), Oredicts.DUSTSILVER, Oredicts.DUSTSILVER, Oredicts.DUSTCOLDIRON, Oredicts.INGOTMERCURY));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.mithril.smallblend, 3), Oredicts.DUSTTINYSILVER, Oredicts.DUSTTINYSILVER, Oredicts.DUSTTINYCOLDIRON, Oredicts.NUGGETMERCURY));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.mithril.blend, 3), Oredicts.DUST_SILVER, Oredicts.DUST_SILVER, Oredicts.DUST_COLDIRON, Oredicts.INGOT_MERCURY));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.mithril.smallblend, 3), Oredicts.DUST_TINY_SILVER, Oredicts.DUST_TINY_SILVER, Oredicts.DUST_TINY_COLDIRON, Oredicts.NUGGET_MERCURY));
 		}
 		if (Options.enableAquarium) {
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.aquarium.blend, 3), Oredicts.DUSTCOPPER, Oredicts.DUSTCOPPER, Oredicts.DUSTZINC, Oredicts.DUSTPRISMARINE, Oredicts.DUSTPRISMARINE, Oredicts.DUSTPRISMARINE));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.aquarium.smallblend, 3), Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYCOPPER, Oredicts.DUSTTINYZINC, Oredicts.DUSTPRISMARINE));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.aquarium.blend, 3), Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_ZINC, Oredicts.DUST_PRISMARINE, Oredicts.DUST_PRISMARINE, Oredicts.DUST_PRISMARINE));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.aquarium.smallblend, 3), Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_ZINC, Oredicts.DUST_PRISMARINE));
 		}
 
 		// Alt oreDict Adamantite
@@ -225,44 +225,45 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			addAdditionalOredicts(Materials.adamantine, "Adamantite");
 		}
 
-		// Alt oreDict Adamantite
+		// Alt oreDict Adamantium
 		if (Options.enableAdamantine) {
 			addAdditionalOredicts(Materials.adamantine, "Adamantium");
 		}
 
-		// Alt oreDict Adamantite
+		// Alt oreDict Adamant
 		if (Options.enableAdamantine) {
 			addAdditionalOredicts(Materials.adamantine, "Adamant");
 		}
 
 		if (Options.enableMercury) {
+			addAdditionalOredicts(Materials.mercury, "Quicksilver");
+
 			if (FluidRegistry.isUniversalBucketEnabled()) {
 				final UniversalBucket universalBucket = ForgeModContainer.getInstance().universalBucket;
 				final ItemStack bucketMercury = new ItemStack(universalBucket, 1, 0);
 				universalBucket.fill(bucketMercury, new FluidStack(Materials.mercury.fluid, universalBucket.getCapacity()), true);
-				GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY, Oredicts.INGOTMERCURY));
+				GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY));
 			}
-			addAdditionalOredicts(Materials.mercury, "Quicksilver");
 		}
 
 		// misc recipes
 		if (Options.enableSteel) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.ACTIVATOR_RAIL, 6), "x/x", "x*x", "x/x", 'x', Oredicts.INGOTSTEEL, '/', Oredicts.STICKWOOD, '*', net.minecraft.init.Blocks.REDSTONE_TORCH));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.DETECTOR_RAIL, 6), "x x", "x-x", "x*x", 'x', Oredicts.INGOTSTEEL, '/', Oredicts.STICKWOOD, '-', net.minecraft.init.Blocks.STONE_PRESSURE_PLATE, '*', Oredicts.DUSTREDSTONE));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.RAIL, 16), "x x", "x/x", "x x", 'x', Oredicts.INGOTSTEEL, '/', Oredicts.STICKWOOD));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.ACTIVATOR_RAIL, 6), "x/x", "x*x", "x/x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '*', net.minecraft.init.Blocks.REDSTONE_TORCH));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.DETECTOR_RAIL, 6), "x x", "x-x", "x*x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '-', net.minecraft.init.Blocks.STONE_PRESSURE_PLATE, '*', Oredicts.DUST_REDSTONE));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.RAIL, 16), "x x", "x/x", "x x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD));
 			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE), "xx", 'x', Oredicts.INGOTSTEEL));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.TRIPWIRE_HOOK), "x  ", "/  ", "w  ", 'x', Oredicts.INGOTSTEEL, '/', Oredicts.STICKWOOD, 'w', Oredicts.PLANKWOOD));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(net.minecraft.init.Items.FLINT_AND_STEEL), Oredicts.INGOTSTEEL, net.minecraft.init.Items.FLINT));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.HOPPER), "x x", "x/x", " x ", 'x', Oredicts.INGOTSTEEL, '/', Oredicts.CHESTWOOD));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.MINECART), "x x", "xxx", 'x', Oredicts.INGOTSTEEL));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.PISTON), "www", "sxs", "s*s", 'x', Oredicts.INGOTSTEEL, 'w', Oredicts.PLANKWOOD, 's', Oredicts.COBBLESTONE, '*', Oredicts.DUSTREDSTONE));
-			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), "x ", " x", 'x', Oredicts.INGOTSTEEL));
-			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), " x", "x ", 'x', Oredicts.INGOTSTEEL));
-			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHIELD), "wxw", "www", " w ", 'w', Oredicts.PLANKWOOD, 'x', Oredicts.INGOTSTEEL));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.TRIPWIRE_HOOK), "x  ", "/  ", "w  ", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, 'w', Oredicts.PLANK_WOOD));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(net.minecraft.init.Items.FLINT_AND_STEEL), Oredicts.INGOT_STEEL, net.minecraft.init.Items.FLINT));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.HOPPER), "x x", "x/x", " x ", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.CHEST_WOOD));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.MINECART), "x x", "xxx", 'x', Oredicts.INGOT_STEEL));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.PISTON), "www", "sxs", "s*s", 'x', Oredicts.INGOT_STEEL, 'w', Oredicts.PLANK_WOOD, 's', Oredicts.COBBLESTONE, '*', Oredicts.DUST_REDSTONE));
+			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), "x ", " x", 'x', Oredicts.INGOT_STEEL));
+			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), " x", "x ", 'x', Oredicts.INGOT_STEEL));
+			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHIELD), "wxw", "www", " w ", 'w', Oredicts.PLANK_WOOD, 'x', Oredicts.INGOT_STEEL));
 		}
 
 		// new recipes using rods and gears
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.LEVER, 1), "x", "y", 'x', Oredicts.ROD, 'y', Oredicts.COBBLESTONE));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.human_detector, 1), "xx", "yy", 'x', Oredicts.INGOTBRICK, 'y', Oredicts.GEAR));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.human_detector, 1), "xx", "yy", 'x', Oredicts.INGOT_BRICK, 'y', Oredicts.GEAR));
 	}
 }

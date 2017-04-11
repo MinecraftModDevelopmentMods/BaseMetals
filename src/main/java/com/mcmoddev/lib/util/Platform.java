@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class Platform {
 
-	private static int devEnv = 0;
+	private static boolean devEnv = false;
 
 	private Platform() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -133,11 +133,11 @@ public class Platform {
 	 * @return True if running in a dev-environment
 	 */
 	public static boolean isDevEnv() {
-		return devEnv != 0;
+		return devEnv;
 	}
 
 	public static void setDev(boolean dev) {
-		if (devEnv == -1)
-			devEnv = dev ? 1 : 0;
+		if (!(devEnv))
+			devEnv = dev;
 	}
 }

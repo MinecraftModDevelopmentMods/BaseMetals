@@ -216,7 +216,7 @@ public class Blocks extends com.mcmoddev.basemetals.init.Blocks {
 	 * Gets a map of all blocks added, sorted by material
 	 * 
 	 * @deprecated
-	 * @return An unmodifiable map of added items catagorized by material
+	 * @return An unmodifiable map of added items categorized by material
 	 */
 	@Deprecated
 	public static Map<MMDMaterial, List<Block>> getBlocksByMetal() {

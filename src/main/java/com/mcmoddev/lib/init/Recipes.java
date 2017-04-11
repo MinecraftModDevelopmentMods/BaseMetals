@@ -52,16 +52,16 @@ public abstract class Recipes {
 	}
 
 	protected static void initPureVanillaOredicts() {
-		OreDictionary.registerOre(Oredicts.BARSIRON, net.minecraft.init.Blocks.IRON_BARS);
+		OreDictionary.registerOre(Oredicts.BARS_IRON, net.minecraft.init.Blocks.IRON_BARS);
 		OreDictionary.registerOre(Oredicts.BARS, net.minecraft.init.Blocks.IRON_BARS);
-		OreDictionary.registerOre(Oredicts.DOORIRON, net.minecraft.init.Items.IRON_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR_IRON, net.minecraft.init.Items.IRON_DOOR);
 		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.IRON_DOOR);
-		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.OAK_DOOR);
-		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.JUNGLE_DOOR);
-		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.SPRUCE_DOOR);
-		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.DARK_OAK_DOOR);
-		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.BIRCH_DOOR);
-		OreDictionary.registerOre(Oredicts.DOORWOOD, net.minecraft.init.Items.ACACIA_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR_WOOD, net.minecraft.init.Items.OAK_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR_WOOD, net.minecraft.init.Items.JUNGLE_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR_WOOD, net.minecraft.init.Items.SPRUCE_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR_WOOD, net.minecraft.init.Items.DARK_OAK_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR_WOOD, net.minecraft.init.Items.BIRCH_DOOR);
+		OreDictionary.registerOre(Oredicts.DOOR_WOOD, net.minecraft.init.Items.ACACIA_DOOR);
 		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.OAK_DOOR);
 		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.JUNGLE_DOOR);
 		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.SPRUCE_DOOR);
@@ -97,11 +97,11 @@ public abstract class Recipes {
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.GLOWSTONE, new ItemStack(net.minecraft.init.Items.GLOWSTONE_DUST, 4)); // Glowstone to 4 Glowstone Dust
 
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORELAPIS, new ItemStack(net.minecraft.init.Items.DYE, 8, 4)); // Lapis Ore to 8 Lapis
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCKLAPIS, new ItemStack(net.minecraft.init.Items.DYE, 9, 4)); // Lapis Block to 9 Lapis
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE_LAPIS, new ItemStack(net.minecraft.init.Items.DYE, 8, 4)); // Lapis Ore to 8 Lapis
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK_LAPIS, new ItemStack(net.minecraft.init.Items.DYE, 9, 4)); // Lapis Block to 9 Lapis
 
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.OREREDSTONE, new ItemStack(net.minecraft.init.Items.REDSTONE, 8)); // Redstone Ore to 8 Redstone
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCKREDSTONE, new ItemStack(net.minecraft.init.Items.REDSTONE, 9)); // Redstone Block to 9 Redstone
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE_REDSTONE, new ItemStack(net.minecraft.init.Items.REDSTONE, 8)); // Redstone Ore to 8 Redstone
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK_REDSTONE, new ItemStack(net.minecraft.init.Items.REDSTONE, 9)); // Redstone Block to 9 Redstone
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.REEDS, new ItemStack(net.minecraft.init.Items.SUGAR, 2)); // Sugar Cane to 2 Sugar
 
@@ -110,7 +110,7 @@ public abstract class Recipes {
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.BLAZE_ROD, new ItemStack(net.minecraft.init.Items.BLAZE_POWDER, 2)); // Blaze Rod to 2 Blaze Powder
 
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.OREQUARTZ, new ItemStack(net.minecraft.init.Items.QUARTZ, 2)); // Nether Quartz Ore to 2 Quartz
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE_QUARTZ, new ItemStack(net.minecraft.init.Items.QUARTZ, 2)); // Nether Quartz Ore to 2 Quartz
 		// CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCKQUARTZ, new ItemStack(net.minecraft.init.Items.QUARTZ, 4)); // Quartz Block to 4 Quartz
 		// CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.QUARTZ_BLOCK, 1), new ItemStack(net.minecraft.init.Items.QUARTZ, 4)); // Quartz Block to 4 Quartz
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.QUARTZ_BLOCK, new ItemStack(net.minecraft.init.Items.QUARTZ, 4)); // Quartz Block to 4 Quartz
@@ -172,7 +172,7 @@ public abstract class Recipes {
 				}
 
 				if ((material.crackhammer != null) && (!Options.disableAllHammerRecipes)) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.crackhammer), "x", "/", "/", 'x', Oredicts.BLOCK + oreDictName, '/', Oredicts.STICKWOOD));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.crackhammer), "x", "/", "/", 'x', Oredicts.BLOCK + oreDictName, '/', Oredicts.STICK_WOOD));
 					if (Config.Options.furnaceCheese) {
 						GameRegistry.addSmelting(new ItemStack(material.crackhammer), new ItemStack(material.block, 1), 0);
 					} else if (Config.Options.furnace1112) {
@@ -234,7 +234,7 @@ public abstract class Recipes {
 				}
 
 				if (material.shield != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shield), "xyx", "xxx", " x ", 'y', Oredicts.PLANKWOOD, 'x', Oredicts.INGOT + oreDictName));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shield), "xyx", "xxx", " x ", 'y', Oredicts.PLANK_WOOD, 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(new ItemStack(material.shield), new ItemStack(material.ingot, 6), 0); // 1 wood loss
 					if (material.plate != null) {
 						if (Options.enablePlateRepairs) {
@@ -387,7 +387,7 @@ public abstract class Recipes {
 		}
 
 		if ((material.axe != null) && (material.axe instanceof IMMDObject)) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "x/", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.axe), "xx", "x/", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(new ItemStack(material.axe), new ItemStack(material.ingot, 3), 0);
 			} else if (Config.Options.furnace1112) {
@@ -396,7 +396,7 @@ public abstract class Recipes {
 		}
 
 		if ((material.hoe != null) && (material.hoe instanceof IMMDObject)) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", " /", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.hoe), "xx", " /", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(new ItemStack(material.hoe), new ItemStack(material.ingot, 2), 0);
 			} else if (Config.Options.furnace1112) {
@@ -405,7 +405,7 @@ public abstract class Recipes {
 		}
 
 		if ((material.pickaxe != null) && (material.pickaxe instanceof IMMDObject)) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.pickaxe), "xxx", " / ", " / ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.pickaxe), "xxx", " / ", " / ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(new ItemStack(material.pickaxe), new ItemStack(material.ingot, 3), 0);
 			} else if (Config.Options.furnace1112) {
@@ -414,7 +414,7 @@ public abstract class Recipes {
 		}
 
 		if ((material.shovel != null) && (material.shovel instanceof IMMDObject)) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shovel), "x", "/", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.shovel), "x", "/", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(new ItemStack(material.shovel), new ItemStack(material.ingot, 1), 0);
 			} else if (Config.Options.furnace1112) {
@@ -423,7 +423,7 @@ public abstract class Recipes {
 		}
 
 		if ((material.sword != null) && (material.sword instanceof IMMDObject)) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.sword), "x", "x", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICKWOOD));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.sword), "x", "x", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
 			if (Config.Options.furnaceCheese) {
 				GameRegistry.addSmelting(new ItemStack(material.sword), new ItemStack(material.ingot, 2), 0);
 			} else if (Config.Options.furnace1112) {
@@ -473,8 +473,8 @@ public abstract class Recipes {
 				OreDictionary.registerOre(Oredicts.DUST + oreDictName, material.blend);
 			}
 			if (material.smallblend != null) {
-				OreDictionary.registerOre(Oredicts.DUSTTINY + oreDictName, material.smallblend);
-				OreDictionary.registerOre(Oredicts.DUSTSMALL + oreDictName, material.smallblend);
+				OreDictionary.registerOre(Oredicts.DUST_TINY + oreDictName, material.smallblend);
+				OreDictionary.registerOre(Oredicts.DUST_SMALL + oreDictName, material.smallblend);
 			}
 		}
 		if (material.ingot != null) {
@@ -491,8 +491,8 @@ public abstract class Recipes {
 			OreDictionary.registerOre(Oredicts.DUST + oreDictName, material.powder);
 		}
 		if (material.smallpowder != null) {
-			OreDictionary.registerOre(Oredicts.DUSTTINY + oreDictName, material.smallpowder);
-			OreDictionary.registerOre(Oredicts.DUSTSMALL + oreDictName, material.smallpowder);
+			OreDictionary.registerOre(Oredicts.DUST_TINY + oreDictName, material.smallpowder);
+			OreDictionary.registerOre(Oredicts.DUST_SMALL + oreDictName, material.smallpowder);
 		}
 		if (material.gear != null) {
 			OreDictionary.registerOre(Oredicts.GEAR + oreDictName, material.gear);
@@ -517,7 +517,7 @@ public abstract class Recipes {
 		
 		for( int i = 0; i < ingredients.length; i++ ) {
 				dustIngredients[i] = String.format( "%s%s", Oredicts.DUST, (String)ingredients[i] );
-				tinyDustIngredients[i] = String.format( "%s%s", Oredicts.DUSTTINY, (String)ingredients[i] );
+				tinyDustIngredients[i] = String.format( "%s%s", Oredicts.DUST_TINY, (String)ingredients[i] );
 		}
 		
 		GameRegistry.addRecipe( new ShapelessOreRecipe( new ItemStack( material.blend, outputQty ), dustIngredients ) );
@@ -530,6 +530,6 @@ public abstract class Recipes {
 		}
 
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.blend, outputQty), Oredicts.DUST + oredict1, Oredicts.DUST + oredict2));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallblend, outputQty), Oredicts.DUSTTINY + oredict1, Oredicts.DUSTTINY + oredict2));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.smallblend, outputQty), Oredicts.DUST_TINY + oredict1, Oredicts.DUST_TINY + oredict2));
 	}
 }
