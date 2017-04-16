@@ -135,23 +135,23 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 	}
 
 	private void registerAlloys() {
-		if (Options.enableAquarium) {
+		if (Options.enableAquarium && Options.enableCopper && Options.enableZinc ) {
 			registry.registerAlloy(MaterialNames.AQUARIUM, Materials.getMaterialByName(MaterialNames.AQUARIUM).fluid, 3, MaterialNames.COPPER, 2, MaterialNames.ZINC, 1, MaterialNames.PRISMARINE, 3);
 		}
 
-		if (Options.enableCupronickel) {
+		if (Options.enableCupronickel && Options.enableCopper && Options.enableNickel ) {
 			registry.registerAlloy(MaterialNames.CUPRONICKEL, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).fluid, 4, MaterialNames.COPPER, 3, MaterialNames.NICKEL, 1 );
 		}
 
-		if (Options.enableInvar) {
+		if (Options.enableInvar && Options.enableNickel ) {
 			registry.registerAlloy(MaterialNames.INVAR, Materials.getMaterialByName(MaterialNames.INVAR).fluid, 3, MaterialNames.IRON, 2, MaterialNames.NICKEL, 1);
 		}
 
-		if (Options.enableMithril) {
+		if (Options.enableMithril && Options.enableColdIron && Options.enableSilver && Options.enableMercury ) {
 			registry.registerAlloy(MaterialNames.MITHRIL, Materials.getMaterialByName(MaterialNames.MITHRIL).fluid, 3, MaterialNames.SILVER, 2, MaterialNames.COLDIRON, 1, MaterialNames.MERCURY, 1);
 		}
 
-		if (Options.enablePewter) {
+		if (Options.enablePewter && Options.enableLead && Options.enableCopper && Options.enableTin ) {
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
 			registry.registerAlloy(MaterialNames.PEWTER, Materials.getMaterialByName(MaterialNames.PEWTER).fluid, 144, MaterialNames.TIN, 137, MaterialNames.COPPER, 2, MaterialNames.LEAD, 5);
 		}
