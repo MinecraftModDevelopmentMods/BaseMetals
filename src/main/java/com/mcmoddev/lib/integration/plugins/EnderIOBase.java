@@ -177,7 +177,7 @@ public class EnderIOBase implements IIntegration {
 			return; // Only run for Ore types
 
 		if (outputSecondary != null)
-			messageSecondary = String.format("<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%f\" />", secondaryOutput, secondaryQty, secondaryChance);
+			messageSecondary = String.format("<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\" />", secondaryOutput, secondaryQty, secondaryChance);
 			// messageSecondary = "<itemStack oreDictionary=\"" + rockOredict + "\" number=\"" + rockQty + "\" chance=\"" + rockChance + "\" />" +
 
 		// @formatter:off
