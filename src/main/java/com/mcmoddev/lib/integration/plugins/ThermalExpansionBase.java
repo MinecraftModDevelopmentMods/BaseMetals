@@ -71,8 +71,16 @@ public class ThermalExpansionBase implements IIntegration {
 			 */
 			int ENERGY_ORE = 2000;
 			int ENERGY_DUST = 1400;
-			ItemStack ore = new ItemStack( mat.ore );
-			ItemStack ingot = new ItemStack( mat.ingot );
+			ItemStack ore = null;
+			if( mat.ore != null ) {
+				ore = new ItemStack( mat.ore, 1, 0 );
+			} else if( mat.blend != null ) {
+				ore = new ItemStack( mat.blend, 1, 0 );
+			} else {
+				return;
+			}
+			
+			ItemStack ingot = new ItemStack( mat.ingot, 1, 0 );
 			ThermalExpansionHelper.addFurnaceRecipe( ENERGY_ORE, ore, ingot );
 			if( Options.enableBasics && mat.powder != null ) {
 				ItemStack dust = new ItemStack( mat.powder );
