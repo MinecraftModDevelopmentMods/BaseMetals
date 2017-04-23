@@ -26,7 +26,7 @@ public enum Names implements IStringSerializable {
     public static final TreeMap<Integer, Names> MAP = Maps.newTreeMap();
 
     static {
-        for(Names name : values())
+        for( Names name : values() )
             MAP.put(name.ordinal(),name);
     }
 
@@ -36,7 +36,7 @@ public enum Names implements IStringSerializable {
     }
 
     public static Names getType(int ordinal) {
-        if (ordinal > values().length || ordinal < 0)
+        if ( ordinal > values().length || ordinal < 0 )
             ordinal = 0;
         return values()[ordinal];
     }
