@@ -31,12 +31,12 @@ public class MMDMaterial {
 	/**
 	 * Storage for all "Item" type forms for this material
 	 */
-	private Map<String, Item> items = new TreeMap<String, Item>();
+	private Map<Names, Item> items = new TreeMap<>();
 	
 	/**
 	 * Storage for all "Block" type forms for this material
 	 */
-	private Map<String, Block> blocks = new TreeMap<String, Block>();
+	private Map<Names, Block> blocks = new TreeMap<>();
 	
 	/**
 	 * If this material has a fluid, it is stored here
@@ -48,7 +48,7 @@ public class MMDMaterial {
 	/*
 	 * Material Statistics - see com.mcmoddev.lib.data.MaterialStats for current known and used ones
 	 */
-	private Map<String, Float> stats = new TreeMap<String, Float>();
+	private Map<MaterialStats, Float> stats = new TreeMap<>();
 	
 	/*
 	 * Various material flags
@@ -409,7 +409,7 @@ public class MMDMaterial {
 	 *      The item to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
-	public MMDMaterial addNewItem( String name, Item item ) {
+	public MMDMaterial addNewItem( Names name, Item item ) {
 		if( this.items.containsKey(name) ) {
 			FMLLog.getLogger().warn("Tried adding item %s to a material that already has it, don't do that!", name);
 			return this;
@@ -426,7 +426,7 @@ public class MMDMaterial {
 	 *      The block to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
-	public MMDMaterial addNewBlock( String name, Block block ) {
+	public MMDMaterial addNewBlock( Names name, Block block ) {
 		if( this.blocks.containsKey(name) ) {
 			FMLLog.getLogger().warn("Tried adding block %s to a material that already has it, don't do that!", name);
 			return this;
@@ -441,7 +441,7 @@ public class MMDMaterial {
 	 *      Name of the item to retrieve
 	 * @return the Item registered with the material, null if one of that name was not registered
 	 */
-	public Item getItem( String name ) {
+	public Item getItem( Names name ) {
 		if( this.items.containsKey(name) ) {
 			return this.items.get(name);
 		}
@@ -453,7 +453,7 @@ public class MMDMaterial {
 	 *      Name of the item to retrieve
 	 * @return the Block registered with the material, null if one of that name was not registered
 	 */
-	public Block getBlock( String name ) {
+	public Block getBlock( Names name ) {
 		if( this.blocks.containsKey(name) ) {
 			return this.blocks.get(name);
 		}
@@ -476,22 +476,22 @@ public class MMDMaterial {
 		return this.regenerates;
 	}
 	
-	public boolean hasItem(String name) {
+	public boolean hasItem(Names name) {
 		return this.items.containsKey(name);
 	}
 	
-	public boolean hasBlock(String name) {
+	public boolean hasBlock(Names name) {
 		return this.blocks.containsKey(name);
 	}
 	
-	public float getStat(String name) {
+	public float getStat(MaterialStats name) {
 		if( this.stats.containsKey(name) ) {
 			return this.stats.get(name).floatValue();
 		}
 		return 0F;
 	}
 	
-	public void setStat(String name, float value) {
+	public void setStat(MaterialStats name, float value) {
 		if( this.stats.containsKey(name) ) {
 			this.stats.remove(name);
 		}
