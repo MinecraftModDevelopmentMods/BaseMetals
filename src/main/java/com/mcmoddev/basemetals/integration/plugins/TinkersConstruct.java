@@ -55,7 +55,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerAlloys();
 		
 		if (Options.enableCoal) {
-			registerFluid(Materials.vanillaCoal, 144);
+			registerFluid(Materials.getMaterialByName(MaterialNames.COAL), 144);
 		}
 
 
@@ -69,13 +69,13 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 		// Lead itself is added by TiC
 		if ((Options.enableLead) && (Options.enablePlate)) {
-			registerModifierItem("plated", Item.getItemFromBlock(Materials.lead.getBlock(Names.PLATE)));
+			registerModifierItem("plated", Item.getItemFromBlock(Materials.getMaterialByName(MaterialNames.LEAD).getBlock(Names.PLATE)));
 		}
 
 		if (Options.enableMercury) {
 			registry.registerFluid(Materials.getMaterialByName(MaterialNames.MERCURY), 144);
 			if (Options.enableBasics) {
-				registerModifierItem("toxic", Materials.mercury.getItem(Names.POWDER));
+				registerModifierItem("toxic", Materials.getMaterialByName(MaterialNames.MERCURY).getItem(Names.POWDER));
 			}
 		}
 

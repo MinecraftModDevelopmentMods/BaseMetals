@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -18,35 +19,35 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 		}
 
 		if (Options.enableAdamantine) {
-			addOreMultiplicationRecipes(Materials.adamantine);
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
 		}
 
 		if (Options.enableAntimony) {
-			addOreMultiplicationRecipes(Materials.antimony);
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ANTIMONY));
 		}
 
 		if (Options.enableBismuth) {
-			addOreMultiplicationRecipes(Materials.bismuth);
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.BISMUTH));
 		}
 
 		if (Options.enableColdIron) {
-			addOreMultiplicationRecipes(Materials.coldiron);
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.COLDIRON));
 		}
 
 		if (Options.enablePlatinum) {
-			addOreMultiplicationRecipes(Materials.platinum);
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.PLATINUM));
 		}
 
 		if (Options.enableNickel) {
-			addOreMultiplicationRecipes(Materials.nickel);
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.NICKEL));
 		}
 
 		if (Options.enableStarSteel) {
-			addOreMultiplicationRecipes(Materials.starsteel);
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.STARSTEEL));
 		}
 
 		if (Options.enableZinc) {
-			addOreMultiplicationRecipes(Materials.zinc);
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ZINC));
 		}
 
 		initDone = true;

@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
@@ -108,7 +109,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				starsteelUpdateCache.get(player).incrementAndGet();
 				// Achievement
 				if (Options.enableAchievements) {
-					if (armorItem == Materials.starsteel.getItem(Names.BOOTS)) {
+					if (armorItem == Materials.getMaterialByName(MaterialNames.STARSTEEL).getItem(Names.BOOTS)) {
 						player.addStat(Achievements.moonBoots, 1);
 					}
 					break starsteel;
@@ -188,15 +189,15 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				}
 				// full suit of cold-iron makes you fire-proof
 				if (Options.enableColdIron) {
-					if(armorItem == Materials.coldiron.getItem(Names.HELMET)) {
-						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.coldiron.getItem(Names.CHESTPLATE)
-								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.coldiron.getItem(Names.LEGGINGS)
-								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.coldiron.getItem(Names.BOOTS)) {
+					if(armorItem == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.HELMET)) {
+						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.CHESTPLATE)
+								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.LEGGINGS)
+								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.BOOTS)) {
 							final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
 							player.addPotionEffect(fireProtection);
 							// Achievement
 							if (Options.enableAchievements) {
-								if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.coldiron.getItem(Names.SWORD)) {
+								if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.SWORD)) {
 									player.addStat(Achievements.demonSlayer, 1);
 								}
 							}
@@ -206,10 +207,10 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				// full suit of mithril protects you from withering, poison, nausea,
 				// and hunger effects
 				if (Options.enableMithril) {
-					if(armorItem == Materials.mithril.getItem(Names.HELMET)) {
-						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.mithril.getItem(Names.CHESTPLATE)
-								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.mithril.getItem(Names.LEGGINGS)
-								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.mithril.getItem(Names.BOOTS)) {
+					if(armorItem == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.HELMET)) {
+						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.CHESTPLATE)
+								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.LEGGINGS)
+								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.BOOTS)) {
 							final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
 							Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
 							while(effectIterator.hasNext()) {
@@ -224,7 +225,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 							}
 							// Achievement
 							if (Options.enableAchievements) {
-								if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.mithril.getItem(Names.SWORD)) {
+								if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD)) {
 									player.addStat(Achievements.angelOfDeath, 1);
 								}
 							}
@@ -233,10 +234,10 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				}
 				// full suit of aquarium makes you breathe and heal underwater
 				if (Options.enableAquarium) {
-					if(armorItem == Materials.aquarium.getItem(Names.HELMET) && player.posY > 0 && player.posY < 255) {
-						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.aquarium.getItem(Names.CHESTPLATE)
-								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.aquarium.getItem(Names.LEGGINGS)
-								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.aquarium.getItem(Names.BOOTS)) {
+					if(armorItem == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.HELMET) && player.posY > 0 && player.posY < 255) {
+						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.CHESTPLATE)
+								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.LEGGINGS)
+								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.BOOTS)) {
 							Block b1 = w.getBlockState(new BlockPos(player.posX,player.posY, player.posZ)).getBlock();
 							Block b2 = w.getBlockState(new BlockPos(player.posX,player.posY + 1, player.posZ)).getBlock();
 							if(b1 == Blocks.WATER && b2 == Blocks.WATER) {

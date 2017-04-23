@@ -168,10 +168,11 @@ public class Oredicts {
 	public static final String AMMOBOLT = "ammoBolt";
 	public static final String BUTTON = "button";
 	public static final String BLEND = "blend";
+	public static final String BLEND_SMALL = "blendSmall";
 	public static final String BLEND_TINY = "blendTiny";
 	public static final String DUST = "dust";
-	public static final String DUST_TINY = "dustTiny";
 	public static final String DUST_SMALL = "dustSmall";
+	public static final String DUST_TINY = "dustTiny";
 	public static final String BLOCK = "block";
 	public static final String INGOT = "ingot";
 	public static final String NUGGET = "nugget";
@@ -217,8 +218,8 @@ public class Oredicts {
 	public static final String INGOT_MERCURY = "ingotMercury";
 	public static final String INGOT_STEEL = "ingotSteel";
 
-	public static final String NUGGET_CHARCOAL = "nuggetCharcoal";
-	public static final String NUGGET_COAL = "nuggetCoal";
+//	public static final String NUGGET_CHARCOAL = "nuggetCharcoal";
+//	public static final String NUGGET_COAL = "nuggetCoal";
 
 	public static final String DOOR_WOOD = "doorWood";
 	public static final String DOOR_IRON = "doorIron";

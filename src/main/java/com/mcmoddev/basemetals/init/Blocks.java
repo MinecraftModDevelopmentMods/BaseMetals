@@ -1,5 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
@@ -35,54 +36,54 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		ItemGroups.init();
 
 		if (Options.enableAdamantine) {
-			createBlocksFull(Materials.adamantine);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
 		}
 
 		if (Options.enableAntimony) {
-			createBlocksFull(Materials.antimony);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.ANTIMONY));
 		}
 
 		if (Options.enableAquarium) {
-			createBlocksFull(Materials.aquarium);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.AQUARIUM));
 		}
 
 		if (Options.enableBismuth) {
-			createBlocksFull(Materials.bismuth);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.BISMUTH));
 		}
 
 		if (Options.enableBrass) {
-			createBlocksFull(Materials.brass);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.BRASS));
 		}
 
 		if (Options.enableBronze) {
-			createBlocksFull(Materials.bronze);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.BRONZE));
 		}
 
 		if (Options.enableCharcoal) {
-			createBlock(Materials.vanillaCharcoal);
+			createBlock(Materials.getMaterialByName(MaterialNames.CHARCOAL));
 		}
 
 		if (Options.enableCoal) {
-			final MMDMaterial material = Materials.vanillaCoal;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.COAL);
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
 		}
 
 		if (Options.enableColdIron) {
-			createBlocksFull(Materials.coldiron);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.COLDIRON));
 		}
 
 		if (Options.enableCopper) {
-			createBlocksFull(Materials.copper);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.COPPER));
 		}
 
 		if (Options.enableCupronickel) {
-			createBlocksFull(Materials.cupronickel);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.CUPRONICKEL));
 		}
 
 		if (Options.enableDiamond) {
-			final MMDMaterial material = Materials.vanillaDiamond;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.DIAMOND);
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.DIAMOND_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.DIAMOND_ORE);
@@ -95,11 +96,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableElectrum) {
-			createBlocksFull(Materials.electrum);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.ELECTRUM));
 		}
 
 		if (Options.enableEmerald) {
-			final MMDMaterial material = Materials.vanillaEmerald;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.EMERALD);
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.EMERALD_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.EMERALD_ORE);
@@ -112,7 +113,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableGold) {
-			final MMDMaterial material = Materials.vanillaGold;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.GOLD);
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
@@ -127,11 +128,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableInvar) {
-			createBlocksFull(Materials.invar);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.INVAR));
 		}
 
 		if (Options.enableIron) {
-			final MMDMaterial material = Materials.vanillaIron;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.IRON);
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
@@ -146,32 +147,32 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableLapis) {
-			final MMDMaterial material = Materials.vanillaLapis;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.LAPIS);
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.LAPIS_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.LAPIS_ORE);
 		}
 
 		if (Options.enableLead) {
-			createBlocksFull(Materials.lead);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.LEAD));
 		}
 
 		if (Options.enableMercury) {
-			createOre(Materials.mercury);
+			createOre(Materials.getMaterialByName(MaterialNames.MERCURY));
 			// TODO: Use this info in the Material
 			// Materials.mercury.ore.setHardness(3.0f).setResistance(5.0f);
 		}
 
 		if (Options.enableMithril) {
-			createBlocksFull(Materials.mithril);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.MITHRIL));
 		}
 
 		if (Options.enableNickel) {
-			createBlocksFull(Materials.nickel);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.NICKEL));
 		}
 
 		if (Options.enableObsidian) {
-			final MMDMaterial material = Materials.vanillaObsidian;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.OBSIDIAN);
 
@@ -183,15 +184,15 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enablePewter) {
-			createBlocksFull(Materials.pewter);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.PEWTER));
 		}
 
 		if (Options.enablePlatinum) {
-			createBlocksFull(Materials.platinum);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.PLATINUM));
 		}
 
 		if (Options.enableQuartz) {
-			final MMDMaterial material = Materials.vanillaQuartz;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.QUARTZ);
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
@@ -210,28 +211,30 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableRedstone) {
-			final MMDMaterial material = Materials.vanillaRedstone;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.REDSTONE);
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
 		}
 
 		if (Options.enableSilver) {
-			createBlocksFull(Materials.silver);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.SILVER));
 		}
 
 		if (Options.enableStarSteel) {
-			createBlocksFull(Materials.starsteel);
-			Materials.starsteel.getBlock(Names.BLOCK).setLightLevel(0.5f);
-			Materials.starsteel.getBlock(Names.PLATE).setLightLevel(0.5f);
-			Materials.starsteel.getBlock(Names.ORE).setLightLevel(0.5f);
-			Materials.starsteel.getBlock(Names.BARS).setLightLevel(0.5f);
-			Materials.starsteel.getBlock(Names.DOORBLOCK).setLightLevel(0.5f);
-			Materials.starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STARSTEEL);
+
+			createBlocksFull(material);
+			material.getBlock(Names.BLOCK).setLightLevel(0.5f);
+			material.getBlock(Names.PLATE).setLightLevel(0.5f);
+			material.getBlock(Names.ORE).setLightLevel(0.5f);
+			material.getBlock(Names.BARS).setLightLevel(0.5f);
+			material.getBlock(Names.DOORBLOCK).setLightLevel(0.5f);
+			material.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
 		}
 
 		if (Options.enableSteel) {
-			createBlocksFull(Materials.steel);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.STEEL));
 		}
 
 		if (Options.enableStone) {
@@ -239,7 +242,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableTin) {
-			createBlocksFull(Materials.tin);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.TIN));
 		}
 
 		if (Options.enableWood) {
@@ -247,7 +250,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.enableZinc) {
-			createBlocksFull(Materials.zinc);
+			createBlocksFull(Materials.getMaterialByName(MaterialNames.ZINC));
 		}
 
 		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", null, ItemGroups.blocksTab);
