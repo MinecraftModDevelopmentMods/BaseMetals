@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.item;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
@@ -25,7 +26,7 @@ public class ItemMMDSlab extends ItemSlab implements IOreDictionaryEntry, IMMDOb
 	 *            The material to make the slab from
 	 */
 	public ItemMMDSlab(MMDMaterial material) {
-		super(material.halfSlab, material.halfSlab, material.doubleSlab);
+		super((BlockSlab)material.getBlock(Names.HALFSLAB), (BlockSlab)material.getBlock(Names.HALFSLAB), (BlockSlab)material.getBlock(Names.DOUBLESLAB));
 		this.material = material;
 		this.oreDict = Oredicts.SLAB + this.material.getCapitalizedName();
 	}

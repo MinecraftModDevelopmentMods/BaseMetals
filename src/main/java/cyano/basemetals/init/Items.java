@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.item.Item;
@@ -172,212 +173,212 @@ public class Items extends com.mcmoddev.basemetals.init.Items {
 
 		if (Options.enableAdamantine) {
 			material = Materials.adamantine;
-			adamantine_boots = material.boots;
-			adamantine_chestplate = material.chestplate;
-			adamantine_helmet = material.helmet;
-			adamantine_ingot = material.ingot;
-			adamantine_leggings = material.leggings;
-			adamantine_nugget = material.nugget;
-			adamantine_powder = material.powder;
-			adamantine_sword = material.sword;
+			adamantine_boots = material.getItem(Names.BOOTS);
+			adamantine_chestplate = material.getItem(Names.CHESTPLATE);
+			adamantine_helmet = material.getItem(Names.HELMET);
+			adamantine_ingot = material.getItem(Names.INGOT);
+			adamantine_leggings = material.getItem(Names.LEGGINGS);
+			adamantine_nugget = material.getItem(Names.NUGGET);
+			adamantine_powder = material.getItem(Names.POWDER);
+			adamantine_sword = material.getItem(Names.SWORD);
 		}
 
 		if (Options.enableAntimony) {
 			material = Materials.antimony;
-			antimony_helmet = material.helmet;
-			antimony_ingot = material.ingot;
-			antimony_nugget = material.nugget;
-			antimony_powder = material.powder;
+			antimony_helmet = material.getItem(Names.HELMET);
+			antimony_ingot = material.getItem(Names.INGOT);
+			antimony_nugget = material.getItem(Names.NUGGET);
+			antimony_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableAquarium) {
 			material = Materials.aquarium;
-			aquarium_boots = material.boots;
-			aquarium_chestplate = material.chestplate;
-			aquarium_helmet = material.helmet;
-			aquarium_ingot = material.ingot;
-			aquarium_leggings = material.leggings;
-			aquarium_nugget = material.nugget;
-			aquarium_powder = material.powder;
-			aquarium_sword = material.sword;
+			aquarium_boots = material.getItem(Names.BOOTS);
+			aquarium_chestplate = material.getItem(Names.CHESTPLATE);
+			aquarium_helmet = material.getItem(Names.HELMET);
+			aquarium_ingot = material.getItem(Names.INGOT);
+			aquarium_leggings = material.getItem(Names.LEGGINGS);
+			aquarium_nugget = material.getItem(Names.NUGGET);
+			aquarium_powder = material.getItem(Names.POWDER);
+			aquarium_sword = material.getItem(Names.SWORD);
 		}
 
 		if (Options.enableBismuth) {
 			material = Materials.bismuth;
-			bismuth_helmet = material.helmet;
-			bismuth_ingot = material.ingot;
-			bismuth_nugget = material.nugget;
-			bismuth_powder = material.powder;
+			bismuth_helmet = material.getItem(Names.HELMET);
+			bismuth_ingot = material.getItem(Names.INGOT);
+			bismuth_nugget = material.getItem(Names.NUGGET);
+			bismuth_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableBrass) {
 			material = Materials.brass;
-			brass_helmet = material.helmet;
-			brass_ingot = material.ingot;
-			brass_nugget = material.nugget;
-			brass_powder = material.powder;
+			brass_helmet = material.getItem(Names.HELMET);
+			brass_ingot = material.getItem(Names.INGOT);
+			brass_nugget = material.getItem(Names.NUGGET);
+			brass_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableBronze) {
 			material = Materials.bronze;
-			bronze_helmet = material.helmet;
-			bronze_ingot = material.ingot;
-			bronze_nugget = material.nugget;
-			bronze_powder = material.powder;
+			bronze_helmet = material.getItem(Names.HELMET);
+			bronze_ingot = material.getItem(Names.INGOT);
+			bronze_nugget = material.getItem(Names.NUGGET);
+			bronze_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableCoal) {
-			carbon_powder = Materials.vanilla_coal.powder;
-			carbon_smallpowder = Materials.vanilla_coal.smallpowder;
+			carbon_powder = Materials.vanilla_coal.getItem(Names.POWDER);
+			carbon_smallpowder = Materials.vanilla_coal.getItem(Names.SMALLPOWDER);
 		}
 
 		if (Options.enableColdIron) {
 			material = Materials.coldiron;
-			coldiron_boots = material.boots;
-			coldiron_chestplate = material.chestplate;
-			coldiron_helmet = material.helmet;
-			coldiron_ingot = material.ingot;
-			coldiron_leggings = material.leggings;
-			coldiron_nugget = material.nugget;
-			coldiron_powder = material.powder;
-			coldiron_sword = material.sword;
+			coldiron_boots = material.getItem(Names.BOOTS);
+			coldiron_chestplate = material.getItem(Names.CHESTPLATE);
+			coldiron_helmet = material.getItem(Names.HELMET);
+			coldiron_ingot = material.getItem(Names.INGOT);
+			coldiron_leggings = material.getItem(Names.LEGGINGS);
+			coldiron_nugget = material.getItem(Names.NUGGET);
+			coldiron_powder = material.getItem(Names.POWDER);
+			coldiron_sword = material.getItem(Names.SWORD);
 		}
 
 		if (Options.enableCopper) {
 			material = Materials.copper;
-			copper_helmet = material.helmet;
-			copper_ingot = material.ingot;
-			copper_nugget = material.nugget;
-			copper_powder = material.powder;
+			copper_helmet = material.getItem(Names.HELMET);
+			copper_ingot = material.getItem(Names.INGOT);
+			copper_nugget = material.getItem(Names.NUGGET);
+			copper_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableCupronickel) {
 			material = Materials.cupronickel;
-			cupronickel_helmet = material.helmet;
-			cupronickel_ingot = material.ingot;
-			cupronickel_nugget = material.nugget;
-			cupronickel_powder = material.powder;
+			cupronickel_helmet = material.getItem(Names.HELMET);
+			cupronickel_ingot = material.getItem(Names.INGOT);
+			cupronickel_nugget = material.getItem(Names.NUGGET);
+			cupronickel_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableElectrum) {
 			material = Materials.electrum;
-			electrum_helmet = material.helmet;
-			electrum_ingot = material.ingot;
-			electrum_nugget = material.nugget;
-			electrum_powder = material.powder;
+			electrum_helmet = material.getItem(Names.HELMET);
+			electrum_ingot = material.getItem(Names.INGOT);
+			electrum_nugget = material.getItem(Names.NUGGET);
+			electrum_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableGold) {
 			material = Materials.vanilla_gold;
-			gold_powder = material.powder;
+			gold_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableInvar) {
 			material = Materials.invar;
-			invar_helmet = material.helmet;
-			invar_ingot = material.ingot;
-			invar_nugget = material.nugget;
-			invar_powder = material.powder;
+			invar_helmet = material.getItem(Names.HELMET);
+			invar_ingot = material.getItem(Names.INGOT);
+			invar_nugget = material.getItem(Names.NUGGET);
+			invar_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableIron) {
 			material = Materials.vanilla_iron;
-			iron_nugget = material.nugget;
-			iron_powder = material.powder;
+			iron_nugget = material.getItem(Names.NUGGET);
+			iron_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableLead) {
 			material = Materials.lead;
-			lead_boots = material.boots;
-			lead_chestplate = material.chestplate;
-			lead_helmet = material.helmet;
-			lead_ingot = material.ingot;
-			lead_leggings = material.leggings;
-			lead_nugget = material.nugget;
-			lead_powder = material.powder;
-			lead_sword = material.sword;
+			lead_boots = material.getItem(Names.BOOTS);
+			lead_chestplate = material.getItem(Names.CHESTPLATE);
+			lead_helmet = material.getItem(Names.HELMET);
+			lead_ingot = material.getItem(Names.INGOT);
+			lead_leggings = material.getItem(Names.LEGGINGS);
+			lead_nugget = material.getItem(Names.NUGGET);
+			lead_powder = material.getItem(Names.POWDER);
+			lead_sword = material.getItem(Names.SWORD);
 		}
 
 		if (Options.enablePlatinum) {
 			material = Materials.platinum;
-			platinum_helmet = material.helmet;
-			platinum_ingot = material.ingot;
-			platinum_nugget = material.nugget;
-			platinum_powder = material.powder;
+			platinum_helmet = material.getItem(Names.HELMET);
+			platinum_ingot = material.getItem(Names.INGOT);
+			platinum_nugget = material.getItem(Names.NUGGET);
+			platinum_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableMithril) {
 			material = Materials.mithril;
-			mithril_boots = material.boots;
-			mithril_chestplate = material.chestplate;
-			mithril_helmet = material.helmet;
-			mithril_ingot = material.ingot;
-			mithril_leggings = material.leggings;
-			mithril_nugget = material.nugget;
-			mithril_powder = material.powder;
-			mithril_sword = material.sword;
+			mithril_boots = material.getItem(Names.BOOTS);
+			mithril_chestplate = material.getItem(Names.CHESTPLATE);
+			mithril_helmet = material.getItem(Names.HELMET);
+			mithril_ingot = material.getItem(Names.INGOT);
+			mithril_leggings = material.getItem(Names.LEGGINGS);
+			mithril_nugget = material.getItem(Names.NUGGET);
+			mithril_powder = material.getItem(Names.POWDER);
+			mithril_sword = material.getItem(Names.SWORD);
 		}
 
 		if (Options.enableNickel) {
 			material = Materials.nickel;
-			nickel_helmet = material.helmet;
-			nickel_ingot = material.ingot;
-			nickel_nugget = material.nugget;
-			nickel_powder = material.powder;
+			nickel_helmet = material.getItem(Names.HELMET);
+			nickel_ingot = material.getItem(Names.INGOT);
+			nickel_nugget = material.getItem(Names.NUGGET);
+			nickel_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enablePewter) {
 			material = Materials.pewter;
-			pewter_helmet = material.helmet;
-			pewter_ingot = material.ingot;
-			pewter_nugget = material.nugget;
-			pewter_powder = material.powder;
+			pewter_helmet = material.getItem(Names.HELMET);
+			pewter_ingot = material.getItem(Names.INGOT);
+			pewter_nugget = material.getItem(Names.NUGGET);
+			pewter_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableSilver) {
 			material = Materials.silver;
-			silver_helmet = material.helmet;
-			silver_ingot = material.ingot;
-			silver_nugget = material.nugget;
-			silver_powder = material.powder;
+			silver_helmet = material.getItem(Names.HELMET);
+			silver_ingot = material.getItem(Names.INGOT);
+			silver_nugget = material.getItem(Names.NUGGET);
+			silver_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableStarSteel) {
 			material = Materials.starsteel;
-			starsteel_boots = material.boots;
-			starsteel_chestplate = material.chestplate;
-			starsteel_helmet = material.helmet;
-			starsteel_ingot = material.ingot;
-			starsteel_leggings = material.leggings;
-			starsteel_nugget = material.nugget;
-			starsteel_powder = material.powder;
-			starsteel_sword = material.sword;
+			starsteel_boots = material.getItem(Names.BOOTS);
+			starsteel_chestplate = material.getItem(Names.CHESTPLATE);
+			starsteel_helmet = material.getItem(Names.HELMET);
+			starsteel_ingot = material.getItem(Names.INGOT);
+			starsteel_leggings = material.getItem(Names.LEGGINGS);
+			starsteel_nugget = material.getItem(Names.NUGGET);
+			starsteel_powder = material.getItem(Names.POWDER);
+			starsteel_sword = material.getItem(Names.SWORD);
 		}
 
 		if (Options.enableSteel) {
 			material = Materials.steel;
-			steel_helmet = material.helmet;
-			steel_ingot = material.ingot;
-			steel_nugget = material.nugget;
-			steel_powder = material.powder;
+			steel_helmet = material.getItem(Names.HELMET);
+			steel_ingot = material.getItem(Names.INGOT);
+			steel_nugget = material.getItem(Names.NUGGET);
+			steel_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableTin) {
 			material = Materials.tin;
-			tin_helmet = material.helmet;
-			tin_ingot = material.ingot;
-			tin_nugget = material.nugget;
-			tin_powder = material.powder;
+			tin_helmet = material.getItem(Names.HELMET);
+			tin_ingot = material.getItem(Names.INGOT);
+			tin_nugget = material.getItem(Names.NUGGET);
+			tin_powder = material.getItem(Names.POWDER);
 		}
 
 		if (Options.enableZinc) {
 			material = Materials.zinc;
 			createItemsFull(material);
 			createItemsModSupport(material);
-			zinc_helmet = material.helmet;
-			zinc_ingot = material.ingot;
-			zinc_nugget = material.nugget;
-			zinc_powder = material.powder;
+			zinc_helmet = material.getItem(Names.HELMET);
+			zinc_ingot = material.getItem(Names.INGOT);
+			zinc_nugget = material.getItem(Names.NUGGET);
+			zinc_powder = material.getItem(Names.POWDER);
 		}
 
 		initDone = true;

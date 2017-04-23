@@ -2,6 +2,7 @@ package com.mcmoddev.lib.block;
 
 import java.util.Random;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -51,12 +52,12 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	@Override
 	@Deprecated
 	public ItemStack getItem(final World w, final BlockPos c, final IBlockState bs) {
-		return new ItemStack(this.material.door);
+		return new ItemStack(this.material.getItem(Names.DOOR));
 	}
 
 	@Override
 	public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
-		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null : this.material.door;
+		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null : this.material.getItem(Names.DOOR);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.item;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
@@ -21,7 +22,7 @@ public class ItemMMDDoor extends net.minecraft.item.ItemDoor implements IOreDict
 	 *            The material to make the door from
 	 */
 	public ItemMMDDoor(MMDMaterial material) {
-		super(material.doorBlock);
+		super(material.getBlock(Names.DOORBLOCK));
 		this.material = material;
 		this.oreDict = Oredicts.DOOR + this.material.getCapitalizedName();
 	}

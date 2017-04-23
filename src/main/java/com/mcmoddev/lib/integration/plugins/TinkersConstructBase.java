@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
@@ -66,9 +67,9 @@ public class TinkersConstructBase implements IIntegration {
 	}
 	
 	protected static void registerCasting(MMDMaterial base, int amountPer) {
-		registry.registerBasin(base.block, base.fluid, amountPer * 9);
-		registry.registerCasting(base.ingot, base.fluid, amountPer);
-		registry.registerCasting(base.nugget, base.fluid, amountPer/9 );
+		registry.registerBasin(base.getBlock(Names.BLOCK), base.getFluid(), amountPer * 9);
+		registry.registerCasting(base.getItem(Names.INGOT), base.getFluid(), amountPer);
+		registry.registerCasting(base.getItem(Names.NUGGET), base.getFluid(), amountPer/9 );
 	}
 
 	/**

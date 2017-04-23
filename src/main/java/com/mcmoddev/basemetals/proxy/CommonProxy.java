@@ -5,6 +5,7 @@ import com.mcmoddev.basemetals.init.*;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 
@@ -49,11 +50,11 @@ public class CommonProxy {
 			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
 					if ((Options.enableMercury) && ("liquid_mercury".equals(mapping.resourceLocation.getResourcePath()))) {
-						mapping.remap(Materials.mercury.fluidBlock);
+						mapping.remap(Materials.mercury.getFluidBlock());
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
 					if ((Options.enableCoal) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
-						mapping.remap(Materials.vanilla_coal.powder);
+						mapping.remap(Materials.vanilla_coal.getItem(Names.POWDER));
 					}
 				}
 			}

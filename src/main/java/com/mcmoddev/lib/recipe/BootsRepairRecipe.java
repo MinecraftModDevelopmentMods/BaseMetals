@@ -3,6 +3,7 @@ package com.mcmoddev.lib.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -20,8 +21,8 @@ public class BootsRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	private String matName;
 
 	public BootsRepairRecipe(MMDMaterial mat) {
-		super(new ItemStack(mat.boots, 1), new Object[] { mat.getName() + "_boots", Oredicts.PLATE + mat.getCapitalizedName() });
-		baseBoots = new ItemStack(mat.boots, 1, OreDictionary.WILDCARD_VALUE);
+		super(new ItemStack(mat.getItem(Names.BOOTS), 1), new Object[] { mat.getName() + "_boots", Oredicts.PLATE + mat.getCapitalizedName() });
+		baseBoots = new ItemStack(mat.getItem(Names.BOOTS), 1, OreDictionary.WILDCARD_VALUE);
 		matName = mat.getCapitalizedName();
 	}
 

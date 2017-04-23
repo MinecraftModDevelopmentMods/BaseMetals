@@ -2,6 +2,7 @@ package com.mcmoddev.lib.block;
 
 import java.util.List;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
@@ -32,7 +33,7 @@ public class BlockMMDWall extends BlockWall implements IOreDictionaryEntry, IMMD
 	 *            The material the wall is made from
 	 */
 	public BlockMMDWall(MMDMaterial material) {
-		super(material.block);
+		super(material.getBlock(Names.BLOCK));
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.oreDict = Oredicts.WALL + this.material.getCapitalizedName();

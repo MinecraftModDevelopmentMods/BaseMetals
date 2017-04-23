@@ -37,7 +37,7 @@ public class ItemMMDShears extends ItemShears implements IMMDObject {
 		this.setMaxDamage(this.material.getToolDurability());
 		this.setCreativeTab(CreativeTabs.TOOLS);
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
+		this.regenerates = this.material.regenerates();
 	}
 
 	@Override

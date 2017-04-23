@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.block;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
@@ -25,7 +26,7 @@ public class BlockMMDStairs extends BlockStairs implements IOreDictionaryEntry, 
 	 *            The material the stairs are made from
 	 */
 	public BlockMMDStairs(MMDMaterial material) {
-		super(material.block.getDefaultState());
+		super(material.getBlock(Names.BLOCK).getDefaultState());
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.oreDict = Oredicts.STAIRS + this.material.getCapitalizedName();

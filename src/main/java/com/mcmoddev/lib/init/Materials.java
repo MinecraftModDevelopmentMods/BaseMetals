@@ -3,6 +3,7 @@ package com.mcmoddev.lib.init;
 import java.util.*;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 
@@ -202,7 +203,7 @@ public abstract class Materials {
 		final String texName = material.getName();
 		final int[] protection = material.getDamageReductionArray();
 		final int durability = material.getArmorMaxDamageFactor();
-		final ArmorMaterial armorMaterial = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, material.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, material.hardness > 10 ? (int) (material.hardness / 5) : 0);
+		final ArmorMaterial armorMaterial = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, material.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, material.getStat(MaterialStats.HARDNESS) > 10 ? (int) (material.getStat(MaterialStats.HARDNESS) / 5) : 0);
 		if (armorMaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to create armor material enum for " + material);
