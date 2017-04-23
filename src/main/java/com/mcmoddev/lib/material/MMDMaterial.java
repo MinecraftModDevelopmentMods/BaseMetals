@@ -69,6 +69,11 @@ public class MMDMaterial {
 	 */
 	private final boolean hasBlend;
 	
+	/**
+	 * Is this block meant to have an Ore ?
+	 */
+	private final boolean hasOre;
+	
 	/*
 	 * Miscelaneous Material Information
 	 */
@@ -146,6 +151,7 @@ public class MMDMaterial {
 		this.isRare = isRare;
 		this.materialType = type;
 		this.hasBlend = hasBlend;
+		this.hasOre = hasOre;
 	}
 
 	public String getName() {
@@ -455,7 +461,7 @@ public class MMDMaterial {
 	}
 	
 	public boolean hasOre() {
-		return this.blocks.containsKey(Names.ORE);
+		return this.hasOre;
 	}
 	
 	public boolean hasBlend() {
