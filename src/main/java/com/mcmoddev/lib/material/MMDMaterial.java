@@ -357,7 +357,7 @@ public class MMDMaterial {
 	}
 
 	public String getEnumName() {
-		return this.enumName;
+;		return this.enumName;
 	}
 
 	/**
@@ -378,9 +378,6 @@ public class MMDMaterial {
 	 * @return An instance of the material, for quality of life.
 	 */
 	public MMDMaterial setBlastResistance(float resistance) {
-		if( this.stats.containsKey(MaterialStats.BLASTRESISTANCE) ) {
-			this.stats.remove(MaterialStats.BLASTRESISTANCE);
-		}
 		this.stats.put(MaterialStats.BLASTRESISTANCE, resistance);
 		return this;
 	}
@@ -394,9 +391,6 @@ public class MMDMaterial {
 	 * @return An instance of the material, for quality of life.
 	 */
 	public MMDMaterial setBaseDamage(float damage) {
-		if( this.stats.containsKey(MaterialStats.BASEDAMAGE) ) {
-			this.stats.remove(MaterialStats.BASEDAMAGE);
-		}
 		this.stats.put(MaterialStats.BASEDAMAGE, damage);
 		return this;
 	}
@@ -492,9 +486,6 @@ public class MMDMaterial {
 	}
 	
 	public void setStat(MaterialStats name, float value) {
-		if( this.stats.containsKey(name) ) {
-			this.stats.remove(name);
-		}
 		this.stats.put(name, value);
 	}
 	
