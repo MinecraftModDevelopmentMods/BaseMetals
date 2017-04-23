@@ -36,8 +36,9 @@ public enum MaterialStats implements IStringSerializable {
     public static final TreeMap<Integer, MaterialStats> MAP = Maps.newTreeMap();
 
     static {
-        for( MaterialStats stat : values() )
+        for (MaterialStats stat : values()) {
             MAP.put(stat.ordinal(),stat);
+        }
     }
 
     @Override
@@ -46,8 +47,9 @@ public enum MaterialStats implements IStringSerializable {
     }
 
     public static MaterialStats getType(int ordinal) {
-        if ( ordinal > values().length || ordinal < 0 )
+        if ((ordinal > values().length) || (ordinal < 0)) {
             ordinal = 0;
+        }
         return values()[ordinal];
     }
 

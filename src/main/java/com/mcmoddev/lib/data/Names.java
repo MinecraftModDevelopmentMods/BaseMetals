@@ -8,26 +8,30 @@ import net.minecraft.util.IStringSerializable;
 
 public enum Names implements IStringSerializable {
 		// Items
-	ANVIL,ARROW,AXE,BLEND,BOOTS,BOLT,BOW,CHESTPLATE,CRACKHAMMER,CROSSBOW,DOOR,FISHINGROD,GEAR,HELMET,HOE,HORSEARMOR,INGOT,LEGGINGS,NUGGET,PICKAXE,POWDER,ROD,SHEARS,SHIELD,SHOVEL,SLAB,SMALLBLEND,SMALLPOWDER,SWORD,GEM,
+	ANVIL, ARROW, AXE, BLEND, BOOTS, BOLT, BOW, CHESTPLATE, CRACKHAMMER, CROSSBOW, DOOR, FISHINGROD, GEAR,
+	HELMET, HOE, HORSEARMOR, INGOT, LEGGINGS, NUGGET, PICKAXE, POWDER, ROD, SHEARS, SHIELD, SHOVEL, SLAB,
+	SMALLBLEND, SMALLPOWDER, SWORD, GEM,
 
         // Blocks
-	ANVILBLOCK,BARS,BLOCK,BOOKSHELF,BUTTON,DOORBLOCK,DOUBLESLAB,HALFSLAB,FLOWERPOT,LADDER,LEVER,PLATE,PRESSUREPLATE,STAIRS,TRAPDOOR,TRIPWIREHOOK,WALL,FENCE,FENCEGATE,
+	ANVILBLOCK, BARS, BLOCK, BOOKSHELF, BUTTON, DOORBLOCK, DOUBLESLAB, HALFSLAB, FLOWERPOT, LADDER, LEVER,
+	PLATE, PRESSUREPLATE, STAIRS, TRAPDOOR, TRIPWIREHOOK, WALL, FENCE, FENCEGATE,
 
         // Mekanism
-	CRYSTAL,SHARD,CLUMP,POWDERDIRTY,
+	CRYSTAL, SHARD, CLUMP, POWDERDIRTY,
 
         // IC2
-	CASING,DENSEPLATE,CRUSHED,CRUSHEDPURIFIED,
+	CASING, DENSEPLATE, CRUSHED, CRUSHEDPURIFIED,
 
         // Ores
-	ORE,ENDORE,NETHERORE;
+	ORE, ENDORE, NETHERORE;
 
 	
     public static final TreeMap<Integer, Names> MAP = Maps.newTreeMap();
 
     static {
-        for( Names name : values() )
+        for (Names name : values()) {
             MAP.put(name.ordinal(),name);
+        }
     }
 
     @Override
@@ -36,8 +40,9 @@ public enum Names implements IStringSerializable {
     }
 
     public static Names getType(int ordinal) {
-        if ( ordinal > values().length || ordinal < 0 )
+        if ((ordinal > values().length) || (ordinal < 0 )) {
             ordinal = 0;
+        }
         return values()[ordinal];
     }
 
