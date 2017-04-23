@@ -247,12 +247,20 @@ public abstract class Items {
 		return item;
 	}
 
+	private static Item createItem(MMDMaterial material, Names name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
+		if( enabled && extra && !material.hasItem(name) ) {
+			return createItem(material, name.toString(), clazz, enabled, extra, tab);
+		} else {
+			return material.getItem(name);
+		}
+	}
+	
 	private static Item createItem(MMDMaterial material, String name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
 		if( material == null ) {
 			return null;
 		}
 		
-		if( enabled && extra && !material.hasItem(name)) {
+		if( enabled && extra ) {
 			Constructor<?> ctor = null;
 			Item inst = null;
 			try {
@@ -270,37 +278,37 @@ public abstract class Items {
 			}
 			
 			if( inst != null ) {
-				addItem( inst, name, material, tab);
-				return material.getItem(name);
+				return addItem( inst, name, material, tab);
 			}
 		}
 		return null;
 	}
 	
-	private static Item createArmorItem(MMDMaterial material, String name) {
+	private static Item createArmorItem(MMDMaterial material, Names name) {
 		if( !( Options.enableArmor && !material.hasItem(name) ) ) {
 			return null;
 		}
 		
 		Item it = null;
 		switch(name) {
-		case Names.HELMET:
+		case HELMET:
 			it = ItemMMDArmor.createHelmet(material);
 			break;
-		case Names.CHESTPLATE:
+		case CHESTPLATE:
 			it = ItemMMDArmor.createChestplate(material);
 			break;
-		case Names.LEGGINGS:
+		case LEGGINGS:
 			it = ItemMMDArmor.createLeggings(material);
 			break;
-		case Names.BOOTS:
+		case BOOTS:
 			it = ItemMMDArmor.createBoots(material);
 			break;
+		default:
 		}
 		if( it == null ) {
 			return null;
 		}
-		addItem( it, name, material, ItemGroups.toolsTab );
+		addItem( it, name.toString(), material, ItemGroups.toolsTab );
 		return it;
 	}
 	/**

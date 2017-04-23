@@ -99,6 +99,10 @@ public abstract class Blocks {
 		createWall(material);
 	}
 
+	protected static Block addBlock( Block block, Names name, MMDMaterial material, CreativeTabs tab ) {
+		return addBlock( block, name.toString(), material, tab);
+	}
+	
 	/**
 	 * 
 	 * @param block the block of interest
@@ -162,12 +166,20 @@ public abstract class Blocks {
 		return block;
 	}
 
+	private static Block createBlock(MMDMaterial material, Names name, Class<? extends Block> clazz, boolean enabled, boolean extra) {
+		if( !material.hasBlock(name) ) {
+			return createBlock( material, name.toString(), clazz, enabled, extra );
+		} else {
+			return material.getBlock(name);
+		}
+	}
+	
 	private static Block createBlock(MMDMaterial material, String name, Class<? extends Block> clazz, boolean enabled, boolean extra) {
 		if( material == null ) {
 			return null;
 		}
 		
-		if( enabled && extra && !material.hasBlock(name)) {
+		if( enabled && extra ) {
 			Constructor<?> ctor = null;
 			Block inst = null;
 			try {
@@ -185,8 +197,7 @@ public abstract class Blocks {
 			}
 			
 			if( inst != null ) {
-				addBlock( inst, name, material, ItemGroups.blocksTab );
-				return material.getBlock(name);
+				return addBlock( inst, name, material, ItemGroups.blocksTab );
 			}
 		}
 		return null;

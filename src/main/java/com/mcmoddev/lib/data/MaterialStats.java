@@ -51,5 +51,9 @@ public enum MaterialStats implements IStringSerializable {
         return values()[ordinal];
     }
 
+    @Override
+    public String toString() {
+    	return getName();
+    }
 
 }

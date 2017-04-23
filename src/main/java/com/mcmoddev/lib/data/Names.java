@@ -41,6 +41,9 @@ public enum Names implements IStringSerializable {
         return values()[ordinal];
     }
 
-
+    @Override
+    public String toString() {
+    	return getName();
+    }
 }
 
