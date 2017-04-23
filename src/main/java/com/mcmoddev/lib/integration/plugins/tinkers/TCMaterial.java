@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
+import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
@@ -68,11 +69,11 @@ public class TCMaterial {
      */
     public TCMaterial(String name, MMDMaterial material) {
         this.headDurability = material.getToolDurability();
-        this.miningSpeed = material.magicAffinity * 3 / 2;
+        this.miningSpeed = material.getStat(MaterialStats.MAGICAFFINITY) * 3 / 2;
         this.miningLevel = material.getToolHarvestLevel();
         this.headAttackDamage = material.getBaseAttackDamage() * 2;
         this.bodyDurability = material.getToolDurability() / 7;
-        this.bodyModifier = (material.hardness + material.magicAffinity * 2) / 9;
+        this.bodyModifier = (material.getStat(MaterialStats.HARDNESS) + material.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9;
         this.extraDurability = material.getToolDurability() / 10;
         this.bowDrawingSpeed = calcDrawSpeed(material.getToolDurability());
         this.bowDamage = material.getBaseAttackDamage() + 3;
@@ -112,11 +113,11 @@ public class TCMaterial {
             return this;
         }
         this.headDurability = this.metalmaterial.getToolDurability();
-        this.miningSpeed = this.metalmaterial.magicAffinity * 3 / 2;
+        this.miningSpeed = this.metalmaterial.getStat(MaterialStats.MAGICAFFINITY) * 3 / 2;
         this.miningLevel = this.metalmaterial.getToolHarvestLevel();
         this.headAttackDamage = this.metalmaterial.getBaseAttackDamage() * 2;
         this.bodyDurability = this.metalmaterial.getToolDurability() / 7;
-        this.bodyModifier = (this.metalmaterial.hardness + this.metalmaterial.magicAffinity * 2) / 9;
+        this.bodyModifier = (this.metalmaterial.getStat(MaterialStats.HARDNESS) + this.metalmaterial.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9;
         this.extraDurability = this.metalmaterial.getToolDurability() / 10;
         this.bowDrawingSpeed = calcDrawSpeed(this.metalmaterial.getToolDurability());
         this.bowDamage = this.metalmaterial.getBaseAttackDamage() + 3;

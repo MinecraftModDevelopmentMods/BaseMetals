@@ -45,7 +45,7 @@ public class ItemMMDHoe extends ItemHoe implements IMMDObject {
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("hoe");
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
+		this.regenerates = this.material.regenerates();
 	}
 
 	@Override

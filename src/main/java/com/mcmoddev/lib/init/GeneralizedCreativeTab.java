@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.mcmoddev.basemetals.init.Items;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
@@ -66,8 +67,8 @@ public class GeneralizedCreativeTab extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
-		if (this.material.crackhammer != null) {
-			return this.material.crackhammer;
+		if (this.material.getItem(Names.CRACKHAMMER) != null) {
+			return this.material.getItem(Names.CRACKHAMMER);
 		} else {
 			return net.minecraft.init.Items.IRON_PICKAXE;
 		}

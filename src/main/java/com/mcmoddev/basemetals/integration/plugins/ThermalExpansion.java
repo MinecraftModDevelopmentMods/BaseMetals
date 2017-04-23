@@ -6,6 +6,7 @@ import java.util.Map;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.basemetals.data.MaterialNames;
@@ -53,8 +54,8 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			addPressStorage(e.getValue(), e.getKey());
 		}
 
-		ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.copper.ingot, 2), new ItemStack(Materials.zinc.ingot, 1), new ItemStack( Materials.brass.ingot, 3));
-		ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.copper.ingot, 3), new ItemStack(Materials.nickel.ingot, 1), new ItemStack( Materials.cupronickel.ingot, 4));
+		ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.copper.getItem(Names.INGOT), 2), new ItemStack(Materials.zinc.getItem(Names.INGOT), 1), new ItemStack( Materials.brass.getItem(Names.INGOT), 3));
+		ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.copper.getItem(Names.INGOT), 3), new ItemStack(Materials.nickel.getItem(Names.INGOT), 1), new ItemStack( Materials.cupronickel.getItem(Names.INGOT), 4));
 		initDone = true;
 	}		
 }

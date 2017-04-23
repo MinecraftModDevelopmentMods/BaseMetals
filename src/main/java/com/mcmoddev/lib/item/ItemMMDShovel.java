@@ -40,7 +40,7 @@ public class ItemMMDShovel extends ItemSpade implements IMMDObject {
 		this.setMaxDamage(this.material.getToolDurability());
 		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
+		this.regenerates = this.material.regenerates();
 	}
 
 	@Override

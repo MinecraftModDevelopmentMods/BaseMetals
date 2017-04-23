@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import com.mcmoddev.basemetals.init.ItemGroups;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
@@ -92,120 +93,120 @@ public class Blocks extends com.mcmoddev.basemetals.init.Blocks {
 
 		if (Options.enableAdamantine) {
 			material = Materials.adamantine;
-			adamantine_block = material.block;
-			adamantine_ore = material.ore;
+			adamantine_block = material.getBlock(Names.BLOCK);
+			adamantine_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableAntimony) {
 			material = Materials.antimony;
-			antimony_block = material.block;
-			antimony_ore = material.ore;
+			antimony_block = material.getBlock(Names.BLOCK);
+			antimony_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableAquarium) {
 			material = Materials.aquarium;
-			aquarium_block = material.block;
+			aquarium_block = material.getBlock(Names.BLOCK);
 		}
 
 		if (Options.enableBismuth) {
 			material = Materials.bismuth;
-			bismuth_block = material.block;
-			bismuth_ore = material.ore;
+			bismuth_block = material.getBlock(Names.BLOCK);
+			bismuth_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableBrass) {
 			material = Materials.brass;
-			brass_block = material.block;
+			brass_block = material.getBlock(Names.BLOCK);
 		}
 
 		if (Options.enableBronze) {
 			material = Materials.bronze;
-			bronze_block = material.block;
+			bronze_block = material.getBlock(Names.BLOCK);
 		}
 
 		if (Options.enableColdIron) {
 			material = Materials.coldiron;
-			coldiron_block = material.block;
-			coldiron_ore = material.ore;
+			coldiron_block = material.getBlock(Names.BLOCK);
+			coldiron_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableCopper) {
 			material = Materials.copper;
-			copper_block = material.block;
-			copper_ore = material.ore;
+			copper_block = material.getBlock(Names.BLOCK);
+			copper_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableCupronickel) {
 			material = Materials.cupronickel;
-			cupronickel_block = material.block;
+			cupronickel_block = material.getBlock(Names.BLOCK);
 		}
 		
 		if (Options.enableElectrum) {
 			material = Materials.electrum;
-			electrum_block = material.block;
+			electrum_block = material.getBlock(Names.BLOCK);
 		}
 
 		if (Options.enableInvar) {
 			material = Materials.invar;
-			invar_block = material.block;
+			invar_block = material.getBlock(Names.BLOCK);
 		}
 
 		if (Options.enableLead) {
 			material = Materials.lead;
-			lead_block = material.block;
-			lead_ore = material.ore;
+			lead_block = material.getBlock(Names.BLOCK);
+			lead_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableMithril) {
 			material = Materials.mithril;
-			mithril_block = material.block;
+			mithril_block = material.getBlock(Names.BLOCK);
 		}
 
 		if (Options.enableNickel) {
 			material = Materials.nickel;
-			nickel_block = material.block;
-			nickel_ore = material.ore;
+			nickel_block = material.getBlock(Names.BLOCK);
+			nickel_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enablePewter) {
 			material = Materials.pewter;
-			pewter_block = material.block;
+			pewter_block = material.getBlock(Names.BLOCK);
 		}
 
 		if (Options.enablePlatinum) {
 			material = Materials.platinum;
-			platinum_block = material.block;
-			platinum_ore = material.ore;
+			platinum_block = material.getBlock(Names.BLOCK);
+			platinum_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableSilver) {
 			material = Materials.silver;
-			silver_block = material.block;
-			silver_ore = material.ore;
+			silver_block = material.getBlock(Names.BLOCK);
+			silver_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableStarSteel) {
 			material = Materials.starsteel;
-			starsteel_block = material.block;
-			starsteel_ore = material.ore;
+			starsteel_block = material.getBlock(Names.BLOCK);
+			starsteel_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableSteel) {
 			material = Materials.steel;
-			steel_block = material.block;
-			steel_plate = material.plate; // For Power Advantage
+			steel_block = material.getBlock(Names.BLOCK);
+			steel_plate = material.getBlock(Names.PLATE); // For Power Advantage
 		}
 		
 		if (Options.enableTin) {
 			material = Materials.tin;
-			tin_block = material.block;
-			tin_ore = material.ore;
+			tin_block = material.getBlock(Names.BLOCK);
+			tin_ore = material.getBlock(Names.ORE);
 		}
 
 		if (Options.enableZinc) {
 			material = Materials.zinc;
-			zinc_block = material.block;
-			zinc_ore = material.ore;
+			zinc_block = material.getBlock(Names.BLOCK);
+			zinc_ore = material.getBlock(Names.ORE);
 		}
 
 

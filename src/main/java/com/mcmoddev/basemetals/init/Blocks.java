@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.block.BlockHumanDetector;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
@@ -64,8 +65,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableCoal) {
 			final MMDMaterial material = Materials.vanilla_coal;
 
-			material.block = net.minecraft.init.Blocks.COAL_BLOCK;
-			material.ore = net.minecraft.init.Blocks.COAL_ORE;
+			material.addNewBlock( Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK );
+			material.addNewBlock( Names.ORE, net.minecraft.init.Blocks.COAL_ORE );
 		}
 
 		if (Options.enableColdIron) {
@@ -83,8 +84,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableDiamond) {
 			final MMDMaterial material = Materials.vanilla_diamond;
 
-			material.block = net.minecraft.init.Blocks.DIAMOND_BLOCK;
-			material.ore = net.minecraft.init.Blocks.DIAMOND_ORE;
+			material.addNewBlock( Names.BLOCK, net.minecraft.init.Blocks.DIAMOND_BLOCK);
+			material.addNewBlock( Names.ORE, net.minecraft.init.Blocks.DIAMOND_ORE);
 
 			createBars(material);
 			createDoor(material);
@@ -100,8 +101,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableEmerald) {
 			final MMDMaterial material = Materials.vanilla_emerald;
 
-			material.block = net.minecraft.init.Blocks.EMERALD_BLOCK;
-			material.ore = net.minecraft.init.Blocks.EMERALD_ORE;
+			material.addNewBlock( Names.BLOCK, net.minecraft.init.Blocks.EMERALD_BLOCK);
+			material.addNewBlock( Names.ORE, net.minecraft.init.Blocks.EMERALD_ORE);
 
 			createBars(material);
 			createDoor(material);
@@ -113,9 +114,9 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableGold) {
 			final MMDMaterial material = Materials.vanilla_gold;
 
-			material.block = net.minecraft.init.Blocks.GOLD_BLOCK;
-			material.ore = net.minecraft.init.Blocks.GOLD_ORE;
-			material.pressurePlate = net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE;
+			material.addNewBlock( Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
+			material.addNewBlock( Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
+			material.addNewBlock( Names.PRESSUREPLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE );
 
 			createPlate(material);
 			createBars(material);
@@ -132,12 +133,12 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableIron) {
 			final MMDMaterial material = Materials.vanilla_iron;
 
-			material.block = net.minecraft.init.Blocks.IRON_BLOCK;
-			material.ore = net.minecraft.init.Blocks.IRON_ORE;
-			material.bars = net.minecraft.init.Blocks.IRON_BARS;
-			material.doorBlock = net.minecraft.init.Blocks.IRON_DOOR;
-			material.trapdoor = net.minecraft.init.Blocks.IRON_TRAPDOOR;
-			material.pressurePlate = net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE;
+			material.addNewBlock( Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
+			material.addNewBlock( Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
+			material.addNewBlock( Names.BARS, net.minecraft.init.Blocks.IRON_BARS );
+			material.addNewBlock( Names.DOORBLOCK, net.minecraft.init.Blocks.IRON_DOOR );
+			material.addNewBlock( Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR );
+			material.addNewBlock( Names.PRESSUREPLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE );
 
 			createPlate(material);
 
@@ -147,8 +148,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableLapis) {
 			final MMDMaterial material = Materials.vanilla_lapis;
 
-			material.block = net.minecraft.init.Blocks.LAPIS_BLOCK;
-			material.ore = net.minecraft.init.Blocks.LAPIS_ORE;
+			material.addNewBlock( Names.BLOCK, net.minecraft.init.Blocks.LAPIS_BLOCK);
+			material.addNewBlock( Names.ORE, net.minecraft.init.Blocks.LAPIS_ORE);
 		}
 
 		if (Options.enableLead) {
@@ -172,7 +173,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableObsidian) {
 			final MMDMaterial material = Materials.vanilla_obsidian;
 
-			material.block = net.minecraft.init.Blocks.OBSIDIAN;
+			material.addNewBlock( Names.BLOCK, net.minecraft.init.Blocks.OBSIDIAN);
 
 			createBars(material);
 			createDoor(material);
@@ -192,8 +193,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableQuartz) {
 			final MMDMaterial material = Materials.vanilla_quartz;
 
-			material.block = net.minecraft.init.Blocks.QUARTZ_BLOCK;
-			material.ore = net.minecraft.init.Blocks.QUARTZ_ORE;
+			material.addNewBlock( Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
+			material.addNewBlock( Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
 			// material.halfSlab = ;
 			// material.doubleSlab = ;
 			// material.stairs = ;
@@ -211,8 +212,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.enableRedstone) {
 			final MMDMaterial material = Materials.vanilla_redstone;
 
-			material.block = net.minecraft.init.Blocks.REDSTONE_BLOCK;
-			material.ore = net.minecraft.init.Blocks.REDSTONE_ORE;
+			material.addNewBlock( Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
+			material.addNewBlock( Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
 		}
 
 		if (Options.enableSilver) {
@@ -221,12 +222,12 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.enableStarSteel) {
 			createBlocksFull(Materials.starsteel);
-			Materials.starsteel.block.setLightLevel(0.5f);
-			Materials.starsteel.plate.setLightLevel(0.5f);
-			Materials.starsteel.ore.setLightLevel(0.5f);
-			Materials.starsteel.bars.setLightLevel(0.5f);
-			Materials.starsteel.doorBlock.setLightLevel(0.5f);
-			Materials.starsteel.trapdoor.setLightLevel(0.5f);
+			Materials.starsteel.getBlock(Names.BLOCK).setLightLevel(0.5f);
+			Materials.starsteel.getBlock(Names.PLATE).setLightLevel(0.5f);
+			Materials.starsteel.getBlock(Names.ORE).setLightLevel(0.5f);
+			Materials.starsteel.getBlock(Names.BARS).setLightLevel(0.5f);
+			Materials.starsteel.getBlock(Names.DOORBLOCK).setLightLevel(0.5f);
+			Materials.starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
 		}
 
 		if (Options.enableSteel) {

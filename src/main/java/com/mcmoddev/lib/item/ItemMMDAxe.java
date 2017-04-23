@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
+import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -38,10 +39,10 @@ public class ItemMMDAxe extends ItemAxe implements IMMDObject {
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
 		this.damageVsEntity = 4F + (2F * this.material.getBaseAttackDamage());
-		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * this.material.strength);
+		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * this.material.getStat(MaterialStats.STRENGTH));
 		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
 		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
+		this.regenerates = this.material.regenerates();
 	}
 
 	@Override

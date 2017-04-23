@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.block;
 
 import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
@@ -46,7 +47,7 @@ public class BlockMMDOre extends BlockOre implements IOreDictionaryEntry, IMMDOb
 
 	@Override
 	public boolean canEntityDestroy(IBlockState bs, IBlockAccess w, BlockPos coord, Entity entity) {
-		if ((this == Materials.starsteel.ore) && (entity instanceof net.minecraft.entity.boss.EntityDragon))
+		if ((this == Materials.starsteel.getBlock(Names.ORE)) && (entity instanceof net.minecraft.entity.boss.EntityDragon))
 			return false;
 		return super.canEntityDestroy(bs, w, coord, entity);
 	}
@@ -107,11 +108,11 @@ public class BlockMMDOre extends BlockOre implements IOreDictionaryEntry, IMMDOb
 	@Override
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
 		if (this.material.getType() == MMDMaterial.MaterialType.MINERAL) {
-			return this.material.powder;
+			return this.material.getItem(Names.POWDER);
 		} else if (this.material.getType() == MMDMaterial.MaterialType.CRYSTAL) {
-			return this.material.ingot;
+			return this.material.getItem(Names.CRYSTAL);
 		} else if (this.material.getType() == MMDMaterial.MaterialType.GEM) {
-			return this.material.ingot;
+			return this.material.getItem(Names.GEM);
 		}
 		return Item.getItemFromBlock(this);
 	}

@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -72,18 +73,21 @@ public class ThermalExpansionBase implements IIntegration {
 			int ENERGY_ORE = 2000;
 			int ENERGY_DUST = 1400;
 			ItemStack ore = null;
-			if( mat.ore != null ) {
-				ore = new ItemStack( mat.ore, 1, 0 );
-			} else if( mat.blend != null ) {
-				ore = new ItemStack( mat.blend, 1, 0 );
+			if( mat.getBlock(Names.ORE) != null ) {
+				ore = new ItemStack( mat.getBlock(Names.ORE), 1, 0 );
+			} else if( mat.getItem(Names.BLEND) != null ) {
+				ore = new ItemStack( mat.getItem(Names.BLEND), 1, 0 );
 			} else {
 				return;
 			}
 			
-			ItemStack ingot = new ItemStack( mat.ingot, 1, 0 );
+			ItemStack ingot = new ItemStack( mat.getItem(Names.INGOT), 1, 0 );
+			if( ingot.getItem() == null ) {
+				return;
+			}
 			ThermalExpansionHelper.addFurnaceRecipe( ENERGY_ORE, ore, ingot );
-			if( Options.enableBasics && mat.powder != null ) {
-				ItemStack dust = new ItemStack( mat.powder );
+			if( Options.enableBasics && mat.getItem(Names.POWDER) != null ) {
+				ItemStack dust = new ItemStack( mat.getItem(Names.POWDER) );
 				ThermalExpansionHelper.addFurnaceRecipe( ENERGY_DUST, dust, ingot );
 			}
 		}
@@ -102,24 +106,24 @@ public class ThermalExpansionBase implements IIntegration {
 			 */
 			int ENERGY = 8000;
 			
-			ItemStack ingot = new ItemStack( mat.ingot );
+			ItemStack ingot = new ItemStack( mat.getItem(Names.INGOT) );
 			FluidStack oreFluid = FluidRegistry.getFluidStack( mat.getName(), 288 );
 			FluidStack baseFluid = FluidRegistry.getFluidStack( mat.getName(), 144 );
 			
-			if( mat.ore != null ) {
-				ItemStack ore = new ItemStack( mat.ore );
+			if( mat.getBlock(Names.ORE) != null ) {
+				ItemStack ore = new ItemStack( mat.getBlock(Names.ORE) );
 				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ore, oreFluid );
 			}
 			
 			ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ingot, baseFluid );
 			
-			if( Options.enableBasics && mat.powder != null ) {
-				ItemStack dust = new ItemStack( mat.powder );
+			if( Options.enableBasics && mat.getItem(Names.POWDER) != null ) {
+				ItemStack dust = new ItemStack( mat.getItem(Names.POWDER) );
 				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, dust, baseFluid );
 			}
 			
-			addCrucibleExtra( Options.enablePlate, Item.getItemFromBlock(mat.plate), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY );
-			addCrucibleExtra( Options.enableBasics, mat.nugget, FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY );
+			addCrucibleExtra( Options.enablePlate, Item.getItemFromBlock(mat.getBlock(Names.PLATE)), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY );
+			addCrucibleExtra( Options.enableBasics, mat.getItem(Names.NUGGET), FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY );
 		}
 	}
 
@@ -138,7 +142,7 @@ public class ThermalExpansionBase implements IIntegration {
 			 * Compactors default is 4000RF per operation
 			 */
 			int ENERGY = 4000;
-			addCompactorPressRecipe( ENERGY, new ItemStack( mat.ingot ), new ItemStack( mat.plate ) );
+			addCompactorPressRecipe( ENERGY, new ItemStack( mat.getItem(Names.INGOT) ), new ItemStack( mat.getBlock(Names.PLATE) ) );
 		}
 	}
 
@@ -150,10 +154,10 @@ public class ThermalExpansionBase implements IIntegration {
 			 * Compactors default is 4000RF per operation
 			 */
 			int ENERGY = 4000;
-			ItemStack ingots = new ItemStack( mat.ingot, 9 );
-			ItemStack nuggets = new ItemStack( mat.nugget, 9 );
-			ItemStack block = new ItemStack( mat.block, 1 );
-			ItemStack ingot = new ItemStack( mat.ingot, 1 );
+			ItemStack ingots = new ItemStack( mat.getItem(Names.INGOT), 9 );
+			ItemStack nuggets = new ItemStack( mat.getItem(Names.NUGGET), 9 );
+			ItemStack block = new ItemStack( mat.getBlock(Names.BLOCK), 1 );
+			ItemStack ingot = new ItemStack( mat.getItem(Names.INGOT), 1 );
 			
 			addCompactorStorageRecipe( ENERGY, ingots, block );
 			addCompactorStorageRecipe( ENERGY, nuggets, ingot );

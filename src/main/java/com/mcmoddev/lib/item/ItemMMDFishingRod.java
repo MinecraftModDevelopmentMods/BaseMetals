@@ -44,7 +44,7 @@ public class ItemMMDFishingRod extends ItemFishingRod implements IMMDObject {
 //				return entityIn == null ? 0.0F : ((entityIn.getHeldItemMainhand() == stack) && (entityIn instanceof EntityPlayer) && (((EntityPlayer) entityIn).fishEntity != null) ? 1.0F : 0.0F);
 //			}
 //		});
-		this.regenerates = this.material.regenerates;
+		this.regenerates = this.material.regenerates();
 	}
 
 	/*

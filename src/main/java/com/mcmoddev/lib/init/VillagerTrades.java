@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
+import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.item.ItemMMDCrackHammer;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -103,8 +104,8 @@ public abstract class VillagerTrades {
 		});
 
 		for (final MMDMaterial material : Materials.getAllMaterials()) {
-			final float value = material.hardness + material.strength + material.magicAffinity + material.getToolHarvestLevel();
-			if (material.isRare) {
+			final float value = material.getStat(MaterialStats.HARDNESS) + material.getStat(MaterialStats.STRENGTH) + material.getStat(MaterialStats.MAGICAFFINITY) + material.getToolHarvestLevel();
+			if (material.isRare()) {
 				continue;
 			}
 
@@ -152,11 +153,11 @@ public abstract class VillagerTrades {
 
 			if (allArmors.containsKey(material)) {
 				tradesTable.computeIfAbsent(armorsmith | tradeLevel, (Integer key) -> new ArrayList<>()).addAll(
-						Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.hardness / 2), 1,
+						Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2), 1,
 								allArmors.get(material).toArray(new Item[0])))));
 			}
 
-			if (material.magicAffinity > 5) {
+			if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
 				if (allHammers.containsKey(material)) {
 					tradesTable
 							.computeIfAbsent(toolsmith | (tradeLevel + 2),
@@ -180,8 +181,8 @@ public abstract class VillagerTrades {
 										(Integer key) -> new ArrayList<>())
 								.addAll(Collections
 										.singletonList(new ListEnchantedItemForEmeralds(allArmors.get(material).get(i),
-												new PriceInfo(emeraldPurch + 7 + (int) (material.hardness / 2),
-														emeraldPurch + 12 + (int) (material.hardness / 2)))));
+												new PriceInfo(emeraldPurch + 7 + (int) (material.getStat(MaterialStats.HARDNESS) / 2),
+														emeraldPurch + 12 + (int) (material.getStat(MaterialStats.HARDNESS) / 2)))));
 					}
 				}
 

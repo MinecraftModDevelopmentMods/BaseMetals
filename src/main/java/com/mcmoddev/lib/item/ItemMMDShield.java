@@ -2,6 +2,7 @@ package com.mcmoddev.lib.item;
 
 import java.util.List;
 
+import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
@@ -33,11 +34,11 @@ public class ItemMMDShield extends ItemShield implements IOreDictionaryEntry, IM
 	 */
 	public ItemMMDShield(MMDMaterial material) {
 		this.material = material;
-		this.setMaxDamage((int) (this.material.strength * 168));
+		this.setMaxDamage((int) (this.material.getStat(MaterialStats.STRENGTH) * 168));
 		this.setCreativeTab(CreativeTabs.TOOLS);
 		this.oreDict = Oredicts.SHIELD + this.material.getCapitalizedName();
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
+		this.regenerates = this.material.regenerates();
 	}
 
 	@Override

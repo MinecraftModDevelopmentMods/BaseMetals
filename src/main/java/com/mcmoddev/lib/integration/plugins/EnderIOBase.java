@@ -70,7 +70,7 @@ public class EnderIOBase implements IIntegration {
 		final String input = Oredicts.ORE + capitalizedName;
 		final String output = Oredicts.INGOT + capitalizedName;
 
-		if (!(material.hasOre))
+		if (!(material.hasOre()))
 			return; // Only run for Ore types
 
 		// @formatter:off
@@ -173,7 +173,7 @@ public class EnderIOBase implements IIntegration {
 		final String rockChance = "0.15";
 		String messageSecondary = "";
 
-		if (!(material.hasOre))
+		if (!(material.hasOre()))
 			return; // Only run for Ore types
 
 		if (outputSecondary != null)
