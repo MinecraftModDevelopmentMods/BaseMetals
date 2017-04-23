@@ -33,7 +33,7 @@ public enum MaterialStats implements IStringSerializable {
 	 */
 	BASEDAMAGE;
 	
-    public static final TreeMap<Integer, MaterialStats> MAP = Maps.newTreeMap();
+    protected static final TreeMap<Integer, MaterialStats> MAP = Maps.newTreeMap();
 
     static {
         for (MaterialStats stat : values()) {
@@ -57,5 +57,4 @@ public enum MaterialStats implements IStringSerializable {
     public String toString() {
     	return getName();
     }
-
 }

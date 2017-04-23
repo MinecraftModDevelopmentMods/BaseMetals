@@ -41,7 +41,7 @@ public class TinkersConstructBase implements IIntegration {
 	 * Setup specifically for NetherMetals and EndMetals.
 	 *
 	 * @param base
-	 *            MetalMaterial that is the base material for this
+	 *            MMDMaterial that is the base material for this
 	 * @param block
 	 *            Block to register
 	 * @param amountPer

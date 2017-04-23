@@ -99,8 +99,8 @@ public abstract class Blocks {
 		createWall(material);
 	}
 
-	protected static Block addBlock( Block block, Names name, MMDMaterial material, CreativeTabs tab ) {
-		return addBlock( block, name.toString(), material, tab);
+	protected static Block addBlock(Block block, Names name, MMDMaterial material, CreativeTabs tab) {
+		return addBlock(block, name.toString(), material, tab);
 	}
 	
 	/**
@@ -167,37 +167,37 @@ public abstract class Blocks {
 	}
 
 	private static Block createBlock(MMDMaterial material, Names name, Class<? extends Block> clazz, boolean enabled, boolean extra) {
-		if( !material.hasBlock(name) ) {
-			return createBlock( material, name.toString(), clazz, enabled, extra );
+		if (!material.hasBlock(name)) {
+			return createBlock(material, name.toString(), clazz, enabled, extra);
 		} else {
 			return material.getBlock(name);
 		}
 	}
 	
 	private static Block createBlock(MMDMaterial material, String name, Class<? extends Block> clazz, boolean enabled, boolean extra) {
-		if( material == null ) {
+		if (material == null) {
 			return null;
 		}
-		
-		if( enabled && extra ) {
+
+		if (enabled && extra) {
 			Constructor<?> ctor = null;
 			Block inst = null;
 			try {
 				ctor = clazz.getConstructor(material.getClass());
-			} catch( Exception e ) {
+			} catch (Exception ex) {
 				FMLLog.getLogger().fatal("Class for Block named %s does not have an accessible constructor or another exception occurred", name);
-				FMLLog.getLogger().fatal(e.toString());
+				FMLLog.getLogger().fatal(ex.toString());
 				return null;
 			}
 			
 			try {
 				inst = (Block)ctor.newInstance(material);
-			} catch( Exception e ) {
+			} catch (Exception ex) {
 				FMLLog.getLogger().fatal("Unable to create Block named %s for material %s", name, material.getCapitalizedName());
 			}
 			
-			if( inst != null ) {
-				return addBlock( inst, name, material, ItemGroups.blocksTab );
+			if (inst != null) {
+				return addBlock(inst, name, material, ItemGroups.blocksTab);
 			}
 		}
 		return null;
@@ -214,7 +214,7 @@ public abstract class Blocks {
 
 	protected static Block createBookshelf(MMDMaterial material, boolean fullBlock) {
 		BlockMMDBookshelf bs = (BlockMMDBookshelf)createBookshelf(material);
-		if( bs != null ) {
+		if (bs != null) {
 			bs.setFullBlock(fullBlock);
 		}
 		return bs;

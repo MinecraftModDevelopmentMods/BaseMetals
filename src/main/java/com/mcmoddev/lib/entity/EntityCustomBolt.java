@@ -64,7 +64,7 @@ public class EntityCustomBolt extends EntityTippedArrow {
 	protected ItemStack getBoltStack() {
 		if (this.itemStack == null) {
 			// TODO: FIXME
-			this.itemStack = new ItemStack(Materials.vanilla_wood.getItem(Names.BOLT));
+			this.itemStack = new ItemStack(Materials.vanillaWood.getItem(Names.BOLT));
 		}
 
 		return new ItemStack(this.itemStack.getItem(), 1, this.itemStack.getItemDamage());

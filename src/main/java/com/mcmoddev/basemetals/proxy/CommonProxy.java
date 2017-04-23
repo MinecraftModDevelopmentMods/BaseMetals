@@ -32,7 +32,6 @@ public class CommonProxy {
 
 		Materials.init();
 		FuelRegistry.init();
-		cyano.basemetals.init.Materials.init();
 		Fluids.init();
 		ItemGroups.init();
 		Blocks.init();
@@ -54,7 +53,7 @@ public class CommonProxy {
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
 					if ((Options.enableCoal) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
-						mapping.remap(Materials.vanilla_coal.getItem(Names.POWDER));
+						mapping.remap(Materials.vanillaCoal.getItem(Names.POWDER));
 					}
 				}
 			}

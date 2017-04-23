@@ -248,7 +248,7 @@ public abstract class Items {
 	}
 
 	private static Item createItem(MMDMaterial material, Names name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
-		if( enabled && extra && !material.hasItem(name) ) {
+		if (enabled && extra && !material.hasItem(name)) {
 			return createItem(material, name.toString(), clazz, enabled, extra, tab);
 		} else {
 			return material.getItem(name);
@@ -256,7 +256,7 @@ public abstract class Items {
 	}
 	
 	private static Item createItem(MMDMaterial material, String name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
-		if( material == null ) {
+		if (material == null) {
 			return null;
 		}
 		
@@ -265,27 +265,27 @@ public abstract class Items {
 			Item inst = null;
 			try {
 				ctor = clazz.getConstructor(material.getClass());
-			} catch( Exception e ) {
+			} catch (Exception ex) {
 				FMLLog.getLogger().fatal("Class for Item named %s does not have an accessible constructor or another exception occurred", name);
-				FMLLog.getLogger().fatal(e.toString());
+				FMLLog.getLogger().fatal(ex.toString());
 				return null;
 			}
 			
 			try {
 				inst = (Item)ctor.newInstance(material);
-			} catch( Exception e ) {
+			} catch (Exception ex) {
 				FMLLog.getLogger().fatal("Unable to create Item named %s for material %s", name, material.getCapitalizedName());
 			}
 			
-			if( inst != null ) {
-				return addItem( inst, name, material, tab);
+			if (inst != null) {
+				return addItem(inst, name, material, tab);
 			}
 		}
 		return null;
 	}
 	
 	private static Item createArmorItem(MMDMaterial material, Names name) {
-		if( !( Options.enableArmor && !material.hasItem(name) ) ) {
+		if(!(Options.enableArmor && !material.hasItem(name))) {
 			return null;
 		}
 		
@@ -305,10 +305,11 @@ public abstract class Items {
 			break;
 		default:
 		}
-		if( it == null ) {
+
+		if (it == null) {
 			return null;
 		}
-		addItem( it, name.toString(), material, ItemGroups.toolsTab );
+		addItem(it, name.toString(), material, ItemGroups.toolsTab);
 		return it;
 	}
 	/**

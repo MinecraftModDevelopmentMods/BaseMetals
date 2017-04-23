@@ -24,9 +24,8 @@ public enum Names implements IStringSerializable {
 
         // Ores
 	ORE, ENDORE, NETHERORE;
-
 	
-    public static final TreeMap<Integer, Names> MAP = Maps.newTreeMap();
+    protected static final TreeMap<Integer, Names> MAP = Maps.newTreeMap();
 
     static {
         for (Names name : values()) {
@@ -51,4 +50,3 @@ public enum Names implements IStringSerializable {
     	return getName();
     }
 }
-

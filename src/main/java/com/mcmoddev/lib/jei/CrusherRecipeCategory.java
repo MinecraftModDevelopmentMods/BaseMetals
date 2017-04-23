@@ -1,8 +1,5 @@
 package com.mcmoddev.lib.jei;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 
 import mezz.jei.api.IGuiHelper;

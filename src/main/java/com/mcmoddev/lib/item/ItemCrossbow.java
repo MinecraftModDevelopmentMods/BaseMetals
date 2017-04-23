@@ -43,7 +43,7 @@ public class ItemCrossbow extends ItemBow {
 			if ((itemstack != null) || flag) {
 				if (itemstack == null) {
 					// TODO: FIXME
-					itemstack = new ItemStack(Materials.vanilla_iron.getItem(Names.BOLT));
+					itemstack = new ItemStack(Materials.vanillaIron.getItem(Names.BOLT));
 				}
 
 				final float f = getArrowVelocity(i);
@@ -57,7 +57,7 @@ public class ItemCrossbow extends ItemBow {
 					if (!worldIn.isRemote) {
 						// TODO: FIXME Using Materials.vanilla_iron.arrow, MC uses Items.ARROW
 //						final ItemArrow itemArrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Materials.vanilla_iron.bolt));
-						final ItemBolt itemBolt = (ItemBolt) ((ItemBolt) (itemstack.getItem() instanceof ItemBolt ? itemstack.getItem() : Materials.vanilla_iron.getItem(Names.BOLT)));
+						final ItemBolt itemBolt = (ItemBolt) ((ItemBolt) (itemstack.getItem() instanceof ItemBolt ? itemstack.getItem() : Materials.vanillaIron.getItem(Names.BOLT)));
 						final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemstack, entityplayer);
 						entityBolt.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 

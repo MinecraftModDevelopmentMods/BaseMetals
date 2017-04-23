@@ -55,7 +55,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerAlloys();
 		
 		if (Options.enableCoal) {
-			registerFluid(Materials.vanilla_coal, 144);
+			registerFluid(Materials.vanillaCoal, 144);
 		}
 
 

@@ -22,9 +22,9 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 			return;
 		}
 
-		blocksTab = addTab("blocks", true, Materials.vanilla_iron);
-		itemsTab = addTab("items", true, Materials.vanilla_iron);
-		toolsTab = addTab("tools", true, Materials.vanilla_iron);
+		blocksTab = addTab("blocks", true, Materials.vanillaIron);
+		itemsTab = addTab("items", true, Materials.vanillaIron);
+		toolsTab = addTab("tools", true, Materials.vanillaIron);
 
 		initDone = true;
 	}

@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.util;
 
-@SuppressWarnings("unused")
 public class Oredicts {
 
 	// See net.minecraftforge.oredict.OreDictionary.initVanillaEntries() for Vanilla oreDict names
@@ -208,50 +207,23 @@ public class Oredicts {
 	public static final String DUST_CARBON = "dustCarbon";
 	public static final String DUST_CHARCOAL = "dustCharcoal";
 	public static final String DUST_COAL = "dustCoal";
-	public static final String DUST_COPPER = "dustCopper";
-	public static final String DUST_TIN = "dustTin";
-	public static final String DUST_ZINC = "dustZinc";
-	public static final String DUST_NICKEL = "dustNickel";
 
 	public static final String DUST_TINY_CHARCOAL = "dustTinyCharcoal";
 	public static final String DUST_TINY_COAL = "dustTinyCoal";
-	public static final String DUST_TINY_MERCURY = "dustTinyMercury";
-	public static final String DUST_TINY_COLDIRON = "dustTinyColdiron";
-	public static final String DUST_TINY_COPPER = "dustTinyCopper";
-	public static final String DUST_TINY_GOLD = "dustTinyGold";
-	public static final String DUST_TINY_IRON = "dustTinyIron";
-	public static final String DUST_TINY_NICKEL = "dustTinyNickel";
-	public static final String DUST_TINY_SILVER = "dustTinySilver";
-	public static final String DUST_TINY_TIN = "dustTinyTin";
-	public static final String DUST_TINY_ZINC = "dustTinyZinc";
 
 	public static final String DUST_SMALL_CHARCOAL = "dustSmallCharcoal";
 	public static final String DUST_SMALL_COAL = "dustSmallCoal";
-	public static final String DUST_SMALL_MERCURY = "dustSmallMercury";
-
-	public static final String ORE_MERCURY = "oreMercury";
 
 	public static final String INGOT_MERCURY = "ingotMercury";
 	public static final String INGOT_STEEL = "ingotSteel";
 
 	public static final String NUGGET_CHARCOAL = "nuggetCharcoal";
 	public static final String NUGGET_COAL = "nuggetCoal";
-	public static final String NUGGET_MERCURY = "nuggetMercury";
-
-	public static final String DUST_COLDIRON = "dustColdiron";
-	public static final String DUST_IRON = "dustIron";
-	public static final String DUST_SILVER = "dustSilver";
-	public static final String DUST_GOLD = "dustGold";
-	public static final String DUST_MERCURY = "dustMercury";
 
 	public static final String DOOR_WOOD = "doorWood";
 	public static final String DOOR_IRON = "doorIron";
 
 	public static final String BARS_IRON = "barsIron";
-
-	public static final String COAL = "Coal";
-	public static final String CHARCOAL = "Charcoal";
-	public static final String QUICKSILVER = "quicksilver";
 
 	private Oredicts() {
 		throw new IllegalAccessError("Not a instantiable class");

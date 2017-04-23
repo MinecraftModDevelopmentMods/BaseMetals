@@ -55,13 +55,13 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		}
 
 		if (Options.enableCharcoal) {
-			addFluid(Materials.vanilla_charcoal, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_charcoal);
+			addFluid(Materials.vanillaCharcoal, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaCharcoal);
 		}
 
 		if (Options.enableCoal) {
-			addFluid(Materials.vanilla_coal, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_coal);
+			addFluid(Materials.vanillaCoal, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaCoal);
 		}
 
 		if (Options.enableColdIron) {
@@ -80,8 +80,8 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		}
 
 		if (Options.enableDiamond) {
-			addFluid(Materials.vanilla_diamond, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_diamond);
+			addFluid(Materials.vanillaDiamond, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaDiamond);
 		}
 
 		if (Options.enableElectrum) {
@@ -90,18 +90,18 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		}
 
 		if (Options.enableEmerald) {
-			addFluid(Materials.vanilla_emerald, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_emerald);
+			addFluid(Materials.vanillaEmerald, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaEmerald);
 		}
 
 		if (Options.enableEnder) {
-			addFluid(Materials.vanilla_ender, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_ender);
+			addFluid(Materials.vanillaEnder, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaEnder);
 		}
 
 		if (Options.enableGold) {
-			addFluid(Materials.vanilla_gold, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_gold);
+			addFluid(Materials.vanillaGold, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaGold);
 		}
 
 		if (Options.enableInvar) {
@@ -110,8 +110,8 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		}
 
 		if (Options.enableIron) {
-			addFluid(Materials.vanilla_iron, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_iron);
+			addFluid(Materials.vanillaIron, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaIron);
 		}
 
 		if (Options.enableLead) {
@@ -135,8 +135,8 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		}
 
 		if (Options.enableObsidian) {
-			addFluid(Materials.vanilla_obsidian, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_obsidian);
+			addFluid(Materials.vanillaObsidian, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaObsidian);
 		}
 
 		if (Options.enablePewter) {
@@ -150,13 +150,13 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		}
 
 		if (Options.enablePrismarine) {
-			addFluid(Materials.vanilla_prismarine, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_prismarine);
+			addFluid(Materials.vanillaPrismarine, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaPrismarine);
 		}
 
 		if (Options.enableRedstone) {
-			addFluid(Materials.vanilla_redstone, 2000, 10000, 769, 10);
-			addFluidBlock(Materials.vanilla_redstone);
+			addFluid(Materials.vanillaRedstone, 2000, 10000, 769, 10);
+			addFluidBlock(Materials.vanillaRedstone);
 		}
 
 		if (Options.enableSilver) {

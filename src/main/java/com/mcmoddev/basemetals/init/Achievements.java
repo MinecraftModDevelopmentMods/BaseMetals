@@ -66,7 +66,7 @@ public class Achievements extends com.mcmoddev.lib.init.Achievements {
 
 			thisIsNew = makeAchievement("this_is_new", AchievementList.BUILD_FURNACE, 0, 0, Materials.copper.getItem(Names.INGOT), page); // TODO: Make this check for all ingots
 			blocktastic = makeAchievement("blocktastic", thisIsNew, 2, 0, Materials.copper.getBlock(Names.BLOCK), page); // TODO: Make this checks for all blocks
-			geologist = makeAchievement("geologist", thisIsNew, 4, 2, Materials.vanilla_iron.getItem(Names.CRACKHAMMER), page); // TODO: Make this check for all crackhammers
+			geologist = makeAchievement("geologist", thisIsNew, 4, 2, Materials.vanillaIron.getItem(Names.CRACKHAMMER), page); // TODO: Make this check for all crackhammers
 			metallurgy = makeAchievement("metallurgy", geologist, 6, 2, Materials.brass.getItem(Names.BLEND), page); // TODO: Make this check for all blends
 			if (Options.enableBrass) {
 				brassMaker = makeAchievement("brass_maker", metallurgy, 9, 3, Materials.brass.getItem(Names.INGOT), page);
