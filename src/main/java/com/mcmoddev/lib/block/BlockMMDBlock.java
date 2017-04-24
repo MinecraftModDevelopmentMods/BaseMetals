@@ -4,8 +4,6 @@ import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -23,10 +21,9 @@ import net.minecraft.world.World;
 /**
  * Metal Block
  */
-public class BlockMMDBlock extends Block implements IOreDictionaryEntry, IMMDObject {
+public class BlockMMDBlock extends Block implements IMMDObject {
 
 	private final MMDMaterial material;
-	private final String oreDict;
 	private final boolean beaconBase;
 
 	/**
@@ -51,7 +48,6 @@ public class BlockMMDBlock extends Block implements IOreDictionaryEntry, IMMDObj
 		this.translucent = false;
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		this.oreDict = Oredicts.BLOCK + material.getCapitalizedName();
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
@@ -168,11 +164,6 @@ public class BlockMMDBlock extends Block implements IOreDictionaryEntry, IMMDObj
 		if ((Options.enableAchievements) && (placer instanceof EntityPlayer)) {
 			((EntityPlayer) placer).addStat(Achievements.blocktastic, 1);
 		}
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 
 	@Override
