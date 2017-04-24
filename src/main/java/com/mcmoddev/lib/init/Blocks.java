@@ -8,9 +8,7 @@ import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.TabContainer;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.*;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,7 +16,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * This class initializes all blocks in Base Metals and provides some utility
