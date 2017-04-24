@@ -38,30 +38,30 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		com.mcmoddev.lib.init.Items.init(); // TODO
 		
 		if (Options.enableAdamantine) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
-			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.ADAMANTINE), myTabs);
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ADAMANTINE), myTabs);
 		}
 
 		if (Options.enableAntimony) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.ANTIMONY));
-			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ANTIMONY));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.ANTIMONY), myTabs);
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ANTIMONY), myTabs);
 		}
 
 		if (Options.enableAquarium) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.AQUARIUM));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.AQUARIUM), myTabs);
 		}
 
 		if (Options.enableBismuth) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.BISMUTH));
-			createItemsModSupport(Materials.getMaterialByName(MaterialNames.BISMUTH));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.BISMUTH), myTabs);
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.BISMUTH), myTabs);
 		}
 
 		if (Options.enableBrass) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.BRASS));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.BRASS), myTabs);
 		}
 
 		if (Options.enableBronze) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.BRONZE));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.BRONZE), myTabs);
 		}
 
 		if (Options.enableCharcoal) {
@@ -92,16 +92,16 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableColdIron) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.COLDIRON));
-			createItemsModSupport(Materials.getMaterialByName(MaterialNames.COLDIRON));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.COLDIRON), myTabs);
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.COLDIRON), myTabs);
 		}
 
 		if (Options.enableCopper) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.COPPER));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.COPPER), myTabs);
 		}
 
 		if (Options.enableCupronickel) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.CUPRONICKEL));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.CUPRONICKEL), myTabs);
 		}
 
 		if (Options.enableDiamond) {
@@ -131,7 +131,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableElectrum) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.ELECTRUM));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.ELECTRUM), myTabs);
 		}
 
 		if (Options.enableGold) {
@@ -154,7 +154,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableInvar) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.INVAR));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.INVAR), myTabs);
 		}
 
 		if (Options.enableIron) {
@@ -187,17 +187,17 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableLead) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.LEAD));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.LEAD), myTabs);
 		}
 
 		if (Options.enableObsidian) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
-			createItemsFull(material);
+			createItemsFull(material, myTabs);
 		}
 
 		if (Options.enablePlatinum) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.PLATINUM));
-			createItemsModSupport(Materials.getMaterialByName(MaterialNames.PLATINUM));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.PLATINUM), myTabs);
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.PLATINUM), myTabs);
 		}
 
 		if (Options.enableMercury) {
@@ -210,16 +210,16 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableMithril) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.MITHRIL));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.MITHRIL), myTabs);
 		}
 
 		if (Options.enableNickel) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.NICKEL));
-			createItemsModSupport(Materials.getMaterialByName(MaterialNames.NICKEL));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.NICKEL), myTabs);
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.NICKEL), myTabs);
 		}
 
 		if (Options.enablePewter) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.PEWTER));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.PEWTER), myTabs);
 		}
 
 		if (Options.enableRedstone) {
@@ -239,12 +239,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableSilver) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.SILVER));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.SILVER), myTabs);
 		}
 
 		if (Options.enableStarSteel) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.STARSTEEL));
-			createItemsModSupport(Materials.getMaterialByName(MaterialNames.STARSTEEL));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.STARSTEEL), myTabs);
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.STARSTEEL), myTabs);
 		}
 
 		if (Options.enableStone) {
@@ -266,11 +266,11 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableSteel) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.STEEL));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.STEEL), myTabs);
 		}
 
 		if (Options.enableTin) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.TIN));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.TIN), myTabs);
 		}
 
 		if (Options.enableWood) {
@@ -296,8 +296,8 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableZinc) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.ZINC));
-			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ZINC));
+			createItemsFull(Materials.getMaterialByName(MaterialNames.ZINC), myTabs);
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ZINC), myTabs);
 		}
 
 		addToMetList(); // TODO
