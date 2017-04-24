@@ -19,7 +19,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
  * @author Jasmine Iwanek
  *
  */
-public class GeneralizedCreativeTab extends CreativeTabs {
+public class MMDCreativeTab extends CreativeTabs {
 
 	private MMDMaterial material;
 	private final boolean searchable;
@@ -34,7 +34,7 @@ public class GeneralizedCreativeTab extends CreativeTabs {
 		}
 	};
 
-	public GeneralizedCreativeTab(String unlocalizedName, boolean searchable, MMDMaterial material) {
+	public MMDCreativeTab(String unlocalizedName, boolean searchable, MMDMaterial material) {
 		super(unlocalizedName);
 		// this.itemSupplier = itemSupplier;
 		this.material = material;

@@ -32,7 +32,7 @@ public class ItemGroups {
 	public static CreativeTabs itemsTab;
 	public static CreativeTabs toolsTab;
 
-	private static Map<String, List<GeneralizedCreativeTab>> itemGroupsByModID = new HashMap<>();
+	private static Map<String, List<MMDCreativeTab>> itemGroupsByModID = new HashMap<>();
 
 	private static boolean initDone = false;
 
@@ -51,8 +51,8 @@ public class ItemGroups {
 		initDone = true;
 	}
 
-	protected static GeneralizedCreativeTab addTab(String name, boolean searchable, MMDMaterial material) {
-		GeneralizedCreativeTab tab = new GeneralizedCreativeTab(Loader.instance().activeModContainer().getModId() + "." + name, searchable, material);
+	protected static MMDCreativeTab addTab(String name, boolean searchable, MMDMaterial material) {
+		MMDCreativeTab tab = new MMDCreativeTab(Loader.instance().activeModContainer().getModId() + "." + name, searchable, material);
 		// itemGroupsByModID.get(name).add(tab);
 		return tab;
 	}
@@ -62,7 +62,7 @@ public class ItemGroups {
 	 *
 	 * @return An unmodifiable map of added items catagorized by metal material
 	 */
-	public static Map<String, List<GeneralizedCreativeTab>> getItemsGroupsByModID() {
+	public static Map<String, List<MMDCreativeTab>> getItemsGroupsByModID() {
 		return Collections.unmodifiableMap(itemGroupsByModID);
 	}
 }
