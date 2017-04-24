@@ -5,7 +5,6 @@ import java.util.List;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,10 +18,9 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDShield extends ItemShield implements IOreDictionaryEntry, IMMDObject {
+public class ItemMMDShield extends ItemShield implements IMMDObject {
 
 	final MMDMaterial material;
-	private final String oreDict;
 	protected final String repairOreDictName;
 	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
@@ -36,7 +34,6 @@ public class ItemMMDShield extends ItemShield implements IOreDictionaryEntry, IM
 		this.material = material;
 		this.setMaxDamage((int) (this.material.getStat(MaterialStats.STRENGTH) * 168));
 		this.setCreativeTab(CreativeTabs.TOOLS);
-		this.oreDict = Oredicts.SHIELD + this.material.getCapitalizedName();
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 		this.regenerates = this.material.regenerates();
 	}
@@ -53,11 +50,6 @@ public class ItemMMDShield extends ItemShield implements IOreDictionaryEntry, IM
 	@Deprecated
 	public MMDMaterial getMetalMaterial() {
 		return this.material;
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 
 	/**

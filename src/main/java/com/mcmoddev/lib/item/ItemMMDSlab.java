@@ -3,8 +3,6 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -15,10 +13,9 @@ import net.minecraft.item.ItemSlab;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDSlab extends ItemSlab implements IOreDictionaryEntry, IMMDObject {
+public class ItemMMDSlab extends ItemSlab implements IMMDObject {
 
 	final MMDMaterial material;
-	private final String oreDict;
 
 	/**
 	 *
@@ -28,7 +25,6 @@ public class ItemMMDSlab extends ItemSlab implements IOreDictionaryEntry, IMMDOb
 	public ItemMMDSlab(MMDMaterial material) {
 		super((BlockSlab)material.getBlock(Names.HALFSLAB), (BlockSlab)material.getBlock(Names.HALFSLAB), (BlockSlab)material.getBlock(Names.DOUBLESLAB));
 		this.material = material;
-		this.oreDict = Oredicts.SLAB + this.material.getCapitalizedName();
 	}
 
 	/**
@@ -45,7 +41,6 @@ public class ItemMMDSlab extends ItemSlab implements IOreDictionaryEntry, IMMDOb
 	public ItemMMDSlab(MMDMaterial metal, Block block, BlockSlab slab, BlockSlab doubleslab) {
 		super(block, slab, doubleslab);
 		this.material = metal;
-		this.oreDict = "slab" + this.material.getCapitalizedName();
 	}
 
 	@Override
@@ -60,10 +55,5 @@ public class ItemMMDSlab extends ItemSlab implements IOreDictionaryEntry, IMMDOb
 	@Deprecated
 	public MMDMaterial getMetalMaterial() {
 		return this.material;
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 }

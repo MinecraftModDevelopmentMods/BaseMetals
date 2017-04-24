@@ -12,7 +12,6 @@ import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
 
@@ -239,10 +238,6 @@ public abstract class Items {
 		if (material != null) {
 			itemsByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
 			itemsByMaterial.get(material).add(item);
-		}
-
-		if (item instanceof IOreDictionaryEntry) {
-			OreDictionary.registerOre(((IOreDictionaryEntry) item).getOreDictionaryName(), item);
 		}
 
 		return item;

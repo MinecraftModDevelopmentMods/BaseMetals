@@ -10,6 +10,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.TabContainer;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.*;
 import net.minecraft.creativetab.CreativeTabs;
@@ -157,11 +158,6 @@ public abstract class Blocks {
 		if (material != null) {
 			blocksByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
 			blocksByMaterial.get(material).add(block);
-		}
-
-		// TODO: Make this support multiple oredicts
-		if (block instanceof IOreDictionaryEntry) {
-			OreDictionary.registerOre(((IOreDictionaryEntry) block).getOreDictionaryName(), block);
 		}
 
 		return block;

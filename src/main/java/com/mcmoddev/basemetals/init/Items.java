@@ -1,5 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
@@ -37,34 +38,34 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		com.mcmoddev.lib.init.Items.init(); // TODO
 		
 		if (Options.enableAdamantine) {
-			createItemsFull(Materials.adamantine, myTabs);
-			createItemsModSupport(Materials.adamantine, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
 		}
 
 		if (Options.enableAntimony) {
-			createItemsFull(Materials.antimony, myTabs);
-			createItemsModSupport(Materials.antimony, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.ANTIMONY));
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ANTIMONY));
 		}
 
 		if (Options.enableAquarium) {
-			createItemsFull(Materials.aquarium, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.AQUARIUM));
 		}
 
 		if (Options.enableBismuth) {
-			createItemsFull(Materials.bismuth, myTabs);
-			createItemsModSupport(Materials.bismuth, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.BISMUTH));
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.BISMUTH));
 		}
 
 		if (Options.enableBrass) {
-			createItemsFull(Materials.brass, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.BRASS));
 		}
 
 		if (Options.enableBronze) {
-			createItemsFull(Materials.bronze, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.BRONZE));
 		}
 
 		if (Options.enableCharcoal) {
-			final MMDMaterial material = Materials.vanillaCharcoal;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 			material.addNewItem(Names.INGOT, new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
 
 			createNugget(material, myTabs.itemsTab);
@@ -78,7 +79,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableCoal) {
-			final MMDMaterial material = Materials.vanillaCoal;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.COAL);
 			material.addNewItem(Names.INGOT, net.minecraft.init.Items.COAL);
 
 			createNugget(material, myTabs.itemsTab);
@@ -91,20 +92,20 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableColdIron) {
-			createItemsFull(Materials.coldiron, myTabs);
-			createItemsModSupport(Materials.coldiron, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.COLDIRON));
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.COLDIRON));
 		}
 
 		if (Options.enableCopper) {
-			createItemsFull(Materials.copper, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.COPPER));
 		}
 
 		if (Options.enableCupronickel) {
-			createItemsFull(Materials.cupronickel, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.CUPRONICKEL));
 		}
 
 		if (Options.enableDiamond) {
-			final MMDMaterial material = Materials.vanillaDiamond;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.DIAMOND);
 
 			material.addNewItem(Names.AXE, net.minecraft.init.Items.DIAMOND_AXE);
 			material.addNewItem(Names.HOE, net.minecraft.init.Items.DIAMOND_HOE);
@@ -122,7 +123,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableEmerald) {
-			final MMDMaterial material = Materials.vanillaEmerald;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.EMERALD);
 
 			material.addNewItem(Names.INGOT, net.minecraft.init.Items.EMERALD);
 
@@ -130,11 +131,11 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableElectrum) {
-			createItemsFull(Materials.electrum, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.ELECTRUM));
 		}
 
 		if (Options.enableGold) {
-			final MMDMaterial material = Materials.vanillaGold;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.GOLD);
 
 			material.addNewItem(Names.AXE, net.minecraft.init.Items.GOLDEN_AXE);
 			material.addNewItem(Names.HOE, net.minecraft.init.Items.GOLDEN_HOE);
@@ -153,11 +154,11 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableInvar) {
-			createItemsFull(Materials.invar, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.INVAR));
 		}
 
 		if (Options.enableIron) {
-			final MMDMaterial material = Materials.vanillaIron;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.IRON);
 			material.addNewItem(Names.AXE, net.minecraft.init.Items.IRON_AXE);
 			material.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
 			material.addNewItem(Names.HOE, net.minecraft.init.Items.IRON_HOE);
@@ -178,7 +179,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableLapis) {
-			final MMDMaterial material = Materials.vanillaLapis;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.LAPIS);
 			material.addNewItem(Names.POWDER, net.minecraft.init.Items.DYE);
 
 			createSmallPowder(material, myTabs.itemsTab);
@@ -186,21 +187,21 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableLead) {
-			createItemsFull(Materials.lead, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.LEAD));
 		}
 
 		if (Options.enableObsidian) {
-			final MMDMaterial material = Materials.vanillaObsidian;
-			createItemsFull(material, myTabs);
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
+			createItemsFull(material);
 		}
 
 		if (Options.enablePlatinum) {
-			createItemsFull(Materials.platinum, myTabs);
-			createItemsModSupport(Materials.platinum, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.PLATINUM));
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.PLATINUM));
 		}
 
 		if (Options.enableMercury) {
-			final MMDMaterial material = Materials.mercury;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.MERCURY);
 
 			createIngot(material, myTabs.itemsTab);
 			createNugget(material, myTabs.itemsTab);
@@ -209,20 +210,20 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableMithril) {
-			createItemsFull(Materials.mithril, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.MITHRIL));
 		}
 
 		if (Options.enableNickel) {
-			createItemsFull(Materials.nickel, myTabs);
-			createItemsModSupport(Materials.nickel, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.NICKEL));
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.NICKEL));
 		}
 
 		if (Options.enablePewter) {
-			createItemsFull(Materials.pewter, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.PEWTER));
 		}
 
 		if (Options.enableRedstone) {
-			final MMDMaterial material = Materials.vanillaRedstone;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.REDSTONE);
 			material.addNewItem(Names.POWDER, net.minecraft.init.Items.REDSTONE);
 
 			createIngot(material, myTabs.itemsTab);
@@ -230,7 +231,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableQuartz) {
-			final MMDMaterial material = Materials.vanillaQuartz;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.QUARTZ);
 			material.addNewItem( Names.INGOT, net.minecraft.init.Items.QUARTZ);
 			// material.slab = ;
 
@@ -238,16 +239,16 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableSilver) {
-			createItemsFull(Materials.silver, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.SILVER));
 		}
 
 		if (Options.enableStarSteel) {
-			createItemsFull(Materials.starsteel, myTabs);
-			createItemsModSupport(Materials.starsteel, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.STARSTEEL));
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.STARSTEEL));
 		}
 
 		if (Options.enableStone) {
-			final MMDMaterial material = Materials.vanillaStone;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STONE);
 
 			material.addNewItem(Names.AXE, net.minecraft.init.Items.STONE_AXE);
 			material.addNewItem(Names.HOE, net.minecraft.init.Items.STONE_HOE);
@@ -265,15 +266,15 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableSteel) {
-			createItemsFull(Materials.steel, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.STEEL));
 		}
 
 		if (Options.enableTin) {
-			createItemsFull(Materials.tin, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.TIN));
 		}
 
 		if (Options.enableWood) {
-			final MMDMaterial material = Materials.vanillaWood;
+			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.WOOD);
 
 			material.addNewItem(Names.AXE, net.minecraft.init.Items.WOODEN_AXE);
 			material.addNewItem(Names.DOOR, net.minecraft.init.Items.OAK_DOOR);
@@ -295,8 +296,8 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.enableZinc) {
-			createItemsFull(Materials.zinc, myTabs);
-			createItemsModSupport(Materials.zinc, myTabs);
+			createItemsFull(Materials.getMaterialByName(MaterialNames.ZINC));
+			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ZINC));
 		}
 
 		addToMetList(); // TODO

@@ -193,7 +193,6 @@ public class Oredicts {
 	public static final String GEM = "gem";
 	public static final String BARS = "bars";
 	public static final String WALL = "wall";
-	public static final String BLOCK_CHARCOAL = "blockCharcoal";
 
 	public static final String CLUMP = "clump";
 	public static final String DUST_DIRTY = "dustDirty";
@@ -205,26 +204,28 @@ public class Oredicts {
 	public static final String CRUSHED = "crushed";
 	public static final String CRUSHED_PURIFIED = "crushedPurified";
 
-	public static final String DUST_CARBON = "dustCarbon";
-	public static final String DUST_CHARCOAL = "dustCharcoal";
-	public static final String DUST_COAL = "dustCoal";
-
-	public static final String DUST_TINY_CHARCOAL = "dustTinyCharcoal";
-	public static final String DUST_TINY_COAL = "dustTinyCoal";
-
-	public static final String DUST_SMALL_CHARCOAL = "dustSmallCharcoal";
-	public static final String DUST_SMALL_COAL = "dustSmallCoal";
-
-	public static final String INGOT_MERCURY = "ingotMercury";
-	public static final String INGOT_STEEL = "ingotSteel";
-
-//	public static final String NUGGET_CHARCOAL = "nuggetCharcoal";
-//	public static final String NUGGET_COAL = "nuggetCoal";
-
 	public static final String DOOR_WOOD = "doorWood";
 	public static final String DOOR_IRON = "doorIron";
 
 	public static final String BARS_IRON = "barsIron";
+
+	public static final String BLOCK_CHARCOAL = "blockCharcoal";
+
+	public static final String DUST_CARBON = "dustCarbon";
+
+	public static final String DUST_CHARCOAL = "dustCharcoal";
+	public static final String DUST_SMALL_CHARCOAL = "dustSmallCharcoal";
+	public static final String DUST_TINY_CHARCOAL = "dustTinyCharcoal";
+
+	public static final String DUST_COAL = "dustCoal";
+	public static final String DUST_SMALL_COAL = "dustSmallCoal";
+	public static final String DUST_TINY_COAL = "dustTinyCoal";
+
+	public static final String INGOT_MERCURY = "ingotMercury";
+	public static final String INGOT_STEEL = "ingotSteel";
+
+	public static final String NUGGET_CHARCOAL = "nuggetCharcoal";
+	public static final String NUGGET_COAL = "nuggetCoal";
 
 	private Oredicts() {
 		throw new IllegalAccessError("Not a instantiable class");
