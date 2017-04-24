@@ -70,9 +70,9 @@ public class ThermalExpansionBase implements IIntegration {
 			 * Ore -> Ingot default, according to TE source, is 2000
 			 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
 			 */
-			int ENERGY_ORE = 2000;
-			int ENERGY_DUST = 1400;
-			ItemStack ore = null;
+			final int ENERGY_ORE = 2000;
+			final int ENERGY_DUST = 1400;
+			ItemStack ore;
 			if (mat.getBlock(Names.ORE) != null) {
 				ore = new ItemStack(mat.getBlock(Names.ORE), 1, 0);
 			} else if( mat.getItem(Names.BLEND) != null ) {
@@ -104,7 +104,7 @@ public class ThermalExpansionBase implements IIntegration {
 			 * Glowstone block is 80000
 			 * Cobblestone/Stone/Obsidian is 320000
 			 */
-			int ENERGY = 8000;
+			final int ENERGY = 8000;
 
 			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT));
 			FluidStack oreFluid = FluidRegistry.getFluidStack(mat.getName(), 288);
@@ -141,7 +141,7 @@ public class ThermalExpansionBase implements IIntegration {
 			/*
 			 * Compactors default is 4000RF per operation
 			 */
-			int ENERGY = 4000;
+			final int ENERGY = 4000;
 			addCompactorPressRecipe(ENERGY, new ItemStack(mat.getItem(Names.INGOT)), new ItemStack(mat.getBlock(Names.PLATE)));
 		}
 	}
@@ -153,14 +153,14 @@ public class ThermalExpansionBase implements IIntegration {
 			/*
 			 * Compactors default is 4000RF per operation
 			 */
-			int ENERGY = 4000;
-			ItemStack ingots = new ItemStack( mat.getItem(Names.INGOT), 9 );
-			ItemStack nuggets = new ItemStack( mat.getItem(Names.NUGGET), 9 );
-			ItemStack block = new ItemStack( mat.getBlock(Names.BLOCK), 1 );
-			ItemStack ingot = new ItemStack( mat.getItem(Names.INGOT), 1 );
+			final int ENERGY = 4000;
+			ItemStack ingots = new ItemStack(mat.getItem(Names.INGOT), 9);
+			ItemStack nuggets = new ItemStack(mat.getItem(Names.NUGGET), 9);
+			ItemStack block = new ItemStack(mat.getBlock(Names.BLOCK), 1);
+			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT), 1);
 			
-			addCompactorStorageRecipe( ENERGY, ingots, block );
-			addCompactorStorageRecipe( ENERGY, nuggets, ingot );
+			addCompactorStorageRecipe(ENERGY, ingots, block);
+			addCompactorStorageRecipe(ENERGY, nuggets, ingot);
 		}
 	}
 }
