@@ -320,7 +320,9 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createCrystal(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.CRYSTAL, ItemMMDIngot.class, Options.enableBasics, true, tab);
+		final Item item = createItem(material, Names.CRYSTAL, ItemMMDIngot.class, Options.enableBasics, true, tab);
+		OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
@@ -330,7 +332,9 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createGem(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.GEM, ItemMMDIngot.class, Options.enableBasics, true, tab);
+		final Item item = createItem(material, Names.GEM, ItemMMDIngot.class, Options.enableBasics, true, tab);
+		OreDictionary.registerOre(Oredicts.GEM + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
@@ -340,7 +344,9 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createIngot(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.INGOT, ItemMMDIngot.class, Options.enableBasics, true, tab);
+		final Item item = createItem(material, Names.INGOT, ItemMMDIngot.class, Options.enableBasics, true, tab);
+		OreDictionary.registerOre(Oredicts.INGOT + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
@@ -350,7 +356,9 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createNugget(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.NUGGET, ItemMMDNugget.class, Options.enableBasics, true, tab);
+		final Item item = createItem(material, Names.NUGGET, ItemMMDNugget.class, Options.enableBasics, true, tab);
+		OreDictionary.registerOre(Oredicts.NUGGET + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
@@ -360,7 +368,10 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createPowder(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.POWDER, ItemMMDPowder.class, Options.enableBasics, true, tab);
+		final Item item = createItem(material, Names.POWDER, ItemMMDPowder.class, Options.enableBasics, true, tab);
+		OreDictionary.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
+		return item;
+		
 	}
 
 	/**
@@ -370,7 +381,10 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createBlend(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.BLEND, ItemMMDBlend.class, Options.enableBasics, material.hasBlend(), tab);
+		final Item item = createItem(material, Names.BLEND, ItemMMDBlend.class, Options.enableBasics, material.hasBlend(), tab);
+		OreDictionary.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
+		return item;
+		
 	}
 
 	/**
@@ -515,7 +529,9 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createArrow(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.ARROW, ItemMMDArrow.class, Options.enableBowAndArrow, true, tab);
+		final Item item = createItem(material, Names.ARROW, ItemMMDArrow.class, Options.enableBowAndArrow, true, tab);
+		OreDictionary.registerOre(Oredicts.ARROW + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
@@ -525,7 +541,10 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createBolt(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.BOLT, ItemMMDBolt.class, Options.enableCrossbowAndBolt, true, tab);
+		final Item item = createItem(material, Names.BOLT, ItemMMDBolt.class, Options.enableCrossbowAndBolt, true, tab);
+		OreDictionary.registerOre(Oredicts.AMMOBOLT, item);
+		return item;
+
 	}
 
 	/**
@@ -585,7 +604,10 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createSmallPowder(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.enableSmallDust, material.hasBlend(), tab);
+		final Item item = createItem(material, Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.enableSmallDust, material.hasBlend(), tab);
+		OreDictionary.registerOre(Oredicts.DUST_TINY + material.getCapitalizedName(), item);
+		return item;
+
 	}
 
 	/**
@@ -595,7 +617,9 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createShield(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.SHIELD, ItemMMDShield.class, Options.enableShield, true, tab);
+		final Item item = createItem(material, Names.SHIELD, ItemMMDShield.class, Options.enableShield, true, tab);
+		OreDictionary.registerOre(Oredicts.SHIELD + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
@@ -703,7 +727,9 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createSlab(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.SLAB, ItemMMDSlab.class, Options.enableSlab, material.hasBlock(Names.HALFSLAB) && material.hasBlock(Names.DOUBLESLAB), tab);
+		final Item item = createItem(material, Names.SLAB, ItemMMDSlab.class, Options.enableSlab, material.hasBlock(Names.HALFSLAB) && material.hasBlock(Names.DOUBLESLAB), tab);
+		OreDictionary.registerOre(Oredicts.SLAB + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**

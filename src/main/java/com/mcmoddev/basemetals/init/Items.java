@@ -71,7 +71,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createNugget(material, myTabs.itemsTab);
 			createPowder(material, myTabs.itemsTab);
 			createSmallPowder(material, myTabs.itemsTab);
-			FuelRegistry.addFuel(Oredicts.NUGGET+"_charcoal", 200);
+			FuelRegistry.addFuel(Oredicts.NUGGET_CHARCOAL, 200);
 			FuelRegistry.addFuel(Oredicts.DUST_CHARCOAL, 1600);
 			FuelRegistry.addFuel(Oredicts.DUST_SMALL_CHARCOAL, 200);
 			FuelRegistry.addFuel(Oredicts.DUST_TINY_CHARCOAL, 200);
@@ -85,7 +85,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			createNugget(material, myTabs.itemsTab);
 			createPowder(material, myTabs.itemsTab);
 			createSmallPowder(material, myTabs.itemsTab);
-			FuelRegistry.addFuel(Oredicts.NUGGET+"_coal", 200);
+			FuelRegistry.addFuel(Oredicts.NUGGET_COAL, 200);
 			FuelRegistry.addFuel(Oredicts.DUST_COAL, 1600);
 			FuelRegistry.addFuel(Oredicts.DUST_SMALL_COAL, 200);
 			FuelRegistry.addFuel(Oredicts.DUST_TINY_COAL, 200);
