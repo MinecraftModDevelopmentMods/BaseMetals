@@ -458,9 +458,8 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createDoor(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.DOORBLOCK, BlockMMDDoor.class, Options.enableDoor, true, tab);
-		OreDictionary.registerOre(Oredicts.DOOR + material.getCapitalizedName(), block);
-		return block;
+		// oreDict is handled in items
+		return createBlock(material, Names.DOORBLOCK, BlockMMDDoor.class, Options.enableDoor, true, tab);
 	}
 
 	/**
