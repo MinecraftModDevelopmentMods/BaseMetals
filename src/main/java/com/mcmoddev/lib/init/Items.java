@@ -586,7 +586,10 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createSmallBlend(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.enableSmallDust, material.hasBlend(), tab);
+		final Item item = createItem(material, Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.enableSmallDust, material.hasBlend(), tab);
+		OreDictionary.registerOre(Oredicts.DUST_TINY + material.getCapitalizedName(), item);
+		return item;
+
 	}
 
 	/**
@@ -609,7 +612,6 @@ public abstract class Items {
 		final Item item = createItem(material, Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.enableSmallDust, material.hasBlend(), tab);
 		OreDictionary.registerOre(Oredicts.DUST_TINY + material.getCapitalizedName(), item);
 		return item;
-
 	}
 
 	/**
