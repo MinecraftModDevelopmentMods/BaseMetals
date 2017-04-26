@@ -11,6 +11,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * This class initializes all of the materials in Base Metals. It also contains
@@ -27,7 +28,8 @@ public abstract class Materials {
 	private static Map<String, MMDMaterial> allMaterials = new HashMap<>();
 	private static Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
-
+	private static Map<String, Set<MMDMaterial>> modSourceMaterialMap = new HashMap<>();
+	
 	protected Materials() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -217,6 +219,14 @@ public abstract class Materials {
 		}
 		toolMaterialMap.put(material, toolMaterial);
 
+		if (modSourceMaterialMap.containsKey(Loader.instance().activeModContainer().getModId())) {
+			modSourceMaterialMap.get(Loader.instance().activeModContainer().getModId()).add(material);
+		} else {
+			Set<MMDMaterial> newSet = new TreeSet<>();
+			newSet.add(material);
+			modSourceMaterialMap.put(Loader.instance().activeModContainer().getModId(), newSet);
+			
+		}
 		return material;
 	}
 
@@ -289,5 +299,20 @@ public abstract class Materials {
 	@Deprecated
 	public static MMDMaterial getMetalByName(String materialName) {
 		return allMaterials.get(materialName);
+	}
+	
+	/**
+	 * Gets all materials from a given mod
+	 * 
+	 * @param modId the ModID of the mod
+	 * @return an immutable collection representing all the materials registered by a given mod
+	 *         or the "empty set" if the modId is not recorded.
+	 */
+	public static Collection<MMDMaterial> getMaterialsByMod(String modId) {
+		if (modSourceMaterialMap.containsKey(modId)) {
+			return Collections.unmodifiableSet(modSourceMaterialMap.get(modId));
+		} else {
+			return Collections.emptySet();
+		}
 	}
 }
