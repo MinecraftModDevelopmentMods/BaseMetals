@@ -30,6 +30,7 @@ public class ItemGroups {
 
 	private static boolean initDone = false;
 
+	
 	protected ItemGroups() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -74,4 +75,5 @@ public class ItemGroups {
 	public static Map<String, List<MMDCreativeTab>> getItemsGroupsByModID() {
 		return Collections.unmodifiableMap(itemGroupsByModID);
 	}
+	
 }

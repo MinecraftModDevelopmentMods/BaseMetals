@@ -20,6 +20,7 @@ import com.mcmoddev.basemetals.init.Items;
 public class MMDCreativeTab extends CreativeTabs {
 
 	private Item iconItem;
+	
 	private final boolean searchable;
 	private List<ItemStack> cache;
 	private Comparator<ItemStack> comparator;
@@ -66,9 +67,8 @@ public class MMDCreativeTab extends CreativeTabs {
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
 		if( this.iconItem == null ) {
-			return net.minecraft.init.Items.IRON_PICKAXE;
-		}
-		
+				return net.minecraft.init.Items.IRON_PICKAXE;
+		}		
 		return this.iconItem;
 	}
 
@@ -82,4 +82,5 @@ public class MMDCreativeTab extends CreativeTabs {
 	public void setTabIconItem( Item iconItem ) {
 		this.iconItem = iconItem;
 	}
+	
 }
