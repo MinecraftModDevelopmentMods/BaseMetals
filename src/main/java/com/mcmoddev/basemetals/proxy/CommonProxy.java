@@ -37,6 +37,9 @@ public class CommonProxy {
 		ItemGroups.init();
 		Blocks.init();
 		Items.init();
+		
+		// icons have to be setup after the blocks and items are initialized
+		ItemGroups.setupIcons();
 		VillagerTrades.init();
 
 		FMLInterModComms.sendFunctionMessage("orespawn", "api", "com.mcmoddev.orespawn.BaseMetalsOreSpawn");
