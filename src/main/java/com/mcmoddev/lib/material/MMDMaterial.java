@@ -517,11 +517,19 @@ public class MMDMaterial {
 	}
 	
 	public boolean hasItem(Names name) {
+		return this.hasItem(name.toString());
+	}
+	
+	public boolean hasItem(String name) {
 		return this.items.containsKey(name);
 	}
 	
-	public boolean hasBlock(Names name) {
+	public boolean hasBlock(String name) {
 		return this.blocks.containsKey(name);
+	}
+	
+	public boolean hasBlock(Names name) {
+		return this.hasBlock(name.toString());
 	}
 	
 	public float getStat(MaterialStats name) {
