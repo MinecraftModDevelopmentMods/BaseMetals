@@ -19,7 +19,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * This class initializes all items in Base Metals and provides some utility
@@ -320,7 +319,7 @@ public abstract class Items {
 	 */
 	protected static Item createCrystal(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.CRYSTAL, ItemMMDIngot.class, Options.enableBasics, true, tab);
-		OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -332,7 +331,7 @@ public abstract class Items {
 	 */
 	protected static Item createGem(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.GEM, ItemMMDIngot.class, Options.enableBasics, true, tab);
-		OreDictionary.registerOre(Oredicts.GEM + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.GEM + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -344,7 +343,7 @@ public abstract class Items {
 	 */
 	protected static Item createIngot(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.INGOT, ItemMMDIngot.class, Options.enableBasics, true, tab);
-		OreDictionary.registerOre(Oredicts.INGOT + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.INGOT + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -356,7 +355,7 @@ public abstract class Items {
 	 */
 	protected static Item createNugget(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.NUGGET, ItemMMDNugget.class, Options.enableBasics, true, tab);
-		OreDictionary.registerOre(Oredicts.NUGGET + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.NUGGET + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -368,7 +367,7 @@ public abstract class Items {
 	 */
 	protected static Item createPowder(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.POWDER, ItemMMDPowder.class, Options.enableBasics, true, tab);
-		OreDictionary.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
 		return item;
 		
 	}
@@ -381,7 +380,7 @@ public abstract class Items {
 	 */
 	protected static Item createBlend(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.BLEND, ItemMMDBlend.class, Options.enableBasics, material.hasBlend(), tab);
-		OreDictionary.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
 		return item;
 		
 	}
@@ -394,9 +393,9 @@ public abstract class Items {
 	 */
 	protected static Item createRod(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.ROD, ItemMMDRod.class, Options.enableRod, true, tab);
-		OreDictionary.registerOre(Oredicts.STICK + material.getCapitalizedName(), item);
-		OreDictionary.registerOre(Oredicts.ROD + material.getCapitalizedName(), item);
-		OreDictionary.registerOre(Oredicts.ROD, item);
+		Oredicts.registerOre(Oredicts.STICK + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.ROD + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.ROD, item);
 		return item;
 	}
 
@@ -408,8 +407,8 @@ public abstract class Items {
 	 */
 	protected static Item createGear(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.GEAR, ItemMMDGear.class, Options.enableGear, true, tab);
-		OreDictionary.registerOre(Oredicts.GEAR + material.getCapitalizedName(), item);
-		OreDictionary.registerOre(Oredicts.GEAR, item);
+		Oredicts.registerOre(Oredicts.GEAR + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.GEAR, item);
 		return item;
 	}
 
@@ -531,7 +530,7 @@ public abstract class Items {
 	 */
 	protected static Item createArrow(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.ARROW, ItemMMDArrow.class, Options.enableBowAndArrow, true, tab);
-		OreDictionary.registerOre(Oredicts.ARROW + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.ARROW + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -543,7 +542,7 @@ public abstract class Items {
 	 */
 	protected static Item createBolt(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.BOLT, ItemMMDBolt.class, Options.enableCrossbowAndBolt, true, tab);
-		OreDictionary.registerOre(Oredicts.AMMOBOLT, item);
+		Oredicts.registerOre(Oredicts.AMMOBOLT, item);
 		return item;
 
 	}
@@ -586,7 +585,7 @@ public abstract class Items {
 	 */
 	protected static Item createSmallBlend(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.enableSmallDust, material.hasBlend(), tab);
-		OreDictionary.registerOre(Oredicts.DUST_TINY + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.DUST_TINY + material.getCapitalizedName(), item);
 		return item;
 
 	}
@@ -609,7 +608,7 @@ public abstract class Items {
 	 */
 	protected static Item createSmallPowder(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.enableSmallDust, material.hasBlend(), tab);
-		OreDictionary.registerOre(Oredicts.DUST_TINY + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.DUST_TINY + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -621,7 +620,7 @@ public abstract class Items {
 	 */
 	protected static Item createShield(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.SHIELD, ItemMMDShield.class, Options.enableShield, true, tab);
-		OreDictionary.registerOre(Oredicts.SHIELD + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.SHIELD + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -633,7 +632,7 @@ public abstract class Items {
 	 */
 	protected static Item createMekCrystal(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.CRYSTAL, GenericMMDItem.class, Options.enableMekanism, material.getType()!=MaterialType.CRYSTAL, tab);
-		OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -645,7 +644,7 @@ public abstract class Items {
 	 */
 	protected static Item createMekShard(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.SHARD, GenericMMDItem.class, Options.enableMekanism, true, tab);
-		OreDictionary.registerOre(Oredicts.SHARD + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.SHARD + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -657,7 +656,7 @@ public abstract class Items {
 	 */
 	protected static Item createMekClump(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.CLUMP, GenericMMDItem.class, Options.enableMekanism, true, tab);
-		OreDictionary.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -669,7 +668,7 @@ public abstract class Items {
 	 */
 	protected static Item createMekDirtyPowder(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.POWDERDIRTY, GenericMMDItem.class, Options.enableMekanism, true, tab);
-		OreDictionary.registerOre(Oredicts.DUST_DIRTY + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.DUST_DIRTY + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -682,7 +681,7 @@ public abstract class Items {
 	 */
 	protected static Item createCasing(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.CASING, GenericMMDItem.class, Options.enableIC2, true, tab);
-		OreDictionary.registerOre(Oredicts.CASING + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.CASING + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -695,7 +694,7 @@ public abstract class Items {
 	 */
 	protected static Item createDensePlate(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.DENSEPLATE, GenericMMDItem.class, Options.enableIC2, true, tab);
-		OreDictionary.registerOre(Oredicts.PLATE_DENSE + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.PLATE_DENSE + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -707,7 +706,7 @@ public abstract class Items {
 	 */
 	protected static Item createCrushed(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.CRUSHED, GenericMMDItem.class, Options.enableIC2, true, tab);
-		OreDictionary.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -719,7 +718,7 @@ public abstract class Items {
 	 */
 	protected static Item createCrushedPurified(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.CRUSHEDPURIFIED, GenericMMDItem.class, Options.enableIC2, true, tab);
-		OreDictionary.registerOre(Oredicts.CRUSHED_PURIFIED + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.CRUSHED_PURIFIED + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -731,7 +730,7 @@ public abstract class Items {
 	 */
 	protected static Item createSlab(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.SLAB, ItemMMDSlab.class, Options.enableSlab, material.hasBlock(Names.HALFSLAB) && material.hasBlock(Names.DOUBLESLAB), tab);
-		OreDictionary.registerOre(Oredicts.SLAB + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.SLAB + material.getCapitalizedName(), item);
 		return item;
 	}
 
@@ -753,7 +752,7 @@ public abstract class Items {
 	 */
 	protected static Item createDoor(MMDMaterial material, CreativeTabs tab) {
 		Item item = createItem(material, Names.DOOR, ItemMMDDoor.class, Options.enableDoor, material.hasBlock(Names.DOORBLOCK), tab);
-		OreDictionary.registerOre(Oredicts.DOOR, item);
+		Oredicts.registerOre(Oredicts.DOOR, item);
 		return item;
 	}
 
