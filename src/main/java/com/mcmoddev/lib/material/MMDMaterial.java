@@ -31,12 +31,12 @@ public class MMDMaterial {
 	/**
 	 * Storage for all "Item" type forms for this material
 	 */
-	private Map<Names, Item> items = new TreeMap<>();
+	private Map<String, Item> items = new TreeMap<>();
 	
 	/**
 	 * Storage for all "Block" type forms for this material
 	 */
-	private Map<Names, Block> blocks = new TreeMap<>();
+	private Map<String, Block> blocks = new TreeMap<>();
 	
 	/**
 	 * If this material has a fluid, it is stored here
@@ -404,6 +404,18 @@ public class MMDMaterial {
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewItem( Names name, Item item ) {
+		addNewItem( name.toString(), item );
+		return this;
+	}
+	/**
+	 * Adds a new item to the list of known items made from this material
+	 * @param name
+	 * 	    The name of the item. Existing names can be found in com.mcmoddev.lib.data.Names
+	 * @param item
+	 *      The item to add
+	 * @return an instance of the material - QOL and call chaining
+	 */
+	public MMDMaterial addNewItem( String name, Item item ) {
 		if( this.items.containsKey(name) ) {
 			FMLLog.getLogger().warn("Tried adding item %s to a material that already has it, don't do that!", name);
 			return this;
@@ -421,6 +433,19 @@ public class MMDMaterial {
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewBlock( Names name, Block block ) {
+		addNewBlock( name.toString(), block);
+		return this;
+	}
+
+	/**
+	 * Adds a new block to the list of known items made from this material
+	 * @param name
+	 * 	    The name of the block. Existing names can be found in com.mcmoddev.lib.data.Names
+	 * @param block
+	 *      The block to add
+	 * @return an instance of the material - QOL and call chaining
+	 */
+	public MMDMaterial addNewBlock( String name, Block block ) {
 		if( this.blocks.containsKey(name) ) {
 			FMLLog.getLogger().warn("Tried adding block %s to a material that already has it, don't do that!", name);
 			return this;
@@ -428,7 +453,7 @@ public class MMDMaterial {
 		this.blocks.put(name, block);
 		return this;
 	}
-
+	
 	/**
 	 * Get the item with name 'name' if it exists, null is returned if the item does not exist
 	 * @param name
@@ -436,11 +461,22 @@ public class MMDMaterial {
 	 * @return the Item registered with the material, null if one of that name was not registered
 	 */
 	public Item getItem( Names name ) {
+		return getItem(name.toString());
+	}
+	
+	/**
+	 * Get the item with name 'name' if it exists, null is returned if the item does not exist
+	 * @param name
+	 *      Name of the item to retrieve
+	 * @return the Item registered with the material, null if one of that name was not registered
+	 */
+	public Item getItem( String name ) {
 		if( this.items.containsKey(name) ) {
 			return this.items.get(name);
 		}
 		return null;
 	}
+	
 	/**
 	 * Get the block with name 'name' if it exists, null is returned if the block does not exist
 	 * @param name
@@ -448,6 +484,16 @@ public class MMDMaterial {
 	 * @return the Block registered with the material, null if one of that name was not registered
 	 */
 	public Block getBlock( Names name ) {
+		return getBlock( name.toString() );
+	}
+	
+	/**
+	 * Get the block with name 'name' if it exists, null is returned if the block does not exist
+	 * @param name
+	 *      Name of the item to retrieve
+	 * @return the Block registered with the material, null if one of that name was not registered
+	 */
+	public Block getBlock( String name ) {
 		if( this.blocks.containsKey(name) ) {
 			return this.blocks.get(name);
 		}
