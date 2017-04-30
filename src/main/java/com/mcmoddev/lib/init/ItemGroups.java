@@ -3,6 +3,7 @@ package com.mcmoddev.lib.init;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.common.Loader;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ItemGroups {
 		return delta;
 	};
 
-	private static Map<String, List<MMDCreativeTab>> itemGroupsByModID = new HashMap<>();
+	private static final Map<String, List<MMDCreativeTab>> itemGroupsByModID = new HashMap<>();
 
 	private static boolean initDone = false;
 
@@ -48,10 +49,17 @@ public class ItemGroups {
 
 	protected static int addTab(String name, boolean searchable ) {
 		String modName = Loader.instance().activeModContainer().getModId();
-		MMDCreativeTab tab = new MMDCreativeTab( modName + "." + name, searchable, null );
-		itemGroupsByModID.get(modName).add(tab);
+		String internalTabName = String.format("%s.%s", modName, name);
+		MMDCreativeTab tab = new MMDCreativeTab( internalTabName, searchable, null );
+		if( itemGroupsByModID.containsKey(modName) ) {
+			itemGroupsByModID.get(modName).add(tab);
+		} else {
+			List<MMDCreativeTab> nl = new ArrayList<>();
+			nl.add(tab);
+			itemGroupsByModID.put(modName, nl);
+		}
 		
-		return itemGroupsByModID.get(modName).size();
+		return itemGroupsByModID.get(modName).size() - 1;
 	}
 
 	protected static MMDCreativeTab getTab( int id ) {

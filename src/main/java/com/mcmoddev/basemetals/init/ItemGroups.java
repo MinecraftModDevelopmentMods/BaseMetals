@@ -19,7 +19,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
 	private static boolean initDone = false;
 
-	private static final int blocksTabId  = addTab("blocks", true );;
+	private static final int blocksTabId  = addTab("blocks", true );
 	private static final int itemsTabId = addTab("items", true );
 	private static final int toolsTabId = addTab("tools", true );
 	public static final MMDCreativeTab blocksTab = getTab(blocksTabId);
