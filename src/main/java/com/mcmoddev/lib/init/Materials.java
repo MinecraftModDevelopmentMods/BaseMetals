@@ -222,7 +222,7 @@ public abstract class Materials {
 		if (modSourceMaterialMap.containsKey(Loader.instance().activeModContainer().getModId())) {
 			modSourceMaterialMap.get(Loader.instance().activeModContainer().getModId()).add(material);
 		} else {
-			Set<MMDMaterial> newSet = new TreeSet<>();
+			Set<MMDMaterial> newSet = new HashSet<>();
 			newSet.add(material);
 			modSourceMaterialMap.put(Loader.instance().activeModContainer().getModId(), newSet);
 			
