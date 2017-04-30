@@ -167,10 +167,9 @@ public abstract class Blocks {
 
 	private static Block createBlock(MMDMaterial material, Names name, Class<? extends Block> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
 		if( !material.hasBlock(name) ) {
-			return createBlock( material, name.toString(), clazz, enabled, extra, tab );
-		} else {
-			return material.getBlock(name);
+			material.addNewBlock(name, createBlock( material, name.toString(), clazz, enabled, extra, tab )); 
 		}
+		return material.getBlock(name);
 	}
 	
 	private static Block createBlock(MMDMaterial material, String name, Class<? extends Block> clazz, boolean enabled, boolean extra, CreativeTabs tab) {

@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins.tinkers;
 
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;
@@ -152,6 +153,27 @@ public class TinkersConstructRegistry {
 			}
 		}
     	
+		Item matRepItem;
+		MaterialType matType = mat.getMetalMaterial().getType(); 
+		switch( matType ) {
+		case METAL:
+			matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+			break;
+		case GEM:
+			matRepItem = mat.getMetalMaterial().getItem(Names.GEM);
+			break;
+		case CRYSTAL:
+			matRepItem = mat.getMetalMaterial().getItem(Names.CRYSTAL);
+			break;
+		case MINERAL:
+			matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+			break;
+		case ROCK:
+		case WOOD:
+		default:
+			return TCCode.BAD_MATERIAL;
+		}
+		
 		registerFluid(mat.getMetalMaterial(), mat.getAmountPer());
 		
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHeadStats());
@@ -161,9 +183,9 @@ public class TinkersConstructRegistry {
 		TinkerRegistry.addMaterialStats(tcmat, mat.getBowStringStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getArrowShaftStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getFletchingStats());
-
-		tcmat.setFluid(mat.getMetalMaterial().getFluid()).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(mat.getMetalMaterial().getItem(Names.INGOT), 1, Material.VALUE_Ingot);
-		tcmat.setRepresentativeItem(mat.getMetalMaterial().getItem(Names.INGOT));
+		
+		tcmat.setFluid(mat.getMetalMaterial().getFluid()).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(matRepItem, 1, Material.VALUE_Ingot);
+		tcmat.setRepresentativeItem(matRepItem);
 		
 		String base = mat.getMetalMaterial().getName();
 		String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);

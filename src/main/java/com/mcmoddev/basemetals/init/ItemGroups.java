@@ -1,12 +1,12 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.MMDCreativeTab;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 /**
@@ -42,9 +42,28 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	}
 	
 	public static void setupIcons() {
-		Item blocksTabIconItem = Item.getItemFromBlock(Options.enableStarSteel?Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.BLOCK):(Block) Materials.getMaterialByName(MaterialNames.IRON).getBlock(Names.BLOCK));
-		Item itemsTabIconItem = Options.enableGear?Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.GEAR):Items.STICK;
-		Item toolsTabIconItem = Options.enableBasicTools?Materials.getMaterialByName(MaterialNames.DIAMOND).getItem(Names.SWORD):Items.DIAMOND_SWORD;
+		Block temp;
+		Item blocksTabIconItem;
+		Item itemsTabIconItem;
+		Item toolsTabIconItem;
+		if (Options.enableStarSteel) {
+			temp = Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.BLOCK);
+		} else {
+			temp = net.minecraft.init.Blocks.IRON_BLOCK;
+		}
+		blocksTabIconItem = Item.getItemFromBlock(temp);
+		
+		if (Options.enableGear) {
+			itemsTabIconItem = Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.GEAR);
+		} else {
+			itemsTabIconItem = net.minecraft.init.Items.STICK;
+		}
+		
+		if (Options.enableBasicTools) {
+			toolsTabIconItem = Materials.getMaterialByName(MaterialNames.DIAMOND).getItem(Names.SWORD);	
+		} else {
+			toolsTabIconItem = net.minecraft.init.Items.DIAMOND_SWORD;
+		}
 		
 		blocksTab.setTabIconItem( blocksTabIconItem );
 		itemsTab.setTabIconItem(itemsTabIconItem);

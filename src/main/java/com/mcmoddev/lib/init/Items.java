@@ -250,10 +250,9 @@ public abstract class Items {
 
 	private static Item createItem(MMDMaterial material, Names name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
 		if (enabled && extra && !material.hasItem(name)) {
-			return createItem(material, name.toString(), clazz, enabled, extra, tab);
-		} else {
-			return material.getItem(name);
+			material.addNewItem(name, createItem(material, name.toString(), clazz, enabled, extra, tab));
 		}
+		return material.getItem(name);
 	}
 	
 	private static Item createItem(MMDMaterial material, String name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
