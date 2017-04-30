@@ -74,7 +74,7 @@ public class Config {
 				"If true, then Base Metals will scan the Ore Dictionary to automatically add a \n"
 						+ "Crack Hammer recipe for every material that has an ore, dust, and ingot.");
 		Options.requireMMDOreSpawn = configuration.getBoolean("using_orespawn", GENERAL_CAT, true,
-				"If false, then Base Metals will not require DrCyano's Ore Spawn mod. \n"
+				"If false, then Base Metals will not require MMD Ore Spawn mod. \n"
 						+ "Set to false if using another mod to manually handle ore generation.");
 		Options.enableAchievements = configuration.getBoolean("achievements", GENERAL_CAT, true,
 				"If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals");
@@ -136,7 +136,7 @@ public class Config {
 				"Enable Lead Items and Materials");
 		Options.enableMercury = configuration.getBoolean("EnableMercury", MATERIALS_CAT, true,
 				"Enable Mercury Items and Materials");
-		Options.enableMithril = configuration.getBoolean("EnableMitheril", MATERIALS_CAT, true,
+		Options.enableMithril = configuration.getBoolean("EnableMithril", MATERIALS_CAT, true,
 				"Enable Mithril Items and Materials");
 		Options.enableNickel = configuration.getBoolean("EnableNickel", MATERIALS_CAT, true,
 				"Enable Nickel Items and Materials");
@@ -176,7 +176,7 @@ public class Config {
 		Options.furnace1112 = configuration.getBoolean("Furnace1112", TOOLS_CAT, true,
 				"Mimic 1.11.2 armor and tool melting.\n Overridden by Furnace Cheese");
 		Options.enableBasics = configuration.getBoolean("Enable Basics", TOOLS_CAT, true,
-				"Set to false to disable: Nuggest, Ingots, Powders, Blends, Blocks and Ores");
+				"Set to false to disable: Nuggets, Ingots, Powders, Blends, Blocks and Ores");
 		Options.enableBasicTools = configuration.getBoolean("Enable Basic Tools", TOOLS_CAT, true,
 				"Set to false to disable: Axe, Hoe, Pickaxe, Shovel and Sword");
 		Options.enableBowAndArrow = configuration.getBoolean("Enable Bow and Arrow", TOOLS_CAT, true,
@@ -206,7 +206,7 @@ public class Config {
 		Options.enablePlate = configuration.getBoolean("Enable Plates", TOOLS_CAT, true,
 				"IC2, Tech Reborn and a number of other mods require plates of material. This provides recipes for them.");
 		Options.enableDoor = configuration.getBoolean("Enable Door", TOOLS_CAT, true,
-				"Doors of many wonderous materials");
+				"Doors of many wondrous materials");
 		Options.enableTrapdoor = configuration.getBoolean("Enable Trapdoors", TOOLS_CAT, true,
 				"Do you want trapdoors? Because that's how you get trapdoors!");
 		Options.enableButton = configuration.getBoolean("Enable Buttons", TOOLS_CAT, true,
@@ -214,7 +214,7 @@ public class Config {
 		Options.enableSlab = configuration.getBoolean("Enable Slab", TOOLS_CAT, true,
 				"Slabs of all the materials that get added");
 		Options.enableLever = configuration.getBoolean("Enable Lever", TOOLS_CAT, true,
-				"Levers of all different materials - they even have different hardnesses");
+				"Levers of all different materials - they even have different hardness's");
 		Options.enablePressurePlate = configuration.getBoolean("Enable Pressure-plates", TOOLS_CAT, true,
 				"Now your traps can be hidden in even more places!");
 		Options.enableStairs = configuration.getBoolean("Enable Stairs", TOOLS_CAT, true,
@@ -488,7 +488,7 @@ public class Config {
 	 * optional.
 	 *
 	 * @param str
-	 *            A String describing an itemstack (e.g. "4*minecraft:dye#15" or
+	 *            A String describing an ItemStack (e.g. "4*minecraft:dye#15" or
 	 *            "minecraft:bow")
 	 * @param allowWildcard
 	 *            If true, then item strings that do not specify a metadata

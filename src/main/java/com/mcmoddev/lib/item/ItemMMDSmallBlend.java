@@ -4,8 +4,6 @@ import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,10 +16,9 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDSmallBlend extends Item implements IOreDictionaryEntry, IMMDObject {
+public class ItemMMDSmallBlend extends Item implements IMMDObject {
 
 	protected final MMDMaterial material;
-	private final String oreDict;
 
 	/**
 	 *
@@ -31,7 +28,6 @@ public class ItemMMDSmallBlend extends Item implements IOreDictionaryEntry, IMMD
 	public ItemMMDSmallBlend(MMDMaterial material) {
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = Oredicts.DUSTTINY + this.material.getCapitalizedName(); // same oreDict entry as powder
 	}
 
 	@Override
@@ -41,11 +37,6 @@ public class ItemMMDSmallBlend extends Item implements IOreDictionaryEntry, IMMD
 		if (Options.enableAchievements) {
 			crafter.addStat(Achievements.metallurgy, 1);
 		}
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 
 	@Override

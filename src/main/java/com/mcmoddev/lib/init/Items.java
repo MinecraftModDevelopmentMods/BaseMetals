@@ -7,17 +7,18 @@ import com.google.common.collect.*;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.block.*;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.Oredicts;
+import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * This class initializes all items in Base Metals and provides some utility
@@ -124,86 +125,91 @@ public abstract class Items {
 	/**
 	 * 
 	 * @param material The material base of these items
+	 * @param tab TabContainer covering the various CreativeTabs items might be on
 	 */
-	protected static void createItemsBasic(MMDMaterial material) {
-		createBlend(material);
-		createIngot(material);
-		createNugget(material);
-		createPowder(material);
-		createSmallBlend(material);
-		createSmallPowder(material);
+	protected static void createItemsBasic(MMDMaterial material, TabContainer tab) {
+		createBlend(material, tab.itemsTab);
+		createIngot(material, tab.itemsTab);
+		createNugget(material, tab.itemsTab);
+		createPowder(material, tab.itemsTab);
+		createSmallBlend(material, tab.itemsTab);
+		createSmallPowder(material, tab.itemsTab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of these items
+	 * @param tab TabContainer covering the various CreativeTabs items might be on
 	 */
-	protected static void createItemsFull(MMDMaterial material) {
-		createArrow(material);
-		createAxe(material);
-		createBlend(material);
-		createBolt(material);
-		createBoots(material);
-		createBow(material);
-		createChestplate(material);
-		createCrackhammer(material);
-		createCrossbow(material);
-		createDoor(material);
-		createFishingRod(material);
-		createHelmet(material);
-		createHoe(material);
-		createHorseArmor(material);
-		createIngot(material);
-		createLeggings(material);
-		createNugget(material);
-		createPickaxe(material);
-		createPowder(material);
-		createShears(material);
-		createShield(material);
-		createShovel(material);
-		createSlab(material);
-		createSmallBlend(material);
-		createSmallPowder(material);
-		createSword(material);
-		createRod(material);
-		createGear(material);
+	protected static void createItemsFull(MMDMaterial material, TabContainer tab) {
+		createArrow(material, tab.toolsTab);
+		createAxe(material, tab.toolsTab);
+		createBlend(material, tab.itemsTab);
+		createBolt(material, tab.toolsTab);
+		createBoots(material, tab.itemsTab);
+		createBow(material, tab.toolsTab);
+		createChestplate(material, tab.itemsTab);
+		createCrackhammer(material, tab.toolsTab);
+		createCrossbow(material, tab.toolsTab);
+		createDoor(material, tab.blocksTab);
+		createFishingRod(material, tab.toolsTab);
+		createHelmet(material, tab.toolsTab);
+		createHoe(material, tab.toolsTab);
+		createHorseArmor(material, tab.itemsTab);
+		createIngot(material, tab.itemsTab);
+		createLeggings(material, tab.itemsTab);
+		createNugget(material, tab.itemsTab);
+		createPickaxe(material, tab.toolsTab);
+		createPowder(material, tab.itemsTab);
+		createShears(material, tab.toolsTab);
+		createShield(material, tab.itemsTab);
+		createShovel(material, tab.toolsTab);
+		createSlab(material, tab.blocksTab);
+		createSmallBlend(material, tab.itemsTab);
+		createSmallPowder(material, tab.itemsTab);
+		createSword(material, tab.itemsTab);
+		createRod(material, tab.itemsTab);
+		createGear(material, tab.itemsTab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of these items
+	 * @param tab TabContainer covering the various CreativeTabs items might be on
 	 */
-	protected static void createItemsModSupport(MMDMaterial material) {
+	protected static void createItemsModSupport(MMDMaterial material, TabContainer tab) {
 		if (Options.enableModderSupportThings) {
-			createCasing(material);
-			createDensePlate(material);
+			createCasing(material, tab.itemsTab);
+			createDensePlate(material, tab.itemsTab);
 		}
 
-		createItemsModMekanism(material);
-		createItemsModIC2(material);
+		createItemsModMekanism(material, tab);
+		createItemsModIC2(material, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of these items
+	 * @param tab TabContainer covering the various CreativeTabs items might be on
 	 */
-	protected static void createItemsModIC2(MMDMaterial material) {
-		if (material.hasOre) {
-			createCrushed(material);
-			createCrushedPurified(material);
+	protected static void createItemsModIC2(MMDMaterial material, TabContainer tab) {
+		if (material.hasOre()) {
+			createCrushed(material, tab.itemsTab);
+			createCrushedPurified(material, tab.itemsTab);
 		}
 	}
 
 	/**
 	 * 
 	 * @param material The material base of these items
+	 * @param tab TabContainer covering the various CreativeTabs items might be on
 	 */
-	protected static void createItemsModMekanism(MMDMaterial material) {
-		if (material.hasOre) {
-			createMekCrystal(material);
-			createMekShard(material);
-			createMekClump(material);
-			createMekDirtyPowder(material);
+	protected static void createItemsModMekanism(MMDMaterial material, TabContainer tab) {
+		if (material.hasOre()) {
+			createMekCrystal(material, tab.itemsTab);
+			createMekShard(material, tab.itemsTab);
+			createMekClump(material, tab.itemsTab);
+			createMekDirtyPowder(material, tab.itemsTab);
 		}
 	}
 
@@ -238,689 +244,516 @@ public abstract class Items {
 			itemsByMaterial.get(material).add(item);
 		}
 
-		if (item instanceof IOreDictionaryEntry) {
-			OreDictionary.registerOre(((IOreDictionaryEntry) item).getOreDictionaryName(), item);
+		return item;
+	}
+
+	private static Item createItem(MMDMaterial material, Names name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
+		if (enabled && extra && !material.hasItem(name)) {
+			material.addNewItem(name, createItem(material, name.toString(), clazz, enabled, extra, tab));
+		}
+		return material.getItem(name);
+	}
+	
+	private static Item createItem(MMDMaterial material, String name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
+		if (material == null) {
+			return null;
+		}
+		
+		if( enabled && extra ) {
+			Constructor<?> ctor = null;
+			Item inst = null;
+			try {
+				ctor = clazz.getConstructor(material.getClass());
+			} catch (Exception ex) {
+				FMLLog.getLogger().fatal("Class for Item named %s does not have an accessible constructor or another exception occurred", name);
+				FMLLog.getLogger().fatal(ex.toString());
+				return null;
+			}
+			
+			try {
+				inst = (Item)ctor.newInstance(material);
+			} catch (Exception ex) {
+				FMLLog.getLogger().fatal("Unable to create Item named %s for material %s", name, material.getCapitalizedName());
+			}
+			
+			if (inst != null) {
+				return addItem(inst, name, material, tab);
+			}
+		}
+		return null;
+	}
+	
+	private static Item createArmorItem(MMDMaterial material, Names name, CreativeTabs tab) {
+		if( !( Options.enableArmor && !material.hasItem(name) ) ) {
+			return null;
+		}
+		
+		Item item = null;
+		switch(name) {
+		case HELMET:
+			item = ItemMMDArmor.createHelmet(material);
+			break;
+		case CHESTPLATE:
+			item = ItemMMDArmor.createChestplate(material);
+			break;
+		case LEGGINGS:
+			item = ItemMMDArmor.createLeggings(material);
+			break;
+		case BOOTS:
+			item = ItemMMDArmor.createBoots(material);
+			break;
+		default:
 		}
 
+		if (item == null) {
+			return null;
+		}
+		addItem( item, name.toString(), material, tab );
+		return item;
+	}
+	/**
+	 * 
+	 * @param material The material base of this crystal
+	 * @param tab which creative tab it is in
+	 * @return the item this function created
+	 */
+	protected static Item createCrystal(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.CRYSTAL, ItemMMDIngot.class, Options.enableBasics, true, tab);
+		Oredicts.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
 		return item;
 	}
 
 	/**
 	 * 
-	 * @param material The material base of this crystal
-	 * @return the item this function created
-	 */
-	protected static Item createCrystal(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasics) && (material.ingot == null)) {
-			material.ingot = addItem(new ItemMMDIngot(material), "crystal", material, ItemGroups.itemsTab);
-		}
-
-		return material.ingot;
-	}
-
-	/**
-	 * 
 	 * @param material The material base of this gem
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createGem(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasics) && (material.ingot == null)) {
-			material.ingot = addItem(new ItemMMDIngot(material), "gem", material, ItemGroups.itemsTab);
-		}
-
-		return material.ingot;
+	protected static Item createGem(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.GEM, ItemMMDIngot.class, Options.enableBasics, true, tab);
+		Oredicts.registerOre(Oredicts.GEM + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this ingot
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createIngot(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasics) && (material.ingot == null)) {
-			material.ingot = addItem(new ItemMMDIngot(material), "ingot", material, ItemGroups.itemsTab);
-		}
-
-		return material.ingot;
+	protected static Item createIngot(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.INGOT, ItemMMDIngot.class, Options.enableBasics, true, tab);
+		Oredicts.registerOre(Oredicts.INGOT + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this nugget
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createNugget(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasics) && (material.nugget == null)) {
-			material.nugget = addItem(new ItemMMDNugget(material), "nugget", material, ItemGroups.itemsTab);
-		}
-
-		return material.nugget;
+	protected static Item createNugget(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.NUGGET, ItemMMDNugget.class, Options.enableBasics, true, tab);
+		Oredicts.registerOre(Oredicts.NUGGET + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this powder
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createPowder(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasics) && (material.powder == null)) {
-			material.powder = addItem(new ItemMMDPowder(material), "powder", material, ItemGroups.itemsTab);
-		}
-
-		return material.powder;
+	protected static Item createPowder(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.POWDER, ItemMMDPowder.class, Options.enableBasics, true, tab);
+		Oredicts.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
+		return item;
+		
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this blend
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createBlend(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasics) && (material.hasBlend) && (material.blend == null)) {
-			material.blend = addItem(new ItemMMDBlend(material), "blend", material, ItemGroups.itemsTab);
-		}
-
-		return material.blend;
+	protected static Item createBlend(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.BLEND, ItemMMDBlend.class, Options.enableBasics, material.hasBlend(), tab);
+		Oredicts.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
+		return item;
+		
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this rod
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createRod(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableRod) && (material.rod == null)) {
-			material.rod = addItem(new ItemMMDRod(material), "rod", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.STICK + material.getCapitalizedName(), material.rod);
-			OreDictionary.registerOre(Oredicts.ROD, material.rod);
-		}
-
-		return material.rod;
+	protected static Item createRod(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.ROD, ItemMMDRod.class, Options.enableRod, true, tab);
+		Oredicts.registerOre(Oredicts.STICK + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.ROD + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.ROD, item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this gear
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createGear(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableGear) && (material.gear == null)) {
-			material.gear = addItem(new ItemMMDGear(material), "gear", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.GEAR, material.gear);
-		}
-
-		return material.gear;
+	protected static Item createGear(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.GEAR, ItemMMDGear.class, Options.enableGear, true, tab);
+		Oredicts.registerOre(Oredicts.GEAR + material.getCapitalizedName(), item);
+		Oredicts.registerOre(Oredicts.GEAR, item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this axe
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createAxe(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasicTools) && (material.axe == null)) {
-			material.axe = addItem(new ItemMMDAxe(material), "axe", material, ItemGroups.toolsTab);
-		}
-
-		return material.axe;
+	protected static Item createAxe(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.AXE, ItemMMDAxe.class, Options.enableBasicTools, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this crackhammer
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createCrackhammer(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableCrackHammer) && (material.crackhammer == null)) {
-			material.crackhammer = addItem(new ItemMMDCrackHammer(material), "crackhammer", material, ItemGroups.toolsTab);
-		}
-
-		return material.crackhammer;
+	protected static Item createCrackhammer(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.CRACKHAMMER, ItemMMDCrackHammer.class, Options.enableCrackHammer, true, tab);
+	}
+	
+	/**
+	 * 
+	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
+	 * @return the item this function created
+	 */
+	protected static Item createHoe(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.HOE, ItemMMDHoe.class, Options.enableBasicTools, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createHoe(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasicTools) && (material.hoe == null)) {
-			material.hoe = addItem(new ItemMMDHoe(material), "hoe", material, ItemGroups.toolsTab);
-		}
-
-		return material.hoe;
+	protected static Item createPickaxe(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.PICKAXE, ItemMMDPickaxe.class, Options.enableBasicTools, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createPickaxe(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasicTools) && (material.pickaxe == null)) {
-			material.pickaxe = addItem(new ItemMMDPickaxe(material), "pickaxe", material, ItemGroups.toolsTab);
-		}
-
-		return material.pickaxe;
+	protected static Item createShovel(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.SHOVEL, ItemMMDShovel.class, Options.enableBasicTools, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createShovel(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasicTools) && (material.shovel == null)) {
-			material.shovel = addItem(new ItemMMDShovel(material), "shovel", material, ItemGroups.toolsTab);
-		}
-
-		return material.shovel;
+	protected static Item createSword(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.SWORD, ItemMMDSword.class, Options.enableBasicTools, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createSword(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBasicTools) && (material.sword == null)) {
-			material.sword = addItem(new ItemMMDSword(material), "sword", material, ItemGroups.toolsTab);
-		}
-
-		return material.sword;
+	protected static Item createHelmet(MMDMaterial material, CreativeTabs tab) {
+		return createArmorItem(material, Names.HELMET, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createHelmet(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableArmor) && (material.helmet == null)) {
-			material.helmet = addItem(ItemMMDArmor.createHelmet(material), "helmet", material, ItemGroups.toolsTab);
-		}
-
-		return material.helmet;
+	protected static Item createChestplate(MMDMaterial material, CreativeTabs tab) {
+		return createArmorItem(material, Names.CHESTPLATE, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createChestplate(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableArmor) && (material.chestplate == null)) {
-			material.chestplate = addItem(ItemMMDArmor.createChestplate(material), "chestplate", material, ItemGroups.toolsTab);
-		}
-
-		return material.chestplate;
+	protected static Item createLeggings(MMDMaterial material, CreativeTabs tab) {
+		return createArmorItem(material, Names.LEGGINGS, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createLeggings(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableArmor) && (material.leggings == null)) {
-			material.leggings = addItem(ItemMMDArmor.createLeggings(material), "leggings", material, ItemGroups.toolsTab);
-		}
-
-		return material.leggings;
+	protected static Item createBoots(MMDMaterial material, CreativeTabs tab) {
+		return createArmorItem(material, Names.BOOTS, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createBoots(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableArmor) && (material.boots == null)) {
-			material.boots = addItem(ItemMMDArmor.createBoots(material), "boots", material, ItemGroups.toolsTab);
-		}
-
-		return material.boots;
+	protected static Item createHorseArmor(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.HORSEARMOR, ItemMMDHorseArmor.class, Options.enableHorseArmor, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createHorseArmor(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableHorseArmor) && (material.horseArmor == null)) {
-			material.horseArmor = addItem(new ItemMMDHorseArmor(material), "horsearmor", material, ItemGroups.toolsTab);
-		}
-
-		return material.horseArmor;
+	protected static Item createArrow(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.ARROW, ItemMMDArrow.class, Options.enableBowAndArrow, true, tab);
+		Oredicts.registerOre(Oredicts.ARROW + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createArrow(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
+	protected static Item createBolt(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.BOLT, ItemMMDBolt.class, Options.enableCrossbowAndBolt, true, tab);
+		Oredicts.registerOre(Oredicts.AMMOBOLT, item);
+		return item;
 
-		if ((Options.enableBowAndArrow) && (material.arrow == null)) {
-			material.arrow = addItem(new ItemMMDArrow(material), "arrow", material, ItemGroups.toolsTab);
-		}
-
-		return material.arrow;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createBolt(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableCrossbowAndBolt) && (material.bolt == null)) {
-			material.bolt = addItem(new ItemMMDBolt(material), "bolt", material, ItemGroups.toolsTab);
-		}
-
-		return material.bolt;
+	protected static Item createBow(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.BOW, ItemMMDBow.class, Options.enableBowAndArrow, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createBow(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableBowAndArrow) && (material.bow == null)) {
-			material.bow = addItem(new ItemMMDBow(material), "bow", material, ItemGroups.toolsTab);
-		}
-
-		return material.bow;
+	protected static Item createCrossbow(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.CROSSBOW, ItemMMDCrossbow.class, Options.enableCrossbowAndBolt, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createCrossbow(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableCrossbowAndBolt) && (material.crossbow == null)) {
-			material.crossbow = addItem(new ItemMMDCrossbow(material), "crossbow", material, ItemGroups.toolsTab);
-		}
-
-		return material.crossbow;
+	protected static Item createShears(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.SHEARS, ItemMMDShears.class, Options.enableShears, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createShears(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
+	protected static Item createSmallBlend(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.enableSmallDust, material.hasBlend(), tab);
+		Oredicts.registerOre(Oredicts.DUST_TINY + material.getCapitalizedName(), item);
+		return item;
 
-		if ((Options.enableShears) && (material.shears == null)) {
-			material.shears = addItem(new ItemMMDShears(material), "shears", material, ItemGroups.toolsTab);
-		}
-
-		return material.shears;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createSmallBlend(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableSmallDust) && (material.hasBlend) && (material.smallblend == null)) {
-			material.smallblend = addItem(new ItemMMDSmallBlend(material), "smallblend", material, ItemGroups.itemsTab);
-		}
-
-		return material.smallblend;
+	protected static Item createFishingRod(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.FISHINGROD, ItemMMDFishingRod.class, Options.enableFishingRod, true, tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createFishingRod(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableFishingRod) && (material.fishingRod == null)) {
-			material.fishingRod = addItem(new ItemMMDFishingRod(material), "fishing_rod", material, ItemGroups.toolsTab);
-		}
-
-		return material.fishingRod;
+	protected static Item createSmallPowder(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.enableSmallDust, material.hasBlend(), tab);
+		Oredicts.registerOre(Oredicts.DUST_TINY + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createSmallPowder(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableSmallDust) && (material.smallpowder == null)) {
-			material.smallpowder = addItem(new ItemMMDSmallPowder(material), "smallpowder", material, ItemGroups.itemsTab);
-		}
-
-		return material.smallpowder;
+	protected static Item createShield(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.SHIELD, ItemMMDShield.class, Options.enableShield, true, tab);
+		Oredicts.registerOre(Oredicts.SHIELD + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createShield(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableShield) && (material.shield == null)) {
-			material.shield = addItem(new ItemMMDShield(material), "shield", material, ItemGroups.itemsTab);
-		}
-
-		return material.shield;
+	protected static Item createMekCrystal(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.CRYSTAL, GenericMMDItem.class, Options.enableMekanism, material.getType()!=MaterialType.CRYSTAL, tab);
+		Oredicts.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createMekCrystal(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableMekanism) && (material.crystal == null) && (material.getType() != MaterialType.CRYSTAL)) {
-			material.crystal = addItem(new GenericMMDItem(material), "crystal", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), material.crystal);
-		}
-
-		return material.crystal;
+	protected static Item createMekShard(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.SHARD, GenericMMDItem.class, Options.enableMekanism, true, tab);
+		Oredicts.registerOre(Oredicts.SHARD + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createMekShard(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableMekanism) && (material.shard == null)) {
-			material.shard = addItem(new GenericMMDItem(material), "shard", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.SHARD + material.getCapitalizedName(), material.shard);
-		}
-
-		return material.shard;
+	protected static Item createMekClump(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.CLUMP, GenericMMDItem.class, Options.enableMekanism, true, tab);
+		Oredicts.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createMekClump(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableMekanism) && (material.clump == null)) {
-			material.clump = addItem(new GenericMMDItem(material), "clump", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), material.clump);
-		}
-
-		return material.clump;
-	}
-
-	/**
-	 * 
-	 * @param material The material base of this item
-	 * @return the item this function created
-	 */
-	protected static Item createMekDirtyPowder(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableMekanism) && (material.powderDirty == null)) {
-			material.powderDirty = addItem(new GenericMMDItem(material), "powder_dirty", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.DUSTDIRTY + material.getCapitalizedName(), material.powderDirty);
-		}
-
-		return material.powderDirty;
+	protected static Item createMekDirtyPowder(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.POWDERDIRTY, GenericMMDItem.class, Options.enableMekanism, true, tab);
+		Oredicts.registerOre(Oredicts.DUST_DIRTY + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	// TODO: Possibly make this a Block, double of the normal plate.
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createCasing(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableIC2) && (material.casing == null)) {
-			material.casing = addItem(new GenericMMDItem(material), "casing", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.CASING + material.getCapitalizedName(), material.casing);
-		}
-
-		return material.casing;
+	protected static Item createCasing(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.CASING, GenericMMDItem.class, Options.enableIC2, true, tab);
+		Oredicts.registerOre(Oredicts.CASING + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	// TODO: Possibly make this a Block, double of the normal plate.
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createDensePlate(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableIC2) && (material.densePlate == null)) {
-			material.densePlate = addItem(new GenericMMDItem(material), "dense_plate", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.PLATEDENSE + material.getCapitalizedName(), material.densePlate);
-		}
-
-		return material.densePlate;
+	protected static Item createDensePlate(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.DENSEPLATE, GenericMMDItem.class, Options.enableIC2, true, tab);
+		Oredicts.registerOre(Oredicts.PLATE_DENSE + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createCrushed(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableIC2) && (material.crushed == null)) {
-			material.crushed = addItem(new GenericMMDItem(material), "crushed", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), material.crushed);
-		}
-
-		return material.crushed;
+	protected static Item createCrushed(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.CRUSHED, GenericMMDItem.class, Options.enableIC2, true, tab);
+		Oredicts.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createCrushedPurified(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if ((Options.enableIC2) && (material.crushedPurified == null)) {
-			material.crushedPurified = addItem(new GenericMMDItem(material), "crushed_purified", material, ItemGroups.itemsTab);
-			OreDictionary.registerOre(Oredicts.CRUSHEDPURIFIED + material.getCapitalizedName(), material.crushedPurified);
-		}
-
-		return material.crushedPurified;
+	protected static Item createCrushedPurified(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.CRUSHEDPURIFIED, GenericMMDItem.class, Options.enableIC2, true, tab);
+		Oredicts.registerOre(Oredicts.CRUSHED_PURIFIED + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createSlab(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		// TODO: Do we need to check for the block too?
-		if ((Options.enableSlab) && (material.slab == null) && (material.halfSlab != null) && (material.doubleSlab != null)) {
-			material.slab = addItem(new ItemMMDSlab(material), "slab", material, ItemGroups.blocksTab);
-		}
-
-		return material.slab;
+	protected static Item createSlab(MMDMaterial material, CreativeTabs tab) {
+		final Item item = createItem(material, Names.SLAB, ItemMMDSlab.class, Options.enableSlab, material.hasBlock(Names.HALFSLAB) && material.hasBlock(Names.DOUBLESLAB), tab);
+		Oredicts.registerOre(Oredicts.SLAB + material.getCapitalizedName(), item);
+		return item;
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createAnvil(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if (((Options.enableAnvil) && (material.anvil == null)) && (material.anvilBlock != null)) {
-			material.anvil = addItem(new ItemMMDAnvilBlock(material), "anvil", material, ItemGroups.blocksTab);
-		}
-
-		return material.anvil;
+	protected static Item createAnvil(MMDMaterial material, CreativeTabs tab) {
+		return createItem(material, Names.ANVIL, ItemMMDAnvilBlock.class, Options.enableAnvil, material.hasBlock(Names.ANVILBLOCK), tab);
 	}
 
 	/**
 	 * 
 	 * @param material The material base of this item
+	 * @param tab which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createDoor(MMDMaterial material) {
-		if (material == null) {
-			return null;
-		}
-
-		if (((Options.enableDoor) && (material.door == null)) && (material.doorBlock != null)) {
-			material.door = addItem(new ItemMMDDoor(material), "door", material, ItemGroups.blocksTab);
-			OreDictionary.registerOre(Oredicts.DOOR, material.door);
-		}
-
-		return material.door;
+	protected static Item createDoor(MMDMaterial material, CreativeTabs tab) {
+		Item item = createItem(material, Names.DOOR, ItemMMDDoor.class, Options.enableDoor, material.hasBlock(Names.DOORBLOCK), tab);
+		Oredicts.registerOre(Oredicts.DOOR, item);
+		return item;
 	}
 
 	/**

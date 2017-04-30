@@ -59,8 +59,8 @@ public abstract class Fluids {
 	protected static Fluid addFluid(MMDMaterial material, int density, int viscosity, int temperature, int luminosity) {
 		int tintColor;
 		if (material != null) {
-			if (material.fluid != null) {
-				return material.fluid;
+			if (material.getFluid() != null) {
+				return material.getFluid();
 			}
 			tintColor = material.getTintColor();
 		} else {
@@ -78,7 +78,7 @@ public abstract class Fluids {
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
 
-		material.fluid = fluid;
+		material.setFluid(fluid);
 
 		fluidRegistry.put(material.getName(), fluid);
 		return fluid;
@@ -90,15 +90,15 @@ public abstract class Fluids {
 			return null;
 		}
 
-		if (material.fluidBlock != null) {
-			return material.fluidBlock;
+		if (material.getFluidBlock() != null) {
+			return material.getFluidBlock();
 		}
 
 		BlockFluidClassic block;
 		String name = material.getName();
 
 		if (name != "mercury") {
-			block = new BlockFluidClassic(material.fluid, Material.LAVA);
+			block = new BlockFluidClassic(material.getFluid(), Material.LAVA);
 		} else {
 			block = new InteractiveFluidBlock(getFluidByName(name), false,
 					(World w, EntityLivingBase e) -> {
@@ -118,7 +118,7 @@ public abstract class Fluids {
 		itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
 		GameRegistry.register(itemBlock);
 
-		material.fluidBlock = block;
+		material.setFluidBlock(block);
 		fluidBlockRegistry.put(name, block);
 		return block;
 	}

@@ -44,7 +44,7 @@ public class ItemMMDSword extends ItemSword implements IMMDObject {
 		// this.damageVsEntity = attackDamage + metal.getBaseAttackDamage(); // damageVsEntity is private, sadly
 		this.attackDamage = 3F + this.material.getBaseAttackDamage();
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
+		this.regenerates = this.material.regenerates();
 		this.setCreativeTab(CreativeTabs.COMBAT);
 	}
 

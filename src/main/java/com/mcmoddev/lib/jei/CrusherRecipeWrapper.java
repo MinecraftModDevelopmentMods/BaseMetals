@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.jei;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -26,8 +27,9 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		// TODO Auto-generated method stub
-
+		// TODO: Verify Inputs
+		ingredients.setInputs(ItemStack.class, theRecipe.getInputs());
+		ingredients.setOutput(ItemStack.class, theRecipe.getOutput());
 	}
 
 	@Override
@@ -44,12 +46,12 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 
 	@Override
 	public List<FluidStack> getFluidInputs() {
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override
 	public List<FluidStack> getFluidOutputs() {
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -65,7 +67,7 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 
 	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override

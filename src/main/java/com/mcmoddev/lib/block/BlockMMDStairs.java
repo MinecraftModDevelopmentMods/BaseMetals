@@ -1,9 +1,8 @@
 package com.mcmoddev.lib.block;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
@@ -14,10 +13,9 @@ import net.minecraft.block.SoundType;
  * @author Jasmine Iwanek
  *
  */
-public class BlockMMDStairs extends BlockStairs implements IOreDictionaryEntry, IMMDObject {
+public class BlockMMDStairs extends BlockStairs implements IMMDObject {
 
 	final MMDMaterial material;
-	private final String oreDict;
 
 	/**
 	 *
@@ -25,10 +23,9 @@ public class BlockMMDStairs extends BlockStairs implements IOreDictionaryEntry, 
 	 *            The material the stairs are made from
 	 */
 	public BlockMMDStairs(MMDMaterial material) {
-		super(material.block.getDefaultState());
+		super(material.getBlock(Names.BLOCK).getDefaultState());
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.oreDict = Oredicts.STAIRS + this.material.getCapitalizedName();
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
@@ -45,7 +42,6 @@ public class BlockMMDStairs extends BlockStairs implements IOreDictionaryEntry, 
 		super(modelBlock.getDefaultState());
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.oreDict = Oredicts.STAIRS + this.material.getCapitalizedName();
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
@@ -63,10 +59,5 @@ public class BlockMMDStairs extends BlockStairs implements IOreDictionaryEntry, 
 	@Deprecated
 	public MMDMaterial getMetalMaterial() {
 		return this.material;
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 }

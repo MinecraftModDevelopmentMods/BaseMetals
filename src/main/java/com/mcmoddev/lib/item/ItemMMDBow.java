@@ -36,7 +36,7 @@ public class ItemMMDBow extends ItemBow implements IMMDObject {
 		this.setMaxDamage(this.material.getToolDurability());
 		this.setCreativeTab(CreativeTabs.COMBAT);
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
+		this.regenerates = this.material.regenerates();
 	}
 
 	/*

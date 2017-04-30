@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
 
@@ -23,28 +24,28 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 			return;
 		}
 
-		// TODO: Verify blocks, Slabs, Ingots, Oreblocks
-		addSagMillRecipe("adamantine");
-		addSagMillRecipe("antimony");
-		addSagMillRecipe("aquarium");
-		addSagMillRecipe("bismuth");
-		addSagMillRecipe("brass");
-		addSagMillRecipe("bronze");
-		addSagMillRecipe("coldiron");
-		addSagMillRecipe("copper");
-		addSagMillRecipe("cupronickel");
-		addSagMillRecipe("electrum");
-		addSagMillRecipe("invar");
-		addSagMillRecipe("lead");
-		addSagMillRecipe("mithril");
-		addSagMillRecipe("nickel");
-		addSagMillRecipe("pewter");
-		addSagMillRecipe("platinum");
-		addSagMillRecipe("silver");
-		addSagMillRecipe("starsteel");
-		addSagMillRecipe("steel");
-		addSagMillRecipe("tin");
-		addSagMillRecipe("zinc");
+		// TODO: Verify blocks, Slabs, Ingots, Ore Blocks
+		addSagMillRecipe(MaterialNames.ADAMANTINE);
+		addSagMillRecipe(MaterialNames.ANTIMONY);
+		addSagMillRecipe(MaterialNames.AQUARIUM);
+		addSagMillRecipe(MaterialNames.BISMUTH);
+		addSagMillRecipe(MaterialNames.BRASS);
+		addSagMillRecipe(MaterialNames.BRONZE);
+		addSagMillRecipe(MaterialNames.COLDIRON);
+		addSagMillRecipe(MaterialNames.COPPER, 2, MaterialNames.GOLD, 1, 360);
+		addSagMillRecipe(MaterialNames.CUPRONICKEL);
+		addSagMillRecipe(MaterialNames.ELECTRUM);
+		addSagMillRecipe(MaterialNames.INVAR);
+		addSagMillRecipe(MaterialNames.LEAD, 2, MaterialNames.SILVER, 1, 360);
+		addSagMillRecipe(MaterialNames.MITHRIL);
+		addSagMillRecipe(MaterialNames.NICKEL, 2, MaterialNames.PLATINUM, 1, 360);
+		addSagMillRecipe(MaterialNames.PEWTER);
+		addSagMillRecipe(MaterialNames.PLATINUM);
+		addSagMillRecipe(MaterialNames.SILVER, 2, MaterialNames.LEAD, 1, 360);
+		addSagMillRecipe(MaterialNames.STARSTEEL);
+		addSagMillRecipe(MaterialNames.STEEL);
+		addSagMillRecipe(MaterialNames.TIN);
+		addSagMillRecipe(MaterialNames.ZINC);
 
 		initDone = true;
 	}

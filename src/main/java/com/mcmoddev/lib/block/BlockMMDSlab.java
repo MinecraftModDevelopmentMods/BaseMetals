@@ -2,6 +2,7 @@ package com.mcmoddev.lib.block;
 
 import java.util.Random;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -107,7 +108,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 	 */
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return this.material.slab;
+		return this.material.getItem(Names.SLAB);
 	}
 
 	/**
@@ -116,7 +117,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 	@Override
 	@Deprecated
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(this.material.slab);
+		return new ItemStack(this.material.getItem(Names.SLAB));
 	}
 
 	/**

@@ -24,10 +24,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.Achievements;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -100,43 +102,44 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 			// count armor pieces
 			if ((Options.enableStarSteel) && ("starsteel".equals(((ItemMMDArmor) armorItem).material.getName()))) {
 				starsteel: {
-					// used to count up the starsteel armor items
-					if (!(starsteelUpdateCache.containsKey(player))) {
-						starsteelUpdateCache.put(player, new AtomicInteger(0));
-					}
-					starsteelUpdateCache.get(player).incrementAndGet();
-					// Achievement
-					if (Options.enableAchievements) {
-						if (armorItem == Materials.starsteel.boots)
-							player.addStat(Achievements.moonBoots, 1);
+				// used to count up the starsteel armor items
+				if (!(starsteelUpdateCache.containsKey(player))) {
+					starsteelUpdateCache.put(player, new AtomicInteger(0));
+				}
+				starsteelUpdateCache.get(player).incrementAndGet();
+				// Achievement
+				if (Options.enableAchievements) {
+					if (armorItem == Materials.getMaterialByName(MaterialNames.STARSTEEL).getItem(Names.BOOTS)) {
+						player.addStat(Achievements.moonBoots, 1);
 					}
 					break starsteel;
 				}
 			}
+			}
 			if ((Options.enableLead) && ("lead".equals(((ItemMMDArmor) armorItem).material.getName()))) {
 				lead: {
-					// used to count up the starsteel armor items
-					if (!(leadUpdateCache.containsKey(player))) {
-						leadUpdateCache.put(player, new AtomicInteger(0));
-					}
-					leadUpdateCache.get(player).incrementAndGet();
-					break lead;
+				// used to count up the starsteel armor items
+				if (!(leadUpdateCache.containsKey(player))) {
+					leadUpdateCache.put(player, new AtomicInteger(0));
 				}
+				leadUpdateCache.get(player).incrementAndGet();
+				break lead;
+			}
 			}
 			if ((Options.enableAdamantine) && ("adamantine".equals(((ItemMMDArmor) armorItem).material.getName()))) {
 				adamantine: {
-					// used to count up the adamantine armor items
-					if (!(adamantineUpdateCache.containsKey(player))) {
-						adamantineUpdateCache.put(player, new AtomicInteger(0));
-					}
-					adamantineUpdateCache.get(player).incrementAndGet();
-					break adamantine;
+				// used to count up the adamantine armor items
+				if (!(adamantineUpdateCache.containsKey(player))) {
+					adamantineUpdateCache.put(player, new AtomicInteger(0));
 				}
+				adamantineUpdateCache.get(player).incrementAndGet();
+				break adamantine;
 			}
-		} else {
-			// apply potion effects. Note that "Level I" is actually effect level 0 in the effect constructor 
-			if (Options.enableStarSteel) {
-				starsteel: {
+			}
+			} else {
+				// apply potion effects. Note that "Level I" is actually effect level 0 in the effect constructor 
+				if (Options.enableStarSteel) {
+					starsteel: {
 					if (!starsteelUpdateCache.containsKey(player))
 						break starsteel;
 					int num = starsteelUpdateCache.get(player).getAndSet(0);
@@ -150,9 +153,9 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 					}
 					break starsteel;
 				}
-			}
-			if (Options.enableLead) {
-				lead: {
+				}
+				if (Options.enableLead) {
+					lead: {
 					if (!(leadUpdateCache.containsKey(player)))
 						break lead;
 					int level = leadUpdateCache.get(player).getAndSet(0) / 2;
@@ -164,9 +167,9 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 					}
 					break lead;
 				}
-			}
-			if (Options.enableAdamantine) {
-				adamantine: {
+				}
+				if (Options.enableAdamantine) {
+					adamantine: {
 					if (!(adamantineUpdateCache.containsKey(player)))
 						break adamantine;
 					int num = adamantineUpdateCache.get(player).getAndSet(0);
@@ -183,76 +186,76 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 					}
 					break adamantine;
 				}
-			}
-			// full suit of cold-iron makes you fire-proof
-			if (Options.enableColdIron) {
-				if(armorItem == Materials.coldiron.helmet) {
-					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.coldiron.chestplate
-							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.coldiron.leggings
-							&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.coldiron.boots) {
-						final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
-						player.addPotionEffect(fireProtection);
-						// Achievement
-                    	if (Options.enableAchievements) {
-                    		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.coldiron.sword) {
-                    			player.addStat(Achievements.demonSlayer, 1);
-                    		}
-                    	}
+				}
+				// full suit of cold-iron makes you fire-proof
+				if (Options.enableColdIron) {
+					if(armorItem == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.HELMET)) {
+						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.CHESTPLATE)
+								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.LEGGINGS)
+								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.BOOTS)) {
+							final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
+							player.addPotionEffect(fireProtection);
+							// Achievement
+							if (Options.enableAchievements) {
+								if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.SWORD)) {
+									player.addStat(Achievements.demonSlayer, 1);
+								}
+							}
+						}
 					}
 				}
-			}
-			// full suit of mithril protects you from withering, poison, nausea,
-			// and hunger effects
-			if (Options.enableMithril) {
-				if(armorItem == Materials.mithril.helmet) {
-					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.mithril.chestplate
-							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.mithril.leggings
-							&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.mithril.boots) {
-                    	final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
-                    	Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
-                    	while(effectIterator.hasNext()) {
-                        	PotionEffect pe = effectIterator.next();
-                        	Potion p = pe.getPotion();
-                        	if(p.isBadEffect()) {
-                        		removeList.add(p);
-                        	}
-                    	}
-                    	for(Potion p : removeList) {
-                    		player.removePotionEffect(p);
-                    	}
-                    	// Achievement
-                    	if (Options.enableAchievements) {
-                    		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.mithril.sword) {
-								player.addStat(Achievements.angelOfDeath, 1);
+				// full suit of mithril protects you from withering, poison, nausea,
+				// and hunger effects
+				if (Options.enableMithril) {
+					if(armorItem == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.HELMET)) {
+						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.CHESTPLATE)
+								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.LEGGINGS)
+								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.BOOTS)) {
+							final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
+							Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
+							while(effectIterator.hasNext()) {
+								PotionEffect pe = effectIterator.next();
+								Potion p = pe.getPotion();
+								if(p.isBadEffect()) {
+									removeList.add(p);
+								}
+							}
+							for(Potion p : removeList) {
+								player.removePotionEffect(p);
+							}
+							// Achievement
+							if (Options.enableAchievements) {
+								if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD)) {
+									player.addStat(Achievements.angelOfDeath, 1);
+								}
+							}
+						}
+					}
+				}
+				// full suit of aquarium makes you breathe and heal underwater
+				if (Options.enableAquarium) {
+					if(armorItem == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.HELMET) && player.posY > 0 && player.posY < 255) {
+						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.CHESTPLATE)
+								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.LEGGINGS)
+								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.BOOTS)) {
+							Block b1 = w.getBlockState(new BlockPos(player.posX,player.posY, player.posZ)).getBlock();
+							Block b2 = w.getBlockState(new BlockPos(player.posX,player.posY + 1, player.posZ)).getBlock();
+							if(b1 == Blocks.WATER && b2 == Blocks.WATER) {
+								final PotionEffect waterBreathing = new PotionEffect(Potion.REGISTRY.getObject(waterBreathingPotionKey), EFFECT_DURATION, 0, false, false);
+								player.addPotionEffect(waterBreathing);
+								final PotionEffect protection = new PotionEffect(Potion.REGISTRY.getObject(waterBuffPotionKey), EFFECT_DURATION, 0, false, false);
+								player.addPotionEffect(protection);
+								player.removePotionEffect(Potion.REGISTRY.getObject(fatiguePotionKey));
+								// Achievement
+								if (Options.enableAchievements) {
+									player.addStat(Achievements.scubaDiver, 1);
+								}
 							}
 						}
 					}
 				}
 			}
-			// full suit of aquarium makes you breathe and heal underwater
-			if (Options.enableAquarium) {
-				if(armorItem == Materials.aquarium.helmet && player.posY > 0 && player.posY < 255) {
-					if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.aquarium.chestplate
-							&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.aquarium.leggings
-							&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.aquarium.boots) {
-						Block b1 = w.getBlockState(new BlockPos(player.posX,player.posY, player.posZ)).getBlock();
-						Block b2 = w.getBlockState(new BlockPos(player.posX,player.posY + 1, player.posZ)).getBlock();
-						if(b1 == Blocks.WATER && b2 == Blocks.WATER) {
-							final PotionEffect waterBreathing = new PotionEffect(Potion.REGISTRY.getObject(waterBreathingPotionKey), EFFECT_DURATION, 0, false, false);
-							player.addPotionEffect(waterBreathing);
-							final PotionEffect protection = new PotionEffect(Potion.REGISTRY.getObject(waterBuffPotionKey), EFFECT_DURATION, 0, false, false);
-							player.addPotionEffect(protection);
-                        	player.removePotionEffect(Potion.REGISTRY.getObject(fatiguePotionKey));
-                        	// Achievement
-                        	if (Options.enableAchievements) {
-                        		player.addStat(Achievements.scubaDiver, 1);
-                        	}
-						}
-					}
-				}
-			}
 		}
-	}
 
 	/**
 	 *

@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.mcmoddev.basemetals.init.Items;
-import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
  * This class is a MetalMaterial based Wrapper for making a CreativeTab.
@@ -18,9 +17,10 @@ import com.mcmoddev.lib.material.MMDMaterial;
  * @author Jasmine Iwanek
  *
  */
-public class GeneralizedCreativeTab extends CreativeTabs {
+public class MMDCreativeTab extends CreativeTabs {
 
-	private MMDMaterial material;
+	private Item iconItem;
+	
 	private final boolean searchable;
 	private List<ItemStack> cache;
 	private Comparator<ItemStack> comparator;
@@ -33,10 +33,10 @@ public class GeneralizedCreativeTab extends CreativeTabs {
 		}
 	};
 
-	public GeneralizedCreativeTab(String unlocalizedName, boolean searchable, MMDMaterial material) {
+	public MMDCreativeTab(String unlocalizedName, boolean searchable, Item iconItem ) {
 		super(unlocalizedName);
 		// this.itemSupplier = itemSupplier;
-		this.material = material;
+		this.iconItem = iconItem;
 		this.searchable = searchable;
 		this.setSortingAlgorithm(DEFAULT);
 		if (searchable)
@@ -66,11 +66,10 @@ public class GeneralizedCreativeTab extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
-		if (this.material.crackhammer != null) {
-			return this.material.crackhammer;
-		} else {
-			return net.minecraft.init.Items.IRON_PICKAXE;
-		}
+		if( this.iconItem == null ) {
+				return net.minecraft.init.Items.IRON_PICKAXE;
+		}		
+		return this.iconItem;
 	}
 
 	public void setSortingAlgorithm(Comparator<ItemStack> comparator) {
@@ -79,4 +78,9 @@ public class GeneralizedCreativeTab extends CreativeTabs {
 		if (this.cache != null)
 			cache.sort(comparator);
 	}
+	
+	public void setTabIconItem( Item iconItem ) {
+		this.iconItem = iconItem;
+	}
+	
 }

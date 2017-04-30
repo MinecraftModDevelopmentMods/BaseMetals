@@ -4,6 +4,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
@@ -54,7 +55,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerAlloys();
 		
 		if (Options.enableCoal) {
-			registerFluid(Materials.vanilla_coal, 144);
+			registerFluid(Materials.getMaterialByName(MaterialNames.COAL), 144);
 		}
 
 
@@ -68,13 +69,13 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 		// Lead itself is added by TiC
 		if ((Options.enableLead) && (Options.enablePlate)) {
-			registerModifierItem("plated", Item.getItemFromBlock(Materials.lead.plate));
+			registerModifierItem("plated", Item.getItemFromBlock(Materials.getMaterialByName(MaterialNames.LEAD).getBlock(Names.PLATE)));
 		}
 
 		if (Options.enableMercury) {
 			registry.registerFluid(Materials.getMaterialByName(MaterialNames.MERCURY), 144);
 			if (Options.enableBasics) {
-				registerModifierItem("toxic", Materials.mercury.powder);
+				registerModifierItem("toxic", Materials.getMaterialByName(MaterialNames.MERCURY).getItem(Names.POWDER));
 			}
 		}
 
@@ -135,29 +136,29 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 	}
 
 	private void registerAlloys() {
-		if (Options.enableAquarium) {
-			registry.registerAlloy(MaterialNames.AQUARIUM, Materials.getMaterialByName(MaterialNames.AQUARIUM).fluid, 3, MaterialNames.COPPER, 2, MaterialNames.ZINC, 1, MaterialNames.PRISMARINE, 3);
+		if (Options.enableAquarium && Options.enableCopper && Options.enableZinc ) {
+			registry.registerAlloy(MaterialNames.AQUARIUM, Materials.getMaterialByName(MaterialNames.AQUARIUM).getFluid(), 3, MaterialNames.COPPER, 2, MaterialNames.ZINC, 1, MaterialNames.PRISMARINE, 3);
 		}
 
-		if (Options.enableCupronickel) {
-			registry.registerAlloy(MaterialNames.CUPRONICKEL, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).fluid, 4, MaterialNames.COPPER, 3, MaterialNames.NICKEL, 1 );
+		if (Options.enableCupronickel && Options.enableCopper && Options.enableNickel ) {
+			registry.registerAlloy(MaterialNames.CUPRONICKEL, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getFluid(), 4, MaterialNames.COPPER, 3, MaterialNames.NICKEL, 1 );
 		}
 
-		if (Options.enableInvar) {
-			registry.registerAlloy(MaterialNames.INVAR, Materials.getMaterialByName(MaterialNames.INVAR).fluid, 3, MaterialNames.IRON, 2, MaterialNames.NICKEL, 1);
+		if (Options.enableInvar && Options.enableNickel ) {
+			registry.registerAlloy(MaterialNames.INVAR, Materials.getMaterialByName(MaterialNames.INVAR).getFluid(), 3, MaterialNames.IRON, 2, MaterialNames.NICKEL, 1);
 		}
 
-		if (Options.enableMithril) {
-			registry.registerAlloy(MaterialNames.MITHRIL, Materials.getMaterialByName(MaterialNames.MITHRIL).fluid, 3, MaterialNames.SILVER, 2, MaterialNames.COLDIRON, 1, MaterialNames.MERCURY, 1);
+		if (Options.enableMithril && Options.enableColdIron && Options.enableSilver && Options.enableMercury ) {
+			registry.registerAlloy(MaterialNames.MITHRIL, Materials.getMaterialByName(MaterialNames.MITHRIL).getFluid(), 3, MaterialNames.SILVER, 2, MaterialNames.COLDIRON, 1, MaterialNames.MERCURY, 1);
 		}
 
-		if (Options.enablePewter) {
+		if (Options.enablePewter && Options.enableLead && Options.enableCopper && Options.enableTin ) {
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
-			registry.registerAlloy(MaterialNames.PEWTER, Materials.getMaterialByName(MaterialNames.PEWTER).fluid, 144, MaterialNames.TIN, 137, MaterialNames.COPPER, 2, MaterialNames.LEAD, 5);
+			registry.registerAlloy(MaterialNames.PEWTER, Materials.getMaterialByName(MaterialNames.PEWTER).getFluid(), 144, MaterialNames.TIN, 137, MaterialNames.COPPER, 2, MaterialNames.LEAD, 5);
 		}
 
 		if (Options.enableSteel) {
-			registry.registerAlloy(MaterialNames.STEEL, Materials.getMaterialByName(MaterialNames.STEEL).fluid, 8, MaterialNames.IRON, 8, MaterialNames.COAL, 1);
+			registry.registerAlloy(MaterialNames.STEEL, Materials.getMaterialByName(MaterialNames.STEEL).getFluid(), 8, MaterialNames.IRON, 8, MaterialNames.COAL, 1);
 		}
 	}
 	

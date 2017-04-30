@@ -113,23 +113,7 @@ public class CrusherRecipeRegistry {
 	 *            The item to create as the result of this crusher recipe.
 	 */
 	public static void addNewCrusherRecipe(final Item input, final ItemStack output) {
-		getInstance().addRecipe(new ICrusherRecipe() {
-
-			@Override
-			public ItemStack getOutput() {
-				return output;
-			}
-
-			@Override
-			public boolean isValidInput(ItemStack in) {
-				return input.equals(in.getItem());
-			}
-
-			@Override
-			public Collection<ItemStack> getValidInputs() {
-				return Collections.singletonList(new ItemStack(input));
-			}
-		});
+		getInstance().addRecipe(new ArbitraryCrusherRecipe(input, output));
 	}
 
 	/**
@@ -145,23 +129,15 @@ public class CrusherRecipeRegistry {
 	 *            The item to create as the result of this crusher recipe.
 	 */
 	public static void addNewCrusherRecipe(final Block input, final ItemStack output) {
-		getInstance().addRecipe(new ICrusherRecipe() {
-
-			@Override
-			public ItemStack getOutput() {
-				return output;
-			}
-
+		getInstance().addRecipe(new ArbitraryCrusherRecipe(input, output));
+/*
+{
 			@Override
 			public boolean isValidInput(ItemStack in) {
 				return input.equals(Block.getBlockFromItem(in.getItem()));
 			}
-
-			@Override
-			public Collection<ItemStack> getValidInputs() {
-				return Collections.singletonList(new ItemStack(input));
-			}
 		});
+*/
 	}
 
 	/**
@@ -274,7 +250,7 @@ public class CrusherRecipeRegistry {
 	}
 
 	/**
-	 * Gets the recipe for crushing the specified item, or null if ther is no
+	 * Gets the recipe for crushing the specified item, or null if there is no
 	 * recipe accepting the item.
 	 * 
 	 * @param input

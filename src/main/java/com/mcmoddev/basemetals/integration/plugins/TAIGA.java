@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -53,15 +54,15 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 						String name = t.substring(0, t.length() - 5);
 
 						Block k = (Block) f.get(f.getClass());
-						float harvestlevel = k.getHarvestLevel(null);
+						float harvestLevel = k.getHarvestLevel(null);
 						float resist = k.getExplosionResistance(null);
 
-						MMDMaterial repThis = createOrelessMaterial(name, MaterialType.METAL, harvestlevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);
+						MMDMaterial repThis = createOrelessMaterial(name, MaterialType.METAL, harvestLevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);
 
-						repThis.block = k;
-						repThis.ingot = new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Ingot").get(Items.class), 1).getItem();
-						repThis.powder = new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Dust").get(Items.class), 1).getItem();
-						repThis.nugget = new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Nugget").get(Items.class), 1).getItem();
+						repThis.addNewBlock(Names.BLOCK, k);
+						repThis.addNewItem(Names.INGOT, new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Ingot").get(Items.class), 1).getItem());
+						repThis.addNewItem(Names.POWDER, new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Dust").get(Items.class), 1).getItem());
+						repThis.addNewItem(Names.NUGGET, new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Nugget").get(Items.class), 1).getItem());
 
 						materials.add(repThis);
 					}

@@ -2,8 +2,6 @@ package com.mcmoddev.lib.item;
 
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
 
@@ -13,10 +11,9 @@ import net.minecraft.creativetab.CreativeTabs;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDRod extends net.minecraft.item.Item implements IOreDictionaryEntry, IMMDObject {
+public class ItemMMDRod extends net.minecraft.item.Item implements IMMDObject {
 
 	private final MMDMaterial material;
-	private final String oreDict;
 
 	/**
 	 *
@@ -26,12 +23,6 @@ public class ItemMMDRod extends net.minecraft.item.Item implements IOreDictionar
 	public ItemMMDRod(MMDMaterial material) {
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = Oredicts.ROD + this.material.getCapitalizedName();
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 
 	@Override

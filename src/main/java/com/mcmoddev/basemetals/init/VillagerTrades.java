@@ -4,7 +4,10 @@ import java.util.*;
 
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.MaterialStats;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.item.ItemMMDCrackHammer;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -90,19 +93,19 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 		});
 
 		for (final MMDMaterial material : Materials.getAllMaterials()) {
-			final float value = material.hardness + material.strength + material.magicAffinity + material.getToolHarvestLevel();
-			if (material.isRare) {
+			final float value = material.getStat(MaterialStats.HARDNESS) + material.getStat(MaterialStats.MAGICAFFINITY) + material.getStat(MaterialStats.STRENGTH) + material.getToolHarvestLevel();
+			if (material.isRare()) {
 				continue;
 			}
 
-			// for reference, iron has a value of 21.5, gold would be 14, copper
-			// is 14, and diamond is 30
+			// For reference, Iron has a value of 21.5, Gold would be 14, Copper
+			// is 14, and Diamond is 30
 			final int emeraldPurch = emeraldPurchaseValue(value);
 			final int emeraldSale = emeraldSaleValue(value);
 			final int tradeLevel = tradeLevel(value);
 
 			if ((emeraldPurch > 64) || (emeraldSale > 64)) {
-				continue; // too expensive
+				continue; // Too expensive
 			}
 
 			final int armorsmith = (3 << 16) | (1 << 8) | (tradeLevel);
@@ -123,10 +126,10 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 				tradesTable.computeIfAbsent(weaponsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette((emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1, 1, allSwords.get(material)))));
 			}
 			if (allArmors.containsKey(material)) {
-				tradesTable.computeIfAbsent(armorsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.hardness / 2), 1, allArmors.get(material).toArray(new Item[0])))));
+				tradesTable.computeIfAbsent(armorsmith, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2), 1, allArmors.get(material).toArray(new Item[0])))));
 			}
 
-			if (material.magicAffinity > 5) {
+			if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
 				if (allHammers.containsKey(material)) {
 					tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (tradeLevel + 2), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allHammers.get(material), new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
 				}
@@ -135,7 +138,7 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 				}
 				if (allArmors.containsKey(material)) {
 					for (int i = 0; i < allArmors.get(material).size(); i++) {
-						tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allArmors.get(material).get(i), new PriceInfo(emeraldPurch + 7 + (int) (material.hardness / 2), emeraldPurch + 12 + (int) (material.hardness / 2)))));
+						tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allArmors.get(material).get(i), new PriceInfo(emeraldPurch + 7 + (int) (material.getStat(MaterialStats.HARDNESS) / 2), emeraldPurch + 12 + (int) (material.getStat(MaterialStats.HARDNESS) / 2)))));
 					}
 				}
 				if (allSwords.containsKey(material)) {
@@ -146,15 +149,15 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 
 		if ("basemetals".equals(Loader.instance().activeModContainer().getModId())) {
 			if (Options.enableCharcoal) {
-				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
-				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
-				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem(Names.POWDER))));
+				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem(Names.POWDER))));
+				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem(Names.POWDER))));
 			}
 
 			if (Options.enableCoal) {
-				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_coal.powder)));
-				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_coal.powder)));
-				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_coal.powder)));
+				tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER))));
+				tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER))));
+				tradesTable.computeIfAbsent((3 << 16) | (3 << 8) | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER))));
 			}
 		}
 

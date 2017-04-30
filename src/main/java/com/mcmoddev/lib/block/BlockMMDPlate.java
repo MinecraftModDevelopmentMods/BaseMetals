@@ -2,10 +2,10 @@ package com.mcmoddev.lib.block;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -29,7 +29,7 @@ import net.minecraft.world.World;
  * @author DrCyano
  *
  */
-public class BlockMMDPlate extends net.minecraft.block.Block implements IOreDictionaryEntry, IMMDObject {
+public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObject {
 
 	/**
 	 * Blockstate property
@@ -37,7 +37,6 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IOreDict
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
 	private final MMDMaterial material;
-	private final String oreDict;
 
 	private static final float THICKNESS = 1.0f / 16.0f;
 
@@ -52,7 +51,6 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IOreDict
 		super(Material.IRON);
 		this.blockSoundType = SoundType.METAL;
 		this.material = material;
-		this.oreDict = Oredicts.PLATE + material.getCapitalizedName();
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
@@ -247,15 +245,10 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IOreDict
 	@Deprecated
 	public void addCollisionBoxToList(final IBlockState bs, final World world, final BlockPos coord,
 									  final AxisAlignedBB box, final List<AxisAlignedBB> collisionBoxList,
-									  final Entity entity) {
+									  @Nullable final Entity entity) {
 
 		final EnumFacing orientation = world.getBlockState(coord).getValue(FACING);
 		super.addCollisionBoxToList(coord, box, collisionBoxList, BOXES[orientation.ordinal()]);
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 
 	@Override

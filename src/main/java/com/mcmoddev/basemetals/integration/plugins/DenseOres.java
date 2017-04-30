@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -30,22 +31,50 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
 	private static void registerOres() {
-		String[] baseNames = new String[] { "adamantine", "antimony", "bismuth", "coldiron", "copper", "lead", "mercury", "nickel", "platinum", "silver", "tin", "zinc" };
-		boolean[] baseEnabled = new boolean[] { Options.enableAdamantine, Options.enableAntimony, Options.enableBismuth, Options.enableColdIron, Options.enableCopper, Options.enableLead, Options.enableMercury, Options.enableNickel, Options.enablePlatinum, Options.enableSilver, Options.enableTin, Options.enableZinc };
+		final String[] baseNames = new String[] {
+				MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH,
+				MaterialNames.COLDIRON,
+				MaterialNames.COPPER,
+				MaterialNames.LEAD,
+				MaterialNames.MERCURY,
+				MaterialNames.NICKEL,
+				MaterialNames.PLATINUM,
+				MaterialNames.SILVER,
+				MaterialNames.TIN,
+				MaterialNames.ZINC
+		};
+
+		final boolean[] baseEnabled = new boolean[] {
+				Options.enableAdamantine,
+				Options.enableAntimony,
+				Options.enableBismuth,
+				Options.enableColdIron,
+				Options.enableCopper,
+				Options.enableLead,
+				Options.enableMercury,
+				Options.enableNickel,
+				Options.enablePlatinum,
+				Options.enableSilver,
+				Options.enableTin,
+				Options.enableZinc
+		};
+
 		for (int i = 0; i < baseNames.length; i++) {
-			String ore = baseNames[i];
-			MMDMaterial mat = Materials.getMaterialByName(ore);
+			final String ore = baseNames[i];
+			final MMDMaterial mat = Materials.getMaterialByName(ore);
 			if (mat != null && baseEnabled[i]) {
 				String baseMaterial;
 				switch (ore) {
-					case "adamantine":
-					case "coldiron":
-						baseMaterial = "netherrack";
+					case MaterialNames.ADAMANTINE:
+					case MaterialNames.COLDIRON:
+						baseMaterial = Oredicts.NETHERRACK;
 						break;
 					default:
-						baseMaterial = "stone";
+						baseMaterial = Oredicts.STONE;
 				}
-				registerOre(String.format("%s_%s", ore, Oredicts.ORE), "basemetals", baseMaterial, 0);
+				registerOre(String.format("%s_%s", ore, Oredicts.ORE), BaseMetals.MODID, baseMaterial, 0);
 			}
 		}
 	}

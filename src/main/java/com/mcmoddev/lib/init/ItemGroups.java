@@ -1,16 +1,15 @@
 package com.mcmoddev.lib.init;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.common.Loader;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.mcmoddev.lib.init.Items;
-import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
  * This class initializes all item groups in Base Metals.
@@ -28,14 +27,11 @@ public class ItemGroups {
 		return delta;
 	};
 
-	public static CreativeTabs blocksTab;
-	public static CreativeTabs itemsTab;
-	public static CreativeTabs toolsTab;
-
-	private static Map<String, List<GeneralizedCreativeTab>> itemGroupsByModID = new HashMap<>();
+	private static final Map<String, List<MMDCreativeTab>> itemGroupsByModID = new HashMap<>();
 
 	private static boolean initDone = false;
 
+	
 	protected ItemGroups() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -51,18 +47,42 @@ public class ItemGroups {
 		initDone = true;
 	}
 
-	protected static GeneralizedCreativeTab addTab(String name, boolean searchable, MMDMaterial material) {
-		GeneralizedCreativeTab tab = new GeneralizedCreativeTab(Loader.instance().activeModContainer().getModId() + "." + name, searchable, material);
-		// itemGroupsByModID.get(name).add(tab);
-		return tab;
+	protected static int addTab(String name, boolean searchable ) {
+		String modName = Loader.instance().activeModContainer().getModId();
+		String internalTabName = String.format("%s.%s", modName, name);
+		MMDCreativeTab tab = new MMDCreativeTab( internalTabName, searchable, null );
+		if( itemGroupsByModID.containsKey(modName) ) {
+			itemGroupsByModID.get(modName).add(tab);
+		} else {
+			List<MMDCreativeTab> nl = new ArrayList<>();
+			nl.add(tab);
+			itemGroupsByModID.put(modName, nl);
+		}
+		
+		return itemGroupsByModID.get(modName).size() - 1;
 	}
 
+	protected static MMDCreativeTab getTab( int id ) {
+		return getTab( Loader.instance().activeModContainer().getModId(), id );
+	}
+	
+	protected static MMDCreativeTab getTab( String modName, int id ) {
+		if( itemGroupsByModID.containsKey(modName) ) {
+			if( itemGroupsByModID.get(modName).size() > id ) {
+				MMDCreativeTab t = itemGroupsByModID.get(modName).get(id);
+				return t;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Gets a map of all items added, sorted by material
 	 *
 	 * @return An unmodifiable map of added items catagorized by metal material
 	 */
-	public static Map<String, List<GeneralizedCreativeTab>> getItemsGroupsByModID() {
+	public static Map<String, List<MMDCreativeTab>> getItemsGroupsByModID() {
 		return Collections.unmodifiableMap(itemGroupsByModID);
 	}
+	
 }

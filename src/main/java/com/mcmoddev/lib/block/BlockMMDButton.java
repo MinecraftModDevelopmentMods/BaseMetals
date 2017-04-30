@@ -2,8 +2,6 @@ package com.mcmoddev.lib.block;
 
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.SoundType;
@@ -13,16 +11,14 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockMMDButton extends BlockButton implements IOreDictionaryEntry, IMMDObject {
+public class BlockMMDButton extends BlockButton implements IMMDObject {
 
 	final MMDMaterial material;
-	private final String oreDict;
 
 	public BlockMMDButton(MMDMaterial material) {
 		super(false);
 		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.oreDict = Oredicts.BUTTON + this.material.getCapitalizedName();
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
@@ -50,10 +46,5 @@ public class BlockMMDButton extends BlockButton implements IOreDictionaryEntry, 
 	@Deprecated
 	public MMDMaterial getMetalMaterial() {
 		return this.material;
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 }

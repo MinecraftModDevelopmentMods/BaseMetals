@@ -3,6 +3,7 @@ package com.mcmoddev.lib.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -20,8 +21,8 @@ public class ChestplateRepairRecipe extends ShapelessOreRecipe implements IRecip
 	private String matName;
 
 	public ChestplateRepairRecipe(MMDMaterial mat) {
-		super(new ItemStack(mat.chestplate, 1), new Object[] { mat.getName() + "_chestplate", Oredicts.PLATE + mat.getCapitalizedName() });
-		baseChestplate = new ItemStack(mat.chestplate, 1, OreDictionary.WILDCARD_VALUE);
+		super(new ItemStack(mat.getItem(Names.CHESTPLATE), 1), new Object[] { mat.getName() + "_chestplate", Oredicts.PLATE + mat.getCapitalizedName() });
+		baseChestplate = new ItemStack(mat.getItem(Names.CHESTPLATE), 1, OreDictionary.WILDCARD_VALUE);
 		matName = mat.getCapitalizedName();
 	}
 

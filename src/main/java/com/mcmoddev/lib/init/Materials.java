@@ -3,6 +3,7 @@ package com.mcmoddev.lib.init;
 import java.util.*;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 
@@ -10,6 +11,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * This class initializes all of the materials in Base Metals. It also contains
@@ -26,7 +28,8 @@ public abstract class Materials {
 	private static Map<String, MMDMaterial> allMaterials = new HashMap<>();
 	private static Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
-
+	private static Map<String, Set<MMDMaterial>> modSourceMaterialMap = new HashMap<>();
+	
 	protected Materials() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -202,7 +205,7 @@ public abstract class Materials {
 		final String texName = material.getName();
 		final int[] protection = material.getDamageReductionArray();
 		final int durability = material.getArmorMaxDamageFactor();
-		final ArmorMaterial armorMaterial = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, material.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, material.hardness > 10 ? (int) (material.hardness / 5) : 0);
+		final ArmorMaterial armorMaterial = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, material.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, material.getStat(MaterialStats.HARDNESS) > 10 ? (int) (material.getStat(MaterialStats.HARDNESS) / 5) : 0);
 		if (armorMaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to create armor material enum for " + material);
@@ -216,6 +219,14 @@ public abstract class Materials {
 		}
 		toolMaterialMap.put(material, toolMaterial);
 
+		if (modSourceMaterialMap.containsKey(Loader.instance().activeModContainer().getModId())) {
+			modSourceMaterialMap.get(Loader.instance().activeModContainer().getModId()).add(material);
+		} else {
+			Set<MMDMaterial> newSet = new HashSet<>();
+			newSet.add(material);
+			modSourceMaterialMap.put(Loader.instance().activeModContainer().getModId(), newSet);
+			
+		}
 		return material;
 	}
 
@@ -288,5 +299,20 @@ public abstract class Materials {
 	@Deprecated
 	public static MMDMaterial getMetalByName(String materialName) {
 		return allMaterials.get(materialName);
+	}
+	
+	/**
+	 * Gets all materials from a given mod
+	 * 
+	 * @param modId the ModID of the mod
+	 * @return an immutable collection representing all the materials registered by a given mod
+	 *         or the "empty set" if the modId is not recorded.
+	 */
+	public static Collection<MMDMaterial> getMaterialsByMod(String modId) {
+		if (modSourceMaterialMap.containsKey(modId)) {
+			return Collections.unmodifiableSet(modSourceMaterialMap.get(modId));
+		} else {
+			return Collections.emptySet();
+		}
 	}
 }

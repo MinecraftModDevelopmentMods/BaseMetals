@@ -2,8 +2,6 @@ package com.mcmoddev.lib.block;
 
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.SoundType;
@@ -19,10 +17,9 @@ import net.minecraft.world.World;
 /**
  * Metal Trap Door
  */
-public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implements IOreDictionaryEntry, IMMDObject {
+public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implements IMMDObject {
 
 	private final MMDMaterial material;
-	private final String oreDict;
 
 	/**
 	 *
@@ -32,7 +29,6 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	public BlockMMDTrapDoor(MMDMaterial material) {
 		super(Material.IRON);
 		this.material = material;
-		this.oreDict = Oredicts.TRAPDOOR + material.getCapitalizedName();
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();
 		this.blockSoundType = SoundType.METAL;
@@ -50,11 +46,6 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 		world.setBlockState(coord, state, 2);
 		world.playEvent(player, ((Boolean) state.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 
 	@Override

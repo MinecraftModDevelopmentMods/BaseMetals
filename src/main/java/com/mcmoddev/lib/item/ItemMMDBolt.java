@@ -3,8 +3,6 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,10 +14,9 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDBolt extends ItemBolt implements IOreDictionaryEntry, IMMDObject {
+public class ItemMMDBolt extends ItemBolt implements IMMDObject {
 
 	protected final MMDMaterial material;
-	private final String oreDict;
 
 	/**
 	 *
@@ -29,7 +26,6 @@ public class ItemMMDBolt extends ItemBolt implements IOreDictionaryEntry, IMMDOb
 	public ItemMMDBolt(MMDMaterial material) {
 		this.material = material;
 		this.setCreativeTab(CreativeTabs.MATERIALS);
-		this.oreDict = Oredicts.AMMOBOLT;
 	}
 
 	/**
@@ -45,11 +41,6 @@ public class ItemMMDBolt extends ItemBolt implements IOreDictionaryEntry, IMMDOb
 	@Override
 	public EntityCustomBolt createBolt(World worldIn, ItemStack stack, EntityPlayer shooter) {
 		return new EntityCustomBolt(worldIn, stack, shooter);
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 
 	@Override

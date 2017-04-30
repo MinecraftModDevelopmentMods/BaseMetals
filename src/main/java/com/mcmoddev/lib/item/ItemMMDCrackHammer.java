@@ -55,7 +55,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 		toolTypes.add("crackhammer");
 		toolTypes.add("pickaxe");
 		repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
+		this.regenerates = this.material.regenerates();
 	}
 
 	@Override

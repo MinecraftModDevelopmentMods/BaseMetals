@@ -1,10 +1,10 @@
 package com.mcmoddev.lib.block;
 
-import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.state.IBlockState;
@@ -18,10 +18,9 @@ import java.util.Random;
 /**
  * Ore Block
  */
-public class BlockMMDOre extends BlockOre implements IOreDictionaryEntry, IMMDObject {
+public class BlockMMDOre extends BlockOre implements IMMDObject {
 
 	private final MMDMaterial material;
-	private final String oreDict;
 
 	/**
 	 *
@@ -35,7 +34,6 @@ public class BlockMMDOre extends BlockOre implements IOreDictionaryEntry, IMMDOb
 		this.blockHardness = Math.max(5f, material.getOreBlockHardness());
 		this.blockResistance = Math.max(1.5f, material.getBlastResistance() * 0.75f);
 		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
-		this.oreDict = Oredicts.ORE + material.getCapitalizedName();
 		// BaseMetals.logger.info(material.getName() + " ore harvest level set to " + material.getRequiredHarvestLevel());
 	}
 
@@ -46,18 +44,9 @@ public class BlockMMDOre extends BlockOre implements IOreDictionaryEntry, IMMDOb
 
 	@Override
 	public boolean canEntityDestroy(IBlockState bs, IBlockAccess w, BlockPos coord, Entity entity) {
-		if ((this == Materials.starsteel.ore) && (entity instanceof net.minecraft.entity.boss.EntityDragon))
+		if ((this == Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.ORE)) && (entity instanceof net.minecraft.entity.boss.EntityDragon))
 			return false;
 		return super.canEntityDestroy(bs, w, coord, entity);
-	}
-
-	public MMDMaterial getMetal() {
-		return this.material;
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 
 	@Override
@@ -107,11 +96,11 @@ public class BlockMMDOre extends BlockOre implements IOreDictionaryEntry, IMMDOb
 	@Override
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
 		if (this.material.getType() == MMDMaterial.MaterialType.MINERAL) {
-			return this.material.powder;
+			return this.material.getItem(Names.POWDER);
 		} else if (this.material.getType() == MMDMaterial.MaterialType.CRYSTAL) {
-			return this.material.ingot;
+			return this.material.getItem(Names.CRYSTAL);
 		} else if (this.material.getType() == MMDMaterial.MaterialType.GEM) {
-			return this.material.ingot;
+			return this.material.getItem(Names.GEM);
 		}
 		return Item.getItemFromBlock(this);
 	}

@@ -1,6 +1,8 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
 
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
@@ -10,39 +12,39 @@ import net.minecraftforge.fml.common.Loader;
 /** initializer for achievements */
 public class Achievements extends com.mcmoddev.lib.init.Achievements {
 
-	/** smelt a new metal ingot */
+	/** Smelt a new metal ingot */
 	public static Achievement thisIsNew;
-	/** make a metal block */
+	/** Make a metal block */
 	public static Achievement blocktastic;
-	/** make a crack hammer */
+	/** Make a Crack Hammer */
 	public static Achievement geologist;
-	/** make any alloy ingot */
+	/** Make any alloy ingot */
 	public static Achievement metallurgy;
-	/** make brass blend */
+	/** Make Brass blend */
 	public static Achievement brassMaker;
-	/** make bronze blend */
+	/** Make Bronze blend */
 	public static Achievement bronzeMaker;
-	/** make electrum blend */
+	/** Make Electrum blend */
 	public static Achievement electrumMaker;
-	/** make cupronickel blend */
+	/** Make Cupronickel blend */
 	public static Achievement cupronickelMaker;
-	/** make steel blend */
+	/** Make Steel blend */
 	public static Achievement steelMaker;
-	/** make invar blend */
+	/** Make Invar blend */
 	public static Achievement invarMaker;
-	/** make mithril blend */
+	/** Make Mithril blend */
 	public static Achievement mithrilMaker;
-	/** make aquarium blend */
+	/** Make Aquarium blend */
 	public static Achievement aquariumMaker;
-	/** decked out completely in cold-iron */
+	/** Decked out completely in Cold-Iron */
 	public static Achievement demonSlayer;
-	/** decked out fully in mithril */
+	/** Decked out fully in Mithril */
 	public static Achievement angelOfDeath;
-	/** full suit of aquarium armor */
+	/** Full suit of Aquarium armor */
 	public static Achievement scubaDiver;
-	/** craft star-steel boots */
+	/** Craft Star-Steel boots */
 	public static Achievement moonBoots;
-	/** full suit of adamantine armor */
+	/** Full suit of Adamantine armor */
 	public static Achievement juggernaut;
 
 	private static boolean initDone = false;
@@ -63,48 +65,48 @@ public class Achievements extends com.mcmoddev.lib.init.Achievements {
 			AchievementPage page = new AchievementPage(Loader.instance().activeModContainer().getModId());
 			AchievementPage.registerAchievementPage(page);
 
-			thisIsNew = makeAchievement("this_is_new", AchievementList.BUILD_FURNACE, 0, 0, Materials.copper.ingot, page); // TODO: Make this check for all ingots
-			blocktastic = makeAchievement("blocktastic", thisIsNew, 2, 0, Materials.copper.block, page); // TODO: Make this checks for all blocks
-			geologist = makeAchievement("geologist", thisIsNew, 4, 2, Materials.vanilla_iron.crackhammer, page); // TODO: Make this check for all crackhammers
-			metallurgy = makeAchievement("metallurgy", geologist, 6, 2, Materials.brass.blend, page); // TODO: Make this check for all blends
+			thisIsNew = makeAchievement("this_is_new", AchievementList.BUILD_FURNACE, 0, 0, Materials.getMaterialByName(MaterialNames.COPPER).getItem(Names.INGOT), page); // TODO: Make this check for all ingots
+			blocktastic = makeAchievement("blocktastic", thisIsNew, 2, 0, Materials.getMaterialByName(MaterialNames.COPPER).getBlock(Names.BLOCK), page); // TODO: Make this checks for all blocks
+			geologist = makeAchievement("geologist", thisIsNew, 4, 2, Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.CRACKHAMMER), page); // TODO: Make this check for all crackhammers
+			metallurgy = makeAchievement("metallurgy", geologist, 6, 2, Materials.getMaterialByName(MaterialNames.BRASS).getItem(Names.BLEND), page); // TODO: Make this check for all blends
 			if (Options.enableBrass) {
-				brassMaker = makeAchievement("brass_maker", metallurgy, 9, 3, Materials.brass.ingot, page);
+				brassMaker = makeAchievement("brass_maker", metallurgy, 9, 3, Materials.getMaterialByName(MaterialNames.BRASS).getItem(Names.INGOT), page);
 			}
 			if (Options.enableBronze) {
-				bronzeMaker = makeAchievement("bronze_maker", metallurgy, 9, 4, Materials.bronze.ingot, page);
+				bronzeMaker = makeAchievement("bronze_maker", metallurgy, 9, 4, Materials.getMaterialByName(MaterialNames.BRONZE).getItem(Names.INGOT), page);
 			}
 			if (Options.enableCupronickel) {
-				cupronickelMaker = makeAchievement("cupronickel_maker", metallurgy, 9, 5, Materials.cupronickel.ingot, page);
+				cupronickelMaker = makeAchievement("cupronickel_maker", metallurgy, 9, 5, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getItem(Names.INGOT), page);
 			}
 			if (Options.enableElectrum) {
-				electrumMaker = makeAchievement("electrum_maker", metallurgy, 9, 6, Materials.electrum.ingot, page);
+				electrumMaker = makeAchievement("electrum_maker", metallurgy, 9, 6, Materials.getMaterialByName(MaterialNames.ELECTRUM).getItem(Names.INGOT), page);
 			}
 			if (Options.enableSteel) {
-				steelMaker = makeAchievement("steel_maker", metallurgy, 9, 7, Materials.steel.ingot, page);
+				steelMaker = makeAchievement("steel_maker", metallurgy, 9, 7, Materials.getMaterialByName(MaterialNames.STEEL).getItem(Names.INGOT), page);
 			}
 			if (Options.enableInvar) {
-				invarMaker = makeAchievement("invar_maker", metallurgy, 9, 8, Materials.invar.ingot, page);
+				invarMaker = makeAchievement("invar_maker", metallurgy, 9, 8, Materials.getMaterialByName(MaterialNames.INVAR).getItem(Names.INGOT), page);
 			}
 			if (Options.enableMithril) {
-				mithrilMaker = makeAchievement("mithril_maker", metallurgy, 11, 10, Materials.mithril.ingot, page);
+				mithrilMaker = makeAchievement("mithril_maker", metallurgy, 11, 10, Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.INGOT), page);
 			}
 			if (Options.enableAquarium) {
-				aquariumMaker = makeAchievement("aquarium_maker", metallurgy, 11, 12, Materials.aquarium.ingot, page);
+				aquariumMaker = makeAchievement("aquarium_maker", metallurgy, 11, 12, Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.INGOT), page);
 			}
 			if (Options.enableColdIron) {
-				demonSlayer = makeAchievement("demon_slayer", AchievementList.PORTAL, -5, 5, Materials.coldiron.sword, page);
+				demonSlayer = makeAchievement("demon_slayer", AchievementList.PORTAL, -5, 5, Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.SWORD), page);
 			}
 			if (Options.enableMithril) {
-				angelOfDeath = makeAchievement("angel_of_death", mithrilMaker, 11, 11, Materials.mithril.sword, page);
+				angelOfDeath = makeAchievement("angel_of_death", mithrilMaker, 11, 11, Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD), page);
 			}
 			if (Options.enableAquarium) {
-				scubaDiver = makeAchievement("scuba_diver", aquariumMaker, 11, 13, Materials.aquarium.sword, page).setSpecial();
+				scubaDiver = makeAchievement("scuba_diver", aquariumMaker, 11, 13, Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.SWORD), page).setSpecial();
 			}
 			if (Options.enableAdamantine) {
-				juggernaut = makeAchievement("juggernaut", AchievementList.PORTAL, -7, 3, Materials.adamantine.helmet, page).setSpecial();
+				juggernaut = makeAchievement("juggernaut", AchievementList.PORTAL, -7, 3, Materials.getMaterialByName(MaterialNames.ADAMANTINE).getItem(Names.HELMET), page).setSpecial();
 			}
 			if (Options.enableStarSteel) {
-				moonBoots = makeAchievement("moon_boots", AchievementList.THE_END, -2, 6, Materials.starsteel.boots, page).setSpecial();
+				moonBoots = makeAchievement("moon_boots", AchievementList.THE_END, -2, 6, Materials.getMaterialByName(MaterialNames.STARSTEEL).getItem(Names.BOOTS), page).setSpecial();
 			}
 		}
 
