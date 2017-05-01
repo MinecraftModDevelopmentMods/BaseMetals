@@ -127,7 +127,7 @@ public abstract class Blocks {
 		} else if (block instanceof BlockMMDDoubleSlab) {
 			fullName = "double_" + name;
 		} else if (material != null) {
-			if ((name == "nether") || (name == "end")) {
+			if (("nether".equals(name)) || ("end".equals(name))) {
 				fullName = name + "_" + material.getName() + "_" + "ore";
 			} else {
 				fullName = material.getName() + "_" + name;
