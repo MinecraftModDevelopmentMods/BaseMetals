@@ -19,7 +19,7 @@ import net.minecraft.item.Item;
  * @author Jasmine Iwanek
  *
  */
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, initCallback="doSecondPass")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, initCallback = "doSecondPass")
 public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase implements IIntegration {
 
 	private static boolean initDone = false;
@@ -34,7 +34,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
 
-		registerMaterial(Options.materialEnabled.get(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, true, false, "coldblooded", "insatiable" );
+		registerMaterial(Options.materialEnabled.get(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, true, false, "coldblooded", "insatiable");
 		registerMaterial(Options.materialEnabled.get(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, true, false);
 		registerMaterial(Options.materialEnabled.get(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, "aquadynamic", "jagged", TraitLocations.HEAD, "aquadynamic", TraitLocations.HEAD);
 		registerMaterial(Options.materialEnabled.get(MaterialNames.BISMUTH), MaterialNames.BISMUTH, true, false);
@@ -52,11 +52,10 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerMaterial(Options.materialEnabled.get(MaterialNames.ZINC), MaterialNames.ZINC, true, false);
 
 		registerAlloys();
-		
+
 		if (Options.materialEnabled.get(MaterialNames.COAL)) {
 			registerFluid(Materials.getMaterialByName(MaterialNames.COAL), 144);
 		}
-
 
 		// As much as we'd like to, we cannot do this like this.
 		// At some point between this code running and it getting
@@ -78,19 +77,16 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			}
 		}
 
-
-
 		if (Options.materialEnabled.get(MaterialNames.SILVER)) {
 			// Anything needed?
 		}
-
 
 		registry.registerAll();
 		initDone = true;
 	}
 
 	private boolean isTraitLoc(String loc) {
-		switch(loc) {
+		switch (loc) {
 		case TraitLocations.BOW:
 		case TraitLocations.BOWSTRING:
 		case TraitLocations.EXTRA:
@@ -104,30 +100,30 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			return false;
 		}
 	}
-	
+
 	private void addTraits(TCMaterial mat, String[] traits) {
 		int i = 0;
-		while( i < traits.length ) {
-			if( i+1 >= traits.length ) {
+		while (i < traits.length) {
+			if (i + 1 >= traits.length) {
 				mat.addTrait(traits[i]);
 				i++;
 				continue;
 			}
 
-			if( isTraitLoc(traits[i+1]) ) {
-				mat.addTrait( traits[i], traits[i+1] );
+			if (isTraitLoc(traits[i + 1])) {
+				mat.addTrait(traits[i], traits[i + 1]);
 				i++;
 			} else {
-				mat.addTrait( traits[i] );
+				mat.addTrait(traits[i]);
 			}
 			i++;
 		}
 	}
-	
+
 	private void registerMaterial(boolean enabled, String name, boolean castable, boolean craftable, String... traits) {
-		if( enabled ) {
+		if (enabled) {
 			TCMaterial mat = registry.getMaterial(name, Materials.getMaterialByName(name)).setCastable(castable).setCraftable(craftable);
-			if( traits.length > 0 ) {
+			if (traits.length > 0) {
 				addTraits(mat, traits);
 			}
 			mat.settle();
@@ -140,7 +136,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.CUPRONICKEL) && Options.materialEnabled.get(MaterialNames.COPPER) && Options.materialEnabled.get(MaterialNames.NICKEL)) {
-			registry.registerAlloy(MaterialNames.CUPRONICKEL, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getFluid(), 4, MaterialNames.COPPER, 3, MaterialNames.NICKEL, 1 );
+			registry.registerAlloy(MaterialNames.CUPRONICKEL, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getFluid(), 4, MaterialNames.COPPER, 3, MaterialNames.NICKEL, 1);
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.INVAR) && Options.materialEnabled.get(MaterialNames.NICKEL)) {
@@ -160,7 +156,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			registry.registerAlloy(MaterialNames.STEEL, Materials.getMaterialByName(MaterialNames.STEEL).getFluid(), 8, MaterialNames.IRON, 8, MaterialNames.COAL, 1);
 		}
 	}
-	
+
 	public void doSecondPass() {
 		// make the second-pass MaterialIntegration call
 		registry.integrateRecipes();

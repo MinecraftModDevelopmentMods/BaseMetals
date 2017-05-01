@@ -61,8 +61,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material of interest
-	 * @param tab Container of the CreativeTabs these will get registered in
+	 * @param material
+	 *            The material of interest
+	 * @param tab
+	 *            Container of the CreativeTabs these will get registered in
 	 */
 	protected static void createBlocksBasic(MMDMaterial material, TabContainer tab) {
 		createBlock(material, tab.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
@@ -75,8 +77,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material of interest
-	 * @param tab Container of the CreativeTabs these will get registered in
+	 * @param material
+	 *            The material of interest
+	 * @param tab
+	 *            Container of the CreativeTabs these will get registered in
 	 */
 	protected static void createBlocksAdditional(MMDMaterial material, TabContainer tab) {
 		createButton(material, tab.blocksTab);
@@ -90,8 +94,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material of interest
-	 * @param tab Container of the CreativeTabs these will get registered in
+	 * @param material
+	 *            The material of interest
+	 * @param tab
+	 *            Container of the CreativeTabs these will get registered in
 	 */
 	protected static void createBlocksFull(MMDMaterial material, TabContainer tab) {
 		createBlock(material, tab.blocksTab);
@@ -113,13 +119,17 @@ public abstract class Blocks {
 	protected static Block addBlock(Block block, Names name, MMDMaterial material, CreativeTabs tab) {
 		return addBlock(block, name.toString(), material, tab);
 	}
-	
+
 	/**
 	 * 
-	 * @param block the block of interest
-	 * @param name name of the thing
-	 * @param material the material the thing is made from
-	 * @param tab which creative tab is it on
+	 * @param block
+	 *            the block of interest
+	 * @param name
+	 *            name of the thing
+	 * @param material
+	 *            the material the thing is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return a new block
 	 */
 	protected static Block addBlock(Block block, String name, MMDMaterial material, CreativeTabs tab) {
@@ -173,14 +183,14 @@ public abstract class Blocks {
 	}
 
 	private static Block createBlock(MMDMaterial material, Names name, Class<? extends Block> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
-		if( !material.hasBlock(name) ) {
-			material.addNewBlock(name, createBlock( material, name.toString(), clazz, enabled, extra, tab )); 
+		if (!material.hasBlock(name)) {
+			material.addNewBlock(name, createBlock(material, name.toString(), clazz, enabled, extra, tab));
 		}
 		return material.getBlock(name);
 	}
-	
+
 	private static Block createBlock(MMDMaterial material, String name, Class<? extends Block> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
-		if( material == null ) {
+		if (material == null) {
 			return null;
 		}
 
@@ -194,15 +204,15 @@ public abstract class Blocks {
 				FMLLog.getLogger().fatal(ex.toString());
 				return null;
 			}
-			
+
 			try {
-				inst = (Block)ctor.newInstance(material);
+				inst = (Block) ctor.newInstance(material);
 			} catch (Exception ex) {
 				FMLLog.getLogger().fatal("Unable to create Block named %s for material %s", name, material.getCapitalizedName());
 			}
-			
-			if( inst != null ) {
-				return addBlock( inst, name, material, tab );
+
+			if (inst != null) {
+				return addBlock(inst, name, material, tab);
 			}
 		}
 		return null;
@@ -210,8 +220,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createBookshelf(MMDMaterial material, CreativeTabs tab) {
@@ -219,17 +231,19 @@ public abstract class Blocks {
 	}
 
 	protected static Block createBookshelf(MMDMaterial material, boolean fullBlock, CreativeTabs tab) {
-		BlockMMDBookshelf bs = (BlockMMDBookshelf)createBookshelf(material, tab);
-		if( bs != null ) {
+		BlockMMDBookshelf bs = (BlockMMDBookshelf) createBookshelf(material, tab);
+		if (bs != null) {
 			bs.setFullBlock(fullBlock);
 		}
 		return bs;
 	}
-	
+
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createPlate(MMDMaterial material, CreativeTabs tab) {
@@ -240,8 +254,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createBars(MMDMaterial material, CreativeTabs tab) {
@@ -252,8 +268,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createBlock(MMDMaterial material, CreativeTabs tab) {
@@ -262,9 +280,12 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param glow Does it have a glow ?
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param glow
+	 *            Does it have a glow ?
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createBlock(MMDMaterial material, boolean glow, CreativeTabs tab) {
@@ -283,8 +304,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createButton(MMDMaterial material, CreativeTabs tab) {
@@ -295,8 +318,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createLever(MMDMaterial material, CreativeTabs tab) {
@@ -307,8 +332,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createPressurePlate(MMDMaterial material, CreativeTabs tab) {
@@ -317,8 +344,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createSlab(MMDMaterial material, CreativeTabs tab) {
@@ -328,8 +357,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createDoubleSlab(MMDMaterial material, CreativeTabs tab) {
@@ -339,8 +370,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createStairs(MMDMaterial material, CreativeTabs tab) {
@@ -351,8 +384,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createWall(MMDMaterial material, CreativeTabs tab) {
@@ -363,8 +398,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createFence(MMDMaterial material, CreativeTabs tab) {
@@ -373,8 +410,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createFenceGate(MMDMaterial material, CreativeTabs tab) {
@@ -383,8 +422,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createAnvil(MMDMaterial material, CreativeTabs tab) {
@@ -393,8 +434,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createFlowerPot(MMDMaterial material, CreativeTabs tab) {
@@ -403,8 +446,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createLadder(MMDMaterial material, CreativeTabs tab) {
@@ -413,8 +458,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createTripWireHook(MMDMaterial material, CreativeTabs tab) {
@@ -423,8 +470,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createOre(MMDMaterial material, CreativeTabs tab) {
@@ -436,8 +485,10 @@ public abstract class Blocks {
 	/**
 	 * This is here purely for End Metals
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createEndOre(MMDMaterial material, CreativeTabs tab) {
@@ -449,8 +500,10 @@ public abstract class Blocks {
 	/**
 	 * This is here purely for Nether Metals
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createNetherOre(MMDMaterial material, CreativeTabs tab) {
@@ -461,8 +514,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createDoor(MMDMaterial material, CreativeTabs tab) {
@@ -472,8 +527,10 @@ public abstract class Blocks {
 
 	/**
 	 * 
-	 * @param material The material this is made from
-	 * @param tab which creative tab is it on
+	 * @param material
+	 *            The material this is made from
+	 * @param tab
+	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
 	protected static Block createTrapDoor(MMDMaterial material, CreativeTabs tab) {

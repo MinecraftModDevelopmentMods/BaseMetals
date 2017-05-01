@@ -29,7 +29,6 @@ public class ItemGroups {
 
 	private static boolean initDone = false;
 
-	
 	protected ItemGroups() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -45,35 +44,35 @@ public class ItemGroups {
 		initDone = true;
 	}
 
-	protected static int addTab(String name, boolean searchable ) {
+	protected static int addTab(String name, boolean searchable) {
 		String modName = Loader.instance().activeModContainer().getModId();
 		String internalTabName = String.format("%s.%s", modName, name);
-		MMDCreativeTab tab = new MMDCreativeTab( internalTabName, searchable, null );
-		if( itemGroupsByModID.containsKey(modName) ) {
+		MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable, null);
+		if (itemGroupsByModID.containsKey(modName)) {
 			itemGroupsByModID.get(modName).add(tab);
 		} else {
 			List<MMDCreativeTab> nl = new ArrayList<>();
 			nl.add(tab);
 			itemGroupsByModID.put(modName, nl);
 		}
-		
+
 		return itemGroupsByModID.get(modName).size() - 1;
 	}
 
-	protected static MMDCreativeTab getTab( int id ) {
-		return getTab( Loader.instance().activeModContainer().getModId(), id );
+	protected static MMDCreativeTab getTab(int id) {
+		return getTab(Loader.instance().activeModContainer().getModId(), id);
 	}
-	
-	protected static MMDCreativeTab getTab( String modName, int id ) {
-		if( itemGroupsByModID.containsKey(modName) ) {
-			if( itemGroupsByModID.get(modName).size() > id ) {
+
+	protected static MMDCreativeTab getTab(String modName, int id) {
+		if (itemGroupsByModID.containsKey(modName)) {
+			if (itemGroupsByModID.get(modName).size() > id) {
 				MMDCreativeTab t = itemGroupsByModID.get(modName).get(id);
 				return t;
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets a map of all items added, sorted by material
 	 *
@@ -82,5 +81,5 @@ public class ItemGroups {
 	public static Map<String, List<MMDCreativeTab>> getItemsGroupsByModID() {
 		return Collections.unmodifiableMap(itemGroupsByModID);
 	}
-	
+
 }

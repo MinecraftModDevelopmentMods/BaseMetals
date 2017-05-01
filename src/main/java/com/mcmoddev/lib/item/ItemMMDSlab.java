@@ -23,7 +23,7 @@ public class ItemMMDSlab extends ItemSlab implements IMMDObject {
 	 *            The material to make the slab from
 	 */
 	public ItemMMDSlab(MMDMaterial material) {
-		super((BlockSlab)material.getBlock(Names.HALFSLAB), (BlockSlab)material.getBlock(Names.HALFSLAB), (BlockSlab)material.getBlock(Names.DOUBLESLAB));
+		super((BlockSlab) material.getBlock(Names.HALFSLAB), (BlockSlab) material.getBlock(Names.HALFSLAB), (BlockSlab) material.getBlock(Names.DOUBLESLAB));
 		this.material = material;
 	}
 

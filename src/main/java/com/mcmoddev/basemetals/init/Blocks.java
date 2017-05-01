@@ -20,7 +20,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	public static Block humanDetector;
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs = new TabContainer( ItemGroups.blocksTab, ItemGroups.itemsTab, ItemGroups.toolsTab );
+	private static TabContainer myTabs = new TabContainer(ItemGroups.blocksTab, ItemGroups.itemsTab, ItemGroups.toolsTab);
 
 	protected Blocks() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -119,7 +119,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
-			material.addNewBlock(Names.PRESSUREPLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE );
+			material.addNewBlock(Names.PRESSUREPLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
 
 			createPlate(material, myTabs.blocksTab);
 			createBars(material, myTabs.blocksTab);
@@ -225,8 +225,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.materialEnabled.get(MaterialNames.STARSTEEL)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STARSTEEL);
-			
-			createBlocksFull(material, myTabs);			
+
+			createBlocksFull(material, myTabs);
 			material.getBlock(Names.BLOCK).setLightLevel(0.5f);
 			material.getBlock(Names.PLATE).setLightLevel(0.5f);
 			material.getBlock(Names.ORE).setLightLevel(0.5f);

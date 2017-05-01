@@ -32,29 +32,29 @@ public enum MaterialStats implements IStringSerializable {
 	 * The base attack damage for the material.
 	 */
 	BASEDAMAGE;
-	
-    protected static final TreeMap<Integer, MaterialStats> MAP = Maps.newTreeMap();
 
-    static {
-        for (MaterialStats stat : values()) {
-            MAP.put(stat.ordinal(),stat);
-        }
-    }
+	protected static final TreeMap<Integer, MaterialStats> MAP = Maps.newTreeMap();
 
-    @Override
-    public String getName() {
-        return name().toLowerCase();
-    }
+	static {
+		for (MaterialStats stat : values()) {
+			MAP.put(stat.ordinal(), stat);
+		}
+	}
 
-    public static MaterialStats getType(int ordinal) {
-        if ((ordinal > values().length) || (ordinal < 0)) {
-            ordinal = 0;
-        }
-        return values()[ordinal];
-    }
+	@Override
+	public String getName() {
+		return name().toLowerCase();
+	}
 
-    @Override
-    public String toString() {
-    	return getName();
-    }
+	public static MaterialStats getType(int ordinal) {
+		if ((ordinal > values().length) || (ordinal < 0)) {
+			ordinal = 0;
+		}
+		return values()[ordinal];
+	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

@@ -9,7 +9,8 @@ public interface IHorseArmor {
 	/**
 	 * Returns the {@link HorseArmorType} of the custom horse armor.
 	 *
-	 * @return The {@link HorseArmorType} that this horse armor will have the values of.
+	 * @return The {@link HorseArmorType} that this horse armor will have the
+	 *         values of.
 	 */
 	HorseArmorType getArmorType();
 

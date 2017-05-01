@@ -14,7 +14,7 @@ public class BlockMMDFence extends BlockFence implements IMMDObject {
 
 	public BlockMMDFence(MMDMaterial material) {
 		super(Material.WOOD, MapColor.WOOD);
-        this.setSoundType(SoundType.METAL);
+		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();

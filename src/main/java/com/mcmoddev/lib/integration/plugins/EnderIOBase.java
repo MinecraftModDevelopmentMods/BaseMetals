@@ -118,10 +118,10 @@ public class EnderIOBase implements IIntegration {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
 
 		// we need to be sure the material is enabled, a null check is the best way
-		if( material == null ) {
+		if (material == null) {
 			return;
 		}
-		
+
 		int primaryQty = 2;
 		int secondaryQty = 1;
 

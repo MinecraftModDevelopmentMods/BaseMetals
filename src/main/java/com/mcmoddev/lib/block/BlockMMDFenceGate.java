@@ -13,7 +13,7 @@ public class BlockMMDFenceGate extends BlockFenceGate implements IMMDObject {
 
 	public BlockMMDFenceGate(MMDMaterial material) {
 		super(BlockPlanks.EnumType.OAK);
-        this.setSoundType(SoundType.METAL);
+		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();

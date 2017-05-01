@@ -109,8 +109,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 			if (curItem != null) {
 				for (MMDMaterial e : Materials.getAllMaterials()) {
-					if (OreDictionary.containsMatch(false, OreDictionary.getOres(Oredicts.PLATE + e.getName()),
-							curItem)) {
+					if (OreDictionary.containsMatch(false, OreDictionary.getOres(Oredicts.PLATE + e.getName()), curItem)) {
 						return e;
 					}
 				}

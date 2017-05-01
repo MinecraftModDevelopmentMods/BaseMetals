@@ -19,8 +19,8 @@ import net.minecraft.item.ItemStack;
 public class Items extends com.mcmoddev.lib.init.Items {
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs = new TabContainer( ItemGroups.blocksTab, ItemGroups.itemsTab, ItemGroups.toolsTab );
-	
+	private static TabContainer myTabs = new TabContainer(ItemGroups.blocksTab, ItemGroups.itemsTab, ItemGroups.toolsTab);
+
 	protected Items() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -35,7 +35,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 		Blocks.init();
 		com.mcmoddev.lib.init.Items.init(); // TODO
-		
+
 		if (Options.materialEnabled.get(MaterialNames.ADAMANTINE)) {
 			createItemsFull(Materials.getMaterialByName(MaterialNames.ADAMANTINE), myTabs);
 			createItemsModSupport(Materials.getMaterialByName(MaterialNames.ADAMANTINE), myTabs);
@@ -231,7 +231,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 		if (Options.materialEnabled.get(MaterialNames.QUARTZ)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.QUARTZ);
-			material.addNewItem( Names.INGOT, net.minecraft.init.Items.QUARTZ);
+			material.addNewItem(Names.INGOT, net.minecraft.init.Items.QUARTZ);
 			// material.slab = ;
 
 			createItemsFull(material, myTabs);

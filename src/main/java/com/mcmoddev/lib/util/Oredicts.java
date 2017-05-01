@@ -232,26 +232,26 @@ public class Oredicts {
 	public static final String NUGGET_CHARCOAL = "nuggetCharcoal";
 	public static final String NUGGET_COAL = "nuggetCoal";
 
-	public static void registerOre( String name, Block block ) {
-		if( block != null ) {
-			OreDictionary.registerOre( name, block );
+	public static void registerOre(String name, Block block) {
+		if (block != null) {
+			OreDictionary.registerOre(name, block);
 		}
-	}
-	
-	public static void registerOre( String name, Item item ) {
-		if( item != null ) {
-			OreDictionary.registerOre( name, item );
-		}
-		
 	}
 
-	public static void registerOre( String name, ItemStack itemStack ) {
-		if( itemStack != null ) {
-			OreDictionary.registerOre( name, itemStack );
+	public static void registerOre(String name, Item item) {
+		if (item != null) {
+			OreDictionary.registerOre(name, item);
 		}
-		
+
 	}
-	
+
+	public static void registerOre(String name, ItemStack itemStack) {
+		if (itemStack != null) {
+			OreDictionary.registerOre(name, itemStack);
+		}
+
+	}
+
 	private Oredicts() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}

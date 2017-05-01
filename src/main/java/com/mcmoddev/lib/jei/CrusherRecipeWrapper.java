@@ -15,7 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-
 @SuppressWarnings("rawtypes")
 public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecipeWrapper {
 

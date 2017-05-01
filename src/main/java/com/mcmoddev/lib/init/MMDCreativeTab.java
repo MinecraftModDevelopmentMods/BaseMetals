@@ -33,7 +33,7 @@ public class MMDCreativeTab extends CreativeTabs {
 		}
 	};
 
-	public MMDCreativeTab(String unlocalizedName, boolean searchable, Item iconItem ) {
+	public MMDCreativeTab(String unlocalizedName, boolean searchable, Item iconItem) {
 		super(unlocalizedName);
 		// this.itemSupplier = itemSupplier;
 		this.iconItem = iconItem;
@@ -66,9 +66,9 @@ public class MMDCreativeTab extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
-		if( this.iconItem == null ) {
-				return net.minecraft.init.Items.IRON_PICKAXE;
-		}		
+		if (this.iconItem == null) {
+			return net.minecraft.init.Items.IRON_PICKAXE;
+		}
 		return this.iconItem;
 	}
 
@@ -78,9 +78,8 @@ public class MMDCreativeTab extends CreativeTabs {
 		if (this.cache != null)
 			cache.sort(comparator);
 	}
-	
-	public void setTabIconItem( Item iconItem ) {
+
+	public void setTabIconItem(Item iconItem) {
 		this.iconItem = iconItem;
 	}
-	
 }

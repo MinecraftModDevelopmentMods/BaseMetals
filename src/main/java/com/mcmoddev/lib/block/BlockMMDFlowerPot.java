@@ -11,7 +11,7 @@ public class BlockMMDFlowerPot extends BlockFlowerPot implements IMMDObject {
 	final MMDMaterial material;
 
 	public BlockMMDFlowerPot(MMDMaterial material) {
-        this.setSoundType(SoundType.METAL);
+		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();

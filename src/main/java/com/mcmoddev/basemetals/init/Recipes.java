@@ -100,7 +100,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			oreDictName = material.getCapitalizedName();
 
 			if (material.getItem(Names.POWDER) != null) {
-				if (material.getItem( Names.ORE) != null) {
+				if (material.getItem(Names.ORE) != null) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, new ItemStack(material.getItem(Names.POWDER), 2));
 				}
 				if (material.getBlock(Names.BLOCK) != null) {
@@ -121,7 +121,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 		// furnace cheese all the things!
 		for (MMDMaterial mat : Materials.getAllMaterials()) {
-			if ((mat.getItem(Names.INGOT)) != null && !(mat.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject) && mat.hasOre() ) {
+			if ((mat.getItem(Names.INGOT)) != null && !(mat.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject) && mat.hasOre()) {
 				if (Options.furnaceCheese()) {
 					if (mat.getItem(Names.BOOTS) != null)
 						GameRegistry.addSmelting(mat.getItem(Names.BOOTS), new ItemStack(mat.getItem(Names.INGOT), 4), 0);
@@ -132,23 +132,23 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 					if (mat.getItem(Names.SWORD) != null)
 						GameRegistry.addSmelting(mat.getItem(Names.SWORD), new ItemStack(mat.getItem(Names.INGOT), 2), 0);
 
-					if (mat.getItem( Names.SHOVEL) != null)
+					if (mat.getItem(Names.SHOVEL) != null)
 						GameRegistry.addSmelting(mat.getItem(Names.SHOVEL), new ItemStack(mat.getItem(Names.INGOT), 1), 0);
 
-					if (mat.getItem( Names.PICKAXE) != null)
+					if (mat.getItem(Names.PICKAXE) != null)
 						GameRegistry.addSmelting(mat.getItem(Names.PICKAXE), new ItemStack(mat.getItem(Names.INGOT), 3), 0);
 
-					if (mat.getItem( Names.HOE) != null)
+					if (mat.getItem(Names.HOE) != null)
 						GameRegistry.addSmelting(mat.getItem(Names.HOE), new ItemStack(mat.getItem(Names.INGOT), 2), 0);
 
-					if (mat.getItem( Names.AXE) != null)
-						GameRegistry.addSmelting(mat.getItem( Names.AXE), new ItemStack(mat.getItem(Names.INGOT), 3), 0);
+					if (mat.getItem(Names.AXE) != null)
+						GameRegistry.addSmelting(mat.getItem(Names.AXE), new ItemStack(mat.getItem(Names.INGOT), 3), 0);
 
-					if (mat.getItem( Names.LEGGINGS) != null)
-						GameRegistry.addSmelting(mat.getItem( Names.LEGGINGS), new ItemStack(mat.getItem(Names.INGOT), 7), 0);
+					if (mat.getItem(Names.LEGGINGS) != null)
+						GameRegistry.addSmelting(mat.getItem(Names.LEGGINGS), new ItemStack(mat.getItem(Names.INGOT), 7), 0);
 
-					if (mat.getItem( Names.CHESTPLATE) != null)
-						GameRegistry.addSmelting(mat.getItem( Names.CHESTPLATE), new ItemStack(mat.getItem(Names.INGOT), 8), 0);
+					if (mat.getItem(Names.CHESTPLATE) != null)
+						GameRegistry.addSmelting(mat.getItem(Names.CHESTPLATE), new ItemStack(mat.getItem(Names.INGOT), 8), 0);
 
 				} else if (Options.furnace1112()) {
 					if (mat.getItem(Names.BOOTS) != null)
@@ -235,7 +235,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 		if (Options.materialEnabled.get(MaterialNames.STEEL)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STEEL);
-			OreDictionary.registerOre(Oredicts.SPROCKET, material.getItem( Names.GEAR ));
+			OreDictionary.registerOre(Oredicts.SPROCKET, material.getItem(Names.GEAR));
 
 			// addAlloyRecipe(material, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, "Carbon");
 

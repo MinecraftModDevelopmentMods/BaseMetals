@@ -12,6 +12,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 class HorseArmorTypeTransformer implements ITransformer {
 
 	private static final String HORSE_INTERFACE = "com/mcmoddev/lib/common/item/IHorseArmor";
+
 	@Override
 	public String getTarget() {
 		return "net.minecraft.entity.passive.HorseArmorType";

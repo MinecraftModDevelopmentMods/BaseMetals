@@ -82,8 +82,7 @@ public class ItemMMDShovel extends ItemSpade implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0)
-				&& ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 

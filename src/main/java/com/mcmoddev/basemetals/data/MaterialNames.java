@@ -36,5 +36,5 @@ public class MaterialNames {
 	public static final String STONE = "stone";
 	public static final String TIN = "tin";
 	public static final String WOOD = "wood";
-	public static final String ZINC = "zinc";	
+	public static final String ZINC = "zinc";
 }

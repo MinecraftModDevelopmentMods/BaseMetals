@@ -11,7 +11,7 @@ public class BlockMMDLadder extends BlockLadder implements IMMDObject {
 	final MMDMaterial material;
 
 	public BlockMMDLadder(MMDMaterial material) {
-        this.setSoundType(SoundType.METAL);
+		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();

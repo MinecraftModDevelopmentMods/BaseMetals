@@ -15,17 +15,18 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * TiC Plugin, redesigned
+ * 
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  *
  */
 public class TinkersConstructBase implements IIntegration {
-	
+
 	public static final String PLUGIN_MODID = "tconstruct";
 
 	private static boolean initDone = false;
 
 	protected static final TinkersConstructRegistry registry = TinkersConstructRegistry.getInstance();
-	
+
 	@Override
 	public void init() {
 		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("tinkersconstruct")) {
@@ -34,7 +35,7 @@ public class TinkersConstructBase implements IIntegration {
 
 		initDone = true;
 	}
-	
+
 	/**
 	 * Variant of fluid registration to allow for late registration of specific
 	 * materials that have a different amount of fluid per block than normal.
@@ -65,11 +66,11 @@ public class TinkersConstructBase implements IIntegration {
 	protected static void registerFluid(MMDMaterial base, int amountPer) {
 		registry.registerFluid(base, amountPer);
 	}
-	
+
 	protected static void registerCasting(MMDMaterial base, int amountPer) {
 		registry.registerBasin(base.getBlock(Names.BLOCK), base.getFluid(), amountPer * 9);
 		registry.registerCasting(base.getItem(Names.INGOT), base.getFluid(), amountPer);
-		registry.registerCasting(base.getItem(Names.NUGGET), base.getFluid(), amountPer/9 );
+		registry.registerCasting(base.getItem(Names.NUGGET), base.getFluid(), amountPer / 9);
 	}
 
 	/**
@@ -99,10 +100,10 @@ public class TinkersConstructBase implements IIntegration {
 	 *            If this can be casted
 	 * @return a handle for potential, further manipulation of the material
 	 */
-	protected static TCMaterial registerMaterial(MMDMaterial material, boolean craftable, boolean castable ) {
+	protected static TCMaterial registerMaterial(MMDMaterial material, boolean craftable, boolean castable) {
 		return registry.getMaterial(material.getName(), material).setCraftable(craftable).setCastable(castable).setToolForge(true);
 	}
-	
+
 	/**
 	 * Creates a Tinkers Construct
 	 * {@link slimeknights.tconstruct.library.materials.Material}

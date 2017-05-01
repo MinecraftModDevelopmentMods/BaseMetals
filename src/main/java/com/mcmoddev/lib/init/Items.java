@@ -136,8 +136,11 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of these items
-	 * @param tab TabContainer covering the various CreativeTabs items might be on
+	 * @param material
+	 *            The material base of these items
+	 * @param tab
+	 *            TabContainer covering the various CreativeTabs items might be
+	 *            on
 	 */
 	protected static void createItemsBasic(MMDMaterial material, TabContainer tab) {
 		createBlend(material, tab.itemsTab);
@@ -150,8 +153,11 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of these items
-	 * @param tab TabContainer covering the various CreativeTabs items might be on
+	 * @param material
+	 *            The material base of these items
+	 * @param tab
+	 *            TabContainer covering the various CreativeTabs items might be
+	 *            on
 	 */
 	protected static void createItemsFull(MMDMaterial material, TabContainer tab) {
 		createArrow(material, tab.toolsTab);
@@ -186,8 +192,11 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of these items
-	 * @param tab TabContainer covering the various CreativeTabs items might be on
+	 * @param material
+	 *            The material base of these items
+	 * @param tab
+	 *            TabContainer covering the various CreativeTabs items might be
+	 *            on
 	 */
 	protected static void createItemsModSupport(MMDMaterial material, TabContainer tab) {
 		if (Options.enableModderSupportThings()) {
@@ -201,8 +210,11 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of these items
-	 * @param tab TabContainer covering the various CreativeTabs items might be on
+	 * @param material
+	 *            The material base of these items
+	 * @param tab
+	 *            TabContainer covering the various CreativeTabs items might be
+	 *            on
 	 */
 	protected static void createItemsModIC2(MMDMaterial material, TabContainer tab) {
 		if (material.hasOre()) {
@@ -213,8 +225,11 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of these items
-	 * @param tab TabContainer covering the various CreativeTabs items might be on
+	 * @param material
+	 *            The material base of these items
+	 * @param tab
+	 *            TabContainer covering the various CreativeTabs items might be
+	 *            on
 	 */
 	protected static void createItemsModMekanism(MMDMaterial material, TabContainer tab) {
 		if (material.hasOre()) {
@@ -227,10 +242,14 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param item The item to add
-	 * @param name Name of the item
-	 * @param material Material it is made from
-	 * @param tab which creative tab it is in
+	 * @param item
+	 *            The item to add
+	 * @param name
+	 *            Name of the item
+	 * @param material
+	 *            Material it is made from
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item that was added
 	 */
 	protected static Item addItem(Item item, String name, MMDMaterial material, CreativeTabs tab) {
@@ -265,15 +284,15 @@ public abstract class Items {
 		}
 		return material.getItem(name);
 	}
-	
+
 	private static Item createItem(MMDMaterial material, String name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
 		if (material == null) {
 			return null;
 		}
-		
+
 		FMLLog.severe("enabled: %s :: extra: %s", enabled, extra);
-		
-		if( enabled && extra ) {
+
+		if (enabled && extra) {
 			Constructor<?> ctor = null;
 			Item inst = null;
 			try {
@@ -287,26 +306,26 @@ public abstract class Items {
 				FMLLog.severe(ex.toString());
 				return null;
 			}
-			
+
 			try {
-				inst = (Item)ctor.newInstance(material);
-			} catch (IllegalAccessException ex ) { 
+				inst = (Item) ctor.newInstance(material);
+			} catch (IllegalAccessException ex) {
 				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
 				FMLLog.severe(ex.toString());
 				return null;
-			} catch (IllegalArgumentException ex ) { 
+			} catch (IllegalArgumentException ex) {
 				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
 				FMLLog.severe(ex.toString());
 				return null;
-			} catch (InstantiationException ex ) { 
+			} catch (InstantiationException ex) {
 				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
 				FMLLog.severe(ex.toString());
 				return null;
-			} catch (InvocationTargetException ex ) { 
+			} catch (InvocationTargetException ex) {
 				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
 				FMLLog.severe(ex.toString());
 				return null;
-			} catch (ExceptionInInitializerError ex ) { 
+			} catch (ExceptionInInitializerError ex) {
 				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
 				FMLLog.severe(ex.toString());
 				return null;
@@ -315,7 +334,7 @@ public abstract class Items {
 				FMLLog.severe(ex.toString());
 				return null;
 			}
-			
+
 			if (inst != null) {
 				addItem(inst, name, material, tab);
 				material.addNewItem(name, inst);
@@ -324,14 +343,14 @@ public abstract class Items {
 		}
 		return null;
 	}
-	
+
 	private static Item createArmorItem(MMDMaterial material, Names name, CreativeTabs tab) {
-		if( !( Options.thingEnabled.get("Armor") && !material.hasItem(name) ) ) {
+		if (!(Options.thingEnabled.get("Armor") && !material.hasItem(name))) {
 			return null;
 		}
-		
+
 		Item item = null;
-		switch(name) {
+		switch (name) {
 		case HELMET:
 			item = ItemMMDArmor.createHelmet(material);
 			break;
@@ -350,13 +369,16 @@ public abstract class Items {
 		if (item == null) {
 			return null;
 		}
-		addItem( item, name.toString(), material, tab );
+		addItem(item, name.toString(), material, tab);
 		return item;
 	}
+
 	/**
 	 * 
-	 * @param material The material base of this crystal
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this crystal
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createCrystal(MMDMaterial material, CreativeTabs tab) {
@@ -367,8 +389,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this gem
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this gem
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createGem(MMDMaterial material, CreativeTabs tab) {
@@ -379,8 +403,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this ingot
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this ingot
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createIngot(MMDMaterial material, CreativeTabs tab) {
@@ -391,8 +417,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this nugget
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this nugget
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createNugget(MMDMaterial material, CreativeTabs tab) {
@@ -403,26 +431,30 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this powder
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this powder
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createPowder(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.POWDER, ItemMMDPowder.class, Options.thingEnabled.get("Basics"), true, tab);
 		Oredicts.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
 		return item;
-		
+
 	}
 
 	/**
 	 * 
-	 * @param material The material base of this blend
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this blend
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createBlend(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.BLEND, ItemMMDBlend.class, Options.thingEnabled.get("Basics"), material.hasBlend(), tab);
-		if( item == null && material.hasBlend() ) {
+		if (item == null && material.hasBlend()) {
 			FMLLog.severe("Unable to create Blend for %s", material);
 		}
 		Oredicts.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
@@ -431,8 +463,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this rod
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this rod
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createRod(MMDMaterial material, CreativeTabs tab) {
@@ -445,8 +479,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this gear
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this gear
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createGear(MMDMaterial material, CreativeTabs tab) {
@@ -458,8 +494,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this axe
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this axe
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createAxe(MMDMaterial material, CreativeTabs tab) {
@@ -468,18 +506,22 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this crackhammer
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this crackhammer
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createCrackhammer(MMDMaterial material, CreativeTabs tab) {
 		return createItem(material, Names.CRACKHAMMER, ItemMMDCrackHammer.class, Options.thingEnabled.get("CrackHammer"), true, tab);
 	}
-	
+
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createHoe(MMDMaterial material, CreativeTabs tab) {
@@ -488,8 +530,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createPickaxe(MMDMaterial material, CreativeTabs tab) {
@@ -498,8 +542,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createShovel(MMDMaterial material, CreativeTabs tab) {
@@ -508,8 +554,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createSword(MMDMaterial material, CreativeTabs tab) {
@@ -518,8 +566,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createHelmet(MMDMaterial material, CreativeTabs tab) {
@@ -528,8 +578,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createChestplate(MMDMaterial material, CreativeTabs tab) {
@@ -538,8 +590,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createLeggings(MMDMaterial material, CreativeTabs tab) {
@@ -548,8 +602,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createBoots(MMDMaterial material, CreativeTabs tab) {
@@ -558,8 +614,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createHorseArmor(MMDMaterial material, CreativeTabs tab) {
@@ -568,8 +626,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createArrow(MMDMaterial material, CreativeTabs tab) {
@@ -580,8 +640,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createBolt(MMDMaterial material, CreativeTabs tab) {
@@ -593,8 +655,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createBow(MMDMaterial material, CreativeTabs tab) {
@@ -603,8 +667,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createCrossbow(MMDMaterial material, CreativeTabs tab) {
@@ -613,8 +679,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createShears(MMDMaterial material, CreativeTabs tab) {
@@ -623,8 +691,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createSmallBlend(MMDMaterial material, CreativeTabs tab) {
@@ -636,8 +706,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createFishingRod(MMDMaterial material, CreativeTabs tab) {
@@ -646,8 +718,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createSmallPowder(MMDMaterial material, CreativeTabs tab) {
@@ -658,8 +732,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createShield(MMDMaterial material, CreativeTabs tab) {
@@ -670,20 +746,24 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createMekCrystal(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.CRYSTAL, GenericMMDItem.class, Options.modEnabled.get("mekanism"), material.getType()!=MaterialType.CRYSTAL, tab);
+		Item item = createItem(material, Names.CRYSTAL, GenericMMDItem.class, Options.modEnabled.get("mekanism"), material.getType() != MaterialType.CRYSTAL, tab);
 		Oredicts.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
 		return item;
 	}
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createMekShard(MMDMaterial material, CreativeTabs tab) {
@@ -694,8 +774,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createMekClump(MMDMaterial material, CreativeTabs tab) {
@@ -706,8 +788,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createMekDirtyPowder(MMDMaterial material, CreativeTabs tab) {
@@ -719,8 +803,10 @@ public abstract class Items {
 	// TODO: Possibly make this a Block, double of the normal plate.
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createCasing(MMDMaterial material, CreativeTabs tab) {
@@ -732,8 +818,10 @@ public abstract class Items {
 	// TODO: Possibly make this a Block, double of the normal plate.
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createDensePlate(MMDMaterial material, CreativeTabs tab) {
@@ -744,8 +832,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createCrushed(MMDMaterial material, CreativeTabs tab) {
@@ -756,8 +846,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createCrushedPurified(MMDMaterial material, CreativeTabs tab) {
@@ -768,8 +860,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createSlab(MMDMaterial material, CreativeTabs tab) {
@@ -780,8 +874,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createAnvil(MMDMaterial material, CreativeTabs tab) {
@@ -790,8 +886,10 @@ public abstract class Items {
 
 	/**
 	 * 
-	 * @param material The material base of this item
-	 * @param tab which creative tab it is in
+	 * @param material
+	 *            The material base of this item
+	 * @param tab
+	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
 	protected static Item createDoor(MMDMaterial material, CreativeTabs tab) {

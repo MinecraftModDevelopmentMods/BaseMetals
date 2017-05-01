@@ -18,13 +18,13 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
 	private static boolean initDone = false;
 
-	private static final int blocksTabId  = addTab("blocks", true );
-	private static final int itemsTabId = addTab("items", true );
-	private static final int toolsTabId = addTab("tools", true );
+	private static final int blocksTabId = addTab("blocks", true);
+	private static final int itemsTabId = addTab("items", true);
+	private static final int toolsTabId = addTab("tools", true);
 	public static final MMDCreativeTab blocksTab = getTab(blocksTabId);
 	public static final MMDCreativeTab itemsTab = getTab(itemsTabId);
-	public static final MMDCreativeTab toolsTab = getTab(toolsTabId); 
-	
+	public static final MMDCreativeTab toolsTab = getTab(toolsTabId);
+
 	private ItemGroups() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -39,7 +39,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
 		initDone = true;
 	}
-	
+
 	public static void setupIcons() {
 		Block temp;
 		Item blocksTabIconItem;
@@ -51,20 +51,20 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 			temp = net.minecraft.init.Blocks.IRON_BLOCK;
 		}
 		blocksTabIconItem = Item.getItemFromBlock(temp);
-		
+
 		if (Options.thingEnabled.get("Gear")) {
 			itemsTabIconItem = Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.GEAR);
 		} else {
 			itemsTabIconItem = net.minecraft.init.Items.STICK;
 		}
-		
+
 		if (Options.thingEnabled.get("BasicTools")) {
-			toolsTabIconItem = Materials.getMaterialByName(MaterialNames.DIAMOND).getItem(Names.SWORD);	
+			toolsTabIconItem = Materials.getMaterialByName(MaterialNames.DIAMOND).getItem(Names.SWORD);
 		} else {
 			toolsTabIconItem = net.minecraft.init.Items.DIAMOND_SWORD;
 		}
-		
-		blocksTab.setTabIconItem( blocksTabIconItem );
+
+		blocksTab.setTabIconItem(blocksTabIconItem);
 		itemsTab.setTabIconItem(itemsTabIconItem);
 		toolsTab.setTabIconItem(toolsTabIconItem);
 	}

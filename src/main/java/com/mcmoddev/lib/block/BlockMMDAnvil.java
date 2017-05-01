@@ -11,7 +11,7 @@ public class BlockMMDAnvil extends BlockAnvil implements IMMDObject {
 	final MMDMaterial material;
 
 	public BlockMMDAnvil(MMDMaterial material) {
-        this.setSoundType(SoundType.METAL);
+		this.setSoundType(SoundType.METAL);
 		this.material = material;
 		this.blockHardness = material.getBlockHardness();
 		this.blockResistance = material.getBlastResistance();

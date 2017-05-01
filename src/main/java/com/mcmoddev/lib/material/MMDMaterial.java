@@ -32,12 +32,12 @@ public class MMDMaterial {
 	 * Storage for all "Item" type forms for this material
 	 */
 	private Map<String, Item> items = new TreeMap<>();
-	
+
 	/**
 	 * Storage for all "Block" type forms for this material
 	 */
 	private Map<String, Block> blocks = new TreeMap<>();
-	
+
 	/**
 	 * If this material has a fluid, it is stored here
 	 */
@@ -46,10 +46,11 @@ public class MMDMaterial {
 	private BlockFluidClassic fluidBlock;
 
 	/*
-	 * Material Statistics - see com.mcmoddev.lib.data.MaterialStats for current known and used ones
+	 * Material Statistics - see com.mcmoddev.lib.data.MaterialStats for current
+	 * known and used ones
 	 */
 	private Map<MaterialStats, Float> stats = new TreeMap<>();
-	
+
 	/*
 	 * Various material flags
 	 */
@@ -65,15 +66,16 @@ public class MMDMaterial {
 	private final boolean isRare;
 
 	/**
-	 * Whether or not this material has a blend that can be smelted to produce it
+	 * Whether or not this material has a blend that can be smelted to produce
+	 * it
 	 */
 	private final boolean hasBlend;
-	
+
 	/**
 	 * Is this block meant to have an Ore ?
 	 */
 	private final boolean hasOre;
-	
+
 	/*
 	 * Miscelaneous Material Information
 	 */
@@ -121,8 +123,8 @@ public class MMDMaterial {
 	 * @param strength
 	 *            durability on a scale from 0 to 10 (or more). For reference,
 	 *            Leather is 2.5, Gold is 3, Wood is 2, Stone is 4, Iron is 8,
-	 *            Diamond is 10. Used for item durability calculations
-	 *            and blast resistance
+	 *            Diamond is 10. Used for item durability calculations and blast
+	 *            resistance
 	 * @param magic
 	 *            Scale from 0 to 10 (or more) on how magical the material is.
 	 *            For reference, Stone is 2, Iron is 4.5, Diamond is 4, Wood is
@@ -141,9 +143,9 @@ public class MMDMaterial {
 		this.stats.put(MaterialStats.HARDNESS, hardness);
 		this.stats.put(MaterialStats.STRENGTH, strength);
 		this.stats.put(MaterialStats.MAGICAFFINITY, magic);
-		this.stats.put(MaterialStats.BLASTRESISTANCE, 2.5f * strength );
-		this.stats.put(MaterialStats.BASEDAMAGE, this.round(0.25f * hardness, 1) );
-		
+		this.stats.put(MaterialStats.BLASTRESISTANCE, 2.5f * strength);
+		this.stats.put(MaterialStats.BASEDAMAGE, this.round(0.25f * hardness, 1));
+
 		this.tintColor = tintColor;
 		this.identifier = name;
 		this.titleName = StringUtils.capitalize(name);
@@ -357,7 +359,8 @@ public class MMDMaterial {
 	}
 
 	public String getEnumName() {
-;		return this.enumName;
+		;
+		return this.enumName;
 	}
 
 	/**
@@ -394,172 +397,193 @@ public class MMDMaterial {
 		this.stats.put(MaterialStats.BASEDAMAGE, damage);
 		return this;
 	}
-	
+
 	/**
 	 * Adds a new item to the list of known items made from this material
+	 * 
 	 * @param name
-	 * 	    The name of the item. Existing names can be found in com.mcmoddev.lib.data.Names
+	 *            The name of the item. Existing names can be found in
+	 *            com.mcmoddev.lib.data.Names
 	 * @param item
-	 *      The item to add
+	 *            The item to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
-	public MMDMaterial addNewItem( Names name, Item item ) {
-		addNewItem( name.toString(), item );
+	public MMDMaterial addNewItem(Names name, Item item) {
+		addNewItem(name.toString(), item);
 		return this;
 	}
+
 	/**
 	 * Adds a new item to the list of known items made from this material
+	 * 
 	 * @param name
-	 * 	    The name of the item. Existing names can be found in com.mcmoddev.lib.data.Names
+	 *            The name of the item. Existing names can be found in
+	 *            com.mcmoddev.lib.data.Names
 	 * @param item
-	 *      The item to add
+	 *            The item to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
-	public MMDMaterial addNewItem( String name, Item item ) {
-		if( this.items.containsKey(name) ) {
+	public MMDMaterial addNewItem(String name, Item item) {
+		if (this.items.containsKey(name)) {
 			FMLLog.warning("Tried adding item %s to a material that already has it, don't do that!", name);
 			return this;
 		}
 		this.items.put(name, item);
 		return this;
 	}
-	
+
 	/**
 	 * Adds a new block to the list of known items made from this material
+	 * 
 	 * @param name
-	 * 	    The name of the block. Existing names can be found in com.mcmoddev.lib.data.Names
+	 *            The name of the block. Existing names can be found in
+	 *            com.mcmoddev.lib.data.Names
 	 * @param block
-	 *      The block to add
+	 *            The block to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
-	public MMDMaterial addNewBlock( Names name, Block block ) {
-		addNewBlock( name.toString(), block);
+	public MMDMaterial addNewBlock(Names name, Block block) {
+		addNewBlock(name.toString(), block);
 		return this;
 	}
 
 	/**
 	 * Adds a new block to the list of known items made from this material
+	 * 
 	 * @param name
-	 * 	    The name of the block. Existing names can be found in com.mcmoddev.lib.data.Names
+	 *            The name of the block. Existing names can be found in
+	 *            com.mcmoddev.lib.data.Names
 	 * @param block
-	 *      The block to add
+	 *            The block to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
-	public MMDMaterial addNewBlock( String name, Block block ) {
-		if( this.blocks.containsKey(name) ) {
+	public MMDMaterial addNewBlock(String name, Block block) {
+		if (this.blocks.containsKey(name)) {
 			FMLLog.warning("Tried adding block %s to a material that already has it, don't do that!", name);
 			return this;
 		}
 		this.blocks.put(name, block);
 		return this;
 	}
-	
+
 	/**
-	 * Get the item with name 'name' if it exists, null is returned if the item does not exist
+	 * Get the item with name 'name' if it exists, null is returned if the item
+	 * does not exist
+	 * 
 	 * @param name
-	 *      Name of the item to retrieve
-	 * @return the Item registered with the material, null if one of that name was not registered
+	 *            Name of the item to retrieve
+	 * @return the Item registered with the material, null if one of that name
+	 *         was not registered
 	 */
-	public Item getItem( Names name ) {
+	public Item getItem(Names name) {
 		return getItem(name.toString());
 	}
-	
+
 	/**
-	 * Get the item with name 'name' if it exists, null is returned if the item does not exist
+	 * Get the item with name 'name' if it exists, null is returned if the item
+	 * does not exist
+	 * 
 	 * @param name
-	 *      Name of the item to retrieve
-	 * @return the Item registered with the material, null if one of that name was not registered
+	 *            Name of the item to retrieve
+	 * @return the Item registered with the material, null if one of that name
+	 *         was not registered
 	 */
-	public Item getItem( String name ) {
-		if( this.items.containsKey(name) ) {
+	public Item getItem(String name) {
+		if (this.items.containsKey(name)) {
 			return this.items.get(name);
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Get the block with name 'name' if it exists, null is returned if the block does not exist
+	 * Get the block with name 'name' if it exists, null is returned if the
+	 * block does not exist
+	 * 
 	 * @param name
-	 *      Name of the item to retrieve
-	 * @return the Block registered with the material, null if one of that name was not registered
+	 *            Name of the item to retrieve
+	 * @return the Block registered with the material, null if one of that name
+	 *         was not registered
 	 */
-	public Block getBlock( Names name ) {
-		return this.getBlock( name.toString() );
+	public Block getBlock(Names name) {
+		return this.getBlock(name.toString());
 	}
-	
+
 	/**
-	 * Get the block with name 'name' if it exists, null is returned if the block does not exist
+	 * Get the block with name 'name' if it exists, null is returned if the
+	 * block does not exist
+	 * 
 	 * @param name
-	 *      Name of the item to retrieve
-	 * @return the Block registered with the material, null if one of that name was not registered
+	 *            Name of the item to retrieve
+	 * @return the Block registered with the material, null if one of that name
+	 *         was not registered
 	 */
-	public Block getBlock( String name ) {
-		if( this.blocks.containsKey(name) ) {
+	public Block getBlock(String name) {
+		if (this.blocks.containsKey(name)) {
 			return this.blocks.get(name);
 		}
 		return null;
 	}
-	
+
 	public boolean hasOre() {
 		return this.hasOre;
 	}
-	
+
 	public boolean hasBlend() {
 		return this.hasBlend;
 	}
-	
+
 	public boolean isRare() {
 		return this.isRare;
 	}
-	
+
 	public boolean regenerates() {
 		return this.regenerates;
 	}
-	
+
 	public boolean hasItem(Names name) {
 		return this.hasItem(name.toString());
 	}
-	
+
 	public boolean hasItem(String name) {
 		return this.items.containsKey(name);
 	}
-	
+
 	public boolean hasBlock(String name) {
 		return this.blocks.containsKey(name);
 	}
-	
+
 	public boolean hasBlock(Names name) {
 		return this.hasBlock(name.toString());
 	}
-	
+
 	public float getStat(MaterialStats name) {
-		if( this.stats.containsKey(name) ) {
+		if (this.stats.containsKey(name)) {
 			return this.stats.get(name).floatValue();
 		}
 		return 0F;
 	}
-	
+
 	public void setStat(MaterialStats name, float value) {
 		this.stats.put(name, value);
 	}
-	
+
 	public Fluid getFluid() {
 		return this.fluid;
 	}
-	
+
 	public void setFluid(Fluid f) {
 		this.fluid = f;
 	}
-	
+
 	public BlockFluidClassic getFluidBlock() {
 		return this.fluidBlock;
 	}
-	
+
 	public void setFluidBlock(BlockFluidClassic b) {
 		this.fluidBlock = b;
 	}
-	
-	public void setRegenerates( boolean regen ) {
+
+	public void setRegenerates(boolean regen) {
 		this.regenerates = regen;
 	}
 }
