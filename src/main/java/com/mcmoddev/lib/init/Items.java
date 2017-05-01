@@ -249,7 +249,7 @@ public abstract class Items {
 
 	private static Item createItem(MMDMaterial material, Names name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
 		if (enabled && extra && !material.hasItem(name)) {
-			material.addNewItem(name, createItem(material, name.toString(), clazz, enabled, extra, tab));
+			return createItem(material, name.toString(), clazz, enabled, extra, tab);
 		}
 		return material.getItem(name);
 	}
@@ -259,25 +259,55 @@ public abstract class Items {
 			return null;
 		}
 		
+		FMLLog.severe("enabled: %s :: extra: %s", enabled, extra);
+		
 		if( enabled && extra ) {
 			Constructor<?> ctor = null;
 			Item inst = null;
 			try {
 				ctor = clazz.getConstructor(material.getClass());
-			} catch (Exception ex) {
-				FMLLog.getLogger().fatal("Class for Item named %s does not have an accessible constructor or another exception occurred", name);
-				FMLLog.getLogger().fatal(ex.toString());
+			} catch (NoSuchMethodException ex) {
+				FMLLog.severe("Class for Item named %s does not have the correct constructor", name);
+				FMLLog.severe(ex.toString());
+				return null;
+			} catch (SecurityException ex) {
+				FMLLog.severe("Class for Item named %s does not have an accessible constructor", name);
+				FMLLog.severe(ex.toString());
 				return null;
 			}
 			
 			try {
 				inst = (Item)ctor.newInstance(material);
+			} catch (IllegalAccessException ex ) { 
+				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
+				FMLLog.severe(ex.toString());
+				return null;
+			} catch (IllegalArgumentException ex ) { 
+				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
+				FMLLog.severe(ex.toString());
+				return null;
+			} catch (InstantiationException ex ) { 
+				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
+				FMLLog.severe(ex.toString());
+				return null;
+			} catch (InvocationTargetException ex ) { 
+				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
+				FMLLog.severe(ex.toString());
+				return null;
+			} catch (ExceptionInInitializerError ex ) { 
+				FMLLog.severe("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName());
+				FMLLog.severe(ex.toString());
+				return null;
 			} catch (Exception ex) {
-				FMLLog.getLogger().fatal("Unable to create Item named %s for material %s", name, material.getCapitalizedName());
+				FMLLog.severe("Unable to create Item named %s for material %s", name, material.getCapitalizedName());
+				FMLLog.severe(ex.toString());
+				return null;
 			}
 			
 			if (inst != null) {
-				return addItem(inst, name, material, tab);
+				addItem(inst, name, material, tab);
+				material.addNewItem(name, inst);
+				return inst;
 			}
 		}
 		return null;
@@ -380,9 +410,11 @@ public abstract class Items {
 	 */
 	protected static Item createBlend(MMDMaterial material, CreativeTabs tab) {
 		final Item item = createItem(material, Names.BLEND, ItemMMDBlend.class, Options.enableBasics, material.hasBlend(), tab);
+		if( item == null && material.hasBlend() ) {
+			FMLLog.severe("Unable to create Blend for %s", material);
+		}
 		Oredicts.registerOre(Oredicts.DUST + material.getCapitalizedName(), item);
 		return item;
-		
 	}
 
 	/**

@@ -254,7 +254,10 @@ public abstract class Recipes {
 
 			if (material.getItem(Names.GEAR) != null) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.GEAR), Config.Options.gearQuantity), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
-				GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)), new ItemStack(material.getItem(Names.INGOT), Config.Options.gearQuantity), 0); // you lose the rod
+				if (material.hasItem(Names.INGOT)) {
+					// if there is no ingot, no cheese
+					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)), new ItemStack(material.getItem(Names.INGOT), Config.Options.gearQuantity), 0); // you lose the rod
+				}
 			}
 		}
 	}

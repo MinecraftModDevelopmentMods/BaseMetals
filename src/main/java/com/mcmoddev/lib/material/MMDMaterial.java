@@ -417,7 +417,7 @@ public class MMDMaterial {
 	 */
 	public MMDMaterial addNewItem( String name, Item item ) {
 		if( this.items.containsKey(name) ) {
-			FMLLog.getLogger().warn("Tried adding item %s to a material that already has it, don't do that!", name);
+			FMLLog.warning("Tried adding item %s to a material that already has it, don't do that!", name);
 			return this;
 		}
 		this.items.put(name, item);
@@ -447,7 +447,7 @@ public class MMDMaterial {
 	 */
 	public MMDMaterial addNewBlock( String name, Block block ) {
 		if( this.blocks.containsKey(name) ) {
-			FMLLog.getLogger().warn("Tried adding block %s to a material that already has it, don't do that!", name);
+			FMLLog.warning("Tried adding block %s to a material that already has it, don't do that!", name);
 			return this;
 		}
 		this.blocks.put(name, block);
