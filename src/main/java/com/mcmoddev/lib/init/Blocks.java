@@ -267,8 +267,10 @@ public abstract class Blocks {
 		if ((Options.enableBasics) && (!material.hasBlock(Names.BLOCK))) {
 			final Block block = addBlock(new BlockMMDBlock(material, glow, true), Names.BLOCK, material, tab);
 			Oredicts.registerOre(Oredicts.BLOCK + material.getCapitalizedName(), block);
+			material.addNewBlock(Names.BLOCK, block);
+			return block;
 		}
-		return material.getBlock(Names.BLOCK);
+		return null;
 	}
 
 	/**

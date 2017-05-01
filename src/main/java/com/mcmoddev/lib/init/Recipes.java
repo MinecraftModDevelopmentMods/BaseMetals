@@ -352,7 +352,7 @@ public abstract class Recipes {
 		// NOTE: smelting XP is based on output item, not input item
 		final float oreSmeltXP = material.getOreSmeltXP();
 		
-		if (material.hasItem(Names.INGOT) && (material.getItem(Names.INGOT) instanceof IMMDObject) ) {
+		if (material.hasItem(Names.INGOT)) {
 			if (material.hasOre()) {
 				GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.ORE)), new ItemStack(material.getItem(Names.INGOT), 1), oreSmeltXP);				
 			} else if (material.hasBlend()) {

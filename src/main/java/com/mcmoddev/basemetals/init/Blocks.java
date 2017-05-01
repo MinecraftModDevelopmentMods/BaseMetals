@@ -1,5 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.block.BlockHumanDetector;
@@ -226,8 +227,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.enableStarSteel) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STARSTEEL);
-
-			createBlocksFull(material, myTabs);
+			
+			createBlocksFull(material, myTabs);			
 			material.getBlock(Names.BLOCK).setLightLevel(0.5f);
 			material.getBlock(Names.PLATE).setLightLevel(0.5f);
 			material.getBlock(Names.ORE).setLightLevel(0.5f);
