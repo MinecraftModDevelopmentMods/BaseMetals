@@ -8,7 +8,6 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -45,7 +44,6 @@ public class BlockMMDBlock extends Block implements IMMDObject {
 		this.fullBlock = true;
 		this.lightOpacity = 255;
 		this.translucent = false;
-		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
