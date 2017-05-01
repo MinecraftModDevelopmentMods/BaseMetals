@@ -1,5 +1,24 @@
 package com.mcmoddev.lib.item;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+import javax.annotation.Nonnull;
+
+import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.items.MMDToolEffects;
+import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Achievements;
+import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.material.IMMDObject;
+import com.mcmoddev.lib.material.MMDMaterial;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,21 +36,6 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
-
-import javax.annotation.Nonnull;
-
-import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.init.Achievements;
-import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.basemetals.items.MMDToolEffects;
-import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.material.IMMDObject;
-import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
  * Armor

@@ -1,6 +1,12 @@
 package com.mcmoddev.lib.init;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
@@ -9,7 +15,9 @@ import com.mcmoddev.lib.item.ItemMMDCrackHammer;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.entity.passive.EntityVillager.*;
+import net.minecraft.entity.passive.EntityVillager.ITradeList;
+import net.minecraft.entity.passive.EntityVillager.ListEnchantedItemForEmeralds;
+import net.minecraft.entity.passive.EntityVillager.PriceInfo;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemAxe;

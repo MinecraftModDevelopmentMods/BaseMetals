@@ -2,10 +2,10 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkersConstructRegistry;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

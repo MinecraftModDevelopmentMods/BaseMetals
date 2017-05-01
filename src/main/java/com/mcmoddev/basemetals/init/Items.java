@@ -7,7 +7,6 @@ import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
-import com.mcmoddev.basemetals.init.ItemGroups;
 
 import net.minecraft.item.ItemStack;
 

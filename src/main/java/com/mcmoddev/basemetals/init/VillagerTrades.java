@@ -1,18 +1,22 @@
 package com.mcmoddev.basemetals.init;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.mcmoddev.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.item.ItemMMDCrackHammer;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.entity.passive.EntityVillager.*;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.common.Loader;
 

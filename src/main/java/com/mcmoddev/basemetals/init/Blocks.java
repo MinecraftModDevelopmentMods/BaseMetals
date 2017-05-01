@@ -5,10 +5,9 @@ import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
-import com.mcmoddev.lib.util.TabContainer;
-import com.mcmoddev.basemetals.init.ItemGroups;
 
 /**
  * This class initializes all blocks in Base Metals.

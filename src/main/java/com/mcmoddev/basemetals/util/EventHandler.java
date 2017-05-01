@@ -2,8 +2,8 @@ package com.mcmoddev.basemetals.util;
 
 import java.util.List;
 
-import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.material.IMMDObject;

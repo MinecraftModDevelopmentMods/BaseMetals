@@ -1,15 +1,15 @@
 package com.mcmoddev.lib.init;
 
+import java.util.Comparator;
+import java.util.List;
+
+import com.mcmoddev.basemetals.init.Items;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Comparator;
-import java.util.List;
-
-import com.mcmoddev.basemetals.init.Items;
 
 /**
  * This class is a MetalMaterial based Wrapper for making a CreativeTab.

@@ -1,7 +1,7 @@
 package com.mcmoddev.lib.item;
 
-import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 

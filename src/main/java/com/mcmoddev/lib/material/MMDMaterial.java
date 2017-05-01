@@ -6,6 +6,9 @@ import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.mcmoddev.lib.data.MaterialStats;
+import com.mcmoddev.lib.data.Names;
+
 import net.minecraft.block.Block;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -14,9 +17,6 @@ import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
-
-import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.data.MaterialStats;
 
 /**
  *

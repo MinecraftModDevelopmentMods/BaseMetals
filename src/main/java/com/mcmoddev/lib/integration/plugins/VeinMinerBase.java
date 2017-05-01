@@ -2,7 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.integration.IIntegration;
 
-import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.Loader;
 import portablejim.veinminer.api.IMCMessage;
 
 /**

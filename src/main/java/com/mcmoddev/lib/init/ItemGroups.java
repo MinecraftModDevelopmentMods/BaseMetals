@@ -1,15 +1,13 @@
 package com.mcmoddev.lib.init;
 
-import net.minecraft.item.*;
-import net.minecraftforge.fml.common.Loader;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.mcmoddev.lib.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * This class initializes all item groups in Base Metals.

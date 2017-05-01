@@ -4,12 +4,12 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.recipe.*;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
-import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;

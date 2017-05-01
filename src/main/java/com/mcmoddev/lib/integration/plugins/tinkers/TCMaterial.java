@@ -1,12 +1,16 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
-
-import java.util.*;
 
 /**
  * Created by Daniel Hazelton on 2/21/2017.

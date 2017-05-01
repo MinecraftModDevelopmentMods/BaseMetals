@@ -1,8 +1,8 @@
 package com.mcmoddev.lib.block;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 

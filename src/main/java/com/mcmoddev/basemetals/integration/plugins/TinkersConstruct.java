@@ -1,19 +1,18 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
+import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
-import com.mcmoddev.basemetals.data.MaterialNames;
 
 import net.minecraft.item.Item;
-
-import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 
 /**
  *
