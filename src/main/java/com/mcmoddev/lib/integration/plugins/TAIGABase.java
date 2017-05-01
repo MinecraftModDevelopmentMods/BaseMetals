@@ -11,8 +11,8 @@ public class TAIGABase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTAIGA) {
-			if (!com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("taiga")) {
+			if (!com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("tinkersconstruct")) {
 				BaseMetals.logger.error("TAIGA Plugin requires the TinkersConstruct Plugin");
 			}
 			return;

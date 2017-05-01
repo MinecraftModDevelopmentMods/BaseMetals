@@ -11,7 +11,7 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableIC2) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("ic2")) {
 			return;
 		}
 

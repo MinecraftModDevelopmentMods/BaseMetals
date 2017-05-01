@@ -11,7 +11,7 @@ public class Thaumcraft extends com.mcmoddev.lib.integration.plugins.ThaumcraftB
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableThaumcraft) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("thaumcraft")) {
 			return;
 		}
 

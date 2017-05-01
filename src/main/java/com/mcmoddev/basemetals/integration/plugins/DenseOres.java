@@ -16,7 +16,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableDenseOres) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("denseores")) {
 			return;
 		}
 

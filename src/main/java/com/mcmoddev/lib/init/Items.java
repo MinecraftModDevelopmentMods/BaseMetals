@@ -663,7 +663,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createMekCrystal(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.CRYSTAL, GenericMMDItem.class, Options.enableMekanism, material.getType()!=MaterialType.CRYSTAL, tab);
+		Item item = createItem(material, Names.CRYSTAL, GenericMMDItem.class, Options.modEnabled.get("mekanism"), material.getType()!=MaterialType.CRYSTAL, tab);
 		Oredicts.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -675,7 +675,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createMekShard(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.SHARD, GenericMMDItem.class, Options.enableMekanism, true, tab);
+		Item item = createItem(material, Names.SHARD, GenericMMDItem.class, Options.modEnabled.get("mekanism"), true, tab);
 		Oredicts.registerOre(Oredicts.SHARD + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -687,7 +687,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createMekClump(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.CLUMP, GenericMMDItem.class, Options.enableMekanism, true, tab);
+		Item item = createItem(material, Names.CLUMP, GenericMMDItem.class, Options.modEnabled.get("mekanism"), true, tab);
 		Oredicts.registerOre(Oredicts.CLUMP + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -699,7 +699,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createMekDirtyPowder(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.POWDERDIRTY, GenericMMDItem.class, Options.enableMekanism, true, tab);
+		Item item = createItem(material, Names.POWDERDIRTY, GenericMMDItem.class, Options.modEnabled.get("mekanism"), true, tab);
 		Oredicts.registerOre(Oredicts.DUST_DIRTY + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -712,7 +712,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createCasing(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.CASING, GenericMMDItem.class, Options.enableIC2, true, tab);
+		Item item = createItem(material, Names.CASING, GenericMMDItem.class, Options.modEnabled.get("ic2"), true, tab);
 		Oredicts.registerOre(Oredicts.CASING + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -725,7 +725,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createDensePlate(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.DENSEPLATE, GenericMMDItem.class, Options.enableIC2, true, tab);
+		Item item = createItem(material, Names.DENSEPLATE, GenericMMDItem.class, Options.modEnabled.get("ic2"), true, tab);
 		Oredicts.registerOre(Oredicts.PLATE_DENSE + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -737,7 +737,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createCrushed(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.CRUSHED, GenericMMDItem.class, Options.enableIC2, true, tab);
+		Item item = createItem(material, Names.CRUSHED, GenericMMDItem.class, Options.modEnabled.get("ic2"), true, tab);
 		Oredicts.registerOre(Oredicts.CRUSHED + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -749,7 +749,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createCrushedPurified(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.CRUSHEDPURIFIED, GenericMMDItem.class, Options.enableIC2, true, tab);
+		Item item = createItem(material, Names.CRUSHEDPURIFIED, GenericMMDItem.class, Options.modEnabled.get("ic2"), true, tab);
 		Oredicts.registerOre(Oredicts.CRUSHED_PURIFIED + material.getCapitalizedName(), item);
 		return item;
 	}

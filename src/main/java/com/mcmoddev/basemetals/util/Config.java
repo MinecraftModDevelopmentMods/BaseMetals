@@ -87,25 +87,25 @@ public class Config {
 				"Upgrade a fully repaired shield to a material at least as hard as the shields current one using a plate of that material in the Anvil");
 
 		// INTEGRATION
-		Options.enableEnderIO = configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
-				"If false, then Base Metals will not try and integrate with Ender IO");
-		Options.enableIC2 = configuration.getBoolean("ic2_integration", INTEGRATION_CAT, true,
-				"If false, then Base Metals will not try and integrate with IC2");
-		Options.enableMekanism = configuration.getBoolean("mekanism_integration", INTEGRATION_CAT, true,
-				"If false, then Base Metals will not try and integrate with Mekanism");
-		Options.enableThaumcraft = configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
-				"If false, then Base Metals will not try and integrate with Thaumcraft");
-		Options.enableTinkersConstruct = configuration.getBoolean("tinkers_construct_integration", INTEGRATION_CAT, true,
-				"If false, then Base Metals will not try and integrate with Tinkers Construct");
-		Options.enableVeinminer = configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
-				"If false, then Base Metals will not try and integrate with VeinMiner");
-		Options.enableTAIGA = configuration.getBoolean("taiga_integration", INTEGRATION_CAT, true,
-				"Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals");
-		Options.enableDenseOres = configuration.getBoolean("denseores", INTEGRATION_CAT, true,
-				"If DenseOres is available, this will allow automatic integration");
-		Options.enableThermalExpansion = configuration.getBoolean("thermal_expansion", INTEGRATION_CAT, true, 
-				"If Thermal Expansion is available, this wil automatically integrate materials with the various machines");
-		
+		Options.modEnabled.put("enderio", configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
+				"If false, then Base Metals will not try and integrate with Ender IO"));
+		Options.modEnabled.put("ic2", configuration.getBoolean("ic2_integration", INTEGRATION_CAT, true,
+				"If false, then Base Metals will not try and integrate with IC2"));
+		Options.modEnabled.put("mekanism", configuration.getBoolean("mekanism_integration", INTEGRATION_CAT, true,
+				"If false, then Base Metals will not try and integrate with Mekanism"));
+		Options.modEnabled.put("thaumcraft", configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
+				"If false, then Base Metals will not try and integrate with Thaumcraft"));
+		Options.modEnabled.put("tinkersconstruct", configuration.getBoolean("tinkers_construct_integration", INTEGRATION_CAT, true,
+				"If false, then Base Metals will not try and integrate with Tinkers Construct"));
+		Options.modEnabled.put("veinminer", configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
+				"If false, then Base Metals will not try and integrate with VeinMiner"));
+		Options.modEnabled.put("taiga", configuration.getBoolean("taiga_integration", INTEGRATION_CAT, true,
+				"Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals"));
+		Options.modEnabled.put("denseores", configuration.getBoolean("denseores", INTEGRATION_CAT, true,
+				"If DenseOres is available, this will allow automatic integration"));
+		Options.modEnabled.put("thermalexpansion", configuration.getBoolean("thermal_expansion", INTEGRATION_CAT, true, 
+				"If Thermal Expansion is available, this wil automatically integrate materials with the various machines"));
+
 		// METALS
 		Options.materialEnabled.put(MaterialNames.ADAMANTINE, configuration.getBoolean("EnableAdamantine", MATERIALS_CAT, true,
 				"Enable Adamantine Items and Materials"));
@@ -334,61 +334,10 @@ public class Config {
 		public static boolean furnace1112 = true; // Overridden by FURNACE_CHEESE
 
 		// INTEGRATION
-		public static boolean enableDenseOres = true;
-		public static boolean enableEnderIO = true;
-		public static boolean enableIC2 = true;
-		public static boolean enableMekanism = true;
-		public static boolean enableThaumcraft = true;
-		public static boolean enableTinkersConstruct = true;
-		public static boolean enableVeinminer = true;
-		public static boolean enableTAIGA = true;
-		public static boolean enableThermalExpansion = true;
-
-		public static Map<String, Boolean> materialEnabled = new HashMap<>();
+		public static Map<String, Boolean> modEnabled = new HashMap<>();
 
 		// MATERIALS
-		/*
-		public static boolean enableAdamantine = true;
-		public static boolean enableAntimony = true;
-		public static boolean enableAquarium = true;
-		public static boolean enableBismuth = true;
-		public static boolean enableBrass = true;
-		public static boolean enableBronze = true;
-		public static boolean enableCharcoal = true;
-		public static boolean enableCoal = true;
-		public static boolean enableColdIron = true;
-		public static boolean enableCopper = true;
-		public static boolean enableCupronickel = true;
-		public static boolean enableElectrum = true;
-		public static boolean enableInvar = true;
-		public static boolean enableLead = true;
-		public static boolean enableMercury = true;
-		public static boolean enableMithril = true;
-		public static boolean enableNickel = true;
-		public static boolean enablePewter = true;
-		public static boolean enablePlatinum = true;
-		public static boolean enableSilver = true;
-		public static boolean enableStarSteel = true;
-		public static boolean enableSteel = true;
-		public static boolean enableTin = true;
-		public static boolean enableZinc = true;
-		*/
-
-		// VANILLA
-		/*
-		public static boolean enableObsidian = true;
-		public static boolean enableQuartz = true;
-		public static boolean enableEmerald = true;
-		public static boolean enableDiamond = true;
-		public static boolean enableGold = true;
-		public static boolean enableIron = true;
-		public static boolean enableStone = true;
-		public static boolean enableWood = true;
-		public static boolean enablePrismarine = true;
-		public static boolean enableRedstone = true;
-		public static boolean enableLapis = true;
-		public static boolean enableEnder = true;
-		*/
+		public static Map<String, Boolean> materialEnabled = new HashMap<>();
 
 		// THINGS
 		public static boolean enableBasics = true; // Nugget, Ingot, Powder, Blend, Block, Ore

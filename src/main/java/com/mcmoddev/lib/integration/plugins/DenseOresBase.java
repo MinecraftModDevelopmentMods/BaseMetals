@@ -13,7 +13,7 @@ public class DenseOresBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableDenseOres) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("denseores")) {
 			return;
 		}
 

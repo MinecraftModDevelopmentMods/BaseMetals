@@ -18,7 +18,7 @@ public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBas
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableVeinminer) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("veinminer")) {
 			return;
 		}
 

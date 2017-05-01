@@ -27,8 +27,10 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
-			return;
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("taiga")) {
+			if (!com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("tinkersconstruct")) {
+				return;
+			}
 		}
 
 		TraitRegistry.initTAIGATraits();
