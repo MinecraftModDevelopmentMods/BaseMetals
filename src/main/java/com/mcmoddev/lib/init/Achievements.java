@@ -75,7 +75,7 @@ public abstract class Achievements {
 	 * This is the reverse of the getAchievementByName(...) method, returning the
 	 * registered name of an achievement instance (Base Metals achievements only).
 	 *
-	 * @param b
+	 * @param a
 	 *            The achievement in question
 	 * @return The name of the achievement, or null if the item is not a Base Metals
 	 *         achievement.
