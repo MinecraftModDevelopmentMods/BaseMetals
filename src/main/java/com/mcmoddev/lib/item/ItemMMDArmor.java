@@ -108,9 +108,9 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				}
 				starsteelUpdateCache.get(player).incrementAndGet();
 				// Achievement
-				if (Options.enableAchievements) {
+				if (Options.enableAchievements()) {
 					if (armorItem == Materials.getMaterialByName(MaterialNames.STARSTEEL).getItem(Names.BOOTS)) {
-						player.addStat(Achievements.moonBoots, 1);
+						player.addStat(Achievements.getAchievementByName("moon_boots"), 1);
 					}
 					break starsteel;
 				}
@@ -181,8 +181,8 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 						player.addPotionEffect(protection);
 					}
 					// Achievement
-					if ((Options.enableAchievements) && (num == 4)) {
-						player.addStat(Achievements.juggernaut, 1);
+					if ((Options.enableAchievements()) && (num == 4)) {
+						player.addStat(Achievements.getAchievementByName("juggernaut"), 1);
 					}
 					break adamantine;
 				}
@@ -196,9 +196,9 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 							final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
 							player.addPotionEffect(fireProtection);
 							// Achievement
-							if (Options.enableAchievements) {
+							if (Options.enableAchievements()) {
 								if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.SWORD)) {
-									player.addStat(Achievements.demonSlayer, 1);
+									player.addStat(Achievements.getAchievementByName("demon_slayer"), 1);
 								}
 							}
 						}
@@ -224,9 +224,9 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 								player.removePotionEffect(p);
 							}
 							// Achievement
-							if (Options.enableAchievements) {
+							if (Options.enableAchievements()) {
 								if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD)) {
-									player.addStat(Achievements.angelOfDeath, 1);
+									player.addStat(Achievements.getAchievementByName("angel_of_death"), 1);
 								}
 							}
 						}
@@ -247,8 +247,8 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 								player.addPotionEffect(protection);
 								player.removePotionEffect(Potion.REGISTRY.getObject(fatiguePotionKey));
 								// Achievement
-								if (Options.enableAchievements) {
-									player.addStat(Achievements.scubaDiver, 1);
+								if (Options.enableAchievements()) {
+									player.addStat(Achievements.getAchievementByName("scuba_diver"), 1);
 								}
 							}
 						}

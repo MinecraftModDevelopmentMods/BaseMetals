@@ -161,8 +161,8 @@ public class BlockMMDBlock extends Block implements IMMDObject {
 			final EntityLivingBase placer, final ItemStack src) {
 		super.onBlockPlacedBy(w, coord, bs, placer, src);
 		// achievement
-		if ((Options.enableAchievements) && (placer instanceof EntityPlayer)) {
-			((EntityPlayer) placer).addStat(Achievements.blocktastic, 1);
+		if ((Options.enableAchievements()) && (placer instanceof EntityPlayer)) {
+			((EntityPlayer) placer).addStat(Achievements.getAchievementByName("blocktastic"), 1);
 		}
 	}
 

@@ -71,7 +71,7 @@ public class Config {
 				"If true, then the crack hammer can crush ingots/ores that a pickaxe of the same \n"
 						+ "material can harvest. If false, then your crack hammer must be made of a harder \n"
 						+ "material than the ore you are crushing.");
-		Options.autodetectRecipes = configuration.getBoolean("automatic_recipes", GENERAL_CAT, true,
+		Options.autoDetectRecipes = configuration.getBoolean("automatic_recipes", GENERAL_CAT, true,
 				"If true, then Base Metals will scan the Ore Dictionary to automatically add a \n"
 						+ "Crack Hammer recipe for every material that has an ore, dust, and ingot.");
 		Options.requireMMDOreSpawn = configuration.getBoolean("using_orespawn", GENERAL_CAT, true,
@@ -79,7 +79,7 @@ public class Config {
 						+ "Set to false if using another mod to manually handle ore generation.");
 		Options.enableAchievements = configuration.getBoolean("achievements", GENERAL_CAT, true,
 				"If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals");
-		Options.crackhammerFullStack = configuration.getBoolean("crackhammer_full_stacks", GENERAL_CAT, false,
+		Options.crackHammerFullStack = configuration.getBoolean("crackhammer_full_stacks", GENERAL_CAT, false,
 				"If true then you can crackhammer full stacks of dropped items.");
 		Options.enablePlateRepairs = configuration.getBoolean("repair_using_plates", GENERAL_CAT, true,
 				"Repair shields and armor with metal plates of the same type");
@@ -266,7 +266,7 @@ public class Config {
 			configuration.save();
 		}
 
-		if (Options.requireMMDOreSpawn) {
+		if (Options.requireMMDOreSpawn()) {
 			if (!Loader.isModLoaded("orespawn")) {
 				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
 				orespawnMod.add(new DefaultArtifactVersion("1.1.0"));
@@ -317,32 +317,89 @@ public class Config {
 	public static class Options {
 
 		// GENERAL
-		public static boolean disableAllHammerRecipes = false;
-		public static boolean enforceHardness = true;
-		public static boolean strongHammers = true;
-		public static boolean autodetectRecipes = true;
-		public static boolean requireMMDOreSpawn = true;
-		public static boolean enableAchievements = true;
-		public static boolean crackhammerFullStack = false;
-		public static boolean enableShieldUpgrades = true;
-		public static boolean enablePlateRepairs = true;
-		public static boolean enableModderSupportThings = true;
+		protected static boolean disableAllHammerRecipes = false;
+		protected static boolean enforceHardness = true;
+		protected static boolean strongHammers = true;
+		protected static boolean autoDetectRecipes = true;
+		protected static boolean requireMMDOreSpawn = true;
+		protected static boolean enableAchievements = true;
+		protected static boolean crackHammerFullStack = false;
+		protected static boolean enableShieldUpgrades = true;
+		protected static boolean enablePlateRepairs = true;
+		protected static boolean enableModderSupportThings = true;
+
+		public static boolean disableAllHammerRecipes() {
+			return disableAllHammerRecipes;
+		}
+
+		public static boolean enforceHardness() {
+			return enforceHardness;
+		}
+
+		public static boolean strongHammers() {
+			return strongHammers;
+		}
+
+		public static boolean autoDetectRecipes() {
+			return autoDetectRecipes;
+		}
+
+		public static boolean requireMMDOreSpawn() {
+			return requireMMDOreSpawn;
+		}
+
+		public static boolean enableAchievements() {
+			return enableAchievements;
+		}
+
+		public static boolean crackHammerFullStack() {
+			return crackHammerFullStack;
+		}
+
+		public static boolean enableShieldUpgrades() {
+			return enableShieldUpgrades;
+		}
+
+		public static boolean enablePlateRepairs() {
+			return enablePlateRepairs;
+		}
+
+		public static boolean enableModderSupportThings() {
+			return enableModderSupportThings;
+		}
+		
 		public static String[] disabledRecipes = null;
 
 		// RECIPE AMOUNTS
-		public static int gearQuantity = 4;
-		public static int plateQuantity = 3;
-		public static boolean furnaceCheese = true;
-		public static boolean furnace1112 = true; // Overridden by FURNACE_CHEESE
+		protected static int gearQuantity = 4;
+
+		public static int gearQuantity() {
+			return gearQuantity;
+		}
+
+		protected static int plateQuantity = 3;
+
+		public static int plateQuantity() {
+			return plateQuantity;
+		}
+
+		protected static boolean furnaceCheese = true;
+		public static boolean furnaceCheese() {
+			return furnaceCheese;
+		}
+		protected static boolean furnace1112 = true; // Overridden by FURNACE_CHEESE
+		public static boolean furnace1112() {
+			return furnace1112;
+		}
 
 		// INTEGRATION
-		public static Map<String, Boolean> modEnabled = new HashMap<>();
+		public static final Map<String, Boolean> modEnabled = new HashMap<>();
 
 		// MATERIALS
-		public static Map<String, Boolean> materialEnabled = new HashMap<>();
+		public static final Map<String, Boolean> materialEnabled = new HashMap<>();
 
 		// THINGS
-		public static Map<String, Boolean> thingEnabled = new HashMap<>();
+		public static final Map<String, Boolean> thingEnabled = new HashMap<>();
 /*
 		public static boolean enableBasics = true; // Nugget, Ingot, Powder, Blend, Block, Ore
 		public static boolean enableBasicTools = true; // Axe, Hoe, Pickaxe, Shovel, Sword
@@ -394,7 +451,7 @@ public class Config {
 			}
 		}
 
-		if (Options.autodetectRecipes) {
+		if (Options.autoDetectRecipes()) {
 			// add recipe for every X where the Ore Dictionary has dustX, oreX, and ingotX
 			final Set<String> dictionary = new HashSet<>();
 			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()));

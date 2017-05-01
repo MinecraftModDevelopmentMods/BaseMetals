@@ -34,8 +34,8 @@ public class ItemMMDSmallBlend extends Item implements IMMDObject {
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
 		// achievement
-		if (Options.enableAchievements) {
-			crafter.addStat(Achievements.metallurgy, 1);
+		if (Options.enableAchievements()) {
+			crafter.addStat(Achievements.getAchievementByName("metallurgy"), 1);
 		}
 	}
 

@@ -99,7 +99,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 				ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(targetItem);
 				if (recipe != null) {
 					// hardness check
-					if ((Config.Options.enforceHardness) && (targetItem.getItem() instanceof ItemBlock)) {
+					if ((Config.Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
 						Block b = ((ItemBlock) targetItem.getItem()).getBlock();
 						if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
 							// cannot harvest the block, no crush for you!
@@ -111,7 +111,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 						ItemStack output = recipe.getOutput().copy();
 						int count = output.stackSize;
 						int toolDamage;
-						if (Options.crackhammerFullStack) {
+						if (Options.crackHammerFullStack()) {
 							output.stackSize = targetItem.stackSize;
 							if (item.isItemDamaged() && (item.getItemDamage() < output.stackSize)) {
 									output.stackSize = item.getItemDamage();
@@ -125,7 +125,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 						double y = target.posY;
 						double z = target.posZ;
 
-						if (Options.crackhammerFullStack) {
+						if (Options.crackHammerFullStack()) {
 							targetItem.stackSize -= output.stackSize;
 						} else {
 							targetItem.stackSize--;
@@ -202,7 +202,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 	@Deprecated
 	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
 		if (typeRequested != null && toolTypes.contains(typeRequested)) {
-			if (Config.Options.strongHammers) {
+			if (Config.Options.strongHammers()) {
 				return material.getToolHarvestLevel();
 			} else {
 				return material.getToolHarvestLevel() - 1;
@@ -228,8 +228,8 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 		super.onCreated(item, world, crafter);
 		MMDToolEffects.extraEffectsOnCrafting(material, item, world, crafter);
 		// achievement
-		if (Options.enableAchievements) {
-			crafter.addStat(Achievements.geologist, 1);
+		if (Options.enableAchievements()) {
+			crafter.addStat(Achievements.getAchievementByName("geologist"), 1);
 		}
 	}
 

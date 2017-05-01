@@ -32,7 +32,7 @@ public class ItemMMDIngot extends net.minecraft.item.Item implements IMMDObject 
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		crafter.addStat(Achievements.thisIsNew, 1);
+		crafter.addStat(Achievements.getAchievementByName("this_is_new"), 1);
 	}
 
 	@Override

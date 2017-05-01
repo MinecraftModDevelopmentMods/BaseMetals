@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.init;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -182,12 +184,12 @@ public abstract class Recipes {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.SHIELD)), "xyx", "xxx", " x ", 'y', Oredicts.PLANK_WOOD, 'x', Oredicts.INGOT + oreDictName));
 			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.SHIELD)), new ItemStack(material.getItem(Names.INGOT), 6), 0); // 1 wood loss
 			if (material.getItem(Names.PLATE) != null) {
-				if (Options.enablePlateRepairs) {
+				if (Options.enablePlateRepairs()) {
 					GameRegistry.addRecipe(new ShieldRepairRecipe(material));
 					RecipeSorter.register(repairSort, ShieldRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 				}
 
-				if (Options.enableShieldUpgrades) {
+				if (Options.enableShieldUpgrades()) {
 					GameRegistry.addRecipe(new ShieldUpgradeRecipe(material));
 					RecipeSorter.register(upgradeSort, ShieldUpgradeRecipe.class, Category.UNKNOWN, SORTLOC);
 				}
@@ -215,7 +217,7 @@ public abstract class Recipes {
 
 		if ((material.getItem(Names.GEAR) != null) && (material.getItem(Names.CROSSBOW) != null)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.CROSSBOW)), "zxx", " yx", "x z", 'x', Oredicts.ROD + oreDictName, 'y', Oredicts.GEAR + oreDictName, 'z', Oredicts.STRING));
-			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.CROSSBOW)), new ItemStack(material.getItem(Names.INGOT), 2 + Config.Options.gearQuantity), 0);
+			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.CROSSBOW)), new ItemStack(material.getItem(Names.INGOT), 2 + Config.Options.gearQuantity()), 0);
 		}
 
 		if (material.getItem(Names.BOLT) != null) {
@@ -253,10 +255,10 @@ public abstract class Recipes {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.ROD), 4), "x", "x", 'x', Oredicts.INGOT + oreDictName));
 
 			if (material.getItem(Names.GEAR) != null) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.GEAR), Config.Options.gearQuantity), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.GEAR), Config.Options.gearQuantity()), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
 				if (material.hasItem(Names.INGOT)) {
 					// if there is no ingot, no cheese
-					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)), new ItemStack(material.getItem(Names.INGOT), Config.Options.gearQuantity), 0); // you lose the rod
+					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)), new ItemStack(material.getItem(Names.INGOT), Config.Options.gearQuantity()), 0); // you lose the rod
 				}
 			}
 		}
@@ -285,11 +287,11 @@ public abstract class Recipes {
 				GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.WALL)), new ItemStack(material.getBlock(Names.BLOCK), 1), 0);
 			}
 
-			if ((material.getItem(Names.CRACKHAMMER) != null) && (!Options.disableAllHammerRecipes)) {
+			if ((material.getItem(Names.CRACKHAMMER) != null) && (!Options.disableAllHammerRecipes())) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.CRACKHAMMER)), "x", "/", "/", 'x', Oredicts.BLOCK + oreDictName, '/', Oredicts.STICK_WOOD));
-				if (Config.Options.furnaceCheese) {
+				if (Config.Options.furnaceCheese()) {
 					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.CRACKHAMMER)), new ItemStack(material.getBlock(Names.BLOCK), 1), 0);
-				} else if (Config.Options.furnace1112) {
+				} else if (Config.Options.furnace1112()) {
 					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.CRACKHAMMER)), new ItemStack(material.getItem(Names.NUGGET), 1), 0);
 				}
 			}
@@ -300,7 +302,7 @@ public abstract class Recipes {
 
 			if (material.getBlock(Names.BLOCK) instanceof IMMDObject) {
 				if (material.getBlock(Names.PLATE) != null) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.PLATE), Config.Options.plateQuantity), "xxx", 'x', Oredicts.INGOT + oreDictName));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.PLATE), Config.Options.plateQuantity()), "xxx", 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.PLATE)), new ItemStack(material.getItem(Names.INGOT), 1), 0);
 				}
 
@@ -414,97 +416,97 @@ public abstract class Recipes {
 		
 		if ((boots != null) && (boots instanceof IMMDObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(boots), "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
-			if ((plate != null) && (Options.enablePlateRepairs)) {
+			if ((plate != null) && (Options.enablePlateRepairs())) {
 				GameRegistry.addRecipe(new BootsRepairRecipe(material));
 				RecipeSorter.register("mmd:bootsrepair", BootsRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 			}
-			if (Config.Options.furnaceCheese) {
+			if (Config.Options.furnaceCheese()) {
 				GameRegistry.addSmelting(new ItemStack(boots), new ItemStack(ingot, 4), 0);
-			} else if (Config.Options.furnace1112) {
+			} else if (Config.Options.furnace1112()) {
 				GameRegistry.addSmelting(new ItemStack(boots), new ItemStack(nugget, 1), 0);
 			}
 		}
 
 		if ((helmet != null) && (helmet instanceof IMMDObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(helmet), "xxx", "x x", 'x', Oredicts.INGOT + oreDictName));
-			if ((plate != null) && (Options.enablePlateRepairs)) {
+			if ((plate != null) && (Options.enablePlateRepairs())) {
 				GameRegistry.addRecipe(new HelmetRepairRecipe(material));
 				RecipeSorter.register("mmd:helmetrepair", HelmetRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 			}
-			if (Config.Options.furnaceCheese) {
+			if (Config.Options.furnaceCheese()) {
 				GameRegistry.addSmelting(new ItemStack(helmet), new ItemStack(ingot, 5), 0);
-			} else if (Config.Options.furnace1112) {
+			} else if (Config.Options.furnace1112()) {
 				GameRegistry.addSmelting(new ItemStack(helmet), new ItemStack(nugget, 1), 0);
 			}
 		}
 
 		if ((chestplate != null) && (chestplate instanceof IMMDObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chestplate), "x x", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
-			if ((plate != null) && (Options.enablePlateRepairs)) {
+			if ((plate != null) && (Options.enablePlateRepairs())) {
 				GameRegistry.addRecipe(new ChestplateRepairRecipe(material));
 				RecipeSorter.register("mmd:chestplaterepair", ChestplateRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 			}
-			if (Config.Options.furnaceCheese) {
+			if (Config.Options.furnaceCheese()) {
 				GameRegistry.addSmelting(new ItemStack(chestplate), new ItemStack(ingot, 8), 0);
-			} else if (Config.Options.furnace1112) {
+			} else if (Config.Options.furnace1112()) {
 				GameRegistry.addSmelting(new ItemStack(chestplate), new ItemStack(nugget, 1), 0);
 			}
 		}
 
 		if ((leggings != null) && (leggings instanceof IMMDObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(leggings), "xxx", "x x", "x x", 'x', Oredicts.INGOT + oreDictName));
-			if ((plate != null) && (Options.enablePlateRepairs)) {
+			if ((plate != null) && (Options.enablePlateRepairs())) {
 				GameRegistry.addRecipe(new LeggingsRepairRecipe(material));
 				RecipeSorter.register("mmd:leggingsrepair", LeggingsRepairRecipe.class, Category.SHAPELESS, SORTLOC);
 			}
-			if (Config.Options.furnaceCheese) {
+			if (Config.Options.furnaceCheese()) {
 				GameRegistry.addSmelting(new ItemStack(leggings), new ItemStack(ingot, 7), 0);
-			} else if (Config.Options.furnace1112) {
+			} else if (Config.Options.furnace1112()) {
 				GameRegistry.addSmelting(new ItemStack(leggings), new ItemStack(nugget, 1), 0);
 			}
 		}
 
 		if ((axe != null) && (axe instanceof IMMDObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axe), "xx", "x/", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
-			if (Config.Options.furnaceCheese) {
+			if (Config.Options.furnaceCheese()) {
 				GameRegistry.addSmelting(new ItemStack(axe), new ItemStack(ingot, 3), 0);
-			} else if (Config.Options.furnace1112) {
+			} else if (Config.Options.furnace1112()) {
 				GameRegistry.addSmelting(new ItemStack(axe), new ItemStack(nugget, 1), 0);
 			}
 		}
 
 		if ((hoe != null) && (hoe instanceof IMMDObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoe), "xx", " /", " /", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
-			if (Config.Options.furnaceCheese) {
+			if (Config.Options.furnaceCheese()) {
 				GameRegistry.addSmelting(new ItemStack(hoe), new ItemStack(ingot, 2), 0);
-			} else if (Config.Options.furnace1112) {
+			} else if (Config.Options.furnace1112()) {
 				GameRegistry.addSmelting(new ItemStack(hoe), new ItemStack(nugget, 1), 0);
 			}
 		}
 
 		if ((pickaxe != null) && (pickaxe instanceof IMMDObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(pickaxe), "xxx", " / ", " / ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
-			if (Config.Options.furnaceCheese) {
+			if (Config.Options.furnaceCheese()) {
 				GameRegistry.addSmelting(new ItemStack(pickaxe), new ItemStack(ingot, 3), 0);
-			} else if (Config.Options.furnace1112) {
+			} else if (Config.Options.furnace1112()) {
 				GameRegistry.addSmelting(new ItemStack(pickaxe), new ItemStack(nugget, 1), 0);
 			}
 		}
 
 		if ((shovel != null) && (shovel instanceof IMMDObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(shovel), "x", "/", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
-			if (Config.Options.furnaceCheese) {
+			if (Config.Options.furnaceCheese()) {
 				GameRegistry.addSmelting(new ItemStack(shovel), new ItemStack(ingot, 1), 0);
-			} else if (Config.Options.furnace1112) {
+			} else if (Config.Options.furnace1112()) {
 				GameRegistry.addSmelting(new ItemStack(shovel), new ItemStack(nugget, 1), 0);
 			}
 		}
 
 		if ((sword != null) && (sword instanceof IMMDObject)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(sword), "x", "x", "/", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.STICK_WOOD));
-			if (Config.Options.furnaceCheese) {
+			if (Config.Options.furnaceCheese()) {
 				GameRegistry.addSmelting(new ItemStack(sword), new ItemStack(ingot, 2), 0);
-			} else if (Config.Options.furnace1112) {
+			} else if (Config.Options.furnace1112()) {
 				GameRegistry.addSmelting(new ItemStack(sword), new ItemStack(nugget, 1), 0);
 			}
 		}
@@ -527,6 +529,8 @@ public abstract class Recipes {
 		if (material == null) {
 			return;
 		}
+
+		oreDictName = StringUtils.capitalize(oreDictName);
 
 		if ((material.hasOre()) && (material.getBlock(Names.ORE) != null)) {
 			OreDictionary.registerOre(Oredicts.ORE + oreDictName, material.getBlock(Names.ORE));
@@ -590,12 +594,12 @@ public abstract class Recipes {
 			addSimpleAlloyRecipe(material, outputQty, (String)ingredients[0], (String)ingredients[1]);
 		}
 
-		Object[] dustIngredients = new String[ingredients.length];
+		Object[] dustIngredients = (new String[ingredients.length]);
 		Object[] tinyDustIngredients = new String[ingredients.length];
 
 		for (int i = 0; i < ingredients.length; i++) {
-				dustIngredients[i] = String.format("%s%s", Oredicts.DUST, (String)ingredients[i]);
-				tinyDustIngredients[i] = String.format("%s%s", Oredicts.DUST_TINY, (String)ingredients[i]);
+				dustIngredients[i] = String.format("%s%s", Oredicts.DUST, StringUtils.capitalize((String)ingredients[i]));
+				tinyDustIngredients[i] = String.format("%s%s", Oredicts.DUST_TINY, StringUtils.capitalize((String)ingredients[i]));
 		}
 
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.BLEND), outputQty), dustIngredients));
@@ -607,7 +611,7 @@ public abstract class Recipes {
 			return;
 		}
 
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.BLEND), outputQty), Oredicts.DUST + oredict1, Oredicts.DUST + oredict2));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLBLEND), outputQty), Oredicts.DUST_TINY + oredict1, Oredicts.DUST_TINY + oredict2));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.BLEND), outputQty), Oredicts.DUST + StringUtils.capitalize(oredict1), Oredicts.DUST + StringUtils.capitalize(oredict2)));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLBLEND), outputQty), Oredicts.DUST_TINY + StringUtils.capitalize(oredict1), Oredicts.DUST_TINY + StringUtils.capitalize(oredict2)));
 	}
 }

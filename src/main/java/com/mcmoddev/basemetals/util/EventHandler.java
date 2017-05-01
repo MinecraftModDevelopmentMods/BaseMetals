@@ -80,25 +80,25 @@ public class EventHandler {
 		final Item item = event.smelting.getItem();
 		if (item instanceof IMMDObject) {
 			final MMDMaterial material = ((IMMDObject) item).getMaterial();
-			if (Options.enableAchievements) {
+			if (Options.enableAchievements()) {
 				if (item instanceof ItemMMDIngot) {
 					// event.player.addStat(Achievements.this_is_new, 1);
 					if ("aquarium".equals(material.getName())) {
-						event.player.addStat(Achievements.aquariumMaker, 1);
+						event.player.addStat(Achievements.getAchievementByName("aquarium_maker"), 1);
 					} else if ("brass".equals(material.getName())) {
-						event.player.addStat(Achievements.brassMaker, 1);
+						event.player.addStat(Achievements.getAchievementByName("brass_maker"), 1);
 					} else if ("bronze".equals(material.getName())) {
-						event.player.addStat(Achievements.bronzeMaker, 1);
+						event.player.addStat(Achievements.getAchievementByName("bronze_maker"), 1);
 					} else if ("electrum".equals(material.getName())) {
-						event.player.addStat(Achievements.electrumMaker, 1);
+						event.player.addStat(Achievements.getAchievementByName("electrum_maker"), 1);
 					} else if ("steel".equals(material.getName())) {
-						event.player.addStat(Achievements.steelMaker, 1);
+						event.player.addStat(Achievements.getAchievementByName("steel_maker"), 1);
 					} else if ("invar".equals(material.getName())) {
-						event.player.addStat(Achievements.invarMaker, 1);
+						event.player.addStat(Achievements.getAchievementByName("invar_maker"), 1);
 					} else if ("mithril".equals(material.getName())) {
-						event.player.addStat(Achievements.mithrilMaker, 1);
+						event.player.addStat(Achievements.getAchievementByName("mithril_maker"), 1);
 					} else if ("cupronickel".equals(material.getName())) {
-						event.player.addStat(Achievements.cupronickelMaker, 1);
+						event.player.addStat(Achievements.getAchievementByName("cupronickel_maker"), 1);
 					}
 				}
 			}

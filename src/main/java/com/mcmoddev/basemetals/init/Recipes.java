@@ -51,7 +51,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		MMDMaterial material;
 		String oreDictName;
 
-		if (!Options.disableAllHammerRecipes) {
+		if (!Options.disableAllHammerRecipes()) {
 			if (Options.materialEnabled.get(MaterialNames.WOOD)) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.WOOD).getItem(Names.CRACKHAMMER)), "x", "/", "/", 'x', Oredicts.LOG_WOOD, '/', Oredicts.STICK_WOOD));
 			}
@@ -118,7 +118,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		// furnace cheese all the things!
 		for (MMDMaterial mat : Materials.getAllMaterials()) {
 			if ((mat.getItem(Names.INGOT)) != null && !(mat.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject) && mat.hasOre() ) {
-				if (Options.furnaceCheese) {
+				if (Options.furnaceCheese()) {
 					if (mat.getItem(Names.BOOTS) != null)
 						GameRegistry.addSmelting(mat.getItem(Names.BOOTS), new ItemStack(mat.getItem(Names.INGOT), 4), 0);
 
@@ -146,7 +146,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 					if (mat.getItem( Names.CHESTPLATE) != null)
 						GameRegistry.addSmelting(mat.getItem( Names.CHESTPLATE), new ItemStack(mat.getItem(Names.INGOT), 8), 0);
 
-				} else if (Options.furnace1112) {
+				} else if (Options.furnace1112()) {
 					if (mat.getItem(Names.BOOTS) != null)
 						GameRegistry.addSmelting(mat.getItem(Names.BOOTS), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
 
@@ -191,39 +191,27 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.AQUARIUM)) {
-			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.AQUARIUM), 3, "Copper", "Copper", "Zinc", "Prismarine", "Prismarine", "Prismarine");
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem( Names.BLEND ), 3), Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_ZINC, Oredicts.DUST_PRISMARINE, Oredicts.DUST_PRISMARINE, Oredicts.DUST_PRISMARINE));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem( Names.SMALLBLEND), 3), Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_ZINC, Oredicts.DUST_PRISMARINE));
+			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.AQUARIUM), 3, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.PRISMARINE, MaterialNames.PRISMARINE, MaterialNames.PRISMARINE);
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.BRASS)) {
-			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.BRASS), 3, "Copper", "Copper", "Zinc");
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.BRASS).getItem(Names.BLEND), 3), Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_ZINC));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.BRASS).getItem(Names.SMALLBLEND), 3), Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_ZINC));
+			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.BRASS), 3, MaterialNames.COPPER, MaterialNames.COPPER, "Zinc");
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.BRONZE)) {
-			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.BRONZE), 4, "Copper", "Copper", "Copper", "Tin");
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.BRONZE).getItem(Names.BLEND), 4), Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_TIN));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.BRONZE).getItem(Names.SMALLBLEND), 4), Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_TIN));
+			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.BRONZE), 4, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.TIN);
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.CUPRONICKEL)) {
-			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.CUPRONICKEL), 4, "Copper", "Copper", "Copper", "Nickel");
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getItem(Names.BLEND), 4), Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_COPPER, Oredicts.DUST_NICKEL));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getItem(Names.SMALLBLEND), 4), Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_COPPER, Oredicts.DUST_TINY_NICKEL));
+			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.CUPRONICKEL), 4, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.NICKEL);
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.ELECTRUM)) {
-			addSimpleAlloyRecipe(Materials.getMaterialByName(MaterialNames.ELECTRUM), 2, "Gold", "Silver");
-			//GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.ELECTRUM).getItem(Names.BLEND), 2), Oredicts.DUST_SILVER, Oredicts.DUST_GOLD));
-			//GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.ELECTRUM).getItem(Names.SMALLBLEND), 2), Oredicts.DUST_TINY_SILVER, Oredicts.DUST_TINY_GOLD));
+			addSimpleAlloyRecipe(Materials.getMaterialByName(MaterialNames.ELECTRUM), 2, MaterialNames.GOLD, MaterialNames.SILVER);
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.INVAR)) {
-			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.INVAR), 3, "Iron", "Iron", "Nickel");
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.INVAR).getItem(Names.BLEND), 3), Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_NICKEL));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.INVAR).getItem(Names.SMALLBLEND), 3), Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_NICKEL));
+			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.INVAR), 3, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.NICKEL);
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.MERCURY)) {
@@ -238,26 +226,18 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.MITHRIL)) {
-			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.MITHRIL), 3, "Silver", "Silver", "Coldiron", "Mercury");
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.MITHRIL).getItem( Names.BLEND ), 3), Oredicts.DUST_SILVER, Oredicts.DUST_SILVER, Oredicts.DUST_COLDIRON, Oredicts.INGOT_MERCURY));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.MITHRIL).getItem( Names.SMALLBLEND ), 3), Oredicts.DUST_TINY_SILVER, Oredicts.DUST_TINY_SILVER, Oredicts.DUST_TINY_COLDIRON, Oredicts.NUGGET_MERCURY));
+			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.MITHRIL), 3, MaterialNames.SILVER, MaterialNames.SILVER, MaterialNames.COLDIRON, MaterialNames.MERCURY);
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.STEEL)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STEEL);
 			OreDictionary.registerOre(Oredicts.SPROCKET, material.getItem( Names.GEAR ));
 
-			// addAlloyRecipe(material, 8, "Iron", "Iron", "Iron", "Iron", "Iron", "Iron", "Iron", "Iron", "Carbon");
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.BLEND), 8), Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_CARBON));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLBLEND), 8), Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_CARBON));
+			// addAlloyRecipe(material, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, "Carbon");
 
-			addAlloyRecipe(material, 8, "Iron", "Iron", "Iron", "Iron", "Iron", "Iron", "Iron", "Iron", "Charcoal");
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem( Names.BLEND ), 8), Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_CHARCOAL));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem( Names.SMALLBLEND ), 8), Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_CHARCOAL));
+			addAlloyRecipe(material, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.CHARCOAL);
 
-			addAlloyRecipe(material, 8, "Iron", "Iron", "Iron", "Iron", "Iron", "Iron", "Iron", "Iron", "Coal");
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem( Names.BLEND ), 8), Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_IRON, Oredicts.DUST_COAL));
-			// GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem( Names.SMALLBLEND ), 8), Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_IRON, Oredicts.DUST_TINY_COAL));
+			addAlloyRecipe(material, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.COAL);
 
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.ACTIVATOR_RAIL, 6), "x/x", "x*x", "x/x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '*', net.minecraft.init.Blocks.REDSTONE_TORCH));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.DETECTOR_RAIL, 6), "x x", "x-x", "x*x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '-', net.minecraft.init.Blocks.STONE_PRESSURE_PLATE, '*', Oredicts.DUST_REDSTONE));

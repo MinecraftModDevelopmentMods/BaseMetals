@@ -178,7 +178,7 @@ public abstract class Items {
 	 * @param tab TabContainer covering the various CreativeTabs items might be on
 	 */
 	protected static void createItemsModSupport(MMDMaterial material, TabContainer tab) {
-		if (Options.enableModderSupportThings) {
+		if (Options.enableModderSupportThings()) {
 			createCasing(material, tab.itemsTab);
 			createDensePlate(material, tab.itemsTab);
 		}
