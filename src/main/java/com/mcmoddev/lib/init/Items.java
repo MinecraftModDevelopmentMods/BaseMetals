@@ -290,8 +290,6 @@ public abstract class Items {
 			return null;
 		}
 
-		FMLLog.severe("enabled: %s :: extra: %s", enabled, extra);
-
 		if (enabled && extra) {
 			Constructor<?> ctor = null;
 			Item inst = null;
