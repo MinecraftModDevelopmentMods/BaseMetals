@@ -17,6 +17,9 @@ import com.mcmoddev.lib.item.ItemMMDCrackHammer;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.material.MMDMaterial;
 
+import net.minecraft.entity.passive.EntityVillager.ITradeList;
+import net.minecraft.entity.passive.EntityVillager.ListEnchantedItemForEmeralds;
+import net.minecraft.entity.passive.EntityVillager.PriceInfo;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.common.Loader;
 
