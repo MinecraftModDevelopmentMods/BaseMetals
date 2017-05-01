@@ -1,6 +1,5 @@
 package com.mcmoddev.basemetals.init;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.data.Names;
@@ -53,13 +52,13 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 		}
 		blocksTabIconItem = Item.getItemFromBlock(temp);
 		
-		if (Options.enableGear) {
+		if (Options.thingEnabled.get("Gear")) {
 			itemsTabIconItem = Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.GEAR);
 		} else {
 			itemsTabIconItem = net.minecraft.init.Items.STICK;
 		}
 		
-		if (Options.enableBasicTools) {
+		if (Options.thingEnabled.get("BasicTools")) {
 			toolsTabIconItem = Materials.getMaterialByName(MaterialNames.DIAMOND).getItem(Names.SWORD);	
 		} else {
 			toolsTabIconItem = net.minecraft.init.Items.DIAMOND_SWORD;

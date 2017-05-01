@@ -68,13 +68,13 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		// we could hook that...
 
 		// Lead itself is added by TiC
-		if ((Options.materialEnabled.get(MaterialNames.LEAD)) && (Options.enablePlate)) {
+		if ((Options.materialEnabled.get(MaterialNames.LEAD)) && (Options.thingEnabled.get("Plate"))) {
 			registerModifierItem("plated", Item.getItemFromBlock(Materials.getMaterialByName(MaterialNames.LEAD).getBlock(Names.PLATE)));
 		}
 
 		if (Options.materialEnabled.get(MaterialNames.MERCURY)) {
 			registry.registerFluid(Materials.getMaterialByName(MaterialNames.MERCURY), 144);
-			if (Options.enableBasics) {
+			if (Options.thingEnabled.get("Basics")) {
 				registerModifierItem("toxic", Materials.getMaterialByName(MaterialNames.MERCURY).getItem(Names.POWDER));
 			}
 		}

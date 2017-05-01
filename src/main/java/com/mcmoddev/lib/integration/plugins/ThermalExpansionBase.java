@@ -97,7 +97,7 @@ public class ThermalExpansionBase implements IIntegration {
 			
 			ItemStack ingot = new ItemStack( mat.getItem(Names.INGOT), 1, 0);
 			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
-			if (Options.enableBasics) {
+			if (Options.thingEnabled.get("Basics")) {
 				if (mat.hasItem(Names.POWDER) && mat.getItem(Names.POWDER) != null) {
 					ItemStack dust = new ItemStack(mat.getItem(Names.POWDER), 1, 0);
 					ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
@@ -130,13 +130,13 @@ public class ThermalExpansionBase implements IIntegration {
 
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY, ingot, baseFluid);
 
-			if (Options.enableBasics && mat.getItem(Names.POWDER) != null) {
+			if (Options.thingEnabled.get("Basics") && mat.getItem(Names.POWDER) != null) {
 				ItemStack dust = new ItemStack( mat.getItem(Names.POWDER) );
 				ThermalExpansionHelper.addCrucibleRecipe(ENERGY, dust, baseFluid);
 			}
 
-			addCrucibleExtra(Options.enablePlate, Item.getItemFromBlock(mat.getBlock(Names.PLATE)), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY);
-			addCrucibleExtra(Options.enableBasics, mat.getItem(Names.NUGGET), FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY);
+			addCrucibleExtra(Options.thingEnabled.get("Plate"), Item.getItemFromBlock(mat.getBlock(Names.PLATE)), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY);
+			addCrucibleExtra(Options.thingEnabled.get("Basics"), mat.getItem(Names.NUGGET), FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY);
 		}
 	}
 
@@ -148,7 +148,7 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	public static void addPlatePress(boolean enabled, String materialName) {
-		if( enabled && Options.enablePlate ) {
+		if( enabled && Options.thingEnabled.get("Plate") ) {
 			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 
 			/*

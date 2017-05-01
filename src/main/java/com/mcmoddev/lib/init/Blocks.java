@@ -207,7 +207,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createBookshelf(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.BOOKSHELF, BlockMMDBookshelf.class, Options.enableBookshelf, true, tab);
+		return createBlock(material, Names.BOOKSHELF, BlockMMDBookshelf.class, Options.thingEnabled.get("Bookshelf"), true, tab);
 	}
 
 	protected static Block createBookshelf(MMDMaterial material, boolean fullBlock, CreativeTabs tab) {
@@ -225,7 +225,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createPlate(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.PLATE, BlockMMDPlate.class, Options.enablePlate, true, tab);
+		final Block block = createBlock(material, Names.PLATE, BlockMMDPlate.class, Options.thingEnabled.get("Plate"), true, tab);
 		Oredicts.registerOre(Oredicts.PLATE + material.getCapitalizedName(), block);
 		return block;
 	}
@@ -237,7 +237,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createBars(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.BARS, BlockMMDBars.class, Options.enableBars, true, tab);
+		final Block block = createBlock(material, Names.BARS, BlockMMDBars.class, Options.thingEnabled.get("Bars"), true, tab);
 		Oredicts.registerOre(Oredicts.BARS + material.getCapitalizedName(), block);
 		return block;
 	}
@@ -264,7 +264,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		if ((Options.enableBasics) && (!material.hasBlock(Names.BLOCK))) {
+		if ((Options.thingEnabled.get("Basics")) && (!material.hasBlock(Names.BLOCK))) {
 			final Block block = addBlock(new BlockMMDBlock(material, glow, true), Names.BLOCK, material, tab);
 			Oredicts.registerOre(Oredicts.BLOCK + material.getCapitalizedName(), block);
 			material.addNewBlock(Names.BLOCK, block);
@@ -280,7 +280,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createButton(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.BUTTON, BlockMMDButton.class, Options.enableButton, true, tab);
+		final Block block = createBlock(material, Names.BUTTON, BlockMMDButton.class, Options.thingEnabled.get("Button"), true, tab);
 		Oredicts.registerOre(Oredicts.BUTTON + material.getCapitalizedName(), block);
 		return block;
 	}
@@ -292,7 +292,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createLever(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.LEVER, BlockMMDLever.class, Options.enableLever, true, tab);
+		final Block block = createBlock(material, Names.LEVER, BlockMMDLever.class, Options.thingEnabled.get("Lever"), true, tab);
 		Oredicts.registerOre(Oredicts.LEVER + material.getCapitalizedName(), block);
 		return block;
 	}
@@ -304,7 +304,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createPressurePlate(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.PRESSUREPLATE, BlockMMDPressurePlate.class, Options.enablePressurePlate, true, tab);
+		return createBlock(material, Names.PRESSUREPLATE, BlockMMDPressurePlate.class, Options.thingEnabled.get("PressurePlate"), true, tab);
 	}
 
 	/**
@@ -315,7 +315,7 @@ public abstract class Blocks {
 	 */
 	protected static Block createSlab(MMDMaterial material, CreativeTabs tab) {
 		// oreDict is handled in items
-		return createBlock(material, Names.HALFSLAB, BlockMMDHalfSlab.class, Options.enableSlab, true, tab);
+		return createBlock(material, Names.HALFSLAB, BlockMMDHalfSlab.class, Options.thingEnabled.get("Slab"), true, tab);
 	}
 
 	/**
@@ -326,7 +326,7 @@ public abstract class Blocks {
 	 */
 	protected static Block createDoubleSlab(MMDMaterial material, CreativeTabs tab) {
 		// oreDict is handled in items
-		return createBlock(material, Names.DOUBLESLAB, BlockMMDDoubleSlab.class, Options.enableSlab, true, tab);
+		return createBlock(material, Names.DOUBLESLAB, BlockMMDDoubleSlab.class, Options.thingEnabled.get("Slab"), true, tab);
 	}
 
 	/**
@@ -336,7 +336,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createStairs(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.STAIRS, BlockMMDStairs.class, Options.enableStairs, material.hasBlock(Names.BLOCK), tab);
+		final Block block = createBlock(material, Names.STAIRS, BlockMMDStairs.class, Options.thingEnabled.get("Stairs"), material.hasBlock(Names.BLOCK), tab);
 		Oredicts.registerOre(Oredicts.STAIRS + material.getCapitalizedName(), block);
 		return block;
 	}
@@ -348,7 +348,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createWall(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.WALL, BlockMMDWall.class, Options.enableWall, material.hasBlock(Names.BLOCK), tab);
+		final Block block = createBlock(material, Names.WALL, BlockMMDWall.class, Options.thingEnabled.get("Wall"), material.hasBlock(Names.BLOCK), tab);
 		Oredicts.registerOre(Oredicts.WALL + material.getCapitalizedName(), block);
 		return block;
 	}
@@ -360,7 +360,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createFence(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.FENCE, BlockMMDFence.class, Options.enableWall, material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.FENCE, BlockMMDFence.class, Options.thingEnabled.get("Wall"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**
@@ -370,7 +370,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createFenceGate(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.FENCEGATE, BlockMMDFenceGate.class, Options.enableWall, material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.FENCEGATE, BlockMMDFenceGate.class, Options.thingEnabled.get("Wall"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**
@@ -380,7 +380,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createAnvil(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.ANVILBLOCK, BlockMMDAnvil.class, Options.enableAnvil, material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.ANVILBLOCK, BlockMMDAnvil.class, Options.thingEnabled.get("Anvil"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**
@@ -390,7 +390,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createFlowerPot(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.FLOWERPOT, BlockMMDFlowerPot.class, Options.enableFlowerPot, material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.FLOWERPOT, BlockMMDFlowerPot.class, Options.thingEnabled.get("FlowerPot"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**
@@ -400,7 +400,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createLadder(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.LADDER, BlockMMDLadder.class, Options.enableLadder, material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.LADDER, BlockMMDLadder.class, Options.thingEnabled.get("Ladder"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**
@@ -410,7 +410,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createTripWireHook(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.TRIPWIREHOOK, BlockMMDTripWireHook.class, Options.enableTripWire, material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.TRIPWIREHOOK, BlockMMDTripWireHook.class, Options.thingEnabled.get("TripWire"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**
@@ -420,7 +420,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createOre(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.ORE, BlockMMDOre.class, Options.enableBasics, !material.hasBlock(Names.ORE) && material.hasOre(), tab);
+		final Block block = createBlock(material, Names.ORE, BlockMMDOre.class, Options.thingEnabled.get("Basics"), !material.hasBlock(Names.ORE) && material.hasOre(), tab);
 		Oredicts.registerOre(Oredicts.ORE + material.getCapitalizedName(), block);
 		return block;
 	}
@@ -433,7 +433,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createEndOre(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.ENDORE, BlockMMDEndOre.class, Options.enableBasics, !material.hasBlock(Names.ORE) && material.hasOre(), tab);
+		final Block block = createBlock(material, Names.ENDORE, BlockMMDEndOre.class, Options.thingEnabled.get("Basics"), !material.hasBlock(Names.ORE) && material.hasOre(), tab);
 		Oredicts.registerOre(Oredicts.ORE_END + material.getCapitalizedName(), block);
 		return block;
 	}
@@ -446,7 +446,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createNetherOre(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.NETHERORE, BlockMMDNetherOre.class, Options.enableBasics, !material.hasBlock(Names.ORE) && material.hasOre(), tab);
+		final Block block = createBlock(material, Names.NETHERORE, BlockMMDNetherOre.class, Options.thingEnabled.get("Basics"), !material.hasBlock(Names.ORE) && material.hasOre(), tab);
 		Oredicts.registerOre(Oredicts.ORE_NETHER + material.getCapitalizedName(), block);
 		return block;
 	}
@@ -459,7 +459,7 @@ public abstract class Blocks {
 	 */
 	protected static Block createDoor(MMDMaterial material, CreativeTabs tab) {
 		// oreDict is handled in items
-		return createBlock(material, Names.DOORBLOCK, BlockMMDDoor.class, Options.enableDoor, true, tab);
+		return createBlock(material, Names.DOORBLOCK, BlockMMDDoor.class, Options.thingEnabled.get("Door"), true, tab);
 	}
 
 	/**
@@ -469,7 +469,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createTrapDoor(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.TRAPDOOR, BlockMMDTrapDoor.class, Options.enableTrapdoor, true, tab);
+		final Block block = createBlock(material, Names.TRAPDOOR, BlockMMDTrapDoor.class, Options.thingEnabled.get("Trapdoor"), true, tab);
 		Oredicts.registerOre(Oredicts.TRAPDOOR + material.getCapitalizedName(), block);
 		return block;
 	}
