@@ -18,35 +18,35 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 			return;
 		}
 
-		if (Options.enableAdamantine) {
+		if (Options.materialEnabled.get(MaterialNames.ADAMANTINE)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
 		}
 
-		if (Options.enableAntimony) {
+		if (Options.materialEnabled.get(MaterialNames.ANTIMONY)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ANTIMONY));
 		}
 
-		if (Options.enableBismuth) {
+		if (Options.materialEnabled.get(MaterialNames.BISMUTH)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.BISMUTH));
 		}
 
-		if (Options.enableColdIron) {
+		if (Options.materialEnabled.get(MaterialNames.COLDIRON)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.COLDIRON));
 		}
 
-		if (Options.enablePlatinum) {
+		if (Options.materialEnabled.get(MaterialNames.PLATINUM)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.PLATINUM));
 		}
 
-		if (Options.enableNickel) {
+		if (Options.materialEnabled.get(MaterialNames.NICKEL)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.NICKEL));
 		}
 
-		if (Options.enableStarSteel) {
+		if (Options.materialEnabled.get(MaterialNames.STARSTEEL)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.STARSTEEL));
 		}
 
-		if (Options.enableZinc) {
+		if (Options.materialEnabled.get(MaterialNames.ZINC)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ZINC));
 		}
 

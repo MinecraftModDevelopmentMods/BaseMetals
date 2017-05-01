@@ -15,49 +15,49 @@ public class BaseMetalsOreSpawn implements Function<OreSpawnAPI, SpawnLogic> {
 	public SpawnLogic apply(OreSpawnAPI api) {
 		SpawnLogic logic = api.createSpawnLogic();
 
-		if( Options.enableColdIron ) {
+		if(Options.materialEnabled.get(MaterialNames.COLDIRON)) {
 			logic.getDimension(-1).addOre(Materials.getMaterialByName(MaterialNames.COLDIRON).getBlock(Names.ORE).getDefaultState(), 8, 4, 5, 0, 128);
 		}
 
-		if( Options.enableAdamantine ) {
+		if(Options.materialEnabled.get(MaterialNames.ADAMANTINE)) {
 			logic.getDimension(-1).addOre(Materials.getMaterialByName(MaterialNames.ADAMANTINE).getBlock(Names.ORE).getDefaultState(), 8, 4, 2, 0, 128);
 		}
 
-		if( Options.enableCopper ) {
+		if(Options.materialEnabled.get(MaterialNames.COPPER)) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.COPPER).getBlock(Names.ORE).getDefaultState(), 8, 4, 10, 0, 96);
 		}
 
-		if( Options.enableSilver ) {
+		if(Options.materialEnabled.get(MaterialNames.SILVER)) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.SILVER).getBlock(Names.ORE).getDefaultState(), 8, 4, 4, 0, 32);
 		}
 
-		if( Options.enableTin ) {
+		if(Options.materialEnabled.get(MaterialNames.TIN)) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.TIN).getBlock(Names.ORE).getDefaultState(), 8, 4, 10, 0, 128);
 		}
 
-		if( Options.enableLead ) {
+		if(Options.materialEnabled.get(MaterialNames.LEAD)) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.LEAD).getBlock(Names.ORE).getDefaultState(), 8, 4, 5, 0, 64);
 		}
 	
-		if( Options.enableZinc ) {
+		if(Options.materialEnabled.get(MaterialNames.ZINC)) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.ZINC).getBlock(Names.ORE).getDefaultState(), 8, 4, 5, 0, 96);
 		}
 		
-		if( Options.enableMercury ) {
+		if(Options.materialEnabled.get(MaterialNames.MERCURY)) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.MERCURY).getBlock(Names.ORE).getDefaultState(), 8, 4, 3, 0, 32);
 		}
 		
-		if( Options.enableNickel ) {
+		if(Options.materialEnabled.get(MaterialNames.NICKEL)) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.NICKEL).getBlock(Names.ORE).getDefaultState(), 8, 4, 1, 32, 96);
 		}
 		
 /*	Currently broken
-		if( Options.enablePlatinum ) {
+		if( Options.materials.get(MaterialNames.PLATINUM)) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.PLATINUM).getBlock(Names.ORE).getDefaultState(), 8, 4, 0.125f, 1, 32);
 		}
 */
 		
-		if( Options.enableStarSteel ) {
+		if(Options.materialEnabled.get(MaterialNames.STARSTEEL)) {
 			logic.getDimension(1).addOre(Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.ORE).getDefaultState(), 8, 4, 5, 0, 255);
 		}
 

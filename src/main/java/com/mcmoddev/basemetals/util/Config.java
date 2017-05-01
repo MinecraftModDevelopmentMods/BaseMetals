@@ -8,6 +8,7 @@ import java.util.*;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.AdditionalLootTables;
 import com.mcmoddev.basemetals.data.DataConstants;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
 import net.minecraft.block.Block;
@@ -40,7 +41,7 @@ public class Config {
 	private static final String TOOLS_CAT = "Tools and Items";
 	private static final String ALT_CFG_PATH = "config/additional-loot-tables"; // + BaseMetals.MODID;
 	private static final String ORESPAWN_CFG_PATH = "config/orespawn";
-	private static List<String> UserCrusherRecipes = new ArrayList<String>();
+	private static final List<String> UserCrusherRecipes = new ArrayList<String>();
 
 	@SubscribeEvent
 	public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent e) {
@@ -106,66 +107,66 @@ public class Config {
 				"If Thermal Expansion is available, this wil automatically integrate materials with the various machines");
 		
 		// METALS
-		Options.enableAdamantine = configuration.getBoolean("EnableAdamantine", MATERIALS_CAT, true,
-				"Enable Adamantine Items and Materials");
-		Options.enableAntimony = configuration.getBoolean("EnableAntimony", MATERIALS_CAT, true,
-				"Enable Antimony Items and Materials");
-		Options.enableAquarium = configuration.getBoolean("EnableAquarium", MATERIALS_CAT, true,
-				"Enable Aquarium Items and Materials");
-		Options.enableBismuth = configuration.getBoolean("EnableBismuth", MATERIALS_CAT, true,
-				"Enable Bismuth Items and Materials");
-		Options.enableBrass = configuration.getBoolean("EnableBrass", MATERIALS_CAT, true,
-				"Enable Brass Items and Materials");
-		Options.enableBronze = configuration.getBoolean("EnableBronze", MATERIALS_CAT, true,
-				"Enable Bronze Items and Materials");
-		Options.enableCharcoal = configuration.getBoolean("EnableCharcoal", MATERIALS_CAT, true,
-				"Enable Charcoal Items and Materials");
-		Options.enableCoal = configuration.getBoolean("EnableCoal", MATERIALS_CAT, true,
-				"Enable Coal Items and Materials");
-		Options.enableColdIron = configuration.getBoolean("EnableColdIron", MATERIALS_CAT, true,
-				"Enable ColdIron Items and Materials");
-		Options.enableCopper = configuration.getBoolean("EnableCopper", MATERIALS_CAT, true,
-				"Enable Copper Items and Materials");
-		Options.enableCupronickel = configuration.getBoolean("EnableCupronickel", MATERIALS_CAT, true,
-				"Enable Cupronickel Items and Materials");
-		Options.enableElectrum = configuration.getBoolean("EnableElectrum", MATERIALS_CAT, true,
-				"Enable Electrum Items and Materials");
-		Options.enableInvar = configuration.getBoolean("EnableInvar", MATERIALS_CAT, true,
-				"Enable Invar Items and Materials");
-		Options.enableLead = configuration.getBoolean("EnableLead", MATERIALS_CAT, true,
-				"Enable Lead Items and Materials");
-		Options.enableMercury = configuration.getBoolean("EnableMercury", MATERIALS_CAT, true,
-				"Enable Mercury Items and Materials");
-		Options.enableMithril = configuration.getBoolean("EnableMithril", MATERIALS_CAT, true,
-				"Enable Mithril Items and Materials");
-		Options.enableNickel = configuration.getBoolean("EnableNickel", MATERIALS_CAT, true,
-				"Enable Nickel Items and Materials");
-		Options.enablePewter = configuration.getBoolean("EnablePewter", MATERIALS_CAT, true,
-				"Enable Pewter Items and Materials");
-		Options.enablePlatinum = configuration.getBoolean("EnablePlatinum", MATERIALS_CAT, true,
-				"Enable Platinum Items and Materials");
-		Options.enableSilver = configuration.getBoolean("EnableSilver", MATERIALS_CAT, true,
-				"Enable Silver Items and Materials");
-		Options.enableStarSteel = configuration.getBoolean("EnableStarSteel", MATERIALS_CAT, true,
-				"Enable StarSteel Items and Materials");
-		Options.enableSteel = configuration.getBoolean("EnableSteel", MATERIALS_CAT, true,
-				"Enable Steel Items and Materials");
-		Options.enableTin = configuration.getBoolean("EnableTin", MATERIALS_CAT, true,
-				"Enable Tin Items and Materials");
-		Options.enableZinc = configuration.getBoolean("EnableZinc", MATERIALS_CAT, true,
-				"Enable Zinc Items and Materials");
+		Options.materialEnabled.put(MaterialNames.ADAMANTINE, configuration.getBoolean("EnableAdamantine", MATERIALS_CAT, true,
+				"Enable Adamantine Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.ANTIMONY, configuration.getBoolean("EnableAntimony", MATERIALS_CAT, true,
+				"Enable Antimony Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.AQUARIUM, configuration.getBoolean("EnableAquarium", MATERIALS_CAT, true,
+				"Enable Aquarium Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.BISMUTH, configuration.getBoolean("EnableBismuth", MATERIALS_CAT, true,
+				"Enable Bismuth Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.BRASS, configuration.getBoolean("EnableBrass", MATERIALS_CAT, true,
+				"Enable Brass Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.BRONZE, configuration.getBoolean("EnableBronze", MATERIALS_CAT, true,
+				"Enable Bronze Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.CHARCOAL, configuration.getBoolean("EnableCharcoal", MATERIALS_CAT, true,
+				"Enable Charcoal Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.COAL, configuration.getBoolean("EnableCoal", MATERIALS_CAT, true,
+				"Enable Coal Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.COLDIRON, configuration.getBoolean("EnableColdIron", MATERIALS_CAT, true,
+				"Enable ColdIron Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.COPPER, configuration.getBoolean("EnableCopper", MATERIALS_CAT, true,
+				"Enable Copper Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.CUPRONICKEL, configuration.getBoolean("EnableCupronickel", MATERIALS_CAT, true,
+				"Enable Cupronickel Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.ELECTRUM, configuration.getBoolean("EnableElectrum", MATERIALS_CAT, true,
+				"Enable Electrum Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.INVAR, configuration.getBoolean("EnableInvar", MATERIALS_CAT, true,
+				"Enable Invar Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.LEAD, configuration.getBoolean("EnableLead", MATERIALS_CAT, true,
+				"Enable Lead Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.MERCURY, configuration.getBoolean("EnableMercury", MATERIALS_CAT, true,
+				"Enable Mercury Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.MITHRIL, configuration.getBoolean("EnableMithril", MATERIALS_CAT, true,
+				"Enable Mithril Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.NICKEL, configuration.getBoolean("EnableNickel", MATERIALS_CAT, true,
+				"Enable Nickel Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.PEWTER, configuration.getBoolean("EnablePewter", MATERIALS_CAT, true,
+				"Enable Pewter Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.PLATINUM, configuration.getBoolean("EnablePlatinum", MATERIALS_CAT, true,
+				"Enable Platinum Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.SILVER, configuration.getBoolean("EnableSilver", MATERIALS_CAT, true,
+				"Enable Silver Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.STARSTEEL, configuration.getBoolean("EnableStarSteel", MATERIALS_CAT, true,
+				"Enable StarSteel Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.STEEL, configuration.getBoolean("EnableSteel", MATERIALS_CAT, true,
+				"Enable Steel Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.TIN, configuration.getBoolean("EnableTin", MATERIALS_CAT, true,
+				"Enable Tin Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.ZINC, configuration.getBoolean("EnableZinc", MATERIALS_CAT, true,
+				"Enable Zinc Items and Materials"));
 
 		// VANILLA
-		Options.enableDiamond = configuration.getBoolean("EnableDiamond", VANILLA_CAT, true,
-				"Enable Diamond Items and Materials");
-		Options.enableGold = configuration.getBoolean("EnableGold", VANILLA_CAT, true,
-				"Enable Gold Items and Materials");
-		Options.enableIron = configuration.getBoolean("EnableIron", VANILLA_CAT, true,
-				"Enable Iron Items and Materials");
-		Options.enableStone = configuration.getBoolean("EnableStone", VANILLA_CAT, true,
-				"Enable Stone Items and Materials");
-		Options.enableWood = configuration.getBoolean("EnableWood", VANILLA_CAT, true,
-				"Enable Wood Items and Materials");
+		Options.materialEnabled.put(MaterialNames.DIAMOND, configuration.getBoolean("EnableDiamond", VANILLA_CAT, true,
+				"Enable Diamond Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.GOLD, configuration.getBoolean("EnableGold", VANILLA_CAT, true,
+				"Enable Gold Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.IRON, configuration.getBoolean("EnableIron", VANILLA_CAT, true,
+				"Enable Iron Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.STONE, configuration.getBoolean("EnableStone", VANILLA_CAT, true,
+				"Enable Stone Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.WOOD, configuration.getBoolean("EnableWood", VANILLA_CAT, true,
+				"Enable Wood Items and Materials"));
 
 		// RECIPE AMOUNTS/TOOL&ITEM DISABLING
 		Options.gearQuantity = configuration.getInt("Gear Quantity", TOOLS_CAT, 4, 1, 64, "Number of Gears per recipe");
@@ -343,7 +344,10 @@ public class Config {
 		public static boolean enableTAIGA = true;
 		public static boolean enableThermalExpansion = true;
 
+		public static Map<String, Boolean> materialEnabled = new HashMap<>();
+
 		// MATERIALS
+		/*
 		public static boolean enableAdamantine = true;
 		public static boolean enableAntimony = true;
 		public static boolean enableAquarium = true;
@@ -368,8 +372,10 @@ public class Config {
 		public static boolean enableSteel = true;
 		public static boolean enableTin = true;
 		public static boolean enableZinc = true;
+		*/
 
 		// VANILLA
+		/*
 		public static boolean enableObsidian = true;
 		public static boolean enableQuartz = true;
 		public static boolean enableEmerald = true;
@@ -382,6 +388,7 @@ public class Config {
 		public static boolean enableRedstone = true;
 		public static boolean enableLapis = true;
 		public static boolean enableEnder = true;
+		*/
 
 		// THINGS
 		public static boolean enableBasics = true; // Nugget, Ingot, Powder, Blend, Block, Ore
@@ -497,7 +504,7 @@ public class Config {
 	 * @return An ItemStack representing the item, or null if the item is not
 	 *         found
 	 */
-	public static ItemStack parseStringAsItemStack(String str, boolean allowWildcard) {
+	public static ItemStack parseStringAsItemStack(String str, final boolean allowWildcard) {
 		str = str.trim();
 		int count = 1;
 		int meta;

@@ -100,7 +100,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 		Item armorItem = armor.getItem();
 		if (i % 2 == 0) {
 			// count armor pieces
-			if ((Options.enableStarSteel) && ("starsteel".equals(((ItemMMDArmor) armorItem).material.getName()))) {
+			if ((Options.materialEnabled.get(MaterialNames.STARSTEEL)) && ("starsteel".equals(((ItemMMDArmor) armorItem).material.getName()))) {
 				starsteel: {
 				// used to count up the starsteel armor items
 				if (!(starsteelUpdateCache.containsKey(player))) {
@@ -116,9 +116,9 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				}
 			}
 			}
-			if ((Options.enableLead) && ("lead".equals(((ItemMMDArmor) armorItem).material.getName()))) {
+			if ((Options.materialEnabled.get(MaterialNames.LEAD)) && ("lead".equals(((ItemMMDArmor) armorItem).material.getName()))) {
 				lead: {
-				// used to count up the starsteel armor items
+				// used to count up the Star-Steel armor items
 				if (!(leadUpdateCache.containsKey(player))) {
 					leadUpdateCache.put(player, new AtomicInteger(0));
 				}
@@ -126,9 +126,9 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				break lead;
 			}
 			}
-			if ((Options.enableAdamantine) && ("adamantine".equals(((ItemMMDArmor) armorItem).material.getName()))) {
+			if ((Options.materialEnabled.get(MaterialNames.ADAMANTINE)) && ("adamantine".equals(((ItemMMDArmor) armorItem).material.getName()))) {
 				adamantine: {
-				// used to count up the adamantine armor items
+				// used to count up the Adamantine armor items
 				if (!(adamantineUpdateCache.containsKey(player))) {
 					adamantineUpdateCache.put(player, new AtomicInteger(0));
 				}
@@ -138,7 +138,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 			}
 			} else {
 				// apply potion effects. Note that "Level I" is actually effect level 0 in the effect constructor 
-				if (Options.enableStarSteel) {
+				if (Options.materialEnabled.get(MaterialNames.STARSTEEL)) {
 					starsteel: {
 					if (!starsteelUpdateCache.containsKey(player))
 						break starsteel;
@@ -154,7 +154,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 					break starsteel;
 				}
 				}
-				if (Options.enableLead) {
+				if (Options.materialEnabled.get(MaterialNames.LEAD)) {
 					lead: {
 					if (!(leadUpdateCache.containsKey(player)))
 						break lead;
@@ -168,7 +168,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 					break lead;
 				}
 				}
-				if (Options.enableAdamantine) {
+				if (Options.materialEnabled.get(MaterialNames.ADAMANTINE)) {
 					adamantine: {
 					if (!(adamantineUpdateCache.containsKey(player)))
 						break adamantine;
@@ -188,7 +188,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				}
 				}
 				// full suit of cold-iron makes you fire-proof
-				if (Options.enableColdIron) {
+				if (Options.materialEnabled.get(MaterialNames.COLDIRON)) {
 					if(armorItem == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.HELMET)) {
 						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.CHESTPLATE)
 								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.LEGGINGS)
@@ -204,9 +204,9 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 						}
 					}
 				}
-				// full suit of mithril protects you from withering, poison, nausea,
+				// full suit of Mithril protects you from withering, poison, nausea,
 				// and hunger effects
-				if (Options.enableMithril) {
+				if (Options.materialEnabled.get(MaterialNames.MITHRIL)) {
 					if(armorItem == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.HELMET)) {
 						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.CHESTPLATE)
 								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.LEGGINGS)
@@ -232,8 +232,8 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 						}
 					}
 				}
-				// full suit of aquarium makes you breathe and heal underwater
-				if (Options.enableAquarium) {
+				// full suit of Aquarium makes you breathe and heal under water
+				if (Options.materialEnabled.get(MaterialNames.AQUARIUM)) {
 					if(armorItem == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.HELMET) && player.posY > 0 && player.posY < 255) {
 						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.CHESTPLATE)
 								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.LEGGINGS)

@@ -70,8 +70,8 @@ public class ItemMMDShield extends ItemShield implements IMMDObject {
 		String name = String.format("%s.name", this.getUnlocalizedName());
 		if( net.minecraft.util.text.translation.I18n.canTranslate(name) ) {
 			if( stack.getSubCompound("BlockEntityTag", false) != null ) {
-				String colored_name = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
-				return net.minecraft.util.text.translation.I18n.translateToLocal(colored_name);
+				String coloredName = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
+				return net.minecraft.util.text.translation.I18n.translateToLocal(coloredName);
 			} else {
 				return name;
 			}

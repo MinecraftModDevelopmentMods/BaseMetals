@@ -39,17 +39,17 @@ public abstract class MMDToolEffects {
 	 *            The attacker
 	 */
 	public static void extraEffectsOnAttack(final MMDMaterial material, final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
-		if ((Options.enableColdIron) && (material.equals(Materials.getMaterialByName(MaterialNames.COLDIRON)))) {
+		if ((Options.materialEnabled.get(MaterialNames.COLDIRON)) && (material.equals(Materials.getMaterialByName(MaterialNames.COLDIRON)))) {
 			if (target.isImmuneToFire()) {
 				final DamageSource extraDamage = DamageSource.generic;
 				target.attackEntityFrom(extraDamage, 3f);
 			}
-		} else if ((Options.enableAdamantine) && (material.equals(Materials.getMaterialByName(MaterialNames.ADAMANTINE)))) {
+		} else if ((Options.materialEnabled.get(MaterialNames.ADAMANTINE)) && (material.equals(Materials.getMaterialByName(MaterialNames.ADAMANTINE)))) {
 			if (target.getMaxHealth() > 20f) {
 				final DamageSource extraDamage = DamageSource.generic;
 				target.attackEntityFrom(extraDamage, 4f);
 			}
-		} else if ((Options.enableMithril) && (material.equals(Materials.getMaterialByName(MaterialNames.MITHRIL)))) {
+		} else if ((Options.materialEnabled.get(MaterialNames.MITHRIL)) && (material.equals(Materials.getMaterialByName(MaterialNames.MITHRIL)))) {
 			if (target.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD) {
 				final ResourceLocation witherKey = new ResourceLocation("wither");
 				final ResourceLocation blindKey = new ResourceLocation("wither");
@@ -58,7 +58,7 @@ public abstract class MMDToolEffects {
 				target.addPotionEffect(wither);
 				target.addPotionEffect(blind);
 			}
-		} else if ((Options.enableAquarium) && (material.equals(Materials.getMaterialByName(MaterialNames.AQUARIUM)))) {
+		} else if ((Options.materialEnabled.get(MaterialNames.AQUARIUM)) && (material.equals(Materials.getMaterialByName(MaterialNames.AQUARIUM)))) {
 			if (target.canBreatheUnderwater()) {
 				final DamageSource extraDamage = DamageSource.generic;
 				target.attackEntityFrom(extraDamage, 4f);
@@ -90,19 +90,19 @@ public abstract class MMDToolEffects {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void addToolSpecialPropertiesToolTip(MMDMaterial material, java.util.List<String> tooltipList) {
-		if ((Options.enableAdamantine) && (material.equals(Materials.getMaterialByName(MaterialNames.ADAMANTINE)))) {
+		if ((Options.materialEnabled.get(MaterialNames.ADAMANTINE)) && (material.equals(Materials.getMaterialByName(MaterialNames.ADAMANTINE)))) {
 			tooltipList.add(I18n.format("tooltip.adamantine.tool", 4));
 		}
-		if ((Options.enableAquarium) && (material.equals(Materials.getMaterialByName(MaterialNames.AQUARIUM)))) {
+		if ((Options.materialEnabled.get(MaterialNames.AQUARIUM)) && (material.equals(Materials.getMaterialByName(MaterialNames.AQUARIUM)))) {
 			tooltipList.add(I18n.format("tooltip.aquarium.tool", 4));
 		}
-		if ((Options.enableColdIron) && (material.equals(Materials.getMaterialByName(MaterialNames.COLDIRON)))) {
+		if ((Options.materialEnabled.get(MaterialNames.COLDIRON)) && (material.equals(Materials.getMaterialByName(MaterialNames.COLDIRON)))) {
 			tooltipList.add(I18n.format("tooltip.coldiron.tool", 3));
 		}
-		if ((Options.enableMithril) && (material.equals(Materials.getMaterialByName(MaterialNames.MITHRIL)))) {
+		if ((Options.materialEnabled.get(MaterialNames.MITHRIL)) && (material.equals(Materials.getMaterialByName(MaterialNames.MITHRIL)))) {
 			tooltipList.add(I18n.format("tooltip.mithril.tool"));
 		}
-		if ((Options.enableStarSteel) && (material.equals(Materials.getMaterialByName(MaterialNames.STARSTEEL)))) {
+		if ((Options.materialEnabled.get(MaterialNames.STARSTEEL)) && (material.equals(Materials.getMaterialByName(MaterialNames.STARSTEEL)))) {
 			tooltipList.add(I18n.format("tooltip.starsteel.tool", 10));
 		}
 	}
@@ -116,19 +116,19 @@ public abstract class MMDToolEffects {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void addArmorSpecialPropertiesToolTip(MMDMaterial material, java.util.List<String> tooltipList) {
-		if ((Options.enableAdamantine) && (material.equals(Materials.getMaterialByName(MaterialNames.ADAMANTINE)))) {
+		if ((Options.materialEnabled.get(MaterialNames.ADAMANTINE)) && (material.equals(Materials.getMaterialByName(MaterialNames.ADAMANTINE)))) {
 			tooltipList.add(I18n.format("tooltip.adamantine.armor", 4));
 		}
-		if ((Options.enableAquarium) && (material.equals(Materials.getMaterialByName(MaterialNames.AQUARIUM)))) {
+		if ((Options.materialEnabled.get(MaterialNames.AQUARIUM)) && (material.equals(Materials.getMaterialByName(MaterialNames.AQUARIUM)))) {
 			tooltipList.add(I18n.format("tooltip.aquarium.armor", 4));
 		}
-		if ((Options.enableColdIron) && (material.equals(Materials.getMaterialByName(MaterialNames.COLDIRON)))) {
+		if ((Options.materialEnabled.get(MaterialNames.COLDIRON)) && (material.equals(Materials.getMaterialByName(MaterialNames.COLDIRON)))) {
 			tooltipList.add(I18n.format("tooltip.coldiron.armor", 3));
 		}
-		if ((Options.enableMithril) && (material.equals(Materials.getMaterialByName(MaterialNames.MITHRIL)))) {
+		if ((Options.materialEnabled.get(MaterialNames.MITHRIL)) && (material.equals(Materials.getMaterialByName(MaterialNames.MITHRIL)))) {
 			tooltipList.add(I18n.format("tooltip.mithril.armor"));
 		}
-		if ((Options.enableStarSteel) && (material.equals(Materials.getMaterialByName(MaterialNames.STARSTEEL)))) {
+		if ((Options.materialEnabled.get(MaterialNames.STARSTEEL)) && (material.equals(Materials.getMaterialByName(MaterialNames.STARSTEEL)))) {
 			tooltipList.add(I18n.format("tooltip.starsteel.armor", 10));
 		}
 	}

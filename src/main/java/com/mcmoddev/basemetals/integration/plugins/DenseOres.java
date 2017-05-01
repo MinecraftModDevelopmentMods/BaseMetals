@@ -46,25 +46,10 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 				MaterialNames.ZINC
 		};
 
-		final boolean[] baseEnabled = new boolean[] {
-				Options.enableAdamantine,
-				Options.enableAntimony,
-				Options.enableBismuth,
-				Options.enableColdIron,
-				Options.enableCopper,
-				Options.enableLead,
-				Options.enableMercury,
-				Options.enableNickel,
-				Options.enablePlatinum,
-				Options.enableSilver,
-				Options.enableTin,
-				Options.enableZinc
-		};
-
 		for (int i = 0; i < baseNames.length; i++) {
 			final String ore = baseNames[i];
 			final MMDMaterial mat = Materials.getMaterialByName(ore);
-			if (mat != null && baseEnabled[i]) {
+			if (mat != null && Options.materialEnabled.get(ore)) {
 				String baseMaterial;
 				switch (ore) {
 					case MaterialNames.ADAMANTINE:

@@ -69,43 +69,43 @@ public class Achievements extends com.mcmoddev.lib.init.Achievements {
 			blocktastic = makeAchievement("blocktastic", thisIsNew, 2, 0, Materials.getMaterialByName(MaterialNames.COPPER).getBlock(Names.BLOCK), page); // TODO: Make this checks for all blocks
 			geologist = makeAchievement("geologist", thisIsNew, 4, 2, Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.CRACKHAMMER), page); // TODO: Make this check for all crackhammers
 			metallurgy = makeAchievement("metallurgy", geologist, 6, 2, Materials.getMaterialByName(MaterialNames.BRASS).getItem(Names.BLEND), page); // TODO: Make this check for all blends
-			if (Options.enableBrass) {
+			if (Options.materialEnabled.get(MaterialNames.BRASS)) {
 				brassMaker = makeAchievement("brass_maker", metallurgy, 9, 3, Materials.getMaterialByName(MaterialNames.BRASS).getItem(Names.INGOT), page);
 			}
-			if (Options.enableBronze) {
+			if (Options.materialEnabled.get(MaterialNames.BRONZE)) {
 				bronzeMaker = makeAchievement("bronze_maker", metallurgy, 9, 4, Materials.getMaterialByName(MaterialNames.BRONZE).getItem(Names.INGOT), page);
 			}
-			if (Options.enableCupronickel) {
+			if (Options.materialEnabled.get(MaterialNames.CUPRONICKEL)) {
 				cupronickelMaker = makeAchievement("cupronickel_maker", metallurgy, 9, 5, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getItem(Names.INGOT), page);
 			}
-			if (Options.enableElectrum) {
+			if (Options.materialEnabled.get(MaterialNames.ELECTRUM)) {
 				electrumMaker = makeAchievement("electrum_maker", metallurgy, 9, 6, Materials.getMaterialByName(MaterialNames.ELECTRUM).getItem(Names.INGOT), page);
 			}
-			if (Options.enableSteel) {
+			if (Options.materialEnabled.get(MaterialNames.STEEL)) {
 				steelMaker = makeAchievement("steel_maker", metallurgy, 9, 7, Materials.getMaterialByName(MaterialNames.STEEL).getItem(Names.INGOT), page);
 			}
-			if (Options.enableInvar) {
+			if (Options.materialEnabled.get(MaterialNames.INVAR)) {
 				invarMaker = makeAchievement("invar_maker", metallurgy, 9, 8, Materials.getMaterialByName(MaterialNames.INVAR).getItem(Names.INGOT), page);
 			}
-			if (Options.enableMithril) {
+			if (Options.materialEnabled.get(MaterialNames.MITHRIL)) {
 				mithrilMaker = makeAchievement("mithril_maker", metallurgy, 11, 10, Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.INGOT), page);
 			}
-			if (Options.enableAquarium) {
+			if (Options.materialEnabled.get(MaterialNames.AQUARIUM)) {
 				aquariumMaker = makeAchievement("aquarium_maker", metallurgy, 11, 12, Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.INGOT), page);
 			}
-			if (Options.enableColdIron) {
+			if (Options.materialEnabled.get(MaterialNames.COLDIRON)) {
 				demonSlayer = makeAchievement("demon_slayer", AchievementList.PORTAL, -5, 5, Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.SWORD), page);
 			}
-			if (Options.enableMithril) {
+			if (Options.materialEnabled.get(MaterialNames.MITHRIL)) {
 				angelOfDeath = makeAchievement("angel_of_death", mithrilMaker, 11, 11, Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD), page);
 			}
-			if (Options.enableAquarium) {
+			if (Options.materialEnabled.get(MaterialNames.AQUARIUM)) {
 				scubaDiver = makeAchievement("scuba_diver", aquariumMaker, 11, 13, Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.SWORD), page).setSpecial();
 			}
-			if (Options.enableAdamantine) {
+			if (Options.materialEnabled.get(MaterialNames.ADAMANTINE)) {
 				juggernaut = makeAchievement("juggernaut", AchievementList.PORTAL, -7, 3, Materials.getMaterialByName(MaterialNames.ADAMANTINE).getItem(Names.HELMET), page).setSpecial();
 			}
-			if (Options.enableStarSteel) {
+			if (Options.materialEnabled.get(MaterialNames.STARSTEEL)) {
 				moonBoots = makeAchievement("moon_boots", AchievementList.THE_END, -2, 6, Materials.getMaterialByName(MaterialNames.STARSTEEL).getItem(Names.BOOTS), page).setSpecial();
 			}
 		}

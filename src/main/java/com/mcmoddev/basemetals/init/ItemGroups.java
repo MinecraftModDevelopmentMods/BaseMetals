@@ -46,7 +46,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 		Item blocksTabIconItem;
 		Item itemsTabIconItem;
 		Item toolsTabIconItem;
-		if (Options.enableStarSteel) {
+		if (Options.materialEnabled.get(MaterialNames.STARSTEEL)) {
 			temp = Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.BLOCK);
 		} else {
 			temp = net.minecraft.init.Blocks.IRON_BLOCK;
