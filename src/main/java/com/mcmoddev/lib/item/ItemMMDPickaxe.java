@@ -110,16 +110,7 @@ public class ItemMMDPickaxe extends ItemPickaxe implements IMMDObject {
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }

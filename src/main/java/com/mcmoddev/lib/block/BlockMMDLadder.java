@@ -19,12 +19,7 @@ public class BlockMMDLadder extends BlockLadder implements IMMDObject {
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	@Override
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }

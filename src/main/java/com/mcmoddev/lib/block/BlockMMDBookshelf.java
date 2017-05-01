@@ -25,15 +25,10 @@ public class BlockMMDBookshelf extends BlockBookshelf implements IMMDObject {
 	}
 	
 	@Override
-	public MMDMaterial getMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 
-	@Override
-	public MMDMaterial getMetalMaterial() {
-		return this.material;
-	}
-	
     @Override
     public boolean isFullCube(IBlockState state) {
         return this.fullBlock;

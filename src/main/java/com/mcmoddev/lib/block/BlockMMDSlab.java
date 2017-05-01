@@ -134,21 +134,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
-		return this.material;
-	}
-
-	// @Override
-	// public String getOreDictionaryName() {
-	// return Oredicts.SLAB + material.getCapitalizedName();
-	// }
 }

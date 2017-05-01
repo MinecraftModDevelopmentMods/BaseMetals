@@ -2,10 +2,9 @@ package com.mcmoddev.lib.item;
 
 import java.util.*;
 
-import com.mcmoddev.basemetals.init.Achievements;
-import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.lib.init.Achievements;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
-import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -99,7 +98,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 				ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(targetItem);
 				if (recipe != null) {
 					// hardness check
-					if ((Config.Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
+					if ((Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
 						Block b = ((ItemBlock) targetItem.getItem()).getBlock();
 						if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
 							// cannot harvest the block, no crush for you!
@@ -202,7 +201,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 	@Deprecated
 	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
 		if (typeRequested != null && toolTypes.contains(typeRequested)) {
-			if (Config.Options.strongHammers()) {
+			if (Options.strongHammers()) {
 				return material.getToolHarvestLevel();
 			} else {
 				return material.getToolHarvestLevel() - 1;
@@ -268,16 +267,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }

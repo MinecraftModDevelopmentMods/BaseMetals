@@ -825,10 +825,10 @@ public abstract class Items {
 		int materialVal = 9900;
 		if ((itemStack.getItem() instanceof ItemBlock) && (((ItemBlock) itemStack.getItem()).getBlock() instanceof IMMDObject)) {
 			classVal = classSortingValues.computeIfAbsent(((ItemBlock) itemStack.getItem()).getBlock().getClass(), (Class<?> clazz) -> 990000);
-			materialVal = materialSortingValues.computeIfAbsent(((IMMDObject) ((ItemBlock) itemStack.getItem()).getBlock()).getMaterial(), (MMDMaterial material) -> 9900);
+			materialVal = materialSortingValues.computeIfAbsent(((IMMDObject) ((ItemBlock) itemStack.getItem()).getBlock()).getMMDMaterial(), (MMDMaterial material) -> 9900);
 		} else if (itemStack.getItem() instanceof IMMDObject) {
 			classVal = classSortingValues.computeIfAbsent(itemStack.getItem().getClass(), (Class<?> clazz) -> 990000);
-			materialVal = materialSortingValues.computeIfAbsent(((IMMDObject) itemStack.getItem()).getMaterial(), (MMDMaterial material) -> 9900);
+			materialVal = materialSortingValues.computeIfAbsent(((IMMDObject) itemStack.getItem()).getMMDMaterial(), (MMDMaterial material) -> 9900);
 		}
 		return classVal + materialVal + (itemStack.getMetadata() % 100);
 	}

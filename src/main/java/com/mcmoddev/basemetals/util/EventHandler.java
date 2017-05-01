@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.util;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.init.Achievements;
+import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.item.ItemMMDShield;
@@ -79,7 +79,7 @@ public class EventHandler {
 	void event(ItemSmeltedEvent event) {
 		final Item item = event.smelting.getItem();
 		if (item instanceof IMMDObject) {
-			final MMDMaterial material = ((IMMDObject) item).getMaterial();
+			final MMDMaterial material = ((IMMDObject) item).getMMDMaterial();
 			if (Options.enableAchievements()) {
 				if (item instanceof ItemMMDIngot) {
 					// event.player.addStat(Achievements.this_is_new, 1);

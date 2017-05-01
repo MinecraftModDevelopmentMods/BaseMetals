@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.item;
 
-import com.mcmoddev.basemetals.init.Achievements;
+import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -36,16 +36,7 @@ public class ItemMMDIngot extends net.minecraft.item.Item implements IMMDObject 
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }

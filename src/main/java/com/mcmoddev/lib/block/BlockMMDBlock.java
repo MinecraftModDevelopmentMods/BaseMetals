@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.block;
 
-import com.mcmoddev.basemetals.init.Achievements;
+import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -40,9 +40,9 @@ public class BlockMMDBlock extends Block implements IMMDObject {
 	}
 
 	public BlockMMDBlock(MMDMaterial material, boolean glows, boolean isBeacon) {
-		super(getMaterialFromMetalMaterial(material));
+		super(getMaterialFromMMDMaterial(material));
 
-		this.setSoundType(getSoundFromMetalMaterial(material));
+		this.setSoundType(getSoundFromMMDMaterial(material));
 		this.fullBlock = true;
 		this.lightOpacity = 255;
 		this.translucent = false;
@@ -57,7 +57,7 @@ public class BlockMMDBlock extends Block implements IMMDObject {
 			this.setLightLevel(0.5f);
 	}
 
-	private static final Material getMaterialFromMetalMaterial(MMDMaterial material) {
+	private static final Material getMaterialFromMMDMaterial(MMDMaterial material) {
 		switch (material.getType()) {
 			case METAL:
 				return Material.IRON;
@@ -73,7 +73,7 @@ public class BlockMMDBlock extends Block implements IMMDObject {
 		}
 	}
 
-	private static final SoundType getSoundFromMetalMaterial(MMDMaterial material) {
+	private static final SoundType getSoundFromMMDMaterial(MMDMaterial material) {
 		switch (material.getType()) {
 			case METAL:
 				return SoundType.METAL;
@@ -167,16 +167,7 @@ public class BlockMMDBlock extends Block implements IMMDObject {
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }
