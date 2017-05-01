@@ -28,20 +28,12 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			MaterialNames.AQUARIUM,
 			MaterialNames.BISMUTH,
 			MaterialNames.BRASS,
-			MaterialNames.BRONZE,
 			MaterialNames.COLDIRON,
 			MaterialNames.CUPRONICKEL,
-			MaterialNames.INVAR,
-			MaterialNames.MITHRIL,
-			MaterialNames.NICKEL,
 			MaterialNames.PEWTER,
-			MaterialNames.PLATINUM,
 			MaterialNames.STARSTEEL,
-			MaterialNames.TIN,
 			MaterialNames.ZINC,
-			MaterialNames.LEAD,
-			MaterialNames.MERCURY,
-			MaterialNames.SILVER
+			MaterialNames.MERCURY
 		};
 
 		for (int i = 0; i < baseNames.length; i++) {

@@ -170,6 +170,8 @@ public class Config {
 		// VANILLA
 		Options.materialEnabled.put(MaterialNames.DIAMOND, configuration.getBoolean("EnableDiamond", VANILLA_CAT, true,
 				"Enable Diamond Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.EMERALD, configuration.getBoolean("EnableEmerald", VANILLA_CAT, true,
+				"Enable Emerald Items and Materials"));
 		Options.materialEnabled.put(MaterialNames.GOLD, configuration.getBoolean("EnableGold", VANILLA_CAT, true,
 				"Enable Gold Items and Materials"));
 		Options.materialEnabled.put(MaterialNames.IRON, configuration.getBoolean("EnableIron", VANILLA_CAT, true,
@@ -178,6 +180,18 @@ public class Config {
 				"Enable Stone Items and Materials"));
 		Options.materialEnabled.put(MaterialNames.WOOD, configuration.getBoolean("EnableWood", VANILLA_CAT, true,
 				"Enable Wood Items and Materials"));
+		Options.materialEnabled.put(MaterialNames.ENDER, configuration.getBoolean("EnableEnder", VANILLA_CAT, true,
+				"Enable Ender Items and Materials (not currently in use)"));
+		Options.materialEnabled.put(MaterialNames.QUARTZ, configuration.getBoolean("EnableQuartz", VANILLA_CAT, true,
+				"Enable Nether Quartz Items and Materials (not currently in use)"));
+		Options.materialEnabled.put(MaterialNames.OBSIDIAN, configuration.getBoolean("EnableObsidian", VANILLA_CAT, true,
+				"Enable Obsidian Items and Materials (not currently in use)"));
+		Options.materialEnabled.put(MaterialNames.LAPIS, configuration.getBoolean("EnableLapis", VANILLA_CAT, true,
+				"Enable Lapis Lazuli Items and Materials (not currently in use)"));
+		Options.materialEnabled.put(MaterialNames.PRISMARINE, configuration.getBoolean("EnablePrismarine", VANILLA_CAT, true,
+				"Enable Prismarine Items and Materials (not currently in use)"));
+		Options.materialEnabled.put(MaterialNames.REDSTONE, configuration.getBoolean("EnableRedstone", VANILLA_CAT, true,
+				"Enable Redstone Items and Materials (not currently in use)"));
 
 		// RECIPE AMOUNTS/TOOL&ITEM DISABLING
 		Options.gearQuantity = configuration.getInt("Gear Quantity", TOOLS_CAT, 4, 1, 64, "Number of Gears per recipe");
