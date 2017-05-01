@@ -4,7 +4,6 @@ import com.mcmoddev.lib.entity.EntityCustomBolt;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -25,7 +24,6 @@ public class ItemMMDBolt extends ItemBolt implements IMMDObject {
 	 */
 	public ItemMMDBolt(MMDMaterial material) {
 		this.material = material;
-		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 
 	/**

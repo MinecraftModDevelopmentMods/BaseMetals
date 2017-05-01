@@ -9,7 +9,6 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +27,6 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ItemMMDSword extends ItemSword implements IMMDObject {
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 	protected final float attackDamage;
 
@@ -44,8 +42,6 @@ public class ItemMMDSword extends ItemSword implements IMMDObject {
 		// this.damageVsEntity = attackDamage + metal.getBaseAttackDamage(); // damageVsEntity is private, sadly
 		this.attackDamage = 3F + this.material.getBaseAttackDamage();
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates();
-		this.setCreativeTab(CreativeTabs.COMBAT);
 	}
 
 	@Override
@@ -85,7 +81,7 @@ public class ItemMMDSword extends ItemSword implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (this.material.regenerates() && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 
@@ -97,11 +93,7 @@ public class ItemMMDSword extends ItemSword implements IMMDObject {
 	public float getAttackDamage() {
 		return this.attackDamage;
 	}
-/*
-	public String getMaterialName() {
-		return this.material.getName();
-	}
-*/
+
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);

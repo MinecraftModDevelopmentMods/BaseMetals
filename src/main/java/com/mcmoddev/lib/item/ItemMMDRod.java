@@ -3,8 +3,6 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.creativetab.CreativeTabs;
-
 /**
  * Rods
  * 
@@ -22,7 +20,6 @@ public class ItemMMDRod extends net.minecraft.item.Item implements IMMDObject {
 	 */
 	public ItemMMDRod(MMDMaterial material) {
 		this.material = material;
-		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 
 	@Override

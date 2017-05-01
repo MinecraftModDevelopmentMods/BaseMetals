@@ -5,7 +5,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.HorseArmorUtils;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.HorseArmorType;
 import net.minecraft.item.Item;
@@ -22,7 +21,6 @@ public class ItemMMDHorseArmor extends Item implements IMMDObject, IHorseArmor {
 
 	public ItemMMDHorseArmor(MMDMaterial material) {
 		this.material = material;
-		this.setCreativeTab(CreativeTabs.COMBAT);
 		this.setMaxStackSize(1);
 	}
 

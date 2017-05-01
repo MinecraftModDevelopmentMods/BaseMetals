@@ -7,10 +7,11 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -22,7 +23,6 @@ public class ItemMMDShield extends ItemShield implements IMMDObject {
 
 	final MMDMaterial material;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -33,9 +33,13 @@ public class ItemMMDShield extends ItemShield implements IMMDObject {
 	public ItemMMDShield(MMDMaterial material) {
 		this.material = material;
 		this.setMaxDamage((int) (this.material.getStat(MaterialStats.STRENGTH) * 168));
-		this.setCreativeTab(CreativeTabs.TOOLS);
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates();
+	}
+
+	@Override
+	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
+		if (this.material.regenerates() && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+			item.setItemDamage(item.getItemDamage() - 1);
 	}
 
 	@Override
