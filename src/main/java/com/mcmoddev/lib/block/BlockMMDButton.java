@@ -4,7 +4,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.BlockButton;
-import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
@@ -17,11 +16,11 @@ public class BlockMMDButton extends BlockButton implements IMMDObject {
 
 	public BlockMMDButton(MMDMaterial material) {
 		super(false);
-		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.setSoundType(this.material.getSoundType());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

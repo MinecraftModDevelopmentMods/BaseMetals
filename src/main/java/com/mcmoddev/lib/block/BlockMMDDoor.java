@@ -7,7 +7,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.BlockDoor;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,12 +35,12 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	 *            The material the door is made from
 	 */
 	public BlockMMDDoor(MMDMaterial material) {
-		super((material.getToolHarvestLevel() > 0) ? Material.IRON : Material.ROCK);
-		this.setSoundType(SoundType.METAL);
+		super((material.getToolHarvestLevel() > 0) ? material.getVanillaMaterial() : Material.ROCK);
 		this.material = material;
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.setSoundType(this.material.getSoundType());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 

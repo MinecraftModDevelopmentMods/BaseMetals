@@ -4,18 +4,17 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.BlockAnvil;
-import net.minecraft.block.SoundType;
 
 public class BlockMMDAnvil extends BlockAnvil implements IMMDObject {
 
 	final MMDMaterial material;
 
 	public BlockMMDAnvil(MMDMaterial material) {
-		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.setHarvestLevel("axe", material.getRequiredHarvestLevel());
+		this.setSoundType(this.material.getSoundType());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

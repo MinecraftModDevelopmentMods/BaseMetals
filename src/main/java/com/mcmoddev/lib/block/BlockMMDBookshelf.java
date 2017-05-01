@@ -4,7 +4,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.BlockBookshelf;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 
 public class BlockMMDBookshelf extends BlockBookshelf implements IMMDObject {
@@ -13,11 +12,11 @@ public class BlockMMDBookshelf extends BlockBookshelf implements IMMDObject {
 	private boolean fullBlock = true;
 
 	public BlockMMDBookshelf(MMDMaterial material) {
-		this.setSoundType(SoundType.METAL);
 		this.material = material;
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.setHarvestLevel("axe", material.getRequiredHarvestLevel());
+		this.setSoundType(this.material.getSoundType());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.setHarvestLevel("axe", this.material.getRequiredHarvestLevel());
 	}
 
 	public void setFullBlock(boolean val) {

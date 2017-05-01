@@ -4,8 +4,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.BlockPressurePlate;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 
 /**
  *
@@ -22,12 +20,12 @@ public class BlockMMDPressurePlate extends BlockPressurePlate implements IMMDObj
 	 *            The material the pressure plate is made from
 	 */
 	public BlockMMDPressurePlate(MMDMaterial material) {
-		super(Material.IRON, BlockPressurePlate.Sensitivity.MOBS);
-		this.setSoundType(SoundType.METAL);
+		super(material.getVanillaMaterial(), BlockPressurePlate.Sensitivity.MOBS);
 		this.material = material;
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.setSoundType(this.material.getSoundType());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

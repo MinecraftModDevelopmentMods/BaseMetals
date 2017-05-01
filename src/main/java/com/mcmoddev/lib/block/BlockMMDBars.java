@@ -3,9 +3,6 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-
 /**
  * Metal Bars
  * 
@@ -22,12 +19,12 @@ public class BlockMMDBars extends net.minecraft.block.BlockPane implements IMMDO
 	 *            The material the bars are made from
 	 */
 	public BlockMMDBars(MMDMaterial material) {
-		super(Material.IRON, true);
-		this.setSoundType(SoundType.METAL);
+		super(material.getVanillaMaterial(), true);
 		this.material = material;
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.setSoundType(this.material.getSoundType());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

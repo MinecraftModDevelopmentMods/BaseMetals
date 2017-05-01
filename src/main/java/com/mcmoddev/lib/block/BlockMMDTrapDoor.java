@@ -4,8 +4,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,12 +25,12 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	 *            The material the trapdoor is made from
 	 */
 	public BlockMMDTrapDoor(MMDMaterial material) {
-		super(Material.IRON);
+		super(material.getVanillaMaterial());
 		this.material = material;
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.blockSoundType = SoundType.METAL;
-		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.blockSoundType = this.material.getSoundType();
+		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 

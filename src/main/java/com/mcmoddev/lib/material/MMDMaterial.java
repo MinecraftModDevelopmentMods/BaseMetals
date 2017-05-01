@@ -10,6 +10,8 @@ import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 // import net.minecraftforge.fluids.BlockFluidBase;
@@ -586,4 +588,38 @@ public class MMDMaterial {
 	public void setRegenerates(boolean regen) {
 		this.regenerates = regen;
 	}
+	
+	public final Material getVanillaMaterial() {
+		switch (this.getType()) {
+			case METAL:
+				return Material.IRON;
+			case GEM:
+			case ROCK:
+				return Material.ROCK;
+			case MINERAL:
+				return Material.GRASS;
+			case WOOD:
+				return Material.WOOD;
+			default:
+				return Material.GROUND;
+		}
+	}
+
+	public final SoundType getSoundType() {
+		switch (this.getType()) {
+			case METAL:
+				return SoundType.METAL;
+			case GEM:
+				return SoundType.GLASS;
+			case ROCK:
+				return SoundType.STONE;
+			case MINERAL:
+				return SoundType.SAND;
+			case WOOD:
+				return SoundType.WOOD;
+			default:
+				return SoundType.GROUND;
+		}
+	}
+
 }

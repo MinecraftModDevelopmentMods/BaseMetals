@@ -6,9 +6,7 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,54 +38,21 @@ public class BlockMMDBlock extends Block implements IMMDObject {
 	}
 
 	public BlockMMDBlock(MMDMaterial material, boolean glows, boolean isBeacon) {
-		super(getMaterialFromMMDMaterial(material));
+		super(material.getVanillaMaterial());
+		this.material = material;
 
-		this.setSoundType(getSoundFromMMDMaterial(material));
+		this.setSoundType(this.material.getSoundType());
 		this.fullBlock = true;
 		this.lightOpacity = 255;
 		this.translucent = false;
-		this.material = material;
 		this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 		this.beaconBase = isBeacon;
 
 		if (glows)
 			this.setLightLevel(0.5f);
-	}
-
-	private static final Material getMaterialFromMMDMaterial(MMDMaterial material) {
-		switch (material.getType()) {
-			case METAL:
-				return Material.IRON;
-			case GEM:
-			case ROCK:
-				return Material.ROCK;
-			case MINERAL:
-				return Material.GRASS;
-			case WOOD:
-				return Material.WOOD;
-			default:
-				return Material.GROUND;
-		}
-	}
-
-	private static final SoundType getSoundFromMMDMaterial(MMDMaterial material) {
-		switch (material.getType()) {
-			case METAL:
-				return SoundType.METAL;
-			case GEM:
-				return SoundType.GLASS;
-			case ROCK:
-				return SoundType.STONE;
-			case MINERAL:
-				return SoundType.SAND;
-			case WOOD:
-				return SoundType.WOOD;
-			default:
-				return SoundType.GROUND;
-		}
 	}
 
 	@Override
