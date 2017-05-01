@@ -37,6 +37,11 @@ public class ThermalExpansionBase implements IIntegration {
 		if (input == null || output == null) {
 			return;
 		}
+		
+		if (input.getItem() == null || output.getItem() == null ) {
+			return;
+		}
+		
 		NBTTagCompound toSend = new NBTTagCompound();
 
 		toSend.setInteger("energy", energy);
@@ -52,6 +57,11 @@ public class ThermalExpansionBase implements IIntegration {
 		if (input == null || output == null) {
 			return;
 		}
+		
+		if (input.getItem() == null || output.getItem() == null ) {
+			return;
+		}
+
 		NBTTagCompound toSend = new NBTTagCompound();
 
 		toSend.setInteger("energy", energy);
@@ -73,22 +83,25 @@ public class ThermalExpansionBase implements IIntegration {
 			final int ENERGY_ORE = 2000;
 			final int ENERGY_DUST = 1400;
 			ItemStack ore;
-			if (mat.getBlock(Names.ORE) != null) {
+			if (mat.hasBlock(Names.ORE) && mat.getBlock(Names.ORE) != null) {
 				ore = new ItemStack(mat.getBlock(Names.ORE), 1, 0);
-			} else if( mat.getItem(Names.BLEND) != null ) {
+			} else if( mat.hasItem(Names.BLEND) &&  mat.getItem(Names.BLEND) != null ) {
 				ore = new ItemStack(mat.getItem(Names.BLEND), 1, 0);
 			} else {
 				return;
 			}
-			
-			ItemStack ingot = new ItemStack( mat.getItem(Names.INGOT), 1, 0);
-			if (ingot.getItem() == null) {
+
+			if ((!mat.hasItem(Names.INGOT)) || mat.getItem(Names.INGOT) == null) {
 				return;
 			}
+			
+			ItemStack ingot = new ItemStack( mat.getItem(Names.INGOT), 1, 0);
 			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
-			if (Options.enableBasics && mat.getItem(Names.POWDER) != null) {
-				ItemStack dust = new ItemStack(mat.getItem(Names.POWDER));
-				ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
+			if (Options.enableBasics) {
+				if (mat.hasItem(Names.POWDER) && mat.getItem(Names.POWDER) != null) {
+					ItemStack dust = new ItemStack(mat.getItem(Names.POWDER), 1, 0);
+					ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
+				}
 			}
 		}
 	}
