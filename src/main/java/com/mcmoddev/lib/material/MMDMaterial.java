@@ -484,7 +484,7 @@ public class MMDMaterial {
 	 * @return the Block registered with the material, null if one of that name was not registered
 	 */
 	public Block getBlock( Names name ) {
-		return getBlock( name.toString() );
+		return this.getBlock( name.toString() );
 	}
 	
 	/**
