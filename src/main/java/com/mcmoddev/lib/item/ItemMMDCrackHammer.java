@@ -45,7 +45,6 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 	private final MMDMaterial material;
 	private final Set<String> toolTypes;
 	private final String repairOreDictName;
-	private final boolean regenerates;
 	private static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -64,7 +63,6 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 		toolTypes.add("crackhammer");
 		toolTypes.add("pickaxe");
 		repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates();
 	}
 
 	@Override
@@ -244,7 +242,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % REGEN_INTERVAL == 0) {
+		if (this.material.regenerates() && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % REGEN_INTERVAL == 0) {
 			item.setItemDamage(item.getItemDamage() - 1);
 		}
 	}
@@ -265,11 +263,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 		// return true if block doesn't need tools
 		return target.getHarvestLevel(target.getDefaultState()) == -1;
 	}
-/*
-	public String getMaterialName() {
-		return this.material.getName();
-	}
-*/
+
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);

@@ -22,7 +22,6 @@ public class ItemMMDFishingRod extends ItemFishingRod implements IMMDObject {
 
 	private final MMDMaterial material;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -44,7 +43,6 @@ public class ItemMMDFishingRod extends ItemFishingRod implements IMMDObject {
 //				return entityIn == null ? 0.0F : ((entityIn.getHeldItemMainhand() == stack) && (entityIn instanceof EntityPlayer) && (((EntityPlayer) entityIn).fishEntity != null) ? 1.0F : 0.0F);
 //			}
 //		});
-		this.regenerates = this.material.regenerates();
 	}
 
 	/*
@@ -81,14 +79,10 @@ public class ItemMMDFishingRod extends ItemFishingRod implements IMMDObject {
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
 		super.onUpdate(item, world, player, inventoryIndex, isHeld);
 
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (this.material.regenerates() && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
-/*
-	public String getMaterialName() {
-		return this.material.getName();
-	}
-*/
+
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);

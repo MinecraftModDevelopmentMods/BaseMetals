@@ -3,7 +3,6 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 /**
@@ -22,7 +21,6 @@ public class ItemMMDSmallPowder extends Item implements IMMDObject {
 	 */
 	public ItemMMDSmallPowder(MMDMaterial material) {
 		this.material = material;
-		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 
 	@Override

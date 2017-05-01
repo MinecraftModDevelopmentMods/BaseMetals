@@ -6,7 +6,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import net.minecraft.item.Item;
 
 /**
- * version of Item that stores a metal material
+ * version of Item that stores a material
  * 
  * @author DrCyano
  *

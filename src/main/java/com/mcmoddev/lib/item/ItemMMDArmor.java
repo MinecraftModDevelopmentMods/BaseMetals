@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.basemetals.util.Config.Options;
@@ -18,6 +19,7 @@ import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -31,7 +33,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -71,7 +72,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 							 EntityEquipmentSlot slot) {
 		super(armorMat, renderIndex, slot);
 		this.material = material;
-		this.repairOreDictName = "ingot" + material.getCapitalizedName();
+		this.repairOreDictName = Oredicts.INGOT + material.getCapitalizedName();
 		this.customTexture = Loader.instance().activeModContainer().getModId() + ":textures/models/armor/" + material.getName() + "_layer_" + (slot == EntityEquipmentSlot.LEGS ? 2 : 1) + ".png";
 	}
 
@@ -104,7 +105,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 		Item armorItem = armor.getItem();
 		if (i % 2 == 0) {
 			// count armor pieces
-			if ((Options.materialEnabled.get(MaterialNames.STARSTEEL)) && ("starsteel".equals(((ItemMMDArmor) armorItem).material.getName()))) {
+			if ((Options.materialEnabled.get(MaterialNames.STARSTEEL)) && (MaterialNames.STARSTEEL.equals(((ItemMMDArmor) armorItem).material.getName()))) {
 				starsteel: {
 				// used to count up the starsteel armor items
 				if (!(starsteelUpdateCache.containsKey(player))) {
@@ -120,7 +121,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				}
 			}
 			}
-			if ((Options.materialEnabled.get(MaterialNames.LEAD)) && ("lead".equals(((ItemMMDArmor) armorItem).material.getName()))) {
+			if ((Options.materialEnabled.get(MaterialNames.LEAD)) && (MaterialNames.LEAD.equals(((ItemMMDArmor) armorItem).material.getName()))) {
 				lead: {
 				// used to count up the Star-Steel armor items
 				if (!(leadUpdateCache.containsKey(player))) {
@@ -130,7 +131,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				break lead;
 			}
 			}
-			if ((Options.materialEnabled.get(MaterialNames.ADAMANTINE)) && ("adamantine".equals(((ItemMMDArmor) armorItem).material.getName()))) {
+			if ((Options.materialEnabled.get(MaterialNames.ADAMANTINE)) && (MaterialNames.ADAMANTINE.equals(((ItemMMDArmor) armorItem).material.getName()))) {
 				adamantine: {
 				// used to count up the Adamantine armor items
 				if (!(adamantineUpdateCache.containsKey(player))) {
@@ -273,7 +274,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
 		if (amaterial == null) {
 			// uh-oh
-			FMLLog.severe("Failed to load armor material enum for " + material);
+			BaseMetals.logger.error("Failed to load armor material enum for " + material);
 			return null;
 		}
 		return new ItemMMDArmor(material, amaterial, amaterial.ordinal(), slot);

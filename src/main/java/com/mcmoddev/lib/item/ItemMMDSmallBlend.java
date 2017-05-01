@@ -5,7 +5,6 @@ import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,7 +26,6 @@ public class ItemMMDSmallBlend extends Item implements IMMDObject {
 	 */
 	public ItemMMDSmallBlend(MMDMaterial material) {
 		this.material = material;
-		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 
 	@Override

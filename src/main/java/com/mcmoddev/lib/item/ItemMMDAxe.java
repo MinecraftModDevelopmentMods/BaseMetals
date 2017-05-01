@@ -7,6 +7,7 @@ import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,7 +27,6 @@ public class ItemMMDAxe extends ItemAxe implements IMMDObject {
 
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -41,8 +41,7 @@ public class ItemMMDAxe extends ItemAxe implements IMMDObject {
 		this.damageVsEntity = 4F + (2F * this.material.getBaseAttackDamage());
 		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * this.material.getStat(MaterialStats.STRENGTH));
 		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
-		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates();
+		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 
 	@Override
@@ -84,14 +83,10 @@ public class ItemMMDAxe extends ItemAxe implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (this.material.regenerates() && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
-/*
-	public String getMaterialName() {
-		return this.material.getName();
-	}
-*/
+
 	@Override
 	public MMDMaterial getMMDMaterial() {
 		return this.material;

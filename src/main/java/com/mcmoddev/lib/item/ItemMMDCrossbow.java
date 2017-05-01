@@ -7,7 +7,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -23,7 +22,6 @@ public class ItemMMDCrossbow extends ItemBow implements IMMDObject {
 
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -35,9 +33,7 @@ public class ItemMMDCrossbow extends ItemBow implements IMMDObject {
 		this.material = material;
 		this.maxStackSize = 1;
 		this.setMaxDamage(this.material.getToolDurability());
-		this.setCreativeTab(CreativeTabs.COMBAT);
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates();
 	}
 
 	/*
@@ -156,12 +152,8 @@ public class ItemMMDCrossbow extends ItemBow implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (this.material.regenerates() && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
-	}
-
-	public String getMaterialName() {
-		return this.material.getName();
 	}
 
 	@Override

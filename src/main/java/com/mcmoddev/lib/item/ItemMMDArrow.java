@@ -4,7 +4,6 @@ import com.mcmoddev.lib.entity.EntityCustomArrow;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
@@ -26,7 +25,6 @@ public class ItemMMDArrow extends ItemArrow implements IMMDObject {
 	 */
 	public ItemMMDArrow(MMDMaterial material) {
 		this.material = material;
-		this.setCreativeTab(CreativeTabs.MATERIALS);
 	}
 
 	/**

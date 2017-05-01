@@ -30,7 +30,6 @@ public class ItemMMDHoe extends ItemHoe implements IMMDObject {
 	protected final MMDMaterial material;
 	protected final Set<String> toolTypes;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -45,7 +44,6 @@ public class ItemMMDHoe extends ItemHoe implements IMMDObject {
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("hoe");
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates();
 	}
 
 	@Override
@@ -103,7 +101,7 @@ public class ItemMMDHoe extends ItemHoe implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (this.material.regenerates() && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
 			item.setItemDamage(item.getItemDamage() - 1);
 	}
 
