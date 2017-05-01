@@ -115,10 +115,6 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 				continue; // Too expensive
 			}
 
-			final int armorsmith = (3 << 16) | (1 << 8) | (tradeLevel);
-			final int weaponsmith = (3 << 16) | (2 << 8) | (tradeLevel);
-			final int toolsmith = (3 << 16) | (3 << 8) | (tradeLevel);
-
 			if (allIngots.containsKey(material)) {
 				final ITradeList[] ingotTrades = makeTradePalette(makePurchasePalette(emeraldPurch, 12, allIngots.get(material)), makeSalePalette(emeraldSale, 12, allIngots.get(material)));
 				tradesTable.computeIfAbsent(armorsmith | (tradeLevel), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(ingotTrades));

@@ -37,6 +37,10 @@ import net.minecraftforge.fml.common.Loader;
  */
 public abstract class VillagerTrades {
 
+	protected static final int armorsmith = (3 << 16) | (1 << 8);
+	protected static final int weaponsmith = (3 << 16) | (2 << 8);
+	protected static final int toolsmith = (3 << 16) | (3 << 8);
+
 	private static boolean initDone = false;
 
 	protected static final int TRADES_PER_LEVEL = 4;
@@ -126,10 +130,6 @@ public abstract class VillagerTrades {
 			if ((emeraldPurch > 64) || (emeraldSale > 64)) {
 				continue; // too expensive
 			}
-
-			final int armorsmith = (3 << 16) | (1 << 8);
-			final int weaponsmith = (3 << 16) | (2 << 8);
-			final int toolsmith = (3 << 16) | (3 << 8);
 
 			if (allIngots.containsKey(material)) {
 				final ITradeList[] ingotTrades = makeTradePalette(
