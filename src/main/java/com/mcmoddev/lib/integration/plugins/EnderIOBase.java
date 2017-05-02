@@ -25,7 +25,7 @@ public class EnderIOBase implements IIntegration {
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("enderio")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("enderio")) {
 			return;
 		}
 

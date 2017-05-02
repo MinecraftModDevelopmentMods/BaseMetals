@@ -151,13 +151,13 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 		}
 
 		if ("basemetals".equals(Loader.instance().activeModContainer().getModId())) {
-			if (Options.materialEnabled.get(MaterialNames.CHARCOAL)) {
+			if (Options.materialEnabled(MaterialNames.CHARCOAL)) {
 				tradesTable.computeIfAbsent(armorsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem(Names.POWDER))));
 				tradesTable.computeIfAbsent(weaponsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem(Names.POWDER))));
 				tradesTable.computeIfAbsent(toolsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem(Names.POWDER))));
 			}
 
-			if (Options.materialEnabled.get(MaterialNames.COAL)) {
+			if (Options.materialEnabled(MaterialNames.COAL)) {
 				tradesTable.computeIfAbsent(armorsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER))));
 				tradesTable.computeIfAbsent(weaponsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER))));
 				tradesTable.computeIfAbsent(toolsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER))));

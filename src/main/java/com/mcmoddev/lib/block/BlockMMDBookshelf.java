@@ -8,7 +8,6 @@ import net.minecraft.block.state.IBlockState;
 public class BlockMMDBookshelf extends net.minecraft.block.BlockBookshelf implements IMMDObject {
 
 	final MMDMaterial material;
-	private boolean fullBlock = true;
 
 	public BlockMMDBookshelf(MMDMaterial material) {
 		this.material = material;

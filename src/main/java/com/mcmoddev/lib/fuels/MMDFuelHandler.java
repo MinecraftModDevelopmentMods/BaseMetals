@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.IFuelHandler;
 class MMDFuelHandler implements IFuelHandler {
 
 	public MMDFuelHandler() {
+		// TODO - STUB
 	}
 
 	@Override

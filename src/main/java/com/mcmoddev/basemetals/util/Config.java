@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
- * @author p455w0rd
+ * @author Jasmine Iwanek
  *
  */
 public class Config {
@@ -392,8 +392,11 @@ public class Config {
 		public static boolean enableModderSupportThings() {
 			return enableModderSupportThings;
 		}
-		
-		public static String[] disabledRecipes = null;
+
+		protected static String[] disabledRecipes = null;
+		public static String[] disabledRecipes() {
+			return disabledRecipes;
+		}
 
 		// RECIPE AMOUNTS
 		protected static int gearQuantity = 4;
@@ -418,13 +421,22 @@ public class Config {
 		}
 
 		// INTEGRATION
-		public static final Map<String, Boolean> modEnabled = new HashMap<>();
+		protected static final Map<String, Boolean> modEnabled = new HashMap<>();
+		public static boolean modEnabled(String name) {
+			return modEnabled.get(name);
+		}
 
 		// MATERIALS
-		public static final Map<String, Boolean> materialEnabled = new HashMap<>();
+		protected static final Map<String, Boolean> materialEnabled = new HashMap<>();
+		public static boolean materialEnabled(String name) {
+			return materialEnabled.get(name);
+		}
 
 		// THINGS
-		public static final Map<String, Boolean> thingEnabled = new HashMap<>();
+		protected static final Map<String, Boolean> thingEnabled = new HashMap<>();
+		public static boolean thingEnabled(String name) {
+			return thingEnabled.get(name);
+		}
 /*
 		public static boolean enableBasics = true; // Nugget, Ingot, Powder, Blend, Block, Ore
 		public static boolean enableBasicTools = true; // Axe, Hoe, Pickaxe, Shovel, Sword

@@ -10,7 +10,7 @@ public class ThaumcraftBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("thaumcraft")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("thaumcraft")) {
 			return;
 		}
 

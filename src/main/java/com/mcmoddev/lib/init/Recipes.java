@@ -75,7 +75,6 @@ public abstract class Recipes {
 		OreDictionary.registerOre(Oredicts.DOOR, net.minecraft.init.Items.ACACIA_DOOR);
 	}
 
-	// TODO
 	protected static void initPureVanillaCrusherRecipes() {
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.STONE, new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1)); // Stone to Cobblestone
 		// CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.STONE, new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1)); // Stone to Cobblestone
@@ -344,11 +343,9 @@ public abstract class Recipes {
 	private static void makeBlockRecipes(MMDMaterial material) {
 		final String oreDictName = material.getCapitalizedName();
 
-		if (material.hasItem(Names.BLOCK) && (material.getItem(Names.BLOCK) instanceof IMMDObject)) {
-			if (material.hasItem(Names.INGOT)) {
-				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.INGOT), 9), Oredicts.BLOCK + oreDictName));
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
-			}
+		if (material.hasItem(Names.BLOCK) && (material.getItem(Names.BLOCK) instanceof IMMDObject) && (material.hasItem(Names.INGOT))) {
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.INGOT), 9), Oredicts.BLOCK + oreDictName));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
 		}
 	}
 

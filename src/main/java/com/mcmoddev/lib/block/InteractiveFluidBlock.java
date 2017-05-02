@@ -110,8 +110,7 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 		return 0;
 	}
 
-	// TODO: remove the block overrides and see if fluids are working correctly
-	// yet
+	// TODO: remove the block overrides and see if fluids are working correctly yet
 	/**
 	 * @deprecated
 	 */

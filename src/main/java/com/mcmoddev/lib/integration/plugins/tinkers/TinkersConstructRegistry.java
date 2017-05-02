@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
@@ -148,7 +149,7 @@ public class TinkersConstructRegistry {
 		if (hasTraits) {
 			for (String s : mat.getTraitLocations()) {
 				for (AbstractTrait t : mat.getTraits(s)) {
-					tcmat.addTrait(t, s == "general" ? null : s);
+					tcmat.addTrait(t, "general".equals(s) ? null : s);
 				}
 			}
 		}
@@ -356,7 +357,7 @@ public class TinkersConstructRegistry {
 		String oreDictName = base.getCapitalizedName();
 
 		// hacky fix for Coal being itemCoal and not ingotCoal
-		if (base.getName() == "coal")
+		if (MaterialNames.COAL.equals(base.getName()))
 			TinkerRegistry.registerMelting("itemCoal", output, amountPer);
 
 		

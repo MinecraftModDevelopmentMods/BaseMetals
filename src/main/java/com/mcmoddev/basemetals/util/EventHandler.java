@@ -35,12 +35,12 @@ import net.minecraftforge.fml.relauncher.Side;
 public class EventHandler {
 
 	@SubscribeEvent
-	public void attackEvent(LivingAttackEvent e) {
-		float damage = e.getAmount();
-		if (!(e.getEntityLiving() instanceof EntityPlayer)) {
+	public void attackEvent(LivingAttackEvent event) {
+		float damage = event.getAmount();
+		if (!(event.getEntityLiving() instanceof EntityPlayer)) {
 			return;
 		}
-		EntityPlayer player = (EntityPlayer) e.getEntityLiving();
+		EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 		if (player.getActiveItemStack() == null) {
 			return;
 		}
@@ -66,14 +66,16 @@ public class EventHandler {
 
 	@SubscribeEvent void event(ItemCraftedEvent event) {
 		final Item item = event.crafting.getItem();
-		if (item instanceof IMMDObject) {
-			// final MMDMaterial material = ((IMMDObject) item).getMMDMaterial();
-			if (Options.enableAchievements) {
-				if ((item instanceof ItemMMDBlend) || (item instanceof ItemMMDSmallBlend)) {
-					event.player.addStat(Achievements.getAchievementByName("metallurgy"), 1);
-				} else if (item instanceof ItemMMDIngot) {
-					event.player.addStat(Achievements.getAchievementByName("this_is_new"), 1);
-				}
+		if (!(item instanceof IMMDObject)) {
+			return;
+		}
+			
+		// final MMDMaterial material = ((IMMDObject) item).getMMDMaterial();
+		if (Options.enableAchievements) {
+			if ((item instanceof ItemMMDBlend) || (item instanceof ItemMMDSmallBlend)) {
+				event.player.addStat(Achievements.getAchievementByName("metallurgy"), 1);
+			} else if (item instanceof ItemMMDIngot) {
+				event.player.addStat(Achievements.getAchievementByName("this_is_new"), 1);
 			}
 		}
 	}
@@ -81,29 +83,29 @@ public class EventHandler {
 	@SubscribeEvent
 	void event(ItemSmeltedEvent event) {
 		final Item item = event.smelting.getItem();
-		if (item instanceof IMMDObject) {
-			final MMDMaterial material = ((IMMDObject) item).getMMDMaterial();
-			if (Options.enableAchievements()) {
-				if (item instanceof ItemMMDIngot) {
-					// event.player.addStat(Achievements.this_is_new, 1);
-					if ("aquarium".equals(material.getName())) {
-						event.player.addStat(Achievements.getAchievementByName("aquarium_maker"), 1);
-					} else if ("brass".equals(material.getName())) {
-						event.player.addStat(Achievements.getAchievementByName("brass_maker"), 1);
-					} else if ("bronze".equals(material.getName())) {
-						event.player.addStat(Achievements.getAchievementByName("bronze_maker"), 1);
-					} else if ("electrum".equals(material.getName())) {
-						event.player.addStat(Achievements.getAchievementByName("electrum_maker"), 1);
-					} else if ("steel".equals(material.getName())) {
-						event.player.addStat(Achievements.getAchievementByName("steel_maker"), 1);
-					} else if ("invar".equals(material.getName())) {
-						event.player.addStat(Achievements.getAchievementByName("invar_maker"), 1);
-					} else if ("mithril".equals(material.getName())) {
-						event.player.addStat(Achievements.getAchievementByName("mithril_maker"), 1);
-					} else if ("cupronickel".equals(material.getName())) {
-						event.player.addStat(Achievements.getAchievementByName("cupronickel_maker"), 1);
-					}
-				}
+		if (!(item instanceof IMMDObject)) {
+			return;
+		}
+
+		final MMDMaterial material = ((IMMDObject) item).getMMDMaterial();
+		if ((item instanceof ItemMMDIngot) &&(Options.enableAchievements())) {
+			// event.player.addStat(Achievements.getAchievementByName("this_is_new"), 1);
+			if ("aquarium".equals(material.getName())) {
+				event.player.addStat(Achievements.getAchievementByName("aquarium_maker"), 1);
+			} else if ("brass".equals(material.getName())) {
+				event.player.addStat(Achievements.getAchievementByName("brass_maker"), 1);
+			} else if ("bronze".equals(material.getName())) {
+				event.player.addStat(Achievements.getAchievementByName("bronze_maker"), 1);
+			} else if ("electrum".equals(material.getName())) {
+				event.player.addStat(Achievements.getAchievementByName("electrum_maker"), 1);
+			} else if ("steel".equals(material.getName())) {
+				event.player.addStat(Achievements.getAchievementByName("steel_maker"), 1);
+			} else if ("invar".equals(material.getName())) {
+				event.player.addStat(Achievements.getAchievementByName("invar_maker"), 1);
+			} else if ("mithril".equals(material.getName())) {
+				event.player.addStat(Achievements.getAchievementByName("mithril_maker"), 1);
+			} else if ("cupronickel".equals(material.getName())) {
+				event.player.addStat(Achievements.getAchievementByName("cupronickel_maker"), 1);
 			}
 		}
 	}
@@ -120,9 +122,9 @@ public class EventHandler {
 	}
 
 	@SubscribeEvent
-	public void handleAnvilEvent(AnvilUpdateEvent evt) {
-		ItemStack left = evt.getLeft();
-		ItemStack right = evt.getRight();
+	public void handleAnvilEvent(AnvilUpdateEvent event) {
+		ItemStack left = event.getLeft();
+		ItemStack right = event.getRight();
 
 		if (left == null || right == null || left.stackSize != 1 || right.stackSize != 1) {
 			return;
@@ -133,11 +135,9 @@ public class EventHandler {
 		recipeInput.setInventorySlotContents(1, right);
 		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
 		for (IRecipe r : recipes) {
-			if (r instanceof ShieldUpgradeRecipe) {
-				if (((ShieldUpgradeRecipe) r).matches(recipeInput, null)) {
-					evt.setOutput(r.getCraftingResult(recipeInput));
-					evt.setCost(((ShieldUpgradeRecipe) r).getCost(recipeInput));
-				}
+			if ((r instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) r).matches(recipeInput, null))) {
+				event.setOutput(r.getCraftingResult(recipeInput));
+				event.setCost(((ShieldUpgradeRecipe) r).getCost(recipeInput));
 			}
 		}
 	}

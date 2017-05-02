@@ -13,7 +13,7 @@ public class DenseOresBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("denseores")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
@@ -44,7 +44,7 @@ public class DenseOresBase implements IIntegration {
 		// this, however, is apparently a name, so...
 		mess.setString("config_entry", String.format("%s %s ore", modID, name));
 
-		FMLInterModComms.sendMessage("denseores", "addDenseOre", mess);
+		FMLInterModComms.sendMessage(PLUGIN_MODID, "addDenseOre", mess);
 	}
 
 	/**

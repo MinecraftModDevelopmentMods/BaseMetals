@@ -14,39 +14,39 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("mekanism")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("mekanism")) {
 			return;
 		}
 
-		if (Options.materialEnabled.get(MaterialNames.ADAMANTINE)) {
+		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
 		}
 
-		if (Options.materialEnabled.get(MaterialNames.ANTIMONY)) {
+		if (Options.materialEnabled(MaterialNames.ANTIMONY)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ANTIMONY));
 		}
 
-		if (Options.materialEnabled.get(MaterialNames.BISMUTH)) {
+		if (Options.materialEnabled(MaterialNames.BISMUTH)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.BISMUTH));
 		}
 
-		if (Options.materialEnabled.get(MaterialNames.COLDIRON)) {
+		if (Options.materialEnabled(MaterialNames.COLDIRON)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.COLDIRON));
 		}
 
-		if (Options.materialEnabled.get(MaterialNames.PLATINUM)) {
+		if (Options.materialEnabled(MaterialNames.PLATINUM)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.PLATINUM));
 		}
 
-		if (Options.materialEnabled.get(MaterialNames.NICKEL)) {
+		if (Options.materialEnabled(MaterialNames.NICKEL)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.NICKEL));
 		}
 
-		if (Options.materialEnabled.get(MaterialNames.STARSTEEL)) {
+		if (Options.materialEnabled(MaterialNames.STARSTEEL)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.STARSTEEL));
 		}
 
-		if (Options.materialEnabled.get(MaterialNames.ZINC)) {
+		if (Options.materialEnabled(MaterialNames.ZINC)) {
 			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ZINC));
 		}
 
