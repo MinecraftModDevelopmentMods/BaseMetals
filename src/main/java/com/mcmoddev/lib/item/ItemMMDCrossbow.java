@@ -18,7 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDCrossbow extends ItemBow implements IMMDObject {
+public class ItemMMDCrossbow extends ItemCrossbow implements IMMDObject {
 
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;

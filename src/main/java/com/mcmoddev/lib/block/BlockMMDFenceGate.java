@@ -3,10 +3,9 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockPlanks;
 
-public class BlockMMDFenceGate extends BlockFenceGate implements IMMDObject {
+public class BlockMMDFenceGate extends net.minecraft.block.BlockFenceGate implements IMMDObject {
 
 	final MMDMaterial material;
 

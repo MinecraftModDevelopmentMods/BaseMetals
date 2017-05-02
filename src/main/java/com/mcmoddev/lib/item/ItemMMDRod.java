@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.item;
 
-import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
@@ -9,9 +8,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDRod extends net.minecraft.item.Item implements IMMDObject {
-
-	private final MMDMaterial material;
+public class ItemMMDRod extends GenericMMDItem {
 
 	/**
 	 *
@@ -19,11 +16,6 @@ public class ItemMMDRod extends net.minecraft.item.Item implements IMMDObject {
 	 *            The material to make the rod from
 	 */
 	public ItemMMDRod(MMDMaterial material) {
-		this.material = material;
-	}
-
-	@Override
-	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		super(material);
 	}
 }

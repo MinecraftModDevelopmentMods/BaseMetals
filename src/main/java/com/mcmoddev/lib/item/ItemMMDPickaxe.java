@@ -14,7 +14,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -25,7 +24,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class ItemMMDPickaxe extends ItemPickaxe implements IMMDObject {
+public class ItemMMDPickaxe extends net.minecraft.item.ItemPickaxe implements IMMDObject {
 
 	private final MMDMaterial material;
 	private final Set<String> toolTypes;

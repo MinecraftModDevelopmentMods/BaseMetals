@@ -6,14 +6,13 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
-import net.minecraft.item.ItemSlab;
 
 /**
  *
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDSlab extends ItemSlab implements IMMDObject {
+public class ItemMMDSlab extends net.minecraft.item.ItemSlab implements IMMDObject {
 
 	final MMDMaterial material;
 

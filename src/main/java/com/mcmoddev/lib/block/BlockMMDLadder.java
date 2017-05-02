@@ -3,9 +3,7 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockLadder;
-
-public class BlockMMDLadder extends BlockLadder implements IMMDObject {
+public class BlockMMDLadder extends net.minecraft.block.BlockLadder implements IMMDObject {
 
 	final MMDMaterial material;
 

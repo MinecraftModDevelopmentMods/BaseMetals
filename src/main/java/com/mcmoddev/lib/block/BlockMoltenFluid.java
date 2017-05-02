@@ -3,7 +3,6 @@ package com.mcmoddev.lib.block;
 import javax.annotation.Nonnull;
 
 import net.minecraft.block.material.Material;
-import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 // import net.minecraftforge.fluids.FluidRegistry;
 
@@ -12,7 +11,7 @@ import net.minecraftforge.fluids.Fluid;
  * @author Jasmine Iwanek
  *
  */
-public class BlockMoltenFluid extends BlockFluidClassic {
+public class BlockMoltenFluid extends net.minecraftforge.fluids.BlockFluidClassic {
 
 	/**
 	 *

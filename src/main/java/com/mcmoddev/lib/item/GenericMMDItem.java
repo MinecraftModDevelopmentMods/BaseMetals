@@ -3,15 +3,13 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.item.Item;
-
 /**
  * version of Item that stores a material
  * 
  * @author DrCyano
  *
  */
-public class GenericMMDItem extends Item implements IMMDObject {
+public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObject {
 
 	private final MMDMaterial material;
 

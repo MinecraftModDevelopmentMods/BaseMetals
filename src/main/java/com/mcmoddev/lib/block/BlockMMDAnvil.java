@@ -3,9 +3,7 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockAnvil;
-
-public class BlockMMDAnvil extends BlockAnvil implements IMMDObject {
+public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMMDObject {
 
 	final MMDMaterial material;
 

@@ -3,14 +3,13 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockMMDButton extends BlockButton implements IMMDObject {
+public class BlockMMDButton extends net.minecraft.block.BlockButton implements IMMDObject {
 
 	final MMDMaterial material;
 

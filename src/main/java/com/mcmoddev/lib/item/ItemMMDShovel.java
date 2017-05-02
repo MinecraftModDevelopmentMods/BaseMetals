@@ -11,7 +11,6 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -22,7 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class ItemMMDShovel extends ItemSpade implements IMMDObject {
+public class ItemMMDShovel extends net.minecraft.item.ItemSpade implements IMMDObject {
 
 	private final MMDMaterial material;
 	private final String repairOreDictName;

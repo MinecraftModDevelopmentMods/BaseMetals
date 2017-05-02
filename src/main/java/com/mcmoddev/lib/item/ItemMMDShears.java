@@ -9,7 +9,6 @@ import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -19,7 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDShears extends ItemShears implements IMMDObject {
+public class ItemMMDShears extends net.minecraft.item.ItemShears implements IMMDObject {
 
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;

@@ -9,7 +9,6 @@ import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBanner;
-import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -19,7 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDShield extends ItemShield implements IMMDObject {
+public class ItemMMDShield extends net.minecraft.item.ItemShield implements IMMDObject {
 
 	final MMDMaterial material;
 	protected final String repairOreDictName;

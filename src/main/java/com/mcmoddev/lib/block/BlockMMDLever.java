@@ -3,9 +3,7 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockLever;
-
-public class BlockMMDLever extends BlockLever implements IMMDObject {
+public class BlockMMDLever extends net.minecraft.block.BlockLever implements IMMDObject {
 
 	final MMDMaterial material;
 

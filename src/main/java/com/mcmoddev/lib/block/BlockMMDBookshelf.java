@@ -3,10 +3,9 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockBookshelf;
 import net.minecraft.block.state.IBlockState;
 
-public class BlockMMDBookshelf extends BlockBookshelf implements IMMDObject {
+public class BlockMMDBookshelf extends net.minecraft.block.BlockBookshelf implements IMMDObject {
 
 	final MMDMaterial material;
 	private boolean fullBlock = true;

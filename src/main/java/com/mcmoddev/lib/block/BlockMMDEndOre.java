@@ -6,7 +6,6 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -16,7 +15,7 @@ import net.minecraft.world.IBlockAccess;
 /**
  * Ore Block
  */
-public class BlockMMDEndOre extends BlockOre implements IMMDObject {
+public class BlockMMDEndOre extends net.minecraft.block.BlockOre implements IMMDObject {
 
 	private final MMDMaterial material;
 

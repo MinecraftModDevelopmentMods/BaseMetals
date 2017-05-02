@@ -8,7 +8,6 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockOre;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -18,7 +17,7 @@ import net.minecraft.world.IBlockAccess;
 /**
  * Ore Block
  */
-public class BlockMMDOre extends BlockOre implements IMMDObject {
+public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObject {
 
 	private final MMDMaterial material;
 
