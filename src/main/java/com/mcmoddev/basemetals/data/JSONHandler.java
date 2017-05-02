@@ -28,19 +28,19 @@ public class JSONHandler {
 
 		dimensions.add(new OreSpawnDimensionEntry("+", "All Dimensions", ores));
 
-		ores.add(new OreSpawnOreEntry("basemetals:coldiron_ore", 8, 4, 5, 0, 128));
-		ores.add(new OreSpawnOreEntry("basemetals:adamantine_ore", 8, 4, 2, 0, 128));
+		netherores.add(new OreSpawnOreEntry("basemetals:coldiron_ore", 8, 4, 5, 0, 128));
+		netherores.add(new OreSpawnOreEntry("basemetals:adamantine_ore", 8, 4, 2, 0, 128));
 
 		dimensions.add(new OreSpawnDimensionEntry("-1", "The Nether", netherores));
 
-		ores.add(new OreSpawnOreEntry("basemetals:starsteel_ore", 8, 4, 5, 0, 255));
+		endores.add(new OreSpawnOreEntry("basemetals:starsteel_ore", 8, 4, 5, 0, 255));
 
 		dimensions.add(new OreSpawnDimensionEntry("1", "The End", endores));
 
-		OreSpawnEntry ose = new OreSpawnEntry(dimensions, "dimension 0 for overworld, -1 for the nether, 1 for the end, other numbers for dimensions added by other mods, and + for any dimension not already described by this file.");
+		final OreSpawnEntry ose = new OreSpawnEntry(dimensions, "dimension 0 for overworld, -1 for the nether, 1 for the end, other numbers for dimensions added by other mods, and + for any dimension not already described by this file.");
 
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String jsonInString = gson.toJson(ose);
+		final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		final String jsonInString = gson.toJson(ose);
 		FMLLog.severe(BaseMetals.MODID + ": DEBUG: " + jsonInString);
 	}
 }
