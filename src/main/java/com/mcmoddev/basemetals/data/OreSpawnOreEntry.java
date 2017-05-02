@@ -1,5 +1,7 @@
 package com.mcmoddev.basemetals.data;
 
+import javax.annotation.Nonnull;
+
 public class OreSpawnOreEntry {
 
 	private final String blockID;
@@ -9,7 +11,7 @@ public class OreSpawnOreEntry {
 	private final int minHeight;
 	private final int maxHeight;
 
-	public OreSpawnOreEntry(String blockID, int size, int variation, float frequency, int minHeight, int maxHeight) {
+	public OreSpawnOreEntry(@Nonnull final String blockID, @Nonnull final int size, @Nonnull final int variation, @Nonnull final float frequency, @Nonnull final int minHeight, @Nonnull final int maxHeight) {
 		this.blockID = blockID;
 		this.size = size;
 		this.variation = variation;

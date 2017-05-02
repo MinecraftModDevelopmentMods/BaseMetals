@@ -2,16 +2,19 @@ package com.mcmoddev.basemetals.data;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class OreSpawnDimensionEntry {
 
 	private final String dimension;
 	private final String __comment;
 	private final List<OreSpawnOreEntry> ores;
 
-	public OreSpawnDimensionEntry(String dimension, String comment, List<OreSpawnOreEntry> ores) {
+	public OreSpawnDimensionEntry(@Nonnull final String dimension, @Nonnull final List<OreSpawnOreEntry> ores, @Nullable final String comment) {
 		this.dimension = dimension;
-		this.__comment = comment;
 		this.ores = ores;
+		this.__comment = comment;
 	}
 
 	public String getDimension() {
