@@ -29,7 +29,7 @@ public class TinkersConstructBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("tinkersconstruct")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("tinkersconstruct")) {
 			return;
 		}
 

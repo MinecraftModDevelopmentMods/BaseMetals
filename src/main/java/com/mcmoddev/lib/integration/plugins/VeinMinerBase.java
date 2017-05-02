@@ -19,7 +19,7 @@ public class VeinMinerBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("veinminer")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("veinminer")) {
 			return;
 		}
 

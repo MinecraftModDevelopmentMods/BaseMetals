@@ -64,11 +64,8 @@ public class ItemGroups {
 	}
 
 	protected static MMDCreativeTab getTab(String modName, int id) {
-		if (itemGroupsByModID.containsKey(modName)) {
-			if (itemGroupsByModID.get(modName).size() > id) {
-				MMDCreativeTab t = itemGroupsByModID.get(modName).get(id);
-				return t;
-			}
+		if ((itemGroupsByModID.containsKey(modName)) && (itemGroupsByModID.get(modName).size() > id)) {
+			return itemGroupsByModID.get(modName).get(id);
 		}
 		return null;
 	}

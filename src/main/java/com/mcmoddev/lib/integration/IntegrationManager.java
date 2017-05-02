@@ -69,8 +69,8 @@ public enum IntegrationManager {
 			mmm.put(i, i.getClass().getMethod(name));
 			k.add(mmm);
 			callbacks.put(phase, k);
-		} catch (final Exception e) {
-			BaseMetals.logger.debug("Exception adding callback %s for loading phase %s\nException: %s", name, phase, e.getMessage());
+		} catch (final Exception ex) {
+			BaseMetals.logger.debug("Exception adding callback " + name + " for loading phase " + phase, ex);
 		}
 	}
 
@@ -78,8 +78,8 @@ public enum IntegrationManager {
 		for (Entry<IIntegration, Method> ent : cbs.entrySet()) {
 			try {
 				ent.getValue().invoke(ent.getKey());
-			} catch (final Exception e) {
-				BaseMetals.logger.debug("Exception running callback: %s", e.getMessage());
+			} catch (final Exception ex) {
+				BaseMetals.logger.debug("Exception running callback: ", ex);
 			}
 		}
 	}

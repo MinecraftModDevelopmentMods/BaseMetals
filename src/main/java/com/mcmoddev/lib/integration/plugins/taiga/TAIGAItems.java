@@ -8,9 +8,13 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.TabContainer;
 
 public class TAIGAItems extends Items {
-	public static boolean initDone = false;
+	private static boolean initDone = false;
 
 	public static void init(List<MMDMaterial> materials) {
+		if (initDone) {
+			return;
+		}
+
 		for (MMDMaterial m : materials) {
 			createItemsFull(m, new TabContainer(ItemGroups.blocksTab, ItemGroups.itemsTab, ItemGroups.toolsTab));
 		}

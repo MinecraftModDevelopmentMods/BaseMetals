@@ -18,7 +18,7 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("thermalexpansion")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("thermalexpansion")) {
 			return;
 		}
 
@@ -38,11 +38,11 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 
 		for (int i = 0; i < baseNames.length; i++) {
 			final String ore = baseNames[i];
-			if (Options.materialEnabled.get(ore)) {
-				addFurnace(Options.materialEnabled.get(ore), ore);
-				addCrucible(Options.materialEnabled.get(ore), ore);
-				addPlatePress(Options.materialEnabled.get(ore), ore);
-				addPressStorage(Options.materialEnabled.get(ore), ore);
+			if (Options.materialEnabled(ore)) {
+				addFurnace(Options.materialEnabled(ore), ore);
+				addCrucible(Options.materialEnabled(ore), ore);
+				addPlatePress(Options.materialEnabled(ore), ore);
+				addPressStorage(Options.materialEnabled(ore), ore);
 			}
 		}
 

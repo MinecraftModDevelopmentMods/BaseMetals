@@ -82,8 +82,12 @@ public class ItemMMDAxe extends net.minecraft.item.ItemAxe implements IMMDObject
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.material.regenerates() && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (world.isRemote)
+			return;
+
+		if (this.material.regenerates() && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
 			item.setItemDamage(item.getItemDamage() - 1);
+		}
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -26,10 +27,8 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("taiga")) {
-			if (!com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("tinkersconstruct")) {
-				return;
-			}
+		if (initDone || (!Options.modEnabled("taiga") && (!Options.modEnabled("tinkersconstruct")))) {
+			return;
 		}
 
 		TraitRegistry.initTAIGATraits();

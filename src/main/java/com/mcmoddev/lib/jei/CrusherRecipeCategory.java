@@ -57,6 +57,7 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 
 	@Override
 	public void drawExtras(Minecraft minecraft) {
+		// TODO - STUB
 	}
 
 	@Override

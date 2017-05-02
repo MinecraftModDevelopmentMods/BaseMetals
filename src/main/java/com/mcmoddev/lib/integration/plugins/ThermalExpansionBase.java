@@ -22,11 +22,15 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 public class ThermalExpansionBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "thermalexpansion";
+	private static final String INPUT = "input";
+	private static final String OUTPUT = "output";
+	private static final String ENERGY = "energy";
+	
 	private static boolean initDone = false;
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("thermalexpansion")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("thermalexpansion")) {
 			return;
 		}
 
@@ -44,13 +48,12 @@ public class ThermalExpansionBase implements IIntegration {
 
 		NBTTagCompound toSend = new NBTTagCompound();
 
-		toSend.setInteger("energy", energy);
-		toSend.setTag("input", new NBTTagCompound());
-		toSend.setTag("output", new NBTTagCompound());
-		input.writeToNBT(toSend.getCompoundTag("input"));
-		output.writeToNBT(toSend.getCompoundTag("output"));
-		FMLInterModComms.sendMessage("thermalexpansion", "addcompactorpressrecipe", toSend);
-
+		toSend.setInteger(ENERGY, energy);
+		toSend.setTag(INPUT, new NBTTagCompound());
+		toSend.setTag(OUTPUT, new NBTTagCompound());
+		input.writeToNBT(toSend.getCompoundTag(INPUT));
+		output.writeToNBT(toSend.getCompoundTag(OUTPUT));
+		FMLInterModComms.sendMessage(PLUGIN_MODID, "addcompactorpressrecipe", toSend);
 	}
 
 	public static void addCompactorStorageRecipe(int energy, ItemStack input, ItemStack output) {
@@ -64,12 +67,12 @@ public class ThermalExpansionBase implements IIntegration {
 
 		NBTTagCompound toSend = new NBTTagCompound();
 
-		toSend.setInteger("energy", energy);
-		toSend.setTag("input", new NBTTagCompound());
-		toSend.setTag("output", new NBTTagCompound());
-		input.writeToNBT(toSend.getCompoundTag("input"));
-		output.writeToNBT(toSend.getCompoundTag("output"));
-		FMLInterModComms.sendMessage("thermalexpansion", "addcompactorstoragerecipe", toSend);
+		toSend.setInteger(ENERGY, energy);
+		toSend.setTag(INPUT, new NBTTagCompound());
+		toSend.setTag(OUTPUT, new NBTTagCompound());
+		input.writeToNBT(toSend.getCompoundTag(INPUT));
+		output.writeToNBT(toSend.getCompoundTag(OUTPUT));
+		FMLInterModComms.sendMessage(PLUGIN_MODID, "addcompactorstoragerecipe", toSend);
 
 	}
 
@@ -97,7 +100,7 @@ public class ThermalExpansionBase implements IIntegration {
 
 			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT), 1, 0);
 			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
-			if (Options.thingEnabled.get("Basics")) {
+			if (Options.thingEnabled("Basics")) {
 				if (mat.hasItem(Names.POWDER) && mat.getItem(Names.POWDER) != null) {
 					ItemStack dust = new ItemStack(mat.getItem(Names.POWDER), 1, 0);
 					ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
@@ -117,7 +120,7 @@ public class ThermalExpansionBase implements IIntegration {
 			 * Glowstone block is 80000
 			 * Cobblestone/Stone/Obsidian is 320000
 			 */
-			final int ENERGY = 8000;
+			final int ENERGY_QTY = 8000;
 
 			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT));
 			FluidStack oreFluid = FluidRegistry.getFluidStack(mat.getName(), 288);
@@ -125,18 +128,18 @@ public class ThermalExpansionBase implements IIntegration {
 
 			if (mat.getBlock(Names.ORE) != null) {
 				ItemStack ore = new ItemStack(mat.getBlock(Names.ORE));
-				ThermalExpansionHelper.addCrucibleRecipe(ENERGY, ore, oreFluid);
+				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ore, oreFluid);
 			}
 
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY, ingot, baseFluid);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ingot, baseFluid);
 
-			if (Options.thingEnabled.get("Basics") && mat.getItem(Names.POWDER) != null) {
+			if (Options.thingEnabled("Basics") && mat.getItem(Names.POWDER) != null) {
 				ItemStack dust = new ItemStack(mat.getItem(Names.POWDER));
-				ThermalExpansionHelper.addCrucibleRecipe(ENERGY, dust, baseFluid);
+				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dust, baseFluid);
 			}
 
-			addCrucibleExtra(Options.thingEnabled.get("Plate"), Item.getItemFromBlock(mat.getBlock(Names.PLATE)), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY);
-			addCrucibleExtra(Options.thingEnabled.get("Basics"), mat.getItem(Names.NUGGET), FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY);
+			addCrucibleExtra(Options.thingEnabled("Plate"), Item.getItemFromBlock(mat.getBlock(Names.PLATE)), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY_QTY);
+			addCrucibleExtra(Options.thingEnabled("Basics"), mat.getItem(Names.NUGGET), FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY_QTY);
 		}
 	}
 
@@ -148,14 +151,14 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	public static void addPlatePress(boolean enabled, String materialName) {
-		if (enabled && Options.thingEnabled.get("Plate")) {
+		if (enabled && Options.thingEnabled("Plate")) {
 			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 
 			/*
 			 * Compactors default is 4000RF per operation
 			 */
-			final int ENERGY = 4000;
-			addCompactorPressRecipe(ENERGY, new ItemStack(mat.getItem(Names.INGOT)), new ItemStack(mat.getBlock(Names.PLATE)));
+			final int ENERGY_QTY = 4000;
+			addCompactorPressRecipe(ENERGY_QTY, new ItemStack(mat.getItem(Names.INGOT)), new ItemStack(mat.getBlock(Names.PLATE)));
 		}
 	}
 
@@ -166,14 +169,14 @@ public class ThermalExpansionBase implements IIntegration {
 			/*
 			 * Compactors default is 4000RF per operation
 			 */
-			final int ENERGY = 4000;
+			final int ENERGY_QTY = 4000;
 			ItemStack ingots = new ItemStack(mat.getItem(Names.INGOT), 9);
 			ItemStack nuggets = new ItemStack(mat.getItem(Names.NUGGET), 9);
 			ItemStack block = new ItemStack(mat.getBlock(Names.BLOCK), 1);
 			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT), 1);
 
-			addCompactorStorageRecipe(ENERGY, ingots, block);
-			addCompactorStorageRecipe(ENERGY, nuggets, ingot);
+			addCompactorStorageRecipe(ENERGY_QTY, ingots, block);
+			addCompactorStorageRecipe(ENERGY_QTY, nuggets, ingot);
 		}
 	}
 }

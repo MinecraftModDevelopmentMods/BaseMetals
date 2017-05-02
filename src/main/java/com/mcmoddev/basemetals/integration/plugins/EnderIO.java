@@ -20,11 +20,10 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled.get("enderio")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("enderio")) {
 			return;
 		}
 
-		// TODO: Verify blocks, Slabs, Ingots, Ore Blocks
 		addSagMillRecipe(MaterialNames.ADAMANTINE);
 		addSagMillRecipe(MaterialNames.ANTIMONY);
 		addSagMillRecipe(MaterialNames.AQUARIUM);

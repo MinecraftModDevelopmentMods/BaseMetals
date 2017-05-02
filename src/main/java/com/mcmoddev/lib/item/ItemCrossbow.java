@@ -43,7 +43,7 @@ public class ItemCrossbow extends ItemBow {
 
 			if ((itemstack != null) || flag) {
 				if (itemstack == null) {
-					// TODO: FIXME
+					// FIXME - this is potentially unreliable
 					itemstack = new ItemStack(Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT));
 				}
 

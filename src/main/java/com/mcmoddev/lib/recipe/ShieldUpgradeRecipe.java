@@ -41,7 +41,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		base = new ItemStack(input.getItem(Names.SHIELD), 1, 0);
 
 		for (MMDMaterial mat : allmats) {
-			if (mat.getStat(MaterialStats.HARDNESS) >= input.getStat(MaterialStats.HARDNESS) && mat.getName() != matName) {
+			if (mat.getStat(MaterialStats.HARDNESS) >= input.getStat(MaterialStats.HARDNESS) && mat.getName().equals(matName)) {
 				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				upgradeMats.addAll(mats);
 			}
@@ -72,7 +72,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		int hardness = ((Float) Materials.getMaterialByName(matName).getStat(MaterialStats.HARDNESS)).intValue();
 
 		for (MMDMaterial mat : allmats) {
-			if (mat.getStat(MaterialStats.HARDNESS) >= hardness && mat.getName() != matName) {
+			if (mat.getStat(MaterialStats.HARDNESS) >= hardness && (!mat.getName().equals(matName))) {
 				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				plates.put(mat.getName(), mats);
 			}

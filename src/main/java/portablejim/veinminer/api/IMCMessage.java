@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
  */
 public class IMCMessage {
 
+	private static final String MODID = "VeinMiner";
 	/**
 	 *
 	 * @param type
@@ -35,7 +36,7 @@ public class IMCMessage {
 		message.setString("whitelistType", itemType);
 		message.setString("toolType", toolType);
 		message.setString("blockName", blockName);
-		FMLInterModComms.sendMessage("VeinMiner", "whitelist", message);
+		FMLInterModComms.sendMessage(MODID, "whitelist", message);
 	}
 
 	/**
@@ -52,7 +53,7 @@ public class IMCMessage {
 		message.setString("toolType", type);
 		message.setString("toolName", name);
 		message.setString("toolIcon", icon);
-		FMLInterModComms.sendMessage("VeinMiner", "addTool", message);
+		FMLInterModComms.sendMessage(MODID, "addTool", message);
 	}
 
 	/**
@@ -66,6 +67,6 @@ public class IMCMessage {
 		final NBTTagCompound message = new NBTTagCompound();
 		message.setString("existingBlock", existingBlock);
 		message.setString("newBlock", newBlock);
-		FMLInterModComms.sendMessage("VeinMiner", "addEqualBlocks", message);
+		FMLInterModComms.sendMessage(MODID, "addEqualBlocks", message);
 	}
 }

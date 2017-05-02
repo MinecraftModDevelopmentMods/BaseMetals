@@ -45,20 +45,20 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 		Item blocksTabIconItem;
 		Item itemsTabIconItem;
 		Item toolsTabIconItem;
-		if (Options.materialEnabled.get(MaterialNames.STARSTEEL)) {
+		if (Options.materialEnabled(MaterialNames.STARSTEEL)) {
 			temp = Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.BLOCK);
 		} else {
 			temp = net.minecraft.init.Blocks.IRON_BLOCK;
 		}
 		blocksTabIconItem = Item.getItemFromBlock(temp);
 
-		if (Options.thingEnabled.get("Gear")) {
+		if (Options.thingEnabled("Gear")) {
 			itemsTabIconItem = Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.GEAR);
 		} else {
 			itemsTabIconItem = net.minecraft.init.Items.STICK;
 		}
 
-		if (Options.thingEnabled.get("BasicTools")) {
+		if (Options.thingEnabled("BasicTools")) {
 			toolsTabIconItem = Materials.getMaterialByName(MaterialNames.DIAMOND).getItem(Names.SWORD);
 		} else {
 			toolsTabIconItem = net.minecraft.init.Items.DIAMOND_SWORD;
