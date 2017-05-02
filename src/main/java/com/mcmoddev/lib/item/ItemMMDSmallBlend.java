@@ -2,11 +2,9 @@ package com.mcmoddev.lib.item;
 
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.init.Achievements;
-import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -15,9 +13,7 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDSmallBlend extends Item implements IMMDObject {
-
-	protected final MMDMaterial material;
+public class ItemMMDSmallBlend extends GenericMMDItem {
 
 	/**
 	 *
@@ -25,7 +21,7 @@ public class ItemMMDSmallBlend extends Item implements IMMDObject {
 	 *            The material to make the small blend from
 	 */
 	public ItemMMDSmallBlend(MMDMaterial material) {
-		this.material = material;
+		super(material);
 	}
 
 	@Override
@@ -35,10 +31,5 @@ public class ItemMMDSmallBlend extends Item implements IMMDObject {
 		if (Options.enableAchievements()) {
 			crafter.addStat(Achievements.getAchievementByName("metallurgy"), 1);
 		}
-	}
-
-	@Override
-	public MMDMaterial getMMDMaterial() {
-		return this.material;
 	}
 }

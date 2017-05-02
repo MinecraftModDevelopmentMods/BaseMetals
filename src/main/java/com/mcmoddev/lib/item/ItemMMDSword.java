@@ -13,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -24,7 +23,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class ItemMMDSword extends ItemSword implements IMMDObject {
+public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDObject {
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;
 	protected static final long REGEN_INTERVAL = 200;

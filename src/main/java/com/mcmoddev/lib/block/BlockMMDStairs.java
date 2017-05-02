@@ -4,14 +4,12 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockStairs;
-
 /**
  *
  * @author Jasmine Iwanek
  *
  */
-public class BlockMMDStairs extends BlockStairs implements IMMDObject {
+public class BlockMMDStairs extends net.minecraft.block.BlockStairs implements IMMDObject {
 
 	final MMDMaterial material;
 

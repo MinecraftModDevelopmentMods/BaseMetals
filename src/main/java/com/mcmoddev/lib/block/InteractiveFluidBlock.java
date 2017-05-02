@@ -9,7 +9,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
 /**
@@ -19,7 +18,7 @@ import net.minecraftforge.fluids.Fluid;
  * @author DrCyano
  *
  */
-public class InteractiveFluidBlock extends BlockFluidClassic {
+public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidClassic {
 
 	private final java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect;
 	private final boolean isFlammable;

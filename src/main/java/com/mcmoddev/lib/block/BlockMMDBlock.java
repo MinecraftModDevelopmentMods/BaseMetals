@@ -5,7 +5,6 @@ import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,7 +17,7 @@ import net.minecraft.world.World;
 /**
  * Metal Block
  */
-public class BlockMMDBlock extends Block implements IMMDObject {
+public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObject {
 
 	private final MMDMaterial material;
 	private final boolean beaconBase;

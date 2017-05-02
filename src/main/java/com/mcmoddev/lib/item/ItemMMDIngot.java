@@ -1,7 +1,6 @@
 package com.mcmoddev.lib.item;
 
 import com.mcmoddev.lib.init.Achievements;
-import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,9 +13,7 @@ import net.minecraft.world.World;
  * @author DrCyano
  *
  */
-public class ItemMMDIngot extends net.minecraft.item.Item implements IMMDObject {
-
-	private final MMDMaterial material;
+public class ItemMMDIngot extends GenericMMDItem {
 
 	/**
 	 *
@@ -24,17 +21,12 @@ public class ItemMMDIngot extends net.minecraft.item.Item implements IMMDObject 
 	 *            The material to make the ingot from
 	 */
 	public ItemMMDIngot(MMDMaterial material) {
-		this.material = material;
+		super(material);
 	}
 
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
 		crafter.addStat(Achievements.getAchievementByName("this_is_new"), 1);
-	}
-
-	@Override
-	public MMDMaterial getMMDMaterial() {
-		return this.material;
 	}
 }

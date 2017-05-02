@@ -12,7 +12,6 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -23,7 +22,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class ItemMMDAxe extends ItemAxe implements IMMDObject {
+public class ItemMMDAxe extends net.minecraft.item.ItemAxe implements IMMDObject {
 
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;

@@ -5,7 +5,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -14,7 +13,7 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDArrow extends ItemArrow implements IMMDObject {
+public class ItemMMDArrow extends net.minecraft.item.ItemArrow implements IMMDObject {
 
 	protected final MMDMaterial material;
 

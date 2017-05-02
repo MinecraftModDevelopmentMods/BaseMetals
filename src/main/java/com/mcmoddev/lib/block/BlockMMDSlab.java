@@ -6,7 +6,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockSlab;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -22,7 +21,7 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class BlockMMDSlab extends BlockSlab implements IMMDObject {
+public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDObject {
 
 	public static final PropertyEnum<BlockMMDSlab.Variant> VARIANT = PropertyEnum.<BlockMMDSlab.Variant>create("variant", BlockMMDSlab.Variant.class);
 
@@ -44,7 +43,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 		IBlockState iblockstate = this.blockState.getBaseState();
 
 		if (!this.isDouble())
-			iblockstate = iblockstate.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
+			iblockstate = iblockstate.withProperty(HALF, net.minecraft.block.BlockSlab.EnumBlockHalf.BOTTOM);
 
 		this.setDefaultState(iblockstate.withProperty(VARIANT, BlockMMDSlab.Variant.DEFAULT));
 	}
@@ -58,7 +57,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 		IBlockState iblockstate = this.getDefaultState().withProperty(VARIANT, BlockMMDSlab.Variant.DEFAULT);
 
 		if (!this.isDouble())
-			iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
+			iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? net.minecraft.block.BlockSlab.EnumBlockHalf.BOTTOM : net.minecraft.block.BlockSlab.EnumBlockHalf.TOP);
 
 		return iblockstate;
 	}
@@ -70,7 +69,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 	public int getMetaFromState(IBlockState state) {
 		int i = 0;
 
-		if (!this.isDouble() && (state.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP))
+		if (!this.isDouble() && (state.getValue(HALF) == net.minecraft.block.BlockSlab.EnumBlockHalf.TOP))
 			i |= 8;
 
 		return i;

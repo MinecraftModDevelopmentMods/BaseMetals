@@ -3,11 +3,10 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockFence;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 
-public class BlockMMDFence extends BlockFence implements IMMDObject {
+public class BlockMMDFence extends net.minecraft.block.BlockFence implements IMMDObject {
 
 	final MMDMaterial material;
 

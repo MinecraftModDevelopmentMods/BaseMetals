@@ -3,9 +3,7 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockFlowerPot;
-
-public class BlockMMDFlowerPot extends BlockFlowerPot implements IMMDObject {
+public class BlockMMDFlowerPot extends net.minecraft.block.BlockFlowerPot implements IMMDObject {
 
 	final MMDMaterial material;
 

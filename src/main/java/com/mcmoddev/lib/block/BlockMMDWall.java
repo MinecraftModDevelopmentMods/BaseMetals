@@ -6,7 +6,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockWall;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author Jasmine Iwanek
  *
  */
-public class BlockMMDWall extends BlockWall implements IMMDObject {
+public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDObject {
 
 	final MMDMaterial material;
 
@@ -39,7 +38,7 @@ public class BlockMMDWall extends BlockWall implements IMMDObject {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
-		list.add(new ItemStack(itemIn, 1, BlockWall.EnumType.NORMAL.getMetadata()));
+		list.add(new ItemStack(itemIn, 1, net.minecraft.block.BlockWall.EnumType.NORMAL.getMetadata()));
 	}
 
 	@Override

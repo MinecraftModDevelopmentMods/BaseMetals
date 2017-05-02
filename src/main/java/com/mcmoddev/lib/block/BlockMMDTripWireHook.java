@@ -3,9 +3,7 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockTripWireHook;
-
-public class BlockMMDTripWireHook extends BlockTripWireHook implements IMMDObject {
+public class BlockMMDTripWireHook extends net.minecraft.block.BlockTripWireHook implements IMMDObject {
 
 	final MMDMaterial material;
 

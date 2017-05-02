@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.item;
 
-import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
@@ -9,9 +8,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDGear extends net.minecraft.item.Item implements IMMDObject {
-
-	private final MMDMaterial material;
+public class ItemMMDGear extends GenericMMDItem {
 
 	/**
 	 *
@@ -19,11 +16,6 @@ public class ItemMMDGear extends net.minecraft.item.Item implements IMMDObject {
 	 *            The material to make the gear from
 	 */
 	public ItemMMDGear(MMDMaterial material) {
-		this.material = material;
-	}
-
-	@Override
-	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		super(material);
 	}
 }

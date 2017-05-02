@@ -25,7 +25,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -39,7 +38,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * Crack Hammers
  */
 @SuppressWarnings("deprecation")
-public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
+public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements IMMDObject {
 	private static final float ATTACK_SPEED = -3.0F;
 
 	private final MMDMaterial material;

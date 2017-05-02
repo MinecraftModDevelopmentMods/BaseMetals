@@ -1,9 +1,8 @@
 package com.mcmoddev.lib.block;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockOre;
 
-public class BlockExplosiveOre extends BlockOre {
+public class BlockExplosiveOre extends net.minecraft.block.BlockOre {
 
 	private boolean explode;
 

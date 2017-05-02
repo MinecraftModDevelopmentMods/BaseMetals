@@ -14,7 +14,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -25,7 +24,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class ItemMMDHoe extends ItemHoe implements IMMDObject {
+public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject {
 
 	protected final MMDMaterial material;
 	protected final Set<String> toolTypes;
