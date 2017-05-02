@@ -4,8 +4,8 @@ import java.util.List;
 
 public class OreSpawnEntry {
 
-	private String __comment;
-	private List<OreSpawnDimensionEntry> dimensions;
+	private final String __comment;
+	private final List<OreSpawnDimensionEntry> dimensions;
 
 	public OreSpawnEntry(List<OreSpawnDimensionEntry> dimensions, String comment) {
 		this.dimensions = dimensions;

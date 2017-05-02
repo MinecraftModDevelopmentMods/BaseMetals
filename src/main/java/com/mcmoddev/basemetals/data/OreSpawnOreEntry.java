@@ -2,14 +2,14 @@ package com.mcmoddev.basemetals.data;
 
 public class OreSpawnOreEntry {
 
-	private String blockID;
-	private int size;
-	private int variation;
-	private int frequency;
-	private int minHeight;
-	private int maxHeight;
+	private final String blockID;
+	private final int size;
+	private final int variation;
+	private final float frequency;
+	private final int minHeight;
+	private final int maxHeight;
 
-	public OreSpawnOreEntry(String blockID, int size, int variation, int frequency, int minHeight, int maxHeight) {
+	public OreSpawnOreEntry(String blockID, int size, int variation, float frequency, int minHeight, int maxHeight) {
 		this.blockID = blockID;
 		this.size = size;
 		this.variation = variation;
@@ -30,7 +30,7 @@ public class OreSpawnOreEntry {
 		return variation;
 	}
 
-	public int getFrequency() {
+	public float getFrequency() {
 		return frequency;
 	}
 
