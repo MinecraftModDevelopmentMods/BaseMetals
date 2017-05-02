@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.init.Achievements;
+import com.mcmoddev.lib.item.ItemMMDBlend;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.item.ItemMMDShield;
+import com.mcmoddev.lib.item.ItemMMDSmallBlend;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
@@ -26,6 +28,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -61,19 +64,19 @@ public class EventHandler {
 		}
 	}
 
-	/*
 	@SubscribeEvent void event(ItemCraftedEvent event) {
 		final Item item = event.crafting.getItem();
-		if (item instanceof IMetalObject) {
-			final MetalMaterial material = ((IMetalObject) item).getMaterial();
+		if (item instanceof IMMDObject) {
+			// final MMDMaterial material = ((IMMDObject) item).getMMDMaterial();
 			if (Options.enableAchievements) {
-				if (item instanceof ItemMetalBlend) {
-					// event.player.addStat(Achievements.metallurgy, 1);
+				if ((item instanceof ItemMMDBlend) || (item instanceof ItemMMDSmallBlend)) {
+					event.player.addStat(Achievements.getAchievementByName("metallurgy"), 1);
+				} else if (item instanceof ItemMMDIngot) {
+					event.player.addStat(Achievements.getAchievementByName("this_is_new"), 1);
 				}
 			}
 		}
 	}
-	*/
 
 	@SubscribeEvent
 	void event(ItemSmeltedEvent event) {
