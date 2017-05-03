@@ -337,33 +337,6 @@ public abstract class Materials {
 	}
 
 	/**
-	 * Returns a list of all metal materials in Base Metals. All of the metals
-	 * in this list are also available as static public members of this class.
-	 * 
-	 * @deprecated
-	 * @return A Collection of MetalMaterial instances.
-	 */
-	@Deprecated
-	public static Collection<MMDMaterial> getAllMetals() {
-		return allMaterials.values();
-	}
-
-	/**
-	 * Gets a metal material by its name (e.g. "copper").
-	 *
-	 * @param materialName
-	 *            The name of a metal
-	 * 
-	 * @deprecated
-	 * @return The material representing the named metal, or null if no metals
-	 *         have been registered under that name.
-	 */
-	@Deprecated
-	public static MMDMaterial getMetalByName(String materialName) {
-		return allMaterials.get(materialName);
-	}
-
-	/**
 	 * Gets all materials from a given mod
 	 * 
 	 * @param modId
