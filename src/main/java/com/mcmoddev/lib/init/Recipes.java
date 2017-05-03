@@ -345,7 +345,7 @@ public abstract class Recipes {
 
 		if (material.hasBlock(Names.BLOCK) && (material.getBlock(Names.BLOCK) instanceof IMMDObject) && (material.hasItem(Names.INGOT))) {
 			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.INGOT), 9), Oredicts.BLOCK + oreDictName));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
 		}
 	}
 
