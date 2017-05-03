@@ -14,6 +14,7 @@ import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
@@ -343,7 +344,7 @@ public abstract class Recipes {
 	private static void makeBlockRecipes(MMDMaterial material) {
 		final String oreDictName = material.getCapitalizedName();
 
-		if (material.hasItem(Names.BLOCK) && (material.getItem(Names.BLOCK) instanceof IMMDObject) && (material.hasItem(Names.INGOT))) {
+		if (material.hasBlock(Names.BLOCK) && (material.getItem(Names.BLOCK) instanceof IMMDObject) && (material.hasItem(Names.INGOT))) {
 			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.INGOT), 9), Oredicts.BLOCK + oreDictName));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', Oredicts.INGOT + oreDictName));
 		}
