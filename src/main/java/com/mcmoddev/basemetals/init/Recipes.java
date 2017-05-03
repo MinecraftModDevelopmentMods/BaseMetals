@@ -77,18 +77,18 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			material = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 			oreDictName = material.getCapitalizedName();
 
-			if (material.getItem(Names.POWDER) != null) {
-				if (material.getBlock(Names.BLOCK) != null) { // Note: Minecraft does not provide a block of charcoal
+			if (material.hasItem(Names.POWDER)) {
+				if (material.hasBlock(Names.BLOCK)) { // Note: Minecraft does not provide a block of charcoal
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.getItem(Names.POWDER), 9));
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', material.getItem(Names.POWDER)));
 				}
-				if (material.getItem(Names.INGOT) != null) {
+				if (material.hasItem(Names.INGOT)) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(material.getItem(Names.INGOT), 1, 1), new ItemStack(material.getItem(Names.POWDER), 1));
 				}
-				if (material.getItem(Names.SMALLPOWDER) != null) {
+				if (material.hasItem(Names.SMALLPOWDER)) {
 					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLPOWDER), 9), new ItemStack(material.getItem(Names.POWDER))));
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(material.getItem(Names.SMALLPOWDER))));
-					if (material.getItem(Names.NUGGET) != null) {
+					if (material.hasItem(Names.NUGGET)) {
 						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.getItem(Names.SMALLPOWDER), 1));
 					}
 				}
@@ -99,84 +99,23 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			material = Materials.getMaterialByName(MaterialNames.COAL);
 			oreDictName = material.getCapitalizedName();
 
-			if (material.getItem(Names.POWDER) != null) {
-				if (material.getItem(Names.ORE) != null) {
+			if (material.hasItem(Names.POWDER)) {
+				if (material.hasItem(Names.ORE)) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, new ItemStack(material.getItem(Names.POWDER), 2));
 				}
-				if (material.getBlock(Names.BLOCK) != null) {
+				if (material.hasBlock(Names.BLOCK)) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.getItem(Names.POWDER), 9));
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', material.getItem(Names.POWDER)));
 				}
-				if (material.getItem(Names.INGOT) != null) {
+				if (material.hasItem(Names.INGOT)) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(material.getItem(Names.INGOT), 1, 0), new ItemStack(material.getItem(Names.POWDER), 1));
 				}
-				if (material.getItem(Names.SMALLPOWDER) != null) {
+				if (material.hasItem(Names.SMALLPOWDER)) {
 					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLPOWDER), 9), new ItemStack(material.getItem(Names.POWDER))));
 					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(material.getItem(Names.SMALLPOWDER))));
-					if (material.getItem(Names.NUGGET) != null) {
+					if (material.hasItem(Names.NUGGET)) {
 						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.getItem(Names.SMALLPOWDER), 1));
 					}
-				}
-			}
-		}
-		// furnace cheese all the things!
-		for (MMDMaterial mat : Materials.getAllMaterials()) {
-			if ((mat.getItem(Names.INGOT)) != null && !(mat.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject) && mat.hasOre()) {
-				if (Options.furnaceCheese()) {
-					if (mat.getItem(Names.BOOTS) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.BOOTS), new ItemStack(mat.getItem(Names.INGOT), 4), 0);
-
-					if (mat.getItem(Names.HELMET) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.HELMET), new ItemStack(mat.getItem(Names.INGOT), 5), 0);
-
-					if (mat.getItem(Names.SWORD) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.SWORD), new ItemStack(mat.getItem(Names.INGOT), 2), 0);
-
-					if (mat.getItem(Names.SHOVEL) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.SHOVEL), new ItemStack(mat.getItem(Names.INGOT), 1), 0);
-
-					if (mat.getItem(Names.PICKAXE) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.PICKAXE), new ItemStack(mat.getItem(Names.INGOT), 3), 0);
-
-					if (mat.getItem(Names.HOE) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.HOE), new ItemStack(mat.getItem(Names.INGOT), 2), 0);
-
-					if (mat.getItem(Names.AXE) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.AXE), new ItemStack(mat.getItem(Names.INGOT), 3), 0);
-
-					if (mat.getItem(Names.LEGGINGS) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.LEGGINGS), new ItemStack(mat.getItem(Names.INGOT), 7), 0);
-
-					if (mat.getItem(Names.CHESTPLATE) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.CHESTPLATE), new ItemStack(mat.getItem(Names.INGOT), 8), 0);
-
-				} else if (Options.furnace1112()) {
-					if (mat.getItem(Names.BOOTS) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.BOOTS), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
-
-					if (mat.getItem(Names.HELMET) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.HELMET), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
-
-					if (mat.getItem(Names.SWORD) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.SWORD), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
-
-					if (mat.getItem(Names.SHOVEL) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.SHOVEL), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
-
-					if (mat.getItem(Names.PICKAXE) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.PICKAXE), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
-
-					if (mat.getItem(Names.HOE) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.HOE), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
-
-					if (mat.getItem(Names.AXE) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.AXE), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
-
-					if (mat.getItem(Names.LEGGINGS) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.LEGGINGS), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
-
-					if (mat.getItem(Names.CHESTPLATE) != null)
-						GameRegistry.addSmelting(mat.getItem(Names.CHESTPLATE), new ItemStack(mat.getItem(Names.NUGGET), 1), 0);
 				}
 			}
 		}
