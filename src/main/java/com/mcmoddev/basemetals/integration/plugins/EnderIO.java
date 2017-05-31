@@ -2,8 +2,8 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.MMDPlugin;
 
 /**
  *
@@ -20,11 +20,10 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableEnderIO) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("enderio")) {
 			return;
 		}
 
-		// TODO: Verify blocks, Slabs, Ingots, Ore Blocks
 		addSagMillRecipe(MaterialNames.ADAMANTINE);
 		addSagMillRecipe(MaterialNames.ANTIMONY);
 		addSagMillRecipe(MaterialNames.AQUARIUM);
@@ -32,16 +31,16 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 		addSagMillRecipe(MaterialNames.BRASS);
 		addSagMillRecipe(MaterialNames.BRONZE);
 		addSagMillRecipe(MaterialNames.COLDIRON);
-		addSagMillRecipe(MaterialNames.COPPER);
+		addSagMillRecipe(MaterialNames.COPPER, 2, MaterialNames.GOLD, 1, 360);
 		addSagMillRecipe(MaterialNames.CUPRONICKEL);
 		addSagMillRecipe(MaterialNames.ELECTRUM);
 		addSagMillRecipe(MaterialNames.INVAR);
-		addSagMillRecipe(MaterialNames.LEAD);
+		addSagMillRecipe(MaterialNames.LEAD, 2, MaterialNames.SILVER, 1, 360);
 		addSagMillRecipe(MaterialNames.MITHRIL);
-		addSagMillRecipe(MaterialNames.NICKEL);
+		addSagMillRecipe(MaterialNames.NICKEL, 2, MaterialNames.PLATINUM, 1, 360);
 		addSagMillRecipe(MaterialNames.PEWTER);
 		addSagMillRecipe(MaterialNames.PLATINUM);
-		addSagMillRecipe(MaterialNames.SILVER);
+		addSagMillRecipe(MaterialNames.SILVER, 2, MaterialNames.LEAD, 1, 360);
 		addSagMillRecipe(MaterialNames.STARSTEEL);
 		addSagMillRecipe(MaterialNames.STEEL);
 		addSagMillRecipe(MaterialNames.TIN);

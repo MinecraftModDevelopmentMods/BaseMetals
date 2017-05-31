@@ -1,9 +1,9 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Collections;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.*;

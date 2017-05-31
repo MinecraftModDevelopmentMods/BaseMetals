@@ -4,7 +4,6 @@ import com.mcmoddev.lib.entity.EntityCustomBolt;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -13,7 +12,7 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class ItemBolt extends Item {
+public class ItemBolt extends net.minecraft.item.Item {
 
 	/**
 	 *

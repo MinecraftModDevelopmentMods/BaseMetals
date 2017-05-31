@@ -44,10 +44,10 @@ public class ASMTransformer implements IClassTransformer {
 				out.write(cw.toByteArray());
 				out.close();
 			} catch (final IOException ex) {
-//				ex.printStackTrace();
+				//				ex.printStackTrace();
 				BaseMetals.logger.error(ex);
 			} finally {
-				
+
 			}
 	}
 }

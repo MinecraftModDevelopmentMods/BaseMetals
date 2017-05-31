@@ -1,10 +1,11 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
-import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.MMDPlugin;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
 public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase implements IIntegration {
@@ -13,40 +14,40 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableMekanism) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("mekanism")) {
 			return;
 		}
 
-		if (Options.enableAdamantine) {
-			addOreMultiplicationRecipes(Materials.adamantine);
+		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
 		}
 
-		if (Options.enableAntimony) {
-			addOreMultiplicationRecipes(Materials.antimony);
+		if (Options.materialEnabled(MaterialNames.ANTIMONY)) {
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ANTIMONY));
 		}
 
-		if (Options.enableBismuth) {
-			addOreMultiplicationRecipes(Materials.bismuth);
+		if (Options.materialEnabled(MaterialNames.BISMUTH)) {
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.BISMUTH));
 		}
 
-		if (Options.enableColdIron) {
-			addOreMultiplicationRecipes(Materials.coldiron);
+		if (Options.materialEnabled(MaterialNames.COLDIRON)) {
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.COLDIRON));
 		}
 
-		if (Options.enablePlatinum) {
-			addOreMultiplicationRecipes(Materials.platinum);
+		if (Options.materialEnabled(MaterialNames.PLATINUM)) {
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.PLATINUM));
 		}
 
-		if (Options.enableNickel) {
-			addOreMultiplicationRecipes(Materials.nickel);
+		if (Options.materialEnabled(MaterialNames.NICKEL)) {
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.NICKEL));
 		}
 
-		if (Options.enableStarSteel) {
-			addOreMultiplicationRecipes(Materials.starsteel);
+		if (Options.materialEnabled(MaterialNames.STARSTEEL)) {
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.STARSTEEL));
 		}
 
-		if (Options.enableZinc) {
-			addOreMultiplicationRecipes(Materials.zinc);
+		if (Options.materialEnabled(MaterialNames.ZINC)) {
+			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ZINC));
 		}
 
 		initDone = true;

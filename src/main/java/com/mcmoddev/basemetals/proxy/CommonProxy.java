@@ -1,10 +1,12 @@
 package com.mcmoddev.basemetals.proxy;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.*;
 import com.mcmoddev.basemetals.util.Config;
-import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.basemetals.util.EventHandler;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 
@@ -31,11 +33,13 @@ public class CommonProxy {
 
 		Materials.init();
 		FuelRegistry.init();
-		cyano.basemetals.init.Materials.init();
 		Fluids.init();
 		ItemGroups.init();
 		Blocks.init();
 		Items.init();
+
+		// icons have to be setup after the blocks and items are initialized
+		ItemGroups.setupIcons();
 		VillagerTrades.init();
 
 		FMLInterModComms.sendFunctionMessage("orespawn", "api", "com.mcmoddev.orespawn.BaseMetalsOreSpawn");
@@ -48,12 +52,12 @@ public class CommonProxy {
 		for (final MissingMapping mapping : event.get()) {
 			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
-					if ((Options.enableMercury) && ("liquid_mercury".equals(mapping.resourceLocation.getResourcePath()))) {
-						mapping.remap(Materials.mercury.fluidBlock);
+					if ((Options.materialEnabled(MaterialNames.MERCURY)) && ("liquid_mercury".equals(mapping.resourceLocation.getResourcePath()))) {
+						mapping.remap(Materials.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
-					if ((Options.enableCoal) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
-						mapping.remap(Materials.vanilla_coal.powder);
+					if ((Options.materialEnabled(MaterialNames.COAL)) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
+						mapping.remap(Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
 					}
 				}
 			}

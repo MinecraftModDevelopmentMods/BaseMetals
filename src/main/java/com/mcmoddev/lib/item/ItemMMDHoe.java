@@ -14,7 +14,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -25,12 +24,11 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class ItemMMDHoe extends ItemHoe implements IMMDObject {
+public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject {
 
 	protected final MMDMaterial material;
 	protected final Set<String> toolTypes;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -45,7 +43,6 @@ public class ItemMMDHoe extends ItemHoe implements IMMDObject {
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("hoe");
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -103,21 +100,16 @@ public class ItemMMDHoe extends ItemHoe implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (world.isRemote)
+			return;
+
+		if (this.material.regenerates() && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
 			item.setItemDamage(item.getItemDamage() - 1);
+		}
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 

@@ -1,17 +1,23 @@
 package com.mcmoddev.lib.material;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.mcmoddev.lib.data.MaterialStats;
+import com.mcmoddev.lib.data.Names;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockSlab;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 // import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 
 /**
@@ -21,51 +27,75 @@ import net.minecraftforge.fml.common.Loader;
  */
 public class MMDMaterial {
 
-	/**
-	 * hardness on a scale from 0 to 10 (or more), where 0 is non-solid and
-	 * diamond is 10. For reference, wood is 3, stone is 5, iron is 8, diamond
-	 * is 10.
+	/*
+	 * data storage - flexible, somewhat important stuff in this part
 	 */
-	public final float hardness;
+	/**
+	 * Storage for all "Item" type forms for this material
+	 */
+	private Map<String, Item> items = new TreeMap<>();
 
 	/**
-	 * durability on a scale from 0 to 10 (or more). For reference, leather is
-	 * 2.5, gold is 3, wood is 2, stone is 4, iron is 8, minecraft diamond is
-	 * 10.
+	 * Storage for all "Block" type forms for this material
 	 */
-	public final float strength;
+	private Map<String, Block> blocks = new TreeMap<>();
 
 	/**
-	 * Scale from 0 to 10 (or more) on how magical the material is. For
-	 * reference, stone is 2, iron is 4.5, diamond is 4, wood is 6, gold is 10.
+	 * If this material has a fluid, it is stored here
 	 */
-	public final float magicAffinity;
 
+	private Fluid fluid;
+	private BlockFluidClassic fluidBlock;
+
+	/*
+	 * Material Statistics - see com.mcmoddev.lib.data.MaterialStats for current
+	 * known and used ones
+	 */
+	private Map<MaterialStats, Float> stats = new TreeMap<>();
+
+	/*
+	 * Various material flags
+	 */
 	/**
 	 * Whether things made from this material can regenerate
 	 */
-	public boolean regenerates = false;
-
-	/**
-	 * Color Info for metal
-	 */
-	public final int tintColor;
+	private boolean regenerates = false;
 
 	/**
 	 * Rare metals, like platinum, are never found in villager trades and
 	 * unusually uncommon in world generation
 	 */
-	public final boolean isRare;
+	private final boolean isRare;
 
 	/**
-	 * Does this Material have an Ore?
+	 * Whether or not this material has a blend that can be smelted to produce
+	 * it
 	 */
-	public final boolean hasOre;
+	private final boolean hasBlend;
 
 	/**
-	 * Does this Material have a blend?
+	 * Is this block meant to have an Ore ?
 	 */
-	public final boolean hasBlend;
+	private final boolean hasOre;
+
+	/*
+	 * Miscelaneous Material Information
+	 */
+	/**
+	 * Color Info for metal
+	 */
+	private final int tintColor;
+
+	/**
+	 * String used to identify items and blocks using this material
+	 */
+	private final String identifier;
+
+	private final String titleName;
+
+	private final String enumName;
+
+	private int[] cache = null;
 
 	/**
 	 * ENUM of all the types of Materials
@@ -83,94 +113,6 @@ public class MMDMaterial {
 	private final MaterialType materialType;
 
 	/**
-	 * String used to identify items and blocks using this material
-	 */
-	final String identifier;
-
-	final String titleName;
-
-	private final String enumName;
-
-	private int[] cache = null;
-
-	/**
-	 * The resistance the material has against explosions.
-	 */
-	private float blastResistance;
-
-	/**
-	 * The base attack damage for the material.
-	 */
-	private float baseDamage;
-
-	public Item anvil;
-	public Item arrow;
-	public Item axe;
-	public Item blend;
-	public Item boots;
-	public Item bolt;
-	public Item bow;
-	public Item chestplate;
-	public Item crackhammer;
-	public Item crossbow;
-	public Item door;
-	public Item fishingRod;
-	public Item gear;
-	public Item helmet;
-	public Item hoe;
-	public Item horseArmor;
-	public Item ingot;
-	public Item leggings;
-	public Item nugget;
-	public Item pickaxe;
-	public Item powder;
-	public Item rod;
-	public Item shears;
-	public Item shield;
-	public Item shovel;
-	public Item slab;
-	public Item smallblend;
-	public Item smallpowder;
-	public Item sword;
-
-	public Block anvilBlock;
-	public Block bars;
-	public Block block;
-	public Block bookshelf;
-	public Block button;
-	public BlockDoor doorBlock;
-	public BlockSlab doubleSlab;
-	public BlockSlab halfSlab;
-	public Block flowerPot;
-	public Block ladder;
-	public Block lever;
-	public Block ore;
-	public Block plate;
-	public Block pressurePlate;
-	public Block stairs;
-	public Block trapdoor;
-	public Block tripwireHook;
-	public Block wall;
-	public Block fence;
-	public Block fenceGate;
-
-	public Fluid fluid;
-	public BlockFluidClassic fluidBlock;
-
-	public Item crystal;
-	public Item shard;
-	public Item clump;
-	public Item powderDirty;
-
-	public Item casing;
-	public Item densePlate;
-	public Item crushed;
-	public Item crushedPurified;
-
-	public Block oreEnd;
-	public Block oreNether;
-
-	/**
 	 * @param name
 	 *            String used to identify items and blocks using this material
 	 * @param type
@@ -183,8 +125,8 @@ public class MMDMaterial {
 	 * @param strength
 	 *            durability on a scale from 0 to 10 (or more). For reference,
 	 *            Leather is 2.5, Gold is 3, Wood is 2, Stone is 4, Iron is 8,
-	 *            Diamond is 10. Used for item durability calculations
-	 *            and blast resistance
+	 *            Diamond is 10. Used for item durability calculations and blast
+	 *            resistance
 	 * @param magic
 	 *            Scale from 0 to 10 (or more) on how magical the material is.
 	 *            For reference, Stone is 2, Iron is 4.5, Diamond is 4, Wood is
@@ -199,19 +141,21 @@ public class MMDMaterial {
 	 *            If true this material has a blend
 	 */
 	public MMDMaterial(String name, MaterialType type, float hardness, float strength, float magic, int tintColor, boolean isRare, boolean hasOre, boolean hasBlend) {
-		this.hardness = hardness;
-		this.strength = strength;
-		this.magicAffinity = magic;
+		// material stats
+		this.stats.put(MaterialStats.HARDNESS, hardness);
+		this.stats.put(MaterialStats.STRENGTH, strength);
+		this.stats.put(MaterialStats.MAGICAFFINITY, magic);
+		this.stats.put(MaterialStats.BLASTRESISTANCE, 2.5f * strength);
+		this.stats.put(MaterialStats.BASEDAMAGE, this.round(0.25f * hardness, 1));
+
 		this.tintColor = tintColor;
 		this.identifier = name;
 		this.titleName = StringUtils.capitalize(name);
 		this.enumName = (Loader.instance().activeModContainer().getModId() + "_" + name).toUpperCase(Locale.ENGLISH);
+		this.isRare = isRare;
+		this.materialType = type;
 		this.hasBlend = hasBlend;
 		this.hasOre = hasOre;
-		this.isRare = isRare;
-		this.blastResistance = 2.5f * this.strength;
-		this.baseDamage = this.round(0.25f * this.hardness, 1);
-		this.materialType = type;
 	}
 
 	public String getName() {
@@ -261,7 +205,7 @@ public class MMDMaterial {
 	 * @return XP value per ore block
 	 */
 	public float getOreSmeltXP() {
-		return 0.1f * this.magicAffinity;
+		return 0.1f * this.stats.get(MaterialStats.MAGICAFFINITY);
 	}
 
 	/**
@@ -271,7 +215,7 @@ public class MMDMaterial {
 	 *         equivalent)
 	 */
 	public int getToolHarvestLevel() {
-		return (int) (this.hardness / 3f);
+		return (int) (this.stats.get(MaterialStats.HARDNESS) / 3f);
 	}
 
 	/**
@@ -282,7 +226,7 @@ public class MMDMaterial {
 	 *         equivalent)
 	 */
 	public int getRequiredHarvestLevel() {
-		return (int) clamp((0.9f * this.hardness) / 3f, -1, 3);
+		return (int) clamp((0.9f * this.stats.get(MaterialStats.HARDNESS)) / 3f, -1, 3);
 	}
 
 	static int clamp(int x, int min, int max) {
@@ -315,7 +259,7 @@ public class MMDMaterial {
 	 * @return the blast resistance score
 	 */
 	public float getBlastResistance() {
-		return this.blastResistance;
+		return this.stats.get(MaterialStats.BLASTRESISTANCE);
 	}
 
 	/**
@@ -325,7 +269,7 @@ public class MMDMaterial {
 	 * @return the number used to determine how quickly a block is mined
 	 */
 	public float getToolEfficiency() {
-		return this.hardness;
+		return this.stats.get(MaterialStats.HARDNESS);
 	}
 
 	/**
@@ -334,7 +278,7 @@ public class MMDMaterial {
 	 * @return the hardness of the ore block for this material
 	 */
 	public float getOreBlockHardness() {
-		return 0.5f * this.hardness;
+		return 0.5f * this.stats.get(MaterialStats.HARDNESS);
 	}
 
 	/**
@@ -343,7 +287,7 @@ public class MMDMaterial {
 	 * @return the hardness for blocks made from this material
 	 */
 	public float getBlockHardness() {
-		return 2.0f * this.hardness;
+		return 2.0f * this.stats.get(MaterialStats.HARDNESS);
 	}
 
 	/**
@@ -352,7 +296,7 @@ public class MMDMaterial {
 	 * @return The number of uses of a tool made from this material
 	 */
 	public int getToolDurability() {
-		return (int) (32 * this.strength);
+		return (int) (32 * this.stats.get(MaterialStats.STRENGTH));
 	}
 
 	/**
@@ -362,7 +306,7 @@ public class MMDMaterial {
 	 *         take.
 	 */
 	public int getArmorMaxDamageFactor() {
-		return (int) (2.0f * this.strength);
+		return (int) (2.0f * this.stats.get(MaterialStats.STRENGTH));
 	}
 
 	/**
@@ -377,7 +321,7 @@ public class MMDMaterial {
 			final float minimum = 5f; // most metals should be better than
 										// leather armor
 			final float hardnessFactor = 1.25f;
-			final float total = (hardnessFactor * this.hardness) + minimum;
+			final float total = (hardnessFactor * this.stats.get(MaterialStats.HARDNESS)) + minimum;
 			this.cache = new int[4];
 			final int feetIndex = EntityEquipmentSlot.FEET.getIndex();
 			final int legsIndex = EntityEquipmentSlot.LEGS.getIndex();
@@ -397,7 +341,7 @@ public class MMDMaterial {
 	 * @return the base damage from attacks with tools made from this material
 	 */
 	public float getBaseAttackDamage() {
-		return this.baseDamage;
+		return this.stats.get(MaterialStats.BASEDAMAGE);
 	}
 
 	private float round(float number, int numDecimalPlaces) {
@@ -413,10 +357,11 @@ public class MMDMaterial {
 	 * @return the enchantability score for this material
 	 */
 	public int getEnchantability() {
-		return (int) (2.5f * this.magicAffinity);
+		return (int) (2.5f * this.stats.get(MaterialStats.MAGICAFFINITY));
 	}
 
 	public String getEnumName() {
+		;
 		return this.enumName;
 	}
 
@@ -438,7 +383,7 @@ public class MMDMaterial {
 	 * @return An instance of the material, for quality of life.
 	 */
 	public MMDMaterial setBlastResistance(float resistance) {
-		this.blastResistance = resistance;
+		this.stats.put(MaterialStats.BLASTRESISTANCE, resistance);
 		return this;
 	}
 
@@ -451,7 +396,230 @@ public class MMDMaterial {
 	 * @return An instance of the material, for quality of life.
 	 */
 	public MMDMaterial setBaseDamage(float damage) {
-		this.baseDamage = damage;
+		this.stats.put(MaterialStats.BASEDAMAGE, damage);
 		return this;
 	}
+
+	/**
+	 * Adds a new item to the list of known items made from this material
+	 * 
+	 * @param name
+	 *            The name of the item. Existing names can be found in
+	 *            com.mcmoddev.lib.data.Names
+	 * @param item
+	 *            The item to add
+	 * @return an instance of the material - QOL and call chaining
+	 */
+	public MMDMaterial addNewItem(Names name, Item item) {
+		addNewItem(name.toString(), item);
+		return this;
+	}
+
+	/**
+	 * Adds a new item to the list of known items made from this material
+	 * 
+	 * @param name
+	 *            The name of the item. Existing names can be found in
+	 *            com.mcmoddev.lib.data.Names
+	 * @param item
+	 *            The item to add
+	 * @return an instance of the material - QOL and call chaining
+	 */
+	public MMDMaterial addNewItem(String name, Item item) {
+		if (this.items.containsKey(name)) {
+			FMLLog.warning("Tried adding item %s to a material that already has it, don't do that!", name);
+			return this;
+		}
+		this.items.put(name, item);
+		return this;
+	}
+
+	/**
+	 * Adds a new block to the list of known items made from this material
+	 * 
+	 * @param name
+	 *            The name of the block. Existing names can be found in
+	 *            com.mcmoddev.lib.data.Names
+	 * @param block
+	 *            The block to add
+	 * @return an instance of the material - QOL and call chaining
+	 */
+	public MMDMaterial addNewBlock(Names name, Block block) {
+		addNewBlock(name.toString(), block);
+		return this;
+	}
+
+	/**
+	 * Adds a new block to the list of known items made from this material
+	 * 
+	 * @param name
+	 *            The name of the block. Existing names can be found in
+	 *            com.mcmoddev.lib.data.Names
+	 * @param block
+	 *            The block to add
+	 * @return an instance of the material - QOL and call chaining
+	 */
+	public MMDMaterial addNewBlock(String name, Block block) {
+		if (this.blocks.containsKey(name)) {
+			FMLLog.warning("Tried adding block %s to a material that already has it, don't do that!", name);
+			return this;
+		}
+		this.blocks.put(name, block);
+		return this;
+	}
+
+	/**
+	 * Get the item with name 'name' if it exists, null is returned if the item
+	 * does not exist
+	 * 
+	 * @param name
+	 *            Name of the item to retrieve
+	 * @return the Item registered with the material, null if one of that name
+	 *         was not registered
+	 */
+	public Item getItem(Names name) {
+		return getItem(name.toString());
+	}
+
+	/**
+	 * Get the item with name 'name' if it exists, null is returned if the item
+	 * does not exist
+	 * 
+	 * @param name
+	 *            Name of the item to retrieve
+	 * @return the Item registered with the material, null if one of that name
+	 *         was not registered
+	 */
+	public Item getItem(String name) {
+		if (this.items.containsKey(name)) {
+			return this.items.get(name);
+		}
+		return null;
+	}
+
+	/**
+	 * Get the block with name 'name' if it exists, null is returned if the
+	 * block does not exist
+	 * 
+	 * @param name
+	 *            Name of the item to retrieve
+	 * @return the Block registered with the material, null if one of that name
+	 *         was not registered
+	 */
+	public Block getBlock(Names name) {
+		return this.getBlock(name.toString());
+	}
+
+	/**
+	 * Get the block with name 'name' if it exists, null is returned if the
+	 * block does not exist
+	 * 
+	 * @param name
+	 *            Name of the item to retrieve
+	 * @return the Block registered with the material, null if one of that name
+	 *         was not registered
+	 */
+	public Block getBlock(String name) {
+		if (this.blocks.containsKey(name)) {
+			return this.blocks.get(name);
+		}
+		return null;
+	}
+
+	public boolean hasOre() {
+		return this.hasOre;
+	}
+
+	public boolean hasBlend() {
+		return this.hasBlend;
+	}
+
+	public boolean isRare() {
+		return this.isRare;
+	}
+
+	public boolean regenerates() {
+		return this.regenerates;
+	}
+
+	public boolean hasItem(Names name) {
+		return this.hasItem(name.toString());
+	}
+
+	public boolean hasItem(String name) {
+		return this.items.containsKey(name);
+	}
+
+	public boolean hasBlock(String name) {
+		return this.blocks.containsKey(name);
+	}
+
+	public boolean hasBlock(Names name) {
+		return this.hasBlock(name.toString());
+	}
+
+	public float getStat(MaterialStats name) {
+		if (this.stats.containsKey(name)) {
+			return this.stats.get(name).floatValue();
+		}
+		return 0F;
+	}
+
+	public void setStat(MaterialStats name, float value) {
+		this.stats.put(name, value);
+	}
+
+	public Fluid getFluid() {
+		return this.fluid;
+	}
+
+	public void setFluid(Fluid f) {
+		this.fluid = f;
+	}
+
+	public BlockFluidClassic getFluidBlock() {
+		return this.fluidBlock;
+	}
+
+	public void setFluidBlock(BlockFluidClassic b) {
+		this.fluidBlock = b;
+	}
+
+	public void setRegenerates(boolean regen) {
+		this.regenerates = regen;
+	}
+	
+	public final Material getVanillaMaterial() {
+		switch (this.getType()) {
+			case METAL:
+				return Material.IRON;
+			case GEM:
+			case ROCK:
+				return Material.ROCK;
+			case MINERAL:
+				return Material.GRASS;
+			case WOOD:
+				return Material.WOOD;
+			default:
+				return Material.GROUND;
+		}
+	}
+
+	public final SoundType getSoundType() {
+		switch (this.getType()) {
+			case METAL:
+				return SoundType.METAL;
+			case GEM:
+				return SoundType.GLASS;
+			case ROCK:
+				return SoundType.STONE;
+			case MINERAL:
+				return SoundType.SAND;
+			case WOOD:
+				return SoundType.WOOD;
+			default:
+				return SoundType.GROUND;
+		}
+	}
+
 }

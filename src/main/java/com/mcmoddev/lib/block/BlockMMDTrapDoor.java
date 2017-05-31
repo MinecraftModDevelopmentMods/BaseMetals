@@ -2,12 +2,8 @@ package com.mcmoddev.lib.block;
 
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,10 +15,9 @@ import net.minecraft.world.World;
 /**
  * Metal Trap Door
  */
-public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implements IOreDictionaryEntry, IMMDObject {
+public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implements IMMDObject {
 
 	private final MMDMaterial material;
-	private final String oreDict;
 
 	/**
 	 *
@@ -30,13 +25,12 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	 *            The material the trapdoor is made from
 	 */
 	public BlockMMDTrapDoor(MMDMaterial material) {
-		super(Material.IRON);
+		super(material.getVanillaMaterial());
 		this.material = material;
-		this.oreDict = Oredicts.TRAPDOOR + material.getCapitalizedName();
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.blockSoundType = SoundType.METAL;
-		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.blockSoundType = this.material.getSoundType();
+		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 
@@ -53,21 +47,7 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	}
 
 	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
-	}
-
-	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }

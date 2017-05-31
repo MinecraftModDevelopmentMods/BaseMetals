@@ -3,6 +3,7 @@ package com.mcmoddev.lib.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -20,8 +21,8 @@ public class ShieldRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	private String matName;
 
 	public ShieldRepairRecipe(MMDMaterial mat) {
-		super(new ItemStack(mat.shield, 1), new Object[] { Oredicts.SHIELD + mat.getCapitalizedName(), Oredicts.PLATE + mat.getCapitalizedName() });
-		baseShield = new ItemStack(mat.shield, 1, OreDictionary.WILDCARD_VALUE);
+		super(new ItemStack(mat.getItem(Names.SHIELD), 1), new Object[] { Oredicts.SHIELD + mat.getCapitalizedName(), Oredicts.PLATE + mat.getCapitalizedName() });
+		baseShield = new ItemStack(mat.getItem(Names.SHIELD), 1, OreDictionary.WILDCARD_VALUE);
 		matName = mat.getCapitalizedName();
 	}
 

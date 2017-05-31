@@ -2,8 +2,8 @@ package com.mcmoddev.lib.fluids;
 
 import com.mcmoddev.basemetals.init.Materials;
 
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
@@ -29,7 +29,7 @@ public class CustomFluid extends Fluid {
 	public CustomFluid(String fluidName, ResourceLocation still, ResourceLocation flowing) {
 		super(fluidName, still, flowing);
 		if (Materials.getMaterialByName(fluidName) != null) {
-			this.color = Materials.getMaterialByName(fluidName).tintColor;
+			this.color = Materials.getMaterialByName(fluidName).getTintColor();
 		}
 		if (((this.color >> 24) & 0xFF) == 0) {
 			this.color |= 0xFF << 24;
@@ -65,7 +65,7 @@ public class CustomFluid extends Fluid {
 				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_still"),
 				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_flow"));
 		if (Materials.getMaterialByName(fluidName) != null) {
-			this.color = Materials.getMaterialByName(fluidName).tintColor;
+			this.color = Materials.getMaterialByName(fluidName).getTintColor();
 		}
 		if (((this.color >> 24) & 0xFF) == 0) {
 			this.color |= 0xFF << 24;
