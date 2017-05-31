@@ -13,7 +13,7 @@ public class DenseOresBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableDenseOres) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
@@ -44,11 +44,12 @@ public class DenseOresBase implements IIntegration {
 		// this, however, is apparently a name, so...
 		mess.setString("config_entry", String.format("%s %s ore", modID, name));
 
-		FMLInterModComms.sendMessage("denseores", "addDenseOre", mess);
+		FMLInterModComms.sendMessage(PLUGIN_MODID, "addDenseOre", mess);
 	}
 
 	/**
-	 * Register a single ore that spawns in the nether and has an oredict of 'nether_&lt;name&gt;_ore'
+	 * Register a single ore that spawns in the nether and has an oredict of
+	 * 'nether_&lt;name&gt;_ore'
 	 *
 	 * @param name
 	 *            Oredictionary name of this ore in its source mod
@@ -63,7 +64,8 @@ public class DenseOresBase implements IIntegration {
 	}
 
 	/**
-	 * Register a single ore that spawns in the end and has an oredict of 'end_&lt;name&gt;_ore'
+	 * Register a single ore that spawns in the end and has an oredict of
+	 * 'end_&lt;name&gt;_ore'
 	 *
 	 * @param name
 	 *            Oredictionary name of this ore in its source mod

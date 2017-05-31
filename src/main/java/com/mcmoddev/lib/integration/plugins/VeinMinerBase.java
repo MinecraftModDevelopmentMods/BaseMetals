@@ -2,7 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.integration.IIntegration;
 
-import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.Loader;
 import portablejim.veinminer.api.IMCMessage;
 
 /**
@@ -19,7 +19,7 @@ public class VeinMinerBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableVeinminer) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("veinminer")) {
 			return;
 		}
 

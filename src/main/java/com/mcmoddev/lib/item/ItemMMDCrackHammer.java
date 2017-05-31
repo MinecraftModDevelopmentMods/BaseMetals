@@ -1,12 +1,13 @@
 package com.mcmoddev.lib.item;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import com.mcmoddev.basemetals.init.Achievements;
-import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
-import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.init.Achievements;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
@@ -16,13 +17,20 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.util.math.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -30,13 +38,12 @@ import net.minecraftforge.oredict.OreDictionary;
  * Crack Hammers
  */
 @SuppressWarnings("deprecation")
-public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
+public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements IMMDObject {
 	private static final float ATTACK_SPEED = -3.0F;
 
 	private final MMDMaterial material;
 	private final Set<String> toolTypes;
 	private final String repairOreDictName;
-	private final boolean regenerates;
 	private static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -55,7 +62,6 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 		toolTypes.add("crackhammer");
 		toolTypes.add("pickaxe");
 		repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -99,7 +105,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 				ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(targetItem);
 				if (recipe != null) {
 					// hardness check
-					if ((Config.Options.enforceHardness) && (targetItem.getItem() instanceof ItemBlock)) {
+					if ((Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
 						Block b = ((ItemBlock) targetItem.getItem()).getBlock();
 						if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
 							// cannot harvest the block, no crush for you!
@@ -111,7 +117,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 						ItemStack output = recipe.getOutput().copy();
 						int count = output.stackSize;
 						int toolDamage;
-						if (Options.crackhammerFullStack) {
+						if (Options.crackHammerFullStack()) {
 							output.stackSize = targetItem.stackSize;
 							if (item.isItemDamaged() && (item.getItemDamage() < output.stackSize)) {
 									output.stackSize = item.getItemDamage();
@@ -125,7 +131,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 						double y = target.posY;
 						double z = target.posZ;
 
-						if (Options.crackhammerFullStack) {
+						if (Options.crackHammerFullStack()) {
 							targetItem.stackSize -= output.stackSize;
 						} else {
 							targetItem.stackSize--;
@@ -202,7 +208,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 	@Deprecated
 	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
 		if (typeRequested != null && toolTypes.contains(typeRequested)) {
-			if (Config.Options.strongHammers) {
+			if (Options.strongHammers()) {
 				return material.getToolHarvestLevel();
 			} else {
 				return material.getToolHarvestLevel() - 1;
@@ -228,14 +234,17 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 		super.onCreated(item, world, crafter);
 		MMDToolEffects.extraEffectsOnCrafting(material, item, world, crafter);
 		// achievement
-		if (Options.enableAchievements) {
-			crafter.addStat(Achievements.geologist, 1);
+		if (Options.enableAchievements()) {
+			crafter.addStat(Achievements.getAchievementByName("geologist"), 1);
 		}
 	}
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (regenerates && !world.isRemote && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % REGEN_INTERVAL == 0) {
+		if (world.isRemote)
+			return;
+
+		if (this.material.regenerates() && isHeld && item.getItemDamage() > 0 && world.getTotalWorldTime() % REGEN_INTERVAL == 0) {
 			item.setItemDamage(item.getItemDamage() - 1);
 		}
 	}
@@ -256,11 +265,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 		// return true if block doesn't need tools
 		return target.getHarvestLevel(target.getDefaultState()) == -1;
 	}
-/*
-	public String getMaterialName() {
-		return this.material.getName();
-	}
-*/
+
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
 		super.addInformation(stack, player, list, b);
@@ -268,16 +273,7 @@ public class ItemMMDCrackHammer extends ItemTool implements IMMDObject {
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }

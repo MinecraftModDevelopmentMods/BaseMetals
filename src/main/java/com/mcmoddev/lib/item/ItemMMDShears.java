@@ -7,10 +7,8 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -20,11 +18,10 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDShears extends ItemShears implements IMMDObject {
+public class ItemMMDShears extends net.minecraft.item.ItemShears implements IMMDObject {
 
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -35,9 +32,7 @@ public class ItemMMDShears extends ItemShears implements IMMDObject {
 	public ItemMMDShears(MMDMaterial material) {
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
-		this.setCreativeTab(CreativeTabs.TOOLS);
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -52,12 +47,12 @@ public class ItemMMDShears extends ItemShears implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
-			item.setItemDamage(item.getItemDamage() - 1);
-	}
+		if (world.isRemote)
+			return;
 
-	public String getMaterialName() {
-		return this.material.getName();
+		if (this.material.regenerates()  && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
+			item.setItemDamage(item.getItemDamage() - 1);
+		}
 	}
 
 	@Override
@@ -67,16 +62,7 @@ public class ItemMMDShears extends ItemShears implements IMMDObject {
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }

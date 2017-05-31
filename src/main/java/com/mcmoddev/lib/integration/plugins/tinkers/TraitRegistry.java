@@ -61,8 +61,7 @@ public class TraitRegistry {
 
 	public static void dumpRegistry() {
 		for (Entry<String, ITrait> e : registeredTraits.entrySet()) {
-			String t = String.format("BaseMetals-TCon> Trait: %s - class %s", e.getKey(),
-					e.getValue().getClass().getName());
+			String t = String.format("BaseMetals-TCon> Trait: %s - class %s", e.getKey(), e.getValue().getClass().getName());
 			BaseMetals.logger.info(t);
 		}
 	}

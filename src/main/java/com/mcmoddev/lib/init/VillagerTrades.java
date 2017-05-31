@@ -1,22 +1,25 @@
 package com.mcmoddev.lib.init;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
+import com.mcmoddev.lib.data.MaterialStats;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.item.ItemMMDCrackHammer;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.entity.passive.EntityVillager.*;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSpade;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.entity.passive.EntityVillager.ITradeList;
+import net.minecraft.entity.passive.EntityVillager.ListEnchantedItemForEmeralds;
+import net.minecraft.entity.passive.EntityVillager.PriceInfo;
+import net.minecraft.item.*;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.fml.common.Loader;
@@ -27,6 +30,10 @@ import net.minecraftforge.fml.common.Loader;
  *
  */
 public abstract class VillagerTrades {
+
+	protected static final int armorsmith = (3 << 16) | (1 << 8);
+	protected static final int weaponsmith = (3 << 16) | (2 << 8);
+	protected static final int toolsmith = (3 << 16) | (3 << 8);
 
 	private static boolean initDone = false;
 
@@ -53,13 +60,14 @@ public abstract class VillagerTrades {
 	}
 
 	protected static void registerCommonTrades() {
+		String modid = Loader.instance().activeModContainer().getModId();
 		// integer is used as byte data: (unused) (profession) (career) (level)
 		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>();
 
 		// Minecraft stores trades in a 4D array:
 		// [Profession ID][Sub-profession ID][villager level - 1][trades]
 
-		final int size = Materials.getAllMaterials().size();
+		final int size = Materials.getMaterialsByMod(modid).size();
 		final Map<MMDMaterial, List<Item>> allArmors = new HashMap<>(size);
 		final Map<MMDMaterial, Item> allHammers = new HashMap<>(size);
 		final Map<MMDMaterial, Item> allSwords = new HashMap<>(size);
@@ -72,144 +80,143 @@ public abstract class VillagerTrades {
 		// @SuppressWarnings("unused")
 		// final Map<Item, Integer> tradeLevelMap = new HashMap<>();
 
-		String modid = Loader.instance().activeModContainer().getModId();
-		Items.getItemsByMaterial().entrySet().stream().forEach((Map.Entry<MMDMaterial, List<Item>> entry) -> {
-			final MMDMaterial material = entry.getKey();
+		for (MMDMaterial material : Materials.getMaterialsByMod(modid)) {
 			if (material == null) {
 				return;
 			}
 
-			for (final Item item : entry.getValue()) {
-				if (item.getRegistryName().getResourceDomain().equals(modid)) {
-					if (item instanceof ItemArmor) {
-						allArmors.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>()).add(item);
-					} else if (item instanceof ItemMMDCrackHammer) {
-						allHammers.put(material, item);
-					} else if (item instanceof ItemSword) {
-						allSwords.put(material, item);
-					} else if (item instanceof ItemHoe) {
-						allHoes.put(material, item);
-					} else if (item instanceof ItemAxe) {
-						allAxes.put(material, item);
-					} else if (item instanceof ItemPickaxe) {
-						allPickAxes.put(material, item);
-					} else if (item instanceof ItemSpade) {
-						allShovels.put(material, item);
-					} else if (item instanceof ItemMMDIngot) {
-						allIngots.put(material, item);
-					}
+			if (material.hasItem(Names.HELMET)) {
+				final Item item = material.getItem(Names.HELMET);
+				if (item instanceof ItemArmor) {
+					allArmors.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>()).add(item);
 				}
 			}
-		});
+			if (material.hasItem(Names.CHESTPLATE)) {
+				final Item item = material.getItem(Names.CHESTPLATE);
+				if (item instanceof ItemArmor) {
+					allArmors.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>()).add(item);
+				}
+			}
+			if (material.hasItem(Names.LEGGINGS)) {
+				final Item item = material.getItem(Names.LEGGINGS);
+				if (item instanceof ItemArmor) {
+					allArmors.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>()).add(item);
+				}
+			}
+			if (material.hasItem(Names.BOOTS)) {
+				final Item item = material.getItem(Names.BOOTS);
+				if (item instanceof ItemArmor) {
+					allArmors.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>()).add(item);
+				}
+			}
+			if (material.hasItem(Names.CRACKHAMMER)) {
+				final Item item = material.getItem(Names.CRACKHAMMER); 
+				if (item instanceof ItemMMDCrackHammer) {
+					allHammers.put(material, item);
+				}
+			}
+			if (material.hasItem(Names.SWORD)) {
+				final Item item = material.getItem(Names.SWORD); 
+				if (item instanceof ItemSword) {
+					allSwords.put(material, item);
+				}
+			}
+			if (material.hasItem(Names.HOE)) {
+				final Item item = material.getItem(Names.HOE);
+				if (item instanceof ItemHoe) {
+					allHoes.put(material, item);
+				}
+			}
+			if (material.hasItem(Names.AXE)) {
+				final Item item = material.getItem(Names.AXE);
+				if (item instanceof ItemAxe) {
+					allAxes.put(material, item);
+				}
+			}
+			if (material.hasItem(Names.PICKAXE)) {
+				final Item item = material.getItem(Names.PICKAXE); 
+				if (item instanceof ItemPickaxe) {
+					allPickAxes.put(material, item);
+				}
+			}
+			if (material.hasItem(Names.SHOVEL)) {
+				final Item item = material.getItem(Names.SHOVEL);
+				if (item instanceof ItemSpade) {
+					allShovels.put(material, item);
+				}
+			}
+			if (material.hasItem(Names.INGOT)) {
+				final Item item = material.getItem(Names.INGOT); 
+				if (item instanceof ItemMMDIngot) {
+					allIngots.put(material, item);
+				}
+			}
+		}
 
-		for (final MMDMaterial material : Materials.getAllMaterials()) {
-			final float value = material.hardness + material.strength + material.magicAffinity + material.getToolHarvestLevel();
-			if (material.isRare) {
+		for (final MMDMaterial material : Materials.getMaterialsByMod(modid)) {
+			final float value = material.getStat(MaterialStats.HARDNESS) + material.getStat(MaterialStats.STRENGTH) + material.getStat(MaterialStats.MAGICAFFINITY) + material.getToolHarvestLevel();
+			if (material.isRare()) {
 				continue;
 			}
 
-			// for reference, iron has a value of 21.5, gold would be 14, copper
-			// is 14, and diamond is 30
+			// For reference, Iron has a value of 21.5, Gold would be 14, Copper
+			// is 14, and Diamond is 30
 			final int emeraldPurch = emeraldPurchaseValue(value);
 			final int emeraldSale = emeraldSaleValue(value);
 			final int tradeLevel = tradeLevel(value);
 
 			if ((emeraldPurch > 64) || (emeraldSale > 64)) {
-				continue; // too expensive
+				continue; // Too expensive
 			}
-
-			final int armorsmith = (3 << 16) | (1 << 8);
-			final int weaponsmith = (3 << 16) | (2 << 8);
-			final int toolsmith = (3 << 16) | (3 << 8);
 
 			if (allIngots.containsKey(material)) {
-				final ITradeList[] ingotTrades = makeTradePalette(
-						makePurchasePalette(emeraldPurch, 12, allIngots.get(material)),
-						makeSalePalette(emeraldSale, 12, allIngots.get(material)));
-				tradesTable.computeIfAbsent(armorsmith | tradeLevel, (Integer key) -> new ArrayList<>())
-						.addAll(Arrays.asList(ingotTrades));
-				tradesTable.computeIfAbsent(weaponsmith | tradeLevel, (Integer key) -> new ArrayList<>())
-						.addAll(Arrays.asList(ingotTrades));
-				tradesTable.computeIfAbsent(toolsmith | tradeLevel, (Integer key) -> new ArrayList<>())
-						.addAll(Arrays.asList(ingotTrades));
+				final ITradeList[] ingotTrades = makeTradePalette(makePurchasePalette(emeraldPurch, 12, allIngots.get(material)), makeSalePalette(emeraldSale, 12, allIngots.get(material)));
+				tradesTable.computeIfAbsent(armorsmith | (tradeLevel), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(ingotTrades));
+				tradesTable.computeIfAbsent(weaponsmith | (tradeLevel), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(ingotTrades));
+				tradesTable.computeIfAbsent(toolsmith | (tradeLevel), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(ingotTrades));
 			}
 
-			if (allHammers.containsKey(material) && allPickAxes.containsKey(material) && allAxes.containsKey(material)
-					&& allShovels.containsKey(material) && allHoes.containsKey(material)) {
-				tradesTable.computeIfAbsent(toolsmith | tradeLevel, (Integer key) -> new ArrayList<>())
-						.addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch, 1, allPickAxes.get(material),
-								allAxes.get(material), allShovels.get(material), allHoes.get(material)))));
-				tradesTable.computeIfAbsent(toolsmith | (tradeLevel + 1), (Integer key) -> new ArrayList<>())
-						.addAll(Arrays
-								.asList(makeTradePalette(makePurchasePalette(emeraldPurch, 1, allHammers.get(material)))));
+			if (allHammers.containsKey(material) && allPickAxes.containsKey(material) && allAxes.containsKey(material) && allShovels.containsKey(material) && allHoes.containsKey(material)) {
+				tradesTable.computeIfAbsent(toolsmith | (tradeLevel), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch, 1, allPickAxes.get(material), allAxes.get(material), allShovels.get(material), allHoes.get(material)))));
+				tradesTable.computeIfAbsent(toolsmith | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch, 1, allHammers.get(material)))));
 			}
 
 			if (allSwords.containsKey(material)) {
-				tradesTable.computeIfAbsent(weaponsmith | tradeLevel, (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(
-						makeTradePalette(makePurchasePalette((emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1,
-								1, allSwords.get(material)))));
+				tradesTable.computeIfAbsent(weaponsmith | (tradeLevel), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette((emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1, 1, allSwords.get(material)))));
 			}
 
 			if (allArmors.containsKey(material)) {
-				tradesTable.computeIfAbsent(armorsmith | tradeLevel, (Integer key) -> new ArrayList<>()).addAll(
-						Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.hardness / 2), 1,
-								allArmors.get(material).toArray(new Item[0])))));
+				tradesTable.computeIfAbsent(armorsmith | (tradeLevel), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2), 1, allArmors.get(material).toArray(new Item[0])))));
 			}
 
-			if (material.magicAffinity > 5) {
+			if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
 				if (allHammers.containsKey(material)) {
-					tradesTable
-							.computeIfAbsent(toolsmith | (tradeLevel + 2),
-									(Integer key) -> new ArrayList<>())
-							.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allHammers.get(material),
-									new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
+					tradesTable.computeIfAbsent(toolsmith | (tradeLevel + 2), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allHammers.get(material), new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
 				}
 
 				if (allPickAxes.containsKey(material)) {
-					tradesTable
-							.computeIfAbsent(toolsmith | (tradeLevel + 1),
-									(Integer key) -> new ArrayList<>())
-							.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allPickAxes.get(material),
-									new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
+					tradesTable.computeIfAbsent(toolsmith | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allPickAxes.get(material), new PriceInfo(emeraldPurch + 7, emeraldPurch + 12))));
 				}
 
 				if (allArmors.containsKey(material)) {
 					for (int i = 0; i < allArmors.get(material).size(); i++) {
-						tradesTable
-								.computeIfAbsent(armorsmith | (tradeLevel + 1),
-										(Integer key) -> new ArrayList<>())
-								.addAll(Collections
-										.singletonList(new ListEnchantedItemForEmeralds(allArmors.get(material).get(i),
-												new PriceInfo(emeraldPurch + 7 + (int) (material.hardness / 2),
-														emeraldPurch + 12 + (int) (material.hardness / 2)))));
+						tradesTable.computeIfAbsent(armorsmith | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allArmors.get(material).get(i), new PriceInfo(emeraldPurch + 7 + (int) (material.getStat(MaterialStats.HARDNESS) / 2), emeraldPurch + 12 + (int) (material.getStat(MaterialStats.HARDNESS) / 2)))));
 					}
 				}
 
 				if (allSwords.containsKey(material)) {
-					tradesTable
-							.computeIfAbsent(weaponsmith | (tradeLevel + 1),
-									(Integer key) -> new ArrayList<>())
-							.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allSwords.get(material),
-									new PriceInfo(emeraldPurch + 7 + (int) (material.getBaseAttackDamage() / 2) - 1,
-											emeraldPurch + 12 + (int) (material.getBaseAttackDamage() / 2) - 1))));
+					tradesTable.computeIfAbsent(weaponsmith | (tradeLevel + 1), (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(allSwords.get(material), new PriceInfo(emeraldPurch + 7 + (int) (material.getBaseAttackDamage() / 2) - 1, emeraldPurch + 12 + (int) (material.getBaseAttackDamage() / 2) - 1))));
 				}
 			}
 		}
 
-		/*
-		if (Loader.instance().activeModContainer().getModId().equals("basemetals")) {
-			if (Options.ENABLE_CHARCOAL) {
-				tradesTable.computeIfAbsent(armorsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
-				tradesTable.computeIfAbsent(weaponsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
-				tradesTable.computeIfAbsent(toolsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_charcoal.powder)));
-			}
-			if (Options.ENABLE_COAL) {
-				tradesTable.computeIfAbsent(armorsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_coal.powder)));
-				tradesTable.computeIfAbsent(weaponsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_coal.powder)));
-				tradesTable.computeIfAbsent(toolsmith | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, Materials.vanilla_coal.powder)));
-			}
-		}
-		*/
+		commitTrades(tradesTable);
+	}
+
+	protected static void registerModSpecificTrades() {
+	}
+
+	protected static void commitTrades(final Map<Integer, List<ITradeList>> tradesTable) {
 
 		for (final Integer k : tradesTable.keySet()) {
 			final List<ITradeList> trades = tradesTable.get(k);

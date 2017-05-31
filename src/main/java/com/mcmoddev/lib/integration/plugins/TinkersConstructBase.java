@@ -1,10 +1,11 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkersConstructRegistry;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -14,33 +15,34 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * TiC Plugin, redesigned
+ * 
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  *
  */
 public class TinkersConstructBase implements IIntegration {
-	
+
 	public static final String PLUGIN_MODID = "tconstruct";
 
 	private static boolean initDone = false;
 
 	protected static final TinkersConstructRegistry registry = TinkersConstructRegistry.getInstance();
-	
+
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableTinkersConstruct) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("tinkersconstruct")) {
 			return;
 		}
 
 		initDone = true;
 	}
-	
+
 	/**
 	 * Variant of fluid registration to allow for late registration of specific
 	 * materials that have a different amount of fluid per block than normal.
 	 * Setup specifically for NetherMetals and EndMetals.
 	 *
 	 * @param base
-	 *            MetalMaterial that is the base material for this
+	 *            MMDMaterial that is the base material for this
 	 * @param block
 	 *            Block to register
 	 * @param amountPer
@@ -64,11 +66,11 @@ public class TinkersConstructBase implements IIntegration {
 	protected static void registerFluid(MMDMaterial base, int amountPer) {
 		registry.registerFluid(base, amountPer);
 	}
-	
+
 	protected static void registerCasting(MMDMaterial base, int amountPer) {
-		registry.registerBasin(base.block, base.fluid, amountPer * 9);
-		registry.registerCasting(base.ingot, base.fluid, amountPer);
-		registry.registerCasting(base.nugget, base.fluid, amountPer/9 );
+		registry.registerBasin(base.getBlock(Names.BLOCK), base.getFluid(), amountPer * 9);
+		registry.registerCasting(base.getItem(Names.INGOT), base.getFluid(), amountPer);
+		registry.registerCasting(base.getItem(Names.NUGGET), base.getFluid(), amountPer / 9);
 	}
 
 	/**
@@ -98,10 +100,10 @@ public class TinkersConstructBase implements IIntegration {
 	 *            If this can be casted
 	 * @return a handle for potential, further manipulation of the material
 	 */
-	protected static TCMaterial registerMaterial(MMDMaterial material, boolean craftable, boolean castable ) {
+	protected static TCMaterial registerMaterial(MMDMaterial material, boolean craftable, boolean castable) {
 		return registry.getMaterial(material.getName(), material).setCraftable(craftable).setCastable(castable).setToolForge(true);
 	}
-	
+
 	/**
 	 * Creates a Tinkers Construct
 	 * {@link slimeknights.tconstruct.library.materials.Material}

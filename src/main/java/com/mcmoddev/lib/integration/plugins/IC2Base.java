@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
@@ -17,7 +18,7 @@ public class IC2Base implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableIC2) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("ic2")) {
 			return;
 		}
 
@@ -33,15 +34,15 @@ public class IC2Base implements IIntegration {
 //		}
 
 		// Move these to main recipe loop?
-		GameRegistry.addSmelting(material.crushed, new ItemStack(material.ingot, 1), 0);
-		GameRegistry.addSmelting(material.crushedPurified, new ItemStack(material.ingot, 1), 0);
+		GameRegistry.addSmelting(material.getItem(Names.CRUSHED), new ItemStack(material.getItem(Names.INGOT), 1), 0);
+		GameRegistry.addSmelting(material.getItem(Names.CRUSHEDPURIFIED), new ItemStack(material.getItem(Names.INGOT), 1), 0);
 
 		// TODO: Figure out Dense Plate & Casing
 	}
 
 	protected void addMaceratorRecipes(MMDMaterial material) {
 		String oreDictName = material.getCapitalizedName();
-		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.ORE + oreDictName, 0), null, false, new ItemStack(material.crushed, 2));
-		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.PLATE_DENSE + oreDictName, 0), null, false, new ItemStack(material.powder, 8));
+		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.ORE + oreDictName, 0), null, false, new ItemStack(material.getItem(Names.CRUSHED), 2));
+		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.PLATE_DENSE + oreDictName, 0), null, false, new ItemStack(material.getItem(Names.POWDER), 8));
 	}
 }

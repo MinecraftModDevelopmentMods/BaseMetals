@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.MaterialStats;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
@@ -36,10 +38,10 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		List<ItemStack> upgradeMats = new ArrayList<>();
 		Collection<MMDMaterial> allmats = Materials.getAllMaterials();
 		MMDMaterial input = Materials.getMaterialByName(matName);
-		base = new ItemStack(input.shield, 1, 0);
+		base = new ItemStack(input.getItem(Names.SHIELD), 1, 0);
 
 		for (MMDMaterial mat : allmats) {
-			if (mat.hardness >= input.hardness && mat.getName() != matName) {
+			if (mat.getStat(MaterialStats.HARDNESS) >= input.getStat(MaterialStats.HARDNESS) && mat.getName().equals(matName)) {
 				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				upgradeMats.addAll(mats);
 			}
@@ -67,10 +69,10 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		Map<String, List<ItemStack>> plates = new HashMap<>();
 
 		Collection<MMDMaterial> allmats = Materials.getAllMaterials();
-		int hardness = ((Float) Materials.getMaterialByName(matName).hardness).intValue();
+		int hardness = ((Float) Materials.getMaterialByName(matName).getStat(MaterialStats.HARDNESS)).intValue();
 
 		for (MMDMaterial mat : allmats) {
-			if (mat.hardness >= hardness && mat.getName() != matName) {
+			if (mat.getStat(MaterialStats.HARDNESS) >= hardness && (!mat.getName().equals(matName))) {
 				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				plates.put(mat.getName(), mats);
 			}
@@ -78,7 +80,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 		ItemStack plateMatched = null;
 		Map<Enchantment, Integer> enchants = Collections.emptyMap();
-		ItemStack matcher = new ItemStack(Materials.getMaterialByName(matName).shield, 1, 0);
+		ItemStack matcher = new ItemStack(Materials.getMaterialByName(matName).getItem(Names.SHIELD), 1, 0);
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack curItem = inv.getStackInSlot(i);
@@ -87,8 +89,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 				ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getMetadata());
 				for (Entry<String, List<ItemStack>> ent : plates.entrySet()) {
 					if (OreDictionary.containsMatch(false, ent.getValue(), comp)) {
-						plateMatched = new ItemStack(Materials.getMaterialByName(ent.getKey().toLowerCase()).shield, 1,
-								0);
+						plateMatched = new ItemStack(Materials.getMaterialByName(ent.getKey().toLowerCase()).getItem(Names.SHIELD), 1, 0);
 					}
 				}
 				if (OreDictionary.itemMatches(matcher, comp, false)) {
@@ -108,8 +109,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 			if (curItem != null) {
 				for (MMDMaterial e : Materials.getAllMaterials()) {
-					if (OreDictionary.containsMatch(false, OreDictionary.getOres(Oredicts.PLATE + e.getName()),
-							curItem)) {
+					if (OreDictionary.containsMatch(false, OreDictionary.getOres(Oredicts.PLATE + e.getName()), curItem)) {
 						return e;
 					}
 				}
@@ -119,7 +119,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 	}
 
 	private ItemStack findBaseItem(InventoryCrafting inv) {
-		ItemStack input = new ItemStack(Materials.getMaterialByName(matName).shield, 1, 0);
+		ItemStack input = new ItemStack(Materials.getMaterialByName(matName).getItem(Names.SHIELD), 1, 0);
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack a = inv.getStackInSlot(i);
@@ -146,11 +146,11 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		MMDMaterial shieldMat = Materials.getMaterialByName(matName);
 		MMDMaterial upgradeMat = getUpgradeMat(inv);
 
-		float hardDiff = upgradeMat.hardness - shieldMat.hardness;
+		float hardDiff = upgradeMat.getStat(MaterialStats.HARDNESS) - shieldMat.getStat(MaterialStats.HARDNESS);
 		int enchantCount = getEnchantCount(inv);
 
 		float diffVal = hardDiff * 5;
-		float enchantVal = upgradeMat.magicAffinity * enchantCount;
+		float enchantVal = upgradeMat.getStat(MaterialStats.MAGICAFFINITY) * enchantCount;
 		Float finalVal = diffVal + enchantVal;
 
 		if (finalVal < 5.0f) {

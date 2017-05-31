@@ -4,8 +4,10 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.*;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.fluids.CustomFluid;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -14,10 +16,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.BlockFluidClassic;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -59,8 +65,8 @@ public abstract class Fluids {
 	protected static Fluid addFluid(MMDMaterial material, int density, int viscosity, int temperature, int luminosity) {
 		int tintColor;
 		if (material != null) {
-			if (material.fluid != null) {
-				return material.fluid;
+			if (material.getFluid() != null) {
+				return material.getFluid();
 			}
 			tintColor = material.getTintColor();
 		} else {
@@ -78,7 +84,7 @@ public abstract class Fluids {
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
 
-		material.fluid = fluid;
+		material.setFluid(fluid);
 
 		fluidRegistry.put(material.getName(), fluid);
 		return fluid;
@@ -90,15 +96,15 @@ public abstract class Fluids {
 			return null;
 		}
 
-		if (material.fluidBlock != null) {
-			return material.fluidBlock;
+		if (material.getFluidBlock() != null) {
+			return material.getFluidBlock();
 		}
 
 		BlockFluidClassic block;
 		String name = material.getName();
 
-		if (name != "mercury") {
-			block = new BlockFluidClassic(material.fluid, Material.LAVA);
+		if (!MaterialNames.MERCURY.equals(name)) {
+			block = new BlockFluidClassic(material.getFluid(), Material.LAVA);
 		} else {
 			block = new InteractiveFluidBlock(getFluidByName(name), false,
 					(World w, EntityLivingBase e) -> {
@@ -118,7 +124,7 @@ public abstract class Fluids {
 		itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
 		GameRegistry.register(itemBlock);
 
-		material.fluidBlock = block;
+		material.setFluidBlock(block);
 		fluidBlockRegistry.put(name, block);
 		return block;
 	}

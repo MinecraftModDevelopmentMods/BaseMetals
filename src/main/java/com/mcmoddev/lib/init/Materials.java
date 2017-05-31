@@ -1,8 +1,14 @@
 package com.mcmoddev.lib.init;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 
@@ -10,6 +16,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * This class initializes all of the materials in Base Metals. It also contains
@@ -26,6 +33,7 @@ public abstract class Materials {
 	private static Map<String, MMDMaterial> allMaterials = new HashMap<>();
 	private static Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
+	private static Map<String, Set<MMDMaterial>> modSourceMaterialMap = new HashMap<>();
 
 	protected Materials() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -45,12 +53,19 @@ public abstract class Materials {
 	/**
 	 * Create a oreless material
 	 * 
-	 * @param name Name of the material
-	 * @param type the type of the material (metal, gem, mineral, etc...)
-	 * @param hardness Scaled hardness of the material, based on the Mohs scale
-	 * @param strength material strength
-	 * @param magic material magic affinity
-	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the
+	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createOrelessMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
@@ -62,12 +77,19 @@ public abstract class Materials {
 	/**
 	 * Create a standard material
 	 * 
-	 * @param name Name of the material
-	 * @param type the type of the material (metal, gem, mineral, etc...)
-	 * @param hardness Scaled hardness of the material, based on the Mohs scale
-	 * @param strength material strength
-	 * @param magic material magic affinity
-	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the
+	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
@@ -79,12 +101,19 @@ public abstract class Materials {
 	/**
 	 * Create an alloy material
 	 * 
-	 * @param name Name of the material
-	 * @param type the type of the material (metal, gem, mineral, etc...)
-	 * @param hardness Scaled hardness of the material, based on the Mohs scale
-	 * @param strength material strength
-	 * @param magic material magic affinity
-	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the
+	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
@@ -96,12 +125,19 @@ public abstract class Materials {
 	/**
 	 * Create a special alloy material which has an ore block
 	 * 
-	 * @param name Name of the material
-	 * @param type the type of the material (metal, gem, mineral, etc...)
-	 * @param hardness Scaled hardness of the material, based on the Mohs scale
-	 * @param strength material strength
-	 * @param magic material magic affinity
-	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the
+	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
@@ -113,12 +149,19 @@ public abstract class Materials {
 	/**
 	 * Create a rare, oreless material
 	 * 
-	 * @param name Name of the material
-	 * @param type the type of the material (metal, gem, mineral, etc...)
-	 * @param hardness Scaled hardness of the material, based on the Mohs scale
-	 * @param strength material strength
-	 * @param magic material magic affinity
-	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the
+	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createOrelessRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
@@ -130,12 +173,19 @@ public abstract class Materials {
 	/**
 	 * Create a rare material
 	 * 
-	 * @param name Name of the material
-	 * @param type the type of the material (metal, gem, mineral, etc...)
-	 * @param hardness Scaled hardness of the material, based on the Mohs scale
-	 * @param strength material strength
-	 * @param magic material magic affinity
-	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the
+	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
@@ -147,12 +197,19 @@ public abstract class Materials {
 	/**
 	 * Create a rare alloy material
 	 * 
-	 * @param name Name of the material
-	 * @param type the type of the material (metal, gem, mineral, etc...)
-	 * @param hardness Scaled hardness of the material, based on the Mohs scale
-	 * @param strength material strength
-	 * @param magic material magic affinity
-	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the
+	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createRareAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
@@ -164,12 +221,19 @@ public abstract class Materials {
 	/**
 	 * Create a special rare alloy material
 	 * 
-	 * @param name Name of the material
-	 * @param type the type of the material (metal, gem, mineral, etc...)
-	 * @param hardness Scaled hardness of the material, based on the Mohs scale
-	 * @param strength material strength
-	 * @param magic material magic affinity
-	 * @param tintColor material tint color - used in several places, including in the TiC plugin, where it determines tool-part color
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the
+	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createRareSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
@@ -181,7 +245,8 @@ public abstract class Materials {
 	/**
 	 * Register a material
 	 * 
-	 * @param material the material to register
+	 * @param material
+	 *            the material to register
 	 * @return the material
 	 */
 	protected static MMDMaterial registerMaterial(MMDMaterial material) {
@@ -202,7 +267,7 @@ public abstract class Materials {
 		final String texName = material.getName();
 		final int[] protection = material.getDamageReductionArray();
 		final int durability = material.getArmorMaxDamageFactor();
-		final ArmorMaterial armorMaterial = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, material.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, material.hardness > 10 ? (int) (material.hardness / 5) : 0);
+		final ArmorMaterial armorMaterial = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, material.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, material.getStat(MaterialStats.HARDNESS) > 10 ? (int) (material.getStat(MaterialStats.HARDNESS) / 5) : 0);
 		if (armorMaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to create armor material enum for " + material);
@@ -216,6 +281,14 @@ public abstract class Materials {
 		}
 		toolMaterialMap.put(material, toolMaterial);
 
+		if (modSourceMaterialMap.containsKey(Loader.instance().activeModContainer().getModId())) {
+			modSourceMaterialMap.get(Loader.instance().activeModContainer().getModId()).add(material);
+		} else {
+			Set<MMDMaterial> newSet = new HashSet<>();
+			newSet.add(material);
+			modSourceMaterialMap.put(Loader.instance().activeModContainer().getModId(), newSet);
+
+		}
 		return material;
 	}
 
@@ -264,29 +337,18 @@ public abstract class Materials {
 	}
 
 	/**
-	 * Returns a list of all metal materials in Base Metals. All of the metals
-	 * in this list are also available as static public members of this class.
+	 * Gets all materials from a given mod
 	 * 
-	 * @deprecated
-	 * @return A Collection of MetalMaterial instances.
+	 * @param modId
+	 *            the ModID of the mod
+	 * @return an immutable collection representing all the materials registered
+	 *         by a given mod or the "empty set" if the modId is not recorded.
 	 */
-	@Deprecated
-	public static Collection<MMDMaterial> getAllMetals() {
-		return allMaterials.values();
-	}
-
-	/**
-	 * Gets a metal material by its name (e.g. "copper").
-	 *
-	 * @param materialName
-	 *            The name of a metal
-	 * 
-	 * @deprecated
-	 * @return The material representing the named metal, or null if no metals
-	 *         have been registered under that name.
-	 */
-	@Deprecated
-	public static MMDMaterial getMetalByName(String materialName) {
-		return allMaterials.get(materialName);
+	public static Collection<MMDMaterial> getMaterialsByMod(String modId) {
+		if (modSourceMaterialMap.containsKey(modId)) {
+			return Collections.unmodifiableSet(modSourceMaterialMap.get(modId));
+		} else {
+			return Collections.emptySet();
+		}
 	}
 }

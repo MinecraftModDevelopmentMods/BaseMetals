@@ -1,10 +1,9 @@
 package com.mcmoddev.lib.waila;
 
-import net.minecraftforge.fml.common.event.FMLInterModComms;
-
 import com.mcmoddev.lib.block.BlockMMDLever;
 
 import mcp.mobius.waila.api.IWailaRegistrar;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class Waila {
 	public static void init() {
