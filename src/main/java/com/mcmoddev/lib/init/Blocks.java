@@ -428,7 +428,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createAnvil(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.ANVILBLOCK, BlockMMDAnvil.class, Options.thingEnabled("Anvil"), material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.ANVIL, BlockMMDAnvil.class, Options.thingEnabled("Anvil"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**
@@ -521,7 +521,7 @@ public abstract class Blocks {
 	 */
 	protected static Block createDoor(MMDMaterial material, CreativeTabs tab) {
 		// oreDict is handled in items
-		return createBlock(material, Names.DOORBLOCK, BlockMMDDoor.class, Options.thingEnabled("Door"), true, tab);
+		return createBlock(material, Names.DOOR, BlockMMDDoor.class, Options.thingEnabled("Door"), true, tab);
 	}
 
 	/**

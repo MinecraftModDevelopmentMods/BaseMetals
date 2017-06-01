@@ -139,7 +139,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
 			material.addNewBlock(Names.BARS, net.minecraft.init.Blocks.IRON_BARS);
-			material.addNewBlock(Names.DOORBLOCK, net.minecraft.init.Blocks.IRON_DOOR);
+			material.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.IRON_DOOR);
 			material.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR);
 			material.addNewBlock(Names.PRESSUREPLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
 
@@ -230,7 +230,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			material.getBlock(Names.PLATE).setLightLevel(0.5f);
 			material.getBlock(Names.ORE).setLightLevel(0.5f);
 			material.getBlock(Names.BARS).setLightLevel(0.5f);
-			material.getBlock(Names.DOORBLOCK).setLightLevel(0.5f);
+			material.getBlock(Names.DOOR).setLightLevel(0.5f);
 			material.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
 		}
 
