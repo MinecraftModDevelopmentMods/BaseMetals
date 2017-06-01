@@ -9,7 +9,7 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemAnvilBlock impleme
 	final MMDMaterial material;
 
 	public ItemMMDAnvilBlock(MMDMaterial material) {
-		super(material.getBlock(Names.ANVILBLOCK));
+		super(material.getBlock(Names.ANVIL));
 		this.material = material;
 	}
 

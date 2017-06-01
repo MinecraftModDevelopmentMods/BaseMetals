@@ -281,7 +281,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.addNewItem(Names.PICKAXE, net.minecraft.init.Items.WOODEN_PICKAXE);
 			material.addNewItem(Names.SHOVEL, net.minecraft.init.Items.WOODEN_SHOVEL);
 			material.addNewItem(Names.SWORD, net.minecraft.init.Items.WOODEN_SWORD);
-			material.addNewBlock(Names.DOORBLOCK, net.minecraft.init.Blocks.OAK_DOOR);
+			material.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.OAK_DOOR);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.LOG);
 			material.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.TRAPDOOR);
 			material.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);

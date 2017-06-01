@@ -871,7 +871,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createAnvil(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.ANVIL, ItemMMDAnvilBlock.class, Options.thingEnabled("Anvil"), material.hasBlock(Names.ANVILBLOCK), tab);
+		return createItem(material, Names.ANVIL, ItemMMDAnvilBlock.class, Options.thingEnabled("Anvil"), material.hasBlock(Names.ANVIL), tab);
 	}
 
 	/**
@@ -883,7 +883,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createDoor(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.DOOR, ItemMMDDoor.class, Options.thingEnabled("Door"), material.hasBlock(Names.DOORBLOCK), tab);
+		Item item = createItem(material, Names.DOOR, ItemMMDDoor.class, Options.thingEnabled("Door"), material.hasBlock(Names.DOOR), tab);
 		Oredicts.registerOre(Oredicts.DOOR, item);
 		return item;
 	}
