@@ -14,7 +14,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -25,12 +24,11 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class ItemMMDPickaxe extends ItemPickaxe implements IMMDObject {
+public class ItemMMDPickaxe extends net.minecraft.item.ItemPickaxe implements IMMDObject {
 
 	private final MMDMaterial material;
 	private final Set<String> toolTypes;
 	private final String repairOreDictName;
-	private final boolean regenerates;
 	private static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -46,7 +44,6 @@ public class ItemMMDPickaxe extends ItemPickaxe implements IMMDObject {
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("pickaxe");
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
@@ -95,12 +92,12 @@ public class ItemMMDPickaxe extends ItemPickaxe implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
-			item.setItemDamage(item.getItemDamage() - 1);
-	}
+		if (world.isRemote)
+			return;
 
-	public String getMaterialName() {
-		return this.material.getName();
+		if (this.material.regenerates()  && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
+			item.setItemDamage(item.getItemDamage() - 1);
+		}
 	}
 
 	@Override
@@ -110,16 +107,7 @@ public class ItemMMDPickaxe extends ItemPickaxe implements IMMDObject {
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }

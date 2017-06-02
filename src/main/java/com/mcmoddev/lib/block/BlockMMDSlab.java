@@ -2,12 +2,10 @@ package com.mcmoddev.lib.block;
 
 import java.util.Random;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -23,7 +21,7 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class BlockMMDSlab extends BlockSlab implements IMMDObject {
+public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDObject {
 
 	public static final PropertyEnum<BlockMMDSlab.Variant> VARIANT = PropertyEnum.<BlockMMDSlab.Variant>create("variant", BlockMMDSlab.Variant.class);
 
@@ -35,17 +33,17 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 	 *            The material the slab is made from
 	 */
 	public BlockMMDSlab(MMDMaterial material) {
-		super(Material.IRON);
-		this.setSoundType(SoundType.METAL);
+		super(material.getVanillaMaterial());
 		this.material = material;
-		this.blockHardness = material.getBlockHardness();
-		this.blockResistance = material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", material.getRequiredHarvestLevel());
+		this.setSoundType(this.material.getSoundType());
+		this.blockHardness = this.material.getBlockHardness();
+		this.blockResistance = this.material.getBlastResistance();
+		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 
 		IBlockState iblockstate = this.blockState.getBaseState();
 
 		if (!this.isDouble())
-			iblockstate = iblockstate.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
+			iblockstate = iblockstate.withProperty(HALF, net.minecraft.block.BlockSlab.EnumBlockHalf.BOTTOM);
 
 		this.setDefaultState(iblockstate.withProperty(VARIANT, BlockMMDSlab.Variant.DEFAULT));
 	}
@@ -59,7 +57,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 		IBlockState iblockstate = this.getDefaultState().withProperty(VARIANT, BlockMMDSlab.Variant.DEFAULT);
 
 		if (!this.isDouble())
-			iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
+			iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? net.minecraft.block.BlockSlab.EnumBlockHalf.BOTTOM : net.minecraft.block.BlockSlab.EnumBlockHalf.TOP);
 
 		return iblockstate;
 	}
@@ -71,7 +69,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 	public int getMetaFromState(IBlockState state) {
 		int i = 0;
 
-		if (!this.isDouble() && (state.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP))
+		if (!this.isDouble() && (state.getValue(HALF) == net.minecraft.block.BlockSlab.EnumBlockHalf.TOP))
 			i |= 8;
 
 		return i;
@@ -107,7 +105,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 	 */
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return this.material.slab;
+		return this.material.getItem(Names.SLAB);
 	}
 
 	/**
@@ -116,7 +114,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 	@Override
 	@Deprecated
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(this.material.slab);
+		return new ItemStack(this.material.getItem(Names.SLAB));
 	}
 
 	/**
@@ -133,21 +131,7 @@ public class BlockMMDSlab extends BlockSlab implements IMMDObject {
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
-		return this.material;
-	}
-
-	// @Override
-	// public String getOreDictionaryName() {
-	// return Oredicts.SLAB + material.getCapitalizedName();
-	// }
 }

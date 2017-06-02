@@ -40,8 +40,6 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 
 			if ((itemstack != null) || flag) {
 				if (itemstack == null) {
-					// TODO: FIXME Using Materials.vanilla_iron.arrow, MC uses Items.ARROW
-//					itemstack = new ItemStack(Materials.vanilla_iron.arrow);
 					itemstack = new ItemStack(Items.ARROW);
 				}
 
@@ -54,8 +52,6 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 					final boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemArrow ? ((ItemArrow) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer) : false);
 
 					if (!worldIn.isRemote) {
-						// TODO: FIXME Using Materials.vanilla_iron.arrow, MC uses Items.ARROW
-//						final ItemArrow itemArrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Materials.vanilla_iron.arrow));
 						final ItemArrow itemArrow = (ItemArrow) ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW));
 						final EntityArrow entityarrow = itemArrow.createArrow(worldIn, itemstack, entityplayer);
 						entityarrow.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
@@ -126,7 +122,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 
 	@Override
 	protected boolean isArrow(@Nullable ItemStack stack) {
-		// Changed ItemArrow to ItemMetalArrow
+		// Changed ItemArrow to ItemMMDArrow
 		return (stack != null) && (stack.getItem() instanceof ItemMMDArrow);
 	}
 

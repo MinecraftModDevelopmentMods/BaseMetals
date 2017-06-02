@@ -1,10 +1,19 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.item.Item;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -13,12 +22,6 @@ import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Created by Daniel Hazelton on 2/21/2017.
@@ -136,7 +139,7 @@ public class TinkersConstructRegistry {
 		
     	Boolean hasTraits = !mat.getTraitLocations().isEmpty();
     	
-    	if( mat.getMetalMaterial().fluid == null ) {
+    	if( mat.getMetalMaterial().getFluid() == null ) {
     		return TCCode.BAD_MATERIAL;
     	}
     	
@@ -146,11 +149,32 @@ public class TinkersConstructRegistry {
 		if (hasTraits) {
 			for (String s : mat.getTraitLocations()) {
 				for (AbstractTrait t : mat.getTraits(s)) {
-					tcmat.addTrait(t, s == "general" ? null : s);
+					tcmat.addTrait(t, "general".equals(s) ? null : s);
 				}
 			}
 		}
     	
+		Item matRepItem;
+		MaterialType matType = mat.getMetalMaterial().getType(); 
+		switch( matType ) {
+		case METAL:
+			matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+			break;
+		case GEM:
+			matRepItem = mat.getMetalMaterial().getItem(Names.GEM);
+			break;
+		case CRYSTAL:
+			matRepItem = mat.getMetalMaterial().getItem(Names.CRYSTAL);
+			break;
+		case MINERAL:
+			matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+			break;
+		case ROCK:
+		case WOOD:
+		default:
+			return TCCode.BAD_MATERIAL;
+		}
+		
 		registerFluid(mat.getMetalMaterial(), mat.getAmountPer());
 		
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHeadStats());
@@ -160,13 +184,13 @@ public class TinkersConstructRegistry {
 		TinkerRegistry.addMaterialStats(tcmat, mat.getBowStringStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getArrowShaftStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getFletchingStats());
-
-		tcmat.setFluid(mat.getMetalMaterial().fluid).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(mat.getMetalMaterial().ingot, 1, Material.VALUE_Ingot);
-		tcmat.setRepresentativeItem(mat.getMetalMaterial().ingot);
+		
+		tcmat.setFluid(mat.getMetalMaterial().getFluid()).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(matRepItem, 1, Material.VALUE_Ingot);
+		tcmat.setRepresentativeItem(matRepItem);
 		
 		String base = mat.getMetalMaterial().getName();
 		String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
-		MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMetalMaterial().fluid, suffix);
+		MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMetalMaterial().getFluid(), suffix);
 		
 		if (mat.getToolForge()) {
 			m.toolforge();
@@ -333,7 +357,7 @@ public class TinkersConstructRegistry {
 		String oreDictName = base.getCapitalizedName();
 
 		// hacky fix for Coal being itemCoal and not ingotCoal
-		if (base.getName() == "coal")
+		if (MaterialNames.COAL.equals(base.getName()))
 			TinkerRegistry.registerMelting("itemCoal", output, amountPer);
 
 		
@@ -343,22 +367,22 @@ public class TinkersConstructRegistry {
 		meltingHelper(Oredicts.NUGGET + oreDictName, output, amountPer / 9);
 		meltingHelper(Oredicts.DUST + oreDictName, output, amountPer);
 		meltingHelper(Oredicts.DUST_SMALL + oreDictName, output, amountPer / 9);
-		meltingHelper(base.oreNether, output, amountPer * 4);
-		meltingHelper(base.oreEnd, output, amountPer * 4);
+		meltingHelper(base.getBlock(Names.NETHERORE), output, amountPer * 4);
+		meltingHelper(base.getBlock(Names.ENDORE), output, amountPer * 4);
 
-		meltingHelper(base.halfSlab, output, (amountPer * 4) + (amountPer / 2));
-		meltingHelper(base.wall, output, amountPer * 9);
-		meltingHelper(base.boots, output, amountPer * 4);
-		meltingHelper(base.helmet, output, amountPer * 5);
-		meltingHelper(base.chestplate, output, amountPer * 8);
-		meltingHelper(base.leggings, output, amountPer * 7);
-		meltingHelper(base.shears, output, amountPer * 2);
-		meltingHelper(base.pressurePlate, output, amountPer * 2);
-		meltingHelper(base.bars, output, ((amountPer / 9) * 3) + 6); // Fun math
-		meltingHelper(base.rod, output, amountPer / 2);
-		meltingHelper(base.door, output, amountPer * 2);
-		meltingHelper(base.trapdoor, output, amountPer * 4);
-		meltingHelper(base.button, output, (amountPer / 9) * 2);    	
+		meltingHelper(base.getBlock(Names.HALFSLAB), output, (amountPer * 4) + (amountPer / 2));
+		meltingHelper(base.getBlock(Names.WALL), output, amountPer * 9);
+		meltingHelper(base.getItem(Names.BOOTS), output, amountPer * 4);
+		meltingHelper(base.getItem(Names.HELMET), output, amountPer * 5);
+		meltingHelper(base.getItem(Names.CHESTPLATE), output, amountPer * 8);
+		meltingHelper(base.getItem(Names.LEGGINGS), output, amountPer * 7);
+		meltingHelper(base.getItem(Names.SHEARS), output, amountPer * 2);
+		meltingHelper(base.getBlock(Names.PRESSUREPLATE), output, amountPer * 2);
+		meltingHelper(base.getBlock(Names.BARS), output, ((amountPer / 9) * 3) + 6); // Fun math
+		meltingHelper(base.getItem(Names.ROD), output, amountPer / 2);
+		meltingHelper(base.getItem(Names.DOOR), output, amountPer * 2);
+		meltingHelper(base.getBlock(Names.TRAPDOOR), output, amountPer * 4);
+		meltingHelper(base.getBlock(Names.BUTTON), output, (amountPer / 9) * 2);    	
 		
 		return TCCode.SUCCESS;
     }

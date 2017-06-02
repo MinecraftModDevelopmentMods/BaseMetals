@@ -25,7 +25,7 @@ public class EnderIOBase implements IIntegration {
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableEnderIO) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("enderio")) {
 			return;
 		}
 
@@ -70,7 +70,7 @@ public class EnderIOBase implements IIntegration {
 		final String input = Oredicts.ORE + capitalizedName;
 		final String output = Oredicts.INGOT + capitalizedName;
 
-		if (!(material.hasOre))
+		if (!(material.hasOre()))
 			return; // Only run for Ore types
 
 		// @formatter:off
@@ -118,10 +118,10 @@ public class EnderIOBase implements IIntegration {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
 
 		// we need to be sure the material is enabled, a null check is the best way
-		if( material == null ) {
+		if (material == null) {
 			return;
 		}
-		
+
 		int primaryQty = 2;
 		int secondaryQty = 1;
 
@@ -173,11 +173,11 @@ public class EnderIOBase implements IIntegration {
 		final String rockChance = "0.15";
 		String messageSecondary = "";
 
-		if (!(material.hasOre))
+		if (!(material.hasOre()))
 			return; // Only run for Ore types
 
 		if (outputSecondary != null)
-			messageSecondary = String.format("<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%f\" />", secondaryOutput, secondaryQty, secondaryChance);
+			messageSecondary = String.format("<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\" />", secondaryOutput, secondaryQty, secondaryChance);
 			// messageSecondary = "<itemStack oreDictionary=\"" + rockOredict + "\" number=\"" + rockQty + "\" chance=\"" + rockChance + "\" />" +
 
 		// @formatter:off

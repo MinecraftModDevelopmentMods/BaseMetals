@@ -4,8 +4,8 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -16,7 +16,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableDenseOres) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("denseores")) {
 			return;
 		}
 
@@ -46,25 +46,10 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 				MaterialNames.ZINC
 		};
 
-		final boolean[] baseEnabled = new boolean[] {
-				Options.enableAdamantine,
-				Options.enableAntimony,
-				Options.enableBismuth,
-				Options.enableColdIron,
-				Options.enableCopper,
-				Options.enableLead,
-				Options.enableMercury,
-				Options.enableNickel,
-				Options.enablePlatinum,
-				Options.enableSilver,
-				Options.enableTin,
-				Options.enableZinc
-		};
-
 		for (int i = 0; i < baseNames.length; i++) {
 			final String ore = baseNames[i];
 			final MMDMaterial mat = Materials.getMaterialByName(ore);
-			if (mat != null && baseEnabled[i]) {
+			if (mat != null && Options.materialEnabled(ore)) {
 				String baseMaterial;
 				switch (ore) {
 					case MaterialNames.ADAMANTINE:

@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -21,68 +22,95 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 public class ThermalExpansionBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "thermalexpansion";
-	private static boolean initDone = false;
+	private static final String INPUT = "input";
+	private static final String OUTPUT = "output";
+	private static final String ENERGY = "energy";
 	
+	private static boolean initDone = false;
+
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableThermalExpansion) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("thermalexpansion")) {
 			return;
 		}
 
 		initDone = true;
 	}
-	
+
 	public static void addCompactorPressRecipe(int energy, ItemStack input, ItemStack output) {
 		if (input == null || output == null) {
 			return;
 		}
+
+		if (input.getItem() == null || output.getItem() == null) {
+			return;
+		}
+
 		NBTTagCompound toSend = new NBTTagCompound();
 
-		toSend.setInteger("energy", energy);
-		toSend.setTag("input", new NBTTagCompound());
-		toSend.setTag("output", new NBTTagCompound());
-		input.writeToNBT(toSend.getCompoundTag("input"));
-		output.writeToNBT(toSend.getCompoundTag("output"));
-		FMLInterModComms.sendMessage("thermalexpansion", "addcompactorpressrecipe", toSend);
-		
+		toSend.setInteger(ENERGY, energy);
+		toSend.setTag(INPUT, new NBTTagCompound());
+		toSend.setTag(OUTPUT, new NBTTagCompound());
+		input.writeToNBT(toSend.getCompoundTag(INPUT));
+		output.writeToNBT(toSend.getCompoundTag(OUTPUT));
+		FMLInterModComms.sendMessage(PLUGIN_MODID, "addcompactorpressrecipe", toSend);
 	}
 
 	public static void addCompactorStorageRecipe(int energy, ItemStack input, ItemStack output) {
 		if (input == null || output == null) {
 			return;
 		}
+
+		if (input.getItem() == null || output.getItem() == null) {
+			return;
+		}
+
 		NBTTagCompound toSend = new NBTTagCompound();
 
-		toSend.setInteger("energy", energy);
-		toSend.setTag("input", new NBTTagCompound());
-		toSend.setTag("output", new NBTTagCompound());
-		input.writeToNBT(toSend.getCompoundTag("input"));
-		output.writeToNBT(toSend.getCompoundTag("output"));
-		FMLInterModComms.sendMessage("thermalexpansion", "addcompactorstoragerecipe", toSend);
-		
+		toSend.setInteger(ENERGY, energy);
+		toSend.setTag(INPUT, new NBTTagCompound());
+		toSend.setTag(OUTPUT, new NBTTagCompound());
+		input.writeToNBT(toSend.getCompoundTag(INPUT));
+		output.writeToNBT(toSend.getCompoundTag(OUTPUT));
+		FMLInterModComms.sendMessage(PLUGIN_MODID, "addcompactorstoragerecipe", toSend);
+
 	}
 
 	public static void addFurnace(boolean enabled, String materialName) {
-		if( enabled ) {
+		if (enabled) {
 			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			/*
 			 * Ore -> Ingot default, according to TE source, is 2000
 			 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
 			 */
-			int ENERGY_ORE = 2000;
-			int ENERGY_DUST = 1400;
-			ItemStack ore = new ItemStack( mat.ore );
-			ItemStack ingot = new ItemStack( mat.ingot );
-			ThermalExpansionHelper.addFurnaceRecipe( ENERGY_ORE, ore, ingot );
-			if( Options.enableBasics && mat.powder != null ) {
-				ItemStack dust = new ItemStack( mat.powder );
-				ThermalExpansionHelper.addFurnaceRecipe( ENERGY_DUST, dust, ingot );
+			final int ENERGY_ORE = 2000;
+			final int ENERGY_DUST = 1400;
+			ItemStack ore;
+			if (mat.hasBlock(Names.ORE) && mat.getBlock(Names.ORE) != null) {
+				ore = new ItemStack(mat.getBlock(Names.ORE), 1, 0);
+			} else if (mat.hasItem(Names.BLEND) && mat.getItem(Names.BLEND) != null) {
+				ore = new ItemStack(mat.getItem(Names.BLEND), 1, 0);
+			} else {
+				return;
+			}
+
+			if ((!mat.hasItem(Names.INGOT)) || mat.getItem(Names.INGOT) == null) {
+				return;
+			}
+
+			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT), 1, 0);
+			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
+			if (Options.thingEnabled("Basics")) {
+				if (mat.hasItem(Names.POWDER) && mat.getItem(Names.POWDER) != null) {
+					ItemStack dust = new ItemStack(mat.getItem(Names.POWDER), 1, 0);
+					ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
+				}
 			}
 		}
 	}
-	
+
 	public static void addCrucible(boolean enabled, String materialName) {
-		if( enabled ) {
+		if (enabled) {
 			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
 			/*
 			 * Default power, according to TE source, is 8000
@@ -92,63 +120,63 @@ public class ThermalExpansionBase implements IIntegration {
 			 * Glowstone block is 80000
 			 * Cobblestone/Stone/Obsidian is 320000
 			 */
-			int ENERGY = 8000;
-			
-			ItemStack ingot = new ItemStack( mat.ingot );
-			FluidStack oreFluid = FluidRegistry.getFluidStack( mat.getName(), 288 );
-			FluidStack baseFluid = FluidRegistry.getFluidStack( mat.getName(), 144 );
-			
-			if( mat.ore != null ) {
-				ItemStack ore = new ItemStack( mat.ore );
-				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ore, oreFluid );
+			final int ENERGY_QTY = 8000;
+
+			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT));
+			FluidStack oreFluid = FluidRegistry.getFluidStack(mat.getName(), 288);
+			FluidStack baseFluid = FluidRegistry.getFluidStack(mat.getName(), 144);
+
+			if (mat.getBlock(Names.ORE) != null) {
+				ItemStack ore = new ItemStack(mat.getBlock(Names.ORE));
+				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ore, oreFluid);
 			}
-			
-			ThermalExpansionHelper.addCrucibleRecipe( ENERGY, ingot, baseFluid );
-			
-			if( Options.enableBasics && mat.powder != null ) {
-				ItemStack dust = new ItemStack( mat.powder );
-				ThermalExpansionHelper.addCrucibleRecipe( ENERGY, dust, baseFluid );
+
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ingot, baseFluid);
+
+			if (Options.thingEnabled("Basics") && mat.getItem(Names.POWDER) != null) {
+				ItemStack dust = new ItemStack(mat.getItem(Names.POWDER));
+				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dust, baseFluid);
 			}
-			
-			addCrucibleExtra( Options.enablePlate, Item.getItemFromBlock(mat.plate), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY );
-			addCrucibleExtra( Options.enableBasics, mat.nugget, FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY );
+
+			addCrucibleExtra(Options.thingEnabled("Plate"), Item.getItemFromBlock(mat.getBlock(Names.PLATE)), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY_QTY);
+			addCrucibleExtra(Options.thingEnabled("Basics"), mat.getItem(Names.NUGGET), FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY_QTY);
 		}
 	}
 
-	private static void addCrucibleExtra(boolean enabled, Item input, FluidStack output, int energy ) {
-		if( enabled && input != null && output != null ) {
-			ItemStack inItems = new ItemStack( input );
-			ThermalExpansionHelper.addCrucibleRecipe( energy, inItems, output );
+	private static void addCrucibleExtra(boolean enabled, Item input, FluidStack output, int energy) {
+		if (enabled && input != null && output != null) {
+			ItemStack inItems = new ItemStack(input);
+			ThermalExpansionHelper.addCrucibleRecipe(energy, inItems, output);
 		}
 	}
 
 	public static void addPlatePress(boolean enabled, String materialName) {
-		if( enabled && Options.enablePlate ) {
+		if (enabled && Options.thingEnabled("Plate")) {
 			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
-			
+
 			/*
 			 * Compactors default is 4000RF per operation
 			 */
-			int ENERGY = 4000;
-			addCompactorPressRecipe( ENERGY, new ItemStack( mat.ingot ), new ItemStack( mat.plate ) );
+			final int ENERGY_QTY = 4000;
+			addCompactorPressRecipe(ENERGY_QTY, new ItemStack(mat.getItem(Names.INGOT)), new ItemStack(mat.getBlock(Names.PLATE)));
 		}
 	}
 
 	public static void addPressStorage(boolean enabled, String materialName) {
-		if( enabled ) {
+		if (enabled) {
 			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
-			
+
 			/*
 			 * Compactors default is 4000RF per operation
 			 */
-			int ENERGY = 4000;
-			ItemStack ingots = new ItemStack( mat.ingot, 9 );
-			ItemStack nuggets = new ItemStack( mat.nugget, 9 );
-			ItemStack block = new ItemStack( mat.block, 1 );
-			ItemStack ingot = new ItemStack( mat.ingot, 1 );
-			
-			addCompactorStorageRecipe( ENERGY, ingots, block );
-			addCompactorStorageRecipe( ENERGY, nuggets, ingot );
+			final int ENERGY_QTY = 4000;
+			ItemStack ingots = new ItemStack(mat.getItem(Names.INGOT), 9);
+			ItemStack nuggets = new ItemStack(mat.getItem(Names.NUGGET), 9);
+			ItemStack block = new ItemStack(mat.getBlock(Names.BLOCK), 1);
+			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT), 1);
+
+			addCompactorStorageRecipe(ENERGY_QTY, ingots, block);
+			addCompactorStorageRecipe(ENERGY_QTY, nuggets, ingot);
 		}
 	}
 }

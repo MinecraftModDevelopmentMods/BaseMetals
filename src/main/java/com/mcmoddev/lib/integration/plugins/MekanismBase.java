@@ -1,11 +1,14 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -57,7 +60,7 @@ public class MekanismBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.enableMekanism) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("mekanism")) {
 			return;
 		}
 		/*
@@ -82,38 +85,45 @@ public class MekanismBase implements IIntegration {
 	protected static void addOreMultiplicationRecipes(MMDMaterial material) {
 		// Combiner 8 dust to 1 ore
 		// Clump to dirty IC2: Macerator)
-
-		if ((material.clump != null) && (material.powderDirty != null)) {
-			addCrusherRecipe(new ItemStack(material.clump), new ItemStack(material.powderDirty));
+		Item clump = material.getItem(Names.CLUMP);
+		Item powderDirty = material.getItem(Names.POWDERDIRTY);
+		Item ingot = material.getItem(Names.INGOT);
+		Item powder = material.getItem(Names.POWDER);
+		Block ore = material.getBlock(Names.ORE);
+		Item shard = material.getItem(Names.SHARD);
+		Item crystal = material.getItem(Names.CRYSTAL);
+		
+		if ((clump != null) && (powderDirty != null)) {
+			addCrusherRecipe(new ItemStack(clump), new ItemStack(powderDirty));
 		}
-		if ((material.ingot != null) && (material.powder != null)) {
-			addCrusherRecipe(new ItemStack(material.ingot), new ItemStack(material.powder));
-		}
-
-		if (material.powder != null) {
-			if (material.ore != null) {
-				addEnrichmentChamberRecipe(new ItemStack(material.ore), new ItemStack(material.powder, 2));
-			}
-			if (material.powderDirty != null) {
-				addEnrichmentChamberRecipe(new ItemStack(material.powderDirty), new ItemStack(material.powder));
-			}
+		if ((ingot != null) && (powder != null)) {
+			addCrusherRecipe(new ItemStack(ingot), new ItemStack(powder));
 		}
 
-		if (material.clump != null) {
-			if (material.ore != null) {
-				addPurificationChamberRecipe(new ItemStack(material.ore), new ItemStack(material.clump, 3));
+		if (powder != null) {
+			if (ore != null) {
+				addEnrichmentChamberRecipe(new ItemStack(ore), new ItemStack(powder, 2));
 			}
-			if (material.shard != null) {
-				addPurificationChamberRecipe(new ItemStack(material.shard), new ItemStack(material.clump));
+			if (powderDirty != null) {
+				addEnrichmentChamberRecipe(new ItemStack(powderDirty), new ItemStack(powder));
 			}
 		}
 
-		if (material.shard != null) {
-			if (material.ore != null) {
-				addChemicalInjectionChamberRecipe(new ItemStack(material.ore), new ItemStack(material.shard, 4));
+		if (clump != null) {
+			if (ore != null) {
+				addPurificationChamberRecipe(new ItemStack(ore), new ItemStack(clump, 3));
 			}
-			if (material.crystal != null) {
-				addChemicalInjectionChamberRecipe(new ItemStack(material.crystal), new ItemStack(material.shard));
+			if (shard != null) {
+				addPurificationChamberRecipe(new ItemStack(shard), new ItemStack(clump));
+			}
+		}
+
+		if (shard != null) {
+			if (ore != null) {
+				addChemicalInjectionChamberRecipe(new ItemStack(ore), new ItemStack(shard, 4));
+			}
+			if (crystal != null) {
+				addChemicalInjectionChamberRecipe(new ItemStack(crystal), new ItemStack(shard));
 			}
 		}
 

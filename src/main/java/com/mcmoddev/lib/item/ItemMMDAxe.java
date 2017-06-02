@@ -4,13 +4,14 @@ import java.util.List;
 
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
+import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -21,11 +22,10 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class ItemMMDAxe extends ItemAxe implements IMMDObject {
+public class ItemMMDAxe extends net.minecraft.item.ItemAxe implements IMMDObject {
 
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -38,10 +38,9 @@ public class ItemMMDAxe extends ItemAxe implements IMMDObject {
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
 		this.damageVsEntity = 4F + (2F * this.material.getBaseAttackDamage());
-		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * this.material.strength);
+		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * this.material.getStat(MaterialStats.STRENGTH));
 		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
-		this.repairOreDictName = "ingot" + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
+		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 
 	@Override
@@ -83,25 +82,16 @@ public class ItemMMDAxe extends ItemAxe implements IMMDObject {
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (this.regenerates && !world.isRemote && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0))
+		if (world.isRemote)
+			return;
+
+		if (this.material.regenerates() && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
 			item.setItemDamage(item.getItemDamage() - 1);
-	}
-/*
-	public String getMaterialName() {
-		return this.material.getName();
-	}
-*/
-	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
+		}
 	}
 
-	/**
-	 * @deprecated
-	 */
 	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 

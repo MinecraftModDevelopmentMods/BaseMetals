@@ -189,8 +189,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 		@Override
 		public List<PositionedStack> getIngredients() {
-			return this.getCycledIngredients(CrusherRecipeHandler.this.cycleticks / 48,
-					Collections.singletonList(this.ingred));
+			return this.getCycledIngredients(CrusherRecipeHandler.this.cycleticks / 48, Collections.singletonList(this.ingred));
 		}
 
 		@Override

@@ -1,26 +1,20 @@
 package com.mcmoddev.lib.item;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.item.ItemAnvilBlock;
-
-public class ItemMMDAnvilBlock extends ItemAnvilBlock implements IMMDObject {
+public class ItemMMDAnvilBlock extends net.minecraft.item.ItemAnvilBlock implements IMMDObject {
 
 	final MMDMaterial material;
 
 	public ItemMMDAnvilBlock(MMDMaterial material) {
-		super(material.anvilBlock);
+		super(material.getBlock(Names.ANVIL));
 		this.material = material;
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
-		return this.material;
-	}
-
-	@Override
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }

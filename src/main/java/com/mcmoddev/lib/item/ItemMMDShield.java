@@ -2,15 +2,15 @@ package com.mcmoddev.lib.item;
 
 import java.util.List;
 
+import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.IOreDictionaryEntry;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBanner;
-import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -18,12 +18,10 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDShield extends ItemShield implements IOreDictionaryEntry, IMMDObject {
+public class ItemMMDShield extends net.minecraft.item.ItemShield implements IMMDObject {
 
 	final MMDMaterial material;
-	private final String oreDict;
 	protected final String repairOreDictName;
-	protected final boolean regenerates;
 	protected static final long REGEN_INTERVAL = 200;
 
 	/**
@@ -33,30 +31,23 @@ public class ItemMMDShield extends ItemShield implements IOreDictionaryEntry, IM
 	 */
 	public ItemMMDShield(MMDMaterial material) {
 		this.material = material;
-		this.setMaxDamage((int) (this.material.strength * 168));
-		this.setCreativeTab(CreativeTabs.TOOLS);
-		this.oreDict = Oredicts.SHIELD + this.material.getCapitalizedName();
+		this.setMaxDamage((int) (this.material.getStat(MaterialStats.STRENGTH) * 168));
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-		this.regenerates = this.material.regenerates;
 	}
 
 	@Override
-	public MMDMaterial getMaterial() {
+	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
+		if (world.isRemote)
+			return;
+
+		if (this.material.regenerates()  && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
+			item.setItemDamage(item.getItemDamage() - 1);
+		}
+	}
+
+	@Override
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
-	public MMDMaterial getMetalMaterial() {
-		return this.material;
-	}
-
-	@Override
-	public String getOreDictionaryName() {
-		return this.oreDict;
 	}
 
 	/**
@@ -75,10 +66,10 @@ public class ItemMMDShield extends ItemShield implements IOreDictionaryEntry, IM
 	@SuppressWarnings("deprecation")
 	public String getItemStackDisplayName(ItemStack stack) {
 		String name = String.format("%s.name", this.getUnlocalizedName());
-		if( net.minecraft.util.text.translation.I18n.canTranslate(name) ) {
-			if( stack.getSubCompound("BlockEntityTag", false) != null ) {
-				String colored_name = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
-				return net.minecraft.util.text.translation.I18n.translateToLocal(colored_name);
+		if (net.minecraft.util.text.translation.I18n.canTranslate(name)) {
+			if (stack.getSubCompound("BlockEntityTag", false) != null) {
+				String coloredName = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
+				return net.minecraft.util.text.translation.I18n.translateToLocal(coloredName);
 			} else {
 				return name;
 			}

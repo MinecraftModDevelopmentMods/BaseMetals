@@ -181,7 +181,7 @@ public class CrusherRecipeRegistry {
 			final List<ICrusherRecipe> recipeCache = new ArrayList<>();
 			for (final ICrusherRecipe r : this.recipes) {
 				if (ItemStack.areItemsEqual(r.getOutput(), output)) {
-					for (final String s : Options.disabledRecipes) {
+					for (final String s : Options.disabledRecipes()) {
 						List<ItemStack> ores = OreDictionary.getOres(s);
 						for (ItemStack input : r.getValidInputs()) {
 							if (OreDictionary.containsMatch(false, ores, input)) {
@@ -233,7 +233,7 @@ public class CrusherRecipeRegistry {
 		} else {
 			for (final ICrusherRecipe r : this.recipes) {
 				if (r.isValidInput(input)) {
-					for (final String s : Options.disabledRecipes) {
+					for (final String s : Options.disabledRecipes()) {
 						List<ItemStack> ores = OreDictionary.getOres(s);
 						if (OreDictionary.containsMatch(false, ores, input)) {
 							this.recipeByInputCache.put(hashKey, null);
@@ -271,7 +271,7 @@ public class CrusherRecipeRegistry {
 		List<ICrusherRecipe> filtered = new ArrayList<>();
 		for (final ICrusherRecipe r : this.recipes) {
 			boolean matched = false;
-			for (final String s : Options.disabledRecipes) {
+			for (final String s : Options.disabledRecipes()) {
 				List<ItemStack> ores = OreDictionary.getOres(s);
 				for (ItemStack ore : ores) {
 					if (r.isValidInput(ore)) {
