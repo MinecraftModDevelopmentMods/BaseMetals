@@ -69,12 +69,12 @@ public abstract class MMDToolEffects {
 	public static void extraEffectsOnAttack(final MMDMaterial material, final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
 		if ((Options.materialEnabled(MaterialNames.COLDIRON)) && (material.equals(Materials.getMaterialByName(MaterialNames.COLDIRON)))) {
 			if (target.isImmuneToFire()) {
-				final DamageSource extraDamage = DamageSource.generic;
+				final DamageSource extraDamage = DamageSource.GENERIC;
 				target.attackEntityFrom(extraDamage, 3f);
 			}
 		} else if ((Options.materialEnabled(MaterialNames.ADAMANTINE)) && (material.equals(Materials.getMaterialByName(MaterialNames.ADAMANTINE)))) {
 			if (target.getMaxHealth() > 20f) {
-				final DamageSource extraDamage = DamageSource.generic;
+				final DamageSource extraDamage = DamageSource.GENERIC;
 				target.attackEntityFrom(extraDamage, 4f);
 			}
 		} else if ((Options.materialEnabled(MaterialNames.MITHRIL)) && (material.equals(Materials.getMaterialByName(MaterialNames.MITHRIL)))) {
@@ -88,7 +88,7 @@ public abstract class MMDToolEffects {
 			}
 		} else if ((Options.materialEnabled(MaterialNames.AQUARIUM)) && (material.equals(Materials.getMaterialByName(MaterialNames.AQUARIUM)))) {
 			if (target.canBreatheUnderwater()) {
-				final DamageSource extraDamage = DamageSource.generic;
+				final DamageSource extraDamage = DamageSource.GENERIC;
 				target.attackEntityFrom(extraDamage, 4f);
 			}
 		}

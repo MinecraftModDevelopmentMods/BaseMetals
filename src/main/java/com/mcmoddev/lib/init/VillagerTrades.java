@@ -464,18 +464,18 @@ public abstract class VillagerTrades {
 			}
 			ItemStack in1 = input1.copy();
 			if (maxInputMarkup1 > 0) {
-				in1.stackSize = in1.stackSize + random.nextInt(maxInputMarkup1);
+				in1.setCount(in1.getCount() + random.nextInt(maxInputMarkup1));
 			}
 			ItemStack in2 = null;
 			if (input2 != null && input2.getItem() != null) {
 				in2 = input2.copy();
 				if (maxInputMarkup2 > 0) {
-					in2.stackSize = in2.stackSize + random.nextInt(maxInputMarkup2);
+					in2.setCount(in2.getCount() + random.nextInt(maxInputMarkup2));
 				}
 			}
 			ItemStack out = output.copy();
 			if (maxOutputMarkup > 0) {
-				out.stackSize = out.stackSize + random.nextInt(maxOutputMarkup);
+				out.setCount(out.getCount() + random.nextInt(maxOutputMarkup));
 			}
 
 			if (numTrades > 0) {

@@ -504,9 +504,9 @@ public class Config {
 					final String oreX = "ore".concat(X);
 					if (dictionary.contains(oreX) && dictionary.contains(ingotX) && !OreDictionary.getOres(dustX).isEmpty()) {
 						final ItemStack dustX1 = OreDictionary.getOres(dustX).get(0).copy();
-						dustX1.stackSize = 1;
+						dustX1.setCount(1);
 						final ItemStack dustX2 = dustX1.copy();
-						dustX2.stackSize = 2;
+						dustX2.setCount(2);
 						// recipe found but is it already registered
 						final List<ItemStack> oreBlocks = OreDictionary.getOres(oreX);
 						boolean alreadyHasOreRecipe = true;

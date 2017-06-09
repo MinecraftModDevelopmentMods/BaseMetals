@@ -87,8 +87,9 @@ public class LeggingsRepairRecipe extends ShapelessOreRecipe implements IRecipe 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack item = inv.getStackInSlot(i);
 			if (OreDictionary.containsMatch(true, repairMaterials, item)) {
-				item.stackSize--;
-				if (item.stackSize <= 0) {
+				item.setCount(item.getCount() - 1);
+
+				if (item.getCount() <= 0) {
 					outputStacks[i] = null;
 				} else {
 					outputStacks[i] = item;

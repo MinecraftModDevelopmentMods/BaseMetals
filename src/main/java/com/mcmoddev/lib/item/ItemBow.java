@@ -88,9 +88,9 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 					worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, (1.0F / ((itemRand.nextFloat() * 0.4F) + 1.2F)) + (f * 0.5F));
 
 					if (!flag1) {
-						--itemstack.stackSize;
+						itemstack.setCount(itemstack.getCount() - 1);
 
-						if (itemstack.stackSize == 0) {
+						if (itemstack.getCount() == 0) {
 							entityplayer.inventory.deleteStack(itemstack);
 						}
 					}

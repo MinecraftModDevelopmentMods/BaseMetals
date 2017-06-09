@@ -182,7 +182,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 					result = new ItemStack(Blocks.AIR);
 				}
 			}
-			ingred.stackSize = 1;
+			ingred.setCount(1);
 			this.ingred = new PositionedStack(ingred, 65, 23);
 			this.result = new PositionedStack(result, 123, 23);
 		}
