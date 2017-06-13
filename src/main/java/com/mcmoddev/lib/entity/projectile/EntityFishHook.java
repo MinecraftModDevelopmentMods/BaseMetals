@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
@@ -63,33 +64,6 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 	 *
 	 * @param worldIn
 	 *            The World
-	 */
-	public EntityFishHook(World worldIn) {
-		super(worldIn);
-	}
-
-	/**
-	 *
-	 * @param worldIn
-	 *            The World
-	 * @param x
-	 *            X
-	 * @param y
-	 *            Y
-	 * @param z
-	 *            Z
-	 * @param anglerIn
-	 *            The bobber
-	 */
-	@SideOnly(Side.CLIENT)
-	public EntityFishHook(World worldIn, double x, double y, double z, EntityPlayer anglerIn) {
-		super(worldIn, x, y, z, anglerIn);
-	}
-
-	/**
-	 *
-	 * @param worldIn
-	 *            The World
 	 * @param fishingPlayer
 	 *            The player
 	 */
@@ -136,12 +110,12 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 				this.caughtEntity = this.world.getEntityByID(i - 1);
 			}
 		} else {
-			final ItemStack itemstack = this.angler.getHeldItemMainhand();
+			final ItemStack itemstack = this.getAngler().getHeldItemMainhand();
 
 			// We had to change this due to hardcoding
-			if (this.angler.isDead || !this.angler.isEntityAlive() || (itemstack == null) || !(itemstack.getItem() instanceof ItemFishingRod) || (this.getDistanceSqToEntity(this.angler) > 1024.0D)) {
+			if (this.getAngler().isDead || !this.getAngler().isEntityAlive() || (itemstack == null) || !(itemstack.getItem() instanceof ItemFishingRod) || (this.getDistanceSqToEntity(this.getAngler()) > 1024.0D)) {
 				this.setDead();
-				this.angler.fishEntity = null;
+				this.getAngler().fishEntity = null;
 				return;
 			}
 		}
@@ -209,7 +183,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 				for (int j = 0; j < list.size(); ++j) {
 					final Entity entity1 = (Entity) list.get(j);
 
-					if (entity1.canBeCollidedWith() && ((entity1 != this.angler) || (this.ticksInAir >= 5))) {
+					if (entity1.canBeCollidedWith() && ((entity1 != this.getAngler()) || (this.ticksInAir >= 5))) {
 						final AxisAlignedBB axisalignedbb1 = entity1.getEntityBoundingBox().expandXyz(0.30000001192092896D);
 						final RayTraceResult raytraceresult1 = axisalignedbb1.calculateIntercept(vec3d1, vec3d);
 
@@ -239,7 +213,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 			}
 
 			if (!this.inGround) {
-				this.move(this.motionX, this.motionY, this.motionZ);
+				this.move(MoverType.PLAYER, this.motionX, this.motionY, this.motionZ);
 				final float f2 = MathHelper.sqrt((this.motionX * this.motionX) + (this.motionZ * this.motionZ));
 				this.rotationYaw = (float) (MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
 
@@ -277,7 +251,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 					final double d11 = axisalignedbb.minY + ((d9 * (double) (l + 1)) / 5.0D);
 					final AxisAlignedBB axisalignedbb2 = new AxisAlignedBB(axisalignedbb.minX, d10, axisalignedbb.minZ, axisalignedbb.maxX, d11, axisalignedbb.maxZ);
 
-					if (this.world.isAABBInMaterial(axisalignedbb2, Material.WATER)) {
+					if (this.world.isMaterialInBB(axisalignedbb2, Material.WATER)) {
 						d5 += 0.2D;
 					}
 				}
@@ -364,7 +338,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 						}
 					} else {
 						this.ticksCaughtDelay = MathHelper.getInt(this.rand, 100, 900);
-						this.ticksCaughtDelay -= EnchantmentHelper.getLureModifier(this.angler) * 20 * 5;
+						this.ticksCaughtDelay -= EnchantmentHelper.getLootingModifier(this.getAngler()) * 20 * 5;
 					}
 
 					if (this.ticksCatchable > 0) {
@@ -402,20 +376,20 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 				i = this.caughtEntity instanceof EntityItem ? 3 : 5;
 			} else if (this.ticksCatchable > 0) {
 				final LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.world);
-				lootcontext$builder.withLuck((float) EnchantmentHelper.getLuckOfSeaModifier(this.angler) + this.angler.getLuck());
+				lootcontext$builder.withLuck((float) EnchantmentHelper.getLootingModifier(this.getAngler()) + this.getAngler().getLuck());
 
 				for (final ItemStack itemstack : this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(this.rand, lootcontext$builder.build())) {
 					final EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY, this.posZ, itemstack);
-					final double d0 = this.angler.posX - this.posX;
-					final double d1 = this.angler.posY - this.posY;
-					final double d2 = this.angler.posZ - this.posZ;
+					final double d0 = this.getAngler().posX - this.posX;
+					final double d1 = this.getAngler().posY - this.posY;
+					final double d2 = this.getAngler().posZ - this.posZ;
 					final double d3 = (double) MathHelper.sqrt((d0 * d0) + (d1 * d1) + (d2 * d2));
 					// final double d4 = 0.1D;
 					entityitem.motionX = d0 * 0.1D;
 					entityitem.motionY = (d1 * 0.1D) + ((double) MathHelper.sqrt(d3) * 0.08D);
 					entityitem.motionZ = d2 * 0.1D;
 					this.world.spawnEntity(entityitem);
-					this.angler.world.spawnEntity(new EntityXPOrb(this.angler.world, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(6) + 1));
+					this.getAngler().world.spawnEntity(new EntityXPOrb(this.getAngler().world, this.getAngler().posX, this.getAngler().posY + 0.5D, this.getAngler().posZ + 0.5D, this.rand.nextInt(6) + 1));
 				}
 
 				i = 1;
@@ -426,7 +400,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 			}
 
 			this.setDead();
-			this.angler.fishEntity = null;
+			this.getAngler().fishEntity = null;
 			return i;
 		}
 	}

@@ -128,14 +128,14 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 
 	// TODO: This may not be needed
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		final boolean flag = this.findAmmo(playerIn) != null;
 
 		if (!playerIn.capabilities.isCreativeMode && !flag)
-			return new ActionResult<>(EnumActionResult.FAIL, itemStackIn);
+			return new ActionResult<>(EnumActionResult.FAIL, playerIn.getHeldItemMainhand());
 		else {
 			playerIn.setActiveHand(hand);
-			return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
+			return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItemMainhand());
 		}
 	}
 }

@@ -25,11 +25,6 @@ public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeWrapper
 	}
 
 	@Override
-	public String getRecipeCategoryUid() {
-		return BaseMetalsJEIPlugin.JEIUID;
-	}
-
-	@Override
 	public IRecipeWrapper getRecipeWrapper(CrusherRecipeWrapper recipe) {
 		return recipe;
 	}

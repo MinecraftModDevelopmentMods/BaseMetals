@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.jei;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import mezz.jei.api.IGuiHelper;
@@ -61,16 +63,6 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 	}
 
 	@Override
-	public void drawAnimations(Minecraft minecraft) {
-		hammer.draw(minecraft, 71, 6);
-	}
-
-	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper) {
-		// deprecated
-	}
-
-	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		// custom tooltips
 		recipeLayout.getItemStacks().addTooltipCallback((CrusherRecipeWrapper) recipeWrapper);
@@ -82,5 +74,10 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 		// output
 		recipeLayout.getItemStacks().init(2, false, 119, 14);
 		recipeLayout.getItemStacks().set(2, (ItemStack) recipeWrapper.getOutputs().get(0));
+	}
+
+	@Override
+	public List getTooltipStrings(int mouseX, int mouseY) {
+		return null;
 	}
 }

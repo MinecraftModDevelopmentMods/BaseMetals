@@ -6,7 +6,6 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -35,9 +34,8 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	}
 
 	@Override
-	public boolean onBlockActivated(final World world, final BlockPos coord, IBlockState state,
-									final EntityPlayer player, EnumHand hand, ItemStack heldItem, final EnumFacing facing,
-									final float partialX, final float partialY, final float partialZ) {
+	public boolean onBlockActivated(World world, BlockPos coord, IBlockState state, EntityPlayer player,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (this.material.getToolHarvestLevel() > 1)
 			return true;
 		state = state.cycleProperty(BlockTrapDoor.OPEN);

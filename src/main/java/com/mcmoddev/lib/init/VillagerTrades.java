@@ -16,6 +16,7 @@ import com.mcmoddev.lib.item.ItemMMDCrackHammer;
 import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.material.MMDMaterial;
 
+import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.entity.passive.EntityVillager.ListEnchantedItemForEmeralds;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
@@ -312,21 +313,13 @@ public abstract class VillagerTrades {
 			trades = tradePalette.toArray(new ITradeList[tradePalette.size()]);
 		}
 
-		/**
-		 * Invoked when the merchant generates its trade menu
-		 * 
-		 * @param recipeList
-		 *            existing trade menu
-		 * @param random
-		 *            a psuedorandom number generator instance
-		 */
 		@Override
-		public void modifyMerchantRecipeList(MerchantRecipeList recipeList, Random random) {
+		public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
 			for (int n = 0; n < numberOfTrades; n++) {
-				trades[random.nextInt(trades.length)].modifyMerchantRecipeList(recipeList, random);
+				trades[random.nextInt(trades.length)].addMerchantRecipe(merchant, recipeList, random);
 			}
-		}
-
+			}
+		
 		/**
 		 * For debugging purposes only
 		 * 
@@ -443,7 +436,7 @@ public abstract class VillagerTrades {
 		public String toString() {
 			return input1 + " + " + input2 + " => " + output;
 		}
-
+		
 		/**
 		 * Invoked when the merchant generates its trade menu
 		 * 
@@ -453,7 +446,7 @@ public abstract class VillagerTrades {
 		 *            a psuedorandom number generator instance
 		 */
 		@Override
-		public void modifyMerchantRecipeList(MerchantRecipeList recipeList, Random random) {
+		public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
 			int numTrades = -1;
 			if (maxTrades > 0) {
 				if (maxTradeVariation > 0) {

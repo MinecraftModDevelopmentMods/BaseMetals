@@ -79,6 +79,6 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
-		this.itemStack = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("itemstack"));
+		this.itemStack = new ItemStack(compound.getCompoundTag("itemstack"));
 	}
 }

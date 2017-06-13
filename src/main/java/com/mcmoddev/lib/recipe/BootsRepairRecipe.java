@@ -11,6 +11,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -28,7 +29,7 @@ public class BootsRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
-		List<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE + matName);
+		NonNullList<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE + matName);
 		boolean bootsMatched = false;
 		boolean repairMatched = false;
 
@@ -83,26 +84,26 @@ public class BootsRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	}
 
 	@Override
-	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-		ItemStack[] outputStacks = new ItemStack[inv.getSizeInventory()];
-		List<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE + matName);
+	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
+		NonNullList<ItemStack> outputStacks = new ItemStack[inv.getSizeInventory()];
+		NonNullList<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE + matName);
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack item = inv.getStackInSlot(i);
 			if (OreDictionary.containsMatch(true, repairMaterials, item)) {
 				item.setCount(item.getCount() - 1);
 				if (item.getCount() <= 0) {
-					outputStacks[i] = null;
+					outputStacks.set(i, ItemStack.EMPTY);
 				} else {
-					outputStacks[i] = item;
+					outputStacks.set(i, item);
 				}
 			} else {
-				outputStacks[i] = item;
+				outputStacks.set(i, item);
 			}
 		}
 		return outputStacks;
 	}
-
+	
 	@Override
 	public ArrayList<Object> getInput() {
 		ArrayList<Object> inputs = new ArrayList<>();

@@ -210,9 +210,9 @@ public abstract class MMDToolEffects {
 				// full suit of cold-iron makes you fire-proof
 				if (Options.materialEnabled(MaterialNames.COLDIRON)) {
 					if(armorItem == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.HELMET)) {
-						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.CHESTPLATE)
-								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.LEGGINGS)
-								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.BOOTS)) {
+						if(player.inventory.armorInventory.get(2) != null && player.inventory.armorInventory.get(2).getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.CHESTPLATE)
+								&& player.inventory.armorInventory.get(1) != null && player.inventory.armorInventory.get(1).getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.LEGGINGS)
+								&& player.inventory.armorInventory.get(0) != null && player.inventory.armorInventory.get(0).getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.BOOTS)) {
 							final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
 							player.addPotionEffect(fireProtection);
 							// Achievement
@@ -228,9 +228,9 @@ public abstract class MMDToolEffects {
 				// and hunger effects
 				if (Options.materialEnabled(MaterialNames.MITHRIL)) {
 					if(armorItem == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.HELMET)) {
-						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.CHESTPLATE)
-								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.LEGGINGS)
-								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.BOOTS)) {
+						if(player.inventory.armorInventory.get(2) != null && player.inventory.armorInventory.get(2).getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.CHESTPLATE)
+								&& player.inventory.armorInventory.get(1) != null && player.inventory.armorInventory.get(1).getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.LEGGINGS)
+								&& player.inventory.armorInventory.get(0) != null && player.inventory.armorInventory.get(0).getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.BOOTS)) {
 							final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
 							Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
 							while(effectIterator.hasNext()) {
@@ -255,9 +255,9 @@ public abstract class MMDToolEffects {
 				// full suit of Aquarium makes you breathe and heal under water
 				if (Options.materialEnabled(MaterialNames.AQUARIUM)) {
 					if(armorItem == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.HELMET) && player.posY > 0 && player.posY < 255) {
-						if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.CHESTPLATE)
-								&& player.inventory.armorInventory[1] != null && player.inventory.armorInventory[1].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.LEGGINGS)
-								&& player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.BOOTS)) {
+						if(player.inventory.armorInventory.get(2) != null && player.inventory.armorInventory.get(2).getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.CHESTPLATE)
+								&& player.inventory.armorInventory.get(1) != null && player.inventory.armorInventory.get(1).getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.LEGGINGS)
+								&& player.inventory.armorInventory.get(0) != null && player.inventory.armorInventory.get(0).getItem() == Materials.getMaterialByName(MaterialNames.AQUARIUM).getItem(Names.BOOTS)) {
 							Block b1 = w.getBlockState(new BlockPos(player.posX,player.posY, player.posZ)).getBlock();
 							Block b2 = w.getBlockState(new BlockPos(player.posX,player.posY + 1, player.posZ)).getBlock();
 							if(b1 == Blocks.WATER && b2 == Blocks.WATER) {

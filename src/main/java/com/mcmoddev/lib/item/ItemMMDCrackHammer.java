@@ -93,7 +93,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	}
 
 	@Override
-	public EnumActionResult onItemUse(final ItemStack item, final EntityPlayer player, final World w, final BlockPos coord, EnumHand hand, final EnumFacing facing, final float partialX, final float partialY, final float partialZ) {
+	public EnumActionResult onItemUse(final EntityPlayer player, final World w, final BlockPos coord, EnumHand hand, final EnumFacing facing, final float partialX, final float partialY, final float partialZ) {
 		if (facing != EnumFacing.UP) {
 			return EnumActionResult.PASS;
 		}
@@ -119,8 +119,8 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 						int toolDamage;
 						if (Options.crackHammerFullStack()) {
 							output.setCount(targetItem.getCount());
-							if (item.isItemDamaged() && (item.getItemDamage() < output.getCount())) {
-									output.setCount(item.getItemDamage());
+							if (player.getHeldItemMainhand().isItemDamaged() && (player.getHeldItemMainhand().getItemDamage() < output.getCount())) {
+									output.setCount(player.getHeldItemMainhand().getItemDamage());
 							}
 							toolDamage = output.getCount();
 						} else {
@@ -132,7 +132,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 						double z = target.posZ;
 
 						if (Options.crackHammerFullStack()) {
-							targetItem.stackSize -= output.getCount();
+							targetItem.shrink(output.getCount());
 						} else {
 							targetItem.setCount(targetItem.getCount() - 1);
 						}
@@ -142,7 +142,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 						for (int i = 0; i < count; i++) {
 							w.spawnEntity(new EntityItem(w, x, y, z, output.copy()));
 						}
-						item.damageItem(toolDamage, player);
+						player.getHeldItemMainhand().damageItem(toolDamage, player);
 					}
 					success = true;
 					break;
@@ -206,7 +206,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	 */
 	@Override
 	@Deprecated
-	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
+	public int getHarvestLevel(ItemStack stack, String typeRequested, EntityPlayer player, IBlockState blockState) {
 		if (typeRequested != null && toolTypes.contains(typeRequested)) {
 			if (Options.strongHammers()) {
 				return material.getToolHarvestLevel();
@@ -252,12 +252,13 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	@Override
 	public boolean canHarvestBlock(final IBlockState targetBS) {
 		Block target = targetBS.getBlock();
+		EntityPlayer player = null;
 		// go to net.minecraftforge.common.ForgeHooks.initTools(); to see all
 		// tool type strings
 		String toolType = target.getHarvestTool(target.getDefaultState());
 		if (toolTypes.contains(toolType) || target.getMaterial(targetBS) == Material.ROCK) {
 			// can mine like a Pickaxe
-			return this.getHarvestLevel(null, "pickaxe") >= target.getHarvestLevel(target.getDefaultState());
+			return this.getHarvestLevel(null, "pickaxe", player, targetBS) >= target.getHarvestLevel(target.getDefaultState());
 		} else if ("shovel".equals(toolType) && target.getHarvestLevel(target.getDefaultState()) <= 0) {
 			// can be dug with wooden shovel
 			return true;

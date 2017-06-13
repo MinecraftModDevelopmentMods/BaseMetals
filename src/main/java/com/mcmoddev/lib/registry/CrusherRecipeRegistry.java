@@ -20,6 +20,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -182,7 +183,7 @@ public class CrusherRecipeRegistry {
 			for (final ICrusherRecipe r : this.recipes) {
 				if (ItemStack.areItemsEqual(r.getOutput(), output)) {
 					for (final String s : Options.disabledRecipes()) {
-						List<ItemStack> ores = OreDictionary.getOres(s);
+						NonNullList<ItemStack> ores = OreDictionary.getOres(s);
 						for (ItemStack input : r.getValidInputs()) {
 							if (OreDictionary.containsMatch(false, ores, input)) {
 								this.recipeByInputCache.put(hashKey, null);
@@ -234,7 +235,7 @@ public class CrusherRecipeRegistry {
 			for (final ICrusherRecipe r : this.recipes) {
 				if (r.isValidInput(input)) {
 					for (final String s : Options.disabledRecipes()) {
-						List<ItemStack> ores = OreDictionary.getOres(s);
+						NonNullList<ItemStack> ores = OreDictionary.getOres(s);
 						if (OreDictionary.containsMatch(false, ores, input)) {
 							this.recipeByInputCache.put(hashKey, null);
 							return null;

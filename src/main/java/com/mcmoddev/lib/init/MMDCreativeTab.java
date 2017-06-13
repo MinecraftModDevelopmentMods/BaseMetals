@@ -6,8 +6,8 @@ import java.util.List;
 import com.mcmoddev.basemetals.init.Items;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class MMDCreativeTab extends CreativeTabs {
 
-	private Item iconItem;
+	private ItemStack iconItem;
 	
 	private final boolean searchable;
 	private List<ItemStack> cache;
@@ -33,7 +33,7 @@ public class MMDCreativeTab extends CreativeTabs {
 		}
 	};
 
-	public MMDCreativeTab(String unlocalizedName, boolean searchable, Item iconItem) {
+	public MMDCreativeTab(String unlocalizedName, boolean searchable, ItemStack iconItem) {
 		super(unlocalizedName);
 		// this.itemSupplier = itemSupplier;
 		this.iconItem = iconItem;
@@ -50,7 +50,7 @@ public class MMDCreativeTab extends CreativeTabs {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void displayAllRelevantItems(List<ItemStack> itemList) {
+	public void displayAllRelevantItems(NonNullList<ItemStack> itemList) {
 		if (cache == null) {
 
 			super.displayAllRelevantItems(itemList);
@@ -65,9 +65,9 @@ public class MMDCreativeTab extends CreativeTabs {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Item getTabIconItem() {
+	public ItemStack getTabIconItem() {
 		if (this.iconItem == null) {
-			return net.minecraft.init.Items.IRON_PICKAXE;
+			return new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
 		}
 		return this.iconItem;
 	}
@@ -79,7 +79,7 @@ public class MMDCreativeTab extends CreativeTabs {
 			cache.sort(comparator);
 	}
 
-	public void setTabIconItem(Item iconItem) {
+	public void setTabIconItem(ItemStack iconItem) {
 		this.iconItem = iconItem;
 	}
 }

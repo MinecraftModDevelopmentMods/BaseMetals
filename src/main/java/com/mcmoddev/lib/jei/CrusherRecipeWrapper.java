@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.jei;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,9 +12,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
-@SuppressWarnings("rawtypes")
 public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecipeWrapper {
 
 	private ICrusherRecipe theRecipe;
@@ -31,6 +28,9 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 		ingredients.setOutput(ItemStack.class, theRecipe.getOutput());
 	}
 
+
+	/*
+	 * No Longer Exist
 	@Override
 	public List getInputs() {
 		return new ArrayList<>(theRecipe.getValidInputs());
@@ -52,16 +52,12 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 	public List<FluidStack> getFluidOutputs() {
 		return Collections.emptyList();
 	}
+	*/
 
 	@Override
 	public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
