@@ -10,6 +10,7 @@ import ic2.api.recipe.Recipes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+@SuppressWarnings("deprecation")
 public class IC2Base implements IIntegration {
 
 	public static final String PLUGIN_MODID = "IC2";
@@ -40,6 +41,7 @@ public class IC2Base implements IIntegration {
 		// TODO: Figure out Dense Plate & Casing
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void addMaceratorRecipes(MMDMaterial material) {
 		String oreDictName = material.getCapitalizedName();
 		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.ORE + oreDictName, 0), null, false, new ItemStack(material.getItem(Names.CRUSHED), 2));
