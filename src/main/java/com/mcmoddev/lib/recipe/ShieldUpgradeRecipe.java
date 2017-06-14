@@ -1,10 +1,8 @@
 package com.mcmoddev.lib.recipe;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -36,14 +34,14 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
 		ItemStack base;
-		List<ItemStack> upgradeMats = new ArrayList<>();
+		NonNullList<ItemStack> upgradeMats = NonNullList.create();
 		Collection<MMDMaterial> allmats = Materials.getAllMaterials();
 		MMDMaterial input = Materials.getMaterialByName(matName);
 		base = new ItemStack(input.getItem(Names.SHIELD), 1, 0);
 
 		for (MMDMaterial mat : allmats) {
 			if (mat.getStat(MaterialStats.HARDNESS) >= input.getStat(MaterialStats.HARDNESS) && mat.getName().equals(matName)) {
-				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
+				NonNullList<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				upgradeMats.addAll(mats);
 			}
 		}
@@ -67,14 +65,14 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		Map<String, List<ItemStack>> plates = new HashMap<>();
+		Map<String, NonNullList<ItemStack>> plates = new HashMap<>();
 
 		Collection<MMDMaterial> allmats = Materials.getAllMaterials();
 		int hardness = ((Float) Materials.getMaterialByName(matName).getStat(MaterialStats.HARDNESS)).intValue();
 
 		for (MMDMaterial mat : allmats) {
 			if (mat.getStat(MaterialStats.HARDNESS) >= hardness && (!mat.getName().equals(matName))) {
-				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
+				NonNullList<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				plates.put(mat.getName(), mats);
 			}
 		}
@@ -88,7 +86,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 			if (curItem != null) {
 				ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getMetadata());
-				for (Entry<String, List<ItemStack>> ent : plates.entrySet()) {
+				for (Entry<String, NonNullList<ItemStack>> ent : plates.entrySet()) {
 					if (OreDictionary.containsMatch(false, ent.getValue(), comp)) {
 						plateMatched = new ItemStack(Materials.getMaterialByName(ent.getKey().toLowerCase()).getItem(Names.SHIELD), 1, 0);
 					}
