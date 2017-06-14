@@ -72,7 +72,7 @@ if (secretFile.exists()) {
 minecraft {
     version = "1.11.2-13.20.0.2228"
     runDir = "run"
-    mappings = "snapshot_20170331"
+    mappings = "stable_32"
 //  coreMod = corePlugin
     clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
     serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
