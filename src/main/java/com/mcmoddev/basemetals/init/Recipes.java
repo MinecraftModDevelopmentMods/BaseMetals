@@ -10,7 +10,6 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -161,9 +160,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY), "Quicksilver");
 
 			if (FluidRegistry.isUniversalBucketEnabled()) {
-				final UniversalBucket universalBucket = ForgeModContainer.getInstance().universalBucket;
-				final ItemStack bucketMercury = new ItemStack(universalBucket, 1, 0);
-				universalBucket.fill(bucketMercury, new FluidStack(Materials.getMaterialByName(MaterialNames.MERCURY).getFluid(), universalBucket.getCapacity()), true);
+				final ItemStack bucketMercury = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, Materials.getMaterialByName(MaterialNames.MERCURY).getFluid());
 				GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY));
 			}
 		}
