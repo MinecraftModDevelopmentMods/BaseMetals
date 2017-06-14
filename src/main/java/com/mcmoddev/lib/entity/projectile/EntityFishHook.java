@@ -173,18 +173,18 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 				vec3d = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
 				if (raytraceresult != null) {
-					vec3d = new Vec3d(raytraceresult.hitVec.xCoord, raytraceresult.hitVec.yCoord, raytraceresult.hitVec.zCoord);
+					vec3d = new Vec3d(raytraceresult.hitVec.x, raytraceresult.hitVec.y, raytraceresult.hitVec.z);
 				}
 
 				Entity entity = null;
-				final List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expandXyz(1.0D));
+				final List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().grow(this.motionX, this.motionY, this.motionZ).expand(1.0d, 1.0d, 1.0d));
 				double d0 = 0.0D;
 
 				for (int j = 0; j < list.size(); ++j) {
 					final Entity entity1 = (Entity) list.get(j);
 
 					if (entity1.canBeCollidedWith() && ((entity1 != this.getAngler()) || (this.ticksInAir >= 5))) {
-						final AxisAlignedBB axisalignedbb1 = entity1.getEntityBoundingBox().expandXyz(0.30000001192092896D);
+						final AxisAlignedBB axisalignedbb1 = entity1.getEntityBoundingBox().expand(0.30000001192092896D,0.30000001192092896D,0.30000001192092896D);
 						final RayTraceResult raytraceresult1 = axisalignedbb1.calculateIntercept(vec3d1, vec3d);
 
 						if (raytraceresult1 != null) {

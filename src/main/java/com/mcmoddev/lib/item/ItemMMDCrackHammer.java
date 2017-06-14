@@ -100,7 +100,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		List<EntityItem> entities = w.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(coord.getX(), coord.getY() + 1, coord.getZ(), coord.getX() + 1, coord.getY() + 2, coord.getZ() + 1));
 		boolean success = false;
 		for (EntityItem target : entities) {
-			ItemStack targetItem = target.getEntityItem();
+			ItemStack targetItem = target.getItem();
 			if (targetItem != null) {
 				ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(targetItem);
 				if (recipe != null) {
