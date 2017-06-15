@@ -9,6 +9,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -19,7 +20,7 @@ public class ChestplateRepairRecipe extends ShapelessOreRecipe implements IRecip
 	private String matName;
 
 	public ChestplateRepairRecipe(MMDMaterial mat) {
-		super(new ItemStack(mat.getItem(Names.CHESTPLATE), 1), new Object[] { mat.getName() + "_chestplate", Oredicts.PLATE + mat.getCapitalizedName() });
+		super(new ResourceLocation("chestplate_repair"), new ItemStack(mat.getItem(Names.CHESTPLATE), 1), new Object[] { mat.getName() + "_chestplate", Oredicts.PLATE + mat.getCapitalizedName() });
 		baseChestplate = new ItemStack(mat.getItem(Names.CHESTPLATE), 1, OreDictionary.WILDCARD_VALUE);
 		matName = mat.getCapitalizedName();
 	}
@@ -81,6 +82,7 @@ public class ChestplateRepairRecipe extends ShapelessOreRecipe implements IRecip
 		return new ItemStack(baseChestplate.getItem(), 1, 0);
 	}
 
+		
 	@Override
 	public NonNullList<Object> getInput() {
 		NonNullList<Object> inputs = NonNullList.create();

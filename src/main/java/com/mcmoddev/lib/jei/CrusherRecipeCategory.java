@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mcmoddev.basemetals.BaseMetals;
+
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -74,5 +76,10 @@ public class CrusherRecipeCategory extends BlankRecipeCategory<IRecipeWrapper> {
 		// setup the data
 		craftingGridHelper.setInputs(guiItemStacks, inputs);
 		guiItemStacks.set(1, outputs.get(0));
+	}
+
+	@Override
+	public String getModName() {
+		return BaseMetals.MODID;
 	}
 }

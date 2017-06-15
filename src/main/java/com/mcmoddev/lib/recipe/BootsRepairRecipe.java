@@ -9,6 +9,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -19,7 +20,7 @@ public class BootsRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	private String matName;
 
 	public BootsRepairRecipe(MMDMaterial mat) {
-		super(new ItemStack(mat.getItem(Names.BOOTS), 1), new Object[] { mat.getName() + "_boots", Oredicts.PLATE + mat.getCapitalizedName() });
+		super(new ResourceLocation("boots_repair"), new ItemStack(mat.getItem(Names.BOOTS), 1), new Object[] { mat.getName() + "_boots", Oredicts.PLATE + mat.getCapitalizedName() });
 		baseBoots = new ItemStack(mat.getItem(Names.BOOTS), 1, OreDictionary.WILDCARD_VALUE);
 		matName = mat.getCapitalizedName();
 	}

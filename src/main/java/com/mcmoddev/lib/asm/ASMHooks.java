@@ -33,6 +33,12 @@ public class ASMHooks {
         {
             return new DataParameter<Optional<ItemStack>>(id, this);
         }
+		
+		//TODO Temp not set for testing || Can set whenver
+		@Override
+		public Optional<ItemStack> copyValue(Optional<ItemStack> value) {
+			return null;
+		}
     };
     
 	public static final DataParameter<Optional<ItemStack>> ARMOR_STACK = EntityDataManager.createKey(EntityHorse.class, OPTIONAL_ITEM_STACK);

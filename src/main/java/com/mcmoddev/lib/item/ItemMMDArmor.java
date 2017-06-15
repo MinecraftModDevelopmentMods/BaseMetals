@@ -15,6 +15,7 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -133,9 +134,8 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
-		super.addInformation(stack, player, list, b);
-		MMDToolEffects.addArmorSpecialPropertiesToolTip(material, list);
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		MMDToolEffects.addArmorSpecialPropertiesToolTip(material, tooltip);
 	}
 
 	/**
