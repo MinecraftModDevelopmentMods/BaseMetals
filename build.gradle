@@ -173,7 +173,7 @@ dependencies {
         exclude group: 'mezz.jei'
         exclude group: 'codechicken'
     }
-    deobfCompile "mmd:orespawn:${orespawn_version}-1.10.2"
+    deobfCompile "mmd:orespawn:${mc_version}-${orespawn_version}"
 //  deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
     deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
