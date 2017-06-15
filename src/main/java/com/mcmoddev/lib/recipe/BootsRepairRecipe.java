@@ -1,8 +1,5 @@
 package com.mcmoddev.lib.recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
@@ -39,7 +36,8 @@ public class BootsRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 				repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
 			}
 			if (!bootsMatched) {
-				bootsMatched = OreDictionary.itemMatches(baseBoots, item, false) ? (item.getItemDamage() > 0 ? true : false) : false;
+				boolean hasDamage = item.getItemDamage() > 0 ? true : false;
+				bootsMatched = OreDictionary.itemMatches(baseBoots, item, false) ? hasDamage : false;
 			}
 		}
 		return bootsMatched ? repairMatched : false;
@@ -84,29 +82,8 @@ public class BootsRepairRecipe extends ShapelessOreRecipe implements IRecipe {
 	}
 
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
-		NonNullList<ItemStack> outputStacks = new ItemStack[inv.getSizeInventory()];
-		NonNullList<ItemStack> repairMaterials = OreDictionary.getOres(Oredicts.PLATE + matName);
-
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack item = inv.getStackInSlot(i);
-			if (OreDictionary.containsMatch(true, repairMaterials, item)) {
-				item.setCount(item.getCount() - 1);
-				if (item.getCount() <= 0) {
-					outputStacks.set(i, ItemStack.EMPTY);
-				} else {
-					outputStacks.set(i, item);
-				}
-			} else {
-				outputStacks.set(i, item);
-			}
-		}
-		return outputStacks;
-	}
-	
-	@Override
-	public ArrayList<Object> getInput() {
-		ArrayList<Object> inputs = new ArrayList<>();
+	public NonNullList<Object> getInput() {
+		NonNullList<Object> inputs = NonNullList.create();
 		inputs.add(baseBoots);
 		inputs.addAll(OreDictionary.getOres(Oredicts.PLATE + matName));
 		return inputs;
