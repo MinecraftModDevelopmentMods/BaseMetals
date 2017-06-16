@@ -33,8 +33,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 		modid = BaseMetals.MODID,
 		name = BaseMetals.NAME,
 		version = BaseMetals.VERSION,
-		dependencies = "required-after:Forge@[12.18.3.2185,);after:taiga;before:buildingbricks",
-		acceptedMinecraftVersions = "[1.10.2,)",
+		dependencies = "required-after:forge@[14.21.0.2327,);after:taiga;before:buildingbricks",
+		acceptedMinecraftVersions = "[1.12,)",
 		updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {
 
