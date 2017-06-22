@@ -59,7 +59,11 @@ public class MMDCreativeTab extends CreativeTabs {
 			if (comparator != null)
 				cache.sort(comparator);
 		}
-
+		
+		// lets clear the itemList before trying to do an add
+		// especially when that add is actually a sorted version
+		// of the passed-in list
+		itemList.clear();
 		itemList.addAll(cache);
 	}
 
