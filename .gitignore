@@ -6,7 +6,6 @@ bin
 .metadata
 .classpath
 .project
-.travis.yml
 
 # idea
 out
