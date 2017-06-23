@@ -5,7 +5,7 @@ import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import ic2.api.recipe.RecipeInputOreDict;
+//import ic2.api.recipe.RecipeInputOreDict;
 import ic2.api.recipe.Recipes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -44,7 +44,7 @@ public class IC2Base implements IIntegration {
 	@SuppressWarnings("deprecation")
 	protected void addMaceratorRecipes(MMDMaterial material) {
 		String oreDictName = material.getCapitalizedName();
-		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.ORE + oreDictName, 0), null, false, new ItemStack(material.getItem(Names.CRUSHED), 2));
-		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.PLATE_DENSE + oreDictName, 0), null, false, new ItemStack(material.getItem(Names.POWDER), 8));
+//		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.ORE + oreDictName, 0), null, false, new ItemStack(material.getItem(Names.CRUSHED), 2));
+//		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.PLATE_DENSE + oreDictName, 0), null, false, new ItemStack(material.getItem(Names.POWDER), 8));
 	}
 }
