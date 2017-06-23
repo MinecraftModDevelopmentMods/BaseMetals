@@ -1,8 +1,10 @@
 package com.mcmoddev.lib.init;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Items;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -22,7 +24,6 @@ public class MMDCreativeTab extends CreativeTabs {
 	private ItemStack iconItem;
 	
 	private final boolean searchable;
-	private List<ItemStack> cache;
 	private Comparator<ItemStack> comparator;
 
 	private static final Comparator<ItemStack> DEFAULT = new Comparator<ItemStack>() {
@@ -51,20 +52,10 @@ public class MMDCreativeTab extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void displayAllRelevantItems(NonNullList<ItemStack> itemList) {
-		if (cache == null) {
-
-			super.displayAllRelevantItems(itemList);
-			cache = itemList;
-
-			if (comparator != null)
-				cache.sort(comparator);
+		super.displayAllRelevantItems(itemList);
+		if (comparator != null) {
+			itemList.sort(comparator);
 		}
-		
-		// lets clear the itemList before trying to do an add
-		// especially when that add is actually a sorted version
-		// of the passed-in list
-		itemList.clear();
-		itemList.addAll(cache);
 	}
 
 	@Override
@@ -78,9 +69,6 @@ public class MMDCreativeTab extends CreativeTabs {
 
 	public void setSortingAlgorithm(Comparator<ItemStack> comparator) {
 		this.comparator = comparator;
-
-		if (this.cache != null)
-			cache.sort(comparator);
 	}
 
 	public void setTabIconItem(ItemStack iconItem) {
