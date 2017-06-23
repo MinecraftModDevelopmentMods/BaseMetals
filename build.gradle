@@ -8,6 +8,10 @@ buildscript {
             url = "http://files.minecraftforge.net/maven"
         }
         maven {
+            name = "gradle"
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/groups/public"
         }
@@ -19,8 +23,8 @@ buildscript {
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT"
         classpath "org.spongepowered:mixingradle:0.4-SNAPSHOT"
-        classpath "com.matthewprenger:CurseGradle:1.0-SNAPSHOT"
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
+        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.9"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5"
     }
 }
 
@@ -127,6 +131,10 @@ repositories {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
+	maven {
+        name 'opencomputers'
+        url 'http://maven.cil.li/'
+    }
     maven { // Mekanism, TAIGA
         name "jitpack"
         url "https://jitpack.io"
@@ -139,7 +147,7 @@ configurations {
 }
 
 dependencies {
-    shade 'org.spongepowered:mixin:0.6.8-SNAPSHOT'
+    shade 'org.spongepowered:mixin:0.6.11-SNAPSHOT'
 
     compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
@@ -174,7 +182,7 @@ dependencies {
         exclude group: 'codechicken'
     }
     deobfCompile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
-//  deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
+//  deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}:universal"
     deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
@@ -189,7 +197,7 @@ dependencies {
     }
     
     // CoFHCore for TE integration
-    compile ("cofh:CoFHCore:1.10.2-${cofhcore_version}:deobf") {
+    compile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:deobf") {
     	exclude group: 'mezz.jei'
     }
 }

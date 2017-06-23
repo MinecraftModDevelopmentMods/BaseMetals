@@ -6,8 +6,8 @@ import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.data.Names;
 
-import mmd.orespawn.api.OreSpawnAPI;
-import mmd.orespawn.api.SpawnLogic;
+import com.mcmoddev.orespawn.api.OreSpawnAPI;
+import com.mcmoddev.orespawn.api.SpawnLogic;
 
 public class BaseMetalsOreSpawn implements Function<OreSpawnAPI, SpawnLogic> {
 
