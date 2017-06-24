@@ -370,14 +370,14 @@ public class TinkersConstructRegistry {
 		meltingHelper(base.getBlock(Names.NETHERORE), output, amountPer * 4);
 		meltingHelper(base.getBlock(Names.ENDORE), output, amountPer * 4);
 
-		meltingHelper(base.getBlock(Names.HALFSLAB), output, (amountPer * 4) + (amountPer / 2));
+		meltingHelper(base.getBlock(Names.SLAB), output, (amountPer * 4) + (amountPer / 2));
 		meltingHelper(base.getBlock(Names.WALL), output, amountPer * 9);
 		meltingHelper(base.getItem(Names.BOOTS), output, amountPer * 4);
 		meltingHelper(base.getItem(Names.HELMET), output, amountPer * 5);
 		meltingHelper(base.getItem(Names.CHESTPLATE), output, amountPer * 8);
 		meltingHelper(base.getItem(Names.LEGGINGS), output, amountPer * 7);
 		meltingHelper(base.getItem(Names.SHEARS), output, amountPer * 2);
-		meltingHelper(base.getBlock(Names.PRESSUREPLATE), output, amountPer * 2);
+		meltingHelper(base.getBlock(Names.PRESSURE_PLATE), output, amountPer * 2);
 		meltingHelper(base.getBlock(Names.BARS), output, ((amountPer / 9) * 3) + 6); // Fun math
 		meltingHelper(base.getItem(Names.ROD), output, amountPer / 2);
 		meltingHelper(base.getItem(Names.DOOR), output, amountPer * 2);

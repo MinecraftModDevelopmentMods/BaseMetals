@@ -703,7 +703,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createFishingRod(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.FISHINGROD, ItemMMDFishingRod.class, Options.thingEnabled("FishingRod"), true, tab);
+		return createItem(material, Names.FISHING_ROD, ItemMMDFishingRod.class, Options.thingEnabled("FishingRod"), true, tab);
 	}
 
 	/**
@@ -857,7 +857,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createSlab(MMDMaterial material, CreativeTabs tab) {
-		final Item item = createItem(material, Names.SLAB, ItemMMDSlab.class, Options.thingEnabled("Slab"), material.hasBlock(Names.HALFSLAB) && material.hasBlock(Names.DOUBLESLAB), tab);
+		final Item item = createItem(material, Names.SLAB, ItemMMDSlab.class, Options.thingEnabled("Slab"), material.hasBlock(Names.SLAB) && material.hasBlock(Names.DOUBLESLAB), tab);
 		Oredicts.registerOre(Oredicts.SLAB + material.getCapitalizedName(), item);
 		return item;
 	}
