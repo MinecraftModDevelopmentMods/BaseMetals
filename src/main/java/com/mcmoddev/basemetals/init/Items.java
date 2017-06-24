@@ -255,7 +255,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.addNewItem(Names.SHOVEL, net.minecraft.init.Items.STONE_SHOVEL);
 			material.addNewItem(Names.SWORD, net.minecraft.init.Items.STONE_SWORD);
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.STONE);
-			material.addNewBlock(Names.HALFSLAB, net.minecraft.init.Blocks.STONE_SLAB);
+			material.addNewBlock(Names.SLAB, net.minecraft.init.Blocks.STONE_SLAB);
 			material.addNewBlock(Names.DOUBLESLAB, net.minecraft.init.Blocks.DOUBLE_STONE_SLAB);
 			material.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.STONE_STAIRS);
 
@@ -286,7 +286,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			material.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.TRAPDOOR);
 			material.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.PLANKS);
-			material.addNewBlock(Names.HALFSLAB, net.minecraft.init.Blocks.WOODEN_SLAB);
+			material.addNewBlock(Names.SLAB, net.minecraft.init.Blocks.WOODEN_SLAB);
 			material.addNewBlock(Names.DOUBLESLAB, net.minecraft.init.Blocks.DOUBLE_WOODEN_SLAB);
 			material.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.OAK_STAIRS);
 

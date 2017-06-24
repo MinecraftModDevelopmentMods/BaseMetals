@@ -119,7 +119,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
 			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
-			material.addNewBlock(Names.PRESSUREPLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
+			material.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
 
 			createPlate(material, myTabs.blocksTab);
 			createBars(material, myTabs.blocksTab);
@@ -141,7 +141,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			material.addNewBlock(Names.BARS, net.minecraft.init.Blocks.IRON_BARS);
 			material.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.IRON_DOOR);
 			material.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR);
-			material.addNewBlock(Names.PRESSUREPLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+			material.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
 
 			createPlate(material, myTabs.blocksTab);
 

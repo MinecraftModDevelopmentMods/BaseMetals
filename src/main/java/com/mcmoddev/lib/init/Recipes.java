@@ -302,9 +302,9 @@ public abstract class Recipes {
 					GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.PLATE)), new ItemStack(material.getItem(Names.INGOT), 1), 0);
 				}
 
-				if (material.hasBlock(Names.PRESSUREPLATE)) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.PRESSUREPLATE)), "xx", 'x', Oredicts.INGOT + oreDictName));
-					GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.PRESSUREPLATE)), new ItemStack(material.getItem(Names.INGOT), 2), 0);
+				if (material.hasBlock(Names.PRESSURE_PLATE)) {
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.PRESSURE_PLATE)), "xx", 'x', Oredicts.INGOT + oreDictName));
+					GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.PRESSURE_PLATE)), new ItemStack(material.getItem(Names.INGOT), 2), 0);
 				}
 
 				if (material.hasBlock(Names.BARS)) {
@@ -328,9 +328,9 @@ public abstract class Recipes {
 					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.HORSEARMOR)), new ItemStack(material.getItem(Names.INGOT), 6), 0); // 1 wool loss
 				}
 
-				if (material.hasItem(Names.FISHINGROD)) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.FISHINGROD)), "  x", " xy", "x y", 'x', Oredicts.ROD + oreDictName, 'y', Oredicts.STRING));
-					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.FISHINGROD)), new ItemStack(material.getItem(Names.INGOT), 1), 0); // 4.5 nugget loss
+				if (material.hasItem(Names.FISHING_ROD)) {
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.FISHING_ROD)), "  x", " xy", "x y", 'x', Oredicts.ROD + oreDictName, 'y', Oredicts.STRING));
+					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.FISHING_ROD)), new ItemStack(material.getItem(Names.INGOT), 1), 0); // 4.5 nugget loss
 				}
 
 			}

@@ -338,7 +338,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createPressurePlate(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.PRESSUREPLATE, BlockMMDPressurePlate.class, Options.thingEnabled("PressurePlate"), true, tab);
+		return createBlock(material, Names.PRESSURE_PLATE, BlockMMDPressurePlate.class, Options.thingEnabled("PressurePlate"), true, tab);
 	}
 
 	/**
@@ -351,7 +351,7 @@ public abstract class Blocks {
 	 */
 	protected static Block createSlab(MMDMaterial material, CreativeTabs tab) {
 		// oreDict is handled in items
-		return createBlock(material, Names.HALFSLAB, BlockMMDHalfSlab.class, Options.thingEnabled("Slab"), true, tab);
+		return createBlock(material, Names.SLAB, BlockMMDHalfSlab.class, Options.thingEnabled("Slab"), true, tab);
 	}
 
 	/**
