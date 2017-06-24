@@ -85,7 +85,7 @@ minecraft {
 repositories {
     maven {
 	    name "SpongePowered"
-        url 'https://repo.spongepowered.org/maven/'
+        url "https://repo.spongepowered.org/maven/"
     }
     maven { // Mantle, TCon, JEI
         name "DVS1 Maven FS"
@@ -181,7 +181,7 @@ dependencies {
         exclude group: 'mezz.jei'
         exclude group: 'codechicken'
     }
-    deobfCompile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
+    compile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
 //  deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}:universal"
     deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
