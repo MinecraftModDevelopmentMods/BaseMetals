@@ -77,12 +77,15 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	public static void addFurnace(boolean enabled, String materialName) {
-		if (enabled) {
+		// anything we'd want to add here is likely already pulled in by TE's
+		// import of all vanilla furnace recipes.
+		return;
+/*		if (enabled) {
 			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
-			/*
+			
 			 * Ore -> Ingot default, according to TE source, is 2000
 			 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
-			 */
+			 
 			final int ENERGY_ORE = 2000;
 			final int ENERGY_DUST = 1400;
 			ItemStack ore;
@@ -107,7 +110,7 @@ public class ThermalExpansionBase implements IIntegration {
 				}
 			}
 		}
-	}
+*/	}
 
 	public static void addCrucible(boolean enabled, String materialName) {
 		if (enabled) {
