@@ -1,10 +1,7 @@
 package com.mcmoddev.lib.init;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Items;
 
 import net.minecraft.creativetab.CreativeTabs;

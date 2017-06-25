@@ -358,6 +358,7 @@ public abstract class Items {
 		if (item == null) {
 			return null;
 		}
+		material.addNewItem(name, item);
 		addItem(item, name.toString(), material, tab);
 		return item;
 	}
