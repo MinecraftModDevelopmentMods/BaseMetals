@@ -145,8 +145,9 @@ public abstract class Blocks {
 		} else if (block instanceof BlockMMDDoubleSlab) {
 			fullName = "double_" + name;
 		} else if (material != null) {
-			if (("nether".equals(name)) || ("end".equals(name))) {
-				fullName = name + "_" + material.getName() + "_" + "ore";
+			if ((name.startsWith("nether")) || (name.startsWith("end"))) {
+				String neededBit = name.substring(0, name.length()-3);
+				fullName = neededBit + "_" + material.getName() + "_" + "ore";
 			} else {
 				fullName = material.getName() + "_" + name;
 			}
