@@ -491,7 +491,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createEndOre(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.ENDORE, BlockMMDEndOre.class, Options.thingEnabled("Basics"), !material.hasBlock(Names.ORE) && material.hasOre(), tab);
+		final Block block = createBlock(material, Names.ENDORE, BlockMMDEndOre.class, Options.thingEnabled("Basics"), !material.hasBlock(Names.ENDORE), tab);
 		Oredicts.registerOre(Oredicts.ORE_END + material.getCapitalizedName(), block);
 		return block;
 	}
