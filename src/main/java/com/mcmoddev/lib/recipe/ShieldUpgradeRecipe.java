@@ -17,13 +17,12 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeRepairItem;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
+public class ShieldUpgradeRecipe extends RecipeRepairItem {
 
 	protected String matName;
 
