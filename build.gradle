@@ -38,9 +38,14 @@ javadoc {
     failOnError = false
 }
 
+description = "Base Metals"
 def mod_file = getModFile()
 def mc_version = "1.11.2"
-def short_version = getVersion("VERSION", mod_file)
+
+ext {
+    short_version = getVersion("VERSION", mod_file)
+}
+
 version = mc_version + "-" + short_version
 if (System.getenv().BUILD_NUMBER) {
     version += "." + System.getenv().BUILD_NUMBER
@@ -297,24 +302,34 @@ curseforge {
             displayVersion += "." + System.getenv().BUILD_NUMBER
         }
         mainArtifact(jar) {
-            displayName = "$projectName $displayVersion"
+            displayName = "$project.description $displayVersion"
             relations {
                 requiredLibrary "mmd-orespawn"
                 optionalLibrary "additional-loot-tables"
             }
         }
 //        addArtifact(apiJar) {
-//            displayName = "$projectName $displayVersion API"
+//            displayName = "$project.description $displayVersion API"
 //        }
         addArtifact(sourceJar) {
-            displayName = "$projectName $displayVersion Sources"
+            displayName = "$project.description $displayVersion Sources"
         }
         addArtifact(deobfJar) {
-            displayName = "$projectName $displayVersion Development"
+            displayName = "$project.description $displayVersion Development"
         }
         addArtifact(javadocJar) {
-            displayName = "$projectName $displayVersion Javadoc"
+            displayName = "$project.description $displayVersion Javadoc"
         }
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.host.url", secret.sonarHost
+        property "sonar.organization", secret.sonarOrganization
+        property "sonar.login", secret.sonarToken
+        property "sonar.projectName", project.archivesBaseName
+        property "sonar.projectKey", "$project.group:$project.archivesBaseName"
     }
 }
 
