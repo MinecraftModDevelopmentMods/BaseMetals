@@ -506,7 +506,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createNetherOre(MMDMaterial material, CreativeTabs tab) {
-		final Block block = createBlock(material, Names.NETHERORE, BlockMMDNetherOre.class, Options.thingEnabled("Basics"), !material.hasBlock(Names.ORE) && material.hasOre(), tab);
+		final Block block = createBlock(material, Names.NETHERORE, BlockMMDNetherOre.class, Options.thingEnabled("Basics"), !material.hasBlock(Names.NETHERORE), tab);
 		Oredicts.registerOre(Oredicts.ORE_NETHER + material.getCapitalizedName(), block);
 		return block;
 	}
