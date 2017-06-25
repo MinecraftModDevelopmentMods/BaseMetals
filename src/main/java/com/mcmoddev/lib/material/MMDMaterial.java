@@ -361,7 +361,6 @@ public class MMDMaterial {
 	}
 
 	public String getEnumName() {
-		;
 		return this.enumName;
 	}
 
