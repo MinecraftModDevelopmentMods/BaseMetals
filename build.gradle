@@ -227,7 +227,7 @@ jar {
     manifest {
         attributes 'FMLCorePluginContainsFMLMod': 'true'
         attributes 'FMLCorePlugin': corePlugin
-//        attributes 'FMLAT' : 'mmdlib_at.cfg'
+//      attributes 'FMLAT' : 'mmdlib_at.cfg'
     }
 }
 
