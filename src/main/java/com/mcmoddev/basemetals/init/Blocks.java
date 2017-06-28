@@ -33,6 +33,38 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (initDone) {
 			return;
 		}
+		
+		// Vanilla Materials get their Ore and Block always
+		Materials.getMaterialByName(MaterialNames.COAL).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
+		Materials.getMaterialByName(MaterialNames.COAL).addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
+		
+		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.DIAMOND_BLOCK);
+		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewBlock(Names.ORE, net.minecraft.init.Blocks.DIAMOND_ORE);
+
+		Materials.getMaterialByName(MaterialNames.EMERALD).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.EMERALD_BLOCK);
+		Materials.getMaterialByName(MaterialNames.EMERALD).addNewBlock(Names.ORE, net.minecraft.init.Blocks.EMERALD_ORE);
+
+		Materials.getMaterialByName(MaterialNames.GOLD).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
+		Materials.getMaterialByName(MaterialNames.GOLD).addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
+		Materials.getMaterialByName(MaterialNames.GOLD).addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
+
+		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
+		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
+		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.BARS, net.minecraft.init.Blocks.IRON_BARS);
+		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.DOOR, net.minecraft.init.Blocks.IRON_DOOR);
+		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR);
+		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+
+		Materials.getMaterialByName(MaterialNames.LAPIS).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.LAPIS_BLOCK);
+		Materials.getMaterialByName(MaterialNames.LAPIS).addNewBlock(Names.ORE, net.minecraft.init.Blocks.LAPIS_ORE);
+
+		Materials.getMaterialByName(MaterialNames.OBSIDIAN).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.OBSIDIAN);
+
+		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
+		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewBlock(Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
+
+		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
+		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
 
 		Materials.init();
 		ItemGroups.init();
@@ -65,13 +97,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlock(Materials.getMaterialByName(MaterialNames.CHARCOAL), myTabs.blocksTab);
 		}
 
-		if (Options.materialEnabled(MaterialNames.COAL)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.COAL);
-
-			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
-			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
-		}
-
 		if (Options.materialEnabled(MaterialNames.COLDIRON)) {
 			createBlocksFull(Materials.getMaterialByName(MaterialNames.COLDIRON), myTabs);
 		}
@@ -86,10 +111,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.materialEnabled(MaterialNames.DIAMOND)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.DIAMOND);
-
-			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.DIAMOND_BLOCK);
-			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.DIAMOND_ORE);
-
 			createBars(material, myTabs.blocksTab);
 			createDoor(material, myTabs.blocksTab);
 			createTrapDoor(material, myTabs.blocksTab);
@@ -104,9 +125,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.materialEnabled(MaterialNames.EMERALD)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.EMERALD);
 
-			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.EMERALD_BLOCK);
-			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.EMERALD_ORE);
-
 			createBars(material, myTabs.blocksTab);
 			createDoor(material, myTabs.blocksTab);
 			createTrapDoor(material, myTabs.blocksTab);
@@ -116,11 +134,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.materialEnabled(MaterialNames.GOLD)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.GOLD);
-
-			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
-			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
-			material.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
-
 			createPlate(material, myTabs.blocksTab);
 			createBars(material, myTabs.blocksTab);
 			createDoor(material, myTabs.blocksTab);
@@ -135,24 +148,9 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.materialEnabled(MaterialNames.IRON)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.IRON);
-
-			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
-			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
-			material.addNewBlock(Names.BARS, net.minecraft.init.Blocks.IRON_BARS);
-			material.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.IRON_DOOR);
-			material.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR);
-			material.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-
 			createPlate(material, myTabs.blocksTab);
 
 			createBlocksAdditional(material, myTabs);
-		}
-
-		if (Options.materialEnabled(MaterialNames.LAPIS)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.LAPIS);
-
-			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.LAPIS_BLOCK);
-			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.LAPIS_ORE);
 		}
 
 		if (Options.materialEnabled(MaterialNames.LEAD)) {
@@ -175,8 +173,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.materialEnabled(MaterialNames.OBSIDIAN)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
 
-			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.OBSIDIAN);
-
 			createBars(material, myTabs.blocksTab);
 			createDoor(material, myTabs.blocksTab);
 			createTrapDoor(material, myTabs.blocksTab);
@@ -194,9 +190,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.materialEnabled(MaterialNames.QUARTZ)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.QUARTZ);
-
-			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
-			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
 			// material.halfSlab = ;
 			// material.doubleSlab = ;
 			// material.stairs = ;
@@ -209,13 +202,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createLever(material, myTabs.blocksTab);
 			createPressurePlate(material, myTabs.blocksTab);
 			createWall(material, myTabs.blocksTab);
-		}
-
-		if (Options.materialEnabled(MaterialNames.REDSTONE)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.REDSTONE);
-
-			material.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
-			material.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
 		}
 
 		if (Options.materialEnabled(MaterialNames.SILVER)) {

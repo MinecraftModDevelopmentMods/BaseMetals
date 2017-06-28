@@ -28,6 +28,8 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		}
 
 		// Vanilla Materials
+		// always created and populated with their base item-sets
+		// even if they are not enabled
 		createOrelessMaterial(MaterialNames.WOOD, MaterialType.WOOD, 2, 2, 6, 0xFF695433);
 
 		createOrelessMaterial(MaterialNames.STONE, MaterialType.ROCK, 5, 4, 2, 0xFF8F8F8F);
@@ -38,42 +40,24 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 
 		createMaterial(MaterialNames.DIAMOND, MaterialType.GEM, 10, 15, 4, 0xFF8CF4E1);
 
-		if (Options.materialEnabled(MaterialNames.COAL)) {
-			createMaterial(MaterialNames.COAL, MaterialType.MINERAL, 4, 4, 2, 0xFF151515);
-		}
+		createMaterial(MaterialNames.COAL, MaterialType.MINERAL, 4, 4, 2, 0xFF151515);
 
-		if (Options.materialEnabled(MaterialNames.CHARCOAL)) {
-			createOrelessMaterial(MaterialNames.CHARCOAL, MaterialType.MINERAL, 4, 4, 2, 0xFF231F18);
-		}
+		createOrelessMaterial(MaterialNames.CHARCOAL, MaterialType.MINERAL, 4, 4, 2, 0xFF231F18);
 
-		if (Options.materialEnabled(MaterialNames.EMERALD)) {
-			createMaterial(MaterialNames.EMERALD, MaterialType.GEM, 10, 15, 4, 0xFF82F6AC);
-		}
+		createMaterial(MaterialNames.EMERALD, MaterialType.GEM, 10, 15, 4, 0xFF82F6AC);
 
-		if (Options.materialEnabled(MaterialNames.ENDER)) {
-			createOrelessMaterial(MaterialNames.ENDER, MaterialType.GEM, 2, 2, 6, 0xFF063931);
-		}
+		createOrelessMaterial(MaterialNames.ENDER, MaterialType.GEM, 2, 2, 6, 0xFF063931);
 
-		if (Options.materialEnabled(MaterialNames.QUARTZ)) {
-			createMaterial(MaterialNames.QUARTZ, MaterialType.GEM, 5, 4, 2, 0xFFEAE3DB);
-		}
+		createMaterial(MaterialNames.QUARTZ, MaterialType.GEM, 5, 4, 2, 0xFFEAE3DB);
 
-		if (Options.materialEnabled(MaterialNames.OBSIDIAN)) {
-			createOrelessMaterial(MaterialNames.OBSIDIAN, MaterialType.ROCK, 10, 15, 4, 0xFF101019);
-		}
+		createOrelessMaterial(MaterialNames.OBSIDIAN, MaterialType.ROCK, 10, 15, 4, 0xFF101019);
 
-		if (Options.materialEnabled(MaterialNames.LAPIS)) {
-			createMaterial(MaterialNames.LAPIS, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
-		}
+		createMaterial(MaterialNames.LAPIS, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
 
-		if (Options.materialEnabled(MaterialNames.PRISMARINE)) {
-			createMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
-		}
+		createMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
 
-		if (Options.materialEnabled(MaterialNames.REDSTONE)) {
-			createMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
-		}
-
+		createMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
+			
 		// Mod Materials
 		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
 			createMaterial(MaterialNames.ADAMANTINE, MaterialType.METAL, 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
