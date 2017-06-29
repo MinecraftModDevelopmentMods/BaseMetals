@@ -1,18 +1,13 @@
 package com.mcmoddev.lib.jei;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
-import com.mcmoddev.lib.registry.recipe.ArbitraryCrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
-import com.mcmoddev.lib.registry.recipe.OreDictionaryCrusherRecipe;
 
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;

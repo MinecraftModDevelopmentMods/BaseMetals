@@ -27,8 +27,9 @@ public class ICrusherRecipeWrapper extends BlankRecipeWrapper {
 
 	@Override
 	public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+		// this used to add
 		// add the recipes type at the top of the screen
-		minecraft.fontRenderer.drawString(I18n.format("basemetals.description.crackhammer"),43, 0, 0);
+		// minecraft.fontRenderer.drawString(I18n.format("basemetals.description.crackhammer"),43, 0, 0);
 	}
 
 	@Override
