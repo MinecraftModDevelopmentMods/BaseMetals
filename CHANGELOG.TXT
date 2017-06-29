@@ -1,0 +1,6 @@
+Port to 1.11.2
+Make materials, blocks, items and other such things configurable
+Many code improvements
+API Changes
+Move to com.mcmoddev namespace
+Many new blocks and items
