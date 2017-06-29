@@ -77,7 +77,6 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 		List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
 		List<List<ItemStack>> outputs = ingredients.getOutputs(ItemStack.class);
 
-		BaseMetals.logger.fatal("guiItemStacks == %s ::: inputs == %s", guiItemStacks.toString(), inputs.toString());
 		// setup the data
 		guiItemStacks.set(0, inputs.get(0));
 		guiItemStacks.set(1, outputs.get(0));
