@@ -326,7 +326,7 @@ public class TinkersConstructRegistry {
         if( block == null || source == null || sourceQty == 0 ) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
-        TinkerRegistry.registerBasinCasting(new ItemStack(block), null, source, sourceQty);
+        TinkerRegistry.registerBasinCasting(new ItemStack(block), ItemStack.EMPTY, source, sourceQty);
         return TCCode.SUCCESS;
     }
 
@@ -341,7 +341,7 @@ public class TinkersConstructRegistry {
         if( output == null || source == null || sourceQty == 0 ) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
-        TinkerRegistry.registerTableCasting( new ItemStack(output), null, source, sourceQty);
+        TinkerRegistry.registerTableCasting( new ItemStack(output),  ItemStack.EMPTY, source, sourceQty);
         return TCCode.SUCCESS;
     }
 
