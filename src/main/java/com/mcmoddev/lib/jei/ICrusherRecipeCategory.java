@@ -6,8 +6,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mcmoddev.basemetals.BaseMetals;
-
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableAnimated;
@@ -84,7 +82,7 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 
 	@Override
 	public void drawExtras(Minecraft minecraft) {
-		// what extras ?
+		this.hammer.draw(minecraft,  71, 6);
 	}
 
 	@Override
