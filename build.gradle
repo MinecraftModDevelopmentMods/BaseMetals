@@ -294,7 +294,7 @@ curseforge {
     project {
         id = '240967'
         changelog = file('CHANGELOG.txt')
-        releaseType = 'release'
+        releaseType = 'beta'
         addGameVersion(project.mc_version)
         def projectName = 'Base Metals'
         def displayVersion = getVersion('VERSION', mod_file)
