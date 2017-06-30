@@ -285,7 +285,7 @@ public abstract class Items {
 	}
 
 	private static Item createItem(MMDMaterial material, String name, Class<? extends Item> clazz, boolean enabled, boolean extra, CreativeTabs tab) {
-		if (material == null) {
+		if (material == null || material.hasItem(name)) {
 			return null;
 		}
 
