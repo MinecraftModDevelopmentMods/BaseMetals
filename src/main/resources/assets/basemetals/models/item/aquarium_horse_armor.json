@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
     "textures": {
-        "layer0": "basemetals:items/platinum_horsearmor"
+        "layer0": "basemetals:items/aquarium_horse_armor"
     }
 }

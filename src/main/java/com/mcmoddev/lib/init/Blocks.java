@@ -141,7 +141,7 @@ public abstract class Blocks {
 		}
 
 		if ((block instanceof BlockMMDDoubleSlab) && (material != null)) {
-			fullName = "double_" + material.getName() + "_" + name;
+			fullName = "double_" + material.getName() + "_" + Names.SLAB;
 		} else if (block instanceof BlockMMDDoubleSlab) {
 			fullName = "double_" + name;
 		} else if (material != null) {
@@ -365,7 +365,7 @@ public abstract class Blocks {
 	 */
 	protected static Block createDoubleSlab(MMDMaterial material, CreativeTabs tab) {
 		// oreDict is handled in items
-		return createBlock(material, Names.DOUBLESLAB, BlockMMDDoubleSlab.class, Options.thingEnabled("Slab"), true, tab);
+		return createBlock(material, Names.DOUBLE_SLAB, BlockMMDDoubleSlab.class, Options.thingEnabled("Slab"), true, tab);
 	}
 
 	/**
@@ -417,7 +417,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createFenceGate(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.FENCEGATE, BlockMMDFenceGate.class, Options.thingEnabled("Wall"), material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.FENCE_GATE, BlockMMDFenceGate.class, Options.thingEnabled("Wall"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**
@@ -441,7 +441,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createFlowerPot(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.FLOWERPOT, BlockMMDFlowerPot.class, Options.thingEnabled("FlowerPot"), material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.FLOWER_POT, BlockMMDFlowerPot.class, Options.thingEnabled("FlowerPot"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**
@@ -465,7 +465,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block createTripWireHook(MMDMaterial material, CreativeTabs tab) {
-		return createBlock(material, Names.TRIPWIREHOOK, BlockMMDTripWireHook.class, Options.thingEnabled("TripWire"), material.hasBlock(Names.BLOCK), tab);
+		return createBlock(material, Names.TRIPWIRE_HOOK, BlockMMDTripWireHook.class, Options.thingEnabled("TripWire"), material.hasBlock(Names.BLOCK), tab);
 	}
 
 	/**

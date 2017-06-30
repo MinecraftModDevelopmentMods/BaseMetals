@@ -323,9 +323,9 @@ public abstract class Recipes {
 				}
 
 				// Diamond, Gold & Iron Horse armor are in vanilla so dont do them for vanilla mats
-				if ((material.getItem(Names.HORSEARMOR) instanceof IMMDObject) && (material.hasItem(Names.HORSEARMOR))) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.HORSEARMOR)), "  x", "xyx", "xxx", 'x', Oredicts.INGOT + oreDictName, 'y', net.minecraft.init.Blocks.WOOL));
-					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.HORSEARMOR)), new ItemStack(material.getItem(Names.INGOT), 6), 0); // 1 wool loss
+				if ((material.getItem(Names.HORSE_ARMOR) instanceof IMMDObject) && (material.hasItem(Names.HORSE_ARMOR))) {
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.HORSE_ARMOR)), "  x", "xyx", "xxx", 'x', Oredicts.INGOT + oreDictName, 'y', net.minecraft.init.Blocks.WOOL));
+					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.HORSE_ARMOR)), new ItemStack(material.getItem(Names.INGOT), 6), 0); // 1 wool loss
 				}
 
 				if (material.hasItem(Names.FISHING_ROD)) {
@@ -458,7 +458,8 @@ public abstract class Recipes {
 	}
 
 	protected static void furnaceSpecial(final MMDMaterial material) {
-		// furnace cheese all the things!
+		// Furnace cheese all the things!
+		// TODO: First remove the vanilla recipes
 		if ((material.hasItem(Names.INGOT)) && !(material.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject) && material.hasOre()) {
 			if (Options.furnaceCheese()) {
 				if (material.hasItem(Names.BOOTS))
@@ -490,7 +491,7 @@ public abstract class Recipes {
 
 				if (material.hasItem(Names.CRACKHAMMER))
 					GameRegistry.addSmelting(material.getItem(Names.CRACKHAMMER), new ItemStack(material.getBlock(Names.BLOCK), 1), 0);
-
+/*
 			} else if (Options.furnace1112()) {
 				ItemStack outputStack = new ItemStack(material.getItem(Names.NUGGET), 1);
 				if (material.hasItem(Names.BOOTS))
@@ -522,6 +523,7 @@ public abstract class Recipes {
 
 				if (material.hasItem(Names.CRACKHAMMER))
 					GameRegistry.addSmelting(material.getItem(Names.CRACKHAMMER), outputStack, 0);
+*/
 			}
 		}
 	}

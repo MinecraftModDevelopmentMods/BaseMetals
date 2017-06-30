@@ -612,7 +612,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createHorseArmor(MMDMaterial material, CreativeTabs tab) {
-		return createItem(material, Names.HORSEARMOR, ItemMMDHorseArmor.class, Options.thingEnabled("HorseArmor"), true, tab);
+		return createItem(material, Names.HORSE_ARMOR, ItemMMDHorseArmor.class, Options.thingEnabled("HorseArmor"), true, tab);
 	}
 
 	/**
@@ -786,7 +786,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createMekDirtyPowder(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.POWDERDIRTY, GenericMMDItem.class, Options.modEnabled("mekanism"), true, tab);
+		Item item = createItem(material, Names.POWDER_DIRTY, GenericMMDItem.class, Options.modEnabled("mekanism"), true, tab);
 		Oredicts.registerOre(Oredicts.DUST_DIRTY + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -816,7 +816,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createDensePlate(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.DENSEPLATE, GenericMMDItem.class, Options.modEnabled("ic2"), true, tab);
+		Item item = createItem(material, Names.DENSE_PLATE, GenericMMDItem.class, Options.modEnabled("ic2"), true, tab);
 		Oredicts.registerOre(Oredicts.PLATE_DENSE + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -844,7 +844,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createCrushedPurified(MMDMaterial material, CreativeTabs tab) {
-		Item item = createItem(material, Names.CRUSHEDPURIFIED, GenericMMDItem.class, Options.modEnabled("ic2"), true, tab);
+		Item item = createItem(material, Names.CRUSHED_PURIFIED, GenericMMDItem.class, Options.modEnabled("ic2"), true, tab);
 		Oredicts.registerOre(Oredicts.CRUSHED_PURIFIED + material.getCapitalizedName(), item);
 		return item;
 	}
@@ -858,7 +858,7 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createSlab(MMDMaterial material, CreativeTabs tab) {
-		final Item item = createItem(material, Names.SLAB, ItemMMDSlab.class, Options.thingEnabled("Slab"), material.hasBlock(Names.SLAB) && material.hasBlock(Names.DOUBLESLAB), tab);
+		final Item item = createItem(material, Names.SLAB, ItemMMDSlab.class, Options.thingEnabled("Slab"), material.hasBlock(Names.SLAB) && material.hasBlock(Names.DOUBLE_SLAB), tab);
 		Oredicts.registerOre(Oredicts.SLAB + material.getCapitalizedName(), item);
 		return item;
 	}

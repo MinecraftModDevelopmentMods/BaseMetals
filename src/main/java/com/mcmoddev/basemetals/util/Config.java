@@ -17,7 +17,6 @@ import java.util.Set;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.AdditionalLootTables;
-import com.mcmoddev.basemetals.data.DataConstants;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
@@ -51,7 +50,6 @@ public class Config {
 	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipies";
 	private static final String TOOLS_CAT = "Tools and Items";
 	private static final String ALT_CFG_PATH = "config/additional-loot-tables"; // + BaseMetals.MODID;
-	private static final String ORESPAWN_CFG_PATH = "config/orespawn";
 	private static final List<String> UserCrusherRecipes = new ArrayList<String>();
 
 	@SubscribeEvent
@@ -294,17 +292,8 @@ public class Config {
 		if (Options.requireMMDOreSpawn()) {
 			if (!Loader.isModLoaded("orespawn")) {
 				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
-				orespawnMod.add(new DefaultArtifactVersion("1.1.0"));
+				orespawnMod.add(new DefaultArtifactVersion("3.0.0"));
 				throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
-			}
-			final Path oreSpawnFile = Paths.get(ORESPAWN_CFG_PATH, BaseMetals.MODID + ".json");
-			if (!(oreSpawnFile.toFile().exists())) {
-				try {
-					Files.createDirectories(oreSpawnFile.getParent());
-					Files.write(oreSpawnFile, Arrays.asList(DataConstants.DEFAULT_ORESPAWN_JSON.split("\n")), Charset.forName("UTF-8"));
-				} catch (final IOException ex) {
-					BaseMetals.logger.error("Failed to write file " + oreSpawnFile, ex);
-				}
 			}
 		}
 
