@@ -292,7 +292,7 @@ public class Config {
 		if (Options.requireMMDOreSpawn()) {
 			if (!Loader.isModLoaded("orespawn")) {
 				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
-				orespawnMod.add(new DefaultArtifactVersion("1.1.0"));
+				orespawnMod.add(new DefaultArtifactVersion("3.0.0"));
 				throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
 			}
 		}
