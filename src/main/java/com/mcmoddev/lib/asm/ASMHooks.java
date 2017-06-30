@@ -1,7 +1,6 @@
 package com.mcmoddev.lib.asm;
 
 import com.mcmoddev.lib.common.item.IHorseArmor;
-import com.mcmoddev.lib.item.ItemMMDHorseArmor;
 
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.HorseArmorType;

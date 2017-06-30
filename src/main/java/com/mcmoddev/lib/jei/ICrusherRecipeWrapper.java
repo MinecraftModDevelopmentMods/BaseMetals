@@ -7,8 +7,6 @@ import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 public class ICrusherRecipeWrapper extends BlankRecipeWrapper {
@@ -23,13 +21,6 @@ public class ICrusherRecipeWrapper extends BlankRecipeWrapper {
 	public void getIngredients(IIngredients ingredients) {
 		ingredients.setInputs(ItemStack.class, theRecipe.getInputs());
 		ingredients.setOutput(ItemStack.class, theRecipe.getOutput());
-	}
-
-	@Override
-	public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-		// this used to add
-		// add the recipes type at the top of the screen
-		// minecraft.fontRenderer.drawString(I18n.format("basemetals.description.crackhammer"),43, 0, 0);
 	}
 
 	@Override
