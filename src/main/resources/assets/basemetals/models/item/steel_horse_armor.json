@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
     "textures": {
-        "layer0": "basemetals:items/silver_horsearmor"
+        "layer0": "basemetals:items/steel_horse_armor"
     }
 }

@@ -36,7 +36,7 @@ public class IC2Base implements IIntegration {
 
 		// Move these to main recipe loop?
 		GameRegistry.addSmelting(material.getItem(Names.CRUSHED), new ItemStack(material.getItem(Names.INGOT), 1), 0);
-		GameRegistry.addSmelting(material.getItem(Names.CRUSHEDPURIFIED), new ItemStack(material.getItem(Names.INGOT), 1), 0);
+		GameRegistry.addSmelting(material.getItem(Names.CRUSHED_PURIFIED), new ItemStack(material.getItem(Names.INGOT), 1), 0);
 
 		// TODO: Figure out Dense Plate & Casing
 	}

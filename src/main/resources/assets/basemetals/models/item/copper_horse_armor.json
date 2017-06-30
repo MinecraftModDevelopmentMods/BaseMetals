@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
     "textures": {
-        "layer0": "basemetals:items/copper_horsearmor"
+        "layer0": "basemetals:items/copper_horse_armor"
     }
 }

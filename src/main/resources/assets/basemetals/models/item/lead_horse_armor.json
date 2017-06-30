@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
     "textures": {
-        "layer0": "basemetals:items/obsidian_horsearmor"
+        "layer0": "basemetals:items/lead_horse_armor"
     }
 }

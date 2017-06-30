@@ -323,9 +323,9 @@ public abstract class Recipes {
 				}
 
 				// Diamond, Gold & Iron Horse armor are in vanilla so dont do them for vanilla mats
-				if ((material.getItem(Names.HORSEARMOR) instanceof IMMDObject) && (material.hasItem(Names.HORSEARMOR))) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.HORSEARMOR)), "  x", "xyx", "xxx", 'x', Oredicts.INGOT + oreDictName, 'y', net.minecraft.init.Blocks.WOOL));
-					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.HORSEARMOR)), new ItemStack(material.getItem(Names.INGOT), 6), 0); // 1 wool loss
+				if ((material.getItem(Names.HORSE_ARMOR) instanceof IMMDObject) && (material.hasItem(Names.HORSE_ARMOR))) {
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.HORSE_ARMOR)), "  x", "xyx", "xxx", 'x', Oredicts.INGOT + oreDictName, 'y', net.minecraft.init.Blocks.WOOL));
+					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.HORSE_ARMOR)), new ItemStack(material.getItem(Names.INGOT), 6), 0); // 1 wool loss
 				}
 
 				if (material.hasItem(Names.FISHING_ROD)) {

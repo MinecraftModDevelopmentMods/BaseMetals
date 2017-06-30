@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
     "textures": {
-        "layer0": "basemetals:items/tin_horsearmor"
+        "layer0": "basemetals:items/charcoal_nugget"
     }
 }

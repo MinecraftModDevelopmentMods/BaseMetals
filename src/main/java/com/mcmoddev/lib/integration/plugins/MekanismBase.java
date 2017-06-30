@@ -86,7 +86,7 @@ public class MekanismBase implements IIntegration {
 		// Combiner 8 dust to 1 ore
 		// Clump to dirty IC2: Macerator)
 		Item clump = material.getItem(Names.CLUMP);
-		Item powderDirty = material.getItem(Names.POWDERDIRTY);
+		Item powderDirty = material.getItem(Names.POWDER_DIRTY);
 		Item ingot = material.getItem(Names.INGOT);
 		Item powder = material.getItem(Names.POWDER);
 		Block ore = material.getBlock(Names.ORE);
