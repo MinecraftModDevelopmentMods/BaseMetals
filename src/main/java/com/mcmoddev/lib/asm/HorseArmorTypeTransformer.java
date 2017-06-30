@@ -12,7 +12,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 class HorseArmorTypeTransformer implements ITransformer {
 
 	private static final String HORSE_INTERFACE = "com/mcmoddev/lib/common/item/IHorseArmor";
-	private static final String getByItem = "func_188576_a";
+	private static final String GET_BY_ITEM = "func_188576_a";
 	
 	@Override
 	public String getTarget() {
@@ -21,7 +21,7 @@ class HorseArmorTypeTransformer implements ITransformer {
 
 	@Override
 	public void transform(ClassNode node, boolean dev) {
-		node.methods.stream().filter(methodNode -> getByItem.equals(methodNode.name)).forEachOrdered(methodNode -> {
+		node.methods.stream().filter(methodNode -> GET_BY_ITEM.equals(methodNode.name)).forEachOrdered(methodNode -> {
 			final InsnList inject = new InsnList();
 			inject.add(new VarInsnNode(ALOAD, 0));
 			inject.add(new TypeInsnNode(INSTANCEOF, HORSE_INTERFACE));

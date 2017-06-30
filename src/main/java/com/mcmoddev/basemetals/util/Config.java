@@ -2,23 +2,25 @@ package com.mcmoddev.basemetals.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.AdditionalLootTables;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -49,8 +51,8 @@ public class Config {
 	private static final String VANILLA_CAT = "Vanilla";
 	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipies";
 	private static final String TOOLS_CAT = "Tools and Items";
-	private static final String ALT_CFG_PATH = "config/additional-loot-tables"; // + BaseMetals.MODID;
-	private static final List<String> UserCrusherRecipes = new ArrayList<String>();
+	private static final String ALT_CFG_PATH = "config/additional-loot-tables";
+	private static final List<String> UserCrusherRecipes = new ArrayList<>();
 
 	@SubscribeEvent
 	public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent e) {
@@ -64,11 +66,6 @@ public class Config {
 			configuration = new Configuration(new File(CONFIG_FILE));
 			MinecraftForge.EVENT_BUS.register(new Config());
 		}
-
-		// GENERAL
-		// enablePotionRecipes = config.getBoolean("enable_potions", "options",
-		// enablePotionRecipes,
-		// "If true, then some metals can be used to brew potions.");
 
 		// GENERAL
 		Options.disableAllHammerRecipes = configuration.getBoolean("disable_crack_hammer", GENERAL_CAT, false,
@@ -248,16 +245,12 @@ public class Config {
 				"Hey, Teachers! Leave those kids alone!"));
 
 		// DISABLE CRACK HAMMER RECIPES
-		String disabledRecipesRaw = configuration.getString("DisabledCrackhammerRecipes", GENERAL_CAT, "",
-				"Disable the recipes by putting the input materials ore dictionary name ore registry name in this key.\nThe format is a semicolon (;) separate list of ore dictionary names (ie:  oreGold;oreIron;oreCopper - this would blacklist Gold, Iron and Copper ores from working");
-		if (!disabledRecipesRaw.isEmpty() && disabledRecipesRaw.contains(";")) {
-			Options.disabledRecipes = disabledRecipesRaw.split(";");
-		} else {
-			Options.disabledRecipes = new String[] { disabledRecipesRaw };
-		}
+		Options.disabledRecipes = parseDisabledRecipes(configuration.getString("DisabledCrackhammerRecipes", GENERAL_CAT, "",
+				"Disable the recipes by putting the input materials ore dictionary name ore registry name in this key.\nThe format is a semicolon (;) separate list of ore dictionary names (ie:  oreGold;oreIron;oreCopper - this would blacklist Gold, Iron and Copper ores from working"));
 
 		// CRACK HAMMER RECIPES
 		final ConfigCategory userRecipeCat = configuration.getCategory(HAMMER_RECIPES_CAT);
+		
 		userRecipeCat
 				.setComment("This section allows you to add your own recipes for the Crack Hammer (and other rock \n"
 						+ "crushers). Recipes are specified in semicolon (;) delimited lists of formulas in the \n"
@@ -271,30 +264,17 @@ public class Config {
 			prop.setComment("Example: minecraft:stained_glass#11->minecraft:dye#4; minecraft:wool->4*minecraft:string");
 			userRecipeCat.put("custom", prop);
 		}
-		for (final Property p : userRecipeCat.values()) {
-			final String[] recipes = p.getString().split(";");
-			for (final String r : recipes) {
-				final String recipe = r.trim();
-				if (recipe.isEmpty()) {
-					continue;
-				}
-				if (!(recipe.contains("->"))) {
-					throw new IllegalArgumentException("Malformed hammer recipe expression '" + recipe + "'. Should be in format 'modid:itemname->modid:itemname'");
-				}
-				UserCrusherRecipes.add(recipe);
-			}
-		}
+		
+		manageUserHammerRecipes(userRecipeCat.values());
 
 		if (configuration.hasChanged()) {
 			configuration.save();
 		}
 
-		if (Options.requireMMDOreSpawn()) {
-			if (!Loader.isModLoaded("orespawn")) {
+		if ((Options.requireMMDOreSpawn()) && (!Loader.isModLoaded("orespawn"))) {
 				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
 				orespawnMod.add(new DefaultArtifactVersion("3.0.0"));
 				throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
-			}
 		}
 
 		final Path myLootFolder = Paths.get(ALT_CFG_PATH, BaseMetals.MODID);
@@ -325,6 +305,30 @@ public class Config {
 			} catch (final IOException ex) {
 				BaseMetals.logger.error("Failed to extract additional loot tables", ex);
 			}
+		}
+	}
+
+	private static void manageUserHammerRecipes(Collection<Property> values) {
+		for (final Property p : values) {
+			final String[] recipes = p.getString().split(";");
+			for (final String r : recipes) {
+				final String recipe = r.trim();
+				if (recipe.isEmpty()) {
+					continue;
+				}
+				if (!(recipe.contains("->"))) {
+					throw new IllegalArgumentException("Malformed hammer recipe expression '" + recipe + "'. Should be in format 'modid:itemname->modid:itemname'");
+				}
+				UserCrusherRecipes.add(recipe);
+			}
+		}
+	}
+
+	private static String[] parseDisabledRecipes(String rawDisabledRecipes) {
+		if (!rawDisabledRecipes.isEmpty() && rawDisabledRecipes.contains(";")) {
+			return rawDisabledRecipes.split(";");
+		} else {
+			return new String[] { rawDisabledRecipes };
 		}
 	}
 
@@ -426,43 +430,74 @@ public class Config {
 		public static boolean thingEnabled(String name) {
 			return thingEnabled.get(name);
 		}
-/*
-		public static boolean enableBasics = true; // Nugget, Ingot, Powder, Blend, Block, Ore
-		public static boolean enableBasicTools = true; // Axe, Hoe, Pickaxe, Shovel, Sword
-		public static boolean enableCrossbowAndBolt = true; // Crossbows, Bolts
-		public static boolean enableBowAndArrow = true; // Bows, Arrows
-		public static boolean enableArmor = true; // Helmet, Chestplate, Leggings, Boots
-		public static boolean enableCrackHammer = true;
-		public static boolean enableFishingRod = true;
-		public static boolean enableHorseArmor = true;
-		public static boolean enableShears = true;
-		public static boolean enableSmallDust = true; // Small Powder, Small Blend
-		public static boolean enableRod = true;
-		public static boolean enableGear = true;
-		public static boolean enableShield = true;
-
-		public static boolean enableAnvil = true;
-		public static boolean enableBars = true;
-		public static boolean enableBookshelf = true;
-		public static boolean enableButton = true;
-		public static boolean enableDoor = true; // Also item
-		public static boolean enableFlowerPot = true;
-		public static boolean enableLadder = true;
-		public static boolean enableLever = true;
-		public static boolean enablePlate = true;
-		public static boolean enablePressurePlate = true;
-		public static boolean enableSlab = true; // Also item, double slab
-		public static boolean enableStairs = true;
-		public static boolean enableTrapdoor = true;
-		public static boolean enableTripWire = true;
-		public static boolean enableWall = true;
-*/
+		
 		private Options() {
 			throw new IllegalAccessError("Not a instantiable class");
 		}
 	}
 
 	public static void postInit() {
+		addUserRecipes();
+
+		if (Options.autoDetectRecipes()) {
+			// add recipe for every X where the Ore Dictionary has dustX, oreX, and ingotX
+			final Set<String> dictionary = new HashSet<>();
+			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()).stream().filter( item -> !item.contains("Mercury") )
+			.filter( item -> !item.contains("Redstone") ).filter( item -> item.startsWith("dust") )
+			.filter( item -> {
+				String ingotX = Oredicts.INGOT.concat(item.substring(4));
+				String oreX = Oredicts.ORE.concat(item.substring(4));
+				return (dictionary.contains(oreX) && dictionary.contains(ingotX) && !OreDictionary.getOres(item).isEmpty());
+			}).collect(Collectors.<String>toSet()));
+
+			addOreRecipes( dictionary );
+			addIngotRecipes( dictionary );
+		}
+
+		CrusherRecipeRegistry.getInstance().clearCache();
+	}
+
+	private static void addIngotRecipes(Set<String> dictionary) {
+		dictionary.stream()
+		.filter( entry -> {
+			List<ItemStack> iS = OreDictionary.getOres(Oredicts.INGOT.concat(entry.substring(4)));
+			for( ItemStack i : iS ) {
+				if((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null )) {
+					return true;
+				}
+			}
+			return false;
+		})
+		.forEach( entry -> {
+			String ingotX = Oredicts.INGOT.concat(entry.substring(4));
+			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
+			dustX.setCount(2);
+			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", ingotX, dustX);
+			CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX);				
+		});			
+	}
+
+	private static void addOreRecipes(Set<String> dictionary) {
+		dictionary.stream()
+		.filter( entry -> {
+			List<ItemStack> iS = OreDictionary.getOres(Oredicts.ORE.concat(entry.substring(4)));
+			for( ItemStack i : iS ) {
+				if((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null )) {
+					return true;
+				}
+			}
+			return false;
+		})
+		.forEach( entry -> {
+			String oreX = Oredicts.ORE.concat(entry.substring(4));
+			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
+			dustX.setCount(2);
+			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", oreX, dustX);
+			CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX);				
+		});
+	}
+
+	private static void addUserRecipes() {
 		for (final String recipe : UserCrusherRecipes) {
 			BaseMetals.logger.info("Adding custom crusher recipe '%s'", recipe);
 			final int i = recipe.indexOf("->");
@@ -476,51 +511,6 @@ public class Config {
 				CrusherRecipeRegistry.addNewCrusherRecipe(input, output);
 			}
 		}
-
-		if (Options.autoDetectRecipes()) {
-			// add recipe for every X where the Ore Dictionary has dustX, oreX, and ingotX
-			final Set<String> dictionary = new HashSet<>();
-			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()));
-			for (final String entry : dictionary) {
-				// TODO: Make this better
-				if ((entry.contains("Mercury")) || (entry.contains("Redstone"))) {
-					continue;
-				}
-				if (entry.startsWith("dust")) {
-					final String X = entry.substring("dust".length());
-					final String dustX = entry;
-					final String ingotX = "ingot".concat(X);
-					final String oreX = "ore".concat(X);
-					if (dictionary.contains(oreX) && dictionary.contains(ingotX) && !OreDictionary.getOres(dustX).isEmpty()) {
-						final ItemStack dustX1 = OreDictionary.getOres(dustX).get(0).copy();
-						dustX1.setCount(1);
-						final ItemStack dustX2 = dustX1.copy();
-						dustX2.setCount(2);
-						// recipe found but is it already registered
-						final List<ItemStack> oreBlocks = OreDictionary.getOres(oreX);
-						boolean alreadyHasOreRecipe = true;
-						for (final ItemStack i : oreBlocks) {
-							alreadyHasOreRecipe = alreadyHasOreRecipe && (CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null);
-						}
-						final List<ItemStack> ingotStacks = OreDictionary.getOres(ingotX);
-						boolean alreadyHasIngotRecipe = true;
-						for (final ItemStack i : ingotStacks) {
-							alreadyHasIngotRecipe = alreadyHasIngotRecipe && (CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null);
-						}
-						if (!alreadyHasOreRecipe) {
-							BaseMetals.logger.info("Automatically adding custom crusher recipe '%s' -> %s", oreX, dustX2);
-							CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX2);
-						}
-						if (!alreadyHasIngotRecipe) {
-							BaseMetals.logger.info("Automatically adding custom crusher recipe '%s' -> %s", ingotX, dustX1);
-							CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX1);
-						}
-					}
-				}
-			}
-		}
-
-		CrusherRecipeRegistry.getInstance().clearCache();
 	}
 
 	/**
@@ -539,7 +529,7 @@ public class Config {
 	 *         found
 	 */
 	public static ItemStack parseStringAsItemStack(String str, final boolean allowWildcard) {
-		str = str.trim();
+		String work = str.trim();
 		int count = 1;
 		int meta;
 		if (allowWildcard) {
@@ -548,16 +538,16 @@ public class Config {
 			meta = 0;
 		}
 		int nameStart = 0;
-		int nameEnd = str.length();
-		if (str.contains("*")) {
-			count = Integer.parseInt(str.substring(0, str.indexOf('*')).trim());
-			nameStart = str.indexOf('*') + 1;
+		int nameEnd = work.length();
+		if (work.contains("*")) {
+			count = Integer.parseInt(work.substring(0, work.indexOf('*')).trim());
+			nameStart = work.indexOf('*') + 1;
 		}
-		if (str.contains("#")) {
-			meta = Integer.parseInt(str.substring(str.indexOf('#') + 1, str.length()).trim());
-			nameEnd = str.indexOf('#');
+		if (work.contains("#")) {
+			meta = Integer.parseInt(work.substring(work.indexOf('#') + 1, str.length()).trim());
+			nameEnd = work.indexOf('#');
 		}
-		final String id = str.substring(nameStart, nameEnd).trim();
+		final String id = work.substring(nameStart, nameEnd).trim();
 		if (Block.getBlockFromName(id) != null) {
 			// is a block
 			return new ItemStack(Block.getBlockFromName(id), count, meta);

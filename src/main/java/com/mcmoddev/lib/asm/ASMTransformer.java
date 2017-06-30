@@ -33,21 +33,30 @@ public class ASMTransformer implements IClassTransformer {
 	}
 
 	private void saveBytecode(String name, ClassWriter cw) {
-		if (Platform.isDevEnv())
+		if (Platform.isDevEnv()) {
+			File output = null; 
+			FileOutputStream out = null;
 			try {
 				final File debugDir = new File("mmd/asm/debug/");
 				if (debugDir.exists())
 					debugDir.delete();
+				output = new File(debugDir, name + ".class");
+				out = new FileOutputStream(output);
 				debugDir.mkdirs();
-				final File output = new File(debugDir, name + ".class");
-				final FileOutputStream out = new FileOutputStream(output);
 				out.write(cw.toByteArray());
-				out.close();
 			} catch (final IOException ex) {
 				//				ex.printStackTrace();
 				BaseMetals.logger.error(ex);
 			} finally {
-
+				if( out != null ) {
+					try {
+						out.close();
+					} catch (IOException e) {
+						// e.printStackTrace();
+						BaseMetals.logger.error(e);
+					}
+				}
 			}
+		}
 	}
 }

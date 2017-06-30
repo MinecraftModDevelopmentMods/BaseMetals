@@ -3,6 +3,7 @@ package com.mcmoddev.basemetals.init;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Achievements;
 
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
@@ -10,11 +11,11 @@ import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.fml.common.Loader;
 
 /** initializer for achievements */
-public class Achievements extends com.mcmoddev.lib.init.Achievements {
+public class BaseMetalsAchievements extends Achievements {
 
 	private static boolean initDone = false;
 
-	private Achievements() {
+	private BaseMetalsAchievements() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
 
