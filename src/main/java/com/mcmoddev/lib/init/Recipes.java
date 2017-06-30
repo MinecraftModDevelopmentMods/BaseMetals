@@ -491,8 +491,9 @@ public abstract class Recipes {
 
 				if (material.hasItem(Names.CRACKHAMMER))
 					GameRegistry.addSmelting(material.getItem(Names.CRACKHAMMER), new ItemStack(material.getBlock(Names.BLOCK), 1), 0);
-/*
 			} else if (Options.furnace1112()) {
+				//do nothing, contents commented out for now
+/*
 				ItemStack outputStack = new ItemStack(material.getItem(Names.NUGGET), 1);
 				if (material.hasItem(Names.BOOTS))
 					GameRegistry.addSmelting(material.getItem(Names.BOOTS), outputStack, 0);

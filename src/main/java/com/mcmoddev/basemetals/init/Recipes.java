@@ -65,14 +65,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 		// Iron items
 		if (Options.materialEnabled(MaterialNames.IRON)) {
-			material = Materials.getMaterialByName(MaterialNames.IRON);
-			oreDictName = material.getCapitalizedName();
-
-		// Not needed for 1.11.1+
-		/*
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.NUGGET), 9), Oredicts.INGOT + oreDictName));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.INGOT)), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName));
-		*/
+			// this should all be handled elsewhere
 		}
 
 		if (Options.materialEnabled(MaterialNames.CHARCOAL)) {
