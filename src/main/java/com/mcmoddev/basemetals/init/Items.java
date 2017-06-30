@@ -39,7 +39,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		// Vanilla stuff always gets those bits that exist in vanilla assigned
 		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT, new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
 
-		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT, net.minecraft.init.Items.COAL);
+		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT, new ItemStack(net.minecraft.init.Items.COAL, 1, 0).getItem());
 
 		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.AXE, net.minecraft.init.Items.DIAMOND_AXE);
 		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.HOE, net.minecraft.init.Items.DIAMOND_HOE);
@@ -84,10 +84,11 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
 		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
-		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItem(Names.POWDER, net.minecraft.init.Items.DYE);
+		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItem(Names.POWDER, new ItemStack(net.minecraft.init.Items.DYE, 1, 4).getItem());
 
-		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.POWDER, net.minecraft.init.Items.REDSTONE);
 		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT, net.minecraft.init.Items.QUARTZ);
+
+		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER, net.minecraft.init.Items.REDSTONE);
 
 		Materials.getMaterialByName(MaterialNames.STONE).addNewItem(Names.AXE, net.minecraft.init.Items.STONE_AXE);
 		Materials.getMaterialByName(MaterialNames.STONE).addNewItem(Names.HOE, net.minecraft.init.Items.STONE_HOE);
