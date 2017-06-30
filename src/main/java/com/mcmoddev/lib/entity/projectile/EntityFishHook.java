@@ -281,7 +281,8 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 
 						if (this.ticksCatchableDelay <= 0) {
 							this.motionY -= 0.20000000298023224D;
-							this.playSound(SoundEvents.ENTITY_BOBBER_SPLASH, 0.25F, 1.0F + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F));
+							float temp = this.rand.nextFloat();
+							this.playSound(SoundEvents.ENTITY_BOBBER_SPLASH, 0.25F, 1.0F + ((temp - this.rand.nextFloat()) * 0.4F));
 							final float f6 = (float) MathHelper.floor(this.getEntityBoundingBox().minY);
 							worldserver.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX, (double) (f6 + 1.0F), this.posZ, (int) (1.0F + (this.width * 20.0F)), (double) this.width, 0.0D, (double) this.width, 0.20000000298023224D, new int[0]);
 							worldserver.spawnParticle(EnumParticleTypes.WATER_WAKE, this.posX, (double) (f6 + 1.0F), this.posZ, (int) (1.0F + (this.width * 20.0F)), (double) this.width, 0.0D, (double) this.width, 0.20000000298023224D, new int[0]);

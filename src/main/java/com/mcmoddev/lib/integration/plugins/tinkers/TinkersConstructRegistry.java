@@ -40,8 +40,7 @@ public class TinkersConstructRegistry {
      * @constructor
      */
     private TinkersConstructRegistry() {
-    	if( instance == null )
-    		instance = this;
+    	// blank, hidden default constructor
     }
 
     /**
