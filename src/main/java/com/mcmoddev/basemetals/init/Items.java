@@ -81,7 +81,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
 		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
 		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
+		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.NUGGET, net.minecraft.init.Items.field_191525_da); // Items.IRON_NUGGET
 		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItem(Names.POWDER, new ItemStack(net.minecraft.init.Items.DYE, 1, 4).getItem());
