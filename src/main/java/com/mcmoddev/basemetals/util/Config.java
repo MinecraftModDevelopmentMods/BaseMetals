@@ -272,9 +272,9 @@ public class Config {
 		}
 
 		if ((Options.requireMMDOreSpawn()) && (!Loader.isModLoaded("orespawn"))) {
-				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
-				orespawnMod.add(new DefaultArtifactVersion("3.0.0"));
-				throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
+			final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
+			orespawnMod.add(new DefaultArtifactVersion("3.0.0"));
+			throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
 		}
 
 		final Path myLootFolder = Paths.get(ALT_CFG_PATH, BaseMetals.MODID);

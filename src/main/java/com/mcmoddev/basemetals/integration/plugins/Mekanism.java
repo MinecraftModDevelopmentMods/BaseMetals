@@ -2,7 +2,6 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -14,40 +13,26 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("mekanism")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(Mekanism.PLUGIN_MODID)) {
 			return;
 		}
 
-		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
-			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
-		}
+		final String[] baseNames = new String[] {
+				MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH,
+				MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM,
+				MaterialNames.NICKEL,
+				MaterialNames.STARSTEEL,
+				MaterialNames.ZINC
+		};
 
-		if (Options.materialEnabled(MaterialNames.ANTIMONY)) {
-			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ANTIMONY));
-		}
-
-		if (Options.materialEnabled(MaterialNames.BISMUTH)) {
-			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.BISMUTH));
-		}
-
-		if (Options.materialEnabled(MaterialNames.COLDIRON)) {
-			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.COLDIRON));
-		}
-
-		if (Options.materialEnabled(MaterialNames.PLATINUM)) {
-			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.PLATINUM));
-		}
-
-		if (Options.materialEnabled(MaterialNames.NICKEL)) {
-			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.NICKEL));
-		}
-
-		if (Options.materialEnabled(MaterialNames.STARSTEEL)) {
-			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.STARSTEEL));
-		}
-
-		if (Options.materialEnabled(MaterialNames.ZINC)) {
-			addOreMultiplicationRecipes(Materials.getMaterialByName(MaterialNames.ZINC));
+		for (int i = 0; i < baseNames.length; i++) {
+			final String materialName = baseNames[i];
+			if (Options.materialEnabled(materialName)) {
+				addOreMultiplicationRecipes(materialName);
+			}
 		}
 
 		initDone = true;

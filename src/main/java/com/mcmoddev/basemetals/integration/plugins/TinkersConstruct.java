@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.data.TraitNames;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.data.Names;
@@ -26,7 +27,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("tinkersconstruct")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(TinkersConstruct.PLUGIN_MODID)) {
 			return;
 		}
 
@@ -34,20 +35,20 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
 
-		registerMaterial(Options.materialEnabled(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, true, false, "coldblooded", "insatiable");
+		registerMaterial(Options.materialEnabled(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
 		registerMaterial(Options.materialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, true, false);
-		registerMaterial(Options.materialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, "aquadynamic", "jagged", TraitLocations.HEAD, "aquadynamic", TraitLocations.HEAD);
+		registerMaterial(Options.materialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC, TraitNames.JAGGED, TraitLocations.HEAD, TraitNames.AQUADYNAMIC, TraitLocations.HEAD);
 		registerMaterial(Options.materialEnabled(MaterialNames.BISMUTH), MaterialNames.BISMUTH, true, false);
-		registerMaterial(Options.materialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, true, false, "dense");
+		registerMaterial(Options.materialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, true, false, TraitNames.DENSE);
 		//registerMaterial(Options.materialEnabled(MaterialNames.BRONZE), MaterialNames.BRONZE, true, false);
-		registerMaterial(Options.materialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, true, false, "freezing");
+		registerMaterial(Options.materialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
 		registerMaterial(Options.materialEnabled(MaterialNames.CUPRONICKEL), MaterialNames.CUPRONICKEL, true, false);
 		registerMaterial(Options.materialEnabled(MaterialNames.INVAR), MaterialNames.INVAR, true, false);
-		registerMaterial(Options.materialEnabled(MaterialNames.MITHRIL), MaterialNames.MITHRIL, true, false, "holy");
+		registerMaterial(Options.materialEnabled(MaterialNames.MITHRIL), MaterialNames.MITHRIL, true, false, TraitNames.HOLY);
 		registerMaterial(Options.materialEnabled(MaterialNames.NICKEL), MaterialNames.NICKEL, true, false);
-		registerMaterial(Options.materialEnabled(MaterialNames.PEWTER), MaterialNames.PEWTER, true, false, "soft");
+		registerMaterial(Options.materialEnabled(MaterialNames.PEWTER), MaterialNames.PEWTER, true, false, TraitNames.SOFT);
 		registerMaterial(Options.materialEnabled(MaterialNames.PLATINUM), MaterialNames.PLATINUM, true, false);
-		registerMaterial(Options.materialEnabled(MaterialNames.STARSTEEL), MaterialNames.STARSTEEL, true, false, "enderference", TraitLocations.HEAD, "sparkly");
+		registerMaterial(Options.materialEnabled(MaterialNames.STARSTEEL), MaterialNames.STARSTEEL, true, false, TraitNames.ENDERFERENCE, TraitLocations.HEAD, TraitNames.SPARKLY);
 		registerMaterial(Options.materialEnabled(MaterialNames.TIN), MaterialNames.TIN, true, false);
 		registerMaterial(Options.materialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, true, false);
 

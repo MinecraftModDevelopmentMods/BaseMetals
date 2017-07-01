@@ -26,135 +26,135 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		}
 		
 		// Vanilla Materials need to always have fluids available in case of tie-in mods
-		addFluid(Materials.getMaterialByName(MaterialNames.CHARCOAL), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.CHARCOAL));
-		addFluid(Materials.getMaterialByName(MaterialNames.COAL), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.COAL));
-		addFluid(Materials.getMaterialByName(MaterialNames.DIAMOND), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.DIAMOND));
-		addFluid(Materials.getMaterialByName(MaterialNames.EMERALD), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.EMERALD));
-		addFluid(Materials.getMaterialByName(MaterialNames.ENDER), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.ENDER));
-		addFluid(Materials.getMaterialByName(MaterialNames.GOLD), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.GOLD));
-		addFluid(Materials.getMaterialByName(MaterialNames.IRON), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.IRON));
-		addFluid(Materials.getMaterialByName(MaterialNames.OBSIDIAN), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.OBSIDIAN));
-		addFluid(Materials.getMaterialByName(MaterialNames.PRISMARINE), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.PRISMARINE));
-		addFluid(Materials.getMaterialByName(MaterialNames.REDSTONE), 2000, 10000, 769, 10);
-		addFluidBlock(Materials.getMaterialByName(MaterialNames.REDSTONE));
+		addFluid(MaterialNames.CHARCOAL, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.CHARCOAL);
+		addFluid(MaterialNames.COAL, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.COAL);
+		addFluid(MaterialNames.DIAMOND, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.DIAMOND);
+		addFluid(MaterialNames.EMERALD, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.EMERALD);
+		addFluid(MaterialNames.ENDER, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.ENDER);
+		addFluid(MaterialNames.GOLD, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.GOLD);
+		addFluid(MaterialNames.IRON, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.IRON);
+		addFluid(MaterialNames.OBSIDIAN, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.OBSIDIAN);
+		addFluid(MaterialNames.PRISMARINE, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.PRISMARINE);
+		addFluid(MaterialNames.REDSTONE, 2000, 10000, 769, 10);
+		addFluidBlock(MaterialNames.REDSTONE);
 
 		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.ADAMANTINE), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.ADAMANTINE));
+			addFluid(MaterialNames.ADAMANTINE, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.ADAMANTINE);
 		}
 
 		if (Options.materialEnabled(MaterialNames.ANTIMONY)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.ANTIMONY), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.ANTIMONY));
+			addFluid(MaterialNames.ANTIMONY, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.ANTIMONY);
 		}
 
 		if (Options.materialEnabled(MaterialNames.AQUARIUM)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.AQUARIUM), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.AQUARIUM));
+			addFluid(MaterialNames.AQUARIUM, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.AQUARIUM);
 		}
 
 		if (Options.materialEnabled(MaterialNames.BISMUTH)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.BISMUTH), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.BISMUTH));
+			addFluid(MaterialNames.BISMUTH, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.BISMUTH);
 		}
 
 		if (Options.materialEnabled(MaterialNames.BRASS)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.BRASS), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.BRASS));
+			addFluid(MaterialNames.BRASS, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.BRASS);
 		}
 
 		if (Options.materialEnabled(MaterialNames.BRONZE)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.BRONZE), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.BRONZE));
+			addFluid(MaterialNames.BRONZE, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.BRONZE);
 		}
 
 		if (Options.materialEnabled(MaterialNames.COLDIRON)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.COLDIRON), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.COLDIRON));
+			addFluid(MaterialNames.COLDIRON, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.COLDIRON);
 		}
 
 		if (Options.materialEnabled(MaterialNames.COPPER)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.COPPER), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.COPPER));
+			addFluid(MaterialNames.COPPER, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.COPPER);
 		}
 
 		if (Options.materialEnabled(MaterialNames.CUPRONICKEL)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.CUPRONICKEL), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.CUPRONICKEL));
+			addFluid(MaterialNames.CUPRONICKEL, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.CUPRONICKEL);
 		}
 
 		if (Options.materialEnabled(MaterialNames.ELECTRUM)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.ELECTRUM), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.ELECTRUM));
+			addFluid(MaterialNames.ELECTRUM, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.ELECTRUM);
 		}
 
 		if (Options.materialEnabled(MaterialNames.INVAR)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.INVAR), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.INVAR));
+			addFluid(MaterialNames.INVAR, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.INVAR);
 		}
 
 		if (Options.materialEnabled(MaterialNames.LEAD)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.LEAD), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.LEAD));
+			addFluid(MaterialNames.LEAD, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.LEAD);
 		}
 
 		if (Options.materialEnabled(MaterialNames.MERCURY)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.MERCURY), 13594, 2000, 769, 0);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.MERCURY));
+			addFluid(MaterialNames.MERCURY, 13594, 2000, 769, 0);
+			addFluidBlock(MaterialNames.MERCURY);
 		}
 
 		if (Options.materialEnabled(MaterialNames.MITHRIL)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.MITHRIL), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.MITHRIL));
+			addFluid(MaterialNames.MITHRIL, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.MITHRIL);
 		}
 
 		if (Options.materialEnabled(MaterialNames.NICKEL)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.NICKEL), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.NICKEL));
+			addFluid(MaterialNames.NICKEL, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.NICKEL);
 		}
 
 		if (Options.materialEnabled(MaterialNames.PEWTER)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.PEWTER), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.PEWTER));
+			addFluid(MaterialNames.PEWTER, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.PEWTER);
 		}
 
 		if (Options.materialEnabled(MaterialNames.PLATINUM)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.PLATINUM), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.PLATINUM));
+			addFluid(MaterialNames.PLATINUM, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.PLATINUM);
 		}
 
 		if (Options.materialEnabled(MaterialNames.SILVER)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.SILVER), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.SILVER));
+			addFluid(MaterialNames.SILVER, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.SILVER);
 		}
 
 		if (Options.materialEnabled(MaterialNames.STARSTEEL)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.STARSTEEL), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.STARSTEEL));
+			addFluid(MaterialNames.STARSTEEL, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.STARSTEEL);
 		}
 
 		if (Options.materialEnabled(MaterialNames.STEEL)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.STEEL), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.STEEL));
+			addFluid(MaterialNames.STEEL, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.STEEL);
 		}
 
 		if (Options.materialEnabled(MaterialNames.TIN)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.TIN), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.TIN));
+			addFluid(MaterialNames.TIN, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.TIN);
 		}
 
 		if (Options.materialEnabled(MaterialNames.ZINC)) {
-			addFluid(Materials.getMaterialByName(MaterialNames.ZINC), 2000, 10000, 769, 10);
-			addFluidBlock(Materials.getMaterialByName(MaterialNames.ZINC));
+			addFluid(MaterialNames.ZINC, 2000, 10000, 769, 10);
+			addFluidBlock(MaterialNames.ZINC);
 		}
 
 		initDone = true;

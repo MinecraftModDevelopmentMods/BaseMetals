@@ -18,7 +18,7 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("thermalexpansion")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(ThermalExpansion.PLUGIN_MODID)) {
 			return;
 		}
 

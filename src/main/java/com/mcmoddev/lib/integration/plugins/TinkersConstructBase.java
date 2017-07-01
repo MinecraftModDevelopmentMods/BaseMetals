@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
@@ -29,11 +30,15 @@ public class TinkersConstructBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("tinkersconstruct")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
 		initDone = true;
+	}
+
+	protected static void registerExtraMelting(String materialName, Block block, int amountPer) {
+		registerExtraMelting(Materials.getMaterialByName(materialName), block, amountPer);
 	}
 
 	/**
@@ -57,6 +62,10 @@ public class TinkersConstructBase implements IIntegration {
 		}
 	}
 
+	protected static void registerFluid(String materialName, int amountPer) {
+		registerFluid(Materials.getMaterialByName(materialName), amountPer);
+	}
+
 	/**
 	 * @param base
 	 *            Material being melted
@@ -65,6 +74,10 @@ public class TinkersConstructBase implements IIntegration {
 	 */
 	protected static void registerFluid(MMDMaterial base, int amountPer) {
 		registry.registerFluid(base, amountPer);
+	}
+
+	protected static void registerCasting(String materialName, int amountPer) {
+		registerCasting(Materials.getMaterialByName(materialName), amountPer);
 	}
 
 	protected static void registerCasting(MMDMaterial base, int amountPer) {
@@ -88,6 +101,9 @@ public class TinkersConstructBase implements IIntegration {
 		registry.registerAlloy(outputName, outputQty, inputName, inputQty);
 	}
 
+	protected static TCMaterial registerMaterial(String materialName, boolean craftable, boolean castable) {
+		return registerMaterial(Materials.getMaterialByName(materialName), craftable, castable);
+	}
 	/**
 	 * Creates a Tinkers Construct
 	 * {@link slimeknights.tconstruct.library.materials.Material}

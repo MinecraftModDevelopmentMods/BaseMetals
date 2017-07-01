@@ -51,11 +51,9 @@ public class BaseMetalsOreSpawn implements Function<OreSpawnAPI, SpawnLogic> {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.NICKEL).getBlock(Names.ORE).getDefaultState(), 8, 4, 1, 32, 96);
 		}
 		
-/*	Currently broken
-		if( Options.materials.get(MaterialNames.PLATINUM)) {
+		if( Options.materialEnabled(MaterialNames.PLATINUM)) {
 			logic.getDimension(OreSpawnAPI.DIMENSION_WILDCARD).addOre(Materials.getMaterialByName(MaterialNames.PLATINUM).getBlock(Names.ORE).getDefaultState(), 8, 4, 0.125f, 1, 32);
 		}
-*/
 		
 		if(Options.materialEnabled(MaterialNames.STARSTEEL)) {
 			logic.getDimension(1).addOre(Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.ORE).getDefaultState(), 8, 4, 5, 0, 255);

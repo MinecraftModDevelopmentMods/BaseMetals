@@ -11,12 +11,12 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("ic2")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(IC2.PLUGIN_MODID)) {
 			return;
 		}
 
-		// registerVanillaRecipes(Materials.adamantine);
-		// addMaceratorRecipes(Materials.adamantine);
+		// registerVanillaRecipes(MaterialNames.ADAMANTINE);
+		// addMaceratorRecipes(MaterialNames.ADAMANTINE);
 
 		initDone = true;
 	}

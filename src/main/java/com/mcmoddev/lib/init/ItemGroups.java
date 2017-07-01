@@ -73,7 +73,7 @@ public class ItemGroups {
 	/**
 	 * Gets a map of all items added, sorted by material
 	 *
-	 * @return An unmodifiable map of added items catagorized by metal material
+	 * @return An unmodifiable map of added items categorized by metal material
 	 */
 	public static Map<String, List<MMDCreativeTab>> getItemsGroupsByModID() {
 		return Collections.unmodifiableMap(itemGroupsByModID);

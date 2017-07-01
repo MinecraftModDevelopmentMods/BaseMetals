@@ -1,29 +1,33 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
+//import com.mcmoddev.lib.util.Oredicts;
 
 //import ic2.api.recipe.RecipeInputOreDict;
-import ic2.api.recipe.Recipes;
+//import ic2.api.recipe.Recipes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@SuppressWarnings("deprecation")
 public class IC2Base implements IIntegration {
 
-	public static final String PLUGIN_MODID = "IC2";
+	public static final String PLUGIN_MODID = "ic2";
 
 	private static boolean initDone = false;
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("ic2")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
 		initDone = true;
+	}
+
+	protected void registerVanillaRecipes(String materialName) {
+		registerVanillaRecipes(Materials.getMaterialByName(materialName));
 	}
 
 	protected void registerVanillaRecipes(MMDMaterial material) {
@@ -41,9 +45,12 @@ public class IC2Base implements IIntegration {
 		// TODO: Figure out Dense Plate & Casing
 	}
 
-	@SuppressWarnings("deprecation")
+	protected void addMaceratorRecipes(String materialName) {
+		addMaceratorRecipes(Materials.getMaterialByName(materialName));
+	}
+
 	protected void addMaceratorRecipes(MMDMaterial material) {
-		String oreDictName = material.getCapitalizedName();
+//		String oreDictName = material.getCapitalizedName();
 //		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.ORE + oreDictName, 0), null, false, new ItemStack(material.getItem(Names.CRUSHED), 2));
 //		Recipes.macerator.addRecipe(new RecipeInputOreDict(Oredicts.PLATE_DENSE + oreDictName, 0), null, false, new ItemStack(material.getItem(Names.POWDER), 8));
 	}

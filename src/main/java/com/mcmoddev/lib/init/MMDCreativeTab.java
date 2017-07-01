@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * This class is a MetalMaterial based Wrapper for making a CreativeTab.
+ * This class is a MMDMaterial based Wrapper for making a CreativeTab.
  *
  * @author Jasmine Iwanek
  *

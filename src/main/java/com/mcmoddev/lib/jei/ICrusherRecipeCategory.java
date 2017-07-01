@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mcmoddev.basemetals.BaseMetals;
+
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableAnimated;
@@ -20,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWrapper> {
-	private final ResourceLocation resourceLocation = new ResourceLocation("basemetals", "textures/jei/JEIhammeroverlay.png");
+	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID, "textures/jei/JEIhammeroverlay.png");
 	private final IDrawable background;
 	private final IDrawable icon;
 	protected final IDrawableAnimated hammer;
@@ -37,7 +39,7 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 
 	@Override
 	public String getUid() {
-		return BaseMetalsJEIPlugin.recipeUID;
+		return BaseMetalsJEIPlugin.RECIPE_UID;
 	}
 
 	@Override
