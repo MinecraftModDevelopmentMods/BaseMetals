@@ -23,8 +23,8 @@ import mezz.jei.api.recipe.IRecipeWrapperFactory;
 @JEIPlugin
 public class BaseMetalsJEIPlugin extends BlankModPlugin {
 
-	public static final String JEIUID = BaseMetals.MODID;
-	public static final String recipeUID = JEIUID + ".crackhammer";
+	public static final String JEI_UID = BaseMetals.MODID;
+	public static final String RECIPE_UID = JEI_UID + ".crackhammer";
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -36,13 +36,13 @@ public class BaseMetalsJEIPlugin extends BlankModPlugin {
 
 	@Override
 	public void register(IModRegistry registry) {
-		registry.addRecipes(CrusherRecipeRegistry.getInstance().getAllRecipes().stream().map((ICrusherRecipe in) -> new ICrusherRecipeWrapper(in)).collect(Collectors.toList()), recipeUID);
+		registry.addRecipes(CrusherRecipeRegistry.getInstance().getAllRecipes().stream().map((ICrusherRecipe in) -> new ICrusherRecipeWrapper(in)).collect(Collectors.toList()), RECIPE_UID);
 
 		registry.handleRecipes(ICrusherRecipe.class, new IRecipeWrapperFactory<ICrusherRecipe>() {
 			@Override
 			public IRecipeWrapper getRecipeWrapper(ICrusherRecipe recipe) {
 				return new ICrusherRecipeWrapper(recipe);
 			}
-		}, recipeUID);		
+		}, RECIPE_UID);
 	}
 }

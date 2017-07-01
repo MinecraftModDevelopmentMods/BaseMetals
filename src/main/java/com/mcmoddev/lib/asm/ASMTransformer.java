@@ -45,15 +45,13 @@ public class ASMTransformer implements IClassTransformer {
 				debugDir.mkdirs();
 				out.write(cw.toByteArray());
 			} catch (final IOException ex) {
-				//				ex.printStackTrace();
 				BaseMetals.logger.error(ex);
 			} finally {
 				if( out != null ) {
 					try {
 						out.close();
-					} catch (IOException e) {
-						// e.printStackTrace();
-						BaseMetals.logger.error(e);
+					} catch (IOException ex) {
+						BaseMetals.logger.error(ex);
 					}
 				}
 			}

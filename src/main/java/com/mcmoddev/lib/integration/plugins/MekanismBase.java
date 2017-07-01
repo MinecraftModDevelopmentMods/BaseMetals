@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -17,7 +18,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class MekanismBase implements IIntegration {
 
-	public static final String PLUGIN_MODID = "Mekanism";
+	public static final String PLUGIN_MODID = "mekanism";
 
 	private static boolean initDone = false;
 
@@ -60,7 +61,7 @@ public class MekanismBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("mekanism")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(PLUGIN_MODID)) {
 			return;
 		}
 		/*
@@ -72,6 +73,10 @@ public class MekanismBase implements IIntegration {
 		initDone = true;
 	}
 
+	protected static void addGassesForMaterial(String materialName) {
+		addGassesForMaterial(Materials.getMaterialByName(materialName));
+	}
+
 	protected static void addGassesForMaterial(MMDMaterial material) {
 		final Gas gas1 = new Gas(material.getName(), material.getName() + "-Icon");
 		gas1.setUnlocalizedName("gas" + material.getName());
@@ -80,6 +85,10 @@ public class MekanismBase implements IIntegration {
 		final Gas gas2 = new Gas("clean" + material.getCapitalizedName(), material.getName() + "-CleanIcon");
 		gas2.setUnlocalizedName("clean" + material.getName());
 		GasRegistry.register(gas2);
+	}
+
+	protected static void addOreMultiplicationRecipes(String materialName) {
+		addOreMultiplicationRecipes(Materials.getMaterialByName(materialName));
 	}
 
 	protected static void addOreMultiplicationRecipes(MMDMaterial material) {

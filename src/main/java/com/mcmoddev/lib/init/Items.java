@@ -40,6 +40,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public abstract class Items {
 
+	private static final String ERROR_ONE_PART1 = "Class for Item named ";
+	private static final String ERROR_ONE_PART2 = " does not have the correct constructor";
+	private static final String ERROR_TWO_PART1 = "Unable to create new instance of Item class for item name ";
+	private static final String ERROR_TWO_PART2 = " of material ";
+
 	private static boolean initDone = false;
 
 	private static BiMap<String, Item> itemRegistry = HashBiMap.create(34);
@@ -133,21 +138,71 @@ public abstract class Items {
 		}
 	}
 
+	protected static void createItemsBasic(String materialName, TabContainer tabs) {
+		createItemsBasic(Materials.getMaterialByName(materialName), tabs);
+	}
 	/**
 	 * 
 	 * @param material
 	 *            The material base of these items
-	 * @param tab
+	 * @param tabs
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
-	protected static void createItemsBasic(MMDMaterial material, TabContainer tab) {
-		createBlend(material, tab.itemsTab);
-		createIngot(material, tab.itemsTab);
-		createNugget(material, tab.itemsTab);
-		createPowder(material, tab.itemsTab);
-		createSmallBlend(material, tab.itemsTab);
-		createSmallPowder(material, tab.itemsTab);
+	protected static void createItemsBasic(MMDMaterial material, TabContainer tabs) {
+		createBlend(material, tabs.itemsTab);
+		createIngot(material, tabs.itemsTab);
+		createNugget(material, tabs.itemsTab);
+		createPowder(material, tabs.itemsTab);
+		createSmallBlend(material, tabs.itemsTab);
+		createSmallPowder(material, tabs.itemsTab);
+	}
+
+	protected static void createItemsFull(String materialName, TabContainer tabs) {
+		createItemsFull(Materials.getMaterialByName(materialName), tabs);
+	}
+
+	/**
+	 * 
+	 * @param material
+	 *            The material base of these items
+	 * @param tabs
+	 *            TabContainer covering the various CreativeTabs items might be
+	 *            on
+	 */
+	protected static void createItemsFull(MMDMaterial material, TabContainer tabs) {
+		createArrow(material, tabs.toolsTab);
+		createAxe(material, tabs.toolsTab);
+		createBlend(material, tabs.itemsTab);
+		createBolt(material, tabs.toolsTab);
+		createBoots(material, tabs.itemsTab);
+		createBow(material, tabs.toolsTab);
+		createChestplate(material, tabs.itemsTab);
+		createCrackhammer(material, tabs.toolsTab);
+		createCrossbow(material, tabs.toolsTab);
+		createDoor(material, tabs.blocksTab);
+		createFishingRod(material, tabs.toolsTab);
+		createHelmet(material, tabs.toolsTab);
+		createHoe(material, tabs.toolsTab);
+		createHorseArmor(material, tabs.itemsTab);
+		createIngot(material, tabs.itemsTab);
+		createLeggings(material, tabs.itemsTab);
+		createNugget(material, tabs.itemsTab);
+		createPickaxe(material, tabs.toolsTab);
+		createPowder(material, tabs.itemsTab);
+		createShears(material, tabs.toolsTab);
+		createShield(material, tabs.itemsTab);
+		createShovel(material, tabs.toolsTab);
+		createSlab(material, tabs.blocksTab);
+		createSmallBlend(material, tabs.itemsTab);
+		createSmallPowder(material, tabs.itemsTab);
+		createSword(material, tabs.itemsTab);
+		createRod(material, tabs.itemsTab);
+		createGear(material, tabs.itemsTab);
+	}
+
+	protected static void createItemsModSupport(String materialName, TabContainer tabs) {
+		createItemsModSupport(Materials.getMaterialByName(materialName), tabs);
 	}
 
 	/**
@@ -158,53 +213,18 @@ public abstract class Items {
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
-	protected static void createItemsFull(MMDMaterial material, TabContainer tab) {
-		createArrow(material, tab.toolsTab);
-		createAxe(material, tab.toolsTab);
-		createBlend(material, tab.itemsTab);
-		createBolt(material, tab.toolsTab);
-		createBoots(material, tab.itemsTab);
-		createBow(material, tab.toolsTab);
-		createChestplate(material, tab.itemsTab);
-		createCrackhammer(material, tab.toolsTab);
-		createCrossbow(material, tab.toolsTab);
-		createDoor(material, tab.blocksTab);
-		createFishingRod(material, tab.toolsTab);
-		createHelmet(material, tab.toolsTab);
-		createHoe(material, tab.toolsTab);
-		createHorseArmor(material, tab.itemsTab);
-		createIngot(material, tab.itemsTab);
-		createLeggings(material, tab.itemsTab);
-		createNugget(material, tab.itemsTab);
-		createPickaxe(material, tab.toolsTab);
-		createPowder(material, tab.itemsTab);
-		createShears(material, tab.toolsTab);
-		createShield(material, tab.itemsTab);
-		createShovel(material, tab.toolsTab);
-		createSlab(material, tab.blocksTab);
-		createSmallBlend(material, tab.itemsTab);
-		createSmallPowder(material, tab.itemsTab);
-		createSword(material, tab.itemsTab);
-		createRod(material, tab.itemsTab);
-		createGear(material, tab.itemsTab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material base of these items
-	 * @param tab
-	 *            TabContainer covering the various CreativeTabs items might be
-	 *            on
-	 */
-	protected static void createItemsModSupport(MMDMaterial material, TabContainer tab) {
+	protected static void createItemsModSupport(MMDMaterial material, TabContainer tabs) {
 		if (Options.enableModderSupportThings()) {
-			createCasing(material, tab.itemsTab);
-			createDensePlate(material, tab.itemsTab);
+			createCasing(material, tabs.itemsTab);
+			createDensePlate(material, tabs.itemsTab);
 		}
 
-		createItemsModMekanism(material, tab);
-		createItemsModIC2(material, tab);
+		createItemsModMekanism(material, tabs);
+		createItemsModIC2(material, tabs);
+	}
+
+	protected static void createItemsModIC2(String materialName, TabContainer tabs) {
+		createItemsModIC2(Materials.getMaterialByName(materialName), tabs);
 	}
 
 	/**
@@ -215,27 +235,31 @@ public abstract class Items {
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
-	protected static void createItemsModIC2(MMDMaterial material, TabContainer tab) {
+	protected static void createItemsModIC2(MMDMaterial material, TabContainer tabs) {
 		if (material.hasOre()) {
-			createCrushed(material, tab.itemsTab);
-			createCrushedPurified(material, tab.itemsTab);
+			createCrushed(material, tabs.itemsTab);
+			createCrushedPurified(material, tabs.itemsTab);
 		}
+	}
+
+	protected static void createItemsModMekanism(String materialName, TabContainer tabs) {
+		createItemsModMekanism(Materials.getMaterialByName(materialName), tabs);
 	}
 
 	/**
 	 * 
 	 * @param material
 	 *            The material base of these items
-	 * @param tab
+	 * @param tabs
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
-	protected static void createItemsModMekanism(MMDMaterial material, TabContainer tab) {
+	protected static void createItemsModMekanism(MMDMaterial material, TabContainer tabs) {
 		if (material.hasOre()) {
-			createMekCrystal(material, tab.itemsTab);
-			createMekShard(material, tab.itemsTab);
-			createMekClump(material, tab.itemsTab);
-			createMekDirtyPowder(material, tab.itemsTab);
+			createMekCrystal(material, tabs.itemsTab);
+			createMekShard(material, tabs.itemsTab);
+			createMekClump(material, tabs.itemsTab);
+			createMekDirtyPowder(material, tabs.itemsTab);
 		}
 	}
 
@@ -292,32 +316,33 @@ public abstract class Items {
 		if (enabled && extra) {
 			Constructor<?> ctor = null;
 			Item inst = null;
+
 			try {
 				ctor = clazz.getConstructor(material.getClass());
 			} catch (NoSuchMethodException ex) {
-				BaseMetals.logger.error("Class for Item named " + name + " does not have the correct constructor", ex);
+				BaseMetals.logger.error(ERROR_ONE_PART1 + name + ERROR_ONE_PART2, ex);
 				return null;
 			} catch (SecurityException ex) {
-				BaseMetals.logger.error("Class for Item named " + name + " does not have an accessible constructor", ex);
+				BaseMetals.logger.error(ERROR_ONE_PART1 + name + ERROR_ONE_PART2, ex);
 				return null;
 			}
 
 			try {
 				inst = (Item) ctor.newInstance(material);
 			} catch (IllegalAccessException ex) {
-				BaseMetals.logger.error("Unable to create new instance of Item class for item name " + name + " of material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
 				return null;
 			} catch (IllegalArgumentException ex) {
-				BaseMetals.logger.error("Unable to create new instance of Item class for item name" + name + " of material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
 				return null;
 			} catch (InstantiationException ex) {
-				BaseMetals.logger.error("Unable to create new instance of Item class for item name " + name + " of material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
 				return null;
 			} catch (InvocationTargetException ex) {
-				BaseMetals.logger.error("Unable to create new instance of Item class for item name " + name + " of material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
 				return null;
 			} catch (ExceptionInInitializerError ex) {
-				BaseMetals.logger.error("Unable to create new instance of Item class for item name " + name + " of material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
 				return null;
 			} catch (Exception ex) {
 				BaseMetals.logger.error("Unable to create Item named " + name + " for material " + material.getCapitalizedName(), ex);
@@ -467,7 +492,7 @@ public abstract class Items {
 		return item;
 	}
 
-	// TODO: Possibly make this a placable Block
+	// TODO: Possibly make this a placeable Block
 	/**
 	 * 
 	 * @param material

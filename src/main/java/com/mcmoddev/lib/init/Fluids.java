@@ -62,6 +62,10 @@ public abstract class Fluids {
 		initDone = true;
 	}
 
+	protected static Fluid addFluid(String materialName, int density, int viscosity, int temperature, int luminosity) {
+		return addFluid(Materials.getMaterialByName(materialName), density, viscosity, temperature, luminosity);
+	}
+
 	protected static Fluid addFluid(MMDMaterial material, int density, int viscosity, int temperature, int luminosity) {
 		int tintColor;
 		if (material != null) {
@@ -88,6 +92,10 @@ public abstract class Fluids {
 
 		fluidRegistry.put(material.getName(), fluid);
 		return fluid;
+	}
+
+	protected static BlockFluidClassic addFluidBlock(String materialName) {
+		return addFluidBlock(Materials.getMaterialByName(materialName));
 	}
 
 	protected static BlockFluidClassic addFluidBlock(@Nonnull MMDMaterial material) {

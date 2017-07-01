@@ -13,14 +13,14 @@ import net.minecraftforge.common.util.EnumHelper;
 @Nullable
 public class HorseArmorUtils {
 
-	private static Map<String, HorseArmorType> TYPES = new HashMap<>();
+	private static final Map<String, HorseArmorType> TYPES = new HashMap<>();
 
 	private HorseArmorUtils() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
 
-	public static HorseArmorType getArmorType(int protection, @Nonnull String name, @Nonnull String hash) {
-		name = name.toUpperCase(Locale.ENGLISH);
+	public static HorseArmorType getArmorType(int protection, @Nonnull String lowerName, @Nonnull String hash) {
+		String name = lowerName.toUpperCase(Locale.ENGLISH);
 
 		if (HorseArmorUtils.TYPES.containsKey(name))
 			return HorseArmorUtils.TYPES.get(name);

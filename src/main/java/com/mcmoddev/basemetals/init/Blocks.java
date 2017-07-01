@@ -34,194 +34,200 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			return;
 		}
 		
-		// Vanilla Materials get their Ore and Block always
-		Materials.getMaterialByName(MaterialNames.COAL).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
-		Materials.getMaterialByName(MaterialNames.COAL).addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
-		
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.DIAMOND_BLOCK);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewBlock(Names.ORE, net.minecraft.init.Blocks.DIAMOND_ORE);
-
-		Materials.getMaterialByName(MaterialNames.EMERALD).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.EMERALD_BLOCK);
-		Materials.getMaterialByName(MaterialNames.EMERALD).addNewBlock(Names.ORE, net.minecraft.init.Blocks.EMERALD_ORE);
-
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
-
-		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.BARS, net.minecraft.init.Blocks.IRON_BARS);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.DOOR, net.minecraft.init.Blocks.IRON_DOOR);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-
-		Materials.getMaterialByName(MaterialNames.LAPIS).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.LAPIS_BLOCK);
-		Materials.getMaterialByName(MaterialNames.LAPIS).addNewBlock(Names.ORE, net.minecraft.init.Blocks.LAPIS_ORE);
-
-		Materials.getMaterialByName(MaterialNames.OBSIDIAN).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.OBSIDIAN);
-
-		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
-		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewBlock(Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
-
-		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
-		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
-
 		Materials.init();
 		ItemGroups.init();
 
+		// Vanilla Materials get their Ore and Block always
+		final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
+		final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
+		final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
+		final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
+		final MMDMaterial gold = Materials.getMaterialByName(MaterialNames.GOLD);
+		final MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
+		final MMDMaterial lapis = Materials.getMaterialByName(MaterialNames.LAPIS);
+		final MMDMaterial obsidian = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
+		final MMDMaterial quartz = Materials.getMaterialByName(MaterialNames.QUARTZ);
+		final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
+		// final MMDMaterial stone = Materials.getMaterialByName(MaterialNames.STONE);
+		// final MMDMaterial wood = Materials.getMaterialByName(MaterialNames.WOOD);
+
+		coal.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
+		coal.addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
+		
+		diamond.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.DIAMOND_BLOCK);
+		diamond.addNewBlock(Names.ORE, net.minecraft.init.Blocks.DIAMOND_ORE);
+
+		emerald.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.EMERALD_BLOCK);
+		emerald.addNewBlock(Names.ORE, net.minecraft.init.Blocks.EMERALD_ORE);
+
+		gold.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
+		gold.addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
+		gold.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
+
+		iron.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
+		iron.addNewBlock(Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
+		iron.addNewBlock(Names.BARS, net.minecraft.init.Blocks.IRON_BARS);
+		iron.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.IRON_DOOR);
+		iron.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR);
+		iron.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+
+		lapis.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.LAPIS_BLOCK);
+		lapis.addNewBlock(Names.ORE, net.minecraft.init.Blocks.LAPIS_ORE);
+
+		obsidian.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.OBSIDIAN);
+
+		quartz.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
+		quartz.addNewBlock(Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
+		// quartz.addNewBlock(Names.SLAB, net.minecraft.init.Blocks.);
+		// quartz.addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.);
+		// quartz.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.);
+
+		redstone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
+		redstone.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
+
 		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.ADAMANTINE), myTabs);
+			createBlocksFull(MaterialNames.ADAMANTINE, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.ANTIMONY)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.ANTIMONY), myTabs);
+			createBlocksFull(MaterialNames.ANTIMONY, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.AQUARIUM)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.AQUARIUM), myTabs);
+			createBlocksFull(MaterialNames.AQUARIUM, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.BISMUTH)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.BISMUTH), myTabs);
+			createBlocksFull(MaterialNames.BISMUTH, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.BRASS)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.BRASS), myTabs);
+			createBlocksFull(MaterialNames.BRASS, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.BRONZE)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.BRONZE), myTabs);
+			createBlocksFull(MaterialNames.BRONZE, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.CHARCOAL)) {
-			createBlock(Materials.getMaterialByName(MaterialNames.CHARCOAL), myTabs.blocksTab);
+			createBlock(charcoal, myTabs.blocksTab);
 		}
 
 		if (Options.materialEnabled(MaterialNames.COLDIRON)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.COLDIRON), myTabs);
+			createBlocksFull(MaterialNames.COLDIRON, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.COPPER)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.COPPER), myTabs);
+			createBlocksFull(MaterialNames.COPPER, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.CUPRONICKEL)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.CUPRONICKEL), myTabs);
+			createBlocksFull(MaterialNames.CUPRONICKEL, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.DIAMOND)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.DIAMOND);
-			createBars(material, myTabs.blocksTab);
-			createDoor(material, myTabs.blocksTab);
-			createTrapDoor(material, myTabs.blocksTab);
+			createBars(diamond, myTabs.blocksTab);
+			createDoor(diamond, myTabs.blocksTab);
+			createTrapDoor(diamond, myTabs.blocksTab);
 
-			createBlocksAdditional(material, myTabs);
+			createBlocksAdditional(diamond, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.ELECTRUM)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.ELECTRUM), myTabs);
+			createBlocksFull(MaterialNames.ELECTRUM, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.EMERALD)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.EMERALD);
+			createBars(emerald, myTabs.blocksTab);
+			createDoor(emerald, myTabs.blocksTab);
+			createTrapDoor(emerald, myTabs.blocksTab);
 
-			createBars(material, myTabs.blocksTab);
-			createDoor(material, myTabs.blocksTab);
-			createTrapDoor(material, myTabs.blocksTab);
-
-			createBlocksAdditional(material, myTabs);
+			createBlocksAdditional(emerald, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.GOLD)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.GOLD);
-			createPlate(material, myTabs.blocksTab);
-			createBars(material, myTabs.blocksTab);
-			createDoor(material, myTabs.blocksTab);
-			createTrapDoor(material, myTabs.blocksTab);
+			createPlate(gold, myTabs.blocksTab);
+			createBars(gold, myTabs.blocksTab);
+			createDoor(gold, myTabs.blocksTab);
+			createTrapDoor(gold, myTabs.blocksTab);
 
-			createBlocksAdditional(material, myTabs);
+			createBlocksAdditional(gold, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.INVAR)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.INVAR), myTabs);
+			createBlocksFull(MaterialNames.INVAR, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.IRON)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.IRON);
-			createPlate(material, myTabs.blocksTab);
+			createPlate(iron, myTabs.blocksTab);
 
-			createBlocksAdditional(material, myTabs);
+			createBlocksAdditional(iron, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.LEAD)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.LEAD), myTabs);
+			createBlocksFull(MaterialNames.LEAD, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.MERCURY)) {
-			createOre(Materials.getMaterialByName(MaterialNames.MERCURY), myTabs.blocksTab);
-			Materials.getMaterialByName(MaterialNames.MERCURY).getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
+			MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
+			createOre(mercury, myTabs.blocksTab);
+			mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
 		}
 
 		if (Options.materialEnabled(MaterialNames.MITHRIL)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.MITHRIL), myTabs);
+			createBlocksFull(MaterialNames.MITHRIL, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.NICKEL)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.NICKEL), myTabs);
+			createBlocksFull(MaterialNames.NICKEL, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.OBSIDIAN)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
+			createBars(obsidian, myTabs.blocksTab);
+			createDoor(obsidian, myTabs.blocksTab);
+			createTrapDoor(obsidian, myTabs.blocksTab);
 
-			createBars(material, myTabs.blocksTab);
-			createDoor(material, myTabs.blocksTab);
-			createTrapDoor(material, myTabs.blocksTab);
-
-			createBlocksAdditional(material, myTabs);
+			createBlocksAdditional(obsidian, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.PEWTER)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.PEWTER), myTabs);
+			createBlocksFull(MaterialNames.PEWTER, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.PLATINUM)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.PLATINUM), myTabs);
+			createBlocksFull(MaterialNames.PLATINUM, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.QUARTZ)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.QUARTZ);
-			// material.halfSlab = ;
-			// material.doubleSlab = ;
-			// material.stairs = ;
 
-			createBars(material, myTabs.blocksTab);
-			createDoor(material, myTabs.blocksTab);
-			createTrapDoor(material, myTabs.blocksTab);
+			createBars(quartz, myTabs.blocksTab);
+			createDoor(quartz, myTabs.blocksTab);
+			createTrapDoor(quartz, myTabs.blocksTab);
 
-			createButton(material, myTabs.blocksTab);
-			createLever(material, myTabs.blocksTab);
-			createPressurePlate(material, myTabs.blocksTab);
-			createWall(material, myTabs.blocksTab);
+			createButton(quartz, myTabs.blocksTab);
+			createLever(quartz, myTabs.blocksTab);
+			createPressurePlate(quartz, myTabs.blocksTab);
+			createWall(quartz, myTabs.blocksTab);
 		}
 
 		if (Options.materialEnabled(MaterialNames.SILVER)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.SILVER), myTabs);
+			createBlocksFull(MaterialNames.SILVER, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.STARSTEEL)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STARSTEEL);
+			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
 
-			createBlocksFull(material, myTabs);
-			material.getBlock(Names.BLOCK).setLightLevel(0.5f);
-			material.getBlock(Names.PLATE).setLightLevel(0.5f);
-			material.getBlock(Names.ORE).setLightLevel(0.5f);
-			material.getBlock(Names.BARS).setLightLevel(0.5f);
-			material.getBlock(Names.DOOR).setLightLevel(0.5f);
-			material.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
+			createBlocksFull(starsteel, myTabs);
+			starsteel.getBlock(Names.BLOCK).setLightLevel(0.5f);
+			starsteel.getBlock(Names.PLATE).setLightLevel(0.5f);
+			starsteel.getBlock(Names.ORE).setLightLevel(0.5f);
+			starsteel.getBlock(Names.BARS).setLightLevel(0.5f);
+			starsteel.getBlock(Names.DOOR).setLightLevel(0.5f);
+			starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
 		}
 
 		if (Options.materialEnabled(MaterialNames.STEEL)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.STEEL), myTabs);
+			createBlocksFull(MaterialNames.STEEL, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.STONE)) {
@@ -229,7 +235,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.materialEnabled(MaterialNames.TIN)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.TIN), myTabs);
+			createBlocksFull(MaterialNames.TIN, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.WOOD)) {
@@ -237,7 +243,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.materialEnabled(MaterialNames.ZINC)) {
-			createBlocksFull(Materials.getMaterialByName(MaterialNames.ZINC), myTabs);
+			createBlocksFull(MaterialNames.ZINC, myTabs);
 		}
 
 		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", null, ItemGroups.blocksTab);

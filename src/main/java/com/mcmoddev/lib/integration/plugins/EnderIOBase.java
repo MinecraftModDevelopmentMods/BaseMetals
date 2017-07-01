@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
  */
 public class EnderIOBase implements IIntegration {
 
-	public static final String PLUGIN_MODID = "EnderIO";
+	public static final String PLUGIN_MODID = "enderio";
 
 	private static boolean initDone = false;
 
@@ -25,7 +25,7 @@ public class EnderIOBase implements IIntegration {
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("enderio")) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(PLUGIN_MODID)) {
 			return;
 		}
 

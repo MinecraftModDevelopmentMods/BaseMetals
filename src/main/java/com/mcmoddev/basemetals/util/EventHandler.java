@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.util;
 
 import java.util.List;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.item.ItemMMDBlend;
@@ -9,7 +10,6 @@ import com.mcmoddev.lib.item.ItemMMDIngot;
 import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.item.ItemMMDSmallBlend;
 import com.mcmoddev.lib.material.IMMDObject;
-import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,22 +41,21 @@ public class EventHandler {
 			return;
 		}
 		EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-		if (player.getActiveItemStack() == null) {
+		if (player.getActiveItemStack() == ItemStack.EMPTY) {
 			return;
 		}
 		ItemStack activeItemStack = player.getActiveItemStack();
-		if ((damage > 0.0F) && (activeItemStack != null) && (activeItemStack.getItem() instanceof ItemMMDShield)) {
+		if ((damage > 0.0F) && (activeItemStack != ItemStack.EMPTY) && (activeItemStack.getItem() instanceof ItemMMDShield)) {
 			int i = 1 + MathHelper.floor(damage);
 			activeItemStack.damageItem(i, player);
 			if (activeItemStack.getCount() <= 0) {
 				EnumHand enumhand = player.getActiveHand();
 				ForgeEventFactory.onPlayerDestroyItem(player, activeItemStack, enumhand);
 				if (enumhand == EnumHand.MAIN_HAND) {
-					player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, (ItemStack) null);
+					player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 				} else {
-					player.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, (ItemStack) null);
+					player.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, ItemStack.EMPTY);
 				}
-				activeItemStack = null;
 				if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 					player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, 0.8F, 0.8F + player.world.rand.nextFloat() * 0.4F);
 				}
@@ -65,46 +64,52 @@ public class EventHandler {
 	}
 
 	@SubscribeEvent void event(ItemCraftedEvent event) {
+		if (!(Options.enableAchievements())) {
+			return;
+		}
+
 		final Item item = event.crafting.getItem();
 		if (!(item instanceof IMMDObject)) {
 			return;
 		}
 			
-		// final MMDMaterial material = ((IMMDObject) item).getMMDMaterial();
-		if (Options.enableAchievements) {
-			if ((item instanceof ItemMMDBlend) || (item instanceof ItemMMDSmallBlend)) {
-				event.player.addStat(Achievements.getAchievementByName("metallurgy"), 1);
-			} else if (item instanceof ItemMMDIngot) {
-				event.player.addStat(Achievements.getAchievementByName("this_is_new"), 1);
-			}
+//		final String materialName = ((IMMDObject) item).getMMDMaterial().getName();
+		if ((item instanceof ItemMMDBlend) || (item instanceof ItemMMDSmallBlend)) {
+			event.player.addStat(Achievements.getAchievementByName("metallurgy"), 1);
+		} else if (item instanceof ItemMMDIngot) {
+			event.player.addStat(Achievements.getAchievementByName("this_is_new"), 1);
 		}
 	}
 
 	@SubscribeEvent
 	void event(ItemSmeltedEvent event) {
+		if (!(Options.enableAchievements())) {
+			return;
+		}
+
 		final Item item = event.smelting.getItem();
 		if (!(item instanceof IMMDObject)) {
 			return;
 		}
 
-		final MMDMaterial material = ((IMMDObject) item).getMMDMaterial();
-		if ((item instanceof ItemMMDIngot) &&(Options.enableAchievements())) {
+		final String materialName = ((IMMDObject) item).getMMDMaterial().getName();
+		if (item instanceof ItemMMDIngot) {
 			// event.player.addStat(Achievements.getAchievementByName("this_is_new"), 1);
-			if ("aquarium".equals(material.getName())) {
+			if (materialName.equals(MaterialNames.AQUARIUM)) {
 				event.player.addStat(Achievements.getAchievementByName("aquarium_maker"), 1);
-			} else if ("brass".equals(material.getName())) {
+			} else if (materialName.equals(MaterialNames.BRASS)) {
 				event.player.addStat(Achievements.getAchievementByName("brass_maker"), 1);
-			} else if ("bronze".equals(material.getName())) {
+			} else if (materialName.equals(MaterialNames.BRONZE)) {
 				event.player.addStat(Achievements.getAchievementByName("bronze_maker"), 1);
-			} else if ("electrum".equals(material.getName())) {
+			} else if (materialName.equals(MaterialNames.ELECTRUM)) {
 				event.player.addStat(Achievements.getAchievementByName("electrum_maker"), 1);
-			} else if ("steel".equals(material.getName())) {
+			} else if (materialName.equals(MaterialNames.STEEL)) {
 				event.player.addStat(Achievements.getAchievementByName("steel_maker"), 1);
-			} else if ("invar".equals(material.getName())) {
+			} else if (materialName.equals(MaterialNames.INVAR)) {
 				event.player.addStat(Achievements.getAchievementByName("invar_maker"), 1);
-			} else if ("mithril".equals(material.getName())) {
+			} else if (materialName.equals(MaterialNames.MITHRIL)) {
 				event.player.addStat(Achievements.getAchievementByName("mithril_maker"), 1);
-			} else if ("cupronickel".equals(material.getName())) {
+			} else if (materialName.equals(MaterialNames.CUPRONICKEL)) {
 				event.player.addStat(Achievements.getAchievementByName("cupronickel_maker"), 1);
 			}
 		}
@@ -126,7 +131,7 @@ public class EventHandler {
 		ItemStack left = event.getLeft();
 		ItemStack right = event.getRight();
 
-		if (left == null || right == null || left.getCount() != 1 || right.getCount() != 1) {
+		if (left == ItemStack.EMPTY || right == ItemStack.EMPTY || left.getCount() != 1 || right.getCount() != 1) {
 			return;
 		}
 

@@ -58,7 +58,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		createOrelessMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
 
 		createOrelessMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
-			
+
 		// Mod Materials
 		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
 			createMaterial(MaterialNames.ADAMANTINE, MaterialType.METAL, 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);

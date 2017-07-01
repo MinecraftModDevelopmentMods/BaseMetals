@@ -59,61 +59,73 @@ public abstract class Blocks {
 		initDone = true;
 	}
 
-	/**
-	 * 
-	 * @param material
-	 *            The material of interest
-	 * @param tab
-	 *            Container of the CreativeTabs these will get registered in
-	 */
-	protected static void createBlocksBasic(MMDMaterial material, TabContainer tab) {
-		createBlock(material, tab.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
-		createPlate(material, tab.blocksTab);
-		createOre(material, tab.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
-		createBars(material, tab.blocksTab); // Not Iron
-		createDoor(material, tab.blocksTab); // Not Iron
-		createTrapDoor(material, tab.blocksTab); // Not Iron
+	protected static void createBlocksBasic(String materialName, TabContainer tabs) {
+		createBlocksBasic(Materials.getMaterialByName(materialName), tabs);
 	}
 
 	/**
 	 * 
 	 * @param material
 	 *            The material of interest
-	 * @param tab
+	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
-	protected static void createBlocksAdditional(MMDMaterial material, TabContainer tab) {
-		createButton(material, tab.blocksTab);
-		createSlab(material, tab.blocksTab);
-		createDoubleSlab(material, tab.blocksTab);
-		createLever(material, tab.blocksTab);
-		createPressurePlate(material, tab.blocksTab); // Not Iron, Not Gold
-		createStairs(material, tab.blocksTab);
-		createWall(material, tab.blocksTab);
+	protected static void createBlocksBasic(MMDMaterial material, TabContainer tabs) {
+		createBlock(material, tabs.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
+		createPlate(material, tabs.blocksTab);
+		createOre(material, tabs.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
+		createBars(material, tabs.blocksTab); // Not Iron
+		createDoor(material, tabs.blocksTab); // Not Iron
+		createTrapDoor(material, tabs.blocksTab); // Not Iron
+	}
+
+	protected static void createBlocksAdditional(String materialName, TabContainer tabs) {
+		createBlocksAdditional(Materials.getMaterialByName(materialName), tabs);
 	}
 
 	/**
 	 * 
 	 * @param material
 	 *            The material of interest
-	 * @param tab
+	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
-	protected static void createBlocksFull(MMDMaterial material, TabContainer tab) {
-		createBlock(material, tab.blocksTab);
-		createPlate(material, tab.blocksTab);
-		createOre(material, tab.blocksTab);
-		createBars(material, tab.blocksTab);
-		createDoor(material, tab.blocksTab);
-		createTrapDoor(material, tab.blocksTab);
+	protected static void createBlocksAdditional(MMDMaterial material, TabContainer tabs) {
+		createButton(material, tabs.blocksTab);
+		createSlab(material, tabs.blocksTab);
+		createDoubleSlab(material, tabs.blocksTab);
+		createLever(material, tabs.blocksTab);
+		createPressurePlate(material, tabs.blocksTab); // Not Iron, Not Gold
+		createStairs(material, tabs.blocksTab);
+		createWall(material, tabs.blocksTab);
+	}
 
-		createButton(material, tab.blocksTab);
-		createSlab(material, tab.blocksTab);
-		createDoubleSlab(material, tab.blocksTab);
-		createLever(material, tab.blocksTab);
-		createPressurePlate(material, tab.blocksTab);
-		createStairs(material, tab.blocksTab);
-		createWall(material, tab.blocksTab);
+	protected static void createBlocksFull(String materialName, TabContainer tabs) {
+		createBlocksFull(Materials.getMaterialByName(materialName), tabs);
+	}
+
+	/**
+	 * 
+	 * @param material
+	 *            The material of interest
+	 * @param tabs
+	 *            Container of the CreativeTabs these will get registered in
+	 */
+	protected static void createBlocksFull(MMDMaterial material, TabContainer tabs) {
+		createBlock(material, tabs.blocksTab);
+		createPlate(material, tabs.blocksTab);
+		createOre(material, tabs.blocksTab);
+		createBars(material, tabs.blocksTab);
+		createDoor(material, tabs.blocksTab);
+		createTrapDoor(material, tabs.blocksTab);
+
+		createButton(material, tabs.blocksTab);
+		createSlab(material, tabs.blocksTab);
+		createDoubleSlab(material, tabs.blocksTab);
+		createLever(material, tabs.blocksTab);
+		createPressurePlate(material, tabs.blocksTab);
+		createStairs(material, tabs.blocksTab);
+		createWall(material, tabs.blocksTab);
 	}
 
 	protected static Block addBlock(Block block, Names name, MMDMaterial material, CreativeTabs tab) {
