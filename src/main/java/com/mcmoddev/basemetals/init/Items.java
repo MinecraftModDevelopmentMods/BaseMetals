@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 public class Items extends com.mcmoddev.lib.init.Items {
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs = new TabContainer(ItemGroups.blocksTab, ItemGroups.itemsTab, ItemGroups.toolsTab);
+	private static TabContainer myTabs = ItemGroups.myTabs;
 
 	protected Items() {
 		throw new IllegalAccessError("Not a instantiable class");

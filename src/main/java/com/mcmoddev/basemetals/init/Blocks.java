@@ -20,7 +20,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	public static Block humanDetector;
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs = new TabContainer(ItemGroups.blocksTab, ItemGroups.itemsTab, ItemGroups.toolsTab);
+	private static TabContainer myTabs = ItemGroups.myTabs;
 
 	protected Blocks() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -246,7 +246,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksFull(MaterialNames.ZINC, myTabs);
 		}
 
-		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", null, ItemGroups.blocksTab);
+		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", null, myTabs.blocksTab);
 
 		initDone = true;
 	}
