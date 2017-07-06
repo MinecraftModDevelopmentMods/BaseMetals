@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.init;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -62,11 +63,11 @@ public abstract class Fluids {
 		initDone = true;
 	}
 
-	protected static Fluid addFluid(String materialName, int density, int viscosity, int temperature, int luminosity) {
+	protected static Fluid addFluid(@Nonnull final String materialName, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
 		return addFluid(Materials.getMaterialByName(materialName), density, viscosity, temperature, luminosity);
 	}
 
-	protected static Fluid addFluid(MMDMaterial material, int density, int viscosity, int temperature, int luminosity) {
+	protected static Fluid addFluid(@Nonnull MMDMaterial material, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
 		int tintColor;
 		if (material != null) {
 			if (material.getFluid() != null) {
@@ -94,11 +95,11 @@ public abstract class Fluids {
 		return fluid;
 	}
 
-	protected static BlockFluidClassic addFluidBlock(String materialName) {
+	protected static BlockFluidClassic addFluidBlock(@Nonnull final String materialName) {
 		return addFluidBlock(Materials.getMaterialByName(materialName));
 	}
 
-	protected static BlockFluidClassic addFluidBlock(@Nonnull MMDMaterial material) {
+	protected static BlockFluidClassic addFluidBlock(@Nonnull final MMDMaterial material) {
 
 		if (material == null) {
 			return null;
@@ -111,7 +112,11 @@ public abstract class Fluids {
 		BlockFluidClassic block;
 		String name = material.getName();
 
-		if (!MaterialNames.MERCURY.equals(name)) {
+		if (name == null) {
+			return null;
+		}
+
+		if (!name.equals(MaterialNames.MERCURY)) {
 			block = new BlockFluidClassic(material.getFluid(), Material.LAVA);
 		} else {
 			block = new InteractiveFluidBlock(getFluidByName(name), false,
@@ -146,7 +151,7 @@ public abstract class Fluids {
 	 *            The name of the fluid in question
 	 * @return The fluid matching that name, or null if there isn't one
 	 */
-	public static Fluid getFluidByName(String name) {
+	public static Fluid getFluidByName(@Nonnull final String name) {
 		return fluidRegistry.get(name);
 	}
 
@@ -154,17 +159,17 @@ public abstract class Fluids {
 	 * This is the reverse of the getFluidByName(...) method, returning the
 	 * registered name of an fluid instance (Base Metals fluids only).
 	 *
-	 * @param b
-	 *            The item in question
-	 * @return The name of the item, or null if the item is not a Base Metals
-	 *         fluid block.
+	 * @param fluid
+	 *            The fluid in question
+	 * @return The name of the fluid, or null if the item is not a Base Metals
+	 *         fluid.
 	 */
-	public static String getNameOfFluid(Fluid b) {
-		return fluidRegistry.inverse().get(b);
+	public static String getNameOfFluid(@Nonnull final Fluid fluid) {
+		return fluidRegistry.inverse().get(fluid);
 	}
 
 	public static Map<String, Fluid> getFluidRegistry() {
-		return fluidRegistry;
+		return Collections.unmodifiableMap(fluidRegistry);
 	}
 
 	/**
@@ -176,7 +181,7 @@ public abstract class Fluids {
 	 *            The name of the fluid block in question
 	 * @return The fluid block matching that name, or null if there isn't one
 	 */
-	public static BlockFluidBase getFluidBlockByName(String name) {
+	public static BlockFluidBase getFluidBlockByName(@Nonnull String name) {
 		return fluidBlockRegistry.get(name);
 	}
 
@@ -185,16 +190,16 @@ public abstract class Fluids {
 	 * registered name of an fluid block instance (Base Metals fluid blocks
 	 * only).
 	 *
-	 * @param b
-	 *            The item in question
+	 * @param block
+	 *            The fluid block in question
 	 * @return The name of the item, or null if the item is not a Base Metals
 	 *         fluid block.
 	 */
-	public static String getNameOfFluidBlock(BlockFluidBase b) {
-		return fluidBlockRegistry.inverse().get(b);
+	public static String getNameOfFluidBlock(@Nonnull BlockFluidBase block) {
+		return fluidBlockRegistry.inverse().get(block);
 	}
 
 	public static Map<String, BlockFluidBase> getFluidBlockRegistry() {
-		return fluidBlockRegistry;
+		return Collections.unmodifiableMap(fluidBlockRegistry);
 	}
 }

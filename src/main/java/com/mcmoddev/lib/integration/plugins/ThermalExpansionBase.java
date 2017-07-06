@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -37,7 +39,7 @@ public class ThermalExpansionBase implements IIntegration {
 		initDone = true;
 	}
 
-	public static void addCompactorPressRecipe(int energy, ItemStack input, ItemStack output) {
+	public static void addCompactorPressRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
 		if (input == null || output == null) {
 			return;
 		}
@@ -46,7 +48,7 @@ public class ThermalExpansionBase implements IIntegration {
 			return;
 		}
 
-		NBTTagCompound toSend = new NBTTagCompound();
+		final NBTTagCompound toSend = new NBTTagCompound();
 
 		toSend.setInteger(ENERGY, energy);
 		toSend.setTag(INPUT, new NBTTagCompound());
@@ -56,7 +58,7 @@ public class ThermalExpansionBase implements IIntegration {
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "addcompactorpressrecipe", toSend);
 	}
 
-	public static void addCompactorStorageRecipe(int energy, ItemStack input, ItemStack output) {
+	public static void addCompactorStorageRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
 		if (input == null || output == null) {
 			return;
 		}
@@ -65,7 +67,7 @@ public class ThermalExpansionBase implements IIntegration {
 			return;
 		}
 
-		NBTTagCompound toSend = new NBTTagCompound();
+		final NBTTagCompound toSend = new NBTTagCompound();
 
 		toSend.setInteger(ENERGY, energy);
 		toSend.setTag(INPUT, new NBTTagCompound());
@@ -76,16 +78,16 @@ public class ThermalExpansionBase implements IIntegration {
 
 	}
 
-	public static void addFurnace(boolean enabled, String materialName) {
+	public static void addFurnace(@Nonnull final boolean enabled, @Nonnull final String materialName) {
 		// anything we'd want to add here is likely already pulled in by TE's
 		// import of all vanilla furnace recipes.
 		return;
 /*		if (enabled) {
-			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
-			
+			final MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+
 			 * Ore -> Ingot default, according to TE source, is 2000
 			 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
-			 
+
 			final int ENERGY_ORE = 2000;
 			final int ENERGY_DUST = 1400;
 			ItemStack ore;
@@ -101,20 +103,23 @@ public class ThermalExpansionBase implements IIntegration {
 				return;
 			}
 
-			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT), 1, 0);
+			final ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT), 1, 0);
 			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
 			if (Options.thingEnabled("Basics")) {
 				if (mat.hasItem(Names.POWDER) && mat.getItem(Names.POWDER) != null) {
-					ItemStack dust = new ItemStack(mat.getItem(Names.POWDER), 1, 0);
+					final ItemStack dust = new ItemStack(mat.getItem(Names.POWDER), 1, 0);
 					ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
 				}
 			}
 		}
 */	}
 
-	public static void addCrucible(boolean enabled, String materialName) {
-		if (enabled) {
-			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+	public static void addCrucible(@Nonnull final boolean enabled, @Nonnull final String materialName) {
+		addCrucible(enabled, Materials.getMaterialByName(materialName.toLowerCase()));
+	}
+
+	public static void addCrucible(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
+		if ((enabled) && (material != null)) {
 			/*
 			 * Default power, according to TE source, is 8000
 			 * This is used for Pyrotheum, Cryotheum, Aerotheum, Petrotheum and Redstone.
@@ -125,61 +130,71 @@ public class ThermalExpansionBase implements IIntegration {
 			 */
 			final int ENERGY_QTY = 8000;
 
-			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT));
-			FluidStack oreFluid = FluidRegistry.getFluidStack(mat.getName(), 288);
-			FluidStack baseFluid = FluidRegistry.getFluidStack(mat.getName(), 144);
+			final String materialName = material.getName();
+			final ItemStack ingot = new ItemStack(material.getItem(Names.INGOT));
+			final Item dust = material.getItem(Names.POWDER);
+			final FluidStack oreFluid = FluidRegistry.getFluidStack(materialName, 288);
+			final FluidStack baseFluid = FluidRegistry.getFluidStack(materialName, 144);
+			final FluidStack nuggetFluid = FluidRegistry.getFluidStack(materialName, 16);
 
-			if (mat.getBlock(Names.ORE) != null) {
-				ItemStack ore = new ItemStack(mat.getBlock(Names.ORE));
+			if (material.getBlock(Names.ORE) != null) {
+				final ItemStack ore = new ItemStack(material.getBlock(Names.ORE));
 				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ore, oreFluid);
 			}
 
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ingot, baseFluid);
 
-			if (Options.thingEnabled("Basics") && mat.getItem(Names.POWDER) != null) {
-				ItemStack dust = new ItemStack(mat.getItem(Names.POWDER));
-				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dust, baseFluid);
+			if (Options.thingEnabled("Basics") && dust != null) {
+				final ItemStack dustStack = new ItemStack(dust);
+				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dustStack, baseFluid);
 			}
 
-			addCrucibleExtra(Options.thingEnabled("Plate"), Item.getItemFromBlock(mat.getBlock(Names.PLATE)), FluidRegistry.getFluidStack(mat.getName(), 144), ENERGY_QTY);
-			addCrucibleExtra(Options.thingEnabled("Basics"), mat.getItem(Names.NUGGET), FluidRegistry.getFluidStack(mat.getName(), 16), ENERGY_QTY);
+			addCrucibleExtra(Options.thingEnabled("Plate"), Item.getItemFromBlock(material.getBlock(Names.PLATE)), baseFluid, ENERGY_QTY);
+			addCrucibleExtra(Options.thingEnabled("Basics"), material.getItem(Names.NUGGET), nuggetFluid, ENERGY_QTY);
 		}
 	}
 
-	private static void addCrucibleExtra(boolean enabled, Item input, FluidStack output, int energy) {
-		if (enabled && input != null && output != null) {
-			ItemStack inItems = new ItemStack(input);
+	private static void addCrucibleExtra(@Nonnull final boolean enabled, @Nonnull final Item input, @Nonnull final FluidStack output, @Nonnull final int energy) {
+		if ((enabled) && (input != null && output != null)) {
+			final ItemStack inItems = new ItemStack(input);
 			ThermalExpansionHelper.addCrucibleRecipe(energy, inItems, output);
 		}
 	}
 
-	public static void addPlatePress(boolean enabled, String materialName) {
-		if (enabled && Options.thingEnabled("Plate")) {
-			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+	public static void addPlatePress(@Nonnull final boolean enabled, @Nonnull final String materialName) {
+		addPlatePress(enabled, Materials.getMaterialByName(materialName.toLowerCase()));
+	}
+
+	public static void addPlatePress(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
+		if ((enabled) && (Options.thingEnabled("Plate") && material != null)) {
 
 			/*
 			 * Compactors default is 4000RF per operation
 			 */
 			final int ENERGY_QTY = 4000;
-			addCompactorPressRecipe(ENERGY_QTY, new ItemStack(mat.getItem(Names.INGOT)), new ItemStack(mat.getBlock(Names.PLATE)));
+			addCompactorPressRecipe(ENERGY_QTY, new ItemStack(material.getItem(Names.INGOT)), new ItemStack(material.getBlock(Names.PLATE)));
 		}
 	}
 
-	public static void addPressStorage(boolean enabled, String materialName) {
-		if (enabled) {
-			MMDMaterial mat = Materials.getMaterialByName(materialName.toLowerCase());
+	public static void addPressStorage(@Nonnull final boolean enabled, @Nonnull final String materialName) {
+		addPressStorage(enabled, Materials.getMaterialByName(materialName.toLowerCase()));
+	}
+
+	public static void addPressStorage(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
+		if (enabled && material != null) {
 
 			/*
 			 * Compactors default is 4000RF per operation
 			 */
 			final int ENERGY_QTY = 4000;
-			ItemStack ingots = new ItemStack(mat.getItem(Names.INGOT), 9);
-			ItemStack nuggets = new ItemStack(mat.getItem(Names.NUGGET), 9);
-			ItemStack block = new ItemStack(mat.getBlock(Names.BLOCK), 1);
-			ItemStack ingot = new ItemStack(mat.getItem(Names.INGOT), 1);
+			final Item ingot = material.getItem(Names.INGOT);
+			final ItemStack ingotsStack = new ItemStack(ingot, 9);
+			final ItemStack nuggetsStack = new ItemStack(material.getItem(Names.NUGGET), 9);
+			final ItemStack blockStack = new ItemStack(material.getBlock(Names.BLOCK), 1);
+			final ItemStack ingotStack = new ItemStack(ingot, 1);
 
-			addCompactorStorageRecipe(ENERGY_QTY, ingots, block);
-			addCompactorStorageRecipe(ENERGY_QTY, nuggets, ingot);
+			addCompactorStorageRecipe(ENERGY_QTY, ingotsStack, blockStack);
+			addCompactorStorageRecipe(ENERGY_QTY, nuggetsStack, ingotStack);
 		}
 	}
 }

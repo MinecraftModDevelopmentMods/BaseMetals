@@ -2,6 +2,9 @@ package com.mcmoddev.lib.init;
 
 import java.util.Comparator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.init.Items;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -31,9 +34,8 @@ public class MMDCreativeTab extends CreativeTabs {
 		}
 	};
 
-	public MMDCreativeTab(String unlocalizedName, boolean searchable, ItemStack iconItem) {
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final ItemStack iconItem) {
 		super(unlocalizedName);
-		// this.itemSupplier = itemSupplier;
 		this.iconItem = iconItem;
 		this.searchable = searchable;
 		this.setSortingAlgorithm(DEFAULT);
@@ -48,7 +50,7 @@ public class MMDCreativeTab extends CreativeTabs {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void displayAllRelevantItems(NonNullList<ItemStack> itemList) {
+	public void displayAllRelevantItems(@Nonnull final NonNullList<ItemStack> itemList) {
 		super.displayAllRelevantItems(itemList);
 		if (comparator != null) {
 			itemList.sort(comparator);
@@ -64,11 +66,11 @@ public class MMDCreativeTab extends CreativeTabs {
 		return this.iconItem;
 	}
 
-	public void setSortingAlgorithm(Comparator<ItemStack> comparator) {
+	public void setSortingAlgorithm(@Nonnull final Comparator<ItemStack> comparator) {
 		this.comparator = comparator;
 	}
 
-	public void setTabIconItem(ItemStack iconItem) {
+	public void setTabIconItem(@Nonnull final ItemStack iconItem) {
 		this.iconItem = iconItem;
 	}
 }

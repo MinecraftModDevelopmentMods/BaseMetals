@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -73,11 +75,11 @@ public class MekanismBase implements IIntegration {
 		initDone = true;
 	}
 
-	protected static void addGassesForMaterial(String materialName) {
+	protected static void addGassesForMaterial(@Nonnull final String materialName) {
 		addGassesForMaterial(Materials.getMaterialByName(materialName));
 	}
 
-	protected static void addGassesForMaterial(MMDMaterial material) {
+	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
 		final Gas gas1 = new Gas(material.getName(), material.getName() + "-Icon");
 		gas1.setUnlocalizedName("gas" + material.getName());
 		GasRegistry.register(gas1);
@@ -87,21 +89,22 @@ public class MekanismBase implements IIntegration {
 		GasRegistry.register(gas2);
 	}
 
-	protected static void addOreMultiplicationRecipes(String materialName) {
+	protected static void addOreMultiplicationRecipes(@Nonnull final String materialName) {
 		addOreMultiplicationRecipes(Materials.getMaterialByName(materialName));
 	}
 
-	protected static void addOreMultiplicationRecipes(MMDMaterial material) {
+	protected static void addOreMultiplicationRecipes(@Nonnull final MMDMaterial material) {
 		// Combiner 8 dust to 1 ore
 		// Clump to dirty IC2: Macerator)
-		Item clump = material.getItem(Names.CLUMP);
-		Item powderDirty = material.getItem(Names.POWDER_DIRTY);
-		Item ingot = material.getItem(Names.INGOT);
-		Item powder = material.getItem(Names.POWDER);
-		Block ore = material.getBlock(Names.ORE);
-		Item shard = material.getItem(Names.SHARD);
-		Item crystal = material.getItem(Names.CRYSTAL);
-		
+		final Item clump = material.getItem(Names.CLUMP);
+		final Item powderDirty = material.getItem(Names.POWDER_DIRTY);
+		final Item ingot = material.getItem(Names.INGOT);
+		final Item powder = material.getItem(Names.POWDER);
+		final Block ore = material.getBlock(Names.ORE);
+		final Item shard = material.getItem(Names.SHARD);
+		// TODO: check specifically for mek crystal type
+		final Item crystal = material.getItem(Names.CRYSTAL);
+
 		if ((clump != null) && (powderDirty != null)) {
 			addCrusherRecipe(new ItemStack(clump), new ItemStack(powderDirty));
 		}
@@ -146,136 +149,147 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addMetallurgicInfuserRecipe() {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 		// TODO
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "MetallurgicInfuserRecipe", recipeTag);
 	}
 
-	protected static void addCrusherRecipe(ItemStack inputItem, ItemStack outputItem) {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+	protected static void addCrusherRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+		final NBTTagCompound recipeTag = new NBTTagCompound();
+
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
+
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "CrusherRecipe", recipeTag);
 	}
 
-	protected static void addEnrichmentChamberRecipe(ItemStack inputItem, ItemStack outputItem) {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+	protected static void addEnrichmentChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+		final NBTTagCompound recipeTag = new NBTTagCompound();
+
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
+
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "EnrichmentChamberRecipe", recipeTag);
 	}
 
-	protected static void addPurificationChamberRecipe(ItemStack inputItem, ItemStack outputItem) {
+	protected static void addPurificationChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
 		// Oxygen
-		String inputGas = "oxygen";
-		int inputGasQty = 1000;
+		final String inputGas = "oxygen";
+		final int inputGasQty = 1000;
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		NBTTagCompound recipeTag = new NBTTagCompound();
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(GAS_TYPE, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "PurificationChamberRecipe", recipeTag);
 	}
 
-	protected static void addChemicalInjectionChamberRecipe(ItemStack inputItem, ItemStack outputItem) {
+	protected static void addChemicalInjectionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
 		// Hydrogen Chloride
-		String inputGas = "hydrogenChloride";
-		int inputGasQty = 1000;
+		final String inputGas = "hydrogenChloride";
+		final int inputGasQty = 1000;
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		NBTTagCompound recipeTag = new NBTTagCompound();
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(GAS_TYPE, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
+
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ChemicalInjectionChamberRecipe", recipeTag);
 	}
 
 	// 5x, Slurry to Crystal
-	protected static void addChemicalCrystallizerRecipe(String inputGas, int inputGasQty, ItemStack outputItem) {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+	protected static void addChemicalCrystallizerRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem) {
+		final NBTTagCompound recipeTag = new NBTTagCompound();
+
 		recipeTag.setTag(INPUT, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
+
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ChemicalCrystallizerRecipe", recipeTag);
 	}
 
 	// 5x, Slurry to Clean Slurry
-	protected static void addChemicalWasherRecipe(String inputGas, int inputGasQty, String outputGas) {
+	protected static void addChemicalWasherRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final String outputGas) {
 		// Water
-		FluidStack inputFluid = FluidRegistry.getFluidStack("water", 1000);
+		final FluidStack inputFluid = FluidRegistry.getFluidStack("water", 1000);
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		NBTTagCompound recipeTag = new NBTTagCompound();
 		recipeTag.setTag(INPUT, inputFluid.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(GAS_TYPE, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
 		recipeTag.setTag(GAS_OUTPUT, new GasStack(GasRegistry.getGas(outputGas), 1000).write(new NBTTagCompound()));
+
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ChemicalWasherChamberRecipe", recipeTag);
 	}
 
 	// 5x, Ore to Slurry
-	protected static void addChemicalDissolutionChamberRecipe(ItemStack inputItem, String outputGas) {
+	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas) {
 		// Sulphuric Acid
-		String inputGas = "sulphuricAcid";
-		int inputGasQty = 1000;
-
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final String inputGas = "sulphuricAcid";
+		final int inputGasQty = 1000;
+		final NBTTagCompound recipeTag = new NBTTagCompound();
+	
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(GAS_TYPE, new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
 		recipeTag.setTag(GAS_OUTPUT, new GasStack(GasRegistry.getGas(outputGas), 1000).write(new NBTTagCompound()));
+
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ChemicalDissolutionChamberRecipe", recipeTag);
 	}
 
-	protected static void addPRCRecipe(ItemStack inputItem, FluidStack inputFluid, String inputGas, int inputGasQty, ItemStack outputItem, String outputGas, int outputGasQty) {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem, @Nonnull final FluidStack inputFluid, @Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
+		final NBTTagCompound recipeTag = new NBTTagCompound();
+
 		recipeTag.setTag(ITEM_INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(FLUID_INPUT, inputFluid.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(GAS_INPUT,	new GasStack(GasRegistry.getGas(inputGas), inputGasQty).write(new NBTTagCompound()));
 		recipeTag.setTag(ITEM_OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(GAS_OUTPUT, new GasStack(GasRegistry.getGas(outputGas), outputGasQty).write(new NBTTagCompound()));
+
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "PressurizedReactionChamberRecipe", recipeTag);
 	}
 
 	protected static void addOsmiumCompressorRecipe() {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 		// TODO
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "OsmiumCompressorRecipe", recipeTag);
 	}
 
 	protected static void addCombinerRecipe() {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 		// TODO
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "CombinerRecipe", recipeTag);
 	}
 
 	protected static void addChemicalOxidizerRecipe() {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 		// TODO
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ChemicalOxidizerRecipe", recipeTag);
 	}
 
 	protected static void addChemicalInfuserRecipe() {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 		// TODO
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ChemicalInfuserRecipe", recipeTag);
 	}
 
 	protected static void addPrecisionSawmillRecipe() {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 		// TODO
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "PrecisionSawmillRecipe", recipeTag);
 	}
 
 	protected static void addElectrolyticSeparatorRecipe() {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 		// TODO
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ElectrolyticSeparatorRecipe", recipeTag);
 	}
 
 	protected static void addThermalEvaporationRecipe() {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 		// TODO
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "ThermalEvaporationRecipe", recipeTag);
 	}
 
 	protected static void addSolarNeutronRecipe() {
-		NBTTagCompound recipeTag = new NBTTagCompound();
+		final NBTTagCompound recipeTag = new NBTTagCompound();
 		// TODO
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "SolarNeutronRecipe", recipeTag);
 	}

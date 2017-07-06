@@ -1,8 +1,11 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.lib.integration.IIntegration;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class DenseOresBase implements IIntegration {
@@ -20,6 +23,11 @@ public class DenseOresBase implements IIntegration {
 		initDone = true;
 	}
 
+	protected static void registerOre(@Nonnull final String name, @Nonnull final String underlying, @Nonnull final int meta) {
+		final String modID = Loader.instance().activeModContainer().getModId();
+		registerOre(name, modID, underlying, meta);
+	}
+
 	/**
 	 * Register a single ore
 	 * 
@@ -34,8 +42,9 @@ public class DenseOresBase implements IIntegration {
 	 *            The metadata value for this ore in the source block
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
-	public static void registerOre(String name, String modID, String underlying, int meta) {
-		NBTTagCompound mess = new NBTTagCompound();
+	protected static void registerOre(@Nonnull final String name, @Nonnull final String modID, @Nonnull final String underlying, @Nonnull final int meta) {
+		final NBTTagCompound mess = new NBTTagCompound();
+
 		mess.setString("baseBlock", String.format("%s:%s", modID, name));
 		mess.setInteger("baseBlockMeta", meta);
 		mess.setString("underlyingBlockTexture", String.format("blocks/%s", underlying));
@@ -45,6 +54,11 @@ public class DenseOresBase implements IIntegration {
 		mess.setString("config_entry", String.format("%s %s ore", modID, name));
 
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "addDenseOre", mess);
+	}
+
+	protected static void registerNetherOre(@Nonnull final String name, @Nonnull final int meta) {
+		final String modID = Loader.instance().activeModContainer().getModId();
+		registerOre(String.format("nether_%s", name), modID, "netherrack", meta);
 	}
 
 	/**
@@ -59,8 +73,13 @@ public class DenseOresBase implements IIntegration {
 	 *            The metadata value for this ore in the source block
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
-	public static void registerNetherOre(String name, String modID, int meta) {
+	protected static void registerNetherOre(@Nonnull final String name, @Nonnull final String modID, @Nonnull final int meta) {
 		registerOre(String.format("nether_%s", name), modID, "netherrack", meta);
+	}
+
+	protected static void registerEndOre(@Nonnull final String name, @Nonnull final int meta) {
+		final String modID = Loader.instance().activeModContainer().getModId();
+		registerOre(String.format("end_%s", name), modID, "end_stone", meta);
 	}
 
 	/**
@@ -75,7 +94,7 @@ public class DenseOresBase implements IIntegration {
 	 *            The metadata value for this ore in the source block
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
-	public static void registerEndOre(String name, String modID, int meta) {
+	protected static void registerEndOre(@Nonnull final String name, @Nonnull final String modID, @Nonnull final int meta) {
 		registerOre(String.format("end_%s", name), modID, "end_stone", meta);
 	}
 }
