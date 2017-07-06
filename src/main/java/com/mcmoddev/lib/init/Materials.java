@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -30,10 +32,10 @@ public abstract class Materials {
 
 	private static boolean initDone = false;
 
-	private static Map<String, MMDMaterial> allMaterials = new HashMap<>();
-	private static Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
-	private static Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
-	private static Map<String, Set<MMDMaterial>> modSourceMaterialMap = new HashMap<>();
+	private static final Map<String, MMDMaterial> allMaterials = new HashMap<>();
+	private static final Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
+	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
+	private static final Map<String, Set<MMDMaterial>> modSourceMaterialMap = new HashMap<>();
 
 	protected Materials() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -68,7 +70,7 @@ public abstract class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createOrelessMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+	protected static MMDMaterial createOrelessMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
 		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, false, false);
 
 		return registerMaterial(material);
@@ -92,7 +94,7 @@ public abstract class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+	protected static MMDMaterial createMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
 		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, true, false);
 
 		return registerMaterial(material);
@@ -116,7 +118,7 @@ public abstract class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+	protected static MMDMaterial createAlloyMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
 		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, false, true);
 
 		return registerMaterial(material);
@@ -140,7 +142,7 @@ public abstract class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+	protected static MMDMaterial createSpecialMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
 		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, true, true);
 
 		return registerMaterial(material);
@@ -164,7 +166,7 @@ public abstract class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createOrelessRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+	protected static MMDMaterial createOrelessRareMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
 		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, false, false);
 
 		return registerMaterial(material);
@@ -188,7 +190,7 @@ public abstract class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createRareMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+	protected static MMDMaterial createRareMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
 		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, true, false);
 
 		return registerMaterial(material);
@@ -212,7 +214,7 @@ public abstract class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createRareAlloyMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+	protected static MMDMaterial createRareAlloyMaterial(@Nonnull final String name, @Nonnull final MaterialType type, final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
 		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, false, true);
 
 		return registerMaterial(material);
@@ -236,7 +238,7 @@ public abstract class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createRareSpecialMaterial(String name, MaterialType type, double hardness, double strength, double magic, int tintColor) {
+	protected static MMDMaterial createRareSpecialMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
 		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, true, true);
 
 		return registerMaterial(material);
@@ -249,7 +251,7 @@ public abstract class Materials {
 	 *            the material to register
 	 * @return the material
 	 */
-	protected static MMDMaterial registerMaterial(MMDMaterial material) {
+	protected static MMDMaterial registerMaterial(@Nonnull final MMDMaterial material) {
 
 		if (material == null) {
 			BaseMetals.logger.error("Null material passed to registermaterial(), Don't do that!");
@@ -293,32 +295,31 @@ public abstract class Materials {
 	}
 
 	/**
-	 * Gets the armor material for a given metal
+	 * Gets the armor material for a given material
 	 *
 	 * @param material
-	 *            The metal of interest
-	 * @return The armor material for this metal, or null if there isn't one
+	 *            The material of interest
+	 * @return The armor material for this material, or null if there isn't one
 	 */
-	public static ArmorMaterial getArmorMaterialFor(MMDMaterial material) {
+	public static ArmorMaterial getArmorMaterialFor(@Nonnull final MMDMaterial material) {
 		return armorMaterialMap.get(material);
 	}
 
 	/**
-	 * Gets the tool material for a given metal
+	 * Gets the tool material for a given material
 	 *
 	 * @param material
 	 *            The metal of interest
-	 * @return The tool material for this metal, or null if there isn't one
+	 * @return The tool material for this material, or null if there isn't one
 	 */
-	public static ToolMaterial getToolMaterialFor(MMDMaterial material) {
+	public static ToolMaterial getToolMaterialFor(@Nonnull final MMDMaterial material) {
 		return toolMaterialMap.get(material);
 	}
 
 	/**
-	 * Returns a list of all materials in Base Metals. All of the materials in
-	 * this list are also available as static public members of this class.
+	 * Returns a list of all materials in Base Metals.
 	 *
-	 * @return A Collection of MetalMaterial instances.
+	 * @return A Collection of MMDMaterial instances.
 	 */
 	public static Collection<MMDMaterial> getAllMaterials() {
 		return allMaterials.values();
@@ -332,7 +333,7 @@ public abstract class Materials {
 	 * @return The material representing the named material, or null if no
 	 *         materials have been registered under that name.
 	 */
-	public static MMDMaterial getMaterialByName(String materialName) {
+	public static MMDMaterial getMaterialByName(@Nonnull final String materialName) {
 		return allMaterials.get(materialName);
 	}
 
@@ -344,7 +345,7 @@ public abstract class Materials {
 	 * @return an immutable collection representing all the materials registered
 	 *         by a given mod or the "empty set" if the modId is not recorded.
 	 */
-	public static Collection<MMDMaterial> getMaterialsByMod(String modId) {
+	public static Collection<MMDMaterial> getMaterialsByMod(@Nonnull final String modId) {
 		if (modSourceMaterialMap.containsKey(modId)) {
 			return Collections.unmodifiableSet(modSourceMaterialMap.get(modId));
 		} else {

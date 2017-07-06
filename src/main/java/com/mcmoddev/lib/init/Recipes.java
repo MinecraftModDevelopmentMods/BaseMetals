@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.init;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.mcmoddev.lib.init.Materials;
@@ -137,6 +139,10 @@ public abstract class Recipes {
 	protected static void initGeneralRecipes() {
 
 		for (final MMDMaterial material : Materials.getAllMaterials()) {
+			if (material == null) {
+				return;
+			}
+
 			// first we handle any recipes possibly involving transformations of an ore-block
 			makePowderRecipes(material); // this also handles ingot->powder, block->powder, etc..
 			makeIngotRecipes(material); // nugget->ingot, ore->ingot, powder->ingot
@@ -176,7 +182,11 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void makeShieldRecipes(MMDMaterial material) {
+	private static void makeShieldRecipes(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 		final String repairSort = "mmd:shieldrepair";
 		final String upgradeSort = "mmd:shieldupgrade";
@@ -198,7 +208,11 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void makeBowRecipes(MMDMaterial material) {
+	private static void makeBowRecipes(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.ARROW)) {
@@ -213,7 +227,11 @@ public abstract class Recipes {
 
 	}
 
-	private static void makeCrossbowRecipes(MMDMaterial material) {
+	private static void makeCrossbowRecipes(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 
 		if ((material.hasItem(Names.GEAR)) && (material.hasItem(Names.CROSSBOW))) {
@@ -227,7 +245,11 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void makeNuggetRecipes(MMDMaterial material) {
+	private static void makeNuggetRecipes(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.NUGGET)) {
@@ -249,7 +271,11 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void makeModRecipes(MMDMaterial material) {
+	private static void makeModRecipes(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.ROD)) {
@@ -265,7 +291,11 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void makeSimpleRecipes(MMDMaterial material) {
+	private static void makeSimpleRecipes(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasBlock(Names.BLOCK)) {
@@ -337,7 +367,11 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void makeBlockRecipes(MMDMaterial material) {
+	private static void makeBlockRecipes(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasBlock(Names.BLOCK) && (material.getBlock(Names.BLOCK) instanceof IMMDObject) && (material.hasItem(Names.INGOT))) {
@@ -346,7 +380,11 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void makeIngotRecipes(MMDMaterial material) {
+	private static void makeIngotRecipes(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 		// NOTE: smelting XP is based on output item, not input item
 		final float oreSmeltXP = material.getOreSmeltXP();
@@ -369,7 +407,11 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void makePowderRecipes(MMDMaterial material) {
+	private static void makePowderRecipes(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.POWDER)) {
@@ -392,7 +434,11 @@ public abstract class Recipes {
 		}
 	}
 
-	private static void generateBaseTools(final MMDMaterial material) {
+	private static void generateBaseTools(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		final String oreDictName = material.getCapitalizedName();
 
 		if ((material.hasItem(Names.BOOTS)) && (material.getItem(Names.BOOTS) instanceof IMMDObject)) {
@@ -457,7 +503,11 @@ public abstract class Recipes {
 		}
 	}
 
-	protected static void furnaceSpecial(final MMDMaterial material) {
+	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
+		if (material == null) {
+			return;
+		}
+
 		// Furnace cheese all the things!
 		// TODO: First remove the vanilla recipes
 		if ((material.hasItem(Names.INGOT)) && !(material.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject) && material.hasOre()) {
@@ -533,12 +583,12 @@ public abstract class Recipes {
 
 	}
 
-	protected static void addAdditionalOredicts(MMDMaterial material, String oreDictName) {
+	protected static void addAdditionalOredicts(@Nonnull final MMDMaterial material, @Nonnull final String oreDictNameIn) {
 		if (material == null) {
 			return;
 		}
 
-		oreDictName = StringUtils.capitalize(oreDictName);
+		String oreDictName = StringUtils.capitalize(oreDictNameIn);
 
 		if ((material.hasOre()) && (material.hasBlock(Names.ORE))) {
 			OreDictionary.registerOre(Oredicts.ORE + oreDictName, material.getBlock(Names.ORE));
@@ -593,7 +643,7 @@ public abstract class Recipes {
 		}
 	}
 
-	protected static void addAlloyRecipe(MMDMaterial material, int outputQty, Object... ingredients) {
+	protected static void addAlloyRecipe(@Nonnull final MMDMaterial material, @Nonnull final int outputQty, @Nonnull final Object... ingredients) {
 		if (material == null) {
 			return;
 		}
@@ -602,24 +652,28 @@ public abstract class Recipes {
 			addSimpleAlloyRecipe(material, outputQty, (String) ingredients[0], (String) ingredients[1]);
 		}
 
-		Object[] dustIngredients = (new String[ingredients.length]);
-		Object[] tinyDustIngredients = new String[ingredients.length];
+		final Object[] dustIngredients = (new String[ingredients.length]);
+		final Object[] tinyDustIngredients = (new String[ingredients.length]);
 
 		for (int i = 0; i < ingredients.length; i++) {
-			dustIngredients[i] = String.format("%s%s", Oredicts.DUST, StringUtils.capitalize((String) ingredients[i]));
-			tinyDustIngredients[i] = String.format("%s%s", Oredicts.DUST_TINY, StringUtils.capitalize((String) ingredients[i]));
+			final String oreDictName = StringUtils.capitalize((String) ingredients[i]);
+			dustIngredients[i] = String.format("%s%s", Oredicts.DUST, oreDictName);
+			tinyDustIngredients[i] = String.format("%s%s", Oredicts.DUST_TINY, oreDictName);
 		}
 
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.BLEND), outputQty), dustIngredients));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLBLEND), outputQty), tinyDustIngredients));
 	}
 
-	protected static void addSimpleAlloyRecipe(MMDMaterial material, int outputQty, String oredict1, String oredict2) {
+	protected static void addSimpleAlloyRecipe(@Nonnull final MMDMaterial material, @Nonnull final int outputQty, @Nonnull final String oredict1In, @Nonnull final String oredict2In) {
 		if (material == null) {
 			return;
 		}
 
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.BLEND), outputQty), Oredicts.DUST + StringUtils.capitalize(oredict1), Oredicts.DUST + StringUtils.capitalize(oredict2)));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLBLEND), outputQty), Oredicts.DUST_TINY + StringUtils.capitalize(oredict1), Oredicts.DUST_TINY + StringUtils.capitalize(oredict2)));
+		final String oredict1 = StringUtils.capitalize(oredict1In);
+		final String oredict2 = StringUtils.capitalize(oredict2In);
+
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.BLEND), outputQty), Oredicts.DUST + oredict1, Oredicts.DUST + oredict2));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLBLEND), outputQty), Oredicts.DUST_TINY + oredict1, Oredicts.DUST_TINY + oredict2));
 	}
 }

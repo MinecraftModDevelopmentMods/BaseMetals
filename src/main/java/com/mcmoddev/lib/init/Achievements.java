@@ -1,10 +1,15 @@
 package com.mcmoddev.lib.init;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -20,7 +25,8 @@ import net.minecraftforge.common.AchievementPage;
  */
 public abstract class Achievements {
 
-	private static BiMap<String, Achievement> achievementRegistry = HashBiMap.create(16);
+	private static final BiMap<String, Achievement> achievementRegistry = HashBiMap.create(16);
+	private static Map<MMDMaterial, List<Achievement>> achievementsByMaterial = new HashMap<>();
 
 	private static boolean initDone = false;
 
@@ -36,22 +42,18 @@ public abstract class Achievements {
 			return;
 		}
 
-		if (Options.enableAchievements()) {
-
-		}
-
 		initDone = true;
 	}
 
-	protected static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, Item icon, AchievementPage page) {
+	protected static Achievement makeAchievement(@Nonnull final String baseName, @Nonnull final Achievement requirement, @Nonnull final int x, @Nonnull final int y, @Nonnull final Item icon, @Nonnull final AchievementPage page) {
 		return makeAchievement(baseName, requirement, x, y, new ItemStack(icon), page);
 	}
 
-	protected static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, Block icon, AchievementPage page) {
+	protected static Achievement makeAchievement(@Nonnull final String baseName, @Nonnull final Achievement requirement, @Nonnull final int x, @Nonnull final int y, @Nonnull final Block icon, @Nonnull final AchievementPage page) {
 		return makeAchievement(baseName, requirement, x, y, new ItemStack(icon), page);
 	}
 
-	protected static Achievement makeAchievement(String baseName, Achievement requirement, int x, int y, ItemStack icon, AchievementPage page) {
+	protected static Achievement makeAchievement(@Nonnull String baseName, @Nonnull Achievement requirement, @Nonnull final int x, @Nonnull final int y, @Nonnull final ItemStack icon, @Nonnull final AchievementPage page) {
 		final Achievement a = new Achievement(baseName, baseName, x, y, icon, requirement).registerStat();
 		achievementRegistry.put(baseName, a);
 		page.getAchievements().add(a);
@@ -67,7 +69,7 @@ public abstract class Achievements {
 	 *            The name of the achievement in question
 	 * @return The achievement matching that name, or null if there isn't one
 	 */
-	public static Achievement getAchievementByName(String name) {
+	public static Achievement getAchievementByName(@Nonnull final String name) {
 		return achievementRegistry.get(name);
 	}
 
@@ -80,20 +82,20 @@ public abstract class Achievements {
 	 * @return The name of the achievement, or null if the item is not a Base Metals
 	 *         achievement.
 	 */
-	public static String getNameOfAchievement(Achievement a) {
+	public static String getNameOfAchievement(@Nonnull final Achievement a) {
 		return achievementRegistry.inverse().get(a);
 	}
 
 	public static Map<String, Achievement> getAchievementRegistry() {
-		return achievementRegistry;
+		return Collections.unmodifiableMap(achievementRegistry);
 	}
 
 	/**
 	 * Gets a map of all achievement added, sorted by material
 	 *
-	 * @return An unmodifiable map of added items catagorized by material
+	 * @return An unmodifiable map of added items categorized by material
 	 */
-	//	public static Map<MMDMaterial, List<Achievement>> getAchievementsByMaterial() {
-	//		return Collections.unmodifiableMap(achievementsByMaterial);
-	//	}
+	public static Map<MMDMaterial, List<Achievement>> getAchievementsByMaterial() {
+		return Collections.unmodifiableMap(achievementsByMaterial);
+	}
 }

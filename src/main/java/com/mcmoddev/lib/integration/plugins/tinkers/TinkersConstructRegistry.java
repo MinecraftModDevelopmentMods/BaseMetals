@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -48,9 +50,9 @@ public class TinkersConstructRegistry {
      * @return an instance of the registry
      */
     public static TinkersConstructRegistry getInstance() {
-    	if( instance == null )
+    	if (instance == null)
     		instance = new TinkersConstructRegistry();
-    	
+
     	return instance;
     }
     
@@ -59,7 +61,7 @@ public class TinkersConstructRegistry {
      * @param name The name to test for
      * @return Boolean truth value of whether or not the item has been registered
      */
-    public boolean isRegistered(String name) {
+    public boolean isRegistered(@Nonnull final String name) {
         return registry.containsKey(name);
     }
 
@@ -69,7 +71,7 @@ public class TinkersConstructRegistry {
      * @param mat Material to be registered
      * @return the material
      */
-    private TCMaterial put(String name, TCMaterial mat) {
+    private TCMaterial put(@Nonnull final String name, @Nonnull final TCMaterial mat) {
         if( isRegistered(name) ) {
             return registry.get(name);
         }
@@ -82,16 +84,17 @@ public class TinkersConstructRegistry {
      * @param name name used for material during registration
      * @return the request material
      */
-    private TCMaterial get(String name) {
+    private TCMaterial get(@Nonnull final String name) {
     	return getInstance().registry.get(name);
     }
+
     /**
      * Get a the named material, returning a new one of the correct name if an existing one is not available
      * @param name Name of the material
      * @return Reference to the material asked for or a new one of the correct name
      */
-    public TCMaterial getMaterial(String name) {
-        String n = name==null?"FixYourCode":name;
+    public TCMaterial getMaterial(@Nonnull final String name) {
+        final String n = name==null?"FixYourCode":name;
         if( getInstance().isRegistered(n) ) {
             return getInstance().get(n);
         }
@@ -99,14 +102,14 @@ public class TinkersConstructRegistry {
     }
 
     /**
-     * Get a material of a given name based on a given MetalMaterial
+     * Get a material of a given name based on a given MMDMaterial
      * @param name name of the material
      * @param material MetalMaterial it is based on
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
-    public TCMaterial getMaterial(String name, MMDMaterial material) {
-        String n = name==null?(material==null?"FixYourCode":material.getName()):name;
-        if( material == null ) {
+    public TCMaterial getMaterial(@Nonnull final String name, @Nonnull final MMDMaterial material) {
+        final String n = name==null?(material==null?"FixYourCode":material.getName()):name;
+        if( material == null || name == null) {
             return null;
         }
 
@@ -121,7 +124,7 @@ public class TinkersConstructRegistry {
      * Private internal function for adding a MaterialIntegration to said list
      * @param m The MaterialIntegration to add to the list
      */
-    private static void addIntegration(MaterialIntegration m) {
+    private static void addIntegration(@Nonnull final MaterialIntegration m) {
     	getInstance().integrations.add(m);
     }
     
@@ -131,30 +134,30 @@ public class TinkersConstructRegistry {
      * @param mat The material being registered.
      * @return Hopefully TCCode.SUCCESS, but can be any number of the various error code returns
      */
-    private TCCode register(TCMaterial mat) {
+    private TCCode register(@Nonnull final TCMaterial mat) {
 		if (TinkerRegistry.getMaterial(mat.getName().toLowerCase()) != Material.UNKNOWN) {
 			return TCCode.MATERIAL_ALREADY_REGISTERED;
 		}
 		
-    	Boolean hasTraits = !mat.getTraitLocations().isEmpty();
+    	final Boolean hasTraits = !mat.getTraitLocations().isEmpty();
     	
     	if( mat.getMetalMaterial().getFluid() == null ) {
     		return TCCode.BAD_MATERIAL;
     	}
     	
 		// make sure the name used here is all lower case
-		Material tcmat = new Material(mat.getName().toLowerCase(), mat.getMetalMaterial().getTintColor());
+		final Material tcmat = new Material(mat.getName().toLowerCase(), mat.getMetalMaterial().getTintColor());
 
 		if (hasTraits) {
-			for (String s : mat.getTraitLocations()) {
-				for (AbstractTrait t : mat.getTraits(s)) {
+			for (final String s : mat.getTraitLocations()) {
+				for (final AbstractTrait t : mat.getTraits(s)) {
 					tcmat.addTrait(t, "general".equals(s) ? null : s);
 				}
 			}
 		}
     	
 		Item matRepItem;
-		MaterialType matType = mat.getMetalMaterial().getType(); 
+		final MaterialType matType = mat.getMetalMaterial().getType(); 
 		switch( matType ) {
 		case METAL:
 			matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
@@ -187,9 +190,9 @@ public class TinkersConstructRegistry {
 		tcmat.setFluid(mat.getMetalMaterial().getFluid()).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(matRepItem, 1, Material.VALUE_Ingot);
 		tcmat.setRepresentativeItem(matRepItem);
 		
-		String base = mat.getMetalMaterial().getName();
-		String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
-		MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMetalMaterial().getFluid(), suffix);
+		final String base = mat.getMetalMaterial().getName();
+		final String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
+		final MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMetalMaterial().getFluid(), suffix);
 		
 		if (mat.getToolForge()) {
 			m.toolforge();
@@ -205,9 +208,9 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCCode registerAll() {
-        for( Entry<String,TCMaterial> ent : registry.entrySet() ) {
+        for (final Entry<String,TCMaterial> ent : registry.entrySet()) {
         	// log ent.getKey() - the material name - here ?
-        	TCCode rv = register(ent.getValue());
+        	final TCCode rv = register(ent.getValue());
         	// Either we've had a success or the material is already registered
         	// in those two cases, we carry on. Otherwise we return the error and
         	// halt
@@ -226,7 +229,7 @@ public class TinkersConstructRegistry {
      * @param outputQuantity How much of the fluid, in mB
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
-    public TCCode registerMelting(Item input, Fluid output, int outputQuantity) {
+    public TCCode registerMelting(@Nonnull final Item input, @Nonnull final Fluid output, @Nonnull final int outputQuantity) {
         if( input == null || output == null || outputQuantity == 0 ) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
@@ -241,7 +244,7 @@ public class TinkersConstructRegistry {
      * @param outputQuantity Output Amount
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
-    public TCCode registerMelting(String oredictName, Fluid output, int outputQuantity ){
+    public TCCode registerMelting(@Nonnull final String oredictName, @Nonnull final Fluid output, @Nonnull final int outputQuantity ) {
         if( oredictName == null || output == null || outputQuantity == 0 ) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
@@ -255,9 +258,9 @@ public class TinkersConstructRegistry {
      * @param amt passed in as an Object, but actually an Integer representing the amount of the fluid, in mB, that is in the stack
      * @return a FluidStack representing the Fluid+Amount pair of parameters passed in
      */
-    private static FluidStack getFluidStack( Object fluid, Object amt ) {
-    	Integer amount = (Integer)amt;
-    	if( fluid instanceof String ) {
+    private static FluidStack getFluidStack(@Nonnull final Object fluid, @Nonnull final Object amt ) {
+    	final Integer amount = (Integer)amt;
+    	if (fluid instanceof String) {
     		return new FluidStack(FluidRegistry.getFluid((String)fluid), amount.intValue());
     	} else if( fluid instanceof MMDMaterial ) {
     		return new FluidStack(FluidRegistry.getFluid(((MMDMaterial)fluid).getName()), amount.intValue());
@@ -275,13 +278,13 @@ public class TinkersConstructRegistry {
      * @param recipe A chunk of String/Fluid/MetalMaterial/TCMaterial followed by an amount - must be at least two entries (4 items)
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
-    public TCCode registerAlloy(String name, Fluid output, int outputAmount, Object... recipe) {
+    public TCCode registerAlloy(@Nonnull final String name, @Nonnull final Fluid output, @Nonnull final int outputAmount, @Nonnull final Object... recipe) {
         if( name == null || output == null || outputAmount == 0 ) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
 
-        FluidStack outputStack = new FluidStack(output, outputAmount);
-        FluidStack[] inputs = new FluidStack[recipe.length/2];
+        final FluidStack outputStack = new FluidStack(output, outputAmount);
+        final FluidStack[] inputs = new FluidStack[recipe.length/2];
 
         for( int i = 0, j = 0; i < recipe.length; i += 2, j++ ) {
         	inputs[j] = getFluidStack(recipe[i], recipe[i+1]);
@@ -299,13 +302,13 @@ public class TinkersConstructRegistry {
      * @param inputQty Array of quantities matching those inputs
      * @return TCCode.SUCCESS or TCCode.FAILURE_PARAMETER_ERROR
      */
-    public TCCode registerAlloy(String output, int outputQty, String[] inputNames, int[] inputQty) {
+    public TCCode registerAlloy(@Nonnull final String output, @Nonnull final int outputQty, @Nonnull final String[] inputNames, @Nonnull final int[] inputQty) {
     	if( inputNames.length != inputQty.length ) {
     		return TCCode.FAILURE_PARAMETER_ERROR;
     	}
     	
-    	FluidStack outputs = getFluidStack(output, outputQty);
-    	FluidStack[] inputs = new FluidStack[inputNames.length];
+    	final FluidStack outputs = getFluidStack(output, outputQty);
+    	final FluidStack[] inputs = new FluidStack[inputNames.length];
     	
     	for( int i = 0; i < inputNames.length; i++ ) {
     		inputs[i] = getFluidStack(inputNames[i], inputQty[i]);
@@ -321,7 +324,7 @@ public class TinkersConstructRegistry {
      * @param sourceQty Amount of fluid being poured
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
-    public TCCode registerBasin(Block block, Fluid source, int sourceQty) {
+    public TCCode registerBasin(@Nonnull final Block block, @Nonnull final Fluid source, @Nonnull final int sourceQty) {
         if( block == null || source == null || sourceQty == 0 ) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
@@ -336,7 +339,7 @@ public class TinkersConstructRegistry {
      * @param sourceQty Amount
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
-    public TCCode registerCasting(Item output, Fluid source, int sourceQty) {
+    public TCCode registerCasting(@Nonnull final Item output, @Nonnull final Fluid source, @Nonnull final int sourceQty) {
         if( output == null || source == null || sourceQty == 0 ) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
@@ -350,10 +353,10 @@ public class TinkersConstructRegistry {
      * @param amountPer How much per ingot/single item of the material
      * @return TCCode.SUCCESS - at this point there are no failure points in this routine
      */
-    public TCCode registerFluid(MMDMaterial base, int amountPer) {
-		String materialName = base.getName();
-		Fluid output = FluidRegistry.getFluid(materialName);
-		String oreDictName = base.getCapitalizedName();
+    public TCCode registerFluid(@Nonnull final MMDMaterial base, @Nonnull final int amountPer) {
+		final String materialName = base.getName();
+		final Fluid output = FluidRegistry.getFluid(materialName);
+		final String oreDictName = base.getCapitalizedName();
 
 		// hacky fix for Coal being itemCoal and not ingotCoal
 		if (MaterialNames.COAL.equals(base.getName()))
@@ -389,7 +392,7 @@ public class TinkersConstructRegistry {
     /*
      * The following functions are helpers to help make the registerMelting function a touch less complex
      */
-    private void meltingHelper( Item item, Fluid output, int amount ) {
+    private void meltingHelper(@Nonnull final Item item, @Nonnull final Fluid output, @Nonnull final int amount ) {
     	if( item == null || output == null ) {
     		return;
     	}
@@ -397,7 +400,7 @@ public class TinkersConstructRegistry {
     	TinkerRegistry.registerMelting(item, output, amount);
     }
     
-    private void meltingHelper( String itemName, Fluid output, int amount ) {
+    private void meltingHelper(@Nonnull final String itemName, @Nonnull final Fluid output, @Nonnull final int amount ) {
     	if( itemName == null || output == null ) {
     		return;
     	}
@@ -405,7 +408,7 @@ public class TinkersConstructRegistry {
     	TinkerRegistry.registerMelting(itemName, output, amount);
     }
 
-    private void meltingHelper( Block block, Fluid output, int amount ) {
+    private void meltingHelper(@Nonnull final Block block, @Nonnull final Fluid output, @Nonnull final int amount ) {
     	if( block == null || output == null ) {
     		return;
     	}
@@ -414,7 +417,7 @@ public class TinkersConstructRegistry {
     }
     
     public void integrateRecipes() {
-    	for( MaterialIntegration m : integrations ) {
+    	for (final MaterialIntegration m : integrations) {
     		m.integrateRecipes();
     	}
     }

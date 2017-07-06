@@ -5,7 +5,6 @@ import java.util.List;
 import com.mcmoddev.basemetals.init.ItemGroups;
 import com.mcmoddev.lib.init.Items;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.TabContainer;
 
 public class TAIGAItems extends Items {
 	private static boolean initDone = false;
@@ -16,7 +15,8 @@ public class TAIGAItems extends Items {
 		}
 
 		for (MMDMaterial m : materials) {
-			createItemsFull(m, new TabContainer(ItemGroups.blocksTab, ItemGroups.itemsTab, ItemGroups.toolsTab));
+			// TODO: This probably shouldn't use the BMe tabs
+			createItemsFull(m, ItemGroups.myTabs);
 		}
 
 		initDone = true;

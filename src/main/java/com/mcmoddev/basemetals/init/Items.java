@@ -33,6 +33,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			return;
 		}
 
+		com.mcmoddev.basemetals.util.Config.init();
 		Blocks.init();
 		com.mcmoddev.lib.init.Items.init();
 
@@ -158,9 +159,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 		if (Options.materialEnabled(MaterialNames.CHARCOAL)) {
 
-			createNugget(charcoal, myTabs.itemsTab);
-			createPowder(charcoal, myTabs.itemsTab);
-			createSmallPowder(charcoal, myTabs.itemsTab);
+			create(Names.NUGGET, charcoal, myTabs.itemsTab);
+			create(Names.POWDER, charcoal, myTabs.itemsTab);
+			create(Names.SMALLPOWDER, charcoal, myTabs.itemsTab);
 			FuelRegistry.addFuel(Oredicts.NUGGET_CHARCOAL, 200);
 			FuelRegistry.addFuel(Oredicts.DUST_CHARCOAL, 1600);
 			FuelRegistry.addFuel(Oredicts.DUST_SMALL_CHARCOAL, 200);
@@ -169,9 +170,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.materialEnabled(MaterialNames.COAL)) {
-			createNugget(coal, myTabs.itemsTab);
-			createPowder(coal, myTabs.itemsTab);
-			createSmallPowder(coal, myTabs.itemsTab);
+			create(Names.NUGGET, coal, myTabs.itemsTab);
+			create(Names.POWDER, coal, myTabs.itemsTab);
+			create(Names.SMALLPOWDER, coal, myTabs.itemsTab);
 			FuelRegistry.addFuel(Oredicts.NUGGET_COAL, 200);
 			FuelRegistry.addFuel(Oredicts.DUST_COAL, 1600);
 			FuelRegistry.addFuel(Oredicts.DUST_SMALL_COAL, 200);
@@ -216,7 +217,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.materialEnabled(MaterialNames.LAPIS)) {
-			createSmallPowder(lapis, myTabs.itemsTab);
+			create(Names.SMALLPOWDER, lapis, myTabs.itemsTab);
 		}
 
 		if (Options.materialEnabled(MaterialNames.LEAD)) {
@@ -235,10 +236,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		if (Options.materialEnabled(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 
-			createIngot(mercury, myTabs.itemsTab);
-			createNugget(mercury, myTabs.itemsTab);
-			createPowder(mercury, myTabs.itemsTab);
-			createSmallPowder(mercury, myTabs.itemsTab);
+			create(Names.INGOT, mercury, myTabs.itemsTab);
+			create(Names.NUGGET, mercury, myTabs.itemsTab);
+			create(Names.POWDER, mercury, myTabs.itemsTab);
+			create(Names.SMALLPOWDER, mercury, myTabs.itemsTab);
 		}
 
 		if (Options.materialEnabled(MaterialNames.MITHRIL)) {
@@ -255,8 +256,8 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.materialEnabled(MaterialNames.REDSTONE)) {
-			createIngot(redstone, myTabs.itemsTab);
-			createSmallPowder(redstone, myTabs.itemsTab);
+			create(Names.INGOT, redstone, myTabs.itemsTab);
+			create(Names.SMALLPOWDER, redstone, myTabs.itemsTab);
 		}
 
 		if (Options.materialEnabled(MaterialNames.QUARTZ)) {
@@ -273,9 +274,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.materialEnabled(MaterialNames.STONE)) {
-			createCrackhammer(stone, myTabs.toolsTab);
-			createRod(stone, myTabs.itemsTab);
-			createGear(stone, myTabs.itemsTab);
+			create(Names.CRACKHAMMER, stone, myTabs.toolsTab);
+			create(Names.ROD, stone, myTabs.itemsTab);
+			create(Names.GEAR, stone, myTabs.itemsTab);
 		}
 
 		if (Options.materialEnabled(MaterialNames.STEEL)) {
@@ -287,8 +288,8 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.materialEnabled(MaterialNames.WOOD)) {
-			createCrackhammer(wood, myTabs.toolsTab);
-			createGear(wood, myTabs.itemsTab);
+			create(Names.CRACKHAMMER, wood, myTabs.toolsTab);
+			create(Names.GEAR, wood, myTabs.itemsTab);
 		}
 
 		if (Options.materialEnabled(MaterialNames.ZINC)) {

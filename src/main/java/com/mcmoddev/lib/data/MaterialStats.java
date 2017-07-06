@@ -2,6 +2,8 @@ package com.mcmoddev.lib.data;
 
 import java.util.TreeMap;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.collect.Maps;
 
 import net.minecraft.util.IStringSerializable;
@@ -46,7 +48,7 @@ public enum MaterialStats implements IStringSerializable {
 		return name().toLowerCase();
 	}
 
-	public static MaterialStats getType(int ordinal) {
+	public static MaterialStats getType(@Nonnull int ordinal) {
 		if ((ordinal > values().length) || (ordinal < 0)) {
 			ordinal = 0;
 		}

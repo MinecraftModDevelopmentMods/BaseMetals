@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 
@@ -44,7 +46,11 @@ public class ItemGroups {
 		initDone = true;
 	}
 
-	protected static int addTab(String name, boolean searchable) {
+	protected static int addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
+		if (name == null) {
+			return 0;
+		}
+	
 		String modName = Loader.instance().activeModContainer().getModId();
 		String internalTabName = String.format("%s.%s", modName, name);
 		MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable, null);
@@ -59,11 +65,15 @@ public class ItemGroups {
 		return itemGroupsByModID.get(modName).size() - 1;
 	}
 
-	protected static MMDCreativeTab getTab(int id) {
+	protected static MMDCreativeTab getTab(@Nonnull final int id) {
 		return getTab(Loader.instance().activeModContainer().getModId(), id);
 	}
 
-	protected static MMDCreativeTab getTab(String modName, int id) {
+	protected static MMDCreativeTab getTab(@Nonnull final String modName, @Nonnull final int id) {
+		if (modName == null) {
+			return null;
+		}
+
 		if ((itemGroupsByModID.containsKey(modName)) && (itemGroupsByModID.get(modName).size() > id)) {
 			return itemGroupsByModID.get(modName).get(id);
 		}
@@ -71,12 +81,11 @@ public class ItemGroups {
 	}
 
 	/**
-	 * Gets a map of all items added, sorted by material
+	 * Gets a map of all tabs added, sorted by modID
 	 *
-	 * @return An unmodifiable map of added items categorized by metal material
+	 * @return An unmodifiable map of added tabs categorized by modID
 	 */
 	public static Map<String, List<MMDCreativeTab>> getItemsGroupsByModID() {
 		return Collections.unmodifiableMap(itemGroupsByModID);
 	}
-
 }

@@ -2,6 +2,8 @@ package com.mcmoddev.lib.integration.plugins.tinkers.traits;
 
 import java.util.Random;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +23,7 @@ public class TraitRadioactive extends AbstractTrait {
 	}
 
 	@Override
-	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
+	public void onUpdate(@Nonnull final ItemStack tool, @Nonnull final World world, @Nonnull final Entity entity, @Nonnull final int itemSlot, @Nonnull final boolean isSelected) {
 		if (!ToolHelper.isBroken(tool) && entity instanceof EntityPlayer) {
 			EntityLivingBase player = (EntityPlayer) entity;
 			NBTTagCompound root = TagUtil.getTagSafe(tool);

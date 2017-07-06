@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.lib.data.MaterialStats;
@@ -81,7 +83,7 @@ public abstract class VillagerTrades {
 		// @SuppressWarnings("unused")
 		// final Map<Item, Integer> tradeLevelMap = new HashMap<>();
 
-		for (MMDMaterial material : Materials.getMaterialsByMod(modid)) {
+		for (final MMDMaterial material : Materials.getMaterialsByMod(modid)) {
 			if (material == null) {
 				return;
 			}
@@ -217,7 +219,7 @@ public abstract class VillagerTrades {
 	protected static void registerModSpecificTrades() {
 	}
 
-	protected static void commitTrades(final Map<Integer, List<ITradeList>> tradesTable) {
+	protected static void commitTrades(@Nonnull final Map<Integer, List<ITradeList>> tradesTable) {
 
 		for (final Integer k : tradesTable.keySet()) {
 			final List<ITradeList> trades = tradesTable.get(k);
@@ -233,26 +235,26 @@ public abstract class VillagerTrades {
 		}
 	}
 
-	protected static int emeraldPurchaseValue(float value) {
+	protected static int emeraldPurchaseValue(@Nonnull final float value) {
 		return Math.max(1, (int) (value * 0.2F));
 	}
 
-	protected static int emeraldSaleValue(float value) {
+	protected static int emeraldSaleValue(@Nonnull final float value) {
 		return Math.max(1, emeraldPurchaseValue(value) / 3);
 	}
 
-	protected static int tradeLevel(float value) {
+	protected static int tradeLevel(@Nonnull final float value) {
 		return Math.max(1, Math.min(4, (int) (value * 0.1F)));
 	}
 
-	protected static int fluctuation(int baseValue) {
+	protected static int fluctuation(@Nonnull final int baseValue) {
 		if (baseValue <= 1) {
 			return 0;
 		}
 		return Math.max(2, baseValue / 4);
 	}
 
-	protected static ITradeList[] makePurchasePalette(int emeraldPrice, int stackSize, Item... items) {
+	protected static ITradeList[] makePurchasePalette(@Nonnull final int emeraldPrice, @Nonnull final int stackSize, @Nonnull final Item... items) {
 		final ITradeList[] trades = new ITradeList[items.length];
 		for (int i = 0; i < items.length; i++) {
 			final Item item = items[i];
@@ -262,7 +264,7 @@ public abstract class VillagerTrades {
 		return trades;
 	}
 
-	protected static ITradeList[] makeSalePalette(int emeraldValue, int stackSize, Item... items) {
+	protected static ITradeList[] makeSalePalette(@Nonnull final int emeraldValue, @Nonnull final int stackSize, @Nonnull final Item... items) {
 		final ITradeList[] trades = new ITradeList[items.length];
 		for (int i = 0; i < items.length; i++) {
 			final Item item = items[i];
@@ -272,7 +274,7 @@ public abstract class VillagerTrades {
 		return trades;
 	}
 
-	protected static ITradeList[] makeTradePalette(ITradeList[]... list) {
+	protected static ITradeList[] makeTradePalette(@Nonnull final ITradeList[]... list) {
 		if (list.length == 1) {
 			return list[0];
 		}
@@ -308,17 +310,17 @@ public abstract class VillagerTrades {
 		 * @param tradePalette
 		 *            The trades to randomly choose from
 		 */
-		public MultiTradeGenerator(int tradeCount, List<ITradeList> tradePalette) {
+		public MultiTradeGenerator(@Nonnull final int tradeCount, @Nonnull final List<ITradeList> tradePalette) {
 			numberOfTrades = Math.min(tradeCount, tradePalette.size());
 			trades = tradePalette.toArray(new ITradeList[tradePalette.size()]);
 		}
 
 		@Override
-		public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+		public void addMerchantRecipe(@Nonnull final IMerchant merchant, @Nonnull final MerchantRecipeList recipeList, @Nonnull final Random random) {
 			for (int n = 0; n < numberOfTrades; n++) {
 				trades[random.nextInt(trades.length)].addMerchantRecipe(merchant, recipeList, random);
 			}
-			}
+		}
 		
 		/**
 		 * For debugging purposes only
@@ -369,8 +371,8 @@ public abstract class VillagerTrades {
 		 *            range of variation in value of <code>numberTrades</code>
 		 *            (-1 to disable)
 		 */
-		public SimpleTrade(ItemStack in1, int variation1, ItemStack in2, int variation2, ItemStack out,
-				int variationOut, int numberTrades, int tradeNumberVariation) {
+		public SimpleTrade(@Nonnull final ItemStack in1, @Nonnull final int variation1, final ItemStack in2, @Nonnull final int variation2, @Nonnull final ItemStack out,
+				@Nonnull final int variationOut, @Nonnull final int numberTrades, @Nonnull final int tradeNumberVariation) {
 			input1 = in1;
 			maxInputMarkup1 = variation1;
 			input2 = in2;
@@ -399,7 +401,7 @@ public abstract class VillagerTrades {
 		 * @param vout
 		 *            range of variation in quantity of <code>out</code>
 		 */
-		public SimpleTrade(ItemStack in1, int v1, ItemStack in2, int v2, ItemStack out, int vout) {
+		public SimpleTrade(@Nonnull final ItemStack in1, @Nonnull final int v1, final ItemStack in2, @Nonnull final int v2, @Nonnull final ItemStack out, @Nonnull final int vout) {
 			this(in1, v1, in2, v2, out, vout, -1, -1);
 		}
 
@@ -416,7 +418,7 @@ public abstract class VillagerTrades {
 		 * @param vout
 		 *            range of variation in quantity of <code>out</code>
 		 */
-		public SimpleTrade(ItemStack in1, int v1, ItemStack out, int vout) {
+		public SimpleTrade(@Nonnull final ItemStack in1, @Nonnull final int v1, @Nonnull final ItemStack out, @Nonnull final int vout) {
 			this(in1, v1, null, 0, out, vout, -1, -1);
 		}
 
@@ -428,7 +430,7 @@ public abstract class VillagerTrades {
 		 * @param out
 		 *            The item to be purchased (trade recipe output slot)
 		 */
-		public SimpleTrade(ItemStack in1, ItemStack out) {
+		public SimpleTrade(@Nonnull final ItemStack in1, @Nonnull final ItemStack out) {
 			this(in1, 0, null, 0, out, 0, -1, -1);
 		}
 
@@ -446,7 +448,7 @@ public abstract class VillagerTrades {
 		 *            a psuedorandom number generator instance
 		 */
 		@Override
-		public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+		public void addMerchantRecipe(@Nonnull final IMerchant merchant, @Nonnull final MerchantRecipeList recipeList, @Nonnull final Random random) {
 			int numTrades = -1;
 			if (maxTrades > 0) {
 				if (maxTradeVariation > 0) {

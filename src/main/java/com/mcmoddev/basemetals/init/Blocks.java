@@ -33,7 +33,9 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (initDone) {
 			return;
 		}
-		
+
+		com.mcmoddev.basemetals.util.Config.init();
+		com.mcmoddev.lib.init.Blocks.init();
 		Materials.init();
 		ItemGroups.init();
 
@@ -110,7 +112,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.materialEnabled(MaterialNames.CHARCOAL)) {
-			createBlock(charcoal, myTabs.blocksTab);
+			create(Names.BLOCK, charcoal, myTabs.blocksTab);
 		}
 
 		if (Options.materialEnabled(MaterialNames.COLDIRON)) {
@@ -126,9 +128,9 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.materialEnabled(MaterialNames.DIAMOND)) {
-			createBars(diamond, myTabs.blocksTab);
-			createDoor(diamond, myTabs.blocksTab);
-			createTrapDoor(diamond, myTabs.blocksTab);
+			create(Names.BARS, diamond, myTabs.blocksTab);
+			create(Names.DOOR, diamond, myTabs.blocksTab);
+			create(Names.TRAPDOOR, diamond, myTabs.blocksTab);
 
 			createBlocksAdditional(diamond, myTabs);
 		}
@@ -138,18 +140,18 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.materialEnabled(MaterialNames.EMERALD)) {
-			createBars(emerald, myTabs.blocksTab);
-			createDoor(emerald, myTabs.blocksTab);
-			createTrapDoor(emerald, myTabs.blocksTab);
+			create(Names.BARS, emerald, myTabs.blocksTab);
+			create(Names.DOOR, emerald, myTabs.blocksTab);
+			create(Names.TRAPDOOR, emerald, myTabs.blocksTab);
 
 			createBlocksAdditional(emerald, myTabs);
 		}
 
 		if (Options.materialEnabled(MaterialNames.GOLD)) {
-			createPlate(gold, myTabs.blocksTab);
-			createBars(gold, myTabs.blocksTab);
-			createDoor(gold, myTabs.blocksTab);
-			createTrapDoor(gold, myTabs.blocksTab);
+			create(Names.PLATE, gold, myTabs.blocksTab);
+			create(Names.BARS, gold, myTabs.blocksTab);
+			create(Names.DOOR, gold, myTabs.blocksTab);
+			create(Names.TRAPDOOR, gold, myTabs.blocksTab);
 
 			createBlocksAdditional(gold, myTabs);
 		}
@@ -159,7 +161,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.materialEnabled(MaterialNames.IRON)) {
-			createPlate(iron, myTabs.blocksTab);
+			create(Names.PLATE, iron, myTabs.blocksTab);
 
 			createBlocksAdditional(iron, myTabs);
 		}
@@ -170,7 +172,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.materialEnabled(MaterialNames.MERCURY)) {
 			MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
-			createOre(mercury, myTabs.blocksTab);
+			create(Names.ORE, mercury, myTabs.blocksTab);
 			mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
 		}
 
@@ -183,9 +185,9 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.materialEnabled(MaterialNames.OBSIDIAN)) {
-			createBars(obsidian, myTabs.blocksTab);
-			createDoor(obsidian, myTabs.blocksTab);
-			createTrapDoor(obsidian, myTabs.blocksTab);
+			create(Names.BARS, obsidian, myTabs.blocksTab);
+			create(Names.DOOR, obsidian, myTabs.blocksTab);
+			create(Names.TRAPDOOR, obsidian, myTabs.blocksTab);
 
 			createBlocksAdditional(obsidian, myTabs);
 		}
@@ -200,14 +202,14 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		if (Options.materialEnabled(MaterialNames.QUARTZ)) {
 
-			createBars(quartz, myTabs.blocksTab);
-			createDoor(quartz, myTabs.blocksTab);
-			createTrapDoor(quartz, myTabs.blocksTab);
+			create(Names.BARS, quartz, myTabs.blocksTab);
+			create(Names.DOOR, quartz, myTabs.blocksTab);
+			create(Names.TRAPDOOR, quartz, myTabs.blocksTab);
 
-			createButton(quartz, myTabs.blocksTab);
-			createLever(quartz, myTabs.blocksTab);
-			createPressurePlate(quartz, myTabs.blocksTab);
-			createWall(quartz, myTabs.blocksTab);
+			create(Names.BUTTON, quartz, myTabs.blocksTab);
+			create(Names.LEVER, quartz, myTabs.blocksTab);
+			create(Names.PRESSURE_PLATE, quartz, myTabs.blocksTab);
+			create(Names.WALL, quartz, myTabs.blocksTab);
 		}
 
 		if (Options.materialEnabled(MaterialNames.SILVER)) {
@@ -246,7 +248,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksFull(MaterialNames.ZINC, myTabs);
 		}
 
-		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", null, myTabs.blocksTab);
+		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
 
 		initDone = true;
 	}

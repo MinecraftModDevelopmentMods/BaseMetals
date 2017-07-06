@@ -5,26 +5,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.AdditionalLootTables;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
-import com.mcmoddev.lib.util.Oredicts;
+import com.mcmoddev.lib.util.ConfigBase;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
@@ -35,13 +25,12 @@ import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * @author Jasmine Iwanek
  *
  */
-public class Config {
+public class Config extends ConfigBase {
 
 	private static Configuration configuration;
 	private static final String CONFIG_FILE = "config/BaseMetals.cfg";
@@ -52,7 +41,6 @@ public class Config {
 	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipies";
 	private static final String TOOLS_CAT = "Tools and Items";
 	private static final String ALT_CFG_PATH = "config/additional-loot-tables";
-	private static final List<String> UserCrusherRecipes = new ArrayList<>();
 
 	@SubscribeEvent
 	public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent e) {
@@ -93,99 +81,99 @@ public class Config {
 				"Upgrade a fully repaired shield to a material at least as hard as the shields current one using a plate of that material in the Anvil");
 
 		// INTEGRATION
-		Options.modEnabled.put("enderio", configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
+		Options.modEnabled("enderio", configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Ender IO"));
-		Options.modEnabled.put("ic2", configuration.getBoolean("ic2_integration", INTEGRATION_CAT, true,
+		Options.modEnabled("ic2", configuration.getBoolean("ic2_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with IC2"));
-		Options.modEnabled.put("mekanism", configuration.getBoolean("mekanism_integration", INTEGRATION_CAT, true,
+		Options.modEnabled("mekanism", configuration.getBoolean("mekanism_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Mekanism"));
-		Options.modEnabled.put("thaumcraft", configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
+		Options.modEnabled("thaumcraft", configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Thaumcraft"));
-		Options.modEnabled.put("tinkersconstruct", configuration.getBoolean("tinkers_construct_integration", INTEGRATION_CAT, true,
+		Options.modEnabled("tinkersconstruct", configuration.getBoolean("tinkers_construct_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Tinkers Construct"));
-		Options.modEnabled.put("veinminer", configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
+		Options.modEnabled("veinminer", configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with VeinMiner"));
-		Options.modEnabled.put("taiga", configuration.getBoolean("taiga_integration", INTEGRATION_CAT, true,
+		Options.modEnabled("taiga", configuration.getBoolean("taiga_integration", INTEGRATION_CAT, true,
 				"Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals"));
-		Options.modEnabled.put("denseores", configuration.getBoolean("denseores", INTEGRATION_CAT, true,
+		Options.modEnabled("denseores", configuration.getBoolean("denseores", INTEGRATION_CAT, true,
 				"If DenseOres is available, this will allow automatic integration"));
-		Options.modEnabled.put("thermalexpansion", configuration.getBoolean("thermal_expansion", INTEGRATION_CAT, true, 
+		Options.modEnabled("thermalexpansion", configuration.getBoolean("thermal_expansion", INTEGRATION_CAT, true, 
 				"If Thermal Expansion is available, this wil automatically integrate materials with the various machines"));
 
 		// METALS
-		Options.materialEnabled.put(MaterialNames.ADAMANTINE, configuration.getBoolean("EnableAdamantine", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.ADAMANTINE, configuration.getBoolean("EnableAdamantine", MATERIALS_CAT, true,
 				"Enable Adamantine Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.ANTIMONY, configuration.getBoolean("EnableAntimony", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.ANTIMONY, configuration.getBoolean("EnableAntimony", MATERIALS_CAT, true,
 				"Enable Antimony Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.AQUARIUM, configuration.getBoolean("EnableAquarium", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.AQUARIUM, configuration.getBoolean("EnableAquarium", MATERIALS_CAT, true,
 				"Enable Aquarium Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.BISMUTH, configuration.getBoolean("EnableBismuth", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.BISMUTH, configuration.getBoolean("EnableBismuth", MATERIALS_CAT, true,
 				"Enable Bismuth Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.BRASS, configuration.getBoolean("EnableBrass", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.BRASS, configuration.getBoolean("EnableBrass", MATERIALS_CAT, true,
 				"Enable Brass Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.BRONZE, configuration.getBoolean("EnableBronze", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.BRONZE, configuration.getBoolean("EnableBronze", MATERIALS_CAT, true,
 				"Enable Bronze Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.CHARCOAL, configuration.getBoolean("EnableCharcoal", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.CHARCOAL, configuration.getBoolean("EnableCharcoal", MATERIALS_CAT, true,
 				"Enable Charcoal Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.COAL, configuration.getBoolean("EnableCoal", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.COAL, configuration.getBoolean("EnableCoal", MATERIALS_CAT, true,
 				"Enable Coal Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.COLDIRON, configuration.getBoolean("EnableColdIron", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.COLDIRON, configuration.getBoolean("EnableColdIron", MATERIALS_CAT, true,
 				"Enable ColdIron Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.COPPER, configuration.getBoolean("EnableCopper", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.COPPER, configuration.getBoolean("EnableCopper", MATERIALS_CAT, true,
 				"Enable Copper Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.CUPRONICKEL, configuration.getBoolean("EnableCupronickel", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.CUPRONICKEL, configuration.getBoolean("EnableCupronickel", MATERIALS_CAT, true,
 				"Enable Cupronickel Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.ELECTRUM, configuration.getBoolean("EnableElectrum", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.ELECTRUM, configuration.getBoolean("EnableElectrum", MATERIALS_CAT, true,
 				"Enable Electrum Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.INVAR, configuration.getBoolean("EnableInvar", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.INVAR, configuration.getBoolean("EnableInvar", MATERIALS_CAT, true,
 				"Enable Invar Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.LEAD, configuration.getBoolean("EnableLead", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.LEAD, configuration.getBoolean("EnableLead", MATERIALS_CAT, true,
 				"Enable Lead Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.MERCURY, configuration.getBoolean("EnableMercury", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.MERCURY, configuration.getBoolean("EnableMercury", MATERIALS_CAT, true,
 				"Enable Mercury Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.MITHRIL, configuration.getBoolean("EnableMithril", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.MITHRIL, configuration.getBoolean("EnableMithril", MATERIALS_CAT, true,
 				"Enable Mithril Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.NICKEL, configuration.getBoolean("EnableNickel", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.NICKEL, configuration.getBoolean("EnableNickel", MATERIALS_CAT, true,
 				"Enable Nickel Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.PEWTER, configuration.getBoolean("EnablePewter", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.PEWTER, configuration.getBoolean("EnablePewter", MATERIALS_CAT, true,
 				"Enable Pewter Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.PLATINUM, configuration.getBoolean("EnablePlatinum", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.PLATINUM, configuration.getBoolean("EnablePlatinum", MATERIALS_CAT, true,
 				"Enable Platinum Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.SILVER, configuration.getBoolean("EnableSilver", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.SILVER, configuration.getBoolean("EnableSilver", MATERIALS_CAT, true,
 				"Enable Silver Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.STARSTEEL, configuration.getBoolean("EnableStarSteel", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.STARSTEEL, configuration.getBoolean("EnableStarSteel", MATERIALS_CAT, true,
 				"Enable StarSteel Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.STEEL, configuration.getBoolean("EnableSteel", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.STEEL, configuration.getBoolean("EnableSteel", MATERIALS_CAT, true,
 				"Enable Steel Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.TIN, configuration.getBoolean("EnableTin", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.TIN, configuration.getBoolean("EnableTin", MATERIALS_CAT, true,
 				"Enable Tin Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.ZINC, configuration.getBoolean("EnableZinc", MATERIALS_CAT, true,
+		Options.materialEnabled(MaterialNames.ZINC, configuration.getBoolean("EnableZinc", MATERIALS_CAT, true,
 				"Enable Zinc Items and Materials"));
 
 		// VANILLA
-		Options.materialEnabled.put(MaterialNames.DIAMOND, configuration.getBoolean("EnableDiamond", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.DIAMOND, configuration.getBoolean("EnableDiamond", VANILLA_CAT, true,
 				"Enable Diamond Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.EMERALD, configuration.getBoolean("EnableEmerald", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.EMERALD, configuration.getBoolean("EnableEmerald", VANILLA_CAT, true,
 				"Enable Emerald Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.GOLD, configuration.getBoolean("EnableGold", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.GOLD, configuration.getBoolean("EnableGold", VANILLA_CAT, true,
 				"Enable Gold Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.IRON, configuration.getBoolean("EnableIron", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.IRON, configuration.getBoolean("EnableIron", VANILLA_CAT, true,
 				"Enable Iron Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.STONE, configuration.getBoolean("EnableStone", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.STONE, configuration.getBoolean("EnableStone", VANILLA_CAT, true,
 				"Enable Stone Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.WOOD, configuration.getBoolean("EnableWood", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.WOOD, configuration.getBoolean("EnableWood", VANILLA_CAT, true,
 				"Enable Wood Items and Materials"));
-		Options.materialEnabled.put(MaterialNames.ENDER, configuration.getBoolean("EnableEnder", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.ENDER, configuration.getBoolean("EnableEnder", VANILLA_CAT, true,
 				"Enable Ender Items and Materials (not currently in use)"));
-		Options.materialEnabled.put(MaterialNames.QUARTZ, configuration.getBoolean("EnableQuartz", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.QUARTZ, configuration.getBoolean("EnableQuartz", VANILLA_CAT, true,
 				"Enable Nether Quartz Items and Materials (not currently in use)"));
-		Options.materialEnabled.put(MaterialNames.OBSIDIAN, configuration.getBoolean("EnableObsidian", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.OBSIDIAN, configuration.getBoolean("EnableObsidian", VANILLA_CAT, true,
 				"Enable Obsidian Items and Materials (not currently in use)"));
-		Options.materialEnabled.put(MaterialNames.LAPIS, configuration.getBoolean("EnableLapis", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.LAPIS, configuration.getBoolean("EnableLapis", VANILLA_CAT, true,
 				"Enable Lapis Lazuli Items and Materials (not currently in use)"));
-		Options.materialEnabled.put(MaterialNames.PRISMARINE, configuration.getBoolean("EnablePrismarine", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.PRISMARINE, configuration.getBoolean("EnablePrismarine", VANILLA_CAT, true,
 				"Enable Prismarine Items and Materials (not currently in use)"));
-		Options.materialEnabled.put(MaterialNames.REDSTONE, configuration.getBoolean("EnableRedstone", VANILLA_CAT, true,
+		Options.materialEnabled(MaterialNames.REDSTONE, configuration.getBoolean("EnableRedstone", VANILLA_CAT, true,
 				"Enable Redstone Items and Materials (not currently in use)"));
 
 		// RECIPE AMOUNTS/TOOL&ITEM DISABLING
@@ -197,51 +185,51 @@ public class Config {
 		Options.furnace1112 = configuration.getBoolean("Furnace1112", TOOLS_CAT, true,
 				"Mimic 1.11.2 armor and tool melting.\n Overridden by Furnace Cheese");
 		
-		Options.thingEnabled.put("Basics", configuration.getBoolean("Enable Basics", TOOLS_CAT, true,
+		Options.thingEnabled("Basics", configuration.getBoolean("Enable Basics", TOOLS_CAT, true,
 				"Set to false to disable: Nuggets, Ingots, Powders, Blends, Blocks and Ores"));
-		Options.thingEnabled.put("BasicTools", configuration.getBoolean("Enable Basic Tools", TOOLS_CAT, true,
+		Options.thingEnabled("BasicTools", configuration.getBoolean("Enable Basic Tools", TOOLS_CAT, true,
 				"Set to false to disable: Axe, Hoe, Pickaxe, Shovel and Sword"));
-		Options.thingEnabled.put("BowAndArrow", configuration.getBoolean("Enable Bow and Arrow", TOOLS_CAT, true,
+		Options.thingEnabled("BowAndArrow", configuration.getBoolean("Enable Bow and Arrow", TOOLS_CAT, true,
 				"Set to false to turn off custom bows and arrows"));
-		Options.thingEnabled.put("CrossbowAndBolt", configuration.getBoolean("Enable Crossbow and Bolts", TOOLS_CAT, true,
+		Options.thingEnabled("CrossbowAndBolt", configuration.getBoolean("Enable Crossbow and Bolts", TOOLS_CAT, true,
 				"Set to false to disable custom crossbows and bolts"));
-		Options.thingEnabled.put("Armor", configuration.getBoolean("Enable Armor", TOOLS_CAT, true,
+		Options.thingEnabled("Armor", configuration.getBoolean("Enable Armor", TOOLS_CAT, true,
 				"Set to false to disable: Helmet, Chestplate, Leggings and Boots"));
-		Options.thingEnabled.put("CrackHammer", configuration.getBoolean("Enable Crackhammer", TOOLS_CAT, true,
+		Options.thingEnabled("CrackHammer", configuration.getBoolean("Enable Crackhammer", TOOLS_CAT, true,
 				"Why would you want to disable a valuable early-game tool ?\nThe question we're all asking though is will it blend?"));
-		Options.thingEnabled.put("FishingRod", configuration.getBoolean("Enable Fishing Rod", TOOLS_CAT, true,
+		Options.thingEnabled("FishingRod", configuration.getBoolean("Enable Fishing Rod", TOOLS_CAT, true,
 				"Set to false to turn off added fishing rods"));
-		Options.thingEnabled.put("HorseArmor", configuration.getBoolean("Enable Horse Armor", TOOLS_CAT, true,
+		Options.thingEnabled("HorseArmor", configuration.getBoolean("Enable Horse Armor", TOOLS_CAT, true,
 				"Set to false to disable extra Horse Armor"));
-		Options.thingEnabled.put("Shears", configuration.getBoolean("Enable Shears", TOOLS_CAT, true,
+		Options.thingEnabled("Shears", configuration.getBoolean("Enable Shears", TOOLS_CAT, true,
 				"I love Shears, do you? If you're a Shears hater, set this to false"));
-		Options.thingEnabled.put("SmallDust", configuration.getBoolean("Enable Small Dust", TOOLS_CAT, true,
+		Options.thingEnabled("SmallDust", configuration.getBoolean("Enable Small Dust", TOOLS_CAT, true,
 				"Turn this off to disable nugget-sized piles of dust.\n(Dust is a drug and drugs are bad. Don't do drugs, mmm-kay ?"));
-		Options.thingEnabled.put("Rod", configuration.getBoolean("Enable Rod", TOOLS_CAT, true,
+		Options.thingEnabled("Rod", configuration.getBoolean("Enable Rod", TOOLS_CAT, true,
 				"Spare the Rod... Wait, no, that's Biblical...\nThis controls whether or not rods of various materials (similar to Tinkers' Construct Tool Rod) sare available"));
-		Options.thingEnabled.put("Gear", configuration.getBoolean("Enable Gear", TOOLS_CAT, true,
+		Options.thingEnabled("Gear", configuration.getBoolean("Enable Gear", TOOLS_CAT, true,
 				"A lot of mods have Gears, we can provide them. Turn this off if you think you don't need them."));
-		Options.thingEnabled.put("Shield", configuration.getBoolean("Enable Shield", TOOLS_CAT, true,
+		Options.thingEnabled("Shield", configuration.getBoolean("Enable Shield", TOOLS_CAT, true,
 				"The Combat Update brought Shields to Vanilla Minecraft. Turn this off if you don't want them to multiply"));
-		Options.thingEnabled.put("Bars", configuration.getBoolean("Enable Bars", TOOLS_CAT, true,
+		Options.thingEnabled("Bars", configuration.getBoolean("Enable Bars", TOOLS_CAT, true,
 				"No, not the kind you drink at. The kind you find on jail-cells."));
-		Options.thingEnabled.put("Plate", configuration.getBoolean("Enable Plates", TOOLS_CAT, true,
+		Options.thingEnabled("Plate", configuration.getBoolean("Enable Plates", TOOLS_CAT, true,
 				"IC2, Tech Reborn and a number of other mods require plates of material. This provides recipes for them."));
-		Options.thingEnabled.put("Door", configuration.getBoolean("Enable Door", TOOLS_CAT, true,
+		Options.thingEnabled("Door", configuration.getBoolean("Enable Door", TOOLS_CAT, true,
 				"Doors of many wondrous materials"));
-		Options.thingEnabled.put("Trapdoor", configuration.getBoolean("Enable Trapdoors", TOOLS_CAT, true,
+		Options.thingEnabled("Trapdoor", configuration.getBoolean("Enable Trapdoors", TOOLS_CAT, true,
 				"Do you want trapdoors? Because that's how you get trapdoors!"));
-		Options.thingEnabled.put("Button", configuration.getBoolean("Enable Buttons", TOOLS_CAT, true,
+		Options.thingEnabled("Button", configuration.getBoolean("Enable Buttons", TOOLS_CAT, true,
 				"Ooooh, what does this button do?"));
-		Options.thingEnabled.put("Slab", configuration.getBoolean("Enable Slab", TOOLS_CAT, true,
+		Options.thingEnabled("Slab", configuration.getBoolean("Enable Slab", TOOLS_CAT, true,
 				"Slabs of all the materials that get added"));
-		Options.thingEnabled.put("Lever", configuration.getBoolean("Enable Lever", TOOLS_CAT, true,
+		Options.thingEnabled("Lever", configuration.getBoolean("Enable Lever", TOOLS_CAT, true,
 				"Levers of all different materials - they even have different hardness's"));
-		Options.thingEnabled.put("PressurePlate", configuration.getBoolean("Enable Pressure-plates", TOOLS_CAT, true,
+		Options.thingEnabled("PressurePlate", configuration.getBoolean("Enable Pressure-plates", TOOLS_CAT, true,
 				"Now your traps can be hidden in even more places!"));
-		Options.thingEnabled.put("Stairs", configuration.getBoolean("Enable Stairs", TOOLS_CAT, true,
+		Options.thingEnabled("Stairs", configuration.getBoolean("Enable Stairs", TOOLS_CAT, true,
 				"Stairs of our wonderful metals! Come and get your own - or don't. It's up to you."));
-		Options.thingEnabled.put("Wall", configuration.getBoolean("Enable Wall", TOOLS_CAT, true,
+		Options.thingEnabled("Wall", configuration.getBoolean("Enable Wall", TOOLS_CAT, true,
 				"Hey, Teachers! Leave those kids alone!"));
 
 		// DISABLE CRACK HAMMER RECIPES
@@ -250,7 +238,7 @@ public class Config {
 
 		// CRACK HAMMER RECIPES
 		final ConfigCategory userRecipeCat = configuration.getCategory(HAMMER_RECIPES_CAT);
-		
+
 		userRecipeCat
 				.setComment("This section allows you to add your own recipes for the Crack Hammer (and other rock \n"
 						+ "crushers). Recipes are specified in semicolon (;) delimited lists of formulas in the \n"
@@ -305,30 +293,6 @@ public class Config {
 			} catch (final IOException ex) {
 				BaseMetals.logger.error("Failed to extract additional loot tables", ex);
 			}
-		}
-	}
-
-	private static void manageUserHammerRecipes(Collection<Property> values) {
-		for (final Property p : values) {
-			final String[] recipes = p.getString().split(";");
-			for (final String r : recipes) {
-				final String recipe = r.trim();
-				if (recipe.isEmpty()) {
-					continue;
-				}
-				if (!(recipe.contains("->"))) {
-					throw new IllegalArgumentException("Malformed hammer recipe expression '" + recipe + "'. Should be in format 'modid:itemname->modid:itemname'");
-				}
-				UserCrusherRecipes.add(recipe);
-			}
-		}
-	}
-
-	private static String[] parseDisabledRecipes(String rawDisabledRecipes) {
-		if (!rawDisabledRecipes.isEmpty() && rawDisabledRecipes.contains(";")) {
-			return rawDisabledRecipes.split(";");
-		} else {
-			return new String[] { rawDisabledRecipes };
 		}
 	}
 
@@ -414,150 +378,38 @@ public class Config {
 		}
 
 		// INTEGRATION
-		protected static final Map<String, Boolean> modEnabled = new HashMap<>();
+		private static final Map<String, Boolean> modEnabled = new HashMap<>();
 		public static boolean modEnabled(String name) {
 			return modEnabled.get(name);
 		}
 
+		public static void modEnabled(String string, Boolean bool) {
+			materialEnabled.put(string, bool);
+		}
+
 		// MATERIALS
-		protected static final Map<String, Boolean> materialEnabled = new HashMap<>();
+		private static final Map<String, Boolean> materialEnabled = new HashMap<>();
 		public static boolean materialEnabled(String name) {
 			return materialEnabled.get(name);
 		}
 
+		public static void materialEnabled(String string, Boolean bool) {
+			materialEnabled.put(string, bool);
+		}
+
 		// THINGS
-		protected static final Map<String, Boolean> thingEnabled = new HashMap<>();
+		private static final Map<String, Boolean> thingEnabled = new HashMap<>();
 		public static boolean thingEnabled(String name) {
 			return thingEnabled.get(name);
 		}
+
+		public static void thingEnabled(String string, Boolean bool) {
+			materialEnabled.put(string, bool);
+		}
+
 		
 		private Options() {
 			throw new IllegalAccessError("Not a instantiable class");
-		}
-	}
-
-	public static void postInit() {
-		addUserRecipes();
-
-		if (Options.autoDetectRecipes()) {
-			// add recipe for every X where the Ore Dictionary has dustX, oreX, and ingotX
-			final Set<String> dictionary = new HashSet<>();
-			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()).stream().filter( item -> !item.contains("Mercury") )
-			.filter( item -> !item.contains("Redstone") ).filter( item -> item.startsWith("dust") )
-			.filter( item -> {
-				String ingotX = Oredicts.INGOT.concat(item.substring(4));
-				String oreX = Oredicts.ORE.concat(item.substring(4));
-				return (dictionary.contains(oreX) && dictionary.contains(ingotX) && !OreDictionary.getOres(item).isEmpty());
-			}).collect(Collectors.<String>toSet()));
-
-			addOreRecipes( dictionary );
-			addIngotRecipes( dictionary );
-		}
-
-		CrusherRecipeRegistry.getInstance().clearCache();
-	}
-
-	private static void addIngotRecipes(Set<String> dictionary) {
-		dictionary.stream()
-		.filter( entry -> {
-			List<ItemStack> iS = OreDictionary.getOres(Oredicts.INGOT.concat(entry.substring(4)));
-			for( ItemStack i : iS ) {
-				if((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null )) {
-					return true;
-				}
-			}
-			return false;
-		})
-		.forEach( entry -> {
-			String ingotX = Oredicts.INGOT.concat(entry.substring(4));
-			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
-			dustX.setCount(2);
-			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", ingotX, dustX);
-			CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX);				
-		});			
-	}
-
-	private static void addOreRecipes(Set<String> dictionary) {
-		dictionary.stream()
-		.filter( entry -> {
-			List<ItemStack> iS = OreDictionary.getOres(Oredicts.ORE.concat(entry.substring(4)));
-			for( ItemStack i : iS ) {
-				if((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null )) {
-					return true;
-				}
-			}
-			return false;
-		})
-		.forEach( entry -> {
-			String oreX = Oredicts.ORE.concat(entry.substring(4));
-			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
-			dustX.setCount(2);
-			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", oreX, dustX);
-			CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX);				
-		});
-	}
-
-	private static void addUserRecipes() {
-		for (final String recipe : UserCrusherRecipes) {
-			BaseMetals.logger.info("Adding custom crusher recipe '%s'", recipe);
-			final int i = recipe.indexOf("->");
-			final String inputStr = recipe.substring(0, i);
-			final String outputStr = recipe.substring(i + 2, recipe.length());
-			final ItemStack input = parseStringAsItemStack(inputStr, true);
-			final ItemStack output = parseStringAsItemStack(outputStr, false);
-			if ((input == null) || (output == null)) {
-				BaseMetals.logger.error("Failed to add recipe formula '%s' because the blocks/items could not be found", recipe);
-			} else {
-				CrusherRecipeRegistry.addNewCrusherRecipe(input, output);
-			}
-		}
-	}
-
-	/**
-	 * Parses a String in the format (stack-size)*(modid):(item/block
-	 * name)#(metadata value). The stacksize and metadata value parameters are
-	 * optional.
-	 *
-	 * @param str
-	 *            A String describing an ItemStack (e.g. "4*minecraft:dye#15" or
-	 *            "minecraft:bow")
-	 * @param allowWildcard
-	 *            If true, then item strings that do not specify a metadata
-	 *            value will use the OreDictionary wildcard value. If false,
-	 *            then the default meta value is 0 instead.
-	 * @return An ItemStack representing the item, or null if the item is not
-	 *         found
-	 */
-	public static ItemStack parseStringAsItemStack(String str, final boolean allowWildcard) {
-		String work = str.trim();
-		int count = 1;
-		int meta;
-		if (allowWildcard) {
-			meta = OreDictionary.WILDCARD_VALUE;
-		} else {
-			meta = 0;
-		}
-		int nameStart = 0;
-		int nameEnd = work.length();
-		if (work.contains("*")) {
-			count = Integer.parseInt(work.substring(0, work.indexOf('*')).trim());
-			nameStart = work.indexOf('*') + 1;
-		}
-		if (work.contains("#")) {
-			meta = Integer.parseInt(work.substring(work.indexOf('#') + 1, str.length()).trim());
-			nameEnd = work.indexOf('#');
-		}
-		final String id = work.substring(nameStart, nameEnd).trim();
-		if (Block.getBlockFromName(id) != null) {
-			// is a block
-			return new ItemStack(Block.getBlockFromName(id), count, meta);
-		} else if (Item.getByNameOrId(id) != null) {
-			// is an item
-			return new ItemStack(Item.getByNameOrId(id), count, meta);
-		} else {
-			// item not found
-			BaseMetals.logger.info("Failed to find item or block for ID '%s'", id);
-			return null;
 		}
 	}
 }
