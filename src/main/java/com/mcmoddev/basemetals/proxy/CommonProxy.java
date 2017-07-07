@@ -12,7 +12,6 @@ import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -41,8 +40,6 @@ public class CommonProxy {
 		// icons have to be setup after the blocks and items are initialized
 		ItemGroups.setupIcons();
 		VillagerTrades.init();
-
-		FMLInterModComms.sendFunctionMessage("orespawn", "api", "com.mcmoddev.orespawn.BaseMetalsOreSpawn");
 
 		IntegrationManager.INSTANCE.preInit(event);
 		IntegrationManager.INSTANCE.runCallbacks("preInit");
