@@ -358,6 +358,24 @@ public class ConfigBase {
 			}
 		}
 
+		private static int explosionChance = 0;
+		public static int explosionChance() {
+			return explosionChance;
+		}
+		
+		public static void explosionChance(int chance) {
+			explosionChance = chance;
+		}
+		
+		private static int pigmenAnger = 0;
+		public static int pigmenAnger() {
+			return pigmenAnger;
+		}
+		
+		public static void pigmenAnger(int anger) {
+			pigmenAnger = anger;
+		}
+		
 		private Options() {
 			throw new IllegalAccessError("Not a instantiable class");
 		}
