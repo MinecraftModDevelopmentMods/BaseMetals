@@ -82,7 +82,8 @@ public abstract class Blocks {
 		nameToBlock.put(Names.ENDORE, BlockMMDOre.class);
 		nameToBlock.put(Names.NETHERORE, BlockMMDNetherOre.class);
 		nameToBlock.put(Names.ENDORE, BlockMMDEndOre.class);
-
+		nameToBlock.put(Names.ORE, BlockMMDOre.class);
+		
 		nameToOredict.put(Names.ANVIL, null);
 		nameToOredict.put(Names.BARS, Oredicts.BARS);
 		nameToOredict.put(Names.BLOCK, Oredicts.BLOCK);

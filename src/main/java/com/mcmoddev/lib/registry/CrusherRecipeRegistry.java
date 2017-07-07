@@ -99,7 +99,7 @@ public class CrusherRecipeRegistry {
 			BaseMetals.logger.error("%s: Crusher recipe not registered because of null input or output. \n %s", CrusherRecipeRegistry.class, Arrays.toString(Thread.currentThread().getStackTrace()).replace(", ", "\n").replace("[", "").replace("]", ""));
 		}
 
-		getInstance().addRecipe(new ArbitraryCrusherRecipe(input, output));
+		getInstance().addRecipe(new ArbitraryCrusherRecipe(input == null?ItemStack.EMPTY:input, output == null?ItemStack.EMPTY:output));
 	}
 
 	/**

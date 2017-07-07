@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 
 import com.mcmoddev.basemetals.BaseMetals;
@@ -232,6 +233,7 @@ public class Config extends ConfigBase {
 		Options.thingEnabled("Wall", configuration.getBoolean("Enable Wall", TOOLS_CAT, true,
 				"Hey, Teachers! Leave those kids alone!"));
 
+		
 		// DISABLE CRACK HAMMER RECIPES
 		Options.disabledRecipes = parseDisabledRecipes(configuration.getString("DisabledCrackhammerRecipes", GENERAL_CAT, "",
 				"Disable the recipes by putting the input materials ore dictionary name ore registry name in this key.\nThe format is a semicolon (;) separate list of ore dictionary names (ie:  oreGold;oreIron;oreCopper - this would blacklist Gold, Iron and Copper ores from working"));
@@ -252,9 +254,16 @@ public class Config extends ConfigBase {
 			prop.setComment("Example: minecraft:stained_glass#11->minecraft:dye#4; minecraft:wool->4*minecraft:string");
 			userRecipeCat.put("custom", prop);
 		}
-		
+
 		manageUserHammerRecipes(userRecipeCat.values());
 
+		// Add some utility bits that are referenced
+		Options.thingEnabled("anvil", Options.thingEnabled("basics"));
+		Options.thingEnabled("bookshelf", Options.thingEnabled("basics"));
+		Options.thingEnabled("flowerpot", Options.thingEnabled("basics"));
+		Options.thingEnabled("ladder", Options.thingEnabled("basics"));
+		Options.thingEnabled("tripwire", Options.thingEnabled("basics"));
+		
 		if (configuration.hasChanged()) {
 			configuration.save();
 		}
@@ -380,31 +389,43 @@ public class Config extends ConfigBase {
 		// INTEGRATION
 		private static final Map<String, Boolean> modEnabled = new HashMap<>();
 		public static boolean modEnabled(String name) {
-			return modEnabled.get(name);
+			String testName = name.toLowerCase(Locale.ROOT);
+			if( modEnabled.containsKey(testName) ) {
+				return modEnabled.get(testName);
+			}
+			return false;
 		}
 
 		public static void modEnabled(String string, Boolean bool) {
-			materialEnabled.put(string, bool);
+			modEnabled.put(string.toLowerCase(Locale.ROOT), bool);
 		}
 
 		// MATERIALS
 		private static final Map<String, Boolean> materialEnabled = new HashMap<>();
 		public static boolean materialEnabled(String name) {
-			return materialEnabled.get(name);
+			String testName = name.toLowerCase(Locale.ROOT);
+			if( materialEnabled.containsKey(testName) ) {
+				return materialEnabled.get(testName);
+			}
+			return false;
 		}
 
 		public static void materialEnabled(String string, Boolean bool) {
-			materialEnabled.put(string, bool);
+			materialEnabled.put(string.toLowerCase(Locale.ROOT), bool);
 		}
 
 		// THINGS
 		private static final Map<String, Boolean> thingEnabled = new HashMap<>();
 		public static boolean thingEnabled(String name) {
-			return thingEnabled.get(name);
+			String testName = name.toLowerCase(Locale.ROOT);
+			if( thingEnabled.containsKey(testName) ) {
+				return thingEnabled.get(testName);
+			}
+			return false;
 		}
 
 		public static void thingEnabled(String string, Boolean bool) {
-			materialEnabled.put(string, bool);
+			thingEnabled.put(string.toLowerCase(Locale.ROOT), bool);
 		}
 
 		
