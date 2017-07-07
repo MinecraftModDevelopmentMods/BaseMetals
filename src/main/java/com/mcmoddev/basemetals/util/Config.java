@@ -432,7 +432,7 @@ public class Config extends ConfigBase {
 		}
 
 		public static void thingEnabled(String name, Boolean bool) {
-			if (thingEnabled.containsKey(name)) {
+			if (!thingEnabled.containsKey(name)) {
 				thingEnabled.put(name.toLowerCase(Locale.ROOT), bool);
 			}
 		}
