@@ -6,10 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.AdditionalLootTables;
@@ -57,29 +54,29 @@ public class Config extends ConfigBase {
 		}
 
 		// GENERAL
-		Options.disableAllHammerRecipes = configuration.getBoolean("disable_crack_hammer", GENERAL_CAT, false,
-				"If true, then the crack hammer cannot be crafted.");
-		Options.enforceHardness = configuration.getBoolean("enforce_hardness", GENERAL_CAT, true,
+		Options.setDisableAllHammerRecipes(configuration.getBoolean("disable_crack_hammer", GENERAL_CAT, false,
+				"If true, then the crack hammer cannot be crafted."));
+		Options.setEnforceHardness(configuration.getBoolean("enforce_hardness", GENERAL_CAT, true,
 				"If true, then the crack hammer cannot crush ingots into powders if that \n"
-						+ "crackhammer is not hard enough to crush the ingot's ore.");
-		Options.strongHammers = configuration.getBoolean("strong_hammers", GENERAL_CAT, true,
+						+ "crackhammer is not hard enough to crush the ingot's ore."));
+		Options.setStrongHammers(configuration.getBoolean("strong_hammers", GENERAL_CAT, true,
 				"If true, then the crack hammer can crush ingots/ores that a pickaxe of the same \n"
 						+ "material can harvest. If false, then your crack hammer must be made of a harder \n"
-						+ "material than the ore you are crushing.");
-		Options.autoDetectRecipes = configuration.getBoolean("automatic_recipes", GENERAL_CAT, true,
+						+ "material than the ore you are crushing."));
+		Options.setAutoDetectRecipes(configuration.getBoolean("automatic_recipes", GENERAL_CAT, true,
 				"If true, then Base Metals will scan the Ore Dictionary to automatically add a \n"
-						+ "Crack Hammer recipe for every material that has an ore, dust, and ingot.");
-		Options.requireMMDOreSpawn = configuration.getBoolean("using_orespawn", GENERAL_CAT, true,
+						+ "Crack Hammer recipe for every material that has an ore, dust, and ingot."));
+		Options.setRequireMMDOreSpawn(configuration.getBoolean("using_orespawn", GENERAL_CAT, true,
 				"If false, then Base Metals will not require MMD Ore Spawn mod. \n"
-						+ "Set to false if using another mod to manually handle ore generation.");
-		Options.enableAchievements = configuration.getBoolean("achievements", GENERAL_CAT, true,
-				"If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals");
-		Options.crackHammerFullStack = configuration.getBoolean("crackhammer_full_stacks", GENERAL_CAT, false,
-				"If true then you can crackhammer full stacks of dropped items.");
-		Options.enablePlateRepairs = configuration.getBoolean("repair_using_plates", GENERAL_CAT, true,
-				"Repair shields and armor with metal plates of the same type");
-		Options.enableShieldUpgrades = configuration.getBoolean("upgrade_shields", GENERAL_CAT, true,
-				"Upgrade a fully repaired shield to a material at least as hard as the shields current one using a plate of that material in the Anvil");
+						+ "Set to false if using another mod to manually handle ore generation."));
+		Options.setEnableAchievements(configuration.getBoolean("achievements", GENERAL_CAT, true,
+				"If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals"));
+		Options.setCrackHammerFullStack(configuration.getBoolean("crackhammer_full_stacks", GENERAL_CAT, false,
+				"If true then you can crackhammer full stacks of dropped items."));
+		Options.setEnablePlateRepairs(configuration.getBoolean("repair_using_plates", GENERAL_CAT, true,
+				"Repair shields and armor with metal plates of the same type"));
+		Options.setEnableShieldUpgrades(configuration.getBoolean("upgrade_shields", GENERAL_CAT, true,
+				"Upgrade a fully repaired shield to a material at least as hard as the shields current one using a plate of that material in the Anvil"));
 
 		// INTEGRATION
 		Options.modEnabled("enderio", configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
@@ -178,13 +175,13 @@ public class Config extends ConfigBase {
 				"Enable Redstone Items and Materials (not currently in use)"));
 
 		// RECIPE AMOUNTS/TOOL&ITEM DISABLING
-		Options.gearQuantity = configuration.getInt("Gear Quantity", TOOLS_CAT, 4, 1, 64, "Number of Gears per recipe");
-		Options.plateQuantity = configuration.getInt("Plate Quantity", TOOLS_CAT, 3, 1, 64,
-				"Number of Plates per recipe");
-		Options.furnaceCheese = configuration.getBoolean("Furnace Cheese", TOOLS_CAT, true,
-				"Melt down armor and tools for full value");
-		Options.furnace1112 = configuration.getBoolean("Furnace1112", TOOLS_CAT, true,
-				"Mimic 1.11.2 armor and tool melting.\n Overridden by Furnace Cheese");
+		Options.setGearQuantity(configuration.getInt("Gear Quantity", TOOLS_CAT, 4, 1, 64, "Number of Gears per recipe"));
+		Options.setPlateQuantity(configuration.getInt("Plate Quantity", TOOLS_CAT, 3, 1, 64,
+				"Number of Plates per recipe"));
+		Options.setFurnaceCheese(configuration.getBoolean("Furnace Cheese", TOOLS_CAT, true,
+				"Melt down armor and tools for full value"));
+		Options.setFurnace1112(configuration.getBoolean("Furnace1112", TOOLS_CAT, true,
+				"Mimic 1.11.2 armor and tool melting.\n Overridden by Furnace Cheese"));
 		
 		Options.thingEnabled("Basics", configuration.getBoolean("Enable Basics", TOOLS_CAT, true,
 				"Set to false to disable: Nuggets, Ingots, Powders, Blends, Blocks and Ores"));
@@ -241,10 +238,10 @@ public class Config extends ConfigBase {
 		Options.thingEnabled("flowerpot", Options.isThingEnabled(experimental));
 		Options.thingEnabled("ladder", Options.isThingEnabled(experimental));
 		Options.thingEnabled("tripwire", Options.isThingEnabled(experimental));
-		
+
 		// DISABLE CRACK HAMMER RECIPES
-		Options.disabledRecipes = parseDisabledRecipes(configuration.getString("DisabledCrackhammerRecipes", GENERAL_CAT, "",
-				"Disable the recipes by putting the input materials ore dictionary name ore registry name in this key.\nThe format is a semicolon (;) separate list of ore dictionary names (ie:  oreGold;oreIron;oreCopper - this would blacklist Gold, Iron and Copper ores from working"));
+		Options.setDisabledRecipes(parseDisabledRecipes(configuration.getString("DisabledCrackhammerRecipes", GENERAL_CAT, "",
+				"Disable the recipes by putting the input materials ore dictionary name ore registry name in this key.\nThe format is a semicolon (;) separate list of ore dictionary names (ie:  oreGold;oreIron;oreCopper - this would blacklist Gold, Iron and Copper ores from working")));
 
 		// CRACK HAMMER RECIPES
 		final ConfigCategory userRecipeCat = configuration.getCategory(HAMMER_RECIPES_CAT);
@@ -304,142 +301,6 @@ public class Config extends ConfigBase {
 			} catch (final IOException ex) {
 				BaseMetals.logger.error("Failed to extract additional loot tables", ex);
 			}
-		}
-	}
-
-	public static class Options {
-
-		// GENERAL
-		protected static boolean disableAllHammerRecipes = false;
-		protected static boolean enforceHardness = true;
-		protected static boolean strongHammers = true;
-		protected static boolean autoDetectRecipes = true;
-		protected static boolean requireMMDOreSpawn = true;
-		protected static boolean enableAchievements = true;
-		protected static boolean crackHammerFullStack = false;
-		protected static boolean enableShieldUpgrades = true;
-		protected static boolean enablePlateRepairs = true;
-		protected static boolean enableModderSupportThings = true;
-
-		public static boolean disableAllHammerRecipes() {
-			return disableAllHammerRecipes;
-		}
-
-		public static boolean enforceHardness() {
-			return enforceHardness;
-		}
-
-		public static boolean strongHammers() {
-			return strongHammers;
-		}
-
-		public static boolean autoDetectRecipes() {
-			return autoDetectRecipes;
-		}
-
-		public static boolean requireMMDOreSpawn() {
-			return requireMMDOreSpawn;
-		}
-
-		public static boolean enableAchievements() {
-			return enableAchievements;
-		}
-
-		public static boolean crackHammerFullStack() {
-			return crackHammerFullStack;
-		}
-
-		public static boolean enableShieldUpgrades() {
-			return enableShieldUpgrades;
-		}
-
-		public static boolean enablePlateRepairs() {
-			return enablePlateRepairs;
-		}
-
-		public static boolean enableModderSupportThings() {
-			return enableModderSupportThings;
-		}
-
-		private static String[] disabledRecipes = null;
-		public static String[] disabledRecipes() {
-			return disabledRecipes;
-		}
-
-		// RECIPE AMOUNTS
-		protected static int gearQuantity = 4;
-
-		public static int gearQuantity() {
-			return gearQuantity;
-		}
-
-		protected static int plateQuantity = 3;
-
-		public static int plateQuantity() {
-			return plateQuantity;
-		}
-
-		protected static boolean furnaceCheese = true;
-		public static boolean furnaceCheese() {
-			return furnaceCheese;
-		}
-
-		protected static boolean furnace1112 = true; // Overridden by FURNACE_CHEESE
-		public static boolean furnace1112() {
-			return furnace1112;
-		}
-
-		// INTEGRATION
-		private static final Map<String, Boolean> modEnabled = new HashMap<>();
-		public static boolean isModEnabled(String modName) {
-			String testName = modName.toLowerCase(Locale.ROOT);
-			if( modEnabled.containsKey(testName) ) {
-				return modEnabled.get(testName);
-			}
-			return false;
-		}
-
-		public static void modEnabled(String modName, Boolean bool) {
-			if (!modEnabled.containsKey(modName)) {
-				modEnabled.put(modName.toLowerCase(Locale.ROOT), bool);
-			}
-		}
-
-		// MATERIALS
-		private static final Map<String, Boolean> materialEnabled = new HashMap<>();
-		public static boolean isMaterialEnabled(String name) {
-			String testName = name.toLowerCase(Locale.ROOT);
-			if( materialEnabled.containsKey(testName) ) {
-				return materialEnabled.get(testName);
-			}
-			return false;
-		}
-
-		public static void materialEnabled(String materialName, Boolean bool) {
-			if (!materialEnabled.containsKey(materialName)) {
-				materialEnabled.put(materialName.toLowerCase(Locale.ROOT), bool);
-			}
-		}
-
-		// THINGS
-		private static final Map<String, Boolean> thingEnabled = new HashMap<>();
-		public static boolean isThingEnabled(String name) {
-			String testName = name.toLowerCase(Locale.ROOT);
-			if( thingEnabled.containsKey(testName) ) {
-				return thingEnabled.get(testName);
-			}
-			return false;
-		}
-
-		public static void thingEnabled(String name, Boolean bool) {
-			if (!thingEnabled.containsKey(name)) {
-				thingEnabled.put(name.toLowerCase(Locale.ROOT), bool);
-			}
-		}
-
-		
-		private Options() {
-			throw new IllegalAccessError("Not a instantiable class");
 		}
 	}
 }

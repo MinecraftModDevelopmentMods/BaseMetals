@@ -7,6 +7,7 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 //import com.mcmoddev.lib.util.Oredicts;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.item.Item;
 //import ic2.api.recipe.RecipeInputOreDict;
@@ -22,7 +23,7 @@ public class IC2Base implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 

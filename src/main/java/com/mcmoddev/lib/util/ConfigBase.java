@@ -3,13 +3,15 @@ package com.mcmoddev.lib.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.util.Config.Options;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
 import net.minecraft.block.Block;
@@ -168,6 +170,196 @@ public class ConfigBase {
 			// item not found
 			BaseMetals.logger.info("Failed to find item or block for ID '%s'", id);
 			return null;
+		}
+
+	}
+
+	public static class Options {
+		// GENERAL
+
+		private static boolean disableAllHammerRecipes = false;
+		public static void setDisableAllHammerRecipes(boolean bool) {
+			disableAllHammerRecipes = bool;
+		}
+
+		private static boolean enforceHardness = true;
+		public static void setEnforceHardness(boolean bool) {
+			enforceHardness = bool;
+		}
+
+		private static boolean strongHammers = true;
+		public static void setStrongHammers(boolean bool) {
+			strongHammers = bool;
+		}
+
+		private static boolean autoDetectRecipes = true;
+		public static void setAutoDetectRecipes(boolean bool) {
+			autoDetectRecipes = bool;
+		}
+
+		private static boolean requireMMDOreSpawn = true;
+		public static void setRequireMMDOreSpawn(boolean bool) {
+			requireMMDOreSpawn = bool;
+		}
+
+		private static boolean enableAchievements = true;
+		public static void setEnableAchievements(boolean bool) {
+			enableAchievements = bool;
+		}
+
+		private static boolean crackHammerFullStack = false;
+		public static void setCrackHammerFullStack(boolean bool) {
+			crackHammerFullStack = bool;
+		}
+
+		private static boolean enableShieldUpgrades = true;
+		public static void setEnableShieldUpgrades(boolean bool) {
+			enableShieldUpgrades = bool;
+		}
+
+		private static boolean enablePlateRepairs = true;
+		public static void setEnablePlateRepairs(boolean bool) {
+			enablePlateRepairs = bool;
+		}
+
+		private static boolean enableModderSupportThings = true;
+		public static void setEnableModderSupportThings(boolean bool) {
+			enableModderSupportThings = bool;
+		}
+
+		public static boolean disableAllHammerRecipes() {
+			return disableAllHammerRecipes;
+		}
+
+		public static boolean enforceHardness() {
+			return enforceHardness;
+		}
+
+		public static boolean strongHammers() {
+			return strongHammers;
+		}
+
+		public static boolean autoDetectRecipes() {
+			return autoDetectRecipes;
+		}
+
+		public static boolean requireMMDOreSpawn() {
+			return requireMMDOreSpawn;
+		}
+
+		public static boolean enableAchievements() {
+			return enableAchievements;
+		}
+
+		public static boolean crackHammerFullStack() {
+			return crackHammerFullStack;
+		}
+
+		public static boolean enableShieldUpgrades() {
+			return enableShieldUpgrades;
+		}
+
+		public static boolean enablePlateRepairs() {
+			return enablePlateRepairs;
+		}
+
+		public static boolean enableModderSupportThings() {
+			return enableModderSupportThings;
+		}
+
+		private static String[] disabledRecipes = null;
+		public static void setDisabledRecipes(String[] string) {
+			disabledRecipes = string;
+		}
+		public static String[] disabledRecipes() {
+			return disabledRecipes;
+		}
+
+		// RECIPE AMOUNTS
+		protected static int gearQuantity = 4;
+		public static void setGearQuantity(int qty) {
+			gearQuantity = qty;
+		}
+
+		public static int gearQuantity() {
+			return gearQuantity;
+		}
+
+		private static int plateQuantity = 3;
+		public static void setPlateQuantity(int qty) {
+			plateQuantity = qty;
+		}
+
+		public static int plateQuantity() {
+			return plateQuantity;
+		}
+
+		private static boolean furnaceCheese = true;
+		public static void setFurnaceCheese(boolean bool) {
+			furnaceCheese = bool;
+		}
+		public static boolean furnaceCheese() {
+			return furnaceCheese;
+		}
+
+		private static boolean furnace1112 = true; // Overridden by FURNACE_CHEESE
+		public static void setFurnace1112(boolean bool) {
+			furnace1112 = bool;
+		}
+		public static boolean furnace1112() {
+			return furnace1112;
+		}
+		
+		// INTEGRATION
+		private static final Map<String, Boolean> modEnabled = new HashMap<>();
+		public static boolean isModEnabled(String modName) {
+			String testName = modName.toLowerCase(Locale.ROOT);
+			if (modEnabled.containsKey(testName)) {
+				return modEnabled.get(testName);
+			}
+			return false;
+		}
+
+		public static void modEnabled(String modName, Boolean bool) {
+			if (!modEnabled.containsKey(modName)) {
+				modEnabled.put(modName.toLowerCase(Locale.ROOT), bool);
+			}
+		}
+
+		// MATERIALS
+		private static final Map<String, Boolean> materialEnabled = new HashMap<>();
+		public static boolean isMaterialEnabled(String name) {
+			String testName = name.toLowerCase(Locale.ROOT);
+			if (materialEnabled.containsKey(testName)) {
+				return materialEnabled.get(testName);
+			}
+			return false;
+		}
+
+		public static void materialEnabled(String materialName, Boolean bool) {
+			if (!materialEnabled.containsKey(materialName)) {
+				materialEnabled.put(materialName.toLowerCase(Locale.ROOT), bool);
+			}
+		}
+
+		// THINGS
+		private static final Map<String, Boolean> thingEnabled = new HashMap<>();
+		public static boolean isThingEnabled(String name) {
+			String testName = name.toLowerCase(Locale.ROOT);
+			if (thingEnabled.containsKey(testName)) {
+				return thingEnabled.get(testName);
+			}
+			return false;
+		}
+
+		public static void thingEnabled(String name, Boolean bool) {
+			if (!thingEnabled.containsKey(name)) {
+				thingEnabled.put(name.toLowerCase(Locale.ROOT), bool);
+			}
+		}
+
+		private Options() {
+			throw new IllegalAccessError("Not a instantiable class");
 		}
 	}
 }

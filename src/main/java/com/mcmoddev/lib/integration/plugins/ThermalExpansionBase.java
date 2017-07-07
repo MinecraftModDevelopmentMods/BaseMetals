@@ -2,7 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -32,7 +32,7 @@ public class ThermalExpansionBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 

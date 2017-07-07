@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.item.*;

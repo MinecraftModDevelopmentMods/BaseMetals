@@ -6,6 +6,7 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraftforge.fml.common.Loader;
@@ -27,7 +28,7 @@ public class EnderIOBase implements IIntegration {
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 

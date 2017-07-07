@@ -4,7 +4,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.data.TraitNames;
 import com.mcmoddev.basemetals.init.Materials;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -27,7 +27,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)) {
 			return;
 		}
 

@@ -1,7 +1,7 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 /**
  * This class initializes all fluids in Base Metals.

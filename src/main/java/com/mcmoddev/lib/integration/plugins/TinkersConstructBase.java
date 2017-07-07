@@ -9,6 +9,7 @@ import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkersConstructRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -32,7 +33,7 @@ public class TinkersConstructBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 

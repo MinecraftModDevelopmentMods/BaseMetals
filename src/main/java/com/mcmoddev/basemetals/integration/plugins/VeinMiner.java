@@ -4,6 +4,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 /**
  * VeinMiner Integration Plugin
@@ -18,7 +19,7 @@ public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBas
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(VeinMiner.PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(VeinMiner.PLUGIN_MODID)) {
 			return;
 		}
 

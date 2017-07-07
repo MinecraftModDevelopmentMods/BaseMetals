@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 
@@ -13,7 +13,7 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(Mekanism.PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(Mekanism.PLUGIN_MODID)) {
 			return;
 		}
 

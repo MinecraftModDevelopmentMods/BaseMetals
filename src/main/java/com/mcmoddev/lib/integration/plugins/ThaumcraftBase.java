@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 public class ThaumcraftBase implements IIntegration {
 
@@ -10,7 +11,7 @@ public class ThaumcraftBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 

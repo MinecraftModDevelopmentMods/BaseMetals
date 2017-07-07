@@ -4,6 +4,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 /**
  *
@@ -20,7 +21,7 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(EnderIO.PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(EnderIO.PLUGIN_MODID)) {
 			return;
 		}
 

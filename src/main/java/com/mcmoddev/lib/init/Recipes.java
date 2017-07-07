@@ -5,8 +5,7 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.basemetals.util.Config;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -236,7 +235,7 @@ public abstract class Recipes {
 
 		if ((material.hasItem(Names.GEAR)) && (material.hasItem(Names.CROSSBOW))) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.CROSSBOW)), "zxx", " yx", "x z", 'x', Oredicts.ROD + oreDictName, 'y', Oredicts.GEAR + oreDictName, 'z', Oredicts.STRING));
-			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.CROSSBOW)), new ItemStack(material.getItem(Names.INGOT), 2 + Config.Options.gearQuantity()), 0);
+			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.CROSSBOW)), new ItemStack(material.getItem(Names.INGOT), 2 + Options.gearQuantity()), 0);
 		}
 
 		if (material.hasItem(Names.BOLT)) {
@@ -282,10 +281,10 @@ public abstract class Recipes {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.ROD), 4), "x", "x", 'x', Oredicts.INGOT + oreDictName));
 
 			if (material.hasItem(Names.GEAR)) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.GEAR), Config.Options.gearQuantity()), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.GEAR), Options.gearQuantity()), " x ", "x/x", " x ", 'x', Oredicts.INGOT + oreDictName, '/', Oredicts.ROD + oreDictName));
 				if (material.hasItem(Names.INGOT)) {
 					// if there is no ingot, no cheese
-					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)), new ItemStack(material.getItem(Names.INGOT), Config.Options.gearQuantity()), 0); // you lose the rod
+					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)), new ItemStack(material.getItem(Names.INGOT), Options.gearQuantity()), 0); // you lose the rod
 				}
 			}
 		}
@@ -328,7 +327,7 @@ public abstract class Recipes {
 
 			if (material.getBlock(Names.BLOCK) instanceof IMMDObject) {
 				if (material.hasBlock(Names.PLATE)) {
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.PLATE), Config.Options.plateQuantity()), "xxx", 'x', Oredicts.INGOT + oreDictName));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.PLATE), Options.plateQuantity()), "xxx", 'x', Oredicts.INGOT + oreDictName));
 					GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.PLATE)), new ItemStack(material.getItem(Names.INGOT), 1), 0);
 				}
 

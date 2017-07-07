@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -16,7 +16,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(DenseOres.PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(DenseOres.PLUGIN_MODID)) {
 			return;
 		}
 

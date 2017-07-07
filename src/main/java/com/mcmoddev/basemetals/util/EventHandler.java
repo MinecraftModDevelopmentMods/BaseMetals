@@ -3,7 +3,7 @@ package com.mcmoddev.basemetals.util;
 import java.util.List;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.item.ItemMMDBlend;
 import com.mcmoddev.lib.item.ItemMMDIngot;

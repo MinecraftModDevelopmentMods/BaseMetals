@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraftforge.fml.common.Loader;
 import portablejim.veinminer.api.IMCMessage;
@@ -22,7 +23,7 @@ public class VeinMinerBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
