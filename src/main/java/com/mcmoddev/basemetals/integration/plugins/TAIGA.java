@@ -27,7 +27,7 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 
 	@Override
 	public void init() {
-		if (initDone || (!Options.modEnabled(TAIGA.PLUGIN_MODID) && (!Options.modEnabled(TinkersConstruct.PLUGIN_MODID)))) {
+		if (initDone || (!Options.isModEnabled(TAIGA.PLUGIN_MODID) && (!Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)))) {
 			return;
 		}
 

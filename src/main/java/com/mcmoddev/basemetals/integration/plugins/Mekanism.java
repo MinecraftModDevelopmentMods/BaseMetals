@@ -13,7 +13,7 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(Mekanism.PLUGIN_MODID)) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(Mekanism.PLUGIN_MODID)) {
 			return;
 		}
 
@@ -30,7 +30,7 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 
 		for (int i = 0; i < baseNames.length; i++) {
 			final String materialName = baseNames[i];
-			if (Options.materialEnabled(materialName)) {
+			if (Options.isMaterialEnabled(materialName)) {
 				addOreMultiplicationRecipes(materialName);
 			}
 		}

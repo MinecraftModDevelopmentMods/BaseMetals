@@ -48,20 +48,20 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 		ItemStack blocksTabIconItem;
 		ItemStack itemsTabIconItem;
 		ItemStack toolsTabIconItem;
-		if (Options.materialEnabled(MaterialNames.STARSTEEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
 			temp = Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.BLOCK);
 		} else {
 			temp = net.minecraft.init.Blocks.IRON_BLOCK;
 		}
 		blocksTabIconItem = new ItemStack(Item.getItemFromBlock(temp));
 
-		if (Options.thingEnabled("Gear")) {
+		if (Options.isThingEnabled("Gear")) {
 			itemsTabIconItem = new ItemStack(Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.GEAR));
 		} else {
 			itemsTabIconItem = new ItemStack(net.minecraft.init.Items.STICK);
 		}
 
-		if (Options.thingEnabled("BasicTools")) {
+		if (Options.isThingEnabled("BasicTools")) {
 			toolsTabIconItem = new ItemStack(Materials.getMaterialByName(MaterialNames.DIAMOND).getItem(Names.SWORD));
 		} else {
 			toolsTabIconItem = new ItemStack(net.minecraft.init.Items.DIAMOND_SWORD);

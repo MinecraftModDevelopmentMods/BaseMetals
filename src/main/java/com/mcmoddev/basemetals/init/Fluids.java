@@ -47,112 +47,112 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		addFluid(MaterialNames.REDSTONE, 2000, 10000, 769, 10);
 		addFluidBlock(MaterialNames.REDSTONE);
 
-		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
+		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
 			addFluid(MaterialNames.ADAMANTINE, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.ADAMANTINE);
 		}
 
-		if (Options.materialEnabled(MaterialNames.ANTIMONY)) {
+		if (Options.isMaterialEnabled(MaterialNames.ANTIMONY)) {
 			addFluid(MaterialNames.ANTIMONY, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.ANTIMONY);
 		}
 
-		if (Options.materialEnabled(MaterialNames.AQUARIUM)) {
+		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM)) {
 			addFluid(MaterialNames.AQUARIUM, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.AQUARIUM);
 		}
 
-		if (Options.materialEnabled(MaterialNames.BISMUTH)) {
+		if (Options.isMaterialEnabled(MaterialNames.BISMUTH)) {
 			addFluid(MaterialNames.BISMUTH, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.BISMUTH);
 		}
 
-		if (Options.materialEnabled(MaterialNames.BRASS)) {
+		if (Options.isMaterialEnabled(MaterialNames.BRASS)) {
 			addFluid(MaterialNames.BRASS, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.BRASS);
 		}
 
-		if (Options.materialEnabled(MaterialNames.BRONZE)) {
+		if (Options.isMaterialEnabled(MaterialNames.BRONZE)) {
 			addFluid(MaterialNames.BRONZE, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.BRONZE);
 		}
 
-		if (Options.materialEnabled(MaterialNames.COLDIRON)) {
+		if (Options.isMaterialEnabled(MaterialNames.COLDIRON)) {
 			addFluid(MaterialNames.COLDIRON, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.COLDIRON);
 		}
 
-		if (Options.materialEnabled(MaterialNames.COPPER)) {
+		if (Options.isMaterialEnabled(MaterialNames.COPPER)) {
 			addFluid(MaterialNames.COPPER, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.COPPER);
 		}
 
-		if (Options.materialEnabled(MaterialNames.CUPRONICKEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL)) {
 			addFluid(MaterialNames.CUPRONICKEL, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.CUPRONICKEL);
 		}
 
-		if (Options.materialEnabled(MaterialNames.ELECTRUM)) {
+		if (Options.isMaterialEnabled(MaterialNames.ELECTRUM)) {
 			addFluid(MaterialNames.ELECTRUM, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.ELECTRUM);
 		}
 
-		if (Options.materialEnabled(MaterialNames.INVAR)) {
+		if (Options.isMaterialEnabled(MaterialNames.INVAR)) {
 			addFluid(MaterialNames.INVAR, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.INVAR);
 		}
 
-		if (Options.materialEnabled(MaterialNames.LEAD)) {
+		if (Options.isMaterialEnabled(MaterialNames.LEAD)) {
 			addFluid(MaterialNames.LEAD, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.LEAD);
 		}
 
-		if (Options.materialEnabled(MaterialNames.MERCURY)) {
+		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
 			addFluid(MaterialNames.MERCURY, 13594, 2000, 769, 0);
 			addFluidBlock(MaterialNames.MERCURY);
 		}
 
-		if (Options.materialEnabled(MaterialNames.MITHRIL)) {
+		if (Options.isMaterialEnabled(MaterialNames.MITHRIL)) {
 			addFluid(MaterialNames.MITHRIL, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.MITHRIL);
 		}
 
-		if (Options.materialEnabled(MaterialNames.NICKEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.NICKEL)) {
 			addFluid(MaterialNames.NICKEL, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.NICKEL);
 		}
 
-		if (Options.materialEnabled(MaterialNames.PEWTER)) {
+		if (Options.isMaterialEnabled(MaterialNames.PEWTER)) {
 			addFluid(MaterialNames.PEWTER, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.PEWTER);
 		}
 
-		if (Options.materialEnabled(MaterialNames.PLATINUM)) {
+		if (Options.isMaterialEnabled(MaterialNames.PLATINUM)) {
 			addFluid(MaterialNames.PLATINUM, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.PLATINUM);
 		}
 
-		if (Options.materialEnabled(MaterialNames.SILVER)) {
+		if (Options.isMaterialEnabled(MaterialNames.SILVER)) {
 			addFluid(MaterialNames.SILVER, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.SILVER);
 		}
 
-		if (Options.materialEnabled(MaterialNames.STARSTEEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
 			addFluid(MaterialNames.STARSTEEL, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.STARSTEEL);
 		}
 
-		if (Options.materialEnabled(MaterialNames.STEEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
 			addFluid(MaterialNames.STEEL, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.STEEL);
 		}
 
-		if (Options.materialEnabled(MaterialNames.TIN)) {
+		if (Options.isMaterialEnabled(MaterialNames.TIN)) {
 			addFluid(MaterialNames.TIN, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.TIN);
 		}
 
-		if (Options.materialEnabled(MaterialNames.ZINC)) {
+		if (Options.isMaterialEnabled(MaterialNames.ZINC)) {
 			addFluid(MaterialNames.ZINC, 2000, 10000, 769, 10);
 			addFluidBlock(MaterialNames.ZINC);
 		}
