@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -650,9 +651,9 @@ public abstract class Items {
 		if (item == null) {
 			return null;
 		}
-		material.addNewItem(name, item);
-		addItem(item, name.toString(), material, tab);
-		return item;
+		Item finalItem = addItem(item, name.toString(), material, tab);
+		material.addNewItem(name, finalItem);
+		return finalItem;
 	}
 
 	/**

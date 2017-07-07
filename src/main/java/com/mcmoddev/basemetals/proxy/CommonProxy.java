@@ -67,7 +67,7 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		Recipes.init();
 
-		BaseMetalsAchievements.init();
+		Achievements.init();
 		FuelRegistry.register();
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());

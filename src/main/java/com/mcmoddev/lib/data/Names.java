@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.data;
 
+import java.util.Locale;
 import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
@@ -37,7 +38,7 @@ public enum Names implements IStringSerializable {
 
 	@Override
 	public String getName() {
-		return name().toLowerCase();
+		return this.name();
 	}
 
 	public static Names getType(@Nonnull int ordinal) {
@@ -49,6 +50,6 @@ public enum Names implements IStringSerializable {
 
 	@Override
 	public String toString() {
-		return getName();
+		return this.getName().toLowerCase(Locale.ROOT);
 	}
 }
