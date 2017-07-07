@@ -16,7 +16,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(DenseOres.PLUGIN_MODID)) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(DenseOres.PLUGIN_MODID)) {
 			return;
 		}
 
@@ -49,7 +49,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 		for (int i = 0; i < baseNames.length; i++) {
 			final String materialName = baseNames[i];
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
-			if (material != null && Options.materialEnabled(materialName)) {
+			if (material != null && Options.isMaterialEnabled(materialName)) {
 				String baseMaterial;
 				switch (materialName) {
 					case MaterialNames.ADAMANTINE:

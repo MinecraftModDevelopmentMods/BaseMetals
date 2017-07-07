@@ -32,7 +32,7 @@ public class ThermalExpansionBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(PLUGIN_MODID)) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
@@ -144,13 +144,13 @@ public class ThermalExpansionBase implements IIntegration {
 
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ingot, baseFluid);
 
-			if (Options.thingEnabled("Basics") && dust != null) {
+			if (Options.isThingEnabled("Basics") && dust != null) {
 				final ItemStack dustStack = new ItemStack(dust);
 				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dustStack, baseFluid);
 			}
 
-			addCrucibleExtra(Options.thingEnabled("Plate"), Item.getItemFromBlock(material.getBlock(Names.PLATE)), baseFluid, ENERGY_QTY);
-			addCrucibleExtra(Options.thingEnabled("Basics"), material.getItem(Names.NUGGET), nuggetFluid, ENERGY_QTY);
+			addCrucibleExtra(Options.isThingEnabled("Plate"), Item.getItemFromBlock(material.getBlock(Names.PLATE)), baseFluid, ENERGY_QTY);
+			addCrucibleExtra(Options.isThingEnabled("Basics"), material.getItem(Names.NUGGET), nuggetFluid, ENERGY_QTY);
 		}
 	}
 
@@ -166,7 +166,7 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	public static void addPlatePress(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
-		if ((enabled) && (Options.thingEnabled("Plate") && material != null)) {
+		if ((enabled) && (Options.isThingEnabled("Plate") && material != null)) {
 
 			/*
 			 * Compactors default is 4000RF per operation

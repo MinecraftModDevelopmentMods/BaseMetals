@@ -43,9 +43,9 @@ public abstract class Blocks {
 	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create(16);
 	private static final Map<MMDMaterial, List<Block>> blocksByMaterial = new HashMap<>();
 
-	protected static final Map<Names, Class<? extends Block>> nameToBlock = new HashMap<>();
-	protected static final Map<Names, String> nameToOredict = new HashMap<>();
-	protected static final Map<Names, Boolean> nameToEnabled = new HashMap<>();
+	private static final Map<Names, Class<? extends Block>> nameToClass = new HashMap<>();
+	private static final Map<Names, String> nameToOredict = new HashMap<>();
+	private static final Map<Names, Boolean> nameToEnabled = new HashMap<>();
 
 	protected Blocks() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -60,78 +60,78 @@ public abstract class Blocks {
 		}
 		com.mcmoddev.basemetals.util.Config.init();
 		
-		nameToBlock.put(Names.ANVIL, BlockMMDAnvil.class);
-		nameToBlock.put(Names.BARS, BlockMMDBars.class);
-		nameToBlock.put(Names.BLOCK, BlockMMDBlock.class);
-		nameToBlock.put(Names.BOOKSHELF, BlockMMDBookshelf.class);
-		nameToBlock.put(Names.BUTTON, BlockMMDButton.class);
-		nameToBlock.put(Names.DOOR, BlockMMDDoor.class);
-		nameToBlock.put(Names.DOUBLE_SLAB, BlockMMDSlab.class);
-		nameToBlock.put(Names.FLOWER_POT, BlockMMDFlowerPot.class);
-		nameToBlock.put(Names.LADDER, BlockMMDLadder.class);
-		nameToBlock.put(Names.LEVER, BlockMMDLever.class);
-		nameToBlock.put(Names.PLATE, BlockMMDPlate.class);
-		nameToBlock.put(Names.PRESSURE_PLATE, BlockMMDPressurePlate.class);
-		nameToBlock.put(Names.SLAB, BlockMMDSlab.class);
-		nameToBlock.put(Names.STAIRS, BlockMMDStairs.class);
-		nameToBlock.put(Names.TRAPDOOR, BlockMMDTrapDoor.class);
-		nameToBlock.put(Names.TRIPWIRE_HOOK, BlockMMDTripWireHook.class);
-		nameToBlock.put(Names.WALL, BlockMMDWall.class);
-		nameToBlock.put(Names.FENCE, BlockMMDFence.class);
-		nameToBlock.put(Names.FENCE_GATE, BlockMMDFenceGate.class);
-		nameToBlock.put(Names.ENDORE, BlockMMDOre.class);
-		nameToBlock.put(Names.NETHERORE, BlockMMDNetherOre.class);
-		nameToBlock.put(Names.ENDORE, BlockMMDEndOre.class);
-		nameToBlock.put(Names.ORE, BlockMMDOre.class);
+		mapNameToClass(Names.ANVIL, BlockMMDAnvil.class);
+		mapNameToClass(Names.BARS, BlockMMDBars.class);
+		mapNameToClass(Names.BLOCK, BlockMMDBlock.class);
+		mapNameToClass(Names.BOOKSHELF, BlockMMDBookshelf.class);
+		mapNameToClass(Names.BUTTON, BlockMMDButton.class);
+		mapNameToClass(Names.DOOR, BlockMMDDoor.class);
+		mapNameToClass(Names.DOUBLE_SLAB, BlockMMDSlab.class);
+		mapNameToClass(Names.FLOWER_POT, BlockMMDFlowerPot.class);
+		mapNameToClass(Names.LADDER, BlockMMDLadder.class);
+		mapNameToClass(Names.LEVER, BlockMMDLever.class);
+		mapNameToClass(Names.PLATE, BlockMMDPlate.class);
+		mapNameToClass(Names.PRESSURE_PLATE, BlockMMDPressurePlate.class);
+		mapNameToClass(Names.SLAB, BlockMMDSlab.class);
+		mapNameToClass(Names.STAIRS, BlockMMDStairs.class);
+		mapNameToClass(Names.TRAPDOOR, BlockMMDTrapDoor.class);
+		mapNameToClass(Names.TRIPWIRE_HOOK, BlockMMDTripWireHook.class);
+		mapNameToClass(Names.WALL, BlockMMDWall.class);
+		mapNameToClass(Names.FENCE, BlockMMDFence.class);
+		mapNameToClass(Names.FENCE_GATE, BlockMMDFenceGate.class);
+		mapNameToClass(Names.ENDORE, BlockMMDOre.class);
+		mapNameToClass(Names.NETHERORE, BlockMMDNetherOre.class);
+		mapNameToClass(Names.ENDORE, BlockMMDEndOre.class);
+		mapNameToClass(Names.ORE, BlockMMDOre.class);
 		
-		nameToOredict.put(Names.ANVIL, null);
-		nameToOredict.put(Names.BARS, Oredicts.BARS);
-		nameToOredict.put(Names.BLOCK, Oredicts.BLOCK);
-		nameToOredict.put(Names.BOOKSHELF, null);
-		nameToOredict.put(Names.BUTTON, Oredicts.BUTTON);
-		nameToOredict.put(Names.DOOR, null);
-		nameToOredict.put(Names.DOUBLE_SLAB, null);
-		nameToOredict.put(Names.FLOWER_POT, null);
-		nameToOredict.put(Names.LADDER, null);
-		nameToOredict.put(Names.LEVER, Oredicts.LEVER);
-		nameToOredict.put(Names.PLATE, Oredicts.PLATE);
-		nameToOredict.put(Names.PRESSURE_PLATE, null);
-		nameToOredict.put(Names.SLAB, null);
-		nameToOredict.put(Names.STAIRS, Oredicts.STAIRS);
-		nameToOredict.put(Names.TRAPDOOR, Oredicts.TRAPDOOR);
-		nameToOredict.put(Names.TRIPWIRE_HOOK, null);
-		nameToOredict.put(Names.WALL, Oredicts.WALL);
-		nameToOredict.put(Names.FENCE, null);
-		nameToOredict.put(Names.FENCE_GATE, null);
-		nameToOredict.put(Names.ORE, Oredicts.ORE);
-		nameToOredict.put(Names.NETHERORE, Oredicts.ORE_NETHER);
-		nameToOredict.put(Names.ENDORE, Oredicts.ORE_END);
+		mapNameToOredict(Names.ANVIL, null);
+		mapNameToOredict(Names.BARS, Oredicts.BARS);
+		mapNameToOredict(Names.BLOCK, Oredicts.BLOCK);
+		mapNameToOredict(Names.BOOKSHELF, null);
+		mapNameToOredict(Names.BUTTON, Oredicts.BUTTON);
+		mapNameToOredict(Names.DOOR, null);
+		mapNameToOredict(Names.DOUBLE_SLAB, null);
+		mapNameToOredict(Names.FLOWER_POT, null);
+		mapNameToOredict(Names.LADDER, null);
+		mapNameToOredict(Names.LEVER, Oredicts.LEVER);
+		mapNameToOredict(Names.PLATE, Oredicts.PLATE);
+		mapNameToOredict(Names.PRESSURE_PLATE, null);
+		mapNameToOredict(Names.SLAB, null);
+		mapNameToOredict(Names.STAIRS, Oredicts.STAIRS);
+		mapNameToOredict(Names.TRAPDOOR, Oredicts.TRAPDOOR);
+		mapNameToOredict(Names.TRIPWIRE_HOOK, null);
+		mapNameToOredict(Names.WALL, Oredicts.WALL);
+		mapNameToOredict(Names.FENCE, null);
+		mapNameToOredict(Names.FENCE_GATE, null);
+		mapNameToOredict(Names.ORE, Oredicts.ORE);
+		mapNameToOredict(Names.NETHERORE, Oredicts.ORE_NETHER);
+		mapNameToOredict(Names.ENDORE, Oredicts.ORE_END);
 
 		final String basics = "Basics";
 		final String wall = "Wall";
 
-		nameToEnabled.put(Names.ANVIL, Options.thingEnabled("Anvil"));
-		nameToEnabled.put(Names.BARS, Options.thingEnabled("Bars"));
-		nameToEnabled.put(Names.BLOCK, Options.thingEnabled(basics));
-		nameToEnabled.put(Names.BOOKSHELF, Options.thingEnabled("Bookshelf"));
-		nameToEnabled.put(Names.BUTTON, Options.thingEnabled("Button"));
-		nameToEnabled.put(Names.DOOR, Options.thingEnabled("Door"));
-		nameToEnabled.put(Names.DOUBLE_SLAB, Options.thingEnabled("Slab"));
-		nameToEnabled.put(Names.FLOWER_POT, Options.thingEnabled("FlowerPot"));
-		nameToEnabled.put(Names.LADDER, Options.thingEnabled("Ladder"));
-		nameToEnabled.put(Names.LEVER, Options.thingEnabled("Lever"));
-		nameToEnabled.put(Names.PLATE, Options.thingEnabled("Plate"));
-		nameToEnabled.put(Names.PRESSURE_PLATE, Options.thingEnabled("PressurePlate"));
-		nameToEnabled.put(Names.SLAB, Options.thingEnabled("Slab"));
-		nameToEnabled.put(Names.STAIRS, Options.thingEnabled("Stairs"));
-		nameToEnabled.put(Names.TRAPDOOR, Options.thingEnabled("Trapdoor"));
-		nameToEnabled.put(Names.TRIPWIRE_HOOK, Options.thingEnabled("TripWire"));
-		nameToEnabled.put(Names.WALL, Options.thingEnabled(wall));
-		nameToEnabled.put(Names.FENCE, Options.thingEnabled(wall));
-		nameToEnabled.put(Names.FENCE_GATE, Options.thingEnabled(wall));
-		nameToEnabled.put(Names.ORE, Options.thingEnabled(basics));
-		nameToEnabled.put(Names.NETHERORE, Options.thingEnabled(basics));
-		nameToEnabled.put(Names.ENDORE, Options.thingEnabled(basics));
+		mapNameToEnabled(Names.ANVIL, Options.isThingEnabled("Anvil"));
+		mapNameToEnabled(Names.BARS, Options.isThingEnabled("Bars"));
+		mapNameToEnabled(Names.BLOCK, Options.isThingEnabled(basics));
+		mapNameToEnabled(Names.BOOKSHELF, Options.isThingEnabled("Bookshelf"));
+		mapNameToEnabled(Names.BUTTON, Options.isThingEnabled("Button"));
+		mapNameToEnabled(Names.DOOR, Options.isThingEnabled("Door"));
+		mapNameToEnabled(Names.DOUBLE_SLAB, Options.isThingEnabled("Slab"));
+		mapNameToEnabled(Names.FLOWER_POT, Options.isThingEnabled("FlowerPot"));
+		mapNameToEnabled(Names.LADDER, Options.isThingEnabled("Ladder"));
+		mapNameToEnabled(Names.LEVER, Options.isThingEnabled("Lever"));
+		mapNameToEnabled(Names.PLATE, Options.isThingEnabled("Plate"));
+		mapNameToEnabled(Names.PRESSURE_PLATE, Options.isThingEnabled("PressurePlate"));
+		mapNameToEnabled(Names.SLAB, Options.isThingEnabled("Slab"));
+		mapNameToEnabled(Names.STAIRS, Options.isThingEnabled("Stairs"));
+		mapNameToEnabled(Names.TRAPDOOR, Options.isThingEnabled("Trapdoor"));
+		mapNameToEnabled(Names.TRIPWIRE_HOOK, Options.isThingEnabled("TripWire"));
+		mapNameToEnabled(Names.WALL, Options.isThingEnabled(wall));
+		mapNameToEnabled(Names.FENCE, Options.isThingEnabled(wall));
+		mapNameToEnabled(Names.FENCE_GATE, Options.isThingEnabled(wall));
+		mapNameToEnabled(Names.ORE, Options.isThingEnabled(basics));
+		mapNameToEnabled(Names.NETHERORE, Options.isThingEnabled(basics));
+		mapNameToEnabled(Names.ENDORE, Options.isThingEnabled(basics));
 
 		Materials.init();
 		ItemGroups.init();
@@ -272,7 +272,7 @@ public abstract class Blocks {
 			return material.getBlock(name);
 		}
 
-		if ((name.equals(Names.BLOCK)) && (nameToEnabled.get(name))) {
+		if ((name.equals(Names.BLOCK)) && (isNameEnabled(name))) {
 			material.addNewBlock(name, addBlock(new BlockMMDBlock(material, glow, true), name.toString(), material, tab));
 			return material.getBlock(name);
 		}
@@ -283,9 +283,9 @@ public abstract class Blocks {
 			return null;
 		}
 
-		final Block block = createBlock(material, name.toString(), nameToBlock.get(name), nameToEnabled.get(name), tab);
+		final Block block = createBlock(material, name.toString(), getClassFromName(name), isNameEnabled(name), tab);
 
-		final String oredict = nameToOredict.get(name);
+		final String oredict = getOredictFromName(name);
 		if ((oredict != null) && (block != null)) {
 			Oredicts.registerOre(oredict + material.getCapitalizedName(), block);
 		}
@@ -748,6 +748,45 @@ public abstract class Blocks {
 		return create(Names.TRAPDOOR, material, tab);
 	}
 
+	protected static Class<? extends Block> getClassFromName(@Nonnull final Names name) {
+		if (nameToClass.containsKey(name)) {
+			return nameToClass.get(name);
+		}
+		return net.minecraft.block.Block.class;
+	}
+
+	protected static void mapNameToClass(@Nonnull final Names name, @Nonnull final Class<? extends Block> block) {
+		if (!nameToClass.containsKey(name)) {
+			nameToClass.put(name, block);
+		}
+	}
+
+	protected static String getOredictFromName(@Nonnull final Names name) {
+		if (nameToOredict.containsKey(name)) {
+			return nameToOredict.get(name);
+		}
+		return null;
+	}
+
+	protected static void mapNameToOredict(@Nonnull final Names name, final String oredict) {
+		if (!nameToOredict.containsKey(name)) {
+			nameToOredict.put(name, oredict);
+		}
+	}
+
+	protected static boolean isNameEnabled(@Nonnull final Names name) {
+		if (nameToEnabled.containsKey(name)) {
+			return nameToEnabled.get(name);
+		}
+		return false;
+	}
+
+	protected static void mapNameToEnabled(@Nonnull final Names name, @Nonnull final Boolean bool) {
+		if (!nameToEnabled.containsKey(name)) {
+			nameToEnabled.put(name, bool);
+		}
+	}
+
 	/**
 	 * Gets an block by its name. The name is the name as it is registered in
 	 * the GameRegistry, not its unlocalized name (the unlocalized name is the
@@ -770,8 +809,8 @@ public abstract class Blocks {
 	 * @return The name of the item, or null if the item is not a Base Metals
 	 *         block.
 	 */
-	public static String getNameOfBlock(@Nonnull final Block b) {
-		return blockRegistry.inverse().get(b);
+	public static String getNameOfBlock(@Nonnull final Block block) {
+		return blockRegistry.inverse().get(block);
 	}
 
 	public static Map<String, Block> getBlockRegistry() {

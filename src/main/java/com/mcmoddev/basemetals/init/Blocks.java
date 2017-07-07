@@ -87,47 +87,47 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		redstone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
 		redstone.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
 
-		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
+		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
 			createBlocksFull(MaterialNames.ADAMANTINE, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.ANTIMONY)) {
+		if (Options.isMaterialEnabled(MaterialNames.ANTIMONY)) {
 			createBlocksFull(MaterialNames.ANTIMONY, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.AQUARIUM)) {
+		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM)) {
 			createBlocksFull(MaterialNames.AQUARIUM, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.BISMUTH)) {
+		if (Options.isMaterialEnabled(MaterialNames.BISMUTH)) {
 			createBlocksFull(MaterialNames.BISMUTH, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.BRASS)) {
+		if (Options.isMaterialEnabled(MaterialNames.BRASS)) {
 			createBlocksFull(MaterialNames.BRASS, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.BRONZE)) {
+		if (Options.isMaterialEnabled(MaterialNames.BRONZE)) {
 			createBlocksFull(MaterialNames.BRONZE, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.CHARCOAL)) {
+		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
 			create(Names.BLOCK, charcoal, myTabs.blocksTab);
 		}
 
-		if (Options.materialEnabled(MaterialNames.COLDIRON)) {
+		if (Options.isMaterialEnabled(MaterialNames.COLDIRON)) {
 			createBlocksFull(MaterialNames.COLDIRON, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.COPPER)) {
+		if (Options.isMaterialEnabled(MaterialNames.COPPER)) {
 			createBlocksFull(MaterialNames.COPPER, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.CUPRONICKEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL)) {
 			createBlocksFull(MaterialNames.CUPRONICKEL, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.DIAMOND)) {
+		if (Options.isMaterialEnabled(MaterialNames.DIAMOND)) {
 			create(Names.BARS, diamond, myTabs.blocksTab);
 			create(Names.DOOR, diamond, myTabs.blocksTab);
 			create(Names.TRAPDOOR, diamond, myTabs.blocksTab);
@@ -135,11 +135,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksAdditional(diamond, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.ELECTRUM)) {
+		if (Options.isMaterialEnabled(MaterialNames.ELECTRUM)) {
 			createBlocksFull(MaterialNames.ELECTRUM, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.EMERALD)) {
+		if (Options.isMaterialEnabled(MaterialNames.EMERALD)) {
 			create(Names.BARS, emerald, myTabs.blocksTab);
 			create(Names.DOOR, emerald, myTabs.blocksTab);
 			create(Names.TRAPDOOR, emerald, myTabs.blocksTab);
@@ -147,7 +147,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksAdditional(emerald, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.GOLD)) {
+		if (Options.isMaterialEnabled(MaterialNames.GOLD)) {
 			create(Names.PLATE, gold, myTabs.blocksTab);
 			create(Names.BARS, gold, myTabs.blocksTab);
 			create(Names.DOOR, gold, myTabs.blocksTab);
@@ -156,35 +156,35 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksAdditional(gold, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.INVAR)) {
+		if (Options.isMaterialEnabled(MaterialNames.INVAR)) {
 			createBlocksFull(MaterialNames.INVAR, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.IRON)) {
+		if (Options.isMaterialEnabled(MaterialNames.IRON)) {
 			create(Names.PLATE, iron, myTabs.blocksTab);
 
 			createBlocksAdditional(iron, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.LEAD)) {
+		if (Options.isMaterialEnabled(MaterialNames.LEAD)) {
 			createBlocksFull(MaterialNames.LEAD, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.MERCURY)) {
+		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
 			MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 			create(Names.ORE, mercury, myTabs.blocksTab);
 			mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
 		}
 
-		if (Options.materialEnabled(MaterialNames.MITHRIL)) {
+		if (Options.isMaterialEnabled(MaterialNames.MITHRIL)) {
 			createBlocksFull(MaterialNames.MITHRIL, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.NICKEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.NICKEL)) {
 			createBlocksFull(MaterialNames.NICKEL, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.OBSIDIAN)) {
+		if (Options.isMaterialEnabled(MaterialNames.OBSIDIAN)) {
 			create(Names.BARS, obsidian, myTabs.blocksTab);
 			create(Names.DOOR, obsidian, myTabs.blocksTab);
 			create(Names.TRAPDOOR, obsidian, myTabs.blocksTab);
@@ -192,15 +192,15 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksAdditional(obsidian, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.PEWTER)) {
+		if (Options.isMaterialEnabled(MaterialNames.PEWTER)) {
 			createBlocksFull(MaterialNames.PEWTER, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.PLATINUM)) {
+		if (Options.isMaterialEnabled(MaterialNames.PLATINUM)) {
 			createBlocksFull(MaterialNames.PLATINUM, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.QUARTZ)) {
+		if (Options.isMaterialEnabled(MaterialNames.QUARTZ)) {
 
 			create(Names.BARS, quartz, myTabs.blocksTab);
 			create(Names.DOOR, quartz, myTabs.blocksTab);
@@ -212,11 +212,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			create(Names.WALL, quartz, myTabs.blocksTab);
 		}
 
-		if (Options.materialEnabled(MaterialNames.SILVER)) {
+		if (Options.isMaterialEnabled(MaterialNames.SILVER)) {
 			createBlocksFull(MaterialNames.SILVER, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.STARSTEEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
 			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
 
 			createBlocksFull(starsteel, myTabs);
@@ -228,23 +228,23 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
 		}
 
-		if (Options.materialEnabled(MaterialNames.STEEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
 			createBlocksFull(MaterialNames.STEEL, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.STONE)) {
+		if (Options.isMaterialEnabled(MaterialNames.STONE)) {
 			// Stub
 		}
 
-		if (Options.materialEnabled(MaterialNames.TIN)) {
+		if (Options.isMaterialEnabled(MaterialNames.TIN)) {
 			createBlocksFull(MaterialNames.TIN, myTabs);
 		}
 
-		if (Options.materialEnabled(MaterialNames.WOOD)) {
+		if (Options.isMaterialEnabled(MaterialNames.WOOD)) {
 			// Stub
 		}
 
-		if (Options.materialEnabled(MaterialNames.ZINC)) {
+		if (Options.isMaterialEnabled(MaterialNames.ZINC)) {
 			createBlocksFull(MaterialNames.ZINC, myTabs);
 		}
 

@@ -49,11 +49,11 @@ public class CommonProxy {
 		for (final MissingMapping mapping : event.get()) {
 			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
-					if ((Options.materialEnabled(MaterialNames.MERCURY)) && ("liquid_mercury".equals(mapping.resourceLocation.getResourcePath()))) {
+					if ((Options.isMaterialEnabled(MaterialNames.MERCURY)) && ("liquid_mercury".equals(mapping.resourceLocation.getResourcePath()))) {
 						mapping.remap(Materials.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
-					if ((Options.materialEnabled(MaterialNames.COAL)) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
+					if ((Options.isMaterialEnabled(MaterialNames.COAL)) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
 						mapping.remap(Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
 					}
 				}

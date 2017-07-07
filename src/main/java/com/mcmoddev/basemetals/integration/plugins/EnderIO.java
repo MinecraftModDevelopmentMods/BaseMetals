@@ -20,7 +20,7 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled(EnderIO.PLUGIN_MODID)) {
+		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.isModEnabled(EnderIO.PLUGIN_MODID)) {
 			return;
 		}
 

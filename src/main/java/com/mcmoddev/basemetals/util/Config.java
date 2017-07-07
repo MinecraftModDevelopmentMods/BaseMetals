@@ -232,7 +232,15 @@ public class Config extends ConfigBase {
 				"Stairs of our wonderful metals! Come and get your own - or don't. It's up to you."));
 		Options.thingEnabled("Wall", configuration.getBoolean("Enable Wall", TOOLS_CAT, true,
 				"Hey, Teachers! Leave those kids alone!"));
-
+		final String experimental = "experimental";
+		Options.thingEnabled(experimental, configuration.getBoolean("Enable Experimental", TOOLS_CAT, false,
+				"Enable experimental features (Don't blame us if they burn down your cat or kill your house)"));
+		// Add some utility bits that are referenced
+		Options.thingEnabled("anvil", Options.isThingEnabled(experimental));
+		Options.thingEnabled("bookshelf", Options.isThingEnabled(experimental));
+		Options.thingEnabled("flowerpot", Options.isThingEnabled(experimental));
+		Options.thingEnabled("ladder", Options.isThingEnabled(experimental));
+		Options.thingEnabled("tripwire", Options.isThingEnabled(experimental));
 		
 		// DISABLE CRACK HAMMER RECIPES
 		Options.disabledRecipes = parseDisabledRecipes(configuration.getString("DisabledCrackhammerRecipes", GENERAL_CAT, "",
@@ -256,22 +264,16 @@ public class Config extends ConfigBase {
 		}
 
 		manageUserHammerRecipes(userRecipeCat.values());
-
-		// Add some utility bits that are referenced
-		Options.thingEnabled("anvil", Options.thingEnabled("basics"));
-		Options.thingEnabled("bookshelf", Options.thingEnabled("basics"));
-		Options.thingEnabled("flowerpot", Options.thingEnabled("basics"));
-		Options.thingEnabled("ladder", Options.thingEnabled("basics"));
-		Options.thingEnabled("tripwire", Options.thingEnabled("basics"));
 		
 		if (configuration.hasChanged()) {
 			configuration.save();
 		}
 
-		if ((Options.requireMMDOreSpawn()) && (!Loader.isModLoaded("orespawn"))) {
+		String orespawn = "orespawn";
+		if ((Options.requireMMDOreSpawn()) && (!Loader.isModLoaded(orespawn))) {
 			final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
-			orespawnMod.add(new DefaultArtifactVersion("3.0.0"));
-			throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
+			orespawnMod.add(new DefaultArtifactVersion("3.1.0"));
+			throw new MissingModsException(orespawnMod, orespawn, "MMD Ore Spawn Mod");
 		}
 
 		final Path myLootFolder = Paths.get(ALT_CFG_PATH, BaseMetals.MODID);
@@ -359,7 +361,7 @@ public class Config extends ConfigBase {
 			return enableModderSupportThings;
 		}
 
-		protected static String[] disabledRecipes = null;
+		private static String[] disabledRecipes = null;
 		public static String[] disabledRecipes() {
 			return disabledRecipes;
 		}
@@ -381,6 +383,7 @@ public class Config extends ConfigBase {
 		public static boolean furnaceCheese() {
 			return furnaceCheese;
 		}
+
 		protected static boolean furnace1112 = true; // Overridden by FURNACE_CHEESE
 		public static boolean furnace1112() {
 			return furnace1112;
@@ -388,21 +391,23 @@ public class Config extends ConfigBase {
 
 		// INTEGRATION
 		private static final Map<String, Boolean> modEnabled = new HashMap<>();
-		public static boolean modEnabled(String name) {
-			String testName = name.toLowerCase(Locale.ROOT);
+		public static boolean isModEnabled(String modName) {
+			String testName = modName.toLowerCase(Locale.ROOT);
 			if( modEnabled.containsKey(testName) ) {
 				return modEnabled.get(testName);
 			}
 			return false;
 		}
 
-		public static void modEnabled(String string, Boolean bool) {
-			modEnabled.put(string.toLowerCase(Locale.ROOT), bool);
+		public static void modEnabled(String modName, Boolean bool) {
+			if (!modEnabled.containsKey(modName)) {
+				modEnabled.put(modName.toLowerCase(Locale.ROOT), bool);
+			}
 		}
 
 		// MATERIALS
 		private static final Map<String, Boolean> materialEnabled = new HashMap<>();
-		public static boolean materialEnabled(String name) {
+		public static boolean isMaterialEnabled(String name) {
 			String testName = name.toLowerCase(Locale.ROOT);
 			if( materialEnabled.containsKey(testName) ) {
 				return materialEnabled.get(testName);
@@ -410,13 +415,15 @@ public class Config extends ConfigBase {
 			return false;
 		}
 
-		public static void materialEnabled(String string, Boolean bool) {
-			materialEnabled.put(string.toLowerCase(Locale.ROOT), bool);
+		public static void materialEnabled(String materialName, Boolean bool) {
+			if (!materialEnabled.containsKey(materialName)) {
+				materialEnabled.put(materialName.toLowerCase(Locale.ROOT), bool);
+			}
 		}
 
 		// THINGS
 		private static final Map<String, Boolean> thingEnabled = new HashMap<>();
-		public static boolean thingEnabled(String name) {
+		public static boolean isThingEnabled(String name) {
 			String testName = name.toLowerCase(Locale.ROOT);
 			if( thingEnabled.containsKey(testName) ) {
 				return thingEnabled.get(testName);
@@ -424,8 +431,10 @@ public class Config extends ConfigBase {
 			return false;
 		}
 
-		public static void thingEnabled(String string, Boolean bool) {
-			thingEnabled.put(string.toLowerCase(Locale.ROOT), bool);
+		public static void thingEnabled(String name, Boolean bool) {
+			if (thingEnabled.containsKey(name)) {
+				thingEnabled.put(name.toLowerCase(Locale.ROOT), bool);
+			}
 		}
 
 		
