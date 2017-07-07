@@ -367,13 +367,13 @@ public class ConfigBase {
 			explosionChance = chance;
 		}
 		
-		private static int pigmenAnger = 0;
-		public static int pigmenAnger() {
-			return pigmenAnger;
+		private static int angerPigmenRange = 0;
+		public static int angerPigmenRange() {
+			return angerPigmenRange;
 		}
 		
-		public static void pigmenAnger(int anger) {
-			pigmenAnger = anger;
+		public static void angerPigmenRange(int range) {
+			angerPigmenRange = range;
 		}
 		
 		private Options() {
