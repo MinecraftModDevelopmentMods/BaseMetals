@@ -243,6 +243,8 @@ public abstract class Blocks {
 
 	/**
 	 * 
+	 * @param name
+	 *            Name of the requested block type
 	 * @param material
 	 *            The material this is made from
 	 * @param tab
@@ -255,6 +257,8 @@ public abstract class Blocks {
 
 	/**
 	 * 
+	 * @param name
+	 *            Name of the requested block type
 	 * @param material
 	 *            The material this is made from
 	 * @param glow
@@ -483,6 +487,8 @@ public abstract class Blocks {
 	 * @deprecated
 	 * @param material
 	 *            The material this is made from
+	 * @param glow
+	 *            does it glow
 	 * @param tab
 	 *            which creative tab is it on
 	 * @return the block this function created
@@ -804,9 +810,9 @@ public abstract class Blocks {
 	 * This is the reverse of the getBlockByName(...) method, returning the
 	 * registered name of an block instance (Base Metals blocks only).
 	 *
-	 * @param b
-	 *            The item in question
-	 * @return The name of the item, or null if the item is not a Base Metals
+	 * @param block
+	 *            The block in question
+	 * @return The name of the block, or null if the item is not a Base Metals
 	 *         block.
 	 */
 	public static String getNameOfBlock(@Nonnull final Block block) {

@@ -70,7 +70,7 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	/**
-	 * @param base
+	 * @param material
 	 *            Material being melted
 	 * @param amountPer
 	 *            Amount of fluid per ingot

@@ -397,7 +397,7 @@ public abstract class Items {
 	 * 
 	 * @param material
 	 *            The material base of these items
-	 * @param tab
+	 * @param tabs
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
@@ -423,7 +423,7 @@ public abstract class Items {
 	 * 
 	 * @param material
 	 *            The material base of these items
-	 * @param tab
+	 * @param tabs
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
@@ -465,6 +465,8 @@ public abstract class Items {
 	
 	/**
 	 * 
+	 * @param name
+	 *            Name of the requested item type
 	 * @param material
 	 *            The material this is made from
 	 * @param tab
