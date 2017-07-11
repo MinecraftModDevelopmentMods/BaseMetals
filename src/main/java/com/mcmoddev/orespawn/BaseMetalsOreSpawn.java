@@ -4,7 +4,7 @@ import com.mcmoddev.orespawn.api.os3.*;
 import com.mcmoddev.orespawn.api.plugin.IOreSpawnPlugin;
 import com.mcmoddev.orespawn.api.plugin.OreSpawnPlugin;
 
-@OreSpawnPlugin( modid = "basemetals", resourcePath = "orespawn" )
+@OreSpawnPlugin(modid = "basemetals", resourcePath = "orespawn")
 public class BaseMetalsOreSpawn implements IOreSpawnPlugin {
 	
 	@Override
