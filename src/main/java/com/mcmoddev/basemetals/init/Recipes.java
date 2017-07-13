@@ -8,6 +8,7 @@ import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.UniversalBucket;
@@ -21,6 +22,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  * @author Jasmine Iwanek
  *
  */
+@SuppressWarnings("deprecation")
 public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 	private static boolean initDone = false;
@@ -82,14 +84,14 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			if (material.hasItem(Names.POWDER)) {
 				if (material.hasBlock(Names.BLOCK)) { // Note: Minecraft does not provide a block of charcoal
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.getItem(Names.POWDER), 9));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', material.getItem(Names.POWDER)));
+					GameRegistry.addRecipe(new ResourceLocation("block_to_powder"), new ShapedOreRecipe(new ResourceLocation("block_to_powder"), new ItemStack(material.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', material.getItem(Names.POWDER)));
 				}
 				if (material.hasItem(Names.INGOT)) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(material.getItem(Names.INGOT), 1, 1), new ItemStack(material.getItem(Names.POWDER), 1));
 				}
 				if (material.hasItem(Names.SMALLPOWDER)) {
-					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLPOWDER), 9), new ItemStack(material.getItem(Names.POWDER))));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(material.getItem(Names.SMALLPOWDER))));
+					GameRegistry.addRecipe(new ResourceLocation("powder_to_smallpowder"), new ShapelessOreRecipe(new ResourceLocation("poweder_to_smallpowder"), new ItemStack(material.getItem(Names.SMALLPOWDER), 9), new ItemStack(material.getItem(Names.POWDER))));
+					GameRegistry.addRecipe(new ResourceLocation("smallpowder_to_powder"), new ShapedOreRecipe(new ResourceLocation("smallpowder_to_powder"), new ItemStack(material.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(material.getItem(Names.SMALLPOWDER))));
 					if (material.hasItem(Names.NUGGET)) {
 						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.getItem(Names.SMALLPOWDER), 1));
 					}
@@ -107,14 +109,14 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 				}
 				if (material.hasBlock(Names.BLOCK)) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.getItem(Names.POWDER), 9));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', material.getItem(Names.POWDER)));
+					GameRegistry.addRecipe(new ResourceLocation("powder_to_block"), new ShapedOreRecipe(new ResourceLocation("powder_to_block"), new ItemStack(material.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', material.getItem(Names.POWDER)));
 				}
 				if (material.hasItem(Names.INGOT)) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(material.getItem(Names.INGOT), 1, 0), new ItemStack(material.getItem(Names.POWDER), 1));
 				}
 				if (material.hasItem(Names.SMALLPOWDER)) {
-					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLPOWDER), 9), new ItemStack(material.getItem(Names.POWDER))));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(material.getItem(Names.SMALLPOWDER))));
+					GameRegistry.addRecipe(new ResourceLocation("smallpowder_to_powder_2"), new ShapelessOreRecipe(new ResourceLocation("smallpowder_to_powder_2"), new ItemStack(material.getItem(Names.SMALLPOWDER), 9), new ItemStack(material.getItem(Names.POWDER))));
+					GameRegistry.addRecipe(new ResourceLocation("powder_to_smallpowder_2"), new ShapedOreRecipe(new ResourceLocation("poweder_to_smallpowder_2"), new ItemStack(material.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(material.getItem(Names.SMALLPOWDER))));
 					if (material.hasItem(Names.NUGGET)) {
 						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.getItem(Names.SMALLPOWDER), 1));
 					}
@@ -164,7 +166,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 			if (FluidRegistry.isUniversalBucketEnabled()) {
 				final ItemStack bucketMercury = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, Materials.getMaterialByName(MaterialNames.MERCURY).getFluid());
-				GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY));
+				GameRegistry.addRecipe(new ResourceLocation("bucket"), new ShapelessOreRecipe(new ResourceLocation("bucket"), bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY));
 			}
 		}
 
@@ -182,22 +184,22 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 			addAlloyRecipe(material, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.COAL);
 
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.ACTIVATOR_RAIL, 6), "x/x", "x*x", "x/x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '*', net.minecraft.init.Blocks.REDSTONE_TORCH));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.DETECTOR_RAIL, 6), "x x", "x-x", "x*x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '-', net.minecraft.init.Blocks.STONE_PRESSURE_PLATE, '*', Oredicts.DUST_REDSTONE));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.RAIL, 16), "x x", "x/x", "x x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD));
+			GameRegistry.addRecipe(new ResourceLocation("activator_rail"), new ShapedOreRecipe(new ResourceLocation("activator_rail"), new ItemStack(net.minecraft.init.Blocks.ACTIVATOR_RAIL, 6), "x/x", "x*x", "x/x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '*', net.minecraft.init.Blocks.REDSTONE_TORCH));
+			GameRegistry.addRecipe(new ResourceLocation("detector)rail"), new ShapedOreRecipe(new ResourceLocation("detector_rail"), new ItemStack(net.minecraft.init.Blocks.DETECTOR_RAIL, 6), "x x", "x-x", "x*x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '-', net.minecraft.init.Blocks.STONE_PRESSURE_PLATE, '*', Oredicts.DUST_REDSTONE));
+			GameRegistry.addRecipe(new ResourceLocation("rail"), new ShapedOreRecipe(new ResourceLocation("rail"), new ItemStack(net.minecraft.init.Blocks.RAIL, 16), "x x", "x/x", "x x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD));
 			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE), "xx", 'x', Oredicts.INGOTSTEEL));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.TRIPWIRE_HOOK), "x  ", "/  ", "w  ", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, 'w', Oredicts.PLANK_WOOD));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(net.minecraft.init.Items.FLINT_AND_STEEL), Oredicts.INGOT_STEEL, net.minecraft.init.Items.FLINT));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.HOPPER), "x x", "x/x", " x ", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.CHEST_WOOD));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.MINECART), "x x", "xxx", 'x', Oredicts.INGOT_STEEL));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.PISTON), "www", "sxs", "s*s", 'x', Oredicts.INGOT_STEEL, 'w', Oredicts.PLANK_WOOD, 's', Oredicts.COBBLESTONE, '*', Oredicts.DUST_REDSTONE));
+			GameRegistry.addRecipe(new ResourceLocation("tripwire_hook"), new ShapedOreRecipe(new ResourceLocation("tripwire_hook"), new ItemStack(net.minecraft.init.Blocks.TRIPWIRE_HOOK), "x  ", "/  ", "w  ", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, 'w', Oredicts.PLANK_WOOD));
+			GameRegistry.addRecipe(new ResourceLocation("flint_and_steel"), new ShapelessOreRecipe(new ResourceLocation("flint_and_steel"), new ItemStack(net.minecraft.init.Items.FLINT_AND_STEEL), Oredicts.INGOT_STEEL, net.minecraft.init.Items.FLINT));
+			GameRegistry.addRecipe(new ResourceLocation("hopper"), new ShapedOreRecipe(new ResourceLocation("hopper"), new ItemStack(net.minecraft.init.Blocks.HOPPER), "x x", "x/x", " x ", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.CHEST_WOOD));
+			GameRegistry.addRecipe(new ResourceLocation("minecart"), new ShapedOreRecipe(new ResourceLocation("minecart"), new ItemStack(net.minecraft.init.Items.MINECART), "x x", "xxx", 'x', Oredicts.INGOT_STEEL));
+			GameRegistry.addRecipe(new ResourceLocation("piston"), new ShapedOreRecipe(new ResourceLocation("piston"), new ItemStack(net.minecraft.init.Blocks.PISTON), "www", "sxs", "s*s", 'x', Oredicts.INGOT_STEEL, 'w', Oredicts.PLANK_WOOD, 's', Oredicts.COBBLESTONE, '*', Oredicts.DUST_REDSTONE));
 			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), "x ", " x", 'x', Oredicts.INGOT_STEEL));
 			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), " x", "x ", 'x', Oredicts.INGOT_STEEL));
 			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHIELD), "wxw", "www", " w ", 'w', Oredicts.PLANK_WOOD, 'x', Oredicts.INGOT_STEEL));
 		}
 
 		// new recipes using rods and gears
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.LEVER, 1), "x", "y", 'x', Oredicts.ROD, 'y', Oredicts.COBBLESTONE));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.humanDetector, 1), "xx", "yy", 'x', Oredicts.INGOT_BRICK, 'y', Oredicts.GEAR));
+		GameRegistry.addRecipe(new ResourceLocation("lever"), new ShapedOreRecipe(new ResourceLocation("lever"), new ItemStack(net.minecraft.init.Blocks.LEVER, 1), "x", "y", 'x', Oredicts.ROD, 'y', Oredicts.COBBLESTONE));
+		GameRegistry.addRecipe(new ResourceLocation("human_detector"), new ShapedOreRecipe(new ResourceLocation("human_detector"), new ItemStack(Blocks.humanDetector, 1), "xx", "yy", 'x', Oredicts.INGOT_BRICK, 'y', Oredicts.GEAR));
 	}
 }

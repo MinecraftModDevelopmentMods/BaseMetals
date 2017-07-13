@@ -33,10 +33,9 @@ public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDO
 		this.blockResistance = this.material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 	}
-	
+
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
 		list.add(new ItemStack(itemIn, 1, net.minecraft.block.BlockWall.EnumType.NORMAL.getMetadata()));
 	}
 

@@ -17,6 +17,7 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -266,11 +267,10 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		// return true if block doesn't need tools
 		return target.getHarvestLevel(target.getDefaultState()) == -1;
 	}
-
+	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
-		super.addInformation(stack, player, list, b);
-		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);
 	}
 
 	@Override
