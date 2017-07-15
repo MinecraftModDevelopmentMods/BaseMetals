@@ -218,24 +218,8 @@ public abstract class Blocks {
 	 *            Container of the CreativeTabs these will get registered in
 	 */
 	protected static void createBlocksFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if (tabs == null) {
-			return;
-		}
-
-		create(Names.BLOCK, material, tabs.blocksTab);
-		create(Names.PLATE, material, tabs.blocksTab);
-		create(Names.ORE, material, tabs.blocksTab);
-		create(Names.BARS, material, tabs.blocksTab);
-		create(Names.DOOR, material, tabs.blocksTab);
-		create(Names.TRAPDOOR, material, tabs.blocksTab);
-
-		create(Names.BUTTON, material, tabs.blocksTab);
-		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.DOUBLE_SLAB, material, tabs.blocksTab);
-		create(Names.LEVER, material, tabs.blocksTab);
-		create(Names.PRESSURE_PLATE, material, tabs.blocksTab);
-		create(Names.STAIRS, material, tabs.blocksTab);
-		create(Names.WALL, material, tabs.blocksTab);
+		createBlocksBasic(material, tabs);
+		createBlocksAdditional(material, tabs);
 	}
 
 	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
@@ -273,10 +257,6 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material, @Nonnull final boolean glow, final CreativeTabs tab) {
-		if (name == null) {
-			return null;
-		}
-
 		if (material.hasBlock(name)) {
 			return material.getBlock(name);
 		}
@@ -339,11 +319,6 @@ public abstract class Blocks {
 	 * @return a new block
 	 */
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
-
-		if (block == null) {
-			return null;
-		}
-
 		String fullName;
 
 		if (material != null) {

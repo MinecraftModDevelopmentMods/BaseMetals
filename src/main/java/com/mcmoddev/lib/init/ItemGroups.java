@@ -47,10 +47,6 @@ public class ItemGroups {
 	}
 
 	protected static int addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
-		if (name == null) {
-			return 0;
-		}
-	
 		String modName = Loader.instance().activeModContainer().getModId();
 		String internalTabName = String.format("%s.%s", modName, name);
 		MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable, null);
@@ -70,10 +66,6 @@ public class ItemGroups {
 	}
 
 	protected static MMDCreativeTab getTab(@Nonnull final String modName, @Nonnull final int id) {
-		if (modName == null) {
-			return null;
-		}
-
 		if ((itemGroupsByModID.containsKey(modName)) && (itemGroupsByModID.get(modName).size() > id)) {
 			return itemGroupsByModID.get(modName).get(id);
 		}

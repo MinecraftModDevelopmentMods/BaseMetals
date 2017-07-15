@@ -69,14 +69,10 @@ public abstract class Fluids {
 
 	protected static Fluid addFluid(@Nonnull MMDMaterial material, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
 		int tintColor;
-		if (material != null) {
-			if (material.getFluid() != null) {
-				return material.getFluid();
-			}
-			tintColor = material.getTintColor();
-		} else {
-			return null;
+		if (material.getFluid() != null) {
+			return material.getFluid();
 		}
+		tintColor = material.getTintColor();
 
 		final Fluid fluid = new CustomFluid(material.getName(),
 				new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_still"),
@@ -100,11 +96,6 @@ public abstract class Fluids {
 	}
 
 	protected static BlockFluidClassic addFluidBlock(@Nonnull final MMDMaterial material) {
-
-		if (material == null) {
-			return null;
-		}
-
 		if (material.getFluidBlock() != null) {
 			return material.getFluidBlock();
 		}

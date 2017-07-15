@@ -348,34 +348,8 @@ public abstract class Items {
 	 *            on
 	 */
 	protected static void createItemsFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		create(Names.ARROW, material, tabs.toolsTab);
-		create(Names.AXE, material, tabs.toolsTab);
-		create(Names.BLEND, material, tabs.itemsTab);
-		create(Names.BOLT, material, tabs.toolsTab);
-		create(Names.BOOTS, material, tabs.itemsTab);
-		create(Names.BOW, material, tabs.toolsTab);
-		create(Names.CHESTPLATE, material, tabs.itemsTab);
-		create(Names.CRACKHAMMER, material, tabs.toolsTab);
-		create(Names.CROSSBOW, material, tabs.toolsTab);
-		create(Names.DOOR, material, tabs.blocksTab);
-		create(Names.FISHING_ROD, material, tabs.toolsTab);
-		create(Names.HELMET, material, tabs.toolsTab);
-		create(Names.HOE, material, tabs.toolsTab);
-		create(Names.HORSE_ARMOR, material, tabs.itemsTab);
-		create(Names.INGOT, material, tabs.itemsTab);
-		create(Names.LEGGINGS, material, tabs.itemsTab);
-		create(Names.NUGGET, material, tabs.itemsTab);
-		create(Names.PICKAXE, material, tabs.toolsTab);
-		create(Names.POWDER, material, tabs.itemsTab);
-		create(Names.SHEARS, material, tabs.toolsTab);
-		create(Names.SHIELD, material, tabs.itemsTab);
-		create(Names.SHOVEL, material, tabs.toolsTab);
-		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.SMALLBLEND, material, tabs.itemsTab);
-		create(Names.SMALLPOWDER, material, tabs.itemsTab);
-		create(Names.SWORD, material, tabs.itemsTab);
-		create(Names.ROD, material, tabs.itemsTab);
-		create(Names.GEAR, material, tabs.itemsTab);
+		createItemsBasic(material, tabs);
+		createItemsAdditional(material, tabs);
 	}
 
 	protected static void createItemsModSupport(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
@@ -640,10 +614,6 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	protected static Item createMekCrystal(@Nonnull final MMDMaterial material, final CreativeTabs tab) {
-		if (material == null) {
-			return null;
-		}
-
 		if (material.hasItem(Names.CRYSTAL)) {
 			return material.getItem(Names.CRYSTAL);
 		}

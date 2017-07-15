@@ -252,12 +252,6 @@ public abstract class Materials {
 	 * @return the material
 	 */
 	protected static MMDMaterial registerMaterial(@Nonnull final MMDMaterial material) {
-
-		if (material == null) {
-			BaseMetals.logger.error("Null material passed to registermaterial(), Don't do that!");
-			return null;
-		}
-
 		if (Materials.getAllMaterials().contains(material)) {
 			BaseMetals.logger.error("You asked registermaterial() to register an existing material, Don't do that! (Returning pre existing material instead");
 			return Materials.getMaterialByName(material.getName());

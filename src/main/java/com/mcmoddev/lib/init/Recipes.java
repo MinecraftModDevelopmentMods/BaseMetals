@@ -182,10 +182,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeShieldRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		final String oreDictName = material.getCapitalizedName();
 		final String repairSort = "mmd:shieldrepair";
 		final String upgradeSort = "mmd:shieldupgrade";
@@ -208,10 +204,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeBowRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.ARROW)) {
@@ -227,10 +219,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeCrossbowRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		final String oreDictName = material.getCapitalizedName();
 
 		if ((material.hasItem(Names.GEAR)) && (material.hasItem(Names.CROSSBOW))) {
@@ -245,10 +233,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeNuggetRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.NUGGET)) {
@@ -271,10 +255,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeModRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.ROD)) {
@@ -367,10 +347,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeBlockRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasBlock(Names.BLOCK) && (material.getBlock(Names.BLOCK) instanceof IMMDObject) && (material.hasItem(Names.INGOT))) {
@@ -380,10 +356,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeIngotRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		final String oreDictName = material.getCapitalizedName();
 		// NOTE: smelting XP is based on output item, not input item
 		final float oreSmeltXP = material.getOreSmeltXP();
@@ -407,10 +379,6 @@ public abstract class Recipes {
 	}
 
 	private static void makePowderRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.POWDER)) {
@@ -503,10 +471,6 @@ public abstract class Recipes {
 	}
 
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		// Furnace cheese all the things!
 		// TODO: First remove the vanilla recipes
 		if ((material.hasItem(Names.INGOT)) && !(material.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject) && material.hasOre()) {
@@ -651,10 +615,6 @@ public abstract class Recipes {
 	}
 
 	protected static void addAlloyRecipe(@Nonnull final MMDMaterial material, @Nonnull final int outputQty, @Nonnull final Object... ingredients) {
-		if (material == null) {
-			return;
-		}
-
 		if (ingredients.length == 2 && ingredients[0] instanceof String && ingredients[1] instanceof String) {
 			addSimpleAlloyRecipe(material, outputQty, (String) ingredients[0], (String) ingredients[1]);
 		}
@@ -677,10 +637,6 @@ public abstract class Recipes {
 	}
 
 	protected static void addSimpleAlloyRecipe(@Nonnull final MMDMaterial material, @Nonnull final int outputQty, @Nonnull final String oredict1In, @Nonnull final String oredict2In) {
-		if (material == null) {
-			return;
-		}
-
 		final String oredict1 = StringUtils.capitalize(oredict1In);
 		final String oredict2 = StringUtils.capitalize(oredict2In);
 
