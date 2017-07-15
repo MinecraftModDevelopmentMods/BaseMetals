@@ -298,10 +298,6 @@ public abstract class Items {
 	 *            on
 	 */
 	protected static void createItemsBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
-			return;
-		}
-
 		create(Names.BLEND, material, tabs.itemsTab);
 		create(Names.INGOT, material, tabs.itemsTab);
 		create(Names.NUGGET, material, tabs.itemsTab);
@@ -315,9 +311,6 @@ public abstract class Items {
 	}
 
 	protected static void createItemsAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
-			return;
-		}
 		create(Names.ARROW, material, tabs.toolsTab);
 		create(Names.AXE, material, tabs.toolsTab);
 		create(Names.BOLT, material, tabs.toolsTab);
@@ -355,10 +348,6 @@ public abstract class Items {
 	 *            on
 	 */
 	protected static void createItemsFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
-			return;
-		}
-
 		create(Names.ARROW, material, tabs.toolsTab);
 		create(Names.AXE, material, tabs.toolsTab);
 		create(Names.BLEND, material, tabs.itemsTab);
@@ -402,10 +391,6 @@ public abstract class Items {
 	 *            on
 	 */
 	protected static void createItemsModSupport(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
-			return;
-		}
-
 		if (Options.enableModderSupportThings()) {
 			create(Names.CASING, material, tabs.itemsTab);
 			create(Names.DENSE_PLATE, material, tabs.itemsTab);
@@ -428,9 +413,6 @@ public abstract class Items {
 	 *            on
 	 */
 	protected static void createItemsModIC2(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
-			return;
-		}
 
 		if (material.hasOre()) {
 			create(Names.CRUSHED, material, tabs.itemsTab);
@@ -451,10 +433,6 @@ public abstract class Items {
 	 *            on
 	 */
 	protected static void createItemsModMekanism(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
-			return;
-		}
-
 		if (material.hasOre()) {
 			createMekCrystal(material, tabs.itemsTab);
 			create(Names.SHARD, material, tabs.itemsTab);
@@ -462,7 +440,11 @@ public abstract class Items {
 			create(Names.POWDER_DIRTY, material, tabs.itemsTab);
 		}
 	}
-	
+
+	protected static Item create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
+		return create(name, Materials.getMaterialByName(materialName), tab);
+	}
+
 	/**
 	 * 
 	 * @param name
@@ -538,10 +520,6 @@ public abstract class Items {
 	 * @return the item that was added
 	 */
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
-		if ((item == null) || (name == null)) {
-			return null;
-		}
-		
 		String fullName;
 		if (material != null) {
 			if (material.hasItem(name)) {
@@ -570,10 +548,6 @@ public abstract class Items {
 	}
 
 	private static Item createItem(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Item> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {
-		if ((material == null) || (name == null)) {
-			return null;
-		}
-
 		if (material.hasItem(name)) {
 			return material.getItem(name);
 		}
@@ -624,7 +598,7 @@ public abstract class Items {
 	}
 
 	private static Item createArmorItem(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
-		if ((!(isNameEnabled(name))) || (material == null) || name == null) {
+		if (!(isNameEnabled(name))) {
 			return null;
 		}
 

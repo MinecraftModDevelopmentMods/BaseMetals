@@ -27,6 +27,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
+		BaseMetals.logger.debug("CommonProxy preInit() with event %s", event.description());
 
 		Config.init();
 
@@ -62,6 +63,7 @@ public class CommonProxy {
 	}
 
 	public void init(FMLInitializationEvent event) {
+		BaseMetals.logger.debug("CommonProxt init() with event %s", event.description());
 		Recipes.init();
 
 		Achievements.init();
@@ -71,6 +73,7 @@ public class CommonProxy {
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
+		BaseMetals.logger.debug("CommonProxt postInit() with event %s", event.description());
 		IntegrationManager.INSTANCE.runCallbacks("postInit");
 		Config.postInit();
 	}

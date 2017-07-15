@@ -158,9 +158,6 @@ public abstract class Blocks {
 	 *            Container of the CreativeTabs these will get registered in
 	 */
 	protected static void createBlocksBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
-			return;
-		}
 
 		create(Names.BLOCK, material, tabs.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
 		create(Names.PLATE, material, tabs.blocksTab);
@@ -189,7 +186,7 @@ public abstract class Blocks {
 	 *            Container of the CreativeTabs these will get registered in
 	 */
 	protected static void createBlocksAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
+		if (tabs == null) {
 			return;
 		}
 
@@ -221,7 +218,7 @@ public abstract class Blocks {
 	 *            Container of the CreativeTabs these will get registered in
 	 */
 	protected static void createBlocksFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
+		if (tabs == null) {
 			return;
 		}
 
@@ -241,6 +238,10 @@ public abstract class Blocks {
 		create(Names.WALL, material, tabs.blocksTab);
 	}
 
+	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
+		return create(name, Materials.getMaterialByName(materialName), false, tab);
+	}
+
 	/**
 	 * 
 	 * @param name
@@ -253,6 +254,10 @@ public abstract class Blocks {
 	 */
 	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
 		return create(name, material, false, tab);
+	}
+
+	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, @Nonnull final boolean glow, final CreativeTabs tab) {
+		return create(name, Materials.getMaterialByName(materialName), glow, tab);
 	}
 
 	/**
@@ -268,7 +273,7 @@ public abstract class Blocks {
 	 * @return the block this function created
 	 */
 	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material, @Nonnull final boolean glow, final CreativeTabs tab) {
-		if ((material == null) || (name == null)) {
+		if (name == null) {
 			return null;
 		}
 
@@ -335,7 +340,7 @@ public abstract class Blocks {
 	 */
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
 
-		if ((block == null) || (name == null)) {
+		if (block == null) {
 			return null;
 		}
 
@@ -385,10 +390,6 @@ public abstract class Blocks {
 	}
 
 	private static Block createBlock(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Block> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {
-		if ((material == null) || name == null) {
-			return null;
-		}
-
 		if (enabled) {
 			Constructor<?> ctor = null;
 			Block inst = null;
@@ -415,9 +416,6 @@ public abstract class Blocks {
 	}
 
 	protected static Block createBookshelf(@Nonnull final MMDMaterial material, @Nonnull final boolean fullBlock, final CreativeTabs tab) {
-		if (material == null) {
-			return null;
-		}
 
 		BlockMMDBookshelf bs = (BlockMMDBookshelf) create(Names.BOOKSHELF, material, tab);
 		if (bs != null) {

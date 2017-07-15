@@ -582,6 +582,10 @@ public abstract class Recipes {
 
 	}
 
+	protected static void addAdditionalOredicts(@Nonnull final String materialName, String oreDictName) {
+		addAdditionalOredicts(Materials.getMaterialByName(materialName), oreDictName);
+	}
+
 	protected static void addAdditionalOredicts(@Nonnull final MMDMaterial material, @Nonnull final String oreDictNameIn) {
 		if (material == null) {
 			return;
@@ -642,6 +646,10 @@ public abstract class Recipes {
 		}
 	}
 
+	protected static void addAlloyRecipe(@Nonnull final String materialName, int outputQty, Object... ingredients) {
+		addAlloyRecipe(Materials.getMaterialByName(materialName), outputQty, ingredients);
+	}
+
 	protected static void addAlloyRecipe(@Nonnull final MMDMaterial material, @Nonnull final int outputQty, @Nonnull final Object... ingredients) {
 		if (material == null) {
 			return;
@@ -662,6 +670,10 @@ public abstract class Recipes {
 
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.BLEND), outputQty), dustIngredients));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLBLEND), outputQty), tinyDustIngredients));
+	}
+
+	protected static void addSimpleAlloyRecipe(@Nonnull final String materialName, int outputQty, String oredict1, String oredict2) {
+		addSimpleAlloyRecipe(Materials.getMaterialByName(materialName), outputQty, oredict1, oredict2);
 	}
 
 	protected static void addSimpleAlloyRecipe(@Nonnull final MMDMaterial material, @Nonnull final int outputQty, @Nonnull final String oredict1In, @Nonnull final String oredict2In) {
