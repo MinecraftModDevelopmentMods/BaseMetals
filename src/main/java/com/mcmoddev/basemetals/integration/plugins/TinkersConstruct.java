@@ -123,12 +123,16 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 	private void registerMaterial(boolean enabled, String name, boolean castable, boolean craftable, String... traits) {
 		if (enabled) {
-			TCMaterial mat = registry.getMaterial(name, Materials.getMaterialByName(name)).setCastable(castable).setCraftable(craftable);
-			if (traits.length > 0) {
-				addTraits(mat, traits);
-			}
-			mat.settle();
+			registerMaterial(name, castable, craftable, traits);
 		}
+	}
+
+	private void registerMaterial(String name, boolean castable, boolean craftable, String... traits) {
+		TCMaterial mat = registry.getMaterial(name, Materials.getMaterialByName(name)).setCastable(castable).setCraftable(craftable);
+		if (traits.length > 0) {
+			addTraits(mat, traits);
+		}
+		mat.settle();
 	}
 
 	private void registerAlloys() {

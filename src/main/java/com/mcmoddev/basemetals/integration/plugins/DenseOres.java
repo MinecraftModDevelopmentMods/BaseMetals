@@ -59,7 +59,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 					default:
 						baseMaterial = Oredicts.STONE;
 				}
-				registerOre(String.format("%s_%s", materialName, Oredicts.ORE), BaseMetals.MODID, baseMaterial, 0);
+				registerOre(String.format("%s_%s", materialName, Oredicts.ORE), baseMaterial, 0);
 			}
 		}
 	}

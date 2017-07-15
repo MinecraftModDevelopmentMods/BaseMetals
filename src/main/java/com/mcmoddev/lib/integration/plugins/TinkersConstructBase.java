@@ -136,15 +136,15 @@ public class TinkersConstructBase implements IIntegration {
 		registry.getMaterial(material.getName()).settle();
 	}
 
-	public void registerModifierRecipe(@Nonnull final String name, @Nonnull final ItemStack... recipe) {
+	protected void registerModifierRecipe(@Nonnull final String name, @Nonnull final ItemStack... recipe) {
 		ModifierRegistry.setModifierRecipe(name, recipe);
 	}
 
-	public void registerModifierItem(@Nonnull final String name, @Nonnull final ItemStack item) {
+	protected void registerModifierItem(@Nonnull final String name, @Nonnull final ItemStack item) {
 		ModifierRegistry.setModifierItem(name, item);
 	}
 
-	public void registerModifierItem(@Nonnull final String name, @Nonnull final Item item) {
+	protected void registerModifierItem(@Nonnull final String name, @Nonnull final Item item) {
 		ModifierRegistry.setModifierItem(name, item);
 	}
 }

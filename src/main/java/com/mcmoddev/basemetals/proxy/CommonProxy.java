@@ -1,5 +1,7 @@
 package com.mcmoddev.basemetals.proxy;
 
+import java.util.HashSet;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.*;
@@ -11,12 +13,16 @@ import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.versioning.ArtifactVersion;
+import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
 /**
  * Base Metals Common Proxy
@@ -30,6 +36,12 @@ public class CommonProxy {
 		BaseMetals.logger.debug("CommonProxy preInit() with event %s", event.description());
 
 		Config.init();
+
+		if ((Options.requireMMDOreSpawn()) && (!Loader.isModLoaded("orespawn"))) {
+			final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
+			orespawnMod.add(new DefaultArtifactVersion("3.1.0"));
+			throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
+		}
 
 		Materials.init();
 		FuelRegistry.init();

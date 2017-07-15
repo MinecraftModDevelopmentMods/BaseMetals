@@ -24,6 +24,18 @@ public class DenseOresBase implements IIntegration {
 		initDone = true;
 	}
 
+	/**
+	 * Register a single ore
+	 * 
+	 * @param name
+	 *            Oredictionary name of this ore in its source mod
+	 * @param underlying
+	 *            One of "stone", "netherrack", "end_stone" or "obsidian" - this
+	 *            determines the background of the dense ore texture
+	 * @param meta
+	 *            The metadata value for this ore in the source block
+	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
+	 */
 	protected static void registerOre(@Nonnull final String name, @Nonnull final String underlying, @Nonnull final int meta) {
 		final String modID = Loader.instance().activeModContainer().getModId();
 		registerOre(name, modID, underlying, meta);
@@ -57,6 +69,16 @@ public class DenseOresBase implements IIntegration {
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "addDenseOre", mess);
 	}
 
+	/**
+	 * Register a single ore that spawns in the nether and has an oredict of
+	 * 'nether_&lt;name&gt;_ore'
+	 *
+	 * @param name
+	 *            Oredictionary name of this ore in its source mod
+	 * @param meta
+	 *            The metadata value for this ore in the source block
+	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
+	 */
 	protected static void registerNetherOre(@Nonnull final String name, @Nonnull final int meta) {
 		final String modID = Loader.instance().activeModContainer().getModId();
 		registerOre(String.format("nether_%s", name), modID, "netherrack", meta);
@@ -78,6 +100,16 @@ public class DenseOresBase implements IIntegration {
 		registerOre(String.format("nether_%s", name), modID, "netherrack", meta);
 	}
 
+	/**
+	 * Register a single ore that spawns in the end and has an oredict of
+	 * 'end_&lt;name&gt;_ore'
+	 *
+	 * @param name
+	 *            Oredictionary name of this ore in its source mod
+	 * @param meta
+	 *            The metadata value for this ore in the source block
+	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
+	 */
 	protected static void registerEndOre(@Nonnull final String name, @Nonnull final int meta) {
 		final String modID = Loader.instance().activeModContainer().getModId();
 		registerOre(String.format("end_%s", name), modID, "end_stone", meta);

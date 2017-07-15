@@ -55,6 +55,7 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 
 						final Block k = (Block) f.get(f.getClass());
 						final float harvestLevel = k.getHarvestLevel(null);
+						@SuppressWarnings("deprecation")
 						final float resist = k.getExplosionResistance(null);
 
 						final MMDMaterial repThis = createOrelessMaterial(name, MaterialType.METAL, harvestLevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);

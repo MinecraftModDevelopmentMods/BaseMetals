@@ -8,6 +8,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +48,9 @@ public abstract class Items {
 	private static BiMap<String, Item> itemRegistry = HashBiMap.create(34);
 	private static Map<MMDMaterial, List<Item>> itemsByMaterial = new HashMap<>();
 
-	private static Map<Names, Class<? extends Item>> nameToClass = new HashMap<>();
-	private static Map<Names, String> nameToOredict = new HashMap<>();
-	private static Map<Names, Boolean> nameToEnabled = new HashMap<>();
+	private static EnumMap<Names, Class<? extends Item>> nameToClass = new EnumMap<>(Names.class);
+	private static EnumMap<Names, String> nameToOredict = new EnumMap<>(Names.class);
+	private static EnumMap<Names, Boolean> nameToEnabled = new EnumMap<>(Names.class);
 
 	private static Map<Class<?>, Integer> classSortingValues = new HashMap<>();
 	private static Map<MMDMaterial, Integer> materialSortingValues = new HashMap<>();

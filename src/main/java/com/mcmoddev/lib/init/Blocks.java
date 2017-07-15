@@ -3,6 +3,7 @@ package com.mcmoddev.lib.init;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +44,9 @@ public abstract class Blocks {
 	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create(16);
 	private static final Map<MMDMaterial, List<Block>> blocksByMaterial = new HashMap<>();
 
-	private static final Map<Names, Class<? extends Block>> nameToClass = new HashMap<>();
-	private static final Map<Names, String> nameToOredict = new HashMap<>();
-	private static final Map<Names, Boolean> nameToEnabled = new HashMap<>();
+	private static final EnumMap<Names, Class<? extends Block>> nameToClass = new EnumMap<>(Names.class);
+	private static final EnumMap<Names, String> nameToOredict = new EnumMap<>(Names.class);
+	private static final EnumMap<Names, Boolean> nameToEnabled = new EnumMap<>(Names.class);
 
 	protected Blocks() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -330,7 +331,7 @@ public abstract class Blocks {
 			} else {
 				fullName = material.getName() + "_" + name;
 			}
-		} else if (block instanceof BlockMMDDoubleSlab) { // FIXME: this should be checking for any Double Slab derivative
+		} else if (block instanceof BlockMMDDoubleSlab) {
 			fullName = "double_" + name;
 		} else {
 			fullName = name;

@@ -302,12 +302,9 @@ public abstract class MMDToolEffects {
 
 	private static boolean hasFullSuit(EntityPlayer player, String materialName) {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
-		if (player.inventory.armorInventory.get(3) != ItemStack.EMPTY && player.inventory.armorInventory.get(2).getItem() == material.getItem(Names.HELMET)
+		return (player.inventory.armorInventory.get(3) != ItemStack.EMPTY && player.inventory.armorInventory.get(2).getItem() == material.getItem(Names.HELMET)
 				&& player.inventory.armorInventory.get(2) != ItemStack.EMPTY && player.inventory.armorInventory.get(1).getItem() == material.getItem(Names.CHESTPLATE)
 				&& player.inventory.armorInventory.get(1) != ItemStack.EMPTY && player.inventory.armorInventory.get(1).getItem() == material.getItem(Names.LEGGINGS)
-				&& player.inventory.armorInventory.get(0) != ItemStack.EMPTY&& player.inventory.armorInventory.get(0).getItem() == material.getItem(Names.BOOTS)) {
-				return true;
-			}
-			return false;
+				&& player.inventory.armorInventory.get(0) != ItemStack.EMPTY&& player.inventory.armorInventory.get(0).getItem() == material.getItem(Names.BOOTS));
 	}
 }

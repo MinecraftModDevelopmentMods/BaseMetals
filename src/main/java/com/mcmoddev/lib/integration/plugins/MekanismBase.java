@@ -69,7 +69,7 @@ public class MekanismBase implements IIntegration {
 		}
 		/*
 		for (Gas gas : GasRegistry.getRegisteredGasses()) {
-			BaseMetals.logger.info("BASEMETALS: PEEKING FOR GASSES: %s", gas.getName());
+			BaseMetals.logger.info("PEEKING FOR GASSES: %s", gas.getName());
 		}
 		*/
 
