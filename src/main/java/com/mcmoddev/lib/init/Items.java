@@ -42,11 +42,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public abstract class Items {
 
-	private static final String ERROR_ONE_PART1 = "Class for Item named ";
-	private static final String ERROR_ONE_PART2 = " does not have the correct constructor";
-	private static final String ERROR_TWO_PART1 = "Unable to create new instance of Item class for item name ";
-	private static final String ERROR_TWO_PART2 = " of material ";
-
 	private static boolean initDone = false;
 
 	private static BiMap<String, Item> itemRegistry = HashBiMap.create(34);
@@ -442,13 +437,10 @@ public abstract class Items {
 			return createArmorItem(name, material, tab);
 		}
 
-		if (((name.equals(Names.BLEND)) || name.equals(Names.SMALLBLEND)) && (!material.hasBlend())) {
-			return null;
-		} else if (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL))) {
-			return null;
-		} else if (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR))) {
-			return null;
-		} else if (name.equals(Names.SLAB) && (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB)))) {
+		if ((((name.equals(Names.BLEND)) || name.equals(Names.SMALLBLEND)) && (!material.hasBlend()))
+				|| (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL)))
+				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR)))
+				|| (name.equals(Names.SLAB) && (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB))))) {
 			return null;				
 		}
 
@@ -532,30 +524,15 @@ public abstract class Items {
 
 			try {
 				ctor = clazz.getConstructor(material.getClass());
-			} catch (NoSuchMethodException ex) {
-				BaseMetals.logger.error(ERROR_ONE_PART1 + name + ERROR_ONE_PART2, ex);
-				return null;
-			} catch (SecurityException ex) {
-				BaseMetals.logger.error(ERROR_ONE_PART1 + name + ERROR_ONE_PART2, ex);
+			} catch (NoSuchMethodException|SecurityException ex) {
+				BaseMetals.logger.error("Class for Item named " + name + " does not have the correct constructor", ex);
 				return null;
 			}
 
 			try {
 				inst = (Item) ctor.newInstance(material);
-			} catch (IllegalAccessException ex) {
-				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
-				return null;
-			} catch (IllegalArgumentException ex) {
-				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
-				return null;
-			} catch (InstantiationException ex) {
-				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
-				return null;
-			} catch (InvocationTargetException ex) {
-				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
-				return null;
-			} catch (ExceptionInInitializerError ex) {
-				BaseMetals.logger.error(ERROR_TWO_PART1 + name + ERROR_TWO_PART2 + material.getCapitalizedName(), ex);
+			} catch (IllegalAccessException|IllegalArgumentException|InstantiationException|InvocationTargetException|ExceptionInInitializerError ex) {
+				BaseMetals.logger.error("Unable to create new instance of Item class for item name " + name + " of material " + material.getCapitalizedName(), ex);
 				return null;
 			} catch (Exception ex) {
 				BaseMetals.logger.error("Unable to create Item named " + name + " for material " + material.getCapitalizedName(), ex);
