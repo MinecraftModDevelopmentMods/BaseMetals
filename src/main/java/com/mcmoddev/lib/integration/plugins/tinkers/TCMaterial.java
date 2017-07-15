@@ -488,9 +488,8 @@ public class TCMaterial {
      * @param loc Location to get traits for, null/unsupplied means the same as "general"
      * @return Either an unmodifiable list of traits or the empty list
      */
-    public List<AbstractTrait> getTraits(@Nonnull final String loc ) {
-        final String location = loc==null?"general":loc;
-        if(this.traits.isEmpty() || this.traits.get(location).isEmpty() ) {
+    public List<AbstractTrait> getTraits(@Nonnull final String location) {
+        if(this.traits.isEmpty() || this.traits.get(location).isEmpty()) {
             return Collections.emptyList();
         }
 

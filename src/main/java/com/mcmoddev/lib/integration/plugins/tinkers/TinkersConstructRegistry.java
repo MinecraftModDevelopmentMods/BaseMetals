@@ -94,11 +94,10 @@ public class TinkersConstructRegistry {
      * @return Reference to the material asked for or a new one of the correct name
      */
     public TCMaterial getMaterial(@Nonnull final String name) {
-        final String n = name==null?"FixYourCode":name;
-        if( getInstance().isRegistered(n) ) {
-            return getInstance().get(n);
+        if( getInstance().isRegistered(name) ) {
+            return getInstance().get(name);
         }
-        return getInstance().put( n, new TCMaterial(n) );
+        return getInstance().put( name, new TCMaterial(name) );
     }
 
     /**
@@ -108,13 +107,8 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCMaterial getMaterial(@Nonnull final String name, @Nonnull final MMDMaterial material) {
-        final String n = name==null?(material==null?"FixYourCode":material.getName()):name;
-        if( material == null || name == null) {
-            return null;
-        }
-
-        if( getInstance().isRegistered(n) ) {
-            return getInstance().getMaterial(n);
+        if( getInstance().isRegistered(name) ) {
+            return getInstance().getMaterial(name);
         }
         
         return getInstance().put(name, new TCMaterial(name, material));
@@ -230,7 +224,7 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCCode registerMelting(@Nonnull final Item input, @Nonnull final Fluid output, @Nonnull final int outputQuantity) {
-        if( input == null || output == null || outputQuantity == 0 ) {
+        if (outputQuantity == 0) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
         TinkerRegistry.registerMelting(input, output, outputQuantity);
@@ -245,7 +239,7 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCCode registerMelting(@Nonnull final String oredictName, @Nonnull final Fluid output, @Nonnull final int outputQuantity ) {
-        if( oredictName == null || output == null || outputQuantity == 0 ) {
+        if (outputQuantity == 0) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
         TinkerRegistry.registerMelting(oredictName, output, outputQuantity);
@@ -279,7 +273,7 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCCode registerAlloy(@Nonnull final String name, @Nonnull final Fluid output, @Nonnull final int outputAmount, @Nonnull final Object... recipe) {
-        if( name == null || output == null || outputAmount == 0 ) {
+        if (outputAmount == 0) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
 
@@ -325,7 +319,7 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCCode registerBasin(@Nonnull final Block block, @Nonnull final Fluid source, @Nonnull final int sourceQty) {
-        if( block == null || source == null || sourceQty == 0 ) {
+        if (sourceQty == 0) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
         TinkerRegistry.registerBasinCasting(new ItemStack(block), ItemStack.EMPTY, source, sourceQty);
@@ -340,7 +334,7 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCCode registerCasting(@Nonnull final Item output, @Nonnull final Fluid source, @Nonnull final int sourceQty) {
-        if( output == null || source == null || sourceQty == 0 ) {
+        if (sourceQty == 0) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
         TinkerRegistry.registerTableCasting( new ItemStack(output),  ItemStack.EMPTY, source, sourceQty);
@@ -393,26 +387,14 @@ public class TinkersConstructRegistry {
      * The following functions are helpers to help make the registerMelting function a touch less complex
      */
     private void meltingHelper(@Nonnull final Item item, @Nonnull final Fluid output, @Nonnull final int amount ) {
-    	if( item == null || output == null ) {
-    		return;
-    	}
-    	
     	TinkerRegistry.registerMelting(item, output, amount);
     }
     
     private void meltingHelper(@Nonnull final String itemName, @Nonnull final Fluid output, @Nonnull final int amount ) {
-    	if( itemName == null || output == null ) {
-    		return;
-    	}
-    	
     	TinkerRegistry.registerMelting(itemName, output, amount);
     }
 
     private void meltingHelper(@Nonnull final Block block, @Nonnull final Fluid output, @Nonnull final int amount ) {
-    	if( block == null || output == null ) {
-    		return;
-    	}
-    	
     	TinkerRegistry.registerMelting(block, output, amount);
     }
     

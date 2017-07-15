@@ -19,9 +19,6 @@ import net.minecraftforge.oredict.OreDictionary;
  *
  */
 public class ArbitraryCrusherRecipe implements ICrusherRecipe {
-
-	private static final String NO_NULL_INPUT = ": cannot have null input item";
-	private static final String NO_NULL_OUTPUT = ": cannot have null output item";
 	
 	private final ItemStack input;
 	private final ItemStack output;
@@ -41,10 +38,6 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	public ArbitraryCrusherRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output) {
 		this.input = input;
 		this.output = output;
-		if (input == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_INPUT);
-		if (output == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_OUTPUT);
 	}
 
 	/**
@@ -62,10 +55,6 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	public ArbitraryCrusherRecipe(@Nonnull Item input, @Nonnull ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
-		if (input == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_INPUT);
-		if (output == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_OUTPUT);
 	}
 
 	/**
@@ -83,10 +72,6 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	public ArbitraryCrusherRecipe(@Nonnull Block input, @Nonnull ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
-		if (input == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_INPUT);
-		if (output == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_OUTPUT);
 	}
 
 	/**

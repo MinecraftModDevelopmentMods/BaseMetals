@@ -115,7 +115,7 @@ public class EnderIOBase implements IIntegration {
 																+ "<input>\n\t\t\t<itemStack oreDictionary=\"%s\"/>\n\t\t</input>\n\t\t"
 																+ "<output>\n\t\t\t<itemStack oreDictionary=\"%s\" />\n\t\t</output>\n\t"
 															+ "</recipe>\n</recipeGroup>",
-															ownerModID, material, energy, input, output );
+															ownerModID, material, energy, input, output);
 		// @formatter:on
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:alloysmelter", messageAlloySmelter);
 	}
@@ -163,12 +163,6 @@ public class EnderIOBase implements IIntegration {
 	 *            How much energy it costs to perform
 	 */
 	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material, final String outputSecondary, @Nonnull final int energy) {
-
-		// we need to be sure the material is enabled, a null check is the best way
-		if (material == null) {
-			return;
-		}
-
 		int primaryQty = 2;
 		int secondaryQty = 1;
 
@@ -209,7 +203,7 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material, @Nonnull final int primaryQty, @Nonnull final String outputSecondary, @Nonnull final int secondaryQty, @Nonnull final int energy) {
+	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material, @Nonnull final int primaryQty, final String outputSecondary, @Nonnull final int secondaryQty, @Nonnull final int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
 		final String materialName = material.getName();
