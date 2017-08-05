@@ -132,9 +132,9 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 						double z = target.posZ;
 
 						if (Options.crackHammerFullStack()) {
-							targetItem.shrink(output.getCount());
+							targetItem.setCount(0);
 						} else {
-							targetItem.setCount(targetItem.getCount() - 1);
+							targetItem.shrink(1);
 						}
 						if (targetItem.getCount() <= 0) {
 							w.removeEntity(target);
