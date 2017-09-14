@@ -52,6 +52,8 @@ const alloy_conditions = { 'Aquarium': { 'enabled': [ 'Basics' ], 'materials': [
 			   'Electrum': { 'enabled': [ 'Basics' ], 'materials': [ 'Silver' ] },
 			   'Pewter': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Lead', 'Tin' ] } };
 
+const alloy_names = [ 'Aquarium', 'Brass', 'Bronze', 'Cupronickel', 'Electrum', 'Pewter' ];
+
 const patterns_basic = {
     // Basics
     'nugget': { 'type': 'forge:ore_shapeless', 'input': 'INGOT', 'result': { 'mat': 'NUGGET', 'count': 9 }, 'config': { 'enabled': [ 'Basics'  ] }, "group": "basics" },
@@ -156,6 +158,7 @@ function processConditions( conditions, mat ) {
 			 "optionName": "material",
 			 "optionValue": mat
 		       } ];
+
     for( let c = 0; c < conditions.length; c++ ) {
 	var cur = conditions[c];
 	if( cur == 'hammerEnabled' ) {
@@ -202,5 +205,42 @@ for( let i = 0; i < base_mats.length; i++ ) {
 	res.group = this_recipe.group;
 	console.log(JSON.stringify(res, null, '\t'));
     }
-
 }
+
+function processAlloyConditions( conds, mat ) {
+    let m = conds.materials;
+    let res = [];
+    for( let i = 0; i < m.length; i++ ) {
+	res.push( { "type":"basemetals:enabled", "optionName":"material","optionValue":m[i] } );
+    }
+
+    let e = conds.enabled;
+    for( let x = 0; x < e.length; e++ ) {
+	res.push( { "type":"basemetals:enabled", "optionName":"thing", "optionValue":e[x] } );
+    }
+    return res;
+}
+
+for( let a = 0; a < alloy_names.length; a++ ) {
+    var name = alloy_names[a];
+    var this_blend = mapName( 'BLEND', name );
+    var this_mix = alloy_mix[name];
+    var conds = alloy_conditions[name];
+    var res = {};
+    res.result = { "item": this_blend, "count": this_mix.output };
+    res.type = this_mix.recipe.type;
+    res.ingredients = [];
+    for( let x = 0; x < this_mix.recipe.mix.length; x++ ) {
+	let name = this_mix.recipe.mix[x].name;
+	res.ingredients.push( `ore:${name}` );
+    }
+    res.group = "alloys";
+    let tnc = processAlloyConditions(conds,name);
+    tnc.push( { "type":"basemetals:enabled", "optionName":"material","optionValue":name } );
+    
+    res.conditions = [ { "type":"forge:and", "values": tnc } ];
+    
+    console.log(JSON.stringify(res,null,'\t'));
+}
+
+	       
