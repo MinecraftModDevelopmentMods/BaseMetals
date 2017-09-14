@@ -12,6 +12,7 @@ import com.mcmoddev.lib.item.ItemMMDSmallBlend;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
@@ -23,6 +24,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.client.model.ItemLayerModel.Loader;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -138,7 +140,7 @@ public class EventHandler {
 		InventoryCrafting recipeInput = getDummyCraftingInv();
 		recipeInput.setInventorySlotContents(0, left);
 		recipeInput.setInventorySlotContents(1, right);
-		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+		List<IRecipe> recipes = CraftingManager.findMatchingRecipe(recipeInput, null);
 		for (IRecipe r : recipes) {
 			if ((r instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) r).matches(recipeInput, null))) {
 				event.setOutput(r.getCraftingResult(recipeInput));
