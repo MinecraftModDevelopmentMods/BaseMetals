@@ -177,11 +177,6 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	}
 
 	@Override
-	public ToolMaterial getToolMaterial() {
-		return toolMaterial;
-	}
-
-	@Override
 	public int getItemEnchantability() {
 		return toolMaterial.getEnchantability();
 	}

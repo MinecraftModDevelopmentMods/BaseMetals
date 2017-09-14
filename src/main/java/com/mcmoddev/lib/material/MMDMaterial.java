@@ -1,11 +1,13 @@
 package com.mcmoddev.lib.material;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.collect.ImmutableList;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 
@@ -525,6 +527,22 @@ public class MMDMaterial {
 		return null;
 	}
 
+	/**
+	 * Get all the blocks that are made from this material
+	 * @return ImmutableList<Block> - the blocks
+	 */
+	public ImmutableList<Block> getBlocks() {
+		return ImmutableList.copyOf(this.blocks.values());
+	}
+	
+	/**
+	 * Get all the items that are made from/with this material
+	 * @return ImmutableList<Item> - the items
+	 */
+	public ImmutableList<Item> getItems() {
+		return ImmutableList.copyOf(this.items.values());
+	}
+	
 	public boolean hasOre() {
 		return this.hasOre;
 	}

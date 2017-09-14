@@ -45,11 +45,6 @@ public class ItemMMDAxe extends net.minecraft.item.ItemAxe implements IMMDObject
 	}
 
 	@Override
-	public ToolMaterial getToolMaterial() {
-		return this.toolMaterial;
-	}
-
-	@Override
 	public int getItemEnchantability() {
 		return this.toolMaterial.getEnchantability();
 	}

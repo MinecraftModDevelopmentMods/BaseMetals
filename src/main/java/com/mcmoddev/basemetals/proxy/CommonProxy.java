@@ -1,22 +1,15 @@
 package com.mcmoddev.basemetals.proxy;
 
-import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.*;
 import com.mcmoddev.basemetals.util.Config;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.util.EventHandler;
-import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Base Metals Common Proxy
@@ -45,7 +38,7 @@ public class CommonProxy {
 		IntegrationManager.INSTANCE.runCallbacks("preInit");
 	}
 
-	public void onRemap(FMLMissingMappingsEvent event) {
+/*	public void onRemap(FMLMissingMappingsEvent event) {
 		for (final MissingMapping mapping : event.get()) {
 			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
@@ -59,12 +52,12 @@ public class CommonProxy {
 				}
 			}
 		}
-	}
+	}*/
 
 	public void init(FMLInitializationEvent event) {
 		Recipes.init();
 
-		Achievements.init();
+//		Achievements.init();
 		FuelRegistry.register();
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());

@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -83,8 +82,8 @@ public class BaseMetals {
 		proxy.postInit(event);
 	}
 
-	@EventHandler
+/*	@EventHandler
 	public static void onRemap(FMLMissingMappingsEvent event) {
 		proxy.onRemap(event);
-	}
+	} */
 }

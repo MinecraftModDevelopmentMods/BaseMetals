@@ -8,6 +8,8 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * This class initializes all blocks in Base Metals.
@@ -251,5 +253,14 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
 
 		initDone = true;
+	}
+	
+	@SubscribeEvent
+	public void registerBlocks(RegistryEvent.Register<Block> event) {
+		for( MMDMaterial mat : Materials.getAllMaterials() ) {
+			for( Block b : mat.getBlocks() ) {
+				event.getRegistry().register(b);
+			}
+		}
 	}
 }

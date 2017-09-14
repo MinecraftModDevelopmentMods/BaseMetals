@@ -552,7 +552,7 @@ public abstract class Items {
 
 		item.setRegistryName(fullName);
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
-		GameRegistry.register(item);
+		//GameRegistry.register(item);
 		itemRegistry.put(fullName, item);
 
 		if (tab != null) {

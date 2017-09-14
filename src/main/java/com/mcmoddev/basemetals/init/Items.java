@@ -8,7 +8,11 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * This class initializes all items in Base Metals.
@@ -95,7 +99,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
 		iron.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
 		iron.addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
-		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.field_191525_da); // Items.IRON_NUGGET
+		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		lapis.addNewItem(Names.POWDER, new ItemStack(net.minecraft.init.Items.DYE, 1, 4).getItem());
@@ -301,4 +305,14 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 		initDone = true;
 	}
+	
+	@SubscribeEvent
+	public void registerItems(RegistryEvent.Register<Item> event) {
+		for( MMDMaterial mat : Materials.getAllMaterials() ) {
+			for( Item item : mat.getItems() ) {
+				event.getRegistry().register(item);
+			}
+		}
+	}
+
 }

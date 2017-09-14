@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.material.IMMDObject;
@@ -17,6 +19,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -45,11 +49,6 @@ public class ItemMMDPickaxe extends net.minecraft.item.ItemPickaxe implements IM
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("pickaxe");
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-	}
-
-	@Override
-	public ToolMaterial getToolMaterial() {
-		return this.toolMaterial;
 	}
 
 	@Override
@@ -102,12 +101,13 @@ public class ItemMMDPickaxe extends net.minecraft.item.ItemPickaxe implements IM
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);
 	}
 
 	@Override
-	public MMDMaterial getMMDMaterial() {tooltip
+	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
 }
