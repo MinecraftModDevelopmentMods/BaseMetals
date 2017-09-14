@@ -352,4 +352,8 @@ public abstract class Materials {
 			return Collections.emptySet();
 		}
 	}
+	
+	public static boolean hasMaterialFromMod(String modId) {
+		return modSourceMaterialMap.containsKey(modId);
+	}
 }

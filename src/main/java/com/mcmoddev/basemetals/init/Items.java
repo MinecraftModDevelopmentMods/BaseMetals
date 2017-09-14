@@ -307,11 +307,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	
 	@SubscribeEvent
 	public void registerItems(RegistryEvent.Register<Item> event) {
-		for( MMDMaterial mat : Materials.getAllMaterials() ) {
-			for( Item item : mat.getItems() ) {
-				event.getRegistry().register(item);
-			}
-		}
+		super.register(event);
 	}
 
 }

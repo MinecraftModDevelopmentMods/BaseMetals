@@ -31,6 +31,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -1338,5 +1340,22 @@ public abstract class Items {
 	 */
 	public static Map<MMDMaterial, List<Item>> getItemsByMaterial() {
 		return Collections.unmodifiableMap(itemsByMaterial);
+	}
+
+	/**
+	 * Register all items for the current "activeModContainer" that we have, if any
+	 * @param event
+	 */
+	public static void register(RegistryEvent.Register<Item> event) {
+		String mod = Loader.instance().activeModContainer().getModId();
+		if( !Materials.hasMaterialFromMod(mod) ) {
+			return;
+		}
+		
+        for( MMDMaterial mat : Materials.getMaterialsByMod(mod) ) {
+            for( Item item : mat.getItems() ) {
+                event.getRegistry().register(item);
+            }
+        }
 	}
 }

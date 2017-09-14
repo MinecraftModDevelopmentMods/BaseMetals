@@ -257,10 +257,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	
 	@SubscribeEvent
 	public void registerBlocks(RegistryEvent.Register<Block> event) {
-		for( MMDMaterial mat : Materials.getAllMaterials() ) {
-			for( Block b : mat.getBlocks() ) {
-				event.getRegistry().register(b);
-			}
-		}
+		super.register(event);
 	}
 }

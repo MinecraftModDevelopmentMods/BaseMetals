@@ -25,8 +25,10 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.BlockFluidBase;
 //import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * This class initializes all blocks in Base Metals and provides some utility
@@ -825,4 +827,22 @@ public abstract class Blocks {
 	public static Map<MMDMaterial, List<Block>> getBlocksByMaterial() {
 		return Collections.unmodifiableMap(blocksByMaterial);
 	}
+	
+	/**
+	 * Register all blocks for the current "activeModContainer" that we have, if any
+	 * @param event
+	 */
+	public static void register(RegistryEvent.Register<Block> event) {
+		String mod = Loader.instance().activeModContainer().getModId();
+		if( !Materials.hasMaterialFromMod(mod) ) {
+			return;
+		}
+		
+        for( MMDMaterial mat : Materials.getMaterialsByMod(mod) ) {
+            for( Block block : mat.getBlocks() ) {
+                event.getRegistry().register(block);
+            }
+        }
+	}
+
 }
