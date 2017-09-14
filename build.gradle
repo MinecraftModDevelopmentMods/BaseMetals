@@ -18,7 +18,6 @@ buildscript {
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-//        classpath "org.spongepowered:mixingradle:0.4-SNAPSHOT"
         classpath "com.matthewprenger:CurseGradle:1.0-SNAPSHOT"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
     }
@@ -71,7 +70,7 @@ if (secretFile.exists()) {
 }
 
 minecraft {
-    version = "1.12-14.21.1.2443"
+    version = "1.12.1-14.22.1.2479"
     runDir = "run"
     mappings = "snapshot_20170908"
     clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
@@ -162,15 +161,18 @@ dependencies {
         exclude group: 'codechicken'
     }
     compile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
-    deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
+    
+//    deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
 //    deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
 //        exclude group: 'mezz.jei'
 //    }
+
     deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
         exclude group: 'mezz.jei'
     }
+    
     deobfCompile ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
         exclude group: 'mezz.jei'
     }
