@@ -140,12 +140,10 @@ public class EventHandler {
 		InventoryCrafting recipeInput = getDummyCraftingInv();
 		recipeInput.setInventorySlotContents(0, left);
 		recipeInput.setInventorySlotContents(1, right);
-		List<IRecipe> recipes = CraftingManager.findMatchingRecipe(recipeInput, null);
-		for (IRecipe r : recipes) {
-			if ((r instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) r).matches(recipeInput, null))) {
-				event.setOutput(r.getCraftingResult(recipeInput));
-				event.setCost(((ShieldUpgradeRecipe) r).getCost(recipeInput));
-			}
+		IRecipe recipe = CraftingManager.findMatchingRecipe(recipeInput, null);
+		if ((recipe instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) recipe).matches(recipeInput, null))) {
+			event.setOutput(recipe.getCraftingResult(recipeInput));
+			event.setCost(((ShieldUpgradeRecipe) recipe).getCost(recipeInput));
 		}
 	}
 }
