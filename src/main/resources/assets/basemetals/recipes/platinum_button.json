@@ -1,0 +1,36 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:platinum_button"
+	},
+	"pattern": [
+		"x",
+		"x"
+	],
+	"key": {
+		"x": "ore:nuggetPlatinum"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Platinum"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Button"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "misc"
+}

@@ -1,0 +1,38 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:bismuth_bow"
+	},
+	"pattern": [
+		" xs",
+		"x s",
+		" xs"
+	],
+	"key": {
+		"x": "basemetals:bismuth_rod",
+		"s": "minecraft:string"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Bismuth"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BowAndArrow"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

@@ -1,0 +1,38 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:coldiron_hoe"
+	},
+	"pattern": [
+		"xx",
+		" s",
+		" s"
+	],
+	"key": {
+		"x": "ore:ingotColdIron",
+		"s": "ore:stickWood"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "ColdIron"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BasicTools"
+				}
+			]
+		}
+	],
+	"group": "tools"
+}

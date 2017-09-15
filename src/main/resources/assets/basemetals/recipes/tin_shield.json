@@ -1,0 +1,38 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:tin_shield"
+	},
+	"pattern": [
+		"xyx",
+		"xxx",
+		" x "
+	],
+	"key": {
+		"x": "ore:ingotTin",
+		"y": "ore:plankWood"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Tin"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Shields"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "armor"
+}

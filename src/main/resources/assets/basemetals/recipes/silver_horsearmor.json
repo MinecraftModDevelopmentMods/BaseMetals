@@ -1,0 +1,38 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:silver_horse_armor"
+	},
+	"pattern": [
+		"  x",
+		"xyx",
+		"xxx"
+	],
+	"key": {
+		"x": "ore:ingotSilver",
+		"y": "minecraft:wool"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Silver"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "HorseArmor"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "armor"
+}

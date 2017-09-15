@@ -1,0 +1,40 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:platinum_arrow",
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"y",
+		"z"
+	],
+	"key": {
+		"x": "ore:nuggetPlatinum",
+		"y": "basemetals:platinum_rod",
+		"z": "basemetals:platinum_feather"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Platinum"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BowAndArrow"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

@@ -1,0 +1,36 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:quartz_helmet"
+	},
+	"pattern": [
+		"xxx",
+		"x x"
+	],
+	"key": {
+		"x": "ore:ingotQuartz"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Quartz"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Armor"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

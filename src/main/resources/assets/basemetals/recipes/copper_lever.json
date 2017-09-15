@@ -1,0 +1,42 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:copper_lever"
+	},
+	"pattern": [
+		"x",
+		"y"
+	],
+	"key": {
+		"x": "basemetals:copper_rod",
+		"y": "ore:ingotCopper"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Copper"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Lever"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "misc"
+}

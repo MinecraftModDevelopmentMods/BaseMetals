@@ -1,0 +1,30 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "ore:dustSmallQuartz",
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"item": "ore:dustQuartz"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Quartz"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

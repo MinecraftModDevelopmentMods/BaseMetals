@@ -1,0 +1,30 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "ore:dustSmallCopper",
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"item": "ore:dustCopper"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Copper"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "basics"
+}

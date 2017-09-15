@@ -1,0 +1,45 @@
+{
+	"result": {
+		"item": "ore:blendPewter",
+		"count": 3
+	},
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+		"ore:dustTin",
+		"ore:dustCopper",
+		"ore:dustLead"
+	],
+	"group": "alloys",
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Copper"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Lead"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Tin"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Pewter"
+				}
+			]
+		}
+	]
+}

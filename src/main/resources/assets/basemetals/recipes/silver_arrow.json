@@ -1,0 +1,40 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:silver_arrow",
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"y",
+		"z"
+	],
+	"key": {
+		"x": "ore:nuggetSilver",
+		"y": "basemetals:silver_rod",
+		"z": "basemetals:silver_feather"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Silver"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BowAndArrow"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

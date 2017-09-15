@@ -1,0 +1,38 @@
+{
+	"type": "basemetals:variableOutputOre",
+	"result": {
+		"item": "basemetals:obsidian_gear"
+	},
+	"pattern": [
+		" x ",
+		"xrx",
+		" x "
+	],
+	"key": {
+		"x": "ore:ingotObsidian",
+		"r": "basemetals:obsidian_rod"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Obsidian"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Gear"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

@@ -1,0 +1,36 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:platinum_crackhammer"
+	},
+	"pattern": [
+		"x",
+		"y",
+		"y"
+	],
+	"key": {
+		"x": "ore:blockPlatinum",
+		"y": "ore:stickWood"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Platinum"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:hammer"
+				}
+			]
+		}
+	],
+	"group": "tools"
+}

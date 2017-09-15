@@ -1,0 +1,30 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "ore:nuggetSilver",
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"item": "ore:ingotSilver"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Silver"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "basics"
+}

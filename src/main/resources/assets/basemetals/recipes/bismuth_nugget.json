@@ -1,0 +1,30 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "ore:nuggetBismuth",
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"item": "ore:ingotBismuth"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Bismuth"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "basics"
+}

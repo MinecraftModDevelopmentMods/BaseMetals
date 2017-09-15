@@ -1,0 +1,30 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "ore:blendSmallCupronickel",
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"item": "ore:blendCupronickel"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Cupronickel"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "basics"
+}

@@ -1,0 +1,41 @@
+{
+	"result": {
+		"item": "ore:blendCupronickel",
+		"count": 4
+	},
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+		"ore:dustCopper",
+		"ore:dustCopper",
+		"ore:dustCopper",
+		"ore:dustNickel"
+	],
+	"group": "alloys",
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Copper"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Nickel"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Cupronickel"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,44 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:quartz_crossbow"
+	},
+	"pattern": [
+		"zxx",
+		" yx",
+		"x z"
+	],
+	"key": {
+		"x": "basemetals:quartz_rod",
+		"y": "minecraft:string",
+		"z": "basemetals:quartz_gear"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Quartz"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "CrossbowAndBolts"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Gear"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

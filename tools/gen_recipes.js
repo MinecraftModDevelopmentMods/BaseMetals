@@ -1,8 +1,8 @@
 const fs = require('fs');
 
 const base_mats =  [ "Adamantine", "Antimony", "Bismuth", "ColdIron", "Copper", "Lead", "Mercury", "Nickel", "Platinum", "Silver", "StarSteel", "Steel", "Tin", "Zinc" ];
-const van_mats = [ "Diamond", "Emerald", "Gold", "Iron", "Stone", "Wood", "Ender", "Quartz", "Obsidian", "Lapis", "Prismarine", "Redstone" ];
-const other = [ "Charcoal", "Coal" ];
+const van_mats = [ "Diamond", "Emerald", "Gold", "Iron", "Stone", "Wood", "Quartz", "Obsidian", "Charcoal", "Coal" ];
+
 const _factories = {
     "conditions": {
 	"enabled":"com.mcmoddev.lib.recipe.conditions.ConditionEnabled",
@@ -103,6 +103,22 @@ const recipes = [ 'nugget','ingot','block','powder','smallpowder','blend','small
 		  'boots','helmet','chestplate','leggings','arrow','bars_1','bars_2','bow','button','bolt','crackhammer',
 		  'crossbow','door','fishingrod','gear','horsearmor','lever','plate','pressureplate','rod','shears','shield','slab','stairs','trapdoor','wall' ];
 
+const vanilla_map = { "Diamond": [ 'powder', 'smallpowder', 'arrow', 'bars_1', 'bars_2', 'bow', 'button', 'bolt', 'crackhammer', 'crossbow', 'door', 'fishingrod', 'gear', 'lever', 'plate', 'pressureplate', 'rod', 'stairs', 'slab', 'shield',
+				   'shears', 'trapdoor', 'wall' ],
+		      "Emerald": [ 'powder', 'smallpowder', 'sword', 'shovel', 'hoe', 'axe', 'pickaxe', 'boots', 'helmet', 'chestplate', 'leggings', 'arrow', 'bars_1', 'bars_2', 'bow', 'button', 'bolt', 'crackhammer', 'crossbow', 'door',
+				   'fishingrod', 'gear', 'horsearmor', 'lever', 'plate', 'pressureplate', 'rod', 'stairs', 'slab', 'shield', 'shears', 'trapdoor', 'wall' ],
+		      "Gold": [ 'powder', 'smallpowder', 'arrow', 'bars_1', 'bars_2', 'bow', 'button', 'bolt', 'crackhammer', 'crossbow', 'door', 'fishingrod', 'gear', 'lever', 'plate', 'pressureplate', 'rod', 'stairs', 'slab', 'shield', 'shears',
+				'trapdoor', 'wall' ],
+		      "Iron": [ 'powder', 'smallpowder', 'arrow', 'bars_2', 'bow', 'button', 'bolt', 'crackhammer', 'crossbow', 'fishingrod', 'gear', 'lever', 'plate', 'pressureplate', 'rod', 'stairs', 'slab', 'shield', 'trapdoor', 'wall' ],
+		      "Stone": [ 'crackhammer' ],
+		      "Wood": [ 'crackhammer' ],
+		      "Quartz": [ 'powder', 'smallpowder', 'nugget', 'ingot', 'sword', 'shovel', 'hoe', 'axe', 'pickaxe', 'boots', 'helmet', 'chestplate', 'leggings', 'arrow', 'bars_1', 'bars_2', 'bow', 'button', 'bolt', 'crackhammer', 'crossbow', 'door',
+				  'fishingrod', 'gear', 'horsearmor', 'lever', 'plate', 'pressureplate', 'rod', 'stairs', 'slab', 'shield', 'shears', 'trapdoor', 'wall' ],
+		      "Obsidian": [ 'powder', 'smallpowder', 'nugget', 'ingot', 'block', 'sword', 'shovel', 'hoe', 'axe', 'pickaxe', 'boots', 'helmet', 'chestplate', 'leggings', 'arrow', 'bars_1', 'bars_2', 'bow', 'button', 'bolt', 'crackhammer', 'crossbow', 'door',
+				    'fishingrod', 'gear', 'horsearmor', 'lever', 'plate', 'pressureplate', 'rod', 'stairs', 'slab', 'shield', 'shears', 'trapdoor', 'wall' ],
+		      "Coal": [ 'powder', 'smallpowder', 'nugget', 'ingot' ],
+		      "Charcoal": [ 'powder', 'smallpowder', 'block', 'nugget', 'ingot' ] };
+
 function toTitleCase(str)
 {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -175,35 +191,39 @@ function processConditions( conditions, mat ) {
     return res;
 }
 
-for( let i = 0; i < base_mats.length; i++ ) {
-    let mat = base_mats[i];
-    let res = {};
+function processRecipe( mat, rec ) {
+    var this_recipe = rec;
+    res = {}; // zero out the result on each loop
+    res.type = this_recipe.type;
+    switch( this_recipe.type ) {
+    case 'forge:ore_shaped':
+	res.result = processOutputs( this_recipe.result, mat );
+	res.pattern = this_recipe.input;
+	res.key = processKey(this_recipe.key, mat);
+	res.conditions = processConditions( this_recipe.config.enabled, mat );	    
+	break;
+    case 'forge:ore_shapeless':
+	res.result = processOutputs( this_recipe.result, mat );
+	res.ingredients = [ { "item": mapName( this_recipe.input, mat ) } ];
+	res.conditions = processConditions( this_recipe.config.enabled, mat );	    
+	break;
+    case 'basemetals:variableOutputOre':
+	res.result = processOutputs( this_recipe.result, mat );
+	res.pattern = this_recipe.input;
+	res.key = processKey(this_recipe.key, mat);
+	res.conditions = processConditions( this_recipe.config.enabled, mat );	    
+	break;
+    }
+    res.group = this_recipe.group;
+    return res;
+}
+
+function processMat( mat ) {
     for( let x = 0; x < recipes.length; x++ ) {
-	var this_recipe = patterns_basic[recipes[x]];
-	res = {}; // zero out the result on each loop
-	switch( this_recipe.type ) {
-	case 'forge:ore_shaped':
-	    res.result = processOutputs( this_recipe.result, mat );
-	    res.type = this_recipe.type;
-	    res.pattern = this_recipe.input;
-	    res.key = processKey(this_recipe.key, mat);
-	    res.conditions = processConditions( this_recipe.config.enabled, mat );	    
-	    break;
-	case 'forge:ore_shapeless':
-	    res.result = processOutputs( this_recipe.result, mat );
-	    res.ingredients = [ { "item": mapName( this_recipe.input, mat ) } ];
-	    res.conditions = processConditions( this_recipe.config.enabled, mat );	    
-	    break;
-	case 'basemetals:variableOutputOre':
-	    res.result = processOutputs( this_recipe.result, mat );
-	    res.type = this_recipe.type;
-	    res.pattern = this_recipe.input;
-	    res.key = processKey(this_recipe.key, mat);
-	    res.conditions = processConditions( this_recipe.config.enabled, mat );	    
-	    break;
-	}
-	res.group = this_recipe.group;
-	console.log(JSON.stringify(res, null, '\t'));
+	let res = processRecipe( mat, patterns_basic[recipes[x]] );
+	let matFileName = mat.toLowerCase();
+	let recFileName = recipes[x].toLowerCase();
+	fs.writeFileSync( `output/${matFileName}_${recFileName}.json`, JSON.stringify(res, null, '\t' ) );
     }
 }
 
@@ -221,8 +241,8 @@ function processAlloyConditions( conds, mat ) {
     return res;
 }
 
-for( let a = 0; a < alloy_names.length; a++ ) {
-    var name = alloy_names[a];
+function processAlloy( mat ) {
+    var name = mat;
     var this_blend = mapName( 'BLEND', name );
     var this_mix = alloy_mix[name];
     var conds = alloy_conditions[name];
@@ -239,8 +259,39 @@ for( let a = 0; a < alloy_names.length; a++ ) {
     tnc.push( { "type":"basemetals:enabled", "optionName":"material","optionValue":name } );
     
     res.conditions = [ { "type":"forge:and", "values": tnc } ];
-    
-    console.log(JSON.stringify(res,null,'\t'));
+    return res;
 }
 
-	       
+for( let i = 0; i < base_mats.length; i++ ) {
+    let mat = base_mats[i];
+    processMat( mat );
+}
+
+for( let x = 0; x < alloy_names.length; x++ ) {
+    let mat = alloy_names[x];
+    let res_blend_1 = processAlloy( mat );
+    let res_small_blend = processRecipe( mat, patterns_basic['smallblend'] );
+    let res_blend_2 = processRecipe( mat, patterns_basic['blend'] );
+
+    let matFileName = mat.toLowerCase();
+    fs.writeFileSync( `output/${matFileName}_blend_base.json`, JSON.stringify(res_blend_1, null, '\t' ) );
+    fs.writeFileSync( `output/${matFileName}_blend_smallblend.json`, JSON.stringify(res_blend_2, null, '\t' ) );
+    fs.writeFileSync( `output/${matFileName}_smallblend_blend.json`, JSON.stringify(res_small_blend, null, '\t' ) );
+}
+
+for( let v = 0; v < van_mats.length; v++ ) {
+    let recipes = vanilla_map[van_mats[v]];
+    let matFileName = van_mats[v].toLowerCase();
+    for( let r = 0; r < recipes.length; r++ ) {
+	let recName = recipes[r];
+	let recipe = patterns_basic[recName];
+	let res = processRecipe( van_mats[v], recipe );
+	res.group = "vanilla";
+	let recFileName = recName.toLowerCase();
+
+	fs.writeFileSync( `output/${matFileName}_${recFileName}.json`, JSON.stringify( res, null, '\t' ) );
+    }
+}
+
+console.log( 'done!' );
+

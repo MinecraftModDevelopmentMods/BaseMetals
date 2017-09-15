@@ -1,0 +1,35 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:starsteel_pressure_plate"
+	},
+	"pattern": [
+		"xx"
+	],
+	"key": {
+		"x": "ore:ingotStarSteel"
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "StarSteel"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "PressurePlate"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "misc"
+}
