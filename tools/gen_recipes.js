@@ -5,6 +5,7 @@ const van_mats = [ "Diamond", "Emerald", "Gold", "Iron", "Stone", "Wood", "Quart
 
 const armor_mats = [ "Adamantine", "Antimony", "Bismuth", "Brass", "Bronze", "ColdIron", "Copper", "Cupronickel", "Diamond", "Electrum", "Emerald", "Gold", "Iron", "Lead",
 		     "Nickel", "Obsidian", "Pewter", "Platinum", "Quartz", "Silver", "StarSteel", "Steel", "Tin", "Zinc" ];
+
 const armor_pieces = [ 'boots', 'chestplate', 'helmet', 'leggings', 'shield' ];
 
 const _factories = {
@@ -91,10 +92,10 @@ const patterns_basic = {
     'crossbow': { 'type': 'forge:ore_shaped', 'input': [ 'zxx', ' yx', 'x z' ], 'key': { 'x': 'ROD', 'y': 'STRING', 'z': 'GEAR' }, 'result': { 'mat': 'CROSSBOW', 'count': 1 }, 'config': { 'enabled': [ 'CrossbowAndBolts', 'Rod', 'Gear' ] }, "group": "weapon"  },
     'door': { 'type': 'forge:ore_shaped', 'input': [ 'xx', 'xx', 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'DOOR', 'count': 3 }, 'config': { 'enabled': [ 'Door', 'Basics' ] }, "group": "misc" },
     'fishingrod': { 'type': 'forge:ore_shaped', 'input': [ '  x', ' xy', 'x y' ], 'key': { 'x': 'ROD', 'y': 'STRING' }, 'result': { 'mat': 'FISHING_ROD', 'count': 1 }, 'config': { 'enabled': [ 'FishingRod', 'Rod' ] }, "group": "misc" },
-    'gear': { 'type': 'basemetals:variableOutputOre', 'input': [' x ', 'xrx', ' x ' ], 'key': { 'x': 'INGOT', 'r': 'ROD' }, 'result': { 'mat': 'GEAR' }, 'config': { 'enabled': [ 'Gear', 'Basics' ] }, "group": "misc" },
+    'gear': { 'type': 'basemetals:variableOutputOre', 'input': [' x ', 'xrx', ' x ' ], 'key': { 'x': 'INGOT', 'r': 'ROD' }, 'result': { 'mat': 'GEAR' }, 'config': { 'enabled': [ 'Gear', 'Basics' ] }, "group": "misc", "config_key":"gear" },
     'horsearmor': { 'type': 'forge:ore_shaped', 'input': [ '  x', 'xyx', 'xxx' ], 'key': { 'x': 'INGOT', 'y': 'WOOL' }, 'result': { 'mat': 'HORSE_ARMOR', 'count': 1 }, 'config': { 'enabled': [ 'HorseArmor', 'Basics' ] }, "group": "armor" },
     'lever': { 'type': 'forge:ore_shaped', 'input': [ 'x', 'y' ], 'key': { 'x': 'ROD', 'y': 'INGOT' }, 'result': { 'mat': 'LEVER', 'count': 1 }, 'config': { 'enabled': [ 'Lever', 'Rod', 'Basics' ] }, "group": "misc" },
-    'plate': { 'type': 'basemetals:variableOutputOre', 'input': [ 'xx', 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'PLATE' }, 'config': { 'enabled': [ 'Plate', 'Basics' ] }, "group": "misc" },
+    'plate': { 'type': 'basemetals:variableOutputOre', 'input': [ 'xx', 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'PLATE' }, 'config': { 'enabled': [ 'Plate', 'Basics' ] }, "group": "misc", "config_key":"plate" },
     'pressureplate': { 'type': 'forge:ore_shaped', 'input': [ 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'PRESSUREPLATE', 'count': 1 }, 'config': { 'enabled': [ 'PressurePlate', 'Basics' ] }, "group": "misc" },
     'rod': { 'type': 'forge:ore_shaped', 'input': [ 'x', 'x' ], 'key' : { 'x': 'INGOT' }, 'result': { 'mat': 'ROD', 'count': 4 }, 'config': { 'enabled': [ 'Rod', 'Basics' ] }, "group": "misc" },
     'shears': { 'type': 'forge:ore_shaped', 'input': [ ' x', 'x' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'INGOT', 'count': 1 }, 'config': { 'enabled': [ 'Shears', 'Basics' ] }, "group": "tools" },
@@ -250,7 +251,8 @@ function processRecipe( mat, rec ) {
 	res.result = processOutputs( this_recipe.result, mat );
 	res.pattern = this_recipe.input;
 	res.key = processKey(this_recipe.key, mat);
-	res.conditions = processConditions( this_recipe.config.enabled, mat );	    
+	res.conditions = processConditions( this_recipe.config.enabled, mat );
+	res.config_key = rec.config_key;
 	break;
     }
     res.group = this_recipe.group;

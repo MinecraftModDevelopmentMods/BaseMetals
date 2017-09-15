@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.recipe.factories;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -22,7 +21,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -31,7 +29,7 @@ public class ConfigVariedOutput implements IRecipeFactory {
 
 	@Override
 	public IRecipe parse(JsonContext context, JsonObject json) {
-		String confKey = json.get("config_key").toString().toLowerCase();
+		String confKey = JsonUtils.getString(json, "config_key");
 		int resAmount = 0;
 		String group = JsonUtils.getString(json, "group", "");
 		
@@ -67,6 +65,13 @@ public class ConfigVariedOutput implements IRecipeFactory {
         }
         
         String[] pattern = new String[patternJ.size()];
+        
+        for (int x = 0; x < pattern.length; ++x) {
+            String line = JsonUtils.getString(patternJ.get(x), "pattern[" + x + "]");
+            if (x > 0 && pattern[0].length() != line.length())
+                throw new JsonSyntaxException("Invalid pattern: each row must  be the same width");
+            pattern[x] = line;
+        }
         
 		ShapedPrimer primer = new ShapedPrimer();
         primer.width = pattern[0].length();

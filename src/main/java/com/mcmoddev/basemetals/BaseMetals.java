@@ -72,6 +72,7 @@ public class BaseMetals {
 		FluidRegistry.enableUniversalBucket();
 		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
 		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
 	}
 
 	@EventHandler

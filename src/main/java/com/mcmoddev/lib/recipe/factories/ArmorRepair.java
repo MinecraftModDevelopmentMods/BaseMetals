@@ -2,6 +2,7 @@ package com.mcmoddev.lib.recipe.factories;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.recipe.BootsRepairRecipe;
@@ -9,6 +10,7 @@ import com.mcmoddev.lib.recipe.LeggingsRepairRecipe;
 import com.mcmoddev.lib.recipe.ChestplateRepairRecipe;
 import com.mcmoddev.lib.recipe.HelmetRepairRecipe;
 import com.mcmoddev.lib.recipe.ShieldRepairRecipe;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.JsonUtils;
@@ -21,7 +23,7 @@ public class ArmorRepair implements IRecipeFactory {
 	public IRecipe parse(JsonContext context, JsonObject json) {
 		String material = JsonUtils.getString(json, "material");
 		String type = JsonUtils.getString(json, "armorType").toLowerCase();
-		MMDMaterial mat = Materials.getMaterialByName(material);
+		MMDMaterial mat = Materials.getMaterialByName(material.toLowerCase());
 		
 		switch(type) {
 		case "boots":
