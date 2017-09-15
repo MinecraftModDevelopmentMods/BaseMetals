@@ -1,0 +1,40 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:emerald_button",
+		"data": 0
+	},
+	"pattern": [
+		"x",
+		"x"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetEmerald"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Emerald"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Button"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

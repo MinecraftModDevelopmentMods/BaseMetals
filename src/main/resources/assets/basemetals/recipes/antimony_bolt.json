@@ -1,0 +1,44 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:antimony_bolt",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:antimony_rod"
+		},
+		"y": {
+			"item": "basemetals:antimony_feather"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Antimony"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "CrossbowAndBolts"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

@@ -1,0 +1,48 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:bismuth_arrow",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"y",
+		"z"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetBismuth"
+		},
+		"y": {
+			"item": "basemetals:bismuth_rod"
+		},
+		"z": {
+			"item": "basemetals:bismuth_feather"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Bismuth"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BowAndArrow"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

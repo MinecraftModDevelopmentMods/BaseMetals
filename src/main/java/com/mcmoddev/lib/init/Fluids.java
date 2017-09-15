@@ -26,7 +26,7 @@ import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+//import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * This class initializes all fluids in Base Metals and provides some utility
@@ -129,13 +129,13 @@ public abstract class Fluids {
 
 		block.setRegistryName(name); // fullName
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
-		GameRegistry.register(block);
+//		GameRegistry.register(block);
 		block.setCreativeTab(CreativeTabs.MISC);
 
 		final ItemBlock itemBlock = new ItemBlock(block);
 		itemBlock.setRegistryName(name); // fullName
 		itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
-		GameRegistry.register(itemBlock);
+//		GameRegistry.register(itemBlock);
 
 		material.setFluidBlock(block);
 		fluidBlockRegistry.put(name, block);

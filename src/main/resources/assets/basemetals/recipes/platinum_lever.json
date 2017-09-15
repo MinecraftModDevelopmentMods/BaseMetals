@@ -1,0 +1,48 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:platinum_lever",
+		"data": 0
+	},
+	"pattern": [
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:platinum_rod"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotPlatinum"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Platinum"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Lever"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "misc"
+}

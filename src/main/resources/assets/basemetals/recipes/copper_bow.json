@@ -1,0 +1,43 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:copper_bow",
+		"data": 0
+	},
+	"pattern": [
+		" xs",
+		"x s",
+		" xs"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:copper_rod"
+		},
+		"s": {
+			"item": "minecraft:string"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Copper"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BowAndArrow"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

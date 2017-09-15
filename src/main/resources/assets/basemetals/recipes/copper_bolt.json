@@ -1,0 +1,44 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:copper_bolt",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:copper_rod"
+		},
+		"y": {
+			"item": "basemetals:copper_feather"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Copper"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "CrossbowAndBolts"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

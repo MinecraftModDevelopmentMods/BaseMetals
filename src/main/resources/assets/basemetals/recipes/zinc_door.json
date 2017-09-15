@@ -1,0 +1,42 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:zinc_door",
+		"data": 0,
+		"count": 3
+	},
+	"pattern": [
+		"xx",
+		"xx",
+		"xx"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotZinc"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Zinc"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Door"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "misc"
+}

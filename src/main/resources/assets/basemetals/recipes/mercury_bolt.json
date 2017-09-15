@@ -1,0 +1,44 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:mercury_bolt",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:mercury_rod"
+		},
+		"y": {
+			"item": "basemetals:mercury_feather"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Mercury"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "CrossbowAndBolts"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

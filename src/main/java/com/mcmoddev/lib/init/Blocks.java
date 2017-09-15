@@ -25,8 +25,10 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.BlockFluidBase;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+//import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * This class initializes all blocks in Base Metals and provides some utility
@@ -354,7 +356,7 @@ public abstract class Blocks {
 
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-		GameRegistry.register(block);
+//		GameRegistry.register(block);
 		if (block instanceof BlockFluidBase) {
 			fluidBlockRegistry.put(fullName, (BlockFluidBase) block);
 		} else {
@@ -365,7 +367,7 @@ public abstract class Blocks {
 			final ItemBlock itemBlock = new ItemBlock(block);
 			itemBlock.setRegistryName(fullName);
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-			GameRegistry.register(itemBlock);
+//			GameRegistry.register(itemBlock);
 		}
 
 		if (tab != null) {
@@ -825,4 +827,6 @@ public abstract class Blocks {
 	public static Map<MMDMaterial, List<Block>> getBlocksByMaterial() {
 		return Collections.unmodifiableMap(blocksByMaterial);
 	}
+	
+
 }

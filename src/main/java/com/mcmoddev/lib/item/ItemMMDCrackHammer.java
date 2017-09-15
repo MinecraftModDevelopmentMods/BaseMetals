@@ -177,11 +177,6 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	}
 
 	@Override
-	public ToolMaterial getToolMaterial() {
-		return toolMaterial;
-	}
-
-	@Override
 	public int getItemEnchantability() {
 		return toolMaterial.getEnchantability();
 	}
@@ -236,7 +231,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		MMDToolEffects.extraEffectsOnCrafting(material, item, world, crafter);
 		// achievement
 		if (Options.enableAchievements()) {
-			crafter.addStat(Achievements.getAchievementByName("geologist"), 1);
+			//crafter.addStat(Achievements.getAchievementByName("geologist"), 1);
 		}
 	}
 

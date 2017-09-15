@@ -1,0 +1,44 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:starsteel_bolt",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:starsteel_rod"
+		},
+		"y": {
+			"item": "basemetals:starsteel_feather"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "StarSteel"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "CrossbowAndBolts"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

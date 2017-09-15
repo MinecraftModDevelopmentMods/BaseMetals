@@ -1,0 +1,45 @@
+{
+	"type": "basemetals:variableOutputOre",
+	"result": {
+		"item": "basemetals:platinum_gear",
+		"data": 0
+	},
+	"pattern": [
+		" x ",
+		"xrx",
+		" x "
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotPlatinum"
+		},
+		"r": {
+			"item": "basemetals:platinum_rod"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Platinum"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Gear"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"config_key": "gear",
+	"group": "misc"
+}

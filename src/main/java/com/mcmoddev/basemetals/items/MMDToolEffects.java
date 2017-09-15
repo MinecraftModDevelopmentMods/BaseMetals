@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.mcmoddev.basemetals.data.AchievementNames;
+//import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.init.Achievements;
+//import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.PotionKeys;
@@ -129,7 +129,7 @@ public abstract class MMDToolEffects {
 					countArmorPieces(starsteelUpdateCache, player);
 					// Achievement
 					if ((armor.getItem() == Materials.getMaterialByName(MaterialNames.STARSTEEL).getItem(Names.BOOTS)) && (Options.enableAchievements())) {
-						player.addStat(Achievements.getAchievementByName(AchievementNames.MOON_BOOTS), 1);
+//						player.addStat(Achievements.getAchievementByName(AchievementNames.MOON_BOOTS), 1);
 					}
 					break starsteel;
 				}
@@ -195,7 +195,7 @@ public abstract class MMDToolEffects {
 					}
 					// Achievement
 					if ((Options.enableAchievements()) && (hasFullSuit(player, MaterialNames.ADAMANTINE))) {
-						player.addStat(Achievements.getAchievementByName(AchievementNames.JUGGERNAUT), 1);
+	//					player.addStat(Achievements.getAchievementByName(AchievementNames.JUGGERNAUT), 1);
 					}
 					break adamantine;
 				}
@@ -206,7 +206,7 @@ public abstract class MMDToolEffects {
 				player.addPotionEffect(fireProtection);
 				// Achievement
 				if ((player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.SWORD)) && (Options.enableAchievements())) {
-					player.addStat(Achievements.getAchievementByName(AchievementNames.DEMON_SLAYER), 1);
+		//			player.addStat(Achievements.getAchievementByName(AchievementNames.DEMON_SLAYER), 1);
 				}
 			}
 			// full suit of Mithril protects you from withering, poison, nausea,
@@ -226,7 +226,7 @@ public abstract class MMDToolEffects {
 				}
 				// Achievement
 				if ((player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD)) && (Options.enableAchievements())) {
-					player.addStat(Achievements.getAchievementByName(AchievementNames.ANGEL_OF_DEATH), 1);
+	//				player.addStat(Achievements.getAchievementByName(AchievementNames.ANGEL_OF_DEATH), 1);
 				}
 			}
 			// full suit of Aquarium makes you breathe and heal under water
@@ -241,7 +241,7 @@ public abstract class MMDToolEffects {
 					player.removePotionEffect(Potion.REGISTRY.getObject(fatiguePotionKey));
 					// Achievement
 					if (Options.enableAchievements()) {
-						player.addStat(Achievements.getAchievementByName(AchievementNames.SCUBA_DIVER), 1);
+		//				player.addStat(Achievements.getAchievementByName(AchievementNames.SCUBA_DIVER), 1);
 					}
 				}
 			}

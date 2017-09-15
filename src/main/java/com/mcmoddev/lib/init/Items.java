@@ -31,6 +31,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -552,7 +554,7 @@ public abstract class Items {
 
 		item.setRegistryName(fullName);
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
-		GameRegistry.register(item);
+		//GameRegistry.register(item);
 		itemRegistry.put(fullName, item);
 
 		if (tab != null) {
@@ -1339,4 +1341,5 @@ public abstract class Items {
 	public static Map<MMDMaterial, List<Item>> getItemsByMaterial() {
 		return Collections.unmodifiableMap(itemsByMaterial);
 	}
+
 }

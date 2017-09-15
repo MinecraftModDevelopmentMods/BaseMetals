@@ -4,9 +4,12 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collections;
+import java.util.List;
 
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 /**
@@ -70,8 +73,10 @@ public class VillagerTradeHelper {
 	 *            Trades to add to the given level
 	 */
 	public static void insertTrades(ResourceLocation profession, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
-		for (final EntityVillager.ITradeList trade : trades)
-			VillagerRegistry.instance().getRegistry().getValue(profession).getCareer(careerID - 1).addTrade(tradeLevel, trade);
+		for (final EntityVillager.ITradeList trade : trades) {
+			VillagerRegistry.VillagerProfession _profession = ForgeRegistries.VILLAGER_PROFESSIONS.getValue(profession);
+			((List<VillagerRegistry.VillagerCareer>)ObfuscationReflectionHelper.getPrivateValue(VillagerRegistry.VillagerProfession.class, _profession, "careers")).get(careerID - 1).addTrade(tradeLevel, trade);
+		}
 	}
 
 	/**

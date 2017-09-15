@@ -199,7 +199,7 @@ public class TinkersConstructRegistry {
 		}
 
 		addIntegration(m);
-		m.integrate();
+		m.integrateRecipes();
 		return TCCode.SUCCESS;
     }
     

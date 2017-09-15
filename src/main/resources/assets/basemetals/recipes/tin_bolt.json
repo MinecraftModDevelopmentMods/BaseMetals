@@ -1,0 +1,44 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:tin_bolt",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:tin_rod"
+		},
+		"y": {
+			"item": "basemetals:tin_feather"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Tin"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "CrossbowAndBolts"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

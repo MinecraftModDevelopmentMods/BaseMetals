@@ -1,0 +1,51 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:zinc_crossbow",
+		"data": 0
+	},
+	"pattern": [
+		"zxx",
+		" yx",
+		"x z"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:zinc_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:zinc_gear"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Zinc"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "CrossbowAndBolts"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Gear"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

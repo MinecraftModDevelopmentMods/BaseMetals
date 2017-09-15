@@ -42,11 +42,6 @@ public class ItemMMDShovel extends net.minecraft.item.ItemSpade implements IMMDO
 	}
 
 	@Override
-	public ToolMaterial getToolMaterial() {
-		return this.toolMaterial;
-	}
-
-	@Override
 	public int getItemEnchantability() {
 		return this.toolMaterial.getEnchantability();
 	}
