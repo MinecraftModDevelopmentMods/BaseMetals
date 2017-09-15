@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:adamantine_p"
-		},
-		{
-			"item": "basemetals:adamantine_o"
-		},
-		{
-			"item": "basemetals:adamantine_w"
-		},
-		{
-			"item": "basemetals:adamantine_d"
-		},
-		{
-			"item": "basemetals:adamantine_e"
-		},
-		{
-			"item": "basemetals:adamantine_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustAdamantine"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

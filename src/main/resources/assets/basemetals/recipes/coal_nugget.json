@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:coal_i"
-		},
-		{
-			"item": "basemetals:coal_n"
-		},
-		{
-			"item": "basemetals:coal_g"
-		},
-		{
-			"item": "basemetals:coal_o"
-		},
-		{
-			"item": "basemetals:coal_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotCoal"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

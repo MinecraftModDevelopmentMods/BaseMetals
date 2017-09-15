@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:zinc_i"
-		},
-		{
-			"item": "basemetals:zinc_n"
-		},
-		{
-			"item": "basemetals:zinc_g"
-		},
-		{
-			"item": "basemetals:zinc_o"
-		},
-		{
-			"item": "basemetals:zinc_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotZinc"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

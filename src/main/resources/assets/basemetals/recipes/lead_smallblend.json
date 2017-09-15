@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:lead_b"
-		},
-		{
-			"item": "basemetals:lead_l"
-		},
-		{
-			"item": "basemetals:lead_e"
-		},
-		{
-			"item": "basemetals:lead_n"
-		},
-		{
-			"item": "basemetals:lead_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendLead"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

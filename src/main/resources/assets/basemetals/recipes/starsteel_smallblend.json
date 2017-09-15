@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:starsteel_b"
-		},
-		{
-			"item": "basemetals:starsteel_l"
-		},
-		{
-			"item": "basemetals:starsteel_e"
-		},
-		{
-			"item": "basemetals:starsteel_n"
-		},
-		{
-			"item": "basemetals:starsteel_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendStarSteel"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

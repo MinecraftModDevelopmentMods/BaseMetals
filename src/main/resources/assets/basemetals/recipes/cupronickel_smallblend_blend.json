@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:cupronickel_b"
-		},
-		{
-			"item": "basemetals:cupronickel_l"
-		},
-		{
-			"item": "basemetals:cupronickel_e"
-		},
-		{
-			"item": "basemetals:cupronickel_n"
-		},
-		{
-			"item": "basemetals:cupronickel_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendCupronickel"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:bismuth_p"
-		},
-		{
-			"item": "basemetals:bismuth_o"
-		},
-		{
-			"item": "basemetals:bismuth_w"
-		},
-		{
-			"item": "basemetals:bismuth_d"
-		},
-		{
-			"item": "basemetals:bismuth_e"
-		},
-		{
-			"item": "basemetals:bismuth_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustBismuth"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

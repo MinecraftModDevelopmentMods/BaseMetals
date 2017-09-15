@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:antimony_i"
-		},
-		{
-			"item": "basemetals:antimony_n"
-		},
-		{
-			"item": "basemetals:antimony_g"
-		},
-		{
-			"item": "basemetals:antimony_o"
-		},
-		{
-			"item": "basemetals:antimony_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotAntimony"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

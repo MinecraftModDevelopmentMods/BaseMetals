@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:aquarium_b"
-		},
-		{
-			"item": "basemetals:aquarium_l"
-		},
-		{
-			"item": "basemetals:aquarium_e"
-		},
-		{
-			"item": "basemetals:aquarium_n"
-		},
-		{
-			"item": "basemetals:aquarium_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendAquarium"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

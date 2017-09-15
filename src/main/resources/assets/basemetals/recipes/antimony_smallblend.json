@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:antimony_b"
-		},
-		{
-			"item": "basemetals:antimony_l"
-		},
-		{
-			"item": "basemetals:antimony_e"
-		},
-		{
-			"item": "basemetals:antimony_n"
-		},
-		{
-			"item": "basemetals:antimony_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendAntimony"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

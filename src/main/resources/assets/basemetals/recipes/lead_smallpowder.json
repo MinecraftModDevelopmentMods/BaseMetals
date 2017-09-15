@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:lead_p"
-		},
-		{
-			"item": "basemetals:lead_o"
-		},
-		{
-			"item": "basemetals:lead_w"
-		},
-		{
-			"item": "basemetals:lead_d"
-		},
-		{
-			"item": "basemetals:lead_e"
-		},
-		{
-			"item": "basemetals:lead_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustLead"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

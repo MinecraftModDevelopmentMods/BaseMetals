@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:silver_b"
-		},
-		{
-			"item": "basemetals:silver_l"
-		},
-		{
-			"item": "basemetals:silver_e"
-		},
-		{
-			"item": "basemetals:silver_n"
-		},
-		{
-			"item": "basemetals:silver_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendSilver"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

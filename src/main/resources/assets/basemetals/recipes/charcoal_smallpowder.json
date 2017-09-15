@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:charcoal_p"
-		},
-		{
-			"item": "basemetals:charcoal_o"
-		},
-		{
-			"item": "basemetals:charcoal_w"
-		},
-		{
-			"item": "basemetals:charcoal_d"
-		},
-		{
-			"item": "basemetals:charcoal_e"
-		},
-		{
-			"item": "basemetals:charcoal_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustCharcoal"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

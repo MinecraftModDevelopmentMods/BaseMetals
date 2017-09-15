@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:silver_i"
-		},
-		{
-			"item": "basemetals:silver_n"
-		},
-		{
-			"item": "basemetals:silver_g"
-		},
-		{
-			"item": "basemetals:silver_o"
-		},
-		{
-			"item": "basemetals:silver_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotSilver"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:charcoal_i"
-		},
-		{
-			"item": "basemetals:charcoal_n"
-		},
-		{
-			"item": "basemetals:charcoal_g"
-		},
-		{
-			"item": "basemetals:charcoal_o"
-		},
-		{
-			"item": "basemetals:charcoal_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotCharcoal"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

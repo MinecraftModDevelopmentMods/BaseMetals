@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:coldiron_b"
-		},
-		{
-			"item": "basemetals:coldiron_l"
-		},
-		{
-			"item": "basemetals:coldiron_e"
-		},
-		{
-			"item": "basemetals:coldiron_n"
-		},
-		{
-			"item": "basemetals:coldiron_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendColdIron"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:starsteel_i"
-		},
-		{
-			"item": "basemetals:starsteel_n"
-		},
-		{
-			"item": "basemetals:starsteel_g"
-		},
-		{
-			"item": "basemetals:starsteel_o"
-		},
-		{
-			"item": "basemetals:starsteel_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotStarSteel"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

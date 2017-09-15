@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:zinc_p"
-		},
-		{
-			"item": "basemetals:zinc_o"
-		},
-		{
-			"item": "basemetals:zinc_w"
-		},
-		{
-			"item": "basemetals:zinc_d"
-		},
-		{
-			"item": "basemetals:zinc_e"
-		},
-		{
-			"item": "basemetals:zinc_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustZinc"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

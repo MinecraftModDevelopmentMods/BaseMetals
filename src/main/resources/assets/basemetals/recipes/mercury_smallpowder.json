@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:mercury_p"
-		},
-		{
-			"item": "basemetals:mercury_o"
-		},
-		{
-			"item": "basemetals:mercury_w"
-		},
-		{
-			"item": "basemetals:mercury_d"
-		},
-		{
-			"item": "basemetals:mercury_e"
-		},
-		{
-			"item": "basemetals:mercury_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustMercury"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:platinum_i"
-		},
-		{
-			"item": "basemetals:platinum_n"
-		},
-		{
-			"item": "basemetals:platinum_g"
-		},
-		{
-			"item": "basemetals:platinum_o"
-		},
-		{
-			"item": "basemetals:platinum_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotPlatinum"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

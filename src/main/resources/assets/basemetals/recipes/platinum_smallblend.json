@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:platinum_b"
-		},
-		{
-			"item": "basemetals:platinum_l"
-		},
-		{
-			"item": "basemetals:platinum_e"
-		},
-		{
-			"item": "basemetals:platinum_n"
-		},
-		{
-			"item": "basemetals:platinum_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendPlatinum"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

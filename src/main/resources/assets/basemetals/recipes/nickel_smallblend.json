@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:nickel_b"
-		},
-		{
-			"item": "basemetals:nickel_l"
-		},
-		{
-			"item": "basemetals:nickel_e"
-		},
-		{
-			"item": "basemetals:nickel_n"
-		},
-		{
-			"item": "basemetals:nickel_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendNickel"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

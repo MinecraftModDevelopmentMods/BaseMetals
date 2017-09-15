@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:bismuth_i"
-		},
-		{
-			"item": "basemetals:bismuth_n"
-		},
-		{
-			"item": "basemetals:bismuth_g"
-		},
-		{
-			"item": "basemetals:bismuth_o"
-		},
-		{
-			"item": "basemetals:bismuth_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotBismuth"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

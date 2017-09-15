@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:silver_p"
-		},
-		{
-			"item": "basemetals:silver_o"
-		},
-		{
-			"item": "basemetals:silver_w"
-		},
-		{
-			"item": "basemetals:silver_d"
-		},
-		{
-			"item": "basemetals:silver_e"
-		},
-		{
-			"item": "basemetals:silver_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustSilver"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

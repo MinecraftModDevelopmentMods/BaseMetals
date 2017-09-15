@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:copper_b"
-		},
-		{
-			"item": "basemetals:copper_l"
-		},
-		{
-			"item": "basemetals:copper_e"
-		},
-		{
-			"item": "basemetals:copper_n"
-		},
-		{
-			"item": "basemetals:copper_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendCopper"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

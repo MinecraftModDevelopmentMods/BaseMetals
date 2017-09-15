@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:quartz_i"
-		},
-		{
-			"item": "basemetals:quartz_n"
-		},
-		{
-			"item": "basemetals:quartz_g"
-		},
-		{
-			"item": "basemetals:quartz_o"
-		},
-		{
-			"item": "basemetals:quartz_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotQuartz"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

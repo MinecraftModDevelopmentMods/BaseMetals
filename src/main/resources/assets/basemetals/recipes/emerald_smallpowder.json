@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:emerald_p"
-		},
-		{
-			"item": "basemetals:emerald_o"
-		},
-		{
-			"item": "basemetals:emerald_w"
-		},
-		{
-			"item": "basemetals:emerald_d"
-		},
-		{
-			"item": "basemetals:emerald_e"
-		},
-		{
-			"item": "basemetals:emerald_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustEmerald"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

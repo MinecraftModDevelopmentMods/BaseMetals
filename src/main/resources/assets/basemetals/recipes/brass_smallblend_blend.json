@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:brass_b"
-		},
-		{
-			"item": "basemetals:brass_l"
-		},
-		{
-			"item": "basemetals:brass_e"
-		},
-		{
-			"item": "basemetals:brass_n"
-		},
-		{
-			"item": "basemetals:brass_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendBrass"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

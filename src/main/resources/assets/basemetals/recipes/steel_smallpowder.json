@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:steel_p"
-		},
-		{
-			"item": "basemetals:steel_o"
-		},
-		{
-			"item": "basemetals:steel_w"
-		},
-		{
-			"item": "basemetals:steel_d"
-		},
-		{
-			"item": "basemetals:steel_e"
-		},
-		{
-			"item": "basemetals:steel_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustSteel"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

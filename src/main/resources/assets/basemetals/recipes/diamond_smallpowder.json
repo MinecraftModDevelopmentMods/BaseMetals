@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:diamond_p"
-		},
-		{
-			"item": "basemetals:diamond_o"
-		},
-		{
-			"item": "basemetals:diamond_w"
-		},
-		{
-			"item": "basemetals:diamond_d"
-		},
-		{
-			"item": "basemetals:diamond_e"
-		},
-		{
-			"item": "basemetals:diamond_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustDiamond"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

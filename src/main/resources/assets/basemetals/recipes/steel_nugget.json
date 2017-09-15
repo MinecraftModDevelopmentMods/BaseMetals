@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:steel_i"
-		},
-		{
-			"item": "basemetals:steel_n"
-		},
-		{
-			"item": "basemetals:steel_g"
-		},
-		{
-			"item": "basemetals:steel_o"
-		},
-		{
-			"item": "basemetals:steel_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotSteel"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

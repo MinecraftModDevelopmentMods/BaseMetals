@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:zinc_b"
-		},
-		{
-			"item": "basemetals:zinc_l"
-		},
-		{
-			"item": "basemetals:zinc_e"
-		},
-		{
-			"item": "basemetals:zinc_n"
-		},
-		{
-			"item": "basemetals:zinc_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendZinc"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

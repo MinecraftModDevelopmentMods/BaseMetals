@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:mercury_b"
-		},
-		{
-			"item": "basemetals:mercury_l"
-		},
-		{
-			"item": "basemetals:mercury_e"
-		},
-		{
-			"item": "basemetals:mercury_n"
-		},
-		{
-			"item": "basemetals:mercury_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendMercury"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

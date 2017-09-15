@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:bronze_b"
-		},
-		{
-			"item": "basemetals:bronze_l"
-		},
-		{
-			"item": "basemetals:bronze_e"
-		},
-		{
-			"item": "basemetals:bronze_n"
-		},
-		{
-			"item": "basemetals:bronze_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendBronze"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

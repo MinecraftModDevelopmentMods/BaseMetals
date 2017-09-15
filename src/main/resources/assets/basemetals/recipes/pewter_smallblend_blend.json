@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:pewter_b"
-		},
-		{
-			"item": "basemetals:pewter_l"
-		},
-		{
-			"item": "basemetals:pewter_e"
-		},
-		{
-			"item": "basemetals:pewter_n"
-		},
-		{
-			"item": "basemetals:pewter_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendPewter"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

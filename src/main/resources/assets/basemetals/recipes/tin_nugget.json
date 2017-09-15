@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:tin_i"
-		},
-		{
-			"item": "basemetals:tin_n"
-		},
-		{
-			"item": "basemetals:tin_g"
-		},
-		{
-			"item": "basemetals:tin_o"
-		},
-		{
-			"item": "basemetals:tin_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotTin"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

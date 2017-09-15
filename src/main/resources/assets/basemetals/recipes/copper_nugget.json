@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:copper_i"
-		},
-		{
-			"item": "basemetals:copper_n"
-		},
-		{
-			"item": "basemetals:copper_g"
-		},
-		{
-			"item": "basemetals:copper_o"
-		},
-		{
-			"item": "basemetals:copper_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotCopper"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

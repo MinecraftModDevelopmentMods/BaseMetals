@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:electrum_b"
-		},
-		{
-			"item": "basemetals:electrum_l"
-		},
-		{
-			"item": "basemetals:electrum_e"
-		},
-		{
-			"item": "basemetals:electrum_n"
-		},
-		{
-			"item": "basemetals:electrum_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendElectrum"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

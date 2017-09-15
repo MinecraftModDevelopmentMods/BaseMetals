@@ -7,26 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:platinum_p"
-		},
-		{
-			"item": "basemetals:platinum_o"
-		},
-		{
-			"item": "basemetals:platinum_w"
-		},
-		{
-			"item": "basemetals:platinum_d"
-		},
-		{
-			"item": "basemetals:platinum_e"
-		},
-		{
-			"item": "basemetals:platinum_r"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "dustPlatinum"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

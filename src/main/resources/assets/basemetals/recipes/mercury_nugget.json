@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:mercury_i"
-		},
-		{
-			"item": "basemetals:mercury_n"
-		},
-		{
-			"item": "basemetals:mercury_g"
-		},
-		{
-			"item": "basemetals:mercury_o"
-		},
-		{
-			"item": "basemetals:mercury_t"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "ingotMercury"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",

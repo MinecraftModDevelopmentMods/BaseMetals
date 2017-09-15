@@ -7,23 +7,10 @@
 		},
 		"count": 9
 	},
-	"ingredients": [
-		{
-			"item": "basemetals:tin_b"
-		},
-		{
-			"item": "basemetals:tin_l"
-		},
-		{
-			"item": "basemetals:tin_e"
-		},
-		{
-			"item": "basemetals:tin_n"
-		},
-		{
-			"item": "basemetals:tin_d"
-		}
-	],
+	"ingredients": {
+		"type": "forge:ore_dict",
+		"ore": "blendTin"
+	},
 	"conditions": [
 		{
 			"type": "forge:and",
