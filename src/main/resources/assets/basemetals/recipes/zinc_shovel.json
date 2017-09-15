@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_shovel"
+		"item": "basemetals:zinc_shovel",
+		"data": 0
 	},
 	"pattern": [
 		" x",

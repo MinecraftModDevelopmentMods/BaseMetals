@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_bow"
+		"item": "basemetals:zinc_bow",
+		"data": 0
 	},
 	"pattern": [
 		" xs",

@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_pressure_plate"
+		"item": "basemetals:adamantine_pressureplate",
+		"data": 0
 	},
 	"pattern": [
 		"xx"

@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"type": "forge:ore_dict",
-		"ore": "blockZinc"
+		"item": "basemetals:zinc_block",
+		"data": 0
 	},
 	"pattern": [
 		"xxx",

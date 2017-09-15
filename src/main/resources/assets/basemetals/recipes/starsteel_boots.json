@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:starsteel_boots"
+		"item": "basemetals:starsteel_boots",
+		"data": 0
 	},
 	"pattern": [
 		"x x",

@@ -1,14 +1,17 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
@@ -257,6 +260,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
-		register(event);
+		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
+            for( Block block : mat.getBlocks() ) {
+                event.getRegistry().register(block);
+            }			
+		}
 	}
+
 }

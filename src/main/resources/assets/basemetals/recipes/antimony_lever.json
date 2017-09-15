@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:antimony_lever"
+		"item": "basemetals:antimony_lever",
+		"data": 0
 	},
 	"pattern": [
 		"x",

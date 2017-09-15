@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:platinum_shovel"
+		"item": "basemetals:platinum_shovel",
+		"data": 0
 	},
 	"pattern": [
 		" x",

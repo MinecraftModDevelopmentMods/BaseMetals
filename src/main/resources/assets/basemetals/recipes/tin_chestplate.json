@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_chestplate"
+		"item": "basemetals:tin_chestplate",
+		"data": 0
 	},
 	"pattern": [
 		"x x",

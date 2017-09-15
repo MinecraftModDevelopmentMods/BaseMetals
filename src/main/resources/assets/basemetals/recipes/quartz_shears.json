@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"type": "forge:ore_dict",
-		"ore": "ingotQuartz"
+		"item": "basemetals:quartz_ingot",
+		"data": 0
 	},
 	"pattern": [
 		" x",

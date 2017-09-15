@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"type": "forge:ore_dict",
-		"ore": "dustPlatinum"
+		"item": "basemetals:platinum_powder",
+		"data": 0
 	},
 	"pattern": [
 		"xxx",

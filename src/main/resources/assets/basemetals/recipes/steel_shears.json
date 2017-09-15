@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"type": "forge:ore_dict",
-		"ore": "ingotSteel"
+		"item": "basemetals:steel_ingot",
+		"data": 0
 	},
 	"pattern": [
 		" x",

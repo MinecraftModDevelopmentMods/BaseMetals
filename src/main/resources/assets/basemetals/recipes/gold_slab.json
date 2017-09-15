@@ -2,6 +2,7 @@
 	"type": "forge:ore_shaped",
 	"result": {
 		"item": "basemetals:gold_slab",
+		"data": 0,
 		"count": 6
 	},
 	"pattern": [

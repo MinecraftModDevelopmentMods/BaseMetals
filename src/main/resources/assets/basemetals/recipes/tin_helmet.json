@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_helmet"
+		"item": "basemetals:tin_helmet",
+		"data": 0
 	},
 	"pattern": [
 		"xxx",

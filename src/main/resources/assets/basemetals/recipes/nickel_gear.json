@@ -1,7 +1,8 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:nickel_gear"
+		"item": "basemetals:nickel_gear",
+		"data": 0
 	},
 	"pattern": [
 		" x ",

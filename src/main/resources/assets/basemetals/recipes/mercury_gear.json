@@ -1,7 +1,8 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:mercury_gear"
+		"item": "basemetals:mercury_gear",
+		"data": 0
 	},
 	"pattern": [
 		" x ",

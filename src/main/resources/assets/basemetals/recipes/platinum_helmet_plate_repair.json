@@ -1,6 +1,6 @@
 {
-	"type": "helmet",
-	"armorType": "basemetals:armor_repair",
+	"type": "basemetals:armor_repair",
+	"armorType": "helmet",
 	"material": "Platinum",
 	"conditions": [
 		{

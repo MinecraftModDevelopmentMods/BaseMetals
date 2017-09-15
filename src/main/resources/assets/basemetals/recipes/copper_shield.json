@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:copper_shield"
+		"item": "basemetals:copper_shield",
+		"data": 0
 	},
 	"pattern": [
 		"xyx",

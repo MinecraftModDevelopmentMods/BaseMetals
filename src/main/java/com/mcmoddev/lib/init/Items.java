@@ -1342,20 +1342,4 @@ public abstract class Items {
 		return Collections.unmodifiableMap(itemsByMaterial);
 	}
 
-	/**
-	 * Register all items for the current "activeModContainer" that we have, if any
-	 * @param event
-	 */
-	public static void register(RegistryEvent.Register<Item> event) {
-		String mod = Loader.instance().activeModContainer().getModId();
-		if( !Materials.hasMaterialFromMod(mod) ) {
-			return;
-		}
-		
-        for( MMDMaterial mat : Materials.getMaterialsByMod(mod) ) {
-            for( Item item : mat.getItems() ) {
-                event.getRegistry().register(item);
-            }
-        }
-	}
 }

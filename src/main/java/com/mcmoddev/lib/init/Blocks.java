@@ -828,21 +828,5 @@ public abstract class Blocks {
 		return Collections.unmodifiableMap(blocksByMaterial);
 	}
 	
-	/**
-	 * Register all blocks for the current "activeModContainer" that we have, if any
-	 * @param event
-	 */
-	public static void register(RegistryEvent.Register<Block> event) {
-		String mod = Loader.instance().activeModContainer().getModId();
-		if( !Materials.hasMaterialFromMod(mod) ) {
-			return;
-		}
-		
-        for( MMDMaterial mat : Materials.getMaterialsByMod(mod) ) {
-            for( Block block : mat.getBlocks() ) {
-                event.getRegistry().register(block);
-            }
-        }
-	}
 
 }

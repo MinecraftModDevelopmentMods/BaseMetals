@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_hoe"
+		"item": "basemetals:bismuth_hoe",
+		"data": 0
 	},
 	"pattern": [
 		"xx",

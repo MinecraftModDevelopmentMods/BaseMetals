@@ -1,7 +1,8 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:adamantine_plate"
+		"item": "basemetals:adamantine_plate",
+		"data": 0
 	},
 	"pattern": [
 		"xx",

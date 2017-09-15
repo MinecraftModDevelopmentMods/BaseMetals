@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_boots"
+		"item": "basemetals:bismuth_boots",
+		"data": 0
 	},
 	"pattern": [
 		"x x",

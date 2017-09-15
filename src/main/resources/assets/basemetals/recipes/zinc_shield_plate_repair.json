@@ -1,6 +1,6 @@
 {
-	"type": "shield",
-	"armorType": "basemetals:armor_repair",
+	"type": "basemetals:armor_repair",
+	"armorType": "shield",
 	"material": "Zinc",
 	"conditions": [
 		{

@@ -2,6 +2,7 @@
 	"type": "forge:ore_shaped",
 	"result": {
 		"item": "basemetals:tin_bars",
+		"data": 0,
 		"count": 4
 	},
 	"pattern": [

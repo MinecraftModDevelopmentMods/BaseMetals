@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"type": "forge:ore_dict",
-		"ore": "blendAquarium"
+		"item": "basemetals:aquarium_blend",
+		"data": 0
 	},
 	"pattern": [
 		"xxx",

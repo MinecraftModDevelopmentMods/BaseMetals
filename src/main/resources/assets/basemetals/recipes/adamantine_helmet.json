@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_helmet"
+		"item": "basemetals:adamantine_helmet",
+		"data": 0
 	},
 	"pattern": [
 		"xxx",

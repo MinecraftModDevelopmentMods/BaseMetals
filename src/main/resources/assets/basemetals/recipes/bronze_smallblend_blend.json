@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"type": "forge:ore_dict",
-		"ore": "blendSmallBronze",
+		"item": "basemetals:bronze_smallblend",
+		"data": 0,
 		"count": 9
 	},
 	"ingredients": {

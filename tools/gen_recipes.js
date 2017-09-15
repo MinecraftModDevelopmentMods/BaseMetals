@@ -95,7 +95,7 @@ const patterns_basic = {
     'horsearmor': { 'type': 'forge:ore_shaped', 'input': [ '  x', 'xyx', 'xxx' ], 'key': { 'x': 'INGOT', 'y': 'WOOL' }, 'result': { 'mat': 'HORSE_ARMOR', 'count': 1 }, 'config': { 'enabled': [ 'HorseArmor', 'Basics' ] }, "group": "armor" },
     'lever': { 'type': 'forge:ore_shaped', 'input': [ 'x', 'y' ], 'key': { 'x': 'ROD', 'y': 'INGOT' }, 'result': { 'mat': 'LEVER', 'count': 1 }, 'config': { 'enabled': [ 'Lever', 'Rod', 'Basics' ] }, "group": "misc" },
     'plate': { 'type': 'basemetals:variableOutputOre', 'input': [ 'xx', 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'PLATE' }, 'config': { 'enabled': [ 'Plate', 'Basics' ] }, "group": "misc" },
-    'pressureplate': { 'type': 'forge:ore_shaped', 'input': [ 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'PRESSURE_PLATE', 'count': 1 }, 'config': { 'enabled': [ 'PressurePlate', 'Basics' ] }, "group": "misc" },
+    'pressureplate': { 'type': 'forge:ore_shaped', 'input': [ 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'PRESSUREPLATE', 'count': 1 }, 'config': { 'enabled': [ 'PressurePlate', 'Basics' ] }, "group": "misc" },
     'rod': { 'type': 'forge:ore_shaped', 'input': [ 'x', 'x' ], 'key' : { 'x': 'INGOT' }, 'result': { 'mat': 'ROD', 'count': 4 }, 'config': { 'enabled': [ 'Rod', 'Basics' ] }, "group": "misc" },
     'shears': { 'type': 'forge:ore_shaped', 'input': [ ' x', 'x' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'INGOT', 'count': 1 }, 'config': { 'enabled': [ 'Shears', 'Basics' ] }, "group": "tools" },
     'shield': { 'type': 'forge:ore_shaped', 'input': [ 'xyx', 'xxx', ' x ' ], 'key': { 'x': 'INGOT', 'y': 'WOOD_PLANK' }, 'result': { 'mat': 'SHIELD', 'count': 1 }, 'config': { 'enabled': [ 'Shields', 'Basics' ] }, "group": "armor" },
@@ -155,6 +155,18 @@ function mapName(rawName, matName) {
     return `basemetals:${mname}_${name}`;
 }
 
+function mapNameOutput( rawName, matName ) {
+    switch( rawName ) {
+    case 'WOOD':
+    case 'WOOD_PLANK':
+    case 'STICK':
+    case 'STRING':
+	return "minecraft:"+rawName.toLowerCase();
+    default:
+	return "basemetals:"+matName.toLowerCase()+"_"+rawName.toLowerCase();
+    }
+}
+
 function processKey(recipe_key, mat) {
     let res = {};
     var ks = Object.keys(recipe_key);
@@ -165,7 +177,7 @@ function processKey(recipe_key, mat) {
 }
 
 function processOutputs(recipe_outputs, mat) {
-    let res = processIngredient( recipe_outputs.mat, mat );
+    let res = { "item": mapNameOutput( recipe_outputs.mat, mat ), "data": 0 };
     if( recipe_outputs.count > 1 ) {
 	res.count = recipe_outputs.count;
     }
@@ -324,7 +336,7 @@ for( let am = 0; am < armor_mats.length; am++ ) {
     let this_mat = armor_mats[am];
     for( let at = 0; at < armor_pieces.length; at++ ) {
 	let this_type = armor_pieces[at];
-	let res = { "type": "basemetals:armor_repair", "armorType": "basemetals:armor_repair", "material":this_mat, "type":this_type, "conditions": [
+	let res = { "type": "basemetals:armor_repair", "armorType": this_type, "material":this_mat, "conditions": [
 	    { "type": "forge:and",
 	      "values": [
 		  {

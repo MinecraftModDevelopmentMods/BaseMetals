@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:antimony_chestplate"
+		"item": "basemetals:antimony_chestplate",
+		"data": 0
 	},
 	"pattern": [
 		"x x",

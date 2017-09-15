@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"type": "forge:ore_dict",
-		"ore": "ingotColdIron"
+		"item": "basemetals:coldiron_ingot",
+		"data": 0
 	},
 	"pattern": [
 		" x",

@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:obsidian_pickaxe"
+		"item": "basemetals:obsidian_pickaxe",
+		"data": 0
 	},
 	"pattern": [
 		"xxx",

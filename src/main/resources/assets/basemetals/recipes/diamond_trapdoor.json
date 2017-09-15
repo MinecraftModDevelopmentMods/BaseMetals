@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:diamond_trapdoor"
+		"item": "basemetals:diamond_trapdoor",
+		"data": 0
 	},
 	"pattern": [
 		"xx",

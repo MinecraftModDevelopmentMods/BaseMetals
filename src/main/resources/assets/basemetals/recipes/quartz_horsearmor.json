@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_horse_armor"
+		"item": "basemetals:quartz_horse_armor",
+		"data": 0
 	},
 	"pattern": [
 		"  x",

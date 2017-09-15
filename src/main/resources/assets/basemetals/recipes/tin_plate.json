@@ -1,7 +1,8 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:tin_plate"
+		"item": "basemetals:tin_plate",
+		"data": 0
 	},
 	"pattern": [
 		"xx",

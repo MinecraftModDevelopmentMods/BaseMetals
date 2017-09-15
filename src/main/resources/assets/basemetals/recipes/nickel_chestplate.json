@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:nickel_chestplate"
+		"item": "basemetals:nickel_chestplate",
+		"data": 0
 	},
 	"pattern": [
 		"x x",

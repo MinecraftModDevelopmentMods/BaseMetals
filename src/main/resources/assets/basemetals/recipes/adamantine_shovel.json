@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_shovel"
+		"item": "basemetals:adamantine_shovel",
+		"data": 0
 	},
 	"pattern": [
 		" x",

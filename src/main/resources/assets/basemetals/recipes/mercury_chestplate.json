@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:mercury_chestplate"
+		"item": "basemetals:mercury_chestplate",
+		"data": 0
 	},
 	"pattern": [
 		"x x",

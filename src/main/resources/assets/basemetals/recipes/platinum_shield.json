@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:platinum_shield"
+		"item": "basemetals:platinum_shield",
+		"data": 0
 	},
 	"pattern": [
 		"xyx",

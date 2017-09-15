@@ -2,6 +2,7 @@
 	"type": "forge:ore_shaped",
 	"result": {
 		"item": "basemetals:silver_arrow",
+		"data": 0,
 		"count": 4
 	},
 	"pattern": [

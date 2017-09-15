@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"type": "forge:ore_dict",
-		"ore": "blendBismuth"
+		"item": "basemetals:bismuth_blend",
+		"data": 0
 	},
 	"pattern": [
 		"xxx",

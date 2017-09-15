@@ -1,7 +1,8 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:obsidian_gear"
+		"item": "basemetals:obsidian_gear",
+		"data": 0
 	},
 	"pattern": [
 		" x ",

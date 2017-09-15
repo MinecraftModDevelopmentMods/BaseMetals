@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:copper_pressure_plate"
+		"item": "basemetals:copper_pressureplate",
+		"data": 0
 	},
 	"pattern": [
 		"xx"

@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_chestplate"
+		"item": "basemetals:adamantine_chestplate",
+		"data": 0
 	},
 	"pattern": [
 		"x x",

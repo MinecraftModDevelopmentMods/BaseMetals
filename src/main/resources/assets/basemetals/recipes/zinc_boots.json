@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_boots"
+		"item": "basemetals:zinc_boots",
+		"data": 0
 	},
 	"pattern": [
 		"x x",

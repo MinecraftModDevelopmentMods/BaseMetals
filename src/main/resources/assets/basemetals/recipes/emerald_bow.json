@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_bow"
+		"item": "basemetals:emerald_bow",
+		"data": 0
 	},
 	"pattern": [
 		" xs",

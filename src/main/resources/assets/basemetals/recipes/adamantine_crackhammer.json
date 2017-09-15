@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_crackhammer"
+		"item": "basemetals:adamantine_crackhammer",
+		"data": 0
 	},
 	"pattern": [
 		"x",

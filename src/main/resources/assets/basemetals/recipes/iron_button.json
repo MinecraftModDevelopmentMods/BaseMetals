@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:iron_button"
+		"item": "basemetals:iron_button",
+		"data": 0
 	},
 	"pattern": [
 		"x",

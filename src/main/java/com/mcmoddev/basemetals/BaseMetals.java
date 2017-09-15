@@ -7,6 +7,7 @@ import com.mcmoddev.basemetals.proxy.CommonProxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -69,6 +70,8 @@ public class BaseMetals {
 	static {
 		// Forge says this needs to be statically initialized here.
 		FluidRegistry.enableUniversalBucket();
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
 	}
 
 	@EventHandler

@@ -1,6 +1,6 @@
 {
-	"type": "boots",
-	"armorType": "basemetals:armor_repair",
+	"type": "basemetals:armor_repair",
+	"armorType": "boots",
 	"material": "Silver",
 	"conditions": [
 		{

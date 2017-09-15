@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"type": "forge:ore_dict",
-		"ore": "blendSmallStarSteel",
+		"item": "basemetals:starsteel_smallblend",
+		"data": 0,
 		"count": 9
 	},
 	"ingredients": {

@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_button"
+		"item": "basemetals:coldiron_button",
+		"data": 0
 	},
 	"pattern": [
 		"x",

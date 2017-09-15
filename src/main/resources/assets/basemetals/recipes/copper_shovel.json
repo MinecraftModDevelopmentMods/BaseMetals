@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:copper_shovel"
+		"item": "basemetals:copper_shovel",
+		"data": 0
 	},
 	"pattern": [
 		" x",

@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:nickel_shield"
+		"item": "basemetals:nickel_shield",
+		"data": 0
 	},
 	"pattern": [
 		"xyx",

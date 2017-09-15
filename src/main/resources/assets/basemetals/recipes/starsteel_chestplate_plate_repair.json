@@ -1,6 +1,6 @@
 {
-	"type": "chestplate",
-	"armorType": "basemetals:armor_repair",
+	"type": "basemetals:armor_repair",
+	"armorType": "chestplate",
 	"material": "StarSteel",
 	"conditions": [
 		{

@@ -1,7 +1,8 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:antimony_plate"
+		"item": "basemetals:antimony_plate",
+		"data": 0
 	},
 	"pattern": [
 		"xx",

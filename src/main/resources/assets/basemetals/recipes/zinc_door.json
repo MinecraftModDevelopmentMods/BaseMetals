@@ -2,6 +2,7 @@
 	"type": "forge:ore_shaped",
 	"result": {
 		"item": "basemetals:zinc_door",
+		"data": 0,
 		"count": 3
 	},
 	"pattern": [

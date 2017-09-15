@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_boots"
+		"item": "basemetals:adamantine_boots",
+		"data": 0
 	},
 	"pattern": [
 		"x x",

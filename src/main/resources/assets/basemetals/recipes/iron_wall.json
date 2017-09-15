@@ -2,6 +2,7 @@
 	"type": "forge:ore_shaped",
 	"result": {
 		"item": "basemetals:iron_wall",
+		"data": 0,
 		"count": 6
 	},
 	"pattern": [

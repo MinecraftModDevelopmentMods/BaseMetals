@@ -1,7 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:silver_bow"
+		"item": "basemetals:silver_bow",
+		"data": 0
 	},
 	"pattern": [
 		" xs",

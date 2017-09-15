@@ -1,9 +1,11 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
@@ -11,6 +13,7 @@ import com.mcmoddev.lib.util.TabContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
@@ -307,7 +310,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
-		register(event);
+		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
+			for( Item item : mat.getItems() ) {
+				event.getRegistry().register(item);
+			}
+		}
 	}
-
 }
