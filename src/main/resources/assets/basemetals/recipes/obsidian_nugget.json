@@ -5,10 +5,12 @@
 		"data": 0,
 		"count": 9
 	},
-	"ingredients": {
-		"type": "forge:ore_dict",
-		"ore": "ingotObsidian"
-	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "ingotObsidian"
+		}
+	],
 	"conditions": [
 		{
 			"type": "forge:and",

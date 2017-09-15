@@ -5,10 +5,12 @@
 		"data": 0,
 		"count": 9
 	},
-	"ingredients": {
-		"type": "forge:ore_dict",
-		"ore": "ingotTin"
-	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "ingotTin"
+		}
+	],
 	"conditions": [
 		{
 			"type": "forge:and",

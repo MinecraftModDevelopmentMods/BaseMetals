@@ -5,10 +5,12 @@
 		"data": 0,
 		"count": 9
 	},
-	"ingredients": {
-		"type": "forge:ore_dict",
-		"ore": "blendAdamantine"
-	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "blendAdamantine"
+		}
+	],
 	"conditions": [
 		{
 			"type": "forge:and",

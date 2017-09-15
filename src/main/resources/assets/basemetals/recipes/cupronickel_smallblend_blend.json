@@ -5,10 +5,12 @@
 		"data": 0,
 		"count": 9
 	},
-	"ingredients": {
-		"type": "forge:ore_dict",
-		"ore": "blendCupronickel"
-	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "blendCupronickel"
+		}
+	],
 	"conditions": [
 		{
 			"type": "forge:and",

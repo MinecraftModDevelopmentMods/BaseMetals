@@ -5,10 +5,12 @@
 		"data": 0,
 		"count": 9
 	},
-	"ingredients": {
-		"type": "forge:ore_dict",
-		"ore": "blendCopper"
-	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "blendCopper"
+		}
+	],
 	"conditions": [
 		{
 			"type": "forge:and",

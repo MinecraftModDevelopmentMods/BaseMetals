@@ -5,10 +5,12 @@
 		"data": 0,
 		"count": 9
 	},
-	"ingredients": {
-		"type": "forge:ore_dict",
-		"ore": "dustEmerald"
-	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustEmerald"
+		}
+	],
 	"conditions": [
 		{
 			"type": "forge:and",

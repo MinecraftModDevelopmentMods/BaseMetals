@@ -5,10 +5,12 @@
 		"data": 0,
 		"count": 9
 	},
-	"ingredients": {
-		"type": "forge:ore_dict",
-		"ore": "dustBismuth"
-	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustBismuth"
+		}
+	],
 	"conditions": [
 		{
 			"type": "forge:and",

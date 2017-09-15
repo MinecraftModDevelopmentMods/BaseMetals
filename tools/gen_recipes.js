@@ -243,7 +243,7 @@ function processRecipe( mat, rec ) {
     case 'forge:ore_shapeless':
 	res.result = processOutputs( this_recipe.result, mat );
 	// this isn't the right thing here, but...
-	res.ingredients = processIngredient( this_recipe.input, mat );
+	res.ingredients = [ processIngredient( this_recipe.input, mat ) ];
 	res.conditions = processConditions( this_recipe.config.enabled, mat );	    
 	break;
     case 'basemetals:variableOutputOre':
