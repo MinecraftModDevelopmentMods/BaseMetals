@@ -320,19 +320,39 @@ for( let v = 0; v < van_mats.length; v++ ) {
     }
 }
 
-/*
-const repair_pattern = { 'type': 'basemetals:armor_repair', 'input': [ 'ARMOR_DAMAGED', 'PLATE' ], 'output': 'ARMOR_UNDAMAGED' };
-*/
-/*
 for( let am = 0; am < armor_mats.length; am++ ) {
     let this_mat = armor_mats[am];
     for( let at = 0; at < armor_pieces.length; at++ ) {
 	let this_type = armor_pieces[at];
-	let res = { "type": "basemetals:armor_repair", "material":this_mat, "type":this_type, "conditions": [
-	    {
+	let res = { "type": "basemetals:armor_repair", "armorType": "basemetals:armor_repair", "material":this_mat, "type":this_type, "conditions": [
+	    { "type": "forge:and",
+	      "values": [
+		  {
+		      "type": "basemetals:enabled",
+		      "optionName": "material",
+		      "optionValue": this_mat
+		  },
+		  {
+		      "type": "basemetals:enabled",
+		      "optionName": "thing",
+		      "optionValue": "Armor"
+		  },
+		  {
+		      "type": "basemetals:enabled",
+		      "optionName": "thing",
+		      "optionValue": "Plate"
+		  },
+		  {
+		      "type": "basemetals:plate"
+		  }
+	      ]
+	    }
 	] };
+	let fName = `output/${this_mat}_${this_type}_plate_repair.json`.toLowerCase();
+	fs.writeFileSync( fName, JSON.stringify( res, null, '\t' ) );
+    }
+}
     
-*/    
 fs.writeFileSync( 'output/_factories.json', JSON.stringify( _factories, null, '\t' ) );
 
 console.log( 'done!' );

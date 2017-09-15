@@ -20,7 +20,7 @@ public class ArmorRepair implements IRecipeFactory {
 	@Override
 	public IRecipe parse(JsonContext context, JsonObject json) {
 		String material = JsonUtils.getString(json, "material");
-		String type = JsonUtils.getString(json, "type").toLowerCase();
+		String type = JsonUtils.getString(json, "armorType").toLowerCase();
 		MMDMaterial mat = Materials.getMaterialByName(material);
 		
 		switch(type) {
