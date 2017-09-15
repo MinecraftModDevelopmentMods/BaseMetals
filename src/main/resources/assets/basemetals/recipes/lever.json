@@ -1,0 +1,24 @@
+{
+    "type": "forge:ore_shaped",
+    "conditions": [ {
+	"type": "basemetals:enabled",
+	"optionName": "material",
+	"optionValue": "Steel"
+    }],
+    "pattern": [ "x",
+		 "y" ],
+    "key": {
+	'x': {
+	    "type":"forge:ore_dict",
+	    "ore":"rod"
+	},
+	'y': {
+	    "type":"forge:ore_dict",
+	    "ore":"cobblestone"
+	}
+    },
+    "result": {
+	"item": "minecraft:lever"
+    },
+    "group": "vanilla"
+}

@@ -1,0 +1,49 @@
+{
+    "type": "forge:ore_shapeless",
+    "conditions": [ {
+	"type": "basemetals:enabled",
+	"optionName": "material",
+	"optionValue": "Mercury"
+    }],
+    "ingredients": [
+	{
+	    "item":"minecraft:bucket"
+	},
+	{
+	    "type":"forge:ore_dict",
+	    "ore":"ingotMercury"
+	},
+	{
+	    "type":"forge:ore_dict",
+	    "ore":"ingotMercury"
+	},
+	{
+	    "type":"forge:ore_dict",
+	    "ore":"ingotMercury"
+	},
+	{
+	    "type":"forge:ore_dict",
+	    "ore":"ingotMercury"
+	},
+	{
+	    "type":"forge:ore_dict",
+	    "ore":"ingotMercury"
+	},
+	{
+	    "type":"forge:ore_dict",
+	    "ore":"ingotMercury"
+	},
+	{
+	    "type":"forge:ore_dict",
+	    "ore":"ingotMercury"
+	},
+	{
+	    "type":"forge:ore_dict",
+	    "ore":"ingotMercury"
+	}
+    },
+    "result": {
+	"item": 
+    },
+    "group": "vanilla"
+}

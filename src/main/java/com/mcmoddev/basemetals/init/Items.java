@@ -306,8 +306,8 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	}
 	
 	@SubscribeEvent
-	public void registerItems(RegistryEvent.Register<Item> event) {
-		super.register(event);
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		register(event);
 	}
 
 }

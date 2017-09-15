@@ -256,7 +256,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	}
 	
 	@SubscribeEvent
-	public void registerBlocks(RegistryEvent.Register<Block> event) {
-		super.register(event);
+	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		register(event);
 	}
 }

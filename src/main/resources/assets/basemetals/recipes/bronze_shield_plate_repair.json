@@ -1,0 +1,30 @@
+{
+	"type": "shield",
+	"armorType": "basemetals:armor_repair",
+	"material": "Bronze",
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Bronze"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Armor"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Plate"
+				},
+				{
+					"type": "basemetals:plate"
+				}
+			]
+		}
+	]
+}
