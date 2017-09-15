@@ -1,7 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:emerald_gear"
+		"item": {
+			"item": "basemetals:emerald_gear"
+		}
 	},
 	"pattern": [
 		" x ",
@@ -9,8 +11,13 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotEmerald",
-		"r": "basemetals:emerald_rod"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotEmerald"
+		},
+		"r": {
+			"item": "basemetals:emerald_rod"
+		}
 	},
 	"conditions": [
 		{

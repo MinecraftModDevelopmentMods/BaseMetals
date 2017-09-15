@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_slab",
+		"item": {
+			"item": "basemetals:emerald_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockEmerald"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockEmerald"
+		}
 	},
 	"conditions": [
 		{

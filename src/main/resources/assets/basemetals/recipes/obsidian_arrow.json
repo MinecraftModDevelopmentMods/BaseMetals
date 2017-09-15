@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:obsidian_arrow",
+		"item": {
+			"item": "basemetals:obsidian_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetObsidian",
-		"y": "basemetals:obsidian_rod",
-		"z": "basemetals:obsidian_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetObsidian"
+		},
+		"y": {
+			"item": "basemetals:obsidian_rod"
+		},
+		"z": {
+			"item": "basemetals:obsidian_feather"
+		}
 	},
 	"conditions": [
 		{

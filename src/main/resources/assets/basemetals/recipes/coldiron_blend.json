@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blendColdIron"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendColdIron"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blendSmallColdIron"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallColdIron"
+		}
 	},
 	"conditions": [
 		{

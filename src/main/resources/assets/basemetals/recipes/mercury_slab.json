@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:mercury_slab",
+		"item": {
+			"item": "basemetals:mercury_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockMercury"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockMercury"
+		}
 	},
 	"conditions": [
 		{

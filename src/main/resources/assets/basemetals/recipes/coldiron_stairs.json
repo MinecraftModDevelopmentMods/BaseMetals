@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_stairs",
+		"item": {
+			"item": "basemetals:coldiron_stairs"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockColdIron"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockColdIron"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:silver_axe"
+		"item": {
+			"item": "basemetals:silver_axe"
+		}
 	},
 	"pattern": [
 		"xx",
@@ -9,8 +11,14 @@
 		" s"
 	],
 	"key": {
-		"x": "ore:ingotSilver",
-		"s": "ore:stickWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotSilver"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
 	},
 	"conditions": [
 		{

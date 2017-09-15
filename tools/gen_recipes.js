@@ -3,13 +3,19 @@ const fs = require('fs');
 const base_mats =  [ "Adamantine", "Antimony", "Bismuth", "ColdIron", "Copper", "Lead", "Mercury", "Nickel", "Platinum", "Silver", "StarSteel", "Steel", "Tin", "Zinc" ];
 const van_mats = [ "Diamond", "Emerald", "Gold", "Iron", "Stone", "Wood", "Quartz", "Obsidian", "Charcoal", "Coal" ];
 
+const armor_mats = [ "Adamantine", "Antimony", "Bismuth", "Brass", "Bronze", "ColdIron", "Copper", "Cupronickel", "Diamond", "Electrum", "Emerald", "Gold", "Iron", "Lead",
+		     "Nickel", "Obsidian", "Pewter", "Platinum", "Quartz", "Silver", "StarSteel", "Steel", "Tin", "Zinc" ];
+const armor_pieces = [ 'boots', 'chestplate', 'helmet', 'leggings', 'shield' ];
+
 const _factories = {
     "conditions": {
 	"enabled":"com.mcmoddev.lib.recipe.conditions.ConditionEnabled",
-	"hammer":"com.mcmoddev.lib.recipe.conditions.hammerEnabled"
+	"hammer":"com.mcmoddev.lib.recipe.conditions.hammerEnabled",
+	"plate":"com.mcmoddev.lib.recipe.conditions.PlateRepairEnabled"
     },
     "recipes": {
-	"variableOutputOre":"com.mcmoddev.lib.recipe.factories.ConfigVariedOutput"
+	"variableOutputOre":"com.mcmoddev.lib.recipe.factories.ConfigVariedOutput",
+	"armor_repair":"com.mcmoddev.lib.recipe.factories.ArmorRepair"
     }
 };
 
@@ -153,15 +159,14 @@ function processKey(recipe_key, mat) {
     let res = {};
     var ks = Object.keys(recipe_key);
     for( let k = 0; k < ks.length; k++ ) {
-	res[ks[k]] = mapName(recipe_key[ks[k]],mat);
+	res[ks[k]] = processIngredient( recipe_key[ks[k]], mat );
     }
     return res;
 }
 
 function processOutputs(recipe_outputs, mat) {
-    let res = { item: "" };
-
-    res.item = mapName( recipe_outputs.mat, mat );
+    let res = {};
+    res.item = processIngredient( recipe_outputs.mat, mat );
     if( recipe_outputs.count > 1 ) {
 	res.count = recipe_outputs.count;
     }
@@ -191,6 +196,28 @@ function processConditions( conditions, mat ) {
     return res;
 }
 
+function processIngredients( inputs, mat ) {
+    let res = [];
+    for( let i = 0; i < inputs.length; i++ ) {
+	res.push( processIngredient(inputs[i], mat) );
+    }
+
+    return res;
+}
+
+function processIngredient( input, mat ) {
+    let res = {};
+
+    let name = mapName(input,mat);
+    if( name.startsWith("ore:") ) {
+	res = { "type": "forge:ore_dict", "ore": name.split(':')[1] };
+    } else {
+	res = { "item": name };
+    }
+
+    return res;
+}
+
 function processRecipe( mat, rec ) {
     var this_recipe = rec;
     res = {}; // zero out the result on each loop
@@ -204,7 +231,7 @@ function processRecipe( mat, rec ) {
 	break;
     case 'forge:ore_shapeless':
 	res.result = processOutputs( this_recipe.result, mat );
-	res.ingredients = [ { "item": mapName( this_recipe.input, mat ) } ];
+	res.ingredients = processIngredients( this_recipe.input, mat );
 	res.conditions = processConditions( this_recipe.config.enabled, mat );	    
 	break;
     case 'basemetals:variableOutputOre':
@@ -293,7 +320,19 @@ for( let v = 0; v < van_mats.length; v++ ) {
     }
 }
 
+/*
+const repair_pattern = { 'type': 'basemetals:armor_repair', 'input': [ 'ARMOR_DAMAGED', 'PLATE' ], 'output': 'ARMOR_UNDAMAGED' };
+*/
+/*
+for( let am = 0; am < armor_mats.length; am++ ) {
+    let this_mat = armor_mats[am];
+    for( let at = 0; at < armor_pieces.length; at++ ) {
+	let this_type = armor_pieces[at];
+	let res = { "type": "basemetals:armor_repair", "material":this_mat, "type":this_type, "conditions": [
+	    {
+	] };
+    
+*/    
 fs.writeFileSync( 'output/_factories.json', JSON.stringify( _factories, null, '\t' ) );
 
 console.log( 'done!' );
-

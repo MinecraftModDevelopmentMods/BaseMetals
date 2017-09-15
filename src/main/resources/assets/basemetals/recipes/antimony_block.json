@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blockAntimony"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blockAntimony"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotAntimony"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAntimony"
+		}
 	},
 	"conditions": [
 		{

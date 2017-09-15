@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blendBismuth"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendBismuth"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blendSmallBismuth"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallBismuth"
+		}
 	},
 	"conditions": [
 		{

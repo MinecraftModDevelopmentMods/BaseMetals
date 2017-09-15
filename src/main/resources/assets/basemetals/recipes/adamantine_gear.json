@@ -1,7 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:adamantine_gear"
+		"item": {
+			"item": "basemetals:adamantine_gear"
+		}
 	},
 	"pattern": [
 		" x ",
@@ -9,8 +11,13 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotAdamantine",
-		"r": "basemetals:adamantine_rod"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAdamantine"
+		},
+		"r": {
+			"item": "basemetals:adamantine_rod"
+		}
 	},
 	"conditions": [
 		{

@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallTin",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallTin"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustTin"
+			"item": "basemetals:tin_p"
+		},
+		{
+			"item": "basemetals:tin_o"
+		},
+		{
+			"item": "basemetals:tin_w"
+		},
+		{
+			"item": "basemetals:tin_d"
+		},
+		{
+			"item": "basemetals:tin_e"
+		},
+		{
+			"item": "basemetals:tin_r"
 		}
 	],
 	"conditions": [

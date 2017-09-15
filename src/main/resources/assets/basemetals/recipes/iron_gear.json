@@ -1,7 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:iron_gear"
+		"item": {
+			"item": "basemetals:iron_gear"
+		}
 	},
 	"pattern": [
 		" x ",
@@ -9,8 +11,13 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotIron",
-		"r": "basemetals:iron_rod"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		},
+		"r": {
+			"item": "basemetals:iron_rod"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_bow"
+		"item": {
+			"item": "basemetals:tin_bow"
+		}
 	},
 	"pattern": [
 		" xs",
@@ -9,8 +11,12 @@
 		" xs"
 	],
 	"key": {
-		"x": "basemetals:tin_rod",
-		"s": "minecraft:string"
+		"x": {
+			"item": "basemetals:tin_rod"
+		},
+		"s": {
+			"item": "minecraft:string"
+		}
 	},
 	"conditions": [
 		{

@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetLead",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetLead"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotLead"
+			"item": "basemetals:lead_i"
+		},
+		{
+			"item": "basemetals:lead_n"
+		},
+		{
+			"item": "basemetals:lead_g"
+		},
+		{
+			"item": "basemetals:lead_o"
+		},
+		{
+			"item": "basemetals:lead_t"
 		}
 	],
 	"conditions": [

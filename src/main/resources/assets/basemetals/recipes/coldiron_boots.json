@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_boots"
+		"item": {
+			"item": "basemetals:coldiron_boots"
+		}
 	},
 	"pattern": [
 		"x x",
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotColdIron"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotColdIron"
+		}
 	},
 	"conditions": [
 		{

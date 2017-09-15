@@ -1,14 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:platinum_bars",
+		"item": {
+			"item": "basemetals:platinum_bars"
+		},
 		"count": 4
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "basemetals:platinum_rod"
+		"x": {
+			"item": "basemetals:platinum_rod"
+		}
 	},
 	"conditions": [
 		{

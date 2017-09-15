@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_slab",
+		"item": {
+			"item": "basemetals:bismuth_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockBismuth"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockBismuth"
+		}
 	},
 	"conditions": [
 		{

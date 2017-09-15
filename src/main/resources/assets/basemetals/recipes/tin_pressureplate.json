@@ -1,13 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_pressure_plate"
+		"item": {
+			"item": "basemetals:tin_pressure_plate"
+		}
 	},
 	"pattern": [
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotTin"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotTin"
+		}
 	},
 	"conditions": [
 		{

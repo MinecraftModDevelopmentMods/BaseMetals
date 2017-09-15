@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetObsidian",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetObsidian"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotObsidian"
+			"item": "basemetals:obsidian_i"
+		},
+		{
+			"item": "basemetals:obsidian_n"
+		},
+		{
+			"item": "basemetals:obsidian_g"
+		},
+		{
+			"item": "basemetals:obsidian_o"
+		},
+		{
+			"item": "basemetals:obsidian_t"
 		}
 	],
 	"conditions": [

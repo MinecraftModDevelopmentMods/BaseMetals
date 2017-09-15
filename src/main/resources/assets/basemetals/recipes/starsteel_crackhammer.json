@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:starsteel_crackhammer"
+		"item": {
+			"item": "basemetals:starsteel_crackhammer"
+		}
 	},
 	"pattern": [
 		"x",
@@ -9,8 +11,14 @@
 		"y"
 	],
 	"key": {
-		"x": "ore:blockStarSteel",
-		"y": "ore:stickWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockStarSteel"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
 	},
 	"conditions": [
 		{

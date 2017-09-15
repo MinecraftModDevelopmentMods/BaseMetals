@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_helmet"
+		"item": {
+			"item": "basemetals:zinc_helmet"
+		}
 	},
 	"pattern": [
 		"xxx",
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotZinc"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotZinc"
+		}
 	},
 	"conditions": [
 		{

@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_trapdoor"
+		"item": {
+			"item": "basemetals:bismuth_trapdoor"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotBismuth"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotBismuth"
+		}
 	},
 	"conditions": [
 		{

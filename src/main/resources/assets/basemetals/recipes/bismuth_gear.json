@@ -1,7 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:bismuth_gear"
+		"item": {
+			"item": "basemetals:bismuth_gear"
+		}
 	},
 	"pattern": [
 		" x ",
@@ -9,8 +11,13 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotBismuth",
-		"r": "basemetals:bismuth_rod"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotBismuth"
+		},
+		"r": {
+			"item": "basemetals:bismuth_rod"
+		}
 	},
 	"conditions": [
 		{

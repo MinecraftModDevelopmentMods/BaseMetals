@@ -1,14 +1,20 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:ingotQuartz"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "ingotQuartz"
+		}
 	},
 	"pattern": [
 		" x",
 		"x"
 	],
 	"key": {
-		"x": "ore:ingotQuartz"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotQuartz"
+		}
 	},
 	"conditions": [
 		{

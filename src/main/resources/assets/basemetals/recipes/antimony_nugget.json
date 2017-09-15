@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetAntimony",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetAntimony"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotAntimony"
+			"item": "basemetals:antimony_i"
+		},
+		{
+			"item": "basemetals:antimony_n"
+		},
+		{
+			"item": "basemetals:antimony_g"
+		},
+		{
+			"item": "basemetals:antimony_o"
+		},
+		{
+			"item": "basemetals:antimony_t"
 		}
 	],
 	"conditions": [

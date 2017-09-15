@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallQuartz",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallQuartz"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustQuartz"
+			"item": "basemetals:quartz_p"
+		},
+		{
+			"item": "basemetals:quartz_o"
+		},
+		{
+			"item": "basemetals:quartz_w"
+		},
+		{
+			"item": "basemetals:quartz_d"
+		},
+		{
+			"item": "basemetals:quartz_e"
+		},
+		{
+			"item": "basemetals:quartz_r"
 		}
 	],
 	"conditions": [

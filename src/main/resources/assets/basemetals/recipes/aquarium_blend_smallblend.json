@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blendAquarium"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendAquarium"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blendSmallAquarium"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallAquarium"
+		}
 	},
 	"conditions": [
 		{

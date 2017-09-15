@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallColdIron",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallColdIron"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustColdIron"
+			"item": "basemetals:coldiron_p"
+		},
+		{
+			"item": "basemetals:coldiron_o"
+		},
+		{
+			"item": "basemetals:coldiron_w"
+		},
+		{
+			"item": "basemetals:coldiron_d"
+		},
+		{
+			"item": "basemetals:coldiron_e"
+		},
+		{
+			"item": "basemetals:coldiron_r"
 		}
 	],
 	"conditions": [

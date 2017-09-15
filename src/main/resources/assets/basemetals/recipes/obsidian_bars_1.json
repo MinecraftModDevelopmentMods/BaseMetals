@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:obsidian_bars",
+		"item": {
+			"item": "basemetals:obsidian_bars"
+		},
 		"count": 16
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotObsidian"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotObsidian"
+		}
 	},
 	"conditions": [
 		{

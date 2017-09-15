@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_door",
+		"item": {
+			"item": "basemetals:emerald_door"
+		},
 		"count": 3
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotEmerald"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotEmerald"
+		}
 	},
 	"conditions": [
 		{

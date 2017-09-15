@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_arrow",
+		"item": {
+			"item": "basemetals:adamantine_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetAdamantine",
-		"y": "basemetals:adamantine_rod",
-		"z": "basemetals:adamantine_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetAdamantine"
+		},
+		"y": {
+			"item": "basemetals:adamantine_rod"
+		},
+		"z": {
+			"item": "basemetals:adamantine_feather"
+		}
 	},
 	"conditions": [
 		{

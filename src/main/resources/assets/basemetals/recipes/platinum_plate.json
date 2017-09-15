@@ -1,14 +1,19 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:platinum_plate"
+		"item": {
+			"item": "basemetals:platinum_plate"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotPlatinum"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotPlatinum"
+		}
 	},
 	"conditions": [
 		{

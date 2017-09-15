@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallStarSteel",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallStarSteel"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendStarSteel"
+			"item": "basemetals:starsteel_b"
+		},
+		{
+			"item": "basemetals:starsteel_l"
+		},
+		{
+			"item": "basemetals:starsteel_e"
+		},
+		{
+			"item": "basemetals:starsteel_n"
+		},
+		{
+			"item": "basemetals:starsteel_d"
 		}
 	],
 	"conditions": [

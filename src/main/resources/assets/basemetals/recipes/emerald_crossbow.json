@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_crossbow"
+		"item": {
+			"item": "basemetals:emerald_crossbow"
+		}
 	},
 	"pattern": [
 		"zxx",
@@ -9,9 +11,15 @@
 		"x z"
 	],
 	"key": {
-		"x": "basemetals:emerald_rod",
-		"y": "minecraft:string",
-		"z": "basemetals:emerald_gear"
+		"x": {
+			"item": "basemetals:emerald_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:emerald_gear"
+		}
 	},
 	"conditions": [
 		{

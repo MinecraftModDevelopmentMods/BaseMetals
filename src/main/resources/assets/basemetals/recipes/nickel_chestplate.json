@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:nickel_chestplate"
+		"item": {
+			"item": "basemetals:nickel_chestplate"
+		}
 	},
 	"pattern": [
 		"x x",
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotNickel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotNickel"
+		}
 	},
 	"conditions": [
 		{

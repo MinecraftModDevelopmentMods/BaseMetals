@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:silver_arrow",
+		"item": {
+			"item": "basemetals:silver_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetSilver",
-		"y": "basemetals:silver_rod",
-		"z": "basemetals:silver_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetSilver"
+		},
+		"y": {
+			"item": "basemetals:silver_rod"
+		},
+		"z": {
+			"item": "basemetals:silver_feather"
+		}
 	},
 	"conditions": [
 		{

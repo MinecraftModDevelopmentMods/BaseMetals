@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:platinum_trapdoor"
+		"item": {
+			"item": "basemetals:platinum_trapdoor"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotPlatinum"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotPlatinum"
+		}
 	},
 	"conditions": [
 		{

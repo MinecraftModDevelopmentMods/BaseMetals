@@ -1,14 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_bars",
+		"item": {
+			"item": "basemetals:quartz_bars"
+		},
 		"count": 4
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "basemetals:quartz_rod"
+		"x": {
+			"item": "basemetals:quartz_rod"
+		}
 	},
 	"conditions": [
 		{

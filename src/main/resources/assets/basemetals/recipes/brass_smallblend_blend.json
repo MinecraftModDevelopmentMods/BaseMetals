@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallBrass",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallBrass"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendBrass"
+			"item": "basemetals:brass_b"
+		},
+		{
+			"item": "basemetals:brass_l"
+		},
+		{
+			"item": "basemetals:brass_e"
+		},
+		{
+			"item": "basemetals:brass_n"
+		},
+		{
+			"item": "basemetals:brass_d"
 		}
 	],
 	"conditions": [

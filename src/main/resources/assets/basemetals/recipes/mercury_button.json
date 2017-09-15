@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:mercury_button"
+		"item": {
+			"item": "basemetals:mercury_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetMercury"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetMercury"
+		}
 	},
 	"conditions": [
 		{

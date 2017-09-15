@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_boots"
+		"item": {
+			"item": "basemetals:bismuth_boots"
+		}
 	},
 	"pattern": [
 		"x x",
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotBismuth"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotBismuth"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:gold_crossbow"
+		"item": {
+			"item": "basemetals:gold_crossbow"
+		}
 	},
 	"pattern": [
 		"zxx",
@@ -9,9 +11,15 @@
 		"x z"
 	],
 	"key": {
-		"x": "basemetals:gold_rod",
-		"y": "minecraft:string",
-		"z": "basemetals:gold_gear"
+		"x": {
+			"item": "basemetals:gold_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:gold_gear"
+		}
 	},
 	"conditions": [
 		{

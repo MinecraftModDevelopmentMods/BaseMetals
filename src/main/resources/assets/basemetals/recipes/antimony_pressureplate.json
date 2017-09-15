@@ -1,13 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:antimony_pressure_plate"
+		"item": {
+			"item": "basemetals:antimony_pressure_plate"
+		}
 	},
 	"pattern": [
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotAntimony"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAntimony"
+		}
 	},
 	"conditions": [
 		{

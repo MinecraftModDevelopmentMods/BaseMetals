@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallElectrum",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallElectrum"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendElectrum"
+			"item": "basemetals:electrum_b"
+		},
+		{
+			"item": "basemetals:electrum_l"
+		},
+		{
+			"item": "basemetals:electrum_e"
+		},
+		{
+			"item": "basemetals:electrum_n"
+		},
+		{
+			"item": "basemetals:electrum_d"
 		}
 	],
 	"conditions": [

@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:silver_wall",
+		"item": {
+			"item": "basemetals:silver_wall"
+		},
 		"count": 6
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockSilver"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockSilver"
+		}
 	},
 	"conditions": [
 		{

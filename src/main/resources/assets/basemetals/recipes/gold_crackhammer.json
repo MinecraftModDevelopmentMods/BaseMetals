@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:gold_crackhammer"
+		"item": {
+			"item": "basemetals:gold_crackhammer"
+		}
 	},
 	"pattern": [
 		"x",
@@ -9,8 +11,14 @@
 		"y"
 	],
 	"key": {
-		"x": "ore:blockGold",
-		"y": "ore:stickWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockGold"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
 	},
 	"conditions": [
 		{

@@ -1,14 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_bars",
+		"item": {
+			"item": "basemetals:emerald_bars"
+		},
 		"count": 4
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "basemetals:emerald_rod"
+		"x": {
+			"item": "basemetals:emerald_rod"
+		}
 	},
 	"conditions": [
 		{

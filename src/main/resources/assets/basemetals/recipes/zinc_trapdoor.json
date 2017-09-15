@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_trapdoor"
+		"item": {
+			"item": "basemetals:zinc_trapdoor"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotZinc"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotZinc"
+		}
 	},
 	"conditions": [
 		{

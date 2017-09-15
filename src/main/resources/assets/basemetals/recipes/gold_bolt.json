@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:gold_bolt",
+		"item": {
+			"item": "basemetals:gold_bolt"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,8 +12,12 @@
 		"y"
 	],
 	"key": {
-		"x": "basemetals:gold_rod",
-		"y": "basemetals:gold_feather"
+		"x": {
+			"item": "basemetals:gold_rod"
+		},
+		"y": {
+			"item": "basemetals:gold_feather"
+		}
 	},
 	"conditions": [
 		{

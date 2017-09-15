@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_wall",
+		"item": {
+			"item": "basemetals:tin_wall"
+		},
 		"count": 6
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockTin"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockTin"
+		}
 	},
 	"conditions": [
 		{

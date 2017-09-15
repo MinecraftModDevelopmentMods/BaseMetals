@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:obsidian_leggings"
+		"item": {
+			"item": "basemetals:obsidian_leggings"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +11,10 @@
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotObsidian"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotObsidian"
+		}
 	},
 	"conditions": [
 		{

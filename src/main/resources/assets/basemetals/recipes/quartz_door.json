@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_door",
+		"item": {
+			"item": "basemetals:quartz_door"
+		},
 		"count": 3
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotQuartz"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotQuartz"
+		}
 	},
 	"conditions": [
 		{

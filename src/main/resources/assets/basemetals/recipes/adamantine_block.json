@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blockAdamantine"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blockAdamantine"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotAdamantine"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAdamantine"
+		}
 	},
 	"conditions": [
 		{

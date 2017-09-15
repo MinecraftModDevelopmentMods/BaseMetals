@@ -1,15 +1,22 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_lever"
+		"item": {
+			"item": "basemetals:adamantine_lever"
+		}
 	},
 	"pattern": [
 		"x",
 		"y"
 	],
 	"key": {
-		"x": "basemetals:adamantine_rod",
-		"y": "ore:ingotAdamantine"
+		"x": {
+			"item": "basemetals:adamantine_rod"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAdamantine"
+		}
 	},
 	"conditions": [
 		{

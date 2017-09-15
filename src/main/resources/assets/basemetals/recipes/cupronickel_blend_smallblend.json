@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blendCupronickel"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendCupronickel"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blendSmallCupronickel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallCupronickel"
+		}
 	},
 	"conditions": [
 		{

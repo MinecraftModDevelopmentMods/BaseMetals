@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:lead_crossbow"
+		"item": {
+			"item": "basemetals:lead_crossbow"
+		}
 	},
 	"pattern": [
 		"zxx",
@@ -9,9 +11,15 @@
 		"x z"
 	],
 	"key": {
-		"x": "basemetals:lead_rod",
-		"y": "minecraft:string",
-		"z": "basemetals:lead_gear"
+		"x": {
+			"item": "basemetals:lead_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:lead_gear"
+		}
 	},
 	"conditions": [
 		{

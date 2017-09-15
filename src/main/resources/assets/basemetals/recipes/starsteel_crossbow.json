@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:starsteel_crossbow"
+		"item": {
+			"item": "basemetals:starsteel_crossbow"
+		}
 	},
 	"pattern": [
 		"zxx",
@@ -9,9 +11,15 @@
 		"x z"
 	],
 	"key": {
-		"x": "basemetals:starsteel_rod",
-		"y": "minecraft:string",
-		"z": "basemetals:starsteel_gear"
+		"x": {
+			"item": "basemetals:starsteel_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:starsteel_gear"
+		}
 	},
 	"conditions": [
 		{

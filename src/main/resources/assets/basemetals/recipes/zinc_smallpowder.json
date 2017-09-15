@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallZinc",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallZinc"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustZinc"
+			"item": "basemetals:zinc_p"
+		},
+		{
+			"item": "basemetals:zinc_o"
+		},
+		{
+			"item": "basemetals:zinc_w"
+		},
+		{
+			"item": "basemetals:zinc_d"
+		},
+		{
+			"item": "basemetals:zinc_e"
+		},
+		{
+			"item": "basemetals:zinc_r"
 		}
 	],
 	"conditions": [

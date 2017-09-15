@@ -1,14 +1,20 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:ingotAdamantine"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAdamantine"
+		}
 	},
 	"pattern": [
 		" x",
 		"x"
 	],
 	"key": {
-		"x": "ore:ingotAdamantine"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAdamantine"
+		}
 	},
 	"conditions": [
 		{

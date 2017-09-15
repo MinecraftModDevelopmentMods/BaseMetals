@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:gold_rod",
+		"item": {
+			"item": "basemetals:gold_rod"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"x"
 	],
 	"key": {
-		"x": "ore:ingotGold"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotGold"
+		}
 	},
 	"conditions": [
 		{

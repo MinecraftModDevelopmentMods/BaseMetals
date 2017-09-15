@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetQuartz",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetQuartz"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotQuartz"
+			"item": "basemetals:quartz_i"
+		},
+		{
+			"item": "basemetals:quartz_n"
+		},
+		{
+			"item": "basemetals:quartz_g"
+		},
+		{
+			"item": "basemetals:quartz_o"
+		},
+		{
+			"item": "basemetals:quartz_t"
 		}
 	],
 	"conditions": [

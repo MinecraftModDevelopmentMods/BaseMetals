@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blockZinc"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blockZinc"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotZinc"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotZinc"
+		}
 	},
 	"conditions": [
 		{

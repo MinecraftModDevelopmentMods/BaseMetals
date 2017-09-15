@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:lead_stairs",
+		"item": {
+			"item": "basemetals:lead_stairs"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockLead"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockLead"
+		}
 	},
 	"conditions": [
 		{

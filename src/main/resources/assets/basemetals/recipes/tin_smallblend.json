@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallTin",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallTin"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendTin"
+			"item": "basemetals:tin_b"
+		},
+		{
+			"item": "basemetals:tin_l"
+		},
+		{
+			"item": "basemetals:tin_e"
+		},
+		{
+			"item": "basemetals:tin_n"
+		},
+		{
+			"item": "basemetals:tin_d"
 		}
 	],
 	"conditions": [

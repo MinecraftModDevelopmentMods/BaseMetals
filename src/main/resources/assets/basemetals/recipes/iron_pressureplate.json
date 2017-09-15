@@ -1,13 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:iron_pressure_plate"
+		"item": {
+			"item": "basemetals:iron_pressure_plate"
+		}
 	},
 	"pattern": [
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotIron"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		}
 	},
 	"conditions": [
 		{

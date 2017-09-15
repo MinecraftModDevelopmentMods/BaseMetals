@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_hoe"
+		"item": {
+			"item": "basemetals:zinc_hoe"
+		}
 	},
 	"pattern": [
 		"xx",
@@ -9,8 +11,14 @@
 		" s"
 	],
 	"key": {
-		"x": "ore:ingotZinc",
-		"s": "ore:stickWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotZinc"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
 	},
 	"conditions": [
 		{

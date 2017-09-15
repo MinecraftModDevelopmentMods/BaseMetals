@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallSilver",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallSilver"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustSilver"
+			"item": "basemetals:silver_p"
+		},
+		{
+			"item": "basemetals:silver_o"
+		},
+		{
+			"item": "basemetals:silver_w"
+		},
+		{
+			"item": "basemetals:silver_d"
+		},
+		{
+			"item": "basemetals:silver_e"
+		},
+		{
+			"item": "basemetals:silver_r"
 		}
 	],
 	"conditions": [

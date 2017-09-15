@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallSilver",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallSilver"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendSilver"
+			"item": "basemetals:silver_b"
+		},
+		{
+			"item": "basemetals:silver_l"
+		},
+		{
+			"item": "basemetals:silver_e"
+		},
+		{
+			"item": "basemetals:silver_n"
+		},
+		{
+			"item": "basemetals:silver_d"
 		}
 	],
 	"conditions": [

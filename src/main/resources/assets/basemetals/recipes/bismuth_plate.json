@@ -1,14 +1,19 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:bismuth_plate"
+		"item": {
+			"item": "basemetals:bismuth_plate"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotBismuth"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotBismuth"
+		}
 	},
 	"conditions": [
 		{

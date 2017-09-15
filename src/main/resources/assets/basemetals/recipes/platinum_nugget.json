@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetPlatinum",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetPlatinum"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotPlatinum"
+			"item": "basemetals:platinum_i"
+		},
+		{
+			"item": "basemetals:platinum_n"
+		},
+		{
+			"item": "basemetals:platinum_g"
+		},
+		{
+			"item": "basemetals:platinum_o"
+		},
+		{
+			"item": "basemetals:platinum_t"
 		}
 	],
 	"conditions": [

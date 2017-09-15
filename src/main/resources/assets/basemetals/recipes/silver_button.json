@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:silver_button"
+		"item": {
+			"item": "basemetals:silver_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetSilver"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetSilver"
+		}
 	},
 	"conditions": [
 		{

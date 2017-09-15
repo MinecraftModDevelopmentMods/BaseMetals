@@ -1,15 +1,22 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_lever"
+		"item": {
+			"item": "basemetals:tin_lever"
+		}
 	},
 	"pattern": [
 		"x",
 		"y"
 	],
 	"key": {
-		"x": "basemetals:tin_rod",
-		"y": "ore:ingotTin"
+		"x": {
+			"item": "basemetals:tin_rod"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotTin"
+		}
 	},
 	"conditions": [
 		{

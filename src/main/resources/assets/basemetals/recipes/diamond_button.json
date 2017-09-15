@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:diamond_button"
+		"item": {
+			"item": "basemetals:diamond_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetDiamond"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetDiamond"
+		}
 	},
 	"conditions": [
 		{

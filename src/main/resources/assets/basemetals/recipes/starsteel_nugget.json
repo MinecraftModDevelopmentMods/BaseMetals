@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetStarSteel",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetStarSteel"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotStarSteel"
+			"item": "basemetals:starsteel_i"
+		},
+		{
+			"item": "basemetals:starsteel_n"
+		},
+		{
+			"item": "basemetals:starsteel_g"
+		},
+		{
+			"item": "basemetals:starsteel_o"
+		},
+		{
+			"item": "basemetals:starsteel_t"
 		}
 	],
 	"conditions": [

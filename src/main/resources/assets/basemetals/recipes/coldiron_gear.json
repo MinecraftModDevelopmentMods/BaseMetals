@@ -1,7 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:coldiron_gear"
+		"item": {
+			"item": "basemetals:coldiron_gear"
+		}
 	},
 	"pattern": [
 		" x ",
@@ -9,8 +11,13 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotColdIron",
-		"r": "basemetals:coldiron_rod"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotColdIron"
+		},
+		"r": {
+			"item": "basemetals:coldiron_rod"
+		}
 	},
 	"conditions": [
 		{

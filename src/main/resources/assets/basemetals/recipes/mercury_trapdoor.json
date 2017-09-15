@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:mercury_trapdoor"
+		"item": {
+			"item": "basemetals:mercury_trapdoor"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotMercury"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotMercury"
+		}
 	},
 	"conditions": [
 		{

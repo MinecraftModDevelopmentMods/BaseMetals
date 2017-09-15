@@ -1,14 +1,19 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:mercury_plate"
+		"item": {
+			"item": "basemetals:mercury_plate"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotMercury"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotMercury"
+		}
 	},
 	"conditions": [
 		{

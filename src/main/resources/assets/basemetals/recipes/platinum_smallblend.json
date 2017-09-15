@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallPlatinum",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallPlatinum"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendPlatinum"
+			"item": "basemetals:platinum_b"
+		},
+		{
+			"item": "basemetals:platinum_l"
+		},
+		{
+			"item": "basemetals:platinum_e"
+		},
+		{
+			"item": "basemetals:platinum_n"
+		},
+		{
+			"item": "basemetals:platinum_d"
 		}
 	],
 	"conditions": [

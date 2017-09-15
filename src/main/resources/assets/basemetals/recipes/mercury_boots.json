@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:mercury_boots"
+		"item": {
+			"item": "basemetals:mercury_boots"
+		}
 	},
 	"pattern": [
 		"x x",
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotMercury"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotMercury"
+		}
 	},
 	"conditions": [
 		{

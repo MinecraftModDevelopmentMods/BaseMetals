@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:platinum_shovel"
+		"item": {
+			"item": "basemetals:platinum_shovel"
+		}
 	},
 	"pattern": [
 		" x",
@@ -9,8 +11,14 @@
 		" s"
 	],
 	"key": {
-		"x": "ore:ingotPlatinum",
-		"s": "ore:stickWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotPlatinum"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
 	},
 	"conditions": [
 		{

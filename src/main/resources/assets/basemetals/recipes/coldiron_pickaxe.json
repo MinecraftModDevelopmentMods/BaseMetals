@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_pickaxe"
+		"item": {
+			"item": "basemetals:coldiron_pickaxe"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,8 +11,14 @@
 		" s"
 	],
 	"key": {
-		"x": "ore:ingotColdIron",
-		"s": "ore:stickWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotColdIron"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
 	},
 	"conditions": [
 		{

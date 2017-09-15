@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetNickel",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetNickel"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotNickel"
+			"item": "basemetals:nickel_i"
+		},
+		{
+			"item": "basemetals:nickel_n"
+		},
+		{
+			"item": "basemetals:nickel_g"
+		},
+		{
+			"item": "basemetals:nickel_o"
+		},
+		{
+			"item": "basemetals:nickel_t"
 		}
 	],
 	"conditions": [

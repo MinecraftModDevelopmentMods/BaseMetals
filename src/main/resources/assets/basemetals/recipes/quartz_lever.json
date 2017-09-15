@@ -1,15 +1,22 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_lever"
+		"item": {
+			"item": "basemetals:quartz_lever"
+		}
 	},
 	"pattern": [
 		"x",
 		"y"
 	],
 	"key": {
-		"x": "basemetals:quartz_rod",
-		"y": "ore:ingotQuartz"
+		"x": {
+			"item": "basemetals:quartz_rod"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotQuartz"
+		}
 	},
 	"conditions": [
 		{

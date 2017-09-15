@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_crackhammer"
+		"item": {
+			"item": "basemetals:quartz_crackhammer"
+		}
 	},
 	"pattern": [
 		"x",
@@ -9,8 +11,14 @@
 		"y"
 	],
 	"key": {
-		"x": "ore:blockQuartz",
-		"y": "ore:stickWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockQuartz"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
 	},
 	"conditions": [
 		{

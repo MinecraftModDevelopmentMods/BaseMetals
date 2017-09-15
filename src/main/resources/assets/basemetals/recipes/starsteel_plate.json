@@ -1,14 +1,19 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:starsteel_plate"
+		"item": {
+			"item": "basemetals:starsteel_plate"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotStarSteel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotStarSteel"
+		}
 	},
 	"conditions": [
 		{

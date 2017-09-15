@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallPewter",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallPewter"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendPewter"
+			"item": "basemetals:pewter_b"
+		},
+		{
+			"item": "basemetals:pewter_l"
+		},
+		{
+			"item": "basemetals:pewter_e"
+		},
+		{
+			"item": "basemetals:pewter_n"
+		},
+		{
+			"item": "basemetals:pewter_d"
 		}
 	],
 	"conditions": [

@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:copper_chestplate"
+		"item": {
+			"item": "basemetals:copper_chestplate"
+		}
 	},
 	"pattern": [
 		"x x",
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotCopper"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotCopper"
+		}
 	},
 	"conditions": [
 		{

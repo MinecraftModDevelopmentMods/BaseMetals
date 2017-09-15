@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:diamond_door",
+		"item": {
+			"item": "basemetals:diamond_door"
+		},
 		"count": 3
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotDiamond"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotDiamond"
+		}
 	},
 	"conditions": [
 		{

@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetColdIron",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetColdIron"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotColdIron"
+			"item": "basemetals:coldiron_i"
+		},
+		{
+			"item": "basemetals:coldiron_n"
+		},
+		{
+			"item": "basemetals:coldiron_g"
+		},
+		{
+			"item": "basemetals:coldiron_o"
+		},
+		{
+			"item": "basemetals:coldiron_t"
 		}
 	],
 	"conditions": [

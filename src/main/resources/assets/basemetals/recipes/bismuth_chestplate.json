@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_chestplate"
+		"item": {
+			"item": "basemetals:bismuth_chestplate"
+		}
 	},
 	"pattern": [
 		"x x",
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotBismuth"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotBismuth"
+		}
 	},
 	"conditions": [
 		{

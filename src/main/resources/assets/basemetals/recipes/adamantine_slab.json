@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_slab",
+		"item": {
+			"item": "basemetals:adamantine_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockAdamantine"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockAdamantine"
+		}
 	},
 	"conditions": [
 		{

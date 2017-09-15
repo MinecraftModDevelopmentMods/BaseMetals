@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:starsteel_horse_armor"
+		"item": {
+			"item": "basemetals:starsteel_horse_armor"
+		}
 	},
 	"pattern": [
 		"  x",
@@ -9,8 +11,13 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotStarSteel",
-		"y": "minecraft:wool"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotStarSteel"
+		},
+		"y": {
+			"item": "minecraft:wool"
+		}
 	},
 	"conditions": [
 		{

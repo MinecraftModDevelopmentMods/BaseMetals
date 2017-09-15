@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetSteel",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetSteel"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotSteel"
+			"item": "basemetals:steel_i"
+		},
+		{
+			"item": "basemetals:steel_n"
+		},
+		{
+			"item": "basemetals:steel_g"
+		},
+		{
+			"item": "basemetals:steel_o"
+		},
+		{
+			"item": "basemetals:steel_t"
 		}
 	],
 	"conditions": [

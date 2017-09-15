@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_arrow",
+		"item": {
+			"item": "basemetals:quartz_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetQuartz",
-		"y": "basemetals:quartz_rod",
-		"z": "basemetals:quartz_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetQuartz"
+		},
+		"y": {
+			"item": "basemetals:quartz_rod"
+		},
+		"z": {
+			"item": "basemetals:quartz_feather"
+		}
 	},
 	"conditions": [
 		{

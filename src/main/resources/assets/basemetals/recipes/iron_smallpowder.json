@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallIron",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallIron"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustIron"
+			"item": "basemetals:iron_p"
+		},
+		{
+			"item": "basemetals:iron_o"
+		},
+		{
+			"item": "basemetals:iron_w"
+		},
+		{
+			"item": "basemetals:iron_d"
+		},
+		{
+			"item": "basemetals:iron_e"
+		},
+		{
+			"item": "basemetals:iron_r"
 		}
 	],
 	"conditions": [

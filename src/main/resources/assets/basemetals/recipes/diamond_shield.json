@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:diamond_shield"
+		"item": {
+			"item": "basemetals:diamond_shield"
+		}
 	},
 	"pattern": [
 		"xyx",
@@ -9,8 +11,14 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotDiamond",
-		"y": "ore:plankWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotDiamond"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "plankWood"
+		}
 	},
 	"conditions": [
 		{

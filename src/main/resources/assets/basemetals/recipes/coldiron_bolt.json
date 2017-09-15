@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_bolt",
+		"item": {
+			"item": "basemetals:coldiron_bolt"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,8 +12,12 @@
 		"y"
 	],
 	"key": {
-		"x": "basemetals:coldiron_rod",
-		"y": "basemetals:coldiron_feather"
+		"x": {
+			"item": "basemetals:coldiron_rod"
+		},
+		"y": {
+			"item": "basemetals:coldiron_feather"
+		}
 	},
 	"conditions": [
 		{

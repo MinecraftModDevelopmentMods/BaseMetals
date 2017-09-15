@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:copper_bolt",
+		"item": {
+			"item": "basemetals:copper_bolt"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,8 +12,12 @@
 		"y"
 	],
 	"key": {
-		"x": "basemetals:copper_rod",
-		"y": "basemetals:copper_feather"
+		"x": {
+			"item": "basemetals:copper_rod"
+		},
+		"y": {
+			"item": "basemetals:copper_feather"
+		}
 	},
 	"conditions": [
 		{

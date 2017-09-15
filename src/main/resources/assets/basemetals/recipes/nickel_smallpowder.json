@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallNickel",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallNickel"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustNickel"
+			"item": "basemetals:nickel_p"
+		},
+		{
+			"item": "basemetals:nickel_o"
+		},
+		{
+			"item": "basemetals:nickel_w"
+		},
+		{
+			"item": "basemetals:nickel_d"
+		},
+		{
+			"item": "basemetals:nickel_e"
+		},
+		{
+			"item": "basemetals:nickel_r"
 		}
 	],
 	"conditions": [

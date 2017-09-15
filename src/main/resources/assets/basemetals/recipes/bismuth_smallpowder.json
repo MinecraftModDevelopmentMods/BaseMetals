@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallBismuth",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallBismuth"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustBismuth"
+			"item": "basemetals:bismuth_p"
+		},
+		{
+			"item": "basemetals:bismuth_o"
+		},
+		{
+			"item": "basemetals:bismuth_w"
+		},
+		{
+			"item": "basemetals:bismuth_d"
+		},
+		{
+			"item": "basemetals:bismuth_e"
+		},
+		{
+			"item": "basemetals:bismuth_r"
 		}
 	],
 	"conditions": [

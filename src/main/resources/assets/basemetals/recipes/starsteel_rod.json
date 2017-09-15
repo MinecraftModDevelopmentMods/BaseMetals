@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:starsteel_rod",
+		"item": {
+			"item": "basemetals:starsteel_rod"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"x"
 	],
 	"key": {
-		"x": "ore:ingotStarSteel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotStarSteel"
+		}
 	},
 	"conditions": [
 		{

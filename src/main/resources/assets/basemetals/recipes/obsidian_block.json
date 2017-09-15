@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blockObsidian"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blockObsidian"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotObsidian"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotObsidian"
+		}
 	},
 	"conditions": [
 		{

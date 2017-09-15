@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallZinc",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallZinc"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendZinc"
+			"item": "basemetals:zinc_b"
+		},
+		{
+			"item": "basemetals:zinc_l"
+		},
+		{
+			"item": "basemetals:zinc_e"
+		},
+		{
+			"item": "basemetals:zinc_n"
+		},
+		{
+			"item": "basemetals:zinc_d"
 		}
 	],
 	"conditions": [

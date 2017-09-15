@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallMercury",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallMercury"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustMercury"
+			"item": "basemetals:mercury_p"
+		},
+		{
+			"item": "basemetals:mercury_o"
+		},
+		{
+			"item": "basemetals:mercury_w"
+		},
+		{
+			"item": "basemetals:mercury_d"
+		},
+		{
+			"item": "basemetals:mercury_e"
+		},
+		{
+			"item": "basemetals:mercury_r"
 		}
 	],
 	"conditions": [

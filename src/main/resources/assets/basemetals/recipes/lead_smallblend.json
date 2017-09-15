@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallLead",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallLead"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendLead"
+			"item": "basemetals:lead_b"
+		},
+		{
+			"item": "basemetals:lead_l"
+		},
+		{
+			"item": "basemetals:lead_e"
+		},
+		{
+			"item": "basemetals:lead_n"
+		},
+		{
+			"item": "basemetals:lead_d"
 		}
 	],
 	"conditions": [

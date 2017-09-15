@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:gold_stairs",
+		"item": {
+			"item": "basemetals:gold_stairs"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockGold"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockGold"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:lead_rod",
+		"item": {
+			"item": "basemetals:lead_rod"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"x"
 	],
 	"key": {
-		"x": "ore:ingotLead"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotLead"
+		}
 	},
 	"conditions": [
 		{

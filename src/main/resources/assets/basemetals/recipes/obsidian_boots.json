@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:obsidian_boots"
+		"item": {
+			"item": "basemetals:obsidian_boots"
+		}
 	},
 	"pattern": [
 		"x x",
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotObsidian"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotObsidian"
+		}
 	},
 	"conditions": [
 		{

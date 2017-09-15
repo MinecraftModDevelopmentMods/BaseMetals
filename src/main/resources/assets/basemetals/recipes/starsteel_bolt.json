@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:starsteel_bolt",
+		"item": {
+			"item": "basemetals:starsteel_bolt"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,8 +12,12 @@
 		"y"
 	],
 	"key": {
-		"x": "basemetals:starsteel_rod",
-		"y": "basemetals:starsteel_feather"
+		"x": {
+			"item": "basemetals:starsteel_rod"
+		},
+		"y": {
+			"item": "basemetals:starsteel_feather"
+		}
 	},
 	"conditions": [
 		{

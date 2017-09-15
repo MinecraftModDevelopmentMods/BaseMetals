@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetAdamantine",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetAdamantine"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotAdamantine"
+			"item": "basemetals:adamantine_i"
+		},
+		{
+			"item": "basemetals:adamantine_n"
+		},
+		{
+			"item": "basemetals:adamantine_g"
+		},
+		{
+			"item": "basemetals:adamantine_o"
+		},
+		{
+			"item": "basemetals:adamantine_t"
 		}
 	],
 	"conditions": [

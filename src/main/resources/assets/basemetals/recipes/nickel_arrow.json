@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:nickel_arrow",
+		"item": {
+			"item": "basemetals:nickel_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetNickel",
-		"y": "basemetals:nickel_rod",
-		"z": "basemetals:nickel_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetNickel"
+		},
+		"y": {
+			"item": "basemetals:nickel_rod"
+		},
+		"z": {
+			"item": "basemetals:nickel_feather"
+		}
 	},
 	"conditions": [
 		{

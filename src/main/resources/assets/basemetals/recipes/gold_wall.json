@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:gold_wall",
+		"item": {
+			"item": "basemetals:gold_wall"
+		},
 		"count": 6
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockGold"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockGold"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:obsidian_gear"
+		"item": {
+			"item": "basemetals:obsidian_gear"
+		}
 	},
 	"pattern": [
 		" x ",
@@ -9,8 +11,13 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotObsidian",
-		"r": "basemetals:obsidian_rod"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotObsidian"
+		},
+		"r": {
+			"item": "basemetals:obsidian_rod"
+		}
 	},
 	"conditions": [
 		{

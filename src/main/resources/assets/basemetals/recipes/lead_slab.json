@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:lead_slab",
+		"item": {
+			"item": "basemetals:lead_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockLead"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockLead"
+		}
 	},
 	"conditions": [
 		{

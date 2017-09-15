@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallBronze",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallBronze"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendBronze"
+			"item": "basemetals:bronze_b"
+		},
+		{
+			"item": "basemetals:bronze_l"
+		},
+		{
+			"item": "basemetals:bronze_e"
+		},
+		{
+			"item": "basemetals:bronze_n"
+		},
+		{
+			"item": "basemetals:bronze_d"
 		}
 	],
 	"conditions": [

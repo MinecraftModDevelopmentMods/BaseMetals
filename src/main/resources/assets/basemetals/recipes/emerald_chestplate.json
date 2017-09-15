@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_chestplate"
+		"item": {
+			"item": "basemetals:emerald_chestplate"
+		}
 	},
 	"pattern": [
 		"x x",
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotEmerald"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotEmerald"
+		}
 	},
 	"conditions": [
 		{

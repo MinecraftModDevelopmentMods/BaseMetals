@@ -1,14 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_bars",
+		"item": {
+			"item": "basemetals:bismuth_bars"
+		},
 		"count": 4
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "basemetals:bismuth_rod"
+		"x": {
+			"item": "basemetals:bismuth_rod"
+		}
 	},
 	"conditions": [
 		{

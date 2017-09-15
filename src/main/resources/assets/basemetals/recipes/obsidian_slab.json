@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:obsidian_slab",
+		"item": {
+			"item": "basemetals:obsidian_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockObsidian"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockObsidian"
+		}
 	},
 	"conditions": [
 		{

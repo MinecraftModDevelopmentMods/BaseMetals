@@ -1,14 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:obsidian_bars",
+		"item": {
+			"item": "basemetals:obsidian_bars"
+		},
 		"count": 4
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "basemetals:obsidian_rod"
+		"x": {
+			"item": "basemetals:obsidian_rod"
+		}
 	},
 	"conditions": [
 		{

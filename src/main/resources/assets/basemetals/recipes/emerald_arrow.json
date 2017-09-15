@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_arrow",
+		"item": {
+			"item": "basemetals:emerald_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetEmerald",
-		"y": "basemetals:emerald_rod",
-		"z": "basemetals:emerald_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetEmerald"
+		},
+		"y": {
+			"item": "basemetals:emerald_rod"
+		},
+		"z": {
+			"item": "basemetals:emerald_feather"
+		}
 	},
 	"conditions": [
 		{

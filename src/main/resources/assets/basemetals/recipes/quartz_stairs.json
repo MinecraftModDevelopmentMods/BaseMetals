@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_stairs",
+		"item": {
+			"item": "basemetals:quartz_stairs"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockQuartz"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockQuartz"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_leggings"
+		"item": {
+			"item": "basemetals:zinc_leggings"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +11,10 @@
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotZinc"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotZinc"
+		}
 	},
 	"conditions": [
 		{

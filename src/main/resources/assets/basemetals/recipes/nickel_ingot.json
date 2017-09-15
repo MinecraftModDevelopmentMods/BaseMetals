@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:ingotNickel"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "ingotNickel"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:nuggetNickel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetNickel"
+		}
 	},
 	"conditions": [
 		{

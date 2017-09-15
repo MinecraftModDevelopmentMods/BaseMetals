@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallSteel",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallSteel"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendSteel"
+			"item": "basemetals:steel_b"
+		},
+		{
+			"item": "basemetals:steel_l"
+		},
+		{
+			"item": "basemetals:steel_e"
+		},
+		{
+			"item": "basemetals:steel_n"
+		},
+		{
+			"item": "basemetals:steel_d"
 		}
 	],
 	"conditions": [

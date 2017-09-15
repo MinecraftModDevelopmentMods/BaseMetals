@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallAntimony",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallAntimony"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendAntimony"
+			"item": "basemetals:antimony_b"
+		},
+		{
+			"item": "basemetals:antimony_l"
+		},
+		{
+			"item": "basemetals:antimony_e"
+		},
+		{
+			"item": "basemetals:antimony_n"
+		},
+		{
+			"item": "basemetals:antimony_d"
 		}
 	],
 	"conditions": [

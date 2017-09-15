@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:diamond_arrow",
+		"item": {
+			"item": "basemetals:diamond_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetDiamond",
-		"y": "basemetals:diamond_rod",
-		"z": "basemetals:diamond_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetDiamond"
+		},
+		"y": {
+			"item": "basemetals:diamond_rod"
+		},
+		"z": {
+			"item": "basemetals:diamond_feather"
+		}
 	},
 	"conditions": [
 		{

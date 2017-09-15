@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_door",
+		"item": {
+			"item": "basemetals:bismuth_door"
+		},
 		"count": 3
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotBismuth"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotBismuth"
+		}
 	},
 	"conditions": [
 		{

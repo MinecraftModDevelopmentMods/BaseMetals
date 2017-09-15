@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:gold_shield"
+		"item": {
+			"item": "basemetals:gold_shield"
+		}
 	},
 	"pattern": [
 		"xyx",
@@ -9,8 +11,14 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotGold",
-		"y": "ore:plankWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotGold"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "plankWood"
+		}
 	},
 	"conditions": [
 		{

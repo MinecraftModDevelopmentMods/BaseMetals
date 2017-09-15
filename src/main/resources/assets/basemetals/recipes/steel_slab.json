@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:steel_slab",
+		"item": {
+			"item": "basemetals:steel_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockSteel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockSteel"
+		}
 	},
 	"conditions": [
 		{

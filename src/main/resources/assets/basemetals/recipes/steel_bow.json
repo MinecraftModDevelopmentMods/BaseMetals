@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:steel_bow"
+		"item": {
+			"item": "basemetals:steel_bow"
+		}
 	},
 	"pattern": [
 		" xs",
@@ -9,8 +11,12 @@
 		" xs"
 	],
 	"key": {
-		"x": "basemetals:steel_rod",
-		"s": "minecraft:string"
+		"x": {
+			"item": "basemetals:steel_rod"
+		},
+		"s": {
+			"item": "minecraft:string"
+		}
 	},
 	"conditions": [
 		{

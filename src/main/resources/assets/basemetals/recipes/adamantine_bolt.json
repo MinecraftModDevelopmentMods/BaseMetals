@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_bolt",
+		"item": {
+			"item": "basemetals:adamantine_bolt"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,8 +12,12 @@
 		"y"
 	],
 	"key": {
-		"x": "basemetals:adamantine_rod",
-		"y": "basemetals:adamantine_feather"
+		"x": {
+			"item": "basemetals:adamantine_rod"
+		},
+		"y": {
+			"item": "basemetals:adamantine_feather"
+		}
 	},
 	"conditions": [
 		{

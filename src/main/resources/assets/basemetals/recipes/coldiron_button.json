@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_button"
+		"item": {
+			"item": "basemetals:coldiron_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetColdIron"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetColdIron"
+		}
 	},
 	"conditions": [
 		{

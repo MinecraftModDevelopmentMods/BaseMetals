@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetCopper",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetCopper"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotCopper"
+			"item": "basemetals:copper_i"
+		},
+		{
+			"item": "basemetals:copper_n"
+		},
+		{
+			"item": "basemetals:copper_g"
+		},
+		{
+			"item": "basemetals:copper_o"
+		},
+		{
+			"item": "basemetals:copper_t"
 		}
 	],
 	"conditions": [

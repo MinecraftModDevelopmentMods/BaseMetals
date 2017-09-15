@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_button"
+		"item": {
+			"item": "basemetals:emerald_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetEmerald"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetEmerald"
+		}
 	},
 	"conditions": [
 		{

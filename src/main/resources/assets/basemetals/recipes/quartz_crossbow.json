@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_crossbow"
+		"item": {
+			"item": "basemetals:quartz_crossbow"
+		}
 	},
 	"pattern": [
 		"zxx",
@@ -9,9 +11,15 @@
 		"x z"
 	],
 	"key": {
-		"x": "basemetals:quartz_rod",
-		"y": "minecraft:string",
-		"z": "basemetals:quartz_gear"
+		"x": {
+			"item": "basemetals:quartz_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:quartz_gear"
+		}
 	},
 	"conditions": [
 		{

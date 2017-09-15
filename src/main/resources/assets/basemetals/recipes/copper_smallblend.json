@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallCopper",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallCopper"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendCopper"
+			"item": "basemetals:copper_b"
+		},
+		{
+			"item": "basemetals:copper_l"
+		},
+		{
+			"item": "basemetals:copper_e"
+		},
+		{
+			"item": "basemetals:copper_n"
+		},
+		{
+			"item": "basemetals:copper_d"
 		}
 	],
 	"conditions": [

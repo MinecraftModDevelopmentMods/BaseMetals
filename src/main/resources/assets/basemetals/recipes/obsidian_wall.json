@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:obsidian_wall",
+		"item": {
+			"item": "basemetals:obsidian_wall"
+		},
 		"count": 6
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockObsidian"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockObsidian"
+		}
 	},
 	"conditions": [
 		{

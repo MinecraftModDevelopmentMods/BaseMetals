@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:lead_bolt",
+		"item": {
+			"item": "basemetals:lead_bolt"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,8 +12,12 @@
 		"y"
 	],
 	"key": {
-		"x": "basemetals:lead_rod",
-		"y": "basemetals:lead_feather"
+		"x": {
+			"item": "basemetals:lead_rod"
+		},
+		"y": {
+			"item": "basemetals:lead_feather"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:mercury_door",
+		"item": {
+			"item": "basemetals:mercury_door"
+		},
 		"count": 3
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotMercury"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotMercury"
+		}
 	},
 	"conditions": [
 		{

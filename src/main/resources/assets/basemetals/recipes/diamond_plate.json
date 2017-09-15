@@ -1,14 +1,19 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:diamond_plate"
+		"item": {
+			"item": "basemetals:diamond_plate"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotDiamond"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotDiamond"
+		}
 	},
 	"conditions": [
 		{

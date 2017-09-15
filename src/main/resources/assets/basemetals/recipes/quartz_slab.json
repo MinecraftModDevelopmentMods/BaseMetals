@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_slab",
+		"item": {
+			"item": "basemetals:quartz_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockQuartz"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockQuartz"
+		}
 	},
 	"conditions": [
 		{

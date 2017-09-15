@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:lead_bars",
+		"item": {
+			"item": "basemetals:lead_bars"
+		},
 		"count": 16
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotLead"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotLead"
+		}
 	},
 	"conditions": [
 		{

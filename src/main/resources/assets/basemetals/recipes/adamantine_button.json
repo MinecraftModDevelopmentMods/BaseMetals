@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_button"
+		"item": {
+			"item": "basemetals:adamantine_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetAdamantine"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetAdamantine"
+		}
 	},
 	"conditions": [
 		{

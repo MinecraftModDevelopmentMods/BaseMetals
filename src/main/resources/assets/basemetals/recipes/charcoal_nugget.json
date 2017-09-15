@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetCharcoal",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetCharcoal"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotCharcoal"
+			"item": "basemetals:charcoal_i"
+		},
+		{
+			"item": "basemetals:charcoal_n"
+		},
+		{
+			"item": "basemetals:charcoal_g"
+		},
+		{
+			"item": "basemetals:charcoal_o"
+		},
+		{
+			"item": "basemetals:charcoal_t"
 		}
 	],
 	"conditions": [

@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_trapdoor"
+		"item": {
+			"item": "basemetals:emerald_trapdoor"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotEmerald"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotEmerald"
+		}
 	},
 	"conditions": [
 		{

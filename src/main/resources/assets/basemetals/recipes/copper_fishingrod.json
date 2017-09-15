@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:copper_fishing_rod"
+		"item": {
+			"item": "basemetals:copper_fishing_rod"
+		}
 	},
 	"pattern": [
 		"  x",
@@ -9,8 +11,12 @@
 		"x y"
 	],
 	"key": {
-		"x": "basemetals:copper_rod",
-		"y": "minecraft:string"
+		"x": {
+			"item": "basemetals:copper_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		}
 	},
 	"conditions": [
 		{

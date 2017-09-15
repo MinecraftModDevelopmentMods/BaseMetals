@@ -117,15 +117,11 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			GameRegistry.addRecipe(new ResourceLocation("activator_rail"), new ShapedOreRecipe(new ResourceLocation("activator_rail"), new ItemStack(net.minecraft.init.Blocks.ACTIVATOR_RAIL, 6), "x/x", "x*x", "x/x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '*', net.minecraft.init.Blocks.REDSTONE_TORCH));
 			GameRegistry.addRecipe(new ResourceLocation("detector)rail"), new ShapedOreRecipe(new ResourceLocation("detector_rail"), new ItemStack(net.minecraft.init.Blocks.DETECTOR_RAIL, 6), "x x", "x-x", "x*x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '-', net.minecraft.init.Blocks.STONE_PRESSURE_PLATE, '*', Oredicts.DUST_REDSTONE));
 			GameRegistry.addRecipe(new ResourceLocation("rail"), new ShapedOreRecipe(new ResourceLocation("rail"), new ItemStack(net.minecraft.init.Blocks.RAIL, 16), "x x", "x/x", "x x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD));
-			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE), "xx", 'x', Oredicts.INGOTSTEEL));
 			GameRegistry.addRecipe(new ResourceLocation("tripwire_hook"), new ShapedOreRecipe(new ResourceLocation("tripwire_hook"), new ItemStack(net.minecraft.init.Blocks.TRIPWIRE_HOOK), "x  ", "/  ", "w  ", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, 'w', Oredicts.PLANK_WOOD));
 			GameRegistry.addRecipe(new ResourceLocation("flint_and_steel"), new ShapelessOreRecipe(new ResourceLocation("flint_and_steel"), new ItemStack(net.minecraft.init.Items.FLINT_AND_STEEL), Oredicts.INGOT_STEEL, net.minecraft.init.Items.FLINT));
 			GameRegistry.addRecipe(new ResourceLocation("hopper"), new ShapedOreRecipe(new ResourceLocation("hopper"), new ItemStack(net.minecraft.init.Blocks.HOPPER), "x x", "x/x", " x ", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.CHEST_WOOD));
 			GameRegistry.addRecipe(new ResourceLocation("minecart"), new ShapedOreRecipe(new ResourceLocation("minecart"), new ItemStack(net.minecraft.init.Items.MINECART), "x x", "xxx", 'x', Oredicts.INGOT_STEEL));
 			GameRegistry.addRecipe(new ResourceLocation("piston"), new ShapedOreRecipe(new ResourceLocation("piston"), new ItemStack(net.minecraft.init.Blocks.PISTON), "www", "sxs", "s*s", 'x', Oredicts.INGOT_STEEL, 'w', Oredicts.PLANK_WOOD, 's', Oredicts.COBBLESTONE, '*', Oredicts.DUST_REDSTONE));
-			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), "x ", " x", 'x', Oredicts.INGOT_STEEL));
-			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHEARS), " x", "x ", 'x', Oredicts.INGOT_STEEL));
-			// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.SHIELD), "wxw", "www", " w ", 'w', Oredicts.PLANK_WOOD, 'x', Oredicts.INGOT_STEEL));
 		}
 
 		// new recipes using rods and gears

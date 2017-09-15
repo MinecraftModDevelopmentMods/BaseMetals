@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:nickel_door",
+		"item": {
+			"item": "basemetals:nickel_door"
+		},
 		"count": 3
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotNickel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotNickel"
+		}
 	},
 	"conditions": [
 		{

@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallObsidian",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallObsidian"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustObsidian"
+			"item": "basemetals:obsidian_p"
+		},
+		{
+			"item": "basemetals:obsidian_o"
+		},
+		{
+			"item": "basemetals:obsidian_w"
+		},
+		{
+			"item": "basemetals:obsidian_d"
+		},
+		{
+			"item": "basemetals:obsidian_e"
+		},
+		{
+			"item": "basemetals:obsidian_r"
 		}
 	],
 	"conditions": [

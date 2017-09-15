@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:nickel_stairs",
+		"item": {
+			"item": "basemetals:nickel_stairs"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockNickel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockNickel"
+		}
 	},
 	"conditions": [
 		{

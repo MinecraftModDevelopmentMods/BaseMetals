@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_button"
+		"item": {
+			"item": "basemetals:quartz_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetQuartz"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetQuartz"
+		}
 	},
 	"conditions": [
 		{

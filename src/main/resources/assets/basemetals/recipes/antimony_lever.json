@@ -1,15 +1,22 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:antimony_lever"
+		"item": {
+			"item": "basemetals:antimony_lever"
+		}
 	},
 	"pattern": [
 		"x",
 		"y"
 	],
 	"key": {
-		"x": "basemetals:antimony_rod",
-		"y": "ore:ingotAntimony"
+		"x": {
+			"item": "basemetals:antimony_rod"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAntimony"
+		}
 	},
 	"conditions": [
 		{

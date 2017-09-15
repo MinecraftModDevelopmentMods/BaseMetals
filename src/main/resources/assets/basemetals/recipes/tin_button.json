@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_button"
+		"item": {
+			"item": "basemetals:tin_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetTin"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetTin"
+		}
 	},
 	"conditions": [
 		{

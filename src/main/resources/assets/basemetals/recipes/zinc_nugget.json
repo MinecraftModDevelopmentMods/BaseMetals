@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetZinc",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetZinc"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotZinc"
+			"item": "basemetals:zinc_i"
+		},
+		{
+			"item": "basemetals:zinc_n"
+		},
+		{
+			"item": "basemetals:zinc_g"
+		},
+		{
+			"item": "basemetals:zinc_o"
+		},
+		{
+			"item": "basemetals:zinc_t"
 		}
 	],
 	"conditions": [

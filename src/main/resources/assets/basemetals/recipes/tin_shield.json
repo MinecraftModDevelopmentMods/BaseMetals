@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_shield"
+		"item": {
+			"item": "basemetals:tin_shield"
+		}
 	},
 	"pattern": [
 		"xyx",
@@ -9,8 +11,14 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotTin",
-		"y": "ore:plankWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotTin"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "plankWood"
+		}
 	},
 	"conditions": [
 		{

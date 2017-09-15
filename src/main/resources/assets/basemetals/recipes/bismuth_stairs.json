@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_stairs",
+		"item": {
+			"item": "basemetals:bismuth_stairs"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockBismuth"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockBismuth"
+		}
 	},
 	"conditions": [
 		{

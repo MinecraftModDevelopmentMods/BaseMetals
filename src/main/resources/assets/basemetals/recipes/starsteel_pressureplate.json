@@ -1,13 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:starsteel_pressure_plate"
+		"item": {
+			"item": "basemetals:starsteel_pressure_plate"
+		}
 	},
 	"pattern": [
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotStarSteel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotStarSteel"
+		}
 	},
 	"conditions": [
 		{

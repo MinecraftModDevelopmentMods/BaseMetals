@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blendLead"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendLead"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blendSmallLead"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallLead"
+		}
 	},
 	"conditions": [
 		{

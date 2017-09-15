@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_rod",
+		"item": {
+			"item": "basemetals:coldiron_rod"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"x"
 	],
 	"key": {
-		"x": "ore:ingotColdIron"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotColdIron"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:ingotTin"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "ingotTin"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:nuggetTin"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetTin"
+		}
 	},
 	"conditions": [
 		{

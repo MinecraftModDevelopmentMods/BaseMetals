@@ -1,7 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:quartz_gear"
+		"item": {
+			"item": "basemetals:quartz_gear"
+		}
 	},
 	"pattern": [
 		" x ",
@@ -9,8 +11,13 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotQuartz",
-		"r": "basemetals:quartz_rod"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotQuartz"
+		},
+		"r": {
+			"item": "basemetals:quartz_rod"
+		}
 	},
 	"conditions": [
 		{

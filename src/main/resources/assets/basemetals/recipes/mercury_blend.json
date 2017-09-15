@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:blendMercury"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendMercury"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blendSmallMercury"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallMercury"
+		}
 	},
 	"conditions": [
 		{

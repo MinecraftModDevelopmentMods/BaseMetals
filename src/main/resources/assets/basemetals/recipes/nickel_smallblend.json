@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallNickel",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallNickel"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendNickel"
+			"item": "basemetals:nickel_b"
+		},
+		{
+			"item": "basemetals:nickel_l"
+		},
+		{
+			"item": "basemetals:nickel_e"
+		},
+		{
+			"item": "basemetals:nickel_n"
+		},
+		{
+			"item": "basemetals:nickel_d"
 		}
 	],
 	"conditions": [

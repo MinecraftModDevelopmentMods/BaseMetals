@@ -1,13 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:diamond_pressure_plate"
+		"item": {
+			"item": "basemetals:diamond_pressure_plate"
+		}
 	},
 	"pattern": [
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotDiamond"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotDiamond"
+		}
 	},
 	"conditions": [
 		{

@@ -1,14 +1,19 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:iron_plate"
+		"item": {
+			"item": "basemetals:iron_plate"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotIron"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		}
 	},
 	"conditions": [
 		{

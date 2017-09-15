@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_wall",
+		"item": {
+			"item": "basemetals:emerald_wall"
+		},
 		"count": 6
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockEmerald"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockEmerald"
+		}
 	},
 	"conditions": [
 		{

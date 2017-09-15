@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:starsteel_button"
+		"item": {
+			"item": "basemetals:starsteel_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetStarSteel"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetStarSteel"
+		}
 	},
 	"conditions": [
 		{

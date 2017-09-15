@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallAdamantine",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallAdamantine"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustAdamantine"
+			"item": "basemetals:adamantine_p"
+		},
+		{
+			"item": "basemetals:adamantine_o"
+		},
+		{
+			"item": "basemetals:adamantine_w"
+		},
+		{
+			"item": "basemetals:adamantine_d"
+		},
+		{
+			"item": "basemetals:adamantine_e"
+		},
+		{
+			"item": "basemetals:adamantine_r"
 		}
 	],
 	"conditions": [

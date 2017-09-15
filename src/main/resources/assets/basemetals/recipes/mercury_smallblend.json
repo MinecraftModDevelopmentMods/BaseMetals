@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallMercury",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallMercury"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendMercury"
+			"item": "basemetals:mercury_b"
+		},
+		{
+			"item": "basemetals:mercury_l"
+		},
+		{
+			"item": "basemetals:mercury_e"
+		},
+		{
+			"item": "basemetals:mercury_n"
+		},
+		{
+			"item": "basemetals:mercury_d"
 		}
 	],
 	"conditions": [

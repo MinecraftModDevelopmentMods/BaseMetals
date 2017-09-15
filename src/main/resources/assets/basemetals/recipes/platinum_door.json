@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:platinum_door",
+		"item": {
+			"item": "basemetals:platinum_door"
+		},
 		"count": 3
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotPlatinum"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotPlatinum"
+		}
 	},
 	"conditions": [
 		{

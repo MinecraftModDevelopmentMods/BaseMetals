@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_crossbow"
+		"item": {
+			"item": "basemetals:coldiron_crossbow"
+		}
 	},
 	"pattern": [
 		"zxx",
@@ -9,9 +11,15 @@
 		"x z"
 	],
 	"key": {
-		"x": "basemetals:coldiron_rod",
-		"y": "minecraft:string",
-		"z": "basemetals:coldiron_gear"
+		"x": {
+			"item": "basemetals:coldiron_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:coldiron_gear"
+		}
 	},
 	"conditions": [
 		{

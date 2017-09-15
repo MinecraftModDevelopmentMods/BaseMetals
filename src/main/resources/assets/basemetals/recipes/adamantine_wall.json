@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_wall",
+		"item": {
+			"item": "basemetals:adamantine_wall"
+		},
 		"count": 6
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockAdamantine"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockAdamantine"
+		}
 	},
 	"conditions": [
 		{

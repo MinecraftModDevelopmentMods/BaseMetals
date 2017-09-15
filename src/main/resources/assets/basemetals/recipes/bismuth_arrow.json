@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_arrow",
+		"item": {
+			"item": "basemetals:bismuth_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetBismuth",
-		"y": "basemetals:bismuth_rod",
-		"z": "basemetals:bismuth_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetBismuth"
+		},
+		"y": {
+			"item": "basemetals:bismuth_rod"
+		},
+		"z": {
+			"item": "basemetals:bismuth_feather"
+		}
 	},
 	"conditions": [
 		{

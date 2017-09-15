@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_horse_armor"
+		"item": {
+			"item": "basemetals:zinc_horse_armor"
+		}
 	},
 	"pattern": [
 		"  x",
@@ -9,8 +11,13 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:ingotZinc",
-		"y": "minecraft:wool"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotZinc"
+		},
+		"y": {
+			"item": "minecraft:wool"
+		}
 	},
 	"conditions": [
 		{

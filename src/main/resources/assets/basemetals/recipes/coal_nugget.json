@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetCoal",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetCoal"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotCoal"
+			"item": "basemetals:coal_i"
+		},
+		{
+			"item": "basemetals:coal_n"
+		},
+		{
+			"item": "basemetals:coal_g"
+		},
+		{
+			"item": "basemetals:coal_o"
+		},
+		{
+			"item": "basemetals:coal_t"
 		}
 	],
 	"conditions": [

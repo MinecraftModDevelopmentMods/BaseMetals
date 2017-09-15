@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:copper_arrow",
+		"item": {
+			"item": "basemetals:copper_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetCopper",
-		"y": "basemetals:copper_rod",
-		"z": "basemetals:copper_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetCopper"
+		},
+		"y": {
+			"item": "basemetals:copper_rod"
+		},
+		"z": {
+			"item": "basemetals:copper_feather"
+		}
 	},
 	"conditions": [
 		{

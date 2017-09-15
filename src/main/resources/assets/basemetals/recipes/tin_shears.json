@@ -1,14 +1,20 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:ingotTin"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "ingotTin"
+		}
 	},
 	"pattern": [
 		" x",
 		"x"
 	],
 	"key": {
-		"x": "ore:ingotTin"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotTin"
+		}
 	},
 	"conditions": [
 		{

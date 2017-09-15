@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_leggings"
+		"item": {
+			"item": "basemetals:adamantine_leggings"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +11,10 @@
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotAdamantine"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAdamantine"
+		}
 	},
 	"conditions": [
 		{

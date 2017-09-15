@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_crossbow"
+		"item": {
+			"item": "basemetals:tin_crossbow"
+		}
 	},
 	"pattern": [
 		"zxx",
@@ -9,9 +11,15 @@
 		"x z"
 	],
 	"key": {
-		"x": "basemetals:tin_rod",
-		"y": "minecraft:string",
-		"z": "basemetals:tin_gear"
+		"x": {
+			"item": "basemetals:tin_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:tin_gear"
+		}
 	},
 	"conditions": [
 		{

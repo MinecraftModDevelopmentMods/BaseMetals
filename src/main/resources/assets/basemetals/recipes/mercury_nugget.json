@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetMercury",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetMercury"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotMercury"
+			"item": "basemetals:mercury_i"
+		},
+		{
+			"item": "basemetals:mercury_n"
+		},
+		{
+			"item": "basemetals:mercury_g"
+		},
+		{
+			"item": "basemetals:mercury_o"
+		},
+		{
+			"item": "basemetals:mercury_t"
 		}
 	],
 	"conditions": [

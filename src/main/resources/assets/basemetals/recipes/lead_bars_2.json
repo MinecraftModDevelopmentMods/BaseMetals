@@ -1,14 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:lead_bars",
+		"item": {
+			"item": "basemetals:lead_bars"
+		},
 		"count": 4
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "basemetals:lead_rod"
+		"x": {
+			"item": "basemetals:lead_rod"
+		}
 	},
 	"conditions": [
 		{

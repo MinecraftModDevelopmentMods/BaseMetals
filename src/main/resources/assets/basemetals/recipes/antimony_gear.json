@@ -1,7 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:antimony_gear"
+		"item": {
+			"item": "basemetals:antimony_gear"
+		}
 	},
 	"pattern": [
 		" x ",
@@ -9,8 +11,13 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotAntimony",
-		"r": "basemetals:antimony_rod"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAntimony"
+		},
+		"r": {
+			"item": "basemetals:antimony_rod"
+		}
 	},
 	"conditions": [
 		{

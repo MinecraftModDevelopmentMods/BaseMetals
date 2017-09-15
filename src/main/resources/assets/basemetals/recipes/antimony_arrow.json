@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:antimony_arrow",
+		"item": {
+			"item": "basemetals:antimony_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetAntimony",
-		"y": "basemetals:antimony_rod",
-		"z": "basemetals:antimony_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetAntimony"
+		},
+		"y": {
+			"item": "basemetals:antimony_rod"
+		},
+		"z": {
+			"item": "basemetals:antimony_feather"
+		}
 	},
 	"conditions": [
 		{

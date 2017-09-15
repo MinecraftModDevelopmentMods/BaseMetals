@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_trapdoor"
+		"item": {
+			"item": "basemetals:quartz_trapdoor"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotQuartz"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotQuartz"
+		}
 	},
 	"conditions": [
 		{

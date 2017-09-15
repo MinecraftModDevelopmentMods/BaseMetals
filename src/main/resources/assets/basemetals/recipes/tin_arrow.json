@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_arrow",
+		"item": {
+			"item": "basemetals:tin_arrow"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,9 +12,16 @@
 		"z"
 	],
 	"key": {
-		"x": "ore:nuggetTin",
-		"y": "basemetals:tin_rod",
-		"z": "basemetals:tin_feather"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetTin"
+		},
+		"y": {
+			"item": "basemetals:tin_rod"
+		},
+		"z": {
+			"item": "basemetals:tin_feather"
+		}
 	},
 	"conditions": [
 		{

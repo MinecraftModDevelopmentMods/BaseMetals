@@ -1,14 +1,20 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:ingotCopper"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "ingotCopper"
+		}
 	},
 	"pattern": [
 		" x",
 		"x"
 	],
 	"key": {
-		"x": "ore:ingotCopper"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotCopper"
+		}
 	},
 	"conditions": [
 		{

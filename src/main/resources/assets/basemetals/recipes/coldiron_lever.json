@@ -1,15 +1,22 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_lever"
+		"item": {
+			"item": "basemetals:coldiron_lever"
+		}
 	},
 	"pattern": [
 		"x",
 		"y"
 	],
 	"key": {
-		"x": "basemetals:coldiron_rod",
-		"y": "ore:ingotColdIron"
+		"x": {
+			"item": "basemetals:coldiron_rod"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotColdIron"
+		}
 	},
 	"conditions": [
 		{

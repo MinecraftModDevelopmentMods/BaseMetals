@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:silver_boots"
+		"item": {
+			"item": "basemetals:silver_boots"
+		}
 	},
 	"pattern": [
 		"x x",
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotSilver"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotSilver"
+		}
 	},
 	"conditions": [
 		{

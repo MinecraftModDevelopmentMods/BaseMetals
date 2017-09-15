@@ -1,7 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:tin_gear"
+		"item": {
+			"item": "basemetals:tin_gear"
+		}
 	},
 	"pattern": [
 		" x ",
@@ -9,8 +11,13 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotTin",
-		"r": "basemetals:tin_rod"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotTin"
+		},
+		"r": {
+			"item": "basemetals:tin_rod"
+		}
 	},
 	"conditions": [
 		{

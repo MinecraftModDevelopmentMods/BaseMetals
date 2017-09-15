@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallStarSteel",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallStarSteel"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustStarSteel"
+			"item": "basemetals:starsteel_p"
+		},
+		{
+			"item": "basemetals:starsteel_o"
+		},
+		{
+			"item": "basemetals:starsteel_w"
+		},
+		{
+			"item": "basemetals:starsteel_d"
+		},
+		{
+			"item": "basemetals:starsteel_e"
+		},
+		{
+			"item": "basemetals:starsteel_r"
 		}
 	],
 	"conditions": [

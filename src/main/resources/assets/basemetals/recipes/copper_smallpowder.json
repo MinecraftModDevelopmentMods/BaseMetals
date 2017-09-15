@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallCopper",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallCopper"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustCopper"
+			"item": "basemetals:copper_p"
+		},
+		{
+			"item": "basemetals:copper_o"
+		},
+		{
+			"item": "basemetals:copper_w"
+		},
+		{
+			"item": "basemetals:copper_d"
+		},
+		{
+			"item": "basemetals:copper_e"
+		},
+		{
+			"item": "basemetals:copper_r"
 		}
 	],
 	"conditions": [

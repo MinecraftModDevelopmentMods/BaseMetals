@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_slab",
+		"item": {
+			"item": "basemetals:zinc_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockZinc"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockZinc"
+		}
 	},
 	"conditions": [
 		{

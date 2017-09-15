@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallCoal",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallCoal"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustCoal"
+			"item": "basemetals:coal_p"
+		},
+		{
+			"item": "basemetals:coal_o"
+		},
+		{
+			"item": "basemetals:coal_w"
+		},
+		{
+			"item": "basemetals:coal_d"
+		},
+		{
+			"item": "basemetals:coal_e"
+		},
+		{
+			"item": "basemetals:coal_r"
 		}
 	],
 	"conditions": [

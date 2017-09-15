@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:antimony_helmet"
+		"item": {
+			"item": "basemetals:antimony_helmet"
+		}
 	},
 	"pattern": [
 		"xxx",
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotAntimony"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAntimony"
+		}
 	},
 	"conditions": [
 		{

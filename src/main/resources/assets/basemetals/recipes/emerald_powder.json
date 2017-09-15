@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:dustEmerald"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustEmerald"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:dustSmallEmerald"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallEmerald"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:dustGold"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustGold"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:dustSmallGold"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallGold"
+		}
 	},
 	"conditions": [
 		{

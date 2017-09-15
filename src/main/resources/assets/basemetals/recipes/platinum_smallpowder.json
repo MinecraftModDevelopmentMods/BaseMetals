@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallPlatinum",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallPlatinum"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustPlatinum"
+			"item": "basemetals:platinum_p"
+		},
+		{
+			"item": "basemetals:platinum_o"
+		},
+		{
+			"item": "basemetals:platinum_w"
+		},
+		{
+			"item": "basemetals:platinum_d"
+		},
+		{
+			"item": "basemetals:platinum_e"
+		},
+		{
+			"item": "basemetals:platinum_r"
 		}
 	],
 	"conditions": [

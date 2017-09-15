@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:mercury_leggings"
+		"item": {
+			"item": "basemetals:mercury_leggings"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +11,10 @@
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotMercury"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotMercury"
+		}
 	},
 	"conditions": [
 		{

@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:antimony_wall",
+		"item": {
+			"item": "basemetals:antimony_wall"
+		},
 		"count": 6
 	},
 	"pattern": [
@@ -9,7 +11,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockAntimony"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockAntimony"
+		}
 	},
 	"conditions": [
 		{

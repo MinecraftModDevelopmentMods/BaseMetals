@@ -1,14 +1,19 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:adamantine_plate"
+		"item": {
+			"item": "basemetals:adamantine_plate"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotAdamantine"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAdamantine"
+		}
 	},
 	"conditions": [
 		{

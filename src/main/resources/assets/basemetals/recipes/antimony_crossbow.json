@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:antimony_crossbow"
+		"item": {
+			"item": "basemetals:antimony_crossbow"
+		}
 	},
 	"pattern": [
 		"zxx",
@@ -9,9 +11,15 @@
 		"x z"
 	],
 	"key": {
-		"x": "basemetals:antimony_rod",
-		"y": "minecraft:string",
-		"z": "basemetals:antimony_gear"
+		"x": {
+			"item": "basemetals:antimony_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:antimony_gear"
+		}
 	},
 	"conditions": [
 		{

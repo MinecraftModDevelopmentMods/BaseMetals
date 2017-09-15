@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:adamantine_helmet"
+		"item": {
+			"item": "basemetals:adamantine_helmet"
+		}
 	},
 	"pattern": [
 		"xxx",
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotAdamantine"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotAdamantine"
+		}
 	},
 	"conditions": [
 		{

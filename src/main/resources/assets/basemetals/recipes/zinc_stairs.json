@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_stairs",
+		"item": {
+			"item": "basemetals:zinc_stairs"
+		},
 		"count": 4
 	},
 	"pattern": [
@@ -10,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockZinc"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockZinc"
+		}
 	},
 	"conditions": [
 		{

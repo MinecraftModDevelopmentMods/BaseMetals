@@ -1,15 +1,22 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:nickel_lever"
+		"item": {
+			"item": "basemetals:nickel_lever"
+		}
 	},
 	"pattern": [
 		"x",
 		"y"
 	],
 	"key": {
-		"x": "basemetals:nickel_rod",
-		"y": "ore:ingotNickel"
+		"x": {
+			"item": "basemetals:nickel_rod"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotNickel"
+		}
 	},
 	"conditions": [
 		{

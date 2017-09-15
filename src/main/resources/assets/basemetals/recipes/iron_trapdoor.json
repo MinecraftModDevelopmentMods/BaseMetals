@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:iron_trapdoor"
+		"item": {
+			"item": "basemetals:iron_trapdoor"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotIron"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		}
 	},
 	"conditions": [
 		{

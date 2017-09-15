@@ -1,14 +1,19 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": "basemetals:quartz_plate"
+		"item": {
+			"item": "basemetals:quartz_plate"
+		}
 	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
-		"x": "ore:ingotQuartz"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotQuartz"
+		}
 	},
 	"conditions": [
 		{

@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:nuggetTin",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetTin"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:ingotTin"
+			"item": "basemetals:tin_i"
+		},
+		{
+			"item": "basemetals:tin_n"
+		},
+		{
+			"item": "basemetals:tin_g"
+		},
+		{
+			"item": "basemetals:tin_o"
+		},
+		{
+			"item": "basemetals:tin_t"
 		}
 	],
 	"conditions": [

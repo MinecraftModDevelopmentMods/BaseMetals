@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:bismuth_button"
+		"item": {
+			"item": "basemetals:bismuth_button"
+		}
 	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
-		"x": "ore:nuggetBismuth"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetBismuth"
+		}
 	},
 	"conditions": [
 		{

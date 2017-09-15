@@ -1,12 +1,30 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:dustSmallEmerald",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "dustSmallEmerald"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:dustEmerald"
+			"item": "basemetals:emerald_p"
+		},
+		{
+			"item": "basemetals:emerald_o"
+		},
+		{
+			"item": "basemetals:emerald_w"
+		},
+		{
+			"item": "basemetals:emerald_d"
+		},
+		{
+			"item": "basemetals:emerald_e"
+		},
+		{
+			"item": "basemetals:emerald_r"
 		}
 	],
 	"conditions": [

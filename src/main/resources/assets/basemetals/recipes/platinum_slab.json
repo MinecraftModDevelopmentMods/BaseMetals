@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:platinum_slab",
+		"item": {
+			"item": "basemetals:platinum_slab"
+		},
 		"count": 6
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "ore:blockPlatinum"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockPlatinum"
+		}
 	},
 	"conditions": [
 		{

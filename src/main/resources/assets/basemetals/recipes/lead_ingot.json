@@ -1,7 +1,10 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "ore:ingotLead"
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "ingotLead"
+		}
 	},
 	"pattern": [
 		"xxx",
@@ -9,7 +12,10 @@
 		"xxx"
 	],
 	"key": {
-		"x": "ore:nuggetLead"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetLead"
+		}
 	},
 	"conditions": [
 		{

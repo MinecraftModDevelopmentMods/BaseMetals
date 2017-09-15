@@ -1,14 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:copper_bars",
+		"item": {
+			"item": "basemetals:copper_bars"
+		},
 		"count": 4
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "basemetals:copper_rod"
+		"x": {
+			"item": "basemetals:copper_rod"
+		}
 	},
 	"conditions": [
 		{

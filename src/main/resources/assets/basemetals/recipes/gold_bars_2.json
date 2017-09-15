@@ -1,14 +1,18 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:gold_bars",
+		"item": {
+			"item": "basemetals:gold_bars"
+		},
 		"count": 4
 	},
 	"pattern": [
 		"xxx"
 	],
 	"key": {
-		"x": "basemetals:gold_rod"
+		"x": {
+			"item": "basemetals:gold_rod"
+		}
 	},
 	"conditions": [
 		{

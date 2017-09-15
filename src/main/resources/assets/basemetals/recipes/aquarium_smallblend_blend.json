@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallAquarium",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallAquarium"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendAquarium"
+			"item": "basemetals:aquarium_b"
+		},
+		{
+			"item": "basemetals:aquarium_l"
+		},
+		{
+			"item": "basemetals:aquarium_e"
+		},
+		{
+			"item": "basemetals:aquarium_n"
+		},
+		{
+			"item": "basemetals:aquarium_d"
 		}
 	],
 	"conditions": [

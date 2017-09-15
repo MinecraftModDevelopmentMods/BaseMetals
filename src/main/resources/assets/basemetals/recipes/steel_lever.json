@@ -1,15 +1,22 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:steel_lever"
+		"item": {
+			"item": "basemetals:steel_lever"
+		}
 	},
 	"pattern": [
 		"x",
 		"y"
 	],
 	"key": {
-		"x": "basemetals:steel_rod",
-		"y": "ore:ingotSteel"
+		"x": {
+			"item": "basemetals:steel_rod"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotSteel"
+		}
 	},
 	"conditions": [
 		{

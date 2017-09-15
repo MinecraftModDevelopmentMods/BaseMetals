@@ -1,12 +1,27 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": "ore:blendSmallAdamantine",
+		"item": {
+			"type": "forge:ore_dict",
+			"ore": "blendSmallAdamantine"
+		},
 		"count": 9
 	},
 	"ingredients": [
 		{
-			"item": "ore:blendAdamantine"
+			"item": "basemetals:adamantine_b"
+		},
+		{
+			"item": "basemetals:adamantine_l"
+		},
+		{
+			"item": "basemetals:adamantine_e"
+		},
+		{
+			"item": "basemetals:adamantine_n"
+		},
+		{
+			"item": "basemetals:adamantine_d"
 		}
 	],
 	"conditions": [

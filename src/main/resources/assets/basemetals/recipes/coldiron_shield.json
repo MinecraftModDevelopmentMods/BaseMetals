@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:coldiron_shield"
+		"item": {
+			"item": "basemetals:coldiron_shield"
+		}
 	},
 	"pattern": [
 		"xyx",
@@ -9,8 +11,14 @@
 		" x "
 	],
 	"key": {
-		"x": "ore:ingotColdIron",
-		"y": "ore:plankWood"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotColdIron"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "plankWood"
+		}
 	},
 	"conditions": [
 		{

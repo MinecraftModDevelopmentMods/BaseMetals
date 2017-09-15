@@ -1,7 +1,9 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:diamond_crossbow"
+		"item": {
+			"item": "basemetals:diamond_crossbow"
+		}
 	},
 	"pattern": [
 		"zxx",
@@ -9,9 +11,15 @@
 		"x z"
 	],
 	"key": {
-		"x": "basemetals:diamond_rod",
-		"y": "minecraft:string",
-		"z": "basemetals:diamond_gear"
+		"x": {
+			"item": "basemetals:diamond_rod"
+		},
+		"y": {
+			"item": "minecraft:string"
+		},
+		"z": {
+			"item": "basemetals:diamond_gear"
+		}
 	},
 	"conditions": [
 		{

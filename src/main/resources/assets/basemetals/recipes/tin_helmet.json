@@ -1,14 +1,19 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:tin_helmet"
+		"item": {
+			"item": "basemetals:tin_helmet"
+		}
 	},
 	"pattern": [
 		"xxx",
 		"x x"
 	],
 	"key": {
-		"x": "ore:ingotTin"
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotTin"
+		}
 	},
 	"conditions": [
 		{
