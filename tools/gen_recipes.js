@@ -293,5 +293,7 @@ for( let v = 0; v < van_mats.length; v++ ) {
     }
 }
 
+fs.writeFileSync( 'output/_factories.json', JSON.stringify( _factories, null, '\t' ) );
+
 console.log( 'done!' );
 

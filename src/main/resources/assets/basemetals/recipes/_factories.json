@@ -1,0 +1,9 @@
+{
+	"conditions": {
+		"enabled": "com.mcmoddev.lib.recipe.conditions.ConditionEnabled",
+		"hammer": "com.mcmoddev.lib.recipe.conditions.hammerEnabled"
+	},
+	"recipes": {
+		"variableOutputOre": "com.mcmoddev.lib.recipe.factories.ConfigVariedOutput"
+	}
+}
