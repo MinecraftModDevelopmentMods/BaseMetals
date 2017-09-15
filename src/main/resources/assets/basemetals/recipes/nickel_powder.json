@@ -1,10 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"type": "forge:ore_dict",
-			"ore": "dustNickel"
-		}
+		"type": "forge:ore_dict",
+		"ore": "dustNickel"
 	},
 	"pattern": [
 		"xxx",

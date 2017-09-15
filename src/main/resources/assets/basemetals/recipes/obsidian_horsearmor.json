@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:obsidian_horse_armor"
-		}
+		"item": "basemetals:obsidian_horse_armor"
 	},
 	"pattern": [
 		"  x",

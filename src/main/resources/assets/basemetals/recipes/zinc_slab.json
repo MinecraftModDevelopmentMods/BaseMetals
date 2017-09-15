@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:zinc_slab"
-		},
+		"item": "basemetals:zinc_slab",
 		"count": 6
 	},
 	"pattern": [

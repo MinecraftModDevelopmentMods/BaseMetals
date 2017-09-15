@@ -1,10 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"type": "forge:ore_dict",
-			"ore": "blockMercury"
-		}
+		"type": "forge:ore_dict",
+		"ore": "blockMercury"
 	},
 	"pattern": [
 		"xxx",

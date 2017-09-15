@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:iron_rod"
-		},
+		"item": "basemetals:iron_rod",
 		"count": 4
 	},
 	"pattern": [

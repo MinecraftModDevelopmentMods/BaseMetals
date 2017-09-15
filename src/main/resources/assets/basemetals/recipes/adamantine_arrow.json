@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:adamantine_arrow"
-		},
+		"item": "basemetals:adamantine_arrow",
 		"count": 4
 	},
 	"pattern": [

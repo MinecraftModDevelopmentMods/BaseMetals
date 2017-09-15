@@ -1,10 +1,8 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": {
-			"type": "forge:ore_dict",
-			"ore": "dustSmallDiamond"
-		},
+		"type": "forge:ore_dict",
+		"ore": "dustSmallDiamond",
 		"count": 9
 	},
 	"ingredients": {

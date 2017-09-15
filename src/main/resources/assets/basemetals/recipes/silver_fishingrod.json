@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:silver_fishing_rod"
-		}
+		"item": "basemetals:silver_fishing_rod"
 	},
 	"pattern": [
 		"  x",

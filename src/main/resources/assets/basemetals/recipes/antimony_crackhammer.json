@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:antimony_crackhammer"
-		}
+		"item": "basemetals:antimony_crackhammer"
 	},
 	"pattern": [
 		"x",

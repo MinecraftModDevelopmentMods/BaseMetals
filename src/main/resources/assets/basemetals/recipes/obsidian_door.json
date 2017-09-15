@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:obsidian_door"
-		},
+		"item": "basemetals:obsidian_door",
 		"count": 3
 	},
 	"pattern": [

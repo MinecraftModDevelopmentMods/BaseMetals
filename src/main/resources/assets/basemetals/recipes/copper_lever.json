@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:copper_lever"
-		}
+		"item": "basemetals:copper_lever"
 	},
 	"pattern": [
 		"x",

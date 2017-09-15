@@ -1,10 +1,8 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": {
-			"type": "forge:ore_dict",
-			"ore": "nuggetNickel"
-		},
+		"type": "forge:ore_dict",
+		"ore": "nuggetNickel",
 		"count": 9
 	},
 	"ingredients": {

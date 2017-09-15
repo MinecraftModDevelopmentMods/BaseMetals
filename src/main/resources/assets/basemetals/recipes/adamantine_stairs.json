@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:adamantine_stairs"
-		},
+		"item": "basemetals:adamantine_stairs",
 		"count": 4
 	},
 	"pattern": [

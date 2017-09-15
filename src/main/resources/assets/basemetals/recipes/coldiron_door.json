@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:coldiron_door"
-		},
+		"item": "basemetals:coldiron_door",
 		"count": 3
 	},
 	"pattern": [

@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:coldiron_bars"
-		},
+		"item": "basemetals:coldiron_bars",
 		"count": 4
 	},
 	"pattern": [

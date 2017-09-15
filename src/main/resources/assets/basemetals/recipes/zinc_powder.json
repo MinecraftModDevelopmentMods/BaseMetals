@@ -1,10 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"type": "forge:ore_dict",
-			"ore": "dustZinc"
-		}
+		"type": "forge:ore_dict",
+		"ore": "dustZinc"
 	},
 	"pattern": [
 		"xxx",

@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:starsteel_shield"
-		}
+		"item": "basemetals:starsteel_shield"
 	},
 	"pattern": [
 		"xyx",

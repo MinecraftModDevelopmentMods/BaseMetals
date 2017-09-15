@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:mercury_arrow"
-		},
+		"item": "basemetals:mercury_arrow",
 		"count": 4
 	},
 	"pattern": [

@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:tin_button"
-		}
+		"item": "basemetals:tin_button"
 	},
 	"pattern": [
 		"x",

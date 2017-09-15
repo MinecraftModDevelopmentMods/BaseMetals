@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:tin_hoe"
-		}
+		"item": "basemetals:tin_hoe"
 	},
 	"pattern": [
 		"xx",

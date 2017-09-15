@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:silver_stairs"
-		},
+		"item": "basemetals:silver_stairs",
 		"count": 4
 	},
 	"pattern": [

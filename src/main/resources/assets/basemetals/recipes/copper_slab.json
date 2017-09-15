@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:copper_slab"
-		},
+		"item": "basemetals:copper_slab",
 		"count": 6
 	},
 	"pattern": [

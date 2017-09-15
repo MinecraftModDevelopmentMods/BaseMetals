@@ -1,10 +1,8 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": {
-			"type": "forge:ore_dict",
-			"ore": "dustSmallAdamantine"
-		},
+		"type": "forge:ore_dict",
+		"ore": "dustSmallAdamantine",
 		"count": 9
 	},
 	"ingredients": {

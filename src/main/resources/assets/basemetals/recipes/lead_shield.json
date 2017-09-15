@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:lead_shield"
-		}
+		"item": "basemetals:lead_shield"
 	},
 	"pattern": [
 		"xyx",

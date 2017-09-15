@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:coldiron_trapdoor"
-		}
+		"item": "basemetals:coldiron_trapdoor"
 	},
 	"pattern": [
 		"xx",

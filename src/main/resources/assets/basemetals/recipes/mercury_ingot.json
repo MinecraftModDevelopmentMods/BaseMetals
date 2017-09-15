@@ -1,10 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"type": "forge:ore_dict",
-			"ore": "ingotMercury"
-		}
+		"type": "forge:ore_dict",
+		"ore": "ingotMercury"
 	},
 	"pattern": [
 		"xxx",

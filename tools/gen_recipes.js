@@ -165,8 +165,7 @@ function processKey(recipe_key, mat) {
 }
 
 function processOutputs(recipe_outputs, mat) {
-    let res = {};
-    res.item = processIngredient( recipe_outputs.mat, mat );
+    let res = processIngredient( recipe_outputs.mat, mat );
     if( recipe_outputs.count > 1 ) {
 	res.count = recipe_outputs.count;
     }

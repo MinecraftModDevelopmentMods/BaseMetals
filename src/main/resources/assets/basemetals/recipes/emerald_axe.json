@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:emerald_axe"
-		}
+		"item": "basemetals:emerald_axe"
 	},
 	"pattern": [
 		"xx",

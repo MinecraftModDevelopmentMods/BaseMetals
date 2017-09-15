@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:emerald_bolt"
-		},
+		"item": "basemetals:emerald_bolt",
 		"count": 4
 	},
 	"pattern": [

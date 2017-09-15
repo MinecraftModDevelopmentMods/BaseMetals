@@ -1,10 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"type": "forge:ore_dict",
-			"ore": "ingotCoal"
-		}
+		"type": "forge:ore_dict",
+		"ore": "ingotCoal"
 	},
 	"pattern": [
 		"xxx",

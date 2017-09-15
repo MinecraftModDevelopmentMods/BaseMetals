@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:quartz_bars"
-		},
+		"item": "basemetals:quartz_bars",
 		"count": 4
 	},
 	"pattern": [

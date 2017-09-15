@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:antimony_pickaxe"
-		}
+		"item": "basemetals:antimony_pickaxe"
 	},
 	"pattern": [
 		"xxx",

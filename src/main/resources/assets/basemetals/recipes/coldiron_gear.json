@@ -1,9 +1,7 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": {
-			"item": "basemetals:coldiron_gear"
-		}
+		"item": "basemetals:coldiron_gear"
 	},
 	"pattern": [
 		" x ",

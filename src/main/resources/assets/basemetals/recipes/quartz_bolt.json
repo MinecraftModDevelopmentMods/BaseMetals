@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:quartz_bolt"
-		},
+		"item": "basemetals:quartz_bolt",
 		"count": 4
 	},
 	"pattern": [

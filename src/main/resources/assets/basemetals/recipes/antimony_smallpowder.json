@@ -1,10 +1,8 @@
 {
 	"type": "forge:ore_shapeless",
 	"result": {
-		"item": {
-			"type": "forge:ore_dict",
-			"ore": "dustSmallAntimony"
-		},
+		"type": "forge:ore_dict",
+		"ore": "dustSmallAntimony",
 		"count": 9
 	},
 	"ingredients": {

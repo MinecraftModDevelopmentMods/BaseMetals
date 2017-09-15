@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:copper_bars"
-		},
+		"item": "basemetals:copper_bars",
 		"count": 4
 	},
 	"pattern": [

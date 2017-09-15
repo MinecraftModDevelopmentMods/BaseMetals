@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:nickel_horse_armor"
-		}
+		"item": "basemetals:nickel_horse_armor"
 	},
 	"pattern": [
 		"  x",

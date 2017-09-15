@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:mercury_rod"
-		},
+		"item": "basemetals:mercury_rod",
 		"count": 4
 	},
 	"pattern": [

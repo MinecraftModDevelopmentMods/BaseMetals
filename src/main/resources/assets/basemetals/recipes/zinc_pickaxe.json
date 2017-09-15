@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:zinc_pickaxe"
-		}
+		"item": "basemetals:zinc_pickaxe"
 	},
 	"pattern": [
 		"xxx",

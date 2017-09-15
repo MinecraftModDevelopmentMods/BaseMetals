@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:diamond_lever"
-		}
+		"item": "basemetals:diamond_lever"
 	},
 	"pattern": [
 		"x",

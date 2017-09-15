@@ -1,9 +1,7 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": {
-			"item": "basemetals:bismuth_gear"
-		}
+		"item": "basemetals:bismuth_gear"
 	},
 	"pattern": [
 		" x ",

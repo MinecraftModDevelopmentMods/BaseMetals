@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:bismuth_chestplate"
-		}
+		"item": "basemetals:bismuth_chestplate"
 	},
 	"pattern": [
 		"x x",

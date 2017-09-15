@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:lead_bow"
-		}
+		"item": "basemetals:lead_bow"
 	},
 	"pattern": [
 		" xs",

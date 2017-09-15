@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:wood_crackhammer"
-		}
+		"item": "basemetals:wood_crackhammer"
 	},
 	"pattern": [
 		"x",

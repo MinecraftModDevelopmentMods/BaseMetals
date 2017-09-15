@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:nickel_axe"
-		}
+		"item": "basemetals:nickel_axe"
 	},
 	"pattern": [
 		"xx",

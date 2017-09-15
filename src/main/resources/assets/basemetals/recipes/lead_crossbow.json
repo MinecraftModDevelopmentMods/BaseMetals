@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:lead_crossbow"
-		}
+		"item": "basemetals:lead_crossbow"
 	},
 	"pattern": [
 		"zxx",

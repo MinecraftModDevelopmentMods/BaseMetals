@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:starsteel_sword"
-		}
+		"item": "basemetals:starsteel_sword"
 	},
 	"pattern": [
 		" x",

@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:obsidian_pressure_plate"
-		}
+		"item": "basemetals:obsidian_pressure_plate"
 	},
 	"pattern": [
 		"xx"

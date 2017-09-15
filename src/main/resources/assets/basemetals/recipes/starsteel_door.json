@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:starsteel_door"
-		},
+		"item": "basemetals:starsteel_door",
 		"count": 3
 	},
 	"pattern": [

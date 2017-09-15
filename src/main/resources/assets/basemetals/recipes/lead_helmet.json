@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:lead_helmet"
-		}
+		"item": "basemetals:lead_helmet"
 	},
 	"pattern": [
 		"xxx",

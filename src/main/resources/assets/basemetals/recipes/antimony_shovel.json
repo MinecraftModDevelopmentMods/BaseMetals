@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:antimony_shovel"
-		}
+		"item": "basemetals:antimony_shovel"
 	},
 	"pattern": [
 		" x",

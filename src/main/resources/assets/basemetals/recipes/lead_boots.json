@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:lead_boots"
-		}
+		"item": "basemetals:lead_boots"
 	},
 	"pattern": [
 		"x x",

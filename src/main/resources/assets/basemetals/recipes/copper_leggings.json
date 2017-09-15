@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:copper_leggings"
-		}
+		"item": "basemetals:copper_leggings"
 	},
 	"pattern": [
 		"xxx",

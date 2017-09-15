@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:adamantine_crossbow"
-		}
+		"item": "basemetals:adamantine_crossbow"
 	},
 	"pattern": [
 		"zxx",

@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:bismuth_bow"
-		}
+		"item": "basemetals:bismuth_bow"
 	},
 	"pattern": [
 		" xs",

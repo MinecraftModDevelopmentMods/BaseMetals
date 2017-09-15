@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:mercury_pressure_plate"
-		}
+		"item": "basemetals:mercury_pressure_plate"
 	},
 	"pattern": [
 		"xx"

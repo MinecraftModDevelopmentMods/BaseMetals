@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:bismuth_button"
-		}
+		"item": "basemetals:bismuth_button"
 	},
 	"pattern": [
 		"x",

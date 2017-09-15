@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:mercury_wall"
-		},
+		"item": "basemetals:mercury_wall",
 		"count": 6
 	},
 	"pattern": [

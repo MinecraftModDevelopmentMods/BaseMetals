@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:bismuth_crossbow"
-		}
+		"item": "basemetals:bismuth_crossbow"
 	},
 	"pattern": [
 		"zxx",

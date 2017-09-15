@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:bismuth_bars"
-		},
+		"item": "basemetals:bismuth_bars",
 		"count": 16
 	},
 	"pattern": [

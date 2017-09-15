@@ -1,9 +1,7 @@
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
-		"item": {
-			"item": "basemetals:gold_plate"
-		}
+		"item": "basemetals:gold_plate"
 	},
 	"pattern": [
 		"xx",

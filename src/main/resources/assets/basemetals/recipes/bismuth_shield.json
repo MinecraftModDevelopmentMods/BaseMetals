@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:bismuth_shield"
-		}
+		"item": "basemetals:bismuth_shield"
 	},
 	"pattern": [
 		"xyx",

@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:quartz_helmet"
-		}
+		"item": "basemetals:quartz_helmet"
 	},
 	"pattern": [
 		"xxx",

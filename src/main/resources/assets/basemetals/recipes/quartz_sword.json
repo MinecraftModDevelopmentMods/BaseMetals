@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:quartz_sword"
-		}
+		"item": "basemetals:quartz_sword"
 	},
 	"pattern": [
 		" x",

@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:platinum_slab"
-		},
+		"item": "basemetals:platinum_slab",
 		"count": 6
 	},
 	"pattern": [

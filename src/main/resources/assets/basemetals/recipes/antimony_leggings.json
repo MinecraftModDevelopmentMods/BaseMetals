@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:antimony_leggings"
-		}
+		"item": "basemetals:antimony_leggings"
 	},
 	"pattern": [
 		"xxx",

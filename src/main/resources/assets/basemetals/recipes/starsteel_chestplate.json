@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:starsteel_chestplate"
-		}
+		"item": "basemetals:starsteel_chestplate"
 	},
 	"pattern": [
 		"x x",

@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:tin_slab"
-		},
+		"item": "basemetals:tin_slab",
 		"count": 6
 	},
 	"pattern": [

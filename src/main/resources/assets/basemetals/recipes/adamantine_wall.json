@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:adamantine_wall"
-		},
+		"item": "basemetals:adamantine_wall",
 		"count": 6
 	},
 	"pattern": [

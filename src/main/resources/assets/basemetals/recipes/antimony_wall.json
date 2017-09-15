@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:antimony_wall"
-		},
+		"item": "basemetals:antimony_wall",
 		"count": 6
 	},
 	"pattern": [

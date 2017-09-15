@@ -1,9 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": {
-			"item": "basemetals:copper_chestplate"
-		}
+		"item": "basemetals:copper_chestplate"
 	},
 	"pattern": [
 		"x x",
