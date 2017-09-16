@@ -367,12 +367,15 @@ public abstract class Blocks {
 			final ItemBlock itemBlock = new ItemBlock(block);
 			itemBlock.setRegistryName(fullName);
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
+<<<<<<< HEAD
 			BaseMetals.logger.fatal("Material: "+material+" -- ItemBlock: "+itemBlock);
 			if( material != null ) {
 				material.addNewItem("ItemBlock_"+fullName, itemBlock);
 			} else {
 				BaseMetals.logger.fatal("Material is null for block ("+block+") named "+name);
 			}
+=======
+>>>>>>> 0f321d3bce022fe680612f7bef994fa0abb4a1ca
 //			GameRegistry.register(itemBlock);
 		}
 
