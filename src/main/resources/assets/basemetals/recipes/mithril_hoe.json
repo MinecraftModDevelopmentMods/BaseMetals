@@ -1,23 +1,26 @@
 {
 	"type": "forge:ore_shaped",
-	"result": {
-		"item": "basemetals:wood_crackhammer",
-		"data": 0
-	},
 	"pattern": [
-		"x",
-		"y",
-		"y"
+		"xx",
+		" s",
+		" s"
 	],
 	"key": {
 		"x": {
-			"type": "forge:ore_dict",
-			"ore": "logWood"
+			"type": "item",
+			"item": "basemetals:mithril_ingot",
+			"data": 0
 		},
-		"y": {
-			"type": "forge:ore_dict",
-			"ore": "stickWood"
+		"s": {
+			"type": "item",
+			"item": "minecraft:stick",
+			"data": 0
 		}
+	},
+	"result": {
+		"type": "item",
+		"item": "basemetals:mithril_hoe",
+		"data": 0
 	},
 	"conditions": [
 		{
@@ -26,18 +29,15 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "material",
-					"optionValue": "Wood"
+					"optionValue": "Mithril"
 				},
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",
 					"optionValue": "Basics"
-				},
-				{
-					"type": "basemetals:hammer"
 				}
 			]
 		}
 	],
-	"group": "vanilla"
+	"group": "tools"
 }

@@ -1,23 +1,25 @@
 {
 	"type": "forge:ore_shaped",
-	"result": {
-		"item": "basemetals:lead_horse_armor",
-		"data": 0
-	},
 	"pattern": [
-		"  x",
-		"xyx",
-		"xxx"
+		"x",
+		"y"
 	],
 	"key": {
 		"x": {
-			"type": "forge:ore_dict",
-			"ore": "ingotLead"
+			"type": "item",
+			"item": "basemetals:mithril_rod",
+			"data": 0
 		},
 		"y": {
-			"item": "minecraft:wool",
-			"data": 32767
+			"type": "item",
+			"item": "basemetals:mithril_ingot",
+			"data": 0
 		}
+	},
+	"result": {
+		"type": "item",
+		"item": "basemetals:mithril_lever",
+		"data": 0
 	},
 	"conditions": [
 		{
@@ -26,12 +28,7 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "material",
-					"optionValue": "Lead"
-				},
-				{
-					"type": "basemetals:enabled",
-					"optionName": "thing",
-					"optionValue": "HorseArmor"
+					"optionValue": "Mithril"
 				},
 				{
 					"type": "basemetals:enabled",
@@ -41,5 +38,5 @@
 			]
 		}
 	],
-	"group": "armor"
+	"group": "misc"
 }

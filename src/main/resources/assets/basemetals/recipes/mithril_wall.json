@@ -1,23 +1,21 @@
 {
 	"type": "forge:ore_shaped",
-	"result": {
-		"item": "basemetals:wood_crackhammer",
-		"data": 0
-	},
 	"pattern": [
-		"x",
-		"y",
-		"y"
+		"xxx",
+		"xxx"
 	],
 	"key": {
 		"x": {
-			"type": "forge:ore_dict",
-			"ore": "logWood"
-		},
-		"y": {
-			"type": "forge:ore_dict",
-			"ore": "stickWood"
+			"type": "item",
+			"item": "basemetals:mithril_block",
+			"data": 0
 		}
+	},
+	"result": {
+		"type": "item",
+		"item": "basemetals:mithril_wall",
+		"data": 0,
+		"count": 6
 	},
 	"conditions": [
 		{
@@ -26,18 +24,15 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "material",
-					"optionValue": "Wood"
+					"optionValue": "Mithril"
 				},
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",
 					"optionValue": "Basics"
-				},
-				{
-					"type": "basemetals:hammer"
 				}
 			]
 		}
 	],
-	"group": "vanilla"
+	"group": "misc"
 }

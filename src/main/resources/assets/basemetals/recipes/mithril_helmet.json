@@ -1,23 +1,20 @@
 {
 	"type": "forge:ore_shaped",
-	"result": {
-		"item": "basemetals:silver_horse_armor",
-		"data": 0
-	},
 	"pattern": [
-		"  x",
-		"xyx",
-		"xxx"
+		"xxx",
+		"x x"
 	],
 	"key": {
 		"x": {
-			"type": "forge:ore_dict",
-			"ore": "ingotSilver"
-		},
-		"y": {
-			"item": "minecraft:wool",
-			"data": 32767
+			"type": "item",
+			"item": "basemetals:mithril_ingot",
+			"data": 0
 		}
+	},
+	"result": {
+		"type": "item",
+		"item": "basemetals:mithril_helmet",
+		"data": 0
 	},
 	"conditions": [
 		{
@@ -26,12 +23,7 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "material",
-					"optionValue": "Silver"
-				},
-				{
-					"type": "basemetals:enabled",
-					"optionName": "thing",
-					"optionValue": "HorseArmor"
+					"optionValue": "Mithril"
 				},
 				{
 					"type": "basemetals:enabled",

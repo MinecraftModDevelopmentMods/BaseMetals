@@ -15,8 +15,8 @@
 			"ore": "ingotAntimony"
 		},
 		"y": {
-			"type": "forge:ore_dict",
-			"ore": "blockWool"
+			"item": "minecraft:wool",
+			"data": 32767
 		}
 	},
 	"conditions": [
