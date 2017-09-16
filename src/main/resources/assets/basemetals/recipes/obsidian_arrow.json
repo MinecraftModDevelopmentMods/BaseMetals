@@ -16,10 +16,12 @@
 			"ore": "nuggetObsidian"
 		},
 		"y": {
-			"item": "basemetals:obsidian_rod"
+			"item": "basemetals:obsidian_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:obsidian_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [

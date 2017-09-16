@@ -331,7 +331,7 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return a new block
 	 */
-	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
+	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
 
 		if ((block == null) || (name == null)) {
 			return null;
@@ -367,6 +367,12 @@ public abstract class Blocks {
 			final ItemBlock itemBlock = new ItemBlock(block);
 			itemBlock.setRegistryName(fullName);
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
+			BaseMetals.logger.fatal("Material: "+material+" -- ItemBlock: "+itemBlock);
+			if( material != null ) {
+				material.addNewItem("ItemBlock_"+fullName, itemBlock);
+			} else {
+				BaseMetals.logger.fatal("Material is null for block ("+block+") named "+name);
+			}
 //			GameRegistry.register(itemBlock);
 		}
 

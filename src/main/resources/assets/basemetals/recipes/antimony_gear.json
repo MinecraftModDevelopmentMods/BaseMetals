@@ -15,7 +15,8 @@
 			"ore": "ingotAntimony"
 		},
 		"r": {
-			"item": "basemetals:antimony_rod"
+			"item": "basemetals:antimony_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

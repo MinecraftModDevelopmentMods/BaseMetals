@@ -16,10 +16,12 @@
 			"ore": "nuggetTin"
 		},
 		"y": {
-			"item": "basemetals:tin_rod"
+			"item": "basemetals:tin_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:tin_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [

@@ -6,8 +6,8 @@
 		"count": 4
 	},
 	"pattern": [
-		"x",
-		"xx",
+		"x  ",
+		"xx ",
 		"xxx"
 	],
 	"key": {

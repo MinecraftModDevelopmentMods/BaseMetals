@@ -11,10 +11,12 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:antimony_rod"
+			"item": "basemetals:antimony_rod",
+			"data": 0
 		},
 		"s": {
-			"item": "minecraft:string"
+			"item": "minecraft:string",
+			"data": 0
 		}
 	},
 	"conditions": [

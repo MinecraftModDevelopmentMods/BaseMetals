@@ -15,7 +15,8 @@
 			"ore": "ingotNickel"
 		},
 		"y": {
-			"item": "minecraft:wool"
+			"type": "forge:ore_dict",
+			"ore": "blockWool"
 		}
 	},
 	"conditions": [

@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:obsidian_rod"
+			"item": "basemetals:obsidian_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

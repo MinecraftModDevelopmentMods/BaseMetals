@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:bismuth_rod"
+			"item": "basemetals:bismuth_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

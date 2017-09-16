@@ -16,10 +16,12 @@
 			"ore": "nuggetDiamond"
 		},
 		"y": {
-			"item": "basemetals:diamond_rod"
+			"item": "basemetals:diamond_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:diamond_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [

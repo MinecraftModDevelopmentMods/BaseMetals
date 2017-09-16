@@ -15,7 +15,8 @@
 			"ore": "ingotZinc"
 		},
 		"r": {
-			"item": "basemetals:zinc_rod"
+			"item": "basemetals:zinc_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

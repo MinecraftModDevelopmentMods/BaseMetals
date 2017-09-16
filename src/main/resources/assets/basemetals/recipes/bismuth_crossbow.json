@@ -11,13 +11,16 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:bismuth_rod"
+			"item": "basemetals:bismuth_rod",
+			"data": 0
 		},
 		"y": {
-			"item": "minecraft:string"
+			"item": "minecraft:string",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:bismuth_gear"
+			"item": "basemetals:bismuth_gear",
+			"data": 0
 		}
 	},
 	"conditions": [

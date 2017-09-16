@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:copper_rod"
+			"item": "basemetals:copper_rod",
+			"data": 0
 		},
 		"y": {
 			"type": "forge:ore_dict",

@@ -15,7 +15,8 @@
 			"ore": "ingotBismuth"
 		},
 		"r": {
-			"item": "basemetals:bismuth_rod"
+			"item": "basemetals:bismuth_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

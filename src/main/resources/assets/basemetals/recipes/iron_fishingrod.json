@@ -11,10 +11,12 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:iron_rod"
+			"item": "basemetals:iron_rod",
+			"data": 0
 		},
 		"y": {
-			"item": "minecraft:string"
+			"item": "minecraft:string",
+			"data": 0
 		}
 	},
 	"conditions": [

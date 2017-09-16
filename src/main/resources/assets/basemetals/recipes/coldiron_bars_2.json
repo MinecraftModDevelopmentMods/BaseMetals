@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:coldiron_rod"
+			"item": "basemetals:coldiron_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

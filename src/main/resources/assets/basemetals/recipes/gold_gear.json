@@ -15,7 +15,8 @@
 			"ore": "ingotGold"
 		},
 		"r": {
-			"item": "basemetals:gold_rod"
+			"item": "basemetals:gold_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

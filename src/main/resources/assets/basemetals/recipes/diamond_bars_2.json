@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:diamond_rod"
+			"item": "basemetals:diamond_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

@@ -1,14 +1,27 @@
 {
 	"result": {
-		"item": "ore:blendCupronickel",
+		"item": "basemetals:cupronickel_blend",
+		"data": 0,
 		"count": 4
 	},
 	"type": "forge:ore_shapeless",
 	"ingredients": [
-		"ore:dustCopper",
-		"ore:dustCopper",
-		"ore:dustCopper",
-		"ore:dustNickel"
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustNickel"
+		}
 	],
 	"group": "alloys",
 	"conditions": [

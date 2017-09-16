@@ -15,7 +15,8 @@
 			"ore": "ingotStarSteel"
 		},
 		"r": {
-			"item": "basemetals:starsteel_rod"
+			"item": "basemetals:starsteel_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

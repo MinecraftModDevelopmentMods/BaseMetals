@@ -16,10 +16,12 @@
 			"ore": "nuggetSilver"
 		},
 		"y": {
-			"item": "basemetals:silver_rod"
+			"item": "basemetals:silver_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:silver_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [

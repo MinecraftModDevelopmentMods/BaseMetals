@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:tin_rod"
+			"item": "basemetals:tin_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

@@ -1,7 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:quartz_ingot",
+		"item": "minecraft:quartz",
 		"data": 0
 	},
 	"pattern": [

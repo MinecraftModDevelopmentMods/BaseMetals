@@ -16,10 +16,12 @@
 			"ore": "nuggetBismuth"
 		},
 		"y": {
-			"item": "basemetals:bismuth_rod"
+			"item": "basemetals:bismuth_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:bismuth_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [
