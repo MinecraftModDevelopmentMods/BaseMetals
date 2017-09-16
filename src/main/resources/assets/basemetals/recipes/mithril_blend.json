@@ -15,7 +15,7 @@
 		}
 	],
 	"result": {
-		"type": "item",
+		"type": "minecraft:item",
 		"item": "basemetals:mithril_blend",
 		"data": 0,
 		"count": 3

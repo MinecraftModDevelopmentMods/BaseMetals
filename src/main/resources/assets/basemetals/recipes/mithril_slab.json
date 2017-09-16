@@ -5,13 +5,13 @@
 	],
 	"key": {
 		"x": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_block",
 			"data": 0
 		}
 	},
 	"result": {
-		"type": "item",
+		"type": "minecraft:item",
 		"item": "basemetals:mithril_slab",
 		"data": 0,
 		"count": 6

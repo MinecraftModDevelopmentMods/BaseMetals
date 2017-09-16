@@ -7,7 +7,7 @@
 	],
 	"key": {
 		"x": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_ingot",
 			"data": 0
 		},
@@ -17,7 +17,7 @@
 		}
 	},
 	"result": {
-		"type": "item",
+		"type": "minecraft:item",
 		"item": "basemetals:mithril_shield",
 		"data": 0
 	},

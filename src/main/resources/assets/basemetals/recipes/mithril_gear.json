@@ -7,18 +7,19 @@
 	],
 	"key": {
 		"x": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_ingot",
 			"data": 0
 		},
 		"r": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_rod",
 			"data": 0
 		}
 	},
+    "config_key": "gear",
 	"result": {
-		"type": "item",
+		"type": "minecraft:item",
 		"item": "basemetals:mithril_gear",
 		"data": 0
 	},

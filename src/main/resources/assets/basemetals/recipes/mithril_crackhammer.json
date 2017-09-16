@@ -7,18 +7,18 @@
 	],
 	"key": {
 		"x": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_block",
 			"data": 0
 		},
 		"y": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "minecraft:stick",
 			"data": 0
 		}
 	},
 	"result": {
-		"type": "item",
+		"type": "minecraft:item",
 		"item": "basemetals:mithril_crackhammer",
 		"data": 0
 	},

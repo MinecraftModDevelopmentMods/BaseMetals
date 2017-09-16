@@ -7,18 +7,18 @@
 	],
 	"key": {
 		"x": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_rod",
 			"data": 0
 		},
 		"y": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "minecraft:feather",
 			"data": 0
 		}
 	},
 	"result": {
-		"type": "item",
+		"type": "minecraft:item",
 		"item": "basemetals:mithril_bolt",
 		"data": 0,
 		"count": 4

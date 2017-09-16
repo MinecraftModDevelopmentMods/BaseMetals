@@ -7,13 +7,13 @@
 	],
 	"key": {
 		"x": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_block",
 			"data": 0
 		}
 	},
 	"result": {
-		"type": "item",
+		"type": "minecraft:item",
 		"item": "basemetals:mithril_stairs",
 		"data": 0,
 		"count": 4

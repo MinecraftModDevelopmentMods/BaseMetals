@@ -5,14 +5,14 @@
 	],
 	"key": {
 		"x": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_ingot",
 			"data": 0
 		}
 	},
 	"result": {
-		"type": "item",
-		"item": "basemetals:mithril_pressureplate",
+		"type": "minecraft:item",
+		"item": "basemetals:mithril_pressure_plate",
 		"data": 0
 	},
 	"conditions": [

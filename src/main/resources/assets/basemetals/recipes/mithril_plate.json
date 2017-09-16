@@ -6,13 +6,14 @@
 	],
 	"key": {
 		"x": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_ingot",
 			"data": 0
 		}
 	},
+    "config_key":"plate",
 	"result": {
-		"type": "item",
+		"type": "minecraft:item",
 		"item": "basemetals:mithril_plate",
 		"data": 0
 	},

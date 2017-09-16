@@ -7,23 +7,23 @@
 	],
 	"key": {
 		"x": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_rod",
 			"data": 0
 		},
 		"y": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "minecraft:string",
 			"data": 0
 		},
 		"z": {
-			"type": "item",
+			"type": "minecraft:item",
 			"item": "basemetals:mithril_gear",
 			"data": 0
 		}
 	},
 	"result": {
-		"type": "item",
+		"type": "minecraft:item",
 		"item": "basemetals:mithril_crossbow",
 		"data": 0
 	},
