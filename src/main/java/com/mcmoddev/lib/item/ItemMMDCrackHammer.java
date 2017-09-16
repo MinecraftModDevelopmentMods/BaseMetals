@@ -6,7 +6,6 @@ import java.util.Set;
 
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.util.ConfigBase.Options;
-import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;

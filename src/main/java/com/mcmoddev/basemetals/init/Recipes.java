@@ -4,28 +4,18 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 /**
  *
  * @author Jasmine Iwanek
  *
  */
-@SuppressWarnings("deprecation")
 public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 	private static boolean initDone = false;
