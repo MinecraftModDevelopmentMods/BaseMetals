@@ -40,6 +40,7 @@ public class ASMTransformer implements IClassTransformer {
 				final File debugDir = new File("mmd/asm/debug/");
 				if (debugDir.exists())
 					debugDir.delete();
+				debugDir.mkdirs();
 				output = new File(debugDir, name + ".class");
 				out = new FileOutputStream(output);
 				debugDir.mkdirs();
