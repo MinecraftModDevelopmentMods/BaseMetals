@@ -252,8 +252,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			createBlocksFull(MaterialNames.ZINC, myTabs);
 		}
 
-		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", iron, myTabs.blocksTab);
-
+		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
 		initDone = true;
 	}
 	
@@ -266,6 +265,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
             	}
             }			
 		}
+		event.getRegistry().register(humanDetector);
 	}
 
 }

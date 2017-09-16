@@ -65,7 +65,7 @@ public abstract class Blocks {
 		mapNameToClass(Names.BOOKSHELF, BlockMMDBookshelf.class);
 		mapNameToClass(Names.BUTTON, BlockMMDButton.class);
 		mapNameToClass(Names.DOOR, BlockMMDDoor.class);
-		mapNameToClass(Names.DOUBLE_SLAB, BlockMMDSlab.class);
+		mapNameToClass(Names.DOUBLE_SLAB, BlockMMDDoubleSlab.class);
 		mapNameToClass(Names.FLOWER_POT, BlockMMDFlowerPot.class);
 		mapNameToClass(Names.LADDER, BlockMMDLadder.class);
 		mapNameToClass(Names.LEVER, BlockMMDLever.class);
@@ -299,7 +299,6 @@ public abstract class Blocks {
 			material.addNewBlock(name, addBlock(new BlockMMDBlock(material, glow, true), name.toString(), material, tab));
 			Block b = material.getBlock(name);
 			final String oredict = getOredictFromName(name);
-			BaseMetals.logger.fatal("Material "+material.getCapitalizedName()+" block "+name+" -- oredict "+oredict);
 			if ((oredict != null) && (b != null)) {
 				Oredicts.registerOre(oredict + material.getCapitalizedName(), b);
 			}			
@@ -315,7 +314,6 @@ public abstract class Blocks {
 		final Block block = createBlock(material, name.toString(), getClassFromName(name), isNameEnabled(name), tab);
 
 		final String oredict = getOredictFromName(name);
-		BaseMetals.logger.fatal("Material "+material.getCapitalizedName()+" block "+name+" -- oredict "+oredict);
 		if ((oredict != null) && (block != null)) {
 			Oredicts.registerOre(oredict + material.getCapitalizedName(), block);
 		}
@@ -391,15 +389,11 @@ public abstract class Blocks {
 			blockRegistry.put(fullName, block);
 		}
 
-		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab)) {
+		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab) && (material != null) ) {
 			final ItemBlock itemBlock = new ItemBlock(block);
 			itemBlock.setRegistryName(fullName);
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-			if( material != null ) {
-				material.addNewItem("ItemBlock_"+fullName, itemBlock);
-			} else {
-				BaseMetals.logger.fatal("Material is null for block ("+block+") named "+name);
-			}
+			material.addNewItem("ItemBlock_"+fullName, itemBlock);
 		}
 
 		if (tab != null) {

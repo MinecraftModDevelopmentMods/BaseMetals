@@ -11,6 +11,7 @@ import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -316,5 +317,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 				}
 			}
 		}
+		final ItemBlock itemBlock = new ItemBlock(Blocks.humanDetector);
+		itemBlock.setRegistryName("human_detector");
+		itemBlock.setUnlocalizedName(Blocks.humanDetector.getRegistryName().getResourceDomain() + ".human_detector");
+		event.getRegistry().register(itemBlock);
 	}
 }
