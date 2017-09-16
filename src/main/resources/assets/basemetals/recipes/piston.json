@@ -9,19 +9,19 @@
 		 "sxs",
 		 "s*s" ],
     "key": {
-	'x': {
+	"x": {
 	    "type":"forge:ore_dict",
 	    "ore":"ingotSteel"
 	},
-	'w': {
+	"w": {
 	    "type":"forge:ore_dict",
 	    "ore":"plankWood"
 	},
-	'*': {
+	"*": {
 	    "type":"forge:ore_dict",
 	    "ore":"dustRedstone"
 	},
-	's': {
+	"s": {
 	    "type":"forge:ore_dict",
 	    "ore":"cobblestone"
 	}

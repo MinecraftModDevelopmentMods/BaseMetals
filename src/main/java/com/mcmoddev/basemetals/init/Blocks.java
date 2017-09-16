@@ -11,7 +11,6 @@ import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
@@ -101,7 +100,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM)) {
-			createBlocksFull(MaterialNames.AQUARIUM, myTabs);
+			createBlocksFullOreless(MaterialNames.AQUARIUM, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.BISMUTH)) {
@@ -109,11 +108,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.BRASS)) {
-			createBlocksFull(MaterialNames.BRASS, myTabs);
+			createBlocksFullOreless(MaterialNames.BRASS, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.BRONZE)) {
-			createBlocksFull(MaterialNames.BRONZE, myTabs);
+			createBlocksFullOreless(MaterialNames.BRONZE, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
@@ -129,7 +128,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL)) {
-			createBlocksFull(MaterialNames.CUPRONICKEL, myTabs);
+			createBlocksFullOreless(MaterialNames.CUPRONICKEL, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.DIAMOND)) {
@@ -141,7 +140,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.ELECTRUM)) {
-			createBlocksFull(MaterialNames.ELECTRUM, myTabs);
+			createBlocksFullOreless(MaterialNames.ELECTRUM, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.EMERALD)) {
@@ -162,7 +161,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.INVAR)) {
-			createBlocksFull(MaterialNames.INVAR, myTabs);
+			createBlocksFullOreless(MaterialNames.INVAR, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.IRON)) {
@@ -182,7 +181,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.MITHRIL)) {
-			createBlocksFull(MaterialNames.MITHRIL, myTabs);
+			createBlocksFullOreless(MaterialNames.MITHRIL, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.NICKEL)) {
@@ -198,7 +197,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.PEWTER)) {
-			createBlocksFull(MaterialNames.PEWTER, myTabs);
+			createBlocksFullOreless(MaterialNames.PEWTER, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.PLATINUM)) {
@@ -234,7 +233,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
-			createBlocksFull(MaterialNames.STEEL, myTabs);
+			createBlocksFullOreless(MaterialNames.STEEL, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.STONE)) {
@@ -254,7 +253,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
-
 		initDone = true;
 	}
 	
@@ -262,9 +260,12 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
             for( Block block : mat.getBlocks() ) {
-                event.getRegistry().register(block);
+            	if( block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID) ) {
+            		event.getRegistry().register(block);
+            	}
             }			
 		}
+		event.getRegistry().register(humanDetector);
 	}
 
 }

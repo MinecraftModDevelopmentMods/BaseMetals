@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:gold_rod"
+			"item": "basemetals:gold_rod",
+			"data": 0
 		},
 		"y": {
 			"type": "forge:ore_dict",

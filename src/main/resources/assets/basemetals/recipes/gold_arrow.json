@@ -16,10 +16,12 @@
 			"ore": "nuggetGold"
 		},
 		"y": {
-			"item": "basemetals:gold_rod"
+			"item": "basemetals:gold_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:gold_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [

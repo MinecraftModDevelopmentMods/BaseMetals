@@ -1,0 +1,37 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"xxx",
+		"x x"
+	],
+	"key": {
+		"x": {
+			"type": "minecraft:item",
+			"item": "basemetals:mithril_ingot",
+			"data": 0
+		}
+	},
+	"result": {
+		"type": "minecraft:item",
+		"item": "basemetals:mithril_helmet",
+		"data": 0
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Mithril"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "armor"
+}

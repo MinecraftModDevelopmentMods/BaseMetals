@@ -15,7 +15,8 @@
 			"ore": "ingotLead"
 		},
 		"r": {
-			"item": "basemetals:lead_rod"
+			"item": "basemetals:lead_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

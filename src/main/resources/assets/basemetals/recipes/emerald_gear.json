@@ -15,7 +15,8 @@
 			"ore": "ingotEmerald"
 		},
 		"r": {
-			"item": "basemetals:emerald_rod"
+			"item": "basemetals:emerald_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

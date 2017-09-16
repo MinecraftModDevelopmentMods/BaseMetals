@@ -1,12 +1,12 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:obsidian_ingot",
+		"item": "basemetals:obsidian_shears",
 		"data": 0
 	},
 	"pattern": [
 		" x",
-		"x"
+		"x "
 	],
 	"key": {
 		"x": {

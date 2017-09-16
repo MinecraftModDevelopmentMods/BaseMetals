@@ -1,0 +1,41 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:invar_rod",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"x"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotInvar"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Invar"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "misc"
+}

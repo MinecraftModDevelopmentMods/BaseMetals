@@ -9,15 +9,15 @@
 		 "x*x",
 		 "x/x" ],
     "key": {
-	'x': {
+	"x": {
 	    "type":"forge:ore_dict",
 	    "ore":"ingotSteel"
 	},
-	'/': {
+	"/": {
 	    "type":"forge:ore_dict",
 	    "ore":"stickWood"
 	},
-	'*': {
+	"*": {
 	    "item":"minecraft:redstone_torch"
 	}
     },

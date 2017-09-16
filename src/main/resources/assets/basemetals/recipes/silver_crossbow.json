@@ -11,13 +11,16 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:silver_rod"
+			"item": "basemetals:silver_rod",
+			"data": 0
 		},
 		"y": {
-			"item": "minecraft:string"
+			"item": "minecraft:string",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:silver_gear"
+			"item": "basemetals:silver_gear",
+			"data": 0
 		}
 	},
 	"conditions": [

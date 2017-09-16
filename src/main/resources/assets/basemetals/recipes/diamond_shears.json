@@ -1,12 +1,12 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:diamond_ingot",
+		"item": "basemetals:diamond_shears",
 		"data": 0
 	},
 	"pattern": [
 		" x",
-		"x"
+		"x "
 	],
 	"key": {
 		"x": {

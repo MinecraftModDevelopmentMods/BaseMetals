@@ -3,6 +3,7 @@ package com.mcmoddev.lib.recipe.conditions;
 import java.util.function.BooleanSupplier;
 
 import com.google.gson.JsonObject;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraftforge.common.crafting.IConditionFactory;
@@ -12,7 +13,7 @@ public class hammerEnabled implements IConditionFactory {
 
 	@Override
 	public BooleanSupplier parse(JsonContext context, JsonObject json) {
-		return () -> Options.disableAllHammerRecipes();
+		return () -> !Options.disableAllHammerRecipes();
 	}
 
 }

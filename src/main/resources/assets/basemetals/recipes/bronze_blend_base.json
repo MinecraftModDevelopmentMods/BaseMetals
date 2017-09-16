@@ -1,14 +1,27 @@
 {
 	"result": {
-		"item": "ore:blendBronze",
+		"item": "basemetals:bronze_blend",
+		"data": 0,
 		"count": 4
 	},
 	"type": "forge:ore_shapeless",
 	"ingredients": [
-		"ore:dustCopper",
-		"ore:dustCopper",
-		"ore:dustCopper",
-		"ore:dustTin"
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustTin"
+		}
 	],
 	"group": "alloys",
 	"conditions": [

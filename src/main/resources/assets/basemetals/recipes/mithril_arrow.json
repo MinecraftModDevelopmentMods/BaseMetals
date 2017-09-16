@@ -1,0 +1,49 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"x",
+		"y",
+		"z"
+	],
+	"key": {
+		"x": {
+			"type": "minecraft:item",
+			"item": "basemetals:mithril_nugget",
+			"data": 0
+		},
+		"y": {
+			"type": "minecraft:item",
+			"item": "basemetals:mithril_rod",
+			"data": 0
+		},
+		"z": {
+			"type": "minecraft:item",
+			"item": "minecraft:feather",
+			"data": 0
+		}
+	},
+	"result": {
+		"type": "minecraft:item",
+		"item": "basemetals:mithril_arrow",
+		"data": 0,
+		"count": 4
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Mithril"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "weapon"
+}

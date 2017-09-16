@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:silver_rod"
+			"item": "basemetals:silver_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

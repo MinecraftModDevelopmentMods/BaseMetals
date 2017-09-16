@@ -1,7 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:iron_bars",
+		"item": "minecraft:iron_bars",
 		"data": 0,
 		"count": 4
 	},
@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:iron_rod"
+			"item": "basemetals:iron_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

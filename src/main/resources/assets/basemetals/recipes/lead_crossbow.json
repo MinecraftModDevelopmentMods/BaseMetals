@@ -11,13 +11,16 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:lead_rod"
+			"item": "basemetals:lead_rod",
+			"data": 0
 		},
 		"y": {
-			"item": "minecraft:string"
+			"item": "minecraft:string",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:lead_gear"
+			"item": "basemetals:lead_gear",
+			"data": 0
 		}
 	},
 	"conditions": [

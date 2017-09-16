@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:starsteel_rod"
+			"item": "basemetals:starsteel_rod",
+			"data": 0
 		},
 		"y": {
 			"type": "forge:ore_dict",

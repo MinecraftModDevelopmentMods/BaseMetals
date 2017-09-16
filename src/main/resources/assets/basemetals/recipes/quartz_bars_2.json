@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:quartz_rod"
+			"item": "basemetals:quartz_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

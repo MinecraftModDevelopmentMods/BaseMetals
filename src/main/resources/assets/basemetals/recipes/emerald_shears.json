@@ -1,12 +1,12 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:emerald_ingot",
+		"item": "basemetals:emerald_shears",
 		"data": 0
 	},
 	"pattern": [
 		" x",
-		"x"
+		"x "
 	],
 	"key": {
 		"x": {

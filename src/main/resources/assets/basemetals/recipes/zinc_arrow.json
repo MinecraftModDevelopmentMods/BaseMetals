@@ -16,10 +16,12 @@
 			"ore": "nuggetZinc"
 		},
 		"y": {
-			"item": "basemetals:zinc_rod"
+			"item": "basemetals:zinc_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:zinc_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [

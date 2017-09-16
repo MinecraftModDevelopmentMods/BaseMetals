@@ -8,10 +8,10 @@
     "pattern": [ "x x",
 		 "xxx" ],
     "key": {
-	'x': {
+	"x": {
 	    "type":"forge:ore_dict",
 	    "ore":"ingotSteel"
-	},
+	}
     },
     "result": {
 	"item": "minecraft:minecart"

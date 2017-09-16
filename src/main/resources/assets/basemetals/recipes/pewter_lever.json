@@ -1,0 +1,49 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:pewter_lever",
+		"data": 0
+	},
+	"pattern": [
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:pewter_rod",
+			"data": 0
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotPewter"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Pewter"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Lever"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "misc"
+}

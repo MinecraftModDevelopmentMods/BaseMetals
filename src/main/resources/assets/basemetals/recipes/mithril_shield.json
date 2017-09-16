@@ -1,0 +1,42 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"xyx",
+		"xxx",
+		" x "
+	],
+	"key": {
+		"x": {
+			"type": "minecraft:item",
+			"item": "basemetals:mithril_ingot",
+			"data": 0
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "plankWood"
+		}
+	},
+	"result": {
+		"type": "minecraft:item",
+		"item": "basemetals:mithril_shield",
+		"data": 0
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Mithril"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "armor"
+}

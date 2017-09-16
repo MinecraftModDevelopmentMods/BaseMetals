@@ -9,6 +9,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -17,7 +18,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Base Metals Common Proxy
@@ -68,7 +68,7 @@ public class CommonProxy {
 	
 	public void init(FMLInitializationEvent event) {
 		Recipes.init();
-
+		Oredicts.registerOreDictionary();
 //		Achievements.init();
 		FuelRegistry.register();
 		IntegrationManager.INSTANCE.runCallbacks("init");

@@ -15,7 +15,8 @@
 			"ore": "ingotSteel"
 		},
 		"y": {
-			"item": "minecraft:wool"
+			"item": "minecraft:wool",
+			"data": 32767
 		}
 	},
 	"conditions": [

@@ -16,10 +16,12 @@
 			"ore": "nuggetNickel"
 		},
 		"y": {
-			"item": "basemetals:nickel_rod"
+			"item": "basemetals:nickel_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:nickel_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [

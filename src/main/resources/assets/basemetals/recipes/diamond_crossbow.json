@@ -11,13 +11,16 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:diamond_rod"
+			"item": "basemetals:diamond_rod",
+			"data": 0
 		},
 		"y": {
-			"item": "minecraft:string"
+			"item": "minecraft:string",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:diamond_gear"
+			"item": "basemetals:diamond_gear",
+			"data": 0
 		}
 	},
 	"conditions": [

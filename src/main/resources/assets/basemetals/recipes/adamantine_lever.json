@@ -10,7 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:adamantine_rod"
+			"item": "basemetals:adamantine_rod",
+			"data": 0
 		},
 		"y": {
 			"type": "forge:ore_dict",

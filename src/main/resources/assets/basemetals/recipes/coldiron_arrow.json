@@ -16,10 +16,12 @@
 			"ore": "nuggetColdIron"
 		},
 		"y": {
-			"item": "basemetals:coldiron_rod"
+			"item": "basemetals:coldiron_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:coldiron_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [

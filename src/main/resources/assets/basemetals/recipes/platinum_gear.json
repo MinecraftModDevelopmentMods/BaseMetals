@@ -15,7 +15,8 @@
 			"ore": "ingotPlatinum"
 		},
 		"r": {
-			"item": "basemetals:platinum_rod"
+			"item": "basemetals:platinum_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

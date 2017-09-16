@@ -15,7 +15,8 @@
 			"ore": "ingotIron"
 		},
 		"r": {
-			"item": "basemetals:iron_rod"
+			"item": "basemetals:iron_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

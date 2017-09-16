@@ -1,8 +1,8 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:charcoal_ingot",
-		"data": 0
+		"item": "minecraft:coal",
+		"data": 1
 	},
 	"pattern": [
 		"xxx",

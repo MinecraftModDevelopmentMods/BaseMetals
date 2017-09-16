@@ -1,12 +1,12 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:copper_ingot",
+		"item": "basemetals:copper_shears",
 		"data": 0
 	},
 	"pattern": [
 		" x",
-		"x"
+		"x "
 	],
 	"key": {
 		"x": {

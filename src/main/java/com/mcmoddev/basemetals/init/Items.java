@@ -11,9 +11,9 @@ import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
@@ -312,8 +312,14 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
 			for( Item item : mat.getItems() ) {
-				event.getRegistry().register(item);
+				if( item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID) ) {
+					event.getRegistry().register(item);
+				}
 			}
 		}
+		final ItemBlock itemBlock = new ItemBlock(Blocks.humanDetector);
+		itemBlock.setRegistryName("human_detector");
+		itemBlock.setUnlocalizedName(Blocks.humanDetector.getRegistryName().getResourceDomain() + ".human_detector");
+		event.getRegistry().register(itemBlock);
 	}
 }

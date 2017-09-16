@@ -15,7 +15,8 @@
 			"ore": "ingotCopper"
 		},
 		"r": {
-			"item": "basemetals:copper_rod"
+			"item": "basemetals:copper_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

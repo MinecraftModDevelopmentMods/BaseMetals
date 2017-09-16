@@ -11,13 +11,16 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:quartz_rod"
+			"item": "basemetals:quartz_rod",
+			"data": 0
 		},
 		"y": {
-			"item": "minecraft:string"
+			"item": "minecraft:string",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:quartz_gear"
+			"item": "basemetals:quartz_gear",
+			"data": 0
 		}
 	},
 	"conditions": [

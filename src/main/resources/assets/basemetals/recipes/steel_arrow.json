@@ -16,10 +16,12 @@
 			"ore": "nuggetSteel"
 		},
 		"y": {
-			"item": "basemetals:steel_rod"
+			"item": "basemetals:steel_rod",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:steel_feather"
+			"item": "minecraft:feather",
+			"data": 0
 		}
 	},
 	"conditions": [

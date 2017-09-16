@@ -1,14 +1,27 @@
 {
 	"result": {
-		"item": "ore:blendAquarium",
+		"item": "basemetals:aquarium_blend",
+		"data": 0,
 		"count": 3
 	},
 	"type": "forge:ore_shapeless",
 	"ingredients": [
-		"ore:dustCopper",
-		"ore:dustCopper",
-		"ore:dustZinc",
-		"ore:dustPrismarine"
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustZinc"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustPrismarine"
+		}
 	],
 	"group": "alloys",
 	"conditions": [

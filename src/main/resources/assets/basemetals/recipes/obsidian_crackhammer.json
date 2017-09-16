@@ -10,14 +10,15 @@
 		"y"
 	],
 	"key": {
-		"x": {
-			"type": "forge:ore_dict",
-			"ore": "blockObsidian"
-		},
-		"y": {
-			"type": "forge:ore_dict",
-			"ore": "stickWood"
-		}
+	    "x": {
+		"type": "minecraft:item",
+		"item": "minecraft:obsidian",
+		"data": 0
+	    },
+	    "y": {
+		"type": "forge:ore_dict",
+		"ore": "stickWood"
+	    }
 	},
 	"conditions": [
 		{

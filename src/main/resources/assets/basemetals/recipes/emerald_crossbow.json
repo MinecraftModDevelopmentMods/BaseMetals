@@ -11,13 +11,16 @@
 	],
 	"key": {
 		"x": {
-			"item": "basemetals:emerald_rod"
+			"item": "basemetals:emerald_rod",
+			"data": 0
 		},
 		"y": {
-			"item": "minecraft:string"
+			"item": "minecraft:string",
+			"data": 0
 		},
 		"z": {
-			"item": "basemetals:emerald_gear"
+			"item": "basemetals:emerald_gear",
+			"data": 0
 		}
 	},
 	"conditions": [

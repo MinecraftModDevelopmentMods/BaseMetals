@@ -15,7 +15,8 @@
 			"ore": "ingotNickel"
 		},
 		"r": {
-			"item": "basemetals:nickel_rod"
+			"item": "basemetals:nickel_rod",
+			"data": 0
 		}
 	},
 	"conditions": [

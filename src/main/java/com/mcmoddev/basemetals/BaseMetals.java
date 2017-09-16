@@ -70,13 +70,14 @@ public class BaseMetals {
 	static {
 		// Forge says this needs to be statically initialized here.
 		FluidRegistry.enableUniversalBucket();
-		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
-		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
-		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
 	}
 
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Recipes.class);
 		proxy.preInit(event);
 	}
 

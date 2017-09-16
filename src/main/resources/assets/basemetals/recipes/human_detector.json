@@ -8,11 +8,11 @@
     "pattern": [ "xx",
 		 "yy" ],
     "key": {
-	'x': {
+	"x": {
 	    "type":"forge:ore_dict",
 	    "ore":"ingotBrick"
 	},
-	'y': {
+	"y": {
 	    "type":"forge:ore_dict",
 	    "ore":"gear"
 	}

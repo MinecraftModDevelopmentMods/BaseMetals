@@ -1,12 +1,23 @@
 package com.mcmoddev.lib.util;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import com.mcmoddev.basemetals.BaseMetals;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class Oredicts {
-
+	private static Map<String, List<Item>> oreDictItemMap = new HashMap<>();
+	private static Map<String, List<Block>> oreDictBlockMap = new HashMap<>();
+	private static Map<String, List<ItemStack>> oreDictItemStackMap = new HashMap<>();
+	
 	// See net.minecraftforge.oredict.OreDictionary.initVanillaEntries() for Vanilla oreDict names
 
 	// tree- and wood-related things
@@ -234,24 +245,60 @@ public class Oredicts {
 
 	public static void registerOre(String name, Block block) {
 		if (block != null) {
-			OreDictionary.registerOre(name, block);
+			if( oreDictBlockMap.containsKey(name) ) {
+				oreDictBlockMap.get(name).add(block);
+			} else {
+				List<Block> nl = new ArrayList<>();
+				nl.add(block);
+				oreDictBlockMap.put(name, nl);
+			}
 		}
 	}
 
 	public static void registerOre(String name, Item item) {
 		if (item != null) {
-			OreDictionary.registerOre(name, item);
+			if( oreDictItemMap.containsKey(name) ) {
+				oreDictItemMap.get(name).add(item);
+			} else {
+				List<Item> nl = new ArrayList<>();
+				nl.add(item);
+				oreDictItemMap.put(name, nl);
+			}
 		}
 
 	}
 
 	public static void registerOre(String name, ItemStack itemStack) {
 		if (itemStack != null) {
-			OreDictionary.registerOre(name, itemStack);
+			if( oreDictItemStackMap.containsKey(name) ) {
+				oreDictItemStackMap.get(name).add(itemStack);
+			} else {
+				List<ItemStack> nl = new ArrayList<>();
+				nl.add(itemStack);
+				oreDictItemStackMap.put(name, nl);
+			}
 		}
 
 	}
 
+	public static void registerOreDictionary() {
+		for( Entry<String,List<Block>> ent : oreDictBlockMap.entrySet() ) {
+			for( Block b : ent.getValue() ) {
+				OreDictionary.registerOre(ent.getKey(), b);
+			}
+		}
+		for( Entry<String,List<Item>> ent : oreDictItemMap.entrySet() ) {
+			for( Item i : ent.getValue() ) {
+				OreDictionary.registerOre(ent.getKey(), i);
+			}
+		}
+		for( Entry<String,List<ItemStack>> ent : oreDictItemStackMap.entrySet() ) {
+			for( ItemStack is : ent.getValue() ) {
+				OreDictionary.registerOre(ent.getKey(), is);
+			}
+		}
+	}
+	
 	private Oredicts() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
