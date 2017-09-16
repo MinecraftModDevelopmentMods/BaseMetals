@@ -311,7 +311,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
 			for( Item item : mat.getItems() ) {
-				event.getRegistry().register(item);
+				if( item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID) ) {
+					event.getRegistry().register(item);
+				}
 			}
 		}
 	}
