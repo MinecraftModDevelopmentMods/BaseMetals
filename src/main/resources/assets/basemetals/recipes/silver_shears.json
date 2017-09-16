@@ -1,7 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:silver_ingot",
+		"item": "basemetals:silver_shears",
 		"data": 0
 	},
 	"pattern": [

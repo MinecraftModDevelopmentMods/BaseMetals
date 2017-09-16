@@ -1,7 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:platinum_ingot",
+		"item": "basemetals:platinum_shears",
 		"data": 0
 	},
 	"pattern": [

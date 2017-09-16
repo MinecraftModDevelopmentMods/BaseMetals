@@ -1,7 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "minecraft:gold_ingot",
+		"item": "basemetals:gold_shears",
 		"data": 0
 	},
 	"pattern": [

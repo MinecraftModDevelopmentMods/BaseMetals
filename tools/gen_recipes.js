@@ -51,15 +51,33 @@ const alloy_mix = { 'Aquarium': { 'recipe': { 'type': 'forge:ore_shapeless',
 					    'mix': [ { "type": "oredict", "name": "dustTin" },
 						     { "type": "oredict", "name": "dustCopper" },
 						     { "type": "oredict", "name": "dustLead" } ] },
-				'output': 3 } };
+				'output': 3 },
+		    'Invar': { 'recipe': { 'type': 'forge:ore_shapeless',
+					   'mix': [ { "type": "oredict", "name":"dustIron"},
+						    { "type": "oredict", "name":"dustIron"},
+						    { "type": "oredict", "name":"dustNickel"} ] },
+			       'output': 3 },
+		    'Steel': { 'recipe': { 'type': 'forge:ore_shapeless',
+					   'mix': [ { 'type': 'oredict', 'name':'dustIron' },
+						    { 'type': 'oredict', 'name':'dustIron' },
+						    { 'type': 'oredict', 'name':'dustIron' },
+						    { 'type': 'oredict', 'name':'dustIron' },
+						    { 'type': 'oredict', 'name':'dustIron' },
+						    { 'type': 'oredict', 'name':'dustIron' },
+						    { 'type': 'oredict', 'name':'dustIron' },
+						    { 'type': 'oredict', 'name':'dustIron' },
+						    { 'type': 'oredict', 'name':'dustCoal' } ] },
+			       'output': 8 } };
 const alloy_conditions = { 'Aquarium': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Zinc' ] },
 			   'Brass': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Zinc' ] },
 			   'Bronze': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Tin' ] },
 			   'Cupronickel': { 'enabled': [ 'Basics'] , 'materials': [ 'Copper', 'Nickel' ] },
 			   'Electrum': { 'enabled': [ 'Basics' ], 'materials': [ 'Silver' ] },
-			   'Pewter': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Lead', 'Tin' ] } };
+			   'Invar': { 'enabled': [ 'Basics' ], 'materials': [ 'Iron', 'Nickel' ] },
+			   'Pewter': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Lead', 'Tin' ] },
+			   'Steel': { 'enabled': [ 'Basics' ], 'materials': [ 'Iron', 'Coal' ] } };
 
-const alloy_names = [ 'Aquarium', 'Brass', 'Bronze', 'Cupronickel', 'Electrum', 'Invar', 'Pewter' ];
+const alloy_names = [ 'Aquarium', 'Brass', 'Bronze', 'Cupronickel', 'Electrum', 'Invar', 'Pewter', 'Steel' ];
 
 const patterns_basic = {
     // Basics
@@ -120,7 +138,7 @@ const vanilla_map = { "Diamond": [ 'powder', 'smallpowder', 'arrow', 'bars_1', '
 		      "Stone": [ 'crackhammer' ],
 		      "Wood": [ 'crackhammer' ],
 		      "Quartz": [ 'powder', 'smallpowder', 'nugget', 'ingot', 'sword', 'shovel', 'hoe', 'axe', 'pickaxe', 'boots', 'helmet', 'chestplate', 'leggings', 'arrow', 'bars_1', 'bars_2', 'bow', 'button', 'bolt', 'crackhammer', 'crossbow', 'door',
-				  'fishingrod', 'gear', 'horsearmor', 'lever', 'plate', 'pressureplate', 'rod', 'stairs', 'slab', 'shield', 'shears', 'trapdoor', 'wall' ],
+				  'fishingrod', 'gear', 'horsearmor', 'lever', 'pressureplate', 'rod', 'shield', 'shears', 'trapdoor', 'wall' ],
 		      "Obsidian": [ 'powder', 'smallpowder', 'nugget', 'ingot', 'block', 'sword', 'shovel', 'hoe', 'axe', 'pickaxe', 'boots', 'helmet', 'chestplate', 'leggings', 'arrow', 'bars_1', 'bars_2', 'bow', 'button', 'bolt', 'crackhammer', 'crossbow', 'door',
 				    'fishingrod', 'gear', 'horsearmor', 'lever', 'pressureplate', 'rod', 'stairs', 'slab', 'shield', 'shears', 'trapdoor', 'wall' ],
 		      "Coal": [ 'powder', 'smallpowder', 'nugget', 'ingot' ],
@@ -195,6 +213,7 @@ function mapNameOutput( rawName, matName ) {
 	    } else {
 		return `basemetals:${matName.toLowerCase()}_block`;
 	    }
+	}
     case 'WOOD':
     case 'WOOD_PLANK':
     case 'STICK':
@@ -366,6 +385,12 @@ for( let i = 0; i < base_mats.length; i++ ) {
     processMat( mat );
 }
 
+// alloys get all the same recipes as the rest, just more - which follows this
+for( let i = 0; i < alloy_names.length; i++ ) {
+    let mat = alloy_names[i];
+    processMat( mat );
+}
+
 // Blend->Small Blend, Small Blend->Blend and the base Blend recipes
 for( let x = 0; x < alloy_names.length; x++ ) {
     let mat = alloy_names[x];
@@ -421,7 +446,7 @@ for( let v = 0; v < van_mats.length; v++ ) {
 	let res = processRecipe( van_mats[v], recipe );
 	if( van_mats[v].toLowerCase() == "charcoal" &&
 	    recName.toLowerCase() == "ingot" ) {
-	    res = { "item":"minecraft:coal", "data":1 };
+	    res.result = { "item":"minecraft:coal", "data":1 };
 	}
 	res.group = "vanilla";
 	let recFileName = recName.toLowerCase();

@@ -1,7 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "minecraft:diamond",
+		"item": "basemetals:diamond_shears",
 		"data": 0
 	},
 	"pattern": [

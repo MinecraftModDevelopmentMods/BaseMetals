@@ -1,7 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:zinc_ingot",
+		"item": "basemetals:zinc_shears",
 		"data": 0
 	},
 	"pattern": [
