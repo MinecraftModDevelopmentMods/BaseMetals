@@ -16,6 +16,7 @@ import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.RegistryEvent;
@@ -451,19 +452,22 @@ public abstract class Recipes {
 		}
 	}
 
-	public static void register(RegistryEvent.Register<net.minecraft.item.crafting.IRecipe> event) {
+	public static void register(RegistryEvent.Register<IRecipe> event) {
 		String mod = Loader.instance().activeModContainer().getModId();
 		if( !Materials.hasMaterialFromMod(mod) ) {
 			return;
 		}
 
+		// the following is broken, as the event *DOES* *NOT* *WORK* right and the call asks the 
 		if( mod.equals(BaseMetals.MODID) ) {
 			if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
 				addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY), "Quicksilver");
 
 				if (FluidRegistry.isUniversalBucketEnabled()) {
 					final ItemStack bucketMercury = FluidUtil.getFilledBucket(new FluidStack(Materials.getMaterialByName(MaterialNames.MERCURY).getFluid(),1000));
-					event.getRegistry().register( new ShapelessOreRecipe(new ResourceLocation("basemetals", "bucket"), bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY));
+					ShapelessOreRecipe buckMerc = new ShapelessOreRecipe(new ResourceLocation("basemetals", "bucket"), bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY);
+					buckMerc.setRegistryName("basemetals","mercury_bucket");
+					event.getRegistry().register( buckMerc );
 				}
 			}
 		}		
