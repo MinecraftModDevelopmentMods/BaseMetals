@@ -1,0 +1,36 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:starsteel_block",
+		"data": 0
+	},
+	"pattern": [
+		"xxx",
+		"xxx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotStarSteel"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "StarSteel"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "basics"
+}

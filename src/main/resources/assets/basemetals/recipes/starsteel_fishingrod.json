@@ -1,0 +1,45 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:starsteel_fishing_rod",
+		"data": 0
+	},
+	"pattern": [
+		"  x",
+		" xy",
+		"x y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:starsteel_rod",
+			"data": 0
+		},
+		"y": {
+			"item": "minecraft:string",
+			"data": 0
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "StarSteel"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "FishingRod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				}
+			]
+		}
+	],
+	"group": "misc"
+}

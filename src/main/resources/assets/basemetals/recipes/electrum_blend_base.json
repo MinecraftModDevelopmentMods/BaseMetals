@@ -1,0 +1,41 @@
+{
+	"result": {
+		"item": "basemetals:electrum_blend",
+		"data": 0,
+		"count": 2
+	},
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustGold"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustSilver"
+		}
+	],
+	"group": "alloys",
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Silver"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Electrum"
+				}
+			]
+		}
+	]
+}

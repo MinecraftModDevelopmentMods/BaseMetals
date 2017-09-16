@@ -1,0 +1,32 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "basemetals:steel_nugget",
+		"data": 0,
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "ingotSteel"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Steel"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "basics"
+}
