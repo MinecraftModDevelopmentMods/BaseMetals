@@ -211,6 +211,10 @@ public abstract class Blocks {
 	protected static void createBlocksFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createBlocksFull(Materials.getMaterialByName(materialName), tabs);
 	}
+	
+	protected static void createBlocksFullOreless(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
+		createBlocksFullOreless(Materials.getMaterialByName(materialName), tabs);
+	}
 
 	/**
 	 * 
@@ -238,6 +242,26 @@ public abstract class Blocks {
 		create(Names.PRESSURE_PLATE, material, tabs.blocksTab);
 		create(Names.STAIRS, material, tabs.blocksTab);
 		create(Names.WALL, material, tabs.blocksTab);
+	}
+	
+	protected static void createBlocksFullOreless(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
+		if ((material == null) || (tabs == null)) {
+			return;
+		}
+
+		create(Names.BLOCK, material, tabs.blocksTab);
+		create(Names.PLATE, material, tabs.blocksTab);
+		create(Names.BARS, material, tabs.blocksTab);
+		create(Names.DOOR, material, tabs.blocksTab);
+		create(Names.TRAPDOOR, material, tabs.blocksTab);
+
+		create(Names.BUTTON, material, tabs.blocksTab);
+		create(Names.SLAB, material, tabs.blocksTab);
+		create(Names.DOUBLE_SLAB, material, tabs.blocksTab);
+		create(Names.LEVER, material, tabs.blocksTab);
+		create(Names.PRESSURE_PLATE, material, tabs.blocksTab);
+		create(Names.STAIRS, material, tabs.blocksTab);
+		create(Names.WALL, material, tabs.blocksTab);		
 	}
 
 	/**
@@ -273,6 +297,12 @@ public abstract class Blocks {
 
 		if ((name.equals(Names.BLOCK)) && (isNameEnabled(name))) {
 			material.addNewBlock(name, addBlock(new BlockMMDBlock(material, glow, true), name.toString(), material, tab));
+			Block b = material.getBlock(name);
+			final String oredict = getOredictFromName(name);
+			BaseMetals.logger.fatal("Material "+material.getCapitalizedName()+" block "+name+" -- oredict "+oredict);
+			if ((oredict != null) && (b != null)) {
+				Oredicts.registerOre(oredict + material.getCapitalizedName(), b);
+			}			
 			return material.getBlock(name);
 		}
 
@@ -285,6 +315,7 @@ public abstract class Blocks {
 		final Block block = createBlock(material, name.toString(), getClassFromName(name), isNameEnabled(name), tab);
 
 		final String oredict = getOredictFromName(name);
+		BaseMetals.logger.fatal("Material "+material.getCapitalizedName()+" block "+name+" -- oredict "+oredict);
 		if ((oredict != null) && (block != null)) {
 			Oredicts.registerOre(oredict + material.getCapitalizedName(), block);
 		}

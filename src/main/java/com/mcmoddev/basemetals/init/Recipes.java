@@ -41,7 +41,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		initVanillaRecipes();
 		initGeneralRecipes();
 		initModSpecificRecipes();
-
+		
 		initDone = true;
 	}
 

@@ -284,19 +284,16 @@ public class Oredicts {
 	public static void registerOreDictionary() {
 		for( Entry<String,List<Block>> ent : oreDictBlockMap.entrySet() ) {
 			for( Block b : ent.getValue() ) {
-				BaseMetals.logger.fatal("Registering oredict %s for block %s", ent.getKey(), b);
 				OreDictionary.registerOre(ent.getKey(), b);
 			}
 		}
 		for( Entry<String,List<Item>> ent : oreDictItemMap.entrySet() ) {
 			for( Item i : ent.getValue() ) {
-				BaseMetals.logger.fatal("Registering oredict %s for item %s", ent.getKey(), i);
 				OreDictionary.registerOre(ent.getKey(), i);
 			}
 		}
 		for( Entry<String,List<ItemStack>> ent : oreDictItemStackMap.entrySet() ) {
 			for( ItemStack is : ent.getValue() ) {
-				BaseMetals.logger.fatal("Registering oredict %s for itemstack %s", ent.getKey(), is);
 				OreDictionary.registerOre(ent.getKey(), is);
 			}
 		}

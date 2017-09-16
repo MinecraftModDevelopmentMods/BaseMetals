@@ -100,7 +100,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM)) {
-			createBlocksFull(MaterialNames.AQUARIUM, myTabs);
+			createBlocksFullOreless(MaterialNames.AQUARIUM, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.BISMUTH)) {
@@ -108,11 +108,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.BRASS)) {
-			createBlocksFull(MaterialNames.BRASS, myTabs);
+			createBlocksFullOreless(MaterialNames.BRASS, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.BRONZE)) {
-			createBlocksFull(MaterialNames.BRONZE, myTabs);
+			createBlocksFullOreless(MaterialNames.BRONZE, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
@@ -128,7 +128,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL)) {
-			createBlocksFull(MaterialNames.CUPRONICKEL, myTabs);
+			createBlocksFullOreless(MaterialNames.CUPRONICKEL, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.DIAMOND)) {
@@ -140,7 +140,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.ELECTRUM)) {
-			createBlocksFull(MaterialNames.ELECTRUM, myTabs);
+			createBlocksFullOreless(MaterialNames.ELECTRUM, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.EMERALD)) {
@@ -161,7 +161,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.INVAR)) {
-			createBlocksFull(MaterialNames.INVAR, myTabs);
+			createBlocksFullOreless(MaterialNames.INVAR, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.IRON)) {
@@ -181,7 +181,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.MITHRIL)) {
-			createBlocksFull(MaterialNames.MITHRIL, myTabs);
+			createBlocksFullOreless(MaterialNames.MITHRIL, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.NICKEL)) {
@@ -197,7 +197,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.PEWTER)) {
-			createBlocksFull(MaterialNames.PEWTER, myTabs);
+			createBlocksFullOreless(MaterialNames.PEWTER, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.PLATINUM)) {
@@ -233,7 +233,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
-			createBlocksFull(MaterialNames.STEEL, myTabs);
+			createBlocksFullOreless(MaterialNames.STEEL, myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.STONE)) {
