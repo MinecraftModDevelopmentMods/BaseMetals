@@ -1,0 +1,41 @@
+{
+	"type": "basemetals:variableOutputOre",
+	"result": {
+		"item": "basemetals:pewter_plate",
+		"data": 0
+	},
+	"pattern": [
+		"xx",
+		"xx"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotPewter"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Pewter"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Plate"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"config_key": "plate",
+	"group": "misc"
+}

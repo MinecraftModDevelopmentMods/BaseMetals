@@ -381,7 +381,7 @@ function processAlloy( mat ) {
     res.conditions = [ { "type":"forge:and", "values": tnc } ];
     return res;
 }
-/*
+
 // Basic Materials that get just about everything
 for( let i = 0; i < base_mats.length; i++ ) {
     let mat = base_mats[i];
@@ -406,7 +406,7 @@ for( let x = 0; x < alloy_names.length; x++ ) {
     fs.writeFileSync( `output/${matFileName}_blend_smallblend.json`, JSON.stringify(res_blend_2, null, '\t' ) );
     fs.writeFileSync( `output/${matFileName}_smallblend_blend.json`, JSON.stringify(res_small_blend, null, '\t' ) );
 }
-*/
+
 function mapNameVanilla( typeName, matName ) {
 
     let name = matName.toLowerCase();
@@ -437,7 +437,7 @@ function mapNameVanilla( typeName, matName ) {
 	return `basemetals:${matName.toLowerCase()}_bars`;
     }
 }
-/*
+
 // Vanilla Materials
 // Needs lots of special handling - for ingot, block and some other bits
 for( let v = 0; v < van_mats.length; v++ ) {
@@ -493,12 +493,12 @@ for( let am = 0; am < armor_mats.length; am++ ) {
 }
     
 fs.writeFileSync( 'output/_factories.json', JSON.stringify( _factories, null, '\t' ) );
-*/
 
+/*
 const blargh = [ "Adamantine", "Antimony", "Aquarium", "Bismuth", "Brass", "Bronze", "ColdIron", "Copper", "Cupronickel", "Electrum", "Emerald", "Invar", "Lead", "Mithril", "Nickel", "Obsidian", "Pewter", "Platinum", "Quartz", "Silver", "StarSteel", "Steel", "Tin", "Zinc" ]
 
 blargh.forEach( (name) => {
     fs.writeFileSync( `output/${name.toLowerCase()}_horsearmor.json`, JSON.stringify( processRecipe( name, patterns_basic.horsearmor ), null, '\t' ) );
 });
-
+*/
 console.log( 'done!' );

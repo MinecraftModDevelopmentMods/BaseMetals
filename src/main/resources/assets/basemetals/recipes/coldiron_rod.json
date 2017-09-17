@@ -1,0 +1,41 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:coldiron_rod",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"x"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotColdIron"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "ColdIron"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "misc"
+}

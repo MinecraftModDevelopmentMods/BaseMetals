@@ -1,0 +1,32 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "basemetals:invar_nugget",
+		"data": 0,
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "ingotInvar"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Invar"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "basics"
+}

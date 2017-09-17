@@ -1,0 +1,43 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:gold_crackhammer",
+		"data": 0
+	},
+	"pattern": [
+		"x",
+		"y",
+		"y"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockGold"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Gold"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:hammer"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

@@ -1,0 +1,42 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:diamond_stairs",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x  ",
+		"xx ",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "blockDiamond"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Diamond"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Stairs"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

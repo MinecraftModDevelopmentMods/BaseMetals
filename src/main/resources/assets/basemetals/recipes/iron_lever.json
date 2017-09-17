@@ -1,0 +1,49 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:iron_lever",
+		"data": 0
+	},
+	"pattern": [
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:iron_rod",
+			"data": 0
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Iron"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Lever"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}
