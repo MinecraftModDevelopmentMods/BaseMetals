@@ -1,7 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "minecraft:charcoal_block",
+		"item": "basemetals:charcoal_block",
 		"data": 0
 	},
 	"pattern": [
