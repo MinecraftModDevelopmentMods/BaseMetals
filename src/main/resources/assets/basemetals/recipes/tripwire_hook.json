@@ -9,15 +9,15 @@
 		 "/",
 		 "w" ],
     "key": {
-	'x': {
+	"x": {
 	    "type":"forge:ore_dict",
 	    "ore":"ingotSteel"
 	},
-	'/': {
+	"/": {
 	    "type":"forge:ore_dict",
 	    "ore":"stickWood"
 	},
-	'w': {
+	"w": {
 	    "type":"forge:ore_dict",
 	    "ore":"plankWood"
 	}
