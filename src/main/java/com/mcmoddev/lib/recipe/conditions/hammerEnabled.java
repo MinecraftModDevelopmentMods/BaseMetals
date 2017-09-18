@@ -3,7 +3,6 @@ package com.mcmoddev.lib.recipe.conditions;
 import java.util.function.BooleanSupplier;
 
 import com.google.gson.JsonObject;
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraftforge.common.crafting.IConditionFactory;

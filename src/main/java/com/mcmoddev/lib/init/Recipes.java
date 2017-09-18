@@ -18,12 +18,10 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -228,14 +226,10 @@ public abstract class Recipes {
 			return;
 		}
 
-		if (material.hasItem(Names.ROD)) {
 
-			if (material.hasItem(Names.GEAR)) {
-				if (material.hasItem(Names.INGOT)) {
-					// if there is no ingot, no cheese
-					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)), new ItemStack(material.getItem(Names.INGOT), Options.gearQuantity()), 0); // you lose the rod
-				}
-			}
+		if (material.hasItem(Names.GEAR) && (material.hasItem(Names.INGOT))) {
+			// if there is no ingot, no cheese
+			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)), new ItemStack(material.getItem(Names.INGOT), Options.gearQuantity()), 0); // you lose the rod
 		}
 	}
 
@@ -328,10 +322,8 @@ public abstract class Recipes {
 			if (material.hasItem(Names.BLOCK)) {
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.getItem(Names.POWDER), 9));
 			}
-			if (material.hasItem(Names.SMALLPOWDER)) {
-				if (material.hasItem(Names.NUGGET)) {
+			if ((material.hasItem(Names.SMALLPOWDER)) && (material.hasItem(Names.NUGGET))) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.getItem(Names.SMALLPOWDER), 1));
-				}
 			}
 		}
 	}
@@ -459,17 +451,15 @@ public abstract class Recipes {
 		}
 
 		// the following is broken, as the event *DOES* *NOT* *WORK* right and the call asks the 
-		if( mod.equals(BaseMetals.MODID) ) {
-			if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
-				addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY), "Quicksilver");
+		if( mod.equals(BaseMetals.MODID) && Options.isMaterialEnabled(MaterialNames.MERCURY)) {
+			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY), "Quicksilver");
 
-				if (FluidRegistry.isUniversalBucketEnabled()) {
-					final ItemStack bucketMercury = FluidUtil.getFilledBucket(new FluidStack(Materials.getMaterialByName(MaterialNames.MERCURY).getFluid(),1000));
-					ShapelessOreRecipe buckMerc = new ShapelessOreRecipe(new ResourceLocation("basemetals", "bucket"), bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY);
-					buckMerc.setRegistryName("basemetals","mercury_bucket");
-					event.getRegistry().register( buckMerc );
-				}
+			if (FluidRegistry.isUniversalBucketEnabled()) {
+				final ItemStack bucketMercury = FluidUtil.getFilledBucket(new FluidStack(Materials.getMaterialByName(MaterialNames.MERCURY).getFluid(),1000));
+				ShapelessOreRecipe buckMerc = new ShapelessOreRecipe(new ResourceLocation("basemetals", "bucket"), bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY);
+				buckMerc.setRegistryName("basemetals","mercury_bucket");
+				event.getRegistry().register( buckMerc );
 			}
-		}		
-	}
+		}
+	}		
 }

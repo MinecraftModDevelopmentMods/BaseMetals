@@ -20,27 +20,26 @@ import net.minecraft.item.Item;
  * @author Jasmine Iwanek
  *
  */
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, initCallback = "doSecondPass")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID)
 public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase implements IIntegration {
 
 	private static boolean initDone = false;
 
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled("tinkersconstruct")) {
 			return;
 		}
 
 		TraitRegistry.initTiCTraits();
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
-
+		
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, true, false);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC, TraitNames.JAGGED, TraitLocations.HEAD, TraitNames.AQUADYNAMIC, TraitLocations.HEAD);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.BISMUTH), MaterialNames.BISMUTH, true, false);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, true, false, TraitNames.DENSE);
-		//registerMaterial(Options.materialEnabled(MaterialNames.BRONZE), MaterialNames.BRONZE, true, false);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.CUPRONICKEL), MaterialNames.CUPRONICKEL, true, false);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.INVAR), MaterialNames.INVAR, true, false);
@@ -53,7 +52,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, true, false);
 
 		registerAlloys();
-
+		
 		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
 			registerFluid(Materials.getMaterialByName(MaterialNames.COAL), 144);
 		}
@@ -158,8 +157,9 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 	}
 
-	public void doSecondPass() {
+	// this was needed, might not be now
+/*	public void doSecondPass() {
 		// make the second-pass MaterialIntegration call
 		registry.integrateRecipes();
 	}
-}
+*/}

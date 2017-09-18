@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
@@ -189,7 +190,7 @@ public class TinkersConstructRegistry {
 		
 		tcmat.setFluid(mat.getMetalMaterial().getFluid()).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(matRepItem, 1, Material.VALUE_Ingot);
 		tcmat.setRepresentativeItem(matRepItem);
-		
+
 		final String base = mat.getMetalMaterial().getName();
 		final String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
 		final MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMetalMaterial().getFluid(), suffix);
@@ -199,7 +200,7 @@ public class TinkersConstructRegistry {
 		}
 
 		addIntegration(m);
-		m.integrateRecipes();
+		TinkerRegistry.integrate(m);
 		return TCCode.SUCCESS;
     }
     
