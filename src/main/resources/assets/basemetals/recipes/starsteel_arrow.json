@@ -13,7 +13,7 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "nuggetStarSteel"
+			"ore": "nuggetStarsteel"
 		},
 		"y": {
 			"item": "basemetals:starsteel_rod",

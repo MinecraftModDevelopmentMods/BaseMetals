@@ -11,7 +11,7 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "ingotColdIron"
+			"ore": "ingotColdiron"
 		}
 	},
 	"conditions": [

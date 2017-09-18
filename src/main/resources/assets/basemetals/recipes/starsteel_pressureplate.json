@@ -10,7 +10,7 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "ingotStarSteel"
+			"ore": "ingotStarsteel"
 		}
 	},
 	"conditions": [
