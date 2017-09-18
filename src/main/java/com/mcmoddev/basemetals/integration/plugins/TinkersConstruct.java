@@ -20,7 +20,7 @@ import net.minecraft.item.Item;
  * @author Jasmine Iwanek
  *
  */
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, postInitCallback = "doSecondPass")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID)
 public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase implements IIntegration {
 
 	private static boolean initDone = false;
@@ -157,8 +157,9 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 	}
 
-	public void doSecondPass() {
+	// this was needed, might not be now
+/*	public void doSecondPass() {
 		// make the second-pass MaterialIntegration call
 		registry.integrateRecipes();
 	}
-}
+*/}
