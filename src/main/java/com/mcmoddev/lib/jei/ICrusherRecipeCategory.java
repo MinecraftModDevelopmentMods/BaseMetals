@@ -15,26 +15,26 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeCategory;
+import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWrapper> {
-	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID, "textures/jei/JEIhammeroverlay.png");
+public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWrapper> {
+	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID, "textures/jei/jeihammeroverlay.png");
 	private final IDrawable background;
 	private final IDrawable icon;
 	protected final IDrawableAnimated hammer;
 	protected final IGuiHelper helper;
 
 	public ICrusherRecipeCategory(IGuiHelper guiHelper) {
-		this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
-		this.icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
+		background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
+		icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
 
 		IDrawableStatic hammerDrawable = guiHelper.createDrawable(resourceLocation, 169, 17, 32, 32);
-		this.hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 200, IDrawableAnimated.StartDirection.BOTTOM, false);
-		this.helper = guiHelper;
+		hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 100, IDrawableAnimated.StartDirection.BOTTOM, false);
+		helper = guiHelper;
 	}
 
 	@Override
