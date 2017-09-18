@@ -1,5 +1,10 @@
 {
 	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:mithril_stairs",
+		"data": 0,
+		"count": 4
+	},
 	"pattern": [
 		"x  ",
 		"xx ",
@@ -7,16 +12,9 @@
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
-			"item": "basemetals:mithril_block",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "blockMithril"
 		}
-	},
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_stairs",
-		"data": 0,
-		"count": 4
 	},
 	"conditions": [
 		{
@@ -26,6 +24,11 @@
 					"type": "basemetals:enabled",
 					"optionName": "material",
 					"optionValue": "Mithril"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Stairs"
 				},
 				{
 					"type": "basemetals:enabled",

@@ -1,5 +1,9 @@
 {
 	"type": "basemetals:variableOutputOre",
+	"result": {
+		"item": "basemetals:mithril_gear",
+		"data": 0
+	},
 	"pattern": [
 		" x ",
 		"xrx",
@@ -7,21 +11,13 @@
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
-			"item": "basemetals:mithril_ingot",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "ingotMithril"
 		},
 		"r": {
-			"type": "minecraft:item",
 			"item": "basemetals:mithril_rod",
 			"data": 0
 		}
-	},
-    "config_key": "gear",
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_gear",
-		"data": 0
 	},
 	"conditions": [
 		{
@@ -35,10 +31,16 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",
+					"optionValue": "Gear"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
 					"optionValue": "Basics"
 				}
 			]
 		}
 	],
+	"config_key": "gear",
 	"group": "misc"
 }

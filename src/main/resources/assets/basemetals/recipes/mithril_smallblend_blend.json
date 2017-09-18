@@ -1,16 +1,16 @@
 {
 	"type": "forge:ore_shapeless",
-	"ingredients": [{
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_blend",
-		"data": 0
-	}],
 	"result": {
-		"type": "minecraft:item",
 		"item": "basemetals:mithril_smallblend",
 		"data": 0,
 		"count": 9
 	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "blendMithril"
+		}
+	],
 	"conditions": [
 		{
 			"type": "forge:and",

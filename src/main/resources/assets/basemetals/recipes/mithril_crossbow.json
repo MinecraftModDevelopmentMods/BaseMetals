@@ -1,5 +1,9 @@
 {
 	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:mithril_crossbow",
+		"data": 0
+	},
 	"pattern": [
 		"zxx",
 		" yx",
@@ -7,25 +11,17 @@
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
 			"item": "basemetals:mithril_rod",
 			"data": 0
 		},
 		"y": {
-			"type": "minecraft:item",
 			"item": "minecraft:string",
 			"data": 0
 		},
 		"z": {
-			"type": "minecraft:item",
 			"item": "basemetals:mithril_gear",
 			"data": 0
 		}
-	},
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_crossbow",
-		"data": 0
 	},
 	"conditions": [
 		{
@@ -39,7 +35,17 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",
-					"optionValue": "Basics"
+					"optionValue": "CrossbowAndBolt"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Gear"
 				}
 			]
 		}

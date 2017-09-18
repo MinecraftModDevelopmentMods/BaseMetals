@@ -1,5 +1,9 @@
 {
 	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:mithril_powder",
+		"data": 0
+	},
 	"pattern": [
 		"xxx",
 		"xxx",
@@ -7,15 +11,9 @@
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
-			"item": "basemetals:mithril_smallpowder",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "dustSmallMithril"
 		}
-	},
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_powder",
-		"data": 0
 	},
 	"conditions": [
 		{

@@ -1,21 +1,18 @@
 {
 	"type": "basemetals:variableOutputOre",
+	"result": {
+		"item": "basemetals:mithril_plate",
+		"data": 0
+	},
 	"pattern": [
 		"xx",
 		"xx"
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
-			"item": "basemetals:mithril_ingot",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "ingotMithril"
 		}
-	},
-    "config_key":"plate",
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_plate",
-		"data": 0
 	},
 	"conditions": [
 		{
@@ -29,10 +26,16 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",
+					"optionValue": "Plate"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
 					"optionValue": "Basics"
 				}
 			]
 		}
 	],
+	"config_key": "plate",
 	"group": "misc"
 }

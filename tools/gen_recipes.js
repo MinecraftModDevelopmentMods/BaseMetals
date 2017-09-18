@@ -67,7 +67,13 @@ const alloy_mix = { 'Aquarium': { 'recipe': { 'type': 'forge:ore_shapeless',
 						    { 'type': 'oredict', 'name':'dustIron' },
 						    { 'type': 'oredict', 'name':'dustIron' },
 						    { 'type': 'oredict', 'name':'dustCoal' } ] },
-			       'output': 8 } };
+			       'output': 8 },
+		    'Mithril': { 'recipe': { 'type': 'forge:ore_shapeless',
+					     'mix': [ { 'type': 'oredict', 'name': 'dustSilver'},
+						      { 'type': 'oredict', 'name': 'dustColdiron' },
+						      { 'type': 'oredict', 'name': 'ingotMercury' } ] },
+				 'output': 3 } };
+					     
 const alloy_conditions = { 'Aquarium': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Zinc' ] },
 			   'Brass': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Zinc' ] },
 			   'Bronze': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Tin' ] },
@@ -75,9 +81,10 @@ const alloy_conditions = { 'Aquarium': { 'enabled': [ 'Basics' ], 'materials': [
 			   'Electrum': { 'enabled': [ 'Basics' ], 'materials': [ 'Silver' ] },
 			   'Invar': { 'enabled': [ 'Basics' ], 'materials': [ 'Iron', 'Nickel' ] },
 			   'Pewter': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Lead', 'Tin' ] },
-			   'Steel': { 'enabled': [ 'Basics' ], 'materials': [ 'Iron', 'Coal' ] } };
+			   'Steel': { 'enabled': [ 'Basics' ], 'materials': [ 'Iron', 'Coal' ] },
+			   'Mithril': { 'enabled': [ 'Basics' ], 'materials': [ 'Silver', 'ColdIron', 'Mercury' ] } };
 
-const alloy_names = [ 'Aquarium', 'Brass', 'Bronze', 'Cupronickel', 'Electrum', 'Invar', 'Pewter', 'Steel' ];
+const alloy_names = [ 'Aquarium', 'Brass', 'Bronze', 'Cupronickel', 'Electrum', 'Invar', 'Mithril', 'Pewter', 'Steel' ];
 
 const patterns_basic = {
     // Basics
@@ -105,9 +112,9 @@ const patterns_basic = {
     'bars_2': { 'type': 'forge:ore_shaped', 'input': [ 'xxx' ], 'key': { 'x': 'ROD' }, 'result': { 'mat': 'BARS', 'count': 4 }, 'config': { 'enabled': [ 'Bars', 'Rod' ] }, "group": "misc" },
     'bow': { 'type': 'forge:ore_shaped', 'input': [ ' xs', 'x s', ' xs' ], 'key': { 'x': 'ROD', 's': 'STRING' }, 'result': { 'mat': 'BOW', 'count': 1 }, 'config': { 'enabled': [ 'BowAndArrow', 'Rod' ] }, "group": "weapon"  },    
     'button': { 'type': 'forge:ore_shaped', 'input': [ 'x', 'x' ], 'key': { 'x': 'NUGGET' }, 'result': { 'mat': 'BUTTON', 'count': 1 }, 'config': { 'enabled': [ 'Button', 'Basics' ] }, "group": "misc" },
-    'bolt': { 'type': 'forge:ore_shaped', 'input': [ 'x', 'x', 'y' ], 'key': { 'x': 'ROD', 'y': 'FEATHER' }, 'result': { 'mat': 'BOLT', 'count': 4 }, 'config': { 'enabled': [ 'CrossbowAndBolts', 'Rod' ] }, "group": "weapon"  },
+    'bolt': { 'type': 'forge:ore_shaped', 'input': [ 'x', 'x', 'y' ], 'key': { 'x': 'ROD', 'y': 'FEATHER' }, 'result': { 'mat': 'BOLT', 'count': 4 }, 'config': { 'enabled': [ 'CrossbowAndBolt', 'Rod' ] }, "group": "weapon"  },
     'crackhammer': { 'type': 'forge:ore_shaped', 'input': [ 'x', 'y', 'y' ], 'key': { 'x': 'BLOCK', 'y': 'STICK' }, 'result': { 'mat': 'CRACKHAMMER', 'count': 1 }, 'config': { 'enabled': [ 'Basics', 'hammerEnabled' ] }, "group": "tools" },
-    'crossbow': { 'type': 'forge:ore_shaped', 'input': [ 'zxx', ' yx', 'x z' ], 'key': { 'x': 'ROD', 'y': 'STRING', 'z': 'GEAR' }, 'result': { 'mat': 'CROSSBOW', 'count': 1 }, 'config': { 'enabled': [ 'CrossbowAndBolts', 'Rod', 'Gear' ] }, "group": "weapon"  },
+    'crossbow': { 'type': 'forge:ore_shaped', 'input': [ 'zxx', ' yx', 'x z' ], 'key': { 'x': 'ROD', 'y': 'STRING', 'z': 'GEAR' }, 'result': { 'mat': 'CROSSBOW', 'count': 1 }, 'config': { 'enabled': [ 'CrossbowAndBolt', 'Rod', 'Gear' ] }, "group": "weapon"  },
     'door': { 'type': 'forge:ore_shaped', 'input': [ 'xx', 'xx', 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'DOOR', 'count': 3 }, 'config': { 'enabled': [ 'Door', 'Basics' ] }, "group": "misc" },
     'fishingrod': { 'type': 'forge:ore_shaped', 'input': [ "  x", " xy", "x y" ], 'key': { 'x': 'ROD', 'y': 'STRING' }, 'result': { 'mat': 'FISHING_ROD', 'count': 1 }, 'config': { 'enabled': [ 'FishingRod', 'Rod' ] }, "group": "misc" },
     'gear': { 'type': 'basemetals:variableOutputOre', 'input': [" x ", "xrx", " x " ], 'key': { 'x': 'INGOT', 'r': 'ROD' }, 'result': { 'mat': 'GEAR' }, 'config': { 'enabled': [ 'Gear', 'Basics' ] }, "group": "misc", "config_key":"gear" },
@@ -120,7 +127,7 @@ const patterns_basic = {
     'shield': { 'type': 'forge:ore_shaped', 'input': [ 'xyx', 'xxx', ' x ' ], 'key': { 'x': 'INGOT', 'y': 'WOOD_PLANK' }, 'result': { 'mat': 'SHIELD', 'count': 1 }, 'config': { 'enabled': [ 'Shields', 'Basics' ] }, "group": "armor" },
     'slab': { 'type': 'forge:ore_shaped', 'input': [ 'xxx' ], 'key' : { 'x': 'BLOCK' }, 'result': { 'mat': 'SLAB', 'count': 6 }, 'config': { 'enabled': [ 'Slab', 'Basics' ] }, "group": "misc" },
     'stairs': { 'type': 'forge:ore_shaped', 'input': [ 'x  ', 'xx ', 'xxx' ], 'key' : { 'x': 'BLOCK' }, 'result': { 'mat': 'STAIRS', 'count': 4 }, 'config': { 'enabled': [ 'Stairs', 'Basics' ] }, "group": "misc" },
-    'trapdoor': { 'type': 'forge:ore_shaped', 'input': [ 'xx', 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'TRAPDOOR', 'count': 1 }, 'config': { 'enabled': [ 'Trapdoors', 'Basics' ] }, "group": "misc" },
+    'trapdoor': { 'type': 'forge:ore_shaped', 'input': [ 'xx', 'xx' ], 'key': { 'x': 'INGOT' }, 'result': { 'mat': 'TRAPDOOR', 'count': 1 }, 'config': { 'enabled': [ 'Trapdoor', 'Basics' ] }, "group": "misc" },
     'wall': { 'type': 'forge:ore_shaped', 'input': [ 'xxx', 'xxx' ], 'key' : { 'x': 'BLOCK' }, 'result': { 'mat': 'WALL', 'count': 6 }, 'config': { 'enabled': [ 'Wall', 'Basics' ] }, "group": "misc" }
 };
 
@@ -381,7 +388,7 @@ function processAlloy( mat ) {
     res.conditions = [ { "type":"forge:and", "values": tnc } ];
     return res;
 }
-/*
+
 // Basic Materials that get just about everything
 for( let i = 0; i < base_mats.length; i++ ) {
     let mat = base_mats[i];
@@ -406,7 +413,7 @@ for( let x = 0; x < alloy_names.length; x++ ) {
     fs.writeFileSync( `output/${matFileName}_blend_smallblend.json`, JSON.stringify(res_blend_2, null, '\t' ) );
     fs.writeFileSync( `output/${matFileName}_smallblend_blend.json`, JSON.stringify(res_small_blend, null, '\t' ) );
 }
-*/
+
 function mapNameVanilla( typeName, matName ) {
 
     let name = matName.toLowerCase();
@@ -437,7 +444,7 @@ function mapNameVanilla( typeName, matName ) {
 	return `basemetals:${matName.toLowerCase()}_bars`;
     }
 }
-/*
+
 // Vanilla Materials
 // Needs lots of special handling - for ingot, block and some other bits
 for( let v = 0; v < van_mats.length; v++ ) {
@@ -493,7 +500,7 @@ for( let am = 0; am < armor_mats.length; am++ ) {
 }
     
 fs.writeFileSync( 'output/_factories.json', JSON.stringify( _factories, null, '\t' ) );
-*/
+
 
 const blargh = [ "Adamantine", "Antimony", "Aquarium", "Bismuth", "Brass", "Bronze", "ColdIron", "Copper", "Cupronickel", "Electrum", "Emerald", "Invar", "Lead", "Mithril", "Nickel", "Obsidian", "Pewter", "Platinum", "Quartz", "Silver", "StarSteel", "Steel", "Tin", "Zinc" ]
 

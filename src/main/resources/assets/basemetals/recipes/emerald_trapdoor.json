@@ -11,7 +11,7 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "ingotEmerald"
+			"ore": "gemEmerald"
 		}
 	},
 	"conditions": [
@@ -26,7 +26,7 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",
-					"optionValue": "Trapdoors"
+					"optionValue": "Trapdoor"
 				},
 				{
 					"type": "basemetals:enabled",

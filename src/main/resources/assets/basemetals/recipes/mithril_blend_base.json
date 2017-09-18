@@ -1,4 +1,9 @@
 {
+	"result": {
+		"item": "basemetals:mithril_blend",
+		"data": 0,
+		"count": 3
+	},
 	"type": "forge:ore_shapeless",
 	"ingredients": [
 		{
@@ -14,26 +19,11 @@
 			"ore": "ingotMercury"
 		}
 	],
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_blend",
-		"data": 0,
-		"count": 3
-	},
+	"group": "alloys",
 	"conditions": [
 		{
 			"type": "forge:and",
 			"values": [
-				{
-					"type": "basemetals:enabled",
-					"optionName": "material",
-					"optionValue": "Mithril"
-				},
-				{
-					"type": "basemetals:enabled",
-					"optionName": "material",
-					"optionValue": "Mercury"
-				},
 				{
 					"type": "basemetals:enabled",
 					"optionName": "material",
@@ -42,15 +32,24 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "material",
-					"optionValue": "Coldiron"
+					"optionValue": "ColdIron"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Mercury"
 				},
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",
 					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Mithril"
 				}
 			]
 		}
-	],
-	"group": "alloys"
+	]
 }

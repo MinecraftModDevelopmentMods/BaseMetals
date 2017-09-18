@@ -1,20 +1,18 @@
 {
 	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:mithril_button",
+		"data": 0
+	},
 	"pattern": [
 		"x",
 		"x"
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
-			"item": "basemetals:mithril_nugget",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "nuggetMithril"
 		}
-	},
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_button",
-		"data": 0
 	},
 	"conditions": [
 		{
@@ -24,6 +22,11 @@
 					"type": "basemetals:enabled",
 					"optionName": "material",
 					"optionValue": "Mithril"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Button"
 				},
 				{
 					"type": "basemetals:enabled",

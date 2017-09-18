@@ -1,5 +1,9 @@
 {
 	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:mithril_hoe",
+		"data": 0
+	},
 	"pattern": [
 		"xx",
 		" s",
@@ -7,20 +11,13 @@
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
-			"item": "basemetals:mithril_ingot",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "ingotMithril"
 		},
 		"s": {
-			"type": "minecraft:item",
-			"item": "minecraft:stick",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
 		}
-	},
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_hoe",
-		"data": 0
 	},
 	"conditions": [
 		{
@@ -35,6 +32,11 @@
 					"type": "basemetals:enabled",
 					"optionName": "thing",
 					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BasicTools"
 				}
 			]
 		}

@@ -1,19 +1,17 @@
 {
 	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:mithril_pressure_plate",
+		"data": 0
+	},
 	"pattern": [
 		"xx"
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
-			"item": "basemetals:mithril_ingot",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "ingotMithril"
 		}
-	},
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_pressure_plate",
-		"data": 0
 	},
 	"conditions": [
 		{
@@ -23,6 +21,11 @@
 					"type": "basemetals:enabled",
 					"optionName": "material",
 					"optionValue": "Mithril"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "PressurePlate"
 				},
 				{
 					"type": "basemetals:enabled",

@@ -1,5 +1,10 @@
 {
 	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:mithril_bolt",
+		"data": 0,
+		"count": 4
+	},
 	"pattern": [
 		"x",
 		"x",
@@ -7,21 +12,13 @@
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
 			"item": "basemetals:mithril_rod",
 			"data": 0
 		},
 		"y": {
-			"type": "minecraft:item",
 			"item": "minecraft:feather",
 			"data": 0
 		}
-	},
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_bolt",
-		"data": 0,
-		"count": 4
 	},
 	"conditions": [
 		{
@@ -35,7 +32,12 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",
-					"optionValue": "Basics"
+					"optionValue": "CrossbowAndBolt"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
 				}
 			]
 		}

@@ -1,5 +1,9 @@
 {
 	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:mithril_crackhammer",
+		"data": 0
+	},
 	"pattern": [
 		"x",
 		"y",
@@ -7,20 +11,13 @@
 	],
 	"key": {
 		"x": {
-			"type": "minecraft:item",
-			"item": "basemetals:mithril_block",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "blockMithril"
 		},
 		"y": {
-			"type": "minecraft:item",
-			"item": "minecraft:stick",
-			"data": 0
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
 		}
-	},
-	"result": {
-		"type": "minecraft:item",
-		"item": "basemetals:mithril_crackhammer",
-		"data": 0
 	},
 	"conditions": [
 		{
@@ -35,6 +32,9 @@
 					"type": "basemetals:enabled",
 					"optionName": "thing",
 					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:hammer"
 				}
 			]
 		}
