@@ -1,0 +1,55 @@
+{
+	"result": {
+		"item": "basemetals:mithril_blend",
+		"data": 0,
+		"count": 3
+	},
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustSilver"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustColdiron"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "ingotMercury"
+		}
+	],
+	"group": "alloys",
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Silver"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "ColdIron"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Mercury"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Mithril"
+				}
+			]
+		}
+	]
+}

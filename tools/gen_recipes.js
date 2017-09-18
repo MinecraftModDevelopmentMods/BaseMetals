@@ -67,7 +67,13 @@ const alloy_mix = { 'Aquarium': { 'recipe': { 'type': 'forge:ore_shapeless',
 						    { 'type': 'oredict', 'name':'dustIron' },
 						    { 'type': 'oredict', 'name':'dustIron' },
 						    { 'type': 'oredict', 'name':'dustCoal' } ] },
-			       'output': 8 } };
+			       'output': 8 },
+		    'Mithril': { 'recipe': { 'type': 'forge:ore_shapeless',
+					     'mix': [ { 'type': 'oredict', 'name': 'dustSilver'},
+						      { 'type': 'oredict', 'name': 'dustColdiron' },
+						      { 'type': 'oredict', 'name': 'ingotMercury' } ] },
+				 'output': 3 } };
+					     
 const alloy_conditions = { 'Aquarium': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Zinc' ] },
 			   'Brass': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Zinc' ] },
 			   'Bronze': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Tin' ] },
@@ -75,9 +81,10 @@ const alloy_conditions = { 'Aquarium': { 'enabled': [ 'Basics' ], 'materials': [
 			   'Electrum': { 'enabled': [ 'Basics' ], 'materials': [ 'Silver' ] },
 			   'Invar': { 'enabled': [ 'Basics' ], 'materials': [ 'Iron', 'Nickel' ] },
 			   'Pewter': { 'enabled': [ 'Basics' ], 'materials': [ 'Copper', 'Lead', 'Tin' ] },
-			   'Steel': { 'enabled': [ 'Basics' ], 'materials': [ 'Iron', 'Coal' ] } };
+			   'Steel': { 'enabled': [ 'Basics' ], 'materials': [ 'Iron', 'Coal' ] },
+			   'Mithril': { 'enabled': [ 'Basics' ], 'materials': [ 'Silver', 'ColdIron', 'Mercury' ] } };
 
-const alloy_names = [ 'Aquarium', 'Brass', 'Bronze', 'Cupronickel', 'Electrum', 'Invar', 'Pewter', 'Steel' ];
+const alloy_names = [ 'Aquarium', 'Brass', 'Bronze', 'Cupronickel', 'Electrum', 'Invar', 'Mithril', 'Pewter', 'Steel' ];
 
 const patterns_basic = {
     // Basics
@@ -494,11 +501,11 @@ for( let am = 0; am < armor_mats.length; am++ ) {
     
 fs.writeFileSync( 'output/_factories.json', JSON.stringify( _factories, null, '\t' ) );
 
-/*
+
 const blargh = [ "Adamantine", "Antimony", "Aquarium", "Bismuth", "Brass", "Bronze", "ColdIron", "Copper", "Cupronickel", "Electrum", "Emerald", "Invar", "Lead", "Mithril", "Nickel", "Obsidian", "Pewter", "Platinum", "Quartz", "Silver", "StarSteel", "Steel", "Tin", "Zinc" ]
 
 blargh.forEach( (name) => {
     fs.writeFileSync( `output/${name.toLowerCase()}_horsearmor.json`, JSON.stringify( processRecipe( name, patterns_basic.horsearmor ), null, '\t' ) );
 });
-*/
+
 console.log( 'done!' );
