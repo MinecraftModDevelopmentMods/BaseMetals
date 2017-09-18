@@ -27,14 +27,14 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)) {
+		if (initDone || !Options.isModEnabled("tinkersconstruct")) {
 			return;
 		}
 
 		TraitRegistry.initTiCTraits();
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
-
+		BaseMetals.logger.fatal("TiCon Plugin/BMe Registries Initialized");
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, true, false);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC, TraitNames.JAGGED, TraitLocations.HEAD, TraitNames.AQUADYNAMIC, TraitLocations.HEAD);
@@ -52,7 +52,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, true, false);
 
 		registerAlloys();
-
+		
 		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
 			registerFluid(Materials.getMaterialByName(MaterialNames.COAL), 144);
 		}
