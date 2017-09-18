@@ -13,7 +13,7 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "nuggetColdIron"
+			"ore": "nuggetColdiron"
 		},
 		"y": {
 			"item": "basemetals:coldiron_rod",

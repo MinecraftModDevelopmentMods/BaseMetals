@@ -157,15 +157,15 @@ function toTitleCase(str)
 }
 
 const OreDictMaps = {
-    'NUGGET': (name) => { return `ore:nugget${name}`; },
-    'INGOT': (name) => { return `ore:ingot${name}`; },
-    'POWDER': (name) => { return `ore:dust${name}`; },
-    'BLEND': (name) => { return `ore:blend${name}`; },
-    'SMALLPOWDER': (name) => { return `ore:dustSmall${name}`; },
-    'SMALLBLEND': (name) => { return `ore:blendSmall${name}`; },
+    'NUGGET': (name) => { return `ore:nugget${toTitleCase(name)}`; },
+    'INGOT': (name) => { return `ore:ingot${toTitleCase(name)}`; },
+    'POWDER': (name) => { return `ore:dust${toTitleCase(name)}`; },
+    'BLEND': (name) => { return `ore:blend${toTitleCase(name)}`; },
+    'SMALLPOWDER': (name) => { return `ore:dustSmall${toTitleCase(name)}`; },
+    'SMALLBLEND': (name) => { return `ore:blendSmall${toTitleCase(name)}`; },
     'STICK': (name) => { return 'ore:stickWood'; },
     'WOOD_PLANK': (name) => { return 'ore:plankWood'; },
-    'BLOCK': (name) => { return `ore:block${name}`; },
+    'BLOCK': (name) => { return `ore:block${toTitleCase(name)}`; },
     'WOOL': (name) => { return 'minecraft:wool'; }
 };
 

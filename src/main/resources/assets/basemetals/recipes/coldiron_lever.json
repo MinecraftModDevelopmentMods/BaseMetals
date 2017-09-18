@@ -15,7 +15,7 @@
 		},
 		"y": {
 			"type": "forge:ore_dict",
-			"ore": "ingotColdIron"
+			"ore": "ingotColdiron"
 		}
 	},
 	"conditions": [
