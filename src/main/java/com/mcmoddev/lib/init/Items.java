@@ -113,7 +113,7 @@ public abstract class Items {
 		mapNameToClass(Names.CRUSHED, GenericMMDItem.class);
 		mapNameToClass(Names.CRUSHED_PURIFIED, GenericMMDItem.class);
 
-//		mapNameToClass(Names.CRYSTAL, GenericMMDItem.class);
+		//mapNameToClass(Names.MEK_CRYSTAL, GenericMMDItem.class);
 		mapNameToClass(Names.SHARD, GenericMMDItem.class);
 		mapNameToClass(Names.CLUMP, GenericMMDItem.class);
 		mapNameToClass(Names.POWDER_DIRTY, GenericMMDItem.class);
@@ -168,7 +168,7 @@ public abstract class Items {
 		mapNameToEnabled(Names.CRUSHED_PURIFIED, Options.isModEnabled(ic2));
 
 		final String mekanism = "mekanism";
-//		mapNameToEnabled(Names.CRYSTAL, Options.modEnabled(mekanism));
+		//mapNameToEnabled(Names.CRYSTAL, Options.isModEnabled(mekanism));
 		mapNameToEnabled(Names.SHARD, Options.isModEnabled(mekanism));
 		mapNameToEnabled(Names.CLUMP, Options.isModEnabled(mekanism));
 		mapNameToEnabled(Names.POWDER_DIRTY, Options.isModEnabled(mekanism));
@@ -459,6 +459,7 @@ public abstract class Items {
 			create(Names.SHARD, material, tabs.itemsTab);
 			create(Names.CLUMP, material, tabs.itemsTab);
 			create(Names.POWDER_DIRTY, material, tabs.itemsTab);
+			create(Names.CRYSTAL, material, tabs.itemsTab);
 		}
 	}
 	

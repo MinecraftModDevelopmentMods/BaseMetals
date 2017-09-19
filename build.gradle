@@ -106,10 +106,10 @@ repositories {
         name 'jared maven'
         url 'http://blamejared.com/maven'
     }
-//    maven { // IC2
-//        name "industrialcraft"
-//        url "http://maven.ic2.player.to"
-//    }
+    maven { // IC2
+        name "industrialcraft"
+        url "http://maven.ic2.player.to"
+    }
     maven { // WAILA/HWYLA
     	name 'tehnut'
     	url 'http://tehnut.info/maven'
@@ -129,6 +129,10 @@ repositories {
     maven { // Mekanism, TAIGA
         name 'jitpack'
         url 'https://jitpack.io'
+    }
+    maven { // Buildcraft
+        name 'buildcraft'
+	url 'https://www.mod-buildcraft.com/maven'
     }
 }
 

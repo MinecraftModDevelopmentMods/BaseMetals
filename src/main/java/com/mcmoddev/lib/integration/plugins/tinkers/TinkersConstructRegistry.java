@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 
@@ -22,6 +21,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
+
 import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
@@ -120,7 +120,8 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCMaterial getMaterial(@Nonnull final String name, @Nonnull final MMDMaterial material) {
-        final String n = name==null?(material==null?"FixYourCode":material.getName()):name;
+    	final String posName = (material==null?"FixYourCode":material.getName());
+        final String n = name==null?posName:name;
         if( material == null || name == null) {
             return null;
         }

@@ -157,9 +157,4 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 	}
 
-	// this was needed, might not be now
-/*	public void doSecondPass() {
-		// make the second-pass MaterialIntegration call
-		registry.integrateRecipes();
-	}
-*/}
+}
