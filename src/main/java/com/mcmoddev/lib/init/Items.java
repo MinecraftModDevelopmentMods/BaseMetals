@@ -434,7 +434,7 @@ public abstract class Items {
 		if (material.hasOre()) {
 			create(Names.CRUSHED, material, tabs.itemsTab);
 			create(Names.CRUSHED_PURIFIED, material, tabs.itemsTab);
-		}
+		}		
 	}
 
 	protected static void createItemsModMekanism(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
