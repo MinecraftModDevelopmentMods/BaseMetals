@@ -1,53 +1,27 @@
 package com.mcmoddev.lib.registry;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.Lists;
-import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.registry.recipe.ArbitraryCrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.OreDictionaryCrusherRecipe;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 import net.minecraftforge.registries.RegistryBuilder;
 
 /**
- * This class handles all of the recipes for the crack hammer, collectively
- * referred to as crusher recipes (the crack hammer is meant to be equivalent to
- * the pulverizers and rock crushers from mods like Thermal Expansion). Adding a
- * new crusher recipe is as simple as calling one of the
- * addNewCrusherRecipe(...) static functions. To get the recipe(s) for a given
- * block or item, use
- * CrusherRecipeRegistry.getInstance().getRecipeForInputItem(...) or
- * CrusherRecipeRegistry.getInstance().getRecipesForOutputItem(...). Added
- * crusher recipes will automatically appear in the NEI crusher recipe section.
- * <p>
- * To see all of the default crusher recipes, look at the source code of the
- * class cyano.basemetals.init.Recipes
- * </p>
- * 
- * @author DrCyano
- *
+ * Original code by Dr. Cyano (aka: cyanobacterium on GitHub)
+ * Rewritten entirely as part of the 1.12 porting by D. Hazelton, 20-SEP-2017
  */
 public class CrusherRecipeRegistry {
 	private final IForgeRegistryModifiable<ICrusherRecipe> REGISTRY;
@@ -62,26 +36,29 @@ public class CrusherRecipeRegistry {
 			    .create();
 	}
 
+	// back compat add-recipe stuff
 	public static void addNewCrusherRecipe(@Nonnull final String oreDict, @Nonnull final ItemStack output) {
-		instance.REGISTRY.register( new OreDictionaryCrusherRecipe(oreDict, output));
+		instance.register( new OreDictionaryCrusherRecipe(oreDict, output));
 	}
 
 	public static void addNewCrusherRecipe(@Nonnull final Block input, @Nonnull final ItemStack output) {
-		instance.REGISTRY.register( new ArbitraryCrusherRecipe(input, output));
+		instance.register( new ArbitraryCrusherRecipe(input, output));
 	}
 
 	public static void addNewCrusherRecipe(@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
-		instance.REGISTRY.register( new ArbitraryCrusherRecipe(input, output));
+		instance.register( new ArbitraryCrusherRecipe(input, output));
 	}
 
 	public static void addNewCrusherRecipe(@Nonnull final Item input, @Nonnull final ItemStack output) {
-		instance.REGISTRY.register( new ArbitraryCrusherRecipe(input, output));
+		instance.register( new ArbitraryCrusherRecipe(input, output));
 	}
 
-	public static void register(@Nonnull final ICrusherRecipe recipe) {
-		instance.REGISTRY.register(recipe);
+	// proper entry point
+	public void register(@Nonnull final ICrusherRecipe recipe) {
+		this.REGISTRY.register(recipe);
 	}
 	
+	// more back-compat
 	public static List<ICrusherRecipe> getAll() {
 		return Lists.newArrayList(instance.REGISTRY.iterator());
 	}
@@ -103,7 +80,57 @@ public class CrusherRecipeRegistry {
 		return null;
 	}
 	
+	public static ResourceLocation getNameForInputItem(@Nonnull final ItemStack itemStack) {
+		ICrusherRecipe r = getRecipeForInputItem(itemStack);
+		
+		if( r != null ) {
+			return instance.REGISTRY.getKey(r);
+		}
+		
+		return null;
+	}
+	
 	public void clearCache() {
 		// we do nothing - back-compat
 	}
+	
+	// removing recipes!
+	// statics are for convenience and convenient naming
+	
+	// remove a single entry, by resource location/name
+	public static void removeByName(@Nonnull final ResourceLocation name) {
+		instance.remove(name);
+	}
+
+	// remove all entries that map to the ore-dict
+	public static void removeByInput(@Nonnull final String oreDictName) {
+		NonNullList<ItemStack> itemStacks = OreDictionary.getOres(oreDictName);
+		
+		for( ItemStack itemStack : itemStacks ) {
+			ResourceLocation rl = getNameForInputItem(itemStack);
+			removeByName(rl);
+		}
+	}
+
+	// remove single item, by Item
+	public static void removeByInput(@Nonnull final Item input) {
+		removeByInput( new ItemStack(input) );
+		
+	}
+	
+	// remove single item, by Block
+	public static void removeByInput(@Nonnull final Block input) {
+		removeByInput( Item.getItemFromBlock(input) );
+	}
+	
+	// remove single item, by ItemStack
+	public static void removeByInput(@Nonnull final ItemStack input) {
+		removeByName( getNameForInputItem(input) );
+	}
+	
+	// actually do the removal call
+	public void remove(@Nonnull final ResourceLocation name) {
+		this.REGISTRY.remove(name);
+	}
+	
 }
