@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
  * Superclass for all crushed-item recipes. For recipes that use the
@@ -14,7 +15,7 @@ import net.minecraft.item.ItemStack;
  * @author DrCyano
  *
  */
-public interface ICrusherRecipe {
+public interface ICrusherRecipe extends IForgeRegistryEntry<ICrusherRecipe> {
 
 	/**
 	 * Gets the input item(s) from applying this recipe.

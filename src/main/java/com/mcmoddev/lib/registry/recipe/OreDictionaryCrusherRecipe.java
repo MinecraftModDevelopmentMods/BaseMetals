@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
  * This class is an implementation of the ICrusherRecipe superclass. It uses the
@@ -13,7 +14,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
+public class OreDictionaryCrusherRecipe  extends IForgeRegistryEntry.Impl<ICrusherRecipe> implements ICrusherRecipe {
 
 	private List<ItemStack> inputs;
 	private final ItemStack output;
@@ -32,6 +33,8 @@ public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
 		this.oreDictSource = oreDictionaryID;
 		this.inputs = OreDictionary.getOres(this.oreDictSource);
 		this.output = results;
+		
+		super.setRegistryName(oreDictionaryID + "_to_" + results.getItem().getRegistryName().getResourcePath());
 	}
 
 	/**

@@ -169,9 +169,9 @@ dependencies {
 //    deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
-//    deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
-//        exclude group: 'mezz.jei'
-//    }
+    deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
+        exclude group: 'mezz.jei'
+    }
 
     deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
         exclude group: 'mezz.jei'

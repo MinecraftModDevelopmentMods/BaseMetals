@@ -9,7 +9,10 @@ import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
  * This class is an implementation of the ICrusherRecipe superclass. It uses the
@@ -18,14 +21,14 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author DrCyano
  *
  */
-public class ArbitraryCrusherRecipe implements ICrusherRecipe {
+public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> implements ICrusherRecipe {
 
 	private static final String NO_NULL_INPUT = ": cannot have null input item";
 	private static final String NO_NULL_OUTPUT = ": cannot have null output item";
 	
 	private final ItemStack input;
 	private final ItemStack output;
-
+	
 	/**
 	 * Constructs a new instance of this ICrusherRecipe class representing a
 	 * recipe with an input and an output. If the input ItemStack has
@@ -45,6 +48,8 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 			throw new NullPointerException(this.getClass().getName() + NO_NULL_INPUT);
 		if (output == null)
 			throw new NullPointerException(this.getClass().getName() + NO_NULL_OUTPUT);
+		
+		super.setRegistryName(input.getItem().getRegistryName().getResourcePath() + "_to_" + output.getItem().getRegistryName().getResourcePath());
 	}
 
 	/**
@@ -66,6 +71,8 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 			throw new NullPointerException(this.getClass().getName() + NO_NULL_INPUT);
 		if (output == null)
 			throw new NullPointerException(this.getClass().getName() + NO_NULL_OUTPUT);
+		
+		super.setRegistryName(input.getRegistryName().getResourcePath() + "_to_" + output.getItem().getRegistryName().getResourcePath());
 	}
 
 	/**
@@ -87,6 +94,8 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 			throw new NullPointerException(this.getClass().getName() + NO_NULL_INPUT);
 		if (output == null)
 			throw new NullPointerException(this.getClass().getName() + NO_NULL_OUTPUT);
+		
+		super.setRegistryName(input.getRegistryName().getResourcePath() + "_to_" + output.getItem().getRegistryName().getResourcePath());
 	}
 
 	/**
