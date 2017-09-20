@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -86,7 +87,7 @@ public class IC2Base implements IIntegration {
 	protected void addMetalFormerRecipes(@Nonnull final MMDMaterial material) {
 		String oreDictName = material.getCapitalizedName();
 		IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.INGOT + oreDictName);
-		ItemStack outputPlate = new ItemStack(material.getItem(Names.PLATE));
+		ItemStack outputPlate = new ItemStack(material.getBlock(Names.PLATE));
 		Recipes.metalformerRolling.addRecipe(inputIngot, null, false, outputPlate);
 	}
 }

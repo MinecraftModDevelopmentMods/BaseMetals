@@ -17,12 +17,14 @@ public class IC2 extends IC2Base implements IIntegration {
 		if (initDone || !Options.isModEnabled(IC2.PLUGIN_MODID)) {
 			return;
 		}
-
+		
+/*  examples! */		
 		registerVanillaRecipes(MaterialNames.ADAMANTINE);
 		addMaceratorRecipes(MaterialNames.ADAMANTINE);
 		addOreWashingPlantRecipes(MaterialNames.ADAMANTINE);
 		addThermalCentrifugeRecipes(MaterialNames.ADAMANTINE);
-		addMetalFormerRecipes(MaterialNames.ADAMANTINE);
+		// broken, somehow
+		// addMetalFormerRecipes(MaterialNames.ADAMANTINE);
 		
 		initDone = true;
 	}
