@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.mcmoddev.basemetals.BaseMetals;
 //import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -121,6 +122,7 @@ public abstract class MMDToolEffects {
 			return;
 		if (player == null)
 			return;
+		
 		if (i % 2 == 0) {
 			// count armor pieces
 			if (material.getName().equals(MaterialNames.STARSTEEL)) {
@@ -302,8 +304,9 @@ public abstract class MMDToolEffects {
 
 	private static boolean hasFullSuit(EntityPlayer player, String materialName) {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
-		return (player.inventory.armorInventory.get(3) != ItemStack.EMPTY && player.inventory.armorInventory.get(2).getItem() == material.getItem(Names.HELMET)
-				&& player.inventory.armorInventory.get(2) != ItemStack.EMPTY && player.inventory.armorInventory.get(1).getItem() == material.getItem(Names.CHESTPLATE)
+		
+		return (player.inventory.armorInventory.get(3) != ItemStack.EMPTY && player.inventory.armorInventory.get(3).getItem() == material.getItem(Names.HELMET)
+				&& player.inventory.armorInventory.get(2) != ItemStack.EMPTY && player.inventory.armorInventory.get(2).getItem() == material.getItem(Names.CHESTPLATE)
 				&& player.inventory.armorInventory.get(1) != ItemStack.EMPTY && player.inventory.armorInventory.get(1).getItem() == material.getItem(Names.LEGGINGS)
 				&& player.inventory.armorInventory.get(0) != ItemStack.EMPTY&& player.inventory.armorInventory.get(0).getItem() == material.getItem(Names.BOOTS));
 	}

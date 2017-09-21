@@ -164,7 +164,7 @@ dependencies {
         exclude group: 'mezz.jei'
         exclude group: 'codechicken'
     }
-    compile "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}:deobf"
+    compile "com.mcmoddev:AdditionalLootTables:${mc_version}.1-${alt_version}:deobf"
     compile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
     
 //    deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
