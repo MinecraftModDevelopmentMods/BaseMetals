@@ -3,12 +3,11 @@ package com.mcmoddev.lib.init;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.collect.Lists;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -17,8 +16,11 @@ import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
 
 /**
  * This class initializes all of the materials in Base Metals. It also contains
@@ -28,17 +30,21 @@ import net.minecraftforge.fml.common.Loader;
  * @author Jasmine Iwanek
  *
  */
-public abstract class Materials {
+public class Materials {
 
 	private static boolean initDone = false;
 
-	private static final Map<String, MMDMaterial> allMaterials = new HashMap<>();
+	private final IForgeRegistry<MMDMaterial> REGISTRY;
+	public final static Materials instance = new Materials();
 	private static final Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
-	private static final Map<String, Set<MMDMaterial>> modSourceMaterialMap = new HashMap<>();
 
 	protected Materials() {
-		throw new IllegalAccessError("Not a instantiable class");
+		this.REGISTRY = new RegistryBuilder<MMDMaterial>()
+				.setName(new ResourceLocation("mmdlib","materials_registry"))
+			    .setType(MMDMaterial.class)
+			    .setMaxID(Integer.MAX_VALUE >> 4)
+			    .create();
 	}
 
 	/**
@@ -258,13 +264,16 @@ public abstract class Materials {
 			return null;
 		}
 
-		if (Materials.getAllMaterials().contains(material)) {
+		String modId = Loader.instance().activeModContainer().getModId();
+		ResourceLocation loc = new ResourceLocation( modId, material.getName());
+		if( instance.REGISTRY.containsKey(loc)) {
 			BaseMetals.logger.error("You asked registermaterial() to register an existing material, Don't do that! (Returning pre existing material instead");
 			return Materials.getMaterialByName(material.getName());
 		}
 
-		allMaterials.put(material.getName(), material);
-
+		material.setRegistryName(loc);
+		instance.REGISTRY.register(material);
+		
 		final String enumName = material.getEnumName();
 		final String texName = material.getName();
 		final int[] protection = material.getDamageReductionArray();
@@ -283,14 +292,6 @@ public abstract class Materials {
 		}
 		toolMaterialMap.put(material, toolMaterial);
 
-		if (modSourceMaterialMap.containsKey(Loader.instance().activeModContainer().getModId())) {
-			modSourceMaterialMap.get(Loader.instance().activeModContainer().getModId()).add(material);
-		} else {
-			Set<MMDMaterial> newSet = new HashSet<>();
-			newSet.add(material);
-			modSourceMaterialMap.put(Loader.instance().activeModContainer().getModId(), newSet);
-
-		}
 		return material;
 	}
 
@@ -322,7 +323,7 @@ public abstract class Materials {
 	 * @return A Collection of MMDMaterial instances.
 	 */
 	public static Collection<MMDMaterial> getAllMaterials() {
-		return allMaterials.values();
+		return Collections.unmodifiableList(instance.REGISTRY.getValues());
 	}
 
 	/**
@@ -334,7 +335,12 @@ public abstract class Materials {
 	 *         materials have been registered under that name.
 	 */
 	public static MMDMaterial getMaterialByName(@Nonnull final String materialName) {
-		return allMaterials.get(materialName);
+		for( ResourceLocation key : instance.REGISTRY.getKeys() ) {
+			if( key.getResourcePath().equals(materialName)) {
+				return instance.REGISTRY.getValue(key);
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -346,14 +352,18 @@ public abstract class Materials {
 	 *         by a given mod or the "empty set" if the modId is not recorded.
 	 */
 	public static Collection<MMDMaterial> getMaterialsByMod(@Nonnull final String modId) {
-		if (modSourceMaterialMap.containsKey(modId)) {
-			return Collections.unmodifiableSet(modSourceMaterialMap.get(modId));
-		} else {
-			return Collections.emptySet();
-		}
+		return Lists.newArrayList(instance.REGISTRY.getEntries().stream()
+				.filter((ent) -> ent.getKey().getResourceDomain().equals(modId) )
+				.map((ent) -> ent.getValue()).iterator()); 
 	}
+
 	
-	public static boolean hasMaterialFromMod(String modId) {
-		return modSourceMaterialMap.containsKey(modId);
+	public static boolean hasMaterialFromMod(@Nonnull final String modId) {
+		for( ResourceLocation rl : instance.REGISTRY.getKeys() ) {
+			if( rl.getResourceDomain().equals(modId) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

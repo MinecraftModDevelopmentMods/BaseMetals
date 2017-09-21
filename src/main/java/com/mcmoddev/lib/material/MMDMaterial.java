@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.ImmutableList;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 
@@ -17,15 +18,15 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
  *
  * @author Jasmine Iwanek
  *
  */
-public class MMDMaterial {
+public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 
 	/*
 	 * data storage - flexible, somewhat important stuff in this part
@@ -426,7 +427,7 @@ public class MMDMaterial {
 	 */
 	public MMDMaterial addNewItem(String name, Item item) {
 		if (this.items.containsKey(name)) {
-			FMLLog.warning("Tried adding item %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
+			BaseMetals.logger.warn("Tried adding item %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
 			return this;
 		}
 		this.items.put(name, item);
@@ -460,7 +461,7 @@ public class MMDMaterial {
 	 */
 	public MMDMaterial addNewBlock(String name, Block block) {
 		if (this.blocks.containsKey(name)) {
-			FMLLog.warning("Tried adding block %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
+			BaseMetals.logger.warn("Tried adding block %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
 			return this;
 		}
 		this.blocks.put(name, block);
