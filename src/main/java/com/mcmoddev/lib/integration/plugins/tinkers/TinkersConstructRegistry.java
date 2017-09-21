@@ -22,7 +22,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
 
-import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
@@ -132,14 +131,6 @@ public class TinkersConstructRegistry {
         
         return getInstance().put(name, new TCMaterial(name, material));
     }
-
-    /**
-     * Private internal function for adding a MaterialIntegration to said list
-     * @param m The MaterialIntegration to add to the list
-     */
-    private static void addIntegration(@Nonnull final MaterialIntegration m) {
-    	getInstance().integrations.add(m);
-    }
     
     /**
      * Private internal that handles actual material registration and creates the MaterialIntegration objects
@@ -160,6 +151,7 @@ public class TinkersConstructRegistry {
     	
 		// make sure the name used here is all lower case
 		final Material tcmat = new Material(mat.getName().toLowerCase(), mat.getMetalMaterial().getTintColor());
+		TinkerRegistry.addMaterial(tcmat);
 
 		if (hasTraits) {
 			for (final String s : mat.getTraitLocations()) {
@@ -211,8 +203,8 @@ public class TinkersConstructRegistry {
 			m.toolforge();
 		}
 
-		addIntegration(m);
 		TinkerRegistry.integrate(m);
+		
 		return TCCode.SUCCESS;
     }
     
