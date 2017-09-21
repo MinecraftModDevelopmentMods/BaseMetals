@@ -3,6 +3,7 @@ package com.mcmoddev.lib.material;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,12 +35,12 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	/**
 	 * Storage for all "Item" type forms for this material
 	 */
-	private Map<String, Item> items = new TreeMap<>();
+	private Map<String, Item> items = new ConcurrentHashMap<>();
 
 	/**
 	 * Storage for all "Block" type forms for this material
 	 */
-	private Map<String, Block> blocks = new TreeMap<>();
+	private Map<String, Block> blocks = new ConcurrentHashMap<>();
 
 	/**
 	 * If this material has a fluid, it is stored here
