@@ -391,7 +391,7 @@ public abstract class Blocks {
 
 		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab) && (material != null) ) {
 			final ItemBlock itemBlock = new ItemBlock(block);
-			itemBlock.setRegistryName(fullName);
+			itemBlock.setRegistryName(block.getRegistryName());
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 			material.addNewItem("ItemBlock_"+fullName, itemBlock);
 		}
