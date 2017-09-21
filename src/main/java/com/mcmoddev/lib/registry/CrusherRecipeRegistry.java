@@ -67,6 +67,13 @@ public class CrusherRecipeRegistry {
 		return instance;
 	}
 	
+	public void clearCache() {
+		// we do nothing - back-compat
+	}
+	
+	// very nice to have helpers
+	
+	// get an ICrusherRecipe for a given input, if one exists
 	public static ICrusherRecipe getRecipeForInputItem(@Nonnull final ItemStack itemStack) {
 		Iterator<ICrusherRecipe> iter = instance.REGISTRY.iterator();
 		
@@ -80,6 +87,7 @@ public class CrusherRecipeRegistry {
 		return null;
 	}
 	
+	// if a recipe that can take the matching input exists, give us the name
 	public static ResourceLocation getNameForInputItem(@Nonnull final ItemStack itemStack) {
 		ICrusherRecipe r = getRecipeForInputItem(itemStack);
 		
@@ -88,10 +96,6 @@ public class CrusherRecipeRegistry {
 		}
 		
 		return null;
-	}
-	
-	public void clearCache() {
-		// we do nothing - back-compat
 	}
 	
 	// removing recipes!
