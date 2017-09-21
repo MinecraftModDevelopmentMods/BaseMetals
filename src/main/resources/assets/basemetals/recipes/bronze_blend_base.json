@@ -1,0 +1,54 @@
+{
+	"result": {
+		"item": "basemetals:bronze_blend",
+		"data": 0,
+		"count": 4
+	},
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustTin"
+		}
+	],
+	"group": "alloys",
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Copper"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Tin"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Bronze"
+				}
+			]
+		}
+	]
+}

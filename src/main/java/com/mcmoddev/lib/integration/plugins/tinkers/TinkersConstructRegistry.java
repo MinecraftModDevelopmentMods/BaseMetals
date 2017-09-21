@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -20,6 +20,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
+
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
@@ -34,6 +36,7 @@ import slimeknights.tconstruct.library.traits.AbstractTrait;
 public class TinkersConstructRegistry {
     private final Map<String,TCMaterial> registry = new HashMap<>();
     private final List<MaterialIntegration> integrations = new ArrayList<>();
+    private final Map<String,List<String>> sourceMap = new HashMap<>();
     
     private static TinkersConstructRegistry instance;
 
@@ -76,6 +79,14 @@ public class TinkersConstructRegistry {
             return registry.get(name);
         }
         registry.put(name,mat);
+        String sourceMod = Loader.instance().activeModContainer().getModId(); 
+        if( sourceMap.containsKey(sourceMod) ) {
+        	sourceMap.get(sourceMod).add(name);
+        } else {
+        	List<String> nl = new ArrayList<>();
+        	nl.add(name);
+        	sourceMap.put(sourceMod, nl);
+        }
         return mat;
     }
 
@@ -107,19 +118,17 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCMaterial getMaterial(@Nonnull final String name, @Nonnull final MMDMaterial material) {
-        if( getInstance().isRegistered(name) ) {
-            return getInstance().getMaterial(name);
+    	final String posName = (material==null?"FixYourCode":material.getName());
+        final String n = name==null?posName:name;
+        if( material == null || name == null) {
+            return null;
+        }
+
+        if( getInstance().isRegistered(n) ) {
+            return getInstance().getMaterial(n);
         }
         
         return getInstance().put(name, new TCMaterial(name, material));
-    }
-
-    /**
-     * Private internal function for adding a MaterialIntegration to said list
-     * @param m The MaterialIntegration to add to the list
-     */
-    private static void addIntegration(@Nonnull final MaterialIntegration m) {
-    	getInstance().integrations.add(m);
     }
     
     /**
@@ -141,6 +150,7 @@ public class TinkersConstructRegistry {
     	
 		// make sure the name used here is all lower case
 		final Material tcmat = new Material(mat.getName().toLowerCase(), mat.getMetalMaterial().getTintColor());
+		TinkerRegistry.addMaterial(tcmat);
 
 		if (hasTraits) {
 			for (final String s : mat.getTraitLocations()) {
@@ -183,7 +193,7 @@ public class TinkersConstructRegistry {
 		
 		tcmat.setFluid(mat.getMetalMaterial().getFluid()).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(matRepItem, 1, Material.VALUE_Ingot);
 		tcmat.setRepresentativeItem(matRepItem);
-		
+
 		final String base = mat.getMetalMaterial().getName();
 		final String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
 		final MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMetalMaterial().getFluid(), suffix);
@@ -192,8 +202,8 @@ public class TinkersConstructRegistry {
 			m.toolforge();
 		}
 
-		addIntegration(m);
-		m.integrate();
+		TinkerRegistry.integrate(m);
+		
 		return TCCode.SUCCESS;
     }
     
@@ -202,19 +212,19 @@ public class TinkersConstructRegistry {
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
     public TCCode registerAll() {
-        for (final Entry<String,TCMaterial> ent : registry.entrySet()) {
-        	// log ent.getKey() - the material name - here ?
-        	final TCCode rv = register(ent.getValue());
-        	// Either we've had a success or the material is already registered
-        	// in those two cases, we carry on. Otherwise we return the error and
-        	// halt
-        	if( rv != TCCode.SUCCESS && rv != TCCode.MATERIAL_ALREADY_REGISTERED ) {
-        		return rv;
-        	}
-        }
-        return TCCode.SUCCESS;
+    	for( final String mat : sourceMap.get(Loader.instance().activeModContainer().getModId()) ) {
+    		// log ent.getKey() - the material name - here ?
+    		final TCCode rv = register(registry.get(mat));
+    		// Either we've had a success or the material is already registered
+    		// in those two cases, we carry on. Otherwise we return the error and
+    		// halt
+    		if( rv != TCCode.SUCCESS && rv != TCCode.MATERIAL_ALREADY_REGISTERED ) {
+    			return rv;
+    		}
+    	}
+    	return TCCode.SUCCESS;
     }
-
+    
     /**
      * Register an item as melting to a given amount of a specific output fluid
      * As we have no real method of detecting errors here, we could have this return void. Using TCCode for orthogonality and possible future utility

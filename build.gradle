@@ -15,21 +15,15 @@ buildscript {
             name = 'sonatype'
             url = 'https://oss.sonatype.org/content/groups/public'
         }
-//        maven {
-//            name = 'sponge'
-//            url = 'http://repo.spongepowered.org/maven'
-//        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-//        classpath 'org.spongepowered:mixingradle:0.4-SNAPSHOT'
-        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.0.9'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+        classpath "com.matthewprenger:CurseGradle:1.0-SNAPSHOT"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
-//apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.sonarqube'
@@ -40,13 +34,10 @@ javadoc {
 
 description = 'Base Metals'
 def mod_file = getModFile()
-def mc_version = '1.11.2'
+def mc_version = "1.12"
+def short_version = getVersion("VERSION", mod_file)
+version = mc_version + "-" + short_version
 
-ext {
-    short_version = getVersion('VERSION', mod_file)
-}
-
-version = mc_version + '-' + short_version
 if (System.getenv().BUILD_NUMBER) {
     version += '.' + System.getenv().BUILD_NUMBER
 }
@@ -79,19 +70,14 @@ if (secretFile.exists()) {
 }
 
 minecraft {
-    version = '1.11.2-13.20.1.2386'
-    runDir = 'run'
-    mappings = 'stable_32'
-//  coreMod = corePlugin
+    version = "1.12.1-14.22.1.2479"
+    runDir = "run"
+    mappings = "snapshot_20170908"
     clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
     serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
 }
 
 repositories {
-    maven {
-	    name 'SpongePowered'
-        url 'https://repo.spongepowered.org/maven/'
-    }
     maven { // Mantle, TCon, JEI
         name 'DVS1 Maven FS'
         url 'http://dvs1.progwml6.com/files/maven'
@@ -121,8 +107,8 @@ repositories {
         url 'http://blamejared.com/maven'
     }
     maven { // IC2
-        name 'industrialcraft'
-        url 'http://maven.ic2.player.to'
+        name "industrialcraft"
+        url "http://maven.ic2.player.to"
     }
     maven { // WAILA/HWYLA
     	name 'tehnut'
@@ -144,16 +130,13 @@ repositories {
         name 'jitpack'
         url 'https://jitpack.io'
     }
+    maven { // Buildcraft
+        name 'buildcraft'
+	url 'https://www.mod-buildcraft.com/maven'
+    }
 }
 
-//configurations {
-//    shade
-//    compile.extendsFrom shade
-//}
-
 dependencies {
-//    shade 'org.spongepowered:mixin:0.6.11-SNAPSHOT'
-
     compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
@@ -175,29 +158,26 @@ dependencies {
 	
 //  We do this to make NEI happy as there is no deobf or dev JEI jar for the deobf instance
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-//  deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
-//  runtime "mezz.jei:jei_${mc_version}:${jei_version}:dev"
 
     deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
-//    deobfCompile ("codechicken:CodeChickenCore:${mc_version}-${ccc_version}:universal") {
-//        exclude group: 'codechicken'
-//    }
     deobfCompile ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
         exclude group: 'mezz.jei'
         exclude group: 'codechicken'
     }
     compile "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}:deobf"
     compile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
-//  deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}:universal"
-    deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
+    
+//    deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
     deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
         exclude group: 'mezz.jei'
     }
+
     deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
         exclude group: 'mezz.jei'
     }
+    
     deobfCompile ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
         exclude group: 'mezz.jei'
     }
@@ -228,16 +208,8 @@ jar {
     manifest {
         attributes 'FMLCorePluginContainsFMLMod': 'true'
         attributes 'FMLCorePlugin': corePlugin
-//      attributes 'FMLAT' : 'mmdlib_at.cfg'
     }
 }
-
-/*
-task apiJar(type: Jar) {
-    classifier = 'apiClasses'
-    from apiClasses
-}
-*/
 
 task deobfJar(type: Jar) {
     classifier = 'deobf'
@@ -250,7 +222,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
-//  archives apiJar
     archives deobfJar
     archives sourceJar
     archives javadocJar
@@ -266,11 +237,6 @@ publishing {
             artifact sourceJar {
                 classifier 'sources'
             }
-/*
-            artifact apiJar {
-                classifier 'api'
-            }
-*/
             artifact deobfJar {
                 classifier 'deobf'
             }
@@ -309,9 +275,6 @@ curseforge {
                 optionalLibrary 'additional-loot-tables'
             }
         }
-//        addArtifact(apiJar) {
-//            displayName = "$project.description $displayVersion API"
-//        }
         addArtifact(sourceJar) {
             displayName = "$project.description $displayVersion Sources"
         }

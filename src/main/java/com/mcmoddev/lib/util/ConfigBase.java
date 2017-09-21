@@ -65,8 +65,6 @@ public class ConfigBase {
 			addOreRecipes( dictionary );
 			addIngotRecipes( dictionary );
 		}
-
-		CrusherRecipeRegistry.getInstance().clearCache();
 	}
 
 	private static void addIngotRecipes(Set<String> dictionary) {
@@ -74,7 +72,7 @@ public class ConfigBase {
 		.filter( entry -> {
 			List<ItemStack> iS = OreDictionary.getOres(Oredicts.INGOT.concat(entry.substring(4)));
 			for( ItemStack i : iS ) {
-				if((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null )) {
+				if((CrusherRecipeRegistry.getRecipeForInputItem(i) != null )) {
 					return true;
 				}
 			}
@@ -94,7 +92,7 @@ public class ConfigBase {
 		.filter( entry -> {
 			List<ItemStack> iS = OreDictionary.getOres(Oredicts.ORE.concat(entry.substring(4)));
 			for( ItemStack i : iS ) {
-				if((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null )) {
+				if((CrusherRecipeRegistry.getRecipeForInputItem(i) != null )) {
 					return true;
 				}
 			}

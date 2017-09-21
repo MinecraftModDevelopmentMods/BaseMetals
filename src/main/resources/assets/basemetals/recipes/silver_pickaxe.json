@@ -1,0 +1,45 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:silver_pickaxe",
+		"data": 0
+	},
+	"pattern": [
+		"xxx",
+		" s ",
+		" s "
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotSilver"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Silver"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BasicTools"
+				}
+			]
+		}
+	],
+	"group": "tools"
+}

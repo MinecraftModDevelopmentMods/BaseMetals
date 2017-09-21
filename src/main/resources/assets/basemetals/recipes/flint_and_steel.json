@@ -1,0 +1,21 @@
+{
+    "type": "forge:ore_shapeless",
+    "conditions": [ {
+	"type": "basemetals:enabled",
+	"optionName": "material",
+	"optionValue": "Steel"
+    }],
+    "ingredients": [
+	{ 
+	    "type":"forge:ore_dict",
+	    "ore":"ingotSteel"
+	},
+	{
+	    "item":"minecraft:flint"
+	}
+    ],
+    "result": {
+	"item": "minecraft:flint_and_steel"
+    },
+    "group": "vanilla"
+}

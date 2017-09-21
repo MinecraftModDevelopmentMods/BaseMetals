@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ASMHooks {
     
-	public static final DataParameter<ItemStack> ARMOR_STACK = EntityDataManager.createKey(EntityHorse.class, DataSerializers.OPTIONAL_ITEM_STACK);
+	public static final DataParameter<ItemStack> ARMOR_STACK = EntityDataManager.createKey(EntityHorse.class, DataSerializers.ITEM_STACK);
 
 	private ASMHooks() {
 		throw new IllegalAccessError("Not a instantiable class");

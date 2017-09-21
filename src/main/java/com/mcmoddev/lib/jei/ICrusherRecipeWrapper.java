@@ -6,10 +6,10 @@ import java.util.List;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
-public class ICrusherRecipeWrapper extends BlankRecipeWrapper {
+public class ICrusherRecipeWrapper implements IRecipeWrapper {
 
 	private ICrusherRecipe theRecipe;
 	

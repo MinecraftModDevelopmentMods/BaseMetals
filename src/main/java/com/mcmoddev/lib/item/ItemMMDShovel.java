@@ -8,6 +8,7 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,11 +39,6 @@ public class ItemMMDShovel extends net.minecraft.item.ItemSpade implements IMMDO
 		this.setMaxDamage(this.material.getToolDurability());
 		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-	}
-
-	@Override
-	public ToolMaterial getToolMaterial() {
-		return this.toolMaterial;
 	}
 
 	@Override
@@ -88,9 +84,8 @@ public class ItemMMDShovel extends net.minecraft.item.ItemSpade implements IMMDO
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
-		super.addInformation(stack, player, list, b);
-		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -19,7 +20,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	public final NonNullList<ItemStack> repairMaterials;
 	
 	public RepairRecipeBase(MMDMaterial material, String itemName, Object...objects) {
-		super( new ItemStack(material.getItem(itemName)), objects);
+		super( new ResourceLocation("armor"), new ItemStack(material.getItem(itemName)), objects);
 		this.material = material;
 		this.baseItem = new ItemStack(material.getItem(itemName));
 		this.materialName = material.getCapitalizedName();
@@ -75,7 +76,6 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		}
 	}
 
-	@Override
 	public int getRecipeSize() {
 		int count = 1;
 		count += OreDictionary.getOres(Oredicts.PLATE + this.materialName).size();
@@ -87,7 +87,6 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		return new ItemStack( this.material.getItem(this.itemName));
 	}
 
-	@Override
 	public NonNullList<Object> getInput() {
 		NonNullList<Object> inputs = NonNullList.create();
 		inputs.add(this.baseItem);

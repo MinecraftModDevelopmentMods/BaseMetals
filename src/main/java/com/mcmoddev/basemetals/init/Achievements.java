@@ -1,5 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
+/*
 import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -9,19 +10,21 @@ import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.fml.common.Loader;
+*/
 
 /** initializer for achievements */
 public class Achievements extends com.mcmoddev.lib.init.Achievements {
-
+/*
 	private static boolean initDone = false;
 
 	private Achievements() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
-
+*/
 	/**
 	 *
 	 */
+	/*
 	public static void init() {
 		if (initDone) {
 			return;
@@ -75,5 +78,5 @@ public class Achievements extends com.mcmoddev.lib.init.Achievements {
 		}
 
 		initDone = true;
-	}
+	}*/
 }

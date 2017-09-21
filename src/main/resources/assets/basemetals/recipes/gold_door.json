@@ -1,0 +1,42 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:gold_door",
+		"data": 0,
+		"count": 3
+	},
+	"pattern": [
+		"xx",
+		"xx",
+		"xx"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotGold"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Gold"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Door"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

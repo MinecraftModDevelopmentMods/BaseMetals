@@ -1,7 +1,7 @@
 package com.mcmoddev.lib.block;
 
 import com.mcmoddev.lib.util.ConfigBase.Options;
-import com.mcmoddev.lib.init.Achievements;
+//import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -61,9 +61,9 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	/**
 	 * @deprecated
 	 */
+	
 	@Override
-	@Deprecated
-	public MapColor getMapColor(final IBlockState bs) {
+	public MapColor getMapColor(IBlockState state, IBlockAccess p_180659_2_, BlockPos p_180659_3_) {
 		return MapColor.IRON;
 	}
 
@@ -115,7 +115,7 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 		super.onBlockPlacedBy(w, coord, bs, placer, src);
 		// achievement
 		if ((Options.enableAchievements()) && (placer instanceof EntityPlayer)) {
-			((EntityPlayer) placer).addStat(Achievements.getAchievementByName("blocktastic"), 1);
+		//	((EntityPlayer) placer).addStat(Achievements.getAchievementByName("blocktastic"), 1);
 		}
 	}
 

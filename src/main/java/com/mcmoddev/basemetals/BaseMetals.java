@@ -5,15 +5,19 @@ import org.apache.logging.log4j.Logger;
 
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * This is the entry point for this Mod. If you are writing your own Mod that
@@ -33,8 +37,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 		modid = BaseMetals.MODID,
 		name = BaseMetals.NAME,
 		version = BaseMetals.VERSION,
-		dependencies = "required-after:forge@[13.20.1.2386,);after:taiga;before:buildingbricks",
-		acceptedMinecraftVersions = "[1.11.2,)",
+		dependencies = "required-after:forge@[14.21.0.2327,);after:taiga;after:ic2;after:tconstruct;before:buildingbricks",
+		acceptedMinecraftVersions = "[1.12,)",
 		updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {
 
@@ -70,6 +74,10 @@ public class BaseMetals {
 
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Recipes.class);
 		proxy.preInit(event);
 	}
 
@@ -83,8 +91,14 @@ public class BaseMetals {
 		proxy.postInit(event);
 	}
 
-	@EventHandler
-	public static void onRemap(FMLMissingMappingsEvent event) {
-		proxy.onRemap(event);
+	@SubscribeEvent
+	public void onRemapBlock(RegistryEvent.MissingMappings<Block> event) {
+		proxy.onRemapBlock(event);
 	}
+	
+	@SubscribeEvent
+	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
+		proxy.onRemapItem(event);
+	}
+	
 }

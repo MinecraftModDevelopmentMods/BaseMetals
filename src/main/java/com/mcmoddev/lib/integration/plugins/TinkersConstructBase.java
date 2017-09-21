@@ -25,7 +25,7 @@ import net.minecraftforge.fluids.FluidRegistry;
  */
 public class TinkersConstructBase implements IIntegration {
 
-	public static final String PLUGIN_MODID = "tinkersconstruct";
+	public static final String PLUGIN_MODID = "tconstruct";
 
 	private static boolean initDone = false;
 

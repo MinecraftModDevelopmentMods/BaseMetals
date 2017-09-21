@@ -15,7 +15,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 
 	private static boolean initDone = false;
 
-	protected Materials() {
+	private Materials() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
 

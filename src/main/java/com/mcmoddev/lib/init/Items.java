@@ -32,7 +32,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * This class initializes all items in Base Metals and provides some utility
@@ -110,7 +109,7 @@ public abstract class Items {
 		mapNameToClass(Names.CRUSHED, GenericMMDItem.class);
 		mapNameToClass(Names.CRUSHED_PURIFIED, GenericMMDItem.class);
 
-//		mapNameToClass(Names.CRYSTAL, GenericMMDItem.class);
+		//mapNameToClass(Names.MEK_CRYSTAL, GenericMMDItem.class);
 		mapNameToClass(Names.SHARD, GenericMMDItem.class);
 		mapNameToClass(Names.CLUMP, GenericMMDItem.class);
 		mapNameToClass(Names.POWDER_DIRTY, GenericMMDItem.class);
@@ -165,7 +164,7 @@ public abstract class Items {
 		mapNameToEnabled(Names.CRUSHED_PURIFIED, Options.isModEnabled(ic2));
 
 		final String mekanism = "mekanism";
-//		mapNameToEnabled(Names.CRYSTAL, Options.modEnabled(mekanism));
+		//mapNameToEnabled(Names.CRYSTAL, Options.isModEnabled(mekanism));
 		mapNameToEnabled(Names.SHARD, Options.isModEnabled(mekanism));
 		mapNameToEnabled(Names.CLUMP, Options.isModEnabled(mekanism));
 		mapNameToEnabled(Names.POWDER_DIRTY, Options.isModEnabled(mekanism));
@@ -387,7 +386,7 @@ public abstract class Items {
 		if (material.hasOre()) {
 			create(Names.CRUSHED, material, tabs.itemsTab);
 			create(Names.CRUSHED_PURIFIED, material, tabs.itemsTab);
-		}
+		}		
 	}
 
 	protected static void createItemsModMekanism(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
@@ -408,6 +407,7 @@ public abstract class Items {
 			create(Names.SHARD, material, tabs.itemsTab);
 			create(Names.CLUMP, material, tabs.itemsTab);
 			create(Names.POWDER_DIRTY, material, tabs.itemsTab);
+			create(Names.CRYSTAL, material, tabs.itemsTab);
 		}
 	}
 
@@ -499,7 +499,7 @@ public abstract class Items {
 
 		item.setRegistryName(fullName);
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
-		GameRegistry.register(item);
+		//GameRegistry.register(item);
 		itemRegistry.put(fullName, item);
 
 		if (tab != null) {
@@ -727,4 +727,5 @@ public abstract class Items {
 	public static Map<MMDMaterial, List<Item>> getItemsByMaterial() {
 		return Collections.unmodifiableMap(itemsByMaterial);
 	}
+
 }

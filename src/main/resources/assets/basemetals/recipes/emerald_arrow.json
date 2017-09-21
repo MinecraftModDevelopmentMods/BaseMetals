@@ -1,0 +1,50 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:emerald_arrow",
+		"data": 0,
+		"count": 4
+	},
+	"pattern": [
+		"x",
+		"y",
+		"z"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetEmerald"
+		},
+		"y": {
+			"item": "basemetals:emerald_rod",
+			"data": 0
+		},
+		"z": {
+			"item": "minecraft:feather",
+			"data": 0
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Emerald"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BowAndArrow"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

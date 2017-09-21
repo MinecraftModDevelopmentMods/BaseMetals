@@ -13,7 +13,7 @@ import slimeknights.tconstruct.library.utils.ToolHelper;
 public class TraitBrittle extends AbstractTrait {
 
 	TraitBrittle() {
-		super("brittle", TextFormatting.RED);
+		super("mmd-brittle", TextFormatting.RED);
 	}
 
 	@Override

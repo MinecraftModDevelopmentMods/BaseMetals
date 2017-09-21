@@ -1,0 +1,20 @@
+{
+    "type": "forge:ore_shaped",
+    "conditions": [ {
+	"type": "basemetals:enabled",
+	"optionName": "material",
+	"optionValue": "Steel"
+    }],
+    "pattern": [ "x x",
+		 "xxx" ],
+    "key": {
+	"x": {
+	    "type":"forge:ore_dict",
+	    "ore":"ingotSteel"
+	}
+    },
+    "result": {
+	"item": "minecraft:minecart"
+    },
+    "group": "vanilla"
+}

@@ -46,8 +46,13 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			}
 		}
 
-		ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.getMaterialByName(MaterialNames.COPPER).getItem(Names.INGOT), 2), new ItemStack(Materials.getMaterialByName(MaterialNames.ZINC).getItem(Names.INGOT), 1), new ItemStack(Materials.getMaterialByName(MaterialNames.BRASS).getItem(Names.INGOT), 3));
-		ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.getMaterialByName(MaterialNames.COPPER).getItem(Names.INGOT), 3), new ItemStack(Materials.getMaterialByName(MaterialNames.NICKEL).getItem(Names.INGOT), 1), new ItemStack(Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getItem(Names.INGOT), 4));
+		if( Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.ZINC) && Options.isMaterialEnabled(MaterialNames.BRASS)) {
+			ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.getMaterialByName(MaterialNames.COPPER).getItem(Names.INGOT), 2), new ItemStack(Materials.getMaterialByName(MaterialNames.ZINC).getItem(Names.INGOT), 1), new ItemStack(Materials.getMaterialByName(MaterialNames.BRASS).getItem(Names.INGOT), 3));
+		}
+		if( Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.TIN) && Options.isMaterialEnabled(MaterialNames.BRONZE) ) {
+			ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.getMaterialByName(MaterialNames.COPPER).getItem(Names.INGOT), 3), new ItemStack(Materials.getMaterialByName(MaterialNames.NICKEL).getItem(Names.INGOT), 1), new ItemStack(Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getItem(Names.INGOT), 4));
+		}
+		
 		initDone = true;
 	}
 }

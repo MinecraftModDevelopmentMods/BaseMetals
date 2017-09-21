@@ -5,11 +5,8 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  *
@@ -33,11 +30,10 @@ public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDO
 		this.blockResistance = this.material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 	}
-	
+
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-		list.add(new ItemStack(itemIn, 1, net.minecraft.block.BlockWall.EnumType.NORMAL.getMetadata()));
+	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
+		list.add(new ItemStack(this, 1, net.minecraft.block.BlockWall.EnumType.NORMAL.getMetadata()));
 	}
 
 	@Override

@@ -63,7 +63,9 @@ public class ModifierRegistry {
 
 	public static void registerModifiers() {
 		for (final Entry<String, Modifier> ent : modifiers.entrySet()) {
-			TinkerRegistry.registerModifier(ent.getValue());
+			if( TinkerRegistry.getModifier(ent.getValue().getIdentifier()) == null ) {
+				TinkerRegistry.registerModifier(ent.getValue());
+			}
 		}
 	}
 
@@ -77,5 +79,5 @@ public class ModifierRegistry {
 		} else {
 			return Collections.emptyMap();
 		}
-	}
+	}	
 }

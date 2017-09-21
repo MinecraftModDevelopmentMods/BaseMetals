@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.material.IMMDObject;
@@ -11,11 +13,14 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -44,11 +49,6 @@ public class ItemMMDPickaxe extends net.minecraft.item.ItemPickaxe implements IM
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("pickaxe");
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-	}
-
-	@Override
-	public ToolMaterial getToolMaterial() {
-		return this.toolMaterial;
 	}
 
 	@Override
@@ -99,11 +99,11 @@ public class ItemMMDPickaxe extends net.minecraft.item.ItemPickaxe implements IM
 			item.setItemDamage(item.getItemDamage() - 1);
 		}
 	}
-
+	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
-		super.addInformation(stack, player, list, b);
-		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);
 	}
 
 	@Override

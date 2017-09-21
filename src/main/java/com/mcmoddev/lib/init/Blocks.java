@@ -12,8 +12,8 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -27,7 +27,6 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.BlockFluidBase;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * This class initializes all blocks in Base Metals and provides some utility
@@ -67,7 +66,7 @@ public abstract class Blocks {
 		mapNameToClass(Names.BOOKSHELF, BlockMMDBookshelf.class);
 		mapNameToClass(Names.BUTTON, BlockMMDButton.class);
 		mapNameToClass(Names.DOOR, BlockMMDDoor.class);
-		mapNameToClass(Names.DOUBLE_SLAB, BlockMMDSlab.class);
+		mapNameToClass(Names.DOUBLE_SLAB, BlockMMDDoubleSlab.class);
 		mapNameToClass(Names.FLOWER_POT, BlockMMDFlowerPot.class);
 		mapNameToClass(Names.LADDER, BlockMMDLadder.class);
 		mapNameToClass(Names.LEVER, BlockMMDLever.class);
@@ -210,6 +209,10 @@ public abstract class Blocks {
 	protected static void createBlocksFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createBlocksFull(Materials.getMaterialByName(materialName), tabs);
 	}
+	
+	protected static void createBlocksFullOreless(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
+		createBlocksFullOreless(Materials.getMaterialByName(materialName), tabs);
+	}
 
 	/**
 	 * 
@@ -225,6 +228,26 @@ public abstract class Blocks {
 
 	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
 		return create(name, Materials.getMaterialByName(materialName), false, tab);
+	}
+	
+	protected static void createBlocksFullOreless(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
+		if ((material == null) || (tabs == null)) {
+			return;
+		}
+
+		create(Names.BLOCK, material, tabs.blocksTab);
+		create(Names.PLATE, material, tabs.blocksTab);
+		create(Names.BARS, material, tabs.blocksTab);
+		create(Names.DOOR, material, tabs.blocksTab);
+		create(Names.TRAPDOOR, material, tabs.blocksTab);
+
+		create(Names.BUTTON, material, tabs.blocksTab);
+		create(Names.SLAB, material, tabs.blocksTab);
+		create(Names.DOUBLE_SLAB, material, tabs.blocksTab);
+		create(Names.LEVER, material, tabs.blocksTab);
+		create(Names.PRESSURE_PLATE, material, tabs.blocksTab);
+		create(Names.STAIRS, material, tabs.blocksTab);
+		create(Names.WALL, material, tabs.blocksTab);		
 	}
 
 	/**
@@ -264,6 +287,11 @@ public abstract class Blocks {
 
 		if ((name.equals(Names.BLOCK)) && (isNameEnabled(name))) {
 			material.addNewBlock(name, addBlock(new BlockMMDBlock(material, glow, true), name.toString(), material, tab));
+			Block b = material.getBlock(name);
+			final String oredict = getOredictFromName(name);
+			if ((oredict != null) && (b != null)) {
+				Oredicts.registerOre(oredict + material.getCapitalizedName(), b);
+			}			
 			return material.getBlock(name);
 		}
 
@@ -319,7 +347,12 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return a new block
 	 */
-	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
+	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
+
+		if ((block == null) || (name == null)) {
+			return null;
+		}
+
 		String fullName;
 
 		if (material != null) {
@@ -339,18 +372,18 @@ public abstract class Blocks {
 
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-		GameRegistry.register(block);
+//		GameRegistry.register(block);
 		if (block instanceof BlockFluidBase) {
 			fluidBlockRegistry.put(fullName, (BlockFluidBase) block);
 		} else {
 			blockRegistry.put(fullName, block);
 		}
 
-		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab)) {
+		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab) && (material != null) ) {
 			final ItemBlock itemBlock = new ItemBlock(block);
 			itemBlock.setRegistryName(fullName);
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-			GameRegistry.register(itemBlock);
+			material.addNewItem("ItemBlock_"+fullName, itemBlock);
 		}
 
 		if (tab != null) {
@@ -477,4 +510,6 @@ public abstract class Blocks {
 	public static Map<MMDMaterial, List<Block>> getBlocksByMaterial() {
 		return Collections.unmodifiableMap(blocksByMaterial);
 	}
+	
+
 }

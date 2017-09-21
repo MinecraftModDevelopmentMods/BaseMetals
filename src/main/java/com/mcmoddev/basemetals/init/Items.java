@@ -1,14 +1,20 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * This class initializes all items in Base Metals.
@@ -95,7 +101,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
 		iron.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
 		iron.addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
-		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.field_191525_da); // Items.IRON_NUGGET
+		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		lapis.addNewItem(Names.POWDER, new ItemStack(net.minecraft.init.Items.DYE, 1, 4).getItem());
@@ -300,5 +306,20 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		addToMetList();
 
 		initDone = true;
+	}
+	
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
+			for( Item item : mat.getItems() ) {
+				if( item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID) ) {
+					event.getRegistry().register(item);
+				}
+			}
+		}
+		final ItemBlock itemBlock = new ItemBlock(Blocks.humanDetector);
+		itemBlock.setRegistryName("human_detector");
+		itemBlock.setUnlocalizedName(Blocks.humanDetector.getRegistryName().getResourceDomain() + ".human_detector");
+		event.getRegistry().register(itemBlock);
 	}
 }
