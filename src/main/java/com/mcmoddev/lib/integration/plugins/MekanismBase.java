@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -49,11 +50,11 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
-		final Gas gas1 = new Gas(material.getName(), material.getName() + "-Icon");
+		final Gas gas1 = new Gas(material.getFluid());
 		gas1.setUnlocalizedName("gas" + material.getName());
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas("clean" + material.getCapitalizedName(), material.getName() + "-CleanIcon");
+		final Gas gas2 = new Gas(material.getFluid());
 		gas2.setUnlocalizedName("clean" + material.getName());
 		GasRegistry.register(gas2);
 	}
@@ -147,6 +148,7 @@ public class MekanismBase implements IIntegration {
 		GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
 		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), inputGasQty );
 
+		BaseMetals.logger.fatal("addChemicalWasherRecipe(%s,%d,%s) -- inputGasStack: %s, outputGasStack: %s", inputGas, inputGasQty, outputGas, inputGasStack, outputGasStack);
 		RecipeHandler.addChemicalWasherRecipe(inputGasStack, outputGasStack);
 	}
 
