@@ -2,7 +2,6 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -17,7 +16,6 @@ import mekanism.api.infuse.InfuseRegistry;
 import mekanism.common.recipe.RecipeHandler;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -110,8 +108,8 @@ public class MekanismBase implements IIntegration {
 		}
 		
 		if( crystal != null ) {
-//			addGassesForMaterial(material);
-			addChemicalCrystallizerRecipe("clean"+material.getName(), 1000, new ItemStack(crystal));
+			// Crystallizer is 200mB for 1 crystal
+			addChemicalCrystallizerRecipe("clean"+material.getName(), 200, new ItemStack(crystal));
 			addChemicalWasherRecipe(material.getName(),1000,"clean"+material.getName());
 			addChemicalDissolutionChamberRecipe(new ItemStack(ore), material.getName());
 		}
