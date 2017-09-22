@@ -2,7 +2,6 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -87,7 +86,22 @@ public class IC2Base implements IIntegration {
 	protected void addMetalFormerRecipes(@Nonnull final MMDMaterial material) {
 		String oreDictName = material.getCapitalizedName();
 		IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.INGOT + oreDictName);
+		IRecipeInput inputPlate = Recipes.inputFactory.forOreDict(Oredicts.PLATE + oreDictName);
 		ItemStack outputPlate = new ItemStack(material.getBlock(Names.PLATE));
+		ItemStack outputCasing = new ItemStack(material.getItem(Names.CASING));
 		Recipes.metalformerRolling.addRecipe(inputIngot, null, false, outputPlate);
+		Recipes.metalformerRolling.addRecipe(inputPlate, null, false, outputCasing);
+	}
+
+	protected void addCompressorRecipes(@Nonnull final String materialName) {
+		MMDMaterial material = Materials.getMaterialByName(materialName);
+		addCompressorRecipes(material);
+	}
+	
+	protected void addCompressorRecipes(@Nonnull final MMDMaterial material) {
+		String oreDictName = material.getCapitalizedName();
+		IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.PLATE + oreDictName, 9);
+		ItemStack outputDensePlate = new ItemStack(material.getItem(Names.DENSE_PLATE));
+		Recipes.compressor.addRecipe(inputIngot, null, false, outputDensePlate);
 	}
 }
