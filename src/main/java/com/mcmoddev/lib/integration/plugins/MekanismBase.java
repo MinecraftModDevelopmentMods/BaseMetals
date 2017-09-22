@@ -6,6 +6,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.plugins.mekanism.MMDMekGas;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
@@ -17,10 +18,12 @@ import mekanism.api.infuse.InfuseRegistry;
 import mekanism.common.recipe.RecipeHandler;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
 
 // mekanism.common.recipe.RecipeHandler
 //  -- addEnrichmentChamberRecipe
@@ -51,12 +54,12 @@ public class MekanismBase implements IIntegration {
 
 	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
 		final Gas gas1 = new Gas(material.getFluid());
-		gas1.setUnlocalizedName("gas" + material.getName());
+		gas1.setUnlocalizedName("gas" + material.getCapitalizedName());
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas(material.getFluid());
-		gas2.setUnlocalizedName("clean" + material.getName());
+		final MMDMekGas gas2 = new MMDMekGas(material.getFluid());
 		GasRegistry.register(gas2);
+		BaseMetals.logger.fatal("gas2.getSprite() == %s", gas2.getSprite());
 	}
 
 	protected static void addOreMultiplicationRecipes(@Nonnull final String materialName) {
@@ -109,8 +112,8 @@ public class MekanismBase implements IIntegration {
 		
 		if( crystal != null ) {
 			addGassesForMaterial(material);
-			addChemicalCrystallizerRecipe("clean"+material.getCapitalizedName(), 1000, new ItemStack(crystal));
-			addChemicalWasherRecipe(material.getName(),1000,"clean"+material.getCapitalizedName());
+			addChemicalCrystallizerRecipe("clean"+material.getName(), 1000, new ItemStack(crystal));
+			addChemicalWasherRecipe(material.getName(),1000,"clean"+material.getName());
 			addChemicalDissolutionChamberRecipe(new ItemStack(ore), material.getName());
 		}
 	}
