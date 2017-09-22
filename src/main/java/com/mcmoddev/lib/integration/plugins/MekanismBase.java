@@ -63,7 +63,7 @@ public class MekanismBase implements IIntegration {
 		GasRegistry.register(gas1);
 
 		final Gas gas2 = new Gas(getGasName(material.getName(), clean),material.getFluid().getStill().toString());
-		gas2.setUnlocalizedName(getGasName(material.getName(), cleanGas));
+		gas2.setUnlocalizedName(getGasName(material.getCapitalizedName(), cleanGas));
 		GasRegistry.register(gas2);
 	}
 
