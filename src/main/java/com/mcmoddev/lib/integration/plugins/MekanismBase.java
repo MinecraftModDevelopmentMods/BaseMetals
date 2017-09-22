@@ -6,7 +6,6 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.integration.plugins.mekanism.MMDMekGas;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
@@ -53,11 +52,12 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
-		final Gas gas1 = new Gas(material.getFluid());
+		final Gas gas1 = new Gas("dirty"+material.getName(),material.getFluid().getStill().toString());
 		gas1.setUnlocalizedName("gas" + material.getCapitalizedName());
 		GasRegistry.register(gas1);
 
-		final MMDMekGas gas2 = new MMDMekGas(material.getFluid());
+		final Gas gas2 = new Gas("clean"+material.getName(),material.getFluid().getStill().toString());
+		gas2.setUnlocalizedName("cleanGas"+material.getCapitalizedName());
 		GasRegistry.register(gas2);
 	}
 
