@@ -17,7 +17,7 @@ import com.mcmoddev.lib.integration.plugins.IC2Base;
 public class IC2 extends IC2Base implements IIntegration {
 
 	private static boolean initDone = false;
-
+	
 	@Override
 	public void init() {
 		if (initDone || !Options.isModEnabled(IC2.PLUGIN_MODID)) {
