@@ -102,7 +102,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		for (EntityItem target : entities) {
 			ItemStack targetItem = target.getItem();
 			if (targetItem != null) {
-				ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(targetItem);
+				ICrusherRecipe recipe = CrusherRecipeRegistry.getRecipeForInputItem(targetItem);
 				if (recipe != null) {
 					// hardness check
 					if ((Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
@@ -171,8 +171,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		if (block == null || Item.getItemFromBlock(block.getBlock()) == null) {
 			return null;
 		}
-		//return CrusherRecipeRegistry.getInstance().getRecipeForInputItem(block);
-		return CrusherRecipeRegistry.getInstance().getRecipeForInputItem(new ItemStack(block.getBlock(), 1, block.getBlock().getMetaFromState(block)));
+		return CrusherRecipeRegistry.getRecipeForInputItem(new ItemStack(block.getBlock(), 1, block.getBlock().getMetaFromState(block)));
 	}
 
 	@Override
@@ -228,10 +227,6 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
 		MMDToolEffects.extraEffectsOnCrafting(material, item, world, crafter);
-		// achievement
-		if (Options.enableAchievements()) {
-			//crafter.addStat(Achievements.getAchievementByName("geologist"), 1);
-		}
 	}
 
 	@Override

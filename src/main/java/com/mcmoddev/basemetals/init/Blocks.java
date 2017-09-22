@@ -54,8 +54,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		final MMDMaterial obsidian = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
 		final MMDMaterial quartz = Materials.getMaterialByName(MaterialNames.QUARTZ);
 		final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
-		// final MMDMaterial stone = Materials.getMaterialByName(MaterialNames.STONE);
-		// final MMDMaterial wood = Materials.getMaterialByName(MaterialNames.WOOD);
 
 		coal.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
 		coal.addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
@@ -84,9 +82,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		quartz.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
 		quartz.addNewBlock(Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
-		// quartz.addNewBlock(Names.SLAB, net.minecraft.init.Blocks.);
-		// quartz.addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.);
-		// quartz.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.);
+		quartz.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.QUARTZ_STAIRS);
 
 		redstone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
 		redstone.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);

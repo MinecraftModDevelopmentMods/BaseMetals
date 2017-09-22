@@ -20,7 +20,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Loader;
 
 // mekanism.common.recipe.RecipeHandler
 //  -- addEnrichmentChamberRecipe
@@ -49,13 +48,18 @@ public class MekanismBase implements IIntegration {
 		addGassesForMaterial(Materials.getMaterialByName(materialName));
 	}
 
+	private static String dirty = "dirty";
+	private static String clean = "clean";
+	private static String gas = "gas";
+	private static String cleanGas = "cleanGas";
+	
 	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
-		final Gas gas1 = new Gas("dirty"+material.getName(),material.getFluid().getStill().toString());
-		gas1.setUnlocalizedName("gas" + material.getCapitalizedName());
+		final Gas gas1 = new Gas(dirty+material.getName(),material.getFluid().getStill().toString());
+		gas1.setUnlocalizedName(gas + material.getCapitalizedName());
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas("clean"+material.getName(),material.getFluid().getStill().toString());
-		gas2.setUnlocalizedName("cleanGas"+material.getCapitalizedName());
+		final Gas gas2 = new Gas(clean+material.getName(),material.getFluid().getStill().toString());
+		gas2.setUnlocalizedName(cleanGas+material.getCapitalizedName());
 		GasRegistry.register(gas2);
 	}
 
@@ -109,8 +113,8 @@ public class MekanismBase implements IIntegration {
 		
 		if( crystal != null ) {
 			// Crystallizer is 200mB for 1 crystal
-			addChemicalCrystallizerRecipe("clean"+material.getName(), 200, new ItemStack(crystal));
-			addChemicalWasherRecipe(material.getName(),1000,"clean"+material.getName());
+			addChemicalCrystallizerRecipe(clean+material.getName(), 200, new ItemStack(crystal));
+			addChemicalWasherRecipe(material.getName(),1000,clean+material.getName());
 			addChemicalDissolutionChamberRecipe(new ItemStack(ore), material.getName());
 		}
 	}

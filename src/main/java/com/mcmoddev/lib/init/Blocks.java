@@ -347,7 +347,7 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return a new block
 	 */
-	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
+	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
 
 		if ((block == null) || (name == null)) {
 			return null;
@@ -372,7 +372,7 @@ public abstract class Blocks {
 
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-//		GameRegistry.register(block);
+		
 		if (block instanceof BlockFluidBase) {
 			fluidBlockRegistry.put(fullName, (BlockFluidBase) block);
 		} else {
