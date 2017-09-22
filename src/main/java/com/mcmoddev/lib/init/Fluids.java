@@ -120,13 +120,13 @@ public abstract class Fluids {
 
 		block.setRegistryName(name); // fullName
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
-//		GameRegistry.register(block);
+		material.addNewBlock("fluid", block);
 		block.setCreativeTab(CreativeTabs.MISC);
 
 		final ItemBlock itemBlock = new ItemBlock(block);
 		itemBlock.setRegistryName(name); // fullName
 		itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
-//		GameRegistry.register(itemBlock);
+		material.addNewItem("fluidItemBlock", itemBlock);
 
 		material.setFluidBlock(block);
 		fluidBlockRegistry.put(name, block);
