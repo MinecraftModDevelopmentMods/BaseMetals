@@ -48,18 +48,22 @@ public class MekanismBase implements IIntegration {
 		addGassesForMaterial(Materials.getMaterialByName(materialName));
 	}
 
+	private static String getGasName(String materialName, String which) {
+		return String.format("%s%s", which, materialName);
+	}
+	
 	private static String dirty = "dirty";
 	private static String clean = "clean";
 	private static String gas = "gas";
 	private static String cleanGas = "cleanGas";
 	
 	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
-		final Gas gas1 = new Gas(dirty+material.getName(),material.getFluid().getStill().toString());
-		gas1.setUnlocalizedName(gas + material.getCapitalizedName());
+		final Gas gas1 = new Gas(getGasName(material.getName(), dirty),material.getFluid().getStill().toString());
+		gas1.setUnlocalizedName(getGasName(material.getCapitalizedName(), gas));
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas(clean+material.getName(),material.getFluid().getStill().toString());
-		gas2.setUnlocalizedName(cleanGas+material.getCapitalizedName());
+		final Gas gas2 = new Gas(getGasName(material.getName(), clean),material.getFluid().getStill().toString());
+		gas2.setUnlocalizedName(getGasName(material.getName(), cleanGas));
 		GasRegistry.register(gas2);
 	}
 
@@ -113,9 +117,9 @@ public class MekanismBase implements IIntegration {
 		
 		if( crystal != null ) {
 			// Crystallizer is 200mB for 1 crystal
-			addChemicalCrystallizerRecipe(clean+material.getName(), 200, new ItemStack(crystal));
-			addChemicalWasherRecipe(material.getName(),1000,clean+material.getName());
-			addChemicalDissolutionChamberRecipe(new ItemStack(ore), material.getName());
+			addChemicalCrystallizerRecipe(getGasName(material.getName(), clean), 200, new ItemStack(crystal));
+			addChemicalWasherRecipe(getGasName(material.getName(), dirty),1000,getGasName(material.getName(), clean));
+			addChemicalDissolutionChamberRecipe(new ItemStack(ore), getGasName(material.getName(), dirty));
 		}
 	}
 
