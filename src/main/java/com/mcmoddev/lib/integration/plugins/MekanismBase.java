@@ -59,7 +59,6 @@ public class MekanismBase implements IIntegration {
 
 		final MMDMekGas gas2 = new MMDMekGas(material.getFluid());
 		GasRegistry.register(gas2);
-		BaseMetals.logger.fatal("gas2.getSprite() == %s", gas2.getSprite());
 	}
 
 	protected static void addOreMultiplicationRecipes(@Nonnull final String materialName) {
@@ -111,7 +110,7 @@ public class MekanismBase implements IIntegration {
 		}
 		
 		if( crystal != null ) {
-			addGassesForMaterial(material);
+//			addGassesForMaterial(material);
 			addChemicalCrystallizerRecipe("clean"+material.getName(), 1000, new ItemStack(crystal));
 			addChemicalWasherRecipe(material.getName(),1000,"clean"+material.getName());
 			addChemicalDissolutionChamberRecipe(new ItemStack(ore), material.getName());
@@ -151,7 +150,6 @@ public class MekanismBase implements IIntegration {
 		GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
 		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), inputGasQty );
 
-		BaseMetals.logger.fatal("addChemicalWasherRecipe(%s,%d,%s) -- inputGasStack: %s, outputGasStack: %s", inputGas, inputGasQty, outputGas, inputGasStack, outputGasStack);
 		RecipeHandler.addChemicalWasherRecipe(inputGasStack, outputGasStack);
 	}
 
