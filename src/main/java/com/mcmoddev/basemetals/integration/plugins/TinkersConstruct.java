@@ -149,10 +149,10 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			registry.registerAlloy(MaterialNames.INVAR, Materials.getMaterialByName(MaterialNames.INVAR).getFluid(), 3, MaterialNames.IRON, 2, MaterialNames.NICKEL, 1);
 		}
 
-/*		if (Options.isMaterialEnabled(MaterialNames.MITHRIL) && Options.isMaterialEnabled(MaterialNames.COLDIRON) && Options.isMaterialEnabled(MaterialNames.SILVER) && Options.isMaterialEnabled(MaterialNames.MERCURY)) {
+		if (Options.isMaterialEnabled(MaterialNames.MITHRIL) && Options.isMaterialEnabled(MaterialNames.COLDIRON) && Options.isMaterialEnabled(MaterialNames.SILVER) && Options.isMaterialEnabled(MaterialNames.MERCURY)) {
 			registry.registerAlloy(MaterialNames.MITHRIL, Materials.getMaterialByName(MaterialNames.MITHRIL).getFluid(), 3, MaterialNames.SILVER, 2, MaterialNames.COLDIRON, 1, MaterialNames.MERCURY, 1);
 		}
-*/
+
 		if (Options.isMaterialEnabled(MaterialNames.PEWTER) && Options.isMaterialEnabled(MaterialNames.LEAD) && Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.TIN)) {
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
 			registry.registerAlloy(MaterialNames.PEWTER, Materials.getMaterialByName(MaterialNames.PEWTER).getFluid(), 144, MaterialNames.TIN, 137, MaterialNames.COPPER, 2, MaterialNames.LEAD, 5);
