@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -16,10 +17,12 @@ import mekanism.api.infuse.InfuseRegistry;
 import mekanism.common.recipe.RecipeHandler;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
 
 // mekanism.common.recipe.RecipeHandler
 //  -- addEnrichmentChamberRecipe
