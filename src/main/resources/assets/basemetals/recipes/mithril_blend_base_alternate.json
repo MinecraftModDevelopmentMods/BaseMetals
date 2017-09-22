@@ -8,11 +8,9 @@
 	"ingredients": [
 		{
 			"type": "forge:ore_dict",
-			"ore": "dustSilver"
-		},
-		{
-			"type": "forge:ore_dict",
-			"ore": "dustSilver"
+		    "ore": "dustSilver",
+		    "count": 2
+		    
 		},
 		{
 			"type": "forge:ore_dict",
