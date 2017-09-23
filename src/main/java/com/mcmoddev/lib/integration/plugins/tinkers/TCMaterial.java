@@ -76,7 +76,7 @@ public class TCMaterial {
      */
     public TCMaterial(@Nonnull final String name, @Nonnull final MMDMaterial material) {
         this.headDurability = material.getToolDurability();
-        this.miningSpeed = material.getStat(MaterialStats.MAGICAFFINITY) * 3 / 2;
+        this.miningSpeed = material.getStat(MaterialStats.HARDNESS) * 0.85f;
         this.miningLevel = material.getToolHarvestLevel();
         this.headAttackDamage = material.getBaseAttackDamage() * 2;
         this.bodyDurability = material.getToolDurability() / 7;
