@@ -20,7 +20,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Loader;
 
 // mekanism.common.recipe.RecipeHandler
 //  -- addEnrichmentChamberRecipe
@@ -50,7 +49,7 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
-		final Gas gas1 = new Gas("dirty"+material.getName(),material.getFluid().getStill().toString());
+		final Gas gas1 = new Gas(material.getName(),material.getFluid().getStill().toString());
 		gas1.setUnlocalizedName("gas" + material.getCapitalizedName());
 		GasRegistry.register(gas1);
 
@@ -114,7 +113,7 @@ public class MekanismBase implements IIntegration {
 			addChemicalDissolutionChamberRecipe(new ItemStack(ore), material.getName());
 		}
 	}
-
+	
 	protected static void addMetallurgicInfuserRecipe(@Nonnull final String infuse, @Nonnull int amount, @Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem ) {
 		InfuseType infuseType = InfuseRegistry.get(infuse);
 		RecipeHandler.addMetallurgicInfuserRecipe(infuseType, amount, inputItem, outputItem);
@@ -143,11 +142,10 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addChemicalCrystallizerRecipe(inputGasStack, outputItem);
 	}
 
-	// 5x, Slurry to Clean Slurry
+	// 5x, Slurry to "clean" Slurry
 	protected static void addChemicalWasherRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final String outputGas) {
 		GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
 		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), inputGasQty );
-
 		RecipeHandler.addChemicalWasherRecipe(inputGasStack, outputGasStack);
 	}
 

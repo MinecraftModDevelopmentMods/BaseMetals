@@ -109,7 +109,6 @@ public abstract class Items {
 		mapNameToClass(Names.CRUSHED, GenericMMDItem.class);
 		mapNameToClass(Names.CRUSHED_PURIFIED, GenericMMDItem.class);
 
-		//mapNameToClass(Names.MEK_CRYSTAL, GenericMMDItem.class);
 		mapNameToClass(Names.SHARD, GenericMMDItem.class);
 		mapNameToClass(Names.CLUMP, GenericMMDItem.class);
 		mapNameToClass(Names.POWDER_DIRTY, GenericMMDItem.class);
@@ -157,14 +156,11 @@ public abstract class Items {
 		mapNameToEnabled(Names.DENSE_PLATE, Options.enableModderSupportThings());
 
 		final String ic2 = "ic2";
-//		mapNameToEnabled(Names.CASING, Options.modEnabled(ic2));
-//		mapNameToEnabled(Names.DENSE_PLATE, Options.modEnabled(ic2));
 
 		mapNameToEnabled(Names.CRUSHED, Options.isModEnabled(ic2));
 		mapNameToEnabled(Names.CRUSHED_PURIFIED, Options.isModEnabled(ic2));
 
 		final String mekanism = "mekanism";
-		//mapNameToEnabled(Names.CRYSTAL, Options.isModEnabled(mekanism));
 		mapNameToEnabled(Names.SHARD, Options.isModEnabled(mekanism));
 		mapNameToEnabled(Names.CLUMP, Options.isModEnabled(mekanism));
 		mapNameToEnabled(Names.POWDER_DIRTY, Options.isModEnabled(mekanism));
@@ -207,7 +203,6 @@ public abstract class Items {
 		mapNameToOredict(Names.CRUSHED, Oredicts.CRUSHED);
 		mapNameToOredict(Names.CRUSHED_PURIFIED, Oredicts.CRUSHED_PURIFIED);
 
-//		mapNameToOredict(Names.CRYSTAL, Oredicts.CRUSHED);
 		mapNameToOredict(Names.SHARD, Oredicts.SHARD);
 		mapNameToOredict(Names.CLUMP, Oredicts.CLUMP);
 		mapNameToOredict(Names.POWDER_DIRTY, Oredicts.DUST_DIRTY);
@@ -499,7 +494,7 @@ public abstract class Items {
 
 		item.setRegistryName(fullName);
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
-		//GameRegistry.register(item);
+		
 		itemRegistry.put(fullName, item);
 
 		if (tab != null) {

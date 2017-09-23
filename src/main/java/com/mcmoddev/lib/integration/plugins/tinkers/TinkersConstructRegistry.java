@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;

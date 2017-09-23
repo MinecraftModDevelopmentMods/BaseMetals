@@ -7,12 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.mcmoddev.basemetals.BaseMetals;
-//import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
-//import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.PotionKeys;
@@ -127,12 +123,7 @@ public abstract class MMDToolEffects {
 			// count armor pieces
 			if (material.getName().equals(MaterialNames.STARSTEEL)) {
 				starsteel: {
-					// used to count up the starsteel armor items
 					countArmorPieces(starsteelUpdateCache, player);
-					// Achievement
-					if ((armor.getItem() == Materials.getMaterialByName(MaterialNames.STARSTEEL).getItem(Names.BOOTS)) && (Options.enableAchievements())) {
-//						player.addStat(Achievements.getAchievementByName(AchievementNames.MOON_BOOTS), 1);
-					}
 					break starsteel;
 				}
 			}
@@ -195,10 +186,6 @@ public abstract class MMDToolEffects {
 						final PotionEffect protection = new PotionEffect(Potion.REGISTRY.getObject(protectionPotionKey), EFFECT_DURATION, level - 1, false, false);
 						player.addPotionEffect(protection);
 					}
-					// Achievement
-					if ((Options.enableAchievements()) && (hasFullSuit(player, MaterialNames.ADAMANTINE))) {
-	//					player.addStat(Achievements.getAchievementByName(AchievementNames.JUGGERNAUT), 1);
-					}
 					break adamantine;
 				}
 			}
@@ -206,10 +193,6 @@ public abstract class MMDToolEffects {
 			if ((material.getName().equals(MaterialNames.COLDIRON)) && (hasFullSuit(player, MaterialNames.COLDIRON))) {
 				final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
 				player.addPotionEffect(fireProtection);
-				// Achievement
-				if ((player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.SWORD)) && (Options.enableAchievements())) {
-		//			player.addStat(Achievements.getAchievementByName(AchievementNames.DEMON_SLAYER), 1);
-				}
 			}
 			// full suit of Mithril protects you from withering, poison, nausea,
 			// and hunger effects
@@ -226,10 +209,6 @@ public abstract class MMDToolEffects {
 				for (Potion p : removeList) {
 					player.removePotionEffect(p);
 				}
-				// Achievement
-				if ((player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD)) && (Options.enableAchievements())) {
-	//				player.addStat(Achievements.getAchievementByName(AchievementNames.ANGEL_OF_DEATH), 1);
-				}
 			}
 			// full suit of Aquarium makes you breathe and heal under water
 			if ((material.getName().equals(MaterialNames.AQUARIUM)) && ((hasFullSuit(player, MaterialNames.AQUARIUM)) && (player.posY > 0) && (player.posY < 255))) {
@@ -241,10 +220,6 @@ public abstract class MMDToolEffects {
 					final PotionEffect protection = new PotionEffect(Potion.REGISTRY.getObject(waterBuffPotionKey), EFFECT_DURATION, 0, false, false);
 					player.addPotionEffect(protection);
 					player.removePotionEffect(Potion.REGISTRY.getObject(fatiguePotionKey));
-					// Achievement
-					if (Options.enableAchievements()) {
-		//				player.addStat(Achievements.getAchievementByName(AchievementNames.SCUBA_DIVER), 1);
-					}
 				}
 			}
 		}
