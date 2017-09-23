@@ -48,22 +48,13 @@ public class MekanismBase implements IIntegration {
 		addGassesForMaterial(Materials.getMaterialByName(materialName));
 	}
 
-	private static String getGasName(String materialName, String which) {
-		return String.format("%s%s", which, materialName);
-	}
-	
-	private static String dirty = "dirty";
-	private static String clean = "clean";
-	private static String gas = "gas";
-	private static String cleanGas = "cleanGas";
-	
 	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
-		final Gas gas1 = new Gas(getGasName(material.getName(), dirty),material.getFluid().getStill().toString());
-		gas1.setUnlocalizedName(getGasName(material.getCapitalizedName(), gas));
+		final Gas gas1 = new Gas(material.getName(),material.getFluid().getStill().toString());
+		gas1.setUnlocalizedName("gas" + material.getCapitalizedName());
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas(getGasName(material.getName(), clean),material.getFluid().getStill().toString());
-		gas2.setUnlocalizedName(getGasName(material.getCapitalizedName(), cleanGas));
+		final Gas gas2 = new Gas("clean"+material.getName(),material.getFluid().getStill().toString());
+		gas2.setUnlocalizedName("cleanGas"+material.getCapitalizedName());
 		GasRegistry.register(gas2);
 	}
 
@@ -117,12 +108,12 @@ public class MekanismBase implements IIntegration {
 		
 		if( crystal != null ) {
 			// Crystallizer is 200mB for 1 crystal
-			addChemicalCrystallizerRecipe(getGasName(material.getName(), clean), 200, new ItemStack(crystal));
-			addChemicalWasherRecipe(getGasName(material.getName(), dirty),1000,getGasName(material.getName(), clean));
-			addChemicalDissolutionChamberRecipe(new ItemStack(ore), getGasName(material.getName(), dirty));
+			addChemicalCrystallizerRecipe("clean"+material.getName(), 200, new ItemStack(crystal));
+			addChemicalWasherRecipe(material.getName(),1000,"clean"+material.getName());
+			addChemicalDissolutionChamberRecipe(new ItemStack(ore), material.getName());
 		}
 	}
-
+	
 	protected static void addMetallurgicInfuserRecipe(@Nonnull final String infuse, @Nonnull int amount, @Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem ) {
 		InfuseType infuseType = InfuseRegistry.get(infuse);
 		RecipeHandler.addMetallurgicInfuserRecipe(infuseType, amount, inputItem, outputItem);
@@ -151,11 +142,10 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addChemicalCrystallizerRecipe(inputGasStack, outputItem);
 	}
 
-	// 5x, Slurry to Clean Slurry
+	// 5x, Slurry to "clean" Slurry
 	protected static void addChemicalWasherRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final String outputGas) {
 		GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
 		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), inputGasQty );
-
 		RecipeHandler.addChemicalWasherRecipe(inputGasStack, outputGasStack);
 	}
 
