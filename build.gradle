@@ -19,7 +19,7 @@ buildscript {
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
         classpath "com.matthewprenger:CurseGradle:1.0-SNAPSHOT"
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5"
     }
 }
 
@@ -70,9 +70,9 @@ if (secretFile.exists()) {
 }
 
 minecraft {
-    version = "1.12.1-14.22.1.2479"
+    version = "1.12.1-14.22.1.2485"
     runDir = "run"
-    mappings = "snapshot_20170908"
+    mappings = "snapshot_20170925"
     clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
     serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
 }
