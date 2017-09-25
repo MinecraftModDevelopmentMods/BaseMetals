@@ -364,6 +364,7 @@ public class TinkersConstructRegistry {
 		// hacky fix for Coal being itemCoal and not ingotCoal
 		if (MaterialNames.COAL.equals(base.getName()))
 			TinkerRegistry.registerMelting("itemCoal", output, amountPer);
+		
 
 		
 		meltingHelper(Oredicts.ORE + oreDictName, output, amountPer * 2);
