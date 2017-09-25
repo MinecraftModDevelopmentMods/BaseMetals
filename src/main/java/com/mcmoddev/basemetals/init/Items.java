@@ -317,9 +317,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 				}
 			}
 		}
-		final ItemBlock itemBlock = new ItemBlock(Blocks.humanDetector);
-		itemBlock.setRegistryName("human_detector");
-		itemBlock.setUnlocalizedName(Blocks.humanDetector.getRegistryName().getResourceDomain() + ".human_detector");
-		event.getRegistry().register(itemBlock);
+		
+		if( Blocks.humanDetector != null ) {
+			final ItemBlock itemBlock = new ItemBlock(Blocks.humanDetector);
+			itemBlock.setRegistryName("human_detector");
+			itemBlock.setUnlocalizedName(Blocks.humanDetector.getRegistryName().getResourceDomain() + ".human_detector");
+			event.getRegistry().register(itemBlock);
+		}
 	}
 }

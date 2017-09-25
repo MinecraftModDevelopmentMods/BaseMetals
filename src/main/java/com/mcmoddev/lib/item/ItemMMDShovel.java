@@ -37,7 +37,7 @@ public class ItemMMDShovel extends net.minecraft.item.ItemSpade implements IMMDO
 		super(Materials.getToolMaterialFor(material));
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
-		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
+		this.efficiency = this.material.getToolEfficiency();
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 

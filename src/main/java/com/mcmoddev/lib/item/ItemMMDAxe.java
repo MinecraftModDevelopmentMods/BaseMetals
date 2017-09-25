@@ -38,9 +38,9 @@ public class ItemMMDAxe extends net.minecraft.item.ItemAxe implements IMMDObject
 		super(Materials.getToolMaterialFor(material));
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
-		this.damageVsEntity = 4F + (2F * this.material.getBaseAttackDamage());
+		this.attackDamage = 4F + (2F * this.material.getBaseAttackDamage());
 		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * this.material.getStat(MaterialStats.STRENGTH));
-		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
+		this.efficiency = this.material.getToolEfficiency();
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 

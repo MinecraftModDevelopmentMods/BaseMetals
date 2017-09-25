@@ -262,8 +262,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
             	}
             }			
 		}
-		BaseMetals.logger.fatal("humanDetector = %s", humanDetector);
-		event.getRegistry().register(humanDetector);
+		
+		if( humanDetector != null ) {
+			BaseMetals.logger.fatal("humanDetector = %s", humanDetector);
+			event.getRegistry().register(humanDetector);
+		}
 	}
 
 }

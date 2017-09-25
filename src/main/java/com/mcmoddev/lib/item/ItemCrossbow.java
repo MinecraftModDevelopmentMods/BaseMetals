@@ -50,17 +50,12 @@ public class ItemCrossbow extends ItemBow {
 				final float f = getArrowVelocity(i);
 
 				if ((double) f >= 0.1D) {
-					// OLD
-					//final boolean flag1 = flag && (itemstack.getItem() instanceof ItemBolt); // Forge: Fix consuming custom arrows.
-					// NEW
 					final boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemBolt ? ((ItemBolt) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer) : false);
 
 					if (!worldIn.isRemote) {
-						// TODO: FIXME Using Materials.vanilla_iron.arrow, MC uses Items.ARROW
-//						final ItemArrow itemArrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Materials.vanilla_iron.bolt));
 						final ItemBolt itemBolt = (ItemBolt) ((ItemBolt) (itemstack.getItem() instanceof ItemBolt ? itemstack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
 						final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemstack, entityplayer);
-						entityBolt.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+						entityBolt.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
 						if (f == 1.0F) {
 							entityBolt.setIsCritical(true);
