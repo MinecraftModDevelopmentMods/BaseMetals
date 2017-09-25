@@ -59,6 +59,10 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			registerFluid(Materials.getMaterialByName(MaterialNames.COAL), 144);
 		}
 
+		if (Options.isMaterialEnabled(MaterialNames.DIAMOND)) {
+			registerFluid(Materials.getMaterialByName(MaterialNames.DIAMOND), 144);
+		}
+		
 		// As much as we'd like to, we cannot do this like this.
 		// At some point between this code running and it getting
 		// up to the point of registration, the state changes and
