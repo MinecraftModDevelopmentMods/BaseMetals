@@ -323,8 +323,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			itemBlock.setRegistryName("human_detector");
 			itemBlock.setUnlocalizedName(Blocks.humanDetector.getRegistryName().getResourceDomain() + ".human_detector");
 			event.getRegistry().register(itemBlock);
-		}
-		
-		Oredicts.registerItemOreDictionaryEntries();
+		}		
 	}
 }

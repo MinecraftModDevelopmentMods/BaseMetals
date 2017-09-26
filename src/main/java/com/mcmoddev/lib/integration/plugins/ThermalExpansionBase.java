@@ -44,14 +44,7 @@ public class ThermalExpansionBase implements IIntegration {
 			return;
 		}
 
-		final NBTTagCompound toSend = new NBTTagCompound();
-
-		toSend.setInteger(ENERGY, energy);
-		toSend.setTag(INPUT, new NBTTagCompound());
-		toSend.setTag(OUTPUT, new NBTTagCompound());
-		input.writeToNBT(toSend.getCompoundTag(INPUT));
-		output.writeToNBT(toSend.getCompoundTag(OUTPUT));
-		FMLInterModComms.sendMessage(PLUGIN_MODID, "addcompactorpressrecipe", toSend);
+		ThermalExpansionHelper.addCompactorPressRecipe(energy, input, output);
 	}
 
 	protected static void addCompactorStorageRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
@@ -59,26 +52,19 @@ public class ThermalExpansionBase implements IIntegration {
 		if (input.getItem() == null || output.getItem() == null) {
 			return;
 		}
-
-		final NBTTagCompound toSend = new NBTTagCompound();
-
-		toSend.setInteger(ENERGY, energy);
-		toSend.setTag(INPUT, new NBTTagCompound());
-		toSend.setTag(OUTPUT, new NBTTagCompound());
-		input.writeToNBT(toSend.getCompoundTag(INPUT));
-		output.writeToNBT(toSend.getCompoundTag(OUTPUT));
-		FMLInterModComms.sendMessage(PLUGIN_MODID, "addcompactorstoragerecipe", toSend);
+		
+		ThermalExpansionHelper.addCompactorStorageRecipe(energy, input, output);
 
 	}
 
 	protected static void addFurnace(@Nonnull final boolean enabled, @Nonnull final String materialName) {
 		if (enabled) {
-			addFurnace(Materials.getMaterialByName(materialName.toLowerCase()));
+			addFurnace(Materials.getMaterialByName(materialName));
 		}
 	}
 
 	protected static void addFurnace(@Nonnull final String materialName) {
-		addFurnace(Materials.getMaterialByName(materialName.toLowerCase()));
+		addFurnace(Materials.getMaterialByName(materialName));
 	}
 
 	protected static void addFurnace(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
@@ -88,13 +74,10 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addFurnace(@Nonnull final MMDMaterial material) {
-		// anything we'd want to add here is likely already pulled in by TE's
-		// import of all vanilla furnace recipes.
-		return;
 		/*
 		 * Ore -> Ingot default, according to TE source, is 2000
 		 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
-
+		 */
 		final int ENERGY_ORE = 2000;
 		final int ENERGY_DUST = 1400;
 		ItemStack ore;
@@ -118,17 +101,16 @@ public class ThermalExpansionBase implements IIntegration {
 				ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
 			}
 		}
-		*/
 	}
 
 	protected static void addCrucible(@Nonnull final boolean enabled, @Nonnull final String materialName) {
 		if (enabled) {
-			addCrucible(Materials.getMaterialByName(materialName.toLowerCase()));
+			addCrucible(Materials.getMaterialByName(materialName));
 		}
 	}
 
 	protected static void addCrucible(@Nonnull final String materialName) {
-		addCrucible(Materials.getMaterialByName(materialName.toLowerCase()));
+		addCrucible(Materials.getMaterialByName(materialName));
 	}
 
 	protected static void addCrucible(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
@@ -184,12 +166,12 @@ public class ThermalExpansionBase implements IIntegration {
 
 	protected static void addPlatePress(@Nonnull final boolean enabled, @Nonnull final String materialName) {
 		if (enabled) {
-			addPlatePress(Materials.getMaterialByName(materialName.toLowerCase()));
+			addPlatePress(Materials.getMaterialByName(materialName));
 		}
 	}
 
 	protected static void addPlatePress(@Nonnull final String materialName) {
-		addPlatePress(Materials.getMaterialByName(materialName.toLowerCase()));
+		addPlatePress(Materials.getMaterialByName(materialName));
 	}
 
 	protected static void addPlatePress(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
@@ -211,12 +193,12 @@ public class ThermalExpansionBase implements IIntegration {
 
 	protected static void addPressStorage(@Nonnull final boolean enabled, @Nonnull final String materialName) {
 		if (enabled) {
-			addPressStorage(Materials.getMaterialByName(materialName.toLowerCase()));
+			addPressStorage(Materials.getMaterialByName(materialName));
 		}
 	}
 
 	protected static void addPressStorage(@Nonnull final String materialName) {
-		addPressStorage(Materials.getMaterialByName(materialName.toLowerCase()));
+		addPressStorage(Materials.getMaterialByName(materialName));
 	}
 
 	protected static void addPressStorage(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {

@@ -265,9 +265,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		
 		if( humanDetector != null ) {
 			event.getRegistry().register(humanDetector);
-		}
-		
-		Oredicts.registerBlockOreDictionaryEntries();
+		}		
 	}
 
 }
