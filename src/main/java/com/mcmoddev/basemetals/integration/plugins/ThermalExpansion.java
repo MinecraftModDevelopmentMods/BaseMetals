@@ -10,6 +10,10 @@ import com.mcmoddev.lib.integration.MMDPlugin;
 
 import cofh.api.util.ThermalExpansionHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.item.crafting.IRecipe;
 
 @MMDPlugin( addonId = BaseMetals.MODID, pluginId = ThermalExpansion.PLUGIN_MODID )
 public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansionBase implements IIntegration {
@@ -22,6 +26,12 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			return;
 		}
 
+		MinecraftForge.EVENT_BUS.register(this);
+		initDone = true;
+	}
+	
+	@SubscribeEvent
+	public void regShit(RegistryEvent.Register<IRecipe> ev ) {
 		final String[] baseNames = new String[] {
 			MaterialNames.ADAMANTINE,
 			MaterialNames.ANTIMONY,
@@ -52,7 +62,5 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		if( Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.TIN) && Options.isMaterialEnabled(MaterialNames.BRONZE) ) {
 			ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.getMaterialByName(MaterialNames.COPPER).getItem(Names.INGOT), 3), new ItemStack(Materials.getMaterialByName(MaterialNames.NICKEL).getItem(Names.INGOT), 1), new ItemStack(Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getItem(Names.INGOT), 4));
 		}
-		
-		initDone = true;
 	}
 }
