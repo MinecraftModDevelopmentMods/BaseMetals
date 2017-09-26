@@ -1,3 +1,9 @@
+/* 
+ * this is special in that it doesn't use the 'rod' of the material
+ * It might have a rod registered right now, but I don't actually think it
+ * is supposed to have one, hence it not having one used here
+ */
+ 
 {
 	"type": "basemetals:variableOutputOre",
 	"result": {
@@ -12,11 +18,11 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "ingotEmerald"
+			"ore": "gemEmerald"
 		},
 		"r": {
-			"item": "basemetals:emerald_rod",
-			"data": 0
+		    "type": "forge:ore_dict",
+		    "ore": "rodIron"
 		}
 	},
 	"conditions": [

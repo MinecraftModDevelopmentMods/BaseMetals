@@ -71,7 +71,7 @@ public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject
 	}
 
 	@Override
-	public float getStrVsBlock(final ItemStack tool, final IBlockState target) {
+	public float getDestroySpeed(final ItemStack tool, final IBlockState target) {
 		if (this.canHarvestBlock(target, tool))
 			return Math.max(1.0f, this.material.getToolEfficiency());
 		else

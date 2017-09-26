@@ -24,7 +24,10 @@ import net.minecraftforge.fml.common.Loader;
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
+import slimeknights.tconstruct.library.smeltery.Cast;
+import slimeknights.tconstruct.library.tools.ToolPart;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
+import slimeknights.tconstruct.tools.TinkerMaterials;
 
 /**
  * Created by Daniel Hazelton on 2/21/2017.
@@ -34,11 +37,11 @@ import slimeknights.tconstruct.library.traits.AbstractTrait;
 
 public class TinkersConstructRegistry {
     private final Map<String,TCMaterial> registry = new HashMap<>();
-    private final List<MaterialIntegration> integrations = new ArrayList<>();
     private final Map<String,List<String>> sourceMap = new HashMap<>();
     
     private static TinkersConstructRegistry instance;
-
+    private final List<TCMaterial> castingMaterials = new ArrayList<>();
+    
     /**
      * Hacky-ass shit constructor. Be warned that this creates a semi-circular data structure.
      * @constructor
@@ -164,15 +167,19 @@ public class TinkersConstructRegistry {
 		switch( matType ) {
 		case METAL:
 			matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+			mat.setAmountPer(144);
 			break;
 		case GEM:
 			matRepItem = mat.getMetalMaterial().getItem(Names.GEM);
+			mat.setAmountPer(666); // Tinkers' emeralds are 666mB per gem
 			break;
 		case CRYSTAL:
 			matRepItem = mat.getMetalMaterial().getItem(Names.CRYSTAL);
+			mat.setAmountPer(144); // safe default
 			break;
 		case MINERAL:
 			matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+			mat.setAmountPer(144); // safe default
 			break;
 		case ROCK:
 		case WOOD:
@@ -202,10 +209,10 @@ public class TinkersConstructRegistry {
 		}
 
 		TinkerRegistry.integrate(m);
-		
+		registerCasting(mat);
 		return TCCode.SUCCESS;
     }
-    
+
     /**
      * Register all materials in the registry
      * @return Any TCCode that represents an error or TCCode.SUCCESS
@@ -338,18 +345,88 @@ public class TinkersConstructRegistry {
     /**
      * Register a casting table piece. This is either an ingot, a nugget or a gem
      * @param output Item that is output
+     * @param cast ItemStack that is the cast used
      * @param source source material/fluid
      * @param sourceQty Amount
      * @return Any TCCode that represents an error or TCCode.SUCCESS
      */
-    public TCCode registerCasting(@Nonnull final Item output, @Nonnull final Fluid source, @Nonnull final int sourceQty) {
+    public TCCode registerCasting(@Nonnull final Item output, @Nonnull ItemStack cast, @Nonnull final Fluid source, @Nonnull final int sourceQty) {
         if (sourceQty == 0) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
-        TinkerRegistry.registerTableCasting( new ItemStack(output),  ItemStack.EMPTY, source, sourceQty);
+               
+        TinkerRegistry.registerTableCasting( new ItemStack(output), cast, source, sourceQty);
         return TCCode.SUCCESS;
     }
 
+    public void registerCasting(@Nonnull final String material) {
+    	if( registry.containsKey(material) ) {
+    		registerCasting( registry.get(material) );
+    	}
+    }
+
+    public void registerCasting(@Nonnull final TCMaterial material) {
+    	this.castingMaterials.add( material );
+    }
+    
+    public void doCastings() {
+    	ToolPart toolRod = slimeknights.tconstruct.tools.TinkerTools.toolRod;
+    	final ItemStack nuggetCast = slimeknights.tconstruct.smeltery.TinkerSmeltery.castNugget;
+    	final ItemStack gearCast = slimeknights.tconstruct.smeltery.TinkerSmeltery.castGear;
+    	final ItemStack plateCast = slimeknights.tconstruct.smeltery.TinkerSmeltery.castPlate;
+	    ItemStack rodCast = new ItemStack(slimeknights.tconstruct.smeltery.TinkerSmeltery.cast);
+		Cast.setTagForPart(rodCast, toolRod.getItemstackWithMaterial(TinkerMaterials.iron).getItem());
+    	ItemStack ingotCast;
+    	
+    	int ingotQty;
+    	
+    	for( TCMaterial mat : this.castingMaterials ) {
+    		MMDMaterial material = mat.getMetalMaterial();
+    		
+    		switch(material.getType()) {
+    		case MINERAL:
+    			ingotCast = slimeknights.tconstruct.smeltery.TinkerSmeltery.castGem;
+    			ingotQty = 144;
+    			break;
+    		case GEM:
+    			ingotCast = slimeknights.tconstruct.smeltery.TinkerSmeltery.castGem;
+    			ingotQty = 666;
+    			break;
+    		case METAL:
+    		case CRYSTAL:
+    		case ROCK:
+    		case WOOD:
+    		default:
+    			ingotCast = slimeknights.tconstruct.smeltery.TinkerSmeltery.castIngot;
+    			ingotQty = 144;
+    			break;
+    		}
+
+    		if(material.getType() == MaterialType.WOOD)
+    			break;
+    		
+    		if(material.hasItem(Names.GEAR)) {
+    			registerCasting(material.getItem(Names.GEAR), gearCast, material.getFluid(), ingotQty*4);
+    		}
+    		// we do have, I believe, nuggets for every material, but it pays to be thorough
+    		if(material.hasItem(Names.NUGGET)) {
+    			registerCasting(material.getItem(Names.NUGGET), nuggetCast, material.getFluid(), ingotQty/9);
+    		}
+    		// same as nuggets, I do believe we have a Names.INGOT for every material that will get here - but safety first
+    		if(material.hasItem(Names.INGOT)) {
+    			registerCasting(material.getItem(Names.INGOT), ingotCast, material.getFluid(), ingotQty/9);
+    		}
+/*    		// dammit, well... most should have the Tool Rod and Tough Rod already
+    		if(material.hasItem(Names.ROD) && MaterialNames.DIAMOND.equalsIgnoreCase(material.getName())) {
+    			registerCasting(material.getItem(Names.ROD), rodCast, material.getFluid(), ingotQty*2);
+    		}
+*/    		if(material.hasBlock(Names.PLATE)) {
+    			// I'd like to make this more expensive, but the default built into Tinkers' is the "ingot quantity" so...
+    			registerCasting(Item.getItemFromBlock(material.getBlock(Names.PLATE)), plateCast, material.getFluid(), ingotQty);
+    		}
+    	}
+    }    
+    
     /**
      * Register all the fluids a MetalMaterial might melt into, at the amountPer amount
      * @param base MetalMaterial that is the base for this fluid
@@ -362,9 +439,11 @@ public class TinkersConstructRegistry {
 		final String oreDictName = base.getCapitalizedName();
 
 		// hacky fix for Coal being itemCoal and not ingotCoal
-		if (MaterialNames.COAL.equals(base.getName()))
+		if (MaterialNames.COAL.equals(base.getName())) {
 			TinkerRegistry.registerMelting("itemCoal", output, amountPer);
-
+		} else if(MaterialNames.DIAMOND.equals(base.getName())) {
+			TinkerRegistry.registerMelting("gemDiamond", output, amountPer);
+		}
 		
 		meltingHelper(Oredicts.ORE + oreDictName, output, amountPer * 2);
 		meltingHelper(Oredicts.BLOCK + oreDictName, output, amountPer * 9);
@@ -405,11 +484,5 @@ public class TinkersConstructRegistry {
 
     private void meltingHelper(@Nonnull final Block block, @Nonnull final Fluid output, @Nonnull final int amount ) {
     	TinkerRegistry.registerMelting(block, output, amount);
-    }
-    
-    public void integrateRecipes() {
-    	for (final MaterialIntegration m : integrations) {
-    		m.integrateRecipes();
-    	}
     }
 }

@@ -52,12 +52,12 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	 *            The material to make the crackhammer from
 	 */
 	public ItemMMDCrackHammer(MMDMaterial material) {
-		super(1 + Materials.getToolMaterialFor(material).getDamageVsEntity(), ATTACK_SPEED, Materials.getToolMaterialFor(material), new HashSet<Block>());
+		super(1 + Materials.getToolMaterialFor(material).getAttackDamage(), ATTACK_SPEED, Materials.getToolMaterialFor(material), new HashSet<Block>());
 		this.material = material;
-		damageVsEntity = 5F + 2F * this.material.getBaseAttackDamage();
+		this.attackDamage = 5F + 2F * this.material.getBaseAttackDamage();
 		attackSpeed = -3.5F;
 		setMaxDamage((int) (0.75 * this.material.getToolDurability()));
-		efficiencyOnProperMaterial = this.material.getToolEfficiency();
+		this.efficiency = this.material.getToolEfficiency();
 		toolTypes = new HashSet<>();
 		toolTypes.add("crackhammer");
 		toolTypes.add("pickaxe");
@@ -65,7 +65,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	}
 
 	@Override
-	public float getStrVsBlock(final ItemStack tool, final IBlockState target) {
+	public float getDestroySpeed(final ItemStack tool, final IBlockState target) {
 		if (isCrushableBlock(target) && canHarvestBlock(target)) {
 			return Math.max(1.0f, 0.5f * this.material.getToolEfficiency());
 		}

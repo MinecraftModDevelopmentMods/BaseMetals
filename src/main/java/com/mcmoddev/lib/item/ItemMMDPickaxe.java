@@ -45,7 +45,7 @@ public class ItemMMDPickaxe extends net.minecraft.item.ItemPickaxe implements IM
 		super(Materials.getToolMaterialFor(material));
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
-		this.efficiencyOnProperMaterial = this.material.getToolEfficiency();
+		this.efficiency = this.material.getToolEfficiency();
 		this.toolTypes = new HashSet<>();
 		this.toolTypes.add("pickaxe");
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();

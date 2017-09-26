@@ -9,8 +9,13 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.material.MMDMaterial;
+
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
 public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase implements IIntegration {
@@ -65,5 +70,20 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 				addOreMultiplicationRecipes(materialName);
 			}
 		}
+		
+		if( Options.isMaterialEnabled(MaterialNames.DIAMOND) ) {
+			MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
+			addCrusherRecipe( new ItemStack( diamond.getBlock(Names.ORE)), new ItemStack( diamond.getItem(Names.INGOT), 2));
+			addCrusherRecipe( new ItemStack( diamond.getItem(Names.INGOT)), new ItemStack( diamond.getItem(Names.POWDER)));
+			addPurificationChamberRecipe( new ItemStack( diamond.getBlock(Names.ORE)), new ItemStack( diamond.getItem(Names.POWDER), 2));
+		}
+		
+		if( Options.isMaterialEnabled(MaterialNames.EMERALD) ) {
+			MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
+			addCrusherRecipe( new ItemStack( emerald.getBlock(Names.ORE)), new ItemStack( emerald.getItem(Names.INGOT), 2));
+			addCrusherRecipe( new ItemStack( emerald.getItem(Names.INGOT)), new ItemStack( emerald.getItem(Names.POWDER)));
+			addPurificationChamberRecipe( new ItemStack( emerald.getBlock(Names.ORE)), new ItemStack( emerald.getItem(Names.POWDER), 2));
+		}
+
     }
 }

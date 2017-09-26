@@ -11,7 +11,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.util.ConfigBase.Options;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -33,6 +32,8 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
  */
 public class CommonProxy {
 
+	public boolean allsGood = false;
+	
 	public void preInit(FMLPreInitializationEvent event) {
 		BaseMetals.logger.debug("CommonProxy preInit() with event %s", event.description());
 
@@ -57,6 +58,7 @@ public class CommonProxy {
 
 		IntegrationManager.INSTANCE.preInit(event);
 		IntegrationManager.INSTANCE.runCallbacks("preInit");
+		allsGood = true;
 	}
 
 	public void onRemapBlock(RegistryEvent.MissingMappings<Block> event) {
@@ -80,18 +82,22 @@ public class CommonProxy {
 	}
 	
 	public void init(FMLInitializationEvent event) {
+		allsGood = false;
 		BaseMetals.logger.debug("CommonProxt init() with event %s", event.description());
 		Recipes.init();
-		Oredicts.registerOreDictionary();
+		
 //		Achievements.init();
 		FuelRegistry.register();
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
+		allsGood = true;
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
+		allsGood = false;
 		BaseMetals.logger.debug("CommonProxt postInit() with event %s", event.description());
 		IntegrationManager.INSTANCE.runCallbacks("postInit");
 		Config.postInit();
+		allsGood = true;
 	}
 }

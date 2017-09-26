@@ -113,7 +113,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 			final ItemStack itemstack = this.getAngler().getHeldItemMainhand();
 
 			// We had to change this due to hardcoding
-			if (this.getAngler().isDead || !this.getAngler().isEntityAlive() || (itemstack == null) || !(itemstack.getItem() instanceof ItemFishingRod) || (this.getDistanceSqToEntity(this.getAngler()) > 1024.0D)) {
+			if (this.getAngler().isDead || !this.getAngler().isEntityAlive() || (itemstack == null) || !(itemstack.getItem() instanceof ItemFishingRod) || (this.getDistanceSq(this.getAngler()) > 1024.0D)) {
 				this.setDead();
 				this.getAngler().fishEntity = null;
 				return;
@@ -237,7 +237,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 				this.rotationYaw = this.prevRotationYaw + ((this.rotationYaw - this.prevRotationYaw) * 0.2F);
 				float f3 = 0.92F;
 
-				if (this.onGround || this.isCollidedHorizontally) {
+				if (this.onGround || this.collidedHorizontally) {
 					f3 = 0.5F;
 				}
 

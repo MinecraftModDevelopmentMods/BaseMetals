@@ -1,10 +1,12 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
+
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.data.TraitNames;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -14,6 +16,13 @@ import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import slimeknights.tconstruct.library.smeltery.Cast;
+import slimeknights.tconstruct.tools.TinkerMaterials;
+import net.minecraft.item.crafting.IRecipe;
 
 /**
  *
@@ -44,6 +53,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, true, false, TraitNames.DENSE);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.CUPRONICKEL), MaterialNames.CUPRONICKEL, true, false);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.DIAMOND), MaterialNames.DIAMOND, true, false);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.INVAR), MaterialNames.INVAR, true, false);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.MITHRIL), MaterialNames.MITHRIL, true, false, TraitNames.HOLY);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.NICKEL), MaterialNames.NICKEL, true, false);
@@ -84,9 +94,32 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		registry.registerAll();
+		MinecraftForge.EVENT_BUS.register(this);
 		initDone = true;
 	}
 
+	// Because the underlying "registerCasting" call access some things that are not
+	// available until after the Items are registered, lets run this in the IRecipe
+	@SubscribeEvent
+	public void regExtraCastings(RegistryEvent.Register<IRecipe> ev) {
+		registry.doCastings();
+		if(Options.isMaterialEnabled(MaterialNames.EMERALD)) {
+			registerExtraMelting(MaterialNames.EMERALD, Materials.getMaterialByName(MaterialNames.EMERALD).getBlock(Names.BLOCK), 5994);
+			registry.registerMelting(Oredicts.NUGGET + Materials.getMaterialByName(MaterialNames.EMERALD).getCapitalizedName(),
+					Materials.getMaterialByName(MaterialNames.EMERALD).getFluid(), 74 );
+			registry.registerCasting(Materials.getMaterialByName(MaterialNames.EMERALD).getItem(Names.GEAR), 
+					slimeknights.tconstruct.smeltery.TinkerSmeltery.castGear, 
+					Materials.getMaterialByName(MaterialNames.EMERALD).getFluid(), 2664);
+			registry.registerCasting(Materials.getMaterialByName(MaterialNames.EMERALD).getItem(Names.NUGGET), 
+					slimeknights.tconstruct.smeltery.TinkerSmeltery.castNugget, 
+					Materials.getMaterialByName(MaterialNames.EMERALD).getFluid(), 74);
+		    ItemStack rodCast = new ItemStack(slimeknights.tconstruct.smeltery.TinkerSmeltery.cast);
+			Cast.setTagForPart(rodCast, slimeknights.tconstruct.tools.TinkerTools.toolRod.getItemstackWithMaterial(TinkerMaterials.iron).getItem());
+			registry.registerCasting(Materials.getMaterialByName(MaterialNames.EMERALD).getItem(Names.ROD),
+					rodCast, Materials.getMaterialByName(MaterialNames.EMERALD).getFluid(), 1332 );
+		}
+	}
+	
 	private boolean isTraitLoc(String loc) {
 		switch (loc) {
 		case TraitLocations.BOW:
