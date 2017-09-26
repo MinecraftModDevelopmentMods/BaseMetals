@@ -87,8 +87,7 @@ public class TinkersConstructBase implements IIntegration {
 		final Fluid fluid = material.getFluid();
 
 		registry.registerBasin(material.getBlock(Names.BLOCK), fluid, amountPer * 9);
-		registry.registerCasting(material.getItem(Names.INGOT), fluid, amountPer);
-		registry.registerCasting(material.getItem(Names.NUGGET), fluid, amountPer / 9);
+		registry.registerCasting(material.getEnumName());
 	}
 
 	/**

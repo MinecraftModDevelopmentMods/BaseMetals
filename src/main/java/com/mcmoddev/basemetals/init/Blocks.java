@@ -249,7 +249,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 
 		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
-		BaseMetals.logger.fatal("humanDetector = %s = addBlock(new BlockHumanDetector(), \"human_detector\", %s);", humanDetector, myTabs.blocksTab);
 		initDone = true;
 	}
 	
@@ -264,7 +263,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 		
 		if( humanDetector != null ) {
-			BaseMetals.logger.fatal("humanDetector = %s", humanDetector);
 			event.getRegistry().register(humanDetector);
 		}
 	}
