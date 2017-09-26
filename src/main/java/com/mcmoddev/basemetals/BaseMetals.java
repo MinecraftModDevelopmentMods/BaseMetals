@@ -82,7 +82,7 @@ public class BaseMetals {
 			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
 			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Recipes.class);
 		} else {
-			logger.fatal("Something went wrong during the proxt preInit() call!");
+			logger.fatal("Something went wrong during the proxy preInit() call!");
 		}
 	}
 
