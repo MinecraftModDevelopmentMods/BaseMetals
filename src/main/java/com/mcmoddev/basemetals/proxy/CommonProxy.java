@@ -56,6 +56,7 @@ public class CommonProxy {
 		ItemGroups.setupIcons();
 		VillagerTrades.init();
 
+		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		IntegrationManager.INSTANCE.preInit(event);
 		IntegrationManager.INSTANCE.runCallbacks("preInit");
 		allsGood = true;

@@ -1,8 +1,11 @@
 package com.mcmoddev.basemetals.util;
 
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.item.ItemMMDShield;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -16,6 +19,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -80,5 +84,11 @@ public class EventHandler {
 			event.setOutput(recipe.getCraftingResult(recipeInput));
 			event.setCost(((ShieldUpgradeRecipe) recipe).getCost(recipeInput));
 		}
+	}
+	
+	@SubscribeEvent
+	public void oreDictCrap(RegistryEvent.Register<MMDMaterial> ev) {
+		Oredicts.registerBlockOreDictionaryEntries();
+		Oredicts.registerItemOreDictionaryEntries();
 	}
 }
