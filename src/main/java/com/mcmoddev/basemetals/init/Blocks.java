@@ -3,6 +3,7 @@ package com.mcmoddev.basemetals.init;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -265,6 +266,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if( humanDetector != null ) {
 			event.getRegistry().register(humanDetector);
 		}
+		
+		Oredicts.registerBlockOreDictionaryEntries();
 	}
 
 }

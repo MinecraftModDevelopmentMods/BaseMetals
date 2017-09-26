@@ -11,7 +11,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.util.ConfigBase.Options;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -86,7 +85,7 @@ public class CommonProxy {
 		allsGood = false;
 		BaseMetals.logger.debug("CommonProxt init() with event %s", event.description());
 		Recipes.init();
-		Oredicts.registerOreDictionary();
+		
 //		Achievements.init();
 		FuelRegistry.register();
 		IntegrationManager.INSTANCE.runCallbacks("init");

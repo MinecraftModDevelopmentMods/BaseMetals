@@ -279,12 +279,7 @@ public class Oredicts {
 
 	}
 
-	public static void registerOreDictionary() {
-		for( Entry<String,List<Block>> ent : oreDictBlockMap.entrySet() ) {
-			for( Block b : ent.getValue() ) {
-				OreDictionary.registerOre(ent.getKey(), b);
-			}
-		}
+	public static void registerItemOreDictionaryEntries() {
 		for( Entry<String,List<Item>> ent : oreDictItemMap.entrySet() ) {
 			for( Item i : ent.getValue() ) {
 				OreDictionary.registerOre(ent.getKey(), i);
@@ -293,6 +288,14 @@ public class Oredicts {
 		for( Entry<String,List<ItemStack>> ent : oreDictItemStackMap.entrySet() ) {
 			for( ItemStack is : ent.getValue() ) {
 				OreDictionary.registerOre(ent.getKey(), is);
+			}
+		}		
+	}
+	
+	public static void registerBlockOreDictionaryEntries() {
+		for( Entry<String,List<Block>> ent : oreDictBlockMap.entrySet() ) {
+			for( Block b : ent.getValue() ) {
+				OreDictionary.registerOre(ent.getKey(), b);
 			}
 		}
 	}
