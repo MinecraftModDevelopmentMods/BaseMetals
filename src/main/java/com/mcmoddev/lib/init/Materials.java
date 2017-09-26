@@ -22,6 +22,8 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 
+
+
 /**
  * This class initializes all of the materials in Base Metals. It also contains
  * utility methods for looking up materials by name and finding the tool and
