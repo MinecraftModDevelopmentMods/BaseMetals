@@ -15,7 +15,7 @@
 		},
 		"y": {
 			"type": "forge:ore_dict",
-			"ore": "ingotEmerald"
+			"ore": "gemEmerald"
 		}
 	},
 	"conditions": [

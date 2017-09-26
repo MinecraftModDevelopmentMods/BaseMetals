@@ -13,7 +13,7 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "ingotDiamond"
+			"ore": "gemDiamond"
 		}
 	},
 	"conditions": [
