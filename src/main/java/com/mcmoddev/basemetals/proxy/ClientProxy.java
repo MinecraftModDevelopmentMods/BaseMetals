@@ -8,6 +8,7 @@ import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
 import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
 import com.mcmoddev.lib.entity.EntityCustomArrow;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
@@ -21,10 +22,13 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Base Metals Client Proxy
@@ -37,6 +41,14 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class, RenderCustomArrow::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCustomBolt.class, RenderCustomBolt::new);
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	@SubscribeEvent
+	public void fluidRendering(RegistryEvent.Register<MMDMaterial> ev) {
 		for (final String name : Fluids.getFluidBlockRegistry().keySet()) {
 			final Block block = Fluids.getFluidBlockByName(name);
 			final Item item = Item.getItemFromBlock(block);
@@ -53,11 +65,8 @@ public class ClientProxy extends CommonProxy {
 				}
 			});
 		}
-
-		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class, RenderCustomArrow::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityCustomBolt.class, RenderCustomBolt::new);
 	}
-
+	
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
