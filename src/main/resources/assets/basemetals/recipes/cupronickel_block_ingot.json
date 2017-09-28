@@ -1,0 +1,31 @@
+{
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "blockCupronickel"
+		}
+	],
+	"result": {
+		"item": "basemetals:cupronickel_ingot",
+		"count": 9
+	},
+	"group": "basics",
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Cupronickel"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "basics"
+				}
+			]
+		}
+	]
+}
