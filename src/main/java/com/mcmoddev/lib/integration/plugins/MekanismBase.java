@@ -150,9 +150,13 @@ public class MekanismBase implements IIntegration {
 	}
 
 	// 5x, Ore to Slurry
-	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas) {
-		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), 1000 );
+	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas, @Nonnull int outputQty) {
+		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputQty );
 		RecipeHandler.addChemicalDissolutionChamberRecipe(inputItem, outputGasStack);
+	}
+	
+	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas) {
+		addChemicalDissolutionChamberRecipe(inputItem, outputGas, 1000);
 	}
 
 	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem, @Nonnull final FluidStack inputFluid, @Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem,  @Nonnull final String outputGas, @Nonnull final int outputGasQty, int extraEnergy, int ticks ) {
