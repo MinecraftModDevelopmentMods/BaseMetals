@@ -215,4 +215,8 @@ public class MekanismBase implements IIntegration {
 		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty);
 		RecipeHandler.addSolarNeutronRecipe(inputGasStack, outputGasStack);
 	}
+	
+	protected static boolean gasExists(@Nonnull final String gasName ) {
+		return GasRegistry.containsGas(gasName);
+	}
 }
