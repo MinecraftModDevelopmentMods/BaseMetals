@@ -15,7 +15,7 @@ import net.minecraft.world.IBlockAccess;
 /**
  * Ore Block
  */
-public class BlockMMDNetherOre extends net.minecraft.block.BlockOre implements IMMDObject {
+public class BlockMMDNetherOre extends BlockExplosiveOre implements IMMDObject {
 
 	private final MMDMaterial material;
 
