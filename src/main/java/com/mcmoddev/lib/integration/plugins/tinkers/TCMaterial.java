@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -459,6 +460,7 @@ public class TCMaterial {
     public TCMaterial addTrait(@Nonnull final String name, @Nonnull final String loc) {
         final ITrait trait = TraitRegistry.get(name);
         if (trait == null) {
+        	BaseMetals.logger.fatal("Trait %s returned null - trait does not exist ?", name);
             return this;
         }
         if (this.traits.keySet().contains(loc)) {

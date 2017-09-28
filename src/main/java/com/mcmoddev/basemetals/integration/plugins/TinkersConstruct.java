@@ -14,6 +14,7 @@ import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
+import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,6 +41,13 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			return;
 		}
 
+		MinecraftForge.EVENT_BUS.register(this);
+		
+		initDone = true;
+	}
+	
+	@SubscribeEvent
+	public void setupTinkers(RegistryEvent.Register<IRecipe> ev) {
 		TraitRegistry.initTiCTraits();
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
@@ -94,14 +102,12 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		registry.registerAll();
-		MinecraftForge.EVENT_BUS.register(this);
-		initDone = true;
 	}
 
 	// Because the underlying "registerCasting" call access some things that are not
 	// available until after the Items are registered, lets run this in the IRecipe
 	@SubscribeEvent
-	public void regExtraCastings(RegistryEvent.Register<IRecipe> ev) {
+	public void regExtraCastings(RegistryEvent.Register<ICrusherRecipe> ev) {
 		registry.doCastings();
 		if(Options.isMaterialEnabled(MaterialNames.EMERALD)) {
 			registerExtraMelting(MaterialNames.EMERALD, Materials.getMaterialByName(MaterialNames.EMERALD).getBlock(Names.BLOCK), 5994);
