@@ -19,7 +19,7 @@ import slimeknights.tconstruct.library.utils.ToolHelper;
 public class TraitRadioactive extends AbstractTrait {
 
 	public TraitRadioactive() {
-		super("radioactive", 0x28DF28);
+		super("mmd-radioactive", 0x28DF28);
 	}
 
 	@Override

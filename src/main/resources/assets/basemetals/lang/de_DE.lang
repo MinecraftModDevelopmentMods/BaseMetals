@@ -1796,10 +1796,10 @@ tile.basemetals.steel_wall.name=Stahlmauer
 tile.basemetals.tin_wall.name=Zinnmauer
 tile.basemetals.zinc_wall.name=Zinkmauer
 
-modifier.toxic.name=Giftig
-modifier.sparkly.name=Funkelnd
-modifier.soft.name=Weich
-modifier.brittle.name=Spröde
-modifier.heavy.name=Schwer
-modifier.reactive.name=Reaktiv
-modifier.radioactive.name=Radioaktiv
+modifier.mmd-toxic.name=Giftig
+modifier.mmd-sparkly.name=Funkelnd
+modifier.mmd-soft.name=Weich
+modifier.mmd-brittle.name=Spröde
+modifier.mmd-heavy.name=Schwer
+modifier.mmd-reactive.name=Reaktiv
+modifier.mmd-radioactive.name=Radioaktiv

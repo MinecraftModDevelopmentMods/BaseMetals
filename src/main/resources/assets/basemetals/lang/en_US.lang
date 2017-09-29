@@ -1801,10 +1801,10 @@ tile.basemetals.steel_wall.name=Steel Wall
 tile.basemetals.tin_wall.name=Tin Wall
 tile.basemetals.zinc_wall.name=Zinc Wall
 
-modifier.toxic.name=Toxic
-modifier.sparkly.name=Sparkly
-modifier.soft.name=Soft
+modifier.mmd-toxic.name=Toxic
+modifier.mmd-sparkly.name=Sparkly
+modifier.mmd-soft.name=Soft
 modifier.mmd-brittle.name=Brittle
 modifier.mmd-heavy.name=Heavy
-modifier.reactive.name=Reactive
-modifier.radioactive.name=Radioactive
+modifier.mmd-reactive.name=Reactive
+modifier.mmd-radioactive.name=Radioactive
