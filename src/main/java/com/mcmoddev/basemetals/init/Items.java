@@ -310,6 +310,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
+		BaseMetals.logger.fatal("ITEM REGISTER!");
 		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
 			for( Item item : mat.getItems() ) {
 				if( item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID) ) {
@@ -323,6 +324,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			itemBlock.setRegistryName("human_detector");
 			itemBlock.setUnlocalizedName(Blocks.humanDetector.getRegistryName().getResourceDomain() + ".human_detector");
 			event.getRegistry().register(itemBlock);
-		}		
+		}
+		
+		Oredicts.registerItemOreDictionaryEntries();
+		Oredicts.registerBlockOreDictionaryEntries();
 	}
 }

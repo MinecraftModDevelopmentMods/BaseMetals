@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class Oredicts {
@@ -282,12 +283,16 @@ public class Oredicts {
 	public static void registerItemOreDictionaryEntries() {
 		for( Entry<String,List<Item>> ent : oreDictItemMap.entrySet() ) {
 			for( Item i : ent.getValue() ) {
-				OreDictionary.registerOre(ent.getKey(), i);
+				if( i.getRegistryName().getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
+					OreDictionary.registerOre(ent.getKey(), i);
+				}
 			}
 		}
 		for( Entry<String,List<ItemStack>> ent : oreDictItemStackMap.entrySet() ) {
 			for( ItemStack is : ent.getValue() ) {
-				OreDictionary.registerOre(ent.getKey(), is);
+				if( is.getItem().getRegistryName().getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
+					OreDictionary.registerOre(ent.getKey(), is);
+				}
 			}
 		}		
 	}
@@ -295,7 +300,9 @@ public class Oredicts {
 	public static void registerBlockOreDictionaryEntries() {
 		for( Entry<String,List<Block>> ent : oreDictBlockMap.entrySet() ) {
 			for( Block b : ent.getValue() ) {
-				OreDictionary.registerOre(ent.getKey(), b);
+				if( b.getRegistryName().getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
+					OreDictionary.registerOre(ent.getKey(), b);
+				}
 			}
 		}
 	}

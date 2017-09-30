@@ -255,6 +255,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		BaseMetals.logger.fatal("BLOCK REGISTER!");
 		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
             for( Block block : mat.getBlocks() ) {
             	if( block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID) ) {
@@ -265,7 +266,9 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		
 		if( humanDetector != null ) {
 			event.getRegistry().register(humanDetector);
-		}		
+		}
+		// can't do this here - blocks reg before items and ItemBlock has to be reg'd for the OreDict to work
+		//Oredicts.registerBlockOreDictionaryEntries();
 	}
 
 }

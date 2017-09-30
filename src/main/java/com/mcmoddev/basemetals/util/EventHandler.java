@@ -84,11 +84,5 @@ public class EventHandler {
 			event.setOutput(recipe.getCraftingResult(recipeInput));
 			event.setCost(((ShieldUpgradeRecipe) recipe).getCost(recipeInput));
 		}
-	}
-	
-	@SubscribeEvent
-	public void oreDictCrap(RegistryEvent.Register<MMDMaterial> ev) {
-		Oredicts.registerBlockOreDictionaryEntries();
-		Oredicts.registerItemOreDictionaryEntries();
-	}
+	}	
 }
