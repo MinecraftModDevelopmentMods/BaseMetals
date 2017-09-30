@@ -107,7 +107,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		lapis.addNewItem(Names.POWDER, new ItemStack(net.minecraft.init.Items.DYE, 1, 4).getItem());
 
 		quartz.addNewItem(Names.INGOT, net.minecraft.init.Items.QUARTZ);
-		// material.slab = ;
 
 		redstone.addNewItem(Names.POWDER, net.minecraft.init.Items.REDSTONE);
 
@@ -310,7 +309,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
-		BaseMetals.logger.fatal("ITEM REGISTER!");
 		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
 			for( Item item : mat.getItems() ) {
 				if( item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID) ) {
