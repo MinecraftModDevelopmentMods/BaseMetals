@@ -18,12 +18,10 @@ import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import slimeknights.tconstruct.library.smeltery.Cast;
 import slimeknights.tconstruct.tools.TinkerMaterials;
-import net.minecraft.item.crafting.IRecipe;
 
 /**
  *
@@ -41,13 +39,6 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 			return;
 		}
 
-		MinecraftForge.EVENT_BUS.register(this);
-		
-		initDone = true;
-	}
-	
-	@SubscribeEvent
-	public void setupTinkers(RegistryEvent.Register<IRecipe> ev) {
 		TraitRegistry.initTiCTraits();
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
@@ -102,6 +93,8 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		registry.registerAll();
+		registry.runIntegrations();
+		initDone = true;
 	}
 
 	// Because the underlying "registerCasting" call access some things that are not

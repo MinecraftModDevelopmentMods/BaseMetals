@@ -431,7 +431,7 @@ public class TCMaterial {
         return this.amountPer;
     }
 
-    public MMDMaterial getMetalMaterial() {
+    public MMDMaterial getMMDMaterial() {
         return this.mmdMaterial;
     }
 

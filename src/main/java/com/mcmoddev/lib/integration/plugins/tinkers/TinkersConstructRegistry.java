@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -41,7 +43,8 @@ public class TinkersConstructRegistry {
     
     private static TinkersConstructRegistry instance;
     private final List<TCMaterial> castingMaterials = new ArrayList<>();
-    
+    private static final Map<String,MaterialIntegration> integrations = new HashMap<>();
+        
     /**
      * Hacky-ass shit constructor. Be warned that this creates a semi-circular data structure.
      * @constructor
@@ -146,14 +149,14 @@ public class TinkersConstructRegistry {
 		
     	final Boolean hasTraits = !mat.getTraitLocations().isEmpty();
     	
-    	if( mat.getMetalMaterial().getFluid() == null ) {
+    	if( mat.getMMDMaterial().getFluid() == null ) {
     		return TCCode.BAD_MATERIAL;
     	}
     	
 		// make sure the name used here is all lower case
-		final Material tcmat = new Material(mat.getName().toLowerCase(), mat.getMetalMaterial().getTintColor());
-		TinkerRegistry.addMaterial(tcmat);
-
+		final Material tcmat = new Material(mat.getName().toLowerCase(), mat.getMMDMaterial().getTintColor());
+		//TinkerRegistry.addMaterial(tcmat);
+		
 		if (hasTraits) {
 			for (final String s : mat.getTraitLocations()) {
 				for (final AbstractTrait t : mat.getTraits(s)) {
@@ -163,22 +166,19 @@ public class TinkersConstructRegistry {
 		}
     	
 		Item matRepItem;
-		final MaterialType matType = mat.getMetalMaterial().getType(); 
+		final MaterialType matType = mat.getMMDMaterial().getType(); 
 		switch( matType ) {
 		case METAL:
-			matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+		case MINERAL:
+			matRepItem = mat.getMMDMaterial().getItem(Names.INGOT);
 			mat.setAmountPer(144);
 			break;
 		case GEM:
-			matRepItem = mat.getMetalMaterial().getItem(Names.GEM);
+			matRepItem = mat.getMMDMaterial().getItem(Names.GEM);
 			mat.setAmountPer(666); // Tinkers' emeralds are 666mB per gem
 			break;
 		case CRYSTAL:
-			matRepItem = mat.getMetalMaterial().getItem(Names.CRYSTAL);
-			mat.setAmountPer(144); // safe default
-			break;
-		case MINERAL:
-			matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+			matRepItem = mat.getMMDMaterial().getItem(Names.CRYSTAL);
 			mat.setAmountPer(144); // safe default
 			break;
 		case ROCK:
@@ -187,7 +187,7 @@ public class TinkersConstructRegistry {
 			return TCCode.BAD_MATERIAL;
 		}
 		
-		registerFluid(mat.getMetalMaterial(), mat.getAmountPer());
+		registerFluid(mat.getMMDMaterial(), mat.getAmountPer());
 		
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHeadStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHandleStats());
@@ -196,19 +196,19 @@ public class TinkersConstructRegistry {
 		TinkerRegistry.addMaterialStats(tcmat, mat.getBowStringStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getArrowShaftStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getFletchingStats());
-		
-		tcmat.setFluid(mat.getMetalMaterial().getFluid()).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(matRepItem, 1, Material.VALUE_Ingot);
+		tcmat.setRenderInfo(mat.getMMDMaterial().getTintColor());
+		tcmat.setFluid(mat.getMMDMaterial().getFluid()).setCraftable(mat.getCraftable()).setCastable(mat.getCastable()).addItem(matRepItem, 1, Material.VALUE_Ingot);
 		tcmat.setRepresentativeItem(matRepItem);
 
-		final String base = mat.getMetalMaterial().getName();
+		final String base = mat.getMMDMaterial().getName();
 		final String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
-		final MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMetalMaterial().getFluid(), suffix);
+		final MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMMDMaterial().getFluid(), suffix);
 		
 		if (mat.getToolForge()) {
 			m.toolforge();
 		}
 
-		TinkerRegistry.integrate(m);
+		integrations.put(Loader.instance().activeModContainer().getModId(), m);
 		registerCasting(mat);
 		return TCCode.SUCCESS;
     }
@@ -230,7 +230,15 @@ public class TinkersConstructRegistry {
     	}
     	return TCCode.SUCCESS;
     }
-    
+
+    public TCCode runIntegrations() {
+    	for( Entry<String, MaterialIntegration> ent : integrations.entrySet() ) {
+    		if( ent.getKey().equals(Loader.instance().activeModContainer().getModId()) ) {
+    			TinkerRegistry.integrate(ent.getValue()).preInit();
+    		}
+    	}
+		return TCCode.SUCCESS;
+    }
     /**
      * Register an item as melting to a given amount of a specific output fluid
      * As we have no real method of detecting errors here, we could have this return void. Using TCCode for orthogonality and possible future utility
@@ -292,7 +300,8 @@ public class TinkersConstructRegistry {
         if (outputAmount == 0) {
             return TCCode.FAILURE_PARAMETER_ERROR;
         }
-
+        BaseMetals.logger.debug("Registering alloy %s with Tinkers' Construct", name);
+        
         final FluidStack outputStack = new FluidStack(output, outputAmount);
         final FluidStack[] inputs = new FluidStack[recipe.length/2];
 
@@ -381,7 +390,7 @@ public class TinkersConstructRegistry {
     	int ingotQty;
     	
     	for( TCMaterial mat : this.castingMaterials ) {
-    		MMDMaterial material = mat.getMetalMaterial();
+    		MMDMaterial material = mat.getMMDMaterial();
     		
     		switch(material.getType()) {
     		case MINERAL:
