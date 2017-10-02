@@ -51,7 +51,7 @@ public class ModifierRegistry {
 			BaseMetals.logger.error("Trying to add an item to unknown modifier %s, ignoring.", name);
 			return;
 		}
-
+		
 		t.addItem(item);
 	}
 
@@ -64,7 +64,7 @@ public class ModifierRegistry {
 	public static void registerModifiers() {
 		for (final Entry<String, Modifier> ent : modifiers.entrySet()) {
 			if( TinkerRegistry.getModifier(ent.getValue().getIdentifier()) == null ) {
-				TinkerRegistry.registerModifier(ent.getValue());
+				TinkerRegistry.registerModifierAlias(ent.getValue(),ent.getKey());
 			}
 		}
 	}

@@ -3,7 +3,6 @@ package com.mcmoddev.lib.integration.plugins;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.init.Materials;
-import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
@@ -11,11 +10,10 @@ import com.mcmoddev.lib.integration.plugins.tinkers.TinkersConstructRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * TiC Plugin, redesigned
@@ -29,7 +27,7 @@ public class TinkersConstructBase implements IIntegration {
 
 	private static boolean initDone = false;
 
-	protected static final TinkersConstructRegistry registry = TinkersConstructRegistry.getInstance();
+	protected static final TinkersConstructRegistry registry = TinkersConstructRegistry.instance;
 
 	@Override
 	public void init() {
@@ -40,54 +38,9 @@ public class TinkersConstructBase implements IIntegration {
 		initDone = true;
 	}
 
-	protected static void registerExtraMelting(@Nonnull final String materialName, @Nonnull final Block block, @Nonnull final int amountPer) {
-		registerExtraMelting(Materials.getMaterialByName(materialName), block, amountPer);
-	}
-
-	/**
-	 * Variant of fluid registration to allow for late registration of specific
-	 * materials that have a different amount of fluid per block than normal.
-	 * Setup specifically for NetherMetals and EndMetals.
-	 *
-	 * @param base
-	 *            MMDMaterial that is the base material for this
-	 * @param block
-	 *            Block to register
-	 * @param amountPer
-	 *            the amount of fluid per this block
-	 */
-	protected static void registerExtraMelting(@Nonnull final MMDMaterial base, @Nonnull final Block block, @Nonnull final int amountPer) {
-		final String materialName = base.getName();
-		final Fluid output = FluidRegistry.getFluid(materialName);
-
-		if (block != null) {
-			registry.registerMelting(Item.getItemFromBlock(block), output, amountPer);
-		}
-	}
-
-	protected static void registerFluid(@Nonnull final String materialName, @Nonnull final int amountPer) {
-		registerFluid(Materials.getMaterialByName(materialName), amountPer);
-	}
-
-	/**
-	 * @param material
-	 *            Material being melted
-	 * @param amountPer
-	 *            Amount of fluid per ingot
-	 */
-	protected static void registerFluid(@Nonnull final MMDMaterial material, @Nonnull final int amountPer) {
-		registry.registerFluid(material, amountPer);
-	}
-
-	protected static void registerCasting(@Nonnull final String materialName, @Nonnull final int amountPer) {
-		registerCasting(Materials.getMaterialByName(materialName), amountPer);
-	}
-
-	protected static void registerCasting(@Nonnull final MMDMaterial material, @Nonnull final int amountPer) {
-		final Fluid fluid = material.getFluid();
-
-		registry.registerBasin(material.getBlock(Names.BLOCK), fluid, amountPer * 9);
-		registry.registerCasting(material.getEnumName());
+	protected static void registerExtraMelting(@Nonnull final String materialName, @Nonnull final String type, @Nonnull final String name, @Nonnull final int amountPer) {
+		String actName = String.format("%s:%s", type.toLowerCase(), name);
+		registry.getMaterial(materialName).addExtraMelting(actName, amountPer);
 	}
 
 	/**
@@ -102,12 +55,22 @@ public class TinkersConstructBase implements IIntegration {
 	 *            Array of quantities for input
 	 */
 	protected static void registerAlloy(@Nonnull final String outputName, @Nonnull final int outputQty, @Nonnull final String[] inputName, @Nonnull final int[] inputQty) {
-		registry.registerAlloy(outputName, outputQty, inputName, inputQty);
+		FluidStack output = FluidRegistry.getFluidStack(outputName, outputQty);
+		FluidStack[] inputs = new FluidStack[inputName.length];
+		
+		for( int i = 0; i < inputName.length; i++ ) {
+			inputs[i] = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
+		}
+		
+		registry.registerAlloy(outputName, output, inputs);
 	}
 
 	protected static TCMaterial registerMaterial(@Nonnull final String materialName, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
-		return registerMaterial(Materials.getMaterialByName(materialName), craftable, castable);
+		MMDMaterial mat = Materials.getMaterialByName(materialName);
+		
+		return registerMaterial(mat, craftable, castable);
 	}
+	
 	/**
 	 * Creates a Tinkers Construct
 	 * {@link slimeknights.tconstruct.library.materials.Material}
@@ -121,7 +84,13 @@ public class TinkersConstructBase implements IIntegration {
 	 * @return a handle for potential, further manipulation of the material
 	 */
 	protected static TCMaterial registerMaterial(@Nonnull final MMDMaterial material, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
-		return registry.getMaterial(material.getName(), material).setCraftable(craftable).setCastable(castable).setToolForge(true);
+		TCMaterial tcm = registry.newMaterial(material.getName(), material.getTintColor());
+		if( craftable )
+			tcm.setCraftable();
+		if( castable )
+			tcm.setCastable();
+		
+		return tcm;
 	}
 
 	/**

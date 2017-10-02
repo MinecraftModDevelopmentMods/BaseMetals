@@ -1,34 +1,38 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.BaseMetals;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.data.TraitNames;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.util.ConfigBase.Options;
-import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
-import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
-import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import slimeknights.tconstruct.library.smeltery.Cast;
-import slimeknights.tconstruct.tools.TinkerMaterials;
+import slimeknights.tconstruct.shared.TinkerFluids;
 
 /**
  *
  * @author Jasmine Iwanek
  *
  */
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID)
+@MMDPlugin(addonId = BaseMetals.MODID, 
+           pluginId = TinkersConstruct.PLUGIN_MODID, 
+           preInitCallback="preInit", 
+           initCallback="initCallback")
 public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase implements IIntegration {
 
 	private static boolean initDone = false;
@@ -38,16 +42,12 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if (initDone || !Options.isModEnabled("tinkersconstruct")) {
 			return;
 		}
-
-		TraitRegistry.initTiCTraits();
-		TraitRegistry.initMetalsTraits();
+		
 		ModifierRegistry.initModifiers();
-		TraitRegistry.registerTraits();
-		ModifierRegistry.registerModifiers();
 		
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, true, false);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC, TraitNames.JAGGED, TraitLocations.HEAD, TraitNames.AQUADYNAMIC, TraitLocations.HEAD);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC, TraitLocations.HEAD, TraitNames.JAGGED, TraitLocations.HEAD, TraitNames.AQUADYNAMIC);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.BISMUTH), MaterialNames.BISMUTH, true, false);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, true, false, TraitNames.DENSE);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
@@ -65,60 +65,48 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerAlloys();
 		
 		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
-			registerFluid(Materials.getMaterialByName(MaterialNames.COAL), 144);
+			registerMelting(MaterialNames.COAL, 144);
 		}
 
-		// As much as we'd like to, we cannot do this like this.
-		// At some point between this code running and it getting
-		// up to the point of registration, the state changes and
-		// lead is suddenly registered.
-		// There will have to be another means of making this work...
-		// There is an event TiC has that covers material registration
-		// we could hook that...
-
-		// Lead itself is added by TiC
 		if ((Options.isMaterialEnabled(MaterialNames.LEAD)) && (Options.isThingEnabled("Plate"))) {
 			registerModifierItem("plated", Item.getItemFromBlock(Materials.getMaterialByName(MaterialNames.LEAD).getBlock(Names.PLATE)));
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
-			registry.registerFluid(Materials.getMaterialByName(MaterialNames.MERCURY), 144);
+			registerMelting(MaterialNames.MERCURY, 144);
 			if (Options.isThingEnabled("Basics")) {
 				registerModifierItem("toxic", Materials.getMaterialByName(MaterialNames.MERCURY).getItem(Names.POWDER));
 			}
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.SILVER)) {
-			// Anything needed?
-		}
-
-		registry.registerAll();
-		registry.runIntegrations();
+		MinecraftForge.EVENT_BUS.register(this);
 		initDone = true;
 	}
-
-	// Because the underlying "registerCasting" call access some things that are not
-	// available until after the Items are registered, lets run this in the IRecipe
-	@SubscribeEvent
-	public void regExtraCastings(RegistryEvent.Register<ICrusherRecipe> ev) {
-		registry.doCastings();
-		if(Options.isMaterialEnabled(MaterialNames.EMERALD)) {
-			registerExtraMelting(MaterialNames.EMERALD, Materials.getMaterialByName(MaterialNames.EMERALD).getBlock(Names.BLOCK), 5994);
-			registry.registerMelting(Oredicts.NUGGET + Materials.getMaterialByName(MaterialNames.EMERALD).getCapitalizedName(),
-					Materials.getMaterialByName(MaterialNames.EMERALD).getFluid(), 74 );
-			registry.registerCasting(Materials.getMaterialByName(MaterialNames.EMERALD).getItem(Names.GEAR), 
-					slimeknights.tconstruct.smeltery.TinkerSmeltery.castGear, 
-					Materials.getMaterialByName(MaterialNames.EMERALD).getFluid(), 2664);
-			registry.registerCasting(Materials.getMaterialByName(MaterialNames.EMERALD).getItem(Names.NUGGET), 
-					slimeknights.tconstruct.smeltery.TinkerSmeltery.castNugget, 
-					Materials.getMaterialByName(MaterialNames.EMERALD).getFluid(), 74);
-		    ItemStack rodCast = new ItemStack(slimeknights.tconstruct.smeltery.TinkerSmeltery.cast);
-			Cast.setTagForPart(rodCast, slimeknights.tconstruct.tools.TinkerTools.toolRod.getItemstackWithMaterial(TinkerMaterials.iron).getItem());
-			registry.registerCasting(Materials.getMaterialByName(MaterialNames.EMERALD).getItem(Names.ROD),
-					rodCast, Materials.getMaterialByName(MaterialNames.EMERALD).getFluid(), 1332 );
-		}
+	
+	public void preInit() {
+		registry.setupIntegrations();
+		registry.addMaterialStats();
+		registry.integrationPreInit();
 	}
 	
+	public void initCallback() {
+		registry.resolveTraits();
+		registry.integrationsInit();
+		registry.registerMeltings();
+		registry.registerAlloys();
+	}
+	
+	@SubscribeEvent
+	public void registerModifiers( RegistryEvent.Register<Item> ev) {
+		ModifierRegistry.registerModifiers();
+	}
+	
+	private void registerMelting(@Nonnull final String name, @Nonnull final int amount ) {
+		MMDMaterial mat = Materials.getMaterialByName(name);
+		FluidStack res = new FluidStack(mat.getFluid(), amount);
+		registry.registerMelting(mat.getItem(Names.INGOT), res);
+	}
+
 	private boolean isTraitLoc(String loc) {
 		switch (loc) {
 		case TraitLocations.BOW:
@@ -138,17 +126,20 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 	private void addTraits(TCMaterial mat, String[] traits) {
 		int i = 0;
 		while (i < traits.length) {
-			if (i + 1 >= traits.length) {
-				mat.addTrait(traits[i]);
-				i++;
-				continue;
-			}
-
-			if (isTraitLoc(traits[i + 1])) {
-				mat.addTrait(traits[i], traits[i + 1]);
-				i++;
+			if( i == (traits.length - 1) ) {
+				// can only be a "general" trait
+				mat.addTrait("general", traits[i]);
 			} else {
-				mat.addTrait(traits[i]);
+				String item = traits[i];
+				if( isTraitLoc(item) ) {
+					if( i+1 >= traits.length ) {
+						return;
+					}
+					i++;
+					mat.addTrait(item, traits[i]);
+				} else {
+					mat.addTrait("general", traits[i]);
+				}
 			}
 			i++;
 		}
@@ -156,42 +147,141 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 	private void registerMaterial(boolean enabled, String name, boolean castable, boolean craftable, String... traits) {
 		if (enabled) {
-			registerMaterial(name, castable, craftable, traits);
+				registerMaterial(name, castable, craftable, traits);
 		}
 	}
 
 	private void registerMaterial(String name, boolean castable, boolean craftable, String... traits) {
-		TCMaterial mat = registry.getMaterial(name, Materials.getMaterialByName(name)).setCastable(castable).setCraftable(craftable);
+		MMDMaterial mmdMat = Materials.getMaterialByName(name);
+		TCMaterial mat = registry.newMaterial(name, mmdMat.getTintColor());
+		
+		if( castable )
+			mat.setCastable();
+		if( craftable )
+			mat.setCraftable();
+		
+		mat.setSourceMaterial(mmdMat);
+		mat.genStatsFromSource();
+		
 		if (traits.length > 0) {
 			addTraits(mat, traits);
 		}
+		
 		mat.settle();
 	}
 
-	private void registerAlloys() {
-		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM) && Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.ZINC)) {
-			registry.registerAlloy(MaterialNames.AQUARIUM, Materials.getMaterialByName(MaterialNames.AQUARIUM).getFluid(), 3, MaterialNames.COPPER, 2, MaterialNames.ZINC, 1, MaterialNames.PRISMARINE, 3);
+	private static Fluid getFluid(@Nonnull final MMDMaterial mat) {
+		Fluid outFluid;
+
+		switch(mat.getName()) {
+		case "iron":
+			outFluid = TinkerFluids.iron;
+			break;
+		case "gold":
+			outFluid = TinkerFluids.gold;
+			break;
+		case "emerald":
+			outFluid = TinkerFluids.emerald;
+			break;
+		case "aluminumbrass":
+			outFluid = TinkerFluids.alubrass;
+			break;
+		case "aluminum":
+			outFluid = TinkerFluids.aluminum;
+			break;
+		case "copper":
+			outFluid = TinkerFluids.copper;
+			break;
+		case "brass":
+			outFluid = TinkerFluids.brass;
+			break;
+		case "tin":
+			outFluid = TinkerFluids.tin;
+			break;
+		case "bronze":
+			outFluid = TinkerFluids.bronze;
+			break;
+		case "zinc":
+			outFluid = TinkerFluids.zinc;
+			break;
+		case "lead":
+			outFluid = TinkerFluids.lead;
+			break;
+		case "nickel":
+			outFluid = TinkerFluids.nickel;
+			break;
+		case "silver":
+			outFluid = TinkerFluids.silver;
+			break;
+		case "electrum":
+			outFluid = TinkerFluids.electrum;
+			break;
+		case "steel":
+			outFluid = TinkerFluids.steel;
+			break;
+		default:
+			outFluid = mat.getFluid();
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL) && Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.NICKEL)) {
-			registry.registerAlloy(MaterialNames.CUPRONICKEL, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getFluid(), 4, MaterialNames.COPPER, 3, MaterialNames.NICKEL, 1);
+		return outFluid;
+	}
+	
+	private void registerAlloys() {
+		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM) && 
+				Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.ZINC)) {
+			FluidStack output = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.AQUARIUM)),3);
+			FluidStack copper = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.COPPER)), 2);
+			FluidStack zinc = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.ZINC)), 1);
+			FluidStack prismarine = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.PRISMARINE)), 3);
+			registry.registerAlloy(MaterialNames.AQUARIUM, output, copper, zinc, prismarine);
+		}
+
+		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL) && 
+				Options.isMaterialEnabled(MaterialNames.COPPER) && 
+				Options.isMaterialEnabled(MaterialNames.NICKEL)) {
+			FluidStack output = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.CUPRONICKEL)),4);
+			FluidStack copper = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.COPPER)), 3);
+			FluidStack nickel = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.NICKEL)), 1);
+			registry.registerAlloy(MaterialNames.CUPRONICKEL, output, copper, nickel);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.INVAR) && Options.isMaterialEnabled(MaterialNames.NICKEL)) {
-			registry.registerAlloy(MaterialNames.INVAR, Materials.getMaterialByName(MaterialNames.INVAR).getFluid(), 3, MaterialNames.IRON, 2, MaterialNames.NICKEL, 1);
+			FluidStack output = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.INVAR)),3);
+			FluidStack iron = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.IRON)), 2);
+			FluidStack nickel = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.NICKEL)), 1);
+			registry.registerAlloy(MaterialNames.INVAR, output, iron, nickel);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.MITHRIL) && Options.isMaterialEnabled(MaterialNames.COLDIRON) && Options.isMaterialEnabled(MaterialNames.SILVER) && Options.isMaterialEnabled(MaterialNames.MERCURY)) {
-			registry.registerAlloy(MaterialNames.MITHRIL, Materials.getMaterialByName(MaterialNames.MITHRIL).getFluid(), 3, MaterialNames.SILVER, 2, MaterialNames.COLDIRON, 1, MaterialNames.MERCURY, 1);
+		if (Options.isMaterialEnabled(MaterialNames.MITHRIL) && 
+				Options.isMaterialEnabled(MaterialNames.COLDIRON) && 
+				Options.isMaterialEnabled(MaterialNames.SILVER) && 
+				Options.isMaterialEnabled(MaterialNames.MERCURY)) {
+			FluidStack output = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.MITHRIL)),3);
+			FluidStack coldiron = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.COLDIRON)), 1);
+			FluidStack silver = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.SILVER)), 2);
+			FluidStack mercury = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.MERCURY)), 1);
+			
+			registry.registerAlloy(MaterialNames.MITHRIL, output, silver, coldiron, mercury);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.PEWTER) && Options.isMaterialEnabled(MaterialNames.LEAD) && Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.TIN)) {
+		if (Options.isMaterialEnabled(MaterialNames.PEWTER) && 
+				Options.isMaterialEnabled(MaterialNames.LEAD) && 
+				Options.isMaterialEnabled(MaterialNames.COPPER) && 
+				Options.isMaterialEnabled(MaterialNames.TIN)) {
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
-			registry.registerAlloy(MaterialNames.PEWTER, Materials.getMaterialByName(MaterialNames.PEWTER).getFluid(), 144, MaterialNames.TIN, 137, MaterialNames.COPPER, 2, MaterialNames.LEAD, 5);
+			FluidStack output = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.PEWTER)), 144);
+			FluidStack copper = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.COPPER)), 2);
+			FluidStack tin = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.TIN)), 137);
+			FluidStack lead = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.LEAD)), 5);
+			
+			registry.registerAlloy(MaterialNames.PEWTER, output, tin, copper, lead);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
-			registry.registerAlloy(MaterialNames.STEEL, Materials.getMaterialByName(MaterialNames.STEEL).getFluid(), 8, MaterialNames.IRON, 8, MaterialNames.COAL, 1);
+			FluidStack output = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.STEEL)), 8);
+			FluidStack iron = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.IRON)), 8);
+			FluidStack coal = new FluidStack(getFluid(Materials.getMaterialByName(MaterialNames.COAL)), 1);
+			registry.registerAlloy(MaterialNames.STEEL, output, iron, coal);
 		}
 	}
 
