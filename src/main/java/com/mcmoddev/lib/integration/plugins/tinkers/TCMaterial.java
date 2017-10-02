@@ -17,6 +17,7 @@ import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
 import slimeknights.tconstruct.library.materials.BowMaterialStats;
 import slimeknights.tconstruct.library.materials.BowStringMaterialStats;
@@ -397,7 +398,9 @@ public class TCMaterial {
 			String workingName = this.name!=null?this.name:posName;
 			int posCol = this.material!=null?this.material.getTintColor():0xFFFFFFFF;
 			int color = this.tintColor!=0?this.tintColor:posCol;
-			this.tinkersMaterial = new Material(workingName, color, true);
+			this.tinkersMaterial = new Material(workingName, color, false);
+			if( this.name == null )
+				this.name = workingName;
 		}
 		
 		return this.tinkersMaterial;
@@ -513,11 +516,24 @@ public class TCMaterial {
 			outFluid = mat.getFluid();
 		}
 
+		if( outFluid == null )
+			outFluid = FluidRegistry.getFluid(mat.getName());
+		
 		return outFluid;
 	}
 
 	public Fluid getFluid() {
 		return getActualFluid(this.material);
+	}
+	
+	public TCMaterial setFluid(@Nonnull final Fluid fluid) {
+		Fluid f = getFluid();
+		if( f.equals(fluid) ) {
+			this.tinkersMaterial.setFluid(fluid);
+		} else {
+			this.tinkersMaterial.setFluid(f);
+		}
+		return this;
 	}
 	
 	public TCMaterial setIngotAmount(@Nonnull final int amount) {
@@ -586,8 +602,12 @@ public class TCMaterial {
 	// otherwise we'd be overwriting their stuff
 	public void settle() {
 		if( this.tinkersMaterial == null ) {
-			this.tinkersMaterial = new Material(this.name, this.tintColor);
+			this.tinkersMaterial = this.getMaterial();
+			this.configured = false;
 		}
+		
+		this.tinkersMaterial.setFluid(this.getFluid());
+		this.tinkersMaterial.setVisible();
 		
 		if( !this.configured ) {
 			this.genStatsInternal();

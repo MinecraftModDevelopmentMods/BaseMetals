@@ -121,12 +121,6 @@ public class TraitRegistry {
 	}
 	
 	public static void registerTraits() {
-		for( final Entry<String, ITrait> e : registeredTraits.entrySet() ) {
-			if( e.getValue() != null ) {
-				if( TinkerRegistry.getTrait(e.getValue().getIdentifier()) == null ) {
-					TinkerRegistry.addTrait(e.getValue());
-				}
-			}
-		}
+		// not needed anymore
 	}
 }

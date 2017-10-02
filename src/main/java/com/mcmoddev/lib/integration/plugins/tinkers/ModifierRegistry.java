@@ -65,6 +65,7 @@ public class ModifierRegistry {
 		for (final Entry<String, Modifier> ent : modifiers.entrySet()) {
 			if( TinkerRegistry.getModifier(ent.getValue().getIdentifier()) == null ) {
 				TinkerRegistry.registerModifierAlias(ent.getValue(),ent.getKey());
+				TinkerRegistry.registerModifier(ent.getValue());
 			}
 		}
 	}
