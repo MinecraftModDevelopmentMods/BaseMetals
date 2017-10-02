@@ -151,13 +151,6 @@ public class TinkersConstructRegistry {
 			cmi.add(integration);
 			integrations.put(curMod, cmi);
 			TinkerRegistry.integrate(integration);
-		}
-	}
-	
-	public void integrationPreInit() {
-		String curMod = Loader.instance().activeModContainer().getModId();
-		List<MaterialIntegration> these = integrations.getOrDefault(curMod, Collections.emptyList());
-		for(MaterialIntegration integration : these) {
 			integration.preInit();
 		}
 	}

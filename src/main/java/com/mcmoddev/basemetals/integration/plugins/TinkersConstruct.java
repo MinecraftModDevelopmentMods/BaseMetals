@@ -67,9 +67,9 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 	public void preInit() {
 		registry.setupIntegrations();
 		registry.addMaterialStats();
-		registry.integrationPreInit();
 		registerModifiers();
 		registerMelting();
+		registry.setMaterialsVisible();
 	}
 	
 	public void initCallback() {
@@ -81,6 +81,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 	}
 
 	public void postInit() {
+		registry.setMaterialsVisible();
 		registry.registerAlloys();
 	}
 	
