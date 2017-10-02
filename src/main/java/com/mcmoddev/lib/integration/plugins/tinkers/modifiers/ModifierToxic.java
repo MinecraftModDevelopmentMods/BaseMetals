@@ -6,9 +6,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import slimeknights.tconstruct.library.modifiers.IModifierDisplay;
 import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 
-public class ModifierToxic extends ModifierTrait {
+public class ModifierToxic extends ModifierTrait implements IModifierDisplay {
 
 	public ModifierToxic() {
 		super("toxic-modifier", 0xFFFFFF, 1, 0);
