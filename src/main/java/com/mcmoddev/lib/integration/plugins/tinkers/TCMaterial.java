@@ -584,7 +584,7 @@ public class TCMaterial {
 	// resolve any un-set values
 	// we only do this if someone hasn't actually configured the material
 	// otherwise we'd be overwriting their stuff
-	public TCMaterial settle() {
+	public void settle() {
 		if( this.tinkersMaterial == null ) {
 			this.tinkersMaterial = new Material(this.name, this.tintColor);
 		}
@@ -615,8 +615,6 @@ public class TCMaterial {
 				}
 			}
 		}
-				
-		return this;
 	}
 
 	public void resolveTraits() {
