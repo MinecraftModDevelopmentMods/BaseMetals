@@ -9,7 +9,6 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -79,9 +78,9 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 	
 	@SubscribeEvent
 	public void registerModifiers( RegistryEvent.Register<Item> ev) {
-		ModifierRegistry.initModifiers();
+		super.modifierSetup();
 		registerModifiers();
-		ModifierRegistry.registerModifiers();
+		super.modifierRegister();
 	}
 	
 	private void registerModifiers() {

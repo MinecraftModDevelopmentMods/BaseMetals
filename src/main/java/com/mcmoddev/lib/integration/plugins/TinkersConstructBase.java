@@ -136,4 +136,12 @@ public class TinkersConstructBase implements IIntegration {
 		registry.setMaterialsVisible();
 		registry.registerAlloys();
 	}
+
+	public void modifierSetup() {
+		ModifierRegistry.initModifiers();
+	}
+
+	public void modifierRegister() {
+		ModifierRegistry.registerModifiers();
+	}
 }
