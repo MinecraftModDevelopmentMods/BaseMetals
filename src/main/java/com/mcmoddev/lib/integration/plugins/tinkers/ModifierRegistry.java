@@ -25,7 +25,7 @@ import slimeknights.tconstruct.library.modifiers.Modifier;
 
 public class ModifierRegistry {
 
-	private static Map<String, Modifier> modifiers = new HashMap<>();
+	private static final Map<String, Modifier> modifiers = new HashMap<>();
 
 	private ModifierRegistry() {
 		throw new IllegalAccessError("Not an instantiable class");
@@ -39,6 +39,7 @@ public class ModifierRegistry {
 		}
 
 		t.addRecipeMatch(new RecipeMatch.ItemCombination(1, ingredients));
+		modifiers.put(name, t);
 	}
 
 	public static void setModifierItem(@Nonnull final String name, @Nonnull final ItemStack item) {
@@ -51,8 +52,9 @@ public class ModifierRegistry {
 			BaseMetals.logger.error("Trying to add an item to unknown modifier %s, ignoring.", name);
 			return;
 		}
-
+		
 		t.addItem(item);
+		modifiers.put(name, t);
 	}
 
 	public static void initModifiers() {
@@ -64,6 +66,7 @@ public class ModifierRegistry {
 	public static void registerModifiers() {
 		for (final Entry<String, Modifier> ent : modifiers.entrySet()) {
 			if( TinkerRegistry.getModifier(ent.getValue().getIdentifier()) == null ) {
+				TinkerRegistry.registerModifierAlias(ent.getValue(),ent.getKey());
 				TinkerRegistry.registerModifier(ent.getValue());
 			}
 		}

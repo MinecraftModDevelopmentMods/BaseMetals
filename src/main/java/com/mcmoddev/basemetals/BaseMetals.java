@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 		modid = BaseMetals.MODID,
 		name = BaseMetals.NAME,
 		version = BaseMetals.VERSION,
-		dependencies = "required-after:forge@[14.21.0.2327,);after:taiga;after:ic2;after:tconstruct;before:buildingbricks",
+		dependencies = "required-after:forge@[14.21.0.2327,);after:tconstruct;after:ic2;before:buildingbricks",
 		acceptedMinecraftVersions = "[1.12,)",
 		updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {

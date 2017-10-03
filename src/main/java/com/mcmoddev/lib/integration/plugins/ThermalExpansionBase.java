@@ -11,10 +11,8 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import cofh.api.util.ThermalExpansionHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 // Parts of this are based on code from older versions of CoFHLib
 // Other parts are lifted from the "ThermalExpansionHelper" of the 1.7 versions
@@ -24,9 +22,6 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 public class ThermalExpansionBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "thermalexpansion";
-	private static final String INPUT = "input";
-	private static final String OUTPUT = "output";
-	private static final String ENERGY = "energy";
 	
 	private static boolean initDone = false;
 

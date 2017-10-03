@@ -142,13 +142,6 @@ dependencies {
         exclude group: 'mezz.jei'
     }
 
-    deobfCompile ("com.github.TeamFRM:TAIGA:${taiga_version}") {
-        exclude group: 'MCMultiPart'
-        exclude group: 'mezz.jei'
-        exclude group: 'slimeknights.mantle'
-        exclude group: 'slimeknights'
-    }
-
     deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
         exclude group: 'mezz.jei'
     }
