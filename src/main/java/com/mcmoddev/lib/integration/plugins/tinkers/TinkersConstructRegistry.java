@@ -127,7 +127,9 @@ public class TinkersConstructRegistry {
 
 	public void setupIntegrations() {
 		final String curMod = Loader.instance().activeModContainer().getModId();
+		BaseMetals.logger.debug("setupIntegrations() for mod %s", curMod);
 		for( final Entry<String, TCMaterial> entry : registry.get(curMod).entrySet()) {
+			BaseMetals.logger.debug("processing material %s from mod %s", entry.getKey(), curMod);
 			TCMaterial material = entry.getValue();
 			
 			material.settle();

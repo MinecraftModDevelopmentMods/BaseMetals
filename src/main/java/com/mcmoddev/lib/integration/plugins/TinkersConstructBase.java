@@ -128,12 +128,12 @@ public class TinkersConstructBase implements IIntegration {
 	public void initSetup() {
 		registry.resolveTraits();
 		registry.integrationsInit();
-		registry.setMaterialsVisible();
+		setMaterialsVisible();
 		registry.registerMeltings();
 	}
 
 	public void postInitSetup() {
-		registry.setMaterialsVisible();
+		setMaterialsVisible();
 		registry.registerAlloys();
 	}
 
