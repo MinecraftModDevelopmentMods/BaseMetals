@@ -114,6 +114,10 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 */
 	private final MaterialType materialType;
 
+	private int spawnSize;
+
+	private int defaultDimension;
+
 	/**
 	 * @param name
 	 *            String used to identify items and blocks using this material
@@ -158,6 +162,8 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		this.materialType = type;
 		this.hasBlend = hasBlend;
 		this.hasOre = hasOre;
+		this.spawnSize = 8;
+		this.defaultDimension = Integer.MIN_VALUE;
 	}
 
 	public String getName() {
@@ -639,4 +645,21 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		}
 	}
 
+	public int getSpawnSize() {
+		return this.spawnSize;
+	}
+
+	public MMDMaterial setSpawnSize(int size) {
+		this.spawnSize = size;
+		return this;
+	}
+	
+	public int getDefaultDimension() {
+		return this.defaultDimension;
+	}
+	
+	public MMDMaterial setDefaultDimension(int dim) {
+		this.defaultDimension = dim;
+		return this;
+	}
 }

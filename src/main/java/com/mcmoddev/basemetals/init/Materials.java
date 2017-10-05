@@ -61,7 +61,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 
 		// Mod Materials
 		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
-			createMaterial(MaterialNames.ADAMANTINE, MaterialType.METAL, 12, 100, 0, 0xFF53393F).setBlastResistance(2000f);
+			createMaterial(MaterialNames.ADAMANTINE, MaterialType.METAL, 12, 100, 0, 0xFF53393F).setBlastResistance(2000f).setSpawnSize(4).setDefaultDimension(-1);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.ANTIMONY)) {
@@ -85,7 +85,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.COLDIRON)) {
-			createMaterial(MaterialNames.COLDIRON, MaterialType.METAL, 7, 7, 7, 0xFFC7CEF0);
+			createMaterial(MaterialNames.COLDIRON, MaterialType.METAL, 7, 7, 7, 0xFFC7CEF0).setSpawnSize(4).setDefaultDimension(-1);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.COPPER)) {
@@ -122,7 +122,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 			createAlloyMaterial(MaterialNames.PEWTER, MaterialType.METAL, 1, 1, 1, 0xFF92969F);
 		}
 		if (Options.isMaterialEnabled(MaterialNames.PLATINUM)) {
-			createRareMaterial(MaterialNames.PLATINUM, MaterialType.METAL, 3, 5, 15, 0xFFF2FFFF);
+			createRareMaterial(MaterialNames.PLATINUM, MaterialType.METAL, 3, 5, 15, 0xFFF2FFFF).setSpawnSize(4);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.SILVER)) {
@@ -131,6 +131,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
 			MMDMaterial starsteel = createMaterial(MaterialNames.STARSTEEL, MaterialType.METAL, 10, 25, 12, 0xFF53393F).setBlastResistance(2000f);
 			starsteel.setRegenerates(true);
+			starsteel.setSpawnSize(6).setDefaultDimension(1);
 		}
 		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
 			createAlloyMaterial(MaterialNames.STEEL, MaterialType.METAL, 8, 15, 2, 0xFFD5E3E5);

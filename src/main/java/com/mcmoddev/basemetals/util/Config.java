@@ -65,6 +65,10 @@ public class Config extends ConfigBase {
 				"Repair shields and armor with metal plates of the same type"));
 		Options.setEnableShieldUpgrades(configuration.getBoolean("upgrade_shields", GENERAL_CAT, true,
 				"Upgrade a fully repaired shield to a material at least as hard as the shields current one using a plate of that material in the Anvil"));
+		
+		// fallback orespawn can live as a 'thingEnabled' for a bit...
+		Options.setFallbackOreSpawn(configuration.getBoolean("fallback_orespawn", GENERAL_CAT, true, 
+				"disable this and using_orespawn to make MMDLib based mods not spawn any ores"));
 
 		// INTEGRATION
 		Options.modEnabled("enderio", configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
