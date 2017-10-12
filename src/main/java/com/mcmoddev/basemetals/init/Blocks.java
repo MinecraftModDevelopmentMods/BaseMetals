@@ -70,11 +70,20 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 			createBlocksFull(starsteel, myTabs);
 			starsteel.getBlock(Names.BLOCK).setLightLevel(0.5f);
-			starsteel.getBlock(Names.PLATE).setLightLevel(0.5f);
+			if( Options.isThingEnabled("Plate") )
+				starsteel.getBlock(Names.PLATE).setLightLevel(0.5f);
+			
 			starsteel.getBlock(Names.ORE).setLightLevel(0.5f);
-			starsteel.getBlock(Names.BARS).setLightLevel(0.5f);
-			starsteel.getBlock(Names.DOOR).setLightLevel(0.5f);
-			starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
+			
+			if( Options.isThingEnabled("Bars") )
+				starsteel.getBlock(Names.BARS).setLightLevel(0.5f);
+			
+			if( Options.isThingEnabled("Door") )
+				starsteel.getBlock(Names.DOOR).setLightLevel(0.5f);
+			
+			if( Options.isThingEnabled("Trapdoor") )
+				starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
+			
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
