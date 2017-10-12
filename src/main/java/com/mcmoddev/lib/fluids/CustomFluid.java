@@ -2,7 +2,7 @@ package com.mcmoddev.lib.fluids;
 
 import com.mcmoddev.basemetals.init.Materials;
 
-import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -94,9 +94,10 @@ public class CustomFluid extends Fluid {
 		return this.color;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public String getLocalizedName(FluidStack stack) {
 		String s = this.getUnlocalizedName();
-		return s == null ? "" : I18n.format(String.format("%s.name", s));
+		return s == null ? "" : I18n.translateToLocalFormatted("%s.name", s);
 	}
 }
