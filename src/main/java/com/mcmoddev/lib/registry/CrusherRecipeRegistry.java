@@ -24,11 +24,11 @@ import net.minecraftforge.registries.RegistryBuilder;
  * Rewritten entirely as part of the 1.12 porting by D. Hazelton, 20-SEP-2017
  */
 public class CrusherRecipeRegistry {
-	private final IForgeRegistryModifiable<ICrusherRecipe> REGISTRY;
-	private final static CrusherRecipeRegistry instance = new CrusherRecipeRegistry();
+	private final IForgeRegistryModifiable<ICrusherRecipe> registry;
+	private static final CrusherRecipeRegistry instance = new CrusherRecipeRegistry();
 	
 	private CrusherRecipeRegistry() {
-		this.REGISTRY = (IForgeRegistryModifiable<ICrusherRecipe>)new RegistryBuilder<ICrusherRecipe>()
+		this.registry = (IForgeRegistryModifiable<ICrusherRecipe>)new RegistryBuilder<ICrusherRecipe>()
 				.setName(new ResourceLocation("mmdlib","crusher_registry"))
 			    .allowModification()
 			    .setType(ICrusherRecipe.class)
@@ -55,12 +55,12 @@ public class CrusherRecipeRegistry {
 
 	// proper entry point
 	public void register(@Nonnull final ICrusherRecipe recipe) {
-		this.REGISTRY.register(recipe);
+		this.registry.register(recipe);
 	}
 	
 	// more back-compat
 	public static List<ICrusherRecipe> getAll() {
-		return Lists.newArrayList(instance.REGISTRY.iterator());
+		return Lists.newArrayList(instance.registry.iterator());
 	}
 	
 	public static CrusherRecipeRegistry getInstance() {
@@ -75,7 +75,7 @@ public class CrusherRecipeRegistry {
 	
 	// get an ICrusherRecipe for a given input, if one exists
 	public static ICrusherRecipe getRecipeForInputItem(@Nonnull final ItemStack itemStack) {
-		Iterator<ICrusherRecipe> iter = instance.REGISTRY.iterator();
+		Iterator<ICrusherRecipe> iter = instance.registry.iterator();
 		
 		while( iter.hasNext() ) {
 			ICrusherRecipe cur = iter.next();
@@ -92,10 +92,10 @@ public class CrusherRecipeRegistry {
 		ICrusherRecipe r = getRecipeForInputItem(itemStack);
 		
 		if( r != null ) {
-			return instance.REGISTRY.getKey(r);
+			return instance.registry.getKey(r);
 		}
 		
-		return null;
+		return new ResourceLocation("");
 	}
 	
 	// removing recipes!
@@ -111,8 +111,7 @@ public class CrusherRecipeRegistry {
 		NonNullList<ItemStack> itemStacks = OreDictionary.getOres(oreDictName);
 		
 		for( ItemStack itemStack : itemStacks ) {
-			ResourceLocation rl = getNameForInputItem(itemStack);
-			removeByName(rl);
+			removeByName( getNameForInputItem(itemStack) );
 		}
 	}
 
@@ -134,7 +133,7 @@ public class CrusherRecipeRegistry {
 	
 	// actually do the removal call
 	public void remove(@Nonnull final ResourceLocation name) {
-		this.REGISTRY.remove(name);
+		this.registry.remove(name);
 	}
 	
 }

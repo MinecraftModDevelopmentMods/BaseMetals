@@ -8,6 +8,7 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -27,15 +28,26 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 	 *            The material the ore is made from
 	 */
 	public BlockMMDOre(MMDMaterial material) {
-		super();
-		this.material = material;
-		// this.setSoundType(SoundType.STONE);
-		this.blockHardness = Math.max(5f, this.material.getOreBlockHardness());
-		this.blockResistance = Math.max(1.5f, this.material.getBlastResistance() * 0.75f);
-		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
-		// BaseMetals.logger.info(this.material.getName() + " ore harvest level set to " + material.getRequiredHarvestLevel());
+		this(material, false);
 	}
 
+	public BlockMMDOre(MMDMaterial material, boolean isSoft) {
+		super();
+		this.material = material;
+		
+		if (isSoft) {
+			this.setSoundType(SoundType.GROUND);
+			this.blockHardness = Math.max(2.5f, this.material.getOreBlockHardness());
+			this.blockResistance = Math.max(0.75f, this.material.getBlastResistance() * 0.75f);
+			this.setHarvestLevel("shovel", this.material.getRequiredHarvestLevel());
+		} else {
+			this.blockHardness = Math.max(5f, this.material.getOreBlockHardness());
+			this.blockResistance = Math.max(1.5f, this.material.getBlastResistance() * 0.75f);
+			this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
+			this.setSoundType(SoundType.STONE);
+		}
+	}
+    
 	@Override
 	public int getExpDrop(final IBlockState bs, IBlockAccess w, final BlockPos coord, final int i) {
 		return 0; // XP comes from smelting

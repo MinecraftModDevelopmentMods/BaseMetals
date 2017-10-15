@@ -1,13 +1,11 @@
 package com.mcmoddev.lib.recipe.factories;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mcmoddev.basemetals.BaseMetals;
@@ -47,15 +45,10 @@ public class ConfigVariedOutput implements IRecipeFactory {
 		
 		// load the data here, map the ingredients, setup the primer and return the ShapedOreRecipe :)
 		Map<Character, Ingredient> ingMap = Maps.newHashMap();
-        for (Entry<String, JsonElement> entry : JsonUtils.getJsonObject(json, "key").entrySet())
-        {
-            if (entry.getKey().length() != 1)
-                throw new JsonSyntaxException("Invalid key entry: '" + entry.getKey() + "' is an invalid symbol (must be 1 character only).");
-            if (" ".equals(entry.getKey()))
-                throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
-
-            ingMap.put(entry.getKey().toCharArray()[0], CraftingHelper.getIngredient(entry.getValue(), context));
-        }
+		
+		JsonUtils.getJsonObject(json, "key").entrySet().stream()
+		.filter( ent -> ent.getKey().length() == 1 && !ent.getKey().isEmpty() )
+		.forEach( ent -> ingMap.put( ent.getKey().toCharArray()[0], CraftingHelper.getIngredient(ent.getValue(), context)));
 
         ingMap.put(' ', Ingredient.EMPTY);
         

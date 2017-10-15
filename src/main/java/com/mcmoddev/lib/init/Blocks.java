@@ -353,22 +353,7 @@ public abstract class Blocks {
 			return null;
 		}
 
-		String fullName;
-
-		if (material != null) {
-			if (block instanceof BlockMMDDoubleSlab) {
-				fullName = "double_" + material.getName() + "_" + Names.SLAB;
-			} else if ((name.startsWith("nether")) || (name.startsWith("end"))) {
-				String neededBit = name.substring(0, name.length() - 3);
-				fullName = neededBit + "_" + material.getName() + "_" + "ore";
-			} else {
-				fullName = material.getName() + "_" + name;
-			}
-		} else if (block instanceof BlockMMDDoubleSlab) {
-			fullName = "double_" + name;
-		} else {
-			fullName = name;
-		}
+		String fullName = getBlockFullName(block, material, name);
 
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
@@ -379,23 +364,38 @@ public abstract class Blocks {
 			blockRegistry.put(fullName, block);
 		}
 
+		maybeMakeItemBlock(block, material, fullName);
+
+		if (tab != null) {
+			block.setCreativeTab(tab);
+		}
+
+		blocksByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
+		blocksByMaterial.get(material).add(block);
+
+		return block;
+	}
+
+	private static void maybeMakeItemBlock(Block block, MMDMaterial material, String fullName) {
 		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab) && (material != null) ) {
 			final ItemBlock itemBlock = new ItemBlock(block);
 			itemBlock.setRegistryName(block.getRegistryName());
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 			material.addNewItem("ItemBlock_"+fullName, itemBlock);
 		}
+	}
 
-		if (tab != null) {
-			block.setCreativeTab(tab);
+	private static String getBlockFullName(@Nonnull final Block block, final MMDMaterial material, @Nonnull final String name) {
+		if (block instanceof BlockMMDDoubleSlab) {
+			return String.format( "double_%s_%s", material.getName(), Names.SLAB );
+		} else if ((name.startsWith("nether")) || (name.startsWith("end"))) {
+			String neededBit = name.substring(0, name.length() - 3);
+			return String.format( "%s_%s_%s", neededBit, material.getName(), Names.ORE );
+		} else if( material != null ) {
+			return String.format("%s_%s", material.getName(), name );
+		} else {
+			return name;
 		}
-
-		if (material != null) {
-			blocksByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
-			blocksByMaterial.get(material).add(block);
-		}
-
-		return block;
 	}
 
 	private static Block createBlock(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Block> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {

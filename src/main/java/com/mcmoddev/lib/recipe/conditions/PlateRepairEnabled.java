@@ -12,7 +12,7 @@ public class PlateRepairEnabled implements IConditionFactory {
 
 	@Override
 	public BooleanSupplier parse(JsonContext context, JsonObject json) {
-		return () -> { return Options.enablePlateRepairs(); };
+		return () -> Options.enablePlateRepairs();
 	}
 
 }

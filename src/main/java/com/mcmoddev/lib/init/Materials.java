@@ -260,11 +260,6 @@ public class Materials {
 	 * @return the material
 	 */
 	protected static MMDMaterial registerMaterial(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			BaseMetals.logger.error("Null material passed to registermaterial(), Don't do that!");
-			return null;
-		}
-
 		String modId = Loader.instance().activeModContainer().getModId();
 		ResourceLocation loc = new ResourceLocation( modId, material.getName());
 		if( instance.REGISTRY.containsKey(loc)) {

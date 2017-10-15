@@ -26,7 +26,6 @@ import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
-//import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * This class initializes all fluids in Base Metals and provides some utility
@@ -36,10 +35,6 @@ import net.minecraftforge.fml.common.Loader;
  *
  */
 public abstract class Fluids {
-
-	// static {
-	// FluidRegistry.enableUniversalBucket();
-	// }
 
 	private static boolean initDone = false;
 

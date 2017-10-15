@@ -20,9 +20,6 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
  *
  */
 public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> implements ICrusherRecipe {
-
-	private static final String NO_NULL_INPUT = ": cannot have null input item";
-	private static final String NO_NULL_OUTPUT = ": cannot have null output item";
 	
 	private final ItemStack input;
 	private final ItemStack output;
@@ -42,11 +39,7 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 	public ArbitraryCrusherRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output) {
 		this.input = input;
 		this.output = output;
-		if (input == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_INPUT);
-		if (output == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_OUTPUT);
-		
+
 		super.setRegistryName(input.getItem().getRegistryName().getResourcePath() + "_to_" + output.getItem().getRegistryName().getResourcePath());
 	}
 
@@ -65,10 +58,6 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 	public ArbitraryCrusherRecipe(@Nonnull Item input, @Nonnull ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
-		if (input == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_INPUT);
-		if (output == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_OUTPUT);
 		
 		super.setRegistryName(input.getRegistryName().getResourcePath() + "_to_" + output.getItem().getRegistryName().getResourcePath());
 	}
@@ -88,10 +77,6 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 	public ArbitraryCrusherRecipe(@Nonnull Block input, @Nonnull ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
-		if (input == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_INPUT);
-		if (output == null)
-			throw new NullPointerException(this.getClass().getName() + NO_NULL_OUTPUT);
 		
 		super.setRegistryName(input.getRegistryName().getResourcePath() + "_to_" + output.getItem().getRegistryName().getResourcePath());
 	}

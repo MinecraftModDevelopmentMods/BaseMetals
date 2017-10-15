@@ -30,7 +30,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 		if (entityLiving instanceof EntityPlayer) {
 			final EntityPlayer entityplayer = (EntityPlayer) entityLiving;
 			final boolean flag = entityplayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
-			ItemStack itemstack = this.findAmmo(entityplayer);
+			ItemStack itemstack = this.myFindAmmo(entityplayer);
 
 			int i = this.getMaxItemUseDuration(stack) - timeLeft;
 			i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, (EntityPlayer) entityLiving, i, (itemstack != null) || flag);
@@ -101,8 +101,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 		}
 	}
 
-	// TODO: This may not be needed
-	private ItemStack findAmmo(EntityPlayer player) {
+	private ItemStack myFindAmmo(EntityPlayer player) {
 		if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
 		} else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND))) {
@@ -129,7 +128,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	// TODO: This may not be needed
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		final boolean flag = this.findAmmo(playerIn) != null;
+		final boolean flag = this.myFindAmmo(playerIn) != null;
 
 		if (!playerIn.capabilities.isCreativeMode && !flag)
 			return new ActionResult<>(EnumActionResult.FAIL, playerIn.getHeldItemMainhand());
