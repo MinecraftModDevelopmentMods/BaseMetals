@@ -240,7 +240,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	@Override
 	@Deprecated
 	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox,
-			List<AxisAlignedBB> collisionBoxList, Entity entityIn, boolean blargh) {
+			List<AxisAlignedBB> collisionBoxList, Entity entityIn, boolean p_185477_7_) {
 		final EnumFacing orientation = world.getBlockState(pos).getValue(FACING);
 		addCollisionBoxToList(pos, entityBox, collisionBoxList, BOXES[orientation.ordinal()]);
 	}
