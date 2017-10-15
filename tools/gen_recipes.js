@@ -302,7 +302,7 @@ function processIngredient( input, mat ) {
 
 function processRecipe( mat, rec ) {
     var this_recipe = rec;
-    res = {}; // zero out the result on each loop
+    let res = {}; // zero out the result on each loop
     res.type = this_recipe.type;
     switch( this_recipe.type ) {
     case 'forge:ore_shaped':
@@ -419,11 +419,11 @@ function mapNameVanilla( typeName, matName ) {
     let name = matName.toLowerCase();
     switch( typeName ) {
     case 'BLOCK':
-	switch( matName.toLowerCase() ) {
+	switch( name ) {
 	case 'charcoal':
 	    return 'basemetals:charcoal_block';
 	default:
-	    return `minecraft:${matName.toLowerCase()}_block`;
+	    return `minecraft:${name}_block`;
 	}
 	break;
     case 'INGOT':
@@ -432,16 +432,16 @@ function mapNameVanilla( typeName, matName ) {
 	case 'diamond':
 	case 'charcoal':
 	case 'emerald':
-	    return `minecraft:${matName.toLowerCase()}`;
+	    return `minecraft:${name}`;
 	default:
-	    return `minecraft:${matName.toLowerCase()}_ingot`;
+	    return `minecraft:${name}_ingot`;
 	}
 	break;
     case 'BARS':
 	if( matName.toLowerCase() == "iron" ) {
 	    return 'minecraft:iron_bars';
 	}
-	return `basemetals:${matName.toLowerCase()}_bars`;
+	return `basemetals:${name}_bars`;
     }
 }
 

@@ -25,7 +25,7 @@ import net.minecraftforge.registries.RegistryBuilder;
  */
 public class CrusherRecipeRegistry {
 	private final IForgeRegistryModifiable<ICrusherRecipe> REGISTRY;
-	private final static CrusherRecipeRegistry instance = new CrusherRecipeRegistry();
+	private static final CrusherRecipeRegistry instance = new CrusherRecipeRegistry();
 	
 	private CrusherRecipeRegistry() {
 		this.REGISTRY = (IForgeRegistryModifiable<ICrusherRecipe>)new RegistryBuilder<ICrusherRecipe>()
@@ -95,7 +95,7 @@ public class CrusherRecipeRegistry {
 			return instance.REGISTRY.getKey(r);
 		}
 		
-		return null;
+		return new ResourceLocation("");
 	}
 	
 	// removing recipes!
@@ -111,8 +111,7 @@ public class CrusherRecipeRegistry {
 		NonNullList<ItemStack> itemStacks = OreDictionary.getOres(oreDictName);
 		
 		for( ItemStack itemStack : itemStacks ) {
-			ResourceLocation rl = getNameForInputItem(itemStack);
-			removeByName(rl);
+			removeByName( getNameForInputItem(itemStack) );
 		}
 	}
 

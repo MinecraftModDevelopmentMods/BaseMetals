@@ -168,10 +168,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeBowRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		if (material.hasItem(Names.ARROW)) {
 			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.ARROW)), new ItemStack(material.getItem(Names.NUGGET), 1), 0); // 0.25 nugget loss
 		}
@@ -183,10 +179,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeCrossbowRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		if ((material.hasItem(Names.GEAR)) && (material.hasItem(Names.CROSSBOW))) {
 			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.CROSSBOW)), new ItemStack(material.getItem(Names.INGOT), 2 + Options.gearQuantity()), 0);
 		}
@@ -218,10 +210,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeModRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		if (material.hasItem(Names.GEAR) && (material.hasItem(Names.INGOT))) {
 			// if there is no ingot, no cheese
 			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)), new ItemStack(material.getItem(Names.INGOT), Options.gearQuantity()), 0); // you lose the rod
@@ -229,10 +217,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeSimpleRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		if (material.hasBlock(Names.BLOCK)) {
 			if (material.hasItem(Names.SLAB)) {
 				GameRegistry.addSmelting(new ItemStack(material.getItem(Names.SLAB)), new ItemStack(material.getItem(Names.NUGGET), 4), 0); // you lose roughly half a nugget
@@ -281,10 +265,6 @@ public abstract class Recipes {
 	}
 
 	private static void makeIngotRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		final float oreSmeltXP = material.getOreSmeltXP();
 
 		if (material.hasItem(Names.INGOT)) {
@@ -320,10 +300,6 @@ public abstract class Recipes {
 	}
 
 	private static void generateBaseTools(@Nonnull final MMDMaterial material) {
-		if (material == null) {
-			return;
-		}
-
 		if ((material.hasItem(Names.SHEARS)) && (material.getItem(Names.SHEARS) instanceof IMMDObject)) {
 			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.SHEARS)), new ItemStack(material.getItem(Names.INGOT), 2), 0);
 		}
