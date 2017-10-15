@@ -1,18 +1,12 @@
 package com.mcmoddev.lib.block;
 
-import com.mcmoddev.lib.util.ConfigBase.Options;
-//import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 
 /**
  * Metal Block
@@ -61,9 +55,9 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	/**
 	 * @deprecated
 	 */
-	
+	@Deprecated
 	@Override
-	public MapColor getMapColor(IBlockState state, IBlockAccess p_180659_2_, BlockPos p_180659_3_) {
+	public MapColor getMapColor(IBlockState state, IBlockAccess blockAccess, BlockPos blockPos) {
 		return MapColor.IRON;
 	}
 
@@ -107,16 +101,6 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	@Override
 	public boolean isNormalCube(final IBlockState bs, final IBlockAccess w, final BlockPos coord) {
 		return true;
-	}
-
-	@Override
-	public void onBlockPlacedBy(final World w, final BlockPos coord, final IBlockState bs,
-			final EntityLivingBase placer, final ItemStack src) {
-		super.onBlockPlacedBy(w, coord, bs, placer, src);
-		// achievement
-		if ((Options.enableAchievements()) && (placer instanceof EntityPlayer)) {
-		//	((EntityPlayer) placer).addStat(Achievements.getAchievementByName("blocktastic"), 1);
-		}
 	}
 
 	@Override

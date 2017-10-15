@@ -20,9 +20,6 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
  *
  */
 public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> implements ICrusherRecipe {
-
-	private static final String NO_NULL_INPUT = ": cannot have null input item";
-	private static final String NO_NULL_OUTPUT = ": cannot have null output item";
 	
 	private final ItemStack input;
 	private final ItemStack output;
