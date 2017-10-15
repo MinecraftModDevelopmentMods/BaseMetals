@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.item;
 
-import com.mcmoddev.lib.entity.projectile.EntityFishHook;
+import net.minecraft.entity.projectile.EntityFishHook;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;

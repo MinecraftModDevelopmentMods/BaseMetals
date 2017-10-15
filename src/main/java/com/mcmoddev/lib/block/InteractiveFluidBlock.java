@@ -110,6 +110,7 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 		return 0;
 	}
 
+	@Deprecated
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return NULL_AABB;

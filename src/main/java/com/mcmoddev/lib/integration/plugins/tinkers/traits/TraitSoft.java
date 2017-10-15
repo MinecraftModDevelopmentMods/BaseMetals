@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
-// import slimeknights.tconstruct.library.utils.ToolHelper;
 
 /**
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
