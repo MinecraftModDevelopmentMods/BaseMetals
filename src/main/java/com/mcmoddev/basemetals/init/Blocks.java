@@ -12,6 +12,7 @@ import com.mcmoddev.lib.util.TabContainer;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import java.util.Arrays;
 
 /**
  * This class initializes all blocks in Base Metals.
@@ -21,7 +22,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  */
 public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
-	public static Block humanDetector;
+	protected static Block humanDetector;
 
 	private static boolean initDone = false;
 	private static TabContainer myTabs = ItemGroups.myTabs;
@@ -53,18 +54,23 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL, MaterialNames.PEWTER,
 				MaterialNames.STEEL };
 		
-		for( String name : simpleFullBlocks ) {
-			if( Options.isMaterialEnabled(name) ) {
-				createBlocksFull(name, myTabs);
-			}
-		}
+		Arrays.asList(simpleFullBlocks).stream()
+		.filter( name -> Options.isMaterialEnabled(name))
+		.forEach( name -> createBlocksFull(name, myTabs) );
 		
-		for( String name : alloyFullBlocks ) {
-			if( Options.isMaterialEnabled(name) ) {
-				createBlocksFullOreless(name, myTabs);
-			}
-		}
+		Arrays.asList(alloyFullBlocks).stream()
+		.filter( name -> Options.isMaterialEnabled(name))
+		.forEach( name -> createBlocksFullOreless(name, myTabs) );
 
+		createStarSteel();
+		createMercury();
+		
+
+		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
+		initDone = true;
+	}
+	
+	private static void createStarSteel() {
 		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
 			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
 
@@ -85,15 +91,14 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 				starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
 			
 		}
-
+	}
+	
+	private static void createMercury() {
 		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
 			MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 			create(Names.ORE, mercury, myTabs.blocksTab);
 			mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
 		}
-
-		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
-		initDone = true;
 	}
 
 	private static void registerVanilla() {

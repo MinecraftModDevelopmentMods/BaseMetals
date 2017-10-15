@@ -38,9 +38,9 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (this.material.getToolHarvestLevel() > 1)
 			return true;
-		state = state.cycleProperty(BlockTrapDoor.OPEN);
-		world.setBlockState(coord, state, 2);
-		world.playEvent(player, ((Boolean) state.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
+		IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
+		world.setBlockState(coord, newState, 2);
+		world.playEvent(player, ((Boolean) newState.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
 
