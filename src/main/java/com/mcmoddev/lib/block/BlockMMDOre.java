@@ -34,18 +34,22 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 	public BlockMMDOre(MMDMaterial material, boolean isSoft) {
 		super();
 		this.material = material;
+		float hardnessMax = 5f;
+		float resistMax = 1.5f;
+		String tool = "pickaxe";
 		
 		if (isSoft) {
 			this.setSoundType(SoundType.GROUND);
-			this.blockHardness = Math.max(2.5f, this.material.getOreBlockHardness());
-			this.blockResistance = Math.max(0.75f, this.material.getBlastResistance() * 0.75f);
-			this.setHarvestLevel("shovel", this.material.getRequiredHarvestLevel());
+			hardnessMax = 2.5f;
+			resistMax = 1.5f;
+			tool = "shovel";
 		} else {
-			this.blockHardness = Math.max(5f, this.material.getOreBlockHardness());
-			this.blockResistance = Math.max(1.5f, this.material.getBlastResistance() * 0.75f);
-			this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
 			this.setSoundType(SoundType.STONE);
 		}
+		
+		this.blockHardness = Math.max(hardnessMax, this.material.getOreBlockHardness());
+		this.blockResistance = Math.max(resistMax, this.material.getBlastResistance() * 0.75f);
+		this.setHarvestLevel(tool, this.material.getRequiredHarvestLevel());
 	}
     
 	@Override

@@ -433,7 +433,7 @@ public abstract class Items {
 			return createArmorItem(name, material, tab);
 		}
 
-		if ((((name.equals(Names.BLEND)) || name.equals(Names.SMALLBLEND)) && (!material.hasBlend()))
+		if ( ( ( (name.equals(Names.BLEND)) || (name.equals(Names.SMALLBLEND)) ) && (!material.hasBlend()) )
 				|| (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL)))
 				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR)))
 				|| (name.equals(Names.SLAB) && (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB))))) {

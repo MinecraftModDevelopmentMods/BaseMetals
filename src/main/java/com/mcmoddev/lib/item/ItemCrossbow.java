@@ -3,14 +3,14 @@ package com.mcmoddev.lib.item;
 import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
+import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -43,8 +43,8 @@ public class ItemCrossbow extends ItemBow {
 
 			if ((itemstack != null) || flag) {
 				if (itemstack == null) {
-					// FIXME - this is potentially unreliable
-					itemstack = new ItemStack(Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT));
+					itemstack = getBolt();
+					if( itemstack == null ) return; // if its still null at this point, there is something seriously wrong, just bug out
 				}
 
 				final float f = getArrowVelocity(i);
@@ -80,7 +80,7 @@ public class ItemCrossbow extends ItemBow {
 						stack.damageItem(1, entityplayer);
 
 						if (flag1) {
-							entityBolt.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+							entityBolt.pickupStatus = EntityCustomBolt.PickupStatus.CREATIVE_ONLY;
 						}
 
 						worldIn.spawnEntity(entityBolt);
@@ -102,7 +102,14 @@ public class ItemCrossbow extends ItemBow {
 		}
 	}
 
-	// TODO: This may not be needed
+	private ItemStack getBolt() {
+		for( MMDMaterial mat : Materials.getAllMaterials() ) {
+			if( mat.hasItem(Names.BOLT) ) return new ItemStack( mat.getItem(Names.BOLT) );
+		}
+		return null;
+	}
+
+	// Totally needed!
 	private ItemStack myFindAmmo(EntityPlayer player) {
 		if (this.isBolt(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
@@ -131,7 +138,7 @@ public class ItemCrossbow extends ItemBow {
 		return (stack != null) && (stack.getItem() instanceof ItemBolt);
 	}
 
-	// TODO: This may not be needed
+	// Actually needed... le sigh
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		final boolean flag = this.myFindAmmo(playerIn) != null;
