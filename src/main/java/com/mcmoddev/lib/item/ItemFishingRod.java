@@ -39,6 +39,6 @@ public class ItemFishingRod extends net.minecraft.item.ItemFishingRod {
 			playerIn.addStat(StatList.getObjectUseStats(this));
 		}
 
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItemMainhand());
+		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItemMainhand());
 	}
 }
