@@ -1,8 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:wood_crackhammer",
-		"data": 0
+		"item": "basemetals:wood_crackhammer"
 	},
 	"pattern": [
 		"x",
@@ -12,7 +11,7 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "blockWood"
+			"ore": "logWood"
 		},
 		"y": {
 			"type": "forge:ore_dict",
@@ -23,11 +22,6 @@
 		{
 			"type": "forge:and",
 			"values": [
-				{
-					"type": "basemetals:enabled",
-					"optionName": "material",
-					"optionValue": "Wood"
-				},
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",

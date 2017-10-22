@@ -101,7 +101,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.SMALLPOWDER, mercury, myTabs.itemsTab);
 		}
 
-		BaseMetals.logger.fatal( "%s", Materials.getMaterialByName(MaterialNames.AQUARIUM).hasBlend() );
 		addToMetList();
 
 		initDone = true;
