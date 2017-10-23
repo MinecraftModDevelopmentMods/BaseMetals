@@ -70,8 +70,8 @@ public abstract class Fluids {
 		tintColor = material.getTintColor();
 
 		final Fluid fluid = new CustomFluid(material.getName(),
-				new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_still"),
-				new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_flow"), tintColor);
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"), tintColor);
 		fluid.setDensity(density);
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);
