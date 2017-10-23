@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.fluids.CustomFluid;
