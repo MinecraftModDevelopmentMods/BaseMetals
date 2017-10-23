@@ -322,6 +322,7 @@ public class Materials {
 		return Collections.unmodifiableList(instance.REGISTRY.getValues());
 	}
 
+	public static final MMDMaterial emptyMaterial = createOrelessMaterial("empty",MaterialType.METAL,0,0,0,0);
 	/**
 	 * Gets a material by its name (e.g. "copper").
 	 *
@@ -330,13 +331,13 @@ public class Materials {
 	 * @return The material representing the named material, or null if no
 	 *         materials have been registered under that name.
 	 */
-	public static MMDMaterial getMaterialByName(@Nonnull final String materialName) {
+	public static @Nonnull MMDMaterial getMaterialByName(@Nonnull final String materialName) {
 		for( ResourceLocation key : instance.REGISTRY.getKeys() ) {
 			if( key.getResourcePath().equals(materialName)) {
 				return instance.REGISTRY.getValue(key);
 			}
 		}
-		return null;
+		return emptyMaterial;
 	}
 
 	/**

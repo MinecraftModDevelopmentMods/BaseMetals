@@ -9,7 +9,6 @@ import com.mcmoddev.lib.material.MMDMaterial;
  *
  */
 public class ItemMMDPowder extends GenericMMDItem {
-
 	/**
 	 *
 	 * @param material

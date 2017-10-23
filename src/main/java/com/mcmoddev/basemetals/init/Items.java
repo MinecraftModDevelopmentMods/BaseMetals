@@ -9,7 +9,10 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.fuels.FuelRegistry;
+import com.mcmoddev.lib.item.ItemMMDNugget;
+import com.mcmoddev.lib.item.ItemMMDPowder;
+import com.mcmoddev.lib.item.ItemMMDSmallPowder;
+import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
@@ -86,10 +89,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		
 		myModMats.stream()
 		.filter( name -> Options.isMaterialEnabled(name) )
+		.filter( name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
 		.forEach( name -> createItemsFull( Materials.getMaterialByName(name), myTabs ) );
 		
 		matsModSupport.stream()
 		.filter( name -> Options.isMaterialEnabled(name) )
+		.filter( name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
 		.forEach( name -> createItemsModSupport( Materials.getMaterialByName(name), myTabs ) );
 
 		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
@@ -111,21 +116,19 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.NUGGET, mats.get(MaterialNames.CHARCOAL), myTabs.itemsTab);
 			create(Names.POWDER, mats.get(MaterialNames.CHARCOAL), myTabs.itemsTab);
 			create(Names.SMALLPOWDER, mats.get(MaterialNames.CHARCOAL), myTabs.itemsTab);
-			FuelRegistry.addFuel(Oredicts.NUGGET_CHARCOAL, 200);
-			FuelRegistry.addFuel(Oredicts.DUST_CHARCOAL, 1600);
-			FuelRegistry.addFuel(Oredicts.DUST_SMALL_CHARCOAL, 200);
-			FuelRegistry.addFuel(Oredicts.DUST_TINY_CHARCOAL, 200);
-			FuelRegistry.addFuel(Oredicts.BLOCK_CHARCOAL, 16000);
+			((ItemMMDNugget)mats.get(MaterialNames.CHARCOAL).getItem(Names.NUGGET)).setBurnTime(200);
+			((ItemMMDPowder)mats.get(MaterialNames.CHARCOAL).getItem(Names.POWDER)).setBurnTime(1600);
+			((ItemMMDSmallPowder)mats.get(MaterialNames.CHARCOAL).getItem(Names.SMALLPOWDER)).setBurnTime(200);
+			((ItemMMDBlock)Item.getItemFromBlock(mats.get(MaterialNames.CHARCOAL).getBlock(Names.BLOCK))).setBurnTime(16000);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
 			create(Names.NUGGET, mats.get(MaterialNames.COAL), myTabs.itemsTab);
 			create(Names.POWDER, mats.get(MaterialNames.COAL), myTabs.itemsTab);
 			create(Names.SMALLPOWDER, mats.get(MaterialNames.COAL), myTabs.itemsTab);
-			FuelRegistry.addFuel(Oredicts.NUGGET_COAL, 200);
-			FuelRegistry.addFuel(Oredicts.DUST_COAL, 1600);
-			FuelRegistry.addFuel(Oredicts.DUST_SMALL_COAL, 200);
-			FuelRegistry.addFuel(Oredicts.DUST_TINY_COAL, 200);
+			((ItemMMDNugget)mats.get(MaterialNames.COAL).getItem(Names.NUGGET)).setBurnTime(200);
+			((ItemMMDPowder)mats.get(MaterialNames.COAL).getItem(Names.POWDER)).setBurnTime(1600);
+			((ItemMMDSmallPowder)mats.get(MaterialNames.COAL).getItem(Names.SMALLPOWDER)).setBurnTime(200);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.REDSTONE)) {
