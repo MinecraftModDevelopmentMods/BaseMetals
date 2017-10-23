@@ -421,7 +421,7 @@ public abstract class Items {
 	 * @return the block this function created
 	 */
 	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
-		if ((material == null) || (name == null)) {
+		if ( sanityCheck( name, material ) ) {
 			return null;
 		}
 
@@ -429,20 +429,23 @@ public abstract class Items {
 			return material.getItem(name);
 		}
 
-		if ((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS)) || (name.equals(Names.BOOTS))) {
+		if( isArmor(name) ) {
 			return createArmorItem(name, material, tab);
-		}
-
-		if ( ( ( (name.equals(Names.BLEND)) || (name.equals(Names.SMALLBLEND)) ) && (!material.hasBlend()) )
-				|| (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL)))
-				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR)))
-				|| (name.equals(Names.SLAB) && (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB))))) {
-			return null;				
 		}
 
 		final Item item = createItem(material, name.toString(), getClassFromName(name), isNameEnabled(name), tab);
 
 		final String oredict = getOredictFromName(name);
+		setupOredict(item, oredict, name, material);
+
+		return item;
+	}
+
+	private static boolean sanityCheck(Names name, MMDMaterial material) {
+		return ((material == null) || (name == null) || isWrongThingToMake( name, material));
+	}
+
+	private static void setupOredict(Item item, String oredict, Names name, MMDMaterial material) {
 		if (item != null) {
 			if (oredict != null) {
 				Oredicts.registerOre(oredict + material.getCapitalizedName(), item);
@@ -457,8 +460,17 @@ public abstract class Items {
 				Oredicts.registerOre(Oredicts.DOOR, item);
 			}
 		}
+	}
 
-		return null;
+	private static boolean isWrongThingToMake(Names name, MMDMaterial material) {
+		return ( ( ( (name.equals(Names.BLEND)) || (name.equals(Names.SMALLBLEND)) ) && (!material.hasBlend()) )
+				|| (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL)))
+				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR)))
+				|| (name.equals(Names.SLAB) && (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB)))));
+	}
+
+	private static boolean isArmor(Names name) {
+		return 	((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS)) || (name.equals(Names.BOOTS)));
 	}
 
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final Names name, final CreativeTabs tab) {

@@ -1,8 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:stone_crackhammer",
-		"data": 0
+		"item": "basemetals:stone_crackhammer"
 	},
 	"pattern": [
 		"x",
@@ -12,7 +11,7 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "blockStone"
+			"ore": "stone"
 		},
 		"y": {
 			"type": "forge:ore_dict",
@@ -23,11 +22,6 @@
 		{
 			"type": "forge:and",
 			"values": [
-				{
-					"type": "basemetals:enabled",
-					"optionName": "material",
-					"optionValue": "Stone"
-				},
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",

@@ -1,6 +1,6 @@
 {
   "parent": "basemetals:item/shield_blocking",
   "textures": {
-    "shield": "basemetals:blocks/obsidian_block"
+    "shield": "minecraft:blocks/obsidian"
     }
 }

@@ -149,6 +149,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
 			create(Names.BLOCK, charcoal, myTabs.blocksTab);
 		}
+		
 		if (Options.isMaterialEnabled(MaterialNames.DIAMOND)) {
 			create(Names.BARS, diamond, myTabs.blocksTab);
 			create(Names.DOOR, diamond, myTabs.blocksTab);

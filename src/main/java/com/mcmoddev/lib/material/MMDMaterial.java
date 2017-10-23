@@ -535,7 +535,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 
 	/**
 	 * Get all the blocks that are made from this material
-	 * @return ImmutableList<Block> - the blocks
+	 * @return ImmutableList&lt;Block&gt; - the blocks
 	 */
 	public ImmutableList<Block> getBlocks() {
 		return ImmutableList.copyOf(this.blocks.values());
@@ -543,7 +543,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	
 	/**
 	 * Get all the items that are made from/with this material
-	 * @return ImmutableList<Item> - the items
+	 * @return ImmutableList&lt;Item&gt; - the items
 	 */
 	public ImmutableList<Item> getItems() {
 		return ImmutableList.copyOf(this.items.values());

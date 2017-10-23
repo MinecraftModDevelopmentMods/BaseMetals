@@ -284,7 +284,7 @@ public abstract class Recipes {
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.POWDER)) {
-			if (material.hasOre()) {
+			if (material.hasOre() || material.hasBlock(Names.ORE)) {
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, new ItemStack(material.getItem(Names.POWDER), 2));
 			}
 			if (material.hasItem(Names.INGOT)) {

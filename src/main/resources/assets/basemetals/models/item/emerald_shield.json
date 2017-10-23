@@ -1,7 +1,7 @@
 {
   "parent": "basemetals:item/shield",
   "textures": {
-    "shield": "basemetals:blocks/emerald_block"
+    "shield": "minecraft:blocks/emerald_block"
   },
     "overrides": [
         {

@@ -1,7 +1,7 @@
 {
   "parent": "basemetals:item/shield",
   "textures": {
-    "shield": "basemetals:blocks/obsidian_block"
+    "shield": "minecraft:blocks/obsidian"
   },
     "overrides": [
         {

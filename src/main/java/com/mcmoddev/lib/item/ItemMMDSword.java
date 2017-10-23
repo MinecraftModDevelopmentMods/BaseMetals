@@ -94,6 +94,7 @@ public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDOb
 	 * @return The amount of damage dealt to an entity when attacked by this
 	 *         item
 	 */
+	@Override
 	public float getAttackDamage() {
 		return this.attackDamage;
 	}
