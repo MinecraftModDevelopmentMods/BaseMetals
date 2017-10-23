@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 /**
  * Metal Trap Door
  */
-public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implements IMMDObject {
+public class BlockMMDTrapDoor extends BlockTrapDoor implements IMMDObject {
 
 	private final MMDMaterial material;
 
@@ -36,12 +36,16 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	@Override
 	public boolean onBlockActivated(World world, BlockPos coord, IBlockState state, EntityPlayer player,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (this.material.getToolHarvestLevel() > 1)
+		// just like with doors - using vanilla as an example, since we are all metal and work like the "Iron Trapdoor", this
+		// should just be:
+		return false;
+		
+/*		if (this.material.getToolHarvestLevel() > 1)
 			return true;
 		IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
 		world.setBlockState(coord, newState, 2);
 		world.playEvent(player, ((Boolean) newState.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
-		return true;
+		return true; */
 	}
 
 	@Override

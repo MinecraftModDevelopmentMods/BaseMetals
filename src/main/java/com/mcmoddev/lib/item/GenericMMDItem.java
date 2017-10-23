@@ -2,6 +2,7 @@ package com.mcmoddev.lib.item;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -39,7 +40,11 @@ public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObjec
 	
 	@Override
 	public int getItemBurnTime(@Nonnull ItemStack itemStack) {
-		return this.burnTime;
+		if( itemStack.getItem().equals(this) ) {
+			return this.burnTime;
+		} else {
+			return itemStack.getItem().getItemBurnTime(itemStack);
+		}
 	}
 
 }
