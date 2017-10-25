@@ -74,7 +74,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		case MaterialNames.ANTIMONY:
 			return 0xFFD8E3DE;
 		case MaterialNames.AQUARIUM:
-			return 0xFF000000;
+			return 0xFF0000FF;
 		case MaterialNames.BISMUTH:
 			return  0xFFDDD7CB;
 		case MaterialNames.BRASS:
@@ -94,7 +94,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		case MaterialNames.LEAD:
 			return 0xFF7B7B7B;
 		case MaterialNames.MERCURY:
-			return 0x00000000;
+			return 0xFFE2E2E2;
 		case MaterialNames.MITHRIL:
 			return 0xFFF4FFFF;
 		case MaterialNames.NICKEL:
