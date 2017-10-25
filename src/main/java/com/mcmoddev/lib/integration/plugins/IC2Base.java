@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -9,9 +10,13 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.Recipes;
+import ic2.api.item.IC2Items;
+import ic2.api.recipe.*;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -28,6 +33,22 @@ public class IC2Base implements IIntegration {
 		}
 
 		initDone = true;
+	}
+
+	// This is broken and needs extensive work on our side of things to make it work
+	// IC2 'Recipes.advRecipes' is <em><strong>null</strong></em> at this point
+	protected void addForgeHammerRecipe(@Nonnull final String materialName) {
+		addForgeHammerRecipe(Materials.getMaterialByName(materialName));
+	}
+	
+	private void addForgeHammerRecipe(@Nonnull final MMDMaterial material) {
+/*		ItemStack hammer = IC2Items.getItem("forge_hammer");
+		Item plateItemBlock = material.getItem("ItemBlock_"+material.getName()+"_plate");
+		ItemStack plateStack = new ItemStack(plateItemBlock, 1);
+		Item casingItem = material.getItem(Names.CASING);
+		ItemStack casingStack = new ItemStack(casingItem, 1);
+		
+		Recipes.advRecipes.addShapelessRecipe(casingStack, hammer, plateStack); */
 	}
 
 	protected void registerVanillaRecipes(@Nonnull final String materialName) {

@@ -56,6 +56,7 @@ public class IC2 extends IC2Base implements IIntegration {
 				addThermalCentrifugeRecipes(materialName);
 				addMetalFormerRecipes(materialName);
 				addCompressorRecipes(materialName);
+				addForgeHammerRecipe(materialName);
 			}
 		}
 		
