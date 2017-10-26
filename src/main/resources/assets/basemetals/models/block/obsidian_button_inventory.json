@@ -1,6 +1,6 @@
 {
     "parent": "block/button_inventory",
     "textures": {
-        "texture": "minecraft:blocks/obsidian_block"
+        "texture": "minecraft:blocks/obsidian"
     }
 }

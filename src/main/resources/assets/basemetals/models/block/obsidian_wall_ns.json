@@ -1,6 +1,6 @@
 {
     "parent": "block/wall_ns",
     "textures": {
-        "wall": "minecraft:blocks/obsidian_block"
+        "wall": "minecraft:blocks/obsidian"
     }
 }
