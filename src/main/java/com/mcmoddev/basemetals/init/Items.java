@@ -306,7 +306,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	}
 
 	private static void createItemsFull(@Nonnull final String materialName) {
-		createItemsBasic(Materials.getMaterialByName(materialName), ItemGroups.myTabs);
+		createItemsFull(Materials.getMaterialByName(materialName), ItemGroups.myTabs);
 	}
 
 	private static void createItemsModSupport(@Nonnull final String materialName) {
@@ -314,7 +314,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	}
 
 	private static void createItemsFull(@Nonnull final MMDMaterial material) {
-		createItemsBasic(material, ItemGroups.myTabs);
+		createItemsFull(material, ItemGroups.myTabs);
 	}
 	
 	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {

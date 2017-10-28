@@ -75,11 +75,8 @@ public class EventHandler {
 			return;
 		}
 			
-//		final String materialName = ((IMMDObject) item).getMMDMaterial().getName();
 		if ((item instanceof ItemMMDBlend) || (item instanceof ItemMMDSmallBlend)) {
 			event.player.addStat(Achievements.getAchievementByName(AchievementNames.METALLURGY), 1);
-		} else if (item instanceof ItemMMDIngot) {
-			event.player.addStat(Achievements.getAchievementByName(AchievementNames.THIS_IS_NEW), 1);
 		}
 	}
 
@@ -96,7 +93,7 @@ public class EventHandler {
 
 		final String materialName = ((IMMDObject) item).getMMDMaterial().getName();
 		if (item instanceof ItemMMDIngot) {
-			// event.player.addStat(Achievements.getAchievementByName(AchievementNames.THIS_IS_NEW), 1);
+			event.player.addStat(Achievements.getAchievementByName(AchievementNames.THIS_IS_NEW), 1);
 			if (materialName.equals(MaterialNames.AQUARIUM)) {
 				event.player.addStat(Achievements.getAchievementByName(AchievementNames.AQUARIUM_MAKER), 1);
 			} else if (materialName.equals(MaterialNames.BRASS)) {
