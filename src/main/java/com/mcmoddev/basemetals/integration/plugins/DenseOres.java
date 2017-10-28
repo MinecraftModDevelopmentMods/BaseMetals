@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -16,7 +16,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("denseores")) {
+		if (initDone || !Options.isModEnabled(DenseOres.PLUGIN_MODID)) {
 			return;
 		}
 
@@ -47,11 +47,11 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 		};
 
 		for (int i = 0; i < baseNames.length; i++) {
-			final String ore = baseNames[i];
-			final MMDMaterial mat = Materials.getMaterialByName(ore);
-			if (mat != null && Options.materialEnabled(ore)) {
+			final String materialName = baseNames[i];
+			final MMDMaterial material = Materials.getMaterialByName(materialName);
+			if (material != null && Options.isMaterialEnabled(materialName)) {
 				String baseMaterial;
-				switch (ore) {
+				switch (materialName) {
 					case MaterialNames.ADAMANTINE:
 					case MaterialNames.COLDIRON:
 						baseMaterial = Oredicts.NETHERRACK;
@@ -59,7 +59,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 					default:
 						baseMaterial = Oredicts.STONE;
 				}
-				registerOre(String.format("%s_%s", ore, Oredicts.ORE), BaseMetals.MODID, baseMaterial, 0);
+				registerOre(String.format("%s_%s", materialName, Oredicts.ORE), baseMaterial, 0);
 			}
 		}
 	}

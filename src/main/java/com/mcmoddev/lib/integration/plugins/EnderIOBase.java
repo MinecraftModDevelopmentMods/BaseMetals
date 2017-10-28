@@ -1,9 +1,12 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraftforge.fml.common.Loader;
@@ -25,7 +28,7 @@ public class EnderIOBase implements IIntegration {
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("enderio")) {
+		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
@@ -37,8 +40,17 @@ public class EnderIOBase implements IIntegration {
 	 * @param materialName
 	 *            The Material's name
 	 */
-	protected static void addAlloySmelterRecipe(String materialName) {
-		addAlloySmelterRecipe(materialName, null, 2000);
+	protected static void addAlloySmelterRecipe(@Nonnull final String materialName) {
+		addAlloySmelterRecipe(Materials.getMaterialByName(materialName), null, 2000);
+	}
+
+	/**
+	 *
+	 * @param material
+	 *            The Material
+	 */
+	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material) {
+		addAlloySmelterRecipe(material, null, 2000);
 	}
 
 	/**
@@ -48,8 +60,19 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addAlloySmelterRecipe(String materialName, int energy) {
-		addAlloySmelterRecipe(materialName, null, energy);
+	protected static void addAlloySmelterRecipe(@Nonnull final String materialName, @Nonnull final int energy) {
+		addAlloySmelterRecipe(Materials.getMaterialByName(materialName), null, energy);
+	}
+
+	/**
+	 *
+	 * @param material
+	 *            The Material
+	 * @param energy
+	 *            How much energy it costs to perform
+	 */
+	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material, @Nonnull final int energy) {
+		addAlloySmelterRecipe(material, null, energy);
 	}
 
 	/**
@@ -61,10 +84,22 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addAlloySmelterRecipe(String materialName, String outputSecondary, int energy) {
+	protected static void addAlloySmelterRecipe(@Nonnull final String materialName, final String outputSecondary, @Nonnull final int energy) {
+			addAlloySmelterRecipe(Materials.getMaterialByName(materialName), outputSecondary, energy);
+	}
+
+	/**
+	 *
+	 * @param material
+	 *            The Material
+	 * @param outputSecondary
+	 *            The secondary output
+	 * @param energy
+	 *            How much energy it costs to perform
+	 */
+	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material, final String outputSecondary, @Nonnull final int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
-		final MMDMaterial material = Materials.getMaterialByName(materialName);
 		final String capitalizedName = material.getCapitalizedName();
 
 		final String input = Oredicts.ORE + capitalizedName;
@@ -80,7 +115,7 @@ public class EnderIOBase implements IIntegration {
 																+ "<input>\n\t\t\t<itemStack oreDictionary=\"%s\"/>\n\t\t</input>\n\t\t"
 																+ "<output>\n\t\t\t<itemStack oreDictionary=\"%s\" />\n\t\t</output>\n\t"
 															+ "</recipe>\n</recipeGroup>",
-															ownerModID, material, energy, input, output );
+															ownerModID, material, energy, input, output);
 		// @formatter:on
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:alloysmelter", messageAlloySmelter);
 	}
@@ -90,8 +125,8 @@ public class EnderIOBase implements IIntegration {
 	 * @param materialName
 	 *            The Material's name
 	 */
-	protected static void addSagMillRecipe(String materialName) {
-		addSagMillRecipe(materialName, null, 2400);
+	protected static void addSagMillRecipe(@Nonnull final String materialName) {
+		addSagMillRecipe(Materials.getMaterialByName(materialName), null, 2400);
 	}
 
 	/**
@@ -101,8 +136,8 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addSagMillRecipe(String materialName, int energy) {
-		addSagMillRecipe(materialName, null, energy);
+	protected static void addSagMillRecipe(@Nonnull final String materialName, @Nonnull final int energy) {
+		addSagMillRecipe(Materials.getMaterialByName(materialName), null, energy);
 	}
 
 	/**
@@ -114,14 +149,20 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addSagMillRecipe(String materialName, String outputSecondary, int energy) {
-		MMDMaterial material = Materials.getMaterialByName(materialName);
+	protected static void addSagMillRecipe(@Nonnull final String materialName, final String outputSecondary, @Nonnull final int energy) {
+		addSagMillRecipe(Materials.getMaterialByName(materialName), outputSecondary, energy);
+	}
 
-		// we need to be sure the material is enabled, a null check is the best way
-		if (material == null) {
-			return;
-		}
-
+	/**
+	 *
+	 * @param material
+	 *            The Material
+	 * @param outputSecondary
+	 *            The secondary output
+	 * @param energy
+	 *            How much energy it costs to perform
+	 */
+	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material, final String outputSecondary, @Nonnull final int energy) {
 		int primaryQty = 2;
 		int secondaryQty = 1;
 
@@ -129,7 +170,7 @@ public class EnderIOBase implements IIntegration {
 			primaryQty = 4;
 		}
 
-		addSagMillRecipe(materialName, primaryQty, outputSecondary, secondaryQty, energy);
+		addSagMillRecipe(material, primaryQty, outputSecondary, secondaryQty, energy);
 	}
 
 	/**
@@ -145,10 +186,27 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addSagMillRecipe(String materialName, int primaryQty, String outputSecondary, int secondaryQty, int energy) {
+	protected static void addSagMillRecipe(@Nonnull final String materialName, @Nonnull final int primaryQty, @Nonnull final String outputSecondary, @Nonnull final int secondaryQty, @Nonnull final int energy) {
+		addSagMillRecipe(Materials.getMaterialByName(materialName), primaryQty, outputSecondary, secondaryQty, energy);
+	}
+
+	/**
+	 *
+	 * @param material
+	 *            The Material
+	 * @param primaryQty
+	 *            How much to make
+	 * @param outputSecondary
+	 *            The secondary output
+	 * @param secondaryQty
+	 *            How much to make
+	 * @param energy
+	 *            How much energy it costs to perform
+	 */
+	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material, @Nonnull final int primaryQty, final String outputSecondary, @Nonnull final int secondaryQty, @Nonnull final int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
-		final MMDMaterial material = Materials.getMaterialByName(materialName);
+		final String materialName = material.getName();
 		final String capitalizedName = material.getCapitalizedName();
 
 		final String input = Oredicts.ORE + capitalizedName;

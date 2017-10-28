@@ -3,8 +3,12 @@ package com.mcmoddev.lib.init;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.init.Items;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,14 +16,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * This class is a MetalMaterial based Wrapper for making a CreativeTab.
+ * This class is a MMDMaterial based Wrapper for making a CreativeTab.
  *
  * @author Jasmine Iwanek
  *
  */
 public class MMDCreativeTab extends CreativeTabs {
 
-	private Item iconItem;
+	private ItemStack iconItem;
 	
 	private final boolean searchable;
 	private List<ItemStack> cache;
@@ -33,10 +37,25 @@ public class MMDCreativeTab extends CreativeTabs {
 		}
 	};
 
-	public MMDCreativeTab(String unlocalizedName, boolean searchable, Item iconItem) {
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable) {
+		this(unlocalizedName, searchable, (ItemStack) null);
+	}
+
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final Block iconBlock) {
+		this(unlocalizedName, searchable, new ItemStack(Item.getItemFromBlock(iconBlock)));
+	}
+
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final Item iconItem) {
+		this(unlocalizedName, searchable, new ItemStack(iconItem));
+	}
+
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final ItemStack iconItem) {
 		super(unlocalizedName);
-		// this.itemSupplier = itemSupplier;
-		this.iconItem = iconItem;
+		if (iconItem == null) {
+			this.iconItem =  new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
+		} else {
+			this.iconItem = iconItem;
+		}
 		this.searchable = searchable;
 		this.setSortingAlgorithm(DEFAULT);
 		if (searchable)
@@ -66,20 +85,25 @@ public class MMDCreativeTab extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
-		if (this.iconItem == null) {
-			return net.minecraft.init.Items.IRON_PICKAXE;
-		}
-		return this.iconItem;
+		return this.iconItem.getItem();
 	}
 
-	public void setSortingAlgorithm(Comparator<ItemStack> comparator) {
+	public void setSortingAlgorithm(@Nonnull final Comparator<ItemStack> comparator) {
 		this.comparator = comparator;
 
 		if (this.cache != null)
 			cache.sort(comparator);
 	}
 
-	public void setTabIconItem(Item iconItem) {
+	public void setTabIconItem(@Nonnull final Block iconBlock) {
+		this.iconItem = new ItemStack(Item.getItemFromBlock(iconBlock));
+	}
+
+	public void setTabIconItem(@Nonnull final Item iconItem) {
+		this.iconItem = new ItemStack(iconItem);
+	}
+
+	public void setTabIconItem(@Nonnull final ItemStack iconItem) {
 		this.iconItem = iconItem;
 	}
 }

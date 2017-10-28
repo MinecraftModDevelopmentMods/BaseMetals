@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,9 +19,6 @@ import net.minecraftforge.oredict.OreDictionary;
  *
  */
 public class ArbitraryCrusherRecipe implements ICrusherRecipe {
-
-	private static final String noNullInput = ": cannot have null input item";
-	private static final String noNullOutput = ": cannot have null output item";
 	
 	private final ItemStack input;
 	private final ItemStack output;
@@ -36,13 +35,9 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	 * @param output
 	 *            The result of applying this recipe to an input item
 	 */
-	public ArbitraryCrusherRecipe(ItemStack input, ItemStack output) {
+	public ArbitraryCrusherRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output) {
 		this.input = input;
 		this.output = output;
-		if (input == null)
-			throw new NullPointerException(this.getClass().getName() + noNullInput);
-		if (output == null)
-			throw new NullPointerException(this.getClass().getName() + noNullOutput);
 	}
 
 	/**
@@ -57,13 +52,9 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	 * @param output
 	 *            The result of applying this recipe to an input item
 	 */
-	public ArbitraryCrusherRecipe(Item input, ItemStack output) {
+	public ArbitraryCrusherRecipe(@Nonnull Item input, @Nonnull ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
-		if (input == null)
-			throw new NullPointerException(this.getClass().getName() + noNullInput);
-		if (output == null)
-			throw new NullPointerException(this.getClass().getName() + noNullOutput);
 	}
 
 	/**
@@ -78,13 +69,9 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	 * @param output
 	 *            The result of applying this recipe to an input item
 	 */
-	public ArbitraryCrusherRecipe(Block input, ItemStack output) {
+	public ArbitraryCrusherRecipe(@Nonnull Block input, @Nonnull ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
-		if (input == null)
-			throw new NullPointerException(this.getClass().getName() + noNullInput);
-		if (output == null)
-			throw new NullPointerException(this.getClass().getName() + noNullOutput);
 	}
 
 	/**

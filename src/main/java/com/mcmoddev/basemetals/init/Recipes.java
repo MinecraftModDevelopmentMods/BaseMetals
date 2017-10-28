@@ -1,7 +1,7 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
@@ -56,16 +56,16 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		String oreDictName;
 
 		if (!Options.disableAllHammerRecipes()) {
-			if (Options.materialEnabled(MaterialNames.WOOD)) {
+			if (Options.isMaterialEnabled(MaterialNames.WOOD)) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.WOOD).getItem(Names.CRACKHAMMER)), "x", "/", "/", 'x', Oredicts.LOG_WOOD, '/', Oredicts.STICK_WOOD));
 			}
-			if (Options.materialEnabled(MaterialNames.STONE)) {
+			if (Options.isMaterialEnabled(MaterialNames.STONE)) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.STONE).getItem(Names.CRACKHAMMER)), "x", "/", "/", 'x', net.minecraft.init.Blocks.STONEBRICK, '/', Oredicts.STICK_WOOD));
 			}
 		}
 
 		// Iron items
-		if (Options.materialEnabled(MaterialNames.IRON)) {
+		if (Options.isMaterialEnabled(MaterialNames.IRON)) {
 			material = Materials.getMaterialByName(MaterialNames.IRON);
 			oreDictName = material.getCapitalizedName();
 
@@ -73,7 +73,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.INGOT)), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName)); // Not needed for 1.11.1+
 		}
 
-		if (Options.materialEnabled(MaterialNames.CHARCOAL)) {
+		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
 			material = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 			oreDictName = material.getCapitalizedName();
 
@@ -95,7 +95,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			}
 		}
 
-		if (Options.materialEnabled(MaterialNames.COAL)) {
+		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
 			material = Materials.getMaterialByName(MaterialNames.COAL);
 			oreDictName = material.getCapitalizedName();
 
@@ -122,7 +122,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	private static void initModSpecificRecipes() {
-		if (Options.materialEnabled(MaterialNames.ADAMANTINE)) {
+		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
 			// Alt oreDict Adamantite
 			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamantite");
 
@@ -133,31 +133,31 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamant");
 		}
 
-		if (Options.materialEnabled(MaterialNames.AQUARIUM)) {
+		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.AQUARIUM), 3, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.PRISMARINE, MaterialNames.PRISMARINE, MaterialNames.PRISMARINE);
 		}
 
-		if (Options.materialEnabled(MaterialNames.BRASS)) {
+		if (Options.isMaterialEnabled(MaterialNames.BRASS)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.BRASS), 3, MaterialNames.COPPER, MaterialNames.COPPER, "Zinc");
 		}
 
-		if (Options.materialEnabled(MaterialNames.BRONZE)) {
+		if (Options.isMaterialEnabled(MaterialNames.BRONZE)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.BRONZE), 4, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.TIN);
 		}
 
-		if (Options.materialEnabled(MaterialNames.CUPRONICKEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.CUPRONICKEL), 4, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.NICKEL);
 		}
 
-		if (Options.materialEnabled(MaterialNames.ELECTRUM)) {
+		if (Options.isMaterialEnabled(MaterialNames.ELECTRUM)) {
 			addSimpleAlloyRecipe(Materials.getMaterialByName(MaterialNames.ELECTRUM), 2, MaterialNames.GOLD, MaterialNames.SILVER);
 		}
 
-		if (Options.materialEnabled(MaterialNames.INVAR)) {
+		if (Options.isMaterialEnabled(MaterialNames.INVAR)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.INVAR), 3, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.NICKEL);
 		}
 
-		if (Options.materialEnabled(MaterialNames.MERCURY)) {
+		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
 			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY), "Quicksilver");
 
 			if (FluidRegistry.isUniversalBucketEnabled()) {
@@ -168,11 +168,11 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			}
 		}
 
-		if (Options.materialEnabled(MaterialNames.MITHRIL)) {
+		if (Options.isMaterialEnabled(MaterialNames.MITHRIL)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.MITHRIL), 3, MaterialNames.SILVER, MaterialNames.SILVER, MaterialNames.COLDIRON, MaterialNames.MERCURY);
 		}
 
-		if (Options.materialEnabled(MaterialNames.STEEL)) {
+		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
 			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STEEL);
 			OreDictionary.registerOre(Oredicts.SPROCKET, material.getItem(Names.GEAR));
 

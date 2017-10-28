@@ -37,4 +37,8 @@ public class MaterialNames {
 	public static final String TIN = "tin";
 	public static final String WOOD = "wood";
 	public static final String ZINC = "zinc";
+
+	private MaterialNames() {
+		throw new IllegalAccessError("Not a instantiable class");
+	}
 }

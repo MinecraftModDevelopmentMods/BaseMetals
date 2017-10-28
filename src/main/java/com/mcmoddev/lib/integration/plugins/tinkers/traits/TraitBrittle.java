@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.integration.plugins.tinkers.traits;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
@@ -15,7 +17,7 @@ public class TraitBrittle extends AbstractTrait {
 	}
 
 	@Override
-	public void beforeBlockBreak(ItemStack tool, BlockEvent.BreakEvent event) {
+	public void beforeBlockBreak(@Nonnull final ItemStack tool, @Nonnull final BlockEvent.BreakEvent event) {
 		Block block = event.getState().getBlock();
 		if (block.getDefaultState().getMaterial() == Material.ROCK) {
 			Integer durability = ToolHelper.getCurrentDurability(tool);

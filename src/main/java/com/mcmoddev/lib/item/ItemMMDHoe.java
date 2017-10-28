@@ -59,7 +59,7 @@ public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject
 	 */
 	@Override
 	@Deprecated
-	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
+	public int getHarvestLevel(ItemStack stack, String typeRequested) {
 		if ((typeRequested != null) && this.toolTypes.contains(typeRequested))
 			return this.material.getToolHarvestLevel();
 		return -1;

@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.integration.plugins.tinkers.traits;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +19,7 @@ public class TraitReactive extends AbstractTrait {
 	}
 
 	@Override
-	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
+	public void onUpdate(@Nonnull final ItemStack tool, @Nonnull final World world, @Nonnull final Entity entity, @Nonnull final int itemSlot, @Nonnull final boolean isSelected) {
 		if (!world.isRemote && entity instanceof EntityPlayer && entity.isWet()) {
 			if (((EntityPlayer) entity).getActiveItemStack() == tool) {
 				ToolHelper.damageTool(tool, 5, (EntityLivingBase) entity);
@@ -26,7 +28,7 @@ public class TraitReactive extends AbstractTrait {
 	}
 
 	@Override
-	public void onHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damage, boolean isCritical) {
+	public void onHit(@Nonnull final ItemStack tool, @Nonnull final EntityLivingBase player, @Nonnull final EntityLivingBase target, @Nonnull final float damage, @Nonnull final boolean isCritical) {
 		if (target.canBreatheUnderwater()) {
 			// do extra damage
 			final DamageSource extraDamage = DamageSource.onFire;

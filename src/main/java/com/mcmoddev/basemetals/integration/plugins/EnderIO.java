@@ -4,6 +4,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 /**
  *
@@ -20,31 +21,41 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 	 */
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("enderio")) {
+		if (initDone || !Options.isModEnabled(EnderIO.PLUGIN_MODID)) {
 			return;
 		}
 
-		addSagMillRecipe(MaterialNames.ADAMANTINE);
-		addSagMillRecipe(MaterialNames.ANTIMONY);
-		addSagMillRecipe(MaterialNames.AQUARIUM);
-		addSagMillRecipe(MaterialNames.BISMUTH);
-		addSagMillRecipe(MaterialNames.BRASS);
-		addSagMillRecipe(MaterialNames.BRONZE);
-		addSagMillRecipe(MaterialNames.COLDIRON);
+		final String[] baseNames = new String[] {
+			MaterialNames.ADAMANTINE,
+			MaterialNames.ANTIMONY,
+			MaterialNames.AQUARIUM,
+			MaterialNames.BISMUTH,
+			MaterialNames.BRASS,
+			MaterialNames.BRONZE,
+			MaterialNames.COLDIRON,
+			MaterialNames.CUPRONICKEL,
+			MaterialNames.ELECTRUM,
+			MaterialNames.INVAR,
+			MaterialNames.MITHRIL,
+			MaterialNames.PEWTER,
+			MaterialNames.PLATINUM,
+			MaterialNames.STARSTEEL,
+			MaterialNames.STEEL,
+			MaterialNames.TIN,
+			MaterialNames.ZINC
+		};
+
+		for (int i = 0; i < baseNames.length; i++) {
+			final String materialName = baseNames[i];
+			if (Options.isMaterialEnabled(materialName)) {
+				addSagMillRecipe(materialName, 3600);
+			}
+		}
+
 		addSagMillRecipe(MaterialNames.COPPER, 2, MaterialNames.GOLD, 1, 360);
-		addSagMillRecipe(MaterialNames.CUPRONICKEL);
-		addSagMillRecipe(MaterialNames.ELECTRUM);
-		addSagMillRecipe(MaterialNames.INVAR);
 		addSagMillRecipe(MaterialNames.LEAD, 2, MaterialNames.SILVER, 1, 360);
-		addSagMillRecipe(MaterialNames.MITHRIL);
 		addSagMillRecipe(MaterialNames.NICKEL, 2, MaterialNames.PLATINUM, 1, 360);
-		addSagMillRecipe(MaterialNames.PEWTER);
-		addSagMillRecipe(MaterialNames.PLATINUM);
 		addSagMillRecipe(MaterialNames.SILVER, 2, MaterialNames.LEAD, 1, 360);
-		addSagMillRecipe(MaterialNames.STARSTEEL);
-		addSagMillRecipe(MaterialNames.STEEL);
-		addSagMillRecipe(MaterialNames.TIN);
-		addSagMillRecipe(MaterialNames.ZINC);
 
 		initDone = true;
 	}

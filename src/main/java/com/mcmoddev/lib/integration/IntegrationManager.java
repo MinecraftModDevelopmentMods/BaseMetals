@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.collect.Lists;
 import com.mcmoddev.basemetals.BaseMetals;
 
@@ -16,10 +18,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public enum IntegrationManager {
 	INSTANCE;
 
-	private List<IIntegration> integrations = Lists.newArrayList();
-	private Map<String, List<Map<IIntegration, Method>>> callbacks = new HashMap<>();
+	private final List<IIntegration> integrations = Lists.newArrayList();
+	private final Map<String, List<Map<IIntegration, Method>>> callbacks = new HashMap<>();
 
-	private String getAnnotationItem(String item, final ASMData asmData) {
+	private String getAnnotationItem(@Nonnull final String item, @Nonnull final ASMData asmData) {
 		if (asmData.getAnnotationInfo().get(item) != null) {
 			return asmData.getAnnotationInfo().get(item).toString();
 		} else {
@@ -27,7 +29,7 @@ public enum IntegrationManager {
 		}
 	}
 
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(@Nonnull final FMLPreInitializationEvent event) {
 		for (final ASMData asmDataItem : event.getAsmData().getAll(MMDPlugin.class.getCanonicalName())) {
 			final String addonId = getAnnotationItem("addonId", asmDataItem);
 			final String pluginId = getAnnotationItem("pluginId", asmDataItem);
@@ -54,7 +56,7 @@ public enum IntegrationManager {
 		}
 	}
 
-	private void setCallback(IIntegration i, String name, String phase) {
+	private void setCallback(@Nonnull final IIntegration i, @Nonnull final String name, @Nonnull final String phase) {
 		if ("".equals(name))
 			return;
 
@@ -74,7 +76,7 @@ public enum IntegrationManager {
 		}
 	}
 
-	private void runCallback(Map<IIntegration, Method> cbs) {
+	private void runCallback(@Nonnull final Map<IIntegration, Method> cbs) {
 		for (Entry<IIntegration, Method> ent : cbs.entrySet()) {
 			try {
 				ent.getValue().invoke(ent.getKey());
@@ -84,10 +86,10 @@ public enum IntegrationManager {
 		}
 	}
 
-	public void runCallbacks(String phase) {
+	public void runCallbacks(@Nonnull final String phase) {
 		if (callbacks.containsKey(phase)) {
 			List<Map<IIntegration, Method>> cbs = callbacks.get(phase);
-			for (Map<IIntegration, Method> map : cbs) {
+			for (final Map<IIntegration, Method> map : cbs) {
 				runCallback(map);
 			}
 		}

@@ -11,7 +11,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.registry.recipe.ArbitraryCrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.OreDictionaryCrusherRecipe;

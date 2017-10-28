@@ -3,7 +3,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.Materials;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -18,7 +18,7 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("thermalexpansion")) {
+		if (initDone || !Options.isModEnabled(ThermalExpansion.PLUGIN_MODID)) {
 			return;
 		}
 
@@ -38,11 +38,11 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 
 		for (int i = 0; i < baseNames.length; i++) {
 			final String ore = baseNames[i];
-			if (Options.materialEnabled(ore)) {
-				addFurnace(Options.materialEnabled(ore), ore);
-				addCrucible(Options.materialEnabled(ore), ore);
-				addPlatePress(Options.materialEnabled(ore), ore);
-				addPressStorage(Options.materialEnabled(ore), ore);
+			if (Options.isMaterialEnabled(ore)) {
+				addFurnace(Options.isMaterialEnabled(ore), ore);
+				addCrucible(Options.isMaterialEnabled(ore), ore);
+				addPlatePress(Options.isMaterialEnabled(ore), ore);
+				addPressStorage(Options.isMaterialEnabled(ore), ore);
 			}
 		}
 

@@ -1,6 +1,9 @@
 package com.mcmoddev.lib.data;
 
+import java.util.Locale;
 import java.util.TreeMap;
+
+import javax.annotation.Nonnull;
 
 import com.google.common.collect.Maps;
 
@@ -8,16 +11,19 @@ import net.minecraft.util.IStringSerializable;
 
 public enum Names implements IStringSerializable {
 	// Items
-	ANVIL, ARROW, AXE, BLEND, BOOTS, BOLT, BOW, CHESTPLATE, CRACKHAMMER, CROSSBOW, DOOR, FISHINGROD, GEAR, HELMET, HOE, HORSEARMOR, INGOT, LEGGINGS, NUGGET, PICKAXE, POWDER, ROD, SHEARS, SHIELD, SHOVEL, SLAB, SMALLBLEND, SMALLPOWDER, SWORD, GEM,
+	ARROW, AXE, BLEND, BOOTS, BOLT, BOW, CHESTPLATE, CRACKHAMMER, CROSSBOW, FISHING_ROD, GEAR, HELMET, HOE, HORSE_ARMOR, INGOT, LEGGINGS, NUGGET, PICKAXE, POWDER, ROD, SHEARS, SHIELD, SHOVEL, SMALLBLEND, SMALLPOWDER, SWORD, GEM,
 
 	// Blocks
-	BARS, BLOCK, BOOKSHELF, BUTTON, DOUBLESLAB, HALFSLAB, FLOWERPOT, LADDER, LEVER, PLATE, PRESSUREPLATE, STAIRS, TRAPDOOR, TRIPWIREHOOK, WALL, FENCE, FENCEGATE,
+	BARS, BLOCK, BOOKSHELF, BUTTON, DOUBLE_SLAB, FLOWER_POT, LADDER, LEVER, PLATE, PRESSURE_PLATE, STAIRS, TRAPDOOR, TRIPWIRE_HOOK, WALL, FENCE, FENCE_GATE,
+
+	// ItemBlocks
+	ANVIL, DOOR, SLAB,
 
 	// Mekanism
-	CRYSTAL, SHARD, CLUMP, POWDERDIRTY,
+	CRYSTAL, SHARD, CLUMP, POWDER_DIRTY,
 
 	// IC2
-	CASING, DENSEPLATE, CRUSHED, CRUSHEDPURIFIED,
+	CASING, DENSE_PLATE, CRUSHED, CRUSHED_PURIFIED,
 
 	// Ores
 	ORE, ENDORE, NETHERORE;
@@ -32,10 +38,10 @@ public enum Names implements IStringSerializable {
 
 	@Override
 	public String getName() {
-		return name().toLowerCase();
+		return this.name();
 	}
 
-	public static Names getType(int ordinal) {
+	public static Names getType(@Nonnull int ordinal) {
 		if ((ordinal > values().length) || (ordinal < 0)) {
 			ordinal = 0;
 		}
@@ -44,6 +50,6 @@ public enum Names implements IStringSerializable {
 
 	@Override
 	public String toString() {
-		return getName();
+		return this.getName().toLowerCase(Locale.ROOT);
 	}
 }

@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 public class TAIGABase implements IIntegration {
 
@@ -11,8 +12,8 @@ public class TAIGABase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !com.mcmoddev.basemetals.util.Config.Options.modEnabled("taiga")) {
-			if (!com.mcmoddev.basemetals.util.Config.Options.modEnabled("tinkersconstruct")) {
+		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
+			if (!Options.isModEnabled(TinkersConstructBase.PLUGIN_MODID)) {
 				BaseMetals.logger.error("TAIGA Plugin requires the TinkersConstruct Plugin");
 			}
 			return;

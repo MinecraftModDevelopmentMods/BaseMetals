@@ -58,13 +58,9 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
 		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null : this.material.getItem(Names.DOOR);
 	}
-
 	@Override
-	public boolean onBlockActivated(final World world, final BlockPos coord, IBlockState blockstate,
-									final EntityPlayer player,
-									final EnumHand hand, ItemStack heldItem,
-									final EnumFacing face,
-									final float partialX, final float partialY, final float partialZ) {
+	public boolean onBlockActivated(final World world, final BlockPos coord, IBlockState blockstate, final EntityPlayer player,
+									final EnumHand hand, ItemStack heldItem, final EnumFacing face, final float partialX, final float partialY, final float partialZ) {
 		if (this.material.getToolHarvestLevel() > 1)
 			return false;
 		final BlockPos pos = (blockstate.getValue(BlockDoor.HALF) == EnumDoorHalf.LOWER) ? coord : coord.down();
@@ -77,7 +73,7 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 		world.playEvent(player, ((Boolean) blockstate.getValue(BlockDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
-
+	
 	@Override
 	public MMDMaterial getMMDMaterial() {
 		return this.material;

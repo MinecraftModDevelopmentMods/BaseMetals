@@ -2,8 +2,6 @@ package com.mcmoddev.lib.block;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -243,12 +241,11 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	@Deprecated
 	public void addCollisionBoxToList(final IBlockState bs, final World world, final BlockPos coord,
 									  final AxisAlignedBB box, final List<AxisAlignedBB> collisionBoxList,
-									  @Nullable final Entity entity) {
-
+									  final Entity entity) {
 		final EnumFacing orientation = world.getBlockState(coord).getValue(FACING);
 		addCollisionBoxToList(coord, box, collisionBoxList, BOXES[orientation.ordinal()]);
 	}
-
+	
 	@Override
 	public MMDMaterial getMMDMaterial() {
 		return this.material;

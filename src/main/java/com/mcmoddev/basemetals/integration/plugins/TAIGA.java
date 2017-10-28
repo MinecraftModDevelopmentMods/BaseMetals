@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -27,7 +27,7 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 
 	@Override
 	public void init() {
-		if (initDone || (!Options.modEnabled("taiga") && (!Options.modEnabled("tinkersconstruct")))) {
+		if (initDone || (!Options.isModEnabled(TAIGA.PLUGIN_MODID) && (!Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)))) {
 			return;
 		}
 
@@ -41,23 +41,23 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 	}
 
 	private static class TAIGAMaterials extends com.mcmoddev.lib.init.Materials {
-		private static Field[] allBlocks = Blocks.class.getDeclaredFields();
+		private static final Field[] allBlocks = Blocks.class.getDeclaredFields();
 
 		private static final List<MMDMaterial> materials = new ArrayList<>();
 
 		public static void init() {
 			try {
-				for (Field f : allBlocks) {
-					String t = f.getName();
+				for (final Field f : allBlocks) {
+					final String t = f.getName();
 
 					if (t.endsWith("Block") && !("basaltBlock".equals(t))) {
-						String name = t.substring(0, t.length() - 5);
+						final String name = t.substring(0, t.length() - 5);
 
-						Block k = (Block) f.get(f.getClass());
-						float harvestLevel = k.getHarvestLevel(null);
-						float resist = k.getExplosionResistance(null);
+						final Block k = (Block) f.get(f.getClass());
+						final float harvestLevel = k.getHarvestLevel(null);
+						final float resist = k.getExplosionResistance(null);
 
-						MMDMaterial repThis = createOrelessMaterial(name, MaterialType.METAL, harvestLevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);
+						final MMDMaterial repThis = createOrelessMaterial(name, MaterialType.METAL, harvestLevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);
 
 						repThis.addNewBlock(Names.BLOCK, k);
 						repThis.addNewItem(Names.INGOT, new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Ingot").get(Items.class), 1).getItem());

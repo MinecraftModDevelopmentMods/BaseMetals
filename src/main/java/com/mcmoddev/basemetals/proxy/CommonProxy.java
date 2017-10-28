@@ -1,16 +1,20 @@
 package com.mcmoddev.basemetals.proxy;
 
+import java.util.HashSet;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.*;
 import com.mcmoddev.basemetals.util.Config;
-import com.mcmoddev.basemetals.util.Config.Options;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
@@ -18,6 +22,8 @@ import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMappin
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.versioning.ArtifactVersion;
+import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
 /**
  * Base Metals Common Proxy
@@ -30,6 +36,12 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 
 		Config.init();
+
+		if ((Options.requireMMDOreSpawn()) && (!Loader.isModLoaded("orespawn"))) {
+			final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
+			orespawnMod.add(new DefaultArtifactVersion("3.1.0"));
+			throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod");
+		}
 
 		Materials.init();
 		FuelRegistry.init();
@@ -52,11 +64,11 @@ public class CommonProxy {
 		for (final MissingMapping mapping : event.get()) {
 			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
-					if ((Options.materialEnabled(MaterialNames.MERCURY)) && ("liquid_mercury".equals(mapping.resourceLocation.getResourcePath()))) {
+					if ((Options.isMaterialEnabled(MaterialNames.MERCURY)) && ("liquid_mercury".equals(mapping.resourceLocation.getResourcePath()))) {
 						mapping.remap(Materials.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
-					if ((Options.materialEnabled(MaterialNames.COAL)) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
+					if ((Options.isMaterialEnabled(MaterialNames.COAL)) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
 						mapping.remap(Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
 					}
 				}

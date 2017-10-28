@@ -52,7 +52,7 @@ public class BaseMetals {
 	 * increased whenever a change is made that has the potential to break
 	 * compatibility with other mods that depend on this one.
 	 */
-	public static final String VERSION = "2.5.0-beta1";
+	public static final String VERSION = "2.5.0-beta2";
 
 	static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopment/BaseMetals/master/update.json";
 
