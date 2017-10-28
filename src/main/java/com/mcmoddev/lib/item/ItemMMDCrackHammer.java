@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.init.Achievements;
@@ -235,7 +236,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		MMDToolEffects.extraEffectsOnCrafting(material, item, world, crafter);
 		// achievement
 		if (Options.enableAchievements()) {
-			crafter.addStat(Achievements.getAchievementByName("geologist"), 1);
+			crafter.addStat(Achievements.getAchievementByName(AchievementNames.GEOLOGIST), 1);
 		}
 	}
 

@@ -15,6 +15,7 @@ public class AchievementNames {
 	public static final String INVAR_MAKER = "invar_maker";
 	public static final String MITHRIL_MAKER = "mithril_maker";
 	public static final String AQUARIUM_MAKER = "aquarium_maker";
+	public static final String PEWTER_MAKER = "pewter_maker";
 	
 	public static final String ANGEL_OF_DEATH = "angel_of_death";
 	public static final String SCUBA_DIVER = "scuba_diver";

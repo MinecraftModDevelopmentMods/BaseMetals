@@ -49,7 +49,7 @@ public class ItemGroups {
 	protected static int addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
 		String modName = Loader.instance().activeModContainer().getModId();
 		String internalTabName = String.format("%s.%s", modName, name);
-		MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable, null);
+		MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable);
 		if (itemGroupsByModID.containsKey(modName)) {
 			itemGroupsByModID.get(modName).add(tab);
 		} else {

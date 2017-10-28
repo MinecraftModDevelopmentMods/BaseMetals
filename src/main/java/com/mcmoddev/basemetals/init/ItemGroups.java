@@ -8,7 +8,6 @@ import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 /**
  * This class initializes all item groups in Base Metals.
@@ -44,27 +43,25 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	}
 
 	public static void setupIcons() {
-		Block temp;
-		ItemStack blocksTabIconItem;
-		ItemStack itemsTabIconItem;
-		ItemStack toolsTabIconItem;
+		Block blocksTabIconItem;
+		Item itemsTabIconItem;
+		Item toolsTabIconItem;
 		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
-			temp = Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.BLOCK);
+			blocksTabIconItem = Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.BLOCK);
 		} else {
-			temp = net.minecraft.init.Blocks.IRON_BLOCK;
+			blocksTabIconItem = net.minecraft.init.Blocks.IRON_BLOCK;
 		}
-		blocksTabIconItem = new ItemStack(Item.getItemFromBlock(temp));
 
 		if (Options.isThingEnabled("Gear")) {
-			itemsTabIconItem = new ItemStack(Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.GEAR));
+			itemsTabIconItem = Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.GEAR);
 		} else {
-			itemsTabIconItem = new ItemStack(net.minecraft.init.Items.STICK);
+			itemsTabIconItem = net.minecraft.init.Items.STICK;
 		}
 
 		if (Options.isThingEnabled("BasicTools")) {
-			toolsTabIconItem = new ItemStack(Materials.getMaterialByName(MaterialNames.DIAMOND).getItem(Names.SWORD));
+			toolsTabIconItem = Materials.getMaterialByName(MaterialNames.DIAMOND).getItem(Names.SWORD);
 		} else {
-			toolsTabIconItem = new ItemStack(net.minecraft.init.Items.DIAMOND_SWORD);
+			toolsTabIconItem = net.minecraft.init.Items.DIAMOND_SWORD;
 		}
 
 		blocksTab.setTabIconItem(blocksTabIconItem);

@@ -6,7 +6,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.item.ItemStack;
 
@@ -19,7 +18,6 @@ import net.minecraft.item.ItemStack;
 public class Items extends com.mcmoddev.lib.init.Items {
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs = ItemGroups.myTabs;
 
 	protected Items() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -131,37 +129,37 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		wood.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
-			createItemsFull(MaterialNames.ADAMANTINE, myTabs);
-			createItemsModSupport(MaterialNames.ADAMANTINE, myTabs);
+			createItemsFull(MaterialNames.ADAMANTINE, ItemGroups.myTabs);
+			createItemsModSupport(MaterialNames.ADAMANTINE, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.ANTIMONY)) {
-			createItemsFull(MaterialNames.ANTIMONY, myTabs);
-			createItemsModSupport(MaterialNames.ANTIMONY, myTabs);
+			createItemsFull(MaterialNames.ANTIMONY, ItemGroups.myTabs);
+			createItemsModSupport(MaterialNames.ANTIMONY, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM)) {
-			createItemsFull(MaterialNames.AQUARIUM, myTabs);
+			createItemsFull(MaterialNames.AQUARIUM, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.BISMUTH)) {
-			createItemsFull(MaterialNames.BISMUTH, myTabs);
-			createItemsModSupport(MaterialNames.BISMUTH, myTabs);
+			createItemsFull(MaterialNames.BISMUTH, ItemGroups.myTabs);
+			createItemsModSupport(MaterialNames.BISMUTH, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.BRASS)) {
-			createItemsFull(MaterialNames.BRASS, myTabs);
+			createItemsFull(MaterialNames.BRASS, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.BRONZE)) {
-			createItemsFull(MaterialNames.BRONZE, myTabs);
+			createItemsFull(MaterialNames.BRONZE, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
 
-			create(Names.NUGGET, charcoal, myTabs.itemsTab);
-			create(Names.POWDER, charcoal, myTabs.itemsTab);
-			create(Names.SMALLPOWDER, charcoal, myTabs.itemsTab);
+			create(Names.NUGGET, charcoal, ItemGroups.myTabs.itemsTab);
+			create(Names.POWDER, charcoal, ItemGroups.myTabs.itemsTab);
+			create(Names.SMALLPOWDER, charcoal, ItemGroups.myTabs.itemsTab);
 			FuelRegistry.addFuel(Oredicts.NUGGET_CHARCOAL, 200);
 			FuelRegistry.addFuel(Oredicts.DUST_CHARCOAL, 1600);
 			FuelRegistry.addFuel(Oredicts.DUST_SMALL_CHARCOAL, 200);
@@ -170,9 +168,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
-			create(Names.NUGGET, coal, myTabs.itemsTab);
-			create(Names.POWDER, coal, myTabs.itemsTab);
-			create(Names.SMALLPOWDER, coal, myTabs.itemsTab);
+			create(Names.NUGGET, coal, ItemGroups.myTabs.itemsTab);
+			create(Names.POWDER, coal, ItemGroups.myTabs.itemsTab);
+			create(Names.SMALLPOWDER, coal, ItemGroups.myTabs.itemsTab);
 			FuelRegistry.addFuel(Oredicts.NUGGET_COAL, 200);
 			FuelRegistry.addFuel(Oredicts.DUST_COAL, 1600);
 			FuelRegistry.addFuel(Oredicts.DUST_SMALL_COAL, 200);
@@ -180,121 +178,121 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.COLDIRON)) {
-			createItemsFull(MaterialNames.COLDIRON, myTabs);
-			createItemsModSupport(MaterialNames.COLDIRON, myTabs);
+			createItemsFull(MaterialNames.COLDIRON, ItemGroups.myTabs);
+			createItemsModSupport(MaterialNames.COLDIRON, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.COPPER)) {
-			createItemsFull(MaterialNames.COPPER, myTabs);
+			createItemsFull(MaterialNames.COPPER, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL)) {
-			createItemsFull(MaterialNames.CUPRONICKEL, myTabs);
+			createItemsFull(MaterialNames.CUPRONICKEL, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.DIAMOND)) {
-			createItemsFull(diamond, myTabs);
+			createItemsFull(diamond, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.EMERALD)) {
-			createItemsFull(emerald, myTabs);
+			createItemsFull(emerald, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.ELECTRUM)) {
-			createItemsFull(MaterialNames.ELECTRUM, myTabs);
+			createItemsFull(MaterialNames.ELECTRUM, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.GOLD)) {
-			createItemsFull(gold, myTabs);
+			createItemsFull(gold, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.INVAR)) {
-			createItemsFull(MaterialNames.INVAR, myTabs);
+			createItemsFull(MaterialNames.INVAR, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.IRON)) {
-			createItemsFull(iron, myTabs);
+			createItemsFull(iron, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.LAPIS)) {
-			create(Names.SMALLPOWDER, lapis, myTabs.itemsTab);
+			create(Names.SMALLPOWDER, lapis, ItemGroups.myTabs.itemsTab);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.LEAD)) {
-			createItemsFull(MaterialNames.LEAD, myTabs);
+			createItemsFull(MaterialNames.LEAD, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.OBSIDIAN)) {
-			createItemsFull(obsidian, myTabs);
+			createItemsFull(obsidian, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.PLATINUM)) {
-			createItemsFull(MaterialNames.PLATINUM, myTabs);
-			createItemsModSupport(MaterialNames.PLATINUM, myTabs);
+			createItemsFull(MaterialNames.PLATINUM, ItemGroups.myTabs);
+			createItemsModSupport(MaterialNames.PLATINUM, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 
-			create(Names.INGOT, mercury, myTabs.itemsTab);
-			create(Names.NUGGET, mercury, myTabs.itemsTab);
-			create(Names.POWDER, mercury, myTabs.itemsTab);
-			create(Names.SMALLPOWDER, mercury, myTabs.itemsTab);
+			create(Names.INGOT, mercury, ItemGroups.myTabs.itemsTab);
+			create(Names.NUGGET, mercury, ItemGroups.myTabs.itemsTab);
+			create(Names.POWDER, mercury, ItemGroups.myTabs.itemsTab);
+			create(Names.SMALLPOWDER, mercury, ItemGroups.myTabs.itemsTab);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.MITHRIL)) {
-			createItemsFull(MaterialNames.MITHRIL, myTabs);
+			createItemsFull(MaterialNames.MITHRIL, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.NICKEL)) {
-			createItemsFull(MaterialNames.NICKEL, myTabs);
-			createItemsModSupport(MaterialNames.NICKEL, myTabs);
+			createItemsFull(MaterialNames.NICKEL, ItemGroups.myTabs);
+			createItemsModSupport(MaterialNames.NICKEL, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.PEWTER)) {
-			createItemsFull(MaterialNames.PEWTER, myTabs);
+			createItemsFull(MaterialNames.PEWTER, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.REDSTONE)) {
-			create(Names.INGOT, redstone, myTabs.itemsTab);
-			create(Names.SMALLPOWDER, redstone, myTabs.itemsTab);
+			create(Names.INGOT, redstone, ItemGroups.myTabs.itemsTab);
+			create(Names.SMALLPOWDER, redstone, ItemGroups.myTabs.itemsTab);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.QUARTZ)) {
-			createItemsFull(quartz, myTabs);
+			createItemsFull(quartz, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.SILVER)) {
-			createItemsFull(MaterialNames.SILVER, myTabs);
+			createItemsFull(MaterialNames.SILVER, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
-			createItemsFull(MaterialNames.STARSTEEL, myTabs);
-			createItemsModSupport(MaterialNames.STARSTEEL, myTabs);
+			createItemsFull(MaterialNames.STARSTEEL, ItemGroups.myTabs);
+			createItemsModSupport(MaterialNames.STARSTEEL, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.STONE)) {
-			create(Names.CRACKHAMMER, stone, myTabs.toolsTab);
-			create(Names.ROD, stone, myTabs.itemsTab);
-			create(Names.GEAR, stone, myTabs.itemsTab);
+			create(Names.CRACKHAMMER, stone, ItemGroups.myTabs.toolsTab);
+			create(Names.ROD, stone, ItemGroups.myTabs.itemsTab);
+			create(Names.GEAR, stone, ItemGroups.myTabs.itemsTab);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
-			createItemsFull(MaterialNames.STEEL, myTabs);
+			createItemsFull(MaterialNames.STEEL, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.TIN)) {
-			createItemsFull(MaterialNames.TIN, myTabs);
+			createItemsFull(MaterialNames.TIN, ItemGroups.myTabs);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.WOOD)) {
-			create(Names.CRACKHAMMER, wood, myTabs.toolsTab);
-			create(Names.GEAR, wood, myTabs.itemsTab);
+			create(Names.CRACKHAMMER, wood, ItemGroups.myTabs.toolsTab);
+			create(Names.GEAR, wood, ItemGroups.myTabs.itemsTab);
 		}
 
 		if (Options.isMaterialEnabled(MaterialNames.ZINC)) {
-			createItemsFull(MaterialNames.ZINC, myTabs);
-			createItemsModSupport(MaterialNames.ZINC, myTabs);
+			createItemsFull(MaterialNames.ZINC, ItemGroups.myTabs);
+			createItemsModSupport(MaterialNames.ZINC, ItemGroups.myTabs);
 		}
 
 		addToMetList();

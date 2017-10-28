@@ -7,7 +7,9 @@ import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.init.Items;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,9 +36,25 @@ public class MMDCreativeTab extends CreativeTabs {
 		}
 	};
 
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable) {
+		this(unlocalizedName, searchable, (ItemStack) null);
+	}
+
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final Block iconBlock) {
+		this(unlocalizedName, searchable, new ItemStack(Item.getItemFromBlock(iconBlock)));
+	}
+
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final Item iconItem) {
+		this(unlocalizedName, searchable, new ItemStack(iconItem));
+	}
+
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final ItemStack iconItem) {
 		super(unlocalizedName);
-		this.iconItem = iconItem;
+		if (iconItem == null) {
+			this.iconItem =  new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
+		} else {
+			this.iconItem = iconItem;
+		}
 		this.searchable = searchable;
 		this.setSortingAlgorithm(DEFAULT);
 		if (searchable)
@@ -60,14 +78,19 @@ public class MMDCreativeTab extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ItemStack getTabIconItem() {
-		if (this.iconItem == null) {
-			return new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
-		}
 		return this.iconItem;
 	}
 
 	public void setSortingAlgorithm(@Nonnull final Comparator<ItemStack> comparator) {
 		this.comparator = comparator;
+	}
+
+	public void setTabIconItem(@Nonnull final Block iconBlock) {
+		this.iconItem = new ItemStack(Item.getItemFromBlock(iconBlock));
+	}
+
+	public void setTabIconItem(@Nonnull final Item iconItem) {
+		this.iconItem = new ItemStack(iconItem);
 	}
 
 	public void setTabIconItem(@Nonnull final ItemStack iconItem) {
