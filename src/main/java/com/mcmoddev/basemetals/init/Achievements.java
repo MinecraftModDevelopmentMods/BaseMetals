@@ -54,6 +54,9 @@ public class Achievements extends com.mcmoddev.lib.init.Achievements {
 				if (Options.isMaterialEnabled(MaterialNames.INVAR)) {
 					makeAchievement(AchievementNames.INVAR_MAKER, metallurgy, 9, 8, Materials.getMaterialByName(MaterialNames.INVAR).getItem(Names.INGOT), page);
 				}
+				if (Options.isMaterialEnabled(MaterialNames.PEWTER)) {
+					makeAchievement(AchievementNames.PEWTER_MAKER, metallurgy, 9, 9, Materials.getMaterialByName(MaterialNames.PEWTER).getItem(Names.INGOT), page);
+				}
 				if (Options.isMaterialEnabled(MaterialNames.MITHRIL)) {
 					final Achievement mithrilMaker = makeAchievement(AchievementNames.MITHRIL_MAKER, metallurgy, 11, 10, Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.INGOT), page);
 					makeAchievement(AchievementNames.ANGEL_OF_DEATH, mithrilMaker, 11, 11, Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD), page);

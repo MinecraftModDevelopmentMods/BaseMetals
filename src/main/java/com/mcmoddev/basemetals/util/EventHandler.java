@@ -110,6 +110,8 @@ public class EventHandler {
 				event.player.addStat(Achievements.getAchievementByName(AchievementNames.MITHRIL_MAKER), 1);
 			} else if (materialName.equals(MaterialNames.CUPRONICKEL)) {
 				event.player.addStat(Achievements.getAchievementByName(AchievementNames.CUPRONICKEL_MAKER), 1);
+			} else if (materialName.equals(MaterialNames.PEWTER)) {
+				event.player.addStat(Achievements.getAchievementByName(AchievementNames.PEWTER_MAKER), 1);
 			}
 		}
 	}
