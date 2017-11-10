@@ -12,10 +12,10 @@ public class ASMTransformer implements IClassTransformer {
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] bytes) {
-		byte[] rv = new byte[bytes.length];
+		byte[] rv = bytes;
 		for (final ITransformer transformer : ASMPlugin.transformerList) {
 			if (transformedName.equals(transformer.getTarget())) {
-				final ClassReader classReader = new ClassReader(bytes);
+				final ClassReader classReader = new ClassReader(rv);
 				final ClassNode classNode = new ClassNode();
 				classReader.accept(classNode, 0);
 				transformer.transform(classNode, Platform.isDevEnv());
