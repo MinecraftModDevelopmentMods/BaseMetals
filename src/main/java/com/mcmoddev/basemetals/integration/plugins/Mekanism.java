@@ -64,12 +64,11 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 				MaterialNames.ZINC
 		};
 
-		for (int i = 0; i < baseNames.length; i++) {
-			final String materialName = baseNames[i];
-			if (Options.isMaterialEnabled(materialName)) {
-				addOreMultiplicationRecipes(materialName);
-			}
-		}
+	    for ( final String materialName : baseNames ) {
+		    if ( Options.isMaterialEnabled( materialName ) ) {
+			    addOreMultiplicationRecipes( materialName );
+		    }
+	    }
 		
 		if( Options.isMaterialEnabled(MaterialNames.DIAMOND) ) {
 			MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);

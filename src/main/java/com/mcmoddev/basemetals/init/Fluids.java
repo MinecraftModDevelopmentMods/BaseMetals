@@ -1,10 +1,10 @@
 package com.mcmoddev.basemetals.init;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class initializes all fluids in Base Metals.
@@ -45,7 +45,7 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		});
 
 		standardMaterialsMap.stream()
-		.filter(name -> Options.isMaterialEnabled(name) )
+		.filter(Options::isMaterialEnabled )
 		.forEach( name -> {
 			addFluid( name, 2000, 10000, 769, 10 );
 			addFluidBlock( name );

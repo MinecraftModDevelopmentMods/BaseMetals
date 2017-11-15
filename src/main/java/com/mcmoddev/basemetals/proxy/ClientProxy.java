@@ -83,13 +83,13 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
-	public void registerRenderOuter(Item item) {
+	private void registerRenderOuter ( Item item ) {
 		if (item != null) {
 			registerRender(item, Items.getNameOfItem(item));
 		}
 	}
 
-	public void registerRenderOuter(Block block) {
+	private void registerRenderOuter ( Block block ) {
 		if ((block instanceof BlockDoor) || (block instanceof BlockSlab)) {
 			return; // do not add door blocks or slabs
 		}

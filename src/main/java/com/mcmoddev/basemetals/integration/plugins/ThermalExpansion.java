@@ -46,13 +46,12 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			MaterialNames.MERCURY
 		};
 
-		for (int i = 0; i < baseNames.length; i++) {
-			final String ore = baseNames[i];
-			if (Options.isMaterialEnabled(ore)) {
-				addFurnace(Options.isMaterialEnabled(ore), ore);
-				addCrucible(Options.isMaterialEnabled(ore), ore);
-				addPlatePress(Options.isMaterialEnabled(ore), ore);
-				addPressStorage(Options.isMaterialEnabled(ore), ore);
+		for ( final String ore : baseNames ) {
+			if ( Options.isMaterialEnabled( ore ) ) {
+				addFurnace( Options.isMaterialEnabled( ore ), ore );
+				addCrucible( Options.isMaterialEnabled( ore ), ore );
+				addPlatePress( Options.isMaterialEnabled( ore ), ore );
+				addPressStorage( Options.isMaterialEnabled( ore ), ore );
 			}
 		}
 

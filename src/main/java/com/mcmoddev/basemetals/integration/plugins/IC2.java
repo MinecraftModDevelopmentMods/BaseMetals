@@ -47,18 +47,17 @@ public class IC2 extends IC2Base implements IIntegration {
 				MaterialNames.ZINC
 		};
 
-		for (int i = 0; i < baseNames.length; i++) {
-			final String materialName = baseNames[i];
-			if (Options.isMaterialEnabled(materialName)) {
-				registerVanillaRecipes(materialName);
-				addMaceratorRecipes(materialName);
-				addOreWashingPlantRecipes(materialName);
-				addThermalCentrifugeRecipes(materialName);
-				addMetalFormerRecipes(materialName);
-				addCompressorRecipes(materialName);
-				addForgeHammerRecipe(materialName);
-			}
-		}
+	    for ( final String materialName : baseNames ) {
+		    if ( Options.isMaterialEnabled( materialName ) ) {
+			    registerVanillaRecipes( materialName );
+			    addMaceratorRecipes( materialName );
+			    addOreWashingPlantRecipes( materialName );
+			    addThermalCentrifugeRecipes( materialName );
+			    addMetalFormerRecipes( materialName );
+			    addCompressorRecipes( materialName );
+			    addForgeHammerRecipe( materialName );
+		    }
+	    }
 		
 		if( Options.isMaterialEnabled(MaterialNames.DIAMOND) ) {
 			MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
