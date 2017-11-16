@@ -6,6 +6,8 @@ import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.collect.ImmutableList;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 
@@ -17,7 +19,6 @@ import net.minecraft.item.Item;
 // import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Loader;
 
 /**
@@ -112,6 +113,10 @@ public class MMDMaterial {
 	 */
 	private final MaterialType materialType;
 
+	private int spawnSize;
+
+	private int defaultDimension;
+
 	/**
 	 * @param name
 	 *            String used to identify items and blocks using this material
@@ -156,6 +161,8 @@ public class MMDMaterial {
 		this.materialType = type;
 		this.hasBlend = hasBlend;
 		this.hasOre = hasOre;
+		this.spawnSize = 8;
+		this.defaultDimension = Integer.MIN_VALUE;
 	}
 
 	public String getName() {
@@ -426,7 +433,7 @@ public class MMDMaterial {
 	 */
 	public MMDMaterial addNewItem(String name, Item item) {
 		if (this.items.containsKey(name)) {
-			FMLLog.warning("Tried adding item %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
+			BaseMetals.logger.warn("Tried adding item %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
 			return this;
 		}
 		this.items.put(name, item);
@@ -460,7 +467,7 @@ public class MMDMaterial {
 	 */
 	public MMDMaterial addNewBlock(String name, Block block) {
 		if (this.blocks.containsKey(name)) {
-			FMLLog.warning("Tried adding block %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
+			BaseMetals.logger.warn("Tried adding block %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
 			return this;
 		}
 		this.blocks.put(name, block);
@@ -525,6 +532,22 @@ public class MMDMaterial {
 		return null;
 	}
 
+	/**
+	 * Get all the blocks that are made from this material
+	 * @return ImmutableList&lt;Block&gt; - the blocks
+	 */
+	public ImmutableList<Block> getBlocks() {
+		return ImmutableList.copyOf(this.blocks.values());
+	}
+	
+	/**
+	 * Get all the items that are made from/with this material
+	 * @return ImmutableList&lt;Item&gt; - the items
+	 */
+	public ImmutableList<Item> getItems() {
+		return ImmutableList.copyOf(this.items.values());
+	}
+	
 	public boolean hasOre() {
 		return this.hasOre;
 	}
@@ -621,4 +644,21 @@ public class MMDMaterial {
 		}
 	}
 
+	public int getSpawnSize() {
+		return this.spawnSize;
+	}
+
+	public MMDMaterial setSpawnSize(int size) {
+		this.spawnSize = size;
+		return this;
+	}
+	
+	public int getDefaultDimension() {
+		return this.defaultDimension;
+	}
+	
+	public MMDMaterial setDefaultDimension(int dim) {
+		this.defaultDimension = dim;
+		return this;
+	}
 }

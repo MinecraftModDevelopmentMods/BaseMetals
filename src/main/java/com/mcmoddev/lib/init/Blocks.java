@@ -67,7 +67,7 @@ public abstract class Blocks {
 		mapNameToClass(Names.BOOKSHELF, BlockMMDBookshelf.class);
 		mapNameToClass(Names.BUTTON, BlockMMDButton.class);
 		mapNameToClass(Names.DOOR, BlockMMDDoor.class);
-		mapNameToClass(Names.DOUBLE_SLAB, BlockMMDSlab.class);
+		mapNameToClass(Names.DOUBLE_SLAB, BlockMMDDoubleSlab.class);
 		mapNameToClass(Names.FLOWER_POT, BlockMMDFlowerPot.class);
 		mapNameToClass(Names.LADDER, BlockMMDLadder.class);
 		mapNameToClass(Names.LEVER, BlockMMDLever.class);

@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -35,6 +36,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 		version = BaseMetals.VERSION,
 		dependencies = "required-after:forge@[13.20.1.2386,);after:taiga;before:buildingbricks",
 		acceptedMinecraftVersions = "[1.11.2,)",
+		certificateFingerprint = "@FINGERPRINT@",
 		updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {
 
@@ -67,6 +69,11 @@ public class BaseMetals {
 		// Forge says this needs to be statically initialized here.
 		FluidRegistry.enableUniversalBucket();
 	}
+
+    @Mod.EventHandler
+    public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
+        logger.warn("Invalid fingerprint detected!");
+    }
 
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {

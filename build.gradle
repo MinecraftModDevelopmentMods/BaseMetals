@@ -85,6 +85,8 @@ minecraft {
 //  coreMod = corePlugin
     clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
     serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
+	
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
 }
 
 repositories {
@@ -144,6 +146,14 @@ repositories {
         name 'jitpack'
         url 'https://jitpack.io'
     }
+	maven {
+		name 'buildcraft'
+		url 'https://mod-buildcraft.com/maven/'
+	}
+    maven { // Storage Drawers
+		name 'thiakil' //in case GitHub doesn't like maven being hosted in GH Pages
+		url 'http://maven.thiakil.com'
+	}
 }
 
 //configurations {
@@ -157,14 +167,17 @@ dependencies {
     compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
-    }
+        exclude module: "Chameleon" // mek only uses the storage drawers API, which doesn't need Chameleon
+        exclude module: "jei_1.11.2"
+        exclude module: "Hwyla"
+	}
 
-    deobfCompile ("com.github.TeamFRM:TAIGA:${taiga_version}") {
-        exclude group: 'MCMultiPart'
-        exclude group: 'mezz.jei'
-        exclude group: 'slimeknights.mantle'
-        exclude group: 'slimeknights'
-    }
+//    deobfCompile ("com.github.TeamFRM:TAIGA:${taiga_version}") {
+//        exclude group: 'MCMultiPart'
+//        exclude group: 'mezz.jei'
+//        exclude group: 'slimeknights.mantle'
+//        exclude group: 'slimeknights'
+//    }
 
     deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
         exclude group: 'mezz.jei'
@@ -188,8 +201,8 @@ dependencies {
     }
     compile "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}:deobf"
     compile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
-//  deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}:universal"
-    deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
+    deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}"
+//  deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
     deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
@@ -203,7 +216,7 @@ dependencies {
     }
     
     // CoFHCore for TE integration
-    compile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:deobf") {
+    deobfCompile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
     	exclude group: 'mezz.jei'
     }
 }
@@ -243,6 +256,26 @@ task deobfJar(type: Jar) {
     classifier = 'deobf'
     from sourceSets.main.output
 }
+
+task signJar(type: SignJar, dependsOn: reobfJar) {
+
+    // Skips if the keyStore property is missing.
+    onlyIf {
+        project.hasProperty('keyStore')
+    }
+
+    // findProperty allows us to reference the property without it existing. 
+    // Using project.propName would cause the script to fail validation if 
+    // the property did not exist. 
+    keyStore = project.findProperty('keyStore')
+    alias = project.findProperty('keyStoreAlias')
+    storePass = project.findProperty('keyStorePass')
+    keyPass = project.findProperty('keyStoreKeyPass')
+    inputFile = jar.archivePath
+    outputFile = jar.archivePath
+}
+
+build.dependsOn signJar
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'

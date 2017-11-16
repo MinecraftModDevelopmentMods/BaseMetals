@@ -37,6 +37,8 @@ public abstract class Materials {
 	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 	private static final Map<String, Set<MMDMaterial>> modSourceMaterialMap = new HashMap<>();
 
+	public static final MMDMaterial emptyMaterial = createOrelessMaterial("empty", MaterialType.METAL, 0, 0, 0, 0);
+
 	protected Materials() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}

@@ -70,8 +70,9 @@ public class VillagerTradeHelper {
 	 *            Trades to add to the given level
 	 */
 	public static void insertTrades(ResourceLocation profession, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
-		for (final EntityVillager.ITradeList trade : trades)
+		for (final EntityVillager.ITradeList trade : trades) {
 			VillagerRegistry.instance().getRegistry().getValue(profession).getCareer(careerID - 1).addTrade(tradeLevel, trade);
+		}
 	}
 
 	/**

@@ -45,10 +45,12 @@ public class TraitRegistry {
 		registerFieldArray(fields);
 	}
 
+	/*
 	public static void initTAIGATraits() {
 		final Field[] fields = com.sosnitzka.taiga.MaterialTraits.class.getDeclaredFields();
 		registerFieldArray(fields);
 	}
+	*/
 
 	private static void registerFieldArray(@Nonnull final Field[] regList) {
 		for (final Field f : regList) {

@@ -24,6 +24,11 @@ public class ConfigBase {
 
 	private static final List<String> UserCrusherRecipes = new ArrayList<>();
 
+	// shut up SonarLint/SonarQube
+	protected ConfigBase() {
+		
+	}
+	
 	protected static void manageUserHammerRecipes(Collection<Property> values) {
 		for (final Property p : values) {
 			final String[] recipes = p.getString().split(";");

@@ -13,8 +13,8 @@ import com.mcmoddev.lib.integration.plugins.taiga.TAIGAItems;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
-import com.sosnitzka.taiga.Blocks;
-import com.sosnitzka.taiga.Items;
+//import com.sosnitzka.taiga.Blocks;
+//import com.sosnitzka.taiga.Items;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -27,20 +27,23 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 
 	@Override
 	public void init() {
-		if (initDone || (!Options.isModEnabled(TAIGA.PLUGIN_MODID) && (!Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)))) {
+		if (initDone || ((!Options.isModEnabled(TAIGA.PLUGIN_MODID)) && (!Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)))) {
 			return;
 		}
 
-		TraitRegistry.initTAIGATraits();
-		TAIGAMaterials.init();
-		TAIGAItems.init(TAIGAMaterials.materials);
+		// TODO: Something in here crashes
+		//TraitRegistry.initTAIGATraits();
+		//TAIGAMaterials.init();
+		//TAIGAItems.init(TAIGAMaterials.materials);
 
 		// TraitRegistry.dumpRegistry();
 
 		initDone = true;
 	}
 
+	/*
 	private static class TAIGAMaterials extends com.mcmoddev.lib.init.Materials {
+
 		private static final Field[] allBlocks = Blocks.class.getDeclaredFields();
 
 		private static final List<MMDMaterial> materials = new ArrayList<>();
@@ -74,4 +77,5 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 			}
 		}
 	}
+	*/
 }

@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.fluids.CustomFluid;
@@ -75,8 +74,8 @@ public abstract class Fluids {
 		tintColor = material.getTintColor();
 
 		final Fluid fluid = new CustomFluid(material.getName(),
-				new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_still"),
-				new ResourceLocation(BaseMetals.MODID + ":blocks/molten_metal_flow"), tintColor);
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"), tintColor);
 		fluid.setDensity(density);
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);
