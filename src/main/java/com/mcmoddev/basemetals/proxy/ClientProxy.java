@@ -100,11 +100,12 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	public void registerRender(Item item, String name) {
-		final ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 		if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {
 			return;
 		}
 
-		itemModelMesher.register(item, 0, new ModelResourceLocation(new ResourceLocation(item.getRegistryName().getResourceDomain(), name), "inventory"));
+		String resourceDomain = item.getRegistryName().getResourceDomain();
+		ResourceLocation resLoc = new ResourceLocation(resourceDomain, name);
+		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(resLoc, "inventory"));
 	}
 }
