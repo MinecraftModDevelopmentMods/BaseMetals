@@ -22,7 +22,7 @@ import java.util.Arrays;
  */
 public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
-	protected static Block humanDetector;
+	static Block humanDetector;
 
 	private static boolean initDone = false;
 	private static TabContainer myTabs = ItemGroups.myTabs;
@@ -54,13 +54,13 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL, MaterialNames.PEWTER,
 				MaterialNames.STEEL };
 		
-		Arrays.asList(simpleFullBlocks).stream()
-		.filter( name -> Options.isMaterialEnabled(name))
-		.forEach( name -> createBlocksFull(name, myTabs) );
+		Arrays.stream( simpleFullBlocks)
+		      .filter( Options::isMaterialEnabled )
+		      .forEach( name -> createBlocksFull(name, myTabs) );
 		
-		Arrays.asList(alloyFullBlocks).stream()
-		.filter( name -> Options.isMaterialEnabled(name))
-		.forEach( name -> createBlocksFullOreless(name, myTabs) );
+		Arrays.stream( alloyFullBlocks )
+					.filter( Options::isMaterialEnabled )
+					.forEach( name -> createBlocksFullOreless(name, myTabs) );
 
 		createStarSteel();
 		createMercury();

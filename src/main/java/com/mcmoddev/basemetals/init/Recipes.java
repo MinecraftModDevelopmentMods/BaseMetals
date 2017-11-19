@@ -46,6 +46,8 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	protected static void initVanillaRecipes() {
+		// all recipes for BaseMetals are currently in JSON - this exists in case there are some we have to add
+		// programmatically
 	}
 
 	private static void initModSpecificRecipes() {

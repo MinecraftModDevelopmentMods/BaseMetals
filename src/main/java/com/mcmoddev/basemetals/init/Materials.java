@@ -1,13 +1,12 @@
 package com.mcmoddev.basemetals.init;
 
-import java.util.Arrays;
-import java.util.List;
+import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import javax.annotation.Nonnull;
-
-import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class initializes all of the materials in Base Metals.
@@ -46,11 +45,11 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 				MaterialNames.PEWTER, MaterialNames.STEEL );
 		
 		modMaterials.stream()
-		.filter( name -> Options.isMaterialEnabled(name) )
+		.filter( Options::isMaterialEnabled )
 		.forEach( name -> createMaterial( name, MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)) );
 		
 		alloyMaterials.stream()
-		.filter( name -> Options.isMaterialEnabled(name) )
+		.filter( Options::isMaterialEnabled )
 		.forEach( name -> createAlloyMaterial( name, MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)) );
 		
 		// Mod Materials
