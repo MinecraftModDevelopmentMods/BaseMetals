@@ -11,6 +11,7 @@ import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -59,7 +60,7 @@ public abstract class MMDToolEffects {
 	private static final Map<EntityPlayer, AtomicInteger> leadUpdateCache = new HashMap<>();
 
 	private MMDToolEffects() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -305,6 +306,6 @@ public abstract class MMDToolEffects {
 		return (player.inventory.armorInventory.get(3) != ItemStack.EMPTY && player.inventory.armorInventory.get(3).getItem() == material.getItem(Names.HELMET)
 				&& player.inventory.armorInventory.get(2) != ItemStack.EMPTY && player.inventory.armorInventory.get(2).getItem() == material.getItem(Names.CHESTPLATE)
 				&& player.inventory.armorInventory.get(1) != ItemStack.EMPTY && player.inventory.armorInventory.get(1).getItem() == material.getItem(Names.LEGGINGS)
-				&& player.inventory.armorInventory.get(0) != ItemStack.EMPTY&& player.inventory.armorInventory.get(0).getItem() == material.getItem(Names.BOOTS));
+				&& player.inventory.armorInventory.get(0) != ItemStack.EMPTY && player.inventory.armorInventory.get(0).getItem() == material.getItem(Names.BOOTS));
 	}
 }

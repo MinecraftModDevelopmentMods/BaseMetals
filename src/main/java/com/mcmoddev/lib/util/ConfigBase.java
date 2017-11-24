@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
 import net.minecraft.block.Block;
@@ -26,9 +27,9 @@ public class ConfigBase {
 
 	// shut up SonarLint/SonarQube
 	protected ConfigBase() {
-		
+
 	}
-	
+
 	protected static void manageUserHammerRecipes(Collection<Property> values) {
 		for (final Property p : values) {
 			final String[] recipes = p.getString().split(";");
@@ -67,8 +68,8 @@ public class ConfigBase {
 				return (dictionary.contains(oreX) && dictionary.contains(ingotX) && !OreDictionary.getOres(item).isEmpty());
 			}).collect(Collectors.<String>toSet()));
 
-			addOreRecipes( dictionary );
-			addIngotRecipes( dictionary );
+			addOreRecipes(dictionary);
+			addIngotRecipes(dictionary);
 		}
 
 		CrusherRecipeRegistry.getInstance().clearCache();
@@ -78,28 +79,27 @@ public class ConfigBase {
 		dictionary.stream()
 		.filter( entry -> {
 			List<ItemStack> iS = OreDictionary.getOres(Oredicts.INGOT.concat(entry.substring(4)));
-			for( ItemStack i : iS ) {
-				if((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null )) {
+			for (ItemStack i : iS) {
+				if ((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null)) {
 					return true;
 				}
 			}
 			return false;
-		})
-		.forEach( entry -> {
+		}).forEach(entry -> {
 			String ingotX = Oredicts.INGOT.concat(entry.substring(4));
 			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
 			dustX.setCount(2);
 			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", ingotX, dustX);
-			CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX);				
-		});			
+			CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX);
+		});
 	}
 
 	private static void addOreRecipes(Set<String> dictionary) {
 		dictionary.stream()
 		.filter( entry -> {
 			List<ItemStack> iS = OreDictionary.getOres(Oredicts.ORE.concat(entry.substring(4)));
-			for( ItemStack i : iS ) {
-				if((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null )) {
+			for (ItemStack i : iS) {
+				if ((CrusherRecipeRegistry.getInstance().getRecipeForInputItem(i) != null)) {
 					return true;
 				}
 			}
@@ -110,7 +110,7 @@ public class ConfigBase {
 			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
 			dustX.setCount(2);
 			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", oreX, dustX);
-			CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX);				
+			CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX);
 		});
 	}
 
@@ -183,51 +183,61 @@ public class ConfigBase {
 		// GENERAL
 
 		private static boolean disableAllHammerRecipes = false;
+
 		public static void setDisableAllHammerRecipes(boolean bool) {
 			disableAllHammerRecipes = bool;
 		}
 
 		private static boolean enforceHardness = true;
+
 		public static void setEnforceHardness(boolean bool) {
 			enforceHardness = bool;
 		}
 
 		private static boolean strongHammers = true;
+
 		public static void setStrongHammers(boolean bool) {
 			strongHammers = bool;
 		}
 
 		private static boolean autoDetectRecipes = true;
+
 		public static void setAutoDetectRecipes(boolean bool) {
 			autoDetectRecipes = bool;
 		}
 
 		private static boolean requireMMDOreSpawn = true;
+
 		public static void setRequireMMDOreSpawn(boolean bool) {
 			requireMMDOreSpawn = bool;
 		}
 
 		private static boolean enableAchievements = true;
+
 		public static void setEnableAchievements(boolean bool) {
 			enableAchievements = bool;
 		}
 
 		private static boolean crackHammerFullStack = false;
+
 		public static void setCrackHammerFullStack(boolean bool) {
 			crackHammerFullStack = bool;
 		}
 
 		private static boolean enableShieldUpgrades = true;
+
 		public static void setEnableShieldUpgrades(boolean bool) {
 			enableShieldUpgrades = bool;
 		}
 
 		private static boolean enablePlateRepairs = true;
+
 		public static void setEnablePlateRepairs(boolean bool) {
 			enablePlateRepairs = bool;
 		}
 
 		private static boolean enableModderSupportThings = true;
+
 		public static void setEnableModderSupportThings(boolean bool) {
 			enableModderSupportThings = bool;
 		}
@@ -273,15 +283,18 @@ public class ConfigBase {
 		}
 
 		private static String[] disabledRecipes = null;
+
 		public static void setDisabledRecipes(String[] string) {
 			disabledRecipes = string;
 		}
+
 		public static String[] disabledRecipes() {
 			return disabledRecipes;
 		}
 
 		// RECIPE AMOUNTS
 		protected static int gearQuantity = 4;
+
 		public static void setGearQuantity(int qty) {
 			gearQuantity = qty;
 		}
@@ -291,6 +304,7 @@ public class ConfigBase {
 		}
 
 		private static int plateQuantity = 3;
+
 		public static void setPlateQuantity(int qty) {
 			plateQuantity = qty;
 		}
@@ -300,23 +314,28 @@ public class ConfigBase {
 		}
 
 		private static boolean furnaceCheese = true;
+
 		public static void setFurnaceCheese(boolean bool) {
 			furnaceCheese = bool;
 		}
+
 		public static boolean furnaceCheese() {
 			return furnaceCheese;
 		}
 
 		private static boolean furnace1112 = true; // Overridden by FURNACE_CHEESE
+
 		public static void setFurnace1112(boolean bool) {
 			furnace1112 = bool;
 		}
+
 		public static boolean furnace1112() {
 			return furnace1112;
 		}
-		
+
 		// INTEGRATION
 		private static final Map<String, Boolean> modEnabled = new HashMap<>();
+
 		public static boolean isModEnabled(String modName) {
 			String testName = modName.toLowerCase(Locale.ROOT);
 			if (modEnabled.containsKey(testName)) {
@@ -333,6 +352,7 @@ public class ConfigBase {
 
 		// MATERIALS
 		private static final Map<String, Boolean> materialEnabled = new HashMap<>();
+
 		public static boolean isMaterialEnabled(String name) {
 			String testName = name.toLowerCase(Locale.ROOT);
 			if (materialEnabled.containsKey(testName)) {
@@ -349,6 +369,7 @@ public class ConfigBase {
 
 		// THINGS
 		private static final Map<String, Boolean> thingEnabled = new HashMap<>();
+
 		public static boolean isThingEnabled(String name) {
 			String testName = name.toLowerCase(Locale.ROOT);
 			if (thingEnabled.containsKey(testName)) {
@@ -364,25 +385,27 @@ public class ConfigBase {
 		}
 
 		private static int explosionChance = 0;
+
 		public static int explosionChance() {
 			return explosionChance;
 		}
-		
+
 		public static void explosionChance(int chance) {
 			explosionChance = chance;
 		}
-		
+
 		private static int angerPigmenRange = 0;
+
 		public static int angerPigmenRange() {
 			return angerPigmenRange;
 		}
-		
+
 		public static void angerPigmenRange(int range) {
 			angerPigmenRange = range;
 		}
-		
+
 		private Options() {
-			throw new IllegalAccessError("Not a instantiable class");
+			throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 		}
 	}
 }

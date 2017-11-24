@@ -1,13 +1,15 @@
 package com.mcmoddev.lib.util;
 
+import com.mcmoddev.lib.data.SharedStrings;
+
 import net.minecraft.util.ResourceLocation;
 
 public class PotionKeys {
 
-	public static final ResourceLocation SPEED= new ResourceLocation("speed");
+	public static final ResourceLocation SPEED = new ResourceLocation("speed");
 	public static final ResourceLocation SLOWNESS = new ResourceLocation("slowness");
-	public static final ResourceLocation HASTE= new ResourceLocation("haste");
-	public static final ResourceLocation MINING_FATIGUE= new ResourceLocation("mining_fatigue");
+	public static final ResourceLocation HASTE = new ResourceLocation("haste");
+	public static final ResourceLocation MINING_FATIGUE = new ResourceLocation("mining_fatigue");
 	public static final ResourceLocation STRENGTH = new ResourceLocation("strength");
 	public static final ResourceLocation INSTANT_HEALTH = new ResourceLocation("instant_health");
 	public static final ResourceLocation INSTANT_DAMAGE = new ResourceLocation("instant_damage");
@@ -33,6 +35,6 @@ public class PotionKeys {
 	public static final ResourceLocation UNLUCK = new ResourceLocation("unluck");
 
 	private PotionKeys() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 }

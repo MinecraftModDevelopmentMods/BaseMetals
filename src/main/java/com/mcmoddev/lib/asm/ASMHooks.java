@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ASMHooks {
-    
+
 	public static final DataParameter<ItemStack> ARMOR_STACK = EntityDataManager.createKey(EntityHorse.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
 	private ASMHooks() {
@@ -26,7 +26,7 @@ public class ASMHooks {
 	public static void setHorseArmorStack(EntityHorse entity, ItemStack stack) {
 		entity.getDataManager().set(ASMHooks.ARMOR_STACK, stack);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public static String getTextureName(HorseArmorType type, EntityHorse entity) {
 		final ItemStack stack = entity.getDataManager().get(ASMHooks.ARMOR_STACK);

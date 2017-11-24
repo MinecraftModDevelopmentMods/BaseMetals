@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 public class IMCMessage {
 
 	private static final String MODID = "VeinMiner";
+
 	/**
 	 *
 	 * @param type

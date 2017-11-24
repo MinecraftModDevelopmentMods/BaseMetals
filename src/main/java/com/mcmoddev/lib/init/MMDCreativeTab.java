@@ -24,11 +24,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class MMDCreativeTab extends CreativeTabs {
 
 	private ItemStack iconItem;
-	
+
 	private final boolean searchable;
 	private Comparator<ItemStack> comparator;
 
 	private static final Comparator<ItemStack> DEFAULT = new Comparator<ItemStack>() {
+
 		@Override
 		public int compare(ItemStack first, ItemStack second) {
 			final int delta = Items.getSortingValue(first) - Items.getSortingValue(second);
@@ -51,7 +52,7 @@ public class MMDCreativeTab extends CreativeTabs {
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final ItemStack iconItem) {
 		super(unlocalizedName);
 		if (iconItem == null) {
-			this.iconItem =  new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
+			this.iconItem = new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
 		} else {
 			this.iconItem = iconItem;
 		}

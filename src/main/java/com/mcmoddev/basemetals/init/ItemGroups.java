@@ -3,6 +3,7 @@ package com.mcmoddev.basemetals.init;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.MMDCreativeTab;
 import com.mcmoddev.lib.util.TabContainer;
 
@@ -28,7 +29,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	public static final TabContainer myTabs = new TabContainer(blocksTab, itemsTab, toolsTab);
 
 	private ItemGroups() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**

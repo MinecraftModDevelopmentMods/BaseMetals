@@ -20,11 +20,10 @@ public class BlockMoltenFluid extends net.minecraftforge.fluids.BlockFluidClassi
 	 */
 	public BlockMoltenFluid(@Nonnull Fluid fluid) {
 		super(fluid, Material.LAVA);
-
-		// setCreativeTab(TinkerRegistry.tabSmeltery);
 	}
 
-/*	@Nonnull
+	/*
+	@Nonnull
 	@Override
 	public String getUnlocalizedName() {
 		final Fluid fluid = FluidRegistry.getFluid(this.fluidName);
@@ -32,4 +31,5 @@ public class BlockMoltenFluid extends net.minecraftforge.fluids.BlockFluidClassi
 			return fluid.getUnlocalizedName();
 		return super.getUnlocalizedName();
 	}
-*/}
+	 */
+	}

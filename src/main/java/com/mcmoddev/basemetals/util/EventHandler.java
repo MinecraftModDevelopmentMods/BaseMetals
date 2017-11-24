@@ -64,7 +64,8 @@ public class EventHandler {
 		}
 	}
 
-	@SubscribeEvent void event(ItemCraftedEvent event) {
+	@SubscribeEvent
+	void event(ItemCraftedEvent event) {
 		if (!(Options.enableAchievements())) {
 			return;
 		}
@@ -73,7 +74,7 @@ public class EventHandler {
 		if (!(item instanceof IMMDObject)) {
 			return;
 		}
-			
+
 		if ((item instanceof ItemMMDBlend) || (item instanceof ItemMMDSmallBlend)) {
 			event.player.addStat(Achievements.getAchievementByName(AchievementNames.METALLURGY), 1);
 		}
@@ -117,6 +118,7 @@ public class EventHandler {
 
 	public static InventoryCrafting getDummyCraftingInv() {
 		Container tempContainer = new Container() {
+
 			@Override
 			public boolean canInteractWith(EntityPlayer player) {
 				return false;

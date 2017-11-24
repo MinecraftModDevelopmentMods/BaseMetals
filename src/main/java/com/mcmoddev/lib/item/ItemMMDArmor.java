@@ -33,7 +33,6 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDObject {
 
-
 	private final String customTexture;
 	private final MMDMaterial material;
 	private final String repairOreDictName;

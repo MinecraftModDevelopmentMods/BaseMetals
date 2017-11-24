@@ -3,6 +3,7 @@ package com.mcmoddev.basemetals.init;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.util.Oredicts;
@@ -26,7 +27,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	private static boolean initDone = false;
 
 	private Recipes() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -46,7 +47,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		initVanillaRecipes();
 		initGeneralRecipes();
 		initModSpecificRecipes();
-		
+
 		initDone = true;
 	}
 
@@ -66,14 +67,15 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		// Iron items
 		if (Options.isMaterialEnabled(MaterialNames.IRON)) {
 			// this should all be handled elsewhere in 1.11
-			//material = Materials.getMaterialByName(MaterialNames.IRON);
-			//oreDictName = material.getCapitalizedName();
+			// material = Materials.getMaterialByName(MaterialNames.IRON);
+			// oreDictName = material.getCapitalizedName();
 
-		// Not needed for 1.11.1+
-		/*
+			// Not needed for 1.11.1+
+			/*
 			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.NUGGET), 9), Oredicts.INGOT + oreDictName));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.INGOT)), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName));
-		*/		}
+			*/
+		}
 
 		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
 			material = Materials.getMaterialByName(MaterialNames.CHARCOAL);

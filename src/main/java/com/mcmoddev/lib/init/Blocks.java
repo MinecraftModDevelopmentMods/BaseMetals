@@ -16,6 +16,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
@@ -49,7 +50,7 @@ public abstract class Blocks {
 	private static final EnumMap<Names, Boolean> nameToEnabled = new EnumMap<>(Names.class);
 
 	protected Blocks() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -60,7 +61,7 @@ public abstract class Blocks {
 			return;
 		}
 		com.mcmoddev.basemetals.util.Config.init();
-		
+
 		mapNameToClass(Names.ANVIL, BlockMMDAnvil.class);
 		mapNameToClass(Names.BARS, BlockMMDBars.class);
 		mapNameToClass(Names.BLOCK, BlockMMDBlock.class);
@@ -84,7 +85,7 @@ public abstract class Blocks {
 		mapNameToClass(Names.NETHERORE, BlockMMDNetherOre.class);
 		mapNameToClass(Names.ENDORE, BlockMMDEndOre.class);
 		mapNameToClass(Names.ORE, BlockMMDOre.class);
-		
+
 		mapNameToOredict(Names.ANVIL, null);
 		mapNameToOredict(Names.BARS, Oredicts.BARS);
 		mapNameToOredict(Names.BLOCK, Oredicts.BLOCK);
@@ -267,10 +268,12 @@ public abstract class Blocks {
 			return material.getBlock(name);
 		}
 
-		if ((((name.equals(Names.ANVIL)) || (name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE)) || (name.equals(Names.FLOWER_POT))
-				|| (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS)) || (name.equals(Names.TRIPWIRE_HOOK)) || (name.equals(Names.WALL)))
+		if ((((name.equals(Names.ANVIL)) || (name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE))
+				|| (name.equals(Names.FLOWER_POT)) || (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS))
+				|| (name.equals(Names.TRIPWIRE_HOOK)) || (name.equals(Names.WALL)))
 				&& (!material.hasBlock(Names.BLOCK)))
-			|| (((name.equals(Names.ORE)) || name.equals(Names.ENDORE) || name.equals(Names.NETHERORE)) && (!material.hasOre()))) {
+				|| (((name.equals(Names.ORE)) || name.equals(Names.ENDORE) || name.equals(Names.NETHERORE))
+						&& (!material.hasOre()))) {
 			return null;
 		}
 

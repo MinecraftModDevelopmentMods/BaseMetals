@@ -1,5 +1,7 @@
 package com.mcmoddev.basemetals.data;
 
+import com.mcmoddev.lib.data.SharedStrings;
+
 public class AchievementNames {
 
 	public static final String BLOCKTASTIC = "blocktastic";
@@ -16,7 +18,7 @@ public class AchievementNames {
 	public static final String MITHRIL_MAKER = "mithril_maker";
 	public static final String AQUARIUM_MAKER = "aquarium_maker";
 	public static final String PEWTER_MAKER = "pewter_maker";
-	
+
 	public static final String ANGEL_OF_DEATH = "angel_of_death";
 	public static final String SCUBA_DIVER = "scuba_diver";
 	public static final String DEMON_SLAYER = "demon_slayer";
@@ -24,6 +26,6 @@ public class AchievementNames {
 	public static final String MOON_BOOTS = "moon_boots";
 
 	private AchievementNames() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 }

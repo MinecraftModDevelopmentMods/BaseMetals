@@ -31,20 +31,10 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
 	private static void registerOres() {
-		final String[] baseNames = new String[] {
-				MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON,
-				MaterialNames.COPPER,
-				MaterialNames.LEAD,
-				MaterialNames.MERCURY,
-				MaterialNames.NICKEL,
-				MaterialNames.PLATINUM,
-				MaterialNames.SILVER,
-				MaterialNames.TIN,
-				MaterialNames.ZINC
-		};
+		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD,
+				MaterialNames.MERCURY, MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
+				MaterialNames.TIN, MaterialNames.ZINC };
 
 		for (int i = 0; i < baseNames.length; i++) {
 			final String materialName = baseNames[i];

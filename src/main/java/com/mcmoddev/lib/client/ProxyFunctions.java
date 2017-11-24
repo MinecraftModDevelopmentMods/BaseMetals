@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.client;
 
+import com.mcmoddev.lib.data.SharedStrings;
+
 import net.minecraft.client.renderer.entity.RenderVillager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
@@ -11,7 +13,7 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 public class ProxyFunctions {
 
 	private ProxyFunctions() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**

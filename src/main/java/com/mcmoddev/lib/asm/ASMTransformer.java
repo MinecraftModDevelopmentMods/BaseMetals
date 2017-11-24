@@ -33,24 +33,24 @@ public class ASMTransformer implements IClassTransformer {
 	}
 
 	private void saveBytecode(String name, ClassWriter cw) {
-	    //this checks whether we are in a de-obfuscated environment
-	    //but we are calling it in an ASM transformer running 
-	    //@SortingIndex(1001) so it will always be de-obfuscated
+		// this checks whether we are in a de-obfuscated environment
+		// but we are calling it in an ASM transformer running
+		// @SortingIndex(1001) so it will always be de-obfuscated
 		if (Platform.isDevEnv()) {
-			File output = null; 
+			File output = null;
 			FileOutputStream out = null;
 			try {
 				final File debugDir = new File("mmd/asm/debug/");
 				if (debugDir.exists())
 					debugDir.delete();
-                debugDir.mkdirs();  //moved this as next line was throwing an exception on first execution
+				debugDir.mkdirs(); // moved this as next line was throwing an exception on first execution
 				output = new File(debugDir, name + ".class");
 				out = new FileOutputStream(output);
 				out.write(cw.toByteArray());
 			} catch (final IOException ex) {
 				BaseMetals.logger.error(ex);
 			} finally {
-				if( out != null ) {
+				if (out != null) {
 					try {
 						out.close();
 					} catch (IOException ex) {

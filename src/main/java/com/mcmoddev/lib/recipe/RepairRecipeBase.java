@@ -12,6 +12,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public abstract class RepairRecipeBase extends ShapelessOreRecipe {
+
 	public final MMDMaterial material;
 	public final ItemStack baseItem;
 	public final String materialName;
@@ -26,7 +27,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		this.repairMaterials = OreDictionary.getOres(Oredicts.PLATE + this.materialName);
 		this.itemName = itemName;
 	}
-	
+
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
 		// make sure we have all the materials that can be used for repair, not just what was

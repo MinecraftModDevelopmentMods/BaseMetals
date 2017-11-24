@@ -40,6 +40,7 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 @SuppressWarnings("deprecation")
 public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements IMMDObject {
+
 	private static final float ATTACK_SPEED = -3.0F;
 
 	private final MMDMaterial material;

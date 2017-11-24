@@ -17,16 +17,9 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 			return;
 		}
 
-		final String[] baseNames = new String[] {
-				MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM,
-				MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL,
-				MaterialNames.ZINC
-		};
+		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
+				MaterialNames.STARSTEEL, MaterialNames.ZINC };
 
 		for (int i = 0; i < baseNames.length; i++) {
 			final String materialName = baseNames[i];

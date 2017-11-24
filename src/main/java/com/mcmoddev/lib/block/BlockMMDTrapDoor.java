@@ -34,8 +34,7 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos coord, IBlockState state, EntityPlayer player,
-			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos coord, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (this.material.getToolHarvestLevel() > 1)
 			return true;
 		state = state.cycleProperty(BlockTrapDoor.OPEN);

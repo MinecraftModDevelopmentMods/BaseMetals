@@ -50,8 +50,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
-		this.setDefaultState(this.blockState.getBaseState()
-				.withProperty(FACING, EnumFacing.NORTH));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		this.useNeighborBrightness = true;
 	}
 
@@ -130,9 +129,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public IBlockState getStateForPlacement(final World w, final BlockPos coord, final EnumFacing face,
-									 final float partialX, final float partialY, final float partialZ,
-									 final int i, final EntityLivingBase placer) {
+	public IBlockState getStateForPlacement(final World w, final BlockPos coord, final EnumFacing face, final float partialX, final float partialY, final float partialZ, final int i, final EntityLivingBase placer) {
 		final IBlockState defaultState = this.getDefaultState().withProperty(FACING, face);
 		// redimension to face-local up and right dimensions
 		float up;
@@ -244,7 +241,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 		final EnumFacing orientation = world.getBlockState(pos).getValue(FACING);
 		addCollisionBoxToList(pos, entityBox, collisionBoxList, BOXES[orientation.ordinal()]);
 	}
-	
+
 	@Override
 	public MMDMaterial getMMDMaterial() {
 		return this.material;

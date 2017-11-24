@@ -4,6 +4,7 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
@@ -22,7 +23,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	private static boolean initDone = false;
 
 	protected Blocks() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -41,30 +42,30 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		registerVanilla();
 
 		// TODO
-		String[] simpleFullBlocks = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY, MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.NICKEL, MaterialNames.PLATINUM,
-				MaterialNames.SILVER, MaterialNames.TIN, MaterialNames.ZINC };
+		String[] simpleFullBlocks = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD,
+				MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER, MaterialNames.TIN,
+				MaterialNames.ZINC };
 
 		String[] alloyFullBlocks = new String[] { MaterialNames.AQUARIUM, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL, MaterialNames.PEWTER,
-				MaterialNames.STEEL };
-		
+				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
+				MaterialNames.PEWTER, MaterialNames.STEEL };
+
 		Arrays.asList(simpleFullBlocks).stream()
-		.filter( name -> Options.isMaterialEnabled(name))
-		.forEach( name -> createBlocksFull(name, ItemGroups.myTabs) );
-		
+				.filter(name -> Options.isMaterialEnabled(name))
+				.forEach(name -> createBlocksFull(name, ItemGroups.myTabs));
+
 		Arrays.asList(alloyFullBlocks).stream()
-		.filter( name -> Options.isMaterialEnabled(name))
-		.forEach( name -> createBlocksFull(name, ItemGroups.myTabs) );
+				.filter(name -> Options.isMaterialEnabled(name))
+				.forEach(name -> createBlocksFull(name, ItemGroups.myTabs));
 
 		createStarSteel();
 		createMercury();
-		
 
 		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.myTabs.blocksTab);
 		initDone = true;
 	}
-	
+
 	private static void createStarSteel() {
 		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
 			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
@@ -89,7 +90,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 				starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
 		}
 	}
-	
+
 	private static void createMercury() {
 		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
 			MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
@@ -115,7 +116,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		coal.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
 		coal.addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
-		
+
 		diamond.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.DIAMOND_BLOCK);
 		diamond.addNewBlock(Names.ORE, net.minecraft.init.Blocks.DIAMOND_ORE);
 
@@ -146,11 +147,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		redstone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
 		redstone.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
-		
+
 		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
 			create(Names.BLOCK, charcoal, ItemGroups.myTabs.blocksTab);
 		}
-		
+
 		if (Options.isMaterialEnabled(MaterialNames.DIAMOND)) {
 			create(Names.BARS, diamond, ItemGroups.myTabs.blocksTab);
 			create(Names.DOOR, diamond, ItemGroups.myTabs.blocksTab);

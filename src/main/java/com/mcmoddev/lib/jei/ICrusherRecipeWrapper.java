@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 public class ICrusherRecipeWrapper extends BlankRecipeWrapper {
 
 	private ICrusherRecipe theRecipe;
-	
+
 	public ICrusherRecipeWrapper(ICrusherRecipe recipe) {
 		this.theRecipe = recipe;
 	}

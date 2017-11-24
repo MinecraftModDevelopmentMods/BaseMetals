@@ -37,7 +37,7 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 		float hardnessMax = 5f;
 		float resistMax = 1.5f;
 		String tool = "pickaxe";
-		
+
 		if (isSoft) {
 			this.setSoundType(SoundType.GROUND);
 			hardnessMax = 2.5f;
@@ -46,12 +46,12 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 		} else {
 			this.setSoundType(SoundType.STONE);
 		}
-		
+
 		this.blockHardness = Math.max(hardnessMax, this.material.getOreBlockHardness());
 		this.blockResistance = Math.max(resistMax, this.material.getBlastResistance() * 0.75f);
 		this.setHarvestLevel(tool, this.material.getRequiredHarvestLevel());
 	}
-	
+
 	@Override
 	public int getExpDrop(final IBlockState bs, IBlockAccess w, final BlockPos coord, final int i) {
 		return 0; // XP comes from smelting

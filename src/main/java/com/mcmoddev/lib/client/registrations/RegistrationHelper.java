@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.lib.client.renderer.FluidStateMapper;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Blocks;
 import com.mcmoddev.lib.init.Items;
 
@@ -60,7 +61,7 @@ public class RegistrationHelper {
 
 	@SideOnly(Side.CLIENT)
 	public static void registerFluidRender(@Nonnull final Fluid fluid) {
-//		final Block block = fluid.getBlock(); // Unfortunately this breaks when another mod registered it's fluid before us.
+		// final Block block = fluid.getBlock(); // Unfortunately this breaks when another mod registered it's fluid before us.
 		final Block block = Fluids.getFluidBlockByName(fluid.getName());
 		final Item item = Item.getItemFromBlock(block);
 		final ResourceLocation resourceLocation = block.getRegistryName();
@@ -75,7 +76,7 @@ public class RegistrationHelper {
 			ModelLoader.setCustomMeshDefinition(item, mapper);
 		}
 		ModelLoader.setCustomStateMapper(block, mapper);
-/*
+		/*
 		ModelLoader.setCustomMeshDefinition(item, stack -> fluidModelLocation);
 		ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
 			@Override
@@ -83,7 +84,7 @@ public class RegistrationHelper {
 				return fluidModelLocation;
 			}
 		});
-*/
+		*/
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -93,15 +94,13 @@ public class RegistrationHelper {
 		if (!resourceLocation.getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
 			return;
 		}
-/*
-		final ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-		itemModelMesher.register(item, 0, new ModelResourceLocation(resourceLocation, "inventory"));
- */
+
+		// final ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+		// itemModelMesher.register(item, 0, new ModelResourceLocation(resourceLocation, "inventory"));
 		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(resourceLocation, "inventory"));
 	}
 
 	private RegistrationHelper() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
-
 }
