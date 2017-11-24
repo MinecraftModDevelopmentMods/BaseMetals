@@ -6,11 +6,11 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.*;
 import com.mcmoddev.basemetals.util.Config;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;

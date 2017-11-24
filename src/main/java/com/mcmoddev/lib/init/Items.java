@@ -18,7 +18,6 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
@@ -26,6 +25,7 @@ import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
 

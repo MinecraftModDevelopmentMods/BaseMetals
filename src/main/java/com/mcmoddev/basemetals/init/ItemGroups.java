@@ -1,10 +1,10 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.MMDCreativeTab;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;

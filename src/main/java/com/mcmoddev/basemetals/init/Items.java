@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;

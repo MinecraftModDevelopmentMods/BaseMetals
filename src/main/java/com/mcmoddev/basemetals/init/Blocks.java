@@ -1,14 +1,15 @@
 package com.mcmoddev.basemetals.init;
 
+import java.util.Arrays;
+
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.Block;
-import java.util.Arrays;
 
 /**
  * This class initializes all blocks in Base Metals.

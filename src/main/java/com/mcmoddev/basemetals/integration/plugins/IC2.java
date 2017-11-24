@@ -6,16 +6,11 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import com.mcmoddev.lib.material.MMDMaterial;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID)
 public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements IIntegration {

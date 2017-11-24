@@ -1,24 +1,9 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.util.ConfigBase.Options;
-import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.integration.plugins.taiga.TAIGAItems;
-import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
-import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
-//import com.sosnitzka.taiga.Blocks;
-//import com.sosnitzka.taiga.Items;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TAIGA.PLUGIN_MODID)
 public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implements IIntegration {

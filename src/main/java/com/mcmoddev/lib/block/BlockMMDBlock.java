@@ -1,10 +1,10 @@
 package com.mcmoddev.lib.block;
 
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.item.ItemMMDBlend;
 import com.mcmoddev.lib.item.ItemMMDIngot;
@@ -12,6 +11,7 @@ import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.item.ItemMMDSmallBlend;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;

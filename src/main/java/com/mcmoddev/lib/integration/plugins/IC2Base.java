@@ -6,16 +6,12 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.Recipes;
-import ic2.api.item.IC2Items;
-import ic2.api.recipe.*;
-
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
