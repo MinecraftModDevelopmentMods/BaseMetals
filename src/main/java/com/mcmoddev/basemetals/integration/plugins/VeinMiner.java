@@ -31,9 +31,8 @@ public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBas
 				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
 				MaterialNames.WOOD, MaterialNames.ZINC };
 
-		for (int i = 0; i < baseNames.length; i++) {
-			final String material = baseNames[i];
-			addToolsForMaterial(material);
+		for (final String materialName : baseNames) {
+			addToolsForMaterial(materialName);
 		}
 
 		initDone = true;

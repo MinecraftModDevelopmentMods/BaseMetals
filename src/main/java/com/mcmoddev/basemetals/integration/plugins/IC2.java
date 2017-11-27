@@ -27,8 +27,7 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
 				MaterialNames.STARSTEEL, MaterialNames.ZINC };
 
-		for (int i = 0; i < baseNames.length; i++) {
-			final String materialName = baseNames[i];
+		for (final String materialName : baseNames) {
 			if (Options.isMaterialEnabled(materialName)) {
 				registerVanillaRecipes(materialName);
 				addMaceratorRecipes(materialName);

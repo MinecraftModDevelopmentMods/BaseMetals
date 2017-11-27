@@ -31,8 +31,7 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 				MaterialNames.MITHRIL, MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.STARSTEEL,
 				MaterialNames.STEEL, MaterialNames.TIN, MaterialNames.ZINC };
 
-		for (int i = 0; i < baseNames.length; i++) {
-			final String materialName = baseNames[i];
+		for (final String materialName : baseNames) {
 			if (Options.isMaterialEnabled(materialName)) {
 				addSagMillRecipe(materialName, 3600);
 			}

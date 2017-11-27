@@ -27,13 +27,12 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 				MaterialNames.CUPRONICKEL, MaterialNames.PEWTER, MaterialNames.STARSTEEL, MaterialNames.ZINC,
 				MaterialNames.MERCURY };
 
-		for (int i = 0; i < baseNames.length; i++) {
-			final String ore = baseNames[i];
-			if (Options.isMaterialEnabled(ore)) {
-				addFurnace(Options.isMaterialEnabled(ore), ore);
-				addCrucible(Options.isMaterialEnabled(ore), ore);
-				addPlatePress(Options.isMaterialEnabled(ore), ore);
-				addPressStorage(Options.isMaterialEnabled(ore), ore);
+		for (final String materialName : baseNames) {
+			if (Options.isMaterialEnabled(materialName)) {
+				addFurnace(Options.isMaterialEnabled(materialName), materialName);
+				addCrucible(Options.isMaterialEnabled(materialName), materialName);
+				addPlatePress(Options.isMaterialEnabled(materialName), materialName);
+				addPressStorage(Options.isMaterialEnabled(materialName), materialName);
 			}
 		}
 
