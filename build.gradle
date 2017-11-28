@@ -20,6 +20,7 @@ buildscript {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.9"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5"
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
     }
 }
 
@@ -27,6 +28,27 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.sonarqube'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+repositories {
+	mavenLocal()
+    mavenCentral()
+}
+ 
+dependencies {
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.0.2')
+    testCompile('org.mockito:mockito-core:2.12.0')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.0.2')
+}
+
+junitPlatform {
+    platformVersion '1.0.2' // optional, defaults to plugin version
+    //logManager 'org.apache.logging.log4j.jul.LogManager'
+    reportsDir file('build/test-results/junit-platform') // this is the default
+    // enableStandardTestTask true
+    // selectors (optional)
+    // filters (optional)
+}
 
 javadoc {
     failOnError = false

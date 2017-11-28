@@ -313,6 +313,12 @@ public class ConfigBase {
 			return furnace1112;
 		}
 		
+		protected static void clearOptions() { // to support testability
+			modEnabled.clear();
+			materialEnabled.clear();
+			thingEnabled.clear();
+		}
+		
 		// INTEGRATION
 		private static final Map<String, Boolean> modEnabled = new HashMap<>();
 		public static boolean isModEnabled(String modName) {
