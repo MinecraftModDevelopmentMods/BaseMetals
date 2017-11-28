@@ -57,6 +57,6 @@ class ConfigBaseTests {
 		Options.modEnabled(name, false);
 		
 		
-		assertEquals(true, Options.isModEnabled(name));
+		assertEquals(false, Options.isModEnabled(name));
 	}
 }
