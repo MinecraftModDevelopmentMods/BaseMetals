@@ -418,7 +418,7 @@ public abstract class Recipes {
 		}
 
 		// the following is broken, as the event *DOES* *NOT* *WORK* right and the call asks the 
-		if( mod.equals(BaseMetals.MODID) && Options.isMaterialEnabled(MaterialNames.MERCURY)) {
+		if( mod.equals(BaseMetals.MODID) && Materials.hasMaterial(MaterialNames.MERCURY)) {
 			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY), "Quicksilver");
 
 			if (FluidRegistry.isUniversalBucketEnabled()) {

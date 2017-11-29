@@ -1,7 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
@@ -51,7 +50,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	private static void initModSpecificRecipes() {
-		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
+		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
 			// Alt oreDict Adamantite
 			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamantite");
 
@@ -62,9 +61,11 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamant");
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STEEL);
-			OreDictionary.registerOre(Oredicts.SPROCKET, material.getItem(Names.GEAR));
+		if (Materials.hasMaterial(MaterialNames.STEEL)) {
+			final MMDMaterial steel = Materials.getMaterialByName(MaterialNames.STEEL);
+			if (steel.hasItem(Names.GEAR)) {
+				OreDictionary.registerOre(Oredicts.SPROCKET, steel.getItem(Names.GEAR));
+			}
 		}
 
 		// new recipes using rods and gears

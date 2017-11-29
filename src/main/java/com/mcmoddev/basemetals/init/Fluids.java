@@ -1,7 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,13 +44,13 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 		});
 
 		standardMaterialsMap.stream()
-		.filter(Options::isMaterialEnabled )
+		.filter(Materials::hasMaterial)
 		.forEach( name -> {
 			addFluid( name, 2000, 10000, 769, 10 );
 			addFluidBlock( name );
 		});
 		
-		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
+		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			addFluid(MaterialNames.MERCURY, 13594, 2000, 769, 0);
 			addFluidBlock(MaterialNames.MERCURY);
 		}

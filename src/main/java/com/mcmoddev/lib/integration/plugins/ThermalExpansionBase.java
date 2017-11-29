@@ -88,9 +88,9 @@ public class ThermalExpansionBase implements IIntegration {
 			return;
 		}
 
-		final ItemStack ingot = new ItemStack(material.getItem(Names.INGOT), 1, 0);
-		ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
-		if (Options.isThingEnabled("Basics")) {
+		if (material.hasItem(Names.INGOT)) {
+			final ItemStack ingot = new ItemStack(material.getItem(Names.INGOT), 1, 0);
+			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
 			if (material.hasItem(Names.POWDER) && material.getItem(Names.POWDER) != null) {
 				final ItemStack dust = new ItemStack(material.getItem(Names.POWDER), 1, 0);
 				ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
@@ -132,20 +132,20 @@ public class ThermalExpansionBase implements IIntegration {
 		final FluidStack baseFluid = FluidRegistry.getFluidStack(materialName, 144);
 		final FluidStack nuggetFluid = FluidRegistry.getFluidStack(materialName, 16);
 
-		if (material.getBlock(Names.ORE) != null) {
+		if ((material.hasBlock(Names.ORE)) && (material.getBlock(Names.ORE) != null)) {
 			final ItemStack ore = new ItemStack(material.getBlock(Names.ORE));
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ore, oreFluid);
 		}
 
 		ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ingot, baseFluid);
 
-		if (Options.isThingEnabled("Basics") && dust != null) {
+		if (material.hasItem(Names.POWDER)) {
 			final ItemStack dustStack = new ItemStack(dust);
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dustStack, baseFluid);
 		}
 
-		addCrucibleExtra(Options.isThingEnabled("Plate"), Item.getItemFromBlock(material.getBlock(Names.PLATE)), baseFluid, ENERGY_QTY);
-		addCrucibleExtra(Options.isThingEnabled("Basics"), material.getItem(Names.NUGGET), nuggetFluid, ENERGY_QTY);
+		addCrucibleExtra(material.hasBlock(Names.PLATE), Item.getItemFromBlock(material.getBlock(Names.PLATE)), baseFluid, ENERGY_QTY);
+		addCrucibleExtra(material.hasItem(Names.NUGGET), material.getItem(Names.NUGGET), nuggetFluid, ENERGY_QTY);
 	}
 
 	private static void addCrucibleExtra(@Nonnull final boolean enabled, @Nonnull final Item input, @Nonnull final FluidStack output, @Nonnull final int energy) {
@@ -176,7 +176,7 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addPlatePress(@Nonnull final MMDMaterial material) {
-		if (Options.isThingEnabled("Plate")) {
+		if (material.hasItem(Names.PLATE) && material.hasItem(Names.INGOT)) {
 
 			/*
 			 * Compactors default is 4000RF per operation

@@ -7,6 +7,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import cofh.api.util.ThermalExpansionHelper;
 import net.minecraft.item.ItemStack;
@@ -31,7 +32,7 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 	}
 	
 	@SubscribeEvent
-	public void regShit(RegistryEvent.Register<IRecipe> ev ) {
+	public void regShit(RegistryEvent.Register<IRecipe> event) {
 		final String[] baseNames = new String[] {
 			MaterialNames.ADAMANTINE,
 			MaterialNames.ANTIMONY,
@@ -46,20 +47,31 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 			MaterialNames.MERCURY
 		};
 
-		for ( final String ore : baseNames ) {
-			if ( Options.isMaterialEnabled( ore ) ) {
-				addFurnace( Options.isMaterialEnabled( ore ), ore );
-				addCrucible( Options.isMaterialEnabled( ore ), ore );
-				addPlatePress( Options.isMaterialEnabled( ore ), ore );
-				addPressStorage( Options.isMaterialEnabled( ore ), ore );
+		for (final String material : baseNames) {
+			if (Materials.hasMaterial(material)) {
+				addFurnace(Materials.hasMaterial(material), material);
+				addCrucible(Materials.hasMaterial(material), material);
+				addPlatePress(Materials.hasMaterial(material), material);
+				addPressStorage(Materials.hasMaterial(material), material);
 			}
 		}
 
-		if( Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.ZINC) && Options.isMaterialEnabled(MaterialNames.BRASS)) {
-			ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.getMaterialByName(MaterialNames.COPPER).getItem(Names.INGOT), 2), new ItemStack(Materials.getMaterialByName(MaterialNames.ZINC).getItem(Names.INGOT), 1), new ItemStack(Materials.getMaterialByName(MaterialNames.BRASS).getItem(Names.INGOT), 3));
+		MMDMaterial brass = Materials.getMaterialByName(MaterialNames.BRASS);
+		MMDMaterial copper = Materials.getMaterialByName(MaterialNames.COPPER);
+		MMDMaterial cupronickel = Materials.getMaterialByName(MaterialNames.CUPRONICKEL);
+		MMDMaterial nickel = Materials.getMaterialByName(MaterialNames.NICKEL);
+		MMDMaterial zinc = Materials.getMaterialByName(MaterialNames.ZINC);
+
+		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.ZINC) && Materials.hasMaterial(MaterialNames.BRASS)) {
+			if ((copper.hasItem(Names.INGOT)) && (zinc.hasItem(Names.INGOT)) && (brass.hasItem(Names.INGOT))) {
+				ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(copper.getItem(Names.INGOT), 2), new ItemStack(zinc.getItem(Names.INGOT), 1), new ItemStack(brass.getItem(Names.INGOT), 3));
+			}
 		}
-		if( Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.TIN) && Options.isMaterialEnabled(MaterialNames.BRONZE) ) {
-			ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(Materials.getMaterialByName(MaterialNames.COPPER).getItem(Names.INGOT), 3), new ItemStack(Materials.getMaterialByName(MaterialNames.NICKEL).getItem(Names.INGOT), 1), new ItemStack(Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getItem(Names.INGOT), 4));
+		// TODO: Recently fixed for intent, We may also want bronze here
+		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.NICKEL) && Materials.hasMaterial(MaterialNames.CUPRONICKEL)) {
+			if ((copper.hasItem(Names.INGOT)) && (nickel.hasItem(Names.INGOT)) && (cupronickel.hasItem(Names.INGOT))) {
+				ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(copper.getItem(Names.INGOT), 3), new ItemStack(nickel.getItem(Names.INGOT), 1), new ItemStack(cupronickel.getItem(Names.INGOT), 4));
+			}
 		}
 	}
 }

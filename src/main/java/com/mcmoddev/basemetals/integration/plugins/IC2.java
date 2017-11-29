@@ -35,7 +35,7 @@ public class IC2 extends IC2Base implements IIntegration {
 	}
 	
     @SubscribeEvent
-    public void regCallback(RegistryEvent.Register<IRecipe> ev) {
+    public void regCallback(RegistryEvent.Register<IRecipe> event) {
 		final String[] baseNames = new String[] {
 				MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY,
@@ -48,7 +48,7 @@ public class IC2 extends IC2Base implements IIntegration {
 		};
 
 	    for ( final String materialName : baseNames ) {
-		    if ( Options.isMaterialEnabled( materialName ) ) {
+		    if (Materials.hasMaterial( materialName ) ) {
 			    registerVanillaRecipes( materialName );
 			    addMaceratorRecipes( materialName );
 			    addOreWashingPlantRecipes( materialName );
@@ -59,18 +59,20 @@ public class IC2 extends IC2Base implements IIntegration {
 		    }
 	    }
 		
-		if( Options.isMaterialEnabled(MaterialNames.DIAMOND) ) {
-			MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
-			String oreDictName = diamond.getCapitalizedName();
-			addMaceratorRecipe( Oredicts.ORE + oreDictName, new ItemStack(diamond.getItem(Names.POWDER), 2) );
-		}
-		
-		if( Options.isMaterialEnabled(MaterialNames.EMERALD) ) {
-			MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
-			String oreDictName = emerald.getCapitalizedName();
-			addMaceratorRecipe( Oredicts.ORE + oreDictName, new ItemStack(emerald.getItem(Names.POWDER), 2) );
+		if (Materials.hasMaterial(MaterialNames.DIAMOND) ) {
+			final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
+			final String oreDictName = diamond.getCapitalizedName();
+			if (diamond.hasItem(Names.POWDER)) {
+				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(diamond.getItem(Names.POWDER), 2) );
+			}
 		}
 
+		if (Materials.hasMaterial(MaterialNames.EMERALD) ) {
+			final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
+			final String oreDictName = emerald.getCapitalizedName();
+			if (emerald.hasItem(Names.POWDER)) {
+				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(emerald.getItem(Names.POWDER), 2) );
+			}
+		}
     }
-
 }

@@ -71,7 +71,7 @@ public class CommonProxy {
 	public void onRemapBlock(RegistryEvent.MissingMappings<Block> event) {
 		for ( final RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings() ) {
 			if( mapping.key.getResourceDomain().equals(BaseMetals.MODID) ) {
-				if ((Options.isMaterialEnabled(MaterialNames.MERCURY)) && ("liquid_mercury".equals(mapping.key.getResourcePath()))) {
+				if ((Materials.hasMaterial(MaterialNames.MERCURY)) && ("liquid_mercury".equals(mapping.key.getResourcePath()))) {
 					mapping.remap(Materials.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
 				}				
 			}
@@ -81,7 +81,7 @@ public class CommonProxy {
 	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
 		for ( final RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings() ) {
 			if( mapping.key.getResourceDomain().equals(BaseMetals.MODID) ) {
-				if ((Options.isMaterialEnabled(MaterialNames.COAL)) && ("carbon_powder".equals(mapping.key.getResourcePath()))) {
+				if ((Materials.hasMaterial(MaterialNames.COAL)) && ("carbon_powder".equals(mapping.key.getResourcePath()))) {
 					mapping.remap(Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
 				}
 			}

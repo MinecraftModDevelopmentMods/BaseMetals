@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -44,8 +45,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 		};
 
 		for ( final String materialName : baseNames ) {
-			final com.mcmoddev.lib.material.MMDMaterial material = com.mcmoddev.lib.init.Materials.getMaterialByName( materialName );
-			if ( material != null && com.mcmoddev.lib.util.ConfigBase.Options.isMaterialEnabled( materialName ) ) {
+			if (Materials.hasMaterial(materialName) ) {
 				String baseMaterial;
 				switch ( materialName ) {
 					case com.mcmoddev.basemetals.data.MaterialNames.ADAMANTINE:

@@ -53,12 +53,12 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		.forEach( name -> createAlloyMaterial( name, MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)) );
 		
 		// Mod Materials
-		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
+		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
 			Materials.getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4).setDefaultDimension(-1);
 		}
 
 
-		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
+		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
 			Materials.getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
 			.setDefaultDimension(1).setRegenerates(true);
 		}
@@ -235,7 +235,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 			return 1.0d;
 		}
 	}
-	
+
 	private static void createVanillaMats() {
 		createOrelessMaterial(MaterialNames.WOOD, MaterialType.WOOD, 2, 2, 6, 0xFF695433);
 		createOrelessMaterial(MaterialNames.STONE, MaterialType.ROCK, 5, 4, 2, 0xFF8F8F8F);

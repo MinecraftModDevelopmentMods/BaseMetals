@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -46,7 +47,7 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 		};
 
 		for ( final String materialName : baseNames ) {
-			if ( Options.isMaterialEnabled( materialName ) ) {
+			if (Materials.hasMaterial( materialName ) ) {
 				addSagMillRecipe( materialName, 3600 );
 			}
 		}
