@@ -104,7 +104,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 	}
 
-	private static void registerVanilla() {
+	protected static void registerVanilla() {
 		// Vanilla Materials get their Ore and Block always
 		final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 		final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
