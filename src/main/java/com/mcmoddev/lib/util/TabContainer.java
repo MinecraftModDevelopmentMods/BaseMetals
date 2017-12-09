@@ -1,9 +1,15 @@
 package com.mcmoddev.lib.util;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.MMDCreativeTab;
 import com.mcmoddev.lib.interfaces.ITabProvider;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public final class TabContainer implements ITabProvider {
 	// @SkyBlade: temporary code until the tabcontainer is replaced
@@ -46,5 +52,36 @@ public final class TabContainer implements ITabProvider {
 			throw new Exception("Tab not found: " + tabName);
 		
 		block.setCreativeTab(tab);
+	}
+	
+	@Override
+	public void addItemToTab(Item item, String tabName) throws Exception {
+		MMDCreativeTab tab = this.getTabByName(tabName);
+		
+		if (tab == null) 
+			throw new Exception("Tab not found: " + tabName);
+		
+		item.setCreativeTab(tab);
+	}
+
+	@Override
+	public void setIcon(String tabName, String materialName) throws Exception {
+		MMDCreativeTab tab = this.getTabByName(tabName);
+		
+		if (tab == null) 
+			throw new Exception("Tab not found: " + tabName);
+		
+		Block temp;
+		ItemStack blocksTabIconItem;
+
+		MMDMaterial material = Materials.getMaterialByName(materialName);
+		
+		if ((Materials.hasMaterial(materialName)) && (material.hasBlock(Names.BLOCK)))
+			temp = material.getBlock(Names.BLOCK);
+		else
+			temp = net.minecraft.init.Blocks.IRON_BLOCK;
+		
+		blocksTabIconItem = new ItemStack(Item.getItemFromBlock(temp));
+		blocksTab.setTabIconItem(blocksTabIconItem);
 	}
 }
