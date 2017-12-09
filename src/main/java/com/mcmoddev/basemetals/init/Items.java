@@ -13,7 +13,9 @@ import com.mcmoddev.lib.item.ItemMMDPowder;
 import com.mcmoddev.lib.item.ItemMMDSmallPowder;
 import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.BMeIoC;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
 
@@ -46,6 +48,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			return;
 		}
 
+		// IoC resolutions here
+		BMeIoC IoC = BMeIoC.getInstance();
+		myTabs = IoC.resolve(ITabProvider.class);
+		
 		com.mcmoddev.basemetals.util.Config.init();
 		Blocks.init();
 		com.mcmoddev.lib.init.Items.init();

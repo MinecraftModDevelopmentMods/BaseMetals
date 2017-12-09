@@ -5,7 +5,9 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.BMeIoC;
 import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
@@ -24,7 +26,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	static Block humanDetector;
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs = ItemGroups.myTabs;
+	private static TabContainer myTabs;
 
 	protected Blocks() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -37,7 +39,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (initDone) {
 			return;
 		}
-
+		
+		// IoC resolutions here
+		BMeIoC IoC = BMeIoC.getInstance();
+		myTabs = IoC.resolve(ITabProvider.class);
+		
 		com.mcmoddev.basemetals.util.Config.init();
 		com.mcmoddev.lib.init.Blocks.init();
 		Materials.init();
