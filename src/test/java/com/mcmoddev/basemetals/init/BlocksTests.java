@@ -18,8 +18,7 @@ class BlocksTests {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		//TODO: Figure out why this doesn't work
-		//Blocks.registerVanilla() ; 
+//		Blocks.registerVanilla() ; 
 	}
 
 	@AfterAll
