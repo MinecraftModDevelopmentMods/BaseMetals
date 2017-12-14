@@ -1,4 +1,4 @@
-package com.mcmoddev.orespawn;
+package com.mcmoddev.os3integration;
 
 import com.mcmoddev.orespawn.api.os3.*;
 import com.mcmoddev.orespawn.api.plugin.IOreSpawnPlugin;
