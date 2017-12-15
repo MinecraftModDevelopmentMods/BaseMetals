@@ -70,7 +70,7 @@ public class BaseMetals {
 		FluidRegistry.enableUniversalBucket();
 	}
 
-	@Mod.EventHandler
+	@EventHandler
 	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
 		logger.warn("Invalid fingerprint detected!");
 	}
