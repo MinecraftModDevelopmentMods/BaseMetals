@@ -107,6 +107,7 @@ public class EventHandler {
 		}
 		
         GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
+        if( guiscreen == null ) return;
     	FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
     	int y = (guiscreen.height / 100) * 2;
     	int x = (guiscreen.width/2);
