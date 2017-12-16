@@ -18,17 +18,18 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.util.BMeIoC;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.exceptions.TabNotFoundException;
+import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.TabContainer;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -42,6 +43,12 @@ import net.minecraft.item.ItemStack;
  */
 public abstract class Items {
 
+	protected static final String BLOCKS_TAB = "blocksTab";
+
+	protected static final String ITEMS_TAB = "itemsTab";
+
+	protected static final String TOOLS_TAB = "toolsTab";
+
 	private static boolean initDone = false;
 
 	private static BiMap<String, Item> itemRegistry = HashBiMap.create(34);
@@ -54,6 +61,9 @@ public abstract class Items {
 	private static Map<Class<?>, Integer> classSortingValues = new HashMap<>();
 	private static Map<MMDMaterial, Integer> materialSortingValues = new HashMap<>();
 
+	private static BMeIoC IoC;
+	protected static ITabProvider tabProvider;
+	
 	// public static UniversalBucket universal_bucket; // now automatically added by Forge
 
 	protected Items() {
@@ -68,6 +78,9 @@ public abstract class Items {
 			return;
 		}
 
+		IoC = BMeIoC.getInstance();
+		tabProvider = IoC.resolve(ITabProvider.class);
+		
 		com.mcmoddev.basemetals.util.Config.init();
 		Blocks.init();
 
@@ -276,8 +289,8 @@ public abstract class Items {
 		}
 	}
 
-	protected static void createItemsBasic(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsBasic(Materials.getMaterialByName(materialName), tabs);
+	protected static void createItemsBasic(@Nonnull final String materialName) {
+		createItemsBasic(Materials.getMaterialByName(materialName));
 	}
 	/**
 	 * 
@@ -287,63 +300,46 @@ public abstract class Items {
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
-	protected static void createItemsBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		create(Names.BLEND, material, tabs.itemsTab);
-		create(Names.INGOT, material, tabs.itemsTab);
-		create(Names.NUGGET, material, tabs.itemsTab);
-		create(Names.POWDER, material, tabs.itemsTab);
-		create(Names.SMALLBLEND, material, tabs.itemsTab);
-		create(Names.SMALLPOWDER, material, tabs.itemsTab);
+	protected static void createItemsBasic(@Nonnull final MMDMaterial material) {
+		create(Names.BLEND, material, ITEMS_TAB);
+		create(Names.INGOT, material, ITEMS_TAB);
+		create(Names.NUGGET, material, ITEMS_TAB);
+		create(Names.POWDER, material, ITEMS_TAB);
+		create(Names.SMALLBLEND, material, ITEMS_TAB);
+		create(Names.SMALLPOWDER, material, ITEMS_TAB);
 	}
 
-	protected static void createItemsAdditional(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsAdditional(Materials.getMaterialByName(materialName), tabs);
+	protected static void createItemsAdditional(@Nonnull final String materialName) {
+		createItemsAdditional(Materials.getMaterialByName(materialName));
 	}
 
-	protected static void createItemsAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		create(Names.ARROW, material, tabs.toolsTab);
-		create(Names.AXE, material, tabs.toolsTab);
-		create(Names.BOLT, material, tabs.toolsTab);
-		create(Names.BOOTS, material, tabs.itemsTab);
-		create(Names.BOW, material, tabs.toolsTab);
-		create(Names.CHESTPLATE, material, tabs.itemsTab);
-		create(Names.CRACKHAMMER, material, tabs.toolsTab);
-		create(Names.CROSSBOW, material, tabs.toolsTab);
-		create(Names.DOOR, material, tabs.blocksTab);
-		create(Names.FISHING_ROD, material, tabs.toolsTab);
-		create(Names.HELMET, material, tabs.toolsTab);
-		create(Names.HOE, material, tabs.toolsTab);
-		create(Names.HORSE_ARMOR, material, tabs.itemsTab);
-		create(Names.LEGGINGS, material, tabs.itemsTab);
-		create(Names.PICKAXE, material, tabs.toolsTab);
-		create(Names.SHEARS, material, tabs.toolsTab);
-		create(Names.SHIELD, material, tabs.itemsTab);
-		create(Names.SHOVEL, material, tabs.toolsTab);
-		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.SWORD, material, tabs.itemsTab);
-		create(Names.ROD, material, tabs.itemsTab);
-		create(Names.GEAR, material, tabs.itemsTab);
+	protected static void createItemsAdditional(@Nonnull final MMDMaterial material) {
+		create(Names.ARROW, material, TOOLS_TAB);
+		create(Names.AXE, material, TOOLS_TAB);
+		create(Names.BOLT, material, TOOLS_TAB);
+		create(Names.BOOTS, material, ITEMS_TAB);
+		create(Names.BOW, material, TOOLS_TAB);
+		create(Names.CHESTPLATE, material, ITEMS_TAB);
+		create(Names.CRACKHAMMER, material, TOOLS_TAB);
+		create(Names.CROSSBOW, material, TOOLS_TAB);
+		create(Names.DOOR, material, BLOCKS_TAB);
+		create(Names.FISHING_ROD, material, TOOLS_TAB);
+		create(Names.HELMET, material, TOOLS_TAB);
+		create(Names.HOE, material, TOOLS_TAB);
+		create(Names.HORSE_ARMOR, material, ITEMS_TAB);
+		create(Names.LEGGINGS, material, ITEMS_TAB);
+		create(Names.PICKAXE, material, TOOLS_TAB);
+		create(Names.SHEARS, material, TOOLS_TAB);
+		create(Names.SHIELD, material, ITEMS_TAB);
+		create(Names.SHOVEL, material, TOOLS_TAB);
+		create(Names.SLAB, material, BLOCKS_TAB);
+		create(Names.SWORD, material, ITEMS_TAB);
+		create(Names.ROD, material, ITEMS_TAB);
+		create(Names.GEAR, material, ITEMS_TAB);
 	}
 
-	protected static void createItemsFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsFull(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material base of these items
-	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be
-	 *            on
-	 */
-	protected static void createItemsFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		createItemsBasic(material, tabs);
-		createItemsAdditional(material, tabs);
-	}
-
-	protected static void createItemsModSupport(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsModSupport(Materials.getMaterialByName(materialName), tabs);
+	protected static void createItemsFull(@Nonnull final String materialName) {
+		createItemsFull(Materials.getMaterialByName(materialName));
 	}
 
 	/**
@@ -354,18 +350,35 @@ public abstract class Items {
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
-	protected static void createItemsModSupport(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
+	protected static void createItemsFull(@Nonnull final MMDMaterial material) {
+		createItemsBasic(material);
+		createItemsAdditional(material);
+	}
+
+	protected static void createItemsModSupport(@Nonnull final String materialName) {
+		createItemsModSupport(Materials.getMaterialByName(materialName));
+	}
+
+	/**
+	 * 
+	 * @param material
+	 *            The material base of these items
+	 * @param tabs
+	 *            TabContainer covering the various CreativeTabs items might be
+	 *            on
+	 */
+	protected static void createItemsModSupport(@Nonnull final MMDMaterial material) {
 		if (Options.enableModderSupportThings()) {
-			create(Names.CASING, material, tabs.itemsTab);
-			create(Names.DENSE_PLATE, material, tabs.itemsTab);
+			create(Names.CASING, material, ITEMS_TAB);
+			create(Names.DENSE_PLATE, material, ITEMS_TAB);
 		}
 
-		createItemsModMekanism(material, tabs);
-		createItemsModIC2(material, tabs);
+		createItemsModMekanism(material);
+		createItemsModIC2(material);
 	}
 
-	protected static void createItemsModIC2(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsModIC2(Materials.getMaterialByName(materialName), tabs);
+	protected static void createItemsModIC2(@Nonnull final String materialName) {
+		createItemsModIC2(Materials.getMaterialByName(materialName));
 	}
 
 	/**
@@ -376,16 +389,16 @@ public abstract class Items {
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
-	protected static void createItemsModIC2(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
+	protected static void createItemsModIC2(@Nonnull final MMDMaterial material) {
 
 		if (material.hasOre()) {
-			create(Names.CRUSHED, material, tabs.itemsTab);
-			create(Names.CRUSHED_PURIFIED, material, tabs.itemsTab);
+			create(Names.CRUSHED, material, ITEMS_TAB);
+			create(Names.CRUSHED_PURIFIED, material, ITEMS_TAB);
 		}		
 	}
 
-	protected static void createItemsModMekanism(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsModMekanism(Materials.getMaterialByName(materialName), tabs);
+	protected static void createItemsModMekanism(@Nonnull final String materialName) {
+		createItemsModMekanism(Materials.getMaterialByName(materialName));
 	}
 
 	/**
@@ -396,17 +409,17 @@ public abstract class Items {
 	 *            TabContainer covering the various CreativeTabs items might be
 	 *            on
 	 */
-	protected static void createItemsModMekanism(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
+	protected static void createItemsModMekanism(@Nonnull final MMDMaterial material) {
 		if (material.hasOre()) {
-			createMekCrystal(material, tabs.itemsTab);
-			create(Names.SHARD, material, tabs.itemsTab);
-			create(Names.CLUMP, material, tabs.itemsTab);
-			create(Names.POWDER_DIRTY, material, tabs.itemsTab);
-			create(Names.CRYSTAL, material, tabs.itemsTab);
+			createMekCrystal(material, ITEMS_TAB);
+			create(Names.SHARD, material, ITEMS_TAB);
+			create(Names.CLUMP, material, ITEMS_TAB);
+			create(Names.POWDER_DIRTY, material, ITEMS_TAB);
+			create(Names.CRYSTAL, material, ITEMS_TAB);
 		}
 	}
 
-	protected static Item create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
+	protected static Item create(@Nonnull final Names name, @Nonnull final String materialName, final String tab) {
 		return create(name, Materials.getMaterialByName(materialName), tab);
 	}
 
@@ -420,7 +433,7 @@ public abstract class Items {
 	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
-	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
+	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material, final String tab) {
 		if ( sanityCheck( name, material ) ) {
 			return null;
 		}
@@ -473,11 +486,11 @@ public abstract class Items {
 		return 	((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS)) || (name.equals(Names.BOOTS)));
 	}
 
-	protected static Item addItem(@Nonnull final Item item, @Nonnull final Names name, final CreativeTabs tab) {
+	protected static Item addItem(@Nonnull final Item item, @Nonnull final Names name, final String tab) {
 		return addItem(item, name.toString(), null, tab);
 	}
 
-	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final CreativeTabs tab) {
+	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final String tab) {
 		return addItem(item, name, null, tab);
 	}
 
@@ -493,7 +506,7 @@ public abstract class Items {
 	 *            which creative tab it is in
 	 * @return the item that was added
 	 */
-	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
+	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final MMDMaterial material, final String tab) {
 		String fullName;
 		if (material != null) {
 			if (material.hasItem(name)) {
@@ -510,7 +523,11 @@ public abstract class Items {
 		itemRegistry.put(fullName, item);
 
 		if (tab != null) {
-			item.setCreativeTab(tab);
+			try {
+				tabProvider.addItemToTab(tab, item);
+			} catch (TabNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 
 		if (material != null) {
@@ -521,7 +538,7 @@ public abstract class Items {
 		return item;
 	}
 
-	private static Item createItem(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Item> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {
+	private static Item createItem(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Item> clazz, @Nonnull final boolean enabled, final String tab) {
 		if (material.hasItem(name)) {
 			return material.getItem(name);
 		}
@@ -556,7 +573,7 @@ public abstract class Items {
 		return null;
 	}
 
-	private static Item createArmorItem(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
+	private static Item createArmorItem(@Nonnull final Names name, @Nonnull final MMDMaterial material, final String tab) {
 		if (!(isNameEnabled(name))) {
 			return null;
 		}
@@ -598,7 +615,7 @@ public abstract class Items {
 	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
-	protected static Item createMekCrystal(@Nonnull final MMDMaterial material, final CreativeTabs tab) {
+	protected static Item createMekCrystal(@Nonnull final MMDMaterial material, final String tab) {
 		if (material.hasItem(Names.CRYSTAL)) {
 			return material.getItem(Names.CRYSTAL);
 		}

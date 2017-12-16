@@ -3,11 +3,7 @@ package com.mcmoddev.lib.util;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.mcmoddev.basemetals.init.ItemGroups;
-import com.mcmoddev.lib.init.MMDCreativeTab;
 import com.mcmoddev.lib.interfaces.ITabProvider;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 
 public class BMeIoC {
 

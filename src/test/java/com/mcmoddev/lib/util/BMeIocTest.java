@@ -3,14 +3,12 @@ package com.mcmoddev.lib.util;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import org.apache.commons.io.IOCase;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.mcmoddev.lib.init.MMDCreativeTab;
 import com.mcmoddev.lib.interfaces.ITabProvider;
 
 class BMeIocTest {
@@ -42,32 +40,28 @@ class BMeIocTest {
 	@Test
 	void testIoCCanRegisterAndResolve() {
 		ITabProvider tabProvider = mock(ITabProvider.class);
-		MMDCreativeTab tab = mock(MMDCreativeTab.class);
 		
-		when(tab.getTabLabel()).thenReturn("blocks tab");
-		when(tabProvider.getTabByName("blocks")).thenReturn(tab);
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
 		
 		IoC.register(ITabProvider.class, tabProvider);
 		
 		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class);
-		MMDCreativeTab tabResolved = tabProviderResolved.getTabByName("blocks");
+		String tabResolved = tabProviderResolved.getTab("Axes", "mmdlib");
 		
 		assertNotNull(tabResolved);
-		assertEquals(tabResolved.getTabLabel(), "blocks tab");
+		assertEquals(tabResolved, "axesTab");
 	}
 	
 	@Test
 	void testIoCCanRegisterAndNotResolve() {
 		ITabProvider tabProvider = mock(ITabProvider.class);
-		MMDCreativeTab tab = mock(MMDCreativeTab.class);
 		
-		when(tab.getTabLabel()).thenReturn("blocks tab");
-		when(tabProvider.getTabByName("blocks")).thenReturn(tab);
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
 		
 		IoC.register(ITabProvider.class, tabProvider);
 		
 		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class);
-		MMDCreativeTab tabResolved = tabProviderResolved.getTabByName("blocks2");
+		String tabResolved = tabProviderResolved.getTab("Blocks", "mmdlib");
 		
 		assertNull(tabResolved);
 	}

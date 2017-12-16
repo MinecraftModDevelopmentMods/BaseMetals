@@ -5,11 +5,7 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.BMeIoC;
-import com.mcmoddev.lib.util.TabContainer;
-
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -26,7 +22,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	static Block humanDetector;
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs;
 
 	protected Blocks() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -39,10 +34,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (initDone) {
 			return;
 		}
-		
-		// IoC resolutions here
-		BMeIoC IoC = BMeIoC.getInstance();
-		myTabs = IoC.resolve(ITabProvider.class);
 		
 		com.mcmoddev.basemetals.util.Config.init();
 		com.mcmoddev.lib.init.Blocks.init();
@@ -61,16 +52,16 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		Arrays.stream(simpleFullBlocks)
 			.filter(Materials::hasMaterial)
-			.forEach(name -> createBlocksFull(name, myTabs));
+			.forEach(name -> createBlocksFull(name));
 
 		Arrays.stream(alloyFullBlocks)
 			.filter(Materials::hasMaterial)
-			.forEach(name -> createBlocksFullOreless(name, myTabs));
+			.forEach(name -> createBlocksFullOreless(name));
 
 		createStarSteel();
 		createMercury();
 
-		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
+		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", BLOCKS_TAB);
 
 		initDone = true;
 	}
@@ -79,7 +70,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
 			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
 
-			createBlocksFull(starsteel, myTabs);
+			createBlocksFull(starsteel);
 
 			if (starsteel.hasBlock(Names.BLOCK))
 				starsteel.getBlock(Names.BLOCK).setLightLevel(0.5f);
@@ -104,7 +95,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	private static void createMercury() {
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
-			create(Names.ORE, mercury, myTabs.blocksTab);
+			create(Names.ORE, mercury, BLOCKS_TAB);
 			if (mercury.hasBlock(Names.ORE))
 				mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
 		}
@@ -156,57 +147,57 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		redstone.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
 
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
-			create(Names.BLOCK, charcoal, myTabs.blocksTab);
+			create(Names.BLOCK, charcoal, BLOCKS_TAB);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
-			create(Names.BARS, diamond, myTabs.blocksTab);
-			create(Names.DOOR, diamond, myTabs.blocksTab);
-			create(Names.TRAPDOOR, diamond, myTabs.blocksTab);
+			create(Names.BARS, diamond, BLOCKS_TAB);
+			create(Names.DOOR, diamond, BLOCKS_TAB);
+			create(Names.TRAPDOOR, diamond, BLOCKS_TAB);
 
-			createBlocksAdditional(diamond, myTabs);
+			createBlocksAdditional(diamond);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.EMERALD)) {
-			create(Names.BARS, emerald, myTabs.blocksTab);
-			create(Names.DOOR, emerald, myTabs.blocksTab);
-			create(Names.TRAPDOOR, emerald, myTabs.blocksTab);
+			create(Names.BARS, emerald, BLOCKS_TAB);
+			create(Names.DOOR, emerald, BLOCKS_TAB);
+			create(Names.TRAPDOOR, emerald, BLOCKS_TAB);
 
-			createBlocksAdditional(emerald, myTabs);
+			createBlocksAdditional(emerald);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.GOLD)) {
-			create(Names.PLATE, gold, myTabs.blocksTab);
-			create(Names.BARS, gold, myTabs.blocksTab);
-			create(Names.DOOR, gold, myTabs.blocksTab);
-			create(Names.TRAPDOOR, gold, myTabs.blocksTab);
+			create(Names.PLATE, gold, BLOCKS_TAB);
+			create(Names.BARS, gold, BLOCKS_TAB);
+			create(Names.DOOR, gold, BLOCKS_TAB);
+			create(Names.TRAPDOOR, gold, BLOCKS_TAB);
 
-			createBlocksAdditional(gold, myTabs);
+			createBlocksAdditional(gold);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
-			create(Names.PLATE, iron, myTabs.blocksTab);
+			create(Names.PLATE, iron, BLOCKS_TAB);
 
-			createBlocksAdditional(iron, myTabs);
+			createBlocksAdditional(iron);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.OBSIDIAN)) {
-			create(Names.BARS, obsidian, myTabs.blocksTab);
-			create(Names.DOOR, obsidian, myTabs.blocksTab);
-			create(Names.TRAPDOOR, obsidian, myTabs.blocksTab);
+			create(Names.BARS, obsidian, BLOCKS_TAB);
+			create(Names.DOOR, obsidian, BLOCKS_TAB);
+			create(Names.TRAPDOOR, obsidian, BLOCKS_TAB);
 
-			createBlocksAdditional(obsidian, myTabs);
+			createBlocksAdditional(obsidian);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.QUARTZ)) {
-			create(Names.BARS, quartz, myTabs.blocksTab);
-			create(Names.DOOR, quartz, myTabs.blocksTab);
-			create(Names.TRAPDOOR, quartz, myTabs.blocksTab);
+			create(Names.BARS, quartz, BLOCKS_TAB);
+			create(Names.DOOR, quartz, BLOCKS_TAB);
+			create(Names.TRAPDOOR, quartz, BLOCKS_TAB);
 
-			create(Names.BUTTON, quartz, myTabs.blocksTab);
-			create(Names.LEVER, quartz, myTabs.blocksTab);
-			create(Names.PRESSURE_PLATE, quartz, myTabs.blocksTab);
-			create(Names.WALL, quartz, myTabs.blocksTab);
+			create(Names.BUTTON, quartz, BLOCKS_TAB);
+			create(Names.LEVER, quartz, BLOCKS_TAB);
+			create(Names.PRESSURE_PLATE, quartz, BLOCKS_TAB);
+			create(Names.WALL, quartz, BLOCKS_TAB);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.STONE)) {

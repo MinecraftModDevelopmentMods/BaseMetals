@@ -17,8 +17,6 @@ import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.BMeIoC;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.TabContainer;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -34,8 +32,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class Items extends com.mcmoddev.lib.init.Items {
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs = ItemGroups.myTabs;
-
 	protected Items() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -50,7 +46,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 		// IoC resolutions here
 		BMeIoC IoC = BMeIoC.getInstance();
-		myTabs = IoC.resolve(ITabProvider.class);
+		IoC.resolve(ITabProvider.class);
 		
 		com.mcmoddev.basemetals.util.Config.init();
 		Blocks.init();
@@ -95,20 +91,20 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		myModMats.stream()
 			.filter(Materials::hasMaterial)
 			.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-			.forEach(name -> createItemsFull(Materials.getMaterialByName(name), myTabs));
+			.forEach(name -> createItemsFull(Materials.getMaterialByName(name)));
 
 		matsModSupport.stream()
 			.filter(Materials::hasMaterial)
 			.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-			.forEach(name -> createItemsModSupport(Materials.getMaterialByName(name), myTabs));
+			.forEach(name -> createItemsModSupport(Materials.getMaterialByName(name)));
 
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 
-			create(Names.INGOT, mercury, myTabs.itemsTab);
-			create(Names.NUGGET, mercury, myTabs.itemsTab);
-			create(Names.POWDER, mercury, myTabs.itemsTab);
-			create(Names.SMALLPOWDER, mercury, myTabs.itemsTab);
+			create(Names.INGOT, mercury, ITEMS_TAB);
+			create(Names.NUGGET, mercury, ITEMS_TAB);
+			create(Names.POWDER, mercury, ITEMS_TAB);
+			create(Names.SMALLPOWDER, mercury, ITEMS_TAB);
 		}
 
 		addToMetList();
@@ -120,9 +116,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
 			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 
-			create(Names.NUGGET, charcoal, myTabs.itemsTab);
-			create(Names.POWDER, charcoal, myTabs.itemsTab);
-			create(Names.SMALLPOWDER, charcoal, myTabs.itemsTab);
+			create(Names.NUGGET, charcoal, ITEMS_TAB);
+			create(Names.POWDER, charcoal, ITEMS_TAB);
+			create(Names.SMALLPOWDER, charcoal, ITEMS_TAB);
 
 			if (charcoal.hasItem(Names.NUGGET))
 				((ItemMMDNugget)charcoal.getItem(Names.NUGGET)).setBurnTime(200);
@@ -140,9 +136,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		if (Materials.hasMaterial(MaterialNames.COAL)) {
 			final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
 
-			create(Names.NUGGET, coal, myTabs.itemsTab);
-			create(Names.POWDER, coal, myTabs.itemsTab);
-			create(Names.SMALLPOWDER, coal, myTabs.itemsTab);
+			create(Names.NUGGET, coal, ITEMS_TAB);
+			create(Names.POWDER, coal, ITEMS_TAB);
+			create(Names.SMALLPOWDER, coal, ITEMS_TAB);
 
 			if (coal.hasItem(Names.NUGGET))
 				((ItemMMDNugget)coal.getItem(Names.NUGGET)).setBurnTime(200);
@@ -157,12 +153,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		if (Materials.hasMaterial(MaterialNames.REDSTONE)) {
 			final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
 
-			create(Names.INGOT, redstone, myTabs.itemsTab);
-			create(Names.SMALLPOWDER, redstone, myTabs.itemsTab);
+			create(Names.INGOT, redstone, ITEMS_TAB);
+			create(Names.SMALLPOWDER, redstone, ITEMS_TAB);
 		}
 		
 		if (Materials.hasMaterial(MaterialNames.LAPIS)) {
-			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.LAPIS), myTabs.itemsTab);
+			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.LAPIS), ITEMS_TAB);
 		}
 	}
 
@@ -182,7 +178,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		diamond.addNewItem(Names.INGOT, net.minecraft.init.Items.DIAMOND);
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
-			createItemsFull(diamond, myTabs);
+			createItemsFull(diamond);
 		}
 	}
 
@@ -203,7 +199,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		gold.addNewItem(Names.NUGGET, net.minecraft.init.Items.GOLD_NUGGET);
 
 		if (Materials.hasMaterial(MaterialNames.GOLD)) {
-			createItemsFull(gold, myTabs);
+			createItemsFull(gold);
 		}
 	}
 
@@ -227,7 +223,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
-			createItemsFull(iron, myTabs);
+			createItemsFull(iron);
 		}
 	}
 
@@ -245,9 +241,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		stone.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.STONE_STAIRS);
 
 		if (Materials.hasMaterial(MaterialNames.STONE)) {
-			create(Names.CRACKHAMMER, stone, myTabs.toolsTab);
-			create(Names.ROD, stone, myTabs.itemsTab);
-			create(Names.GEAR, stone, myTabs.itemsTab);
+			create(Names.CRACKHAMMER, stone, TOOLS_TAB);
+			create(Names.ROD, stone, ITEMS_TAB);
+			create(Names.GEAR, stone, ITEMS_TAB);
 		}
 	}
 
@@ -270,8 +266,8 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		wood.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		if (Materials.hasMaterial(MaterialNames.WOOD)) {
-			create(Names.CRACKHAMMER, wood, myTabs.toolsTab);
-			create(Names.GEAR, wood, myTabs.itemsTab);
+			create(Names.CRACKHAMMER, wood, TOOLS_TAB);
+			create(Names.GEAR, wood, ITEMS_TAB);
 		}
 	}
 

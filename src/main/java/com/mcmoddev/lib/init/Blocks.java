@@ -12,31 +12,33 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.mcmoddev.lib.util.BMeIoC;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.exceptions.TabNotFoundException;
+import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.TabContainer;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.BlockFluidBase;
 
 /**
- * This class initializes all blocks in Base Metals and provides some utility
+ * This class initialises all blocks in Base Metals and provides some utility
  * methods for looking up blocks.
  *
  * @author Jasmine Iwanek
  *
  */
 public abstract class Blocks {
+
+	protected static final String BLOCKS_TAB = "blocksTab";
 
 	private static boolean initDone = false;
 
@@ -48,6 +50,8 @@ public abstract class Blocks {
 	private static final EnumMap<Names, String> nameToOredict = new EnumMap<>(Names.class);
 	private static final EnumMap<Names, Boolean> nameToEnabled = new EnumMap<>(Names.class);
 
+	private static ITabProvider tabProvider;
+	
 	protected Blocks() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
@@ -59,6 +63,11 @@ public abstract class Blocks {
 		if (initDone) {
 			return;
 		}
+		
+		BMeIoC IoC = BMeIoC.getInstance();
+		
+		tabProvider = IoC.resolve(ITabProvider.class);
+		
 		com.mcmoddev.basemetals.util.Config.init();
 		
 		mapNameToClass(Names.ANVIL, BlockMMDAnvil.class);
@@ -147,8 +156,8 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
-	protected static void createBlocksBasic(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createBlocksBasic(Materials.getMaterialByName(materialName), tabs);
+	protected static void createBlocksBasic(@Nonnull final String materialName) {
+		createBlocksBasic(Materials.getMaterialByName(materialName));
 	}
 
 	/**
@@ -158,14 +167,14 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
-	protected static void createBlocksBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
+	protected static void createBlocksBasic(@Nonnull final MMDMaterial material) {
 
-		create(Names.BLOCK, material, tabs.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
-		create(Names.PLATE, material, tabs.blocksTab);
-		create(Names.ORE, material, tabs.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
-		create(Names.BARS, material, tabs.blocksTab); // Not Iron
-		create(Names.DOOR, material, tabs.blocksTab); // Not Iron
-		create(Names.TRAPDOOR, material, tabs.blocksTab); // Not Iron
+		create(Names.BLOCK, material, BLOCKS_TAB); // Not Gold, Not Iron, Not Diamond, Not Stone
+		create(Names.PLATE, material, BLOCKS_TAB);
+		create(Names.ORE, material, BLOCKS_TAB); // Not Gold, Not Iron, Not Diamond, Not Stone
+		create(Names.BARS, material, BLOCKS_TAB); // Not Iron
+		create(Names.DOOR, material, BLOCKS_TAB); // Not Iron
+		create(Names.TRAPDOOR, material, BLOCKS_TAB); // Not Iron
 	}
 
 	/**
@@ -175,8 +184,8 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
-	protected static void createBlocksAdditional(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createBlocksAdditional(Materials.getMaterialByName(materialName), tabs);
+	protected static void createBlocksAdditional(@Nonnull final String materialName) {
+		createBlocksAdditional(Materials.getMaterialByName(materialName));
 	}
 
 	/**
@@ -186,18 +195,14 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
-	protected static void createBlocksAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if (tabs == null) {
-			return;
-		}
-
-		create(Names.BUTTON, material, tabs.blocksTab);
-		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.DOUBLE_SLAB, material, tabs.blocksTab);
-		create(Names.LEVER, material, tabs.blocksTab);
-		create(Names.PRESSURE_PLATE, material, tabs.blocksTab); // Not Iron, Not Gold
-		create(Names.STAIRS, material, tabs.blocksTab);
-		create(Names.WALL, material, tabs.blocksTab);
+	protected static void createBlocksAdditional(@Nonnull final MMDMaterial material) {
+		create(Names.BUTTON, material, BLOCKS_TAB);
+		create(Names.SLAB, material, BLOCKS_TAB);
+		create(Names.DOUBLE_SLAB, material, BLOCKS_TAB);
+		create(Names.LEVER, material, BLOCKS_TAB);
+		create(Names.PRESSURE_PLATE, material, BLOCKS_TAB); // Not Iron, Not Gold
+		create(Names.STAIRS, material, BLOCKS_TAB);
+		create(Names.WALL, material, BLOCKS_TAB);
 	}
 
 	/**
@@ -207,12 +212,12 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
-	protected static void createBlocksFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createBlocksFull(Materials.getMaterialByName(materialName), tabs);
+	protected static void createBlocksFull(@Nonnull final String materialName) {
+		createBlocksFull(Materials.getMaterialByName(materialName));
 	}
 	
-	protected static void createBlocksFullOreless(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createBlocksFullOreless(Materials.getMaterialByName(materialName), tabs);
+	protected static void createBlocksFullOreless(@Nonnull final String materialName) {
+		createBlocksFullOreless(Materials.getMaterialByName(materialName));
 	}
 
 	/**
@@ -222,33 +227,33 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
-	protected static void createBlocksFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		createBlocksBasic(material, tabs);
-		createBlocksAdditional(material, tabs);
+	protected static void createBlocksFull(@Nonnull final MMDMaterial material) {
+		createBlocksBasic(material);
+		createBlocksAdditional(material);
 	}
 
-	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
+	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, final String tab) {
 		return create(name, Materials.getMaterialByName(materialName), false, tab);
 	}
 	
-	protected static void createBlocksFullOreless(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
+	protected static void createBlocksFullOreless(@Nonnull final MMDMaterial material) {
+		if (material == null) {
 			return;
 		}
 
-		create(Names.BLOCK, material, tabs.blocksTab);
-		create(Names.PLATE, material, tabs.blocksTab);
-		create(Names.BARS, material, tabs.blocksTab);
-		create(Names.DOOR, material, tabs.blocksTab);
-		create(Names.TRAPDOOR, material, tabs.blocksTab);
+		create(Names.BLOCK, material, BLOCKS_TAB);
+		create(Names.PLATE, material, BLOCKS_TAB);
+		create(Names.BARS, material, BLOCKS_TAB);
+		create(Names.DOOR, material, BLOCKS_TAB);
+		create(Names.TRAPDOOR, material, BLOCKS_TAB);
 
-		create(Names.BUTTON, material, tabs.blocksTab);
-		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.DOUBLE_SLAB, material, tabs.blocksTab);
-		create(Names.LEVER, material, tabs.blocksTab);
-		create(Names.PRESSURE_PLATE, material, tabs.blocksTab);
-		create(Names.STAIRS, material, tabs.blocksTab);
-		create(Names.WALL, material, tabs.blocksTab);		
+		create(Names.BUTTON, material, BLOCKS_TAB);
+		create(Names.SLAB, material, BLOCKS_TAB);
+		create(Names.DOUBLE_SLAB, material, BLOCKS_TAB);
+		create(Names.LEVER, material, BLOCKS_TAB);
+		create(Names.PRESSURE_PLATE, material, BLOCKS_TAB);
+		create(Names.STAIRS, material, BLOCKS_TAB);
+		create(Names.WALL, material, BLOCKS_TAB);		
 	}
 
 	/**
@@ -261,11 +266,11 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
-	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
+	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material, final String tab) {
 		return create(name, material, false, tab);
 	}
 
-	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, @Nonnull final boolean glow, final CreativeTabs tab) {
+	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, @Nonnull final boolean glow, final String tab) {
 		return create(name, Materials.getMaterialByName(materialName), glow, tab);
 	}
 
@@ -281,7 +286,7 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
-	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material, @Nonnull final boolean glow, final CreativeTabs tab) {
+	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material, @Nonnull final boolean glow, final String tab) {
 		if (material.hasBlock(name)) {
 			return material.getBlock(name);
 		}
@@ -312,11 +317,11 @@ public abstract class Blocks {
 		return block;
 	}
 
-	protected static Block addBlock(@Nonnull final Block block, @Nonnull final Names name, final CreativeTabs tab) {
+	protected static Block addBlock(@Nonnull final Block block, @Nonnull final Names name, final String tab) {
 		return addBlock(block, name.toString(), null, tab);
 	}
 
-	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final CreativeTabs tab) {
+	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final String tab) {
 		return addBlock(block, name, null, tab);
 	}
 
@@ -332,7 +337,7 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return a new block
 	 */
-	protected static Block addBlock(@Nonnull final Block block, @Nonnull final Names name, final MMDMaterial material, final CreativeTabs tab) {
+	protected static Block addBlock(@Nonnull final Block block, @Nonnull final Names name, final MMDMaterial material, final String tab) {
 		return addBlock(block, name.toString(), material, tab);
 	}
 
@@ -348,12 +353,7 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return a new block
 	 */
-	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
-
-		if ((block == null) || (name == null)) {
-			return null;
-		}
-
+	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final String tab) {
 		String fullName = getBlockFullName(block, material, name);
 
 		block.setRegistryName(fullName);
@@ -368,7 +368,11 @@ public abstract class Blocks {
 		maybeMakeItemBlock(block, material, fullName);
 
 		if (tab != null) {
-			block.setCreativeTab(tab);
+			try {
+				tabProvider.addBlockToTab(tab, block);
+			} catch (TabNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 
 		blocksByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
@@ -399,7 +403,7 @@ public abstract class Blocks {
 		}
 	}
 
-	private static Block createBlock(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Block> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {
+	private static Block createBlock(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Block> clazz, @Nonnull final boolean enabled, final String tab) {
 		if (enabled) {
 			Constructor<?> ctor = null;
 			Block inst = null;
@@ -425,7 +429,7 @@ public abstract class Blocks {
 		return null;
 	}
 
-	protected static Block createBookshelf(@Nonnull final MMDMaterial material, @Nonnull final boolean fullBlock, final CreativeTabs tab) {
+	protected static Block createBookshelf(@Nonnull final MMDMaterial material, @Nonnull final boolean fullBlock, final String tab) {
 
 		BlockMMDBookshelf bs = (BlockMMDBookshelf) create(Names.BOOKSHELF, material, tab);
 		if (bs != null) {
