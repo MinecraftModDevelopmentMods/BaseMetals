@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.proxy;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
@@ -8,7 +9,11 @@ import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
 import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
 import com.mcmoddev.lib.entity.EntityCustomArrow;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
+import com.mcmoddev.lib.exceptions.MaterialNotFoundException;
+import com.mcmoddev.lib.exceptions.TabNotFoundException;
+import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.BMeIoC;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
@@ -81,8 +86,25 @@ public class ClientProxy extends CommonProxy {
 		for (final String name : Blocks.getBlockRegistry().keySet()) {
 			registerRenderOuter(Blocks.getBlockByName(name));
 		}
+		
+		setTabIcons();
 	}
 
+	private void setTabIcons() {
+		BMeIoC IoC = BMeIoC.getInstance();
+		ITabProvider tabProvider = IoC.resolve(ITabProvider.class);
+				
+		try {
+			tabProvider.setIcon("blocksTab", MaterialNames.STARSTEEL);
+		} catch (TabNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MaterialNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private void registerRenderOuter ( Item item ) {
 		if (item != null) {
 			registerRender(item, Items.getNameOfItem(item));

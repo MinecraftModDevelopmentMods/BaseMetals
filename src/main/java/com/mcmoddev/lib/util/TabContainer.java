@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.util;
 
-import java.util.Collection;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.mcmoddev.lib.data.Names;
@@ -112,8 +111,6 @@ public final class TabContainer implements ITabProvider {
 
 	@Override
 	public String getTab(String itemName) {
-		Collection<String> tabs = tabItemMapping.get(itemName);
-
-		return tabs.isEmpty() ? "blocksTab" : tabs.iterator().next();
+		return tabItemMapping.get(itemName).stream().findFirst().orElse("blocksTab");
 	}
 }
