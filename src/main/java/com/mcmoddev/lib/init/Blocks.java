@@ -371,7 +371,7 @@ public abstract class Blocks {
 			try {
 				tabProvider.addBlockToTab(tab, block);
 			} catch (TabNotFoundException e) {
-				e.printStackTrace();
+				BaseMetals.logger.warn(e.toString());
 			}
 		}
 

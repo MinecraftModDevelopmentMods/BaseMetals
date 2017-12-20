@@ -97,11 +97,9 @@ public class ClientProxy extends CommonProxy {
 		try {
 			tabProvider.setIcon("blocksTab", MaterialNames.STARSTEEL);
 		} catch (TabNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BaseMetals.logger.warn(e.toString());
 		} catch (MaterialNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BaseMetals.logger.warn(e.toString());
 		}
 	}
 	

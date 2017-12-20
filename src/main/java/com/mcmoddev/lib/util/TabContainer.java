@@ -22,7 +22,6 @@ import net.minecraft.item.ItemStack;
 public final class TabContainer implements ITabProvider {
 	// @SkyBlade: temporary code until the tabcontainer is replaced
 	
-	private static final String TAB_NOT_FOUND = "Tab not found: ";
 	public final MMDCreativeTab blocksTab;
 	public final MMDCreativeTab itemsTab;
 	public final MMDCreativeTab toolsTab;
@@ -63,7 +62,7 @@ public final class TabContainer implements ITabProvider {
 		MMDCreativeTab tab = this.getTabByName(tabName);
 		
 		if (tab == null) 
-			throw new TabNotFoundException(TAB_NOT_FOUND + tabName);
+			throw new TabNotFoundException(tabName);
 		
 		block.setCreativeTab(tab);
 	}
@@ -73,7 +72,7 @@ public final class TabContainer implements ITabProvider {
 		MMDCreativeTab tab = this.getTabByName(tabName);
 
 		if (tab == null)
-			throw new TabNotFoundException(TAB_NOT_FOUND + tabName);
+			throw new TabNotFoundException(tabName);
 		
 		item.setCreativeTab(tab);
 	}
@@ -83,7 +82,7 @@ public final class TabContainer implements ITabProvider {
 		MMDCreativeTab tab = this.getTabByName(tabName);
 		
 		if (tab == null) 
-			throw new TabNotFoundException(TAB_NOT_FOUND + tabName);
+			throw new TabNotFoundException(tabName);
 		
 		Block temp;
 		ItemStack blocksTabIconItem;

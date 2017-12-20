@@ -526,7 +526,7 @@ public abstract class Items {
 			try {
 				tabProvider.addItemToTab(tab, item);
 			} catch (TabNotFoundException e) {
-				e.printStackTrace();
+				BaseMetals.logger.warn(e.toString());
 			}
 		}
 
