@@ -526,7 +526,7 @@ public abstract class Items {
 			try {
 				tabProvider.addItemToTab(tab, item);
 			} catch (TabNotFoundException e) {
-				BaseMetals.logger.warn(name + " failed to add to " + tab, e);
+				BaseMetals.logger.warn("%s failed to add to %s", name, tab, e);
 			}
 		}
 
@@ -550,17 +550,17 @@ public abstract class Items {
 			try {
 				ctor = clazz.getConstructor(material.getClass());
 			} catch (NoSuchMethodException|SecurityException ex) {
-				BaseMetals.logger.error("Class for Item named " + name + " does not have the correct constructor", ex);
+				BaseMetals.logger.error("Class for Item named %s does not have the correct constructor", name, ex);
 				return null;
 			}
 
 			try {
 				inst = (Item) ctor.newInstance(material);
 			} catch (IllegalAccessException|IllegalArgumentException|InstantiationException|InvocationTargetException|ExceptionInInitializerError ex) {
-				BaseMetals.logger.error("Unable to create new instance of Item class for item name " + name + " of material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName(), ex);
 				return null;
 			} catch (Exception ex) {
-				BaseMetals.logger.error("Unable to create Item named " + name + " for material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error("Unable to create Item named %s for material %s", name,  material.getCapitalizedName(), ex);
 				return null;
 			}
 
