@@ -11,7 +11,7 @@ import slimeknights.tconstruct.library.utils.ToolHelper;
 public class TraitHeavy extends AbstractTrait {
 
 	TraitHeavy() {
-		super("heavy", TextFormatting.BLACK);
+		super("mmd-heavy", TextFormatting.BLACK);
 	}
 
 	@Override

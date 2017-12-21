@@ -23,31 +23,17 @@ public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBas
 			return;
 		}
 
-		addToolsForMaterial(MaterialNames.ADAMANTINE);
-		addToolsForMaterial(MaterialNames.ANTIMONY);
-		addToolsForMaterial(MaterialNames.AQUARIUM);
-		addToolsForMaterial(MaterialNames.BISMUTH);
-		addToolsForMaterial(MaterialNames.BRASS);
-		addToolsForMaterial(MaterialNames.BRONZE);
-		addToolsForMaterial(MaterialNames.COLDIRON);
-		addToolsForMaterial(MaterialNames.COPPER);
-		addToolsForMaterial(MaterialNames.CUPRONICKEL);
-		addToolsForMaterial(MaterialNames.DIAMOND);
-		addToolsForMaterial(MaterialNames.ELECTRUM);
-		addToolsForMaterial(MaterialNames.GOLD);
-		addToolsForMaterial(MaterialNames.INVAR);
-		addToolsForMaterial(MaterialNames.IRON);
-		addToolsForMaterial(MaterialNames.LEAD);
-		addToolsForMaterial(MaterialNames.MITHRIL);
-		addToolsForMaterial(MaterialNames.NICKEL);
-		addToolsForMaterial(MaterialNames.PEWTER);
-		addToolsForMaterial(MaterialNames.PLATINUM);
-		addToolsForMaterial(MaterialNames.SILVER);
-		addToolsForMaterial(MaterialNames.STARSTEEL);
-		addToolsForMaterial(MaterialNames.STEEL);
-		addToolsForMaterial(MaterialNames.TIN);
-		addToolsForMaterial(MaterialNames.WOOD);
-		addToolsForMaterial(MaterialNames.ZINC);
+		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
+				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.DIAMOND,
+				MaterialNames.ELECTRUM, MaterialNames.GOLD, MaterialNames.INVAR, MaterialNames.IRON, MaterialNames.LEAD,
+				MaterialNames.MITHRIL, MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
+				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
+				MaterialNames.WOOD, MaterialNames.ZINC };
+
+		for (final String materialName : baseNames) {
+			addToolsForMaterial(materialName);
+		}
 
 		initDone = true;
 	}

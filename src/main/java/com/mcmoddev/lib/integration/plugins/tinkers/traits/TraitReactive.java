@@ -15,7 +15,7 @@ import slimeknights.tconstruct.library.utils.ToolHelper;
 public class TraitReactive extends AbstractTrait {
 
 	public TraitReactive() {
-		super("reactive", TextFormatting.BLACK);
+		super("mmd-reactive", TextFormatting.BLACK);
 	}
 
 	@Override

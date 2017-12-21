@@ -13,7 +13,7 @@ import slimeknights.tconstruct.library.traits.ITrait;
 
 public class TraitRegistry {
 
-	private static Map<String, ITrait> registeredTraits = new HashMap<>();
+	private static final Map<String, ITrait> registeredTraits = new HashMap<>();
 
 	private TraitRegistry() {
 		throw new IllegalAccessError("Not an instantiable class");

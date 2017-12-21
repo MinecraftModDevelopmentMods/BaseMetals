@@ -1798,10 +1798,10 @@ tile.basemetals.steel_wall.name=鋼牆
 tile.basemetals.tin_wall.name=錫牆
 tile.basemetals.zinc_wall.name=鋅牆
 
-modifier.toxic.name=毒性
-modifier.sparkly.name=發光
-modifier.soft.name=柔軟
-modifier.brittle.name=脆弱
-modifier.heavy.name=沉重
-modifier.reactive.name=高活性
-modifier.radioactive.name=放射性
+modifier.mmd-toxic.name=毒性
+modifier.mmd-sparkly.name=發光
+modifier.mmd-soft.name=柔軟
+modifier.mmd-brittle.name=脆弱
+modifier.mmd-heavy.name=沉重
+modifier.mmd-reactive.name=高活性
+modifier.mmd-radioactive.name=放射性

@@ -31,7 +31,6 @@ public class BlockMMDNetherOre extends net.minecraft.block.BlockOre implements I
 		this.blockHardness = Math.max(5f, this.material.getOreBlockHardness());
 		this.blockResistance = Math.max(1.5f, this.material.getBlastResistance() * 0.75f);
 		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
-		// FMLLog.info(material.getName() + " ore harvest level set to " + material.getRequiredHarvestLevel());
 	}
 
 	@Override

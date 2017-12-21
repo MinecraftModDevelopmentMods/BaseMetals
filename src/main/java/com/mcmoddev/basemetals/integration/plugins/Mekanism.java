@@ -2,9 +2,10 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
 public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase implements IIntegration {
@@ -17,20 +18,13 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 			return;
 		}
 
-		final String[] baseNames = new String[] {
-				MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM,
-				MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL,
-				MaterialNames.ZINC
-		};
+		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
+				MaterialNames.STARSTEEL, MaterialNames.ZINC };
 
-		for (int i = 0; i < baseNames.length; i++) {
-			final String materialName = baseNames[i];
-			if (Options.isMaterialEnabled(materialName)) {
+		for (final String materialName : baseNames) {
+			if (Materials.hasMaterial(materialName)) {
+				addGassesForMaterial(materialName);
 				addOreMultiplicationRecipes(materialName);
 			}
 		}

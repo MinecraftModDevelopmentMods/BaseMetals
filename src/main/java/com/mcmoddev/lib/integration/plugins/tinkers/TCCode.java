@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
 public enum TCCode {
+
 	SUCCESS, // base success
 	FAILURE, // generic failure
 	FAILURE_PARAMETER_ERROR, // bad/missing/null parameter

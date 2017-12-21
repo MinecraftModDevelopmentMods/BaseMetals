@@ -1,6 +1,9 @@
 package com.mcmoddev.basemetals.data;
 
+import com.mcmoddev.lib.data.SharedStrings;
+
 public class MaterialNames {
+
 	public static final String ADAMANTINE = "adamantine";
 	public static final String ANTIMONY = "antimony";
 	public static final String AQUARIUM = "aquarium";
@@ -39,6 +42,6 @@ public class MaterialNames {
 	public static final String ZINC = "zinc";
 
 	private MaterialNames() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 }

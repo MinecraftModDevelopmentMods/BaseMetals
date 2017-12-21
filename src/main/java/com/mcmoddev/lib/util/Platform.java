@@ -4,6 +4,8 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import com.mcmoddev.lib.data.SharedStrings;
+
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -14,7 +16,7 @@ public class Platform {
 	private static boolean devEnv = false;
 
 	private Platform() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -59,16 +61,16 @@ public class Platform {
 	 */
 	public static EnumFacing rotateAround(final EnumFacing forward) {
 		switch (forward) {
-		case NORTH:
-			return EnumFacing.EAST;
-		case EAST:
-			return EnumFacing.SOUTH;
-		case SOUTH:
-			return EnumFacing.WEST;
-		case WEST:
-			return EnumFacing.NORTH;
-		default:
-			return forward;
+			case NORTH:
+				return EnumFacing.EAST;
+			case EAST:
+				return EnumFacing.SOUTH;
+			case SOUTH:
+				return EnumFacing.WEST;
+			case WEST:
+				return EnumFacing.NORTH;
+			default:
+				return forward;
 		}
 	}
 
@@ -82,26 +84,26 @@ public class Platform {
 	 */
 	public static EnumFacing invertedRotateAround(final EnumFacing forward) {
 		switch (forward) {
-		case NORTH:
-			return EnumFacing.WEST;
-		case EAST:
-			return EnumFacing.NORTH;
-		case SOUTH:
-			return EnumFacing.EAST;
-		case WEST:
-			return EnumFacing.SOUTH;
-		default:
-			return forward;
+			case NORTH:
+				return EnumFacing.WEST;
+			case EAST:
+				return EnumFacing.NORTH;
+			case SOUTH:
+				return EnumFacing.EAST;
+			case WEST:
+				return EnumFacing.SOUTH;
+			default:
+				return forward;
 		}
 	}
 
 	/**
 	 * Get PropertyString from BlockState properties
 	 *
-	 * @param values
-	 * @param extrasArgs
+	 * @param values Values
+	 * @param extrasArgs Extra Args
 	 *
-	 * @return
+	 * @return PropertyString
 	 */
 	public static String getPropertyString(Map<IProperty<?>, Comparable<?>> values, String... extrasArgs) {
 		final StringBuilder stringbuilder = new StringBuilder();

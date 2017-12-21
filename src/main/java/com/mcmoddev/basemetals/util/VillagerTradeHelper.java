@@ -14,13 +14,9 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
  */
 public class VillagerTradeHelper {
 
-	private static final ResourceLocation[] professionList = {
-			new ResourceLocation("minecraft:farmer"),
-			new ResourceLocation("minecraft:librarian"),
-			new ResourceLocation("minecraft:priest"),
-			new ResourceLocation("minecraft:smith"),
-			new ResourceLocation("minecraft:butcher")
-	};
+	private static final ResourceLocation[] professionList = { new ResourceLocation("minecraft:farmer"),
+			new ResourceLocation("minecraft:librarian"), new ResourceLocation("minecraft:priest"),
+			new ResourceLocation("minecraft:smith"), new ResourceLocation("minecraft:butcher") };
 
 	protected VillagerTradeHelper() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -70,8 +66,9 @@ public class VillagerTradeHelper {
 	 *            Trades to add to the given level
 	 */
 	public static void insertTrades(ResourceLocation profession, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
-		for (final EntityVillager.ITradeList trade : trades)
+		for (final EntityVillager.ITradeList trade : trades) {
 			VillagerRegistry.instance().getRegistry().getValue(profession).getCareer(careerID - 1).addTrade(tradeLevel, trade);
+		}
 	}
 
 	/**

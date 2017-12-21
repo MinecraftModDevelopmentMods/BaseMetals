@@ -130,9 +130,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public IBlockState getStateForPlacement(final World w, final BlockPos coord, final EnumFacing face,
-									 final float partialX, final float partialY, final float partialZ,
-									 final int i, final EntityLivingBase placer) {
+	public IBlockState getStateForPlacement(final World w, final BlockPos coord, final EnumFacing face, final float partialX, final float partialY, final float partialZ, final int i, final EntityLivingBase placer) {
 		final IBlockState defaultState = this.getDefaultState().withProperty(FACING, face);
 		// redimension to face-local up and right dimensions
 		float up;
@@ -239,13 +237,12 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public void addCollisionBoxToList(final IBlockState bs, final World world, final BlockPos coord,
-									  final AxisAlignedBB box, final List<AxisAlignedBB> collisionBoxList,
-									  final Entity entity) {
-		final EnumFacing orientation = world.getBlockState(coord).getValue(FACING);
-		addCollisionBoxToList(coord, box, collisionBoxList, BOXES[orientation.ordinal()]);
+	public void addCollisionBoxToList(final IBlockState state, final World world, final BlockPos pos, final AxisAlignedBB entityBox,
+			final List<AxisAlignedBB> collisionBoxList, final Entity entityIn) {
+		final EnumFacing orientation = world.getBlockState(pos).getValue(FACING);
+		addCollisionBoxToList(pos, entityBox, collisionBoxList, BOXES[orientation.ordinal()]);
 	}
-	
+
 	@Override
 	public MMDMaterial getMMDMaterial() {
 		return this.material;

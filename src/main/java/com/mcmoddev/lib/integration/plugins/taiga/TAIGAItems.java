@@ -7,6 +7,7 @@ import com.mcmoddev.lib.init.Items;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 public class TAIGAItems extends Items {
+
 	private static boolean initDone = false;
 
 	public static void init(List<MMDMaterial> materials) {

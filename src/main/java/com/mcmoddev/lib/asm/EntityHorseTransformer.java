@@ -10,6 +10,10 @@ import org.objectweb.asm.tree.VarInsnNode;
 class EntityHorseTransformer implements ITransformer {
 
 	private static final String ASMHOOKS_INTERFACE = "com/mcmoddev/lib/asm/ASMHooks";
+	private static final String ENTITY_INIT = "func_70088_a";
+	private static final String SET_HORSEARMOR_STACK = "func_146086_d";
+	private static final String SET_HORSE_TEXTURE_PATHS = "func_110247_cG";
+	private static final String GET_TEXTURE_NAME = "func_188574_d";
 
 	@Override
 	public String getTarget() {

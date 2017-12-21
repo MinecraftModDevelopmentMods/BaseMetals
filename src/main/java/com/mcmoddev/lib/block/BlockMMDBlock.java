@@ -1,10 +1,10 @@
 package com.mcmoddev.lib.block;
 
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.lib.init.Achievements;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
@@ -64,7 +64,7 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public MapColor getMapColor(final IBlockState bs) {
+	public MapColor getMapColor(final IBlockState state) {
 		return MapColor.IRON;
 	}
 

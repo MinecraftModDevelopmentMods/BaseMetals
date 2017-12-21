@@ -19,7 +19,7 @@ import net.minecraftforge.oredict.OreDictionary;
  *
  */
 public class ArbitraryCrusherRecipe implements ICrusherRecipe {
-	
+
 	private final ItemStack input;
 	private final ItemStack output;
 

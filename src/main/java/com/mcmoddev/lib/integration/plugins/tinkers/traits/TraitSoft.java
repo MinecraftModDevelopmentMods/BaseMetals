@@ -17,7 +17,7 @@ import slimeknights.tconstruct.library.traits.AbstractTrait;
 public class TraitSoft extends AbstractTrait {
 
 	public TraitSoft() {
-		super("soft", 0xffffff);
+		super("mmd-soft", 0xffffff);
 	}
 
 	@Override

@@ -4,15 +4,17 @@ import java.util.List;
 
 import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.init.Achievements;
-import com.mcmoddev.lib.item.ItemMMDBlend;
-import com.mcmoddev.lib.item.ItemMMDIngot;
-import com.mcmoddev.lib.item.ItemMMDShield;
-import com.mcmoddev.lib.item.ItemMMDSmallBlend;
+import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
@@ -28,10 +30,13 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventHandler {
 
@@ -65,7 +70,8 @@ public class EventHandler {
 		}
 	}
 
-	@SubscribeEvent void event(ItemCraftedEvent event) {
+	@SubscribeEvent
+	void event(ItemCraftedEvent event) {
 		if (!(Options.enableAchievements())) {
 			return;
 		}
@@ -74,7 +80,7 @@ public class EventHandler {
 		if (!(item instanceof IMMDObject)) {
 			return;
 		}
-			
+
 		if ((item instanceof ItemMMDBlend) || (item instanceof ItemMMDSmallBlend)) {
 			event.player.addStat(Achievements.getAchievementByName(AchievementNames.METALLURGY), 1);
 		}
@@ -118,6 +124,7 @@ public class EventHandler {
 
 	public static InventoryCrafting getDummyCraftingInv() {
 		Container tempContainer = new Container() {
+
 			@Override
 			public boolean canInteractWith(EntityPlayer player) {
 				return false;
@@ -140,11 +147,51 @@ public class EventHandler {
 		recipeInput.setInventorySlotContents(0, left);
 		recipeInput.setInventorySlotContents(1, right);
 		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-		for (IRecipe r : recipes) {
-			if ((r instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) r).matches(recipeInput, null))) {
-				event.setOutput(r.getCraftingResult(recipeInput));
-				event.setCost(((ShieldUpgradeRecipe) r).getCost(recipeInput));
+		for (IRecipe recipe : recipes) {
+			if ((recipe instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) recipe).matches(recipeInput, null))) {
+				event.setOutput(recipe.getCraftingResult(recipeInput));
+				event.setCost(((ShieldUpgradeRecipe) recipe).getCost(recipeInput));
 			}
 		}
 	}
+
+	@SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    public void onUpdate(TickEvent.RenderTickEvent event) {
+		if ((Options.requireMMDOreSpawn()) && (Loader.isModLoaded("orespawn"))) {
+			return;
+		}
+		
+		if(!Options.fallbackOrespawn()) {
+			return;
+		}
+		
+		if( !Options.requireMMDOreSpawn() ) {
+			return;
+		}
+
+		// FIXME: .fontRenderer doesn't exist on 1.10.2
+		/*
+        GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
+        if( guiscreen == null ) return;
+    	FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
+    	int y = (guiscreen.height / 100) * 2;
+    	int x = (guiscreen.width/2);
+        
+        if (guiscreen instanceof GuiMainMenu) {
+        	guiscreen.drawCenteredString(fontRender, "MMD OreSpawn not present, but requested in configuration, using fallback generator!", x, y, 0xffffff00);        	
+        } else if(guiscreen instanceof GuiWorldSelection) {
+        	x = 10;
+        	int widest = fontRender.getStringWidth("This is likely not what you want - try turning off the 'using_orespawn' option");
+        	int shortest = fontRender.getStringWidth("Fallback Ore Spawn Generator Enabled!");
+        	int wrap = widest+50;
+
+        	if( (guiscreen.width/2) <= wrap ) {
+        		wrap = shortest + 50;
+        	}
+        	
+        	fontRender.drawSplitString("Fallback Ore Spawn Generator Enabled!\nThis is likely not what you want - try turning off the 'using_orespawn' option\n(or install MMD OreSpawn)", x, y, wrap, 0xFFFFFF00);
+        }
+		*/
+    }
 }

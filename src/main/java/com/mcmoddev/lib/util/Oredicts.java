@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.util;
 
+import com.mcmoddev.lib.data.SharedStrings;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -242,7 +244,6 @@ public class Oredicts {
 		if (item != null) {
 			OreDictionary.registerOre(name, item);
 		}
-
 	}
 
 	public static void registerOre(String name, ItemStack itemStack) {
@@ -253,6 +254,6 @@ public class Oredicts {
 	}
 
 	private Oredicts() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 }

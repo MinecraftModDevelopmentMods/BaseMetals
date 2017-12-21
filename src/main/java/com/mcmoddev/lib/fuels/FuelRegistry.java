@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class FuelRegistry {
+
 	// maps an oreDict to a burnTime
 	private static Map<String, Integer> fuelDicts = new HashMap<>();
 	private static boolean initialized = false;
@@ -47,4 +48,3 @@ public class FuelRegistry {
 		}
 	}
 }
-

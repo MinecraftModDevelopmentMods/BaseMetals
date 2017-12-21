@@ -1,10 +1,11 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	private static boolean initDone = false;
 
 	private Recipes() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -52,7 +53,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	protected static void initVanillaRecipes() {
-		MMDMaterial material;
 		String oreDictName;
 
 		if (!Options.disableAllHammerRecipes()) {
@@ -65,56 +65,58 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 
 		// Iron items
-		if (Options.isMaterialEnabled(MaterialNames.IRON)) {
-			material = Materials.getMaterialByName(MaterialNames.IRON);
-			oreDictName = material.getCapitalizedName();
+		if (Materials.hasMaterial(MaterialNames.IRON)) {
+			// this should all be handled elsewhere in 1.11
+			MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
+			oreDictName = iron.getCapitalizedName();
 
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.NUGGET), 9), Oredicts.INGOT + oreDictName)); // Not needed for 1.11.1+
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.INGOT)), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName)); // Not needed for 1.11.1+
+			// Not needed for 1.11.1+
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(iron.getItem(Names.NUGGET), 9), Oredicts.INGOT + oreDictName));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(iron.getItem(Names.INGOT)), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName));
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
-			material = Materials.getMaterialByName(MaterialNames.CHARCOAL);
-			oreDictName = material.getCapitalizedName();
+		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
+			MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
+			oreDictName = charcoal.getCapitalizedName();
 
-			if (material.hasItem(Names.POWDER)) {
-				if (material.hasBlock(Names.BLOCK)) { // Note: Minecraft does not provide a block of charcoal
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.getItem(Names.POWDER), 9));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', material.getItem(Names.POWDER)));
+			if (charcoal.hasItem(Names.POWDER)) {
+				if (charcoal.hasBlock(Names.BLOCK)) { // Note: Minecraft does not provide a block of charcoal
+					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(charcoal.getItem(Names.POWDER), 9));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(charcoal.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', charcoal.getItem(Names.POWDER)));
 				}
-				if (material.hasItem(Names.INGOT)) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(material.getItem(Names.INGOT), 1, 1), new ItemStack(material.getItem(Names.POWDER), 1));
+				if (charcoal.hasItem(Names.INGOT)) {
+					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(charcoal.getItem(Names.INGOT), 1, 1), new ItemStack(charcoal.getItem(Names.POWDER), 1));
 				}
-				if (material.hasItem(Names.SMALLPOWDER)) {
-					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLPOWDER), 9), new ItemStack(material.getItem(Names.POWDER))));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(material.getItem(Names.SMALLPOWDER))));
-					if (material.hasItem(Names.NUGGET)) {
-						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.getItem(Names.SMALLPOWDER), 1));
+				if (charcoal.hasItem(Names.SMALLPOWDER)) {
+					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(charcoal.getItem(Names.SMALLPOWDER), 9), new ItemStack(charcoal.getItem(Names.POWDER))));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(charcoal.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(charcoal.getItem(Names.SMALLPOWDER))));
+					if (charcoal.hasItem(Names.NUGGET)) {
+						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(charcoal.getItem(Names.SMALLPOWDER), 1));
 					}
 				}
 			}
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
-			material = Materials.getMaterialByName(MaterialNames.COAL);
-			oreDictName = material.getCapitalizedName();
+		if (Materials.hasMaterial(MaterialNames.COAL)) {
+			MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
+			oreDictName = coal.getCapitalizedName();
 
-			if (material.hasItem(Names.POWDER)) {
-				if (material.hasItem(Names.ORE)) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, new ItemStack(material.getItem(Names.POWDER), 2));
+			if (coal.hasItem(Names.POWDER)) {
+				if (coal.hasItem(Names.ORE)) {
+					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, new ItemStack(coal.getItem(Names.POWDER), 2));
 				}
-				if (material.hasBlock(Names.BLOCK)) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(material.getItem(Names.POWDER), 9));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', material.getItem(Names.POWDER)));
+				if (coal.hasBlock(Names.BLOCK)) {
+					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(coal.getItem(Names.POWDER), 9));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(coal.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', coal.getItem(Names.POWDER)));
 				}
-				if (material.hasItem(Names.INGOT)) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(material.getItem(Names.INGOT), 1, 0), new ItemStack(material.getItem(Names.POWDER), 1));
+				if (coal.hasItem(Names.INGOT)) {
+					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(coal.getItem(Names.INGOT), 1, 0), new ItemStack(coal.getItem(Names.POWDER), 1));
 				}
-				if (material.hasItem(Names.SMALLPOWDER)) {
-					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItem(Names.SMALLPOWDER), 9), new ItemStack(material.getItem(Names.POWDER))));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(material.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(material.getItem(Names.SMALLPOWDER))));
-					if (material.hasItem(Names.NUGGET)) {
-						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(material.getItem(Names.SMALLPOWDER), 1));
+				if (coal.hasItem(Names.SMALLPOWDER)) {
+					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(coal.getItem(Names.SMALLPOWDER), 9), new ItemStack(coal.getItem(Names.POWDER))));
+					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(coal.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(coal.getItem(Names.SMALLPOWDER))));
+					if (coal.hasItem(Names.NUGGET)) {
+						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(coal.getItem(Names.SMALLPOWDER), 1));
 					}
 				}
 			}
@@ -122,65 +124,71 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	private static void initModSpecificRecipes() {
-		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
+		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
+			final MMDMaterial adamantine = Materials.getMaterialByName(MaterialNames.ADAMANTINE);
+
 			// Alt oreDict Adamantite
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamantite");
+			addAdditionalOredicts(adamantine, "Adamantite");
 
 			// Alt oreDict Adamantium
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamantium");
+			addAdditionalOredicts(adamantine, "Adamantium");
 
 			// Alt oreDict Adamant
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamant");
+			addAdditionalOredicts(adamantine, "Adamant");
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM)) {
+		if (Materials.hasMaterial(MaterialNames.AQUARIUM)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.AQUARIUM), 3, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.PRISMARINE, MaterialNames.PRISMARINE, MaterialNames.PRISMARINE);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.BRASS)) {
+		if (Materials.hasMaterial(MaterialNames.BRASS)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.BRASS), 3, MaterialNames.COPPER, MaterialNames.COPPER, "Zinc");
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.BRONZE)) {
+		if (Materials.hasMaterial(MaterialNames.BRONZE)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.BRONZE), 4, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.TIN);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL)) {
+		if (Materials.hasMaterial(MaterialNames.CUPRONICKEL)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.CUPRONICKEL), 4, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.NICKEL);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.ELECTRUM)) {
+		if (Materials.hasMaterial(MaterialNames.ELECTRUM)) {
 			addSimpleAlloyRecipe(Materials.getMaterialByName(MaterialNames.ELECTRUM), 2, MaterialNames.GOLD, MaterialNames.SILVER);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.INVAR)) {
+		if (Materials.hasMaterial(MaterialNames.INVAR)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.INVAR), 3, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.NICKEL);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY), "Quicksilver");
+		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
+			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
+
+			addAdditionalOredicts(mercury, "Quicksilver");
 
 			if (FluidRegistry.isUniversalBucketEnabled()) {
 				final UniversalBucket universalBucket = ForgeModContainer.getInstance().universalBucket;
 				final ItemStack bucketMercury = new ItemStack(universalBucket, 1, 0);
-				universalBucket.fill(bucketMercury, new FluidStack(Materials.getMaterialByName(MaterialNames.MERCURY).getFluid(), universalBucket.getCapacity()), true);
+				universalBucket.fill(bucketMercury, new FluidStack(mercury.getFluid(), universalBucket.getCapacity()), true);
 				GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY));
 			}
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.MITHRIL)) {
+		if (Materials.hasMaterial(MaterialNames.MITHRIL)) {
 			addAlloyRecipe(Materials.getMaterialByName(MaterialNames.MITHRIL), 3, MaterialNames.SILVER, MaterialNames.SILVER, MaterialNames.COLDIRON, MaterialNames.MERCURY);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STEEL);
-			OreDictionary.registerOre(Oredicts.SPROCKET, material.getItem(Names.GEAR));
+		if (Materials.hasMaterial(MaterialNames.STEEL)) {
+			final MMDMaterial steel = Materials.getMaterialByName(MaterialNames.STEEL);
+			if (steel.hasItem(Names.GEAR)) {
+				OreDictionary.registerOre(Oredicts.SPROCKET, steel.getItem(Names.GEAR));
+			}
 
-			// addAlloyRecipe(material, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, "Carbon");
+			// addAlloyRecipe(steel, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, "Carbon");
 
-			addAlloyRecipe(material, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.CHARCOAL);
+			addAlloyRecipe(steel, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.CHARCOAL);
 
-			addAlloyRecipe(material, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.COAL);
+			addAlloyRecipe(steel, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.COAL);
 
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.ACTIVATOR_RAIL, 6), "x/x", "x*x", "x/x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '*', net.minecraft.init.Blocks.REDSTONE_TORCH));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Blocks.DETECTOR_RAIL, 6), "x x", "x-x", "x*x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, '-', net.minecraft.init.Blocks.STONE_PRESSURE_PLATE, '*', Oredicts.DUST_REDSTONE));

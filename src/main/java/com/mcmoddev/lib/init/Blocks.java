@@ -13,10 +13,12 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
 
@@ -49,7 +51,7 @@ public abstract class Blocks {
 	private static final EnumMap<Names, Boolean> nameToEnabled = new EnumMap<>(Names.class);
 
 	protected Blocks() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -60,14 +62,14 @@ public abstract class Blocks {
 			return;
 		}
 		com.mcmoddev.basemetals.util.Config.init();
-		
+
 		mapNameToClass(Names.ANVIL, BlockMMDAnvil.class);
 		mapNameToClass(Names.BARS, BlockMMDBars.class);
 		mapNameToClass(Names.BLOCK, BlockMMDBlock.class);
 		mapNameToClass(Names.BOOKSHELF, BlockMMDBookshelf.class);
 		mapNameToClass(Names.BUTTON, BlockMMDButton.class);
 		mapNameToClass(Names.DOOR, BlockMMDDoor.class);
-		mapNameToClass(Names.DOUBLE_SLAB, BlockMMDSlab.class);
+		mapNameToClass(Names.DOUBLE_SLAB, BlockMMDDoubleSlab.class);
 		mapNameToClass(Names.FLOWER_POT, BlockMMDFlowerPot.class);
 		mapNameToClass(Names.LADDER, BlockMMDLadder.class);
 		mapNameToClass(Names.LEVER, BlockMMDLever.class);
@@ -84,7 +86,7 @@ public abstract class Blocks {
 		mapNameToClass(Names.NETHERORE, BlockMMDNetherOre.class);
 		mapNameToClass(Names.ENDORE, BlockMMDEndOre.class);
 		mapNameToClass(Names.ORE, BlockMMDOre.class);
-		
+
 		mapNameToOredict(Names.ANVIL, null);
 		mapNameToOredict(Names.BARS, Oredicts.BARS);
 		mapNameToOredict(Names.BLOCK, Oredicts.BLOCK);
@@ -267,10 +269,12 @@ public abstract class Blocks {
 			return material.getBlock(name);
 		}
 
-		if ((((name.equals(Names.ANVIL)) || (name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE)) || (name.equals(Names.FLOWER_POT))
-				|| (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS)) || (name.equals(Names.TRIPWIRE_HOOK)) || (name.equals(Names.WALL)))
+		if ((((name.equals(Names.ANVIL)) || (name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE))
+				|| (name.equals(Names.FLOWER_POT)) || (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS))
+				|| (name.equals(Names.TRIPWIRE_HOOK)) || (name.equals(Names.WALL)))
 				&& (!material.hasBlock(Names.BLOCK)))
-			|| (((name.equals(Names.ORE)) || name.equals(Names.ENDORE) || name.equals(Names.NETHERORE)) && (!material.hasOre()))) {
+				|| (((name.equals(Names.ORE)) || name.equals(Names.ENDORE) || name.equals(Names.NETHERORE))
+						&& (!material.hasOre()))) {
 			return null;
 		}
 
@@ -321,38 +325,24 @@ public abstract class Blocks {
 	 * @return a new block
 	 */
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
-		String fullName;
 
-		if (material != null) {
-			if (block instanceof BlockMMDDoubleSlab) {
-				fullName = "double_" + material.getName() + "_" + Names.SLAB;
-			} else if ((name.startsWith("nether")) || (name.startsWith("end"))) {
-				String neededBit = name.substring(0, name.length() - 3);
-				fullName = neededBit + "_" + material.getName() + "_" + "ore";
-			} else {
-				fullName = material.getName() + "_" + name;
-			}
-		} else if (block instanceof BlockMMDDoubleSlab) {
-			fullName = "double_" + name;
-		} else {
-			fullName = name;
+		if ((block == null) || (name == null)) {
+			return null;
 		}
+
+		final String fullName = getBlockFullName(block, material, name);
 
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 		GameRegistry.register(block);
+
 		if (block instanceof BlockFluidBase) {
 			fluidBlockRegistry.put(fullName, (BlockFluidBase) block);
 		} else {
 			blockRegistry.put(fullName, block);
 		}
 
-		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab)) {
-			final ItemBlock itemBlock = new ItemBlock(block);
-			itemBlock.setRegistryName(fullName);
-			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-			GameRegistry.register(itemBlock);
-		}
+		maybeMakeItemBlock(block, material, fullName);
 
 		if (tab != null) {
 			block.setCreativeTab(tab);
@@ -364,6 +354,29 @@ public abstract class Blocks {
 		}
 
 		return block;
+	}
+
+	private static void maybeMakeItemBlock(Block block, MMDMaterial material, String fullName) {
+		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab) && (material != null) ) {
+			final ItemBlock itemBlock = new ItemMMDBlock(material, block);
+			itemBlock.setRegistryName(block.getRegistryName());
+			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
+			GameRegistry.register(itemBlock);
+			material.addNewItem("ItemBlock_"+fullName, itemBlock);
+		}
+	}
+
+	private static String getBlockFullName(@Nonnull final Block block, final MMDMaterial material, @Nonnull final String name) {
+		if (block instanceof BlockMMDDoubleSlab) {
+			return String.format( "double_%s_%s", material.getName(), Names.SLAB );
+		} else if ((name.startsWith("nether")) || (name.startsWith("end"))) {
+			String neededBit = name.substring(0, name.length() - 3);
+			return String.format( "%s_%s_%s", neededBit, material.getName(), Names.ORE );
+		} else if( material != null ) {
+			return String.format("%s_%s", material.getName(), name );
+		} else {
+			return name;
+		}
 	}
 
 	private static Block createBlock(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Block> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {

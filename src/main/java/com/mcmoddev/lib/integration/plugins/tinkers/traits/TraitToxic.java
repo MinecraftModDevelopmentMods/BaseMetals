@@ -12,7 +12,7 @@ import slimeknights.tconstruct.library.traits.AbstractTrait;
 public class TraitToxic extends AbstractTrait {
 
 	public TraitToxic() {
-		super("toxic", TextFormatting.GREEN);
+		super("mmd-toxic", TextFormatting.GREEN);
 	}
 
 	@Override
