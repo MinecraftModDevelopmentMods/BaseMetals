@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.util;
 
-public class HashTuple2<A, B> {
+public final class HashTuple2<A, B> {
 
     public final A a;
     public final B b;
