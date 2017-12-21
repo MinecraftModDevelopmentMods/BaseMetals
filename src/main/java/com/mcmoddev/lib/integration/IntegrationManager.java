@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public enum IntegrationManager {
+
 	INSTANCE;
 
 	private final List<IIntegration> integrations = Lists.newArrayList();

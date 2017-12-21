@@ -17,13 +17,9 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
  */
 public class VillagerTradeHelper {
 
-	private static final ResourceLocation[] professionList = {
-			new ResourceLocation("minecraft:farmer"),
-			new ResourceLocation("minecraft:librarian"),
-			new ResourceLocation("minecraft:priest"),
-			new ResourceLocation("minecraft:smith"),
-			new ResourceLocation("minecraft:butcher")
-	};
+	private static final ResourceLocation[] professionList = { new ResourceLocation("minecraft:farmer"),
+			new ResourceLocation("minecraft:librarian"), new ResourceLocation("minecraft:priest"),
+			new ResourceLocation("minecraft:smith"), new ResourceLocation("minecraft:butcher") };
 
 	protected VillagerTradeHelper() {
 		throw new IllegalAccessError("Not a instantiable class");

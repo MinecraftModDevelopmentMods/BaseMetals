@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.MMDCreativeTab;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.TabContainer;
@@ -29,7 +30,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	public static final TabContainer myTabs = new TabContainer(blocksTab, itemsTab, toolsTab);
 
 	private ItemGroups() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -51,7 +52,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
 		MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
 		MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
-		
+
 		if ((Materials.hasMaterial(MaterialNames.STARSTEEL)) && (starsteel.hasBlock(Names.BLOCK))) {
 			temp = starsteel.getBlock(Names.BLOCK);
 		} else {

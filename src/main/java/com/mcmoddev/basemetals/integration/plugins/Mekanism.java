@@ -3,7 +3,6 @@ package com.mcmoddev.basemetals.integration.plugins;
 import com.mcmoddev.basemetals.BaseMetals;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -14,9 +13,11 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
 public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase implements IIntegration {
 
@@ -30,19 +31,11 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 
 		MinecraftForge.EVENT_BUS.register(this);
 
-		final String[] baseNames = new String[] {
-				MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM,
-				MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL,
-				MaterialNames.ZINC
-		};
+		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
+				MaterialNames.STARSTEEL, MaterialNames.ZINC };
 
-		for (int i = 0; i < baseNames.length; i++) {
-			final String materialName = baseNames[i];
+		for (final String materialName : baseNames) {
 			if (Materials.hasMaterial(materialName)) {
 				addGassesForMaterial(materialName);
 			}
@@ -53,20 +46,13 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 
     @SubscribeEvent
     public void regCallback(RegistryEvent.Register<IRecipe> event) {
-		final String[] baseNames = new String[] {
-				MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM,
-				MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL,
-				MaterialNames.ZINC
-		};
+		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
+				MaterialNames.STARSTEEL, MaterialNames.ZINC };
 
 	    for (final String materialName : baseNames) {
 		    if (Materials.hasMaterial(materialName)) {
-			    addOreMultiplicationRecipes( materialName);
+			    addOreMultiplicationRecipes(materialName);
 		    }
 	    }
 

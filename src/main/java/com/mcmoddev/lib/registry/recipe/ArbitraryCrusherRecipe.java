@@ -20,10 +20,10 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
  *
  */
 public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> implements ICrusherRecipe {
-	
+
 	private final ItemStack input;
 	private final ItemStack output;
-	
+
 	/**
 	 * Constructs a new instance of this ICrusherRecipe class representing a
 	 * recipe with an input and an output. If the input ItemStack has

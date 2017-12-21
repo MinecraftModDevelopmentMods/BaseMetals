@@ -9,6 +9,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.fluids.CustomFluid;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -43,7 +44,7 @@ public abstract class Fluids {
 	private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
 
 	protected Fluids() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -70,7 +71,8 @@ public abstract class Fluids {
 
 		final Fluid fluid = new CustomFluid(material.getName(),
 				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"), tintColor);
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"),
+				tintColor);
 		fluid.setDensity(density);
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);
@@ -104,12 +106,11 @@ public abstract class Fluids {
 		if (!name.equals(MaterialNames.MERCURY)) {
 			block = new BlockFluidClassic(material.getFluid(), Material.LAVA);
 		} else {
-			block = new InteractiveFluidBlock(getFluidByName(name), false,
-					(World w, EntityLivingBase e) -> {
-						if (w.rand.nextInt(32) == 0) {
-							e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
-						}
-					});
+			block = new InteractiveFluidBlock(getFluidByName(name), false, (World w, EntityLivingBase e) -> {
+				if (w.rand.nextInt(32) == 0) {
+					e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
+				}
+			});
 		}
 
 		block.setRegistryName(name); // fullName

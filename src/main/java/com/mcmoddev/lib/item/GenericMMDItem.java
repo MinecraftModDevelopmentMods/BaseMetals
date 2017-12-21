@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
  *
  */
 public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObject {
+
 	private int burnTime = 0;
 
 	private final MMDMaterial material;
@@ -45,5 +46,4 @@ public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObjec
 			return itemStack.getItem().getItemBurnTime(itemStack);
 		}
 	}
-
 }

@@ -38,7 +38,6 @@ public class CommonProxy {
 	public boolean allsGood = false;
 	
 	public void preInit(FMLPreInitializationEvent event) {
-		BaseMetals.logger.debug("CommonProxy preInit() with event %s", event.description());
 
 		Config.init();
 
@@ -47,7 +46,7 @@ public class CommonProxy {
 				GameRegistry.registerWorldGenerator(new FallbackGenerator(), 0);
 			} else {
 				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
-				orespawnMod.add(new DefaultArtifactVersion("3.1.0"));
+				orespawnMod.add(new DefaultArtifactVersion("3.2.0"));
 				throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod (fallback generator disabled, MMD OreSpawn enabled)");
 			}
 		}
@@ -69,11 +68,11 @@ public class CommonProxy {
 	}
 
 	public void onRemapBlock(RegistryEvent.MissingMappings<Block> event) {
-		for ( final RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings() ) {
-			if( mapping.key.getResourceDomain().equals(BaseMetals.MODID) ) {
+		for (final RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings()) {
+			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID) ) {
 				if ((Materials.hasMaterial(MaterialNames.MERCURY)) && ("liquid_mercury".equals(mapping.key.getResourcePath()))) {
 					mapping.remap(Materials.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
-				}				
+				}
 			}
 		}
 	}
@@ -87,26 +86,25 @@ public class CommonProxy {
 			}
 		}
 	}
-	
+
 	public void init(FMLInitializationEvent event) {
 		allsGood = false;
-		BaseMetals.logger.debug("CommonProxt init() with event %s", event.description());
 		Recipes.init();
-		
+
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		allsGood = true;
-		
+
 		// by this point all materials should have been registered both with MMDLib and Minecraft
 		// move to a separate function - potentially in FallbackGeneratorData - after the test
-		for( MMDMaterial mat : Materials.getAllMaterials() ) {
-			if( mat.hasBlock(Names.ORE) ){
+		for (MMDMaterial mat : Materials.getAllMaterials()) {
+			if (mat.hasBlock(Names.ORE)){
 				FallbackGeneratorData.getInstance().addMaterial(mat.getName(), Names.ORE.toString(), mat.getDefaultDimension());
-				
-				if( mat.hasBlock(Names.NETHERORE) )
+
+				if (mat.hasBlock(Names.NETHERORE))
 					FallbackGeneratorData.getInstance().addMaterial(mat.getName(), Names.NETHERORE.toString(), -1);
-				
-				if( mat.hasBlock(Names.ENDORE) )
+
+				if (mat.hasBlock(Names.ENDORE))
 					FallbackGeneratorData.getInstance().addMaterial(mat.getName(), Names.ENDORE.toString(), 1);
 			}
 		}
@@ -114,7 +112,6 @@ public class CommonProxy {
 
 	public void postInit(FMLPostInitializationEvent event) {
 		allsGood = false;
-		BaseMetals.logger.debug("CommonProxt postInit() with event %s", event.description());
 		IntegrationManager.INSTANCE.runCallbacks("postInit");
 		Config.postInit();
 		allsGood = true;

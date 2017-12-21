@@ -55,7 +55,7 @@ public class ItemMMDCrossbow extends ItemCrossbow implements IMMDObject {
 			item.setItemDamage(item.getItemDamage() - 1);
 		}
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);

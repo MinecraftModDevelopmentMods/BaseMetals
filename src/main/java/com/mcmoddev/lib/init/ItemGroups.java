@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.lib.data.SharedStrings;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 
@@ -32,7 +34,7 @@ public class ItemGroups {
 	private static boolean initDone = false;
 
 	protected ItemGroups() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -49,7 +51,7 @@ public class ItemGroups {
 	protected static int addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
 		String modName = Loader.instance().activeModContainer().getModId();
 		String internalTabName = String.format("%s.%s", modName, name);
-		MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable, null);
+		MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable);
 		if (itemGroupsByModID.containsKey(modName)) {
 			itemGroupsByModID.get(modName).add(tab);
 		} else {

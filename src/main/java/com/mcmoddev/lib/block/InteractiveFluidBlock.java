@@ -109,7 +109,7 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 			return 30;
 		return 0;
 	}
-	
+
 	/**
 	 * @deprecated
 	 */

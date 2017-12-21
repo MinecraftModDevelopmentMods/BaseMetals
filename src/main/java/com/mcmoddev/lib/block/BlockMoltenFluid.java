@@ -19,6 +19,5 @@ public class BlockMoltenFluid extends net.minecraftforge.fluids.BlockFluidClassi
 	 */
 	public BlockMoltenFluid(@Nonnull Fluid fluid) {
 		super(fluid, Material.LAVA);
-
 	}
 }

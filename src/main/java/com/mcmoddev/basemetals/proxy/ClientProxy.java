@@ -4,6 +4,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
+import com.mcmoddev.lib.client.registrations.RegistrationHelper;
 import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
 import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
 import com.mcmoddev.lib.entity.EntityCustomArrow;
@@ -50,23 +51,10 @@ public class ClientProxy extends CommonProxy {
 	@SubscribeEvent
 	public void fluidRendering(RegistryEvent.Register<MMDMaterial> ev) {
 		for (final String name : Fluids.getFluidBlockRegistry().keySet()) {
-			final Block block = Fluids.getFluidBlockByName(name);
-			final Item item = Item.getItemFromBlock(block);
-			if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {
-				continue;
-			}
-			final ModelResourceLocation fluidModelLocation = new ModelResourceLocation(item.getRegistryName().getResourceDomain() + ":" + name, "fluid");
-			ModelBakery.registerItemVariants(item);
-			ModelLoader.setCustomMeshDefinition(item, stack -> fluidModelLocation);
-			ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-				@Override
-				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-					return fluidModelLocation;
-				}
-			});
+			RegistrationHelper.registerFluidRender(name);
 		}
 	}
-	
+
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
@@ -75,39 +63,11 @@ public class ClientProxy extends CommonProxy {
 		}
 
 		for (final String name : Items.getItemRegistry().keySet()) {
-			registerRenderOuter(Items.getItemByName(name));
+			RegistrationHelper.registerItemRender(name);
 		}
 
 		for (final String name : Blocks.getBlockRegistry().keySet()) {
-			registerRenderOuter(Blocks.getBlockByName(name));
+			RegistrationHelper.registerBlockRender(name);
 		}
-	}
-
-	private void registerRenderOuter ( Item item ) {
-		if (item != null) {
-			registerRender(item, Items.getNameOfItem(item));
-		}
-	}
-
-	private void registerRenderOuter ( Block block ) {
-		if ((block instanceof BlockDoor) || (block instanceof BlockSlab)) {
-			return; // do not add door blocks or slabs
-		}
-
-		if (block != null) {
-			registerRender(Item.getItemFromBlock(block), Blocks.getNameOfBlock(block));
-		}
-	}
-
-	public void registerRender(Item item, String name) {
-		final ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher(); 
-		if (!item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {
-			return;
-		}
-
-		String resourceDomain = item.getRegistryName().getResourceDomain();
-		ResourceLocation resLoc = new ResourceLocation(resourceDomain, name);
-		itemModelMesher.register(item, 0, new ModelResourceLocation(resLoc, "inventory"));
-//		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(resLoc, "inventory"));
 	}
 }

@@ -1,17 +1,15 @@
 package com.mcmoddev.basemetals.init;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Arrays;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.item.ItemMMDNugget;
-import com.mcmoddev.lib.item.ItemMMDPowder;
-import com.mcmoddev.lib.item.ItemMMDSmallPowder;
-import com.mcmoddev.lib.item.ItemMMDBlock;
+import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -37,7 +35,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	private static TabContainer myTabs = ItemGroups.myTabs;
 
 	protected Items() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -51,22 +49,23 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		// IoC resolutions here
 		BMeIoC IoC = BMeIoC.getInstance();
 		myTabs = IoC.resolve(ITabProvider.class);
-		
+
 		com.mcmoddev.basemetals.util.Config.init();
 		Blocks.init();
 		com.mcmoddev.lib.init.Items.init();
 
 		// create and register vanilla stuffs
-		Map<String,MMDMaterial> vanillaMats = new HashMap<>();
+		Map<String, MMDMaterial> vanillaMats = new HashMap<>();
 
-		List<String> vanillaMatNames = Arrays.asList( MaterialNames.CHARCOAL, MaterialNames.COAL, MaterialNames.DIAMOND, 
-				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON, MaterialNames.LAPIS, MaterialNames.OBSIDIAN,
-				MaterialNames.QUARTZ, MaterialNames.REDSTONE, MaterialNames.STONE, MaterialNames.WOOD );
+		List<String> vanillaMatNames = Arrays.asList(MaterialNames.CHARCOAL, MaterialNames.COAL, MaterialNames.DIAMOND,
+				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON, MaterialNames.LAPIS,
+				MaterialNames.OBSIDIAN, MaterialNames.QUARTZ, MaterialNames.REDSTONE, MaterialNames.STONE,
+				MaterialNames.WOOD);
 
-		vanillaMatNames.forEach( name -> vanillaMats.put(name,  Materials.getMaterialByName(name)) );
+		vanillaMatNames.forEach(name -> vanillaMats.put(name, Materials.getMaterialByName(name)));
 
-		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT, new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
-		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT, new ItemStack(net.minecraft.init.Items.COAL, 1, 0).getItem());
+		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT,	new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
+		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT,	new ItemStack(net.minecraft.init.Items.COAL, 1, 0).getItem());
 
 		addDiamondBits();
 		addGoldBits();
@@ -82,25 +81,27 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		doSpecialMats();
 
 		// create and register modded stuffs
-		List<String> matsModSupport = Arrays.asList( MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY, MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL, MaterialNames.ZINC );
+		List<String> matsModSupport = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
+				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 
-		List<String> myModMats = Arrays.asList( MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY, MaterialNames.AQUARIUM,
-				MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON, MaterialNames.COPPER,
-				MaterialNames.CUPRONICKEL, MaterialNames.EMERALD, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.LEAD,
-				MaterialNames.OBSIDIAN, MaterialNames.MITHRIL, MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM, 
-				MaterialNames.QUARTZ, MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
+		List<String> myModMats = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY, MaterialNames.AQUARIUM,
+				MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
+				MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.EMERALD, MaterialNames.ELECTRUM,
+				MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.OBSIDIAN, MaterialNames.MITHRIL,
+				MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.QUARTZ,
+				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
 				MaterialNames.ZINC);
 
 		myModMats.stream()
-			.filter(Materials::hasMaterial)
-			.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-			.forEach(name -> createItemsFull(Materials.getMaterialByName(name), myTabs));
+				.filter(Materials::hasMaterial)
+				.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
+				.forEach(name -> createItemsFull(Materials.getMaterialByName(name), myTabs));
 
 		matsModSupport.stream()
-			.filter(Materials::hasMaterial)
-			.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-			.forEach(name -> createItemsModSupport(Materials.getMaterialByName(name), myTabs));
+				.filter(Materials::hasMaterial)
+				.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
+				.forEach(name -> createItemsModSupport(Materials.getMaterialByName(name), myTabs));
 
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
@@ -160,7 +161,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.INGOT, redstone, myTabs.itemsTab);
 			create(Names.SMALLPOWDER, redstone, myTabs.itemsTab);
 		}
-		
+
 		if (Materials.hasMaterial(MaterialNames.LAPIS)) {
 			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.LAPIS), myTabs.itemsTab);
 		}

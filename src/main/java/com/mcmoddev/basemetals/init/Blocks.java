@@ -1,9 +1,12 @@
 package com.mcmoddev.basemetals.init;
 
+import java.util.Arrays;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -13,7 +16,6 @@ import com.mcmoddev.lib.util.TabContainer;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import java.util.Arrays;
 
 /**
  * This class initializes all blocks in Base Metals.
@@ -23,13 +25,13 @@ import java.util.Arrays;
  */
 public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
-	static Block humanDetector;
+	public static Block humanDetector;
 
 	private static boolean initDone = false;
 	private static TabContainer myTabs;
 
 	protected Blocks() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -39,11 +41,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (initDone) {
 			return;
 		}
-		
+
 		// IoC resolutions here
 		BMeIoC IoC = BMeIoC.getInstance();
 		myTabs = IoC.resolve(ITabProvider.class);
-		
+
 		com.mcmoddev.basemetals.util.Config.init();
 		com.mcmoddev.lib.init.Blocks.init();
 		Materials.init();
@@ -51,21 +53,22 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		registerVanilla();
 
-		String[] simpleFullBlocks = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY, MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.NICKEL, MaterialNames.PLATINUM,
-				MaterialNames.SILVER, MaterialNames.TIN, MaterialNames.ZINC };
+		String[] simpleFullBlocks = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD,
+				MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER, MaterialNames.TIN,
+				MaterialNames.ZINC };
 
 		String[] alloyFullBlocks = new String[] { MaterialNames.AQUARIUM, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL, MaterialNames.PEWTER,
-				MaterialNames.STEEL };
+				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
+				MaterialNames.PEWTER, MaterialNames.STEEL };
 
 		Arrays.stream(simpleFullBlocks)
-			.filter(Materials::hasMaterial)
-			.forEach(name -> createBlocksFull(name, myTabs));
+				.filter(Materials::hasMaterial)
+				.forEach(name -> createBlocksFull(name, myTabs));
 
 		Arrays.stream(alloyFullBlocks)
-			.filter(Materials::hasMaterial)
-			.forEach(name -> createBlocksFullOreless(name, myTabs));
+				.filter(Materials::hasMaterial)
+				.forEach(name -> createBlocksFull(name, myTabs));
 
 		createStarSteel();
 		createMercury();

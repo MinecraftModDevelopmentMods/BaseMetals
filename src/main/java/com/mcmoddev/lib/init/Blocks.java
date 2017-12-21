@@ -12,12 +12,13 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.TabContainer;
 
@@ -49,7 +50,7 @@ public abstract class Blocks {
 	private static final EnumMap<Names, Boolean> nameToEnabled = new EnumMap<>(Names.class);
 
 	protected Blocks() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -60,7 +61,7 @@ public abstract class Blocks {
 			return;
 		}
 		com.mcmoddev.basemetals.util.Config.init();
-		
+
 		mapNameToClass(Names.ANVIL, BlockMMDAnvil.class);
 		mapNameToClass(Names.BARS, BlockMMDBars.class);
 		mapNameToClass(Names.BLOCK, BlockMMDBlock.class);
@@ -84,7 +85,7 @@ public abstract class Blocks {
 		mapNameToClass(Names.NETHERORE, BlockMMDNetherOre.class);
 		mapNameToClass(Names.ENDORE, BlockMMDEndOre.class);
 		mapNameToClass(Names.ORE, BlockMMDOre.class);
-		
+
 		mapNameToOredict(Names.ANVIL, null);
 		mapNameToOredict(Names.BARS, Oredicts.BARS);
 		mapNameToOredict(Names.BLOCK, Oredicts.BLOCK);
@@ -210,10 +211,6 @@ public abstract class Blocks {
 	protected static void createBlocksFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createBlocksFull(Materials.getMaterialByName(materialName), tabs);
 	}
-	
-	protected static void createBlocksFullOreless(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createBlocksFullOreless(Materials.getMaterialByName(materialName), tabs);
-	}
 
 	/**
 	 * 
@@ -229,26 +226,6 @@ public abstract class Blocks {
 
 	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
 		return create(name, Materials.getMaterialByName(materialName), false, tab);
-	}
-	
-	protected static void createBlocksFullOreless(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if ((material == null) || (tabs == null)) {
-			return;
-		}
-
-		create(Names.BLOCK, material, tabs.blocksTab);
-		create(Names.PLATE, material, tabs.blocksTab);
-		create(Names.BARS, material, tabs.blocksTab);
-		create(Names.DOOR, material, tabs.blocksTab);
-		create(Names.TRAPDOOR, material, tabs.blocksTab);
-
-		create(Names.BUTTON, material, tabs.blocksTab);
-		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.DOUBLE_SLAB, material, tabs.blocksTab);
-		create(Names.LEVER, material, tabs.blocksTab);
-		create(Names.PRESSURE_PLATE, material, tabs.blocksTab);
-		create(Names.STAIRS, material, tabs.blocksTab);
-		create(Names.WALL, material, tabs.blocksTab);		
 	}
 
 	/**
@@ -292,13 +269,16 @@ public abstract class Blocks {
 			final String oredict = getOredictFromName(name);
 			if ((oredict != null) && (b != null)) {
 				Oredicts.registerOre(oredict + material.getCapitalizedName(), b);
-			}			
+			}
 			return material.getBlock(name);
 		}
 
-		if (((name.equals(Names.ANVIL)) || (name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE)) || (name.equals(Names.FLOWER_POT))
-				|| (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS)) || (name.equals(Names.TRIPWIRE_HOOK)) || (name.equals(Names.WALL)))
-				&& (!material.hasBlock(Names.BLOCK))) {
+		if ((((name.equals(Names.ANVIL)) || (name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE))
+				|| (name.equals(Names.FLOWER_POT)) || (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS))
+				|| (name.equals(Names.TRIPWIRE_HOOK)) || (name.equals(Names.WALL)))
+				&& (!material.hasBlock(Names.BLOCK)))
+				|| (((name.equals(Names.ORE)) || name.equals(Names.ENDORE) || name.equals(Names.NETHERORE))
+						&& (!material.hasOre()))) {
 			return null;
 		}
 
@@ -354,11 +334,11 @@ public abstract class Blocks {
 			return null;
 		}
 
-		String fullName = getBlockFullName(block, material, name);
+		final String fullName = getBlockFullName(block, material, name);
 
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-		
+
 		if (block instanceof BlockFluidBase) {
 			fluidBlockRegistry.put(fullName, (BlockFluidBase) block);
 		} else {
@@ -371,8 +351,10 @@ public abstract class Blocks {
 			block.setCreativeTab(tab);
 		}
 
-		blocksByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
-		blocksByMaterial.get(material).add(block);
+		if (material != null) {
+			blocksByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
+			blocksByMaterial.get(material).add(block);
+		}
 
 		return block;
 	}

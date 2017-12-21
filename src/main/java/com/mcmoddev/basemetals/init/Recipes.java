@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -20,7 +21,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	private static boolean initDone = false;
 
 	private Recipes() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -40,7 +41,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		initVanillaRecipes();
 		initGeneralRecipes();
 		initModSpecificRecipes();
-		
+
 		initDone = true;
 	}
 
@@ -51,14 +52,16 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 	private static void initModSpecificRecipes() {
 		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
+			final MMDMaterial adamantine = Materials.getMaterialByName(MaterialNames.ADAMANTINE);
+
 			// Alt oreDict Adamantite
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamantite");
+			addAdditionalOredicts(adamantine, "Adamantite");
 
 			// Alt oreDict Adamantium
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamantium");
+			addAdditionalOredicts(adamantine, "Adamantium");
 
 			// Alt oreDict Adamant
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamant");
+			addAdditionalOredicts(adamantine, "Adamant");
 		}
 
 		if (Materials.hasMaterial(MaterialNames.STEEL)) {
@@ -70,9 +73,9 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 		// new recipes using rods and gears
 	}
-	
+
 	@SubscribeEvent
-	public static void registerRecipes( RegistryEvent.Register<IRecipe> event ) {
-		register( event );
+	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+		register(event);
 	}
 }

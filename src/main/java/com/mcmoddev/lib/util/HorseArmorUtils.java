@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mcmoddev.lib.data.SharedStrings;
+
 import net.minecraft.entity.passive.HorseArmorType;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -16,7 +18,7 @@ public class HorseArmorUtils {
 	private static final Map<String, HorseArmorType> TYPES = new HashMap<>();
 
 	private HorseArmorUtils() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	public static HorseArmorType getArmorType(int protection, @Nonnull String lowerName, @Nonnull String hash) {

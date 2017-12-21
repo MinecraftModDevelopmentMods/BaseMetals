@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
 public final class TraitLocations {
+
 	public static final String HEAD = "head";
 	public static final String HANDLE = "handle";
 	public static final String EXTRA = "extra";

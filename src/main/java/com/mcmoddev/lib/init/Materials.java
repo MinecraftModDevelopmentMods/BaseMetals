@@ -8,8 +8,10 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.Lists;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.ConfigBase;
@@ -22,8 +24,6 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
-
-
 
 /**
  * This class initializes all of the materials in Base Metals. It also contains
@@ -41,6 +41,8 @@ public class Materials {
 	public final static Materials instance = new Materials();
 	private static final Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
+
+	public static final MMDMaterial emptyMaterial = createOrelessMaterial("empty", MaterialType.METAL, 0, 0, 0, 0);
 
 	protected Materials() {
 		this.REGISTRY = new RegistryBuilder<MMDMaterial>()
@@ -80,7 +82,7 @@ public class Materials {
 	 * @return the new material
 	 */
 	protected static MMDMaterial createOrelessMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, false, false);
+		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,	tintColor, false, false, false);
 
 		return registerMaterial(material);
 	}
@@ -223,8 +225,11 @@ public class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createRareAlloyMaterial(@Nonnull final String name, @Nonnull final MaterialType type, final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, false, true);
+	protected static MMDMaterial createRareAlloyMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
+			final double hardness, @Nonnull final double strength, @Nonnull final double magic,
+			@Nonnull final int tintColor) {
+		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,
+				tintColor, true, false, true);
 
 		return registerMaterial(material);
 	}
@@ -247,8 +252,11 @@ public class Materials {
 	 *            TiC plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createRareSpecialMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, true, true);
+	protected static MMDMaterial createRareSpecialMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
+			@Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic,
+			@Nonnull final int tintColor) {
+		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,
+				tintColor, true, true, true);
 
 		return registerMaterial(material);
 	}
@@ -264,7 +272,8 @@ public class Materials {
 		String modId = Loader.instance().activeModContainer().getModId();
 		ResourceLocation loc = new ResourceLocation( modId, material.getName());
 		if( instance.REGISTRY.containsKey(loc)) {
-			BaseMetals.logger.error("You asked registermaterial() to register an existing material, Don't do that! (Returning pre existing material instead");
+			BaseMetals.logger.error(
+					"You asked registermaterial() to register an existing material, Don't do that! (Returning pre existing material instead");
 			return Materials.getMaterialByName(material.getName());
 		}
 
@@ -275,14 +284,19 @@ public class Materials {
 		final String texName = material.getName();
 		final int[] protection = material.getDamageReductionArray();
 		final int durability = material.getArmorMaxDamageFactor();
-		final ArmorMaterial armorMaterial = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, material.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, material.getStat(MaterialStats.HARDNESS) > 10 ? (int) (material.getStat(MaterialStats.HARDNESS) / 5) : 0);
+		final ArmorMaterial armorMaterial = EnumHelper.addArmorMaterial(enumName, texName, durability, protection,
+				material.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON,
+				material.getStat(MaterialStats.HARDNESS) > 10 ? (int) (material.getStat(MaterialStats.HARDNESS) / 5)
+						: 0);
 		if (armorMaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to create armor material enum for " + material);
 		}
 		armorMaterialMap.put(material, armorMaterial);
 
-		final ToolMaterial toolMaterial = EnumHelper.addToolMaterial(enumName, material.getToolHarvestLevel(), material.getToolDurability(), material.getToolEfficiency(), material.getBaseAttackDamage(), material.getEnchantability());
+		final ToolMaterial toolMaterial = EnumHelper.addToolMaterial(enumName, material.getToolHarvestLevel(),
+				material.getToolDurability(), material.getToolEfficiency(), material.getBaseAttackDamage(),
+				material.getEnchantability());
 		if (toolMaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to create tool material enum for " + material);
@@ -323,7 +337,6 @@ public class Materials {
 		return Collections.unmodifiableList(instance.REGISTRY.getValues());
 	}
 
-	public static final MMDMaterial emptyMaterial = createOrelessMaterial("empty",MaterialType.METAL,0,0,0,0);
 	/**
 	 * Gets a material by its name (e.g. "copper").
 	 *
@@ -351,8 +364,8 @@ public class Materials {
 	 */
 	public static Collection<MMDMaterial> getMaterialsByMod(@Nonnull final String modId) {
 		return Lists.newArrayList(instance.REGISTRY.getEntries().stream()
-				.filter((ent) -> ent.getKey().getResourceDomain().equals(modId) )
-				.map((ent) -> ent.getValue()).iterator()); 
+				.filter((ent) -> ent.getKey().getResourceDomain().equals(modId))
+				.map((ent) -> ent.getValue()).iterator());
 	}
 
 	/**
