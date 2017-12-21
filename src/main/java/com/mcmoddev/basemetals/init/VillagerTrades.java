@@ -9,9 +9,10 @@ import java.util.Map;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 
+import net.minecraft.item.Item;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 
 /**
@@ -47,24 +48,26 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 	protected static void registerModSpecificTrades() {
 		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>();
 
-		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
+		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
 			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
-			tradesTable.computeIfAbsent(ARMOR_SMITH | (1), (Integer key) -> new ArrayList<>())
-					.addAll(Arrays.asList(makePurchasePalette(1, 10, charcoal.getItem(Names.POWDER))));
-			tradesTable.computeIfAbsent(WEAPON_SMITH | (1), (Integer key) -> new ArrayList<>())
-					.addAll(Arrays.asList(makePurchasePalette(1, 10, charcoal.getItem(Names.POWDER))));
-			tradesTable.computeIfAbsent(TOOL_SMITH | (1), (Integer key) -> new ArrayList<>())
-					.addAll(Arrays.asList(makePurchasePalette(1, 10, charcoal.getItem(Names.POWDER))));
+			if (charcoal.hasItem(Names.POWDER)) {
+				final Item charcoalPowder = charcoal.getItem(Names.POWDER);
+
+				tradesTable.computeIfAbsent(ARMOR_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, charcoalPowder)));
+				tradesTable.computeIfAbsent(WEAPON_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, charcoalPowder)));
+				tradesTable.computeIfAbsent(TOOL_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, charcoalPowder)));
+			}
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
+		if (Materials.hasMaterial(MaterialNames.COAL)) {
 			final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
-			tradesTable.computeIfAbsent(ARMOR_SMITH | (1), (Integer key) -> new ArrayList<>())
-					.addAll(Arrays.asList(makePurchasePalette(1, 10, coal.getItem(Names.POWDER))));
-			tradesTable.computeIfAbsent(WEAPON_SMITH | (1), (Integer key) -> new ArrayList<>())
-					.addAll(Arrays.asList(makePurchasePalette(1, 10, coal.getItem(Names.POWDER))));
-			tradesTable.computeIfAbsent(TOOL_SMITH | (1), (Integer key) -> new ArrayList<>())
-					.addAll(Arrays.asList(makePurchasePalette(1, 10, coal.getItem(Names.POWDER))));
+			if (coal.hasItem(Names.POWDER)) {
+				final Item coalPowder = coal.getItem(Names.POWDER);
+
+				tradesTable.computeIfAbsent(ARMOR_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, coalPowder)));
+				tradesTable.computeIfAbsent(WEAPON_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, coalPowder)));
+				tradesTable.computeIfAbsent(TOOL_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, coalPowder)));
+			}
 		}
 
 		commitTrades(tradesTable);

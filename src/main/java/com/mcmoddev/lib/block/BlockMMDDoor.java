@@ -5,6 +5,7 @@ import java.util.Random;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.material.Material;
@@ -62,16 +63,16 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	@Override
 	public boolean onBlockActivated(World world, BlockPos coord, IBlockState blockstate, EntityPlayer player,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (this.material.getToolHarvestLevel() > 1)
+		if ((this.material.getToolHarvestLevel() > 1) || (this.material.getType().equals(MaterialType.METAL)))
 			return false;
 		final BlockPos pos = (blockstate.getValue(BlockDoor.HALF) == EnumDoorHalf.LOWER) ? coord : coord.down();
 		final IBlockState bs = coord.equals(pos) ? blockstate : world.getBlockState(pos);
 		if (bs.getBlock() != this)
 			return false;
-		blockstate = bs.cycleProperty(BlockDoor.OPEN);
-		world.setBlockState(pos, blockstate, 2);
+		IBlockState newState = bs.cycleProperty(BlockDoor.OPEN);
+		world.setBlockState(pos, newState, 2);
 		world.markBlockRangeForRenderUpdate(pos, coord);
-		world.playEvent(player, ((Boolean) blockstate.getValue(BlockDoor.OPEN)) ? 1003 : 1006, coord, 0);
+		world.playEvent(player, ((Boolean) newState.getValue(BlockDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
 

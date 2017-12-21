@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -22,7 +23,8 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 				MaterialNames.STARSTEEL, MaterialNames.ZINC };
 
 		for (final String materialName : baseNames) {
-			if (Options.isMaterialEnabled(materialName)) {
+			if (Materials.hasMaterial(materialName)) {
+				addGassesForMaterial(materialName);
 				addOreMultiplicationRecipes(materialName);
 			}
 		}

@@ -5,7 +5,6 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -37,8 +36,7 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 				MaterialNames.TIN, MaterialNames.ZINC };
 
 		for (final String materialName : baseNames) {
-			final MMDMaterial material = Materials.getMaterialByName(materialName);
-			if (material != null && Options.isMaterialEnabled(materialName)) {
+			if (Materials.hasMaterial(materialName)) {
 				String baseMaterial;
 				switch (materialName) {
 					case MaterialNames.ADAMANTINE:

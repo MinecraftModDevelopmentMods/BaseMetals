@@ -122,6 +122,7 @@ public abstract class MMDToolEffects {
 			return;
 		if (player == null)
 			return;
+
 		if (i % 2 == 0) {
 			// count armor pieces
 			if (material.getName().equals(MaterialNames.STARSTEEL)) {
@@ -129,8 +130,10 @@ public abstract class MMDToolEffects {
 					// used to count up the starsteel armor items
 					countArmorPieces(starsteelUpdateCache, player);
 					// Achievement
-					if ((armor.getItem() == Materials.getMaterialByName(MaterialNames.STARSTEEL).getItem(Names.BOOTS)) && (Options.enableAchievements())) {
-						player.addStat(Achievements.getAchievementByName(AchievementNames.MOON_BOOTS), 1);
+					if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
+						if ((armor.getItem() == Materials.getMaterialByName(MaterialNames.STARSTEEL).getItem(Names.BOOTS)) && (Options.enableAchievements())) {
+							player.addStat(Achievements.getAchievementByName(AchievementNames.MOON_BOOTS), 1);
+						}
 					}
 					break starsteel;
 				}
@@ -195,8 +198,10 @@ public abstract class MMDToolEffects {
 						player.addPotionEffect(protection);
 					}
 					// Achievement
-					if ((Options.enableAchievements()) && (hasFullSuit(player, MaterialNames.ADAMANTINE))) {
-						player.addStat(Achievements.getAchievementByName(AchievementNames.JUGGERNAUT), 1);
+					if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
+						if ((Options.enableAchievements()) && (hasFullSuit(player, MaterialNames.ADAMANTINE))) {
+							player.addStat(Achievements.getAchievementByName(AchievementNames.JUGGERNAUT), 1);
+						}
 					}
 					break adamantine;
 				}
@@ -206,8 +211,10 @@ public abstract class MMDToolEffects {
 				final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
 				player.addPotionEffect(fireProtection);
 				// Achievement
-				if ((player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.SWORD)) && (Options.enableAchievements())) {
-					player.addStat(Achievements.getAchievementByName(AchievementNames.DEMON_SLAYER), 1);
+				if (Materials.hasMaterial(MaterialNames.COLDIRON)) {
+					if ((player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.COLDIRON).getItem(Names.SWORD)) && (Options.enableAchievements())) {
+						player.addStat(Achievements.getAchievementByName(AchievementNames.DEMON_SLAYER), 1);
+					}
 				}
 			}
 			// full suit of Mithril protects you from withering, poison, nausea,
@@ -226,8 +233,10 @@ public abstract class MMDToolEffects {
 					player.removePotionEffect(p);
 				}
 				// Achievement
-				if ((player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD)) && (Options.enableAchievements())) {
-					player.addStat(Achievements.getAchievementByName(AchievementNames.ANGEL_OF_DEATH), 1);
+				if (Materials.hasMaterial(MaterialNames.MITHRIL)) {
+					if ((player.getHeldItemMainhand() != ItemStack.EMPTY && player.getHeldItemMainhand().getItem() == Materials.getMaterialByName(MaterialNames.MITHRIL).getItem(Names.SWORD)) && (Options.enableAchievements())) {
+						player.addStat(Achievements.getAchievementByName(AchievementNames.ANGEL_OF_DEATH), 1);
+					}
 				}
 			}
 			// full suit of Aquarium makes you breathe and heal under water
@@ -241,8 +250,10 @@ public abstract class MMDToolEffects {
 					player.addPotionEffect(protection);
 					player.removePotionEffect(Potion.REGISTRY.getObject(fatiguePotionKey));
 					// Achievement
-					if (Options.enableAchievements()) {
-						player.addStat(Achievements.getAchievementByName(AchievementNames.SCUBA_DIVER), 1);
+					if (Materials.hasMaterial(MaterialNames.AQUARIUM)) {
+						if (Options.enableAchievements()) {
+							player.addStat(Achievements.getAchievementByName(AchievementNames.SCUBA_DIVER), 1);
+						}
 					}
 				}
 			}
@@ -303,6 +314,7 @@ public abstract class MMDToolEffects {
 
 	private static boolean hasFullSuit(EntityPlayer player, String materialName) {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
+
 		return (player.inventory.armorInventory.get(3) != ItemStack.EMPTY && player.inventory.armorInventory.get(3).getItem() == material.getItem(Names.HELMET)
 				&& player.inventory.armorInventory.get(2) != ItemStack.EMPTY && player.inventory.armorInventory.get(2).getItem() == material.getItem(Names.CHESTPLATE)
 				&& player.inventory.armorInventory.get(1) != ItemStack.EMPTY && player.inventory.armorInventory.get(1).getItem() == material.getItem(Names.LEGGINGS)

@@ -313,23 +313,23 @@ public abstract class Items {
 		create(Names.ARROW, material, tabs.toolsTab);
 		create(Names.AXE, material, tabs.toolsTab);
 		create(Names.BOLT, material, tabs.toolsTab);
-		create(Names.BOOTS, material, tabs.itemsTab);
+		create(Names.BOOTS, material, tabs.toolsTab);
 		create(Names.BOW, material, tabs.toolsTab);
-		create(Names.CHESTPLATE, material, tabs.itemsTab);
+		create(Names.CHESTPLATE, material, tabs.toolsTab);
 		create(Names.CRACKHAMMER, material, tabs.toolsTab);
 		create(Names.CROSSBOW, material, tabs.toolsTab);
 		create(Names.DOOR, material, tabs.blocksTab);
 		create(Names.FISHING_ROD, material, tabs.toolsTab);
 		create(Names.HELMET, material, tabs.toolsTab);
 		create(Names.HOE, material, tabs.toolsTab);
-		create(Names.HORSE_ARMOR, material, tabs.itemsTab);
-		create(Names.LEGGINGS, material, tabs.itemsTab);
+		create(Names.HORSE_ARMOR, material, tabs.toolsTab);
+		create(Names.LEGGINGS, material, tabs.toolsTab);
 		create(Names.PICKAXE, material, tabs.toolsTab);
 		create(Names.SHEARS, material, tabs.toolsTab);
-		create(Names.SHIELD, material, tabs.itemsTab);
+		create(Names.SHIELD, material, tabs.toolsTab);
 		create(Names.SHOVEL, material, tabs.toolsTab);
 		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.SWORD, material, tabs.itemsTab);
+		create(Names.SWORD, material, tabs.toolsTab);
 		create(Names.ROD, material, tabs.itemsTab);
 		create(Names.GEAR, material, tabs.itemsTab);
 	}
@@ -429,7 +429,7 @@ public abstract class Items {
 	 * @return the block this function created
 	 */
 	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
-		if ((material == null) || (name == null)) {
+		if (sanityCheck(name, material)) {
 			return null;
 		}
 
@@ -437,21 +437,23 @@ public abstract class Items {
 			return material.getItem(name);
 		}
 
-		if ((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS))
-				|| (name.equals(Names.BOOTS))) {
+		if (isArmor(name)) {
 			return createArmorItem(name, material, tab);
-		}
-
-		if ((((name.equals(Names.BLEND)) || name.equals(Names.SMALLBLEND)) && (!material.hasBlend()))
-				|| (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL)))
-				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR))) || (name.equals(Names.SLAB)
-						&& (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB))))) {
-			return null;
 		}
 
 		final Item item = createItem(material, name.toString(), getClassFromName(name), isNameEnabled(name), tab);
 
 		final String oredict = getOredictFromName(name);
+		setupOredict(item, oredict, name, material);
+
+		return item;
+	}
+
+	private static boolean sanityCheck(Names name, MMDMaterial material) {
+		return ((material == null) || (name == null) || isWrongThingToMake( name, material));
+	}
+
+	private static void setupOredict(Item item, String oredict, Names name, MMDMaterial material) {
 		if (item != null) {
 			if (oredict != null) {
 				Oredicts.registerOre(oredict + material.getCapitalizedName(), item);
@@ -466,8 +468,17 @@ public abstract class Items {
 				Oredicts.registerOre(Oredicts.DOOR, item);
 			}
 		}
+	}
 
-		return null;
+	private static boolean isWrongThingToMake(Names name, MMDMaterial material) {
+		return ((((name.equals(Names.BLEND)) || (name.equals(Names.SMALLBLEND))) && (!material.hasBlend()))
+				|| (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL)))
+				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR)))
+				|| (name.equals(Names.SLAB) && (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB)))));
+	}
+
+	private static boolean isArmor(Names name) {
+		return 	((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS)) || (name.equals(Names.BOOTS)));
 	}
 
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final Names name, final CreativeTabs tab) {

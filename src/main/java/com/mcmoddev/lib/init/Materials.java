@@ -14,6 +14,7 @@ import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.util.ConfigBase;
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
@@ -360,5 +361,19 @@ public abstract class Materials {
 		} else {
 			return Collections.emptySet();
 		}
+	}
+
+	/**
+	 * Checks is a material is enabled and registered
+	 *
+	 * @param materialName Name of the material to check for
+	 * @return true if the material is available
+	 */
+	public static boolean hasMaterial(@Nonnull final String materialName) {
+		MMDMaterial material = Materials.getMaterialByName(materialName);
+		if ((material.getName().equals(materialName)) && (ConfigBase.Options.isMaterialEnabled(materialName))) {
+			return true;
+		}
+		return false;
 	}
 }

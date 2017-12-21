@@ -244,7 +244,6 @@ public class Oredicts {
 		if (item != null) {
 			OreDictionary.registerOre(name, item);
 		}
-
 	}
 
 	public static void registerOre(String name, ItemStack itemStack) {

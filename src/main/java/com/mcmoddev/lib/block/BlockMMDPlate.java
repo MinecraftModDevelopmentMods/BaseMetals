@@ -50,7 +50,8 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
 		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+		this.setDefaultState(this.blockState.getBaseState()
+				.withProperty(FACING, EnumFacing.NORTH));
 		this.useNeighborBrightness = true;
 	}
 

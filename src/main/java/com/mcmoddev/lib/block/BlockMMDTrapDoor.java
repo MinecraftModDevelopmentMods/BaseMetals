@@ -2,6 +2,7 @@ package com.mcmoddev.lib.block;
 
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
@@ -35,11 +36,11 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos coord, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (this.material.getToolHarvestLevel() > 1)
-			return true;
-		state = state.cycleProperty(BlockTrapDoor.OPEN);
-		world.setBlockState(coord, state, 2);
-		world.playEvent(player, ((Boolean) state.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
+		if ((this.material.getToolHarvestLevel() > 1) || (this.material.getType().equals(MaterialType.METAL)))
+			return false;
+		IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
+		world.setBlockState(coord, newState, 2);
+		world.playEvent(player, ((Boolean) newState.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
 

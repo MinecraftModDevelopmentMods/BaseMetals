@@ -48,20 +48,21 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 				MaterialNames.PEWTER, MaterialNames.STEEL);
 
 		modMaterials.stream()
-				.filter(name -> Options.isMaterialEnabled(name))
+				.filter(Options::isMaterialEnabled)
 				.forEach(name -> createMaterial(name, MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
 
 		alloyMaterials.stream()
-				.filter(name -> Options.isMaterialEnabled(name))
+				.filter(Options::isMaterialEnabled)
 				.forEach(name -> createAlloyMaterial(name, MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
 
 		// Mod Materials
-		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
+		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
 			Materials.getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4).setDefaultDimension(-1);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.STARSTEEL)) {
-			Materials.getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6).setDefaultDimension(1).setRegenerates(true);
+		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
+			Materials.getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
+			.setDefaultDimension(1).setRegenerates(true);
 		}
 
 		initDone = true;

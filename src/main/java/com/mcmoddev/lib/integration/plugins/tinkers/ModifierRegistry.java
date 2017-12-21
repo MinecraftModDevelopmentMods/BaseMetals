@@ -25,7 +25,7 @@ import slimeknights.tconstruct.library.modifiers.Modifier;
 
 public class ModifierRegistry {
 
-	private static Map<String, Modifier> modifiers = new HashMap<>();
+	private static final Map<String, Modifier> modifiers = new HashMap<>();
 
 	private ModifierRegistry() {
 		throw new IllegalAccessError("Not an instantiable class");

@@ -34,7 +34,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 		modid = BaseMetals.MODID,
 		name = BaseMetals.NAME,
 		version = BaseMetals.VERSION,
-		dependencies = "required-after:forge@[13.20.1.2386,);after:taiga;before:buildingbricks",
+		dependencies = "required-after:forge@[13.20.1.2386,);after:tconstruct;after:ic2;after:taiga;before:buildingbricks",
 		acceptedMinecraftVersions = "[1.11.2,)",
 		certificateFingerprint = "@FINGERPRINT@",
 		updateJSON = BaseMetals.UPDATEJSON)
@@ -54,7 +54,7 @@ public class BaseMetals {
 	 * increased whenever a change is made that has the potential to break
 	 * compatibility with other mods that depend on this one.
 	 */
-	public static final String VERSION = "2.5.0-beta2";
+	public static final String VERSION = "2.5.0-beta3";
 
 	static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopment/BaseMetals/master/update.json";
 

@@ -32,4 +32,4 @@ public class BlockMoltenFluid extends net.minecraftforge.fluids.BlockFluidClassi
 		return super.getUnlocalizedName();
 	}
 	 */
-	}
+}

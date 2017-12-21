@@ -6,6 +6,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.IC2Base;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
@@ -13,7 +14,7 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.item.ItemStack;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID)
-public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements IIntegration {
+public class IC2 extends IC2Base implements IIntegration {
 
 	private static boolean initDone = false;
 
@@ -28,7 +29,7 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 				MaterialNames.STARSTEEL, MaterialNames.ZINC };
 
 		for (final String materialName : baseNames) {
-			if (Options.isMaterialEnabled(materialName)) {
+			if (Materials.hasMaterial(materialName)) {
 				registerVanillaRecipes(materialName);
 				addMaceratorRecipes(materialName);
 				addOreWashingPlantRecipes(materialName);
@@ -39,16 +40,20 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 			}
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.DIAMOND)) {
-			MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
-			String oreDictName = diamond.getCapitalizedName();
-			addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(diamond.getItem(Names.POWDER), 2));
+		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
+			final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
+			final String oreDictName = diamond.getCapitalizedName();
+			if (diamond.hasItem(Names.POWDER)) {
+				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(diamond.getItem(Names.POWDER), 2));
+			}
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.EMERALD)) {
-			MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
-			String oreDictName = emerald.getCapitalizedName();
-			addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(emerald.getItem(Names.POWDER), 2));
+		if (Materials.hasMaterial(MaterialNames.EMERALD)) {
+			final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
+			final String oreDictName = emerald.getCapitalizedName();
+			if (emerald.hasItem(Names.POWDER)) {
+				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(emerald.getItem(Names.POWDER), 2));
+			}
 		}
 
 		initDone = true;

@@ -11,6 +11,7 @@ import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.item.Item;
@@ -35,26 +36,26 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
 
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, true, false);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC, TraitNames.JAGGED, TraitLocations.HEAD, TraitNames.AQUADYNAMIC, TraitLocations.HEAD);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.BISMUTH), MaterialNames.BISMUTH, true, false);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, true, false, TraitNames.DENSE);
-		// registerMaterial(Options.materialEnabled(MaterialNames.BRONZE), MaterialNames.BRONZE, true, false);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.CUPRONICKEL), MaterialNames.CUPRONICKEL, true, false);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.INVAR), MaterialNames.INVAR, true, false);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.MITHRIL), MaterialNames.MITHRIL, true, false, TraitNames.HOLY);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.NICKEL), MaterialNames.NICKEL, true, false);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.PEWTER), MaterialNames.PEWTER, true, false, TraitNames.SOFT);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.PLATINUM), MaterialNames.PLATINUM, true, false);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.STARSTEEL), MaterialNames.STARSTEEL, true, false, TraitNames.ENDERFERENCE, TraitLocations.HEAD, TraitNames.SPARKLY);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.TIN), MaterialNames.TIN, true, false);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, true, false);
+		registerMaterial(Materials.hasMaterial(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
+		registerMaterial(Materials.hasMaterial(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, true, false);
+		registerMaterial(Materials.hasMaterial(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC, TraitNames.JAGGED, TraitLocations.HEAD, TraitNames.AQUADYNAMIC, TraitLocations.HEAD);
+		registerMaterial(Materials.hasMaterial(MaterialNames.BISMUTH), MaterialNames.BISMUTH, true, false);
+		registerMaterial(Materials.hasMaterial(MaterialNames.BRASS), MaterialNames.BRASS, true, false, TraitNames.DENSE);
+		// registerMaterial(Materials.hasMaterial(MaterialNames.BRONZE), MaterialNames.BRONZE, true, false);
+		registerMaterial(Materials.hasMaterial(MaterialNames.COLDIRON), MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
+		registerMaterial(Materials.hasMaterial(MaterialNames.CUPRONICKEL), MaterialNames.CUPRONICKEL, true, false);
+		registerMaterial(Materials.hasMaterial(MaterialNames.INVAR), MaterialNames.INVAR, true, false);
+		registerMaterial(Materials.hasMaterial(MaterialNames.MITHRIL), MaterialNames.MITHRIL, true, false, TraitNames.HOLY);
+		registerMaterial(Materials.hasMaterial(MaterialNames.NICKEL), MaterialNames.NICKEL, true, false);
+		registerMaterial(Materials.hasMaterial(MaterialNames.PEWTER), MaterialNames.PEWTER, true, false, TraitNames.SOFT);
+		registerMaterial(Materials.hasMaterial(MaterialNames.PLATINUM), MaterialNames.PLATINUM, true, false);
+		registerMaterial(Materials.hasMaterial(MaterialNames.STARSTEEL), MaterialNames.STARSTEEL, true, false, TraitNames.ENDERFERENCE, TraitLocations.HEAD, TraitNames.SPARKLY);
+		registerMaterial(Materials.hasMaterial(MaterialNames.TIN), MaterialNames.TIN, true, false);
+		registerMaterial(Materials.hasMaterial(MaterialNames.ZINC), MaterialNames.ZINC, true, false);
 
 		registerAlloys();
 
-		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
+		if (Materials.hasMaterial(MaterialNames.COAL)) {
 			registerFluid(Materials.getMaterialByName(MaterialNames.COAL), 144);
 		}
 
@@ -67,18 +68,20 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		// we could hook that...
 
 		// Lead itself is added by TiC
-		if ((Options.isMaterialEnabled(MaterialNames.LEAD)) && (Options.isThingEnabled("Plate"))) {
+		if ((Materials.hasMaterial(MaterialNames.LEAD)) && (Materials.getMaterialByName(MaterialNames.LEAD).hasBlock(Names.PLATE))) {
+
 			registerModifierItem("plated", Item.getItemFromBlock(Materials.getMaterialByName(MaterialNames.LEAD).getBlock(Names.PLATE)));
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
-			registry.registerFluid(Materials.getMaterialByName(MaterialNames.MERCURY), 144);
+		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
+			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
+			registry.registerFluid(mercury, 144);
 			if (Options.isThingEnabled("Basics")) {
-				registerModifierItem("toxic", Materials.getMaterialByName(MaterialNames.MERCURY).getItem(Names.POWDER));
+				registerModifierItem("toxic", mercury.getItem(Names.POWDER));
 			}
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.SILVER)) {
+		if (Materials.hasMaterial(MaterialNames.SILVER)) {
 			// Anything needed?
 		}
 
@@ -128,36 +131,52 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 	}
 
 	private void registerMaterial(String name, boolean castable, boolean craftable, String... traits) {
-		TCMaterial mat = registry.getMaterial(name, Materials.getMaterialByName(name)).setCastable(castable).setCraftable(craftable);
+		final MMDMaterial mmdMat = Materials.getMaterialByName(name);
+		final TCMaterial mat = registry.getMaterial(name, mmdMat);
+
+		mat.setCastable(castable);
+		mat.setCraftable(craftable);
+
 		if (traits.length > 0) {
 			addTraits(mat, traits);
 		}
+
 		mat.settle();
 	}
 
 	private void registerAlloys() {
-		if (Options.isMaterialEnabled(MaterialNames.AQUARIUM) && Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.ZINC)) {
+		if (Materials.hasMaterial(MaterialNames.AQUARIUM) &&
+				Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.ZINC)) {
 			registry.registerAlloy(MaterialNames.AQUARIUM, Materials.getMaterialByName(MaterialNames.AQUARIUM).getFluid(), 3, MaterialNames.COPPER, 2, MaterialNames.ZINC, 1, MaterialNames.PRISMARINE, 3);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.CUPRONICKEL) && Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.NICKEL)) {
+		if (Materials.hasMaterial(MaterialNames.CUPRONICKEL) &&
+				Materials.hasMaterial(MaterialNames.COPPER) &&
+				Materials.hasMaterial(MaterialNames.NICKEL)) {
 			registry.registerAlloy(MaterialNames.CUPRONICKEL, Materials.getMaterialByName(MaterialNames.CUPRONICKEL).getFluid(), 4, MaterialNames.COPPER, 3, MaterialNames.NICKEL, 1);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.INVAR) && Options.isMaterialEnabled(MaterialNames.NICKEL)) {
+		if (Materials.hasMaterial(MaterialNames.INVAR) &&
+				Materials.hasMaterial(MaterialNames.NICKEL)) {
 			registry.registerAlloy(MaterialNames.INVAR, Materials.getMaterialByName(MaterialNames.INVAR).getFluid(), 3, MaterialNames.IRON, 2, MaterialNames.NICKEL, 1);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.MITHRIL) && Options.isMaterialEnabled(MaterialNames.COLDIRON) && Options.isMaterialEnabled(MaterialNames.SILVER) && Options.isMaterialEnabled(MaterialNames.MERCURY)) {
+		if (Materials.hasMaterial(MaterialNames.MITHRIL) &&
+				Materials.hasMaterial(MaterialNames.COLDIRON) &&
+				Materials.hasMaterial(MaterialNames.SILVER) &&
+				Materials.hasMaterial(MaterialNames.MERCURY)) {
 			registry.registerAlloy(MaterialNames.MITHRIL, Materials.getMaterialByName(MaterialNames.MITHRIL).getFluid(), 3, MaterialNames.SILVER, 2, MaterialNames.COLDIRON, 1, MaterialNames.MERCURY, 1);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.PEWTER) && Options.isMaterialEnabled(MaterialNames.LEAD) && Options.isMaterialEnabled(MaterialNames.COPPER) && Options.isMaterialEnabled(MaterialNames.TIN)) {
+		if (Materials.hasMaterial(MaterialNames.PEWTER) &&
+				Materials.hasMaterial(MaterialNames.LEAD) &&
+				Materials.hasMaterial(MaterialNames.COPPER) &&
+				Materials.hasMaterial(MaterialNames.TIN)) {
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
 			registry.registerAlloy(MaterialNames.PEWTER, Materials.getMaterialByName(MaterialNames.PEWTER).getFluid(), 144, MaterialNames.TIN, 137, MaterialNames.COPPER, 2, MaterialNames.LEAD, 5);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
+		if (Materials.hasMaterial(MaterialNames.STEEL)) {
 			registry.registerAlloy(MaterialNames.STEEL, Materials.getMaterialByName(MaterialNames.STEEL).getFluid(), 8, MaterialNames.IRON, 8, MaterialNames.COAL, 1);
 		}
 	}

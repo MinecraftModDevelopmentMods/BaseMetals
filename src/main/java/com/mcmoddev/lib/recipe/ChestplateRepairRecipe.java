@@ -10,5 +10,4 @@ public class ChestplateRepairRecipe extends RepairRecipeBase {
 		super(mat, Names.CHESTPLATE.toString(), mat.getName() + "_chestplate",
 				Oredicts.PLATE + mat.getCapitalizedName());
 	}
-
 }

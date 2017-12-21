@@ -540,7 +540,7 @@ public class TCMaterial {
 	/**
 	 * Get a list of all traits on a given location
 	 * 
-	 * @param loc
+	 * @param location
 	 *            Location to get traits for, null/unsupplied means the same as
 	 *            "general"
 	 * @return Either an unmodifiable list of traits or the empty list

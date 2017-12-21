@@ -3,9 +3,9 @@ package com.mcmoddev.lib.item;
 import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
+import com.mcmoddev.lib.init.Materials;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;

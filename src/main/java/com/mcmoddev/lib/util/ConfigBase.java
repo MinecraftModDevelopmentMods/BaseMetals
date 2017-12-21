@@ -333,6 +333,12 @@ public class ConfigBase {
 			return furnace1112;
 		}
 
+		protected static void clearOptions() { // to support testability
+			modEnabled.clear();
+			materialEnabled.clear();
+			thingEnabled.clear();
+		}
+
 		// INTEGRATION
 		private static final Map<String, Boolean> modEnabled = new HashMap<>();
 
@@ -406,6 +412,15 @@ public class ConfigBase {
 
 		private Options() {
 			throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
+		}
+
+		private static boolean fallbackOrespawn;
+		public static void setFallbackOreSpawn(boolean boolean1) {
+			fallbackOrespawn = boolean1;
+		}
+
+		public static boolean fallbackOrespawn() {
+			return fallbackOrespawn;
 		}
 	}
 }

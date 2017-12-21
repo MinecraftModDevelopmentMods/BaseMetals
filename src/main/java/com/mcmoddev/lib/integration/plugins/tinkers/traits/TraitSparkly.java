@@ -15,7 +15,7 @@ public class TraitSparkly extends AbstractTrait {
 	private static final int REGEN_INTERVAL = 200;
 
 	public TraitSparkly() {
-		super("sparkly", TextFormatting.OBFUSCATED);
+		super("mmd-sparkly", TextFormatting.OBFUSCATED);
 	}
 
 	@Override
