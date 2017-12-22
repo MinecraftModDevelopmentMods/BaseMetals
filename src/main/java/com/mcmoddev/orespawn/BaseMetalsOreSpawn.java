@@ -12,5 +12,4 @@ public class BaseMetalsOreSpawn implements IOreSpawnPlugin {
 		// nothing for us to do - all of our ores are in the
 		// jar and the code handles that
 	}
-
 }

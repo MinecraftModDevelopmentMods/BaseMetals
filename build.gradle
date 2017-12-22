@@ -15,14 +15,9 @@ buildscript {
             name = 'sonatype'
             url = 'https://oss.sonatype.org/content/groups/public'
         }
-//        maven {
-//            name = 'sponge'
-//            url = 'http://repo.spongepowered.org/maven'
-//        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-//        classpath 'org.spongepowered:mixingradle:0.4-SNAPSHOT'
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.0.9'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
@@ -30,12 +25,11 @@ buildscript {
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
-//apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.sonarqube'
 apply plugin: 'org.junit.platform.gradle.plugin'
-apply plugin: 'jacoco' 
+apply plugin: 'jacoco'
 
 repositories {
 	mavenLocal()
@@ -134,10 +128,6 @@ minecraft {
 }
 
 repositories {
-    maven {
-	    name 'SpongePowered'
-        url 'https://repo.spongepowered.org/maven/'
-    }
     maven { // Mantle, TCon, JEI
         name 'DVS1 Maven FS'
         url 'http://dvs1.progwml6.com/files/maven/'

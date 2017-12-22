@@ -8,6 +8,7 @@ import com.mcmoddev.basemetals.init.*;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.oregen.FallbackGenerator;
@@ -18,6 +19,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.MissingModsException;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -51,6 +53,7 @@ public class CommonProxy {
 		}
 
 		Materials.init();
+		FuelRegistry.init();
 		Fluids.init();
 		ItemGroups.init();
 		Blocks.init();
@@ -59,6 +62,8 @@ public class CommonProxy {
 		// icons have to be setup after the blocks and items are initialized
 		ItemGroups.setupIcons();
 		VillagerTrades.init();
+
+		FMLInterModComms.sendFunctionMessage("orespawn", "api", "com.mcmoddev.orespawn.BaseMetalsOreSpawn");
 
 		IntegrationManager.INSTANCE.preInit(event);
 		IntegrationManager.INSTANCE.runCallbacks("preInit");
@@ -86,6 +91,7 @@ public class CommonProxy {
 		Recipes.init();
 
 		Achievements.init();
+		FuelRegistry.register();
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		allsGood = true;

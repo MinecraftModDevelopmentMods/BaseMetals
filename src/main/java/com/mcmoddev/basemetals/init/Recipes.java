@@ -67,7 +67,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
 			// this should all be handled elsewhere in 1.11
 			// MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
-			// oreDictName = material.getCapitalizedName();
+			// oreDictName = iron.getCapitalizedName();
 
 			// Not needed for 1.11.1+
 			/*

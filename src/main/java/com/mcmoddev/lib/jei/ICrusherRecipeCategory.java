@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.BaseMetals;
 
@@ -22,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWrapper> {
+
 	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID, "textures/jei/JEIhammeroverlay.png");
 	private final IDrawable background;
 	private final IDrawable icon;
@@ -57,19 +57,23 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 		return background;
 	}
 
-	@Nullable
 	@Override
 	public IDrawable getIcon() {
 		return icon;
 	}
 
 	@Override
+	public void drawExtras(Minecraft minecraft) {
+		this.hammer.draw(minecraft, 71, 6);
+	}
+
+	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, @Nonnull ICrusherRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-		
+
 		// init the input slot
 		guiItemStacks.init(0, true, 40, 14);
-		
+
 		// init the output slot
 		guiItemStacks.init(1, false, 119, 14);
 
@@ -83,13 +87,7 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 	}
 
 	@Override
-	public void drawExtras(Minecraft minecraft) {
-		this.hammer.draw(minecraft,  71, 6);
-	}
-
-	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
 		return Collections.<String>emptyList();
 	}
-
 }

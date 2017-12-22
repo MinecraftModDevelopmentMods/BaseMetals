@@ -107,7 +107,7 @@ public class TCMaterial {
 	 * 
 	 * @param durability
 	 *            durability of the material
-	 * @return teh calculated draw speed
+	 * @return the calculated draw speed
 	 */
 	private float calcDrawSpeed(@Nonnull final int durability) {
 		float val;

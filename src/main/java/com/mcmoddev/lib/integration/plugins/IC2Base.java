@@ -11,6 +11,7 @@ import com.mcmoddev.lib.util.Oredicts;
 
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.Recipes;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
