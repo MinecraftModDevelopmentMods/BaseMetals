@@ -1,6 +1,5 @@
 package com.mcmoddev.basemetals.proxy;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
@@ -11,18 +10,6 @@ import com.mcmoddev.lib.entity.EntityCustomArrow;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;

@@ -1,18 +1,9 @@
 package com.mcmoddev.basemetals.init;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.material.MMDMaterial;
-
-import net.minecraft.block.Block;
 
 class BlocksTests {
 

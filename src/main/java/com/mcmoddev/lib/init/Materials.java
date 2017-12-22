@@ -11,7 +11,6 @@ import com.google.common.collect.Lists;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
-import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.ConfigBase;

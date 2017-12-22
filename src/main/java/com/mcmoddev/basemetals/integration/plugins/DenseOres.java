@@ -5,7 +5,6 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 

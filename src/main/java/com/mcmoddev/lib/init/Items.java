@@ -73,48 +73,6 @@ public abstract class Items {
 		com.mcmoddev.basemetals.util.Config.init();
 		Blocks.init();
 
-		mapNameToClass(Names.CRYSTAL, ItemMMDIngot.class);
-		mapNameToClass(Names.GEM, ItemMMDIngot.class);
-		mapNameToClass(Names.ANVIL, ItemMMDAnvilBlock.class);
-		mapNameToClass(Names.ARROW, ItemMMDArrow.class);
-		mapNameToClass(Names.AXE, ItemMMDAxe.class);
-		mapNameToClass(Names.BLEND, ItemMMDBlend.class);
-		mapNameToClass(Names.BOLT, ItemMMDBolt.class);
-		mapNameToClass(Names.BOOTS, ItemMMDArmor.class);
-		mapNameToClass(Names.BOW, ItemMMDBow.class);
-		mapNameToClass(Names.CHESTPLATE, ItemMMDArmor.class);
-		mapNameToClass(Names.CRACKHAMMER, ItemMMDCrackHammer.class);
-		mapNameToClass(Names.CROSSBOW, ItemMMDCrossbow.class);
-		mapNameToClass(Names.DOOR, ItemMMDDoor.class);
-		mapNameToClass(Names.FISHING_ROD, ItemMMDFishingRod.class);
-		mapNameToClass(Names.HELMET, ItemMMDArmor.class);
-		mapNameToClass(Names.HOE, ItemMMDHoe.class);
-		mapNameToClass(Names.HORSE_ARMOR, ItemMMDHorseArmor.class);
-		mapNameToClass(Names.INGOT, ItemMMDIngot.class);
-		mapNameToClass(Names.LEGGINGS, ItemMMDArmor.class);
-		mapNameToClass(Names.NUGGET, ItemMMDNugget.class);
-		mapNameToClass(Names.PICKAXE, ItemMMDPickaxe.class);
-		mapNameToClass(Names.POWDER, ItemMMDPowder.class);
-		mapNameToClass(Names.SHEARS, ItemMMDShears.class);
-		mapNameToClass(Names.SHIELD, ItemMMDShield.class);
-		mapNameToClass(Names.SHOVEL, ItemMMDShovel.class);
-		mapNameToClass(Names.SLAB, ItemMMDSlab.class);
-		mapNameToClass(Names.SMALLBLEND, ItemMMDSmallBlend.class);
-		mapNameToClass(Names.SMALLPOWDER, ItemMMDSmallPowder.class);
-		mapNameToClass(Names.SWORD, ItemMMDSword.class);
-		mapNameToClass(Names.ROD, ItemMMDRod.class);
-		mapNameToClass(Names.GEAR, ItemMMDGear.class);
-
-		mapNameToClass(Names.CASING, GenericMMDItem.class);
-		mapNameToClass(Names.DENSE_PLATE, GenericMMDItem.class);
-
-		mapNameToClass(Names.CRUSHED, GenericMMDItem.class);
-		mapNameToClass(Names.CRUSHED_PURIFIED, GenericMMDItem.class);
-
-		mapNameToClass(Names.SHARD, GenericMMDItem.class);
-		mapNameToClass(Names.CLUMP, GenericMMDItem.class);
-		mapNameToClass(Names.POWDER_DIRTY, GenericMMDItem.class);
-
 		final String armor = "Armor";
 		final String basics = "Basics";
 		final String basicTools = "BasicTools";
@@ -122,92 +80,50 @@ public abstract class Items {
 		final String crossbowAndBolt = "CrossbowAndBolt";
 		final String bowAndArrow = "BowAndArrow";
 
-		mapNameToEnabled(Names.CRYSTAL, Options.isThingEnabled(basics));
-		mapNameToEnabled(Names.GEM, Options.isThingEnabled(basics));
-		mapNameToEnabled(Names.ANVIL, Options.isThingEnabled("Anvil"));
-		mapNameToEnabled(Names.ARROW, Options.isThingEnabled(bowAndArrow));
-		mapNameToEnabled(Names.AXE, Options.isThingEnabled(basicTools));
-		mapNameToEnabled(Names.BLEND, Options.isThingEnabled(basics));
-		mapNameToEnabled(Names.BOLT, Options.isThingEnabled(crossbowAndBolt));
-		mapNameToEnabled(Names.BOOTS, Options.isThingEnabled(armor));
-		mapNameToEnabled(Names.BOW, Options.isThingEnabled(bowAndArrow));
-		mapNameToEnabled(Names.CHESTPLATE, Options.isThingEnabled(armor));
-		mapNameToEnabled(Names.CRACKHAMMER, Options.isThingEnabled("CrackHammer"));
-		mapNameToEnabled(Names.CROSSBOW, Options.isThingEnabled(crossbowAndBolt));
-		mapNameToEnabled(Names.DOOR, Options.isThingEnabled("Door"));
-		mapNameToEnabled(Names.FISHING_ROD, Options.isThingEnabled("FishingRod"));
-		mapNameToEnabled(Names.HELMET, Options.isThingEnabled(armor));
-		mapNameToEnabled(Names.HOE, Options.isThingEnabled(basicTools));
-		mapNameToEnabled(Names.HORSE_ARMOR, Options.isThingEnabled("HorseArmor"));
-		mapNameToEnabled(Names.INGOT, Options.isThingEnabled(basics));
-		mapNameToEnabled(Names.LEGGINGS, Options.isThingEnabled(armor));
-		mapNameToEnabled(Names.NUGGET, Options.isThingEnabled(basics));
-		mapNameToEnabled(Names.PICKAXE, Options.isThingEnabled(basicTools));
-		mapNameToEnabled(Names.POWDER, Options.isThingEnabled(basics));
-		mapNameToEnabled(Names.SHEARS, Options.isThingEnabled("Shears"));
-		mapNameToEnabled(Names.SHIELD, Options.isThingEnabled("Shield"));
-		mapNameToEnabled(Names.SHOVEL, Options.isThingEnabled(basicTools));
-		mapNameToEnabled(Names.SLAB, Options.isThingEnabled("Slab"));
-		mapNameToEnabled(Names.SMALLBLEND, Options.isThingEnabled(smallDust));
-		mapNameToEnabled(Names.SMALLPOWDER, Options.isThingEnabled(smallDust));
-		mapNameToEnabled(Names.SWORD, Options.isThingEnabled(basicTools));
-		mapNameToEnabled(Names.ROD, Options.isThingEnabled("Rod"));
-		mapNameToEnabled(Names.GEAR, Options.isThingEnabled("Gear"));
-
-		mapNameToEnabled(Names.CASING, Options.enableModderSupportThings());
-		mapNameToEnabled(Names.DENSE_PLATE, Options.enableModderSupportThings());
-
 		final String ic2 = "ic2";
-
-		mapNameToEnabled(Names.CRUSHED, Options.isModEnabled(ic2));
-		mapNameToEnabled(Names.CRUSHED_PURIFIED, Options.isModEnabled(ic2));
-
 		final String mekanism = "mekanism";
-		mapNameToEnabled(Names.SHARD, Options.isModEnabled(mekanism));
-		mapNameToEnabled(Names.CLUMP, Options.isModEnabled(mekanism));
-		mapNameToEnabled(Names.POWDER_DIRTY, Options.isModEnabled(mekanism));
 
-		mapNameToOredict(Names.CRYSTAL, Oredicts.CRYSTAL);
-		mapNameToOredict(Names.GEM, Oredicts.GEM);
-		mapNameToOredict(Names.ANVIL, null);
-		mapNameToOredict(Names.ARROW, Oredicts.ARROW);
-		mapNameToOredict(Names.AXE, null);
-		mapNameToOredict(Names.BLEND, Oredicts.DUST);
-		mapNameToOredict(Names.BOLT, null);
-		mapNameToOredict(Names.BOOTS, null);
-		mapNameToOredict(Names.BOW, null);
-		mapNameToOredict(Names.CHESTPLATE, null);
-		mapNameToOredict(Names.CRACKHAMMER, null);
-		mapNameToOredict(Names.CROSSBOW, null);
-		mapNameToOredict(Names.DOOR, null);
-		mapNameToOredict(Names.FISHING_ROD, null);
-		mapNameToOredict(Names.HELMET, null);
-		mapNameToOredict(Names.HOE, null);
-		mapNameToOredict(Names.HORSE_ARMOR, null);
-		mapNameToOredict(Names.INGOT, Oredicts.INGOT);
-		mapNameToOredict(Names.LEGGINGS, null);
-		mapNameToOredict(Names.NUGGET, Oredicts.NUGGET);
-		mapNameToOredict(Names.PICKAXE, null);
-		mapNameToOredict(Names.POWDER, Oredicts.DUST);
-		mapNameToOredict(Names.SHEARS, null);
-		mapNameToOredict(Names.SHIELD, Oredicts.SHIELD);
-		mapNameToOredict(Names.SHOVEL, null);
-		mapNameToOredict(Names.SLAB, Oredicts.SLAB);
-		mapNameToOredict(Names.SMALLBLEND, Oredicts.DUST_TINY);
-		mapNameToOredict(Names.SMALLPOWDER, Oredicts.DUST_TINY);
-		mapNameToOredict(Names.SWORD, null);
-		mapNameToOredict(Names.ROD, Oredicts.ROD);
-		mapNameToOredict(Names.GEAR, Oredicts.GEAR);
+		addItemType(Names.CRYSTAL, ItemMMDIngot.class, Options.isThingEnabled(basics), Oredicts.CRYSTAL);
+		addItemType(Names.GEM, ItemMMDIngot.class, Options.isThingEnabled(basics), Oredicts.GEM);
+		addItemType(Names.ANVIL, ItemMMDAnvilBlock.class, Options.isThingEnabled("Anvil"), null);
+		addItemType(Names.ARROW, ItemMMDArrow.class, Options.isThingEnabled(bowAndArrow), Oredicts.ARROW);
+		addItemType(Names.AXE, ItemMMDAxe.class, Options.isThingEnabled(basicTools), null);
+		addItemType(Names.BLEND, ItemMMDBlend.class, Options.isThingEnabled(basics), Oredicts.DUST);
+		addItemType(Names.BOLT, ItemMMDBolt.class, Options.isThingEnabled(crossbowAndBolt), null);
+		addItemType(Names.BOOTS, ItemMMDArmor.class, Options.isThingEnabled(armor), null);
+		addItemType(Names.BOW, ItemMMDBow.class, Options.isThingEnabled(bowAndArrow), null);
+		addItemType(Names.CHESTPLATE, ItemMMDArmor.class, Options.isThingEnabled(armor), null);
+		addItemType(Names.CRACKHAMMER, ItemMMDCrackHammer.class, Options.isThingEnabled("CrackHammer"), null);
+		addItemType(Names.CROSSBOW, ItemMMDCrossbow.class, Options.isThingEnabled(crossbowAndBolt), null);
+		addItemType(Names.DOOR, ItemMMDDoor.class, Options.isThingEnabled("Door"), null);
+		addItemType(Names.FISHING_ROD, ItemMMDFishingRod.class, Options.isThingEnabled("FishingRod"), null);
+		addItemType(Names.HELMET, ItemMMDArmor.class, Options.isThingEnabled(armor), null);
+		addItemType(Names.HOE, ItemMMDHoe.class, Options.isThingEnabled(basicTools), null);
+		addItemType(Names.HORSE_ARMOR, ItemMMDHorseArmor.class, Options.isThingEnabled("HorseArmor"), null);
+		addItemType(Names.INGOT, ItemMMDIngot.class, Options.isThingEnabled(basics), Oredicts.INGOT);
+		addItemType(Names.LEGGINGS, ItemMMDArmor.class, Options.isThingEnabled(armor), null);
+		addItemType(Names.NUGGET, ItemMMDNugget.class, Options.isThingEnabled(basics), Oredicts.NUGGET);
+		addItemType(Names.PICKAXE, ItemMMDPickaxe.class, Options.isThingEnabled(basicTools), null);
+		addItemType(Names.POWDER, ItemMMDPowder.class, Options.isThingEnabled(basics), Oredicts.DUST);
+		addItemType(Names.SHEARS, ItemMMDShears.class, Options.isThingEnabled("Shears"), null);
+		addItemType(Names.SHIELD, ItemMMDShield.class, Options.isThingEnabled("Shield"), Oredicts.SHIELD);
+		addItemType(Names.SHOVEL, ItemMMDShovel.class, Options.isThingEnabled(basicTools), null);
+		addItemType(Names.SLAB, ItemMMDSlab.class, Options.isThingEnabled("Slab"), Oredicts.SLAB);
+		addItemType(Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.isThingEnabled(smallDust), Oredicts.DUST_TINY);
+		addItemType(Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.isThingEnabled(smallDust), Oredicts.DUST_TINY);
+		addItemType(Names.SWORD, ItemMMDSword.class, Options.isThingEnabled(basicTools), null);
+		addItemType(Names.ROD, ItemMMDRod.class, Options.isThingEnabled("Rod"), Oredicts.ROD);
+		addItemType(Names.GEAR, ItemMMDGear.class, Options.isThingEnabled("Gear"), Oredicts.GEAR);
 
-		mapNameToOredict(Names.CASING, Oredicts.CASING);
-		mapNameToOredict(Names.DENSE_PLATE, Oredicts.PLATE_DENSE);
+		addItemType(Names.CASING, GenericMMDItem.class, Options.enableModderSupportThings(), Oredicts.CASING);
+		addItemType(Names.DENSE_PLATE, GenericMMDItem.class, Options.enableModderSupportThings(), Oredicts.PLATE_DENSE);
 
-		mapNameToOredict(Names.CRUSHED, Oredicts.CRUSHED);
-		mapNameToOredict(Names.CRUSHED_PURIFIED, Oredicts.CRUSHED_PURIFIED);
+		addItemType(Names.CRUSHED, GenericMMDItem.class, Options.isModEnabled(ic2), Oredicts.CRUSHED);
+		addItemType(Names.CRUSHED_PURIFIED, GenericMMDItem.class, Options.isModEnabled(ic2), Oredicts.CRUSHED_PURIFIED);
 
-		mapNameToOredict(Names.SHARD, Oredicts.SHARD);
-		mapNameToOredict(Names.CLUMP, Oredicts.CLUMP);
-		mapNameToOredict(Names.POWDER_DIRTY, Oredicts.DUST_DIRTY);
+		addItemType(Names.SHARD, GenericMMDItem.class, Options.isModEnabled(mekanism), Oredicts.SHARD);
+		addItemType(Names.CLUMP, GenericMMDItem.class, Options.isModEnabled(mekanism), Oredicts.CLUMP);
+		addItemType(Names.POWDER_DIRTY, GenericMMDItem.class, Options.isModEnabled(mekanism), Oredicts.DUST_DIRTY);
 
 		try {
 			expandCombatArrays(net.minecraft.item.ItemAxe.class);
@@ -676,23 +592,11 @@ public abstract class Items {
 		return net.minecraft.item.Item.class;
 	}
 
-	protected static void mapNameToClass(@Nonnull final Names name, @Nonnull final Class<? extends Item> item) {
-		if (!nameToClass.containsKey(name)) {
-			nameToClass.put(name, item);
-		}
-	}
-
 	protected static String getOredictFromName(@Nonnull final Names name) {
 		if (nameToOredict.containsKey(name)) {
 			return nameToOredict.get(name);
 		}
 		return null;
-	}
-
-	protected static void mapNameToOredict(@Nonnull final Names name, final String oredict) {
-		if (!nameToOredict.containsKey(name)) {
-			nameToOredict.put(name, oredict);
-		}
 	}
 
 	protected static boolean isNameEnabled(@Nonnull final Names name) {
@@ -702,9 +606,21 @@ public abstract class Items {
 		return false;
 	}
 
-	protected static void mapNameToEnabled(@Nonnull final Names name, @Nonnull final Boolean bool) {
+	protected static void addItemType(@Nonnull final Names name, @Nonnull final Class<? extends Item> clazz, @Nonnull final Boolean enabled) {
+		addItemType(name, clazz, enabled, null);
+	}
+
+	protected static void addItemType(@Nonnull final Names name, @Nonnull final Class<? extends Item> clazz, @Nonnull final Boolean enabled, final String oredict) {
+		if (!nameToClass.containsKey(name)) {
+			nameToClass.put(name, clazz);
+		}
+		
 		if (!nameToEnabled.containsKey(name)) {
-			nameToEnabled.put(name, bool);
+			nameToEnabled.put(name, enabled);
+		}
+
+		if (!nameToOredict.containsKey(name)) {
+			nameToOredict.put(name, oredict);
 		}
 	}
 
