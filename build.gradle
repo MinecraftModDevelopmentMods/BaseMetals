@@ -247,7 +247,7 @@ dependencies {
         exclude group: 'codechicken'
     }
 
-//    compile "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}:deobf"
+    compile "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}:deobf"
     compile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
     deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
 //  deobfCompile "MCMultiPart:MCMultiPart-exp:${mcmp_experimental_version}:universal"

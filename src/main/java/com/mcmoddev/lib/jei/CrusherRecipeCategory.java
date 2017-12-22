@@ -1,5 +1,8 @@
 package com.mcmoddev.lib.jei;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import mezz.jei.api.IGuiHelper;
@@ -24,17 +27,17 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 	protected final IDrawableAnimated hammer;
 
 	public CrusherRecipeCategory(IGuiHelper guiHelper) {
-		background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
-		icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
+		this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
+		this.icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
 
 		IDrawableStatic hammerDrawable = guiHelper.createDrawable(resourceLocation, 169, 17, 32, 32);
-		hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 200, IDrawableAnimated.StartDirection.BOTTOM, false);
+		this.hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 200, IDrawableAnimated.StartDirection.BOTTOM, false);
 	}
 
 	@Nonnull
 	@Override
 	public String getUid() {
-		return BaseMetalsJEIPlugin.JEIUID + ".crackhammer";
+		return BaseMetalsJEIPlugin.RECIPE_UID;
 	}
 
 	@Nonnull
@@ -57,12 +60,12 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 
 	@Override
 	public void drawExtras(Minecraft minecraft) {
-		// TODO - STUB
+		hammer.draw(minecraft, 71, 6);
 	}
 
 	@Override
 	public void drawAnimations(Minecraft minecraft) {
-		hammer.draw(minecraft, 71, 6);
+		// Deprecated
 	}
 
 	@Override
@@ -82,5 +85,10 @@ public class CrusherRecipeCategory implements IRecipeCategory {
 		// output
 		recipeLayout.getItemStacks().init(2, false, 119, 14);
 		recipeLayout.getItemStacks().set(2, (ItemStack) recipeWrapper.getOutputs().get(0));
+	}
+
+	@Override
+	public List<String> getTooltipStrings(int mouseX, int mouseY) {
+		return Collections.<String>emptyList();
 	}
 }

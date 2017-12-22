@@ -21,7 +21,7 @@ public class CrusherRecipeWrapper implements ITooltipCallback<ItemStack>, IRecip
 	private ICrusherRecipe theRecipe;
 
 	public CrusherRecipeWrapper(ICrusherRecipe recipe) {
-		theRecipe = recipe;
+		this.theRecipe = recipe;
 	}
 
 	@Override

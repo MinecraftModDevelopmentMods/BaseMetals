@@ -21,12 +21,12 @@ public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeWrapper
 	@Nonnull
 	@Override
 	public String getRecipeCategoryUid(@Nonnull CrusherRecipeWrapper recipe) {
-		return BaseMetalsJEIPlugin.JEIUID + ".crackhammer";
+		return BaseMetalsJEIPlugin.RECIPE_UID;
 	}
 
 	@Override
 	public String getRecipeCategoryUid() {
-		return BaseMetalsJEIPlugin.JEIUID;
+		return BaseMetalsJEIPlugin.JEI_UID;
 	}
 
 	@Override

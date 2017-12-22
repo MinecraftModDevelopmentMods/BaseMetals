@@ -21,7 +21,8 @@ import mezz.jei.api.JEIPlugin;
 @JEIPlugin
 public class BaseMetalsJEIPlugin extends BlankModPlugin {
 
-	public static final String JEIUID = BaseMetals.MODID;
+	public static final String JEI_UID = BaseMetals.MODID;
+	public static final String RECIPE_UID = JEI_UID + ".crackhammer";
 
 	@Override
 	public void register(IModRegistry registry) {
