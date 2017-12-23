@@ -50,6 +50,10 @@ public class RegistrationHelper {
 		if ((block instanceof BlockDoor) || (block instanceof BlockSlab))
 			return; // do not add door blocks or slabs
 
+		// FIXME: For some reason this one block goes wrong
+		if (name.equals("human_detector"))
+			return;
+
 		registerRender(Item.getItemFromBlock(block));
 	}
 
