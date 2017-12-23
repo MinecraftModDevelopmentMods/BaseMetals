@@ -62,8 +62,8 @@ public class CustomFluid extends Fluid {
 	 */
 	public CustomFluid(String fluidName) {
 		super(fluidName,
-				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_still"),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_flow"));
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"));
 		if (Materials.getMaterialByName(fluidName) != null) {
 			this.color = Materials.getMaterialByName(fluidName).getTintColor();
 		}
@@ -81,8 +81,8 @@ public class CustomFluid extends Fluid {
 	 */
 	public CustomFluid(String fluidName, int tintARGB) {
 		super(fluidName,
-				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_still"),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_flow"));
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"));
 		this.color = tintARGB;
 		if (((this.color >> 24) & 0xFF) == 0) {
 			this.color |= 0xFF << 24;

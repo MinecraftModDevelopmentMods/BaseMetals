@@ -91,12 +91,60 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		myModMats.stream()
 				.filter(Materials::hasMaterial)
 				.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-				.forEach(name -> createItemsFull(Materials.getMaterialByName(name), myTabs));
+				.forEach(name -> {
+					final MMDMaterial material = Materials.getMaterialByName(name);
+
+					create(Names.BLEND, material);
+					create(Names.INGOT, material);
+					create(Names.NUGGET, material);
+					create(Names.POWDER, material);
+					create(Names.SMALLBLEND, material);
+					create(Names.SMALLPOWDER, material);
+
+					create(Names.ARROW, material);
+					create(Names.AXE, material);
+					create(Names.BOLT, material);
+					create(Names.BOOTS, material);
+					create(Names.BOW, material);
+					create(Names.CHESTPLATE, material);
+					create(Names.CRACKHAMMER, material);
+					create(Names.CROSSBOW, material);
+					create(Names.DOOR, material);
+					create(Names.FISHING_ROD, material);
+					create(Names.HELMET, material);
+					create(Names.HOE, material);
+					create(Names.HORSE_ARMOR, material);
+					create(Names.LEGGINGS, material);
+					create(Names.PICKAXE, material);
+					create(Names.SHEARS, material);
+					create(Names.SHIELD, material);
+					create(Names.SHOVEL, material);
+					create(Names.SLAB, material);
+					create(Names.SWORD, material);
+					create(Names.ROD, material);
+					create(Names.GEAR, material);
+				});
 
 		matsModSupport.stream()
 				.filter(Materials::hasMaterial)
 				.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-				.forEach(name -> createItemsModSupport(Materials.getMaterialByName(name), myTabs));
+				.forEach(name -> {
+					final MMDMaterial material = Materials.getMaterialByName(name);
+
+					create(Names.CASING, material);
+					create(Names.DENSE_PLATE, material);
+
+					if (material.hasOre()) {
+						create(Names.CRUSHED, material);
+						create(Names.CRUSHED_PURIFIED, material);
+
+						createMekCrystal(material, myTabs.itemsTab);
+						create(Names.SHARD, material);
+						create(Names.CLUMP, material);
+						create(Names.POWDER_DIRTY, material);
+						create(Names.CRYSTAL, material);
+					}
+				});
 
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
@@ -182,7 +230,24 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		diamond.addNewItem(Names.INGOT, net.minecraft.init.Items.DIAMOND);
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
-			createItemsFull(diamond);
+			create(Names.BLEND, diamond);
+			create(Names.NUGGET, diamond);
+			create(Names.POWDER, diamond);
+			create(Names.SMALLBLEND, diamond);
+			create(Names.SMALLPOWDER, diamond);
+
+			create(Names.ARROW, diamond);
+			create(Names.BOLT, diamond);
+			create(Names.BOW, diamond);
+			create(Names.CRACKHAMMER, diamond);
+			create(Names.CROSSBOW, diamond);
+			create(Names.DOOR, diamond);
+			create(Names.FISHING_ROD, diamond);
+			create(Names.SHEARS, diamond);
+			create(Names.SHIELD, diamond);
+			create(Names.SLAB, diamond);
+			create(Names.ROD, diamond);
+			create(Names.GEAR, diamond);
 		}
 	}
 
@@ -203,7 +268,23 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		gold.addNewItem(Names.NUGGET, net.minecraft.init.Items.GOLD_NUGGET);
 
 		if (Materials.hasMaterial(MaterialNames.GOLD)) {
-			createItemsFull(gold);
+			create(Names.BLEND, gold);
+			create(Names.POWDER, gold);
+			create(Names.SMALLBLEND, gold);
+			create(Names.SMALLPOWDER, gold);
+
+			create(Names.ARROW, gold);
+			create(Names.BOLT, gold);
+			create(Names.BOW, gold);
+			create(Names.CRACKHAMMER, gold);
+			create(Names.CROSSBOW, gold);
+			create(Names.DOOR, gold);
+			create(Names.FISHING_ROD, gold);
+			create(Names.SHEARS, gold);
+			create(Names.SHIELD, gold);
+			create(Names.SLAB, gold);
+			create(Names.ROD, gold);
+			create(Names.GEAR, gold);
 		}
 	}
 
@@ -227,7 +308,35 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
-			createItemsFull(iron);
+			create(Names.BLEND, iron);
+			create(Names.INGOT, iron);
+			create(Names.NUGGET, iron);
+			create(Names.POWDER, iron);
+			create(Names.SMALLBLEND, iron);
+			create(Names.SMALLPOWDER, iron);
+
+			create(Names.ARROW, iron);
+			create(Names.AXE, iron);
+			create(Names.BOLT, iron);
+			create(Names.BOOTS, iron);
+			create(Names.BOW, iron);
+			create(Names.CHESTPLATE, iron);
+			create(Names.CRACKHAMMER, iron);
+			create(Names.CROSSBOW, iron);
+			create(Names.DOOR, iron);
+			create(Names.FISHING_ROD, iron);
+			create(Names.HELMET, iron);
+			create(Names.HOE, iron);
+			create(Names.HORSE_ARMOR, iron);
+			create(Names.LEGGINGS, iron);
+			create(Names.PICKAXE, iron);
+			create(Names.SHEARS, iron);
+			create(Names.SHIELD, iron);
+			create(Names.SHOVEL, iron);
+			create(Names.SLAB, iron);
+			create(Names.SWORD, iron);
+			create(Names.ROD, iron);
+			create(Names.GEAR, iron);
 		}
 	}
 
@@ -275,25 +384,17 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 	}
 
-	private static void createItemsFull(@Nonnull final String materialName) {
-		createItemsFull(Materials.getMaterialByName(materialName), ItemGroups.myTabs);
-	}
-
-	private static void createItemsModSupport(@Nonnull final String materialName) {
-		createItemsModSupport(Materials.getMaterialByName(materialName), ItemGroups.myTabs);
-	}
-
-	private static void createItemsFull(@Nonnull final MMDMaterial material) {
-		createItemsFull(material, ItemGroups.myTabs);
-	}
-	
 	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
 		CreativeTabs tab;
-		if (name == Names.CRACKHAMMER) {
-			tab = ItemGroups.myTabs.toolsTab;
+
+		if ((name.equals(Names.DOOR)) || (name.equals(Names.SLAB))) {
+			tab = myTabs.blocksTab;
+		} else if ((name.equals(Names.BLEND)) || (name.equals(Names.INGOT)) || (name.equals(Names.NUGGET)) || (name.equals(Names.POWDER)) || (name.equals(Names.SMALLBLEND)) || (name.equals(Names.SMALLPOWDER)) || (name.equals(Names.ROD)) || (name.equals(Names.GEAR))) {
+			tab = myTabs.itemsTab;
 		} else {
-			tab = ItemGroups.myTabs.itemsTab;
+			tab = myTabs.toolsTab;
 		}
+
 		return create(name, material, tab);
 	}
 }

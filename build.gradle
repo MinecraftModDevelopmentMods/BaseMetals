@@ -190,14 +190,7 @@ repositories {
     }
 }
 
-//configurations {
-//    shade
-//    compile.extendsFrom shade
-//}
-
 dependencies {
-//    shade 'org.spongepowered:mixin:0.6.15-SNAPSHOT'
-
     compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
@@ -227,10 +220,6 @@ dependencies {
 //  runtime "mezz.jei:jei_${mc_version}:${jei_version}:dev"
 
     deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
-
-//    deobfCompile ("codechicken:CodeChickenCore:${mc_version}-${ccc_version}:universal") {
-//        exclude group: 'codechicken'
-//    }
 
     deobfCompile ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
         exclude group: 'mezz.jei'
@@ -283,16 +272,8 @@ jar {
     manifest {
         attributes 'FMLCorePluginContainsFMLMod': 'true'
         attributes 'FMLCorePlugin': corePlugin
-//      attributes 'FMLAT' : 'mmdlib_at.cfg'
     }
 }
-
-/*
-task apiJar(type: Jar) {
-    classifier = 'apiClasses'
-    from apiClasses
-}
-*/
 
 task deobfJar(type: Jar) {
     classifier = 'deobf'
@@ -325,7 +306,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
-//  archives apiJar
     archives deobfJar
     archives sourceJar
     archives javadocJar
@@ -341,11 +321,6 @@ publishing {
             artifact sourceJar {
                 classifier 'sources'
             }
-/*
-            artifact apiJar {
-                classifier 'api'
-            }
-*/
             artifact deobfJar {
                 classifier 'deobf'
             }
@@ -384,9 +359,6 @@ curseforge {
                 optionalLibrary 'additional-loot-tables'
             }
         }
-//        addArtifact(apiJar) {
-//            displayName = "$project.description $displayVersion API"
-//        }
         addArtifact(sourceJar) {
             displayName = "$project.description $displayVersion Sources"
         }
