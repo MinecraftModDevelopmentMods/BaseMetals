@@ -446,6 +446,4 @@ public abstract class Blocks {
 	public static Map<MMDMaterial, List<Block>> getBlocksByMaterial() {
 		return Collections.unmodifiableMap(blocksByMaterial);
 	}
-	
-
 }

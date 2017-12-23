@@ -118,18 +118,18 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
 			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
 
-			create(Names.BLOCK, starsteel); // Not Gold, Not Iron, Not Diamond, Not Stone
+			create(Names.BLOCK, starsteel);
 			create(Names.PLATE, starsteel);
-			create(Names.ORE, starsteel); // Not Gold, Not Iron, Not Diamond, Not Stone
-			create(Names.BARS, starsteel); // Not Iron
-			create(Names.DOOR, starsteel); // Not Iron
-			create(Names.TRAPDOOR, starsteel); // Not Iron
+			create(Names.ORE, starsteel);
+			create(Names.BARS, starsteel);
+			create(Names.DOOR, starsteel);
+			create(Names.TRAPDOOR, starsteel);
 
 			create(Names.BUTTON, starsteel);
 			create(Names.SLAB, starsteel);
 			create(Names.DOUBLE_SLAB, starsteel);
 			create(Names.LEVER, starsteel);
-			create(Names.PRESSURE_PLATE, starsteel); // Not Iron, Not Gold
+			create(Names.PRESSURE_PLATE, starsteel);
 			create(Names.STAIRS, starsteel);
 			create(Names.WALL, starsteel);
 
