@@ -76,15 +76,6 @@ public class RegistrationHelper {
 			ModelLoader.setCustomMeshDefinition(item, mapper);
 		}
 		ModelLoader.setCustomStateMapper(block, mapper);
-		/*
-		ModelLoader.setCustomMeshDefinition(item, stack -> fluidModelLocation);
-		ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-			@Override
-			protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-				return fluidModelLocation;
-			}
-		});
-		*/
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -95,8 +86,6 @@ public class RegistrationHelper {
 			return;
 		}
 
-		// final ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-		// itemModelMesher.register(item, 0, new ModelResourceLocation(resourceLocation, "inventory"));
 		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(resourceLocation, "inventory"));
 	}
 
