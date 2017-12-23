@@ -1,13 +1,13 @@
 package com.mcmoddev.basemetals.proxy;
 
-import com.mcmoddev.basemetals.init.Blocks;
-import com.mcmoddev.basemetals.init.Fluids;
-import com.mcmoddev.basemetals.init.Items;
 import com.mcmoddev.lib.client.registrations.RegistrationHelper;
 import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
 import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
 import com.mcmoddev.lib.entity.EntityCustomArrow;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
+import com.mcmoddev.lib.init.Blocks;
+import com.mcmoddev.lib.init.Fluids;
+import com.mcmoddev.lib.init.Items;
 
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Loader;
@@ -25,6 +25,9 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class, RenderCustomArrow::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCustomBolt.class, RenderCustomBolt::new);
 		for (final String name : Items.getItemRegistry().keySet()) {
 			RegistrationHelper.registerItemRender(name);
 		}
@@ -36,9 +39,6 @@ public class ClientProxy extends CommonProxy {
 		for (final String name : Fluids.getFluidBlockRegistry().keySet()) {
 			RegistrationHelper.registerFluidRender(name);
 		}
-
-		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class, RenderCustomArrow::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityCustomBolt.class, RenderCustomBolt::new);
 	}
 
 	@Override
