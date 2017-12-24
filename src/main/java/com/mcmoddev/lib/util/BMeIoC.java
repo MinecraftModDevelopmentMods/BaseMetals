@@ -32,7 +32,7 @@ public class BMeIoC {
 		return getInstance(true);
 	}
 	
-	public static BMeIoC getInstance(Boolean autoWirup) {
+	public static BMeIoC getInstance(boolean autoWirup) {
 	      if(_instance == null) {
 	         _instance = new BMeIoC();
 	         

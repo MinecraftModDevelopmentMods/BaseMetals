@@ -57,7 +57,7 @@ public final class TabContainer implements ITabProvider {
 	public void addItemToTab(Item item, String tabName) throws Exception {
 		MMDCreativeTab tab = this.getTabByName(tabName);
 		
-		if (tab == null) 
+		if (tab == null)
 			throw new Exception("Tab not found: " + tabName);
 		
 		item.setCreativeTab(tab);

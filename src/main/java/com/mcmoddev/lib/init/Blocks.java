@@ -341,14 +341,14 @@ public abstract class Blocks {
 			try {
 				ctor = clazz.getConstructor(material.getClass());
 			} catch (Exception ex) {
-				BaseMetals.logger.fatal("Class for Block named " + name + " does not have an accessible constructor or another exception occurred", ex);
+				BaseMetals.logger.fatal("Class for Block named %s does not have an accessible constructor or another exception occurred", name, ex);
 				return null;
 			}
 
 			try {
 				inst = (Block) ctor.newInstance(material);
 			} catch (Exception ex) {
-				BaseMetals.logger.fatal("Unable to create Block named " + name + " for material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.fatal("Unable to create Block named %s for material %s", name, material.getCapitalizedName(), ex);
 			}
 
 			if (inst != null) {
