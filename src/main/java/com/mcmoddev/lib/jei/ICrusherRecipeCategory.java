@@ -29,12 +29,12 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 	protected final IGuiHelper helper;
 
 	public ICrusherRecipeCategory(IGuiHelper guiHelper) {
-		background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
-		icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
+		this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
+		this.icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
 
 		IDrawableStatic hammerDrawable = guiHelper.createDrawable(resourceLocation, 169, 17, 32, 32);
-		hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 100, IDrawableAnimated.StartDirection.BOTTOM, false);
-		helper = guiHelper;
+		this.hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 100, IDrawableAnimated.StartDirection.BOTTOM, false);
+		this.helper = guiHelper;
 	}
 
 	@Override

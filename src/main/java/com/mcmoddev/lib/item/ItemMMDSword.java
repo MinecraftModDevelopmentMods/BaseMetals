@@ -25,6 +25,7 @@ import net.minecraftforge.oredict.OreDictionary;
  *
  */
 public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDObject {
+
 	protected final MMDMaterial material;
 	protected final String repairOreDictName;
 	protected static final long REGEN_INTERVAL = 200;

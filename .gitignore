@@ -27,3 +27,5 @@ classes
 /forge-*-changelog.txt
 
 secret.json
+
+.DS_Store

@@ -1,5 +1,7 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.lib.data.SharedStrings;
+
 /**
  *
  * @author Jasmine Iwanek
@@ -10,7 +12,7 @@ public abstract class Entities {
 	private static boolean initDone = false;
 
 	private Entities() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**

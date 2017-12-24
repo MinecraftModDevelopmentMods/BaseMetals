@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent; 
+import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -38,9 +38,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 		modid = BaseMetals.MODID,
 		name = BaseMetals.NAME,
 		version = BaseMetals.VERSION,
-		dependencies = "required-after:forge@[14.21.0.2327,);after:tconstruct;after:ic2;before:buildingbricks",
+		dependencies = "required-after:forge@[14.21.1.2387,);after:tconstruct;after:ic2;before:buildingbricks",
 		acceptedMinecraftVersions = "[1.12,)",
-		certificateFingerprint = "@FINGERPRINT@", 
+		certificateFingerprint = "@FINGERPRINT@",
 		updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {
 
@@ -74,7 +74,7 @@ public class BaseMetals {
 		FluidRegistry.enableUniversalBucket();
 	}
 
-	@Mod.EventHandler
+	@EventHandler
 	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
 		logger.warn("Invalid fingerprint detected!");
 	}
@@ -114,5 +114,4 @@ public class BaseMetals {
 	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
 		proxy.onRemapItem(event);
 	}
-	
 }

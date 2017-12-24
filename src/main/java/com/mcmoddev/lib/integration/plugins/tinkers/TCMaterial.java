@@ -1,14 +1,14 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Collections;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
@@ -18,14 +18,7 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.item.Item;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
-import slimeknights.tconstruct.library.materials.BowMaterialStats;
-import slimeknights.tconstruct.library.materials.BowStringMaterialStats;
-import slimeknights.tconstruct.library.materials.ExtraMaterialStats;
-import slimeknights.tconstruct.library.materials.FletchingMaterialStats;
-import slimeknights.tconstruct.library.materials.HandleMaterialStats;
-import slimeknights.tconstruct.library.materials.HeadMaterialStats;
-import slimeknights.tconstruct.library.materials.Material;
+import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.shared.TinkerFluids;
 
@@ -689,5 +682,4 @@ public class TCMaterial {
 
         return val;
 	}
-	
 }

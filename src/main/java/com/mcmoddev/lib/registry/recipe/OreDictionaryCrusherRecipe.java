@@ -33,7 +33,7 @@ public class OreDictionaryCrusherRecipe  extends IForgeRegistryEntry.Impl<ICrush
 		this.oreDictSource = oreDictionaryID;
 		this.inputs = OreDictionary.getOres(this.oreDictSource);
 		this.output = results;
-		
+
 		super.setRegistryName(oreDictionaryID + "_to_" + results.getItem().getRegistryName().getResourcePath());
 	}
 

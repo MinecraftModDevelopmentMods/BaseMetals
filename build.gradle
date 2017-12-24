@@ -17,9 +17,9 @@ buildscript {
         }
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.9"
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5"
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.0.9'
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
     }
 }
@@ -29,7 +29,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.sonarqube'
 apply plugin: 'org.junit.platform.gradle.plugin'
-apply plugin: 'jacoco' 
+apply plugin: 'jacoco'
 
 repositories {
 	mavenLocal()
@@ -77,9 +77,13 @@ javadoc {
 
 description = 'Base Metals'
 def mod_file = getModFile()
-def mc_version = "1.12"
-def short_version = getVersion("VERSION", mod_file)
-version = mc_version + "-" + short_version
+def mc_version = '1.12'
+
+ext {
+    short_version = getVersion('VERSION', mod_file)
+}
+
+version = mc_version + '-' + short_version
 
 if (System.getenv().BUILD_NUMBER) {
     version += '.' + System.getenv().BUILD_NUMBER
@@ -113,19 +117,19 @@ if (secretFile.exists()) {
 }
 
 minecraft {
-    version = "1.12.1-14.22.1.2485"
-    runDir = "run"
-    mappings = "snapshot_20170925"
+    version = '1.12.1-14.22.1.2485'
+    runDir = 'run'
+    mappings = 'snapshot_20171130'
     clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
     serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
 
-	replace '@FINGERPRINT@', project.findProperty('signSHA1')
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
 }
 
 repositories {
     maven { // Mantle, TCon, JEI
         name 'DVS1 Maven FS'
-        url 'http://dvs1.progwml6.com/files/maven'
+        url 'http://dvs1.progwml6.com/files/maven/'
     }
     maven { // CCL, CCC, NEI
         name 'Chickenbones Repo'
@@ -145,23 +149,23 @@ repositories {
     }
     maven { // Tesla
         name 'epoxide'
-        url 'http://maven.epoxide.org'
+        url 'http://maven.epoxide.org/'
     }
     maven { // CraftTweaker, ZenScript
         name 'jared maven'
-        url 'http://blamejared.com/maven'
+        url 'http://blamejared.com/maven/'
     }
     maven { // IC2
-        name "industrialcraft"
-        url "http://maven.ic2.player.to"
+        name 'industrialcraft'
+        url 'http://maven.ic2.player.to/'
     }
     maven { // WAILA/HWYLA
     	name 'tehnut'
-    	url 'http://tehnut.info/maven'
+    	url 'http://tehnut.info/maven/'
     }
     maven { // CoFH
     	name 'Covers Maven'
-    	url 'http://maven.covers1624.net'
+    	url 'http://maven.covers1624.net/'
     }
 	maven {
         name = 'CurseForge'
@@ -173,11 +177,15 @@ repositories {
     }
     maven { // Mekanism, TAIGA
         name 'jitpack'
-        url 'https://jitpack.io'
+        url 'https://jitpack.io/'
     }
     maven { // Buildcraft
         name 'buildcraft'
-	url 'https://www.mod-buildcraft.com/maven'
+        url 'https://mod-buildcraft.com/maven/'
+    }
+    maven { // Storage Drawers
+        name 'thiakil'
+        url 'http://maven.thiakil.com/'
     }
 }
 
@@ -185,28 +193,36 @@ dependencies {
     compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
+        exclude module: "Chameleon" // mek only uses the storage drawers API, which doesn't need Chameleon
+        exclude module: "jei_1.11.2"
+        exclude module: "Hwyla"
     }
 
     deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
         exclude group: 'mezz.jei'
     }
+
     deobfCompile ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
         exclude group: 'mezz.jei'
     }
-	
+
 //  We do this to make NEI happy as there is no deobf or dev JEI jar for the deobf instance
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
 
     deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+
     deobfCompile ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
         exclude group: 'mezz.jei'
         exclude group: 'codechicken'
     }
+
     compile "com.mcmoddev:AdditionalLootTables:${mc_version}.1-${alt_version}:deobf"
     compile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
-    
-//    deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
+    deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}"
+//  deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
+
+    compileOnly "com.github.portablejim:VeinMiner:${veinminer_version}"
 
     deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
         exclude group: 'mezz.jei'
@@ -215,13 +231,13 @@ dependencies {
     deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
         exclude group: 'mezz.jei'
     }
-    
+
     deobfCompile ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
         exclude group: 'mezz.jei'
     }
-    
+
     // CoFHCore for TE integration
-    compile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:deobf") {
+    deobfCompile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
     	exclude group: 'mezz.jei'
     }
 }

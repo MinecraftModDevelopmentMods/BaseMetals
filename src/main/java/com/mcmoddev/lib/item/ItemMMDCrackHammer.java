@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.mcmoddev.basemetals.items.MMDToolEffects;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
@@ -39,6 +39,7 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 @SuppressWarnings("deprecation")
 public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements IMMDObject {
+
 	private static final float ATTACK_SPEED = -3.0F;
 
 	private final MMDMaterial material;
@@ -256,7 +257,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		// return true if block doesn't need tools
 		return target.getHarvestLevel(target.getDefaultState()) == -1;
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);

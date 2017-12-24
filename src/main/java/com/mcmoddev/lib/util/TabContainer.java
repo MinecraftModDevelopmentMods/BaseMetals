@@ -2,11 +2,11 @@ package com.mcmoddev.lib.util;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.exceptions.MaterialNotFoundException;
 import com.mcmoddev.lib.exceptions.TabNotFoundException;
 import com.mcmoddev.lib.init.MMDCreativeTab;
-import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
 

@@ -7,6 +7,6 @@ import com.mcmoddev.lib.util.Oredicts;
 public class BootsRepairRecipe extends RepairRecipeBase {
 
 	public BootsRepairRecipe(MMDMaterial mat) {
-		super( mat, Names.BOOTS.toString(), mat.getName() + "_boots", Oredicts.PLATE + mat.getCapitalizedName());
+		super(mat, Names.BOOTS.toString(), mat.getName() + "_boots", Oredicts.PLATE + mat.getCapitalizedName());
 	}
 }

@@ -99,7 +99,7 @@ public class ItemMMDPickaxe extends net.minecraft.item.ItemPickaxe implements IM
 			item.setItemDamage(item.getItemDamage() - 1);
 		}
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {

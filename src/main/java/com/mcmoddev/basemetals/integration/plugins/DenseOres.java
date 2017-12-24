@@ -2,10 +2,11 @@ package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Oredicts;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = DenseOres.PLUGIN_MODID)
 public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBase implements IIntegration {
@@ -29,33 +30,23 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
 	private static void registerOres() {
-		final String[] baseNames = new String[] {
-				MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON,
-				MaterialNames.COPPER,
-				MaterialNames.LEAD,
-				MaterialNames.MERCURY,
-				MaterialNames.NICKEL,
-				MaterialNames.PLATINUM,
-				MaterialNames.SILVER,
-				MaterialNames.TIN,
-				MaterialNames.ZINC
-		};
+		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD,
+				MaterialNames.MERCURY, MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
+				MaterialNames.TIN, MaterialNames.ZINC };
 
-		for ( final String materialName : baseNames ) {
-			if (Materials.hasMaterial(materialName) ) {
+		for (final String materialName : baseNames) {
+			if (Materials.hasMaterial(materialName)) {
 				String baseMaterial;
-				switch ( materialName ) {
-					case com.mcmoddev.basemetals.data.MaterialNames.ADAMANTINE:
-					case com.mcmoddev.basemetals.data.MaterialNames.COLDIRON:
-						baseMaterial = com.mcmoddev.lib.util.Oredicts.NETHERRACK;
+				switch (materialName) {
+					case MaterialNames.ADAMANTINE:
+					case MaterialNames.COLDIRON:
+						baseMaterial = Oredicts.NETHERRACK;
 						break;
 					default:
-						baseMaterial = com.mcmoddev.lib.util.Oredicts.STONE;
+						baseMaterial = Oredicts.STONE;
 				}
-				registerOre( String.format( "%s_%s", materialName, com.mcmoddev.lib.util.Oredicts.ORE ), baseMaterial, 0 );
+				registerOre(String.format("%s_%s", materialName, Oredicts.ORE), baseMaterial, 0);
 			}
 		}
 	}

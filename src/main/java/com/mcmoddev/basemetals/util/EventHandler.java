@@ -1,7 +1,7 @@
 package com.mcmoddev.basemetals.util;
 
 
-import com.mcmoddev.lib.item.ItemMMDShield;
+import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
@@ -63,6 +63,7 @@ public class EventHandler {
 
 	public static InventoryCrafting getDummyCraftingInv() {
 		Container tempContainer = new Container() {
+
 			@Override
 			public boolean canInteractWith(EntityPlayer player) {
 				return false;
@@ -90,10 +91,10 @@ public class EventHandler {
 			event.setCost(((ShieldUpgradeRecipe) recipe).getCost(recipeInput));
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onUpdate (TickEvent.RenderTickEvent event) {
+    public void onUpdate(TickEvent.RenderTickEvent event) {
 		if ((Options.requireMMDOreSpawn()) && (Loader.isModLoaded("orespawn"))) {
 			return;
 		}

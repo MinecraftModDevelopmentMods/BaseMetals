@@ -13,7 +13,7 @@ class HorseArmorTypeTransformer implements ITransformer {
 
 	private static final String HORSE_INTERFACE = "com/mcmoddev/lib/common/item/IHorseArmor";
 	private static final String GET_BY_ITEM = "func_188576_a";
-	
+
 	@Override
 	public String getTarget() {
 		return "net.minecraft.entity.passive.HorseArmorType";

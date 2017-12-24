@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -24,7 +25,7 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 	private static boolean initDone = false;
 
 	private VillagerTrades() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**

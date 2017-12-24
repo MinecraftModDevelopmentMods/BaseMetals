@@ -47,7 +47,7 @@ public class TraitRegistry {
 		return getTrait(name);
 	}
 
-    public static void initTiCTraits() {
+	public static void initTiCTraits() {
         // hate having to do it this way, but it seems the only way
         registeredTraits.put("alien", TinkerTraits.alien);
         registeredTraits.put("aquadynamic", TinkerTraits.aquadynamic);
@@ -101,7 +101,7 @@ public class TraitRegistry {
         registeredTraits.put("freezing", TinkerTraits.freezing);
         registeredTraits.put("hovering", TinkerTraits.hovering);
         registeredTraits.put("splitting", TinkerTraits.splitting);
-    }
+	}
     
 	public static void initTraits() {
 		registeredTraits.put("soft", MMDTraits.soft);

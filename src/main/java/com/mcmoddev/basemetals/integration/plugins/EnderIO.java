@@ -26,29 +26,15 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 			return;
 		}
 
-		final String[] baseNames = new String[] {
-			MaterialNames.ADAMANTINE,
-			MaterialNames.ANTIMONY,
-			MaterialNames.AQUARIUM,
-			MaterialNames.BISMUTH,
-			MaterialNames.BRASS,
-			MaterialNames.BRONZE,
-			MaterialNames.COLDIRON,
-			MaterialNames.CUPRONICKEL,
-			MaterialNames.ELECTRUM,
-			MaterialNames.INVAR,
-			MaterialNames.MITHRIL,
-			MaterialNames.PEWTER,
-			MaterialNames.PLATINUM,
-			MaterialNames.STARSTEEL,
-			MaterialNames.STEEL,
-			MaterialNames.TIN,
-			MaterialNames.ZINC
-		};
+		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
+				MaterialNames.COLDIRON, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR,
+				MaterialNames.MITHRIL, MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.STARSTEEL,
+				MaterialNames.STEEL, MaterialNames.TIN, MaterialNames.ZINC };
 
-		for ( final String materialName : baseNames ) {
-			if (Materials.hasMaterial( materialName ) ) {
-				addSagMillRecipe( materialName, 3600 );
+		for (final String materialName : baseNames) {
+			if (Materials.hasMaterial(materialName)) {
+				addSagMillRecipe(materialName, 3600);
 			}
 		}
 

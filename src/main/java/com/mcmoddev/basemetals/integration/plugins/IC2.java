@@ -6,6 +6,8 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.IC2Base;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -15,64 +17,54 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import com.mcmoddev.lib.integration.plugins.IC2Base;
-import com.mcmoddev.lib.material.MMDMaterial;
-
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID)
 public class IC2 extends IC2Base implements IIntegration {
 
 	private static boolean initDone = false;
-	
+
 	@Override
 	public void init() {
 		if (initDone || !Options.isModEnabled(IC2.PLUGIN_MODID)) {
 			return;
 		}
-		
+
 		MinecraftForge.EVENT_BUS.register(this);
-		
+
 		initDone = true;
 	}
-	
+
     @SubscribeEvent
     public void regCallback(RegistryEvent.Register<IRecipe> event) {
-		final String[] baseNames = new String[] {
-				MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM,
-				MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL,
-				MaterialNames.ZINC
-		};
+		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
+				MaterialNames.STARSTEEL, MaterialNames.ZINC };
 
-	    for ( final String materialName : baseNames ) {
-		    if (Materials.hasMaterial( materialName ) ) {
-			    registerVanillaRecipes( materialName );
-			    addMaceratorRecipes( materialName );
-			    addOreWashingPlantRecipes( materialName );
-			    addThermalCentrifugeRecipes( materialName );
-			    addMetalFormerRecipes( materialName );
-			    addCompressorRecipes( materialName );
-			    addForgeHammerRecipe( materialName );
-		    }
-	    }
-		
-		if (Materials.hasMaterial(MaterialNames.DIAMOND) ) {
+		for (final String materialName : baseNames) {
+			if (Materials.hasMaterial(materialName)) {
+				registerVanillaRecipes(materialName);
+				addMaceratorRecipes(materialName);
+				addOreWashingPlantRecipes(materialName);
+				addThermalCentrifugeRecipes(materialName);
+				addMetalFormerRecipes(materialName);
+				addCompressorRecipes(materialName);
+				addForgeHammerRecipe(materialName);
+			}
+		}
+
+		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
 			final String oreDictName = diamond.getCapitalizedName();
 			if (diamond.hasItem(Names.POWDER)) {
-				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(diamond.getItem(Names.POWDER), 2) );
+				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(diamond.getItem(Names.POWDER), 2));
 			}
 		}
 
-		if (Materials.hasMaterial(MaterialNames.EMERALD) ) {
+		if (Materials.hasMaterial(MaterialNames.EMERALD)) {
 			final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
 			final String oreDictName = emerald.getCapitalizedName();
 			if (emerald.hasItem(Names.POWDER)) {
-				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(emerald.getItem(Names.POWDER), 2) );
+				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(emerald.getItem(Names.POWDER), 2));
 			}
 		}
-    }
+	}
 }

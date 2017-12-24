@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.MMDCreativeTab;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.TabContainer;
@@ -30,7 +31,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	public static final TabContainer myTabs = new TabContainer(blocksTab, itemsTab, toolsTab);
 
 	private ItemGroups() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
@@ -45,33 +46,31 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	}
 
 	public static void setupIcons() {
-		Block temp;
-		ItemStack blocksTabIconItem;
-		ItemStack itemsTabIconItem;
-		ItemStack toolsTabIconItem;
+		Block blocksTabIconItem;
+		Item itemsTabIconItem;
+		Item toolsTabIconItem;
 
 		MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
 		MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
-		
+
 		if ((Materials.hasMaterial(MaterialNames.STARSTEEL)) && (starsteel.hasBlock(Names.BLOCK))) {
-			temp = starsteel.getBlock(Names.BLOCK);
+			blocksTabIconItem = starsteel.getBlock(Names.BLOCK);
 		} else {
-			temp = net.minecraft.init.Blocks.IRON_BLOCK;
+			blocksTabIconItem = net.minecraft.init.Blocks.IRON_BLOCK;
 		}
-		blocksTabIconItem = new ItemStack(Item.getItemFromBlock(temp));
 
 		if ((Materials.hasMaterial(MaterialNames.STARSTEEL)) && (starsteel.hasItem(Names.GEAR))) {
-			itemsTabIconItem = new ItemStack(starsteel.getItem(Names.GEAR));
+			itemsTabIconItem = starsteel.getItem(Names.GEAR);
 		} else if ((Materials.hasMaterial(MaterialNames.IRON)) && (iron.hasItem(Names.GEAR))) {
-			itemsTabIconItem = new ItemStack(iron.getItem(Names.GEAR));
+			itemsTabIconItem = iron.getItem(Names.GEAR);
 		} else {
-			itemsTabIconItem = new ItemStack(net.minecraft.init.Items.STICK);
+			itemsTabIconItem = net.minecraft.init.Items.STICK;
 		}
 
 		if ((Materials.hasMaterial(MaterialNames.STARSTEEL)) && (starsteel.hasItem(Names.SWORD))) {
-			toolsTabIconItem = new ItemStack(starsteel.getItem(Names.SWORD));
+			toolsTabIconItem = starsteel.getItem(Names.SWORD);
 		} else {
-			toolsTabIconItem = new ItemStack(net.minecraft.init.Items.DIAMOND_SWORD);
+			toolsTabIconItem = net.minecraft.init.Items.DIAMOND_SWORD;
 		}
 
 		blocksTab.setTabIconItem(blocksTabIconItem);

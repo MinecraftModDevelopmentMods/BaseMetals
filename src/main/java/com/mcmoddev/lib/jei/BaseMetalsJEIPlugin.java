@@ -33,12 +33,12 @@ public class BaseMetalsJEIPlugin implements IModPlugin {
 		registry.addRecipeCategories(new ICrusherRecipeCategory(guiHelper));
 	}
 
-
 	@Override
 	public void register(IModRegistry registry) {
 		registry.addRecipes(CrusherRecipeRegistry.getAll().stream().map((ICrusherRecipe in) -> new ICrusherRecipeWrapper(in)).collect(Collectors.toList()), RECIPE_UID);
 
 		registry.handleRecipes(ICrusherRecipe.class, new IRecipeWrapperFactory<ICrusherRecipe>() {
+
 			@Override
 			public IRecipeWrapper getRecipeWrapper(ICrusherRecipe recipe) {
 				return new ICrusherRecipeWrapper(recipe);

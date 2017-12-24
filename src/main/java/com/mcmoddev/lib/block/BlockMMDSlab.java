@@ -124,6 +124,7 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 	 */
 	public enum Variant implements IStringSerializable {
 		DEFAULT;
+
 		@Override
 		public String getName() {
 			return "default";
