@@ -13,13 +13,8 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.BMeIoC;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.TabContainer;
-
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -35,8 +30,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class Items extends com.mcmoddev.lib.init.Items {
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs = ItemGroups.myTabs;
-
 	protected Items() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -48,10 +41,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		if (initDone) {
 			return;
 		}
-
-		// IoC resolutions here
-		BMeIoC IoC = BMeIoC.getInstance();
-		myTabs = IoC.resolve(ITabProvider.class);
 
 		com.mcmoddev.basemetals.util.Config.init();
 		Blocks.init();
@@ -146,7 +135,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 						create(Names.CRUSHED, material);
 						create(Names.CRUSHED_PURIFIED, material);
 
-						createMekCrystal(material, myTabs.itemsTab);
+						createMekCrystal(material, ITEMS_TAB);
 						create(Names.SHARD, material);
 						create(Names.CLUMP, material);
 						create(Names.POWDER_DIRTY, material);
@@ -411,14 +400,14 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	}
 
 	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
-		CreativeTabs tab;
+		String tab;
 
 		if ((name.equals(Names.DOOR)) || (name.equals(Names.SLAB))) {
-			tab = myTabs.blocksTab;
+			tab = BLOCKS_TAB;
 		} else if ((name.equals(Names.BLEND)) || (name.equals(Names.INGOT)) || (name.equals(Names.NUGGET)) || (name.equals(Names.POWDER)) || (name.equals(Names.SMALLBLEND)) || (name.equals(Names.SMALLPOWDER)) || (name.equals(Names.ROD)) || (name.equals(Names.GEAR))) {
-			tab = myTabs.itemsTab;
+			tab = ITEMS_TAB;
 		} else {
-			tab = myTabs.toolsTab;
+			tab = TOOLS_TAB;
 		}
 
 		return create(name, material, tab);

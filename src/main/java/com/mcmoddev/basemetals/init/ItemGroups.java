@@ -15,8 +15,9 @@ import net.minecraft.item.ItemStack;
  * This class initializes all item groups in Base Metals.
  *
  * @author Jasmine Iwanek
- *
+ * @deprecated Will be removed when new tabprovider arrives
  */
+@Deprecated
 public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
 	private static boolean initDone = false;

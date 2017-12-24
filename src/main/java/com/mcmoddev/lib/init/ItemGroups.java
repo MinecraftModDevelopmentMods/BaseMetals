@@ -17,8 +17,9 @@ import net.minecraftforge.fml.common.Loader;
  * This class initializes all item groups in Base Metals.
  *
  * @author Jasmine Iwanek
- *
+ * @deprecated this class will be removed when the new tabprovider arrives
  */
+@Deprecated
 public class ItemGroups {
 
 	public static final java.util.function.BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (ItemStack a, ItemStack b) -> {

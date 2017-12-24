@@ -9,8 +9,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.mcmoddev.lib.init.MMDCreativeTab;
 import com.mcmoddev.lib.interfaces.ITabProvider;
+
+import net.minecraft.util.ResourceLocation;
 
 class BMeIocTest {
 
@@ -41,33 +42,138 @@ class BMeIocTest {
 	@Test
 	void testIoCCanRegisterAndResolve() {
 		ITabProvider tabProvider = mock(ITabProvider.class);
-		MMDCreativeTab tab = mock(MMDCreativeTab.class);
 		
-		when(tab.getTabLabel()).thenReturn("blocks tab");
-		when(tabProvider.getTabByName("blocks")).thenReturn(tab);
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
 		
 		IoC.register(ITabProvider.class, tabProvider);
 		
 		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class);
-		MMDCreativeTab tabResolved = tabProviderResolved.getTabByName("blocks");
+		String tabResolved = tabProviderResolved.getTab("Axes", "mmdlib");
 		
 		assertNotNull(tabResolved);
-		assertEquals(tabResolved.getTabLabel(), "blocks tab");
+		assertEquals(tabResolved, "axesTab");
 	}
 	
 	@Test
 	void testIoCCanRegisterAndNotResolve() {
 		ITabProvider tabProvider = mock(ITabProvider.class);
-		MMDCreativeTab tab = mock(MMDCreativeTab.class);
 		
-		when(tab.getTabLabel()).thenReturn("blocks tab");
-		when(tabProvider.getTabByName("blocks")).thenReturn(tab);
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
 		
 		IoC.register(ITabProvider.class, tabProvider);
 		
 		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class);
-		MMDCreativeTab tabResolved = tabProviderResolved.getTabByName("blocks2");
+		String tabResolved = tabProviderResolved.getTab("Blocks", "mmdlib");
 		
 		assertNull(tabResolved);
+	}
+	
+	@Test
+	void testIoCCanRegisterAndResolveResourceLocation() {
+		ITabProvider tabProvider = mock(ITabProvider.class);
+		
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
+		
+		ResourceLocation resourceLocation = new ResourceLocation("MyDomain", "MyPath");
+		
+		IoC.register(ITabProvider.class, tabProvider, resourceLocation);
+		
+		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class, resourceLocation);
+		String tabResolved = tabProviderResolved.getTab("Axes", "mmdlib");
+		
+		assertNotNull(tabResolved);
+		assertEquals(tabResolved, "axesTab");
+	}
+	
+	@Test
+	void testIoCCanRegisterAndNotResolveResourceLocation() {
+		ITabProvider tabProvider = mock(ITabProvider.class);
+		
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
+		
+		ResourceLocation resourceLocation = new ResourceLocation("MyDomain", "MyPath");
+		
+		IoC.register(ITabProvider.class, tabProvider, resourceLocation);
+		
+		ResourceLocation resourceLocationDifferent = new ResourceLocation("MyDomain", "MyPathIsDifferent");
+		
+		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class, resourceLocationDifferent);
+		
+		assertNull(tabProviderResolved);
+	}
+	
+	@Test
+	void testIoCCanRegisterAndResolveMMDResourceLocation() {
+		ITabProvider tabProvider = mock(ITabProvider.class);
+		
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
+		
+		ResourceLocation resourceLocation = new MMDResourceLocation("MyNamespace", "MyEntryType", "MyEntryName");
+		
+		IoC.register(ITabProvider.class, tabProvider, resourceLocation);
+		
+		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class, resourceLocation);
+		String tabResolved = tabProviderResolved.getTab("Axes", "mmdlib");
+		
+		assertNotNull(tabResolved);
+		assertEquals(tabResolved, "axesTab");
+	}
+	
+	@Test
+	void testIoCCanRegisterAndNotResolveMMDResourceLocation() {
+		ITabProvider tabProvider = mock(ITabProvider.class);
+		
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
+		
+		ResourceLocation resourceLocation = new MMDResourceLocation("MyNamespace", "MyEntryType", "MyEntryName");
+		
+		IoC.register(ITabProvider.class, tabProvider, resourceLocation);
+		
+		ResourceLocation resourceLocationDifferent = new MMDResourceLocation("MyNamespace", "MyEntryTypeIsDifferent", "MyEntryName");
+		
+		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class, resourceLocationDifferent);
+		
+		assertNull(tabProviderResolved);
+	}
+	
+	@Test
+	void testIoCCanRegisterAndResolveString() {
+		ITabProvider tabProvider = mock(ITabProvider.class);
+		
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
+				
+		IoC.register(ITabProvider.class, tabProvider, "myConcrete", "myMod");
+		
+		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class, "myConcrete", "myMod");
+		String tabResolved = tabProviderResolved.getTab("Axes", "mmdlib");
+		
+		assertNotNull(tabResolved);
+		assertEquals(tabResolved, "axesTab");
+	}
+	
+	@Test
+	void testIoCCanRegisterAndNotResolveString() {
+		ITabProvider tabProvider = mock(ITabProvider.class);
+		
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
+		
+		IoC.register(ITabProvider.class, tabProvider, "myConcrete", "myMod");
+		
+		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class, "myConcreteIsDifferent", "myMod");
+		
+		assertNull(tabProviderResolved);
+	}
+	
+	@Test
+	void testIoCCanRegisterAndNotResolveWrongModString() {
+		ITabProvider tabProvider = mock(ITabProvider.class);
+		
+		when(tabProvider.getTab("Axes", "mmdlib")).thenReturn("axesTab");
+		
+		IoC.register(ITabProvider.class, tabProvider, "myConcrete", "myMod");
+		
+		ITabProvider tabProviderResolved = IoC.resolve(ITabProvider.class, "myConcrete", "myModIsDifferent");
+		
+		assertNull(tabProviderResolved);
 	}
 }

@@ -1,14 +1,20 @@
 package com.mcmoddev.basemetals.proxy;
 
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.client.registrations.RegistrationHelper;
 import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
 import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
 import com.mcmoddev.lib.entity.EntityCustomArrow;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
+import com.mcmoddev.lib.exceptions.MaterialNotFoundException;
+import com.mcmoddev.lib.exceptions.TabNotFoundException;
 import com.mcmoddev.lib.init.Blocks;
 import com.mcmoddev.lib.init.Fluids;
 import com.mcmoddev.lib.init.Items;
+import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.BMeIoC;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -61,6 +67,21 @@ public class ClientProxy extends CommonProxy {
 		super.init(event);
 		if (Loader.isModLoaded("waila")) {
 			com.mcmoddev.lib.waila.Waila.init();
+		}
+		
+		setTabIcons();
+	}
+	
+	private void setTabIcons() {
+		BMeIoC IoC = BMeIoC.getInstance();
+		ITabProvider tabProvider = IoC.resolve(ITabProvider.class);
+				
+		try {
+			tabProvider.setIcon("blocksTab", MaterialNames.STARSTEEL);
+		} catch (TabNotFoundException e) {
+			BaseMetals.logger.warn("Failed to set icon to blocksTab, tab was not found", e);
+		} catch (MaterialNotFoundException e) {
+			BaseMetals.logger.warn("Failed to set icon to blocksTab, material was not found", e);
 		}
 	}
 }

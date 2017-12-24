@@ -10,11 +10,7 @@ import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.interfaces.ITabProvider;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.BMeIoC;
-import com.mcmoddev.lib.util.TabContainer;
-
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -30,7 +26,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	public static Block humanDetector;
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs;
 
 	protected Blocks() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -43,11 +38,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (initDone) {
 			return;
 		}
-
-		// IoC resolutions here
-		BMeIoC IoC = BMeIoC.getInstance();
-		myTabs = IoC.resolve(ITabProvider.class);
-
+		
 		com.mcmoddev.basemetals.util.Config.init();
 		com.mcmoddev.lib.init.Blocks.init();
 		Materials.init();
@@ -109,7 +100,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		createStarSteel();
 		createMercury();
 
-		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
+		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", BLOCKS_TAB);
 
 		initDone = true;
 	}
@@ -316,6 +307,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	}
 
 	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
-		return create(name, material, myTabs.blocksTab);
+		return create(name, material, BLOCKS_TAB);
 	}
 }
