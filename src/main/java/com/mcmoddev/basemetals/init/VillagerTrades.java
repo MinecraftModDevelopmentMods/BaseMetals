@@ -1,12 +1,7 @@
 package com.mcmoddev.basemetals.init;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
@@ -46,16 +41,16 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 	}
 
 	protected static void registerModSpecificTrades() {
-		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>();
 
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
 			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 			if (charcoal.hasItem(Names.POWDER)) {
 				final Item charcoalPowder = charcoal.getItem(Names.POWDER);
+				final ITradeList[] charcoalTrades = makePurchasePalette(1, 10, charcoalPowder);
 
-				tradesTable.computeIfAbsent(ARMOR_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, charcoalPowder)));
-				tradesTable.computeIfAbsent(WEAPON_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, charcoalPowder)));
-				tradesTable.computeIfAbsent(TOOL_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, charcoalPowder)));
+				VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, 1, charcoalTrades);
+				VillagerTradeHelper.insertTrades(SMITH_RL, WEAPON_SMITH_ID, 1, charcoalTrades);
+				VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, 1, charcoalTrades);
 			}
 		}
 
@@ -63,13 +58,12 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 			final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
 			if (coal.hasItem(Names.POWDER)) {
 				final Item coalPowder = coal.getItem(Names.POWDER);
+				final ITradeList[] coalTrades = makePurchasePalette(1, 10, coalPowder);
 
-				tradesTable.computeIfAbsent(ARMOR_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, coalPowder)));
-				tradesTable.computeIfAbsent(WEAPON_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, coalPowder)));
-				tradesTable.computeIfAbsent(TOOL_SMITH | (1), (Integer key) -> new ArrayList<>()).addAll(Arrays.asList(makePurchasePalette(1, 10, coalPowder)));
+				VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, 1, coalTrades);
+				VillagerTradeHelper.insertTrades(SMITH_RL, WEAPON_SMITH_ID, 1, coalTrades);
+				VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, 1, coalTrades);
 			}
 		}
-
-		commitTrades(tradesTable);
 	}
 }
