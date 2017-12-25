@@ -31,14 +31,10 @@ public class VillagerTradeHelper {
 	 * @param trades
 	 *            Trades to add to the given level
 	 */
-			throws NoSuchFieldException, IllegalAccessException {
+	public static void insertTrades(int professionID, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
 		final ResourceLocation profession = professionList[professionID];
 		insertTrades(profession, careerID, tradeLevel, trades);
 		/*
-		Field vanillaTradeField = getTradeArrayFromClass(EntityVillager.class);
-		unlockPrivateFinalField(vanillaTradeField);
-		Object tradeTable = vanillaTradeField.get(null); // is static
-		appendToMultidimensionalArray(trades, tradeTable, professionID, Math.max (0, careerID - 1), Math.max(0, tradeLevel - 1));
 		VillagerRegistry.VillagerProfession _profession = ForgeRegistries.VILLAGER_PROFESSIONS.getKey(professionID);
 		VillagerRegistry.VillagerCareer career = _profession.getCareer(careerID);
 		career.addTrade(tradeLevel, trade);
