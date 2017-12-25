@@ -9,7 +9,6 @@ import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 /**
  * This class initializes all item groups in Base Metals.
