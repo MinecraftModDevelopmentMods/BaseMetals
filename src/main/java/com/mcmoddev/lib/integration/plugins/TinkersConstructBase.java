@@ -29,6 +29,10 @@ public class TinkersConstructBase implements IIntegration {
 
 	protected static final TinkersConstructRegistry registry = TinkersConstructRegistry.instance;
 
+	private static boolean preInitRun = false;
+	private static boolean initRun = false;
+	private static boolean postInitRun = false;
+
 	@Override
 	public void init() {
 		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
@@ -117,8 +121,10 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	public void preInitSetup() {
+		if( preInitRun  ) return;
 		registry.setupIntegrations();
 		registry.addMaterialStats();
+		preInitRun = true;
 	}
 
 	public void setMaterialsVisible() {
@@ -126,15 +132,19 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	public void initSetup() {
+		if( initRun ) return;
 		registry.resolveTraits();
 		registry.integrationsInit();
 		setMaterialsVisible();
 		registry.registerMeltings();
+		initRun = true;
 	}
 
 	public void postInitSetup() {
+		if( postInitRun ) return;
 		setMaterialsVisible();
 		registry.registerAlloys();
+		postInitRun = true;
 	}
 
 	public void modifierSetup() {
