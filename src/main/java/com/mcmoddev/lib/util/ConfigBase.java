@@ -78,7 +78,7 @@ public class ConfigBase {
 		.filter( entry -> {
 			List<ItemStack> iS = OreDictionary.getOres(Oredicts.INGOT.concat(entry.substring(4)));
 			for (ItemStack i : iS) {
-				if ((CrusherRecipeRegistry.getRecipeForInputItem(i) != null )) {
+				if ((CrusherRecipeRegistry.getRecipeForInputItem(i) != null)) {
 					return true;
 				}
 			}

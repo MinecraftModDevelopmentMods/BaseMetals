@@ -223,23 +223,23 @@ public abstract class Items {
 		create(Names.ARROW, material, tabs.toolsTab);
 		create(Names.AXE, material, tabs.toolsTab);
 		create(Names.BOLT, material, tabs.toolsTab);
-		create(Names.BOOTS, material, tabs.itemsTab);
+		create(Names.BOOTS, material, tabs.toolsTab);
 		create(Names.BOW, material, tabs.toolsTab);
-		create(Names.CHESTPLATE, material, tabs.itemsTab);
+		create(Names.CHESTPLATE, material, tabs.toolsTab);
 		create(Names.CRACKHAMMER, material, tabs.toolsTab);
 		create(Names.CROSSBOW, material, tabs.toolsTab);
 		create(Names.DOOR, material, tabs.blocksTab);
 		create(Names.FISHING_ROD, material, tabs.toolsTab);
 		create(Names.HELMET, material, tabs.toolsTab);
 		create(Names.HOE, material, tabs.toolsTab);
-		create(Names.HORSE_ARMOR, material, tabs.itemsTab);
-		create(Names.LEGGINGS, material, tabs.itemsTab);
+		create(Names.HORSE_ARMOR, material, tabs.toolsTab);
+		create(Names.LEGGINGS, material, tabs.toolsTab);
 		create(Names.PICKAXE, material, tabs.toolsTab);
 		create(Names.SHEARS, material, tabs.toolsTab);
-		create(Names.SHIELD, material, tabs.itemsTab);
+		create(Names.SHIELD, material, tabs.toolsTab);
 		create(Names.SHOVEL, material, tabs.toolsTab);
 		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.SWORD, material, tabs.itemsTab);
+		create(Names.SWORD, material, tabs.toolsTab);
 		create(Names.ROD, material, tabs.itemsTab);
 		create(Names.GEAR, material, tabs.itemsTab);
 	}
@@ -451,7 +451,7 @@ public abstract class Items {
 			try {
 				ctor = clazz.getConstructor(material.getClass());
 			} catch (NoSuchMethodException | SecurityException ex) {
-				BaseMetals.logger.error("Class for Item named " + name + " does not have the correct constructor", ex);
+				BaseMetals.logger.error("Class for Item named %s does not have the correct constructor", name, ex);
 				return null;
 			}
 
@@ -459,10 +459,10 @@ public abstract class Items {
 				inst = (Item) ctor.newInstance(material);
 			} catch (IllegalAccessException | IllegalArgumentException | InstantiationException
 					| InvocationTargetException | ExceptionInInitializerError ex) {
-				BaseMetals.logger.error("Unable to create new instance of Item class for item name " + name + " of material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error("Unable to create new instance of Item class for item name %s of material %s", name, material.getCapitalizedName(), ex);
 				return null;
 			} catch (Exception ex) {
-				BaseMetals.logger.error("Unable to create Item named " + name + " for material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error("Unable to create Item named %s for material %s", name, material.getCapitalizedName(), ex);
 				return null;
 			}
 
