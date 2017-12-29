@@ -60,7 +60,7 @@ public class BaseMetals {
 	 */
 	public static final String VERSION = "2.5.0-beta3";
 
-	static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopment/BaseMetals/master/update.json";
+	static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopmentMods/BaseMetals/master/update.json";
 
 	private static final String PROXY_BASE = "com.mcmoddev." + MODID + ".proxy.";
 
@@ -82,8 +82,8 @@ public class BaseMetals {
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {
 		proxy.preInit(event);
-		
-		if( proxy.allsGood ) {
+
+		if (proxy.allsGood) {
 			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
 			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
 			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);

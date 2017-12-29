@@ -55,37 +55,29 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		registerVanilla();
 
-		String[] simpleFullBlocks = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD,
-				MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER, MaterialNames.TIN,
-				MaterialNames.ZINC };
+		String[] materials = new String[] { MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY,
+				MaterialNames.AQUARIUM,
+				MaterialNames.BISMUTH,
+				MaterialNames.BRASS,
+				MaterialNames.BRONZE,
+				MaterialNames.COLDIRON,
+				MaterialNames.COPPER,
+				MaterialNames.CUPRONICKEL,
+				MaterialNames.ELECTRUM,
+				MaterialNames.INVAR,
+				MaterialNames.LEAD,
+				MaterialNames.MITHRIL,
+				MaterialNames.NICKEL,
+				MaterialNames.PEWTER,
+				MaterialNames.PLATINUM,
+				MaterialNames.SILVER,
+				MaterialNames.STEEL,
+				MaterialNames.TIN,
+				MaterialNames.ZINC
+			};
 
-		String[] alloyFullBlocks = new String[] { MaterialNames.AQUARIUM, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
-				MaterialNames.PEWTER, MaterialNames.STEEL };
-
-		Arrays.stream(simpleFullBlocks)
-				.filter(Materials::hasMaterial)
-				.forEach(name -> {
-					final MMDMaterial material = Materials.getMaterialByName(name);
-
-					create(Names.BLOCK, material);
-					create(Names.PLATE, material);
-					create(Names.ORE, material);
-					create(Names.BARS, material);
-					create(Names.DOOR, material);
-					create(Names.TRAPDOOR, material);
-
-					create(Names.BUTTON, material);
-					create(Names.SLAB, material);
-					create(Names.DOUBLE_SLAB, material);
-					create(Names.LEVER, material);
-					create(Names.PRESSURE_PLATE, material);
-					create(Names.STAIRS, material);
-					create(Names.WALL, material);
-				});
-
-		Arrays.stream(alloyFullBlocks)
+		Arrays.stream(materials)
 				.filter(Materials::hasMaterial)
 				.forEach(name -> {
 					final MMDMaterial material = Materials.getMaterialByName(name);
@@ -303,11 +295,11 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		for (MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID)) {
-            for (Block block : mat.getBlocks()) {
-            	if (block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {
-            		event.getRegistry().register(block);
-            	}
-            }			
+			for (Block block : mat.getBlocks()) {
+				if (block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {
+					event.getRegistry().register(block);
+				}
+			}
 		}
 
 		if( humanDetector != null ) {

@@ -44,29 +44,35 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	}
 
 	public static void setupIcons() {
+		MMDMaterial material = Materials.emptyMaterial;
 		Block blocksTabIconItem;
 		Item itemsTabIconItem;
 		Item toolsTabIconItem;
 
-		MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
-		MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
+		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
+			material = Materials.getMaterialByName(MaterialNames.STARSTEEL);
+		} else	if (Materials.hasMaterial(MaterialNames.IRON)) {
+			material = Materials.getMaterialByName(MaterialNames.IRON);
+		}
 
-		if ((Materials.hasMaterial(MaterialNames.STARSTEEL)) && (starsteel.hasBlock(Names.BLOCK))) {
-			blocksTabIconItem = starsteel.getBlock(Names.BLOCK);
+		if (material.equals(Materials.emptyMaterial)) {
+			return;
+		}
+
+		if (material.hasBlock(Names.BLOCK)) {
+			blocksTabIconItem = material.getBlock(Names.BLOCK);
 		} else {
 			blocksTabIconItem = net.minecraft.init.Blocks.IRON_BLOCK;
 		}
 
-		if ((Materials.hasMaterial(MaterialNames.STARSTEEL)) && (starsteel.hasItem(Names.GEAR))) {
-			itemsTabIconItem = starsteel.getItem(Names.GEAR);
-		} else if ((Materials.hasMaterial(MaterialNames.IRON)) && (iron.hasItem(Names.GEAR))) {
-			itemsTabIconItem = iron.getItem(Names.GEAR);
+		if (material.hasItem(Names.GEAR)) {
+			itemsTabIconItem = material.getItem(Names.GEAR);
 		} else {
 			itemsTabIconItem = net.minecraft.init.Items.STICK;
 		}
 
-		if ((Materials.hasMaterial(MaterialNames.STARSTEEL)) && (starsteel.hasItem(Names.SWORD))) {
-			toolsTabIconItem = starsteel.getItem(Names.SWORD);
+		if (material.hasItem(Names.SWORD)) {
+			toolsTabIconItem = material.getItem(Names.SWORD);
 		} else {
 			toolsTabIconItem = net.minecraft.init.Items.DIAMOND_SWORD;
 		}

@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 public class CommonProxy {
 
 	public boolean allsGood = false;
-	
+
 	public void preInit(FMLPreInitializationEvent event) {
 
 		Config.init();
@@ -78,8 +78,8 @@ public class CommonProxy {
 	}
 
 	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
-		for ( final RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings() ) {
-			if( mapping.key.getResourceDomain().equals(BaseMetals.MODID) ) {
+		for (final RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
+			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)) {
 				if ((Materials.hasMaterial(MaterialNames.COAL)) && ("carbon_powder".equals(mapping.key.getResourcePath()))) {
 					mapping.remap(Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
 				}
