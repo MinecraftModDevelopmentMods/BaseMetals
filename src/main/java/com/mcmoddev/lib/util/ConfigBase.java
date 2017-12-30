@@ -335,6 +335,7 @@ public class ConfigBase {
 			modEnabled.clear();
 			materialEnabled.clear();
 			thingEnabled.clear();
+			fluidEnabled.clear();
 		}
 
 		// INTEGRATION
@@ -388,6 +389,23 @@ public class ConfigBase {
 			}
 		}
 
+		// FLUIDS
+		private static final Map<String, Boolean> fluidEnabled = new HashMap<>();
+		
+		public static boolean isFluidEnabled(String name) {
+			String testName = name.toLowerCase(Locale.ROOT);
+			if( fluidEnabled.containsKey(testName) ) {
+				return thingEnabled.get(testName);
+			}
+			return false;
+		}
+		
+		public static void fluidEnabled(String name, Boolean bool) {
+			if( !fluidEnabled.containsKey(name) ) {
+				fluidEnabled.put(name.toLowerCase(Locale.ROOT), bool);
+			}
+		}
+		
 		private static int explosionChance = 0;
 
 		public static int explosionChance() {
