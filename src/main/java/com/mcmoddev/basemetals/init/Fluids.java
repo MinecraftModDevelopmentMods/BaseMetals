@@ -31,10 +31,8 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 
 		// Vanilla Materials need to always have fluids available in case of tie-in mods
 		List<String> vanillaMaterialsMap = Arrays.asList(MaterialNames.CHARCOAL, MaterialNames.COAL,
-				MaterialNames.DIAMOND, MaterialNames.EMERALD, /*
-																 * MaterialNames.GOLD, MaterialNames.IRON,
-																 * MaterialNames.OBSIDIAN,
-																 */ MaterialNames.PRISMARINE, MaterialNames.REDSTONE);
+				MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON,
+				MaterialNames.OBSIDIAN, MaterialNames.PRISMARINE, MaterialNames.REDSTONE);
 
 		List<String> standardMaterialsMap = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
