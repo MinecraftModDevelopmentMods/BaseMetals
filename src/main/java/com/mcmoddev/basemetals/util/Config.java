@@ -232,19 +232,19 @@ public class Config extends ConfigBase {
 		Options.fluidEnabled("Coal",
 				configuration.getBoolean("Enabled Coal", FLUIDS_CAT, true, "Enable the molten fluid of Coal"));
 		Options.fluidEnabled("Diamond",
-				configuration.getBoolean("Enabled Diamond", FLUIDS_CAT, true, "Enable the molten fluid of Diamond"));
+				configuration.getBoolean("Enabled Diamond", FLUIDS_CAT, false, "Enable the molten fluid of Diamond"));
 		Options.fluidEnabled("Emerald",
-				configuration.getBoolean("Enabled Emerald", FLUIDS_CAT, true, "Enable the molten fluid of Emerald"));
+				configuration.getBoolean("Enabled Emerald", FLUIDS_CAT, false, "Enable the molten fluid of Emerald"));
 		Options.fluidEnabled("Gold",
-				configuration.getBoolean("Enabled Gold", FLUIDS_CAT, true, "Enable the molten fluid of Gold"));
+				configuration.getBoolean("Enabled Gold", FLUIDS_CAT, false, "Enable the molten fluid of Gold"));
 		Options.fluidEnabled("Iron",
-				configuration.getBoolean("Enabled Iron", FLUIDS_CAT, true, "Enable the molten fluid of Iron"));
+				configuration.getBoolean("Enabled Iron", FLUIDS_CAT, false, "Enable the molten fluid of Iron"));
 		Options.fluidEnabled("Obsidian",
-				configuration.getBoolean("Enabled Obsidian", FLUIDS_CAT, true, "Enable the molten fluid of Obsidian"));
+				configuration.getBoolean("Enabled Obsidian", FLUIDS_CAT, false, "Enable the molten fluid of Obsidian"));
 		Options.fluidEnabled("Prismarine", configuration.getBoolean("Enabled Prismarine", FLUIDS_CAT, true,
 				"Enable the molten fluid of Prismarine"));
 		Options.fluidEnabled("Redstone",
-				configuration.getBoolean("Enabled Redstone", FLUIDS_CAT, true, "Enable the molten fluid of Redstone"));
+				configuration.getBoolean("Enabled Redstone", FLUIDS_CAT, false, "Enable the molten fluid of Redstone"));
 		Options.fluidEnabled("Adamantine", configuration.getBoolean("Enabled Adamantine", FLUIDS_CAT, true,
 				"Enable the molten fluid of Adamantine"));
 		Options.fluidEnabled("Antimony",
