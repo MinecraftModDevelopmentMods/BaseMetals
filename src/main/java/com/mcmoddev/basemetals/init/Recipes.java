@@ -53,14 +53,8 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	private static void initModSpecificRecipes() {
 		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
 			final MMDMaterial adamantine = Materials.getMaterialByName(MaterialNames.ADAMANTINE);
-
-			// Alt oreDict Adamantite
 			addAdditionalOredicts(adamantine, "Adamantite");
-
-			// Alt oreDict Adamantium
 			addAdditionalOredicts(adamantine, "Adamantium");
-
-			// Alt oreDict Adamant
 			addAdditionalOredicts(adamantine, "Adamant");
 		}
 
@@ -70,8 +64,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 				OreDictionary.registerOre(Oredicts.SPROCKET, steel.getItem(Names.GEAR));
 			}
 		}
-
-		// new recipes using rods and gears
 	}
 
 	@SubscribeEvent

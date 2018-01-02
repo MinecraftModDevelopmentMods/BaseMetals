@@ -198,12 +198,18 @@ public class ConfigBase {
 			strongHammers = bool;
 		}
 
+		private static boolean twoDustDrop = true;
+		
+		public static void setTwoDustDrop(boolean bool) {
+			twoDustDrop = bool;
+		}
+		
 		private static boolean autoDetectRecipes = true;
 
 		public static void setAutoDetectRecipes(boolean bool) {
 			autoDetectRecipes = bool;
 		}
-
+		
 		private static boolean requireMMDOreSpawn = true;
 
 		public static void setRequireMMDOreSpawn(boolean bool) {
@@ -252,6 +258,10 @@ public class ConfigBase {
 			return strongHammers;
 		}
 
+		public static boolean twoDustDrop() {
+			return twoDustDrop;
+		}
+		
 		public static boolean autoDetectRecipes() {
 			return autoDetectRecipes;
 		}
