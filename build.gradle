@@ -119,7 +119,7 @@ if (secretFile.exists()) {
 minecraft {
     version = '1.12.1-14.22.1.2485'
     runDir = 'run'
-    mappings = 'snapshot_20171130'
+    mappings = 'snapshot_20171231'
     clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
     serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
 
@@ -190,12 +190,16 @@ repositories {
 }
 
 dependencies {
+    compileOnly ("net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}" )
+    
     compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
         exclude module: "Chameleon" // mek only uses the storage drawers API, which doesn't need Chameleon
         exclude module: "jei_1.11.2"
         exclude module: "Hwyla"
+	// temporary hack
+	exclude group: "net.darkhax.tesla"
     }
 
     deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
