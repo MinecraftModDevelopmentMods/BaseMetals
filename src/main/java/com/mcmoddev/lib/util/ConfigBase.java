@@ -405,7 +405,7 @@ public class ConfigBase {
 		public static boolean isFluidEnabled(String name) {
 			String testName = name.toLowerCase(Locale.ROOT);
 			if( fluidEnabled.containsKey(testName) ) {
-				return thingEnabled.get(testName);
+				return fluidEnabled.get(testName);
 			}
 			return false;
 		}
