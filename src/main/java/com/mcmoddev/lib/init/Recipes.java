@@ -1,7 +1,5 @@
 package com.mcmoddev.lib.init;
 
-import java.util.Arrays;
-
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
@@ -172,7 +170,7 @@ public abstract class Recipes {
 
 	protected static void initGeneralRecipes() {
 		for (final MMDMaterial material : Materials.getAllMaterials()) {
-			
+
 			if (Materials.emptyMaterial.equals(material)) {
 				continue;
 			}
@@ -326,9 +324,10 @@ public abstract class Recipes {
 
 	private static void makeIngotRecipes(@Nonnull final MMDMaterial material) {
 		final float oreSmeltXP = material.getOreSmeltXP();
-		
-		BaseMetals.logger.debug( "creating ingot recipes for %s, oreSmeltXp == %.4f", material.getCapitalizedName(), oreSmeltXP );
-		
+
+		BaseMetals.logger.debug("creating ingot recipes for %s, oreSmeltXp == %.4f", material.getCapitalizedName(),
+				oreSmeltXP);
+
 		if (material.hasItem(Names.INGOT)) {
 			if (material.hasOre()) {
 				GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.ORE)),
@@ -426,7 +425,21 @@ public abstract class Recipes {
 	}
 
 	private static void initModSpecificRecipes() {
+		for (MMDMaterial mat : Materials.getAllMaterials()) {
+			if (mat.equals(Materials.emptyMaterial))
+				continue;
 
+			if (Options.isModEnabled("ic2")) {
+				if (mat.hasItem(Names.CRUSHED) && mat.hasItem(Names.INGOT)) {
+					GameRegistry.addSmelting(mat.getItem(Names.CRUSHED), new ItemStack(mat.getItem(Names.INGOT)),
+							mat.getOreSmeltXP());
+				}
+				if (mat.hasItem(Names.CRUSHED_PURIFIED) && mat.hasItem(Names.INGOT)) {
+					GameRegistry.addSmelting(mat.getItem(Names.CRUSHED_PURIFIED),
+							new ItemStack(mat.getItem(Names.INGOT)), mat.getOreSmeltXP());
+				}
+			}
+		}
 	}
 
 	protected static void addAdditionalOredicts(@Nonnull final String materialName, String oreDictName) {
