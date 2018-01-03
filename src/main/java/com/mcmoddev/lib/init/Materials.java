@@ -44,11 +44,8 @@ public class Materials {
 	public static final MMDMaterial emptyMaterial = createOrelessMaterial("empty", MaterialType.METAL, 0, 0, 0, 0);
 
 	protected Materials() {
-		this.REGISTRY = new RegistryBuilder<MMDMaterial>()
-				.setName(new ResourceLocation("mmdlib","materials_registry"))
-			    .setType(MMDMaterial.class)
-			    .setMaxID(Integer.MAX_VALUE >> 4)
-			    .create();
+		this.REGISTRY = new RegistryBuilder<MMDMaterial>().setName(new ResourceLocation("mmdlib", "materials_registry"))
+				.setType(MMDMaterial.class).setMaxID(Integer.MAX_VALUE >> 4).create();
 	}
 
 	/**
@@ -76,12 +73,15 @@ public class Materials {
 	 * @param magic
 	 *            material magic affinity
 	 * @param tintColor
-	 *            material tint color - used in several places, including in the
-	 *            TiC plugin, where it determines tool-part color
+	 *            material tint color - used in several places, including in the TiC
+	 *            plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createOrelessMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,	tintColor, false, false, false);
+	protected static MMDMaterial createOrelessMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
+			@Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic,
+			@Nonnull final int tintColor) {
+		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,
+				tintColor, false, false, false);
 
 		return registerMaterial(material);
 	}
@@ -100,12 +100,15 @@ public class Materials {
 	 * @param magic
 	 *            material magic affinity
 	 * @param tintColor
-	 *            material tint color - used in several places, including in the
-	 *            TiC plugin, where it determines tool-part color
+	 *            material tint color - used in several places, including in the TiC
+	 *            plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, true, false);
+	protected static MMDMaterial createMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
+			@Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic,
+			@Nonnull final int tintColor) {
+		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,
+				tintColor, false, true, false);
 
 		return registerMaterial(material);
 	}
@@ -124,12 +127,15 @@ public class Materials {
 	 * @param magic
 	 *            material magic affinity
 	 * @param tintColor
-	 *            material tint color - used in several places, including in the
-	 *            TiC plugin, where it determines tool-part color
+	 *            material tint color - used in several places, including in the TiC
+	 *            plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createAlloyMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, false, true);
+	protected static MMDMaterial createAlloyMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
+			@Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic,
+			@Nonnull final int tintColor) {
+		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,
+				tintColor, false, false, true);
 
 		return registerMaterial(material);
 	}
@@ -148,12 +154,15 @@ public class Materials {
 	 * @param magic
 	 *            material magic affinity
 	 * @param tintColor
-	 *            material tint color - used in several places, including in the
-	 *            TiC plugin, where it determines tool-part color
+	 *            material tint color - used in several places, including in the TiC
+	 *            plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createSpecialMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, false, true, true);
+	protected static MMDMaterial createSpecialMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
+			@Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic,
+			@Nonnull final int tintColor) {
+		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,
+				tintColor, false, true, true);
 
 		return registerMaterial(material);
 	}
@@ -172,12 +181,15 @@ public class Materials {
 	 * @param magic
 	 *            material magic affinity
 	 * @param tintColor
-	 *            material tint color - used in several places, including in the
-	 *            TiC plugin, where it determines tool-part color
+	 *            material tint color - used in several places, including in the TiC
+	 *            plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createOrelessRareMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, false, false);
+	protected static MMDMaterial createOrelessRareMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
+			@Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic,
+			@Nonnull final int tintColor) {
+		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,
+				tintColor, true, false, false);
 
 		return registerMaterial(material);
 	}
@@ -196,12 +208,15 @@ public class Materials {
 	 * @param magic
 	 *            material magic affinity
 	 * @param tintColor
-	 *            material tint color - used in several places, including in the
-	 *            TiC plugin, where it determines tool-part color
+	 *            material tint color - used in several places, including in the TiC
+	 *            plugin, where it determines tool-part color
 	 * @return the new material
 	 */
-	protected static MMDMaterial createRareMaterial(@Nonnull final String name, @Nonnull final MaterialType type, @Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic, tintColor, true, true, false);
+	protected static MMDMaterial createRareMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
+			@Nonnull final double hardness, @Nonnull final double strength, @Nonnull final double magic,
+			@Nonnull final int tintColor) {
+		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength, (float) magic,
+				tintColor, true, true, false);
 
 		return registerMaterial(material);
 	}
@@ -220,8 +235,8 @@ public class Materials {
 	 * @param magic
 	 *            material magic affinity
 	 * @param tintColor
-	 *            material tint color - used in several places, including in the
-	 *            TiC plugin, where it determines tool-part color
+	 *            material tint color - used in several places, including in the TiC
+	 *            plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createRareAlloyMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
@@ -247,8 +262,8 @@ public class Materials {
 	 * @param magic
 	 *            material magic affinity
 	 * @param tintColor
-	 *            material tint color - used in several places, including in the
-	 *            TiC plugin, where it determines tool-part color
+	 *            material tint color - used in several places, including in the TiC
+	 *            plugin, where it determines tool-part color
 	 * @return the new material
 	 */
 	protected static MMDMaterial createRareSpecialMaterial(@Nonnull final String name, @Nonnull final MaterialType type,
@@ -269,8 +284,8 @@ public class Materials {
 	 */
 	protected static MMDMaterial registerMaterial(@Nonnull final MMDMaterial material) {
 		String modId = Loader.instance().activeModContainer().getModId();
-		ResourceLocation loc = new ResourceLocation( modId, material.getName());
-		if( instance.REGISTRY.containsKey(loc)) {
+		ResourceLocation loc = new ResourceLocation(modId, material.getName());
+		if (instance.REGISTRY.containsKey(loc)) {
 			BaseMetals.logger.error(
 					"You asked registermaterial() to register an existing material, Don't do that! (Returning pre existing material instead");
 			return Materials.getMaterialByName(material.getName());
@@ -278,7 +293,7 @@ public class Materials {
 
 		material.setRegistryName(loc);
 		instance.REGISTRY.register(material);
-		
+
 		final String enumName = material.getEnumName();
 		final String texName = material.getName();
 		final int[] protection = material.getDamageReductionArray();
@@ -341,12 +356,12 @@ public class Materials {
 	 *
 	 * @param materialName
 	 *            The name of a material
-	 * @return The material representing the named material, or null if no
-	 *         materials have been registered under that name.
+	 * @return The material representing the named material, or null if no materials
+	 *         have been registered under that name.
 	 */
 	public static @Nonnull MMDMaterial getMaterialByName(@Nonnull final String materialName) {
-		for( ResourceLocation key : instance.REGISTRY.getKeys() ) {
-			if( key.getResourcePath().equals(materialName)) {
+		for (ResourceLocation key : instance.REGISTRY.getKeys()) {
+			if (key.getResourcePath().equals(materialName)) {
 				return instance.REGISTRY.getValue(key);
 			}
 		}
@@ -358,19 +373,20 @@ public class Materials {
 	 * 
 	 * @param modId
 	 *            the ModID of the mod
-	 * @return an immutable collection representing all the materials registered
-	 *         by a given mod or the "empty set" if the modId is not recorded.
+	 * @return an immutable collection representing all the materials registered by
+	 *         a given mod or the "empty set" if the modId is not recorded.
 	 */
 	public static Collection<MMDMaterial> getMaterialsByMod(@Nonnull final String modId) {
-		return Lists.newArrayList(instance.REGISTRY.getEntries().stream()
-				.filter((ent) -> ent.getKey().getResourceDomain().equals(modId))
-				.map((ent) -> ent.getValue()).iterator());
+		return Lists.newArrayList(
+				instance.REGISTRY.getEntries().stream().filter((ent) -> ent.getKey().getResourceDomain().equals(modId))
+						.map((ent) -> ent.getValue()).iterator());
 	}
 
 	/**
 	 * Checks is a material is enabled and registered
 	 *
-	 * @param materialName Name of the material to check for
+	 * @param materialName
+	 *            Name of the material to check for
 	 * @return true if the material is available
 	 */
 	public static boolean hasMaterial(@Nonnull final String materialName) {
@@ -382,8 +398,8 @@ public class Materials {
 	}
 
 	public static boolean hasMaterialFromMod(@Nonnull final String modId) {
-		for( ResourceLocation rl : instance.REGISTRY.getKeys() ) {
-			if( rl.getResourceDomain().equals(modId) ) {
+		for (ResourceLocation rl : instance.REGISTRY.getKeys()) {
+			if (rl.getResourceDomain().equals(modId)) {
 				return true;
 			}
 		}
