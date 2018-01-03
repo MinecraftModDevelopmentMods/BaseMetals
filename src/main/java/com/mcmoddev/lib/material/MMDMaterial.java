@@ -212,8 +212,9 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * 
 	 * @return XP value per ore block
 	 */
-	public float getOreSmeltXP() {
-		return 0.1f * this.stats.get(MaterialStats.MAGICAFFINITY);
+	public final float getOreSmeltXP() {
+		float val = 0.1f * this.stats.get(MaterialStats.MAGICAFFINITY);
+		return Float.max(0.1f, val);
 	}
 
 	/**
