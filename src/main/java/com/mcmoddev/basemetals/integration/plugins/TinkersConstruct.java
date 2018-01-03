@@ -3,7 +3,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.data.TraitNames;
-import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @author Jasmine Iwanek
  *
  */
-@MMDPlugin(addonId = BaseMetals.MODID, 
+@MMDPlugin(addonId = BaseMetals.MODID,
            pluginId = TinkersConstruct.PLUGIN_MODID, 
            preInitCallback="preInit", 
            initCallback="initCallback",
