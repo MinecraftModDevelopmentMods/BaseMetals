@@ -1,0 +1,4 @@
+antimony_scythe
+bismuth_scythe
+pewter_scythe
+quartz_scythe
