@@ -56,7 +56,6 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 		this.setMaxDamage(material.getToolDurability());
 		this.material = material;
 		this.actionDiameter = 3;
-		this.actionHeight = 2;
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 
 	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
-		this.getEffectedBlocks(pos, player.getEntityWorld(), player, stack, this.actionDiameter, this.actionHeight)
+		this.getEffectedBlocks(pos, player.getEntityWorld(), player, stack, this.actionDiameter)
 				.stream().filter(entityPos -> this.isEffective(player.getEntityWorld().getBlockState(pos)))
 				.forEach(entityPos -> breakBlock(stack, player.getEntityWorld(), player, pos, entityPos));
 
@@ -93,7 +92,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	private void breakBlock(ItemStack tool, World world, EntityPlayer player, BlockPos centralPosition,
 			BlockPos actualPosition) {
 		
-		BaseMetals.logger.fatal("in breakBlock");
+		BaseMetals.logger.debug("in breakBlock");
 		// ToolHelper.breakExtraBlock(stack, player.getEntityWorld(), player, pos,
 		// refPos);
 		if (world.isAirBlock(actualPosition)) {
@@ -103,7 +102,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 		IBlockState bsatapos = world.getBlockState(actualPosition);
 		Block block = bsatapos.getBlock();
 		// fire off this event
-		BaseMetals.logger.fatal("breaking block %s (%s) at %s", block, bsatapos, actualPosition);
+		BaseMetals.logger.debug("breaking block %s (%s) at %s", block, bsatapos, actualPosition);
 		tool.onBlockDestroyed(world, bsatapos, centralPosition, player);
 
 		if (!world.isRemote) {
@@ -159,7 +158,8 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	 * @param state
 	 *            the block/blockstate in question
 	 * @return true if the tool is effective, false otherwise
-	 * /
+	 */
+	@SuppressWarnings("unused")
 	private static boolean isToolEffective(ItemStack stack, IBlockState state) {
 		// check material
 		// map the "Tool Classes" string-list to a list of Booleans where a "true"
@@ -168,34 +168,36 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 				.map(type -> state.getBlock().isToolEffective(type, state)).collect(Collectors.toList());
 		// return true if the list we've generated contains a true
 		stack.getItem().getToolClasses(stack).forEach(BaseMetals.logger::fatal);
-		isEffective.forEach(b -> BaseMetals.logger.fatal("%s", b) );
+		isEffective.forEach(b -> BaseMetals.logger.debug("%s", b) );
 		return isEffective.contains(true);
 	}
-*/
+
 	private ImmutableList<BlockPos> getEffectedBlocks(BlockPos pos, World world, EntityPlayer player, ItemStack stack,
-			int range, int heightDiff) {
+			int range) {
 		
-		BaseMetals.logger.fatal("Entered getEffectedBlocks");
+		BaseMetals.logger.debug("Entered getEffectedBlocks");
 		if (stack.isEmpty() || !(stack.getItem() instanceof ItemMMDSickle)) {
-			BaseMetals.logger.fatal("Early out because tool-stack is empty");
+			BaseMetals.logger.debug("Early out because tool-stack is empty");
 			return ImmutableList.of();
 		}
 
 		// where is the player, really ?
 		IBlockState playerPositionState = world.getBlockState(pos);
 
-		BaseMetals.logger.fatal("Player Position: %s - pos: %s", player.getPosition(), pos);
+		BaseMetals.logger.debug("Player Position: %s - pos: %s", player.getPosition(), pos);
 		// the below "isEffective" check is also needed, but...
 		// only if we get past this point
+		// FIXME: This should early-out if the original block clicked isn't harvestable but doesn't work
 	/*	if (!isToolEffective(stack, playerPositionState)) {
-			BaseMetals.logger.fatal("Early out because isEffective on players position is false");
+			BaseMetals.logger.debug("Early out because isEffective on players position is false");
 			return ImmutableList.of();
 		} */
 
 		int rangeOff = (range - 1) / 2; // range should always be odd
-		BlockPos start = pos.add(-rangeOff, -heightDiff, -rangeOff);
-		BlockPos finish = start.add(range + 1, heightDiff + 1, range + 1);
+		BlockPos start = pos.add(-rangeOff, 0, -rangeOff);
+		BlockPos finish = start.add(range, 1, range);
 
+		BaseMetals.logger.debug("start: %s :: finish: %s", start, finish);
 		ImmutableList.Builder<BlockPos> builder = ImmutableList.builder();
 
 		int xOff = 1;
@@ -220,7 +222,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 					BlockPos potential = new BlockPos(x, y, z);
 					if (isEffective(world.getBlockState(potential))) {
 						builder.add(potential);
-						BaseMetals.logger.fatal("Added block %s (at %s) to potential breaks list", world.getBlockState(potential), potential);
+						BaseMetals.logger.debug("Added block %s (at %s) to potential breaks list", world.getBlockState(potential), potential);
 					}
 				}
 			}
