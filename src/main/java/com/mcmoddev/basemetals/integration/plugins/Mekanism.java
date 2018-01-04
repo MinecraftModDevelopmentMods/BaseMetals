@@ -1,7 +1,6 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
-
 import com.mcmoddev.basemetals.data.MaterialNames;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -83,5 +82,5 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 				addPurificationChamberRecipe(new ItemStack(emerald.getBlock(Names.ORE)), new ItemStack(emerald.getItem(Names.POWDER), 2));
 			}
 		}
-    }
+	}
 }

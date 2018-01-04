@@ -452,7 +452,7 @@ public abstract class Recipes {
 			return;
 		}
 
-		String oreDictName = StringUtils.capitalize(oreDictNameIn);
+		final String oreDictName = StringUtils.capitalize(oreDictNameIn);
 
 		if ((material.hasOre()) && (material.hasBlock(Names.ORE))) {
 			OreDictionary.registerOre(Oredicts.ORE + oreDictName, material.getBlock(Names.ORE));

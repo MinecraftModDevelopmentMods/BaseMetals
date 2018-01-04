@@ -306,7 +306,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.IRON_CHESTPLATE);
 		iron.addNewItem(Names.HELMET, net.minecraft.init.Items.IRON_HELMET);
 		iron.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
-		iron.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
 		iron.addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
 		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);

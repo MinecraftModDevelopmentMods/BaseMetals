@@ -30,7 +30,7 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		MinecraftForge.EVENT_BUS.register(this);
 		initDone = true;
 	}
-	
+
 	@SubscribeEvent
 	public void regShit(RegistryEvent.Register<IRecipe> event) {
 		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
@@ -39,11 +39,12 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 				MaterialNames.MERCURY };
 
 		for (final String materialName : baseNames) {
+			boolean enabled = Materials.hasMaterial(materialName);
 			if (Materials.hasMaterial(materialName)) {
-				addFurnace(Materials.hasMaterial(materialName), materialName);
-				addCrucible(Materials.hasMaterial(materialName), materialName);
-				addPlatePress(Materials.hasMaterial(materialName), materialName);
-				addPressStorage(Materials.hasMaterial(materialName), materialName);
+				addFurnace(enabled, materialName);
+				addCrucible(enabled, materialName);
+				addPlatePress(enabled, materialName);
+				addPressStorage(enabled, materialName);
 			}
 		}
 

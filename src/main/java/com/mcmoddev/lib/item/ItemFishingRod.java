@@ -29,7 +29,6 @@ public class ItemFishingRod extends net.minecraft.item.ItemFishingRod {
 			worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / ((itemRand.nextFloat() * 0.4F) + 0.8F));
 
 			if (!worldIn.isRemote) {
-				// Changed from MC EntityFishHook to BMe EntityFishHook
 				EntityFishHook entityfishhook = new EntityFishHook(worldIn, playerIn);
 
 				worldIn.spawnEntity(entityfishhook);
