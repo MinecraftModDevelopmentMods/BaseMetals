@@ -127,6 +127,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 					create(Names.SHEARS, material);
 					create(Names.SHIELD, material);
 					create(Names.SHOVEL, material);
+					create(Names.SCYTHE, material);
 					create(Names.SLAB, material);
 					create(Names.SWORD, material);
 					create(Names.ROD, material);
@@ -252,6 +253,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.SLAB, diamond);
 			create(Names.ROD, diamond);
 			create(Names.GEAR, diamond);
+			create(Names.SCYTHE, diamond);
 		}
 	}
 
@@ -289,6 +291,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.SLAB, gold);
 			create(Names.ROD, gold);
 			create(Names.GEAR, gold);
+			create(Names.SCYTHE, gold);
 		}
 	}
 
@@ -340,6 +343,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.SWORD, iron);
 			create(Names.ROD, iron);
 			create(Names.GEAR, iron);
+			create(Names.SCYTHE, iron);
 		}
 	}
 
@@ -360,6 +364,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.CRACKHAMMER, stone);
 			create(Names.ROD, stone);
 			create(Names.GEAR, stone);
+			create(Names.SCYTHE, stone);
 		}
 	}
 
@@ -384,6 +389,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		if (Materials.hasMaterial(MaterialNames.WOOD)) {
 			create(Names.CRACKHAMMER, wood);
 			create(Names.GEAR, wood);
+			create(Names.SCYTHE, wood);
 		}
 	}
 

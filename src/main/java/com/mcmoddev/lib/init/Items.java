@@ -108,6 +108,7 @@ public abstract class Items {
 		addItemType(Names.SHEARS, ItemMMDShears.class, Options.isThingEnabled("Shears"), null);
 		addItemType(Names.SHIELD, ItemMMDShield.class, Options.isThingEnabled("Shield"), Oredicts.SHIELD);
 		addItemType(Names.SHOVEL, ItemMMDShovel.class, Options.isThingEnabled(basicTools), null);
+		addItemType(Names.SCYTHE, ItemMMDSickle.class, true, null);
 		addItemType(Names.SLAB, ItemMMDSlab.class, Options.isThingEnabled("Slab"), Oredicts.SLAB);
 		addItemType(Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.isThingEnabled(smallDust), Oredicts.DUST_TINY);
 		addItemType(Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.isThingEnabled(smallDust), Oredicts.DUST_TINY);
@@ -156,6 +157,7 @@ public abstract class Items {
 		classSortingValues.put(ItemMMDCrackHammer.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDPickaxe.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDShovel.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDSickle.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDAxe.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDHoe.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDSword.class, ++ss * 10000);
@@ -240,6 +242,7 @@ public abstract class Items {
 		create(Names.SHOVEL, material, tabs.toolsTab);
 		create(Names.SLAB, material, tabs.blocksTab);
 		create(Names.SWORD, material, tabs.toolsTab);
+		create(Names.SCYTHE, material, tabs.toolsTab);
 		create(Names.ROD, material, tabs.itemsTab);
 		create(Names.GEAR, material, tabs.itemsTab);
 	}
