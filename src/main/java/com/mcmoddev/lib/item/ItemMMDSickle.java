@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nullable;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -18,6 +22,7 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.network.Packet;
@@ -27,22 +32,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 
-public class ItemMMDSickle extends ItemTool implements IMMDObject {
-	private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(net.minecraft.init.Blocks.TALLGRASS,
-			net.minecraft.init.Blocks.RED_FLOWER, net.minecraft.init.Blocks.YELLOW_FLOWER,
-			net.minecraft.init.Blocks.LEAVES, net.minecraft.init.Blocks.LEAVES2, net.minecraft.init.Blocks.WEB,
-			net.minecraft.init.Blocks.WHEAT, net.minecraft.init.Blocks.VINE, net.minecraft.init.Blocks.SAPLING,
-			net.minecraft.init.Blocks.BEETROOTS, net.minecraft.init.Blocks.BROWN_MUSHROOM,
-			net.minecraft.init.Blocks.CACTUS, net.minecraft.init.Blocks.CARROTS, net.minecraft.init.Blocks.DEADBUSH,
-			net.minecraft.init.Blocks.DOUBLE_PLANT, net.minecraft.init.Blocks.HAY_BLOCK,
-			net.minecraft.init.Blocks.LIT_PUMPKIN, net.minecraft.init.Blocks.MELON_STEM,
-			net.minecraft.init.Blocks.NETHER_WART, net.minecraft.init.Blocks.PUMPKIN_STEM,
-			net.minecraft.init.Blocks.RED_MUSHROOM, net.minecraft.init.Blocks.REEDS,
-			net.minecraft.init.Blocks.WATERLILY, net.minecraft.init.Blocks.WOOL);
-
+public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	public static final ImmutableSet<net.minecraft.block.material.Material> vanilla_materials = ImmutableSet.of(
 			net.minecraft.block.material.Material.WEB, net.minecraft.block.material.Material.LEAVES,
 			net.minecraft.block.material.Material.PLANTS, net.minecraft.block.material.Material.VINE,
@@ -51,14 +46,13 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 	private final MMDMaterial material;
 	private int actionDiameter;// = 3;
 	private int actionHeight;// = 2;
-
+	private float efficiency;
+	private float attackDamage;
+	private float attackSpeed;
+	
 	public ItemMMDSickle(MMDMaterial material) {
-		// attack damage (float), attack speed (float), ToolMaterial, effectiveBlocks
-		// (Set<Block>)
-		super(Materials.getToolMaterialFor(material), EFFECTIVE_ON);
-		this.attackDamage = calcAttackDamage(material);
-		this.attackSpeed = calcAttackSpeed(material);
-		this.efficiency = material.getToolEfficiency();
+		super(material);
+		this.efficiency = 1.0f;//material.getToolEfficiency();
 		this.setMaxDamage(material.getToolDurability());
 		this.material = material;
 		this.actionDiameter = 3;
@@ -87,7 +81,7 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 				.stream().filter(entityPos -> this.isEffective(player.getEntityWorld().getBlockState(pos)))
 				.forEach(entityPos -> breakBlock(stack, player.getEntityWorld(), player, pos, entityPos));
 
-		return super.onBlockStartBreak(stack, pos, player);
+		return true;//super.onBlockStartBreak(stack, pos, player);
 	}
 
 	private static void sendPacket(Entity player, Packet<?> packet) {
@@ -98,6 +92,8 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 
 	private void breakBlock(ItemStack tool, World world, EntityPlayer player, BlockPos centralPosition,
 			BlockPos actualPosition) {
+		
+		BaseMetals.logger.fatal("in breakBlock");
 		// ToolHelper.breakExtraBlock(stack, player.getEntityWorld(), player, pos,
 		// refPos);
 		if (world.isAirBlock(actualPosition)) {
@@ -107,6 +103,7 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 		IBlockState bsatapos = world.getBlockState(actualPosition);
 		Block block = bsatapos.getBlock();
 		// fire off this event
+		BaseMetals.logger.fatal("breaking block %s (%s) at %s", block, bsatapos, actualPosition);
 		tool.onBlockDestroyed(world, bsatapos, centralPosition, player);
 
 		if (!world.isRemote) {
@@ -162,7 +159,7 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 	 * @param state
 	 *            the block/blockstate in question
 	 * @return true if the tool is effective, false otherwise
-	 */
+	 * /
 	private static boolean isToolEffective(ItemStack stack, IBlockState state) {
 		// check material
 		// map the "Tool Classes" string-list to a list of Booleans where a "true"
@@ -170,23 +167,30 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 		List<Boolean> isEffective = stack.getItem().getToolClasses(stack).stream()
 				.map(type -> state.getBlock().isToolEffective(type, state)).collect(Collectors.toList());
 		// return true if the list we've generated contains a true
+		stack.getItem().getToolClasses(stack).forEach(BaseMetals.logger::fatal);
+		isEffective.forEach(b -> BaseMetals.logger.fatal("%s", b) );
 		return isEffective.contains(true);
 	}
-
+*/
 	private ImmutableList<BlockPos> getEffectedBlocks(BlockPos pos, World world, EntityPlayer player, ItemStack stack,
 			int range, int heightDiff) {
+		
+		BaseMetals.logger.fatal("Entered getEffectedBlocks");
 		if (stack.isEmpty() || !(stack.getItem() instanceof ItemMMDSickle)) {
+			BaseMetals.logger.fatal("Early out because tool-stack is empty");
 			return ImmutableList.of();
 		}
 
 		// where is the player, really ?
 		IBlockState playerPositionState = world.getBlockState(pos);
 
+		BaseMetals.logger.fatal("Player Position: %s - pos: %s", player.getPosition(), pos);
 		// the below "isEffective" check is also needed, but...
 		// only if we get past this point
-		if (!isToolEffective(stack, playerPositionState)) {
+	/*	if (!isToolEffective(stack, playerPositionState)) {
+			BaseMetals.logger.fatal("Early out because isEffective on players position is false");
 			return ImmutableList.of();
-		}
+		} */
 
 		int rangeOff = (range - 1) / 2; // range should always be odd
 		BlockPos start = pos.add(-rangeOff, -heightDiff, -rangeOff);
@@ -216,6 +220,7 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 					BlockPos potential = new BlockPos(x, y, z);
 					if (isEffective(world.getBlockState(potential))) {
 						builder.add(potential);
+						BaseMetals.logger.fatal("Added block %s (at %s) to potential breaks list", world.getBlockState(potential), potential);
 					}
 				}
 			}
@@ -235,4 +240,42 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 	private static float calcAttackSpeed(MMDMaterial material) {
 		return (Float.max(material.getToolDurability(), material.getToolEfficiency()) * 1.50f);
 	}
+	
+    /**
+     * Gets a map of item attribute modifiers, used by ItemSword to increase hit damage.
+     */
+    public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot)
+    {
+        Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
+
+        if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
+        {
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", (double)this.attackDamage, 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", (double)this.attackSpeed, 0));
+        }
+
+        return multimap;
+    }
+
+    @Nullable
+    private String toolClass;
+    @Override
+    public int getHarvestLevel(ItemStack stack, String toolClass, @javax.annotation.Nullable net.minecraft.entity.player.EntityPlayer player, @javax.annotation.Nullable IBlockState blockState)
+    {
+        int level = super.getHarvestLevel(stack, toolClass,  player, blockState);
+        if (level == -1 && toolClass.equals(this.toolClass))
+        {
+            return this.material.getToolHarvestLevel();
+        }
+        else
+        {
+            return level;
+        }
+    }
+
+    @Override
+    public Set<String> getToolClasses(ItemStack stack)
+    {
+        return toolClass != null ? com.google.common.collect.ImmutableSet.of(toolClass) : super.getToolClasses(stack);
+    }
 }
