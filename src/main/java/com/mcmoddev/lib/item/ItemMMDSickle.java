@@ -77,7 +77,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
 		this.getEffectedBlocks(pos, player.getEntityWorld(), player, stack, this.actionDiameter)
-				.stream().filter(entityPos -> this.isEffective(player.getEntityWorld().getBlockState(pos)))
+				.stream().filter(entityPos -> this.isEffective(player.getEntityWorld().getBlockState(entityPos)))
 				.forEach(entityPos -> breakBlock(stack, player.getEntityWorld(), player, pos, entityPos));
 
 		return true;//super.onBlockStartBreak(stack, pos, player);
@@ -92,7 +92,6 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	private void breakBlock(ItemStack tool, World world, EntityPlayer player, BlockPos centralPosition,
 			BlockPos actualPosition) {
 		
-		BaseMetals.logger.debug("in breakBlock");
 		// ToolHelper.breakExtraBlock(stack, player.getEntityWorld(), player, pos,
 		// refPos);
 		if (world.isAirBlock(actualPosition)) {
@@ -102,7 +101,6 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 		IBlockState bsatapos = world.getBlockState(actualPosition);
 		Block block = bsatapos.getBlock();
 		// fire off this event
-		BaseMetals.logger.debug("breaking block %s (%s) at %s", block, bsatapos, actualPosition);
 		tool.onBlockDestroyed(world, bsatapos, centralPosition, player);
 
 		if (!world.isRemote) {
@@ -182,9 +180,9 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 		}
 
 		// where is the player, really ?
-		IBlockState playerPositionState = world.getBlockState(pos);
+		// FIXME: ties into later tool-effectiveness optimization
+		//IBlockState playerPositionState = world.getBlockState(pos);
 
-		BaseMetals.logger.debug("Player Position: %s - pos: %s", player.getPosition(), pos);
 		// the below "isEffective" check is also needed, but...
 		// only if we get past this point
 		// FIXME: This should early-out if the original block clicked isn't harvestable but doesn't work
@@ -194,39 +192,17 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 		} */
 
 		int rangeOff = (range - 1) / 2; // range should always be odd
-		BlockPos start = pos.add(-rangeOff, 0, -rangeOff);
-		BlockPos finish = start.add(range, 1, range);
-
-		BaseMetals.logger.debug("start: %s :: finish: %s", start, finish);
+		
 		ImmutableList.Builder<BlockPos> builder = ImmutableList.builder();
-
-		int xOff = 1;
-		int yOff = 1;
-		int zOff = 1;
-
-		if (finish.getX() < start.getX()) {
-			xOff = -1;
-		}
-
-		if (finish.getZ() < start.getZ()) {
-			zOff = -1;
-		}
-
-		if (finish.getY() < start.getY()) { // unlikely, but maybe ?
-			yOff = -1;
-		}
-
-		for (int x = start.getX(); x != finish.getX(); x += xOff) {
-			for (int y = start.getY(); y != finish.getY(); y += yOff) {
-				for (int z = start.getZ(); z != finish.getZ(); z += zOff) {
-					BlockPos potential = new BlockPos(x, y, z);
-					if (isEffective(world.getBlockState(potential))) {
-						builder.add(potential);
-						BaseMetals.logger.debug("Added block %s (at %s) to potential breaks list", world.getBlockState(potential), potential);
-					}
-				}
+		for( int x = -rangeOff; x < (rangeOff+1); x++ ) {
+			for( int z = -rangeOff; z < (rangeOff+1); z++ ) {
+				BlockPos potential = pos.add(x,0,z);
+				if (isEffective(world.getBlockState(potential))) {
+					builder.add(potential);
+				}				
 			}
 		}
+		
 		return builder.build();
 	}
 
@@ -234,15 +210,6 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 		return vanilla_materials.contains(state.getMaterial());
 	}
 
-	private static float calcAttackDamage(MMDMaterial material) {
-		return Float.max(material.getToolDurability() * 1.0f,
-				(material.getToolEfficiency() * material.getToolHarvestLevel()) / 2.0f);
-	}
-
-	private static float calcAttackSpeed(MMDMaterial material) {
-		return (Float.max(material.getToolDurability(), material.getToolEfficiency()) * 1.50f);
-	}
-	
     /**
      * Gets a map of item attribute modifiers, used by ItemSword to increase hit damage.
      */
