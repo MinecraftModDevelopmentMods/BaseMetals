@@ -342,6 +342,37 @@ item.basemetals.steel_fishing_rod.name=Steel Fishing Rod
 item.basemetals.tin_fishing_rod.name=Tin Fishing Rod
 item.basemetals.zinc_fishing_rod.name=Zinc Fishing Rod
 
+#Sickles
+item.basemetals.adamantine_scythe.name=Adamantine Sickle
+item.basemetals.antimony_scythe.name=Antimony Sickle
+item.basemetals.aquarium_scythe.name=Aquarium Sickle
+item.basemetals.bismuth_scythe.name=Bismuth Sickle
+item.basemetals.brass_scythe.name=Brass Sickle
+item.basemetals.bronze_scythe.name=Bronze Sickle
+item.basemetals.coldiron_scythe.name=Coldiron Sickle
+item.basemetals.copper_scythe.name=Copper Sickle
+item.basemetals.cupronickel_scythe.name=Cupronickel Sickle
+item.basemetals.diamond_scythe.name=Diamond Sickle
+item.basemetals.electrum_scythe.name=Electrum Sickle
+item.basemetals.emerald_scythe.name=Emerald Sickle
+item.basemetals.gold_scythe.name=Gold Sickle
+item.basemetals.invar_scythe.name=Invar Sickle
+item.basemetals.iron_scythe.name=Iron Sickle
+item.basemetals.lead_scythe.name=Lead Sickle
+item.basemetals.mithril_scythe.name=Mithril Sickle
+item.basemetals.nickel_scythe.name=Nickel Sickle
+item.basemetals.obsidian_scythe.name=Obsidian Sickle
+item.basemetals.pewter_scythe.name=Pewter Sickle
+item.basemetals.platinum_scythe.name=Platinum Sickle
+item.basemetals.quartz_scythe.name=Quartz Sickle
+item.basemetals.silver_scythe.name=Silver Sickle
+item.basemetals.starsteel_scythe.name=Starsteel Sickle
+item.basemetals.steel_scythe.name=Steel Sickle
+item.basemetals.stone_scythe.name=Stone Sickle
+item.basemetals.tin_scythe.name=Tin Sickle
+item.basemetals.wood_scythe.name=Wood Sickle
+item.basemetals.zinc_scythe.name=Zinc Sickle
+
 #Shields
 item.basemetals.adamantine_shield.name=Adamantine Shield
 item.basemetals.aquarium_shield.name=Aquarium Shield
