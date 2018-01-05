@@ -220,6 +220,8 @@ public class Config extends ConfigBase {
 				"Levers of all different materials - they even have different hardness's"));
 		Options.thingEnabled("PressurePlate", configuration.getBoolean("Enable Pressure-plates", TOOLS_CAT, true,
 				"Now your traps can be hidden in even more places!"));
+		Options.thingEnabled("Sickle", configuration.getBoolean("Enable Sickles", TOOLS_CAT, true,
+				"You've been asking for them, well - for the two-handed variant usually carried by the Grim Reaper, but..."));
 		Options.thingEnabled("Stairs", configuration.getBoolean("Enable Stairs", TOOLS_CAT, true,
 				"Stairs of our wonderful metals! Come and get your own - or don't. It's up to you."));
 		Options.thingEnabled("Wall",
