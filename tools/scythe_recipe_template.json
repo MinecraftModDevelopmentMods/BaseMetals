@@ -1,0 +1,45 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "__ITEM_NAME__",
+		"data": 0
+	},
+	"pattern": [
+		"ii ",
+		"  i",
+		" s "
+	],
+	"key": {
+		"i": {
+			"type": "forge:ore_dict",
+			"ore": "__INGREDIENT_NAME__"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "__MATERIAL_NAME__"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "BasicTools"
+				}
+			]
+		}
+	],
+	"group": "tools"
+}
