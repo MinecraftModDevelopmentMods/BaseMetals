@@ -562,3 +562,14 @@ item.basemetals.stone_scythe.name=Stone Sickle
 item.basemetals.tin_scythe.name=Tin Sickle
 item.basemetals.wood_scythe.name=Wood Sickle
 item.basemetals.zinc_scythe.name=Zinc Sickle
+
+# Anvils
+tile.basemetals.steel_anvil.intact.name=Steel Anvil
+tile.basemetals.steel_anvil.slightlyDamaged.name=Slightly Damaged Steel Anvil
+tile.basemetals.steel_anvil.veryDamaged.name=Badly Damaged Steel Anvil
+tile.basemetals.stone_anvil.intact.name=Stone Anvil
+tile.basemetals.stone_anvil.slightlyDamaged.name=Slightly Damaged Stone Anvil
+tile.basemetals.stone_anvil.veryDamaged.name=Badly Damaged Stone Anvil
+tile.basemetals.adamantine_anvil.intact.name=Adamantine Anvil
+tile.basemetals.adamantine_anvil.slightlyDamaged.name=Slightly Damaged Adamantine Anvil
+tile.basemetals.adamantine_anvil.veryDamaged.name=Badly Damaged Adamantine Anvil

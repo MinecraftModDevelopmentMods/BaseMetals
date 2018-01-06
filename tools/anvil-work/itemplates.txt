@@ -1,0 +1,3 @@
+template_anvil_intact.json
+template_anvil_slightly_damaged.json
+template_anvil_very_damaged.json

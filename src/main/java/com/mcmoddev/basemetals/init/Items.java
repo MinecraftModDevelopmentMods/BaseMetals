@@ -164,6 +164,11 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.SMALLPOWDER, mercury);
 		}
 
+		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
+		.filter( Materials::hasMaterial )
+		.forEach( name -> create( Names.ANVIL, Materials.getMaterialByName(name) ) );
+		
+
 		addToMetList();
 
 		initDone = true;

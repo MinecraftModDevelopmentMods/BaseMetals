@@ -100,12 +100,19 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		createStarSteel();
 		createMercury();
-
+		createAnvils();
+		
 		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
 
 		initDone = true;
 	}
 
+	private static void createAnvils() {
+		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
+		.filter( Materials::hasMaterial)
+		.forEach( name -> create( Names.ANVIL, Materials.getMaterialByName(name) ) );
+	}
+	
 	private static void createStarSteel() {
 		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
 			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
