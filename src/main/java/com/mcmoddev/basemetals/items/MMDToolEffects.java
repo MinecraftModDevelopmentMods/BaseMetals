@@ -12,7 +12,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.PotionKeys;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -20,11 +19,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,17 +38,6 @@ public abstract class MMDToolEffects {
 	private static final String TOOLTIP = "tooltip.";
 	private static final String ARMOR = ".armor";
 	private static final String TOOL = ".tool";
-
-	private static final ResourceLocation speedPotionKey = PotionKeys.SPEED;
-	private static final ResourceLocation jumpPotionKey = PotionKeys.JUMP_BOOST;
-	private static final ResourceLocation slowPotionKey = PotionKeys.SLOWNESS;
-	private static final ResourceLocation protectionPotionKey = PotionKeys.RESISTANCE;
-	private static final ResourceLocation waterBreathingPotionKey = PotionKeys.WATER_BREATHING;
-	private static final ResourceLocation waterBuffPotionKey = PotionKeys.RESISTANCE;
-	private static final ResourceLocation fatiguePotionKey = PotionKeys.MINING_FATIGUE;
-	private static final ResourceLocation fireproofPotionKey = PotionKeys.FIRE_RESISTANCE;
-	private static final ResourceLocation witherKey = PotionKeys.WITHER;
-	private static final ResourceLocation blindKey = PotionKeys.BLINDNESS;
 
 	private static final int EFFECT_DURATION = 45;
 
@@ -84,8 +73,8 @@ public abstract class MMDToolEffects {
 			}
 		} else if (material.getName().equals(MaterialNames.MITHRIL)) {
 			if (target.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD) {
-				final PotionEffect wither = new PotionEffect(Potion.REGISTRY.getObject(witherKey), 60, 3);
-				final PotionEffect blind = new PotionEffect(Potion.REGISTRY.getObject(blindKey), 60, 1);
+				final PotionEffect wither = new PotionEffect(MobEffects.WITHER, 60, 3);
+				final PotionEffect blind = new PotionEffect(MobEffects.BLINDNESS, 60, 1);
 				target.addPotionEffect(wither);
 				target.addPotionEffect(blind);
 			}
@@ -153,10 +142,10 @@ public abstract class MMDToolEffects {
 					int num = starsteelUpdateCache.get(player).getAndSet(0);
 					if (num == 0)
 						break starsteel;
-					final PotionEffect jumpBoost = new PotionEffect(Potion.REGISTRY.getObject(jumpPotionKey), EFFECT_DURATION, num - 1, false, false);
+					final PotionEffect jumpBoost = new PotionEffect(MobEffects.JUMP_BOOST, EFFECT_DURATION, num - 1, false, false);
 					player.addPotionEffect(jumpBoost);
 					if (num > 1) {
-						final PotionEffect speedBoost = new PotionEffect(Potion.REGISTRY.getObject(speedPotionKey), EFFECT_DURATION, num - 2, false, false);
+						final PotionEffect speedBoost = new PotionEffect(MobEffects.SPEED, EFFECT_DURATION, num - 2, false, false);
 						player.addPotionEffect(speedBoost);
 					}
 					break starsteel;
@@ -170,7 +159,7 @@ public abstract class MMDToolEffects {
 					if (level == 0)
 						break lead;
 					if (level > 0) {
-						final PotionEffect speedLoss = new PotionEffect(Potion.REGISTRY.getObject(slowPotionKey), EFFECT_DURATION, level - 1, false, false);
+						final PotionEffect speedLoss = new PotionEffect(MobEffects.SLOWNESS, EFFECT_DURATION, level - 1, false, false);
 						player.addPotionEffect(speedLoss);
 					}
 					break lead;
@@ -185,7 +174,7 @@ public abstract class MMDToolEffects {
 					if (level == 0)
 						break adamantine;
 					if (level > 0) {
-						final PotionEffect protection = new PotionEffect(Potion.REGISTRY.getObject(protectionPotionKey), EFFECT_DURATION, level - 1, false, false);
+						final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION, level - 1, false, false);
 						player.addPotionEffect(protection);
 					}
 					break adamantine;
@@ -193,7 +182,7 @@ public abstract class MMDToolEffects {
 			}
 			// full suit of cold-iron makes you fire-proof
 			if ((material.getName().equals(MaterialNames.COLDIRON)) && (hasFullSuit(player, MaterialNames.COLDIRON))) {
-				final PotionEffect fireProtection = new PotionEffect(Potion.REGISTRY.getObject(fireproofPotionKey), EFFECT_DURATION, 0, false, false);
+				final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE, EFFECT_DURATION, 0, false, false);
 				player.addPotionEffect(fireProtection);
 			}
 			// full suit of Mithril protects you from withering, poison, nausea,
@@ -217,11 +206,11 @@ public abstract class MMDToolEffects {
 				Block b1 = w.getBlockState(new BlockPos(player.posX, player.posY, player.posZ)).getBlock();
 				Block b2 = w.getBlockState(new BlockPos(player.posX, player.posY + 1, player.posZ)).getBlock();
 				if (b1 == Blocks.WATER && b2 == Blocks.WATER) {
-					final PotionEffect waterBreathing = new PotionEffect(Potion.REGISTRY.getObject(waterBreathingPotionKey), EFFECT_DURATION, 0, false, false);
+					final PotionEffect waterBreathing = new PotionEffect(MobEffects.WATER_BREATHING, EFFECT_DURATION, 0, false, false);
 					player.addPotionEffect(waterBreathing);
-					final PotionEffect protection = new PotionEffect(Potion.REGISTRY.getObject(waterBuffPotionKey), EFFECT_DURATION, 0, false, false);
+					final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION, 0, false, false);
 					player.addPotionEffect(protection);
-					player.removePotionEffect(Potion.REGISTRY.getObject(fatiguePotionKey));
+					player.removePotionEffect(MobEffects.MINING_FATIGUE);
 				}
 			}
 		}
@@ -282,9 +271,9 @@ public abstract class MMDToolEffects {
 	private static boolean hasFullSuit(EntityPlayer player, String materialName) {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
 
-		return (player.inventory.armorInventory.get(3) != ItemStack.EMPTY && player.inventory.armorInventory.get(3).getItem() == material.getItem(Names.HELMET)
-				&& player.inventory.armorInventory.get(2) != ItemStack.EMPTY && player.inventory.armorInventory.get(2).getItem() == material.getItem(Names.CHESTPLATE)
-				&& player.inventory.armorInventory.get(1) != ItemStack.EMPTY && player.inventory.armorInventory.get(1).getItem() == material.getItem(Names.LEGGINGS)
-				&& player.inventory.armorInventory.get(0) != ItemStack.EMPTY && player.inventory.armorInventory.get(0).getItem() == material.getItem(Names.BOOTS));
+		return (player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == material.getItem(Names.HELMET)
+				&& player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == material.getItem(Names.CHESTPLATE)
+				&& player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == material.getItem(Names.LEGGINGS)
+				&& player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material.getItem(Names.BOOTS));
 	}
 }
