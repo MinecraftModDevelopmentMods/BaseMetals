@@ -226,7 +226,7 @@ public abstract class Blocks {
 			return material.getBlock(name);
 		}
 
-		if ((((name.equals(Names.ANVIL)) || (name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE))
+		if (((/*(name.equals(Names.ANVIL)) || */(name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE))
 				|| (name.equals(Names.FLOWER_POT)) || (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS))
 				|| (name.equals(Names.TRIPWIRE_HOOK)) || (name.equals(Names.WALL)))
 				&& (!material.hasBlock(Names.BLOCK)))

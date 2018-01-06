@@ -1853,3 +1853,14 @@ modifier.toxic-modifier.name=Toxic
 modifier.toxic-modifier.desc=§oTOXIC AVENGER!§r\nMercury and it's ethyl and methyl salts are extremely toxic and have neuro-degenerative effects.\nAdding some to a weapon or tool gives it the ability to poison and temporarily blind your enemies.
 modifier.lead-plated.name=Lead Plated
 modifier.lead-plated.desc=§oSafety First§r\nIf you've got some Plutonium or Uranium around and think it'd be great for a weapon, don't forget to add some shielding.\nA nice lead plate will stop the deadly radiation from affection you while still letting it harm your enemies.
+
+# Anvils
+tile.basemetals.steel_anvil.intact.name=Steel Anvil
+tile.basemetals.steel_anvil.slightlyDamaged.name=Slightly Damaged Steel Anvil
+tile.basemetals.steel_anvil.veryDamaged.name=Badly Damaged Steel Anvil
+tile.basemetals.stone_anvil.intact.name=Stone Anvil
+tile.basemetals.stone_anvil.slightlyDamaged.name=Slightly Damaged Stone Anvil
+tile.basemetals.stone_anvil.veryDamaged.name=Badly Damaged Stone Anvil
+tile.basemetals.adamantine_anvil.intact.name=Adamantine Anvil
+tile.basemetals.adamantine_anvil.slightlyDamaged.name=Slightly Damaged Adamantine Anvil
+tile.basemetals.adamantine_anvil.veryDamaged.name=Badly Damaged Adamantine Anvil

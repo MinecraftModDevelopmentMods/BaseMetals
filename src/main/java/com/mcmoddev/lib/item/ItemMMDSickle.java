@@ -9,9 +9,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -24,7 +22,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
@@ -45,14 +42,13 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 
 	private final MMDMaterial material;
 	private int actionDiameter;// = 3;
-	private int actionHeight;// = 2;
 	private float efficiency;
 	private float attackDamage;
 	private float attackSpeed;
 
 	public ItemMMDSickle(MMDMaterial material) {
 		super(material);
-		this.efficiency = 1.0f;// material.getToolEfficiency();
+		this.efficiency = material.getToolEfficiency();
 		this.setMaxDamage(material.getToolDurability());
 		this.material = material;
 		this.actionDiameter = 3;
