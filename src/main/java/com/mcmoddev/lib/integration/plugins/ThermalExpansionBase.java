@@ -52,6 +52,7 @@ public class ThermalExpansionBase implements IIntegration {
 
 	}
 
+	@Deprecated
 	protected static void addFurnace(@Nonnull final boolean enabled, @Nonnull final String materialName) {
 		if (enabled) {
 			addFurnace(Materials.getMaterialByName(materialName));
@@ -62,6 +63,7 @@ public class ThermalExpansionBase implements IIntegration {
 		addFurnace(Materials.getMaterialByName(materialName));
 	}
 
+	@Deprecated
 	protected static void addFurnace(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
 		if (enabled) {
 			addFurnace(material);
@@ -77,9 +79,9 @@ public class ThermalExpansionBase implements IIntegration {
 		final int ENERGY_DUST = 1400;
 		ItemStack ore;
 		if (material.hasBlock(Names.ORE) && material.getBlock(Names.ORE) != null) {
-			ore = new ItemStack(material.getBlock(Names.ORE), 1, 0);
+			ore = material.getBlockItemStack(Names.ORE, 1);
 		} else if (material.hasItem(Names.BLEND) && material.getItem(Names.BLEND) != null) {
-			ore = new ItemStack(material.getItem(Names.BLEND), 1, 0);
+			ore = material.getItemStack(Names.BLEND, 1);
 		} else {
 			return;
 		}
@@ -89,15 +91,16 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 
 		if (material.hasItem(Names.INGOT)) {
-			final ItemStack ingot = new ItemStack(material.getItem(Names.INGOT), 1, 0);
+			final ItemStack ingot = material.getItemStack(Names.INGOT, 1);
 			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
 			if (material.hasItem(Names.POWDER) && material.getItem(Names.POWDER) != null) {
-				final ItemStack dust = new ItemStack(material.getItem(Names.POWDER), 1, 0);
+				final ItemStack dust = material.getItemStack(Names.POWDER, 1);
 				ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
 			}
 		}
 	}
 
+	@Deprecated
 	protected static void addCrucible(@Nonnull final boolean enabled, @Nonnull final String materialName) {
 		if (enabled) {
 			addCrucible(Materials.getMaterialByName(materialName));
@@ -108,6 +111,7 @@ public class ThermalExpansionBase implements IIntegration {
 		addCrucible(Materials.getMaterialByName(materialName));
 	}
 
+	@Deprecated
 	protected static void addCrucible(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
 		if (enabled) {
 			addCrucible(material);
@@ -126,8 +130,8 @@ public class ThermalExpansionBase implements IIntegration {
 		final int ENERGY_QTY = 8000;
 
 		final String materialName = material.getName();
-		final ItemStack ingot = new ItemStack(material.getItem(Names.INGOT));
-		final Item dust = material.getItem(Names.POWDER);
+		final ItemStack ingot = material.getItemStack(Names.INGOT);
+		final ItemStack dust = material.getItemStack(Names.POWDER);
 		final FluidStack oreFluid = FluidRegistry.getFluidStack(materialName, 288);
 		final FluidStack baseFluid = FluidRegistry.getFluidStack(materialName, 144);
 		final FluidStack nuggetFluid = FluidRegistry.getFluidStack(materialName, 16);
@@ -140,14 +144,19 @@ public class ThermalExpansionBase implements IIntegration {
 		ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ingot, baseFluid);
 
 		if (material.hasItem(Names.POWDER)) {
-			final ItemStack dustStack = new ItemStack(dust);
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dustStack, baseFluid);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dust, baseFluid);
 		}
 
-		addCrucibleExtra(material.hasBlock(Names.PLATE), Item.getItemFromBlock(material.getBlock(Names.PLATE)), baseFluid, ENERGY_QTY);
-		addCrucibleExtra(material.hasItem(Names.NUGGET), material.getItem(Names.NUGGET), nuggetFluid, ENERGY_QTY);
+		if (material.hasBlock(Names.PLATE)) {
+			addCrucibleExtra(Item.getItemFromBlock(material.getBlock(Names.PLATE)), baseFluid, ENERGY_QTY);
+		}
+		
+		if (material.hasItem(Names.NUGGET)) {
+			addCrucibleExtra(material.getItem(Names.NUGGET), nuggetFluid, ENERGY_QTY);
+		}
 	}
 
+	@Deprecated
 	private static void addCrucibleExtra(@Nonnull final boolean enabled, @Nonnull final Item input, @Nonnull final FluidStack output, @Nonnull final int energy) {
 		if (enabled) {
 				addCrucibleExtra(input, output, energy);
@@ -155,10 +164,14 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	private static void addCrucibleExtra(@Nonnull final Item input, @Nonnull final FluidStack output, @Nonnull final int energy) {
-		final ItemStack inItems = new ItemStack(input);
-		ThermalExpansionHelper.addCrucibleRecipe(energy, inItems, output);
+		addCrucibleExtra(new ItemStack(input), output, energy);
 	}
 
+	private static void addCrucibleExtra(@Nonnull final ItemStack input, @Nonnull final FluidStack output, @Nonnull final int energy) {
+		ThermalExpansionHelper.addCrucibleRecipe(energy, input, output);
+	}
+
+	@Deprecated
 	protected static void addPlatePress(@Nonnull final boolean enabled, @Nonnull final String materialName) {
 		if (enabled) {
 			addPlatePress(Materials.getMaterialByName(materialName));
@@ -169,6 +182,7 @@ public class ThermalExpansionBase implements IIntegration {
 		addPlatePress(Materials.getMaterialByName(materialName));
 	}
 
+	@Deprecated
 	protected static void addPlatePress(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
 		if (enabled) {
 			addPlatePress(material);
@@ -186,6 +200,7 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 	}
 
+	@Deprecated
 	protected static void addPressStorage(@Nonnull final boolean enabled, @Nonnull final String materialName) {
 		if (enabled) {
 			addPressStorage(Materials.getMaterialByName(materialName));
@@ -196,6 +211,7 @@ public class ThermalExpansionBase implements IIntegration {
 		addPressStorage(Materials.getMaterialByName(materialName));
 	}
 
+	@Deprecated
 	protected static void addPressStorage(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
 		if (enabled) {
 			addPressStorage(material);
@@ -207,11 +223,10 @@ public class ThermalExpansionBase implements IIntegration {
 		 * Compactors default is 4000RF per operation
 		 */
 		final int ENERGY_QTY = 4000;
-		final Item ingot = material.getItem(Names.INGOT);
-		final ItemStack ingotsStack = new ItemStack(ingot, 9);
-		final ItemStack nuggetsStack = new ItemStack(material.getItem(Names.NUGGET), 9);
-		final ItemStack blockStack = new ItemStack(material.getBlock(Names.BLOCK), 1);
-		final ItemStack ingotStack = new ItemStack(ingot, 1);
+		final ItemStack ingotStack = material.getItemStack(Names.INGOT);
+		final ItemStack ingotsStack = new ItemStack(ingotStack.getItem(), 9);
+		final ItemStack nuggetsStack = material.getItemStack(Names.NUGGET, 9);
+		final ItemStack blockStack = material.getBlockItemStack(Names.BLOCK, 1);
 
 		addCompactorStorageRecipe(ENERGY_QTY, ingotsStack, blockStack);
 		addCompactorStorageRecipe(ENERGY_QTY, nuggetsStack, ingotStack);

@@ -14,7 +14,6 @@ import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
@@ -43,43 +42,38 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 		initDone = true;
 	}
 
-    @SubscribeEvent
-    public void regCallback(RegistryEvent.Register<IRecipe> event) {
+	@SubscribeEvent
+	public void regCallback(RegistryEvent.Register<IRecipe> event) {
 		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
 				MaterialNames.STARSTEEL, MaterialNames.ZINC };
 
-	    for (final String materialName : baseNames) {
-		    if (Materials.hasMaterial(materialName)) {
-			    addOreMultiplicationRecipes(materialName);
-		    }
-	    }
-
-		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
-			final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
-
-			if (diamond.hasBlock(Names.ORE) && (diamond.hasItem(Names.INGOT))) {
-				addCrusherRecipe(new ItemStack(diamond.getBlock(Names.ORE)), new ItemStack(diamond.getItem(Names.INGOT), 2));
-			}
-			if (diamond.hasItem(Names.INGOT) && (diamond.hasItem(Names.POWDER))) {
-				addCrusherRecipe(new ItemStack(diamond.getItem(Names.INGOT)), new ItemStack(diamond.getItem(Names.POWDER)));
-			}
-			if (diamond.hasBlock(Names.ORE) && (diamond.hasItem(Names.POWDER))) {
-				addPurificationChamberRecipe(new ItemStack(diamond.getBlock(Names.ORE)), new ItemStack(diamond.getItem(Names.POWDER), 2));
+		for (final String materialName : baseNames) {
+			if (Materials.hasMaterial(materialName)) {
+				addOreMultiplicationRecipes(materialName);
 			}
 		}
 
+		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
+			addVanillaOreMultiplicationRecipes(MaterialNames.DIAMOND);
+		}
 		if (Materials.hasMaterial(MaterialNames.EMERALD)) {
-			final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
+			addVanillaOreMultiplicationRecipes(MaterialNames.EMERALD);
+		}
+	}
 
-			if (emerald.hasBlock(Names.ORE) && (emerald.hasItem(Names.INGOT))) {
-				addCrusherRecipe(new ItemStack(emerald.getBlock(Names.ORE)), new ItemStack(emerald.getItem(Names.INGOT), 2));
+	private void addVanillaOreMultiplicationRecipes(String materialName) {
+		if (Materials.hasMaterial(materialName)) {
+			final MMDMaterial material = Materials.getMaterialByName(materialName);
+
+			if (material.hasBlock(Names.ORE) && (material.hasItem(Names.INGOT))) {
+				addCrusherRecipe(material.getBlockItemStack(Names.ORE), material.getItemStack(Names.INGOT, 2));
 			}
-			if (emerald.hasItem(Names.INGOT) && (emerald.hasItem(Names.POWDER))) {
-				addCrusherRecipe(new ItemStack(emerald.getItem(Names.INGOT)), new ItemStack(emerald.getItem(Names.POWDER)));
+			if (material.hasItem(Names.INGOT) && (material.hasItem(Names.POWDER))) {
+				addCrusherRecipe(material.getItemStack(Names.INGOT), material.getItemStack(Names.POWDER));
 			}
-			if (emerald.hasBlock(Names.ORE) && (emerald.hasItem(Names.POWDER))) {
-				addPurificationChamberRecipe(new ItemStack(emerald.getBlock(Names.ORE)), new ItemStack(emerald.getItem(Names.POWDER), 2));
+			if (material.hasBlock(Names.ORE) && (material.hasItem(Names.POWDER))) {
+				addPurificationChamberRecipe(material.getBlockItemStack(Names.ORE), material.getItemStack(Names.POWDER, 2));
 			}
 		}
 	}

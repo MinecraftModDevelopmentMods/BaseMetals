@@ -15,8 +15,6 @@ import mekanism.api.infuse.InfuseType;
 import mekanism.api.infuse.InfuseRegistry;
 import mekanism.common.recipe.RecipeHandler;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -63,59 +61,59 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addOreMultiplicationRecipes(@Nonnull final MMDMaterial material) {
-		final Item clump = material.getItem(Names.CLUMP);
-		final Item powderDirty = material.getItem(Names.POWDER_DIRTY);
-		final Item ingot = material.getItem(Names.INGOT);
-		final Item powder = material.getItem(Names.POWDER);
-		final Block ore = material.getBlock(Names.ORE);
-		final Item shard = material.getItem(Names.SHARD);
+		final ItemStack clump = material.getItemStack(Names.CLUMP);
+		final ItemStack powderDirty = material.getItemStack(Names.POWDER_DIRTY);
+		final ItemStack ingot = material.getItemStack(Names.INGOT);
+		final ItemStack powder = material.getItemStack(Names.POWDER);
+		final ItemStack ore = material.getBlockItemStack(Names.ORE);
+		final ItemStack shard = material.getItemStack(Names.SHARD);
 		// TODO: check specifically for mek crystal type
-		final Item crystal = material.getItem(Names.CRYSTAL);
+		final ItemStack crystal = material.getItemStack(Names.CRYSTAL);
 
-		if ((clump != null) && (powderDirty != null)) {
-			addCrusherRecipe(new ItemStack(clump), new ItemStack(powderDirty));
+		if ((clump != ItemStack.EMPTY) && (powderDirty != ItemStack.EMPTY)) {
+			addCrusherRecipe(clump, powderDirty);
 		}
-		if ((ingot != null) && (powder != null)) {
-			addCrusherRecipe(new ItemStack(ingot), new ItemStack(powder));
-		}
-
-		if (powder != null) {
-			if (ore != null) {
-				addEnrichmentChamberRecipe(new ItemStack(ore), new ItemStack(powder, 2));
-			}
-			if (powderDirty != null) {
-				addEnrichmentChamberRecipe(new ItemStack(powderDirty), new ItemStack(powder));
-			}
+		if ((ingot != ItemStack.EMPTY) && (powder != ItemStack.EMPTY)) {
+			addCrusherRecipe(ingot, powder);
 		}
 
-		if (clump != null) {
-			if (ore != null) {
-				addPurificationChamberRecipe(new ItemStack(ore), new ItemStack(clump, 3));
+		if (material.hasItem(Names.POWDER)) {
+			if (material.hasBlock(Names.ORE)) {
+				addEnrichmentChamberRecipe(ore, new ItemStack(powder.getItem(), 2));
 			}
-			if (shard != null) {
-				addPurificationChamberRecipe(new ItemStack(shard), new ItemStack(clump));
+			if (material.hasItem(Names.POWDER_DIRTY)) {
+				addEnrichmentChamberRecipe(powderDirty, powder);
 			}
 		}
 
-		if (shard != null) {
-			if (ore != null) {
-				addChemicalInjectionChamberRecipe(new ItemStack(ore), new ItemStack(shard, 4));
+		if (material.hasItem(Names.CLUMP)) {
+			if (material.hasBlock(Names.ORE)) {
+				addPurificationChamberRecipe(ore, new ItemStack(clump.getItem(), 3));
 			}
-			if (crystal != null) {
-				addChemicalInjectionChamberRecipe(new ItemStack(crystal), new ItemStack(shard));
+			if (material.hasItem(Names.SHARD)) {
+				addPurificationChamberRecipe(shard, clump);
 			}
 		}
-		
-		if( crystal != null ) {
+
+		if (material.hasItem(Names.SHARD)) {
+			if (material.hasBlock(Names.ORE)) {
+				addChemicalInjectionChamberRecipe(ore, new ItemStack(shard.getItem(), 4));
+			}
+			if (material.hasItem(Names.CRYSTAL)) {
+				addChemicalInjectionChamberRecipe(crystal, shard);
+			}
+		}
+
+		if(material.hasItem(Names.CRYSTAL) && material.hasBlock(Names.ORE)) {
 			// Crystallizer is 200mB for 1 crystal
-			addChemicalCrystallizerRecipe("clean"+material.getName(), 200, new ItemStack(crystal));
-			addChemicalWasherRecipe(material.getName(),1000,"clean"+material.getName());
-			addChemicalDissolutionChamberRecipe(new ItemStack(ore), material.getName());
+			addChemicalCrystallizerRecipe("clean" + material.getName(), 200, crystal);
+			addChemicalWasherRecipe(material.getName(), 1000, "clean" + material.getName());
+			addChemicalDissolutionChamberRecipe(ore, material.getName());
 		}
 	}
-	
+
 	protected static void addMetallurgicInfuserRecipe(@Nonnull final String infuse, @Nonnull int amount, @Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem ) {
-		InfuseType infuseType = InfuseRegistry.get(infuse);
+		final InfuseType infuseType = InfuseRegistry.get(infuse);
 		RecipeHandler.addMetallurgicInfuserRecipe(infuseType, amount, inputItem, outputItem);
 	}
 
@@ -138,33 +136,33 @@ public class MekanismBase implements IIntegration {
 
 	// 5x, Slurry to Crystal
 	protected static void addChemicalCrystallizerRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem) {
-		GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
+		final GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
 		RecipeHandler.addChemicalCrystallizerRecipe(inputGasStack, outputItem);
 	}
 
 	// 5x, Slurry to "clean" Slurry
 	protected static void addChemicalWasherRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final String outputGas) {
-		GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
-		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), inputGasQty );
+		final GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
+		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), inputGasQty );
 		RecipeHandler.addChemicalWasherRecipe(inputGasStack, outputGasStack);
 	}
 
 	// 5x, Ore to Slurry
 	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas, @Nonnull int outputQty) {
-		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputQty );
+		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputQty );
 		RecipeHandler.addChemicalDissolutionChamberRecipe(inputItem, outputGasStack);
 	}
-	
+
 	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas) {
 		addChemicalDissolutionChamberRecipe(inputItem, outputGas, 1000);
 	}
 
 	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem, @Nonnull final FluidStack inputFluid, @Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem,  @Nonnull final String outputGas, @Nonnull final int outputGasQty, int extraEnergy, int ticks ) {
-		GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
-		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty );
+		final GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
+		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty );
 		RecipeHandler.addPRCRecipe(inputItem, inputFluid, inputGasStack, outputItem, outputGasStack, extraEnergy, ticks);
 	}
-	
+
 	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem, @Nonnull final FluidStack inputFluid, @Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
 		addPRCRecipe(inputItem, inputFluid, inputGas, inputGasQty, outputItem, outputGas, outputGasQty, 0, 60 );
 	}
@@ -178,14 +176,14 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addChemicalOxidizerRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
-		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty);
+		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty);
 		RecipeHandler.addChemicalOxidizerRecipe(inputItem, outputGasStack);
 	}
 
 	protected static void addChemicalInfuserRecipe(@Nonnull final String leftInputGas, @Nonnull final int leftInputGasQty, @Nonnull final String rightInputGas, @Nonnull final int rightInputGasQty, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
-		GasStack leftInputGasStack = new GasStack( GasRegistry.getGas(leftInputGas), leftInputGasQty);
-		GasStack rightInputGasStack = new GasStack( GasRegistry.getGas(rightInputGas), rightInputGasQty);
-		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty);
+		final GasStack leftInputGasStack = new GasStack( GasRegistry.getGas(leftInputGas), leftInputGasQty);
+		final GasStack rightInputGasStack = new GasStack( GasRegistry.getGas(rightInputGas), rightInputGasQty);
+		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty);
 		RecipeHandler.addChemicalInfuserRecipe(leftInputGasStack, rightInputGasStack, outputGasStack);
 	}
 
@@ -196,27 +194,27 @@ public class MekanismBase implements IIntegration {
 	protected static void addPrecisionSawmillRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack mainOutput, @Nonnull final ItemStack secondaryOutput, @Nonnull final double chance) {
 		RecipeHandler.addPrecisionSawmillRecipe(inputItem, mainOutput, secondaryOutput, chance);
 	}
-	
+
 	protected static void addElectrolyticSeparatorRecipe(@Nonnull final String inputFluidName, @Nonnull final int inputFluidQty, @Nonnull final String leftOutputGas, @Nonnull final int leftOutputGasQty, @Nonnull final String rightOutputGas, @Nonnull final int rightOutputGasQty, @Nonnull final int energy) {
-		FluidStack inputFluid = new FluidStack( FluidRegistry.getFluid(inputFluidName), inputFluidQty );
-		GasStack leftOutput = new GasStack( GasRegistry.getGas(leftOutputGas), leftOutputGasQty );
-		GasStack rightOutput = new GasStack( GasRegistry.getGas(rightOutputGas), rightOutputGasQty );
+		final FluidStack inputFluid = new FluidStack( FluidRegistry.getFluid(inputFluidName), inputFluidQty );
+		final GasStack leftOutput = new GasStack( GasRegistry.getGas(leftOutputGas), leftOutputGasQty );
+		final GasStack rightOutput = new GasStack( GasRegistry.getGas(rightOutputGas), rightOutputGasQty );
 		RecipeHandler.addElectrolyticSeparatorRecipe(inputFluid, energy, leftOutput, rightOutput);
 	}
 
 	protected static void addThermalEvaporationRecipe(@Nonnull final String inputFluidName, @Nonnull final int inputFluidQty, @Nonnull final String outputFluidName, @Nonnull final int outputFluidQty) {
-		FluidStack inputFluid = new FluidStack( FluidRegistry.getFluid(inputFluidName), inputFluidQty );
+		final FluidStack inputFluid = new FluidStack( FluidRegistry.getFluid(inputFluidName), inputFluidQty );
 		FluidStack outputFluid = new FluidStack( FluidRegistry.getFluid(outputFluidName), outputFluidQty );
 		RecipeHandler.addThermalEvaporationRecipe(inputFluid, outputFluid);
 	}
 
 	protected static void addSolarNeutronRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
-		GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty);
-		GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty);
+		final GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty);
+		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty);
 		RecipeHandler.addSolarNeutronRecipe(inputGasStack, outputGasStack);
 	}
-	
-	protected static boolean gasExists(@Nonnull final String gasName ) {
+
+	protected static boolean gasExists(@Nonnull final String gasName) {
 		return GasRegistry.containsGas(gasName);
 	}
 }

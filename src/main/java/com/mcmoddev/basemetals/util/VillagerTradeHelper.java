@@ -34,11 +34,6 @@ public class VillagerTradeHelper {
 	public static void insertTrades(int professionID, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
 		final ResourceLocation profession = professionList[professionID];
 		insertTrades(profession, careerID, tradeLevel, trades);
-		/*
-		VillagerRegistry.VillagerProfession _profession = ForgeRegistries.VILLAGER_PROFESSIONS.getKey(professionID);
-		VillagerRegistry.VillagerCareer career = _profession.getCareer(careerID);
-		career.addTrade(tradeLevel, trade);
-		*/
 	}
 
 	/**

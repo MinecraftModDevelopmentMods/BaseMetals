@@ -17,6 +17,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.Loader;
@@ -442,6 +443,16 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return this;
 	}
 
+	public MMDMaterial addNewItemFromItemStack(Names name, ItemStack itemStack) {
+		addNewItem(name.toString(), itemStack.getItem());
+		return this;
+	}
+
+	public MMDMaterial addNewItemFromItemStack(String name, ItemStack itemStack) {
+		addNewItem(name, itemStack.getItem());
+		return this;
+	}
+
 	/**
 	 * Adds a new block to the list of known items made from this material
 	 * 
@@ -476,6 +487,19 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return this;
 	}
 
+	/*
+	TODO: How do we get the Block from the Item?
+	public MMDMaterial addNewBlockFromItemStack(Names name, ItemStack itemStack) {
+		addNewBlock(name.toString(), itemStack.getBlock());
+		return this;
+	}
+
+	public MMDMaterial addNewBlockFromItemStack(String name, ItemStack itemStack) {
+		addNewBlock(name, itemStack.getBlock());
+		return this;
+	}
+	*/
+
 	/**
 	 * Get the item with name 'name' if it exists, null is returned if the item
 	 * does not exist
@@ -505,6 +529,22 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return null;
 	}
 
+	public ItemStack getItemStack(Names name) {
+		return getItemStack(name.toString(), 1);
+	}
+
+	public ItemStack getItemStack(String name) {
+		return new ItemStack(getItem(name), 1);
+	}
+
+	public ItemStack getItemStack(Names name, int amount) {
+		return getItemStack(name.toString(), amount);
+	}
+
+	public ItemStack getItemStack(String name, int amount) {
+		return new ItemStack(getItem(name), amount);
+	}
+
 	/**
 	 * Get the block with name 'name' if it exists, null is returned if the
 	 * block does not exist
@@ -532,6 +572,22 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 			return this.blocks.get(name);
 		}
 		return null;
+	}
+
+	public ItemStack getBlockItemStack(Names name) {
+		return this.getBlockItemStack(name.toString(), 1);
+	}
+
+	public ItemStack getBlockItemStack(String name) {
+		return new ItemStack(getBlock(name), 1);
+	}
+
+	public ItemStack getBlockItemStack(Names name, int amount) {
+		return this.getBlockItemStack(name.toString(), amount);
+	}
+
+	public ItemStack getBlockItemStack(String name, int amount) {
+		return new ItemStack(getBlock(name), amount);
 	}
 
 	/**

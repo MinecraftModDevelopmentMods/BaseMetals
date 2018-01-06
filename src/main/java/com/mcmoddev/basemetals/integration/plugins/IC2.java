@@ -11,7 +11,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.item.ItemStack;
+//import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -55,7 +55,7 @@ public class IC2 extends IC2Base implements IIntegration {
 			final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
 			final String oreDictName = diamond.getCapitalizedName();
 			if (diamond.hasItem(Names.POWDER)) {
-				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(diamond.getItem(Names.POWDER), 2));
+				addMaceratorRecipe(Oredicts.ORE + oreDictName, diamond.getItemStack(Names.POWDER, 2));
 			}
 		}
 
@@ -63,7 +63,7 @@ public class IC2 extends IC2Base implements IIntegration {
 			final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
 			final String oreDictName = emerald.getCapitalizedName();
 			if (emerald.hasItem(Names.POWDER)) {
-				addMaceratorRecipe(Oredicts.ORE + oreDictName, new ItemStack(emerald.getItem(Names.POWDER), 2));
+				addMaceratorRecipe(Oredicts.ORE + oreDictName, emerald.getItemStack(Names.POWDER, 2));
 			}
 		}
 	}

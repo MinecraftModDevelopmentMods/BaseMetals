@@ -9,7 +9,6 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
-import net.minecraft.item.Item;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.Recipes;
 
@@ -36,15 +35,13 @@ public class IC2Base implements IIntegration {
 	protected void addForgeHammerRecipe(@Nonnull final String materialName) {
 		addForgeHammerRecipe(Materials.getMaterialByName(materialName));
 	}
-	
+
 	private void addForgeHammerRecipe(@Nonnull final MMDMaterial material) {
-/*		ItemStack hammer = IC2Items.getItem("forge_hammer");
-		Item plateItemBlock = material.getItem("ItemBlock_"+material.getName()+"_plate");
-		ItemStack plateStack = new ItemStack(plateItemBlock, 1);
-		Item casingItem = material.getItem(Names.CASING);
-		ItemStack casingStack = new ItemStack(casingItem, 1);
-		
-		Recipes.advRecipes.addShapelessRecipe(casingStack, hammer, plateStack); */
+/*		final ItemStack hammer = IC2Items.getItem("forge_hammer");
+		final ItemStack plate = material.getItemStack("ItemBlock_"+material.getName()+"_plate", 1);
+		final ItemStack casing = material.getItemStack(Names.CASING, 1);
+
+		Recipes.advRecipes.addShapelessRecipe(casing, hammer, plate); */
 	}
 
 	protected void registerVanillaRecipes(@Nonnull final String materialName) {
@@ -53,77 +50,72 @@ public class IC2Base implements IIntegration {
 
 	protected void registerVanillaRecipes(@Nonnull final MMDMaterial material) {
 		// With the big 1.12 change this is almost certainly going to only be smelting recipes
-		final Item ingot = material.getItem(Names.INGOT);
-		GameRegistry.addSmelting(material.getItem(Names.CRUSHED), new ItemStack(ingot, 1), 0);
-		GameRegistry.addSmelting(material.getItem(Names.CRUSHED_PURIFIED), new ItemStack(ingot, 1), 0);
+		final ItemStack ingot = material.getItemStack(Names.INGOT, 1);
+		GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED), ingot, 0);
+		GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED_PURIFIED), ingot, 0);
 	}
 
 	protected void addMaceratorRecipes(@Nonnull final String materialName) {
-		MMDMaterial material = Materials.getMaterialByName(materialName);
-		addMaceratorRecipes(material);
+		addMaceratorRecipes(Materials.getMaterialByName(materialName));
 	}
 
 	protected void addMaceratorRecipes(@Nonnull final MMDMaterial material) {
-		String oreDictName = material.getCapitalizedName();
-		IRecipeInput inputOre = Recipes.inputFactory.forOreDict(Oredicts.ORE + oreDictName);
-		IRecipeInput inputDensePlate = Recipes.inputFactory.forOreDict(Oredicts.PLATE_DENSE + oreDictName);
-		Recipes.macerator.addRecipe(inputOre, null, false, new ItemStack(material.getItem(Names.CRUSHED), 2));
-		Recipes.macerator.addRecipe(inputDensePlate, null, false, new ItemStack(material.getItem(Names.POWDER), 8));
+		final String oreDictName = material.getCapitalizedName();
+		final IRecipeInput inputOre = Recipes.inputFactory.forOreDict(Oredicts.ORE + oreDictName);
+		final IRecipeInput inputDensePlate = Recipes.inputFactory.forOreDict(Oredicts.PLATE_DENSE + oreDictName);
+		Recipes.macerator.addRecipe(inputOre, null, false, material.getItemStack(Names.CRUSHED, 2));
+		Recipes.macerator.addRecipe(inputDensePlate, null, false, material.getItemStack(Names.POWDER, 8));
 	}
 	
-	protected void addMaceratorRecipe(@Nonnull final String oreDict, @Nonnull ItemStack output ) {
-		IRecipeInput input = Recipes.inputFactory.forOreDict(oreDict);
+	protected void addMaceratorRecipe(@Nonnull final String oreDict, @Nonnull ItemStack output) {
+		final IRecipeInput input = Recipes.inputFactory.forOreDict(oreDict);
 		Recipes.macerator.addRecipe(input, null, false, output);
 	}
-	
+
 	protected void addOreWashingPlantRecipes(@Nonnull final String materialName) {
-		MMDMaterial material = Materials.getMaterialByName(materialName);
-		addOreWashingPlantRecipes(material);
+		addOreWashingPlantRecipes(Materials.getMaterialByName(materialName));
 	}
-	
+
 	protected void addOreWashingPlantRecipes(@Nonnull final MMDMaterial material) {
-		String oreDictName = material.getCapitalizedName();
-		IRecipeInput inputOre = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED + oreDictName);
-		Recipes.oreWashing.addRecipe(inputOre, null, false, new ItemStack(material.getItem(Names.CRUSHED_PURIFIED)), new ItemStack(material.getItem(Names.SMALLPOWDER), 2));
+		final String oreDictName = material.getCapitalizedName();
+		final IRecipeInput inputOre = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED + oreDictName);
+		Recipes.oreWashing.addRecipe(inputOre, null, false, material.getItemStack(Names.CRUSHED_PURIFIED), material.getItemStack(Names.SMALLPOWDER, 2));
 	}
-	
+
 	protected void addThermalCentrifugeRecipes(@Nonnull final String materialName) {
-		MMDMaterial material = Materials.getMaterialByName(materialName);
-		addThermalCentrifugeRecipes(material);
+		addThermalCentrifugeRecipes(Materials.getMaterialByName(materialName));
 	}
-	
+
 	protected void addThermalCentrifugeRecipes(@Nonnull final MMDMaterial material) {
-		String oreDictName = material.getCapitalizedName();
-		IRecipeInput inputOreCP = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED_PURIFIED + oreDictName);
-		IRecipeInput inputOreC = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED + oreDictName);
-		Recipes.centrifuge.addRecipe(inputOreCP, null, false, new ItemStack(material.getItem(Names.POWDER)), new ItemStack(material.getItem(Names.SMALLPOWDER),2));
-		Recipes.centrifuge.addRecipe(inputOreC, null, false, new ItemStack(material.getItem(Names.POWDER)), new ItemStack(material.getItem(Names.SMALLPOWDER)));
+		final String oreDictName = material.getCapitalizedName();
+		final IRecipeInput inputOreCP = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED_PURIFIED + oreDictName);
+		final IRecipeInput inputOreC = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED + oreDictName);
+		Recipes.centrifuge.addRecipe(inputOreCP, null, false, material.getItemStack(Names.POWDER), material.getItemStack(Names.SMALLPOWDER, 2));
+		Recipes.centrifuge.addRecipe(inputOreC, null, false, material.getItemStack(Names.POWDER), material.getItemStack(Names.SMALLPOWDER));
 	}
-	
+
 	protected void addMetalFormerRecipes(@Nonnull final String materialName) {
-		MMDMaterial material = Materials.getMaterialByName(materialName);
-		addMetalFormerRecipes(material);
+		addMetalFormerRecipes(Materials.getMaterialByName(materialName));
 	}
 	
 	protected void addMetalFormerRecipes(@Nonnull final MMDMaterial material) {
-		String oreDictName = material.getCapitalizedName();
-		IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.INGOT + oreDictName);
-		IRecipeInput inputPlate = Recipes.inputFactory.forOreDict(Oredicts.PLATE + oreDictName);
-		ItemStack outputPlate = new ItemStack(material.getBlock(Names.PLATE));
-		ItemStack outputCasing = new ItemStack(material.getItem(Names.CASING));
+		final String oreDictName = material.getCapitalizedName();
+		final IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.INGOT + oreDictName);
+		final IRecipeInput inputPlate = Recipes.inputFactory.forOreDict(Oredicts.PLATE + oreDictName);
+		final ItemStack outputPlate = material.getBlockItemStack(Names.PLATE);
+		final ItemStack outputCasing = material.getItemStack(Names.CASING);
 		Recipes.metalformerRolling.addRecipe(inputIngot, null, false, outputPlate);
 		Recipes.metalformerRolling.addRecipe(inputPlate, null, false, outputCasing);
 	}
 
 	protected void addCompressorRecipes(@Nonnull final String materialName) {
-		MMDMaterial material = Materials.getMaterialByName(materialName);
-		addCompressorRecipes(material);
+		addCompressorRecipes(Materials.getMaterialByName(materialName));
 	}
 	
 	protected void addCompressorRecipes(@Nonnull final MMDMaterial material) {
-		String oreDictName = material.getCapitalizedName();
-		IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.PLATE + oreDictName, 9);
-		ItemStack outputDensePlate = new ItemStack(material.getItem(Names.DENSE_PLATE));
+		final String oreDictName = material.getCapitalizedName();
+		final IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.PLATE + oreDictName, 9);
+		final ItemStack outputDensePlate = material.getItemStack(Names.DENSE_PLATE);
 		Recipes.compressor.addRecipe(inputIngot, null, false, outputDensePlate);
 	}
 }

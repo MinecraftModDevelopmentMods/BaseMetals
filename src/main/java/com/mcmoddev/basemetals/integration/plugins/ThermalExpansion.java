@@ -10,7 +10,6 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import cofh.api.util.ThermalExpansionHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -39,12 +38,11 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 				MaterialNames.MERCURY };
 
 		for (final String materialName : baseNames) {
-			boolean enabled = Materials.hasMaterial(materialName);
 			if (Materials.hasMaterial(materialName)) {
-				addFurnace(enabled, materialName);
-				addCrucible(enabled, materialName);
-				addPlatePress(enabled, materialName);
-				addPressStorage(enabled, materialName);
+				addFurnace(materialName);
+				addCrucible(materialName);
+				addPlatePress(materialName);
+				addPressStorage(materialName);
 			}
 		}
 
@@ -56,14 +54,14 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 
 		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.ZINC) && Materials.hasMaterial(MaterialNames.BRASS)) {
 			if ((copper.hasItem(Names.INGOT)) && (zinc.hasItem(Names.INGOT)) && (brass.hasItem(Names.INGOT))) {
-				ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(copper.getItem(Names.INGOT), 2), new ItemStack(zinc.getItem(Names.INGOT), 1), new ItemStack(brass.getItem(Names.INGOT), 3));
+				ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 2), zinc.getItemStack(Names.INGOT, 1), brass.getItemStack(Names.INGOT, 3));
 			}
 		}
 
 		// TODO: Recently fixed for intent, We may also want bronze here
 		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.NICKEL) && Materials.hasMaterial(MaterialNames.CUPRONICKEL)) {
 			if ((copper.hasItem(Names.INGOT)) && (nickel.hasItem(Names.INGOT)) && (cupronickel.hasItem(Names.INGOT))) {
-				ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(copper.getItem(Names.INGOT), 3), new ItemStack(nickel.getItem(Names.INGOT), 1), new ItemStack(cupronickel.getItem(Names.INGOT), 4));
+				ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3), nickel.getItemStack(Names.INGOT, 1), cupronickel.getItemStack(Names.INGOT, 4));
 			}
 		}
 	}

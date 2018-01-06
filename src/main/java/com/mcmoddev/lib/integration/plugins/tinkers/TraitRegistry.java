@@ -104,13 +104,13 @@ public class TraitRegistry {
 	}
     
 	public static void initTraits() {
-		registeredTraits.put("soft", MMDTraits.soft);
-		registeredTraits.put("sparkly", MMDTraits.sparkly);
-		registeredTraits.put("heavy", MMDTraits.heavy);
-		registeredTraits.put("brittle", MMDTraits.brittle);
-		registeredTraits.put("toxic", MMDTraits.toxic);
-		registeredTraits.put("radioactive", MMDTraits.radioactive);
-		registeredTraits.put("reactive", MMDTraits.reactive);
+		registeredTraits.put("mmd-soft", MMDTraits.soft);
+		registeredTraits.put("mmd-sparkly", MMDTraits.sparkly);
+		registeredTraits.put("mmd-heavy", MMDTraits.heavy);
+		registeredTraits.put("mmd-brittle", MMDTraits.brittle);
+		registeredTraits.put("mmd-toxic", MMDTraits.toxic);
+		registeredTraits.put("mmd-radioactive", MMDTraits.radioactive);
+		registeredTraits.put("mmd-reactive", MMDTraits.reactive);
 	}
 
 	public static void dumpRegistry() {
