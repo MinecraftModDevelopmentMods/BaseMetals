@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
@@ -114,4 +115,5 @@ public class BaseMetals {
 	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
 		proxy.onRemapItem(event);
 	}
+
 }

@@ -89,7 +89,7 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		allsGood = false;
-		Recipes.init();
+		//Recipes.init();
 
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
