@@ -346,7 +346,7 @@ public abstract class Recipes {
 
 	private static void makePowderRecipes(@Nonnull final MMDMaterial material) {
 		final String oreDictName = material.getCapitalizedName();
-
+		
 		if (material.hasItem(Names.POWDER)) {
 			if (material.hasOre() || material.hasBlock(Names.ORE)) {
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName,
@@ -530,5 +530,12 @@ public abstract class Recipes {
 				event.getRegistry().register(buckMerc);
 			}
 		}
+	
+		initPureVanillaOredicts();
+		initPureVanillaCrusherRecipes();
+		initVanillaRecipes();
+		initGeneralRecipes();
+		initModSpecificRecipes();
+
 	}
 }
