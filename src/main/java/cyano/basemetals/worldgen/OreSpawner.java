@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -75,10 +75,10 @@ public class OreSpawner implements IWorldGenerator {
 		
 		
 		if(spawnData.restrictBiomes){
-			Biome biome = world.getBiomeForCoordsBody(coord);
+			BiomeGenBase biome = world.getBiomeGenForCoords(coord);
 			if(!(
                     spawnData.biomesByName.contains(biome.getBiomeName())
-					|| spawnData.biomesByName.contains(String.valueOf(Biome.getIdForBiome(biome)))
+					|| spawnData.biomesByName.contains(String.valueOf(BiomeGenBase.getIdForBiome(biome)))
                 )
              ){
 				// wrong biome

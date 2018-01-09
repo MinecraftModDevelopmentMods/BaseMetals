@@ -48,7 +48,7 @@ import java.util.*;
 		name=BaseMetals.NAME,
 		version = BaseMetals.VERSION,
 		dependencies = "required-after:Forge",
-		acceptedMinecraftVersions = "1.9.4,") // see VersionRange.createFromVersionSpec(String) for explanation of this convoluted feature
+		acceptedMinecraftVersions = "1.9,") // see VersionRange.createFromVersionSpec(String) for explanation of this convoluted feature
 //		updateJSON = "https://raw.githubusercontent.com/cyanobacterium/BaseMetals/master/update.json")
 
 public class BaseMetals {
@@ -62,7 +62,7 @@ public class BaseMetals {
 	public static final String NAME ="Base Metals";
 	/** Version number, in Major.Minor.Build format. The minor number is increased whenever a change 
 	 * is made that has the potential to break compatibility with other mods that depend on this one. */
-	public static final String VERSION = "2.3.3";
+	public static final String VERSION = "2.2.4";
 
 	/** All ore-spawn files discovered in the ore-spawn folder */
 	public static final List<Path> oreSpawnConfigFiles = new LinkedList<>();

@@ -9,20 +9,20 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
 	}
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "2.3.3.10"
+version = "2.2.4"
 group= "cyano.basemetals"
-archivesBaseName = "BaseMetals_1.9.4"
+archivesBaseName = "BaseMetals_1.9"
 sourceCompatibility = targetCompatibility = '1.8'
 
 minecraft {
-	version = "1.9.4-12.17.0.1976"
+	version = "1.9-12.16.1.1938-1.9.0"
 	runDir = "run"
-	mappings = "stable_26"
+	mappings = "stable_24"
 }
 
 repositories {
@@ -38,9 +38,9 @@ repositories {
 
 dependencies {
 	deobfCompile "mezz.jei:jei_1.9:3.2.14.190"
-	deobfCompile "codechicken:CodeChickenCore:1.8-1.0.5.36:universal" // 1.9-2.0.1.61, 1.9.4-2.0.6.75
+	deobfCompile "codechicken:CodeChickenCore:1.9-2.0.1.61:universal" // 1.9.4-2.0.6.75
 	deobfCompile "codechicken:CodeChickenLib:1.9-2.0.1.33:universal" // 1.9.4-2.1.2.49
-	deobfCompile ("codechicken:NotEnoughItems:1.8-1.0.5.104:universal") { // 1.9.4-2.0.1.134
+	compileOnly ("codechicken:NotEnoughItems:1.8-1.0.5.104:universal") { // 1.9.4-2.0.1.134
 		exclude group: 'mezz.jei'
 		exclude group: 'codechicken'
 	}

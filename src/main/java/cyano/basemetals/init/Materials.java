@@ -113,7 +113,7 @@ public abstract class Materials {
 		int[] protection = m.getDamageReductionArray();
 		int durability = m.getArmorMaxDamageFactor();
 		int toughness = 0;
-		ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, toughness);
+		ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON);
 		if(am == null){
 			// uh-oh
 			FMLLog.severe("Failed to create armor material enum for "+m);
