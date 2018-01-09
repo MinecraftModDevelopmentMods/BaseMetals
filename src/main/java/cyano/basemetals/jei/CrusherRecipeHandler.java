@@ -5,11 +5,9 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 
 public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeJEI>{
 
-	private final String id = BaseMetalsJEIPlugin.JEIUID;
-	
 	@Override
 	public String getRecipeCategoryUid() {
-		return id;
+		return BaseMetalsJEIPlugin.JEI_UID;
 	}
 
 	@Override

@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 @JEIPlugin
 public class BaseMetalsJEIPlugin extends BlankModPlugin{
 
-	public static final String JEIUID = BaseMetals.MODID.concat(".crusher");
+	public static final String JEI_UID = BaseMetals.MODID.concat(".crusher");
 	@Override
 	public void register(IModRegistry registry) {
 

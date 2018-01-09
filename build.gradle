@@ -37,10 +37,10 @@ repositories {
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_1.9:3.2.14.190"
-	deobfCompile "codechicken:CodeChickenCore:1.9-2.0.1.61:universal" // 1.9.4-2.0.6.75
-	deobfCompile "codechicken:CodeChickenLib:1.9-2.0.1.33:universal" // 1.9.4-2.1.2.49
-	compileOnly ("codechicken:NotEnoughItems:1.8-1.0.5.104:universal") { // 1.9.4-2.0.1.134
+	deobfCompile "mezz.jei:jei_1.9:3.3.3.200"
+	deobfCompile "codechicken:CodeChickenCore:1.9-2.0.1.61:universal"
+	deobfCompile "codechicken:CodeChickenLib:1.9-2.0.1.33:universal"
+	compileOnly ("codechicken:NotEnoughItems:1.8-1.0.5.104:universal") { // There is no 1.9 release of NEI
 		exclude group: 'mezz.jei'
 		exclude group: 'codechicken'
 	}
