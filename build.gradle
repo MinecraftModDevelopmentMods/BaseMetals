@@ -37,10 +37,10 @@ repositories {
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_1.9:3.2.14.190"
-	deobfCompile "codechicken:CodeChickenCore:1.8-1.0.5.36:universal" // 1.9-2.0.1.61, 1.9.4-2.0.6.75
-	deobfCompile "codechicken:CodeChickenLib:1.9-2.0.1.33:universal" // 1.9.4-2.1.2.49
-	deobfCompile ("codechicken:NotEnoughItems:1.8-1.0.5.104:universal") { // 1.9.4-2.0.1.134
+	deobfCompile "mezz.jei:jei_1.9.4:3.4.4.208"
+	deobfCompile "codechicken:CodeChickenCore:1.9.4-2.0.6.75:universal"
+	deobfCompile "codechicken:CodeChickenLib:1.9.4-2.1.2.49:universal"
+	deobfCompile ("codechicken:NotEnoughItems:1.9.4-2.0.1.134:universal") {
 		exclude group: 'mezz.jei'
 		exclude group: 'codechicken'
 	}

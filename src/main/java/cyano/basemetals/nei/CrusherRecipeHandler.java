@@ -16,13 +16,13 @@ import net.minecraftforge.fml.common.FMLLog;
 
 import org.lwjgl.opengl.GL11;
 
-import codechicken.nei.PositionedStack;
+import codechicken.nei.api.stack.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cyano.basemetals.BaseMetals;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import cyano.basemetals.registry.recipe.ICrusherRecipe;
 
-public class CrusherRecipeHandler extends TemplateRecipeHandler{
+public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public String getOverlayIdentifier() {

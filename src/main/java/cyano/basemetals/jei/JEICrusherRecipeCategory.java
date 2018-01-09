@@ -14,7 +14,7 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	private final ResourceLocation bgtex = new ResourceLocation(BaseMetals.MODID+":textures/gui/nei/nei_crusher.png");
 	private final IDrawable background;
-	private final String id = BaseMetalsJEIPlugin.JEIUID;
+	private final String id = BaseMetalsJEIPlugin.JEI_UID;
 
 	private static final int inputSlot = 0;
 	private static final int outputSlot = 1;
