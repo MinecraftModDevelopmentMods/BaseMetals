@@ -21,7 +21,7 @@ class HorseArmorTypeTransformer implements ITransformer {
 
 	@Override
 	public void transform(ClassNode node, boolean dev) {
-		node.methods.stream().filter(methodNode -> methodNode.name.equals(dev ? "getByItem" : "func_188576_a")).forEachOrdered(methodNode -> {
+		node.methods.stream().filter(methodNode -> methodNode.name.equals(dev ? "getByItem" : GET_BY_ITEM)).forEachOrdered(methodNode -> {
 			final InsnList inject = new InsnList();
 			inject.add(new VarInsnNode(ALOAD, 0));
 			inject.add(new TypeInsnNode(INSTANCEOF, HORSE_INTERFACE));

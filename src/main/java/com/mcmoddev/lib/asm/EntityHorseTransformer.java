@@ -23,7 +23,7 @@ class EntityHorseTransformer implements ITransformer {
 	@Override
 	public void transform(ClassNode node, boolean dev) {
 		for (final MethodNode methodNode : node.methods)
-			if (methodNode.name.equals(dev ? "entityInit" : "func_70088_a")) {
+			if (methodNode.name.equals(dev ? "entityInit" : ENTITY_INIT)) {
 				for (final AbstractInsnNode insnNode : methodNode.instructions.toArray())
 					if (insnNode.getOpcode() == RETURN) {
 						final InsnList inject = new InsnList();
@@ -31,15 +31,15 @@ class EntityHorseTransformer implements ITransformer {
 						inject.add(new MethodInsnNode(INVOKESTATIC, ASMHOOKS_INTERFACE, "onInitHorse", "(Lnet/minecraft/entity/passive/EntityHorse;)V", false));
 						methodNode.instructions.insertBefore(insnNode, inject);
 					}
-			} else if (methodNode.name.equals(dev ? "setHorseArmorStack" : "func_146086_d")) {
+			} else if (methodNode.name.equals(dev ? "setHorseArmorStack" : SET_HORSEARMOR_STACK)) {
 				final InsnList inject = new InsnList();
 				inject.add(new VarInsnNode(ALOAD, 0));
 				inject.add(new VarInsnNode(ALOAD, 1));
 				inject.add(new MethodInsnNode(INVOKESTATIC, ASMHOOKS_INTERFACE, "setHorseArmorStack", "(Lnet/minecraft/entity/passive/EntityHorse;Lnet/minecraft/item/ItemStack;)V", false));
 				methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), inject);
-			} else if (methodNode.name.equals(dev ? "setHorseTexturePaths" : "func_110247_cG"))
+			} else if (methodNode.name.equals(dev ? "setHorseTexturePaths" : SET_HORSE_TEXTURE_PATHS))
 				for (final AbstractInsnNode insnNode : methodNode.instructions.toArray())
-					if (insnNode instanceof MethodInsnNode && ((MethodInsnNode) insnNode).name.equals(dev ? "getTextureName" : "func_188574_d")) {
+					if (insnNode instanceof MethodInsnNode && ((MethodInsnNode) insnNode).name.equals(dev ? "getTextureName" : GET_TEXTURE_NAME)) {
 						final InsnList inject = new InsnList();
 						inject.add(new VarInsnNode(ALOAD, 0));
 						inject.add(new MethodInsnNode(INVOKESTATIC, ASMHOOKS_INTERFACE, "getTextureName", "(Lnet/minecraft/entity/passive/HorseArmorType;Lnet/minecraft/entity/passive/EntityHorse;)Ljava/lang/String;", false));
