@@ -1,0 +1,45 @@
+{
+    "type": "forge:ore_shaped",
+    "result": {
+	"item": "basemetals:steel_anvil",
+	"data": 0
+    },
+    "pattern": [
+	"bbb",
+	" b ",
+	"iii"
+    ],
+    "key": {
+	"b": {
+	    "type": "forge:ore_dict",
+	    "ore": "blockSteel"
+	},
+	"i": {
+	    "type": "forge:ore_dict",
+	    "ore": "ingotSteel"
+	}
+    },
+    "conditions": [
+	{
+	    "type": "forge:and",
+	    "values": [
+		{
+		    "type": "basemetals:enabled",
+		    "optionName": "material",
+		    "optionValue": "Stone"
+		},
+		{
+		    "type": "basemetals:enabled",
+		    "optionName": "thing",
+		    "optionValue": "Anvil"
+		},
+		{
+		    "type": "basemetals:enabled",
+		    "optionName": "thing",
+		    "optionValue": "BasicTools"
+		}
+	    ]
+	}
+    ],
+    "group": "tools"
+}
