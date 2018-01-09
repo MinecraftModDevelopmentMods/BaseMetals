@@ -23,7 +23,6 @@ import java.util.List;
 
 public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDictionaryEntry, IMetalObject{
 
-
 	/**
 	 * Blockstate property
 	 */

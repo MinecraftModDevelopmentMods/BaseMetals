@@ -54,7 +54,7 @@ public class VillagerTradeHelper {
 		for(EntityVillager.ITradeList trade : trades) {
 			VillagerRegistry.instance().getRegistry().getValue(profession).getCareer(careerID-1).addTrade(tradeLevel, trade);
 		}
- 	}
+	}
 
 	public static void appendToMultidimensionalArray(Object append, Object array, int... indices){
 		appendToMultidimensionalArray(Arrays.asList(append).toArray(),array,indices);
@@ -88,7 +88,7 @@ public class VillagerTradeHelper {
 		}
 
 		// expand lowest level array to new size
-		Class<?> aType = array.getClass().getComponentType();
+		Class aType = array.getClass().getComponentType();
 		if(!aType.isAssignableFrom(append.getClass().getComponentType())){
 			throw new IllegalArgumentException("Class type "+append.getClass().getComponentType().getCanonicalName()+" cannot be appended to "+aType.getCanonicalName()+" array");
 		}
@@ -114,7 +114,7 @@ public class VillagerTradeHelper {
 		modField.setInt(v, v.getModifiers() & ~Modifier.FINAL);
 	}
 
-	public static Field getTradeArrayFromClass(Class<?> c){
+	public static Field getTradeArrayFromClass(Class c){
 		// search for 4D array of ITradeList objects
 		for(Field f : c.getDeclaredFields()){
 			if(f.getType().isArray() // D1

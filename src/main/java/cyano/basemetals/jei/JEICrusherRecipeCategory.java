@@ -10,6 +10,7 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
+@SuppressWarnings({ "deprecation" })
 public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	private final ResourceLocation bgtex = new ResourceLocation(BaseMetals.MODID+":textures/gui/nei/nei_crusher.png");
@@ -30,12 +31,7 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 
 	@Override
 	public String getTitle() {
-		String key = "nei."+BaseMetals.MODID+".recipehandler.crusher.name";
-		if(I18n.canTranslate(key)){
-			return I18n.translateToLocal(key);
-		} else {
-			return "Crusher";
-		}
+			return I18n.translateToLocalFormatted(getUid());
 	}
 
 	@Override
@@ -54,5 +50,4 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 		guiItemStacks.setFromRecipe(inputSlot, recipeWrapper.getInputs());
 		guiItemStacks.setFromRecipe(outputSlot, recipeWrapper.getOutputs());
 	}
-
 }

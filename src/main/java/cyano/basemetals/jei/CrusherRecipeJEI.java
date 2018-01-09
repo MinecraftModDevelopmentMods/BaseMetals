@@ -23,5 +23,4 @@ public class CrusherRecipeJEI  extends BlankRecipeWrapper {
 	public List<ItemStack> getOutputs() {
 		return outputs;
 	}
-
 }

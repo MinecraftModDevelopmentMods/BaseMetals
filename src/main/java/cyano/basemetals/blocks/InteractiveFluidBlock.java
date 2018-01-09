@@ -88,6 +88,7 @@ public class InteractiveFluidBlock extends BlockFluidClassic{
 		return 0;
 	}
 
+	// TODO: remove the block overrides and see if fluids are working correctly yet
 	@Override // Block override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
 		return NULL_AABB;

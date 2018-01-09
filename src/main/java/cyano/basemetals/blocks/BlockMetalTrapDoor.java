@@ -27,7 +27,6 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
 		this.disableStats();
 	}
 
-	
 	@Override
     public boolean onBlockActivated(final World world, final BlockPos coord, IBlockState state,
                                     final EntityPlayer player, EnumHand hand, ItemStack heldItem, final EnumFacing facing,
@@ -40,7 +39,6 @@ public class BlockMetalTrapDoor extends net.minecraft.block.BlockTrapDoor implem
         world.playEvent(player, ((Boolean)state.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
         return true;
     }
-	
 
 	@Override
 	public String getOreDictionaryName() {

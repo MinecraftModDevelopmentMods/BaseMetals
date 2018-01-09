@@ -111,7 +111,6 @@ public class CrusherRecipeRegistry {
 			public Collection<ItemStack> getValidInputs() {
 				return Arrays.asList(new ItemStack(input));
 			}
-			
 		});
 	}
 	/**

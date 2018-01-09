@@ -6,7 +6,6 @@ import cyano.basemetals.registry.CrusherRecipeRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -55,7 +54,7 @@ import java.util.*;
 
 public class BaseMetals {
 
-	//TODO: use metal plates to modify or repair shields 
+	//TODO: use metal plates to modify or repair shields
 
 	public static BaseMetals INSTANCE = null;
 	/** ID of this mod */
@@ -64,9 +63,6 @@ public class BaseMetals {
 	public static final String NAME ="Base Metals";
 	/** Version number, in Major.Minor.Build format. The minor number is increased whenever a change 
 	 * is made that has the potential to break compatibility with other mods that depend on this one. */
-
-	/** All ore-spawn files discovered in the ore-spawn folder */
-	public static final List<Path> oreSpawnConfigFiles = new LinkedList<>();
 	public static final String VERSION = "2.3.4";
 
 	static {
@@ -107,7 +103,7 @@ public class BaseMetals {
 		disableAllHammers = config.getBoolean("disable_crack_hammer", "options", disableAllHammers,
 				"If true, then the crack hammer cannot be crafted.");
 
-		enforceHardness = config.getBoolean("enforce_hardness", "options", enforceHardness, 
+		enforceHardness = config.getBoolean("enforce_hardness", "options", enforceHardness,
 				"If true, then the crack hammer cannot crush ingots into powders if that \n"
 			+	"crackhammer is not hard enough to crush the ingot's ore.");
 		
@@ -115,7 +111,7 @@ public class BaseMetals {
 				"If true, then the crack hammer can crush ingots/ores that a pickaxe of the same \n"
 			+	"material can harvest. If false, then your crack hammer must be made of a harder \n"
 			+	"material than the ore you are crushing.");
-		
+
 		autoDetectRecipes = config.getBoolean("automatic_recipes", "options", autoDetectRecipes, 
 				"If true, then Base Metals will scan the Ore Dictionary to automatically add a \n"
 			+	"Crack Hammer recipe for every material that has an ore, dust, and ingot.");
@@ -167,7 +163,7 @@ public class BaseMetals {
 				} catch (IOException e) {
 					FMLLog.severe(MODID + ": Error: Failed to write file " + oreSpawnFile);
 				}
-  			}
+			}
 		}
 
 		cyano.basemetals.init.Fluids.init();

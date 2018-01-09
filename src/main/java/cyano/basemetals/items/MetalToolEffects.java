@@ -10,11 +10,11 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
 public abstract class MetalToolEffects {
-	   
+
 	public static void extraEffectsOnAttack(final MetalMaterial metal, final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker){
     	if(metal.equals(Materials.coldiron)){
     		if(target.isImmuneToFire()){
@@ -49,29 +49,29 @@ public abstract class MetalToolEffects {
 	
 	public static void addToolSpecialPropertiesToolTip(MetalMaterial metal, java.util.List<String> tooltipList){
 		if(metal == Materials.adamantine){
-			tooltipList.add(I18n.translateToLocal("tooltip.adamantine.tool").replace("%x", String.valueOf(4)));
+			tooltipList.add(I18n.format("tooltip.adamantine.tool", 4));
 		} else if(metal == Materials.aquarium){
-			tooltipList.add(I18n.translateToLocal("tooltip.aquarium.tool").replace("%x", String.valueOf(4)));
+			tooltipList.add(I18n.format("tooltip.aquarium.tool", 4));
 		} else if(metal == Materials.coldiron){
-			tooltipList.add(I18n.translateToLocal("tooltip.coldiron.tool").replace("%x", String.valueOf(3)));
+			tooltipList.add(I18n.format("tooltip.coldiron.tool", 3));
 		} else if(metal == Materials.mithril){
-			tooltipList.add(I18n.translateToLocal("tooltip.mithril.tool"));
+			tooltipList.add(I18n.format("tooltip.mithril.tool"));
 		} else if(metal == Materials.starsteel){
-			tooltipList.add(I18n.translateToLocal("tooltip.starsteel.tool").replace("%x", String.valueOf(10)));
+			tooltipList.add(I18n.format("tooltip.starsteel.tool", 10));
 		}
 	}
-	
+
 	public static void addArmorSpecialPropertiesToolTip(MetalMaterial metal, java.util.List<String> tooltipList){
 		if(metal == Materials.adamantine){
-			tooltipList.add(I18n.translateToLocal("tooltip.adamantine.armor").replace("%x", String.valueOf(4)));
+			tooltipList.add(I18n.format("tooltip.adamantine.armor", 4));
 		} else if(metal == Materials.aquarium){
-			tooltipList.add(I18n.translateToLocal("tooltip.aquarium.armor").replace("%x", String.valueOf(4)));
+			tooltipList.add(I18n.format("tooltip.aquarium.armor", 4));
 		} else if(metal == Materials.coldiron){
-			tooltipList.add(I18n.translateToLocal("tooltip.coldiron.armor").replace("%x", String.valueOf(3)));
+			tooltipList.add(I18n.format("tooltip.coldiron.armor", 3));
 		} else if(metal == Materials.mithril){
-			tooltipList.add(I18n.translateToLocal("tooltip.mithril.armor"));
+			tooltipList.add(I18n.format("tooltip.mithril.armor"));
 		} else if(metal == Materials.starsteel){
-			tooltipList.add(I18n.translateToLocal("tooltip.starsteel.armor").replace("%x", String.valueOf(10)));
+			tooltipList.add(I18n.format("tooltip.starsteel.armor", 10));
 		}
 	}
 }

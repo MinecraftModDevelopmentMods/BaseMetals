@@ -22,6 +22,7 @@ import cyano.basemetals.BaseMetals;
 import cyano.basemetals.registry.CrusherRecipeRegistry;
 import cyano.basemetals.registry.recipe.ICrusherRecipe;
 
+@SuppressWarnings("deprecation")
 public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
@@ -61,7 +62,6 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 		}
 	}
 
-	
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
 		if (outputId.equals("crusher") && getClass() == CrusherRecipeHandler.class) {// we don't want overstep subclasses
@@ -129,8 +129,6 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 		public boolean canInteractWith(EntityPlayer playerIn) {
 			return true;
 		}
-		
-		
 	}
 	
 	public class CrusherPair extends CachedRecipe

@@ -32,5 +32,4 @@ public interface ICrusherRecipe {
 	 * @return A list of allowed inputs.
 	 */
 	public abstract Collection<ItemStack> getValidInputs();
-
 }

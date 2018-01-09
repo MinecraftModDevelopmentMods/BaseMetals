@@ -24,5 +24,4 @@ public class NEIBaseMetalsConfig implements IConfigureNEI{
 		codechicken.nei.api.API.registerRecipeHandler(crusherHandler);
 		codechicken.nei.api.API.registerUsageHandler(crusherHandler);
 	}
-
 }

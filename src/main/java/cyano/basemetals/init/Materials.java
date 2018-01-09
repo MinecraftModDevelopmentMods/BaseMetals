@@ -96,7 +96,6 @@ public abstract class Materials {
 		registerMaterial(name, m);
 		return m;
 	}
-	
 
 	private static MetalMaterial addRareMaterial(String name, double hardness, double strength, double magic){
 		MetalMaterial m = new MetalMaterial(name,(float)hardness,(float)strength,(float)magic,true);
@@ -112,7 +111,6 @@ public abstract class Materials {
 		String texName = m.getName();
 		int[] protection = m.getDamageReductionArray();
 		int durability = m.getArmorMaxDamageFactor();
-		int toughness = 0;
 		ArmorMaterial am = EnumHelper.addArmorMaterial(enumName, texName, durability, protection, m.getEnchantability(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, (m.hardness > 10 ? (int)(m.hardness / 5) : 0));
 		if(am == null){
 			// uh-oh

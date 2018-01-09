@@ -41,8 +41,6 @@ public abstract class VillagerTrades{
 		final Map<MetalMaterial, Item> allShovels = new HashMap<>(size);
 		final Map<MetalMaterial, Item> allIngots = new HashMap<>(size);
 		
-		final Map<Item,Integer> tradeLevelMap = new HashMap<>();
-		
 		cyano.basemetals.init.Items.getItemsByMetal().entrySet().stream()
 				.forEach((Map.Entry<MetalMaterial,List<Item>> e)->{
 					final MetalMaterial m = e.getKey();
@@ -64,13 +62,13 @@ public abstract class VillagerTrades{
 
 		for(MetalMaterial m : cyano.basemetals.init.Materials.getAllMetals()){
 			float value = m.hardness + m.strength + m.magicAffinity + m.getToolHarvestLevel();
-			if(m.isRare) continue; 
+			if(m.isRare) continue;
 			// for reference, iron has a value of 21.5, gold would be 14, copper is 14, and diamond is 30
 			int emeraldPurch = emeraldPurchaseValue(value);
 			int emeraldSale = emeraldSaleValue(value);
 			int tradeLevel = tradeLevel(value);
 
-			if(emeraldPurch > 64 || emeraldSale > 64) continue; // too expensive 
+			if(emeraldPurch > 64 || emeraldSale > 64) continue; // too expensive
 
 			int armorsmith = (3 << 16) | (1 << 8) | (tradeLevel);
 			int weaponsmith = (3 << 16) | (2 << 8) | (tradeLevel);
@@ -110,14 +108,14 @@ public abstract class VillagerTrades{
 				tradesTable.computeIfAbsent(weaponsmith,(Integer key)->new ArrayList<>())
 						.addAll(Arrays.asList(
 						makeTradePalette(
-						makePurchasePalette(emeraldPurch + (int)(m.getBaseAttackDamage() / 2)-1, 1, allSwords.get(m))) 
+						makePurchasePalette(emeraldPurch + (int)(m.getBaseAttackDamage() / 2)-1, 1, allSwords.get(m)))
 						));
 			}
 			if(allArmors.containsKey(m)){
 				tradesTable.computeIfAbsent(armorsmith,(Integer key)->new ArrayList<>())
 						.addAll(Arrays.asList(
 						makeTradePalette(
-						makePurchasePalette(emeraldPurch + (int)(m.hardness / 2), 1, allArmors.get(m).toArray(new Item[0])) 
+						makePurchasePalette(emeraldPurch + (int)(m.hardness / 2), 1, allArmors.get(m).toArray(new Item[0]))
 						)));
 			}
 			
@@ -136,8 +134,8 @@ public abstract class VillagerTrades{
 				}
 				if(allSwords.containsKey(m)) tradesTable.computeIfAbsent((3 << 16) | (2 << 8) | (tradeLevel+1),(Integer key)->new ArrayList<>())
 						.addAll(Arrays.asList(
-						new ListEnchantedItemForEmeralds(allSwords.get(m), new PriceInfo(emeraldPurch+7 + (int)(m.getBaseAttackDamage() / 2)-1, emeraldPurch+12 + (int)(m.getBaseAttackDamage() / 2)-1)))); 
-				}
+						new ListEnchantedItemForEmeralds(allSwords.get(m), new PriceInfo(emeraldPurch+7 + (int)(m.getBaseAttackDamage() / 2)-1, emeraldPurch+12 + (int)(m.getBaseAttackDamage() / 2)-1))));
+			}
 		}
 		tradesTable.computeIfAbsent((3 << 16) | (1 << 8) | (1),(Integer key)->new ArrayList<>())
 				.addAll(Arrays.asList(
@@ -374,7 +372,5 @@ public abstract class VillagerTrades{
 				recipeList.add(new MerchantRecipe(in1,in2,out));
 			}
 		}
-		
 	}
-	
 }

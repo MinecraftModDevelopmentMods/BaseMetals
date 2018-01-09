@@ -263,5 +263,4 @@ public class MetalMaterial {
 	public String getEnumName() {
 		return enumName;
 	}
-
 }

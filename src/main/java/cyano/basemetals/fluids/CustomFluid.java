@@ -15,5 +15,4 @@ public class CustomFluid extends Fluid{
 	public int getColor(){
 		return color;
 	}
-
 }

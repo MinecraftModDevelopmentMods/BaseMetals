@@ -2,7 +2,6 @@ package cyano.basemetals.data;
 
 public abstract class AdditionalLootTables {
 
-
 	public static final String abandoned_mineshaft = "{\n" +
 			"    \"pools\": [\n" +
 			"        {\n" +
@@ -5468,5 +5467,4 @@ public abstract class AdditionalLootTables {
 			"        }\n" +
 			"    ]\n" +
 			"}";
-
 }

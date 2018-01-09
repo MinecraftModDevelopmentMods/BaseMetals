@@ -8,7 +8,6 @@ import cyano.basemetals.registry.CrusherRecipeRegistry;
 import cyano.basemetals.registry.recipe.ICrusherRecipe;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.IItemRegistry;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
@@ -23,7 +22,6 @@ public class BaseMetalsJEIPlugin extends BlankModPlugin{
 	@Override
 	public void register(IModRegistry registry) {
 
-		IItemRegistry itemRegistry = registry.getItemRegistry();
 		IJeiHelpers jeiHelpers = registry.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 		

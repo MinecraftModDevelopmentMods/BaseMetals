@@ -1,14 +1,10 @@
 package cyano.basemetals.jei;
 
-import javax.annotation.Nonnull;
-
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
 public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeJEI>{
 
-	private final String id = BaseMetalsJEIPlugin.JEI_UID;
-	
 	@Override
 	public Class<CrusherRecipeJEI> getRecipeClass() {
 		return CrusherRecipeJEI.class;
@@ -28,5 +24,4 @@ public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeJEI>{
 	public boolean isRecipeValid(CrusherRecipeJEI recipe) {
 		return !(recipe.getInputs().isEmpty() || recipe.getOutputs().isEmpty());
 	}
-
 }
