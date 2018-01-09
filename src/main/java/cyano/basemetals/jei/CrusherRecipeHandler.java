@@ -6,13 +6,13 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeJEI>{
 
 	@Override
-	public String getRecipeCategoryUid() {
-		return BaseMetalsJEIPlugin.JEI_UID;
+	public Class<CrusherRecipeJEI> getRecipeClass() {
+		return CrusherRecipeJEI.class;
 	}
 
 	@Override
-	public Class<CrusherRecipeJEI> getRecipeClass() {
-		return CrusherRecipeJEI.class;
+	public String getRecipeCategoryUid() {
+		return BaseMetalsJEIPlugin.JEI_UID;
 	}
 
 	@Override
@@ -24,5 +24,4 @@ public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeJEI>{
 	public boolean isRecipeValid(CrusherRecipeJEI recipe) {
 		return !(recipe.getInputs().isEmpty() || recipe.getOutputs().isEmpty());
 	}
-
 }

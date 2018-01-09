@@ -54,5 +54,4 @@ public class JEICrusherRecipeCategory extends BlankRecipeCategory {
 		guiItemStacks.setFromRecipe(inputSlot, recipeWrapper.getInputs());
 		guiItemStacks.setFromRecipe(outputSlot, recipeWrapper.getOutputs());
 	}
-
 }

@@ -34,7 +34,6 @@ public class OreSpawner implements IWorldGenerator {
 
 	private final long hash; // used to make prng's different
 	private final Integer dimension; // can be null
-	private final boolean miscDimension;
 
 	private final OreSpawnData spawnData;
 
@@ -53,7 +52,6 @@ public class OreSpawner implements IWorldGenerator {
 		this.hash = hash;
 		this.dimension = dimension;
 		if(dimension != null)registeredDimensions.add(dimension);
-		this.miscDimension = false;
 	}
 
 

@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -21,7 +20,6 @@ import com.google.gson.JsonParser;
 
 import cyano.basemetals.worldgen.OreSpawnData;
 import cyano.basemetals.worldgen.OreSpawner;
-
 
 /**
  * This class contains static initializers to add ore spawning as world-gen. 
@@ -33,12 +31,8 @@ import cyano.basemetals.worldgen.OreSpawner;
  */
 public abstract class WorldGen {
 
-	
-	
 	private static final Map<Integer,List<OreSpawnData>> oreSpawnRegistry  = new HashMap<>();
-	
-	
-	
+
 	public static void loadConfig(Path jsonFile) throws IOException{
 		final JsonObject settings;
 		JsonParser parser = new JsonParser();
@@ -47,12 +41,8 @@ public abstract class WorldGen {
 		fileReader.close();
 		parseConfig(settings);
 	}
-	
-	
+
 	public static void init(){
-		WorldGenMinable b;
-		net.minecraft.world.gen.ChunkProviderHell h;
-		net.minecraft.world.biome.BiomeDecorator bd;
 		// load ore settings (must be done AFTER loading the blocks
 		// add custom spawners to the world
 		Random prng = new Random();

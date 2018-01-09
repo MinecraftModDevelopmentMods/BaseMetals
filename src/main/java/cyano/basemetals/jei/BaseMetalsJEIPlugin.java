@@ -8,7 +8,6 @@ import cyano.basemetals.registry.CrusherRecipeRegistry;
 import cyano.basemetals.registry.recipe.ICrusherRecipe;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.IItemRegistry;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
@@ -17,11 +16,12 @@ import net.minecraft.item.ItemStack;
 @JEIPlugin
 public class BaseMetalsJEIPlugin extends BlankModPlugin{
 
-	public static final String JEI_UID = BaseMetals.MODID.concat(".crusher");
+	public static final String JEI_UID = BaseMetals.MODID;
+	public static final String RECIPE_UID = JEI_UID + ".crackhammer";
+
 	@Override
 	public void register(IModRegistry registry) {
 
-		IItemRegistry itemRegistry = registry.getItemRegistry();
 		IJeiHelpers jeiHelpers = registry.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 		

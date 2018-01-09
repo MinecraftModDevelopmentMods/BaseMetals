@@ -292,5 +292,3 @@ public abstract class DataConstants {
 + "\n	]"
 + "\n}";
 }
-
-

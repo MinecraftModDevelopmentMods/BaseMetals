@@ -66,24 +66,19 @@ public abstract class Fluids{
 			Item item = Item.getItemFromBlock(block);
 			final ModelResourceLocation fluidModelLocation = new ModelResourceLocation(
 					modID.toLowerCase() + ":" + fluidBlockNames.get(block), "fluid");
-//            ModelBakery.registerItemVariants(item);
-//			ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition()
-//			{
-//				public ModelResourceLocation getModelLocation(ItemStack stack)
-//				{
-//					return fluidModelLocation;
-//				}
-//			});
-			ModelLoader.setCustomStateMapper(block, new StateMapperBase()
-			{
-				protected ModelResourceLocation getModelResourceLocation(IBlockState state)
-				{
+            ModelBakery.registerItemVariants(item);
+			ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition() {
+				public ModelResourceLocation getModelLocation(ItemStack stack) {
+					return fluidModelLocation;
+				}
+			});
+			ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
 					return fluidModelLocation;
 				}
 			});
 		}
 	}
-	
 
 	private static Fluid newFluid(String modID, String name, int density, int viscosity, int temperature, int luminosity, int tintColor) {
 		Fluid f = new CustomFluid(name,new ResourceLocation(modID+":blocks/"+name+"_still"),new ResourceLocation(modID+":blocks/"+name+"_flow"),tintColor);
@@ -97,10 +92,9 @@ public abstract class Fluids{
 	}
 
 	private static BlockFluidBase registerFluidBlock(Fluid f, BlockFluidBase block, String name) {
-		block.setRegistryName(BaseMetals.MODID+":"+name);
-		block.setUnlocalizedName(BaseMetals.MODID+"."+name);
+		block.setRegistryName(BaseMetals.MODID + ":" + name);
+		block.setUnlocalizedName(BaseMetals.MODID + "." + name);
 		GameRegistry.register(block);
-//		GameRegistry.registerBlock(block, name);
 		block.setCreativeTab(CreativeTabs.MISC);
 		FluidRegistry.addBucketForFluid(f);
 		fluidBlocks.put(f, block);

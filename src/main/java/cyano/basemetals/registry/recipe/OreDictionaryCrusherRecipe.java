@@ -66,7 +66,4 @@ public class OreDictionaryCrusherRecipe implements ICrusherRecipe{
 	public Collection<ItemStack> getValidInputs() {
 		return OreDictionary.getOres(oreDictSource);
 	}
-
-	
-	
 }

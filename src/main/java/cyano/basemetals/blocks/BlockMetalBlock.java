@@ -83,7 +83,6 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 	public String getOreDictionaryName() {
 		return "block"+metal.getCapitalizedName();
 	}
-	
 
 	@Override
 	public void onBlockPlacedBy(final World w, final BlockPos coord, final IBlockState bs, final EntityLivingBase placer, final ItemStack src) {
@@ -93,7 +92,6 @@ public class BlockMetalBlock extends Block implements IOreDictionaryEntry, IMeta
 			((EntityPlayer)placer).addStat(Achievements.blocktastic, 1);
 		}
 	}
-	
 
 	@Override
 	public MetalMaterial getMetalMaterial(){

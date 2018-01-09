@@ -7,7 +7,6 @@ public class AdamantineMaterial extends MetalMaterial {
 		super(name, hardness, strength, magic);
 	}
 
-	
 	public float getBlastResistance(){
 		return 2000;
 	}
