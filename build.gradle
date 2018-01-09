@@ -14,7 +14,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "2.3.3.10"
+version = "2.3.4"
 group= "cyano.basemetals"
 archivesBaseName = "BaseMetals_1.9.4"
 sourceCompatibility = targetCompatibility = '1.8'

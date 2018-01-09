@@ -64,10 +64,10 @@ public class BaseMetals {
 	public static final String NAME ="Base Metals";
 	/** Version number, in Major.Minor.Build format. The minor number is increased whenever a change 
 	 * is made that has the potential to break compatibility with other mods that depend on this one. */
-	public static final String VERSION = "2.3.3";
 
 	/** All ore-spawn files discovered in the ore-spawn folder */
 	public static final List<Path> oreSpawnConfigFiles = new LinkedList<>();
+	public static final String VERSION = "2.3.4";
 
 	static {
 		// Forge says this needs to be statically initialized here.
