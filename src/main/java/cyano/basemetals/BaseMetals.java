@@ -11,6 +11,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fluids.FluidRegistry; 
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -47,12 +48,13 @@ import java.util.*;
 		name=BaseMetals.NAME,
 		version = BaseMetals.VERSION,
 		dependencies = "required-after:Forge",
-		acceptedMinecraftVersions = "1.9.4")
+		acceptedMinecraftVersions = "1.9.4,") // see VersionRange.createFromVersionSpec(String) for explanation of this convoluted feature
 //		updateJSON = "https://raw.githubusercontent.com/cyanobacterium/BaseMetals/master/update.json")
 
-public class BaseMetals
-{
-	
+public class BaseMetals {
+
+	//TODO: use metal plates to modify or repair shields 
+
 	public static BaseMetals INSTANCE = null;
 	/** ID of this mod */
 	public static final String MODID = "basemetals";
@@ -60,14 +62,16 @@ public class BaseMetals
 	public static final String NAME ="Base Metals";
 	/** Version number, in Major.Minor.Build format. The minor number is increased whenever a change 
 	 * is made that has the potential to break compatibility with other mods that depend on this one. */
-	public static final String VERSION = "2.2.2.1";
-	
+	public static final String VERSION = "2.3.3";
+
 	/** All ore-spawn files discovered in the ore-spawn folder */
 	public static final List<Path> oreSpawnConfigFiles = new LinkedList<>();
-	
-	/** multiplier to increase or reduce the frequency of metal ingots appearing in treasure chests */
-	public static float chestLootFactor = 0.5f;
-	
+
+	static {
+		// Forge says this needs to be statically initialized here.
+		FluidRegistry.enableUniversalBucket();
+	}
+
 //	/** If true, some metals can be used to brew potions */
 //	public static boolean enablePotionRecipes = true;
 	
@@ -76,6 +80,8 @@ public class BaseMetals
 	/** If true, then crack hammers can mine on all the same blocks that their pick-axe equivalent 
 	 * can mine. If false, then the hammer is 1 step weaker than the pick-axe */
 	public static boolean strongHammers = true;
+	/** If true, hammers cannot be crafted */
+	public static boolean disableAllHammers = false;
 	/** Whether or not vanilla ore-gen has been disabled */
 	public static boolean disableVanillaOreGen = false;
 	/** Ignores other mods telling this mod not to generate ore */
@@ -97,13 +103,10 @@ public class BaseMetals
 		
 //		enablePotionRecipes = config.getBoolean("enable_potions", "options", enablePotionRecipes, 
 //				"If true, then some metals can be used to brew potions.");
-		
-		
-		chestLootFactor = config.getFloat("treasure_chest_loot_factor", "options", 0.5f, 0.0f, 1000.0f, 
-				"Controls the rarity of metal ingots being found in treasure chests relative to \n"
-			 +  "the frequency of other chest loot items. Set to 0 to disable metal ingots from \n"
-			 +  "appearing in treasure chests.");
-		
+
+		disableAllHammers = config.getBoolean("disable_crack_hammer", "options", disableAllHammers,
+				"If true, then the crack hammer cannot be crafted.");
+
 		enforceHardness = config.getBoolean("enforce_hardness", "options", enforceHardness, 
 				"If true, then the crack hammer cannot crush ingots into powders if that \n"
 			+	"crackhammer is not hard enough to crush the ingot's ore.");
@@ -151,6 +154,8 @@ public class BaseMetals
 			}
 		}
 
+		config.save();
+
 		oreSpawnFolder = Paths.get(event.getSuggestedConfigurationFile().toPath().getParent().toString(),"orespawn");
 		Path oreSpawnFile = Paths.get(oreSpawnFolder.toString(),MODID+".json");
 		if(Files.exists(oreSpawnFile) == false){
@@ -170,8 +175,6 @@ public class BaseMetals
 				FMLLog.severe(MODID+": Error: Failed to write file "+oreVanillaSpawnFile);
 			}
 		}
-
-		config.save();
 
 		cyano.basemetals.init.Fluids.init();
 		cyano.basemetals.init.Materials.init();

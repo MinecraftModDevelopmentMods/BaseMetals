@@ -1013,6 +1013,20 @@ public abstract class AdditionalLootTables {
 			"                },\n" +
 			"                {\n" +
 			"                    \"type\": \"item\",\n" +
+			"                    \"name\": \"basemetals:platinum_ingot\",\n" +
+			"                    \"weight\": 10,\n" +
+			"                    \"functions\": [\n" +
+			"                        {\n" +
+			"                            \"function\": \"set_count\",\n" +
+			"                            \"count\": {\n" +
+			"                                \"min\": 1,\n" +
+			"                                \"max\": 6\n" +
+			"                            }\n" +
+			"                        }\n" +
+			"                    ]\n" +
+			"                },\n" +
+			"                {\n" +
+			"                    \"type\": \"item\",\n" +
 			"                    \"name\": \"basemetals:adamantine_ingot\",\n" +
 			"                    \"weight\": 10,\n" +
 			"                    \"functions\": [\n" +
@@ -3794,6 +3808,20 @@ public abstract class AdditionalLootTables {
 			"                },\n" +
 			"                {\n" +
 			"                    \"type\": \"item\",\n" +
+			"                    \"name\": \"basemetals:platinum_ingot\",\n" +
+			"                    \"weight\": 10,\n" +
+			"                    \"functions\": [\n" +
+			"                        {\n" +
+			"                            \"function\": \"set_count\",\n" +
+			"                            \"count\": {\n" +
+			"                                \"min\": 1,\n" +
+			"                                \"max\": 6\n" +
+			"                            }\n" +
+			"                        }\n" +
+			"                    ]\n" +
+			"                },\n" +
+			"                {\n" +
+			"                    \"type\": \"item\",\n" +
 			"                    \"name\": \"basemetals:adamantine_ingot\",\n" +
 			"                    \"weight\": 10,\n" +
 			"                    \"functions\": [\n" +
@@ -5390,6 +5418,20 @@ public abstract class AdditionalLootTables {
 			"                            \"count\": {\n" +
 			"                                \"min\": 1,\n" +
 			"                                \"max\": 4\n" +
+			"                            }\n" +
+			"                        }\n" +
+			"                    ]\n" +
+			"                },\n" +
+			"                {\n" +
+			"                    \"type\": \"item\",\n" +
+			"                    \"name\": \"basemetals:platinum_ingot\",\n" +
+			"                    \"weight\": 10,\n" +
+			"                    \"functions\": [\n" +
+			"                        {\n" +
+			"                            \"function\": \"set_count\",\n" +
+			"                            \"count\": {\n" +
+			"                                \"min\": 1,\n" +
+			"                                \"max\": 6\n" +
 			"                            }\n" +
 			"                        }\n" +
 			"                    ]\n" +

@@ -1,77 +1,79 @@
-// Gradle build script
 
 // For those who want the bleeding edge:
 buildscript {
-    repositories {
-        jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
-    }
+	repositories {
+		jcenter()
+		maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+	}
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-
-
-allprojects {
-    apply plugin: 'java'
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-}
-
-/*
-// for people who want stable 
-plugins {
-    id "net.minecraftforge.gradle.forge" version "2.0.2"
-}
-*/
-
-
-version = "2.2.2.1"
+version = "2.3.3.10"
 group= "cyano.basemetals"
 archivesBaseName = "BaseMetals_1.9.4"
+sourceCompatibility = targetCompatibility = '1.8'
 
 minecraft {
-    version = "1.9.4-12.17.0.1921-1.9.4"
-    runDir = "run"
-    mappings = "snapshot_20160525"
+	version = "1.9.4-12.17.0.1976"
+	runDir = "run"
+	mappings = "stable_26"
+}
+
+repositories {
+	maven { // Mantle, TCon, JEI
+		name 'DVS1 Maven FS'
+		url 'http://dvs1.progwml6.com/files/maven/'
+	}
+	maven { // CCL, CCC, NEI
+		name 'Chickenbones Repo'
+		url 'http://chickenbones.net/maven/'
+	}
 }
 
 dependencies {
-    compile files(
-        'lib/NEI/CodeChickenCore-1.8-1.0.5.36-dev.jar',
-        'lib/NEI/NotEnoughItems-1.8-1.0.5.104-dev.jar',
-        'lib/JEI/jei_1.9-3.2.14.190.jar'
-    )
-
+	deobfCompile "mezz.jei:jei_1.9:3.2.14.190"
+	deobfCompile "codechicken:CodeChickenCore:1.8-1.0.5.36:universal" // 1.9-2.0.1.61, 1.9.4-2.0.6.75
+	deobfCompile "codechicken:CodeChickenLib:1.9-2.0.1.33:universal" // 1.9.4-2.1.2.49
+	deobfCompile ("codechicken:NotEnoughItems:1.8-1.0.5.104:universal") { // 1.9.4-2.0.1.134
+		exclude group: 'mezz.jei'
+		exclude group: 'codechicken'
+	}
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+processResources {
+	// this will ensure that this task is redone when the versions change.
+	inputs.property "version", project.version
+	inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+	// replace stuff in mcmod.info, nothing else
+	from(sourceSets.main.resources.srcDirs) {
+		include 'mcmod.info'
+
+		// replace version and mcversion
+		expand 'version':project.version, 'mcversion':project.minecraft.version
+	}
+
+	// copy everything else, thats not the mcmod.info
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'mcmod.info'
+	}
 }
+
+task deobfJar(type: Jar) {
+	from sourceSets.main.output
+	classifier = 'dev'
+}
+
+build.dependsOn deobfJar
 
 idea { 
 	module { 
-		inheritOutputDirs = true 
-	} 
+		inheritOutputDirs = true
+	}
 }

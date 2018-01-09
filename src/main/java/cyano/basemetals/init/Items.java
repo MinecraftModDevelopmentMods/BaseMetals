@@ -73,7 +73,9 @@ public abstract class Items {
 		return Collections.unmodifiableMap(itemsByMetal);
 	}
 
-	public static UniversalBucket universal_bucket;
+	// TODO: Might be needed for 1.9 and earlier
+	//public static UniversalBucket universal_bucket;
+
 	// TODO: metal arrows or crossbow & bolts
 	
 	public static Item adamantine_axe;
@@ -216,6 +218,7 @@ public abstract class Items {
 	public static Item electrum_shovel;
 	public static Item electrum_sword;
 	public static Item electrum_rod;
+	public static Item gold_crackhammer;
 	public static Item gold_powder;
 	public static Item gold_rod;
 	public static Item invar_axe;
@@ -534,6 +537,7 @@ public abstract class Items {
 		electrum_rod = create_rod(Materials.electrum);
 		gold_powder = create_powder(Materials.vanilla_gold);
 		gold_rod = create_rod(Materials.vanilla_gold);
+		gold_crackhammer = create_crackhammer(Materials.vanilla_gold);
 		invar_axe = create_axe(Materials.invar);
 		invar_blend = create_blend(Materials.invar);
 		invar_boots = create_boots(Materials.invar);
@@ -594,6 +598,7 @@ public abstract class Items {
 		GameRegistry.register(mercury_ingot);
 		itemRegistry.put(mercury_ingot, "mercury_ingot");
 		OreDictionary.registerOre("ingotMercury", mercury_ingot);
+		OreDictionary.registerOre("quicksilver", mercury_ingot);
 		mercury_powder = new Item().setRegistryName(BaseMetals.MODID, "mercury_powder").setUnlocalizedName(BaseMetals.MODID+"."+"mercury_powder").setCreativeTab(ItemGroups.tab_items);
 		GameRegistry.register(mercury_powder);
 		itemRegistry.put(mercury_powder, "mercury_powder");
@@ -699,9 +704,10 @@ public abstract class Items {
 		zinc_powder = create_powder(Materials.zinc);
 		zinc_rod = create_rod(Materials.zinc);
 
-		universal_bucket = (UniversalBucket)registerItem(new UniversalBucket(),"bucket", null, null);
-		universal_bucket.setUnlocalizedName("bucket");
-		MinecraftForge.EVENT_BUS.register(universal_bucket);
+		// TODO: Might be needed for 1.9 and earlier
+		// universal_bucket = (UniversalBucket)registerItem(new UniversalBucket(),"bucket", null, null);
+		// universal_bucket.setUnlocalizedName("bucket");
+		// MinecraftForge.EVENT_BUS.register(universal_bucket);
 
 
 		for(Item i : itemRegistry.keySet()){
@@ -776,16 +782,16 @@ public abstract class Items {
 		return registerItem(new ItemMetalBlend(metal), metal.getName()+"_"+"blend", metal, ItemGroups.tab_items);
 	}
 
-
 	private static Item create_rod(MetalMaterial metal){
 		return registerItem(new GenericMetalItem(metal), metal.getName()+"_"+"rod", metal, ItemGroups.tab_items);
 	}
 
-
 	private static Item create_gear(MetalMaterial metal){
-		return registerItem(new GenericMetalItem(metal), metal.getName()+"_"+"gear", metal, ItemGroups.tab_items);
+		Item i = registerItem(new GenericMetalItem(metal), metal.getName()+"_"+"gear", metal, ItemGroups.tab_items);
+		OreDictionary.registerOre("gear"+metal.getCapitalizedName(),i);
+		return i;
 	}
-	
+
 	private static Item create_axe(MetalMaterial metal){
 		return registerItem(new ItemMetalAxe(metal), metal.getName()+"_"+"axe", metal, ItemGroups.tab_tools);
 	}
