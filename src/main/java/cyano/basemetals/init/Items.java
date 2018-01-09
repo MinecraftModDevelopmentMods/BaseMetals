@@ -73,9 +73,6 @@ public abstract class Items {
 		return Collections.unmodifiableMap(itemsByMetal);
 	}
 
-	// TODO: Might be needed for 1.9 and earlier
-	//public static UniversalBucket universal_bucket;
-
 	// TODO: metal arrows or crossbow & bolts
 	
 	public static Item adamantine_axe;
@@ -703,12 +700,6 @@ public abstract class Items {
 		zinc_nugget = create_nugget(Materials.zinc);
 		zinc_powder = create_powder(Materials.zinc);
 		zinc_rod = create_rod(Materials.zinc);
-
-		// TODO: Might be needed for 1.9 and earlier
-		// universal_bucket = (UniversalBucket)registerItem(new UniversalBucket(),"bucket", null, null);
-		// universal_bucket.setUnlocalizedName("bucket");
-		// MinecraftForge.EVENT_BUS.register(universal_bucket);
-
 
 		for(Item i : itemRegistry.keySet()){
 			allItems.put(itemRegistry.get(i), i);
