@@ -34,6 +34,10 @@ repositories {
 		name 'Chickenbones Repo'
 		url 'http://chickenbones.net/maven/'
 	}
+	maven {
+		name 'MMD'
+		url 'https://maven.mcmoddev.com/'
+	}
 }
 
 dependencies {
@@ -44,6 +48,9 @@ dependencies {
 		exclude group: 'mezz.jei'
 		exclude group: 'codechicken'
 	}
+
+    compile "com.mcmoddev:AdditionalLootTables:1.9.4-2.0.3.+:deobf"
+    compile "com.mcmoddev:OreSpawn:1.9.4-3.2.1.+:deobf"
 }
 
 processResources {
