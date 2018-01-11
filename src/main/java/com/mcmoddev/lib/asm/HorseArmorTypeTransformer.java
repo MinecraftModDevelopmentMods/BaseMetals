@@ -40,7 +40,7 @@ class HorseArmorTypeTransformer implements ITransformer {
 						mv.visitMethodInsn(INVOKEINTERFACE, HORSE_INTERFACE, "getArmorType", "()Lnet/minecraft/entity/passive/HorseArmorType;", true);
 						mv.visitInsn(ARETURN);
 						mv.visitLabel(label1);
-						mv.visitInsn(F_SAME);
+						mv.visitFrame(F_SAME, 0, null, 0, null);
 					}
 				};
 			}
