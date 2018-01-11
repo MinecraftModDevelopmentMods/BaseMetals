@@ -11,19 +11,23 @@ import net.minecraft.launchwrapper.IClassTransformer;
 public class ASMTransformer implements IClassTransformer {
 
 	@Override
-	public byte[] transform(String name, String transformedName, byte[] bytes) {
-		byte[] rv = new byte[bytes.length];
+	public byte[] transform(String name, String transformedName, byte[] bytesIn) {
+		ClassNode classNode = null;
 		for (final ITransformer transformer : ASMPlugin.transformerList) {
 			if (transformedName.equals(transformer.getTarget())) {
-				final ClassReader classReader = new ClassReader(bytes);
-				final ClassNode classNode = new ClassNode();
-				classReader.accept(classNode, 0);
-				transformer.transform(classNode, Platform.isDevEnv());
-				final ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS);
-				classNode.accept(classWriter);
-				rv = classWriter.toByteArray();
+				if (classNode == null){
+					final ClassReader classReader = new ClassReader(bytesIn);
+					classNode = new ClassNode();
+					classReader.accept(classNode, 0);
+				}
+				classNode = transformer.transform(classNode, Platform.isDevEnv());
 			}
 		}
-		return rv;
+		if (classNode != null){
+			final ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			classNode.accept(classWriter);
+			return classWriter.toByteArray();
+		}
+		return bytesIn;
 	}
 }
