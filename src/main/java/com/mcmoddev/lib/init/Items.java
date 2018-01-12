@@ -196,6 +196,7 @@ public abstract class Items {
 		}
 	}
 
+	@Deprecated
 	protected static void createItemsBasic(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsBasic(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -207,6 +208,7 @@ public abstract class Items {
 	 * @param tabs
 	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
+	@Deprecated
 	protected static void createItemsBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		create(Names.BLEND, material, tabs.itemsTab);
 		create(Names.INGOT, material, tabs.itemsTab);
@@ -216,10 +218,12 @@ public abstract class Items {
 		create(Names.SMALLPOWDER, material, tabs.itemsTab);
 	}
 
+	@Deprecated
 	protected static void createItemsAdditional(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsAdditional(Materials.getMaterialByName(materialName), tabs);
 	}
 
+	@Deprecated
 	protected static void createItemsAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		create(Names.ARROW, material, tabs.toolsTab);
 		create(Names.AXE, material, tabs.toolsTab);
@@ -246,6 +250,7 @@ public abstract class Items {
 		create(Names.GEAR, material, tabs.itemsTab);
 	}
 
+	@Deprecated
 	protected static void createItemsFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsFull(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -257,11 +262,13 @@ public abstract class Items {
 	 * @param tabs
 	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
+	@Deprecated
 	protected static void createItemsFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		createItemsBasic(material, tabs);
 		createItemsAdditional(material, tabs);
 	}
 
+	@Deprecated
 	protected static void createItemsModSupport(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsModSupport(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -273,6 +280,7 @@ public abstract class Items {
 	 * @param tabs
 	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
+	@Deprecated
 	protected static void createItemsModSupport(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		if (Options.enableModderSupportThings()) {
 			create(Names.CASING, material, tabs.itemsTab);
@@ -283,6 +291,7 @@ public abstract class Items {
 		createItemsModIC2(material, tabs);
 	}
 
+	@Deprecated
 	protected static void createItemsModIC2(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsModIC2(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -294,6 +303,7 @@ public abstract class Items {
 	 * @param tabs
 	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
+	@Deprecated
 	protected static void createItemsModIC2(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 
 		if (material.hasOre()) {
@@ -302,6 +312,7 @@ public abstract class Items {
 		}
 	}
 
+	@Deprecated
 	protected static void createItemsModMekanism(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsModMekanism(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -313,6 +324,7 @@ public abstract class Items {
 	 * @param tabs
 	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
+	@Deprecated
 	protected static void createItemsModMekanism(@Nonnull final MMDMaterial material,
 			@Nonnull final TabContainer tabs) {
 		if (material.hasOre()) {

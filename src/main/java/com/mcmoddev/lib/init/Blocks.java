@@ -101,6 +101,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksBasic(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createBlocksBasic(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -112,6 +113,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 
 		create(Names.BLOCK, material, tabs.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
@@ -129,6 +131,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksAdditional(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createBlocksAdditional(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -140,6 +143,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		if (tabs == null) {
 			return;
@@ -161,6 +165,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createBlocksFull(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -172,6 +177,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		createBlocksBasic(material, tabs);
 		createBlocksAdditional(material, tabs);
