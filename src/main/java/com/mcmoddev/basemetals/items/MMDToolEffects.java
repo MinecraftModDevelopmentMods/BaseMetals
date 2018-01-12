@@ -60,7 +60,8 @@ public abstract class MMDToolEffects {
 	 * @param attacker
 	 *            The attacker
 	 */
-	public static void extraEffectsOnAttack(final MMDMaterial material, final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
+	public static void extraEffectsOnAttack(final MMDMaterial material, final ItemStack item,
+			final EntityLivingBase target, final EntityLivingBase attacker) {
 		if (material.getName().equals(MaterialNames.COLDIRON)) {
 			if (target.isImmuneToFire()) {
 				final DamageSource extraDamage = DamageSource.GENERIC;
@@ -95,12 +96,14 @@ public abstract class MMDToolEffects {
 	 * @param crafter
 	 *            The crafter
 	 */
-	public static void extraEffectsOnCrafting(final MMDMaterial material, final ItemStack item, final World world, final EntityPlayer crafter) {
+	public static void extraEffectsOnCrafting(final MMDMaterial material, final ItemStack item, final World world,
+			final EntityPlayer crafter) {
 		// TODO: do nothing for now. This would be where achievements or automatic
 		// enchantments could appear
 	}
 
-	public static void extraEffectsOnArmorUpdate(final World w, final EntityPlayer player, final MMDMaterial material, final ItemStack armor, int i) {
+	public static void extraEffectsOnArmorUpdate(final World w, final EntityPlayer player, final MMDMaterial material,
+			final ItemStack armor, int i) {
 		// some sanity checks
 		if (armor == ItemStack.EMPTY)
 			return;
@@ -142,10 +145,12 @@ public abstract class MMDToolEffects {
 					int num = starsteelUpdateCache.get(player).getAndSet(0);
 					if (num == 0)
 						break starsteel;
-					final PotionEffect jumpBoost = new PotionEffect(MobEffects.JUMP_BOOST, EFFECT_DURATION, num - 1, false, false);
+					final PotionEffect jumpBoost = new PotionEffect(MobEffects.JUMP_BOOST, EFFECT_DURATION, num - 1,
+							false, false);
 					player.addPotionEffect(jumpBoost);
 					if (num > 1) {
-						final PotionEffect speedBoost = new PotionEffect(MobEffects.SPEED, EFFECT_DURATION, num - 2, false, false);
+						final PotionEffect speedBoost = new PotionEffect(MobEffects.SPEED, EFFECT_DURATION, num - 2,
+								false, false);
 						player.addPotionEffect(speedBoost);
 					}
 					break starsteel;
@@ -159,7 +164,8 @@ public abstract class MMDToolEffects {
 					if (level == 0)
 						break lead;
 					if (level > 0) {
-						final PotionEffect speedLoss = new PotionEffect(MobEffects.SLOWNESS, EFFECT_DURATION, level - 1, false, false);
+						final PotionEffect speedLoss = new PotionEffect(MobEffects.SLOWNESS, EFFECT_DURATION, level - 1,
+								false, false);
 						player.addPotionEffect(speedLoss);
 					}
 					break lead;
@@ -174,7 +180,8 @@ public abstract class MMDToolEffects {
 					if (level == 0)
 						break adamantine;
 					if (level > 0) {
-						final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION, level - 1, false, false);
+						final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION,
+								level - 1, false, false);
 						player.addPotionEffect(protection);
 					}
 					break adamantine;
@@ -182,7 +189,8 @@ public abstract class MMDToolEffects {
 			}
 			// full suit of cold-iron makes you fire-proof
 			if ((material.getName().equals(MaterialNames.COLDIRON)) && (hasFullSuit(player, MaterialNames.COLDIRON))) {
-				final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE, EFFECT_DURATION, 0, false, false);
+				final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE, EFFECT_DURATION, 0,
+						false, false);
 				player.addPotionEffect(fireProtection);
 			}
 			// full suit of Mithril protects you from withering, poison, nausea,
@@ -202,13 +210,16 @@ public abstract class MMDToolEffects {
 				}
 			}
 			// full suit of Aquarium makes you breathe and heal under water
-			if ((material.getName().equals(MaterialNames.AQUARIUM)) && ((hasFullSuit(player, MaterialNames.AQUARIUM)) && (player.posY > 0) && (player.posY < 255))) {
+			if ((material.getName().equals(MaterialNames.AQUARIUM))
+					&& ((hasFullSuit(player, MaterialNames.AQUARIUM)) && (player.posY > 0) && (player.posY < 255))) {
 				Block b1 = w.getBlockState(new BlockPos(player.posX, player.posY, player.posZ)).getBlock();
 				Block b2 = w.getBlockState(new BlockPos(player.posX, player.posY + 1, player.posZ)).getBlock();
 				if (b1 == Blocks.WATER && b2 == Blocks.WATER) {
-					final PotionEffect waterBreathing = new PotionEffect(MobEffects.WATER_BREATHING, EFFECT_DURATION, 0, false, false);
+					final PotionEffect waterBreathing = new PotionEffect(MobEffects.WATER_BREATHING, EFFECT_DURATION, 0,
+							false, false);
 					player.addPotionEffect(waterBreathing);
-					final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION, 0, false, false);
+					final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION, 0, false,
+							false);
 					player.addPotionEffect(protection);
 					player.removePotionEffect(MobEffects.MINING_FATIGUE);
 				}
@@ -272,7 +283,8 @@ public abstract class MMDToolEffects {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
 
 		return (player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == material.getItem(Names.HELMET)
-				&& player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == material.getItem(Names.CHESTPLATE)
+				&& player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == material
+						.getItem(Names.CHESTPLATE)
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == material.getItem(Names.LEGGINGS)
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material.getItem(Names.BOOTS));
 	}

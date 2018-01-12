@@ -1,6 +1,5 @@
 package com.mcmoddev.basemetals.proxy;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.client.registrations.RegistrationHelper;
 import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
 import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
@@ -44,18 +43,17 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-    @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
+	@SubscribeEvent
+	public static void registerModels(ModelRegistryEvent event) {
 		for (final String name : Items.getItemRegistry().keySet()) {
-			if( !name.endsWith(Names.ANVIL.toString()))
+			if (!name.endsWith(Names.ANVIL.toString()))
 				RegistrationHelper.registerItemRender(name);
 			else {
-				String[] names = new String[] { "intact", "slightly_damaged", "very_damaged" };
-				Item it = Items.getItemByName(name);
-				for( int i = 0; i < 3; i++ ) {
-					ResourceLocation rl = new ResourceLocation( "basemetals", String.format("%s_%s", name, names[i]));
-					ModelLoader.setCustomModelResourceLocation(it, i, new ModelResourceLocation(rl, "inventory"));
-					BaseMetals.logger.fatal("ResourceLocation is %s", rl);
+				final String[] names = new String[] { "intact", "slightly_damaged", "very_damaged" };
+				final Item item = Items.getItemByName(name);
+				for (int i = 0; i < 3; i++) {
+					final ResourceLocation rl = new ResourceLocation("basemetals", String.format("%s_%s", name, names[i]));
+					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(rl, "inventory"));
 				}
 			}
 		}
@@ -63,7 +61,7 @@ public class ClientProxy extends CommonProxy {
 		for (final String name : Blocks.getBlockRegistry().keySet()) {
 			RegistrationHelper.registerBlockRender(name);
 		}
-    }
+	}
 
 	@SubscribeEvent
 	public void fluidRendering(RegistryEvent.Register<MMDMaterial> event) {

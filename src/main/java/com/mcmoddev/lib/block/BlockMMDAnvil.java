@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.block;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.item.MMDContainerRepair;
 import com.mcmoddev.lib.material.IMMDObject;
@@ -10,7 +9,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerRepair;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -40,6 +38,7 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
     /**
      * Called when the block is right clicked by a player.
      */
+	@Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         if (!worldIn.isRemote)

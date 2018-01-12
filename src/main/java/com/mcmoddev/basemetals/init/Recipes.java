@@ -46,13 +46,15 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	protected static void initVanillaRecipes() {
-		// all recipes for BaseMetals are currently in JSON - this exists in case there are some we have to add
+		// all recipes for BaseMetals are currently in JSON - this exists in case there
+		// are some we have to add
 		// programmatically
 	}
 
 	private static void initModSpecificRecipes() {
 		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
 			final MMDMaterial adamantine = Materials.getMaterialByName(MaterialNames.ADAMANTINE);
+
 			addAdditionalOredicts(adamantine, "Adamantite");
 			addAdditionalOredicts(adamantine, "Adamantium");
 			addAdditionalOredicts(adamantine, "Adamant");
@@ -60,8 +62,9 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 		if (Materials.hasMaterial(MaterialNames.STEEL)) {
 			final MMDMaterial steel = Materials.getMaterialByName(MaterialNames.STEEL);
+
 			if (steel.hasItem(Names.GEAR)) {
-				OreDictionary.registerOre(Oredicts.SPROCKET, steel.getItem(Names.GEAR));
+				OreDictionary.registerOre(Oredicts.SPROCKET, steel.getItemStack(Names.GEAR));
 			}
 		}
 	}

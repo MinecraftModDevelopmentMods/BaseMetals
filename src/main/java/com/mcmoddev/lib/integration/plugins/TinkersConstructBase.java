@@ -23,7 +23,7 @@ import net.minecraftforge.fluids.FluidStack;
  */
 public class TinkersConstructBase implements IIntegration {
 
-	public static final String PLUGIN_MODID = "tconstruct";
+	public static final String PLUGIN_MODID = "tinkersconstruct";
 
 	private static boolean initDone = false;
 

@@ -52,22 +52,8 @@ public class ThermalExpansionBase implements IIntegration {
 
 	}
 
-	@Deprecated
-	protected static void addFurnace(@Nonnull final boolean enabled, @Nonnull final String materialName) {
-		if (enabled) {
-			addFurnace(Materials.getMaterialByName(materialName));
-		}
-	}
-
 	protected static void addFurnace(@Nonnull final String materialName) {
 		addFurnace(Materials.getMaterialByName(materialName));
-	}
-
-	@Deprecated
-	protected static void addFurnace(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
-		if (enabled) {
-			addFurnace(material);
-		}
 	}
 
 	protected static void addFurnace(@Nonnull final MMDMaterial material) {
@@ -100,22 +86,8 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 	}
 
-	@Deprecated
-	protected static void addCrucible(@Nonnull final boolean enabled, @Nonnull final String materialName) {
-		if (enabled) {
-			addCrucible(Materials.getMaterialByName(materialName));
-		}
-	}
-
 	protected static void addCrucible(@Nonnull final String materialName) {
 		addCrucible(Materials.getMaterialByName(materialName));
-	}
-
-	@Deprecated
-	protected static void addCrucible(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
-		if (enabled) {
-			addCrucible(material);
-		}
 	}
 
 	protected static void addCrucible(@Nonnull final MMDMaterial material) {
@@ -156,13 +128,6 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 	}
 
-	@Deprecated
-	private static void addCrucibleExtra(@Nonnull final boolean enabled, @Nonnull final Item input, @Nonnull final FluidStack output, @Nonnull final int energy) {
-		if (enabled) {
-				addCrucibleExtra(input, output, energy);
-			}		
-	}
-
 	private static void addCrucibleExtra(@Nonnull final Item input, @Nonnull final FluidStack output, @Nonnull final int energy) {
 		addCrucibleExtra(new ItemStack(input), output, energy);
 	}
@@ -171,22 +136,8 @@ public class ThermalExpansionBase implements IIntegration {
 		ThermalExpansionHelper.addCrucibleRecipe(energy, input, output);
 	}
 
-	@Deprecated
-	protected static void addPlatePress(@Nonnull final boolean enabled, @Nonnull final String materialName) {
-		if (enabled) {
-			addPlatePress(Materials.getMaterialByName(materialName));
-		}
-	}
-
 	protected static void addPlatePress(@Nonnull final String materialName) {
 		addPlatePress(Materials.getMaterialByName(materialName));
-	}
-
-	@Deprecated
-	protected static void addPlatePress(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
-		if (enabled) {
-			addPlatePress(material);
-		}
 	}
 
 	protected static void addPlatePress(@Nonnull final MMDMaterial material) {
@@ -200,22 +151,8 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 	}
 
-	@Deprecated
-	protected static void addPressStorage(@Nonnull final boolean enabled, @Nonnull final String materialName) {
-		if (enabled) {
-			addPressStorage(Materials.getMaterialByName(materialName));
-		}
-	}
-
 	protected static void addPressStorage(@Nonnull final String materialName) {
 		addPressStorage(Materials.getMaterialByName(materialName));
-	}
-
-	@Deprecated
-	protected static void addPressStorage(@Nonnull final boolean enabled, @Nonnull final MMDMaterial material) {
-		if (enabled) {
-			addPressStorage(material);
-		}
 	}
 
 	protected static void addPressStorage(@Nonnull final MMDMaterial material) {

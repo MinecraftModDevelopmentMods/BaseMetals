@@ -20,9 +20,9 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
 	private static boolean initDone = false;
 
-	private static final int BLOCKS_TAB_ID = addTab("blocks", true);
-	private static final int ITEMS_TAB_ID = addTab("items", true);
-	private static final int TOOLS_TAB_ID = addTab("tools", true);
+	private static final int BLOCKS_TAB_ID = addTab(SharedStrings.TAB_BLOCKS, true);
+	private static final int ITEMS_TAB_ID = addTab(SharedStrings.TAB_ITEMS, true);
+	private static final int TOOLS_TAB_ID = addTab(SharedStrings.TAB_TOOLS, true);
 	private static final MMDCreativeTab blocksTab = getTab(BLOCKS_TAB_ID);
 	private static final MMDCreativeTab itemsTab = getTab(ITEMS_TAB_ID);
 	private static final MMDCreativeTab toolsTab = getTab(TOOLS_TAB_ID);
@@ -51,7 +51,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
 		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
 			material = Materials.getMaterialByName(MaterialNames.STARSTEEL);
-		} else	if (Materials.hasMaterial(MaterialNames.IRON)) {
+		} else if (Materials.hasMaterial(MaterialNames.IRON)) {
 			material = Materials.getMaterialByName(MaterialNames.IRON);
 		}
 

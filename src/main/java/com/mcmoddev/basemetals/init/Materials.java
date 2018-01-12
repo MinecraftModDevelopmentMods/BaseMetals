@@ -38,31 +38,30 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		// Oreless because our Recipe code can tend to be silly otherwise
 		createVanillaMats();
 
-		List<String> modMaterials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD,
 				MaterialNames.MERCURY, MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
 				MaterialNames.STARSTEEL, MaterialNames.TIN, MaterialNames.ZINC);
 
-		List<String> alloyMaterials = Arrays.asList(MaterialNames.AQUARIUM, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
-				MaterialNames.PEWTER, MaterialNames.STEEL);
+		final List<String> alloyMaterials = Arrays.asList(MaterialNames.AQUARIUM, MaterialNames.BRASS,
+				MaterialNames.BRONZE, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR,
+				MaterialNames.MITHRIL, MaterialNames.PEWTER, MaterialNames.STEEL);
 
-		modMaterials.stream()
-				.filter(Options::isMaterialEnabled)
-				.forEach(name -> createMaterial(name, MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+		materials.stream().filter(Options::isMaterialEnabled).forEach(name -> createMaterial(name, MaterialType.METAL,
+				getHardness(name), getStrength(name), getMagic(name), getColor(name)));
 
-		alloyMaterials.stream()
-				.filter(Options::isMaterialEnabled)
-				.forEach(name -> createAlloyMaterial(name, MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+		alloyMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createAlloyMaterial(name,
+				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
 
 		// Mod Materials
 		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
-			Materials.getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4).setDefaultDimension(-1);
+			Materials.getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4)
+					.setDefaultDimension(-1);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
 			Materials.getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
-			.setDefaultDimension(1).setRegenerates(true);
+					.setDefaultDimension(1).setRegenerates(true);
 		}
 
 		initDone = true;

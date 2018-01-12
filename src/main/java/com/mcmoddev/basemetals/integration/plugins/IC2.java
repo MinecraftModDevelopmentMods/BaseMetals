@@ -1,5 +1,8 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
@@ -33,23 +36,23 @@ public class IC2 extends IC2Base implements IIntegration {
 		initDone = true;
 	}
 
-    @SubscribeEvent
-    public void regCallback(RegistryEvent.Register<IRecipe> event) {
-		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+	@SubscribeEvent
+	public void regCallback(RegistryEvent.Register<IRecipe> event) {
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL, MaterialNames.ZINC };
+				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 
-		for (final String materialName : baseNames) {
-			if (Materials.hasMaterial(materialName)) {
-				registerVanillaRecipes(materialName);
-				addMaceratorRecipes(materialName);
-				addOreWashingPlantRecipes(materialName);
-				addThermalCentrifugeRecipes(materialName);
-				addMetalFormerRecipes(materialName);
-				addCompressorRecipes(materialName);
-				addForgeHammerRecipe(materialName);
-			}
-		}
+		materials.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.forEach(materialName -> {
+					registerVanillaRecipes(materialName);
+					addMaceratorRecipes(materialName);
+					addOreWashingPlantRecipes(materialName);
+					addThermalCentrifugeRecipes(materialName);
+					addMetalFormerRecipes(materialName);
+					addCompressorRecipes(materialName);
+					addForgeHammerRecipe(materialName);
+				});
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);

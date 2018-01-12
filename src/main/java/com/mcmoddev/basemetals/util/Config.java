@@ -226,11 +226,20 @@ public class Config extends ConfigBase {
 				"Stairs of our wonderful metals! Come and get your own - or don't. It's up to you."));
 		Options.thingEnabled("Wall",
 				configuration.getBoolean("Enable Wall", TOOLS_CAT, true, "Hey, Teachers! Leave those kids alone!"));
-		Options.thingEnabled("Anvil", configuration.getBoolean("Enable Anvils", TOOLS_CAT, true, "Less Yak-yak, more Whack-whack (Hello Alex Steele!"));
-		
+		Options.thingEnabled("Anvil", configuration.getBoolean("Enable Anvils", TOOLS_CAT, true,
+				"Less Yak-yak, more Whack-whack (Hello Alex Steele!"));
+
 		final String experimental = "experimental";
 		Options.thingEnabled(experimental, configuration.getBoolean("Enable Experimental", TOOLS_CAT, false,
 				"Enable experimental features (Don't blame us if they burn down your cat or kill your house)"));
+
+		// Add some utility bits that are referenced
+		Options.thingEnabled("anvil", Options.isThingEnabled(experimental));
+		Options.thingEnabled("bookshelf", Options.isThingEnabled(experimental));
+		Options.thingEnabled("flowerpot", Options.isThingEnabled(experimental));
+		Options.thingEnabled("ladder", Options.isThingEnabled(experimental));
+		Options.thingEnabled("tripwire", Options.isThingEnabled(experimental));
+
 		// Fluid options
 		Options.fluidEnabled("Charcoal",
 				configuration.getBoolean("Enabled Charcoal", FLUIDS_CAT, true, "Enable the molten fluid of Charcoal"));
@@ -292,12 +301,6 @@ public class Config extends ConfigBase {
 				configuration.getBoolean("Enabled Tin", FLUIDS_CAT, true, "Enable the molten fluid of Tin"));
 		Options.fluidEnabled("Zinc",
 				configuration.getBoolean("Enabled Zinc", FLUIDS_CAT, true, "Enable the molten fluid of Zinc"));
-		// Add some utility bits that are referenced
-		Options.thingEnabled("anvil", Options.isThingEnabled(experimental));
-		Options.thingEnabled("bookshelf", Options.isThingEnabled(experimental));
-		Options.thingEnabled("flowerpot", Options.isThingEnabled(experimental));
-		Options.thingEnabled("ladder", Options.isThingEnabled(experimental));
-		Options.thingEnabled("tripwire", Options.isThingEnabled(experimental));
 
 		// DISABLE CRACK HAMMER RECIPES
 		Options.setDisabledRecipes(parseDisabledRecipes(configuration.getString("DisabledCrackhammerRecipes",

@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.mcmoddev.basemetals.proxy.CommonProxy;
+import com.mcmoddev.lib.data.SharedStrings;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -18,7 +19,6 @@ import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
@@ -52,20 +52,21 @@ public class BaseMetals {
 	public static final String MODID = "basemetals";
 
 	/** Display name of this Mod */
-	static final String NAME = "Base Metals";
+	protected static final String NAME = "Base Metals";
 
 	/**
 	 * Version number, in Major.Minor.Patch format. The minor number is
 	 * increased whenever a change is made that has the potential to break
 	 * compatibility with other mods that depend on this one.
 	 */
-	public static final String VERSION = "2.5.0-beta3";
+	protected static final String VERSION = "2.5.0-beta3";
 
-	static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopmentMods/BaseMetals/master/update.json";
+	protected static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopmentMods/BaseMetals/master/update.json";
 
-	private static final String PROXY_BASE = "com.mcmoddev." + MODID + ".proxy.";
+	private static final String PROXY_BASE = SharedStrings.MMD_PROXY_GROUP + MODID + SharedStrings.DOT_PROXY_DOT;
 
-	@SidedProxy(clientSide = PROXY_BASE + "ClientProxy", serverSide = PROXY_BASE + "ServerProxy")
+	@SidedProxy(clientSide = PROXY_BASE + SharedStrings.CLIENTPROXY, serverSide = PROXY_BASE
+			+ SharedStrings.SERVERPROXY)
 	public static CommonProxy proxy;
 
 	public static final Logger logger = LogManager.getFormatterLogger(BaseMetals.MODID);
@@ -77,7 +78,7 @@ public class BaseMetals {
 
 	@EventHandler
 	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
-		logger.warn("Invalid fingerprint detected!");
+		logger.warn(SharedStrings.INVALID_FINGERPRINT);
 	}
 
 	@EventHandler
@@ -110,7 +111,7 @@ public class BaseMetals {
 	public void onRemapBlock(RegistryEvent.MissingMappings<Block> event) {
 		proxy.onRemapBlock(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
 		proxy.onRemapItem(event);
