@@ -15,6 +15,7 @@ import com.mcmoddev.lib.data.Names;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -444,12 +445,14 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public MMDMaterial addNewItemFromItemStack(Names name, ItemStack itemStack) {
-		addNewItem(name.toString(), itemStack.getItem());
+		addNewItemFromItemStack(name.toString(), itemStack);
 		return this;
 	}
 
 	public MMDMaterial addNewItemFromItemStack(String name, ItemStack itemStack) {
-		addNewItem(name, itemStack.getItem());
+		if (!(itemStack == ItemStack.EMPTY)) {
+			addNewItem(name, itemStack.getItem());
+		}
 		return this;
 	}
 
@@ -487,18 +490,19 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return this;
 	}
 
-	/*
-	TODO: How do we get the Block from the Item?
 	public MMDMaterial addNewBlockFromItemStack(Names name, ItemStack itemStack) {
-		addNewBlock(name.toString(), itemStack.getBlock());
+		addNewBlockFromItemStack(name.toString(), itemStack);
 		return this;
 	}
 
 	public MMDMaterial addNewBlockFromItemStack(String name, ItemStack itemStack) {
-		addNewBlock(name, itemStack.getBlock());
+		final Item item = itemStack.getItem();
+		final Block block = Block.getBlockFromItem(item);
+		if (!(block == Blocks.AIR)) {
+			addNewBlock(name, block);
+		}
 		return this;
 	}
-	*/
 
 	/**
 	 * Get the item with name 'name' if it exists, null is returned if the item
