@@ -1,4 +1,4 @@
-package com.mcmoddev.lib.modtweaker;
+package com.mcmoddev.lib.crafttweaker;
 
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
@@ -13,7 +13,6 @@ import stanhebben.zenscript.annotations.ZenMethod;
 import static com.blamejared.mtlib.helpers.InputHelper.toStack;
 
 @ZenClass("mods.mmdlib.CrusherRecipes")
-@ModOnly("basemetals")
 @ZenRegister
 public class CrusherRecipes {
 	private static void removeMatchFull( ItemStack input, ItemStack output ) {

@@ -12,8 +12,8 @@ for( var i = 0; i < original_data.dimensions.length; i++ ) {
     var curDim = this_dim.hasOwnProperty('dimension')?this_dim.dimension:Math.PI;
     var spawns = this_dim.ores;
     for( var j = 0; j < spawns.length; j++ ) {
-	let dimBlock = { "includes": [ curDim ] };
-	if( curDim == Math.PI ) dimBlock = { "excludes": [ -1, 1 ] };
+	let dimBlock = [ curDim ];
+	if( curDim == Math.PI ) dimBlock = [];
 	var ns = { "retrogen": false, "enabled": true, "feature": spawns[j].feature, "replaces": spawns[j].replace_block, "dimensions": dimBlock , "biomes": { "excludes": [] }, "parameters": spawns[j].parameters };
 	var block = { "name": spawns[j].block, "chance": 100 };
 	if( spawns[j].hasOwnProperty('metaData') ) {
