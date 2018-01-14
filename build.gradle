@@ -186,7 +186,7 @@ repositories {
     maven { // Storage Drawers
         name 'thiakil'
         url 'http://maven.thiakil.com/'
-    }
+    }   
 }
 
 dependencies {
@@ -198,8 +198,6 @@ dependencies {
         exclude module: "Chameleon" // mek only uses the storage drawers API, which doesn't need Chameleon
         exclude module: "jei_1.11.2"
         exclude module: "Hwyla"
-	// temporary hack
-	exclude group: "net.darkhax.tesla"
     }
 
     deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
@@ -243,6 +241,10 @@ dependencies {
     // CoFHCore for TE integration
     deobfCompile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
     	exclude group: 'mezz.jei'
+    }
+    
+    deobfCompile ("com.blamejared:MTLib:3.0.1.+" ) {
+        exclude group: 'mezz.jei'
     }
 }
 
