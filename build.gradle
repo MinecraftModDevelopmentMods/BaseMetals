@@ -408,9 +408,9 @@ String getVersion(String type, String mod_file) {
         	interesting = interesting.substring(1, interesting.length() - 2)
             String[] pts = interesting.trim().split("\\.")
 
-            major = nvl( pts[0], '0' )
-            revision = nvl( pts[1], '0' )
-            patch = nvl( pts[2], '0' )
+            major = pts[0] ?: '0'
+            revision = pts[1] ?: '0'
+            patch = pts[2] ?: '0'
         }
     }
     return "$major.$revision.$patch"
