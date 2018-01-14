@@ -21,10 +21,12 @@
 				"minHeight": 0,
 				"maxHeight": 128
 			},
-			"block": {
-				"name": "basemetals:coldiron_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:coldiron_ore",
+					"chance": 100
+				}
+			]
 		},
 		"adamantine_ore": {
 			"retrogen": false,
@@ -46,10 +48,12 @@
 				"minHeight": 0,
 				"maxHeight": 128
 			},
-			"block": {
-				"name": "basemetals:adamantine_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:adamantine_ore",
+					"chance": 100
+				}
+			]
 		},
 		"starsteel_ore": {
 			"retrogen": false,
@@ -71,10 +75,12 @@
 				"minHeight": 0,
 				"maxHeight": 255
 			},
-			"block": {
-				"name": "basemetals:starsteel_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:starsteel_ore",
+					"chance": 100
+				}
+			]
 		},
 		"copper_ore": {
 			"retrogen": false,
@@ -97,10 +103,12 @@
 				"minHeight": 0,
 				"maxHeight": 96
 			},
-			"block": {
-				"name": "basemetals:copper_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:copper_ore",
+					"chance": 100
+				}
+			]
 		},
 		"silver_ore": {
 			"retrogen": false,
@@ -123,10 +131,12 @@
 				"minHeight": 0,
 				"maxHeight": 32
 			},
-			"block": {
-				"name": "basemetals:silver_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:silver_ore",
+					"chance": 100
+				}
+			]
 		},
 		"tin_ore": {
 			"retrogen": false,
@@ -149,10 +159,12 @@
 				"minHeight": 0,
 				"maxHeight": 128
 			},
-			"block": {
-				"name": "basemetals:tin_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:tin_ore",
+					"chance": 100
+				}
+			]
 		},
 		"lead_ore": {
 			"retrogen": false,
@@ -175,10 +187,12 @@
 				"minHeight": 0,
 				"maxHeight": 64
 			},
-			"block": {
-				"name": "basemetals:lead_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:lead_ore",
+					"chance": 100
+				}
+			]
 		},
 		"zinc_ore": {
 			"retrogen": false,
@@ -201,10 +215,12 @@
 				"minHeight": 0,
 				"maxHeight": 96
 			},
-			"block": {
-				"name": "basemetals:zinc_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:zinc_ore",
+					"chance": 100
+				}
+			]
 		},
 		"mercury_ore": {
 			"retrogen": false,
@@ -227,10 +243,12 @@
 				"minHeight": 0,
 				"maxHeight": 32
 			},
-			"block": {
-				"name": "basemetals:mercury_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:mercury_ore",
+					"chance": 100
+				}
+			]
 		},
 		"nickel_ore": {
 			"retrogen": false,
@@ -253,10 +271,12 @@
 				"minHeight": 32,
 				"maxHeight": 96
 			},
-			"block": {
-				"name": "basemetals:nickel_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:nickel_ore",
+					"chance": 100
+				}
+			]
 		},
 		"platinum_ore": {
 			"retrogen": false,
@@ -279,10 +299,12 @@
 				"minHeight": 1,
 				"maxHeight": 32
 			},
-			"block": {
-				"name": "basemetals:platinum_ore",
-				"chance": 100
-			}
+			"blocks": [
+				{
+					"name": "basemetals:platinum_ore",
+					"chance": 100
+				}
+			]
 		}
 	}
 }

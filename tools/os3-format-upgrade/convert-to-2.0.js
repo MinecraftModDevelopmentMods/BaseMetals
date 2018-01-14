@@ -15,13 +15,14 @@ for( var i = 0; i < original_data.dimensions.length; i++ ) {
 	let dimBlock = { "includes": [ curDim ] };
 	if( curDim == Math.PI ) dimBlock = { "excludes": [ -1, 1 ] };
 	var ns = { "retrogen": false, "enabled": true, "feature": spawns[j].feature, "replaces": spawns[j].replace_block, "dimensions": dimBlock , "biomes": { "excludes": [] }, "parameters": spawns[j].parameters };
-	ns.block = { "name": spawns[j].block, "chance": 100 };
+	var block = { "name": spawns[j].block, "chance": 100 };
 	if( spawns[j].hasOwnProperty('metaData') ) {
-	    ns.block.metaData = spawns[j].metaData;
+	    block.metaData = spawns[j].metaData;
 	} else if( spawns[j].hasOwnProperty('state') ) {
-	    ns.block.state = spawns[j].state;
+	    block.state = spawns[j].state;
 	}
-	var name = spawns[j].block.split(":")[1];
+	var name = block.name.split(":")[1];
+	ns.blocks = [ block ];
 	new_data.spawns[name] = ns;
     }
 }
