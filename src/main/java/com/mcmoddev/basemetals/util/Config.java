@@ -81,7 +81,7 @@ public class Config extends ConfigBase {
 				"If false, then Base Metals will not try and integrate with Mekanism"));
 		Options.modEnabled("thaumcraft", configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Thaumcraft"));
-		Options.modEnabled("tinkersconstruct", configuration.getBoolean("tinkers_construct_integration",
+		Options.modEnabled("tconstruct", configuration.getBoolean("tinkers_construct_integration",
 				INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Tinkers Construct"));
 		Options.modEnabled("veinminer", configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with VeinMiner"));
