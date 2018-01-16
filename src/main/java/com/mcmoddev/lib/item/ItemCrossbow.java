@@ -104,8 +104,8 @@ public class ItemCrossbow extends ItemBow {
 	}
 
 	private ItemStack getBolt() {
-		for( MMDMaterial material : Materials.getAllMaterials() ) {
-			if( material.hasItem(Names.BOLT))
+		for (MMDMaterial material : Materials.getAllMaterials()) {
+			if (material.hasItem(Names.BOLT))
 				return new ItemStack(material.getItem(Names.BOLT));
 		}
 		return null;
