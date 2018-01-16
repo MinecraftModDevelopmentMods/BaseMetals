@@ -14,7 +14,6 @@ import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -29,7 +28,6 @@ import net.minecraft.item.ItemStack;
 public class Items extends com.mcmoddev.lib.init.Items {
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs = ItemGroups.myTabs;
 
 	protected Items() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -43,24 +41,14 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			return;
 		}
 
-		myTabs = ItemGroups.myTabs;
-
 		com.mcmoddev.basemetals.util.Config.init();
 		Blocks.init();
 		com.mcmoddev.lib.init.Items.init();
 
-		// create and register vanilla stuffs
-		Map<String, MMDMaterial> vanillaMats = new HashMap<>();
-
-		List<String> vanillaMatNames = Arrays.asList(MaterialNames.CHARCOAL, MaterialNames.COAL, MaterialNames.DIAMOND,
-				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON, MaterialNames.LAPIS,
-				MaterialNames.OBSIDIAN, MaterialNames.QUARTZ, MaterialNames.REDSTONE, MaterialNames.STONE,
-				MaterialNames.WOOD);
-
-		vanillaMatNames.forEach(name -> vanillaMats.put(name, Materials.getMaterialByName(name)));
-
-		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT,	new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
-		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT,	new ItemStack(net.minecraft.init.Items.COAL, 1, 0).getItem());
+		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
+		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 0).getItem());
 
 		addDiamondBits();
 		addGoldBits();
@@ -69,30 +57,29 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		addWoodBits();
 
 		Materials.getMaterialByName(MaterialNames.EMERALD).addNewItem(Names.INGOT, net.minecraft.init.Items.EMERALD);
-		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItem(Names.POWDER, new ItemStack(net.minecraft.init.Items.DYE, 1, 4).getItem());
+//		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItem(Names.POWDER, new ItemStack(net.minecraft.init.Items.DYE, 1, 4).getItem());
 		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT, net.minecraft.init.Items.QUARTZ);
 		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER, net.minecraft.init.Items.REDSTONE);
 
 		doSpecialMats();
 
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
+				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.EMERALD,
+				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.OBSIDIAN,
+				MaterialNames.MITHRIL, MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
+				MaterialNames.QUARTZ, MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
+				MaterialNames.TIN, MaterialNames.ZINC);
+
 		// create and register modded stuffs
-		List<String> matsModSupport = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+		final List<String> materialsModSupport = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
 				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 
-		List<String> myModMats = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY, MaterialNames.AQUARIUM,
-				MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
-				MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.EMERALD, MaterialNames.ELECTRUM,
-				MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.OBSIDIAN, MaterialNames.MITHRIL,
-				MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.QUARTZ,
-				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
-				MaterialNames.ZINC);
-
-		myModMats.stream()
-				.filter(Materials::hasMaterial)
-				.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-				.forEach(name -> {
-					final MMDMaterial material = Materials.getMaterialByName(name);
+		materials.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.forEach(materialName -> {
+					final MMDMaterial material = Materials.getMaterialByName(materialName);
 
 					create(Names.BLEND, material);
 					create(Names.INGOT, material);
@@ -119,17 +106,17 @@ public class Items extends com.mcmoddev.lib.init.Items {
 					create(Names.SHEARS, material);
 					create(Names.SHIELD, material);
 					create(Names.SHOVEL, material);
+					create(Names.SCYTHE, material);
 					create(Names.SLAB, material);
 					create(Names.SWORD, material);
 					create(Names.ROD, material);
 					create(Names.GEAR, material);
 				});
 
-		matsModSupport.stream()
-				.filter(Materials::hasMaterial)
-				.filter(name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-				.forEach(name -> {
-					final MMDMaterial material = Materials.getMaterialByName(name);
+		materialsModSupport.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.forEach(materialName -> {
+					final MMDMaterial material = Materials.getMaterialByName(materialName);
 
 					create(Names.CASING, material);
 					create(Names.DENSE_PLATE, material);
@@ -138,7 +125,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 						create(Names.CRUSHED, material);
 						create(Names.CRUSHED_PURIFIED, material);
 
-						createMekCrystal(material, myTabs.itemsTab);
+						createMekCrystal(material, ItemGroups.myTabs.itemsTab);
 						create(Names.SHARD, material);
 						create(Names.CLUMP, material);
 						create(Names.POWDER_DIRTY, material);
@@ -154,6 +141,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.POWDER, mercury);
 			create(Names.SMALLPOWDER, mercury);
 		}
+
+		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
+				.filter(Materials::hasMaterial)
+				.forEach(materialName -> create(Names.ANVIL, Materials.getMaterialByName(materialName)));
 
 		addToMetList();
 
@@ -248,6 +239,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.SLAB, diamond);
 			create(Names.ROD, diamond);
 			create(Names.GEAR, diamond);
+			create(Names.SCYTHE, diamond);
 		}
 	}
 
@@ -285,6 +277,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.SLAB, gold);
 			create(Names.ROD, gold);
 			create(Names.GEAR, gold);
+			create(Names.SCYTHE, gold);
 		}
 	}
 
@@ -304,7 +297,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
 		iron.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
 		iron.addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
-		// iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
+		//iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
@@ -337,6 +330,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.SWORD, iron);
 			create(Names.ROD, iron);
 			create(Names.GEAR, iron);
+			create(Names.SCYTHE, iron);
 		}
 	}
 
@@ -357,6 +351,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.CRACKHAMMER, stone);
 			create(Names.ROD, stone);
 			create(Names.GEAR, stone);
+			create(Names.SCYTHE, stone);
 		}
 	}
 
@@ -381,6 +376,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		if (Materials.hasMaterial(MaterialNames.WOOD)) {
 			create(Names.CRACKHAMMER, wood);
 			create(Names.GEAR, wood);
+			create(Names.SCYTHE, wood);
 		}
 	}
 
@@ -388,11 +384,13 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		CreativeTabs tab;
 
 		if ((name.equals(Names.DOOR)) || (name.equals(Names.SLAB))) {
-			tab = myTabs.blocksTab;
-		} else if ((name.equals(Names.BLEND)) || (name.equals(Names.INGOT)) || (name.equals(Names.NUGGET)) || (name.equals(Names.POWDER)) || (name.equals(Names.SMALLBLEND)) || (name.equals(Names.SMALLPOWDER)) || (name.equals(Names.ROD)) || (name.equals(Names.GEAR))) {
-			tab = myTabs.itemsTab;
+			tab = ItemGroups.myTabs.blocksTab;
+		} else if ((name.equals(Names.BLEND)) || (name.equals(Names.INGOT)) || (name.equals(Names.NUGGET))
+				|| (name.equals(Names.POWDER)) || (name.equals(Names.SMALLBLEND)) || (name.equals(Names.SMALLPOWDER))
+				|| (name.equals(Names.ROD)) || (name.equals(Names.GEAR))) {
+			tab = ItemGroups.myTabs.itemsTab;
 		} else {
-			tab = myTabs.toolsTab;
+			tab = ItemGroups.myTabs.toolsTab;
 		}
 
 		return create(name, material, tab);

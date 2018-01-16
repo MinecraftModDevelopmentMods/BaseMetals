@@ -15,8 +15,10 @@ import com.mcmoddev.lib.data.Names;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 // import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
@@ -212,8 +214,9 @@ public class MMDMaterial {
 	 * 
 	 * @return XP value per ore block
 	 */
-	public float getOreSmeltXP() {
-		return 0.1f * this.stats.get(MaterialStats.MAGICAFFINITY);
+	public final float getOreSmeltXP() {
+		float val = 0.1f * this.stats.get(MaterialStats.MAGICAFFINITY);
+		return Float.max(0.1f, val);
 	}
 
 	/**
@@ -441,6 +444,18 @@ public class MMDMaterial {
 		return this;
 	}
 
+	public MMDMaterial addNewItemFromItemStack(Names name, ItemStack itemStack) {
+		addNewItemFromItemStack(name.toString(), itemStack);
+		return this;
+	}
+
+	public MMDMaterial addNewItemFromItemStack(String name, ItemStack itemStack) {
+		if (!(itemStack == ItemStack.EMPTY)) {
+			addNewItem(name, itemStack.getItem());
+		}
+		return this;
+	}
+
 	/**
 	 * Adds a new block to the list of known items made from this material
 	 * 
@@ -475,6 +490,20 @@ public class MMDMaterial {
 		return this;
 	}
 
+	public MMDMaterial addNewBlockFromItemStack(Names name, ItemStack itemStack) {
+		addNewBlockFromItemStack(name.toString(), itemStack);
+		return this;
+	}
+
+	public MMDMaterial addNewBlockFromItemStack(String name, ItemStack itemStack) {
+		final Item item = itemStack.getItem();
+		final Block block = Block.getBlockFromItem(item);
+		if (!(block == Blocks.AIR)) {
+			addNewBlock(name, block);
+		}
+		return this;
+	}
+
 	/**
 	 * Get the item with name 'name' if it exists, null is returned if the item
 	 * does not exist
@@ -504,6 +533,22 @@ public class MMDMaterial {
 		return null;
 	}
 
+	public ItemStack getItemStack(Names name) {
+		return getItemStack(name.toString(), 1);
+	}
+
+	public ItemStack getItemStack(String name) {
+		return new ItemStack(getItem(name), 1);
+	}
+
+	public ItemStack getItemStack(Names name, int amount) {
+		return getItemStack(name.toString(), amount);
+	}
+
+	public ItemStack getItemStack(String name, int amount) {
+		return new ItemStack(getItem(name), amount);
+	}
+
 	/**
 	 * Get the block with name 'name' if it exists, null is returned if the
 	 * block does not exist
@@ -531,6 +576,22 @@ public class MMDMaterial {
 			return this.blocks.get(name);
 		}
 		return null;
+	}
+
+	public ItemStack getBlockItemStack(Names name) {
+		return this.getBlockItemStack(name.toString(), 1);
+	}
+
+	public ItemStack getBlockItemStack(String name) {
+		return new ItemStack(getBlock(name), 1);
+	}
+
+	public ItemStack getBlockItemStack(Names name, int amount) {
+		return this.getBlockItemStack(name.toString(), amount);
+	}
+
+	public ItemStack getBlockItemStack(String name, int amount) {
+		return new ItemStack(getBlock(name), amount);
 	}
 
 	/**

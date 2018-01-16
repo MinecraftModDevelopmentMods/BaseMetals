@@ -109,6 +109,7 @@ public abstract class Items {
 		addItemType(Names.SHEARS, ItemMMDShears.class, Options.isThingEnabled("Shears"), null);
 		addItemType(Names.SHIELD, ItemMMDShield.class, Options.isThingEnabled("Shield"), Oredicts.SHIELD);
 		addItemType(Names.SHOVEL, ItemMMDShovel.class, Options.isThingEnabled(basicTools), null);
+		addItemType(Names.SCYTHE, ItemMMDSickle.class, Options.isThingEnabled("Sickle"), null);
 		addItemType(Names.SLAB, ItemMMDSlab.class, Options.isThingEnabled("Slab"), Oredicts.SLAB);
 		addItemType(Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.isThingEnabled(smallDust), Oredicts.DUST_TINY);
 		addItemType(Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.isThingEnabled(smallDust), Oredicts.DUST_TINY);
@@ -157,6 +158,7 @@ public abstract class Items {
 		classSortingValues.put(ItemMMDCrackHammer.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDPickaxe.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDShovel.class, ++ss * 10000);
+		classSortingValues.put(ItemMMDSickle.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDAxe.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDHoe.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDSword.class, ++ss * 10000);
@@ -195,6 +197,7 @@ public abstract class Items {
 		}
 	}
 
+	@Deprecated
 	protected static void createItemsBasic(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsBasic(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -204,9 +207,9 @@ public abstract class Items {
 	 * @param material
 	 *            The material base of these items
 	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be
-	 *            on
+	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
+	@Deprecated
 	protected static void createItemsBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		create(Names.BLEND, material, tabs.itemsTab);
 		create(Names.INGOT, material, tabs.itemsTab);
@@ -216,10 +219,12 @@ public abstract class Items {
 		create(Names.SMALLPOWDER, material, tabs.itemsTab);
 	}
 
+	@Deprecated
 	protected static void createItemsAdditional(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsAdditional(Materials.getMaterialByName(materialName), tabs);
 	}
 
+	@Deprecated
 	protected static void createItemsAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		create(Names.ARROW, material, tabs.toolsTab);
 		create(Names.AXE, material, tabs.toolsTab);
@@ -241,10 +246,12 @@ public abstract class Items {
 		create(Names.SHOVEL, material, tabs.toolsTab);
 		create(Names.SLAB, material, tabs.blocksTab);
 		create(Names.SWORD, material, tabs.toolsTab);
+		create(Names.SCYTHE, material, tabs.toolsTab);
 		create(Names.ROD, material, tabs.itemsTab);
 		create(Names.GEAR, material, tabs.itemsTab);
 	}
 
+	@Deprecated
 	protected static void createItemsFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsFull(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -254,14 +261,15 @@ public abstract class Items {
 	 * @param material
 	 *            The material base of these items
 	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be
-	 *            on
+	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
+	@Deprecated
 	protected static void createItemsFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		createItemsBasic(material, tabs);
 		createItemsAdditional(material, tabs);
 	}
 
+	@Deprecated
 	protected static void createItemsModSupport(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsModSupport(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -271,9 +279,9 @@ public abstract class Items {
 	 * @param material
 	 *            The material base of these items
 	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be
-	 *            on
+	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
+	@Deprecated
 	protected static void createItemsModSupport(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		if (Options.enableModderSupportThings()) {
 			create(Names.CASING, material, tabs.itemsTab);
@@ -284,6 +292,7 @@ public abstract class Items {
 		createItemsModIC2(material, tabs);
 	}
 
+	@Deprecated
 	protected static void createItemsModIC2(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsModIC2(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -293,9 +302,9 @@ public abstract class Items {
 	 * @param material
 	 *            The material base of these items
 	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be
-	 *            on
+	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
+	@Deprecated
 	protected static void createItemsModIC2(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 
 		if (material.hasOre()) {
@@ -304,6 +313,7 @@ public abstract class Items {
 		}
 	}
 
+	@Deprecated
 	protected static void createItemsModMekanism(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createItemsModMekanism(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -313,10 +323,11 @@ public abstract class Items {
 	 * @param material
 	 *            The material base of these items
 	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be
-	 *            on
+	 *            TabContainer covering the various CreativeTabs items might be on
 	 */
-	protected static void createItemsModMekanism(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
+	@Deprecated
+	protected static void createItemsModMekanism(@Nonnull final MMDMaterial material,
+			@Nonnull final TabContainer tabs) {
 		if (material.hasOre()) {
 			createMekCrystal(material, tabs.itemsTab);
 			create(Names.SHARD, material, tabs.itemsTab);
@@ -326,7 +337,8 @@ public abstract class Items {
 		}
 	}
 
-	protected static Item create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
+	protected static Item create(@Nonnull final Names name, @Nonnull final String materialName,
+			final CreativeTabs tab) {
 		return create(name, Materials.getMaterialByName(materialName), tab);
 	}
 
@@ -340,7 +352,8 @@ public abstract class Items {
 	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
-	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
+	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material,
+			final CreativeTabs tab) {
 		if (sanityCheck(name, material)) {
 			return null;
 		}
@@ -362,7 +375,7 @@ public abstract class Items {
 	}
 
 	private static boolean sanityCheck(Names name, MMDMaterial material) {
-		return ((material == null) || (name == null) || isWrongThingToMake( name, material));
+		return ((material == null) || (name == null) || isWrongThingToMake(name, material));
 	}
 
 	private static void setupOredict(Item item, String oredict, Names name, MMDMaterial material) {
@@ -385,12 +398,13 @@ public abstract class Items {
 	private static boolean isWrongThingToMake(Names name, MMDMaterial material) {
 		return ((((name.equals(Names.BLEND)) || (name.equals(Names.SMALLBLEND))) && (!material.hasBlend()))
 				|| (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL)))
-				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR)))
-				|| (name.equals(Names.SLAB) && (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB)))));
+				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR))) || (name.equals(Names.SLAB)
+						&& (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB)))));
 	}
 
 	private static boolean isArmor(Names name) {
-		return 	((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS)) || (name.equals(Names.BOOTS)));
+		return ((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS))
+				|| (name.equals(Names.BOOTS)));
 	}
 
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final Names name, final CreativeTabs tab) {
@@ -413,7 +427,8 @@ public abstract class Items {
 	 *            which creative tab it is in
 	 * @return the item that was added
 	 */
-	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
+	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final MMDMaterial material,
+			final CreativeTabs tab) {
 		String fullName;
 		if (material != null) {
 			if (material.hasItem(name)) {
@@ -441,7 +456,8 @@ public abstract class Items {
 		return item;
 	}
 
-	private static Item createItem(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Item> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {
+	private static Item createItem(@Nonnull final MMDMaterial material, @Nonnull final String name,
+			@Nonnull final Class<? extends Item> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {
 		if (material.hasItem(name)) {
 			return material.getItem(name);
 		}
@@ -453,7 +469,7 @@ public abstract class Items {
 			try {
 				ctor = clazz.getConstructor(material.getClass());
 			} catch (NoSuchMethodException | SecurityException ex) {
-				BaseMetals.logger.error("Class for Item named " + name + " does not have the correct constructor", ex);
+				BaseMetals.logger.error("Class for Item named %s does not have the correct constructor", name, ex);
 				return null;
 			}
 
@@ -461,10 +477,12 @@ public abstract class Items {
 				inst = (Item) ctor.newInstance(material);
 			} catch (IllegalAccessException | IllegalArgumentException | InstantiationException
 					| InvocationTargetException | ExceptionInInitializerError ex) {
-				BaseMetals.logger.error("Unable to create new instance of Item class for item name " + name + " of material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error("Unable to create new instance of Item class for item name %s of material %s",
+						name, material.getCapitalizedName(), ex);
 				return null;
 			} catch (Exception ex) {
-				BaseMetals.logger.error("Unable to create Item named " + name + " for material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.error("Unable to create Item named %s for material %s", name,
+						material.getCapitalizedName(), ex);
 				return null;
 			}
 
@@ -477,7 +495,8 @@ public abstract class Items {
 		return null;
 	}
 
-	private static Item createArmorItem(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
+	private static Item createArmorItem(@Nonnull final Names name, @Nonnull final MMDMaterial material,
+			final CreativeTabs tab) {
 		if (!(isNameEnabled(name))) {
 			return null;
 		}
@@ -488,19 +507,19 @@ public abstract class Items {
 
 		Item item = null;
 		switch (name) {
-			case HELMET:
-				item = ItemMMDArmor.createHelmet(material);
-				break;
-			case CHESTPLATE:
-				item = ItemMMDArmor.createChestplate(material);
-				break;
-			case LEGGINGS:
-				item = ItemMMDArmor.createLeggings(material);
-				break;
-			case BOOTS:
-				item = ItemMMDArmor.createBoots(material);
-				break;
-			default:
+		case HELMET:
+			item = ItemMMDArmor.createHelmet(material);
+			break;
+		case CHESTPLATE:
+			item = ItemMMDArmor.createChestplate(material);
+			break;
+		case LEGGINGS:
+			item = ItemMMDArmor.createLeggings(material);
+			break;
+		case BOOTS:
+			item = ItemMMDArmor.createBoots(material);
+			break;
+		default:
 		}
 
 		if (item == null) {
@@ -541,7 +560,8 @@ public abstract class Items {
 	 * @param itemClass
 	 *            The class to modify
 	 */
-	private static void expandCombatArrays(@Nonnull final Class<?> itemClass) throws IllegalAccessException, NoSuchFieldException {
+	private static void expandCombatArrays(@Nonnull final Class<?> itemClass)
+			throws IllegalAccessException, NoSuchFieldException {
 		// WARNING: this method contains black magic
 		final int expandedSize = 256;
 		final Field[] fields = itemClass.getDeclaredFields();
@@ -608,15 +628,17 @@ public abstract class Items {
 		return false;
 	}
 
-	protected static void addItemType(@Nonnull final Names name, @Nonnull final Class<? extends Item> clazz, @Nonnull final Boolean enabled) {
+	protected static void addItemType(@Nonnull final Names name, @Nonnull final Class<? extends Item> clazz,
+			@Nonnull final Boolean enabled) {
 		addItemType(name, clazz, enabled, null);
 	}
 
-	protected static void addItemType(@Nonnull final Names name, @Nonnull final Class<? extends Item> clazz, @Nonnull final Boolean enabled, final String oredict) {
+	protected static void addItemType(@Nonnull final Names name, @Nonnull final Class<? extends Item> clazz,
+			@Nonnull final Boolean enabled, final String oredict) {
 		if (!nameToClass.containsKey(name)) {
 			nameToClass.put(name, clazz);
 		}
-		
+
 		if (!nameToEnabled.containsKey(name)) {
 			nameToEnabled.put(name, enabled);
 		}
@@ -645,8 +667,7 @@ public abstract class Items {
 	 *
 	 * @param item
 	 *            The item in question
-	 * @return The name of the item, or null if the item is not a Base Metals
-	 *         item.
+	 * @return The name of the item, or null if the item is not a Base Metals item.
 	 */
 	public static String getNameOfItem(@Nonnull final Item item) {
 		return itemRegistry.inverse().get(item);

@@ -143,10 +143,12 @@ public abstract class VillagerTrades {
 			}
 			if (material.hasItem(Names.INGOT)) {
 				final Item item = material.getItem(Names.INGOT);
-				final ITradeList[] ingotTrades = makeTradePalette(makePurchasePalette(emeraldPurch, 12, item), makeSalePalette(emeraldSale, 12, item));
-				VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, tradeLevel, ingotTrades);
-				VillagerTradeHelper.insertTrades(SMITH_RL, WEAPON_SMITH_ID, tradeLevel, ingotTrades);
-				VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, tradeLevel, ingotTrades);
+				if ((!item.equals(net.minecraft.init.Items.EMERALD)) && (!item.equals(net.minecraft.init.Items.DIAMOND))) {
+					final ITradeList[] ingotTrades = makeTradePalette(makePurchasePalette(emeraldPurch, 12, item), makeSalePalette(emeraldSale, 12, item));
+					VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, tradeLevel, ingotTrades);
+					VillagerTradeHelper.insertTrades(SMITH_RL, WEAPON_SMITH_ID, tradeLevel, ingotTrades);
+					VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, tradeLevel, ingotTrades);
+				}
 			}
 		}
 

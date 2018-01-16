@@ -4,10 +4,18 @@ import java.util.HashSet;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.init.*;
+import com.mcmoddev.basemetals.init.Achievements;
+import com.mcmoddev.basemetals.init.Blocks;
+import com.mcmoddev.basemetals.init.Fluids;
+import com.mcmoddev.basemetals.init.ItemGroups;
+import com.mcmoddev.basemetals.init.Items;
+import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.basemetals.init.Recipes;
+import com.mcmoddev.basemetals.init.VillagerTrades;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -37,18 +45,19 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 public class CommonProxy {
 
 	public boolean allsGood = false;
-	
+
 	public void preInit(FMLPreInitializationEvent event) {
 
 		Config.init();
 
-		if ((Options.requireMMDOreSpawn()) && (!Loader.isModLoaded("orespawn"))) {
-			if(Options.fallbackOrespawn()) {
+		if ((Options.requireMMDOreSpawn()) && (!Loader.isModLoaded(SharedStrings.ORESPAWN_MODID))) {
+			if (Options.fallbackOrespawn()) {
 				GameRegistry.registerWorldGenerator(new FallbackGenerator(), 0);
 			} else {
 				final HashSet<ArtifactVersion> orespawnMod = new HashSet<>();
-				orespawnMod.add(new DefaultArtifactVersion("3.2.0"));
-				throw new MissingModsException(orespawnMod, "orespawn", "MMD Ore Spawn Mod (fallback generator disabled, MMD OreSpawn enabled)");
+				orespawnMod.add(new DefaultArtifactVersion(SharedStrings.ORESPAWN_VERSION));
+				throw new MissingModsException(orespawnMod, SharedStrings.ORESPAWN_MODID,
+						SharedStrings.ORESPAWN_MISSING_TEXT);
 			}
 		}
 
@@ -96,17 +105,20 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		allsGood = true;
 
-		// by this point all materials should have been registered both with MMDLib and Minecraft
-		// move to a separate function - potentially in FallbackGeneratorData - after the test
-		for (MMDMaterial mat : Materials.getAllMaterials()) {
-			if (mat.hasBlock(Names.ORE)){
-				FallbackGeneratorData.getInstance().addMaterial(mat.getName(), Names.ORE.toString(), mat.getDefaultDimension());
+		// by this point all materials should have been registered both with MMDLib and
+		// Minecraft
+		// move to a separate function - potentially in FallbackGeneratorData - after
+		// the test
+		for (final MMDMaterial material : Materials.getAllMaterials()) {
+			if (material.hasBlock(Names.ORE)) {
+				FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ORE.toString(),
+						material.getDefaultDimension());
 
-				if (mat.hasBlock(Names.NETHERORE))
-					FallbackGeneratorData.getInstance().addMaterial(mat.getName(), Names.NETHERORE.toString(), -1);
+				if (material.hasBlock(Names.NETHERORE))
+					FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.NETHERORE.toString(), -1);
 
-				if (mat.hasBlock(Names.ENDORE))
-					FallbackGeneratorData.getInstance().addMaterial(mat.getName(), Names.ENDORE.toString(), 1);
+				if (material.hasBlock(Names.ENDORE))
+					FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ENDORE.toString(), 1);
 			}
 		}
 	}

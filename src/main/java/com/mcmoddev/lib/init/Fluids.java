@@ -16,8 +16,8 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -37,16 +37,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public abstract class Fluids {
 
-	// static {
-	// FluidRegistry.enableUniversalBucket();
-	// }
-
 	private static boolean initDone = false;
 
 	private static final BiMap<String, Fluid> fluidRegistry = HashBiMap.create();
 	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create();
-
-	private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
 
 	protected Fluids() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -113,7 +107,7 @@ public abstract class Fluids {
 		} else {
 			block = new InteractiveFluidBlock(getFluidByName(name), false, (World w, EntityLivingBase e) -> {
 				if (w.rand.nextInt(32) == 0) {
-					e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
+					e.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 30 * 20, 2));
 				}
 			});
 		}

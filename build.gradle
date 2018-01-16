@@ -35,7 +35,7 @@ repositories {
 	mavenLocal()
     mavenCentral()
 }
- 
+
 dependencies {
     testCompile('org.junit.jupiter:junit-jupiter-api:5.0.2')
     testCompile('org.mockito:mockito-core:2.12.0')
@@ -120,7 +120,6 @@ minecraft {
     version = '1.11.2-13.20.1.2386'
     runDir = 'run'
     mappings = 'stable_32'
-//  coreMod = corePlugin
     clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
     serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
 

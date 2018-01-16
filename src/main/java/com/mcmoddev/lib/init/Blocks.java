@@ -102,6 +102,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksBasic(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createBlocksBasic(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -113,6 +114,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 
 		create(Names.BLOCK, material, tabs.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
@@ -130,6 +132,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksAdditional(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createBlocksAdditional(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -141,6 +144,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		if (tabs == null) {
 			return;
@@ -162,6 +166,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
 		createBlocksFull(Materials.getMaterialByName(materialName), tabs);
 	}
@@ -173,6 +178,7 @@ public abstract class Blocks {
 	 * @param tabs
 	 *            Container of the CreativeTabs these will get registered in
 	 */
+	@Deprecated
 	protected static void createBlocksFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
 		createBlocksBasic(material, tabs);
 		createBlocksAdditional(material, tabs);
@@ -222,7 +228,7 @@ public abstract class Blocks {
 			return material.getBlock(name);
 		}
 
-		if ((((name.equals(Names.ANVIL)) || (name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE))
+		if (((/*(name.equals(Names.ANVIL)) || */(name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE))
 				|| (name.equals(Names.FLOWER_POT)) || (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS))
 				|| (name.equals(Names.TRIPWIRE_HOOK)) || (name.equals(Names.WALL)))
 				&& (!material.hasBlock(Names.BLOCK)))
@@ -339,14 +345,14 @@ public abstract class Blocks {
 			try {
 				ctor = clazz.getConstructor(material.getClass());
 			} catch (Exception ex) {
-				BaseMetals.logger.fatal("Class for Block named " + name + " does not have an accessible constructor or another exception occurred", ex);
+				BaseMetals.logger.fatal("Class for Block named %s does not have an accessible constructor or another exception occurred", name, ex);
 				return null;
 			}
 
 			try {
 				inst = (Block) ctor.newInstance(material);
 			} catch (Exception ex) {
-				BaseMetals.logger.fatal("Unable to create Block named " + name + " for material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.fatal("Unable to create Block named %s for material %s", name, material.getCapitalizedName(), ex);
 			}
 
 			if (inst != null) {

@@ -33,15 +33,10 @@ public class VillagerTradeHelper {
 	 * @param trades
 	 *            Trades to add to the given level
 	 */
-	public static void insertTrades(int professionID, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
+	public static void insertTrades(int professionID, int careerID, int tradeLevel,
+			EntityVillager.ITradeList... trades) {
 		final ResourceLocation profession = professionList[professionID];
 		insertTrades(profession, careerID, tradeLevel, trades);
-		/*
-        IForgeRegistry<VillagerProfession> registry = VillagerRegistry.instance().getRegistry();
-        VillagerProfession profession = registry.getValue(professionRL);
-		VillagerRegistry.VillagerCareer career = profession.getCareer(careerID);
-		career.addTrade(tradeLevel, trade);
-		*/
 	}
 
 	/**
@@ -56,7 +51,8 @@ public class VillagerTradeHelper {
 	 * @param trades
 	 *            Trades to add to the given level
 	 */
-	public static void insertTrades(String professionName, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
+	public static void insertTrades(String professionName, int careerID, int tradeLevel,
+			EntityVillager.ITradeList... trades) {
 		insertTrades(new ResourceLocation(professionName), careerID, tradeLevel, trades);
 	}
 
@@ -72,7 +68,8 @@ public class VillagerTradeHelper {
 	 * @param trades
 	 *            Trades to add to the given level
 	 */
-	public static void insertTrades(ResourceLocation professionRL, int careerID, int tradeLevel, EntityVillager.ITradeList... trades) {
+	public static void insertTrades(ResourceLocation professionRL, int careerID, int tradeLevel,
+			EntityVillager.ITradeList... trades) {
         IForgeRegistry<VillagerProfession> registry = VillagerRegistry.instance().getRegistry();
         VillagerProfession profession = registry.getValue(professionRL);
         VillagerCareer career = profession.getCareer(careerID);

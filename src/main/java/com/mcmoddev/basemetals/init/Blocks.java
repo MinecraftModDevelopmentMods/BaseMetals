@@ -1,6 +1,7 @@
 package com.mcmoddev.basemetals.init;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -10,7 +11,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
 
@@ -25,7 +25,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	public static Block humanDetector;
 
 	private static boolean initDone = false;
-	private static TabContainer myTabs;
 
 	protected Blocks() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -44,67 +43,46 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		Materials.init();
 		ItemGroups.init();
 
-		myTabs = ItemGroups.myTabs;
-
 		registerVanilla();
 
-		String[] simpleFullBlocks = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD,
-				MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER, MaterialNames.TIN,
-				MaterialNames.ZINC };
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
+				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM,
+				MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.MITHRIL, MaterialNames.NICKEL,
+				MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.SILVER, MaterialNames.STEEL,
+				MaterialNames.TIN, MaterialNames.ZINC);
 
-		String[] alloyFullBlocks = new String[] { MaterialNames.AQUARIUM, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
-				MaterialNames.PEWTER, MaterialNames.STEEL };
+		materials.stream().filter(Materials::hasMaterial).forEach(materialName -> {
+			final MMDMaterial material = Materials.getMaterialByName(materialName);
 
-		Arrays.stream(simpleFullBlocks)
-				.filter(Materials::hasMaterial)
-				.forEach(name -> {
-					final MMDMaterial material = Materials.getMaterialByName(name);
+			create(Names.BLOCK, material);
+			create(Names.PLATE, material);
+			create(Names.ORE, material);
+			create(Names.BARS, material);
+			create(Names.DOOR, material);
+			create(Names.TRAPDOOR, material);
 
-					create(Names.BLOCK, material);
-					create(Names.PLATE, material);
-					create(Names.ORE, material);
-					create(Names.BARS, material);
-					create(Names.DOOR, material);
-					create(Names.TRAPDOOR, material);
-
-					create(Names.BUTTON, material);
-					create(Names.SLAB, material);
-					create(Names.DOUBLE_SLAB, material);
-					create(Names.LEVER, material);
-					create(Names.PRESSURE_PLATE, material);
-					create(Names.STAIRS, material);
-					create(Names.WALL, material);
-				});
-
-		Arrays.stream(alloyFullBlocks)
-				.filter(Materials::hasMaterial)
-				.forEach(name -> {
-					final MMDMaterial material = Materials.getMaterialByName(name);
-
-					create(Names.BLOCK, material);
-					create(Names.PLATE, material);
-					create(Names.ORE, material);
-					create(Names.BARS, material);
-					create(Names.DOOR, material);
-					create(Names.TRAPDOOR, material);
-
-					create(Names.BUTTON, material);
-					create(Names.SLAB, material);
-					create(Names.DOUBLE_SLAB, material);
-					create(Names.LEVER, material);
-					create(Names.PRESSURE_PLATE, material);
-					create(Names.STAIRS, material);
-					create(Names.WALL, material);
-				});
+			create(Names.BUTTON, material);
+			create(Names.SLAB, material);
+			create(Names.DOUBLE_SLAB, material);
+			create(Names.LEVER, material);
+			create(Names.PRESSURE_PLATE, material);
+			create(Names.STAIRS, material);
+			create(Names.WALL, material);
+		});
 
 		createStarSteel();
 		createMercury();
+		createAnvils();
 
-		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", myTabs.blocksTab);
+		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.myTabs.blocksTab);
 
 		initDone = true;
+	}
+
+	private static void createAnvils() {
+		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
+				.filter(Materials::hasMaterial).forEach(name -> create(Names.ANVIL, Materials.getMaterialByName(name)));
 	}
 
 	private static void createStarSteel() {
@@ -298,6 +276,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	}
 
 	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
-		return create(name, material, myTabs.blocksTab);
+		return create(name, material, ItemGroups.myTabs.blocksTab);
 	}
 }

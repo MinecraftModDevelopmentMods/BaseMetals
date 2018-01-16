@@ -200,6 +200,12 @@ public class ConfigBase {
 			strongHammers = bool;
 		}
 
+		private static boolean twoDustDrop = true;
+		
+		public static void setTwoDustDrop(boolean bool) {
+			twoDustDrop = bool;
+		}
+		
 		private static boolean autoDetectRecipes = true;
 
 		public static void setAutoDetectRecipes(boolean bool) {
@@ -252,6 +258,10 @@ public class ConfigBase {
 
 		public static boolean strongHammers() {
 			return strongHammers;
+		}
+
+		public static boolean twoDustDrop() {
+			return twoDustDrop;
 		}
 
 		public static boolean autoDetectRecipes() {
@@ -337,6 +347,7 @@ public class ConfigBase {
 			modEnabled.clear();
 			materialEnabled.clear();
 			thingEnabled.clear();
+			fluidEnabled.clear();
 		}
 
 		// INTEGRATION
@@ -387,6 +398,23 @@ public class ConfigBase {
 		public static void thingEnabled(String name, Boolean bool) {
 			if (!thingEnabled.containsKey(name)) {
 				thingEnabled.put(name.toLowerCase(Locale.ROOT), bool);
+			}
+		}
+
+		// FLUIDS
+		private static final Map<String, Boolean> fluidEnabled = new HashMap<>();
+		
+		public static boolean isFluidEnabled(String name) {
+			String testName = name.toLowerCase(Locale.ROOT);
+			if( fluidEnabled.containsKey(testName) ) {
+				return fluidEnabled.get(testName);
+			}
+			return false;
+		}
+		
+		public static void fluidEnabled(String name, Boolean bool) {
+			if( !fluidEnabled.containsKey(name) ) {
+				fluidEnabled.put(name.toLowerCase(Locale.ROOT), bool);
 			}
 		}
 
