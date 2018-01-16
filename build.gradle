@@ -401,17 +401,19 @@ String getVersion(String type, String mod_file) {
     String major = '0'
     String revision = '0'
     String patch = '0'
-    String prefix = "public static final String $type = \""
     File file = file(mod_file)
+	def prefix = ~/^(?:public|protected|private) static final String $type = ".*$/
     file.eachLine { String s ->
-        s = s.trim()
-        if (s.startsWith(prefix)) {
-            s = s.substring(prefix.length(), s.length() - 2)
-            String[] pts = s.split("\\.")
+    	s = s.trim()
+        if (s ==~ prefix || prefix.matcher(s).matches()) {
+        	String[] bits = s.split("=")
+        	String interesting = bits[1].trim()
+        	interesting = interesting.substring(1, interesting.length() - 2)
+            String[] pts = interesting.trim().split("\\.")
 
-            major = pts[0]
-            revision = pts[1]
-            patch = pts[2]
+            major = pts[0] ?: '0'
+            revision = pts[1] ?: '0'
+            patch = pts[2] ?: '0'
         }
     }
     return "$major.$revision.$patch"
