@@ -19,7 +19,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	public final String materialName;
 	public final String itemName;
 	public final NonNullList<ItemStack> repairMaterials;
-	
+
 	public RepairRecipeBase(MMDMaterial material, String itemName, Object...objects) {
 		super(new ResourceLocation("armor"), new ItemStack(material.getItem(itemName)), objects);
 		this.material = material;

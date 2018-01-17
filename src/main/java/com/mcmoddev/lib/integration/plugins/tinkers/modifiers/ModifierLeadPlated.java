@@ -15,7 +15,7 @@ public class ModifierLeadPlated extends ModifierTrait implements IModifierDispla
 	public ModifierLeadPlated() {
 		super("lead-plated", 0xFFFFFF);
 		
-		addAspects( new ModifierAspect.MultiAspect(this, 0xFFFFFF, 1, 1, 0), ModifierAspect.freeModifier);
+		addAspects(new ModifierAspect.MultiAspect(this, 0xFFFFFF, 1, 1, 0), ModifierAspect.freeModifier);
 	}
 
 	@Override

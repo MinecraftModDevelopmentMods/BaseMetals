@@ -10,6 +10,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemMMDBlock extends ItemBlock implements IMMDObject {
+
 	private int burnTime = 0;
 	private MMDMaterial mmdMaterial;
 	
@@ -26,7 +27,7 @@ public class ItemMMDBlock extends ItemBlock implements IMMDObject {
 	public void setBurnTime(int burnTime) {
 		this.burnTime = burnTime;
 	}
-	
+
 	@Override
 	public int getItemBurnTime(@Nonnull ItemStack itemStack) {
 		return this.burnTime;

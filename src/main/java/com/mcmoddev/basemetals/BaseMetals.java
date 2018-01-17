@@ -61,7 +61,7 @@ public class BaseMetals {
 	 */
 	protected static final String VERSION = "2.5.0-beta4";
 
-	protected static final String UPDATEJSON = "https://raw.githubusercontent.com/MinecraftModDevelopmentMods/BaseMetals/master/update.json";
+	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL + "BaseMetals/master/update.json";
 
 	private static final String PROXY_BASE = SharedStrings.MMD_PROXY_GROUP + MODID + SharedStrings.DOT_PROXY_DOT;
 

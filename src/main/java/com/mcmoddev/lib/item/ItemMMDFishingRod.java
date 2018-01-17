@@ -38,7 +38,6 @@ public class ItemMMDFishingRod extends ItemFishingRod implements IMMDObject {
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 
-
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
 		final List<ItemStack> acceptableItems = OreDictionary.getOres(this.repairOreDictName);

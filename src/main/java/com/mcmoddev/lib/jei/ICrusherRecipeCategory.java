@@ -66,10 +66,10 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, @Nonnull ICrusherRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-		
+
 		// init the input slot
 		guiItemStacks.init(0, true, 40, 14);
-		
+
 		// init the output slot
 		guiItemStacks.init(1, false, 119, 14);
 
@@ -91,5 +91,4 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
 		return Collections.<String>emptyList();
 	}
-
 }

@@ -186,12 +186,12 @@ repositories {
     maven { // Storage Drawers
         name 'thiakil'
         url 'http://maven.thiakil.com/'
-    }   
+    }
 }
 
 dependencies {
-    compileOnly ("net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}" )
-    
+    compileOnly ("net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}")
+
     compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
@@ -242,8 +242,8 @@ dependencies {
     deobfCompile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
     	exclude group: 'mezz.jei'
     }
-    
-    deobfCompile ("com.blamejared:MTLib:3.0.1.+" ) {
+
+    deobfCompile ("com.blamejared:MTLib:3.0.1.+") {
         exclude group: 'mezz.jei'
     }
 }
@@ -399,11 +399,11 @@ String getVersion(String type, String mod_file) {
     String revision = '0'
     String patch = '0'
     File file = file(mod_file)
-	def p = ~/^(?:public|protected|private) static final String $type = ".*$/
+	def prefix = ~/^(?:public|protected|private) static final String $type = ".*$/
     file.eachLine { String s ->
     	s = s.trim()
-        if ( s ==~ p || p.matcher(s).matches() ) {
-        	String[] bits = s.split( "=" )
+        if (s ==~ prefix || prefix.matcher(s).matches()) {
+        	String[] bits = s.split("=")
         	String interesting = bits[1].trim()
         	interesting = interesting.substring(1, interesting.length() - 2)
             String[] pts = interesting.trim().split("\\.")

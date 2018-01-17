@@ -209,7 +209,7 @@ public class ConfigBase {
 		public static void setAutoDetectRecipes(boolean bool) {
 			autoDetectRecipes = bool;
 		}
-		
+
 		private static boolean requireMMDOreSpawn = true;
 
 		public static void setRequireMMDOreSpawn(boolean bool) {
@@ -261,7 +261,7 @@ public class ConfigBase {
 		public static boolean twoDustDrop() {
 			return twoDustDrop;
 		}
-		
+
 		public static boolean autoDetectRecipes() {
 			return autoDetectRecipes;
 		}
@@ -415,7 +415,7 @@ public class ConfigBase {
 				fluidEnabled.put(name.toLowerCase(Locale.ROOT), bool);
 			}
 		}
-		
+
 		private static int explosionChance = 0;
 
 		public static int explosionChance() {

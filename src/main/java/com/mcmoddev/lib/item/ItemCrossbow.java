@@ -44,7 +44,8 @@ public class ItemCrossbow extends ItemBow {
 			if ((itemstack != null) || flag) {
 				if (itemstack == null) {
 					itemstack = getBolt();
-					if( itemstack == null ) return; // if its still null at this point, there is something seriously wrong, just bug out
+					if (itemstack == null)
+						return; // if its still null at this point, there is something seriously wrong, just bug out
 				}
 
 				final float f = getArrowVelocity(i);
@@ -103,13 +104,13 @@ public class ItemCrossbow extends ItemBow {
 	}
 
 	private ItemStack getBolt() {
-		for( MMDMaterial mat : Materials.getAllMaterials() ) {
-			if( mat.hasItem(Names.BOLT) ) return new ItemStack( mat.getItem(Names.BOLT) );
+		for (MMDMaterial material : Materials.getAllMaterials()) {
+			if (material.hasItem(Names.BOLT))
+				return new ItemStack(material.getItem(Names.BOLT));
 		}
 		return null;
 	}
 
-	// Totally needed!
 	private ItemStack myFindAmmo(EntityPlayer player) {
 		if (this.isBolt(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
@@ -138,7 +139,6 @@ public class ItemCrossbow extends ItemBow {
 		return (stack != null) && (stack.getItem() instanceof ItemBolt);
 	}
 
-	// Actually needed... le sigh
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		final boolean flag = this.myFindAmmo(playerIn) != null;

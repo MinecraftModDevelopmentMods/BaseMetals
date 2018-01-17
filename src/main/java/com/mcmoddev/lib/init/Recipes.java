@@ -265,43 +265,43 @@ public abstract class Recipes {
 	private static void makeSimpleRecipes(@Nonnull final MMDMaterial material) {
 		if (material.hasBlock(Names.BLOCK)) {
 			if (material.hasItem(Names.SLAB)) {
-				GameRegistry.addSmelting(new ItemStack(material.getItem(Names.SLAB)),
+				GameRegistry.addSmelting(material.getItemStack(Names.SLAB),
 						material.getItemStack(Names.NUGGET, 4), 0); // you lose roughly half a nugget
 			}
 
 			if ((material.hasItem(Names.ROD)) && (material.hasItem(Names.LEVER))) {
-				GameRegistry.addSmelting(new ItemStack(material.getItem(Names.LEVER)),
+				GameRegistry.addSmelting(material.getItemStack(Names.LEVER),
 						material.getItemStack(Names.INGOT, 1), 0); // you lose the rod
 			}
 
 			if (material.hasBlock(Names.WALL)) {
-				GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.WALL)),
+				GameRegistry.addSmelting(material.getBlockItemStack(Names.WALL),
 						material.getBlockItemStack(Names.BLOCK, 1), 0);
 			}
 
 			if (material.getBlock(Names.BLOCK) instanceof IMMDObject) {
 				if (material.hasBlock(Names.PLATE)) {
-					GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.PLATE)),
+					GameRegistry.addSmelting(material.getBlockItemStack(Names.PLATE),
 							material.getItemStack(Names.INGOT, 1), 0);
 				}
 
 				if (material.hasBlock(Names.PRESSURE_PLATE)) {
-					GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.PRESSURE_PLATE)),
+					GameRegistry.addSmelting(material.getBlockItemStack(Names.PRESSURE_PLATE),
 							material.getItemStack(Names.INGOT, 2), 0);
 				}
 
 				if (material.hasBlock(Names.BARS)) {
-					GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.BARS)),
+					GameRegistry.addSmelting(material.getBlockItemStack(Names.BARS),
 							material.getItemStack(Names.NUGGET, 3), 0); // roughly half a nugget loss
 				}
 
 				if (material.hasItem(Names.DOOR)) {
-					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.DOOR)),
+					GameRegistry.addSmelting(material.getItemStack(Names.DOOR),
 							material.getItemStack(Names.INGOT, 2), 0);
 				}
 
 				if (material.hasBlock(Names.TRAPDOOR)) {
-					GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.TRAPDOOR)),
+					GameRegistry.addSmelting(material.getBlockItemStack(Names.TRAPDOOR),
 							material.getItemStack(Names.INGOT, 4), 0);
 				}
 
@@ -309,12 +309,12 @@ public abstract class Recipes {
 				// mats
 				if ((material.getItem(Names.HORSE_ARMOR) instanceof IMMDObject)
 						&& (material.hasItem(Names.HORSE_ARMOR))) {
-					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.HORSE_ARMOR)),
+					GameRegistry.addSmelting(material.getItemStack(Names.HORSE_ARMOR),
 							material.getItemStack(Names.INGOT, 6), 0); // 1 wool loss
 				}
 
 				if (material.hasItem(Names.FISHING_ROD)) {
-					GameRegistry.addSmelting(new ItemStack(material.getItem(Names.FISHING_ROD)),
+					GameRegistry.addSmelting(material.getItemStack(Names.FISHING_ROD),
 							material.getItemStack(Names.INGOT, 1), 0); // 4.5 nugget loss
 				}
 
@@ -325,20 +325,17 @@ public abstract class Recipes {
 	private static void makeIngotRecipes(@Nonnull final MMDMaterial material) {
 		final float oreSmeltXP = material.getOreSmeltXP();
 
-		BaseMetals.logger.debug("creating ingot recipes for %s, oreSmeltXp == %.4f", material.getCapitalizedName(),
-				oreSmeltXP);
-
 		if (material.hasItem(Names.INGOT)) {
 			if (material.hasOre()) {
-				GameRegistry.addSmelting(new ItemStack(material.getBlock(Names.ORE)),
+				GameRegistry.addSmelting(material.getBlockItemStack(Names.ORE),
 						material.getItemStack(Names.INGOT, 1), oreSmeltXP);
 			} else if (material.hasBlend()) {
-				GameRegistry.addSmelting(new ItemStack(material.getItem(Names.BLEND)),
+				GameRegistry.addSmelting(material.getItemStack(Names.BLEND),
 						material.getItemStack(Names.INGOT, 1), oreSmeltXP);
 			}
 
 			if (material.hasItem(Names.POWDER)) {
-				GameRegistry.addSmelting(new ItemStack(material.getItem(Names.POWDER)),
+				GameRegistry.addSmelting(material.getItemStack(Names.POWDER),
 						material.getItemStack(Names.INGOT, 1), oreSmeltXP);
 			}
 		}
@@ -346,7 +343,7 @@ public abstract class Recipes {
 
 	private static void makePowderRecipes(@Nonnull final MMDMaterial material) {
 		final String oreDictName = material.getCapitalizedName();
-		
+
 		if (material.hasItem(Names.POWDER)) {
 			if (material.hasOre() || material.hasBlock(Names.ORE)) {
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName,
@@ -369,7 +366,7 @@ public abstract class Recipes {
 
 	private static void generateBaseTools(@Nonnull final MMDMaterial material) {
 		if ((material.hasItem(Names.SHEARS)) && (material.getItem(Names.SHEARS) instanceof IMMDObject)) {
-			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.SHEARS)),
+			GameRegistry.addSmelting(material.getItemStack(Names.SHEARS),
 					material.getItemStack(Names.INGOT, 2), 0);
 		}
 	}
@@ -418,25 +415,23 @@ public abstract class Recipes {
 				if (material.hasItem(Names.CRACKHAMMER))
 					GameRegistry.addSmelting(material.getItem(Names.CRACKHAMMER),
 							material.getBlockItemStack(Names.BLOCK, 1), 0);
-			} else if (Options.furnace1112()) {
-				// blank on purpose
 			}
 		}
 	}
 
 	private static void initModSpecificRecipes() {
-		for (MMDMaterial mat : Materials.getAllMaterials()) {
-			if (mat.equals(Materials.emptyMaterial))
+		for (MMDMaterial material : Materials.getAllMaterials()) {
+			if (material.equals(Materials.emptyMaterial))
 				continue;
 
 			if (Options.isModEnabled("ic2")) {
-				if (mat.hasItem(Names.CRUSHED) && mat.hasItem(Names.INGOT)) {
-					GameRegistry.addSmelting(mat.getItem(Names.CRUSHED), mat.getItemStack(Names.INGOT),
-							mat.getOreSmeltXP());
+				if (material.hasItem(Names.CRUSHED) && material.hasItem(Names.INGOT)) {
+					GameRegistry.addSmelting(material.getItem(Names.CRUSHED), material.getItemStack(Names.INGOT),
+							material.getOreSmeltXP());
 				}
-				if (mat.hasItem(Names.CRUSHED_PURIFIED) && mat.hasItem(Names.INGOT)) {
-					GameRegistry.addSmelting(mat.getItem(Names.CRUSHED_PURIFIED),
-							new ItemStack(mat.getItem(Names.INGOT)), mat.getOreSmeltXP());
+				if (material.hasItem(Names.CRUSHED_PURIFIED) && material.hasItem(Names.INGOT)) {
+					GameRegistry.addSmelting(material.getItem(Names.CRUSHED_PURIFIED),
+							material.getItemStack(Names.INGOT), material.getOreSmeltXP());
 				}
 			}
 		}

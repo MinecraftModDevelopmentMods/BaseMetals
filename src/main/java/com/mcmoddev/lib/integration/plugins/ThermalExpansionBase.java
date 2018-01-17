@@ -47,9 +47,8 @@ public class ThermalExpansionBase implements IIntegration {
 		if (input.getItem() == null || output.getItem() == null) {
 			return;
 		}
-		
-		ThermalExpansionHelper.addCompactorStorageRecipe(energy, input, output);
 
+		ThermalExpansionHelper.addCompactorStorageRecipe(energy, input, output);
 	}
 
 	protected static void addFurnace(@Nonnull final String materialName) {
@@ -122,7 +121,7 @@ public class ThermalExpansionBase implements IIntegration {
 		if (material.hasBlock(Names.PLATE)) {
 			addCrucibleExtra(Item.getItemFromBlock(material.getBlock(Names.PLATE)), baseFluid, ENERGY_QTY);
 		}
-		
+
 		if (material.hasItem(Names.NUGGET)) {
 			addCrucibleExtra(material.getItem(Names.NUGGET), nuggetFluid, ENERGY_QTY);
 		}

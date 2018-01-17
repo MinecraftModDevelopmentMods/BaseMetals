@@ -186,7 +186,6 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 
 		if (Materials.hasMaterial(MaterialNames.CUPRONICKEL) && Materials.hasMaterial(MaterialNames.COPPER)
 				&& Materials.hasMaterial(MaterialNames.NICKEL)) {
-
 			final FluidStack output = FluidRegistry.getFluidStack(MaterialNames.CUPRONICKEL, 4);
 			final FluidStack copper = FluidRegistry.getFluidStack(MaterialNames.COPPER, 3);
 			final FluidStack nickel = FluidRegistry.getFluidStack(MaterialNames.NICKEL, 1);

@@ -39,7 +39,6 @@ public class MekanismBase implements IIntegration {
 		}
 
 		initDone = true;
-		
 	}
 
 	protected static void addGassesForMaterial(@Nonnull final String materialName) {
@@ -51,8 +50,8 @@ public class MekanismBase implements IIntegration {
 		gas1.setUnlocalizedName("gas" + material.getCapitalizedName());
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas("clean"+material.getName(),material.getFluid().getStill().toString());
-		gas2.setUnlocalizedName("cleanGas"+material.getCapitalizedName());
+		final Gas gas2 = new Gas("clean" + material.getName(),material.getFluid().getStill().toString());
+		gas2.setUnlocalizedName("cleanGas" + material.getCapitalizedName());
 		GasRegistry.register(gas2);
 	}
 
