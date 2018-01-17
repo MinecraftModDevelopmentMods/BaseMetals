@@ -63,7 +63,6 @@ public class BaseMetals {
 
 	@SidedProxy(clientSide = PROXY_BASE + SharedStrings.CLIENTPROXY, serverSide = PROXY_BASE
 			+ SharedStrings.SERVERPROXY)
-
 	public static CommonProxy proxy;
 
 	public static final Logger logger = LogManager.getFormatterLogger(BaseMetals.MODID);

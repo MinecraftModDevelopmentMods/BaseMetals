@@ -1,5 +1,8 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
@@ -18,16 +21,16 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 			return;
 		}
 
-		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL, MaterialNames.ZINC };
+				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 
-		for (final String materialName : baseNames) {
-			if (Materials.hasMaterial(materialName)) {
-				addGassesForMaterial(materialName);
+		materials.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.forEach(materialName -> {
+					addGassesForMaterial(materialName);
 				addOreMultiplicationRecipes(materialName);
-			}
-		}
+				});
 
 		initDone = true;
 	}

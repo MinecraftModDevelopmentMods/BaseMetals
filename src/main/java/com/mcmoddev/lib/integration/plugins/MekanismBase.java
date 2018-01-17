@@ -97,56 +97,55 @@ public class MekanismBase implements IIntegration {
 	protected static void addOreMultiplicationRecipes(@Nonnull final MMDMaterial material) {
 		// Combiner 8 dust to 1 ore
 		// Clump to dirty IC2: Macerator)
-		final Item clump = material.getItem(Names.CLUMP);
-		final Item powderDirty = material.getItem(Names.POWDER_DIRTY);
-		final Item ingot = material.getItem(Names.INGOT);
-		final Item powder = material.getItem(Names.POWDER);
-		final Block ore = material.getBlock(Names.ORE);
-		final Item shard = material.getItem(Names.SHARD);
+		final ItemStack clump = material.getItemStack(Names.CLUMP);
+		final ItemStack powderDirty = material.getItemStack(Names.POWDER_DIRTY);
+		final ItemStack ingot = material.getItemStack(Names.INGOT);
+		final ItemStack powder = material.getItemStack(Names.POWDER);
+		final ItemStack ore = material.getBlockItemStack(Names.ORE);
+		final ItemStack shard = material.getItemStack(Names.SHARD);
 		// TODO: check specifically for mek crystal type
-		final Item crystal = material.getItem(Names.CRYSTAL);
+		final ItemStack crystal = material.getItemStack(Names.CRYSTAL);
 
-		if ((clump != null) && (powderDirty != null)) {
-			addCrusherRecipe(new ItemStack(clump), new ItemStack(powderDirty));
+		if ((clump != ItemStack.EMPTY) && (powderDirty != ItemStack.EMPTY)) {
+			addCrusherRecipe(clump, powderDirty);
 		}
-		if ((ingot != null) && (powder != null)) {
-			addCrusherRecipe(new ItemStack(ingot), new ItemStack(powder));
-		}
-
-		if (powder != null) {
-			if (ore != null) {
-				addEnrichmentChamberRecipe(new ItemStack(ore), new ItemStack(powder, 2));
-			}
-			if (powderDirty != null) {
-				addEnrichmentChamberRecipe(new ItemStack(powderDirty), new ItemStack(powder));
-			}
+		if ((ingot != ItemStack.EMPTY) && (powder != ItemStack.EMPTY)) {
+			addCrusherRecipe(ingot, powder);
 		}
 
-		if (clump != null) {
-			if (ore != null) {
-				addPurificationChamberRecipe(new ItemStack(ore), new ItemStack(clump, 3));
+		if (material.hasItem(Names.POWDER)) {
+			if (material.hasBlock(Names.ORE)) {
+				addEnrichmentChamberRecipe(ore, new ItemStack(powder.getItem(), 2));
 			}
-			if (shard != null) {
-				addPurificationChamberRecipe(new ItemStack(shard), new ItemStack(clump));
+			if (material.hasItem(Names.POWDER_DIRTY)) {
+				addEnrichmentChamberRecipe(powderDirty, powder);
 			}
 		}
 
-		if (shard != null) {
-			if (ore != null) {
-				addChemicalInjectionChamberRecipe(new ItemStack(ore), new ItemStack(shard, 4));
+		if (material.hasItem(Names.CLUMP)) {
+			if (material.hasBlock(Names.ORE)) {
+				addPurificationChamberRecipe(ore, new ItemStack(clump.getItem(), 3));
 			}
-			if (crystal != null) {
-				addChemicalInjectionChamberRecipe(new ItemStack(crystal), new ItemStack(shard));
+			if (material.hasItem(Names.SHARD)) {
+				addPurificationChamberRecipe(shard, clump);
 			}
 		}
 
-		/*
-		addChemicalCrystallizerRecipe("clean" + material.getCapitalizedName(), 1000, new ItemStack(material.crystal));
+		if (material.hasItem(Names.SHARD)) {
+			if (material.hasBlock(Names.ORE)) {
+				addChemicalInjectionChamberRecipe(ore, new ItemStack(shard.getItem(), 4));
+			}
+			if (material.hasItem(Names.CRYSTAL)) {
+				addChemicalInjectionChamberRecipe(crystal, shard);
+			}
+		}
 
-		addChemicalWasherRecipe(material.getName(), 1000, "clean" + material.getCapitalizedName());
-
-		addChemicalDissolutionChamberRecipe(new ItemStack(material.ore), material.getName());
-		*/
+		if(material.hasItem(Names.CRYSTAL) && material.hasBlock(Names.ORE)) {
+			// Crystallizer is 200mB for 1 crystal
+			addChemicalCrystallizerRecipe("clean" + material.getName(), 200, crystal);
+			addChemicalWasherRecipe(material.getName(), 1000, "clean" + material.getName());
+			addChemicalDissolutionChamberRecipe(ore, material.getName());
+		}
 	}
 
 	protected static void addMetallurgicInfuserRecipe() {

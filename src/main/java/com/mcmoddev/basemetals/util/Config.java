@@ -81,7 +81,7 @@ public class Config extends ConfigBase {
 				"If false, then Base Metals will not try and integrate with Mekanism"));
 		Options.modEnabled("thaumcraft", configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Thaumcraft"));
-		Options.modEnabled("tinkersconstruct", configuration.getBoolean("tinkers_construct_integration",
+		Options.modEnabled("tconstruct", configuration.getBoolean("tinkers_construct_integration",
 				INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Tinkers Construct"));
 		Options.modEnabled("veinminer", configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with VeinMiner"));
@@ -230,8 +230,8 @@ public class Config extends ConfigBase {
 				"Less Yak-yak, more Whack-whack (Hello Alex Steele!"));
 
 		final String experimental = "experimental";
-		Options.thingEnabled(experimental,
-				configuration.getBoolean("Enable Experimental", TOOLS_CAT, false, "Enable experimental features (Don't blame us if they burn down your cat or kill your house)"));
+		Options.thingEnabled(experimental, configuration.getBoolean("Enable Experimental", TOOLS_CAT, false,
+				"Enable experimental features (Don't blame us if they burn down your cat or kill your house)"));
 
 		// Add some utility bits that are referenced
 		Options.thingEnabled("anvil", Options.isThingEnabled(experimental));

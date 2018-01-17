@@ -66,11 +66,11 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		// Iron items
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
 			// this should all be handled elsewhere in 1.11
-			// MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
-			// oreDictName = iron.getCapitalizedName();
-
 			// Not needed for 1.11.1+
 			/*
+			MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
+			oreDictName = iron.getCapitalizedName();
+
 			GameRegistry.addRecipe(new ShapelessOreRecipe(iron.getItemStack(Names.NUGGET, 9), Oredicts.INGOT + oreDictName));
 			GameRegistry.addRecipe(new ShapedOreRecipe(iron.getItemStack(Names.INGOT), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName));
 			*/
@@ -83,7 +83,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			if (charcoal.hasItem(Names.POWDER)) {
 				if (charcoal.hasBlock(Names.BLOCK)) { // Note: Minecraft does not provide a block of charcoal
 					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, charcoal.getItemStack(Names.POWDER, 9));
-					GameRegistry.addRecipe(new ShapedOreRecipe(charcoal.getBlockItemStack(Names.BLOCK), "xxx", "xxx", "xxx", 'x', charcoal.getItem(Names.POWDER)));
+					GameRegistry.addRecipe(new ShapedOreRecipe(charcoal.getBlockItemStack(Names.BLOCK), "xxx", "xxx", "xxx", 'x', charcoal.getItemStack(Names.POWDER)));
 				}
 				if (charcoal.hasItem(Names.INGOT)) {
 					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(charcoal.getItem(Names.INGOT), 1, 1), charcoal.getItemStack(Names.POWDER, 1));
@@ -114,7 +114,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(coal.getItem(Names.INGOT), 1, 0), coal.getItemStack(Names.POWDER, 1));
 				}
 				if (coal.hasItem(Names.SMALLPOWDER)) {
-					GameRegistry.addRecipe(new ShapelessOreRecipe(coal.getItemStack(Names.SMALLPOWDER, 9), new ItemStack(coal.getItem(Names.POWDER))));
+					GameRegistry.addRecipe(new ShapelessOreRecipe(coal.getItemStack(Names.SMALLPOWDER, 9), coal.getItemStack(Names.POWDER)));
 					GameRegistry.addRecipe(new ShapedOreRecipe(coal.getItemStack(Names.POWDER), "xxx", "xxx", "xxx", 'x', coal.getItemStack(Names.SMALLPOWDER)));
 					if (coal.hasItem(Names.NUGGET)) {
 						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, coal.getItemStack(Names.SMALLPOWDER, 1));
