@@ -139,17 +139,13 @@ repositories {
         name 'tterrag'
         url 'http://maven.tterrag.com/'
     }
-    maven {
+    maven { // Tesla
         name 'MMD'
         url 'https://maven.mcmoddev.com/'
     }
     maven { // MCMultipart
         name 'amadornes'
         url 'http://maven.amadornes.com/'
-    }
-    maven { // Tesla
-        name 'epoxide'
-        url 'http://maven.epoxide.org/'
     }
     maven { // CraftTweaker, ZenScript
         name 'jared maven'
@@ -341,7 +337,7 @@ curseforge {
     project {
         id = '240967'
         changelog = file('CHANGELOG.txt')
-        releaseType = 'beta'
+        releaseType = 'release'
         addGameVersion(project.mc_version)
         def projectName = 'Base Metals'
         def displayVersion = getVersion('VERSION', mod_file)
