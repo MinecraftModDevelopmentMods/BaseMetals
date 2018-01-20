@@ -120,6 +120,7 @@ minecraft {
     version = '1.11.2-13.20.1.2386'
     runDir = 'run'
     mappings = 'stable_32'
+	// coreMod = corePlugin
     clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
     serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
 
@@ -146,10 +147,6 @@ repositories {
     maven { // MCMultipart
         name 'amadornes'
         url 'http://maven.amadornes.com/'
-    }
-    maven { // Tesla
-        name 'epoxide'
-        url 'http://maven.epoxide.org/'
     }
     maven { // CraftTweaker, ZenScript
         name 'jared maven'
@@ -344,7 +341,7 @@ curseforge {
     project {
         id = '240967'
         changelog = file('CHANGELOG.txt')
-        releaseType = 'beta'
+        releaseType = 'release'
         addGameVersion(project.mc_version)
         def projectName = 'Base Metals'
         def displayVersion = getVersion('VERSION', mod_file)
