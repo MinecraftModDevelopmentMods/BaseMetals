@@ -8,7 +8,6 @@ import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 
@@ -26,14 +25,12 @@ public class BaseMetalsJEIPlugin extends BlankModPlugin {
 
 	@Override
 	public void register(IModRegistry registry) {
+		final IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
 
-		IJeiHelpers jeiHelpers = registry.getJeiHelpers();
-		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
-
-		registry.addRecipeCategories(new CrusherRecipeCategory(guiHelper));
+		registry.addRecipeCategories(new ICrusherRecipeCategory(guiHelper));
 		registry.addRecipeHandlers(new CrusherRecipeHandler());
 
-		registry.addRecipes(CrusherRecipeRegistry.getInstance().getAllRecipes().stream().map((ICrusherRecipe in) -> new CrusherRecipeWrapper(in)).collect(Collectors.toList()));
+		registry.addRecipes(CrusherRecipeRegistry.getInstance().getAllRecipes().stream().map((ICrusherRecipe in) -> new ICrusherRecipeWrapper(in)).collect(Collectors.toList()));
 
 	}
 }

@@ -20,14 +20,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
+//import net.minecraft.util.text.translation.I18n;
+import net.minecraft.util.text.TextComponentTranslation;
 
 /**
  *
  * @author Jasmine Iwanek
  *
  */
-@SuppressWarnings("deprecation")
 public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	private static final String CRUSHER = "crusher";
@@ -96,12 +96,13 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public String getRecipeName() {
+//		TODO: Finish this
 		final String key = BaseMetals.MODID + ".crusher";
-		if (I18n.canTranslate(key)) {
-			return net.minecraft.client.resources.I18n.format(key);
-		} else {
-			return "Crusher";
-		}
+//		if (I18n.canTranslate(key)) {
+			return new TextComponentTranslation(String.format(key)).getFormattedText();
+//		} else {
+//			return "Crusher";
+//		}
 	}
 
 	@Override

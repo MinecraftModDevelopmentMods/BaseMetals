@@ -56,9 +56,9 @@ public class ItemMMDBow extends ItemBow implements IMMDObject {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
-		super.addInformation(stack, player, list, b);
-		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean b) {
+		super.addInformation(stack, player, tooltip, b);
+		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);
 	}
 
 	@Override

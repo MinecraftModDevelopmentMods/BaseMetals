@@ -26,7 +26,6 @@ public class MMDCreativeTab extends CreativeTabs {
 	private ItemStack iconItem;
 
 	private final boolean searchable;
-	private List<ItemStack> cache;
 	private Comparator<ItemStack> comparator;
 
 	private static final Comparator<ItemStack> DEFAULT = new Comparator<ItemStack>() {
@@ -70,17 +69,11 @@ public class MMDCreativeTab extends CreativeTabs {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void displayAllRelevantItems(List<ItemStack> itemList) {
-		if (cache == null) {
-
-			super.displayAllRelevantItems(itemList);
-			cache = itemList;
-
-			if (comparator != null)
-				cache.sort(comparator);
+	public void displayAllRelevantItems(@Nonnull final List<ItemStack> itemList) {
+		super.displayAllRelevantItems(itemList);
+		if (comparator != null) {
+			itemList.sort(comparator);
 		}
-
-		itemList.addAll(cache);
 	}
 
 	@Override
@@ -91,9 +84,6 @@ public class MMDCreativeTab extends CreativeTabs {
 
 	public void setSortingAlgorithm(@Nonnull final Comparator<ItemStack> comparator) {
 		this.comparator = comparator;
-
-		if (this.cache != null)
-			cache.sort(comparator);
 	}
 
 	public void setTabIconItem(@Nonnull final Block iconBlock) {

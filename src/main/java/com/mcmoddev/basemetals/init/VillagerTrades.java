@@ -1,9 +1,5 @@
 package com.mcmoddev.basemetals.init;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.lib.data.Names;
@@ -11,8 +7,8 @@ import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.item.Item;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
+import net.minecraft.item.Item;
 
 /**
  *
@@ -20,8 +16,6 @@ import net.minecraft.entity.passive.EntityVillager.ITradeList;
  *
  */
 public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
-
-	private static boolean initDone = false;
 
 	private VillagerTrades() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -31,21 +25,11 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		Materials.init();
-		Items.init();
-
 		registerCommonTrades();
 		registerModSpecificTrades();
-
-		initDone = true;
 	}
 
 	protected static void registerModSpecificTrades() {
-		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>();
 
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
 			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);

@@ -62,8 +62,8 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	/**
 	 * @deprecated
 	 */
-	@Override
 	@Deprecated
+	@Override
 	public MapColor getMapColor(final IBlockState state) {
 		return MapColor.IRON;
 	}

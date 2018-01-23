@@ -51,7 +51,8 @@ public class EventHandler {
 			return;
 		}
 		ItemStack activeItemStack = player.getActiveItemStack();
-		if ((damage > 0.0F) && (activeItemStack != null) && (activeItemStack.getItem() instanceof ItemMMDShield)) {
+		if ((damage > 0.0F) && (activeItemStack != null)
+				&& (activeItemStack.getItem() instanceof ItemMMDShield)) {
 			int i = 1 + MathHelper.floor(damage);
 			activeItemStack.damageItem(i, player);
 			if (activeItemStack.stackSize <= 0) {
@@ -156,17 +157,17 @@ public class EventHandler {
 	}
 
 	@SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onUpdate(TickEvent.RenderTickEvent event) {
+	@SubscribeEvent
+	public void onUpdate(TickEvent.RenderTickEvent event) {
 		if ((Options.requireMMDOreSpawn()) && (Loader.isModLoaded("orespawn"))) {
 			return;
 		}
-		
-		if(!Options.fallbackOrespawn()) {
+
+		if (!Options.fallbackOrespawn()) {
 			return;
 		}
-		
-		if( !Options.requireMMDOreSpawn() ) {
+
+		if (!Options.requireMMDOreSpawn()) {
 			return;
 		}
 

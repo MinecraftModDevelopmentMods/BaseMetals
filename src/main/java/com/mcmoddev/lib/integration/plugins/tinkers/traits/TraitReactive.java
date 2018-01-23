@@ -20,10 +20,8 @@ public class TraitReactive extends AbstractTrait {
 
 	@Override
 	public void onUpdate(@Nonnull final ItemStack tool, @Nonnull final World world, @Nonnull final Entity entity, @Nonnull final int itemSlot, @Nonnull final boolean isSelected) {
-		if (!world.isRemote && entity instanceof EntityPlayer && entity.isWet()) {
-			if (((EntityPlayer) entity).getActiveItemStack() == tool) {
-				ToolHelper.damageTool(tool, 5, (EntityLivingBase) entity);
-			}
+		if (!world.isRemote && entity instanceof EntityPlayer && entity.isWet() && ((EntityPlayer) entity).getActiveItemStack() == tool) {
+			ToolHelper.damageTool(tool, 5, (EntityLivingBase) entity);
 		}
 	}
 

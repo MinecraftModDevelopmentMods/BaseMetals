@@ -8,7 +8,9 @@ import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Blocks;
 import com.mcmoddev.lib.init.Items;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -65,11 +67,13 @@ public class RegistrationHelper {
 
 	@SideOnly(Side.CLIENT)
 	public static void registerFluidRender(@Nonnull final Fluid fluid) {
-		// final Block block = fluid.getBlock(); // Unfortunately this breaks when another mod registered it's fluid before us.
+		// final Block block = fluid.getBlock(); // Unfortunately this breaks when
+		// another mod registered it's fluid before us.
 		final Block block = Fluids.getFluidBlockByName(fluid.getName());
 		final Item item = Item.getItemFromBlock(block);
 		final ResourceLocation resourceLocation = block.getRegistryName();
-		final FluidStateMapper mapper = new FluidStateMapper(resourceLocation.getResourceDomain() + ":" + fluid.getName());
+		final FluidStateMapper mapper = new FluidStateMapper(
+				resourceLocation.getResourceDomain() + ":" + fluid.getName());
 
 		if (!resourceLocation.getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
 			return;
@@ -80,15 +84,6 @@ public class RegistrationHelper {
 			ModelLoader.setCustomMeshDefinition(item, mapper);
 		}
 		ModelLoader.setCustomStateMapper(block, mapper);
-		/*
-		ModelLoader.setCustomMeshDefinition(item, stack -> fluidModelLocation);
-		ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-			@Override
-			protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-				return fluidModelLocation;
-			}
-		});
-		*/
 	}
 
 	@SideOnly(Side.CLIENT)

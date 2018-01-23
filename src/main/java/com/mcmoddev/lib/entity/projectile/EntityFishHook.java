@@ -107,7 +107,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 	@Override
 	public void notifyDataManagerChange(DataParameter<?> key) {
 		if (DATA_HOOKED_ENTITY.equals(key)) {
-			final int i = ((Integer) this.getDataManager().get(DATA_HOOKED_ENTITY)).intValue();
+			final int i = (this.getDataManager().get(DATA_HOOKED_ENTITY)).intValue();
 
 			if ((i > 0) && (this.caughtEntity != null)) {
 				this.caughtEntity = null;
@@ -130,7 +130,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 		this.onEntityUpdate();
 
 		if (this.world.isRemote) {
-			final int i = ((Integer) this.getDataManager().get(DATA_HOOKED_ENTITY)).intValue();
+			final int i = (this.getDataManager().get(DATA_HOOKED_ENTITY)).intValue();
 
 			if ((i > 0) && (this.caughtEntity == null)) {
 				this.caughtEntity = this.world.getEntityByID(i - 1);
@@ -207,7 +207,7 @@ public class EntityFishHook extends net.minecraft.entity.projectile.EntityFishHo
 				double d0 = 0.0D;
 
 				for (int j = 0; j < list.size(); ++j) {
-					final Entity entity1 = (Entity) list.get(j);
+					final Entity entity1 = list.get(j);
 
 					if (entity1.canBeCollidedWith() && ((entity1 != this.angler) || (this.ticksInAir >= 5))) {
 						final AxisAlignedBB axisalignedbb1 = entity1.getEntityBoundingBox().expandXyz(0.30000001192092896D);

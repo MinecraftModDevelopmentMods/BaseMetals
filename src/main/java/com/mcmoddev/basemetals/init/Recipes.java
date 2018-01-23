@@ -25,8 +25,6 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  */
 public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
-	private static boolean initDone = false;
-
 	private Recipes() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -35,21 +33,8 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		Materials.init();
-		Blocks.init();
-		Items.init();
-
-		initPureVanillaOredicts();
-		initPureVanillaCrusherRecipes();
 		initVanillaRecipes();
-		initGeneralRecipes();
 		initModSpecificRecipes();
-
-		initDone = true;
 	}
 
 	protected static void initVanillaRecipes() {
@@ -57,22 +42,20 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 		if (!Options.disableAllHammerRecipes()) {
 			if (Options.isMaterialEnabled(MaterialNames.WOOD)) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.WOOD).getItem(Names.CRACKHAMMER)), "x", "/", "/", 'x', Oredicts.LOG_WOOD, '/', Oredicts.STICK_WOOD));
+				GameRegistry.addRecipe(new ShapedOreRecipe(Materials.getMaterialByName(MaterialNames.WOOD).getItemStack(Names.CRACKHAMMER), "x", "/", "/", 'x', Oredicts.LOG_WOOD, '/', Oredicts.STICK_WOOD));
 			}
 			if (Options.isMaterialEnabled(MaterialNames.STONE)) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Materials.getMaterialByName(MaterialNames.STONE).getItem(Names.CRACKHAMMER)), "x", "/", "/", 'x', net.minecraft.init.Blocks.STONEBRICK, '/', Oredicts.STICK_WOOD));
+				GameRegistry.addRecipe(new ShapedOreRecipe(Materials.getMaterialByName(MaterialNames.STONE).getItemStack(Names.CRACKHAMMER), "x", "/", "/", 'x', net.minecraft.init.Blocks.STONEBRICK, '/', Oredicts.STICK_WOOD));
 			}
 		}
 
 		// Iron items
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
-			// this should all be handled elsewhere in 1.11
 			MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
 			oreDictName = iron.getCapitalizedName();
 
-			// Not needed for 1.11.1+
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(iron.getItem(Names.NUGGET), 9), Oredicts.INGOT + oreDictName));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(iron.getItem(Names.INGOT)), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(iron.getItemStack(Names.NUGGET, 9), Oredicts.INGOT + oreDictName));
+			GameRegistry.addRecipe(new ShapedOreRecipe(iron.getItemStack(Names.INGOT), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName));
 		}
 
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
@@ -81,17 +64,17 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 			if (charcoal.hasItem(Names.POWDER)) {
 				if (charcoal.hasBlock(Names.BLOCK)) { // Note: Minecraft does not provide a block of charcoal
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(charcoal.getItem(Names.POWDER), 9));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(charcoal.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', charcoal.getItem(Names.POWDER)));
+					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, charcoal.getItemStack(Names.POWDER, 9));
+					GameRegistry.addRecipe(new ShapedOreRecipe(charcoal.getBlockItemStack(Names.BLOCK), "xxx", "xxx", "xxx", 'x', charcoal.getItemStack(Names.POWDER)));
 				}
 				if (charcoal.hasItem(Names.INGOT)) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(charcoal.getItem(Names.INGOT), 1, 1), new ItemStack(charcoal.getItem(Names.POWDER), 1));
+					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(charcoal.getItem(Names.INGOT), 1, 1), charcoal.getItemStack(Names.POWDER, 1));
 				}
 				if (charcoal.hasItem(Names.SMALLPOWDER)) {
-					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(charcoal.getItem(Names.SMALLPOWDER), 9), new ItemStack(charcoal.getItem(Names.POWDER))));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(charcoal.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(charcoal.getItem(Names.SMALLPOWDER))));
+					GameRegistry.addRecipe(new ShapelessOreRecipe(charcoal.getItemStack(Names.SMALLPOWDER, 9), charcoal.getItemStack(Names.POWDER)));
+					GameRegistry.addRecipe(new ShapedOreRecipe(charcoal.getItemStack(Names.POWDER), "xxx", "xxx", "xxx", 'x', charcoal.getItemStack(Names.SMALLPOWDER)));
 					if (charcoal.hasItem(Names.NUGGET)) {
-						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(charcoal.getItem(Names.SMALLPOWDER), 1));
+						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, charcoal.getItemStack(Names.SMALLPOWDER, 1));
 					}
 				}
 			}
@@ -103,20 +86,20 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 			if (coal.hasItem(Names.POWDER)) {
 				if (coal.hasItem(Names.ORE)) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, new ItemStack(coal.getItem(Names.POWDER), 2));
+					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName, coal.getItemStack(Names.POWDER, 2));
 				}
 				if (coal.hasBlock(Names.BLOCK)) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, new ItemStack(coal.getItem(Names.POWDER), 9));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(coal.getBlock(Names.BLOCK)), "xxx", "xxx", "xxx", 'x', coal.getItem(Names.POWDER)));
+					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName, coal.getItemStack(Names.POWDER, 9));
+					GameRegistry.addRecipe(new ShapedOreRecipe(coal.getBlockItemStack(Names.BLOCK), "xxx", "xxx", "xxx", 'x', coal.getItemStack(Names.POWDER)));
 				}
 				if (coal.hasItem(Names.INGOT)) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(coal.getItem(Names.INGOT), 1, 0), new ItemStack(coal.getItem(Names.POWDER), 1));
+					CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(coal.getItem(Names.INGOT), 1, 0), coal.getItemStack(Names.POWDER, 1));
 				}
 				if (coal.hasItem(Names.SMALLPOWDER)) {
-					GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(coal.getItem(Names.SMALLPOWDER), 9), new ItemStack(coal.getItem(Names.POWDER))));
-					GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(coal.getItem(Names.POWDER)), "xxx", "xxx", "xxx", 'x', new ItemStack(coal.getItem(Names.SMALLPOWDER))));
+					GameRegistry.addRecipe(new ShapelessOreRecipe(coal.getItemStack(Names.SMALLPOWDER, 9), coal.getItemStack(Names.POWDER)));
+					GameRegistry.addRecipe(new ShapedOreRecipe(coal.getItemStack(Names.POWDER), "xxx", "xxx", "xxx", 'x', coal.getItemStack(Names.SMALLPOWDER)));
 					if (coal.hasItem(Names.NUGGET)) {
-						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, new ItemStack(coal.getItem(Names.SMALLPOWDER), 1));
+						CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName, coal.getItemStack(Names.SMALLPOWDER, 1));
 					}
 				}
 			}
@@ -180,8 +163,9 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 		if (Materials.hasMaterial(MaterialNames.STEEL)) {
 			final MMDMaterial steel = Materials.getMaterialByName(MaterialNames.STEEL);
+
 			if (steel.hasItem(Names.GEAR)) {
-				OreDictionary.registerOre(Oredicts.SPROCKET, steel.getItem(Names.GEAR));
+				OreDictionary.registerOre(Oredicts.SPROCKET, steel.getItemStack(Names.GEAR));
 			}
 
 			// addAlloyRecipe(steel, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, "Carbon");

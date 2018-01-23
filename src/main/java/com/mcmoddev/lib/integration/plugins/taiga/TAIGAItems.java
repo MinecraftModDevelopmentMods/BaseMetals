@@ -2,24 +2,67 @@ package com.mcmoddev.lib.integration.plugins.taiga;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.init.ItemGroups;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Items;
 import com.mcmoddev.lib.material.MMDMaterial;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+
 public class TAIGAItems extends Items {
 
-	private static boolean initDone = false;
-
 	public static void init(List<MMDMaterial> materials) {
-		if (initDone) {
-			return;
-		}
-
-		for (MMDMaterial m : materials) {
+		for (final MMDMaterial material : materials) {
 			// TODO: This probably shouldn't use the BMe tabs
-			createItemsFull(m, ItemGroups.myTabs);
+
+			create(Names.BLEND, material);
+			create(Names.INGOT, material);
+			create(Names.NUGGET, material);
+			create(Names.POWDER, material);
+			create(Names.SMALLBLEND, material);
+			create(Names.SMALLPOWDER, material);
+
+			create(Names.ARROW, material);
+			create(Names.AXE, material);
+			create(Names.BOLT, material);
+			create(Names.BOOTS, material);
+			create(Names.BOW, material);
+			create(Names.CHESTPLATE, material);
+			create(Names.CRACKHAMMER, material);
+			create(Names.CROSSBOW, material);
+			create(Names.DOOR, material);
+			create(Names.FISHING_ROD, material);
+			create(Names.HELMET, material);
+			create(Names.HOE, material);
+			create(Names.HORSE_ARMOR, material);
+			create(Names.LEGGINGS, material);
+			create(Names.PICKAXE, material);
+			create(Names.SHEARS, material);
+			create(Names.SHIELD, material);
+			create(Names.SHOVEL, material);
+			create(Names.SLAB, material);
+			create(Names.SWORD, material);
+			create(Names.ROD, material);
+			create(Names.GEAR, material);
+		}
+	}
+
+	private static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
+		CreativeTabs tab;
+
+		if ((name.equals(Names.DOOR)) || (name.equals(Names.SLAB))) {
+			tab = ItemGroups.myTabs.blocksTab;
+		} else if ((name.equals(Names.BLEND)) || (name.equals(Names.INGOT)) || (name.equals(Names.NUGGET))
+				|| (name.equals(Names.POWDER)) || (name.equals(Names.SMALLBLEND)) || (name.equals(Names.SMALLPOWDER))
+				|| (name.equals(Names.ROD)) || (name.equals(Names.GEAR))) {
+			tab = ItemGroups.myTabs.itemsTab;
+		} else {
+			tab = ItemGroups.myTabs.toolsTab;
 		}
 
-		initDone = true;
+		return create(name, material, tab);
 	}
 }

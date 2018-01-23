@@ -1,5 +1,8 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.Materials;
@@ -10,32 +13,30 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import cofh.api.util.ThermalExpansionHelper;
-import net.minecraft.item.ItemStack;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = ThermalExpansion.PLUGIN_MODID)
-public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansionBase implements IIntegration {
-
-	private static boolean initDone = false;
+public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansionBase
+		implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(ThermalExpansion.PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
-		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.COLDIRON,
 				MaterialNames.CUPRONICKEL, MaterialNames.PEWTER, MaterialNames.STARSTEEL, MaterialNames.ZINC,
-				MaterialNames.MERCURY };
+				MaterialNames.MERCURY);
 
-		for (final String materialName : baseNames) {
-			if (Materials.hasMaterial(materialName)) {
-				addFurnace(Materials.hasMaterial(materialName), materialName);
-				addCrucible(Materials.hasMaterial(materialName), materialName);
-				addPlatePress(Materials.hasMaterial(materialName), materialName);
-				addPressStorage(Materials.hasMaterial(materialName), materialName);
-			}
-		}
+		materials.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.forEach(materialName -> {
+					addFurnace(materialName);
+					addCrucible(materialName);
+					addPlatePress(materialName);
+					addPressStorage(materialName);
+				});
 
 		final MMDMaterial brass = Materials.getMaterialByName(MaterialNames.BRASS);
 		final MMDMaterial copper = Materials.getMaterialByName(MaterialNames.COPPER);
@@ -43,19 +44,21 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		final MMDMaterial nickel = Materials.getMaterialByName(MaterialNames.NICKEL);
 		final MMDMaterial zinc = Materials.getMaterialByName(MaterialNames.ZINC);
 
-		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.ZINC) && Materials.hasMaterial(MaterialNames.BRASS)) {
+		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.ZINC)
+				&& Materials.hasMaterial(MaterialNames.BRASS)) {
 			if ((copper.hasItem(Names.INGOT)) && (zinc.hasItem(Names.INGOT)) && (brass.hasItem(Names.INGOT))) {
-				ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(copper.getItem(Names.INGOT), 2), new ItemStack(zinc.getItem(Names.INGOT), 1), new ItemStack(brass.getItem(Names.INGOT), 3));
+				ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 2),
+						zinc.getItemStack(Names.INGOT, 1), brass.getItemStack(Names.INGOT, 3));
 			}
 		}
 
 		// TODO: Recently fixed for intent, We may also want bronze here
-		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.NICKEL) && Materials.hasMaterial(MaterialNames.CUPRONICKEL)) {
+		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.NICKEL)
+				&& Materials.hasMaterial(MaterialNames.CUPRONICKEL)) {
 			if ((copper.hasItem(Names.INGOT)) && (nickel.hasItem(Names.INGOT)) && (cupronickel.hasItem(Names.INGOT))) {
-				ThermalExpansionHelper.addSmelterRecipe(4000, new ItemStack(copper.getItem(Names.INGOT), 3), new ItemStack(nickel.getItem(Names.INGOT), 1), new ItemStack(cupronickel.getItem(Names.INGOT), 4));
+				ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3),
+						nickel.getItemStack(Names.INGOT, 1), cupronickel.getItemStack(Names.INGOT, 4));
 			}
 		}
-
-		initDone = true;
 	}
 }

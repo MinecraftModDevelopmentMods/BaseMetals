@@ -6,11 +6,11 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
 import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -33,7 +33,7 @@ public class ItemCrossbow extends ItemBow {
 		if (entityLiving instanceof EntityPlayer) {
 			final EntityPlayer entityplayer = (EntityPlayer) entityLiving;
 			final boolean flag = entityplayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
-			ItemStack itemstack = this.findAmmo(entityplayer);
+			ItemStack itemstack = this.myFindAmmo(entityplayer);
 
 			int i = this.getMaxItemUseDuration(stack) - timeLeft;
 			i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, (EntityPlayer) entityLiving, i, (itemstack != null) || flag);
@@ -43,22 +43,18 @@ public class ItemCrossbow extends ItemBow {
 
 			if ((itemstack != null) || flag) {
 				if (itemstack == null) {
-					// FIXME - this is potentially unreliable
-					itemstack = new ItemStack(Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT));
+					itemstack = getBolt();
+					if (itemstack == null)
+						return; // if its still null at this point, there is something seriously wrong, just bug out
 				}
 
 				final float f = getArrowVelocity(i);
 
 				if ((double) f >= 0.1D) {
-					// OLD
-					//final boolean flag1 = flag && (itemstack.getItem() instanceof ItemBolt); // Forge: Fix consuming custom arrows.
-					// NEW
 					final boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemBolt ? ((ItemBolt) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer) : false);
 
 					if (!worldIn.isRemote) {
-						// TODO: FIXME Using Materials.vanilla_iron.arrow, MC uses Items.ARROW
-//						final ItemArrow itemArrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Materials.vanilla_iron.bolt));
-						final ItemBolt itemBolt = (ItemBolt) ((ItemBolt) (itemstack.getItem() instanceof ItemBolt ? itemstack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
+						final ItemBolt itemBolt = ((ItemBolt) (itemstack.getItem() instanceof ItemBolt ? itemstack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
 						final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemstack, entityplayer);
 						entityBolt.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
@@ -85,7 +81,7 @@ public class ItemCrossbow extends ItemBow {
 						stack.damageItem(1, entityplayer);
 
 						if (flag1) {
-							entityBolt.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+							entityBolt.pickupStatus = EntityCustomBolt.PickupStatus.CREATIVE_ONLY;
 						}
 
 						worldIn.spawnEntity(entityBolt);
@@ -107,8 +103,15 @@ public class ItemCrossbow extends ItemBow {
 		}
 	}
 
-	// TODO: This may not be needed
-	private ItemStack findAmmo(EntityPlayer player) {
+	private ItemStack getBolt() {
+		for (MMDMaterial material : Materials.getAllMaterials()) {
+			if (material.hasItem(Names.BOLT))
+				return new ItemStack(material.getItem(Names.BOLT));
+		}
+		return null;
+	}
+
+	private ItemStack myFindAmmo(EntityPlayer player) {
 		if (this.isBolt(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
 		} else if (this.isBolt(player.getHeldItem(EnumHand.MAIN_HAND))) {
@@ -136,10 +139,9 @@ public class ItemCrossbow extends ItemBow {
 		return (stack != null) && (stack.getItem() instanceof ItemBolt);
 	}
 
-	// TODO: This may not be needed
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		final boolean flag = this.findAmmo(playerIn) != null;
+		final boolean flag = this.myFindAmmo(playerIn) != null;
 
 		if (!playerIn.capabilities.isCreativeMode && !flag)
 			return new ActionResult<>(EnumActionResult.FAIL, itemStackIn);

@@ -208,7 +208,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	 */
 	@Override
 	@Deprecated
-	public int getHarvestLevel(final ItemStack item, final String typeRequested) {
+	public int getHarvestLevel(final ItemStack stack, final String typeRequested) {
 		if (typeRequested != null && toolTypes.contains(typeRequested)) {
 			if (Options.strongHammers()) {
 				return material.getToolHarvestLevel();
@@ -269,9 +269,9 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
-		super.addInformation(stack, player, list, b);
-		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean b) {
+		super.addInformation(stack, player, tooltip, b);
+		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);
 	}
 
 	@Override

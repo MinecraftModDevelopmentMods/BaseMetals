@@ -11,16 +11,16 @@ import mezz.jei.api.recipe.IRecipeWrapper;
  * @author Daniel Hazelton
  *
  */
-public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeWrapper> {
+public class CrusherRecipeHandler implements IRecipeHandler<ICrusherRecipeWrapper> {
 
 	@Override
-	public Class<CrusherRecipeWrapper> getRecipeClass() {
-		return CrusherRecipeWrapper.class;
+	public Class<ICrusherRecipeWrapper> getRecipeClass() {
+		return ICrusherRecipeWrapper.class;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull CrusherRecipeWrapper recipe) {
+	public String getRecipeCategoryUid(@Nonnull ICrusherRecipeWrapper recipe) {
 		return BaseMetalsJEIPlugin.RECIPE_UID;
 	}
 
@@ -30,12 +30,12 @@ public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipeWrapper
 	}
 
 	@Override
-	public IRecipeWrapper getRecipeWrapper(CrusherRecipeWrapper recipe) {
+	public IRecipeWrapper getRecipeWrapper(ICrusherRecipeWrapper recipe) {
 		return recipe;
 	}
 
 	@Override
-	public boolean isRecipeValid(CrusherRecipeWrapper recipe) {
-		return !(recipe.getInputs().isEmpty() || recipe.getOutputs().isEmpty());
+	public boolean isRecipeValid(ICrusherRecipeWrapper recipe) {
+		return true;
 	}
 }

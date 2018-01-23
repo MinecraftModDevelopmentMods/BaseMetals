@@ -12,6 +12,7 @@ import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.util.text.TextComponentTranslation;
 
 /**
  *
@@ -63,17 +64,15 @@ public class ItemMMDShield extends net.minecraft.item.ItemShield implements IMMD
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public String getItemStackDisplayName(ItemStack stack) {
-		String name = String.format("%s.name", this.getUnlocalizedName());
-		if (net.minecraft.util.text.translation.I18n.canTranslate(name)) {
+		final String name = String.format("%s.name", this.getUnlocalizedName());
+		// TODO: Finish this
+//		if (net.minecraft.util.text.translation.I18n.canTranslate(name)) {
 			if (stack.getSubCompound("BlockEntityTag", false) != null) {
-				String coloredName = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
-				return net.minecraft.util.text.translation.I18n.translateToLocal(coloredName);
-			} else {
-				return name;
+				final String coloredName = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
+				return new TextComponentTranslation(String.format(coloredName)).getFormattedText();
 			}
-		}
+//		}
 		return name;
 	}
 

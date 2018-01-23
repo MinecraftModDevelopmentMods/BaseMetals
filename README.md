@@ -1,4 +1,4 @@
-# Base Metals 1.10.2 [![Build Status](https://ci.mcmoddev.com/job/Base%20Metals/badge/icon)](https://ci.mcmoddev.com/job/Base%20Metals) [![CurseForge](http://cf.way2muchnoise.eu/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals) [![Versions](http://cf.way2muchnoise.eu/versions/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals)
+# Base Metals 1.10.2 [![Build Status](https://ci.mcmoddev.com/job/Base%20Metals%201.10.2/badge/icon)](https://ci.mcmoddev.com/job/Base%20Metals) [![CurseForge](http://cf.way2muchnoise.eu/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals) [![Versions](http://cf.way2muchnoise.eu/versions/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals)
 
 ## Base Metals Mod
 

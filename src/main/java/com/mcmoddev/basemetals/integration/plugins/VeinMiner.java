@@ -1,7 +1,11 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -15,26 +19,24 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = VeinMiner.PLUGIN_MODID)
 public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBase implements IIntegration {
 
-	private static boolean initDone = false;
-
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(VeinMiner.PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
-		final String[] baseNames = new String[] { MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
 				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.DIAMOND,
 				MaterialNames.ELECTRUM, MaterialNames.GOLD, MaterialNames.INVAR, MaterialNames.IRON, MaterialNames.LEAD,
 				MaterialNames.MITHRIL, MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
 				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
-				MaterialNames.WOOD, MaterialNames.ZINC };
+				MaterialNames.WOOD, MaterialNames.ZINC);
 
-		for (final String materialName : baseNames) {
-			addToolsForMaterial(materialName);
-		}
-
-		initDone = true;
+		materials.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.forEach(materialName -> {
+					addToolsForMaterial(materialName);
+				});
 	}
 }

@@ -14,13 +14,13 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.block.*;
+import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
@@ -40,8 +40,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public abstract class Blocks {
 
-	private static boolean initDone = false;
-
 	private static final BiMap<String, Block> blockRegistry = HashBiMap.create(16);
 	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create(16);
 	private static final Map<MMDMaterial, List<Block>> blocksByMaterial = new HashMap<>();
@@ -58,124 +56,28 @@ public abstract class Blocks {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-		com.mcmoddev.basemetals.util.Config.init();
-
-		final String basics = "Basics";
-		final String wall = "Wall";
-
-		addBlockType(Names.ANVIL, BlockMMDAnvil.class, Options.isThingEnabled("Anvil"), null);
-		addBlockType(Names.BARS, BlockMMDBars.class, Options.isThingEnabled("Bars"), Oredicts.BARS);
-		addBlockType(Names.BLOCK, BlockMMDBlock.class, Options.isThingEnabled(basics), Oredicts.BLOCK);
-		addBlockType(Names.BOOKSHELF, BlockMMDBookshelf.class, Options.isThingEnabled("Bookshelf"), null);
-		addBlockType(Names.BUTTON, BlockMMDButton.class, Options.isThingEnabled("Button"), Oredicts.BUTTON);
-		addBlockType(Names.DOOR, BlockMMDDoor.class, Options.isThingEnabled("Door"), null);
-		addBlockType(Names.DOUBLE_SLAB, BlockMMDDoubleSlab.class, Options.isThingEnabled("Slab"), null);
-		addBlockType(Names.FLOWER_POT, BlockMMDFlowerPot.class, Options.isThingEnabled("FlowerPot"), null);
-		addBlockType(Names.LADDER, BlockMMDLadder.class, Options.isThingEnabled("Ladder"), null);
-		addBlockType(Names.LEVER, BlockMMDLever.class, Options.isThingEnabled("Lever"), Oredicts.LEVER);
-		addBlockType(Names.PLATE, BlockMMDPlate.class, Options.isThingEnabled("Plate"), Oredicts.PLATE);
-		addBlockType(Names.PRESSURE_PLATE, BlockMMDPressurePlate.class, Options.isThingEnabled("PressurePlate"), null);
-		addBlockType(Names.SLAB, BlockMMDSlab.class, Options.isThingEnabled("Slab"), null);
-		addBlockType(Names.STAIRS, BlockMMDStairs.class, Options.isThingEnabled("Stairs"), Oredicts.STAIRS);
-		addBlockType(Names.TRAPDOOR, BlockMMDTrapDoor.class, Options.isThingEnabled("Trapdoor"), Oredicts.TRAPDOOR);
-		addBlockType(Names.TRIPWIRE_HOOK, BlockMMDTripWireHook.class, Options.isThingEnabled("TripWire"), null);
-		addBlockType(Names.WALL, BlockMMDWall.class, Options.isThingEnabled(wall), Oredicts.WALL);
-		addBlockType(Names.FENCE, BlockMMDFence.class, Options.isThingEnabled(wall), null);
-		addBlockType(Names.FENCE_GATE, BlockMMDFenceGate.class, Options.isThingEnabled(wall), null);
-		addBlockType(Names.ENDORE, BlockMMDOre.class, Options.isThingEnabled(basics), Oredicts.ORE_END);
-		addBlockType(Names.NETHERORE, BlockMMDNetherOre.class, Options.isThingEnabled(basics), Oredicts.ORE_NETHER);
-		addBlockType(Names.ORE, BlockMMDOre.class, Options.isThingEnabled(basics), Oredicts.ORE);
-
-		Materials.init();
-		ItemGroups.init();
-
-		initDone = true;
-	}
-
-	/**
-	 * 
-	 * @param materialName
-	 *            The material of interest
-	 * @param tabs
-	 *            Container of the CreativeTabs these will get registered in
-	 */
-	protected static void createBlocksBasic(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createBlocksBasic(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material of interest
-	 * @param tabs
-	 *            Container of the CreativeTabs these will get registered in
-	 */
-	protected static void createBlocksBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-
-		create(Names.BLOCK, material, tabs.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
-		create(Names.PLATE, material, tabs.blocksTab);
-		create(Names.ORE, material, tabs.blocksTab); // Not Gold, Not Iron, Not Diamond, Not Stone
-		create(Names.BARS, material, tabs.blocksTab); // Not Iron
-		create(Names.DOOR, material, tabs.blocksTab); // Not Iron
-		create(Names.TRAPDOOR, material, tabs.blocksTab); // Not Iron
-	}
-
-	/**
-	 * 
-	 * @param materialName
-	 *            The material of interest
-	 * @param tabs
-	 *            Container of the CreativeTabs these will get registered in
-	 */
-	protected static void createBlocksAdditional(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createBlocksAdditional(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material of interest
-	 * @param tabs
-	 *            Container of the CreativeTabs these will get registered in
-	 */
-	protected static void createBlocksAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if (tabs == null) {
-			return;
-		}
-
-		create(Names.BUTTON, material, tabs.blocksTab);
-		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.DOUBLE_SLAB, material, tabs.blocksTab);
-		create(Names.LEVER, material, tabs.blocksTab);
-		create(Names.PRESSURE_PLATE, material, tabs.blocksTab); // Not Iron, Not Gold
-		create(Names.STAIRS, material, tabs.blocksTab);
-		create(Names.WALL, material, tabs.blocksTab);
-	}
-
-	/**
-	 * 
-	 * @param materialName
-	 *            The material of interest
-	 * @param tabs
-	 *            Container of the CreativeTabs these will get registered in
-	 */
-	protected static void createBlocksFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createBlocksFull(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material of interest
-	 * @param tabs
-	 *            Container of the CreativeTabs these will get registered in
-	 */
-	protected static void createBlocksFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		createBlocksBasic(material, tabs);
-		createBlocksAdditional(material, tabs);
+		addBlockType(Names.ANVIL, BlockMMDAnvil.class, Options.isThingEnabled(ConfigKeys.ANVIL), null);
+		addBlockType(Names.BARS, BlockMMDBars.class, Options.isThingEnabled(ConfigKeys.BARS), Oredicts.BARS);
+		addBlockType(Names.BLOCK, BlockMMDBlock.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.BLOCK);
+		addBlockType(Names.BOOKSHELF, BlockMMDBookshelf.class, Options.isThingEnabled(ConfigKeys.BOOKSHELF), null);
+		addBlockType(Names.BUTTON, BlockMMDButton.class, Options.isThingEnabled(ConfigKeys.BUTTON), Oredicts.BUTTON);
+		addBlockType(Names.DOOR, BlockMMDDoor.class, Options.isThingEnabled(ConfigKeys.DOOR), null);
+		addBlockType(Names.DOUBLE_SLAB, BlockMMDDoubleSlab.class, Options.isThingEnabled(ConfigKeys.SLAB), null);
+		addBlockType(Names.FLOWER_POT, BlockMMDFlowerPot.class, Options.isThingEnabled(ConfigKeys.FLOWERPOT), null);
+		addBlockType(Names.LADDER, BlockMMDLadder.class, Options.isThingEnabled(ConfigKeys.LADDER), null);
+		addBlockType(Names.LEVER, BlockMMDLever.class, Options.isThingEnabled(ConfigKeys.LEVER), Oredicts.LEVER);
+		addBlockType(Names.PLATE, BlockMMDPlate.class, Options.isThingEnabled(ConfigKeys.PLATE), Oredicts.PLATE);
+		addBlockType(Names.PRESSURE_PLATE, BlockMMDPressurePlate.class, Options.isThingEnabled(ConfigKeys.PRESSURE_PLATE), null);
+		addBlockType(Names.SLAB, BlockMMDSlab.class, Options.isThingEnabled(ConfigKeys.SLAB), null);
+		addBlockType(Names.STAIRS, BlockMMDStairs.class, Options.isThingEnabled(ConfigKeys.STAIRS), Oredicts.STAIRS);
+		addBlockType(Names.TRAPDOOR, BlockMMDTrapDoor.class, Options.isThingEnabled(ConfigKeys.TRAPDOOR), Oredicts.TRAPDOOR);
+		addBlockType(Names.TRIPWIRE_HOOK, BlockMMDTripWireHook.class, Options.isThingEnabled(ConfigKeys.TRIPWIRE_HOOK), null);
+		addBlockType(Names.WALL, BlockMMDWall.class, Options.isThingEnabled(ConfigKeys.WALL), Oredicts.WALL);
+		addBlockType(Names.FENCE, BlockMMDFence.class, Options.isThingEnabled(ConfigKeys.WALL), null);
+		addBlockType(Names.FENCE_GATE, BlockMMDFenceGate.class, Options.isThingEnabled(ConfigKeys.WALL), null);
+		addBlockType(Names.ENDORE, BlockMMDOre.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.ORE_END);
+		addBlockType(Names.NETHERORE, BlockMMDNetherOre.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.ORE_NETHER);
+		addBlockType(Names.ORE, BlockMMDOre.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.ORE);
 	}
 
 	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
@@ -222,7 +124,7 @@ public abstract class Blocks {
 			return material.getBlock(name);
 		}
 
-		if ((((name.equals(Names.ANVIL)) || (name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE))
+		if (((/*(name.equals(Names.ANVIL)) || */(name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE))
 				|| (name.equals(Names.FLOWER_POT)) || (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS))
 				|| (name.equals(Names.TRIPWIRE_HOOK)) || (name.equals(Names.WALL)))
 				&& (!material.hasBlock(Names.BLOCK)))
@@ -339,14 +241,14 @@ public abstract class Blocks {
 			try {
 				ctor = clazz.getConstructor(material.getClass());
 			} catch (Exception ex) {
-				BaseMetals.logger.fatal("Class for Block named " + name + " does not have an accessible constructor or another exception occurred", ex);
+				BaseMetals.logger.fatal("Class for Block named %s does not have an accessible constructor or another exception occurred", name, ex);
 				return null;
 			}
 
 			try {
 				inst = (Block) ctor.newInstance(material);
 			} catch (Exception ex) {
-				BaseMetals.logger.fatal("Unable to create Block named " + name + " for material " + material.getCapitalizedName(), ex);
+				BaseMetals.logger.fatal("Unable to create Block named %s for material %s", name, material.getCapitalizedName(), ex);
 			}
 
 			if (inst != null) {
@@ -358,18 +260,6 @@ public abstract class Blocks {
 		return null;
 	}
 
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createBookshelf(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.BOOKSHELF, material, false, tab);
-	}
-
 	protected static Block createBookshelf(@Nonnull final MMDMaterial material, @Nonnull final boolean fullBlock, final CreativeTabs tab) {
 
 		BlockMMDBookshelf bs = (BlockMMDBookshelf) create(Names.BOOKSHELF, material, tab);
@@ -377,275 +267,6 @@ public abstract class Blocks {
 			bs.setFullBlock(fullBlock);
 		}
 		return bs;
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createPlate(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.PLATE, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createBars(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.BARS, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createBlock(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.BLOCK, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param glow
-	 *            Does it have a glow ?
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createBlock(MMDMaterial material, boolean glow, CreativeTabs tab) {
-		return create(Names.BLOCK, material, glow, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createButton(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.BUTTON, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createLever(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.LEVER, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createPressurePlate(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.PRESSURE_PLATE, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createSlab(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.SLAB, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createDoubleSlab(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.DOUBLE_SLAB, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createStairs(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.STAIRS, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createWall(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.WALL, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createFence(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.FENCE, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createFenceGate(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.FENCE_GATE, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createAnvil(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.ANVIL, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createFlowerPot(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.FLOWER_POT, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createLadder(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.LADDER, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createTripWireHook(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.TRIPWIRE_HOOK, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createOre(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.ORE, material, false, tab);
-	}
-
-	/**
-	 * This is here purely for End Metals
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createEndOre(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.ENDORE, material, false, tab);
-	}
-
-	/**
-	 * This is here purely for Nether Metals
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createNetherOre(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.NETHERORE, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createDoor(MMDMaterial material, CreativeTabs tab) {
-		// oreDict is handled in items
-		return create(Names.DOOR, material, false, tab);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material this is made from
-	 * @param tab
-	 *            which creative tab is it on
-	 * @return the block this function created
-	 */
-	protected static Block createTrapDoor(MMDMaterial material, CreativeTabs tab) {
-		return create(Names.TRAPDOOR, material, false, tab);
 	}
 
 	protected static Class<? extends Block> getClassFromName(@Nonnull final Names name) {

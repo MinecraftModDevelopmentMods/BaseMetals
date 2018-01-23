@@ -14,8 +14,6 @@ import net.minecraftforge.fml.common.Loader;
 /** initializer for achievements */
 public class Achievements extends com.mcmoddev.lib.init.Achievements {
 
-	private static boolean initDone = false;
-
 	private Achievements() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -24,10 +22,6 @@ public class Achievements extends com.mcmoddev.lib.init.Achievements {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
 		if (Options.enableAchievements()) {
 			AchievementPage page = new AchievementPage(Loader.instance().activeModContainer().getModId());
 			AchievementPage.registerAchievementPage(page);
@@ -77,7 +71,5 @@ public class Achievements extends com.mcmoddev.lib.init.Achievements {
 				}
 			}
 		}
-
-		initDone = true;
 	}
 }

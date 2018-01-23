@@ -13,15 +13,11 @@ public class DenseOresBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "denseores";
 
-	private static boolean initDone = false;
-
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-
-		initDone = true;
 	}
 
 	/**

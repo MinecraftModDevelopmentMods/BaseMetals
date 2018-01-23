@@ -52,7 +52,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 					final boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemArrow ? ((ItemArrow) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer) : false);
 
 					if (!worldIn.isRemote) {
-						final ItemArrow itemArrow = (ItemArrow) ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW));
+						final ItemArrow itemArrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW));
 						final EntityArrow entityarrow = itemArrow.createArrow(worldIn, itemstack, entityplayer);
 						entityarrow.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 

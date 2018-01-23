@@ -72,7 +72,7 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 		IBlockState newState = bs.cycleProperty(BlockDoor.OPEN);
 		world.setBlockState(pos, newState, 2);
 		world.markBlockRangeForRenderUpdate(pos, coord);
-		world.playEvent(player, ((Boolean) newState.getValue(BlockDoor.OPEN)) ? 1003 : 1006, coord, 0);
+		world.playEvent(player, (newState.getValue(BlockDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
 

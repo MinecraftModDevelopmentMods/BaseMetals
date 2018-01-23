@@ -2,8 +2,8 @@ package com.mcmoddev.lib.fluids;
 
 import com.mcmoddev.basemetals.init.Materials;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
@@ -62,8 +62,8 @@ public class CustomFluid extends Fluid {
 	 */
 	public CustomFluid(String fluidName) {
 		super(fluidName,
-				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_still"),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_flow"));
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"));
 		if (Materials.getMaterialByName(fluidName) != null) {
 			this.color = Materials.getMaterialByName(fluidName).getTintColor();
 		}
@@ -81,8 +81,8 @@ public class CustomFluid extends Fluid {
 	 */
 	public CustomFluid(String fluidName, int tintARGB) {
 		super(fluidName,
-				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_still"),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId() + ":blocks/molten_metal_flow"));
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
+				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"));
 		this.color = tintARGB;
 		if (((this.color >> 24) & 0xFF) == 0) {
 			this.color |= 0xFF << 24;
@@ -97,6 +97,7 @@ public class CustomFluid extends Fluid {
 	@Override
 	public String getLocalizedName(FluidStack stack) {
 		String s = this.getUnlocalizedName();
-		return s == null ? "" : I18n.format(String.format("%s.name", s));
+//		return s == null ? "" : I18n.format(String.format("%s.name", s));
+        return s == null ? "" : new TextComponentTranslation(String.format("%s.name", s)).getFormattedText();
 	}
 }

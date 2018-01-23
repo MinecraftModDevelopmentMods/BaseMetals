@@ -11,10 +11,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.registry.recipe.ArbitraryCrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.OreDictionaryCrusherRecipe;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

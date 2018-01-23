@@ -36,35 +36,7 @@ public class ItemMMDFishingRod extends ItemFishingRod implements IMMDObject {
 		// this.setMaxStackSize(1);
 		// this.setCreativeTab(CreativeTabs.TOOLS);
 		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
-//		this.addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter() {
-//			@SideOnly(Side.CLIENT)
-//			@Override
-//			public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn) {
-//				return entityIn == null ? 0.0F : ((entityIn.getHeldItemMainhand() == stack) && (entityIn instanceof EntityPlayer) && (((EntityPlayer) entityIn).fishEntity != null) ? 1.0F : 0.0F);
-//			}
-//		});
 	}
-
-	/*
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		if (playerIn.fishEntity != null) {
-			final int i = playerIn.fishEntity.handleHookRetraction();
-			itemStackIn.damageItem(i, playerIn);
-			playerIn.swingArm(hand);
-		} else {
-			worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / ((itemRand.nextFloat() * 0.4F) + 0.8F));
-
-			if (!worldIn.isRemote)
-				worldIn.spawnEntity(new EntityMetalFishHook(worldIn, playerIn));
-
-			playerIn.swingArm(hand);
-			playerIn.addStat(StatList.getObjectUseStats(this));
-		}
-
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
-	}
-	*/
 
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
@@ -88,9 +60,9 @@ public class ItemMMDFishingRod extends ItemFishingRod implements IMMDObject {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean b) {
-		super.addInformation(stack, player, list, b);
-		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, list);
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean b) {
+		super.addInformation(stack, player, tooltip, b);
+		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);
 	}
 
 	@Override

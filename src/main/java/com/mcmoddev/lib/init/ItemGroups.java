@@ -31,8 +31,6 @@ public class ItemGroups {
 
 	private static final Map<String, List<MMDCreativeTab>> itemGroupsByModID = new HashMap<>();
 
-	private static boolean initDone = false;
-
 	protected ItemGroups() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -41,11 +39,6 @@ public class ItemGroups {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		initDone = true;
 	}
 
 	protected static int addTab(@Nonnull final String name, @Nonnull final boolean searchable) {

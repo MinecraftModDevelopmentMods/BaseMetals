@@ -26,12 +26,20 @@ public class BlockMMDBookshelf extends net.minecraft.block.BlockBookshelf implem
 		return this.material;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
+	@Deprecated
 	public boolean isFullCube(IBlockState state) {
 		return this.fullBlock;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
+	@Deprecated
 	public boolean isOpaqueCube(IBlockState state) {
 		return this.fullBlock;
 	}
