@@ -30,15 +30,12 @@ public class MekanismBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "mekanism";
 
-	private static boolean initDone = false;
 
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-
-		initDone = true;
 	}
 
 	protected static void addGassesForMaterial(@Nonnull final String materialName) {
@@ -69,10 +66,10 @@ public class MekanismBase implements IIntegration {
 		// TODO: check specifically for mek crystal type
 		final ItemStack crystal = material.getItemStack(Names.CRYSTAL);
 
-		if ((clump != ItemStack.EMPTY) && (powderDirty != ItemStack.EMPTY)) {
+		if ((material.hasItem(Names.CLUMP)) && (material.hasItem(Names.POWDER_DIRTY))) {
 			addCrusherRecipe(clump, powderDirty);
 		}
-		if ((ingot != ItemStack.EMPTY) && (powder != ItemStack.EMPTY)) {
+		if ((material.hasItem(Names.INGOT)) && (material.hasItem(Names.POWDER))) {
 			addCrusherRecipe(ingot, powder);
 		}
 

@@ -18,8 +18,6 @@ import net.minecraft.item.Item;
  */
 public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
-	private static boolean initDone = false;
-
 	private static final int BLOCKS_TAB_ID = addTab(SharedStrings.TAB_BLOCKS, true);
 	private static final int ITEMS_TAB_ID = addTab(SharedStrings.TAB_ITEMS, true);
 	private static final int TOOLS_TAB_ID = addTab(SharedStrings.TAB_TOOLS, true);
@@ -36,11 +34,6 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		initDone = true;
 	}
 
 	public static void setupIcons() {

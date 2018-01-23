@@ -4,6 +4,15 @@ import java.io.File;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.integration.plugins.DenseOres;
+import com.mcmoddev.basemetals.integration.plugins.EnderIO;
+import com.mcmoddev.basemetals.integration.plugins.IC2;
+import com.mcmoddev.basemetals.integration.plugins.Mekanism;
+import com.mcmoddev.basemetals.integration.plugins.Thaumcraft;
+import com.mcmoddev.basemetals.integration.plugins.ThermalExpansion;
+import com.mcmoddev.basemetals.integration.plugins.TinkersConstruct;
+import com.mcmoddev.basemetals.integration.plugins.VeinMiner;
+import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.util.ConfigBase;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -73,23 +82,23 @@ public class Config extends ConfigBase {
 				"disable this and using_orespawn to make MMDLib based mods not spawn any ores"));
 
 		// INTEGRATION
-		Options.modEnabled("enderio", configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
+		Options.modEnabled(EnderIO.PLUGIN_MODID, configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Ender IO"));
-		Options.modEnabled("ic2", configuration.getBoolean("ic2_integration", INTEGRATION_CAT, true,
+		Options.modEnabled(IC2.PLUGIN_MODID, configuration.getBoolean("ic2_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with IC2"));
-		Options.modEnabled("mekanism", configuration.getBoolean("mekanism_integration", INTEGRATION_CAT, true,
+		Options.modEnabled(Mekanism.PLUGIN_MODID, configuration.getBoolean("mekanism_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Mekanism"));
-		Options.modEnabled("thaumcraft", configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
+		Options.modEnabled(Thaumcraft.PLUGIN_MODID, configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Thaumcraft"));
-		Options.modEnabled("tconstruct", configuration.getBoolean("tinkers_construct_integration",
-				INTEGRATION_CAT, true, "If false, then Base Metals will not try and integrate with Tinkers Construct"));
-		Options.modEnabled("veinminer", configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
+		Options.modEnabled(TinkersConstruct.PLUGIN_MODID, configuration.getBoolean("tinkers_construct_integration", INTEGRATION_CAT, true,
+				"If false, then Base Metals will not try and integrate with Tinkers Construct"));
+		Options.modEnabled(VeinMiner.PLUGIN_MODID, configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with VeinMiner"));
 		Options.modEnabled("taiga", configuration.getBoolean("taiga_integration", INTEGRATION_CAT, true,
 				"Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals"));
-		Options.modEnabled("denseores", configuration.getBoolean("denseores", INTEGRATION_CAT, true,
+		Options.modEnabled(DenseOres.PLUGIN_MODID, configuration.getBoolean("denseores", INTEGRATION_CAT, true,
 				"If DenseOres is available, this will allow automatic integration"));
-		Options.modEnabled("thermalexpansion", configuration.getBoolean("thermal_expansion", INTEGRATION_CAT, true,
+		Options.modEnabled(ThermalExpansion.PLUGIN_MODID, configuration.getBoolean("thermal_expansion", INTEGRATION_CAT, true,
 				"If Thermal Expansion is available, this wil automatically integrate materials with the various machines"));
 
 		// METALS
@@ -178,67 +187,60 @@ public class Config extends ConfigBase {
 		Options.setFurnace1112(configuration.getBoolean("Furnace1112", TOOLS_CAT, true,
 				"Mimic 1.11.2 armor and tool melting.\n Overridden by Furnace Cheese"));
 
-		Options.thingEnabled("Basics", configuration.getBoolean("Enable Basics", TOOLS_CAT, true,
-				"Set to false to disable: Nuggets, Ingots, Powders, Blends, Blocks and Ores"));
-		Options.thingEnabled("BasicTools", configuration.getBoolean("Enable Basic Tools", TOOLS_CAT, true,
-				"Set to false to disable: Axe, Hoe, Pickaxe, Shovel and Sword"));
-		Options.thingEnabled("BowAndArrow", configuration.getBoolean("Enable Bow and Arrow", TOOLS_CAT, true,
-				"Set to false to turn off custom bows and arrows"));
-		Options.thingEnabled("CrossbowAndBolt", configuration.getBoolean("Enable Crossbow and Bolts", TOOLS_CAT, true,
-				"Set to false to disable custom crossbows and bolts"));
-		Options.thingEnabled("Armor", configuration.getBoolean("Enable Armor", TOOLS_CAT, true,
-				"Set to false to disable: Helmet, Chestplate, Leggings and Boots"));
-		Options.thingEnabled("CrackHammer", configuration.getBoolean("Enable Crackhammer", TOOLS_CAT, true,
-				"Why would you want to disable a valuable early-game tool ?\nThe question we're all asking though is will it blend?"));
-		Options.thingEnabled("FishingRod", configuration.getBoolean("Enable Fishing Rod", TOOLS_CAT, true,
-				"Set to false to turn off added fishing rods"));
-		Options.thingEnabled("HorseArmor", configuration.getBoolean("Enable Horse Armor", TOOLS_CAT, true,
-				"Set to false to disable extra Horse Armor"));
-		Options.thingEnabled("Shears", configuration.getBoolean("Enable Shears", TOOLS_CAT, true,
-				"I love Shears, do you? If you're a Shears hater, set this to false"));
-		Options.thingEnabled("SmallDust", configuration.getBoolean("Enable Small Dust", TOOLS_CAT, true,
-				"Turn this off to disable nugget-sized piles of dust.\n(Dust is a drug and drugs are bad. Don't do drugs, mmm-kay ?"));
-		Options.thingEnabled("Rod", configuration.getBoolean("Enable Rod", TOOLS_CAT, true,
-				"Spare the Rod... Wait, no, that's Biblical...\nThis controls whether or not rods of various materials (similar to Tinkers' Construct Tool Rod) sare available"));
-		Options.thingEnabled("Gear", configuration.getBoolean("Enable Gear", TOOLS_CAT, true,
-				"A lot of mods have Gears, we can provide them. Turn this off if you think you don't need them."));
-		Options.thingEnabled("Shield", configuration.getBoolean("Enable Shield", TOOLS_CAT, true,
-				"The Combat Update brought Shields to Vanilla Minecraft. Turn this off if you don't want them to multiply"));
-		Options.thingEnabled("Bars", configuration.getBoolean("Enable Bars", TOOLS_CAT, true,
-				"No, not the kind you drink at. The kind you find on jail-cells."));
-		Options.thingEnabled("Plate", configuration.getBoolean("Enable Plates", TOOLS_CAT, true,
-				"IC2, Tech Reborn and a number of other mods require plates of material. This provides recipes for them."));
-		Options.thingEnabled("Door",
+		Options.thingEnabled(ConfigKeys.BASICS,
+				configuration.getBoolean("Enable Basics", TOOLS_CAT, true, "Set to false to disable: Nuggets, Ingots, Powders, Blends, Blocks and Ores"));
+		Options.thingEnabled(ConfigKeys.BASIC_TOOLS,
+				configuration.getBoolean("Enable Basic Tools", TOOLS_CAT, true, "Set to false to disable: Axe, Hoe, Pickaxe, Shovel and Sword"));
+		Options.thingEnabled(ConfigKeys.BOW_AND_ARROW,
+				configuration.getBoolean("Enable Bow and Arrow", TOOLS_CAT, true, "Set to false to turn off custom bows and arrows"));
+		Options.thingEnabled(ConfigKeys.CROSSBOW_AND_BOLT,
+				configuration.getBoolean("Enable Crossbow and Bolts", TOOLS_CAT, true, "Set to false to disable custom crossbows and bolts"));
+		Options.thingEnabled(ConfigKeys.ARMOR,
+				configuration.getBoolean("Enable Armor", TOOLS_CAT, true, "Set to false to disable: Helmet, Chestplate, Leggings and Boots"));
+		Options.thingEnabled(ConfigKeys.CRACKHAMMER,
+				configuration.getBoolean("Enable Crackhammer", TOOLS_CAT, true, "Why would you want to disable a valuable early-game tool ?\nThe question we're all asking though is will it blend?"));
+		Options.thingEnabled(ConfigKeys.FISHING_ROD,
+				configuration.getBoolean("Enable Fishing Rod", TOOLS_CAT, true, "Set to false to turn off added fishing rods"));
+		Options.thingEnabled(ConfigKeys.HORSE_ARMOR,
+				configuration.getBoolean("Enable Horse Armor", TOOLS_CAT, true, "Set to false to disable extra Horse Armor"));
+		Options.thingEnabled(ConfigKeys.SHEARS,
+				configuration.getBoolean("Enable Shears", TOOLS_CAT, true, "I love Shears, do you? If you're a Shears hater, set this to false"));
+		Options.thingEnabled(ConfigKeys.SMALL_DUST,
+				configuration.getBoolean("Enable Small Dust", TOOLS_CAT, true, "Turn this off to disable nugget-sized piles of dust.\n(Dust is a drug and drugs are bad. Don't do drugs, mmm-kay ?"));
+		Options.thingEnabled(ConfigKeys.ROD,
+				configuration.getBoolean("Enable Rod", TOOLS_CAT, true, "Spare the Rod... Wait, no, that's Biblical...\nThis controls whether or not rods of various materials (similar to Tinkers' Construct Tool Rod) sare available"));
+		Options.thingEnabled(ConfigKeys.GEAR,
+				configuration.getBoolean("Enable Gear", TOOLS_CAT, true, "A lot of mods have Gears, we can provide them. Turn this off if you think you don't need them."));
+		Options.thingEnabled(ConfigKeys.SHIELD,
+				configuration.getBoolean("Enable Shield", TOOLS_CAT, true, "The Combat Update brought Shields to Vanilla Minecraft. Turn this off if you don't want them to multiply"));
+		Options.thingEnabled(ConfigKeys.BARS,
+				configuration.getBoolean("Enable Bars", TOOLS_CAT, true, "No, not the kind you drink at. The kind you find on jail-cells."));
+		Options.thingEnabled(ConfigKeys.PLATE,
+				configuration.getBoolean("Enable Plates", TOOLS_CAT, true, "IC2, Tech Reborn and a number of other mods require plates of material. This provides recipes for them."));
+		Options.thingEnabled(ConfigKeys.DOOR,
 				configuration.getBoolean("Enable Door", TOOLS_CAT, true, "Doors of many wondrous materials"));
-		Options.thingEnabled("Trapdoor", configuration.getBoolean("Enable Trapdoors", TOOLS_CAT, true,
-				"Do you want trapdoors? Because that's how you get trapdoors!"));
-		Options.thingEnabled("Button",
+		Options.thingEnabled(ConfigKeys.TRAPDOOR,
+				configuration.getBoolean("Enable Trapdoors", TOOLS_CAT, true, "Do you want trapdoors? Because that's how you get trapdoors!"));
+		Options.thingEnabled(ConfigKeys.BUTTON,
 				configuration.getBoolean("Enable Buttons", TOOLS_CAT, true, "Ooooh, what does this button do?"));
-		Options.thingEnabled("Slab",
+		Options.thingEnabled(ConfigKeys.SLAB,
 				configuration.getBoolean("Enable Slab", TOOLS_CAT, true, "Slabs of all the materials that get added"));
-		Options.thingEnabled("Lever", configuration.getBoolean("Enable Lever", TOOLS_CAT, true,
-				"Levers of all different materials - they even have different hardness's"));
-		Options.thingEnabled("PressurePlate", configuration.getBoolean("Enable Pressure-plates", TOOLS_CAT, true,
-				"Now your traps can be hidden in even more places!"));
-		Options.thingEnabled("Sickle", configuration.getBoolean("Enable Sickles", TOOLS_CAT, true,
-				"You've been asking for them, well - for the two-handed variant usually carried by the Grim Reaper, but..."));
-		Options.thingEnabled("Stairs", configuration.getBoolean("Enable Stairs", TOOLS_CAT, true,
-				"Stairs of our wonderful metals! Come and get your own - or don't. It's up to you."));
-		Options.thingEnabled("Wall",
+		Options.thingEnabled(ConfigKeys.LEVER,
+				configuration.getBoolean("Enable Lever", TOOLS_CAT, true, "Levers of all different materials - they even have different hardness's"));
+		Options.thingEnabled(ConfigKeys.PRESSURE_PLATE,
+				configuration.getBoolean("Enable Pressure-plates", TOOLS_CAT, true, "Now your traps can be hidden in even more places!"));
+		Options.thingEnabled(ConfigKeys.STAIRS,
+				configuration.getBoolean("Enable Stairs", TOOLS_CAT, true, "Stairs of our wonderful metals! Come and get your own - or don't. It's up to you."));
+		Options.thingEnabled(ConfigKeys.WALL,
 				configuration.getBoolean("Enable Wall", TOOLS_CAT, true, "Hey, Teachers! Leave those kids alone!"));
-		Options.thingEnabled("Anvil", configuration.getBoolean("Enable Anvils", TOOLS_CAT, true,
-				"Less Yak-yak, more Whack-whack (Hello Alex Steele!"));
-
-		final String experimental = "experimental";
-		Options.thingEnabled(experimental, configuration.getBoolean("Enable Experimental", TOOLS_CAT, false,
-				"Enable experimental features (Don't blame us if they burn down your cat or kill your house)"));
-
+		Options.thingEnabled(ConfigKeys.EXPERIMENTAL,
+				configuration.getBoolean("Enable Experimental", TOOLS_CAT, false, "Enable experimental features (Don't blame us if they burn down your cat or kill your house)"));
 		// Add some utility bits that are referenced
-		Options.thingEnabled("anvil", Options.isThingEnabled(experimental));
-		Options.thingEnabled("bookshelf", Options.isThingEnabled(experimental));
-		Options.thingEnabled("flowerpot", Options.isThingEnabled(experimental));
-		Options.thingEnabled("ladder", Options.isThingEnabled(experimental));
-		Options.thingEnabled("tripwire", Options.isThingEnabled(experimental));
+		Options.thingEnabled(ConfigKeys.ANVIL, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
+		Options.thingEnabled(ConfigKeys.BOOKSHELF, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
+		Options.thingEnabled(ConfigKeys.FLOWERPOT, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
+		Options.thingEnabled(ConfigKeys.LADDER, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
+		Options.thingEnabled(ConfigKeys.TRIPWIRE_HOOK, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
 
 		// Fluid options
 		Options.fluidEnabled("Charcoal",

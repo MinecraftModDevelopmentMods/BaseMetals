@@ -18,14 +18,12 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = EnderIO.PLUGIN_MODID)
 public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase implements IIntegration {
 
-	private static boolean initDone = false;
-
 	/**
 	 *
 	 */
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(EnderIO.PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
@@ -45,7 +43,5 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 		addSagMillRecipe(MaterialNames.LEAD, 2, MaterialNames.SILVER, 1, 360);
 		addSagMillRecipe(MaterialNames.NICKEL, 2, MaterialNames.PLATINUM, 1, 360);
 		addSagMillRecipe(MaterialNames.SILVER, 2, MaterialNames.LEAD, 1, 360);
-
-		initDone = true;
 	}
 }

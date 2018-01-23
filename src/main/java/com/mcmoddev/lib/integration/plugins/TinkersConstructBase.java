@@ -25,8 +25,6 @@ public class TinkersConstructBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "tconstruct";
 
-	private static boolean initDone = false;
-
 	protected static final TinkersConstructRegistry registry = TinkersConstructRegistry.instance;
 
 	private static boolean preInitRun = false;
@@ -35,11 +33,9 @@ public class TinkersConstructBase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-
-		initDone = true;
 	}
 
 	protected static void registerExtraMelting(@Nonnull final String materialName, @Nonnull final String type, @Nonnull final String name, @Nonnull final int amountPer) {
@@ -61,11 +57,11 @@ public class TinkersConstructBase implements IIntegration {
 	protected static void registerAlloy(@Nonnull final String outputName, @Nonnull final int outputQty, @Nonnull final String[] inputName, @Nonnull final int[] inputQty) {
 		FluidStack output = FluidRegistry.getFluidStack(outputName, outputQty);
 		FluidStack[] inputs = new FluidStack[inputName.length];
-		
+
 		for( int i = 0; i < inputName.length; i++ ) {
 			inputs[i] = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
 		}
-		
+
 		registry.registerAlloy(outputName, output, inputs);
 	}
 
@@ -74,7 +70,7 @@ public class TinkersConstructBase implements IIntegration {
 		
 		return registerMaterial(mat, craftable, castable);
 	}
-	
+
 	/**
 	 * Creates a Tinkers Construct
 	 * {@link slimeknights.tconstruct.library.materials.Material}
@@ -93,7 +89,7 @@ public class TinkersConstructBase implements IIntegration {
 			tcm.setCraftable();
 		if( castable )
 			tcm.setCastable();
-		
+
 		return tcm;
 	}
 

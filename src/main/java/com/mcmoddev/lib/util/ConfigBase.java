@@ -77,7 +77,7 @@ public class ConfigBase {
 		dictionary.stream()
 		.filter( entry -> {
 			List<ItemStack> iS = OreDictionary.getOres(Oredicts.INGOT.concat(entry.substring(4)));
-			for (ItemStack i : iS) {
+			for (final ItemStack i : iS) {
 				if ((CrusherRecipeRegistry.getRecipeForInputItem(i) != null)) {
 					return true;
 				}
@@ -96,16 +96,16 @@ public class ConfigBase {
 		dictionary.stream()
 		.filter( entry -> {
 			List<ItemStack> iS = OreDictionary.getOres(Oredicts.ORE.concat(entry.substring(4)));
-			for (ItemStack i : iS) {
-				if ((CrusherRecipeRegistry.getRecipeForInputItem(i) != null )) {
+			for (final ItemStack i : iS) {
+				if ((CrusherRecipeRegistry.getRecipeForInputItem(i) != null)) {
 					return true;
 				}
 			}
 			return false;
 		})
 		.forEach( entry -> {
-			String oreX = Oredicts.ORE.concat(entry.substring(4));
-			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
+			final String oreX = Oredicts.ORE.concat(entry.substring(4));
+			final ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
 			dustX.setCount(2);
 			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", oreX, dustX);
 			CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX);
@@ -144,7 +144,7 @@ public class ConfigBase {
 	 *         found
 	 */
 	public static ItemStack parseStringAsItemStack(String str, final boolean allowWildcard) {
-		String work = str.trim();
+		final String work = str.trim();
 		int count = 1;
 		int meta;
 		if (allowWildcard) {
@@ -352,7 +352,7 @@ public class ConfigBase {
 		private static final Map<String, Boolean> modEnabled = new HashMap<>();
 
 		public static boolean isModEnabled(String modName) {
-			String testName = modName.toLowerCase(Locale.ROOT);
+			final String testName = modName.toLowerCase(Locale.ROOT);
 			if (modEnabled.containsKey(testName)) {
 				return modEnabled.get(testName);
 			}
@@ -369,7 +369,7 @@ public class ConfigBase {
 		private static final Map<String, Boolean> materialEnabled = new HashMap<>();
 
 		public static boolean isMaterialEnabled(String name) {
-			String testName = name.toLowerCase(Locale.ROOT);
+			final String testName = name.toLowerCase(Locale.ROOT);
 			if (materialEnabled.containsKey(testName)) {
 				return materialEnabled.get(testName);
 			}
@@ -386,7 +386,7 @@ public class ConfigBase {
 		private static final Map<String, Boolean> thingEnabled = new HashMap<>();
 
 		public static boolean isThingEnabled(String name) {
-			String testName = name.toLowerCase(Locale.ROOT);
+			final String testName = name.toLowerCase(Locale.ROOT);
 			if (thingEnabled.containsKey(testName)) {
 				return thingEnabled.get(testName);
 			}
@@ -401,15 +401,15 @@ public class ConfigBase {
 
 		// FLUIDS
 		private static final Map<String, Boolean> fluidEnabled = new HashMap<>();
-		
+
 		public static boolean isFluidEnabled(String name) {
-			String testName = name.toLowerCase(Locale.ROOT);
+			final String testName = name.toLowerCase(Locale.ROOT);
 			if( fluidEnabled.containsKey(testName) ) {
 				return fluidEnabled.get(testName);
 			}
 			return false;
 		}
-		
+
 		public static void fluidEnabled(String name, Boolean bool) {
 			if( !fluidEnabled.containsKey(name) ) {
 				fluidEnabled.put(name.toLowerCase(Locale.ROOT), bool);

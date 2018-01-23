@@ -34,8 +34,6 @@ import net.minecraftforge.registries.RegistryBuilder;
  */
 public class Materials {
 
-	private static boolean initDone = false;
-
 	private final IForgeRegistry<MMDMaterial> REGISTRY;
 	public final static Materials instance = new Materials();
 	private static final Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
@@ -52,11 +50,6 @@ public class Materials {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		initDone = true;
 	}
 
 	/**
@@ -283,8 +276,8 @@ public class Materials {
 	 * @return the material
 	 */
 	protected static MMDMaterial registerMaterial(@Nonnull final MMDMaterial material) {
-		String modId = Loader.instance().activeModContainer().getModId();
-		ResourceLocation loc = new ResourceLocation(modId, material.getName());
+		final String modId = Loader.instance().activeModContainer().getModId();
+		final ResourceLocation loc = new ResourceLocation(modId, material.getName());
 		if (instance.REGISTRY.containsKey(loc)) {
 			BaseMetals.logger.error(
 					"You asked registermaterial() to register an existing material, Don't do that! (Returning pre existing material instead");

@@ -15,28 +15,28 @@ import static com.blamejared.mtlib.helpers.InputHelper.toStack;
 @ZenClass("mods.mmdlib.CrusherRecipes")
 @ZenRegister
 public class CrusherRecipes {
-	private static void removeMatchFull( ItemStack input, ItemStack output ) {
+	private static void removeMatchFull(ItemStack input, ItemStack output) {
 		CrusherRecipeRegistry.getAll().stream()
-		.filter( rec -> rec.getInputs().contains(input) )
-		.filter( rec -> rec.getOutput().equals(output) )
-		.forEach( rec -> CrusherRecipeRegistry.removeByName(rec.getRegistryName()));
+		.filter(rec -> rec.getInputs().contains(input))
+		.filter(rec -> rec.getOutput().equals(output))
+		.forEach(rec -> CrusherRecipeRegistry.removeByName(rec.getRegistryName()));
 	}
 	
-	private static void removeMatch( ItemStack input ) {
+	private static void removeMatch(ItemStack input) {
 		CrusherRecipeRegistry.removeByInput(input);
 	}
 	
 	@ZenMethod
-	public static void remove(IItemStack input, @Optional IItemStack output ) {
-		if( output != null ) {
-			removeMatchFull( toStack(input), toStack(output) );
+	public static void remove(IItemStack input, @Optional IItemStack output) {
+		if (output != null) {
+			removeMatchFull(toStack(input), toStack(output));
 		} else {
-			removeMatch( toStack(input) );
+			removeMatch(toStack(input));
 		}
 	}
 	
 	@ZenMethod
-	public static void add(IItemStack output, IItemStack input ) {
+	public static void add(IItemStack output, IItemStack input) {
 		CrusherRecipeRegistry.addNewCrusherRecipe(toStack(input), toStack(output));
 	}
 }

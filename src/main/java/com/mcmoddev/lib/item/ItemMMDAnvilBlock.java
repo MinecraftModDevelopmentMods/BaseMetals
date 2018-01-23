@@ -11,7 +11,7 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemMultiTexture imple
 	final MMDMaterial material;
 
 	public ItemMMDAnvilBlock(MMDMaterial material) {
-		super(material.getBlock(Names.ANVIL),material.getBlock(Names.ANVIL), new String[] {"intact", "slightlyDamaged", "veryDamaged"});
+		super(material.getBlock(Names.ANVIL), material.getBlock(Names.ANVIL), new String[] {"intact", "slightlyDamaged", "veryDamaged"});
 		this.material = material;
 	}
 
@@ -32,5 +32,4 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemMultiTexture imple
     	String unloc = super.getUnlocalizedName(stack);
         return unloc;
     }
-
 }

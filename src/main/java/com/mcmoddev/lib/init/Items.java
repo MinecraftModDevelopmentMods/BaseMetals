@@ -19,8 +19,11 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.block.*;
+import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.integration.plugins.IC2Base;
+import com.mcmoddev.lib.integration.plugins.MekanismBase;
 import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -43,8 +46,6 @@ import net.minecraft.item.ItemStack;
  */
 public abstract class Items {
 
-	private static boolean initDone = false;
-
 	private static BiMap<String, Item> itemRegistry = HashBiMap.create(34);
 	private static Map<MMDMaterial, List<Item>> itemsByMaterial = new HashMap<>();
 
@@ -66,65 +67,48 @@ public abstract class Items {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		com.mcmoddev.basemetals.util.Config.init();
-		Blocks.init();
-
-		final String armor = "Armor";
-		final String basics = "Basics";
-		final String basicTools = "BasicTools";
-		final String smallDust = "SmallDust";
-		final String crossbowAndBolt = "CrossbowAndBolt";
-		final String bowAndArrow = "BowAndArrow";
-
-		final String ic2 = "ic2";
-		final String mekanism = "mekanism";
-
-		addItemType(Names.CRYSTAL, ItemMMDIngot.class, Options.isThingEnabled(basics), Oredicts.CRYSTAL);
-		addItemType(Names.GEM, ItemMMDIngot.class, Options.isThingEnabled(basics), Oredicts.GEM);
-		addItemType(Names.ANVIL, ItemMMDAnvilBlock.class, Options.isThingEnabled("Anvil"), null);
-		addItemType(Names.ARROW, ItemMMDArrow.class, Options.isThingEnabled(bowAndArrow), Oredicts.ARROW);
-		addItemType(Names.AXE, ItemMMDAxe.class, Options.isThingEnabled(basicTools), null);
-		addItemType(Names.BLEND, ItemMMDBlend.class, Options.isThingEnabled(basics), Oredicts.DUST);
-		addItemType(Names.BOLT, ItemMMDBolt.class, Options.isThingEnabled(crossbowAndBolt), null);
-		addItemType(Names.BOOTS, ItemMMDArmor.class, Options.isThingEnabled(armor), null);
-		addItemType(Names.BOW, ItemMMDBow.class, Options.isThingEnabled(bowAndArrow), null);
-		addItemType(Names.CHESTPLATE, ItemMMDArmor.class, Options.isThingEnabled(armor), null);
-		addItemType(Names.CRACKHAMMER, ItemMMDCrackHammer.class, Options.isThingEnabled("CrackHammer"), null);
-		addItemType(Names.CROSSBOW, ItemMMDCrossbow.class, Options.isThingEnabled(crossbowAndBolt), null);
-		addItemType(Names.DOOR, ItemMMDDoor.class, Options.isThingEnabled("Door"), null);
-		addItemType(Names.FISHING_ROD, ItemMMDFishingRod.class, Options.isThingEnabled("FishingRod"), null);
-		addItemType(Names.HELMET, ItemMMDArmor.class, Options.isThingEnabled(armor), null);
-		addItemType(Names.HOE, ItemMMDHoe.class, Options.isThingEnabled(basicTools), null);
-		addItemType(Names.HORSE_ARMOR, ItemMMDHorseArmor.class, Options.isThingEnabled("HorseArmor"), null);
-		addItemType(Names.INGOT, ItemMMDIngot.class, Options.isThingEnabled(basics), Oredicts.INGOT);
-		addItemType(Names.LEGGINGS, ItemMMDArmor.class, Options.isThingEnabled(armor), null);
-		addItemType(Names.NUGGET, ItemMMDNugget.class, Options.isThingEnabled(basics), Oredicts.NUGGET);
-		addItemType(Names.PICKAXE, ItemMMDPickaxe.class, Options.isThingEnabled(basicTools), null);
-		addItemType(Names.POWDER, ItemMMDPowder.class, Options.isThingEnabled(basics), Oredicts.DUST);
-		addItemType(Names.SHEARS, ItemMMDShears.class, Options.isThingEnabled("Shears"), null);
-		addItemType(Names.SHIELD, ItemMMDShield.class, Options.isThingEnabled("Shield"), Oredicts.SHIELD);
-		addItemType(Names.SHOVEL, ItemMMDShovel.class, Options.isThingEnabled(basicTools), null);
+		addItemType(Names.CRYSTAL, ItemMMDIngot.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.CRYSTAL);
+		addItemType(Names.GEM, ItemMMDIngot.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.GEM);
+		addItemType(Names.ANVIL, ItemMMDAnvilBlock.class, Options.isThingEnabled(ConfigKeys.ANVIL), null);
+		addItemType(Names.ARROW, ItemMMDArrow.class, Options.isThingEnabled(ConfigKeys.BOW_AND_ARROW), Oredicts.ARROW);
+		addItemType(Names.AXE, ItemMMDAxe.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
+		addItemType(Names.BLEND, ItemMMDBlend.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.DUST);
+		addItemType(Names.BOLT, ItemMMDBolt.class, Options.isThingEnabled(ConfigKeys.CROSSBOW_AND_BOLT), null);
+		addItemType(Names.BOOTS, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR), null);
+		addItemType(Names.BOW, ItemMMDBow.class, Options.isThingEnabled(ConfigKeys.BOW_AND_ARROW), null);
+		addItemType(Names.CHESTPLATE, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR), null);
+		addItemType(Names.CRACKHAMMER, ItemMMDCrackHammer.class, Options.isThingEnabled(ConfigKeys.CRACKHAMMER), null);
+		addItemType(Names.CROSSBOW, ItemMMDCrossbow.class, Options.isThingEnabled(ConfigKeys.CROSSBOW_AND_BOLT), null);
+		addItemType(Names.DOOR, ItemMMDDoor.class, Options.isThingEnabled(ConfigKeys.DOOR), null);
+		addItemType(Names.FISHING_ROD, ItemMMDFishingRod.class, Options.isThingEnabled(ConfigKeys.FISHING_ROD), null);
+		addItemType(Names.HELMET, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR), null);
+		addItemType(Names.HOE, ItemMMDHoe.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
+		addItemType(Names.HORSE_ARMOR, ItemMMDHorseArmor.class, Options.isThingEnabled(ConfigKeys.HORSE_ARMOR), null);
+		addItemType(Names.INGOT, ItemMMDIngot.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.INGOT);
+		addItemType(Names.LEGGINGS, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR), null);
+		addItemType(Names.NUGGET, ItemMMDNugget.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.NUGGET);
+		addItemType(Names.PICKAXE, ItemMMDPickaxe.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
+		addItemType(Names.POWDER, ItemMMDPowder.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.DUST);
+		addItemType(Names.SHEARS, ItemMMDShears.class, Options.isThingEnabled(ConfigKeys.SHEARS), null);
+		addItemType(Names.SHIELD, ItemMMDShield.class, Options.isThingEnabled(ConfigKeys.SHIELD), Oredicts.SHIELD);
+		addItemType(Names.SHOVEL, ItemMMDShovel.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
 		addItemType(Names.SCYTHE, ItemMMDSickle.class, Options.isThingEnabled("Sickle"), null);
-		addItemType(Names.SLAB, ItemMMDSlab.class, Options.isThingEnabled("Slab"), Oredicts.SLAB);
-		addItemType(Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.isThingEnabled(smallDust), Oredicts.DUST_TINY);
-		addItemType(Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.isThingEnabled(smallDust), Oredicts.DUST_TINY);
-		addItemType(Names.SWORD, ItemMMDSword.class, Options.isThingEnabled(basicTools), null);
-		addItemType(Names.ROD, ItemMMDRod.class, Options.isThingEnabled("Rod"), Oredicts.ROD);
-		addItemType(Names.GEAR, ItemMMDGear.class, Options.isThingEnabled("Gear"), Oredicts.GEAR);
+		addItemType(Names.SLAB, ItemMMDSlab.class, Options.isThingEnabled(ConfigKeys.SLAB), Oredicts.SLAB);
+		addItemType(Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.isThingEnabled(ConfigKeys.SMALL_DUST), Oredicts.DUST_TINY);
+		addItemType(Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.isThingEnabled(ConfigKeys.SMALL_DUST), Oredicts.DUST_TINY);
+		addItemType(Names.SWORD, ItemMMDSword.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
+		addItemType(Names.ROD, ItemMMDRod.class, Options.isThingEnabled(ConfigKeys.ROD), Oredicts.ROD);
+		addItemType(Names.GEAR, ItemMMDGear.class, Options.isThingEnabled(ConfigKeys.GEAR), Oredicts.GEAR);
 
 		addItemType(Names.CASING, GenericMMDItem.class, Options.enableModderSupportThings(), Oredicts.CASING);
 		addItemType(Names.DENSE_PLATE, GenericMMDItem.class, Options.enableModderSupportThings(), Oredicts.PLATE_DENSE);
 
-		addItemType(Names.CRUSHED, GenericMMDItem.class, Options.isModEnabled(ic2), Oredicts.CRUSHED);
-		addItemType(Names.CRUSHED_PURIFIED, GenericMMDItem.class, Options.isModEnabled(ic2), Oredicts.CRUSHED_PURIFIED);
+		addItemType(Names.CRUSHED, GenericMMDItem.class, Options.isModEnabled(IC2Base.PLUGIN_MODID), Oredicts.CRUSHED);
+		addItemType(Names.CRUSHED_PURIFIED, GenericMMDItem.class, Options.isModEnabled(IC2Base.PLUGIN_MODID), Oredicts.CRUSHED_PURIFIED);
 
-		addItemType(Names.SHARD, GenericMMDItem.class, Options.isModEnabled(mekanism), Oredicts.SHARD);
-		addItemType(Names.CLUMP, GenericMMDItem.class, Options.isModEnabled(mekanism), Oredicts.CLUMP);
-		addItemType(Names.POWDER_DIRTY, GenericMMDItem.class, Options.isModEnabled(mekanism), Oredicts.DUST_DIRTY);
+		addItemType(Names.SHARD, GenericMMDItem.class, Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.SHARD);
+		addItemType(Names.CLUMP, GenericMMDItem.class, Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.CLUMP);
+		addItemType(Names.POWDER_DIRTY, GenericMMDItem.class, Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.DUST_DIRTY);
 
 		try {
 			expandCombatArrays(net.minecraft.item.ItemAxe.class);
@@ -134,8 +118,6 @@ public abstract class Items {
 
 		setSortingList();
 		addToMetList();
-
-		initDone = true;
 	}
 
 	private static void setSortingList() {
@@ -193,146 +175,6 @@ public abstract class Items {
 		metlist.sort((MMDMaterial a, MMDMaterial b) -> a.getName().compareToIgnoreCase(b.getName()));
 		for (int i = 0; i < metlist.size(); i++) {
 			materialSortingValues.put(metlist.get(i), i * 100);
-		}
-	}
-
-	@Deprecated
-	protected static void createItemsBasic(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsBasic(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material base of these items
-	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be on
-	 */
-	@Deprecated
-	protected static void createItemsBasic(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		create(Names.BLEND, material, tabs.itemsTab);
-		create(Names.INGOT, material, tabs.itemsTab);
-		create(Names.NUGGET, material, tabs.itemsTab);
-		create(Names.POWDER, material, tabs.itemsTab);
-		create(Names.SMALLBLEND, material, tabs.itemsTab);
-		create(Names.SMALLPOWDER, material, tabs.itemsTab);
-	}
-
-	@Deprecated
-	protected static void createItemsAdditional(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsAdditional(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	@Deprecated
-	protected static void createItemsAdditional(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		create(Names.ARROW, material, tabs.toolsTab);
-		create(Names.AXE, material, tabs.toolsTab);
-		create(Names.BOLT, material, tabs.toolsTab);
-		create(Names.BOOTS, material, tabs.toolsTab);
-		create(Names.BOW, material, tabs.toolsTab);
-		create(Names.CHESTPLATE, material, tabs.toolsTab);
-		create(Names.CRACKHAMMER, material, tabs.toolsTab);
-		create(Names.CROSSBOW, material, tabs.toolsTab);
-		create(Names.DOOR, material, tabs.blocksTab);
-		create(Names.FISHING_ROD, material, tabs.toolsTab);
-		create(Names.HELMET, material, tabs.toolsTab);
-		create(Names.HOE, material, tabs.toolsTab);
-		create(Names.HORSE_ARMOR, material, tabs.toolsTab);
-		create(Names.LEGGINGS, material, tabs.toolsTab);
-		create(Names.PICKAXE, material, tabs.toolsTab);
-		create(Names.SHEARS, material, tabs.toolsTab);
-		create(Names.SHIELD, material, tabs.toolsTab);
-		create(Names.SHOVEL, material, tabs.toolsTab);
-		create(Names.SLAB, material, tabs.blocksTab);
-		create(Names.SWORD, material, tabs.toolsTab);
-		create(Names.SCYTHE, material, tabs.toolsTab);
-		create(Names.ROD, material, tabs.itemsTab);
-		create(Names.GEAR, material, tabs.itemsTab);
-	}
-
-	@Deprecated
-	protected static void createItemsFull(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsFull(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material base of these items
-	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be on
-	 */
-	@Deprecated
-	protected static void createItemsFull(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		createItemsBasic(material, tabs);
-		createItemsAdditional(material, tabs);
-	}
-
-	@Deprecated
-	protected static void createItemsModSupport(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsModSupport(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material base of these items
-	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be on
-	 */
-	@Deprecated
-	protected static void createItemsModSupport(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-		if (Options.enableModderSupportThings()) {
-			create(Names.CASING, material, tabs.itemsTab);
-			create(Names.DENSE_PLATE, material, tabs.itemsTab);
-		}
-
-		createItemsModMekanism(material, tabs);
-		createItemsModIC2(material, tabs);
-	}
-
-	@Deprecated
-	protected static void createItemsModIC2(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsModIC2(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material base of these items
-	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be on
-	 */
-	@Deprecated
-	protected static void createItemsModIC2(@Nonnull final MMDMaterial material, @Nonnull final TabContainer tabs) {
-
-		if (material.hasOre()) {
-			create(Names.CRUSHED, material, tabs.itemsTab);
-			create(Names.CRUSHED_PURIFIED, material, tabs.itemsTab);
-		}
-	}
-
-	@Deprecated
-	protected static void createItemsModMekanism(@Nonnull final String materialName, @Nonnull final TabContainer tabs) {
-		createItemsModMekanism(Materials.getMaterialByName(materialName), tabs);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material base of these items
-	 * @param tabs
-	 *            TabContainer covering the various CreativeTabs items might be on
-	 */
-	@Deprecated
-	protected static void createItemsModMekanism(@Nonnull final MMDMaterial material,
-			@Nonnull final TabContainer tabs) {
-		if (material.hasOre()) {
-			createMekCrystal(material, tabs.itemsTab);
-			create(Names.SHARD, material, tabs.itemsTab);
-			create(Names.CLUMP, material, tabs.itemsTab);
-			create(Names.POWDER_DIRTY, material, tabs.itemsTab);
-			create(Names.CRYSTAL, material, tabs.itemsTab);
 		}
 	}
 

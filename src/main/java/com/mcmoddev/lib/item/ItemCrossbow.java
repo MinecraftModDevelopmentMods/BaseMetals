@@ -54,7 +54,7 @@ public class ItemCrossbow extends ItemBow {
 					final boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemBolt ? ((ItemBolt) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer) : false);
 
 					if (!worldIn.isRemote) {
-						final ItemBolt itemBolt = (ItemBolt) ((ItemBolt) (itemstack.getItem() instanceof ItemBolt ? itemstack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
+						final ItemBolt itemBolt = ((ItemBolt) (itemstack.getItem() instanceof ItemBolt ? itemstack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
 						final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemstack, entityplayer);
 						entityBolt.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 

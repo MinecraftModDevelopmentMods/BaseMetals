@@ -35,8 +35,6 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  */
 public abstract class Recipes {
 
-	private static boolean initDone = false;
-
 	protected Recipes() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -45,21 +43,11 @@ public abstract class Recipes {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		Materials.init();
-		Blocks.init();
-		Items.init();
-
 		initPureVanillaOredicts();
 		initPureVanillaCrusherRecipes();
-		initVanillaRecipes();
+
 		initGeneralRecipes();
 		initModSpecificRecipes();
-
-		initDone = true;
 	}
 
 	protected static void initPureVanillaOredicts() {

@@ -28,11 +28,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase
 		implements IIntegration {
 
-	private static boolean initDone = false;
-
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
@@ -55,7 +53,6 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		registerMaterial(MaterialNames.ZINC, true, false);
 
 		MinecraftForge.EVENT_BUS.register(this);
-		initDone = true;
 	}
 
 	public void preInit() {

@@ -30,12 +30,12 @@ public class TraitRegistry {
 	}
 
 	public static ITrait getTrait(@Nonnull final String name) {
-		if( registeredTraits.isEmpty() ) {
+		if (registeredTraits.isEmpty()) {
 			initTraits();
 			initTiCTraits();
 		}
 		
-		if( registeredTraits.containsKey(name) ) {
+		if (registeredTraits.containsKey(name)) {
 			return registeredTraits.get(name);
 		} else {
 			// assume it's a core TiC trait

@@ -92,16 +92,7 @@ public abstract class VillagerTrades {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		Materials.init();
-		Items.init();
-
 		registerCommonTrades();
-
-		initDone = true;
 	}
 
 	protected static void registerCommonTrades() {

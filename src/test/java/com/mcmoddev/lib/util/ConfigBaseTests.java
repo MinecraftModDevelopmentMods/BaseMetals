@@ -14,6 +14,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 class ConfigBaseTests {
 
 	private static String MODID;
+	private static final String name = "TestMod";
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -35,28 +36,20 @@ class ConfigBaseTests {
 
 	@Test
 	void testIsModEnabledDetectsModIsNotPresent() {
-		String name = "TestMod";
-		
 		assertEquals(false, Options.isModEnabled(name));
 	}
-	
+
 	@Test
 	void testIsModEnabledDetectsModIsEnabled() {
-		String name = "TestMod";
-		
 		Options.modEnabled(name, true);
-		
-		
+
 		assertEquals(true, Options.isModEnabled(name));
 	}
-	
+
 	@Test
 	void testIsModEnabledDetectsModIsDisabled() {
-		String name = "TestMod";
-		
 		Options.modEnabled(name, false);
-		
-		
+
 		assertEquals(false, Options.isModEnabled(name));
 	}
 }

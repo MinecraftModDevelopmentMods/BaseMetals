@@ -22,16 +22,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansionBase
 		implements IIntegration {
 
-	private static boolean initDone = false;
-
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(ThermalExpansion.PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
 		MinecraftForge.EVENT_BUS.register(this);
-		initDone = true;
 	}
 
 	@SubscribeEvent

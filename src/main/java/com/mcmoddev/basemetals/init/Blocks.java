@@ -27,8 +27,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	public static Block humanDetector;
 
-	private static boolean initDone = false;
-
 	protected Blocks() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -37,15 +35,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		com.mcmoddev.basemetals.util.Config.init();
-		com.mcmoddev.lib.init.Blocks.init();
-		Materials.init();
-		ItemGroups.init();
-
 		registerVanilla();
 
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
@@ -78,9 +67,9 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		createMercury();
 		createAnvils();
 
-		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.myTabs.blocksTab);
-
-		initDone = true;
+		if (humanDetector != null) {
+			humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.myTabs.blocksTab);
+		}
 	}
 
 	private static void createAnvils() {
@@ -136,7 +125,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 	}
 
-	protected static void registerVanilla() {
+	private static void registerVanilla() {
 		// Vanilla Materials get their Ore and Block always
 		final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 		final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);

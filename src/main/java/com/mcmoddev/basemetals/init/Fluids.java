@@ -15,8 +15,6 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
  */
 public class Fluids extends com.mcmoddev.lib.init.Fluids {
 
-	private static boolean initDone = false;
-
 	private Fluids() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -25,10 +23,6 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
 		// Vanilla Materials need to always have fluids available in case of tie-in mods
 		final List<String> vanillaMaterials = Arrays.asList(MaterialNames.CHARCOAL, MaterialNames.COAL,
 				MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON,
@@ -55,7 +49,5 @@ public class Fluids extends com.mcmoddev.lib.init.Fluids {
 			addFluid(MaterialNames.MERCURY, 13594, 2000, 769, 0);
 			addFluidBlock(MaterialNames.MERCURY);
 		}
-
-		initDone = true;
 	}
 }

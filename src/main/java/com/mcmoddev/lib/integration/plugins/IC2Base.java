@@ -6,8 +6,8 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Oredicts;
 
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.Recipes;
@@ -19,15 +19,11 @@ public class IC2Base implements IIntegration {
 
 	public static final String PLUGIN_MODID = "ic2";
 
-	private static boolean initDone = false;
-
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-
-		initDone = true;
 	}
 
 	// This is broken and needs extensive work on our side of things to make it work
@@ -97,7 +93,7 @@ public class IC2Base implements IIntegration {
 	protected void addMetalFormerRecipes(@Nonnull final String materialName) {
 		addMetalFormerRecipes(Materials.getMaterialByName(materialName));
 	}
-	
+
 	protected void addMetalFormerRecipes(@Nonnull final MMDMaterial material) {
 		final String oreDictName = material.getCapitalizedName();
 		final IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.INGOT + oreDictName);
@@ -111,7 +107,7 @@ public class IC2Base implements IIntegration {
 	protected void addCompressorRecipes(@Nonnull final String materialName) {
 		addCompressorRecipes(Materials.getMaterialByName(materialName));
 	}
-	
+
 	protected void addCompressorRecipes(@Nonnull final MMDMaterial material) {
 		final String oreDictName = material.getCapitalizedName();
 		final IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.PLATE + oreDictName, 9);

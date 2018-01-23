@@ -3,6 +3,7 @@ package com.mcmoddev.lib.block;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,7 +40,7 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 			return false;
 		IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
 		world.setBlockState(coord, newState, 2);
-		world.playEvent(player, ((Boolean) newState.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
+		world.playEvent(player, (newState.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
 

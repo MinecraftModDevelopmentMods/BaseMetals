@@ -116,5 +116,4 @@ public class BaseMetals {
 	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
 		proxy.onRemapItem(event);
 	}
-
 }

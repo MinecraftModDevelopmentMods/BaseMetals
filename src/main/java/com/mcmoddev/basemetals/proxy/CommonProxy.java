@@ -58,10 +58,13 @@ public class CommonProxy {
 			}
 		}
 
+		com.mcmoddev.lib.init.Materials.init();
 		Materials.init();
 		Fluids.init();
 		ItemGroups.init();
+		com.mcmoddev.lib.init.Blocks.init();
 		Blocks.init();
+		com.mcmoddev.lib.init.Items.init();
 		Items.init();
 
 		// icons have to be setup after the blocks and items are initialized
@@ -98,6 +101,7 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		allsGood = false;
+		// com.mcmoddev.lib.init.Recipes.init();
 		// Recipes.init();
 
 		IntegrationManager.INSTANCE.runCallbacks("init");

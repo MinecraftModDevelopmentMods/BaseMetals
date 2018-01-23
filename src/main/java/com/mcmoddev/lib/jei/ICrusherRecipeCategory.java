@@ -20,6 +20,7 @@ import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWrapper> {
 	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID, "textures/jei/jeihammeroverlay.png");
@@ -44,12 +45,12 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 
 	@Override
 	public String getModName() {
-		return "basemetals";
+		return 	BaseMetalsJEIPlugin.JEI_UID;
 	}
 
 	@Override
 	public String getTitle() {
-		return Translator.translateToLocal(getUid());
+		return new TextComponentTranslation(String.format(getUid())).getFormattedText();
 	}
 
 	@Override
@@ -57,7 +58,6 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 		return background;
 	}
 
-	@Nullable
 	@Override
 	public IDrawable getIcon() {
 		return icon;
@@ -65,7 +65,7 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, @Nonnull ICrusherRecipeWrapper recipeWrapper, IIngredients ingredients) {
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+		final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
 		// init the input slot
 		guiItemStacks.init(0, true, 40, 14);

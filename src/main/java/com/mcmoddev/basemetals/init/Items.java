@@ -32,8 +32,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  */
 public class Items extends com.mcmoddev.lib.init.Items {
 
-	private static boolean initDone = false;
-
 	protected Items() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -42,14 +40,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		com.mcmoddev.basemetals.util.Config.init();
-		Blocks.init();
-		com.mcmoddev.lib.init.Items.init();
-
 		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT,
 				new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
 		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT,
@@ -151,8 +141,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 				.forEach(materialName -> create(Names.ANVIL, Materials.getMaterialByName(materialName)));
 
 		addToMetList();
-
-		initDone = true;
 	}
 
 	private static void doSpecialMats() {
@@ -315,7 +303,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.CHESTPLATE, iron);
 			create(Names.CRACKHAMMER, iron);
 			create(Names.CROSSBOW, iron);
-			create(Names.DOOR, iron);
+//			create(Names.DOOR, iron);
 			create(Names.FISHING_ROD, iron);
 			create(Names.HELMET, iron);
 			create(Names.HOE, iron);
