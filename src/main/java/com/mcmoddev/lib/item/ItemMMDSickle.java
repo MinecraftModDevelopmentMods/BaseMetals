@@ -14,6 +14,7 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -35,23 +36,22 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 
 public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
-	public static final ImmutableSet<net.minecraft.block.material.Material> vanilla_materials = ImmutableSet.of(
-			net.minecraft.block.material.Material.WEB, net.minecraft.block.material.Material.LEAVES,
-			net.minecraft.block.material.Material.PLANTS, net.minecraft.block.material.Material.VINE,
-			net.minecraft.block.material.Material.GOURD, net.minecraft.block.material.Material.CACTUS);
+	public static final ImmutableSet<Material> vanilla_materials = ImmutableSet.of(
+			Material.WEB, Material.LEAVES, Material.PLANTS, Material.VINE, Material.GOURD, Material.CACTUS);
 
 	private final MMDMaterial material;
 	private int actionDiameter;// = 3;
-	private float efficiency;
+	private float efficiencyOnProperMaterial;
 	private float attackDamage;
 	private float attackSpeed;
 
 	public ItemMMDSickle(MMDMaterial material) {
 		super(material);
-		this.efficiency = material.getToolEfficiency();
+		this.efficiencyOnProperMaterial = material.getToolEfficiency();
 		this.setMaxDamage(material.getToolDurability());
 		this.material = material;
 		this.actionDiameter = 3;
+        this.efficiencyOnProperMaterial = 4.0F;
 	}
 
 	@Override
@@ -59,18 +59,16 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 		return this.material;
 	}
 
-	/*
 	@Override
-	public float getDestroySpeed(ItemStack stack, IBlockState state) {
+	public float getStrVsBlock(ItemStack stack, IBlockState state) {
 		{
 			for (String type : getToolClasses(stack)) {
 				if (state.getBlock().isToolEffective(type, state))
-					return efficiency;
+					return efficiencyOnProperMaterial;
 			}
-			return this.isEffective(state) ? this.efficiency : 1.0F;
+			return this.isEffective(state) ? this.efficiencyOnProperMaterial : 1.0F;
 		}
 	}
-	*/
 
 	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
@@ -214,8 +212,10 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	 * Gets a map of item attribute modifiers, used by ItemSword to increase hit
 	 * damage.
 	 */
+	@Override
+	@Deprecated
 	public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
-		Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
+		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, ItemStack.EMPTY);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
 			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
