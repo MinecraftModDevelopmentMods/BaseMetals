@@ -19,15 +19,11 @@ public class IC2Base implements IIntegration {
 
 	public static final String PLUGIN_MODID = "ic2";
 
-	private static boolean initDone = false;
-
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-
-		initDone = true;
 	}
 
 	// This is broken and needs extensive work on our side of things to make it work
@@ -51,11 +47,11 @@ public class IC2Base implements IIntegration {
 	protected void registerVanillaRecipes(@Nonnull final MMDMaterial material) {
 //		final Item forgeHammer = new ItemStack(Item.getByNameOrId("ic2:forge_hammer"), 1).getItem();
 //		final Item forgeHammer = IC2Items.getItem("forge_hammer").getItem(); // crashes
-		
+
 		final ItemStack ingot = material.getItemStack(Names.INGOT, 1);
 
 //		if (forgeHammer != null) {
-//			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(material.getItemStack(Names.CASING, 2), material.getItemStack(Names.PLATE), forgeHammer));
+//			GameRegistry.addRecipe(new ShapelessOreRecipe(material.getItemStack(Names.CASING, 2), material.getItemStack(Names.PLATE), forgeHammer));
 //		}
 
 		// Move these to main recipe loop?
@@ -74,7 +70,7 @@ public class IC2Base implements IIntegration {
 		Recipes.macerator.addRecipe(inputOre, null, false, material.getItemStack(Names.CRUSHED, 2));
 		Recipes.macerator.addRecipe(inputDensePlate, null, false, material.getItemStack(Names.POWDER, 8));
 	}
-	
+
 	protected void addMaceratorRecipe(@Nonnull final String oreDict, @Nonnull ItemStack output) {
 		final IRecipeInput input = Recipes.inputFactory.forOreDict(oreDict);
 		Recipes.macerator.addRecipe(input, null, false, output);
@@ -105,7 +101,7 @@ public class IC2Base implements IIntegration {
 	protected void addMetalFormerRecipes(@Nonnull final String materialName) {
 		addMetalFormerRecipes(Materials.getMaterialByName(materialName));
 	}
-	
+
 	protected void addMetalFormerRecipes(@Nonnull final MMDMaterial material) {
 		final String oreDictName = material.getCapitalizedName();
 		final IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.INGOT + oreDictName);
@@ -119,7 +115,7 @@ public class IC2Base implements IIntegration {
 	protected void addCompressorRecipes(@Nonnull final String materialName) {
 		addCompressorRecipes(Materials.getMaterialByName(materialName));
 	}
-	
+
 	protected void addCompressorRecipes(@Nonnull final MMDMaterial material) {
 		final String oreDictName = material.getCapitalizedName();
 		final IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.PLATE + oreDictName, 9);

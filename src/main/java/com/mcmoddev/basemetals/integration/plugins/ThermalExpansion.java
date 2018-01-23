@@ -18,11 +18,9 @@ import cofh.api.util.ThermalExpansionHelper;
 public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansionBase
 		implements IIntegration {
 
-	private static boolean initDone = false;
-
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(ThermalExpansion.PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
@@ -62,7 +60,5 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 						nickel.getItemStack(Names.INGOT, 1), cupronickel.getItemStack(Names.INGOT, 4));
 			}
 		}
-
-		initDone = true;
 	}
 }

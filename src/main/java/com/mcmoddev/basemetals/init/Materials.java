@@ -18,8 +18,6 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
  */
 public class Materials extends com.mcmoddev.lib.init.Materials {
 
-	private static boolean initDone = false;
-
 	private Materials() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -28,10 +26,6 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
 		// Vanilla Materials
 		// always created and populated with their base item-sets
 		// even if they are not enabled
@@ -63,8 +57,6 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 			Materials.getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
 					.setDefaultDimension(1).setRegenerates(true);
 		}
-
-		initDone = true;
 	}
 
 	private static int getColor(@Nonnull final String name) {

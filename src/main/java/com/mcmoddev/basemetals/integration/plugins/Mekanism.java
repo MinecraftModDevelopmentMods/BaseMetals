@@ -13,11 +13,9 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
 public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase implements IIntegration {
 
-	private static boolean initDone = false;
-
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(Mekanism.PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
@@ -31,7 +29,5 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 					addGassesForMaterial(materialName);
 				addOreMultiplicationRecipes(materialName);
 				});
-
-		initDone = true;
 	}
 }

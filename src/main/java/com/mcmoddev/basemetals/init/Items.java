@@ -27,8 +27,6 @@ import net.minecraft.item.ItemStack;
  */
 public class Items extends com.mcmoddev.lib.init.Items {
 
-	private static boolean initDone = false;
-
 	protected Items() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -37,14 +35,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		com.mcmoddev.basemetals.util.Config.init();
-		Blocks.init();
-		com.mcmoddev.lib.init.Items.init();
-
 		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT,
 				new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
 		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT,
@@ -147,8 +137,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 				.forEach(materialName -> create(Names.ANVIL, Materials.getMaterialByName(materialName)));
 
 		addToMetList();
-
-		initDone = true;
 	}
 
 	private static void doSpecialMats() {
@@ -297,7 +285,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
 		iron.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
 		iron.addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
-		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.field_191525_da); // IRON_NUGGET
+		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.field_191525_da); // Items.IRON_NUGGET
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
@@ -316,7 +304,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.CHESTPLATE, iron);
 			create(Names.CRACKHAMMER, iron);
 			create(Names.CROSSBOW, iron);
-			create(Names.DOOR, iron);
+//			create(Names.DOOR, iron);
 			create(Names.FISHING_ROD, iron);
 			create(Names.HELMET, iron);
 			create(Names.HOE, iron);
@@ -380,7 +368,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 	}
 
-	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
+	private static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
 		CreativeTabs tab;
 
 		if ((name.equals(Names.DOOR)) || (name.equals(Names.SLAB))) {

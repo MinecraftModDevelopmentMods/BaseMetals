@@ -27,17 +27,13 @@ public class TinkersConstructBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "tconstruct";
 
-	private static boolean initDone = false;
-
 	protected static final TinkersConstructRegistry registry = TinkersConstructRegistry.getInstance();
 
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-
-		initDone = true;
 	}
 
 	protected static void registerExtraMelting(@Nonnull final String materialName, @Nonnull final Block block, @Nonnull final int amountPer) {

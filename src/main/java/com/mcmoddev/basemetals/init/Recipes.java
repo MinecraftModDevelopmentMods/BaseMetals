@@ -24,8 +24,6 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  */
 public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
-	private static boolean initDone = false;
-
 	private Recipes() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -34,21 +32,8 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		Materials.init();
-		Blocks.init();
-		Items.init();
-
-		initPureVanillaOredicts();
-		initPureVanillaCrusherRecipes();
 		initVanillaRecipes();
-		initGeneralRecipes();
 		initModSpecificRecipes();
-
-		initDone = true;
 	}
 
 	protected static void initVanillaRecipes() {
@@ -61,19 +46,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 			if (Options.isMaterialEnabled(MaterialNames.STONE)) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(Materials.getMaterialByName(MaterialNames.STONE).getItemStack(Names.CRACKHAMMER), "x", "/", "/", 'x', net.minecraft.init.Blocks.STONEBRICK, '/', Oredicts.STICK_WOOD));
 			}
-		}
-
-		// Iron items
-		if (Materials.hasMaterial(MaterialNames.IRON)) {
-			// this should all be handled elsewhere in 1.11
-			// Not needed for 1.11.1+
-			/*
-			MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
-			oreDictName = iron.getCapitalizedName();
-
-			GameRegistry.addRecipe(new ShapelessOreRecipe(iron.getItemStack(Names.NUGGET, 9), Oredicts.INGOT + oreDictName));
-			GameRegistry.addRecipe(new ShapedOreRecipe(iron.getItemStack(Names.INGOT), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName));
-			*/
 		}
 
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {

@@ -8,11 +8,9 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TAIGA.PLUGIN_MODID)
 public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implements IIntegration {
 
-	private static boolean initDone = false;
-
 	@Override
 	public void init() {
-		if (initDone || ((!Options.isModEnabled(TAIGA.PLUGIN_MODID)) && (!Options.isModEnabled(TinkersConstruct.PLUGIN_MODID)))) {
+		if (!Options.isModEnabled(PLUGIN_MODID) && (!Options.isModEnabled(TinkersConstruct.PLUGIN_MODID))) {
 			return;
 		}
 
@@ -22,8 +20,6 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 		//TAIGAItems.init(TAIGAMaterials.materials);
 
 		// TraitRegistry.dumpRegistry();
-
-		initDone = true;
 	}
 
 	/*

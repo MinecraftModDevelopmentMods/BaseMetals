@@ -32,8 +32,6 @@ import net.minecraftforge.fml.common.Loader;
  */
 public abstract class Materials {
 
-	private static boolean initDone = false;
-
 	private static final Map<String, MMDMaterial> allMaterials = new HashMap<>();
 	private static final Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
@@ -49,11 +47,6 @@ public abstract class Materials {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		initDone = true;
 	}
 
 	/**

@@ -15,10 +15,10 @@ import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
-import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWrapper> {
 
@@ -26,7 +26,6 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 	private final IDrawable background;
 	private final IDrawable icon;
 	protected final IDrawableAnimated hammer;
-	protected final IGuiHelper helper;
 
 	public ICrusherRecipeCategory(IGuiHelper guiHelper) {
 		this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
@@ -34,7 +33,6 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 
 		IDrawableStatic hammerDrawable = guiHelper.createDrawable(resourceLocation, 169, 17, 32, 32);
 		this.hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 200, IDrawableAnimated.StartDirection.BOTTOM, false);
-		this.helper = guiHelper;
 	}
 
 	@Override
@@ -44,12 +42,12 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 
 	@Override
 	public String getModName() {
-		return "basemetals";
+		return 	BaseMetalsJEIPlugin.JEI_UID;
 	}
 
 	@Override
 	public String getTitle() {
-		return Translator.translateToLocal(getUid());
+		return new TextComponentTranslation(String.format(getUid())).getFormattedText();
 	}
 
 	@Override
@@ -69,7 +67,7 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, @Nonnull ICrusherRecipeWrapper recipeWrapper, IIngredients ingredients) {
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+		final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
 		// init the input slot
 		guiItemStacks.init(0, true, 40, 14);

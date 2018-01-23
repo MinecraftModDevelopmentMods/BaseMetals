@@ -33,6 +33,7 @@ public class ClientProxy extends CommonProxy {
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class, RenderCustomArrow::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomBolt.class, RenderCustomBolt::new);
+
 		for (final String name : Items.getItemRegistry().keySet()) {
 			if (!name.endsWith(Names.ANVIL.toString()))
 				RegistrationHelper.registerItemRender(name);

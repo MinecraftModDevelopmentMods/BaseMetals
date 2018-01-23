@@ -122,7 +122,7 @@ public class TinkersConstructRegistry {
 	 * @param name
 	 *            name of the material
 	 * @param material
-	 *            MetalMaterial it is based on
+	 *            MMDMaterial it is based on
 	 * @return Any TCCode that represents an error or TCCode.SUCCESS
 	 */
 	public TCMaterial getMaterial(@Nonnull final String name, @Nonnull final MMDMaterial material) {

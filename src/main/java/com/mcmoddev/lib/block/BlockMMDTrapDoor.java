@@ -40,7 +40,7 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 			return false;
 		IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
 		world.setBlockState(coord, newState, 2);
-		world.playEvent(player, ((Boolean) newState.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
+		world.playEvent(player, (newState.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
 		return true;
 	}
 

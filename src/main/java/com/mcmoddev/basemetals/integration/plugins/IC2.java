@@ -9,19 +9,16 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.integration.plugins.IC2Base;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID)
-public class IC2 extends IC2Base implements IIntegration {
-
-	private static boolean initDone = false;
+public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements IIntegration {
 
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(IC2.PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 
@@ -56,7 +53,5 @@ public class IC2 extends IC2Base implements IIntegration {
 				addMaceratorRecipe(Oredicts.ORE + oreDictName, emerald.getItemStack(Names.POWDER, 2));
 			}
 		}
-
-		initDone = true;
 	}
 }

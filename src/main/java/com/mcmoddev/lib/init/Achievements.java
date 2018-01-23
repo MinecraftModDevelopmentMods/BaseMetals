@@ -29,8 +29,6 @@ public abstract class Achievements {
 	private static final BiMap<String, Achievement> achievementRegistry = HashBiMap.create(16);
 	private static Map<MMDMaterial, List<Achievement>> achievementsByMaterial = new HashMap<>();
 
-	private static boolean initDone = false;
-
 	protected Achievements() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -39,11 +37,6 @@ public abstract class Achievements {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		initDone = true;
 	}
 
 	protected static Achievement makeAchievement(@Nonnull final String baseName, @Nonnull final Achievement requirement, @Nonnull final int x, @Nonnull final int y, @Nonnull final Item icon, @Nonnull final AchievementPage page) {

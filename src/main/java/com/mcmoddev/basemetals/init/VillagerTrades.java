@@ -17,8 +17,6 @@ import net.minecraft.item.Item;
  */
 public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 
-	private static boolean initDone = false;
-
 	private VillagerTrades() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -27,17 +25,8 @@ public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		Materials.init();
-		Items.init();
-
 		registerCommonTrades();
 		registerModSpecificTrades();
-
-		initDone = true;
 	}
 
 	protected static void registerModSpecificTrades() {

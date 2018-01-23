@@ -41,8 +41,6 @@ public abstract class VillagerTrades {
 	protected static final int WEAPON_SMITH_ID = 2;
 	protected static final int TOOL_SMITH_ID = 3;
 
-	private static boolean initDone = false;
-
 	protected static final int TRADES_PER_LEVEL = 4;
 
 	protected VillagerTrades() {
@@ -53,16 +51,7 @@ public abstract class VillagerTrades {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		Materials.init();
-		Items.init();
-
 		registerCommonTrades();
-
-		initDone = true;
 	}
 
 	protected static void registerCommonTrades() {

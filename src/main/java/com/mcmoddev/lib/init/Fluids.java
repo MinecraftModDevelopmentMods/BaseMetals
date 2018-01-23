@@ -37,8 +37,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 public abstract class Fluids {
 
-	private static boolean initDone = false;
-
 	private static final BiMap<String, Fluid> fluidRegistry = HashBiMap.create();
 	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create();
 
@@ -50,11 +48,6 @@ public abstract class Fluids {
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		initDone = true;
 	}
 
 	protected static Fluid addFluid(@Nonnull final String materialName, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
