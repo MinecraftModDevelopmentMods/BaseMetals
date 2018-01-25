@@ -205,6 +205,8 @@ dependencies {
         exclude group: 'MCMultiPart'
         exclude module: "Chameleon" // mek only uses the storage drawers API, which doesn't need Chameleon
         exclude module: "Hwyla"
+        exclude module: 'InventoryTweaks'
+        exclude module: 'industrialcraft-2'
     }
 
 //  deobfCompile ("com.github.TeamFRM:TAIGA:${taiga_version}") {
@@ -272,8 +274,11 @@ dependencies {
     deobfCompile "com.enderio.core:EnderCore:${mc_version}-${endercore_version}"
 //  deobfProvided "com.enderio.core:EnderCore:${mc_version}-${endercore_version}:api"
 
-//  deobfCompile "com.enderio:EnderIO-Base:${mc_version}-${enderio_version}"
-    deobfProvided "com.enderio:EnderIO-Base:${mc_version}-${enderio_version}:api"
+//  deobfCompile ("com.enderio:EnderIO-Base:${mc_version}-${enderio_version})") {
+    deobfProvided ("com.enderio:EnderIO-Base:${mc_version}-${enderio_version}:api") {
+        exclude group: 'mezz.jei'
+        exclude module: "Hwyla"
+	}
 }
 
 processResources {
