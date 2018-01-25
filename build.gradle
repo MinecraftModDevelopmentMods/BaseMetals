@@ -203,6 +203,7 @@ dependencies {
         exclude module: 'jei_1.11.2'
         exclude module: 'Hwyla'
         exclude module: 'InventoryTweaks'
+        exclude module: 'industrialcraft-2'
     }
 
     deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
