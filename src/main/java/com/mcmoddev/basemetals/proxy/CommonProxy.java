@@ -60,6 +60,7 @@ public class CommonProxy {
 
 		com.mcmoddev.lib.init.Materials.init();
 		Materials.init();
+		// FuelRegistry.init();
 		Fluids.init();
 		ItemGroups.init();
 		com.mcmoddev.lib.init.Blocks.init();

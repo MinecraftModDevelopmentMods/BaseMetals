@@ -199,9 +199,10 @@ dependencies {
     compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
-        exclude module: "Chameleon" // mek only uses the storage drawers API, which doesn't need Chameleon
-        exclude module: "jei_1.11.2"
-        exclude module: "Hwyla"
+        exclude module: 'Chameleon' // mek only uses the storage drawers API, which doesn't need Chameleon
+        exclude module: 'jei_1.11.2'
+        exclude module: 'Hwyla'
+        exclude module: 'InventoryTweaks'
     }
 
     deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
