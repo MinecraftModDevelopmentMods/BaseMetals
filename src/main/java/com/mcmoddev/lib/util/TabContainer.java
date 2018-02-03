@@ -13,5 +13,4 @@ public final class TabContainer {
 		this.itemsTab = itemsTab;
 		this.toolsTab = toolsTab;
 	}
-
 }

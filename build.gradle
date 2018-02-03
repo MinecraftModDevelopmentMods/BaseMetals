@@ -147,7 +147,7 @@ repositories {
         name 'tterrag'
         url 'http://maven.tterrag.com/'
     }
-    maven {
+    maven { // Tesla
         name 'MMD'
         url 'https://maven.mcmoddev.com/'
     }
