@@ -2,7 +2,6 @@ package com.mcmoddev.lib.crafttweaker;
 
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
-import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;

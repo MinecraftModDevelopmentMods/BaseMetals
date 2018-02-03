@@ -80,8 +80,6 @@ public abstract class VillagerTrades {
             (new VillagerCareer(prof, "nitwit")).init(VanillaTrades.trades[5][0]);
         }
 */
-	private static boolean initDone = false;
-
 	protected static final int TRADES_PER_LEVEL = 4;
 
 	protected VillagerTrades() {

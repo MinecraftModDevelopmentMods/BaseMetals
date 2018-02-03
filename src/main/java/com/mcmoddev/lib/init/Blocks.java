@@ -21,7 +21,6 @@ import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
