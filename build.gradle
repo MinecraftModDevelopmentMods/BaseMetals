@@ -191,6 +191,12 @@ repositories {
         name 'thiakil'
         url 'http://maven.thiakil.com/'
     }
+    ivy {
+        url "http://ae-mod.info/builds"
+        layout "pattern", {
+            artifact "[module]-[revision](-[classifier])(.[ext])"
+        }
+	}
 }
 
 dependencies {

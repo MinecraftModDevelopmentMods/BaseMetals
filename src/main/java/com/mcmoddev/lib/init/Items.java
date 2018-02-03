@@ -383,7 +383,7 @@ public abstract class Items {
 		}
 
 		final Item item = createItem(material, Names.CRYSTAL.toString(), GenericMMDItem.class,
-				(Options.isModEnabled("mekanism") && material.getType() != MaterialType.CRYSTAL), tab);
+				(Options.isModEnabled(MekanismBase.PLUGIN_MODID) && material.getType() != MaterialType.CRYSTAL), tab);
 		if (item != null) {
 			Oredicts.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
 			return item;

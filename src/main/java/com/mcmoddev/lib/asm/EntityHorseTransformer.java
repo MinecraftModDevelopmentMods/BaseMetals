@@ -65,7 +65,7 @@ class EntityHorseTransformer implements ITransformer {
 							mv.visitMethodInsn(INVOKESTATIC, ASMHOOKS_INTERFACE, "getTextureName",
 									"(Lnet/minecraft/entity/passive/HorseArmorType;Lnet/minecraft/entity/passive/EntityHorse;)Ljava/lang/String;",
 									false);
-							return;// replace original call
+							return; // replace original call
 						}
 						super.visitMethodInsn(opcode, owner, methodCallName, desc, itf);
 					}

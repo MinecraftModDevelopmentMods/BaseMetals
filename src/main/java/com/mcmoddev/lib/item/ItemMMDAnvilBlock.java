@@ -29,7 +29,7 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemMultiTexture imple
 	@Override
     public String getUnlocalizedName(ItemStack stack)
     {
-    	String unloc = super.getUnlocalizedName(stack);
+    	final String unloc = super.getUnlocalizedName(stack);
         return unloc;
     }
 }

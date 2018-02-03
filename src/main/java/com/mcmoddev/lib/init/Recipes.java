@@ -181,7 +181,7 @@ public abstract class Recipes {
 				makeBowRecipes(material);
 			}
 
-			// as can this
+			// for now this can live here
 			if (material.hasItem(Names.INGOT)) {
 				// Vanilla has all the base tools & armors where they currently matter.
 				generateBaseTools(material);
@@ -192,16 +192,15 @@ public abstract class Recipes {
 	}
 
 	private static void makeBowRecipes(@Nonnull final MMDMaterial material) {
-		if (material.hasItem(Names.ARROW)) {
+		if (isMMDItem(material, Names.ARROW)) {
 			GameRegistry.addSmelting(material.getItemStack(Names.ARROW),
 					material.getItemStack(Names.NUGGET, 1), 0); // 0.25 nugget loss
 		}
 
-		if (material.hasItem(Names.BOW)) {
+		if (isMMDItem(material, Names.BOW)) {
 			GameRegistry.addSmelting(material.getItemStack(Names.BOW),
 					material.getItemStack(Names.INGOT, 1), 0); // 4.5 nugget loss
 		}
-
 	}
 
 	private static void makeCrossbowRecipes(@Nonnull final MMDMaterial material) {
@@ -220,8 +219,8 @@ public abstract class Recipes {
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.NUGGET)) {
-			if (material.hasItem(Names.BUTTON)) {
-				GameRegistry.addSmelting(material.getItemStack(Names.BUTTON),
+			if (isMMDBlock(material, Names.BUTTON)) {
+				GameRegistry.addSmelting(material.getBlockItemStack(Names.BUTTON),
 						material.getItemStack(Names.NUGGET, 2), 0);
 			}
 			if (material.hasItem(Names.ROD)) {
@@ -257,8 +256,8 @@ public abstract class Recipes {
 						material.getItemStack(Names.NUGGET, 4), 0); // you lose roughly half a nugget
 			}
 
-			if ((material.hasItem(Names.ROD)) && (material.hasItem(Names.LEVER))) {
-				GameRegistry.addSmelting(material.getItemStack(Names.LEVER),
+			if ((material.hasItem(Names.ROD)) && (material.hasBlock(Names.LEVER))) {
+				GameRegistry.addSmelting(material.getBlockItemStack(Names.LEVER),
 						material.getItemStack(Names.INGOT, 1), 0); // you lose the rod
 			}
 
@@ -267,45 +266,41 @@ public abstract class Recipes {
 						material.getBlockItemStack(Names.BLOCK, 1), 0);
 			}
 
-			if (material.getBlock(Names.BLOCK) instanceof IMMDObject) {
-				if (material.hasBlock(Names.PLATE)) {
-					GameRegistry.addSmelting(material.getBlockItemStack(Names.PLATE),
-							material.getItemStack(Names.INGOT, 1), 0);
-				}
+			if (isMMDBlock(material, Names.PLATE)) {
+				GameRegistry.addSmelting(material.getBlockItemStack(Names.PLATE),
+						material.getItemStack(Names.INGOT, 1), 0);
+			}
 
-				if (material.hasBlock(Names.PRESSURE_PLATE)) {
-					GameRegistry.addSmelting(material.getBlockItemStack(Names.PRESSURE_PLATE),
-							material.getItemStack(Names.INGOT, 2), 0);
-				}
+			if (isMMDBlock(material, Names.PRESSURE_PLATE)) {
+				GameRegistry.addSmelting(material.getBlockItemStack(Names.PRESSURE_PLATE),
+						material.getItemStack(Names.INGOT, 2), 0);
+			}
 
-				if (material.hasBlock(Names.BARS)) {
-					GameRegistry.addSmelting(material.getBlockItemStack(Names.BARS),
-							material.getItemStack(Names.NUGGET, 3), 0); // roughly half a nugget loss
-				}
+			if (isMMDBlock(material, Names.BARS)) {
+				GameRegistry.addSmelting(material.getBlockItemStack(Names.BARS),
+						material.getItemStack(Names.NUGGET, 3), 0); // roughly half a nugget loss
+			}
 
-				if (material.hasItem(Names.DOOR)) {
-					GameRegistry.addSmelting(material.getItemStack(Names.DOOR),
-							material.getItemStack(Names.INGOT, 2), 0);
-				}
+			if (isMMDItem(material, Names.DOOR)) {
+				GameRegistry.addSmelting(material.getItemStack(Names.DOOR),
+						material.getItemStack(Names.INGOT, 2), 0);
+			}
 
-				if (material.hasBlock(Names.TRAPDOOR)) {
-					GameRegistry.addSmelting(material.getBlockItemStack(Names.TRAPDOOR),
-							material.getItemStack(Names.INGOT, 4), 0);
-				}
+			if (isMMDBlock(material, Names.TRAPDOOR)) {
+				GameRegistry.addSmelting(material.getBlockItemStack(Names.TRAPDOOR),
+						material.getItemStack(Names.INGOT, 4), 0);
+			}
 
-				// Diamond, Gold & Iron Horse armor are in vanilla so dont do them for vanilla
-				// mats
-				if ((material.getItem(Names.HORSE_ARMOR) instanceof IMMDObject)
-						&& (material.hasItem(Names.HORSE_ARMOR))) {
-					GameRegistry.addSmelting(material.getItemStack(Names.HORSE_ARMOR),
-							material.getItemStack(Names.INGOT, 6), 0); // 1 wool loss
-				}
+			// Diamond, Gold & Iron Horse armor are in vanilla so dont do them for vanilla
+			// mats
+			if (isMMDItem(material, Names.HORSE_ARMOR)) {
+				GameRegistry.addSmelting(material.getItemStack(Names.HORSE_ARMOR),
+						material.getItemStack(Names.INGOT, 6), 0); // 1 wool loss
+			}
 
-				if (material.hasItem(Names.FISHING_ROD)) {
-					GameRegistry.addSmelting(material.getItemStack(Names.FISHING_ROD),
-							material.getItemStack(Names.INGOT, 1), 0); // 4.5 nugget loss
-				}
-
+			if (isMMDItem(material, Names.FISHING_ROD)) {
+				GameRegistry.addSmelting(material.getItemStack(Names.FISHING_ROD),
+						material.getItemStack(Names.INGOT, 1), 0); // 4.5 nugget loss
 			}
 		}
 	}
@@ -341,7 +336,7 @@ public abstract class Recipes {
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.INGOT + oreDictName,
 						material.getItemStack(Names.POWDER, 1));
 			}
-			if (material.hasItem(Names.BLOCK)) {
+			if (material.hasBlock(Names.BLOCK)) {
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName,
 						material.getItemStack(Names.POWDER, 9));
 			}
@@ -353,16 +348,16 @@ public abstract class Recipes {
 	}
 
 	private static void generateBaseTools(@Nonnull final MMDMaterial material) {
-		if ((material.hasItem(Names.SHEARS)) && (material.getItem(Names.SHEARS) instanceof IMMDObject)) {
+		if (isMMDItem(material, Names.SHEARS)) {
 			GameRegistry.addSmelting(material.getItemStack(Names.SHEARS),
 					material.getItemStack(Names.INGOT, 2), 0);
 		}
 	}
 
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
-		if ((material.hasItem(Names.INGOT))
-				&& !(material.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject)
-				&& material.hasOre()) {
+		if ((material.hasItem(Names.INGOT)) {
+//				&& !(material.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject)
+//				&& material.hasOre()) {
 			if (Options.furnaceCheese()) {
 				if (material.hasItem(Names.BOOTS))
 					GameRegistry.addSmelting(material.getItem(Names.BOOTS),
@@ -412,12 +407,12 @@ public abstract class Recipes {
 			if (material.equals(Materials.emptyMaterial))
 				continue;
 
-			if (Options.isModEnabled("ic2")) {
-				if (material.hasItem(Names.CRUSHED) && material.hasItem(Names.INGOT)) {
+			if (Options.isModEnabled(IC2Base.PLUGIN_MODID)) {
+				if ((isMMDItem(material, Names.CRUSHED)) && material.hasItem(Names.INGOT)) {
 					GameRegistry.addSmelting(material.getItem(Names.CRUSHED), material.getItemStack(Names.INGOT),
 							material.getOreSmeltXP());
 				}
-				if (material.hasItem(Names.CRUSHED_PURIFIED) && material.hasItem(Names.INGOT)) {
+				if ((isMMDItem(material, Names.CRUSHED_PURIFIED)) && material.hasItem(Names.INGOT)) {
 					GameRegistry.addSmelting(material.getItem(Names.CRUSHED_PURIFIED),
 							material.getItemStack(Names.INGOT), material.getOreSmeltXP());
 				}
@@ -520,5 +515,29 @@ public abstract class Recipes {
 		initGeneralRecipes();
 		initModSpecificRecipes();
 
+	}
+
+	/**
+	 * @param material The Material
+	 * @param name Name of the Block to check
+	 * @return boolean Is it IMMDObject?
+	 */
+	protected static boolean isMMDBlock(final MMDMaterial material, Names name) {
+		if ((material.hasBlock(name)) && (material.getBlock(name) instanceof IMMDObject)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @param material The Material
+	 * @param name Name of the item to check
+	 * @return boolean Is it IMMDObject?
+	 */
+	protected static boolean isMMDItem(final MMDMaterial material, final Names name) {
+		if ((material.hasItem(name)) && (material.getItem(name) instanceof IMMDObject)) {
+			return true;
+		}
+		return false;
 	}
 }
