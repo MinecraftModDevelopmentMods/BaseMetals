@@ -355,7 +355,7 @@ public abstract class Recipes {
 	}
 
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
-		if ((material.hasItem(Names.INGOT)) {
+		if (material.hasItem(Names.INGOT)) {
 //				&& !(material.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject)
 //				&& material.hasOre()) {
 			if (Options.furnaceCheese()) {
