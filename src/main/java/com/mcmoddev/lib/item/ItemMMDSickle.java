@@ -34,6 +34,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
+
 public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	public static final ImmutableSet<Material> vanilla_materials = ImmutableSet.of(
 			Material.WEB, Material.LEAVES, Material.PLANTS, Material.VINE, Material.GOURD, Material.CACTUS);

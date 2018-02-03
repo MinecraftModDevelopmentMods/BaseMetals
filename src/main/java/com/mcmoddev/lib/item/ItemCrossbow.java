@@ -135,7 +135,6 @@ public class ItemCrossbow extends ItemBow {
 	}
 
 	protected boolean isBolt(@Nullable ItemStack stack) {
-		// Changed ItemArrow to ItemMetalArrow
 		return (stack != null) && (stack.getItem() instanceof ItemBolt);
 	}
 

@@ -15,7 +15,7 @@ public class ASMTransformer implements IClassTransformer {
 		ClassNode classNode = null;
 		for (final ITransformer transformer : ASMPlugin.transformerList) {
 			if (transformedName.equals(transformer.getTarget())) {
-				if (classNode == null){
+				if (classNode == null) {
 					final ClassReader classReader = new ClassReader(bytesIn);
 					classNode = new ClassNode();
 					classReader.accept(classNode, 0);
@@ -23,7 +23,7 @@ public class ASMTransformer implements IClassTransformer {
 				classNode = transformer.transform(classNode, Platform.isDevEnv());
 			}
 		}
-		if (classNode != null){
+		if (classNode != null) {
 			final ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 			classNode.accept(classWriter);
 			return classWriter.toByteArray();

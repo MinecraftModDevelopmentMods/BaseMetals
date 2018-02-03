@@ -47,11 +47,11 @@ public class EventHandler {
 			return;
 		}
 		EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-		if (player.getActiveItemStack() == null) {
+		final ItemStack activeItemStack = player.getActiveItemStack();
+		if (activeItemStack == null) {
 			return;
 		}
-		ItemStack activeItemStack = player.getActiveItemStack();
-		if ((damage > 0.0F) && (activeItemStack != null)
+		if ((damage > 0.0F)
 				&& (activeItemStack.getItem() instanceof ItemMMDShield)) {
 			int i = 1 + MathHelper.floor(damage);
 			activeItemStack.damageItem(i, player);
@@ -63,7 +63,6 @@ public class EventHandler {
 				} else {
 					player.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, (ItemStack) null);
 				}
-				activeItemStack = null;
 				if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 					player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, 0.8F, 0.8F + player.world.rand.nextFloat() * 0.4F);
 				}
