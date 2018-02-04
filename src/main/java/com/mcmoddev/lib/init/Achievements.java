@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -27,7 +28,7 @@ import net.minecraftforge.common.AchievementPage;
 public abstract class Achievements {
 
 	private static final BiMap<String, Achievement> achievementRegistry = HashBiMap.create(16);
-	private static Map<MMDMaterial, List<Achievement>> achievementsByMaterial = new HashMap<>();
+	private static final Map<MMDMaterial, List<Achievement>> achievementsByMaterial = new HashMap<>();
 
 	protected Achievements() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -63,6 +64,7 @@ public abstract class Achievements {
 	 *            The name of the achievement in question
 	 * @return The achievement matching that name, or null if there isn't one
 	 */
+	@Nullable
 	public static Achievement getAchievementByName(@Nonnull final String name) {
 		return achievementRegistry.get(name);
 	}
@@ -76,6 +78,7 @@ public abstract class Achievements {
 	 * @return The name of the achievement, or null if the item is not a Base Metals
 	 *         achievement.
 	 */
+	@Nullable
 	public static String getNameOfAchievement(@Nonnull final Achievement a) {
 		return achievementRegistry.inverse().get(a);
 	}

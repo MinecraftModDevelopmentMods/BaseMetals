@@ -11,8 +11,6 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -59,6 +57,8 @@ public class MekanismBase implements IIntegration {
 	// PressurizedOutput (Pressurized Reaction Chamber)
 	private static final String ITEM_OUTPUT = "itemOutput";
 	private static final String GAS_OUTPUT = "gasOutput";
+	
+	private static final String CLEAN = "clean";
 
 	@Override
 	public void init() {
@@ -81,8 +81,8 @@ public class MekanismBase implements IIntegration {
 		gas1.setUnlocalizedName("gas" + material.getName());
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas("clean" + material.getCapitalizedName(), material.getName() + "-CleanIcon");
-		gas2.setUnlocalizedName("clean" + material.getName());
+		final Gas gas2 = new Gas(CLEAN + material.getCapitalizedName(), material.getName() + "-CleanIcon");
+		gas2.setUnlocalizedName(CLEAN + material.getName());
 		GasRegistry.register(gas2);
 	}
 
@@ -138,8 +138,8 @@ public class MekanismBase implements IIntegration {
 
 		if(material.hasItem(Names.CRYSTAL) && material.hasBlock(Names.ORE)) {
 			// Crystallizer is 200mB for 1 crystal
-			addChemicalCrystallizerRecipe("clean" + material.getName(), 200, crystal);
-			addChemicalWasherRecipe(material.getName(), 1000, "clean" + material.getName());
+			addChemicalCrystallizerRecipe(CLEAN + material.getName(), 200, crystal);
+			addChemicalWasherRecipe(material.getName(), 1000, CLEAN + material.getName());
 			addChemicalDissolutionChamberRecipe(ore, material.getName());
 		}
 	}

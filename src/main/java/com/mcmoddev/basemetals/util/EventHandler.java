@@ -42,21 +42,21 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void attackEvent(LivingAttackEvent event) {
-		float damage = event.getAmount();
+		final float damage = event.getAmount();
 		if (!(event.getEntityLiving() instanceof EntityPlayer)) {
 			return;
 		}
-		EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-		if (player.getActiveItemStack() == ItemStack.EMPTY) {
+		final EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+		final ItemStack activeItemStack = player.getActiveItemStack();
+		if (activeItemStack.isEmpty()) {
 			return;
 		}
-		ItemStack activeItemStack = player.getActiveItemStack();
-		if ((damage > 0.0F) && (activeItemStack != ItemStack.EMPTY)
+		if ((damage > 0.0F)
 				&& (activeItemStack.getItem() instanceof ItemMMDShield)) {
-			int i = 1 + MathHelper.floor(damage);
+			final int i = 1 + MathHelper.floor(damage);
 			activeItemStack.damageItem(i, player);
 			if (activeItemStack.getCount() <= 0) {
-				EnumHand enumhand = player.getActiveHand();
+				final EnumHand enumhand = player.getActiveHand();
 				ForgeEventFactory.onPlayerDestroyItem(player, activeItemStack, enumhand);
 				if (enumhand == EnumHand.MAIN_HAND) {
 					player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
@@ -123,7 +123,7 @@ public class EventHandler {
 	}
 
 	public static InventoryCrafting getDummyCraftingInv() {
-		Container tempContainer = new Container() {
+		final Container tempContainer = new Container() {
 
 			@Override
 			public boolean canInteractWith(EntityPlayer player) {
@@ -136,18 +136,18 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void handleAnvilEvent(AnvilUpdateEvent event) {
-		ItemStack left = event.getLeft();
-		ItemStack right = event.getRight();
+		final ItemStack left = event.getLeft();
+		final ItemStack right = event.getRight();
 
-		if (left == ItemStack.EMPTY || right == ItemStack.EMPTY || left.getCount() != 1 || right.getCount() != 1) {
+		if (left.isEmpty() || right.isEmpty() || left.getCount() != 1 || right.getCount() != 1) {
 			return;
 		}
 
-		InventoryCrafting recipeInput = getDummyCraftingInv();
+		final InventoryCrafting recipeInput = getDummyCraftingInv();
 		recipeInput.setInventorySlotContents(0, left);
 		recipeInput.setInventorySlotContents(1, right);
-		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-		for (IRecipe recipe : recipes) {
+		final List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+		for (final IRecipe recipe : recipes) {
 			if ((recipe instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) recipe).matches(recipeInput, null))) {
 				event.setOutput(recipe.getCraftingResult(recipeInput));
 				event.setCost(((ShieldUpgradeRecipe) recipe).getCost(recipeInput));
@@ -170,11 +170,11 @@ public class EventHandler {
 			return;
 		}
 
-		GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
+		final GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
 		if (guiscreen == null)
 			return;
-		FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
-		int y = (guiscreen.height / 100) * 2;
+		final FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
+		final int y = (guiscreen.height / 100) * 2;
 		int x = (guiscreen.width / 2);
 
 		if (guiscreen instanceof GuiMainMenu) {
@@ -183,9 +183,9 @@ public class EventHandler {
 					0xffffff00);
 		} else if (guiscreen instanceof GuiWorldSelection) {
 			x = 10;
-			int widest = fontRender
+			final int widest = fontRender
 					.getStringWidth("This is likely not what you want - try turning off the 'using_orespawn' option");
-			int shortest = fontRender.getStringWidth("Fallback Ore Spawn Generator Enabled!");
+			final int shortest = fontRender.getStringWidth("Fallback Ore Spawn Generator Enabled!");
 			int wrap = widest + 50;
 
 			if ((guiscreen.width / 2) <= wrap) {

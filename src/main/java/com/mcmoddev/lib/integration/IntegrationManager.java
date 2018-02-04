@@ -67,7 +67,7 @@ public enum IntegrationManager {
 		} else {
 			k = Lists.newArrayList();
 		}
-		Map<IIntegration, Method> mmm = new HashMap<>();
+		final Map<IIntegration, Method> mmm = new HashMap<>();
 		try {
 			mmm.put(i, i.getClass().getMethod(name));
 			k.add(mmm);
@@ -89,7 +89,7 @@ public enum IntegrationManager {
 
 	public void runCallbacks(@Nonnull final String phase) {
 		if (callbacks.containsKey(phase)) {
-			List<Map<IIntegration, Method>> cbs = callbacks.get(phase);
+			final List<Map<IIntegration, Method>> cbs = callbacks.get(phase);
 			for (final Map<IIntegration, Method> map : cbs) {
 				runCallback(map);
 			}

@@ -23,12 +23,12 @@ public class RenderCustomBolt extends Render<EntityCustomBolt> {
 	 * @param renderManager
 	 *            The render manager
 	 */
-	public RenderCustomBolt(RenderManager renderManager) {
+	public RenderCustomBolt(final RenderManager renderManager) {
 		super(renderManager);
 	}
 
 	@Override
-	public void doRender(EntityCustomBolt entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(final EntityCustomBolt entity, final double x, final double y, final double z, final float entityYaw, final float partialTicks) {
 		this.bindEntityTexture(entity);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.pushMatrix();
@@ -107,7 +107,7 @@ public class RenderCustomBolt extends Render<EntityCustomBolt> {
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(EntityCustomBolt entity) {
+	protected ResourceLocation getEntityTexture(final EntityCustomBolt entity) {
 		return new ResourceLocation("textures/entity/projectiles/bolt.png");
 	}
 }

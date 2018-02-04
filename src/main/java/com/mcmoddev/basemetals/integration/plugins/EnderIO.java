@@ -34,7 +34,7 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 				MaterialNames.STEEL, MaterialNames.TIN, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
-				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
 					addSagMillRecipe(materialName, 3600);
 				});

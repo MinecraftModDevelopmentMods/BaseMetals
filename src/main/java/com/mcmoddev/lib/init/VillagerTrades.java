@@ -85,7 +85,7 @@ public abstract class VillagerTrades {
 				continue; // Too expensive
 			}
 
-			for (Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS)) {
+			for (final Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS)) {
 				if (material.hasItem(name)) {
 					final ItemStack itemStack = material.getItemStack(name);
 					final ITradeList[] armorTrades = makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2), itemStack));
@@ -461,7 +461,7 @@ public abstract class VillagerTrades {
 				in1.setCount(in1.getCount() + random.nextInt(maxInputMarkup1));
 			}
 			ItemStack in2 = ItemStack.EMPTY;
-			if (input2 != ItemStack.EMPTY && input2.getItem() != null) {
+			if ((!input2.isEmpty()) && input2.getItem() != null) {
 				in2 = input2.copy();
 				if (maxInputMarkup2 > 0) {
 					in2.setCount(in2.getCount() + random.nextInt(maxInputMarkup2));

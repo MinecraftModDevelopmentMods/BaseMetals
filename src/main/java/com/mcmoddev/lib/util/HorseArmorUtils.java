@@ -22,7 +22,7 @@ public class HorseArmorUtils {
 	}
 
 	public static HorseArmorType getArmorType(int protection, @Nonnull String lowerName, @Nonnull String hash) {
-		String name = lowerName.toUpperCase(Locale.ENGLISH);
+		final String name = lowerName.toUpperCase(Locale.ENGLISH);
 
 		if (HorseArmorUtils.TYPES.containsKey(name))
 			return HorseArmorUtils.TYPES.get(name);

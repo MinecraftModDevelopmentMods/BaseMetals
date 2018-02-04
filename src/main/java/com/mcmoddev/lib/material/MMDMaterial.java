@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.ImmutableList;
@@ -36,12 +38,12 @@ public class MMDMaterial {
 	/**
 	 * Storage for all "Item" type forms for this material
 	 */
-	private Map<String, Item> items = new ConcurrentHashMap<>();
+	private final Map<String, Item> items = new ConcurrentHashMap<>();
 
 	/**
 	 * Storage for all "Block" type forms for this material
 	 */
-	private Map<String, Block> blocks = new ConcurrentHashMap<>();
+	private final Map<String, Block> blocks = new ConcurrentHashMap<>();
 
 	/**
 	 * If this material has a fluid, it is stored here
@@ -54,7 +56,7 @@ public class MMDMaterial {
 	 * Material Statistics - see com.mcmoddev.lib.data.MaterialStats for current
 	 * known and used ones
 	 */
-	private Map<MaterialStats, Float> stats = new TreeMap<>();
+	private final Map<MaterialStats, Float> stats = new TreeMap<>();
 
 	/*
 	 * Various material flags
@@ -214,7 +216,7 @@ public class MMDMaterial {
 	 * @return XP value per ore block
 	 */
 	public final float getOreSmeltXP() {
-		float val = 0.1f * this.stats.get(MaterialStats.MAGICAFFINITY);
+		final float val = 0.1f * this.stats.get(MaterialStats.MAGICAFFINITY);
 		return Float.max(0.1f, val);
 	}
 
@@ -449,7 +451,7 @@ public class MMDMaterial {
 	}
 
 	public MMDMaterial addNewItemFromItemStack(String name, ItemStack itemStack) {
-		if (!(itemStack == ItemStack.EMPTY)) {
+		if (!(itemStack.isEmpty())) {
 			addNewItem(name, itemStack.getItem());
 		}
 		return this;
@@ -512,6 +514,7 @@ public class MMDMaterial {
 	 * @return the Item registered with the material, null if one of that name
 	 *         was not registered
 	 */
+	@Nullable
 	public Item getItem(Names name) {
 		return getItem(name.toString());
 	}
@@ -525,6 +528,7 @@ public class MMDMaterial {
 	 * @return the Item registered with the material, null if one of that name
 	 *         was not registered
 	 */
+	@Nullable
 	public Item getItem(String name) {
 		if (this.items.containsKey(name)) {
 			return this.items.get(name);
@@ -557,6 +561,7 @@ public class MMDMaterial {
 	 * @return the Block registered with the material, null if one of that name
 	 *         was not registered
 	 */
+	@Nullable
 	public Block getBlock(Names name) {
 		return this.getBlock(name.toString());
 	}
@@ -570,6 +575,7 @@ public class MMDMaterial {
 	 * @return the Block registered with the material, null if one of that name
 	 *         was not registered
 	 */
+	@Nullable
 	public Block getBlock(String name) {
 		if (this.blocks.containsKey(name)) {
 			return this.blocks.get(name);
@@ -721,5 +727,12 @@ public class MMDMaterial {
 	public MMDMaterial setDefaultDimension(int dim) {
 		this.defaultDimension = dim;
 		return this;
+	}
+
+	public boolean isEmpty() {
+		if (this.getName().equals("empty")) {
+			return true;
+		}
+		return false;
 	}
 }

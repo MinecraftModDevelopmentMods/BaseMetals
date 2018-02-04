@@ -37,8 +37,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	protected static void initVanillaRecipes() {
-		String oreDictName;
-
 		if (!Options.disableAllHammerRecipes()) {
 			if (Options.isMaterialEnabled(MaterialNames.WOOD)) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(Materials.getMaterialByName(MaterialNames.WOOD).getItemStack(Names.CRACKHAMMER), "x", "/", "/", 'x', Oredicts.LOG_WOOD, '/', Oredicts.STICK_WOOD));
@@ -49,8 +47,8 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
-			MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
-			oreDictName = charcoal.getCapitalizedName();
+			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
+			final String oreDictName = charcoal.getCapitalizedName();
 
 			if (charcoal.hasItem(Names.POWDER)) {
 				if (charcoal.hasBlock(Names.BLOCK)) { // Note: Minecraft does not provide a block of charcoal
@@ -71,8 +69,8 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 
 		if (Materials.hasMaterial(MaterialNames.COAL)) {
-			MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
-			oreDictName = coal.getCapitalizedName();
+			final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
+			final String oreDictName = coal.getCapitalizedName();
 
 			if (coal.hasItem(Names.POWDER)) {
 				if (coal.hasItem(Names.ORE)) {

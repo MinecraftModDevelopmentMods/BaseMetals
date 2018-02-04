@@ -56,7 +56,7 @@ public class EntityCustomArrow extends EntityTippedArrow {
 
 	@Override
 	protected ItemStack getArrowStack() {
-		if (this.itemStack == null) {
+		if (this.itemStack.isEmpty()) {
 			this.itemStack = new ItemStack(Items.ARROW);
 		}
 

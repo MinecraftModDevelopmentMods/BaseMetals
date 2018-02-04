@@ -2,7 +2,7 @@ package com.mcmoddev.lib.util;
 
 import java.util.Map;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 import com.mcmoddev.lib.data.SharedStrings;
 
@@ -47,8 +47,8 @@ public class Platform {
 	 *
 	 * @return True is they are the same
 	 */
-	public static boolean isSameItem(@Nullable ItemStack itemStack1, @Nullable ItemStack itemStack2) {
-		return itemStack1 != null && itemStack2 != null && itemStack1.isItemEqual(itemStack2);
+	public static boolean isSameItem(@Nonnull ItemStack itemStack1, @Nonnull ItemStack itemStack2) {
+		return ((!itemStack1.isEmpty()) && (!itemStack2.isEmpty()) && (itemStack1.isItemEqual(itemStack2)));
 	}
 
 	/**

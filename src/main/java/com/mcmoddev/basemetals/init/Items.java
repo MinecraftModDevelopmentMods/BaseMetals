@@ -1,11 +1,10 @@
 package com.mcmoddev.basemetals.init;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
@@ -27,7 +26,7 @@ import net.minecraft.item.ItemStack;
  */
 public class Items extends com.mcmoddev.lib.init.Items {
 
-	protected Items() {
+	private Items() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
@@ -67,7 +66,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
-				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
 					final MMDMaterial material = Materials.getMaterialByName(materialName);
 
@@ -104,7 +103,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 				});
 
 		materialsModSupport.stream().filter(Materials::hasMaterial)
-				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
 					final MMDMaterial material = Materials.getMaterialByName(materialName);
 
@@ -368,6 +367,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 	}
 
+	@Nullable
 	private static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
 		CreativeTabs tab;
 

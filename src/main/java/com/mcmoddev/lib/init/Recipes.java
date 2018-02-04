@@ -162,7 +162,7 @@ public abstract class Recipes {
 	protected static void initGeneralRecipes() {
 		for (final MMDMaterial material : Materials.getAllMaterials()) {
 
-			if (Materials.emptyMaterial.equals(material)) {
+			if (material.isEmpty()) {
 				continue;
 			}
 
@@ -308,7 +308,7 @@ public abstract class Recipes {
 	}
 
 	private static void makeSimpleRecipes(@Nonnull final MMDMaterial material) {
-		if (material == null) {
+		if (material.isEmpty()) {
 			return;
 		}
 
@@ -530,43 +530,43 @@ public abstract class Recipes {
 //				&& material.hasOre()) {
 			if (Options.furnaceCheese()) {
 				if (material.hasItem(Names.BOOTS))
-					GameRegistry.addSmelting(material.getItem(Names.BOOTS),
+					GameRegistry.addSmelting(material.getItemStack(Names.BOOTS),
 							material.getItemStack(Names.INGOT, 4), 0);
 
 				if (material.hasItem(Names.HELMET))
-					GameRegistry.addSmelting(material.getItem(Names.HELMET),
+					GameRegistry.addSmelting(material.getItemStack(Names.HELMET),
 							material.getItemStack(Names.INGOT, 5), 0);
 
 				if (material.hasItem(Names.SWORD))
-					GameRegistry.addSmelting(material.getItem(Names.SWORD),
+					GameRegistry.addSmelting(material.getItemStack(Names.SWORD),
 							material.getItemStack(Names.INGOT, 2), 0);
 
 				if (material.hasItem(Names.SHOVEL))
-					GameRegistry.addSmelting(material.getItem(Names.SHOVEL),
+					GameRegistry.addSmelting(material.getItemStack(Names.SHOVEL),
 							material.getItemStack(Names.INGOT, 1), 0);
 
 				if (material.hasItem(Names.PICKAXE))
-					GameRegistry.addSmelting(material.getItem(Names.PICKAXE),
+					GameRegistry.addSmelting(material.getItemStack(Names.PICKAXE),
 							material.getItemStack(Names.INGOT, 3), 0);
 
 				if (material.hasItem(Names.HOE))
-					GameRegistry.addSmelting(material.getItem(Names.HOE),
+					GameRegistry.addSmelting(material.getItemStack(Names.HOE),
 							material.getItemStack(Names.INGOT, 2), 0);
 
 				if (material.hasItem(Names.AXE))
-					GameRegistry.addSmelting(material.getItem(Names.AXE),
+					GameRegistry.addSmelting(material.getItemStack(Names.AXE),
 							material.getItemStack(Names.INGOT, 3), 0);
 
 				if (material.hasItem(Names.LEGGINGS))
-					GameRegistry.addSmelting(material.getItem(Names.LEGGINGS),
+					GameRegistry.addSmelting(material.getItemStack(Names.LEGGINGS),
 							material.getItemStack(Names.INGOT, 7), 0);
 
 				if (material.hasItem(Names.CHESTPLATE))
-					GameRegistry.addSmelting(material.getItem(Names.CHESTPLATE),
+					GameRegistry.addSmelting(material.getItemStack(Names.CHESTPLATE),
 							material.getItemStack(Names.INGOT, 8), 0);
 
 				if (material.hasItem(Names.CRACKHAMMER))
-					GameRegistry.addSmelting(material.getItem(Names.CRACKHAMMER),
+					GameRegistry.addSmelting(material.getItemStack(Names.CRACKHAMMER),
 							material.getBlockItemStack(Names.BLOCK, 1), 0);
 			}
 		}
@@ -574,16 +574,16 @@ public abstract class Recipes {
 
 	private static void initModSpecificRecipes() {
 		for (MMDMaterial material : Materials.getAllMaterials()) {
-			if (material.equals(Materials.emptyMaterial))
+			if (material.isEmpty())
 				continue;
 
 			if (Options.isModEnabled(IC2Base.PLUGIN_MODID)) {
 				if ((isMMDItem(material, Names.CRUSHED)) && material.hasItem(Names.INGOT)) {
-					GameRegistry.addSmelting(material.getItem(Names.CRUSHED), material.getItemStack(Names.INGOT),
+					GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED), material.getItemStack(Names.INGOT),
 							material.getOreSmeltXP());
 				}
 				if ((isMMDItem(material, Names.CRUSHED_PURIFIED)) && material.hasItem(Names.INGOT)) {
-					GameRegistry.addSmelting(material.getItem(Names.CRUSHED_PURIFIED),
+					GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED_PURIFIED),
 							material.getItemStack(Names.INGOT), material.getOreSmeltXP());
 				}
 			}
@@ -596,7 +596,7 @@ public abstract class Recipes {
 
 	protected static void addAdditionalOredicts(@Nonnull final MMDMaterial material,
 			@Nonnull final String oreDictNameIn) {
-		if (material == null) {
+		if (material.isEmpty()) {
 			return;
 		}
 
