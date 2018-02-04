@@ -327,25 +327,16 @@ public class TCMaterial {
 		return this;
 	}
 
-	/**
-	 * @param mm
-	 *            MetalMaterial this wrapper represents
-	 * @return the material
-	 */
-	public TCMaterial setMetalMaterial(@Nonnull final MMDMaterial mm) {
-		this.mmdMaterial = mm;
-		return genFromMaterial();
-	}
 
 	/**
-	 * Wrapper around {setMetalMaterial}
 	 * 
 	 * @param mm
-	 *            MetalMaterial this represents
+	 *            MMDMaterial this represents
 	 * @return the material
 	 */
-	public TCMaterial setMaterial(@Nonnull final MMDMaterial mm) {
-		return this.setMetalMaterial(mm);
+	public TCMaterial setMMDMaterial(@Nonnull final MMDMaterial mm) {
+		this.mmdMaterial = mm;
+		return genFromMaterial();
 	}
 
 	/**
@@ -477,7 +468,7 @@ public class TCMaterial {
 		return this.amountPer;
 	}
 
-	public MMDMaterial getMetalMaterial() {
+	public MMDMaterial getMMDMaterial() {
 		return this.mmdMaterial;
 	}
 

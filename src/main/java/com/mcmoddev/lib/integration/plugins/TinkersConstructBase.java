@@ -105,6 +105,7 @@ public class TinkersConstructBase implements IIntegration {
 	protected static TCMaterial registerMaterial(@Nonnull final String materialName, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
 		return registerMaterial(Materials.getMaterialByName(materialName), craftable, castable);
 	}
+
 	/**
 	 * Creates a Tinkers Construct
 	 * {@link slimeknights.tconstruct.library.materials.Material}
@@ -119,6 +120,16 @@ public class TinkersConstructBase implements IIntegration {
 	 */
 	protected static TCMaterial registerMaterial(@Nonnull final MMDMaterial material, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
 		return registry.getMaterial(material.getName(), material).setCraftable(craftable).setCastable(castable).setToolForge(true);
+	}
+
+	protected static TCMaterial registerMaterial(@Nonnull final String materialName) {
+		return registerMaterial(Materials.getMaterialByName(materialName));
+	}
+
+	protected static TCMaterial registerMaterial(@Nonnull final MMDMaterial material) {
+		TCMaterial tcMaterial = registry.getMaterial(material.getName(), material).setToolForge(false);
+		tcMaterial.settle();
+		return tcMaterial;
 	}
 
 	/**
