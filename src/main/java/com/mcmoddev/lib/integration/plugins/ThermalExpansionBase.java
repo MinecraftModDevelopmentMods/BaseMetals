@@ -123,27 +123,30 @@ public class ThermalExpansionBase implements IIntegration {
 		final FluidStack nuggetFluid = FluidRegistry.getFluidStack(materialName, 16);
 
 		if ((material.hasBlock(Names.ORE)) && (material.getBlock(Names.ORE) != null)) {
-			final ItemStack ore = new ItemStack(material.getBlock(Names.ORE));
+			final ItemStack ore = material.getBlockItemStack(Names.ORE);
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ore, oreFluid);
 		}
 
-		ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ingot, baseFluid);
+		if (material.hasItem(Names.INGOT)) {
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ingot, baseFluid);
+		}
 
 		if (material.hasItem(Names.POWDER)) {
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dust, baseFluid);
 		}
 
+		// TODO: Can we getBlockItemStack instead?
 		if (material.hasBlock(Names.PLATE)) {
-			addCrucibleExtra(Item.getItemFromBlock(material.getBlock(Names.PLATE)), baseFluid, ENERGY_QTY);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, new ItemStack(Item.getItemFromBlock(material.getBlock(Names.PLATE))), baseFluid);
 		}
 
 		if (material.hasItem(Names.NUGGET)) {
-			addCrucibleExtra(material.getItem(Names.NUGGET), nuggetFluid, ENERGY_QTY);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, material.getItemStack(Names.NUGGET), nuggetFluid);
 		}
 	}
 
 	private static void addCrucibleExtra(@Nonnull final Item input, @Nonnull final FluidStack output, @Nonnull final int energy) {
-		addCrucibleExtra(new ItemStack(input), output, energy);
+		ThermalExpansionHelper.addCrucibleRecipe(energy, new ItemStack(input), output);
 	}
 
 	private static void addCrucibleExtra(@Nonnull final ItemStack input, @Nonnull final FluidStack output, @Nonnull final int energy) {

@@ -85,7 +85,7 @@ public abstract class VillagerTrades {
 				continue; // Too expensive
 			}
 
-			for (Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS)) {
+			for (final Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS)) {
 				if (material.hasItem(name)) {
 					final ItemStack itemStack = material.getItemStack(name);
 					final ITradeList[] armorTrades = makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2), itemStack));
@@ -323,7 +323,7 @@ public abstract class VillagerTrades {
 		 *            a psuedorandom number generator instance
 		 */
 		@Override
-		public void modifyMerchantRecipeList(MerchantRecipeList recipeList, Random random) {
+		public void modifyMerchantRecipeList(final MerchantRecipeList recipeList, final Random random) {
 			for (int n = 0; n < numberOfTrades; n++) {
 				trades[random.nextInt(trades.length)].modifyMerchantRecipeList(recipeList, random);
 			}

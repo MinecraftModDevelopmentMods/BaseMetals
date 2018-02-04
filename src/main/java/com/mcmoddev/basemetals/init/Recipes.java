@@ -38,8 +38,6 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	protected static void initVanillaRecipes() {
-		String oreDictName;
-
 		if (!Options.disableAllHammerRecipes()) {
 			if (Options.isMaterialEnabled(MaterialNames.WOOD)) {
 				GameRegistry.addRecipe(new ShapedOreRecipe(Materials.getMaterialByName(MaterialNames.WOOD).getItemStack(Names.CRACKHAMMER), "x", "/", "/", 'x', Oredicts.LOG_WOOD, '/', Oredicts.STICK_WOOD));
@@ -51,16 +49,16 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 		// Iron items
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
-			MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
-			oreDictName = iron.getCapitalizedName();
+			final MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
+			final String oreDictName = iron.getCapitalizedName();
 
 			GameRegistry.addRecipe(new ShapelessOreRecipe(iron.getItemStack(Names.NUGGET, 9), Oredicts.INGOT + oreDictName));
 			GameRegistry.addRecipe(new ShapedOreRecipe(iron.getItemStack(Names.INGOT), "xxx", "xxx", "xxx", 'x', Oredicts.NUGGET + oreDictName));
 		}
 
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
-			MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
-			oreDictName = charcoal.getCapitalizedName();
+			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
+			final String oreDictName = charcoal.getCapitalizedName();
 
 			if (charcoal.hasItem(Names.POWDER)) {
 				if (charcoal.hasBlock(Names.BLOCK)) { // Note: Minecraft does not provide a block of charcoal
@@ -81,8 +79,8 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 
 		if (Materials.hasMaterial(MaterialNames.COAL)) {
-			MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
-			oreDictName = coal.getCapitalizedName();
+			final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
+			final String oreDictName = coal.getCapitalizedName();
 
 			if (coal.hasItem(Names.POWDER)) {
 				if (coal.hasItem(Names.ORE)) {

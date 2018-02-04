@@ -10,8 +10,8 @@ public interface ITransformer extends Opcodes {
 	ClassNode transform(ClassNode node, boolean dev);
 
 	public static boolean oneEquals(String[] names, String target) {
-		for (String n : names) {
-			if (target.equals(n)) {
+		for (final String name : names) {
+			if (target.equals(name)) {
 				return true;
 			}
 		}

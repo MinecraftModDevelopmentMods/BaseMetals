@@ -76,9 +76,9 @@ public class VillagerTradeHelper {
 	 */
 	public static void insertTrades(ResourceLocation professionRL, int careerID, int tradeLevel,
 			EntityVillager.ITradeList... trades) {
-        IForgeRegistry<VillagerProfession> registry = VillagerRegistry.instance().getRegistry();
-        VillagerProfession profession = registry.getValue(professionRL);
-        VillagerCareer career = profession.getCareer(careerID);
+        final IForgeRegistry<VillagerProfession> registry = VillagerRegistry.instance().getRegistry();
+        final VillagerProfession profession = registry.getValue(professionRL);
+        final VillagerCareer career = profession.getCareer(careerID);
 		career.addTrade(tradeLevel, trades);
 	}
 }

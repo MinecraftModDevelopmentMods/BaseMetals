@@ -58,6 +58,8 @@ public class MekanismBase implements IIntegration {
 	private static final String ITEM_OUTPUT = "itemOutput";
 	private static final String GAS_OUTPUT = "gasOutput";
 
+	private static final String CLEAN = "clean";
+
 	@Override
 	public void init() {
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
@@ -79,8 +81,8 @@ public class MekanismBase implements IIntegration {
 		gas1.setUnlocalizedName("gas" + material.getName());
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas("clean" + material.getCapitalizedName(), material.getName() + "-CleanIcon");
-		gas2.setUnlocalizedName("clean" + material.getName());
+		final Gas gas2 = new Gas(CLEAN + material.getCapitalizedName(), material.getName() + "-CleanIcon");
+		gas2.setUnlocalizedName(CLEAN + material.getName());
 		GasRegistry.register(gas2);
 	}
 
@@ -136,8 +138,8 @@ public class MekanismBase implements IIntegration {
 
 		if(material.hasItem(Names.CRYSTAL) && material.hasBlock(Names.ORE)) {
 			// Crystallizer is 200mB for 1 crystal
-			addChemicalCrystallizerRecipe("clean" + material.getCapitalizedName(), 200, crystal);
-			addChemicalWasherRecipe(material.getName(), 1000, "clean" + material.getCapitalizedName());
+			addChemicalCrystallizerRecipe(CLEAN + material.getCapitalizedName(), 200, crystal);
+			addChemicalWasherRecipe(material.getName(), 1000, CLEAN + material.getCapitalizedName());
 			addChemicalDissolutionChamberRecipe(ore, material.getCapitalizedName());
 		}
 	}

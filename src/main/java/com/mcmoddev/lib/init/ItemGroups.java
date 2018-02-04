@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.mcmoddev.lib.data.SharedStrings;
 
@@ -42,13 +43,13 @@ public class ItemGroups {
 	}
 
 	protected static int addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
-		String modName = Loader.instance().activeModContainer().getModId();
-		String internalTabName = String.format("%s.%s", modName, name);
-		MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable);
+		final String modName = Loader.instance().activeModContainer().getModId();
+		final String internalTabName = String.format("%s.%s", modName, name);
+		final MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable);
 		if (itemGroupsByModID.containsKey(modName)) {
 			itemGroupsByModID.get(modName).add(tab);
 		} else {
-			List<MMDCreativeTab> nl = new ArrayList<>();
+			final List<MMDCreativeTab> nl = new ArrayList<>();
 			nl.add(tab);
 			itemGroupsByModID.put(modName, nl);
 		}
@@ -56,10 +57,12 @@ public class ItemGroups {
 		return itemGroupsByModID.get(modName).size() - 1;
 	}
 
+	@Nullable
 	protected static MMDCreativeTab getTab(@Nonnull final int id) {
 		return getTab(Loader.instance().activeModContainer().getModId(), id);
 	}
 
+	@Nullable
 	protected static MMDCreativeTab getTab(@Nonnull final String modName, @Nonnull final int id) {
 		if ((itemGroupsByModID.containsKey(modName)) && (itemGroupsByModID.get(modName).size() > id)) {
 			return itemGroupsByModID.get(modName).get(id);

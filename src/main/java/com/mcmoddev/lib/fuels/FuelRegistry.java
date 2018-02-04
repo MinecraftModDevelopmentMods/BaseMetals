@@ -12,9 +12,9 @@ import net.minecraftforge.oredict.OreDictionary;
 public class FuelRegistry {
 
 	// maps an oreDict to a burnTime
-	private static Map<String, Integer> fuelDicts = new HashMap<>();
+	private static final Map<String, Integer> fuelDicts = new HashMap<>();
 	private static boolean initialized = false;
-	private static Map<Item, Integer> fuels = new HashMap<>();
+	private static final Map<Item, Integer> fuels = new HashMap<>();
 
 	private FuelRegistry() {
 		throw new IllegalAccessError("This class cannot be instantiated!");
@@ -28,10 +28,10 @@ public class FuelRegistry {
 	}
 
 	public static void register() {
-		for (Map.Entry<String, Integer> ent : fuelDicts.entrySet()) {
-			for (ItemStack item : OreDictionary.getOres(ent.getKey())) {
-				if (!fuels.containsKey(item.getItem())) {
-					fuels.put(item.getItem(), ent.getValue());
+		for (final Map.Entry<String, Integer> ent : fuelDicts.entrySet()) {
+			for (final ItemStack itemStack : OreDictionary.getOres(ent.getKey())) {
+				if (!fuels.containsKey(itemStack.getItem())) {
+					fuels.put(itemStack.getItem(), ent.getValue());
 				}
 			}
 		}

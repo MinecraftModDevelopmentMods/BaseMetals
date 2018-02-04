@@ -19,7 +19,7 @@ class EntityHorseTransformer implements ITransformer {
 
 	@Override
 	public ClassNode transform(ClassNode node, boolean dev) {
-		Visitor vis = new Visitor();
+		final Visitor vis = new Visitor();
 		node.accept(vis);
 		return vis;
 	}
@@ -28,7 +28,7 @@ class EntityHorseTransformer implements ITransformer {
 
 		@Override
 		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
-			MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
+			final MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
 			if (ITransformer.oneEquals(ENTITY_INIT, name)) {
 				return new MethodVisitor(Opcodes.ASM5, mv) {
 

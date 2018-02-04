@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -61,21 +62,22 @@ public abstract class Fluids {
 	}
 
 	protected static Fluid addFluid(@Nonnull MMDMaterial material, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
-		int tintColor;
+//		int tintColor;
 		if (material.getFluid() != null) {
 			return material.getFluid();
 		}
-		tintColor = material.getTintColor();
+//		tintColor = material.getTintColor();
 
+		final String modID = Loader.instance().activeModContainer().getModId();
 		final Fluid fluid = new CustomFluid(material.getName(),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"),
-				tintColor);
+				new ResourceLocation(modID, "blocks/molten_metal_still"),
+				new ResourceLocation(modID, "blocks/molten_metal_flow"));
+//				tintColor);
 		fluid.setDensity(density);
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);
 		fluid.setLuminosity(luminosity);
-		fluid.setUnlocalizedName(Loader.instance().activeModContainer().getModId() + "." + material.getName());
+		fluid.setUnlocalizedName(modID + "." + material.getName());
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
 
@@ -85,10 +87,12 @@ public abstract class Fluids {
 		return fluid;
 	}
 
+	@Nullable
 	protected static BlockFluidClassic addFluidBlock(@Nonnull final String materialName) {
 		return addFluidBlock(Materials.getMaterialByName(materialName));
 	}
 
+	@Nullable
 	protected static BlockFluidClassic addFluidBlock(@Nonnull final MMDMaterial material) {
 		if (material.getFluidBlock() != null) {
 			return material.getFluidBlock();
@@ -138,6 +142,7 @@ public abstract class Fluids {
 	 *            The name of the fluid in question
 	 * @return The fluid matching that name, or null if there isn't one
 	 */
+	@Nullable
 	public static Fluid getFluidByName(@Nonnull final String name) {
 		return fluidRegistry.get(name);
 	}
@@ -151,6 +156,7 @@ public abstract class Fluids {
 	 * @return The name of the fluid, or null if the item is not a Base Metals
 	 *         fluid.
 	 */
+	@Nullable
 	public static String getNameOfFluid(@Nonnull final Fluid fluid) {
 		return fluidRegistry.inverse().get(fluid);
 	}
@@ -168,6 +174,7 @@ public abstract class Fluids {
 	 *            The name of the fluid block in question
 	 * @return The fluid block matching that name, or null if there isn't one
 	 */
+	@Nullable
 	public static BlockFluidBase getFluidBlockByName(@Nonnull String name) {
 		return fluidBlockRegistry.get(name);
 	}
@@ -182,6 +189,7 @@ public abstract class Fluids {
 	 * @return The name of the item, or null if the item is not a Base Metals
 	 *         fluid block.
 	 */
+	@Nullable
 	public static String getNameOfFluidBlock(@Nonnull BlockFluidBase block) {
 		return fluidBlockRegistry.inverse().get(block);
 	}

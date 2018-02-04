@@ -34,15 +34,15 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
-		ItemStack base;
-		List<ItemStack> upgradeMats = new ArrayList<>();
-		Collection<MMDMaterial> allmats = Materials.getAllMaterials();
-		MMDMaterial input = Materials.getMaterialByName(matName);
+		final ItemStack base;
+		final List<ItemStack> upgradeMats = new ArrayList<>();
+		final Collection<MMDMaterial> allmats = Materials.getAllMaterials();
+		final MMDMaterial input = Materials.getMaterialByName(matName);
 		base = new ItemStack(input.getItem(Names.SHIELD), 1, 0);
 
-		for (MMDMaterial mat : allmats) {
+		for (final MMDMaterial mat : allmats) {
 			if (mat.getStat(MaterialStats.HARDNESS) >= input.getStat(MaterialStats.HARDNESS) && mat.getName().equals(matName)) {
-				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
+				final List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				upgradeMats.addAll(mats);
 			}
 		}
@@ -50,10 +50,10 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		boolean[] matches = new boolean[] { false, false };
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack curItem = inv.getStackInSlot(i);
+			final ItemStack curItem = inv.getStackInSlot(i);
 
 			if (curItem != null) {
-				ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getItemDamage());
+				final ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getItemDamage());
 				if (OreDictionary.itemMatches(base, comp, false)) {
 					matches[0] = true;
 				} else if (OreDictionary.containsMatch(false, upgradeMats, comp)) {
@@ -66,28 +66,28 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		Map<String, List<ItemStack>> plates = new HashMap<>();
+		final Map<String, List<ItemStack>> plates = new HashMap<>();
 
-		Collection<MMDMaterial> allmats = Materials.getAllMaterials();
-		int hardness = ((Float) Materials.getMaterialByName(matName).getStat(MaterialStats.HARDNESS)).intValue();
+		final Collection<MMDMaterial> allmats = Materials.getAllMaterials();
+		final int hardness = ((Float) Materials.getMaterialByName(matName).getStat(MaterialStats.HARDNESS)).intValue();
 
-		for (MMDMaterial mat : allmats) {
+		for (final MMDMaterial mat : allmats) {
 			if (mat.getStat(MaterialStats.HARDNESS) >= hardness && (!mat.getName().equals(matName))) {
-				List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
+				final List<ItemStack> mats = OreDictionary.getOres(Oredicts.PLATE + mat.getCapitalizedName());
 				plates.put(mat.getName(), mats);
 			}
 		}
 
 		ItemStack plateMatched = null;
 		Map<Enchantment, Integer> enchants = Collections.emptyMap();
-		ItemStack matcher = new ItemStack(Materials.getMaterialByName(matName).getItem(Names.SHIELD), 1, 0);
+		final ItemStack matcher = new ItemStack(Materials.getMaterialByName(matName).getItem(Names.SHIELD), 1, 0);
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack curItem = inv.getStackInSlot(i);
+			final ItemStack curItem = inv.getStackInSlot(i);
 
 			if (curItem != null) {
-				ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getMetadata());
-				for (Entry<String, List<ItemStack>> ent : plates.entrySet()) {
+				final ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getMetadata());
+				for (final Entry<String, List<ItemStack>> ent : plates.entrySet()) {
 					if (OreDictionary.containsMatch(false, ent.getValue(), comp)) {
 						plateMatched = new ItemStack(Materials.getMaterialByName(ent.getKey().toLowerCase()).getItem(Names.SHIELD), 1, 0);
 					}
@@ -105,10 +105,10 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 	private MMDMaterial getUpgradeMat(InventoryCrafting inv) {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack curItem = inv.getStackInSlot(i);
+			final ItemStack curItem = inv.getStackInSlot(i);
 
 			if (curItem != null) {
-				for (MMDMaterial e : Materials.getAllMaterials()) {
+				for (final MMDMaterial e : Materials.getAllMaterials()) {
 					if (OreDictionary.containsMatch(false, OreDictionary.getOres(Oredicts.PLATE + e.getName()), curItem)) {
 						return e;
 					}
@@ -119,12 +119,12 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 	}
 
 	private ItemStack findBaseItem(InventoryCrafting inv) {
-		ItemStack input = new ItemStack(Materials.getMaterialByName(matName).getItem(Names.SHIELD), 1, 0);
+		final ItemStack input = new ItemStack(Materials.getMaterialByName(matName).getItem(Names.SHIELD), 1, 0);
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack a = inv.getStackInSlot(i);
+			final ItemStack a = inv.getStackInSlot(i);
 			if (a != null) {
-				ItemStack comp = new ItemStack(a.getItem(), 1, a.getMetadata());
+				final ItemStack comp = new ItemStack(a.getItem(), 1, a.getMetadata());
 				if (OreDictionary.itemMatches(input, comp, false)) {
 					return a;
 				}
@@ -143,14 +143,14 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 	}
 
 	public int getCost(InventoryCrafting inv) {
-		MMDMaterial shieldMat = Materials.getMaterialByName(matName);
-		MMDMaterial upgradeMat = getUpgradeMat(inv);
+		final MMDMaterial shieldMat = Materials.getMaterialByName(matName);
+		final MMDMaterial upgradeMat = getUpgradeMat(inv);
 
-		float hardDiff = upgradeMat.getStat(MaterialStats.HARDNESS) - shieldMat.getStat(MaterialStats.HARDNESS);
-		int enchantCount = getEnchantCount(inv);
+		final float hardDiff = upgradeMat.getStat(MaterialStats.HARDNESS) - shieldMat.getStat(MaterialStats.HARDNESS);
+		final int enchantCount = getEnchantCount(inv);
 
-		float diffVal = hardDiff * 5;
-		float enchantVal = upgradeMat.getStat(MaterialStats.MAGICAFFINITY) * enchantCount;
+		final float diffVal = hardDiff * 5;
+		final float enchantVal = upgradeMat.getStat(MaterialStats.MAGICAFFINITY) * enchantCount;
 		Float finalVal = diffVal + enchantVal;
 
 		if (finalVal < 5.0f) {

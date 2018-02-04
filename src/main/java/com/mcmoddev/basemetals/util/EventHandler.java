@@ -42,21 +42,21 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void attackEvent(LivingAttackEvent event) {
-		float damage = event.getAmount();
+		final float damage = event.getAmount();
 		if (!(event.getEntityLiving() instanceof EntityPlayer)) {
 			return;
 		}
-		EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+		final EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 		final ItemStack activeItemStack = player.getActiveItemStack();
 		if (activeItemStack == null) {
 			return;
 		}
 		if ((damage > 0.0F)
 				&& (activeItemStack.getItem() instanceof ItemMMDShield)) {
-			int i = 1 + MathHelper.floor(damage);
+			final int i = 1 + MathHelper.floor(damage);
 			activeItemStack.damageItem(i, player);
 			if (activeItemStack.stackSize <= 0) {
-				EnumHand enumhand = player.getActiveHand();
+				final EnumHand enumhand = player.getActiveHand();
 				ForgeEventFactory.onPlayerDestroyItem(player, activeItemStack, enumhand);
 				if (enumhand == EnumHand.MAIN_HAND) {
 					player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, (ItemStack) null);
@@ -123,7 +123,7 @@ public class EventHandler {
 	}
 
 	public static InventoryCrafting getDummyCraftingInv() {
-		Container tempContainer = new Container() {
+		final Container tempContainer = new Container() {
 
 			@Override
 			public boolean canInteractWith(EntityPlayer player) {
@@ -136,18 +136,18 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void handleAnvilEvent(AnvilUpdateEvent event) {
-		ItemStack left = event.getLeft();
-		ItemStack right = event.getRight();
+		final ItemStack left = event.getLeft();
+		final ItemStack right = event.getRight();
 
 		if (left == null || right == null || left.stackSize != 1 || right.stackSize != 1) {
 			return;
 		}
 
-		InventoryCrafting recipeInput = getDummyCraftingInv();
+		final InventoryCrafting recipeInput = getDummyCraftingInv();
 		recipeInput.setInventorySlotContents(0, left);
 		recipeInput.setInventorySlotContents(1, right);
-		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-		for (IRecipe recipe : recipes) {
+		final List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+		for (final IRecipe recipe : recipes) {
 			if ((recipe instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) recipe).matches(recipeInput, null))) {
 				event.setOutput(recipe.getCraftingResult(recipeInput));
 				event.setCost(((ShieldUpgradeRecipe) recipe).getCost(recipeInput));
@@ -172,26 +172,32 @@ public class EventHandler {
 
 		// FIXME: .fontRenderer doesn't exist on 1.10.2
 		/*
-        GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
-        if( guiscreen == null ) return;
-    	FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
-    	int y = (guiscreen.height / 100) * 2;
-    	int x = (guiscreen.width/2);
-        
-        if (guiscreen instanceof GuiMainMenu) {
-        	guiscreen.drawCenteredString(fontRender, "MMD OreSpawn not present, but requested in configuration, using fallback generator!", x, y, 0xffffff00);        	
-        } else if(guiscreen instanceof GuiWorldSelection) {
-        	x = 10;
-        	int widest = fontRender.getStringWidth("This is likely not what you want - try turning off the 'using_orespawn' option");
-        	int shortest = fontRender.getStringWidth("Fallback Ore Spawn Generator Enabled!");
-        	int wrap = widest+50;
+		final GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
+		if (guiscreen == null)
+			return;
+		final FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
+		final int y = (guiscreen.height / 100) * 2;
+		int x = (guiscreen.width/2);
 
-        	if( (guiscreen.width/2) <= wrap ) {
-        		wrap = shortest + 50;
-        	}
-        	
-        	fontRender.drawSplitString("Fallback Ore Spawn Generator Enabled!\nThis is likely not what you want - try turning off the 'using_orespawn' option\n(or install MMD OreSpawn)", x, y, wrap, 0xFFFFFF00);
-        }
+		if (guiscreen instanceof GuiMainMenu) {
+			guiscreen.drawCenteredString(fontRender,
+					"MMD OreSpawn not present, but requested in configuration, using fallback generator!", x, y,
+					0xffffff00);
+		} else if (guiscreen instanceof GuiWorldSelection) {
+			x = 10;
+			final int widest = fontRender
+					.getStringWidth("This is likely not what you want - try turning off the 'using_orespawn' option");
+			final int shortest = fontRender.getStringWidth("Fallback Ore Spawn Generator Enabled!");
+			int wrap = widest + 50;
+
+			if ((guiscreen.width / 2) <= wrap) {
+				wrap = shortest + 50;
+			}
+
+			fontRender.drawSplitString(
+					"Fallback Ore Spawn Generator Enabled!\nThis is likely not what you want - try turning off the 'using_orespawn' option\n(or install MMD OreSpawn)",
+					x, y, wrap, 0xFFFFFF00);
+		}
 		*/
-    }
+	}
 }

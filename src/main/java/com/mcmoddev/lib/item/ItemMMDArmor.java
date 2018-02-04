@@ -58,10 +58,11 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 		}
 		if (!w.isRemote && w.getTotalWorldTime() > playerUpdateTimestampMap.get(player).get()) {
 			playerUpdateTimestampMap.get(player).set(w.getTotalWorldTime() + UPDATE_INTERVAL);
-			int updateCount = playerUpdateCountMap.get(player).getAndIncrement();
+			final int updateCount = playerUpdateCountMap.get(player).getAndIncrement();
 			for(int i = 0; i < 4; i++) {
-				if (player.inventory.armorInventory[i] != null && player.inventory.armorInventory[i].getItem() instanceof ItemMMDArmor) {
-					MMDToolEffects.extraEffectsOnArmorUpdate(w, player, this.material, player.inventory.armorInventory[i], updateCount);
+				final ItemStack armorItemStack = player.inventory.armorInventory[i];
+				if (armorItemStack != null && (armorItemStack.getItem() instanceof ItemMMDArmor)) {
+					MMDToolEffects.extraEffectsOnArmorUpdate(w, player, this.material, armorItemStack, updateCount);
 				}
 			}
 		}
@@ -76,7 +77,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	 * @return The armor
 	 */
 	protected static ItemMMDArmor createArmorBase(@Nonnull MMDMaterial material, EntityEquipmentSlot slot) {
-		ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
+		final ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
 		if (amaterial == null) {
 			// uh-oh
 			BaseMetals.logger.error("Failed to load armor material enum for " + material);
@@ -157,7 +158,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	public boolean getIsRepairable(ItemStack srcItemStack, ItemStack repairMaterial) {
 		// repair with string or wool
 		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
-		for (ItemStack i : acceptableItems) {
+		for (final ItemStack i : acceptableItems) {
 			if (ItemStack.areItemsEqual(i, repairMaterial))
 				return true;
 		}

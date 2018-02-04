@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
@@ -37,7 +38,7 @@ public abstract class Materials {
 	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 	private static final Map<String, Set<MMDMaterial>> modSourceMaterialMap = new HashMap<>();
 
-	public static final MMDMaterial emptyMaterial = createOrelessMaterial("empty", MaterialType.METAL, 0, 0, 0, 0);
+	public static final MMDMaterial EMPTY = createOrelessMaterial("empty", MaterialType.METAL, 0, 0, 0, 0);
 
 	protected Materials() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -304,12 +305,13 @@ public abstract class Materials {
 		}
 		toolMaterialMap.put(material, toolMaterial);
 
-		if (modSourceMaterialMap.containsKey(Loader.instance().activeModContainer().getModId())) {
-			modSourceMaterialMap.get(Loader.instance().activeModContainer().getModId()).add(material);
+		final String modID = Loader.instance().activeModContainer().getModId();
+		if (modSourceMaterialMap.containsKey(modID)) {
+			modSourceMaterialMap.get(modID).add(material);
 		} else {
 			Set<MMDMaterial> newSet = new HashSet<>();
 			newSet.add(material);
-			modSourceMaterialMap.put(Loader.instance().activeModContainer().getModId(), newSet);
+			modSourceMaterialMap.put(modID, newSet);
 
 		}
 		return material;
@@ -322,6 +324,7 @@ public abstract class Materials {
 	 *            The material of interest
 	 * @return The armor material for this material, or null if there isn't one
 	 */
+	@Nullable
 	public static ArmorMaterial getArmorMaterialFor(@Nonnull final MMDMaterial material) {
 		return armorMaterialMap.get(material);
 	}
@@ -333,6 +336,7 @@ public abstract class Materials {
 	 *            The metal of interest
 	 * @return The tool material for this material, or null if there isn't one
 	 */
+	@Nullable
 	public static ToolMaterial getToolMaterialFor(@Nonnull final MMDMaterial material) {
 		return toolMaterialMap.get(material);
 	}
@@ -358,7 +362,7 @@ public abstract class Materials {
 		if (allMaterials.get(materialName) != null) {
 			return allMaterials.get(materialName);
 		}
-		return emptyMaterial;
+		return EMPTY;
 	}
 
 	/**

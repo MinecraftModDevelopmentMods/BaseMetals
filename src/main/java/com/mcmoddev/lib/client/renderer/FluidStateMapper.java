@@ -13,27 +13,27 @@ public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinit
 
 	public final ModelResourceLocation location;
 
-	public FluidStateMapper(String resourceLocation) {
+	public FluidStateMapper(final String resourceLocation) {
 		this.location = new ModelResourceLocation(resourceLocation, "fluid");
 	}
 
-	public FluidStateMapper(ResourceLocation resourceLocation) {
+	public FluidStateMapper(final ResourceLocation resourceLocation) {
 		this.location = new ModelResourceLocation(resourceLocation, "fluid");
 	}
 
-	public FluidStateMapper(ModelResourceLocation modelResourceLocation) {
+	public FluidStateMapper(final ModelResourceLocation modelResourceLocation) {
 		this.location = modelResourceLocation;
 	}
 
 	@Nonnull
 	@Override
-	protected ModelResourceLocation getModelResourceLocation(@Nonnull IBlockState state) {
+	protected ModelResourceLocation getModelResourceLocation(@Nonnull final IBlockState state) {
 		return location;
 	}
 
 	@Nonnull
 	@Override
-	public ModelResourceLocation getModelLocation(@Nonnull ItemStack stack) {
+	public ModelResourceLocation getModelLocation(@Nonnull final ItemStack stack) {
 		return location;
 	}
 }
