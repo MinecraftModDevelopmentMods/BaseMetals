@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_ns",
-    "textures": {
-        "particle": "basemetals:blocks/brass_bars",
-        "bars": "basemetals:blocks/brass_bars",
-        "edge": "basemetals:blocks/brass_bars"
-    }
-}

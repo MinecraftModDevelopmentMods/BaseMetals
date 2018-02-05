@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_n",
-    "textures": {
-        "particle": "basemetals:blocks/copper_bars",
-        "bars": "basemetals:blocks/copper_bars",
-        "edge": "basemetals:blocks/copper_bars"
-    }
-}

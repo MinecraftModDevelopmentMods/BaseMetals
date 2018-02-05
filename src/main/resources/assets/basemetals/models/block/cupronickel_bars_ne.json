@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_ne",
-    "textures": {
-        "particle": "basemetals:blocks/cupronickel_bars",
-        "bars": "basemetals:blocks/cupronickel_bars",
-        "edge": "basemetals:blocks/cupronickel_bars"
-    }
-}

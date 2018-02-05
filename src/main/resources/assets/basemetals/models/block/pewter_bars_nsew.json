@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_nsew",
-    "textures": {
-        "particle": "basemetals:blocks/pewter_bars",
-        "bars": "basemetals:blocks/pewter_bars",
-        "edge": "basemetals:blocks/pewter_bars"
-    }
-}

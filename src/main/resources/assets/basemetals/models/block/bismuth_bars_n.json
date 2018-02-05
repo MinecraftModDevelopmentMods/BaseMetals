@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_n",
-    "textures": {
-        "particle": "basemetals:blocks/bismuth_bars",
-        "bars": "basemetals:blocks/bismuth_bars",
-        "edge": "basemetals:blocks/bismuth_bars"
-    }
-}
