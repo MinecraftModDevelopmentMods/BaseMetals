@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_nsew",
-    "textures": {
-        "particle": "basemetals:blocks/quartz_bars",
-        "bars": "basemetals:blocks/quartz_bars",
-        "edge": "basemetals:blocks/quartz_bars"
-    }
-}

@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_nsew",
-    "textures": {
-        "particle": "basemetals:blocks/bronze_bars",
-        "bars": "basemetals:blocks/bronze_bars",
-        "edge": "basemetals:blocks/bronze_bars"
-    }
-}

@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_ne",
-    "textures": {
-        "particle": "basemetals:blocks/antimony_bars",
-        "bars": "basemetals:blocks/antimony_bars",
-        "edge": "basemetals:blocks/antimony_bars"
-    }
-}

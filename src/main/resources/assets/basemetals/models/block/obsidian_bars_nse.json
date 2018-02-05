@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_nse",
-    "textures": {
-        "particle": "basemetals:blocks/obsidian_bars",
-        "bars": "basemetals:blocks/obsidian_bars",
-        "edge": "basemetals:blocks/obsidian_bars"
-    }
-}

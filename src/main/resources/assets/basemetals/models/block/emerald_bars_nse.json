@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_nse",
-    "textures": {
-        "particle": "basemetals:blocks/emerald_bars",
-        "bars": "basemetals:blocks/emerald_bars",
-        "edge": "basemetals:blocks/emerald_bars"
-    }
-}
