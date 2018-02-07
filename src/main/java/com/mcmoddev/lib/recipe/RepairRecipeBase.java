@@ -3,6 +3,7 @@ package com.mcmoddev.lib.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -20,7 +21,26 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	public final String materialName;
 	public final String itemName;
 	public final List<ItemStack> repairMaterials;
-	
+
+	// TODO: Share code with below
+	public RepairRecipeBase(MMDMaterial material, Names itemName) {
+		super(material.getItemStack(itemName), material.getName() + "_" + itemName.toString(), Oredicts.PLATE + material.getCapitalizedName());
+		this.material = material;
+		this.baseItem = material.getItemStack(itemName);
+		this.materialName = material.getCapitalizedName();
+		this.repairMaterials = OreDictionary.getOres(Oredicts.PLATE + this.materialName);
+		this.itemName = itemName.toString();
+	}
+
+	public RepairRecipeBase(MMDMaterial material, Names itemName, Object...objects) {
+		super(material.getItemStack(itemName), objects);
+		this.material = material;
+		this.baseItem = material.getItemStack(itemName);
+		this.materialName = material.getCapitalizedName();
+		this.repairMaterials = OreDictionary.getOres(Oredicts.PLATE + this.materialName);
+		this.itemName = itemName.toString();
+	}
+
 	public RepairRecipeBase(MMDMaterial material, String itemName, Object...objects) {
 		super(material.getItemStack(itemName), objects);
 		this.material = material;

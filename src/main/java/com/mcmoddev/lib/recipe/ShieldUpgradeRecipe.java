@@ -34,11 +34,10 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
-		final ItemStack base;
 		final List<ItemStack> upgradeMats = new ArrayList<>();
 		final Collection<MMDMaterial> allmats = Materials.getAllMaterials();
 		final MMDMaterial input = Materials.getMaterialByName(matName);
-		base = new ItemStack(input.getItem(Names.SHIELD), 1, 0);
+		final ItemStack base = new ItemStack(input.getItem(Names.SHIELD), 1, 0);
 
 		for (final MMDMaterial mat : allmats) {
 			if (mat.getStat(MaterialStats.HARDNESS) >= input.getStat(MaterialStats.HARDNESS) && mat.getName().equals(matName)) {

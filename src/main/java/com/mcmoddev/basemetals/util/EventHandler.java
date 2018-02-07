@@ -177,7 +177,7 @@ public class EventHandler {
 			return;
 		final FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
 		final int y = (guiscreen.height / 100) * 2;
-		int x = (guiscreen.width/2);
+		int x = (guiscreen.width / 2);
 
 		if (guiscreen instanceof GuiMainMenu) {
 			guiscreen.drawCenteredString(fontRender,
