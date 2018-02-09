@@ -191,19 +191,6 @@ public abstract class MMDToolEffects {
 				break;
 			default:
 		}
-		/*
-		if (materialName.equals(MaterialNames.ADAMANTINE)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + TOOL, 4));
-		} else if (materialName.equals(MaterialNames.AQUARIUM)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.AQUARIUM + TOOL, 4));
-		} else if (materialName.equals(MaterialNames.COLDIRON)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.COLDIRON + TOOL, 3));
-		} else if (materialName.equals(MaterialNames.MITHRIL)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.MITHRIL + TOOL));
-		} else if (materialName.equals(MaterialNames.STARSTEEL)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.STARSTEEL + TOOL, 10));
-		}
-		*/
 	}
 
 	/**
@@ -233,19 +220,6 @@ public abstract class MMDToolEffects {
 				break;
 			default:
 		}
-		/*
-		if (materialName.equals(MaterialNames.ADAMANTINE)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + ARMOR, 4));
-		} else if (materialName.equals(MaterialNames.AQUARIUM)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.AQUARIUM + ARMOR, 4));
-		} else if (materialName.equals(MaterialNames.COLDIRON)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.COLDIRON + ARMOR, 3));
-		} else if (materialName.equals(MaterialNames.MITHRIL)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.MITHRIL + ARMOR));
-		} else if (materialName.equals(MaterialNames.STARSTEEL)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.STARSTEEL + ARMOR, 10));
-		}
-		*/
 	}
 
 	private static void countArmorPieces(Map<EntityPlayer, AtomicInteger> updateCache, EntityPlayer player) {
