@@ -10,10 +10,10 @@ import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +23,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Armor
@@ -35,22 +34,20 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 
 	private final String customTexture;
 	private final MMDMaterial material;
-	private final String repairOreDictName;
 
 	private static final int UPDATE_INTERVAL = 11;
 	private static final Map<EntityPlayer, AtomicLong> playerUpdateTimestampMap = new HashMap<>();
 	private static final Map<EntityPlayer, AtomicInteger> playerUpdateCountMap = new HashMap<>();
 
-	protected ItemMMDArmor(@Nonnull MMDMaterial material, @Nonnull ArmorMaterial armorMat, int renderIndex,
-							 EntityEquipmentSlot slot) {
+	protected ItemMMDArmor(@Nonnull final MMDMaterial material, @Nonnull final ArmorMaterial armorMat, final int renderIndex,
+							 final EntityEquipmentSlot slot) {
 		super(armorMat, renderIndex, slot);
 		this.material = material;
-		this.repairOreDictName = Oredicts.INGOT + material.getCapitalizedName();
 		this.customTexture = Loader.instance().activeModContainer().getModId() + ":textures/models/armor/" + material.getName() + "_layer_" + (slot == EntityEquipmentSlot.LEGS ? 2 : 1) + ".png";
 	}
 
 	@Override
-	public void onArmorTick(World w, EntityPlayer player, ItemStack armor) {
+	public void onArmorTick(final World w, final EntityPlayer player, final ItemStack armor) {
 		if (!(playerUpdateTimestampMap.containsKey(player))) {
 			playerUpdateTimestampMap.put(player, new AtomicLong(0));
 			playerUpdateCountMap.put(player, new AtomicInteger(0));
@@ -68,6 +65,27 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 		}
 	}
 
+	public static ItemMMDArmor createArmor(@Nonnull final MMDMaterial material, final Names name) {
+		EntityEquipmentSlot slot = null;
+		switch (name) {
+		case HELMET:
+			slot = EntityEquipmentSlot.HEAD;
+			break;
+		case CHESTPLATE:
+			slot = EntityEquipmentSlot.CHEST;
+			break;
+		case LEGGINGS:
+			slot = EntityEquipmentSlot.LEGS;
+			break;
+		case BOOTS:
+			slot = EntityEquipmentSlot.FEET;
+			break;
+		default:
+		}
+
+		return createArmorBase(material, slot);
+	}
+
 	/**
 	 *
 	 * @param material
@@ -76,7 +94,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	 *            Type of armor
 	 * @return The armor
 	 */
-	protected static ItemMMDArmor createArmorBase(@Nonnull MMDMaterial material, EntityEquipmentSlot slot) {
+	protected static ItemMMDArmor createArmorBase(@Nonnull final MMDMaterial material, final EntityEquipmentSlot slot) {
 		final ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
 		if (amaterial == null) {
 			// uh-oh
@@ -86,56 +104,16 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 		return new ItemMMDArmor(material, amaterial, amaterial.ordinal(), slot);
 	}
 
-	/**
-	 *
-	 * @param material
-	 *            The material to make the helmet from
-	 * @return The Helmet
-	 */
-	public static ItemMMDArmor createHelmet(MMDMaterial material) {
-		return createArmorBase(material, EntityEquipmentSlot.HEAD);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material to make the chestplate from
-	 * @return The Chestplate
-	 */
-	public static ItemMMDArmor createChestplate(MMDMaterial material) {
-		return createArmorBase(material, EntityEquipmentSlot.CHEST);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material to make the leggings from
-	 * @return The Leggings
-	 */
-	public static ItemMMDArmor createLeggings(MMDMaterial material) {
-		return createArmorBase(material, EntityEquipmentSlot.LEGS);
-	}
-
-	/**
-	 * 
-	 * @param material
-	 *            The material to make the boots from
-	 * @return The Boots
-	 */
-	public static ItemMMDArmor createBoots(MMDMaterial material) {
-		return createArmorBase(material, EntityEquipmentSlot.FEET);
-	}
-
 	@SideOnly(Side.CLIENT)
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity e, EntityEquipmentSlot slot, String layer) {
+	public String getArmorTexture(final ItemStack stack, final Entity e, final EntityEquipmentSlot slot, final String layer) {
 		return customTexture;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean b) {
+	public void addInformation(final ItemStack stack, final EntityPlayer player, final List<String> tooltip, final boolean b) {
 		super.addInformation(stack, player, tooltip, b);
-		MMDToolEffects.addArmorSpecialPropertiesToolTip(material, tooltip);
+		MMDToolEffects.addArmorSpecialPropertiesToolTip(this.material.getName(), tooltip);
 	}
 
 	/**
@@ -155,14 +133,9 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	 * @return whether this item is repairable in an anvil.
 	 */
 	@Override
-	public boolean getIsRepairable(ItemStack srcItemStack, ItemStack repairMaterial) {
+	public boolean getIsRepairable(final ItemStack srcItemStack, final ItemStack repairMaterial) {
 		// repair with string or wool
-		List<ItemStack> acceptableItems = OreDictionary.getOres(repairOreDictName);
-		for (final ItemStack i : acceptableItems) {
-			if (ItemStack.areItemsEqual(i, repairMaterial))
-				return true;
-		}
-		return false;
+		return MMDItemHelper.isToolRepairable(repairMaterial, this.material.getCapitalizedName());
 	}
 
 	@Override

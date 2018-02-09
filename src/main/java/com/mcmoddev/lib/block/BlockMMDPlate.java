@@ -2,6 +2,8 @@ package com.mcmoddev.lib.block;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -43,13 +45,13 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 * @param material
 	 *            The Material the plate is made from
 	 */
-	public BlockMMDPlate(MMDMaterial material) {
+	public BlockMMDPlate(final MMDMaterial material) {
 		super(material.getVanillaMaterial());
 		this.material = material;
 		this.blockSoundType = this.material.getSoundType();
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(FACING, EnumFacing.NORTH));
 		this.useNeighborBrightness = true;
@@ -60,7 +62,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public IBlockState withRotation(IBlockState state, Rotation rot) {
+	public IBlockState withRotation(final IBlockState state, final Rotation rot) {
 		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	}
 
@@ -69,7 +71,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+	public IBlockState withMirror(final IBlockState state, final Mirror mirrorIn) {
 		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
 	}
 
@@ -112,7 +114,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public boolean isOpaqueCube(IBlockState bs) {
+	public boolean isOpaqueCube(final IBlockState bs) {
 		return false;
 	}
 
@@ -121,7 +123,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public boolean isFullCube(IBlockState bs) {
+	public boolean isFullCube(final IBlockState bs) {
 		return false;
 	}
 
@@ -219,7 +221,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { FACING });
+		return new BlockStateContainer(this, (IProperty[]) new IProperty[] { FACING });
 	}
 
 	/**
@@ -237,10 +239,10 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public void addCollisionBoxToList(final IBlockState state, final World world, final BlockPos pos, final AxisAlignedBB entityBox,
-			final List<AxisAlignedBB> collisionBoxList, final Entity entityIn) {
-		final EnumFacing orientation = world.getBlockState(pos).getValue(FACING);
-		addCollisionBoxToList(pos, entityBox, collisionBoxList, BOXES[orientation.ordinal()]);
+	public void addCollisionBoxToList(final IBlockState state, final World worldIn, final BlockPos pos, final AxisAlignedBB entityBox,
+			final List<AxisAlignedBB> collidingBoxes, @Nullable final Entity entityIn) {
+		final EnumFacing orientation = worldIn.getBlockState(pos).getValue(FACING);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, BOXES[orientation.ordinal()]);
 	}
 
 	@Override

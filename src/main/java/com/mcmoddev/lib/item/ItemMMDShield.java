@@ -1,18 +1,13 @@
 package com.mcmoddev.lib.item;
 
-import java.util.List;
-
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 
 /**
  *
@@ -21,29 +16,21 @@ import net.minecraft.util.text.TextComponentTranslation;
  */
 public class ItemMMDShield extends net.minecraft.item.ItemShield implements IMMDObject {
 
-	final MMDMaterial material;
-	protected final String repairOreDictName;
-	protected static final long REGEN_INTERVAL = 200;
+	private final MMDMaterial material;
 
 	/**
 	 *
 	 * @param material
 	 *            The material to make the shield from
 	 */
-	public ItemMMDShield(MMDMaterial material) {
+	public ItemMMDShield(final MMDMaterial material) {
 		this.material = material;
 		this.setMaxDamage((int) (this.material.getStat(MaterialStats.STRENGTH) * 168));
-		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (world.isRemote)
-			return;
-
-		if (this.material.regenerates()  && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
-			item.setItemDamage(item.getItemDamage() - 1);
-		}
+		MMDItemHelper.doRegeneration(item, world, isHeld, this.material.regenerates());
 	}
 
 	@Override
@@ -55,25 +42,18 @@ public class ItemMMDShield extends net.minecraft.item.ItemShield implements IMMD
 	 * Return whether this item is repairable in an anvil.
 	 */
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		final List<ItemStack> acceptableItems = OreDictionary.getOres(this.repairOreDictName);
-		for (final ItemStack i : acceptableItems)
-			if (ItemStack.areItemsEqual(i, repair))
-				return true;
-		return false;
+	public boolean getIsRepairable(final ItemStack toRepair, final ItemStack repairMaterial) {
+		return MMDItemHelper.isToolRepairable(repairMaterial, this.material.getCapitalizedName());
 	}
 
 	@Override
-	public String getItemStackDisplayName(ItemStack stack) {
-		final String name = String.format("%s.name", this.getUnlocalizedName());
-		// TODO: Finish this
-//		if (net.minecraft.util.text.translation.I18n.canTranslate(name)) {
-			if (stack.getSubCompound("BlockEntityTag", false) != null) {
-				final String coloredName = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
-				return new TextComponentTranslation(String.format(coloredName)).getFormattedText();
-			}
+	public String getItemStackDisplayName(final ItemStack stack) {
+//		if (stack.getSubCompound("BlockEntityTag", false) != null) {
+//			final String coloredName = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
+//			return new TextComponentTranslation(String.format(coloredName)).getFormattedText();
+//		} else {
+			final String name = String.format("%s.name", this.getUnlocalizedName());
+			return new TextComponentTranslation(name).getFormattedText();
 //		}
-		return name;
 	}
-
 }

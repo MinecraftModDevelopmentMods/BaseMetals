@@ -305,7 +305,7 @@ public abstract class Blocks {
 		addBlockType(name, clazz, enabled, null);
 	}
 
-	protected static void addBlockType(@Nonnull final Names name, @Nonnull final Class<? extends Block> clazz, @Nonnull final Boolean enabled, final String oredict) {
+	protected static void addBlockType(@Nonnull final Names name, @Nonnull final Class<? extends Block> clazz, @Nonnull final Boolean enabled, @Nullable final String oredict) {
 		if (!nameToClass.containsKey(name)) {
 			nameToClass.put(name, clazz);
 		}
@@ -314,7 +314,7 @@ public abstract class Blocks {
 			nameToEnabled.put(name, enabled);
 		}
 
-		if (!nameToOredict.containsKey(name)) {
+		if ((oredict != null) && (!"".equals(oredict)) && (!nameToOredict.containsKey(name))) {
 			nameToOredict.put(name, oredict);
 		}
 	}

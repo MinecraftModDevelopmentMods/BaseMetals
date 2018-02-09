@@ -10,7 +10,7 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemAnvilBlock impleme
 
 	final MMDMaterial material;
 
-	public ItemMMDAnvilBlock(MMDMaterial material) {
+	public ItemMMDAnvilBlock(final MMDMaterial material) {
 		super(material.getBlock(Names.ANVIL));
 		this.material = material;
 	}
@@ -21,15 +21,12 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemAnvilBlock impleme
 	}
 
 	@Override
-    public int getMetadata(int damage)
-    {
-        return damage << 2;
+	public int getMetadata(final int damage) {
+		return damage << 2;
     }
 
 	@Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
-    	final String unloc = super.getUnlocalizedName(stack);
-        return unloc;
-    }
+	public String getUnlocalizedName(ItemStack stack) {
+		return super.getUnlocalizedName(stack);
+	}
 }

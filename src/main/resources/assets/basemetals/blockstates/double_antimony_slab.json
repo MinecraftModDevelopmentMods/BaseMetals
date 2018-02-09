@@ -1,5 +1,5 @@
 {
     "variants": {
-        "variant=default": { "model": "basemetals:antimony_block" }
+        "normal": { "model": "basemetals:antimony_block" }
     }
 }

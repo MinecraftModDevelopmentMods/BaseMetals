@@ -1,6 +1,6 @@
 {
     "variants": {
-        "half=bottom,variant=default": { "model": "basemetals:half_slab_copper" },
-        "half=top,variant=default": { "model": "basemetals:upper_slab_copper" }
+        "half=bottom": { "model": "basemetals:half_slab_copper" },
+        "half=top": { "model": "basemetals:upper_slab_copper" }
     }
 }

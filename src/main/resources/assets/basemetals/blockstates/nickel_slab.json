@@ -1,6 +1,6 @@
 {
     "variants": {
-        "half=bottom,variant=default": { "model": "basemetals:half_slab_nickel" },
-        "half=top,variant=default": { "model": "basemetals:upper_slab_nickel" }
+        "half=bottom": { "model": "basemetals:half_slab_nickel" },
+        "half=top": { "model": "basemetals:upper_slab_nickel" }
     }
 }

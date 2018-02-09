@@ -15,7 +15,7 @@ public class ItemMMDIngot extends GenericMMDItem {
 	 * @param material
 	 *            The material to make the ingot from
 	 */
-	public ItemMMDIngot(MMDMaterial material) {
+	public ItemMMDIngot(final MMDMaterial material) {
 		super(material);
 	}
 }

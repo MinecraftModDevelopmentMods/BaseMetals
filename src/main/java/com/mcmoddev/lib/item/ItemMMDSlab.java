@@ -21,14 +21,14 @@ public class ItemMMDSlab extends net.minecraft.item.ItemSlab implements IMMDObje
 	 * @param material
 	 *            The material to make the slab from
 	 */
-	public ItemMMDSlab(MMDMaterial material) {
+	public ItemMMDSlab(final MMDMaterial material) {
 		super((BlockSlab) material.getBlock(Names.SLAB), (BlockSlab) material.getBlock(Names.SLAB), (BlockSlab) material.getBlock(Names.DOUBLE_SLAB));
 		this.material = material;
 	}
 
 	/**
 	 *
-	 * @param metal
+	 * @param material
 	 *            The material to make the slab from
 	 * @param block
 	 *            The block to use to make the slab
@@ -37,9 +37,9 @@ public class ItemMMDSlab extends net.minecraft.item.ItemSlab implements IMMDObje
 	 * @param doubleslab
 	 *            The double slab block to use to make the slab
 	 */
-	public ItemMMDSlab(MMDMaterial metal, Block block, BlockSlab slab, BlockSlab doubleslab) {
+	public ItemMMDSlab(final MMDMaterial material, final Block block, final BlockSlab slab, final BlockSlab doubleslab) {
 		super(block, slab, doubleslab);
-		this.material = metal;
+		this.material = material;
 	}
 
 	@Override

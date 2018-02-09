@@ -18,7 +18,7 @@ public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObjec
 	 * @param material
 	 *            The material to make the item from
 	 */
-	public GenericMMDItem(MMDMaterial material) {
+	public GenericMMDItem(final MMDMaterial material) {
 		this.material = material;
 	}
 

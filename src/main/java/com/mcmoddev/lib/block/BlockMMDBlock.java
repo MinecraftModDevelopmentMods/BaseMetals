@@ -28,15 +28,15 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 * @param material
 	 *            The material the block is made from
 	 */
-	public BlockMMDBlock(MMDMaterial material) {
+	public BlockMMDBlock(final MMDMaterial material) {
 		this(material, false);
 	}
 
-	public BlockMMDBlock(MMDMaterial material, boolean glows) {
+	public BlockMMDBlock(final MMDMaterial material, final boolean glows) {
 		this(material, glows, false);
 	}
 
-	public BlockMMDBlock(MMDMaterial material, boolean glows, boolean isBeacon) {
+	public BlockMMDBlock(final MMDMaterial material, final boolean glows, final boolean isBeacon) {
 		super(material.getVanillaMaterial());
 		this.material = material;
 
@@ -46,15 +46,17 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 		this.translucent = false;
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 		this.beaconBase = isBeacon;
+		// Additional
+		this.fullBlock = true;
 
 		if (glows)
 			this.setLightLevel(0.5f);
 	}
 
 	@Override
-	public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
+	public boolean isBeaconBase(final IBlockAccess worldObj, final BlockPos pos, final BlockPos beacon) {
 		return beaconBase;
 	}
 
@@ -73,7 +75,7 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public boolean isFullBlock(IBlockState bs) {
+	public boolean isFullBlock(final IBlockState bs) {
 		return true;
 	}
 
@@ -82,7 +84,7 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public boolean isNormalCube(IBlockState bs) {
+	public boolean isNormalCube(final IBlockState bs) {
 		return true;
 	}
 
@@ -91,7 +93,7 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public boolean isFullyOpaque(IBlockState bs) {
+	public boolean isFullyOpaque(final IBlockState bs) {
 		return true;
 	}
 
@@ -100,7 +102,7 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public boolean isFullCube(IBlockState bs) {
+	public boolean isFullCube(final IBlockState bs) {
 		return true;
 	}
 
@@ -120,9 +122,9 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	}
 
 	@Override
-	public void onBlockPlacedBy(final World w, final BlockPos coord, final IBlockState bs,
-			final EntityLivingBase placer, final ItemStack src) {
-		super.onBlockPlacedBy(w, coord, bs, placer, src);
+	public void onBlockPlacedBy(final World worldIn, final BlockPos pos, final IBlockState state,
+			final EntityLivingBase placer, final ItemStack stack) {
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		// achievement
 		if ((Options.enableAchievements()) && (placer instanceof EntityPlayer)) {
 			((EntityPlayer) placer).addStat(Achievements.getAchievementByName(AchievementNames.BLOCKTASTIC), 1);

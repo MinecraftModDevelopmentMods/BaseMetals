@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
  */
 public class ItemMMDHorseArmor extends GenericMMDItem implements IHorseArmor {
 
-	public ItemMMDHorseArmor(MMDMaterial material) {
+	public ItemMMDHorseArmor(final MMDMaterial material) {
 		super(material);
 		this.setMaxStackSize(1);
 	}
@@ -27,7 +27,7 @@ public class ItemMMDHorseArmor extends GenericMMDItem implements IHorseArmor {
 	}
 
 	@Override
-	public String getArmorTexture(EntityHorse entity, ItemStack stack) {
+	public String getArmorTexture(final EntityHorse entity, final ItemStack stack) {
 		return stack.getItem().getRegistryName().getResourceDomain() + ":textures/entity/horse/armor/horse_armor_" + getMMDMaterial().getName() + ".png";
 	}
 }

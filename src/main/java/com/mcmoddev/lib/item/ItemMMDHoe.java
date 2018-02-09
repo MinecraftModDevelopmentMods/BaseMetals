@@ -1,14 +1,13 @@
 package com.mcmoddev.lib.item;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -16,7 +15,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Hoes
@@ -26,32 +24,25 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject {
 
-	protected final MMDMaterial material;
-	protected final Set<String> toolTypes;
-	protected final String repairOreDictName;
-	protected static final long REGEN_INTERVAL = 200;
+	private final MMDMaterial material;
+	private final Set<String> toolTypes;
 
 	/**
 	 *
 	 * @param material
 	 *            The material to make the hoe from
 	 */
-	public ItemMMDHoe(MMDMaterial material) {
+	public ItemMMDHoe(final MMDMaterial material) {
 		super(Materials.getToolMaterialFor(material));
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
 		this.toolTypes = new HashSet<>();
-		this.toolTypes.add("hoe");
-		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
+		this.toolTypes.add(Names.HOE.toString());
 	}
 
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
-		final List<ItemStack> acceptableItems = OreDictionary.getOres(this.repairOreDictName);
-		for (final ItemStack i : acceptableItems)
-			if (ItemStack.areItemsEqual(i, repairMaterial))
-				return true;
-		return false;
+		return MMDItemHelper.isToolRepairable(repairMaterial, this.material.getCapitalizedName());
 	}
 
 	/**
@@ -59,7 +50,7 @@ public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject
 	 */
 	@Override
 	@Deprecated
-	public int getHarvestLevel(ItemStack stack, String typeRequested) {
+	public int getHarvestLevel(final ItemStack stack, final String typeRequested) {
 		if ((typeRequested != null) && this.toolTypes.contains(typeRequested))
 			return this.material.getToolHarvestLevel();
 		return -1;
@@ -100,12 +91,7 @@ public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (world.isRemote)
-			return;
-
-		if (this.material.regenerates() && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
-			item.setItemDamage(item.getItemDamage() - 1);
-		}
+		MMDItemHelper.doRegeneration(item, world, isHeld, this.material.regenerates());
 	}
 
 	@Override

@@ -354,22 +354,7 @@ public abstract class Items {
 			return material.getItem(name);
 		}
 
-		Item item = null;
-		switch (name) {
-		case HELMET:
-			item = ItemMMDArmor.createHelmet(material);
-			break;
-		case CHESTPLATE:
-			item = ItemMMDArmor.createChestplate(material);
-			break;
-		case LEGGINGS:
-			item = ItemMMDArmor.createLeggings(material);
-			break;
-		case BOOTS:
-			item = ItemMMDArmor.createBoots(material);
-			break;
-		default:
-		}
+		final Item item = ItemMMDArmor.createArmor(material, name);
 
 		if (item == null) {
 			return null;
@@ -494,7 +479,7 @@ public abstract class Items {
 			nameToEnabled.put(name, enabled);
 		}
 
-		if (!nameToOredict.containsKey(name)) {
+		if ((oredict != null) && (!"".equals(oredict)) && (!nameToOredict.containsKey(name))) {
 			nameToOredict.put(name, oredict);
 		}
 	}

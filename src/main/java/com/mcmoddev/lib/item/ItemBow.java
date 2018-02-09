@@ -31,7 +31,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	 * Called when the player stops using an Item (stops holding the right mouse button).
 	 */
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
+	public void onPlayerStoppedUsing(final ItemStack stack, final World worldIn, final EntityLivingBase entityLiving, final int timeLeft) {
 		if (entityLiving instanceof EntityPlayer) {
 			final EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
 			final boolean flag = entityPlayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
@@ -108,7 +108,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	}
 
 	// TODO: This may not be needed
-	private ItemStack myFindAmmo(EntityPlayer player) {
+	private ItemStack myFindAmmo(final EntityPlayer player) {
 		if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
 		} else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND))) {
@@ -127,7 +127,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	}
 
 	@Override
-	protected boolean isArrow(@Nullable ItemStack stack) {
+	protected boolean isArrow(@Nullable final ItemStack stack) {
 		// Changed ItemArrow to ItemMMDArrow
 		return (stack != null) && (stack.getItem() instanceof ItemMMDArrow);
 	}
@@ -137,7 +137,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	 * Called when the equipped item is right clicked.
 	 */
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+	public ActionResult<ItemStack> onItemRightClick(final ItemStack itemStackIn, final World worldIn, final EntityPlayer playerIn, final EnumHand handIn) {
 		final boolean flag = this.myFindAmmo(playerIn) != null;
 
 		if (!playerIn.capabilities.isCreativeMode && !flag) {

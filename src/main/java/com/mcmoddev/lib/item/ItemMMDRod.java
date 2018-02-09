@@ -15,7 +15,7 @@ public class ItemMMDRod extends GenericMMDItem {
 	 * @param material
 	 *            The material to make the rod from
 	 */
-	public ItemMMDRod(MMDMaterial material) {
+	public ItemMMDRod(final MMDMaterial material) {
 		super(material);
 	}
 }
