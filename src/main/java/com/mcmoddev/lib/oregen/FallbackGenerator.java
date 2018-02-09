@@ -19,7 +19,7 @@ public class FallbackGenerator implements IWorldGenerator {
 
 		final int dimension = world.provider.getDimension();
 		final List<WorldGenMinable> ores = new ArrayList<>(FallbackGeneratorData.getInstance().getSpawnsForDimension(dimension));
-		if (dimension != -1 && dimension != 1 ) ores.addAll(FallbackGeneratorData.getInstance().getSpawnsForDimension(Integer.MIN_VALUE));
+		if (dimension != -1 && dimension != 1) ores.addAll(FallbackGeneratorData.getInstance().getSpawnsForDimension(Integer.MIN_VALUE));
 
 		final int minY = dimension==-1||dimension==1?0:16;
 		final int maxY = dimension==-1?126:dimension==1?256:80;

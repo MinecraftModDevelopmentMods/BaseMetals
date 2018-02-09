@@ -1,5 +1,5 @@
 {
     "variants": {
-        "variant=default": { "model": "minecraft:diamond_block" }
+        "normal": { "model": "minecraft:diamond_block" }
     }
 }

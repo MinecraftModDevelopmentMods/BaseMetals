@@ -231,8 +231,28 @@ public class MMDMaterial {
 	}
 
 	/**
+	 * Gets the tool required to harvest this material
+	 * 
+	 * @return The tool
+	 */
+	public String getHarvestTool() {
+		switch (this.getType()) {
+			case WOOD:
+				return "axe";
+			case METAL:
+			case GEM:
+			case ROCK:
+			case MINERAL:
+			case CRYSTAL:
+			default:
+				return "pickaxe";
+		}
+	}
+
+
+	/**
 	 * Gets the tool harvest level needed from a tool trying to mine this
-	 * metal's ore and other blocks
+	 * material's ore and other blocks
 	 * 
 	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool
 	 *         equivalent)
@@ -499,7 +519,7 @@ public class MMDMaterial {
 	public MMDMaterial addNewBlockFromItemStack(String name, ItemStack itemStack) {
 		final Item item = itemStack.getItem();
 		final Block block = Block.getBlockFromItem(item);
-		if (!(block == Blocks.AIR)) {
+		if (block != Blocks.AIR) {
 			addNewBlock(name, block);
 		}
 		return this;
@@ -730,9 +750,6 @@ public class MMDMaterial {
 	}
 
 	public boolean isEmpty() {
-		if (this.getName().equals("empty")) {
-			return true;
-		}
-		return false;
+		return ("empty".equals(this.getName()));
 	}
 }

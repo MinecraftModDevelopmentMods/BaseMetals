@@ -7,12 +7,12 @@ public class BlockMMDFlowerPot extends net.minecraft.block.BlockFlowerPot implem
 
 	final MMDMaterial material;
 
-	public BlockMMDFlowerPot(MMDMaterial material) {
+	public BlockMMDFlowerPot(final MMDMaterial material) {
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("axe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

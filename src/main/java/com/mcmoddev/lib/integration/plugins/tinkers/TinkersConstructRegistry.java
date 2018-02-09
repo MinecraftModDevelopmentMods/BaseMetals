@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
@@ -154,18 +155,21 @@ public class TinkersConstructRegistry {
 	 *         code returns
 	 */
 	private TCCode register(@Nonnull final TCMaterial mat) {
-		if (TinkerRegistry.getMaterial(mat.getName().toLowerCase()) != Material.UNKNOWN) {
+		final String matName = mat.getName().toLowerCase();
+		final MMDMaterial mmdMaterial = mat.getMMDMaterial();
+		final Fluid fluid = mmdMaterial.getFluid();
+		if (TinkerRegistry.getMaterial(matName) != Material.UNKNOWN) {
 			return TCCode.MATERIAL_ALREADY_REGISTERED;
 		}
 
 		final Boolean hasTraits = !mat.getTraitLocations().isEmpty();
 
-		if (mat.getMetalMaterial().getFluid() == null) {
+		if (fluid == null) {
 			return TCCode.BAD_MATERIAL;
 		}
 
 		// make sure the name used here is all lower case
-		final Material tcmat = new Material(mat.getName().toLowerCase(), mat.getMetalMaterial().getTintColor());
+		final Material tcmat = new Material(matName, mmdMaterial.getTintColor());
 
 		if (hasTraits) {
 			for (final String s : mat.getTraitLocations()) {
@@ -176,19 +180,19 @@ public class TinkersConstructRegistry {
 		}
 
 		Item matRepItem;
-		final MaterialType matType = mat.getMetalMaterial().getType();
+		final MaterialType matType = mmdMaterial.getType();
 		switch (matType) {
 			case METAL:
-				matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+				matRepItem = mmdMaterial.getItem(Names.INGOT);
 				break;
 			case GEM:
-				matRepItem = mat.getMetalMaterial().getItem(Names.GEM);
+				matRepItem = mmdMaterial.getItem(Names.GEM);
 				break;
 			case CRYSTAL:
-				matRepItem = mat.getMetalMaterial().getItem(Names.CRYSTAL);
+				matRepItem = mmdMaterial.getItem(Names.CRYSTAL);
 				break;
 			case MINERAL:
-				matRepItem = mat.getMetalMaterial().getItem(Names.INGOT);
+				matRepItem = mmdMaterial.getItem(Names.INGOT);
 				break;
 			case ROCK:
 			case WOOD:
@@ -196,7 +200,7 @@ public class TinkersConstructRegistry {
 				return TCCode.BAD_MATERIAL;
 		}
 
-		registerFluid(mat.getMetalMaterial(), mat.getAmountPer());
+		registerFluid(mmdMaterial, mat.getAmountPer());
 
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHeadStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHandleStats());
@@ -206,13 +210,15 @@ public class TinkersConstructRegistry {
 		TinkerRegistry.addMaterialStats(tcmat, mat.getArrowShaftStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getFletchingStats());
 
-		tcmat.setFluid(mat.getMetalMaterial().getFluid()).setCraftable(mat.getCraftable())
-				.setCastable(mat.getCastable()).addItem(matRepItem, 1, Material.VALUE_Ingot);
+		tcmat.setFluid(fluid)
+				.setCraftable(mat.getCraftable())
+				.setCastable(mat.getCastable())
+				.addItem(matRepItem, 1, Material.VALUE_Ingot);
 		tcmat.setRepresentativeItem(matRepItem);
 
-		final String base = mat.getMetalMaterial().getName();
+		final String base = mmdMaterial.getName();
 		final String suffix = base.substring(0, 1).toUpperCase() + base.substring(1);
-		final MaterialIntegration m = new MaterialIntegration(tcmat, mat.getMetalMaterial().getFluid(), suffix);
+		final MaterialIntegration m = new MaterialIntegration(tcmat, fluid, suffix);
 
 		if (mat.getToolForge()) {
 			m.toolforge();
@@ -427,7 +433,7 @@ public class TinkersConstructRegistry {
 
 		// hacky fix for Coal being itemCoal and not ingotCoal
 		if (MaterialNames.COAL.equals(base.getName()))
-			TinkerRegistry.registerMelting("itemCoal", output, amountPer);
+			meltingHelper("itemCoal", output, amountPer);
 
 		meltingHelper(Oredicts.ORE + oreDictName, output, amountPer * 2);
 		meltingHelper(Oredicts.BLOCK + oreDictName, output, amountPer * 9);
@@ -435,22 +441,50 @@ public class TinkersConstructRegistry {
 		meltingHelper(Oredicts.NUGGET + oreDictName, output, amountPer / 9);
 		meltingHelper(Oredicts.DUST + oreDictName, output, amountPer);
 		meltingHelper(Oredicts.DUST_SMALL + oreDictName, output, amountPer / 9);
-		meltingHelper(base.getBlock(Names.NETHERORE), output, amountPer * 4);
-		meltingHelper(base.getBlock(Names.ENDORE), output, amountPer * 4);
+		if (base.hasBlock(Names.NETHERORE))
+			meltingHelper(base.getBlock(Names.NETHERORE), output, amountPer * 4);
 
-		meltingHelper(base.getBlock(Names.SLAB), output, (amountPer * 4) + (amountPer / 2));
-		meltingHelper(base.getBlock(Names.WALL), output, amountPer * 9);
-		meltingHelper(base.getItem(Names.BOOTS), output, amountPer * 4);
-		meltingHelper(base.getItem(Names.HELMET), output, amountPer * 5);
-		meltingHelper(base.getItem(Names.CHESTPLATE), output, amountPer * 8);
-		meltingHelper(base.getItem(Names.LEGGINGS), output, amountPer * 7);
-		meltingHelper(base.getItem(Names.SHEARS), output, amountPer * 2);
-		meltingHelper(base.getBlock(Names.PRESSURE_PLATE), output, amountPer * 2);
-		meltingHelper(base.getBlock(Names.BARS), output, ((amountPer / 9) * 3) + 6); // Fun math
-		meltingHelper(base.getItem(Names.ROD), output, amountPer / 2);
-		meltingHelper(base.getItem(Names.DOOR), output, amountPer * 2);
-		meltingHelper(base.getBlock(Names.TRAPDOOR), output, amountPer * 4);
-		meltingHelper(base.getBlock(Names.BUTTON), output, (amountPer / 9) * 2);
+		if (base.hasBlock(Names.ENDORE))
+			meltingHelper(base.getBlock(Names.ENDORE), output, amountPer * 4);
+
+		if (base.hasBlock(Names.SLAB))
+			meltingHelper(base.getBlock(Names.SLAB), output, (amountPer * 4) + (amountPer / 2));
+
+		if (base.hasBlock(Names.WALL))
+			meltingHelper(base.getBlock(Names.WALL), output, amountPer * 9);
+
+		if (base.hasItem(Names.BOOTS))
+			meltingHelper(base.getItem(Names.BOOTS), output, amountPer * 4);
+
+		if (base.hasItem(Names.HELMET))
+			meltingHelper(base.getItem(Names.HELMET), output, amountPer * 5);
+
+		if (base.hasItem(Names.CHESTPLATE))
+			meltingHelper(base.getItem(Names.CHESTPLATE), output, amountPer * 8);
+
+		if (base.hasItem(Names.LEGGINGS))
+			meltingHelper(base.getItem(Names.LEGGINGS), output, amountPer * 7);
+
+		if (base.hasItem(Names.SHEARS))
+			meltingHelper(base.getItem(Names.SHEARS), output, amountPer * 2);
+
+		if (base.hasBlock(Names.PRESSURE_PLATE))
+			meltingHelper(base.getBlock(Names.PRESSURE_PLATE), output, amountPer * 2);
+
+		if (base.hasBlock(Names.BARS))
+			meltingHelper(base.getBlock(Names.BARS), output, ((amountPer / 9) * 3) + 6); // Fun math
+
+		if (base.hasItem(Names.ROD))
+			meltingHelper(base.getItem(Names.ROD), output, amountPer / 2);
+
+		if (base.hasItem(Names.DOOR))
+			meltingHelper(base.getItem(Names.DOOR), output, amountPer * 2);
+
+		if (base.hasBlock(Names.TRAPDOOR))
+			meltingHelper(base.getBlock(Names.TRAPDOOR), output, amountPer * 4);
+
+		if (base.hasBlock(Names.BUTTON))
+			meltingHelper(base.getBlock(Names.BUTTON), output, (amountPer / 9) * 2);
 
 		return TCCode.SUCCESS;
 	}
@@ -460,15 +494,27 @@ public class TinkersConstructRegistry {
 	 * a touch less complex
 	 */
 	private void meltingHelper(@Nonnull final Item item, @Nonnull final Fluid output, @Nonnull final int amount) {
-		TinkerRegistry.registerMelting(item, output, amount);
+		if (item != null) {
+			TinkerRegistry.registerMelting(item, output, amount);
+//		} else {
+//			BaseMetals.logger.error("Attempted to register null item for fluid " + output.getName());
+		}
 	}
 
 	private void meltingHelper(@Nonnull final String itemName, @Nonnull final Fluid output, @Nonnull final int amount) {
-		TinkerRegistry.registerMelting(itemName, output, amount);
+		if (!OreDictionary.getOres(itemName).isEmpty()) {
+			TinkerRegistry.registerMelting(itemName, output, amount);
+//		} else {
+//			BaseMetals.logger.error("Attempted to register oredict for missing item " + itemName);
+		}
 	}
 
 	private void meltingHelper(@Nonnull final Block block, @Nonnull final Fluid output, @Nonnull final int amount) {
-		TinkerRegistry.registerMelting(block, output, amount);
+		if (block != null) {
+			TinkerRegistry.registerMelting(block, output, amount);
+//		} else {
+//			BaseMetals.logger.error("Attempted to register null block for fluid " + output.getName());
+		}
 	}
 
 	public void integrateRecipes() {

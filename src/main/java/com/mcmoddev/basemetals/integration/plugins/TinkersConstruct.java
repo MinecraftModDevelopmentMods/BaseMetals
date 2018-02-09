@@ -8,7 +8,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
-import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -35,24 +34,49 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		TraitRegistry.initMetalsTraits();
 		ModifierRegistry.initModifiers();
 
-		registerMaterial(MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
-		registerMaterial(MaterialNames.ANTIMONY, true, false);
-		registerMaterial(MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC, TraitNames.JAGGED, TraitLocations.HEAD,
-				TraitNames.AQUADYNAMIC, TraitLocations.HEAD);
-		registerMaterial(MaterialNames.BISMUTH, true, false);
-		registerMaterial(MaterialNames.BRASS, true, false, TraitNames.DENSE);
-		// registerMaterial(MaterialNames.BRONZE, true, false);
-		registerMaterial(MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
-		registerMaterial(MaterialNames.CUPRONICKEL, true, false);
-		registerMaterial(MaterialNames.INVAR, true, false);
-		registerMaterial(MaterialNames.MITHRIL, true, false, TraitNames.HOLY);
-		registerMaterial(MaterialNames.NICKEL, true, false);
-		registerMaterial(MaterialNames.PEWTER, true, false, TraitNames.SOFT);
-		registerMaterial(MaterialNames.PLATINUM, true, false);
-		registerMaterial(MaterialNames.STARSTEEL, true, false, TraitNames.ENDERFERENCE, TraitLocations.HEAD,
-				TraitNames.SPARKLY);
-		registerMaterial(MaterialNames.TIN, true, false);
-		registerMaterial(MaterialNames.ZINC, true, false);
+		registerMaterial(MaterialNames.ADAMANTINE)
+			.setCastable(true)
+			.addTrait(TraitNames.COLDBLOODED)
+			.addTrait(TraitNames.INSATIABLE);
+		registerMaterial(MaterialNames.ANTIMONY)
+			.setCastable(true);
+		registerMaterial(MaterialNames.AQUARIUM)
+			.setCastable(true)
+			.addTrait(TraitNames.AQUADYNAMIC)
+			.addTrait(TraitNames.JAGGED, TraitLocations.HEAD)
+			.addTrait(TraitNames.AQUADYNAMIC, TraitLocations.HEAD);
+		registerMaterial(MaterialNames.BISMUTH)
+			.setCastable(true);
+		registerMaterial(MaterialNames.BRASS)
+			.setCastable(true)
+			.addTrait(TraitNames.DENSE);
+		// registerMaterial(MaterialNames.BRONZE)
+		//	.setCastable(true);
+		registerMaterial(MaterialNames.COLDIRON)
+			.setCastable(true)
+			.addTrait(TraitNames.FREEZING);
+		registerMaterial(MaterialNames.CUPRONICKEL)
+			.setCastable(true);
+		registerMaterial(MaterialNames.INVAR)
+			.setCastable(true);
+		registerMaterial(MaterialNames.MITHRIL)
+			.setCastable(true)
+			.addTrait(TraitNames.HOLY);
+		registerMaterial(MaterialNames.NICKEL)
+			.setCastable(true);
+		registerMaterial(MaterialNames.PEWTER)
+			.setCastable(true)
+			.addTrait(TraitNames.SOFT);
+		registerMaterial(MaterialNames.PLATINUM)
+			.setCastable(true);
+		registerMaterial(MaterialNames.STARSTEEL)
+			.setCastable(true)
+			.addTrait(TraitNames.ENDERFERENCE, TraitLocations.HEAD)
+			.addTrait(TraitNames.SPARKLY);
+		registerMaterial(MaterialNames.TIN)
+			.setCastable(true);
+		registerMaterial(MaterialNames.ZINC)
+			.setCastable(true);
 
 		registerAlloys();
 
@@ -88,63 +112,6 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 
 		registry.registerAll();
-	}
-
-	private boolean isTraitLoc(String loc) {
-		switch (loc) {
-			case TraitLocations.BOW:
-			case TraitLocations.BOWSTRING:
-			case TraitLocations.EXTRA:
-			case TraitLocations.FLETCHING:
-			case TraitLocations.HANDLE:
-			case TraitLocations.HEAD:
-			case TraitLocations.PROJECTILE:
-			case TraitLocations.SHAFT:
-				return true;
-			default:
-				return false;
-		}
-	}
-
-	private void addTraits(TCMaterial mat, String[] traits) {
-		int i = 0;
-		while (i < traits.length) {
-			if (i + 1 >= traits.length) {
-				mat.addTrait(traits[i]);
-				i++;
-				continue;
-			}
-
-			if (isTraitLoc(traits[i + 1])) {
-				mat.addTrait(traits[i], traits[i + 1]);
-				i++;
-			} else {
-				mat.addTrait(traits[i]);
-			}
-			i++;
-		}
-	}
-
-	private void registerMaterial(String name, boolean castable, boolean craftable, String... traits) {
-		if (!Materials.hasMaterial(name))
-			return;
-
-		final MMDMaterial mmdMat = Materials.getMaterialByName(name);
-		final TCMaterial mat = registry.getMaterial(name, mmdMat);
-
-		if (mmdMat.isEmpty())
-			return;
-
-		if (castable)
-			mat.setCastable(castable);
-		if (craftable)
-			mat.setCraftable(craftable);
-
-		if (traits.length > 0) {
-			addTraits(mat, traits);
-		}
-
-		mat.settle();
 	}
 
 	private void registerAlloys() {

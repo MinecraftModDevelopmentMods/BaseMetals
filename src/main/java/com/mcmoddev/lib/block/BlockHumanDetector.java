@@ -19,9 +19,9 @@ public class BlockHumanDetector extends net.minecraft.block.BlockPressurePlate {
 	}
 
 	@Override
-	protected int computeRedstoneStrength(World w, BlockPos pos) {
+	protected int computeRedstoneStrength(final World worldIn, final BlockPos pos) {
 		final AxisAlignedBB axisalignedbb = PRESSURE_AABB.offset(pos);
-		final List<? extends Entity> list = w.<Entity>getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
+		final List<? extends Entity> list = worldIn.<Entity>getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
 
 		if (!list.isEmpty())
 			return 15;

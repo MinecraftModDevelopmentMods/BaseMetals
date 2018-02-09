@@ -57,7 +57,7 @@ public class MekanismBase implements IIntegration {
 	// PressurizedOutput (Pressurized Reaction Chamber)
 	private static final String ITEM_OUTPUT = "itemOutput";
 	private static final String GAS_OUTPUT = "gasOutput";
-	
+
 	private static final String CLEAN = "clean";
 
 	@Override

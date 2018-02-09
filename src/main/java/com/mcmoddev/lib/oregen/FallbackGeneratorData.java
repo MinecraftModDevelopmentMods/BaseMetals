@@ -83,7 +83,7 @@ public class FallbackGeneratorData {
 	}
 
 	public void setup() {
-		for (final Entry<Integer, Map<MMDMaterial, List<String>>> matMap : materials.entrySet()) {			
+		for (final Entry<Integer, Map<MMDMaterial, List<String>>> matMap : materials.entrySet()) {
 			final Map<MMDMaterial, List<String>> mats = matMap.getValue();
 			final List<WorldGenMinable> spawnList = spawns.getOrDefault(matMap.getKey(), new ArrayList<>());
 			final Predicate<IBlockState> pred = getPredicateForDimension(matMap.getKey());

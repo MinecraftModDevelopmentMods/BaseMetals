@@ -12,21 +12,21 @@ public class MMDContainerRepair extends ContainerRepair {
 	private final BlockPos myPos;
 	private final World myWorld;
 	
-	public MMDContainerRepair(InventoryPlayer playerInventory, World worldIn, EntityPlayer player) {
+	public MMDContainerRepair(final InventoryPlayer playerInventory, final World worldIn, final EntityPlayer player) {
 		super(playerInventory, worldIn, player);
 		this.myPos = BlockPos.ORIGIN;
 		this.myWorld = worldIn;
 	}
 
-	public MMDContainerRepair(InventoryPlayer playerInventory, World worldIn, BlockPos blockPosIn,
-			EntityPlayer player) {
+	public MMDContainerRepair(final InventoryPlayer playerInventory, final World worldIn, final BlockPos blockPosIn,
+			final EntityPlayer player) {
 		super(playerInventory, worldIn, blockPosIn, player);
 		this.myPos = blockPosIn;
 		this.myWorld = worldIn;
 	}
 
 	@Override
-    public boolean canInteractWith(EntityPlayer playerIn)
+    public boolean canInteractWith(final EntityPlayer playerIn)
     {
         if (!(this.myWorld.getBlockState(this.myPos).getBlock() instanceof BlockMMDAnvil) ) {
             return false;

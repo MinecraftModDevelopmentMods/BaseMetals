@@ -26,13 +26,13 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class ItemCrossbow extends ItemBow {
+public class ItemCrossbow extends net.minecraft.item.ItemBow {
 
 	/**
 	 * Called when the player stops using an Item (stops holding the right mouse button).
 	 */
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
+	public void onPlayerStoppedUsing(final ItemStack stack, final World worldIn, final EntityLivingBase entityLiving, final int timeLeft) {
 		if (entityLiving instanceof EntityPlayer) {
 			final EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
 			final boolean flag = entityPlayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
@@ -115,7 +115,7 @@ public class ItemCrossbow extends ItemBow {
 		return ItemStack.EMPTY;
 	}
 
-	private ItemStack myFindAmmo(EntityPlayer player) {
+	private ItemStack myFindAmmo(final EntityPlayer player) {
 		if (this.isBolt(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
 		} else if (this.isBolt(player.getHeldItem(EnumHand.MAIN_HAND))) {
@@ -134,11 +134,11 @@ public class ItemCrossbow extends ItemBow {
 	}
 
 	@Override
-	protected boolean isArrow(@Nonnull ItemStack stack) {
+	protected boolean isArrow(@Nonnull final ItemStack stack) {
 		return false;
 	}
 
-	protected boolean isBolt(@Nonnull ItemStack stack) {
+	protected boolean isBolt(@Nonnull final ItemStack stack) {
 		return stack.getItem() instanceof ItemBolt;
 	}
 
@@ -146,7 +146,7 @@ public class ItemCrossbow extends ItemBow {
 	 * Called when the equipped item is right clicked.
 	 */
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+	public ActionResult<ItemStack> onItemRightClick(final World worldIn, final EntityPlayer playerIn, final EnumHand handIn) {
 		final ItemStack itemStack = playerIn.getHeldItem(handIn);
 		// Check for specific Arrows
 		final boolean flag = !this.myFindAmmo(playerIn).isEmpty();

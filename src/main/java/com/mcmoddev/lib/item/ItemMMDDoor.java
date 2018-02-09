@@ -18,7 +18,7 @@ public class ItemMMDDoor extends net.minecraft.item.ItemDoor implements IMMDObje
 	 * @param material
 	 *            The material to make the door from
 	 */
-	public ItemMMDDoor(MMDMaterial material) {
+	public ItemMMDDoor(final MMDMaterial material) {
 		super(material.getBlock(Names.DOOR));
 		this.material = material;
 	}
@@ -30,7 +30,7 @@ public class ItemMMDDoor extends net.minecraft.item.ItemDoor implements IMMDObje
 	 * @param material
 	 *            The material to make the door from
 	 */
-	public ItemMMDDoor(BlockDoor block, MMDMaterial material) {
+	public ItemMMDDoor(final BlockDoor block, final MMDMaterial material) {
 		super(block);
 		this.material = material;
 	}

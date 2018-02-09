@@ -28,23 +28,23 @@ public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDO
 	 * @param material
 	 *            The material the wall is made from
 	 */
-	public BlockMMDWall(MMDMaterial material) {
+	public BlockMMDWall(final MMDMaterial material) {
 		super(material.getBlock(Names.BLOCK));
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-		list.add(new ItemStack(itemIn, 1, net.minecraft.block.BlockWall.EnumType.NORMAL.getMetadata()));
+	public void getSubBlocks(final Item itemIn, final CreativeTabs tab, final NonNullList<ItemStack> list) {
+        list.add(new ItemStack(itemIn));
 	}
 
 	@Override
-	public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) {
+	public boolean canPlaceTorchOnTop(final IBlockState state, final IBlockAccess world, final BlockPos pos) {
 		return true;
 	}
 

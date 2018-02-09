@@ -10,7 +10,7 @@ public class ItemMMDBlock extends ItemBlock implements IMMDObject {
 
 	private MMDMaterial mmdMaterial;
 	
-	public ItemMMDBlock(MMDMaterial material, Block block) {
+	public ItemMMDBlock(final MMDMaterial material, final Block block) {
 		super(block);
 		this.mmdMaterial = material;
 	}

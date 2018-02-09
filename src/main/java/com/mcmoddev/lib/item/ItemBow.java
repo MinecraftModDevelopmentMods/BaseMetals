@@ -31,7 +31,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	 * Called when the player stops using an Item (stops holding the right mouse button).
 	 */
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
+	public void onPlayerStoppedUsing(final ItemStack stack, final World worldIn, final EntityLivingBase entityLiving, final int timeLeft) {
 		if (entityLiving instanceof EntityPlayer) {
 			final EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
 			final boolean flag = entityPlayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
@@ -104,7 +104,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 		}
 	}
 
-	private ItemStack myFindAmmo(EntityPlayer player) {
+	private ItemStack myFindAmmo(final EntityPlayer player) {
 		if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
 		} else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND))) {
@@ -123,7 +123,7 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	}
 
 	@Override
-	protected boolean isArrow(@Nonnull ItemStack stack) {
+	protected boolean isArrow(@Nonnull final ItemStack stack) {
 		// Changed ItemArrow to ItemMMDArrow
 		// TODO: Do we really need this?
 		return stack.getItem() instanceof ItemMMDArrow;
@@ -133,21 +133,21 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	 * Called when the equipped item is right clicked.
 	 */
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		final ItemStack itemStack = playerIn.getHeldItem(handIn);
+	public ActionResult<ItemStack> onItemRightClick(final World worldIn, final EntityPlayer playerIn, final EnumHand handIn) {
+		final ItemStack itemStackIn = playerIn.getHeldItem(handIn);
 		// Check for specific Arrows
 		final boolean flag = !this.myFindAmmo(playerIn).isEmpty();
 
-		final ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemStack, worldIn, playerIn, handIn, flag);
+		final ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemStackIn, worldIn, playerIn, handIn, flag);
 		if (ret != null) {
 			return ret;
 		}
 
 		if (!playerIn.capabilities.isCreativeMode && !flag) {
-			return flag ? new ActionResult<>(EnumActionResult.PASS, itemStack) : new ActionResult<>(EnumActionResult.FAIL, itemStack);
+			return flag ? new ActionResult<>(EnumActionResult.PASS, itemStackIn) : new ActionResult<>(EnumActionResult.FAIL, itemStackIn);
 		} else {
 			playerIn.setActiveHand(handIn);
-			return new ActionResult<>(EnumActionResult.SUCCESS, itemStack);
+			return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 		}
 	}
 }

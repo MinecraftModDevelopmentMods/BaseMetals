@@ -15,7 +15,7 @@ public class ItemMMDGear extends GenericMMDItem {
 	 * @param material
 	 *            The material to make the gear from
 	 */
-	public ItemMMDGear(MMDMaterial material) {
+	public ItemMMDGear(final MMDMaterial material) {
 		super(material);
 	}
 }
