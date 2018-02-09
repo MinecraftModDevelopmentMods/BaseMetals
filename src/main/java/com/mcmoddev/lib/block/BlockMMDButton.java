@@ -31,7 +31,7 @@ public class BlockMMDButton extends net.minecraft.block.BlockButton implements I
         if (this.blockMaterial == Material.WOOD) {
     		soundEvent = SoundEvents.BLOCK_WOOD_BUTTON_CLICK_ON;
 		}
-        worldIn.playSound(player, pos, soundEvent, SoundCategory.BLOCKS, 0.3F, 0.6F);
+		worldIn.playSound(player, pos, soundEvent, SoundCategory.BLOCKS, 0.3F, 0.6F);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class BlockMMDButton extends net.minecraft.block.BlockButton implements I
         if (this.blockMaterial == Material.WOOD) {
     		soundEvent = SoundEvents.BLOCK_WOOD_BUTTON_CLICK_OFF;
 		}
-    	worldIn.playSound((EntityPlayer) null, pos, soundEvent, SoundCategory.BLOCKS, 0.3F, 0.5F);
+		worldIn.playSound((EntityPlayer) null, pos, soundEvent, SoundCategory.BLOCKS, 0.3F, 0.5F);
 	}
 
 	@Override

@@ -249,7 +249,6 @@ public class MMDMaterial {
 		}
 	}
 
-
 	/**
 	 * Gets the tool harvest level needed from a tool trying to mine this
 	 * material's ore and other blocks

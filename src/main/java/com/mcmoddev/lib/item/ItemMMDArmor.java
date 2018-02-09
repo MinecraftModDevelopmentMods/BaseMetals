@@ -85,6 +85,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 
 		return createArmorBase(material, slot);
 	}
+
 	/**
 	 *
 	 * @param material

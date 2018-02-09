@@ -41,7 +41,7 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 		if (!this.isDouble())
 			iblockstate = iblockstate.withProperty(HALF, EnumBlockHalf.BOTTOM);
 
-        this.setDefaultState(iblockstate);
+		this.setDefaultState(iblockstate);
 	}
 
 	/**

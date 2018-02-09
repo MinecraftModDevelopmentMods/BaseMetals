@@ -68,7 +68,7 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 		if ((this.material.getToolHarvestLevel() > 1) || (this.material.getType().equals(MaterialType.METAL))) {
 			return false;
 		} else {
-			final BlockPos blockpos = (state.getValue(BlockDoor.HALF) == BlockDoor.EnumDoorHalf.LOWER) ? pos : pos.down();
+			final BlockPos blockpos = (state.getValue(BlockDoor.HALF) == EnumDoorHalf.LOWER) ? pos : pos.down();
 			final IBlockState iblockstate = pos.equals(blockpos) ? state : worldIn.getBlockState(blockpos);
 			if (iblockstate.getBlock() != this) {
 				return false;
@@ -98,7 +98,7 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 		worldIn.playEvent(player, retVal, pos, 0);
 	}
 
-    @Override
+	@Override
 	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}

@@ -36,7 +36,7 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	}
 
 	public BlockMMDBlock(final MMDMaterial material, final boolean glows, final boolean isBeacon) {
-        super(material.getVanillaMaterial());
+		super(material.getVanillaMaterial());
 		this.material = material;
 
 		this.setSoundType(this.material.getSoundType());
@@ -60,8 +60,8 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	}
 
 	@Override
-    public void onBlockPlacedBy(final World worldIn, final BlockPos pos, final IBlockState state,
-    		final EntityLivingBase placer, final ItemStack stack) {
+	public void onBlockPlacedBy(final World worldIn, final BlockPos pos, final IBlockState state,
+			final EntityLivingBase placer, final ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		// achievement
 		if ((Options.enableAchievements()) && (placer instanceof EntityPlayer)) {

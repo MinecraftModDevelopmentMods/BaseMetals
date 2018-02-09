@@ -9,7 +9,7 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemAnvilBlock impleme
 	final MMDMaterial material;
 
 	public ItemMMDAnvilBlock(final MMDMaterial material) {
-	    super(material.getBlock(Names.ANVIL));
+		super(material.getBlock(Names.ANVIL));
 //	    super(material.getBlock(Names.ANVIL), material.getBlock(Names.ANVIL), new String[] {"intact", "slightlyDamaged", "veryDamaged"});
 		this.material = material;
 	}
@@ -20,7 +20,7 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemAnvilBlock impleme
 	}
 
 	@Override
-    public int getMetadata(final int damage) {
-        return damage << 2;
+	public int getMetadata(final int damage) {
+		return damage << 2;
     }
 }

@@ -40,9 +40,10 @@ public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDO
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(final Item itemIn, final CreativeTabs tab, final NonNullList<ItemStack> list) {
-        list.add(new ItemStack(itemIn));
+		list.add(new ItemStack(itemIn));
 	}
 
+	// We don't specifically need this, but it does mean less logic being run on each check
 	@Override
 	public boolean canPlaceTorchOnTop(final IBlockState state, final IBlockAccess world, final BlockPos pos) {
 		return true;

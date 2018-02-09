@@ -479,7 +479,7 @@ public abstract class Items {
 			nameToEnabled.put(name, enabled);
 		}
 
-		if (!nameToOredict.containsKey(name)) {
+		if ((oredict != null) && (!"".equals(oredict)) && (!nameToOredict.containsKey(name))) {
 			nameToOredict.put(name, oredict);
 		}
 	}
