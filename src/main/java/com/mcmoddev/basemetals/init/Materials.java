@@ -98,7 +98,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 			case MaterialNames.SILVER:
 				return 0xFFFFFFFF;
 			case MaterialNames.STARSTEEL:
-				return 0xFF53393F;
+				return 0xFF212135;
 			case MaterialNames.STEEL:
 				return 0xFFD5E3E5;
 			case MaterialNames.TIN:
@@ -241,8 +241,8 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		createOrelessMaterial(MaterialNames.ENDER, MaterialType.GEM, 2, 2, 6, 0xFF063931);
 		createOrelessMaterial(MaterialNames.QUARTZ, MaterialType.GEM, 5, 4, 2, 0xFFEAE3DB);
 		createOrelessMaterial(MaterialNames.OBSIDIAN, MaterialType.ROCK, 10, 15, 4, 0xFF101019);
-		createOrelessMaterial(MaterialNames.LAPIS, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
-		createOrelessMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
-		createOrelessMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
+		createOrelessMaterial(MaterialNames.LAPIS, MaterialType.MINERAL, 1, 1, 1, 0xFF26619c);
+		createOrelessMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7fb8a4);
+		createOrelessMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF720000);
 	}
 }
