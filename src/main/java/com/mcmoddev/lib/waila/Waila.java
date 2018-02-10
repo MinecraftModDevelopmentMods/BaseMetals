@@ -12,7 +12,7 @@ public class Waila {
 	}
 
 	public static void init() {
-		FMLInterModComms.sendMessage("Waila", "register", "com.mcmoddev.basemetals.waila.Waila.register");
+		FMLInterModComms.sendMessage("waila", "register", "com.mcmoddev.basemetals.waila.Waila.register");
 	}
 
 	public static void register(IWailaRegistrar registrar) {
