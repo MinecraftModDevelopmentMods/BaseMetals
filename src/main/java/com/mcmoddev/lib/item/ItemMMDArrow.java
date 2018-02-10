@@ -22,7 +22,7 @@ public class ItemMMDArrow extends net.minecraft.item.ItemArrow implements IMMDOb
 	 * @param material
 	 *            The material to make the arrow from
 	 */
-	public ItemMMDArrow(MMDMaterial material) {
+	public ItemMMDArrow(final MMDMaterial material) {
 		this.material = material;
 	}
 
@@ -36,7 +36,7 @@ public class ItemMMDArrow extends net.minecraft.item.ItemArrow implements IMMDOb
 	 *            The shooter
 	 * @return The Custom Arrow
 	 */
-	public EntityCustomArrow createArrow(World worldIn, ItemStack stack, EntityPlayer shooter) {
+	public EntityCustomArrow createArrow(final World worldIn, final ItemStack stack, final EntityPlayer shooter) {
 		return new EntityCustomArrow(worldIn, stack, shooter);
 	}
 

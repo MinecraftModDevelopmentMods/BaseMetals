@@ -23,12 +23,12 @@ public class RenderCustomArrow extends Render<EntityCustomArrow> {
 	 * @param renderManager
 	 *            The render manager
 	 */
-	public RenderCustomArrow(RenderManager renderManager) {
+	public RenderCustomArrow(final RenderManager renderManager) {
 		super(renderManager);
 	}
 
 	@Override
-	public void doRender(EntityCustomArrow entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(final EntityCustomArrow entity, final double x, final double y, final double z, final float entityYaw, final float partialTicks) {
 		this.bindEntityTexture(entity);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.pushMatrix();
@@ -107,7 +107,7 @@ public class RenderCustomArrow extends Render<EntityCustomArrow> {
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(EntityCustomArrow entity) {
+	protected ResourceLocation getEntityTexture(final EntityCustomArrow entity) {
 		return new ResourceLocation("textures/entity/projectiles/arrow.png");
 	}
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -45,15 +46,15 @@ import net.minecraft.item.ItemStack;
  */
 public abstract class Items {
 
-	private static BiMap<String, Item> itemRegistry = HashBiMap.create(34);
-	private static Map<MMDMaterial, List<Item>> itemsByMaterial = new HashMap<>();
+	private static final BiMap<String, Item> itemRegistry = HashBiMap.create(34);
+	private static final Map<MMDMaterial, List<Item>> itemsByMaterial = new HashMap<>();
 
-	private static EnumMap<Names, Class<? extends Item>> nameToClass = new EnumMap<>(Names.class);
-	private static EnumMap<Names, String> nameToOredict = new EnumMap<>(Names.class);
-	private static EnumMap<Names, Boolean> nameToEnabled = new EnumMap<>(Names.class);
+	private static final EnumMap<Names, Class<? extends Item>> nameToClass = new EnumMap<>(Names.class);
+	private static final EnumMap<Names, String> nameToOredict = new EnumMap<>(Names.class);
+	private static final EnumMap<Names, Boolean> nameToEnabled = new EnumMap<>(Names.class);
 
-	private static Map<Class<?>, Integer> classSortingValues = new HashMap<>();
-	private static Map<MMDMaterial, Integer> materialSortingValues = new HashMap<>();
+	private static final Map<Class<?>, Integer> classSortingValues = new HashMap<>();
+	private static final Map<MMDMaterial, Integer> materialSortingValues = new HashMap<>();
 
 	// public static UniversalBucket universal_bucket; // now automatically added by
 	// Forge
@@ -177,6 +178,7 @@ public abstract class Items {
 		}
 	}
 
+	@Nullable
 	protected static Item create(@Nonnull final Names name, @Nonnull final String materialName,
 			final CreativeTabs tab) {
 		return create(name, Materials.getMaterialByName(materialName), tab);
@@ -192,6 +194,7 @@ public abstract class Items {
 	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
+	@Nullable
 	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material,
 			final CreativeTabs tab) {
 		if (sanityCheck(name, material)) {
@@ -215,7 +218,7 @@ public abstract class Items {
 	}
 
 	private static boolean sanityCheck(Names name, MMDMaterial material) {
-		return ((material == null) || (name == null) || isWrongThingToMake(name, material));
+		return ((material.isEmpty()) || (name == null) || isWrongThingToMake(name, material));
 	}
 
 	private static void setupOredict(Item item, String oredict, Names name, MMDMaterial material) {
@@ -247,12 +250,14 @@ public abstract class Items {
 				|| (name.equals(Names.BOOTS)));
 	}
 
+	@Nullable
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final Names name, final CreativeTabs tab) {
-		return addItem(item, name.toString(), null, tab);
+		return addItem(item, name.toString(), Materials.EMPTY, tab);
 	}
 
+	@Nullable
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final CreativeTabs tab) {
-		return addItem(item, name, null, tab);
+		return addItem(item, name, Materials.EMPTY, tab);
 	}
 
 	/**
@@ -267,10 +272,11 @@ public abstract class Items {
 	 *            which creative tab it is in
 	 * @return the item that was added
 	 */
+	@Nullable
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final MMDMaterial material,
 			final CreativeTabs tab) {
 		String fullName;
-		if (material != null) {
+		if (!material.isEmpty()) {
 			if (material.hasItem(name)) {
 				return material.getItem(name);
 			}
@@ -287,7 +293,7 @@ public abstract class Items {
 			item.setCreativeTab(tab);
 		}
 
-		if (material != null) {
+		if (!material.isEmpty()) {
 			itemsByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
 			itemsByMaterial.get(material).add(item);
 		}
@@ -295,6 +301,7 @@ public abstract class Items {
 		return item;
 	}
 
+	@Nullable
 	private static Item createItem(@Nonnull final MMDMaterial material, @Nonnull final String name,
 			@Nonnull final Class<? extends Item> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {
 		if (material.hasItem(name)) {
@@ -334,6 +341,7 @@ public abstract class Items {
 		return null;
 	}
 
+	@Nullable
 	private static Item createArmorItem(@Nonnull final Names name, @Nonnull final MMDMaterial material,
 			final CreativeTabs tab) {
 		if (!(isNameEnabled(name))) {
@@ -344,27 +352,12 @@ public abstract class Items {
 			return material.getItem(name);
 		}
 
-		Item item = null;
-		switch (name) {
-		case HELMET:
-			item = ItemMMDArmor.createHelmet(material);
-			break;
-		case CHESTPLATE:
-			item = ItemMMDArmor.createChestplate(material);
-			break;
-		case LEGGINGS:
-			item = ItemMMDArmor.createLeggings(material);
-			break;
-		case BOOTS:
-			item = ItemMMDArmor.createBoots(material);
-			break;
-		default:
-		}
+		final Item item = ItemMMDArmor.createArmor(material, name);
 
 		if (item == null) {
 			return null;
 		}
-		Item finalItem = addItem(item, name.toString(), material, tab);
+		final Item finalItem = addItem(item, name.toString(), material, tab);
 		material.addNewItem(name, finalItem);
 		return finalItem;
 	}
@@ -377,6 +370,7 @@ public abstract class Items {
 	 *            which creative tab it is in
 	 * @return the item this function created
 	 */
+	@Nullable
 	protected static Item createMekCrystal(@Nonnull final MMDMaterial material, final CreativeTabs tab) {
 		if (material.hasItem(Names.CRYSTAL)) {
 			return material.getItem(Names.CRYSTAL);
@@ -453,6 +447,7 @@ public abstract class Items {
 		return net.minecraft.item.Item.class;
 	}
 
+	@Nullable
 	protected static String getOredictFromName(@Nonnull final Names name) {
 		if (nameToOredict.containsKey(name)) {
 			return nameToOredict.get(name);
@@ -473,7 +468,7 @@ public abstract class Items {
 	}
 
 	protected static void addItemType(@Nonnull final Names name, @Nonnull final Class<? extends Item> clazz,
-			@Nonnull final Boolean enabled, final String oredict) {
+			@Nonnull final Boolean enabled, @Nullable final String oredict) {
 		if (!nameToClass.containsKey(name)) {
 			nameToClass.put(name, clazz);
 		}
@@ -482,7 +477,7 @@ public abstract class Items {
 			nameToEnabled.put(name, enabled);
 		}
 
-		if (!nameToOredict.containsKey(name)) {
+		if ((oredict != null) && (!"".equals(oredict)) && (!nameToOredict.containsKey(name))) {
 			nameToOredict.put(name, oredict);
 		}
 	}
@@ -496,6 +491,7 @@ public abstract class Items {
 	 *            The name of the item in question
 	 * @return The item matching that name, or null if there isn't one
 	 */
+	@Nullable
 	public static Item getItemByName(@Nonnull final String name) {
 		return itemRegistry.get(name);
 	}
@@ -508,6 +504,7 @@ public abstract class Items {
 	 *            The item in question
 	 * @return The name of the item, or null if the item is not a Base Metals item.
 	 */
+	@Nullable
 	public static String getNameOfItem(@Nonnull final Item item) {
 		return itemRegistry.inverse().get(item);
 	}

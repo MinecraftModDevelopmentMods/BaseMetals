@@ -153,7 +153,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		final MMDMaterial mmdMat = Materials.getMaterialByName(name);
 		final TCMaterial mat = registry.newMaterial(name, mmdMat.getTintColor());
 
-		if (mmdMat.equals(Materials.emptyMaterial))
+		if (mmdMat.isEmpty())
 			return;
 
 		if (castable)

@@ -32,18 +32,18 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 	 * @param material
 	 *            The material the slab is made from
 	 */
-	public BlockMMDSlab(MMDMaterial material) {
+	public BlockMMDSlab(final MMDMaterial material) {
 		super(material.getVanillaMaterial());
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 
 		IBlockState iblockstate = this.blockState.getBaseState();
 
 		if (!this.isDouble())
-			iblockstate = iblockstate.withProperty(HALF, net.minecraft.block.BlockSlab.EnumBlockHalf.BOTTOM);
+			iblockstate = iblockstate.withProperty(HALF, EnumBlockHalf.BOTTOM);
 
 		this.setDefaultState(iblockstate.withProperty(VARIANT, BlockMMDSlab.Variant.DEFAULT));
 	}
@@ -53,11 +53,11 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 	 */
 	@Override
 	@Deprecated
-	public IBlockState getStateFromMeta(int meta) {
+	public IBlockState getStateFromMeta(final int meta) {
 		IBlockState iblockstate = this.getDefaultState().withProperty(VARIANT, BlockMMDSlab.Variant.DEFAULT);
 
 		if (!this.isDouble())
-			iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? net.minecraft.block.BlockSlab.EnumBlockHalf.BOTTOM : net.minecraft.block.BlockSlab.EnumBlockHalf.TOP);
+			iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? EnumBlockHalf.BOTTOM : EnumBlockHalf.TOP);
 
 		return iblockstate;
 	}
@@ -66,10 +66,10 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 	 * Convert the BlockState into the correct metadata value
 	 */
 	@Override
-	public int getMetaFromState(IBlockState state) {
+	public int getMetaFromState(final IBlockState state) {
 		int i = 0;
 
-		if (!this.isDouble() && (state.getValue(HALF) == net.minecraft.block.BlockSlab.EnumBlockHalf.TOP))
+		if (!this.isDouble() && (state.getValue(HALF) == EnumBlockHalf.TOP))
 			i |= 8;
 
 		return i;
@@ -77,11 +77,11 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return this.isDouble() ? new BlockStateContainer(this, new IProperty[] { VARIANT }) : new BlockStateContainer(this, new IProperty[] { HALF, VARIANT });
+		return this.isDouble() ? new BlockStateContainer(this, (IProperty[]) new IProperty[] { VARIANT }) : new BlockStateContainer(this, (IProperty[]) new IProperty[] { HALF, VARIANT });
 	}
 
 	@Override
-	public String getUnlocalizedName(int meta) {
+	public String getUnlocalizedName(final int meta) {
 		return super.getUnlocalizedName();
 	}
 
@@ -96,7 +96,7 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 	}
 
 	@Override
-	public Comparable<?> getTypeForItem(ItemStack stack) {
+	public Comparable<?> getTypeForItem(final ItemStack stack) {
 		return BlockMMDSlab.Variant.DEFAULT;
 	}
 
@@ -104,7 +104,7 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 	 * Get the Item that this Block should drop when harvested.
 	 */
 	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+	public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
 		return this.material.getItem(Names.SLAB);
 	}
 
@@ -113,8 +113,8 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 	 */
 	@Override
 	@Deprecated
-	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(this.material.getItem(Names.SLAB));
+	public ItemStack getItem(final World worldIn, final BlockPos pos, final IBlockState state) {
+		return this.material.getItemStack(Names.SLAB);
 	}
 
 	/**

@@ -250,7 +250,7 @@ public class Oredicts {
 			if (oreDictBlockMap.containsKey(name)) {
 				oreDictBlockMap.get(name).add(block);
 			} else {
-				List<Block> nl = new ArrayList<>();
+				final List<Block> nl = new ArrayList<>();
 				nl.add(block);
 				oreDictBlockMap.put(name, nl);
 			}
@@ -262,7 +262,7 @@ public class Oredicts {
 			if (oreDictItemMap.containsKey(name)) {
 				oreDictItemMap.get(name).add(item);
 			} else {
-				List<Item> nl = new ArrayList<>();
+				final List<Item> nl = new ArrayList<>();
 				nl.add(item);
 				oreDictItemMap.put(name, nl);
 			}
@@ -274,7 +274,7 @@ public class Oredicts {
 			if (oreDictItemStackMap.containsKey(name)) {
 				oreDictItemStackMap.get(name).add(itemStack);
 			} else {
-				List<ItemStack> nl = new ArrayList<>();
+				final List<ItemStack> nl = new ArrayList<>();
 				nl.add(itemStack);
 				oreDictItemStackMap.put(name, nl);
 			}
@@ -283,15 +283,15 @@ public class Oredicts {
 	}
 
 	public static void registerItemOreDictionaryEntries() {
-		for (Entry<String,List<Item>> ent : oreDictItemMap.entrySet()) {
-			for (Item i : ent.getValue()) {
+		for (final Entry<String, List<Item>> ent : oreDictItemMap.entrySet()) {
+			for (final Item i : ent.getValue()) {
 				if (i.getRegistryName().getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), i);
 				}
 			}
 		}
-		for (Entry<String,List<ItemStack>> ent : oreDictItemStackMap.entrySet()) {
-			for (ItemStack is : ent.getValue()) {
+		for (final Entry<String, List<ItemStack>> ent : oreDictItemStackMap.entrySet()) {
+			for (final ItemStack is : ent.getValue()) {
 				if (is.getItem().getRegistryName().getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), is);
 				}
@@ -300,8 +300,8 @@ public class Oredicts {
 	}
 
 	public static void registerBlockOreDictionaryEntries() {
-		for (Entry<String,List<Block>> ent : oreDictBlockMap.entrySet()) {
-			for (Block b : ent.getValue()) {
+		for (final Entry<String, List<Block>> ent : oreDictBlockMap.entrySet()) {
+			for (final Block b : ent.getValue()) {
 				if (b.getRegistryName().getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), b);
 				}

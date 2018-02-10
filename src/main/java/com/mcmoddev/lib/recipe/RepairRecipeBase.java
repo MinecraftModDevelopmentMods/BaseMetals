@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.recipe;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -20,10 +21,29 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	public final String itemName;
 	public final NonNullList<ItemStack> repairMaterials;
 
-	public RepairRecipeBase(MMDMaterial material, String itemName, Object...objects) {
-		super(new ResourceLocation("armor"), new ItemStack(material.getItem(itemName)), objects);
+	// TODO: Share code with below
+	public RepairRecipeBase(MMDMaterial material, Names itemName) {
+		super(new ResourceLocation("armor"), material.getItemStack(itemName), material.getName() + "_" + itemName.toString(), Oredicts.PLATE + material.getCapitalizedName());
 		this.material = material;
-		this.baseItem = new ItemStack(material.getItem(itemName));
+		this.baseItem = material.getItemStack(itemName);
+		this.materialName = material.getCapitalizedName();
+		this.repairMaterials = OreDictionary.getOres(Oredicts.PLATE + this.materialName);
+		this.itemName = itemName.toString();
+	}
+
+	public RepairRecipeBase(MMDMaterial material, Names itemName, Object...objects) {
+		super(new ResourceLocation("armor"), material.getItemStack(itemName), objects);
+		this.material = material;
+		this.baseItem = material.getItemStack(itemName);
+		this.materialName = material.getCapitalizedName();
+		this.repairMaterials = OreDictionary.getOres(Oredicts.PLATE + this.materialName);
+		this.itemName = itemName.toString();
+	}
+
+	public RepairRecipeBase(MMDMaterial material, String itemName, Object...objects) {
+		super(new ResourceLocation("armor"), material.getItemStack(itemName), objects);
+		this.material = material;
+		this.baseItem = material.getItemStack(itemName);
 		this.materialName = material.getCapitalizedName();
 		this.repairMaterials = OreDictionary.getOres(Oredicts.PLATE + this.materialName);
 		this.itemName = itemName;
@@ -39,12 +59,12 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		boolean repairMatched = false;
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack item = inv.getStackInSlot(i);
+			final ItemStack item = inv.getStackInSlot(i);
 			if (!repairMatched) {
 				repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
 			}
 			if (!matched) {
-				boolean hasDamage = item.getItemDamage() > 0 ? true : false;
+				final boolean hasDamage = item.getItemDamage() > 0 ? true : false;
 				matched = OreDictionary.itemMatches(this.baseItem, item, false) ? hasDamage : false;
 			}
 		}
@@ -53,7 +73,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 
 	private ItemStack findBaseItem(InventoryCrafting inv) {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack a = inv.getStackInSlot(i);
+			final ItemStack a = inv.getStackInSlot(i);
 			if (a != null) {
 				ItemStack comp = new ItemStack(a.getItem(), 1, a.getMetadata());
 				if (OreDictionary.itemMatches(this.baseItem, comp, false)) {
@@ -67,10 +87,10 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
 		ItemStack target = findBaseItem(inv);
-		if (target == null) {
-			return new ItemStack(this.material.getItem(this.itemName));
+		if (target.isEmpty()) {
+			return this.material.getItemStack(this.itemName);
 		} else {
-			ItemStack rv = new ItemStack(target.getItem(), 1, target.getMetadata());
+			final ItemStack rv = new ItemStack(target.getItem(), 1, target.getMetadata());
 			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(target), rv);
 			rv.setItemDamage(0);
 			return rv;
@@ -85,11 +105,11 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return new ItemStack( this.material.getItem(this.itemName));
+		return this.material.getItemStack(this.itemName);
 	}
 
 	public NonNullList<Object> getInput() {
-		NonNullList<Object> inputs = NonNullList.create();
+		final NonNullList<Object> inputs = NonNullList.create();
 		inputs.add(this.baseItem);
 		inputs.addAll(OreDictionary.getOres(Oredicts.PLATE + this.materialName));
 		return inputs;

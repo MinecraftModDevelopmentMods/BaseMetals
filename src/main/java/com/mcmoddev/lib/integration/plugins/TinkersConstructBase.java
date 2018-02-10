@@ -55,8 +55,8 @@ public class TinkersConstructBase implements IIntegration {
 	 *            Array of quantities for input
 	 */
 	protected static void registerAlloy(@Nonnull final String outputName, @Nonnull final int outputQty, @Nonnull final String[] inputName, @Nonnull final int[] inputQty) {
-		FluidStack output = FluidRegistry.getFluidStack(outputName, outputQty);
-		FluidStack[] inputs = new FluidStack[inputName.length];
+		final FluidStack output = FluidRegistry.getFluidStack(outputName, outputQty);
+		final FluidStack[] inputs = new FluidStack[inputName.length];
 
 		for( int i = 0; i < inputName.length; i++ ) {
 			inputs[i] = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
@@ -66,8 +66,8 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	protected static TCMaterial registerMaterial(@Nonnull final String materialName, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
-		MMDMaterial mat = Materials.getMaterialByName(materialName);
-		
+		final MMDMaterial mat = Materials.getMaterialByName(materialName);
+
 		return registerMaterial(mat, craftable, castable);
 	}
 
@@ -84,7 +84,7 @@ public class TinkersConstructBase implements IIntegration {
 	 * @return a handle for potential, further manipulation of the material
 	 */
 	protected static TCMaterial registerMaterial(@Nonnull final MMDMaterial material, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
-		TCMaterial tcm = registry.newMaterial(material.getName(), material.getTintColor());
+		final TCMaterial tcm = registry.newMaterial(material.getName(), material.getTintColor());
 		if( craftable )
 			tcm.setCraftable();
 		if( castable )

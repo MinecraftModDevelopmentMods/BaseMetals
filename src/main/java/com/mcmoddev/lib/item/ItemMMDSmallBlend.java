@@ -14,7 +14,7 @@ public class ItemMMDSmallBlend extends GenericMMDItem {
 	 * @param material
 	 *            The material to make the small blend from
 	 */
-	public ItemMMDSmallBlend(MMDMaterial material) {
+	public ItemMMDSmallBlend(final MMDMaterial material) {
 		super(material);
 	}
 }

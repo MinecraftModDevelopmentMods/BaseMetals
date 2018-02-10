@@ -63,7 +63,7 @@ public class EntityCustomBolt extends EntityTippedArrow {
 	}
 
 	protected ItemStack getBoltStack() {
-		if (this.itemStack == null) {
+		if (this.itemStack.isEmpty()) {
 			// FIXME - this is potentially unreliable
 			this.itemStack = new ItemStack(Materials.getMaterialByName(MaterialNames.WOOD).getItem(Names.BOLT));
 		}

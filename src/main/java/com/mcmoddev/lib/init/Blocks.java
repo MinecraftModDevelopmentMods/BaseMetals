@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -79,6 +80,7 @@ public abstract class Blocks {
 		addBlockType(Names.ORE, BlockMMDOre.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.ORE);
 	}
 
+	@Nullable
 	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, final CreativeTabs tab) {
 		return create(name, Materials.getMaterialByName(materialName), false, tab);
 	}
@@ -93,10 +95,12 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
+	@Nullable
 	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
 		return create(name, material, false, tab);
 	}
 
+	@Nullable
 	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName, @Nonnull final boolean glow, final CreativeTabs tab) {
 		return create(name, Materials.getMaterialByName(materialName), glow, tab);
 	}
@@ -113,6 +117,7 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return the block this function created
 	 */
+	@Nullable
 	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material, @Nonnull final boolean glow, final CreativeTabs tab) {
 		if (material.hasBlock(name)) {
 			return material.getBlock(name);
@@ -120,7 +125,7 @@ public abstract class Blocks {
 
 		if ((name.equals(Names.BLOCK)) && (isNameEnabled(name))) {
 			material.addNewBlock(name, addBlock(new BlockMMDBlock(material, glow, true), name.toString(), material, tab));
-			Block b = material.getBlock(name);
+			final Block b = material.getBlock(name);
 			final String oredict = getOredictFromName(name);
 			if ((oredict != null) && (b != null)) {
 				Oredicts.registerOre(oredict + material.getCapitalizedName(), b);
@@ -147,12 +152,14 @@ public abstract class Blocks {
 		return block;
 	}
 
+	@Nullable
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final Names name, final CreativeTabs tab) {
-		return addBlock(block, name.toString(), null, tab);
+		return addBlock(block, name.toString(), Materials.EMPTY, tab);
 	}
 
+	@Nullable
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final CreativeTabs tab) {
-		return addBlock(block, name, null, tab);
+		return addBlock(block, name, Materials.EMPTY, tab);
 	}
 
 	/**
@@ -167,6 +174,7 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return a new block
 	 */
+	@Nullable
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final Names name, final MMDMaterial material, final CreativeTabs tab) {
 		return addBlock(block, name.toString(), material, tab);
 	}
@@ -183,6 +191,7 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return a new block
 	 */
+	@Nullable
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
 
 		if ((block == null) || (name == null)) {
@@ -206,7 +215,7 @@ public abstract class Blocks {
 			block.setCreativeTab(tab);
 		}
 
-		if (material != null) {
+		if (!material.isEmpty()) {
 			blocksByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
 			blocksByMaterial.get(material).add(block);
 		}
@@ -219,7 +228,7 @@ public abstract class Blocks {
 			final ItemBlock itemBlock = new ItemMMDBlock(material, block);
 			itemBlock.setRegistryName(block.getRegistryName());
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-			material.addNewItem("ItemBlock_"+fullName, itemBlock);
+			material.addNewItem("ItemBlock_" + fullName, itemBlock);
 		}
 	}
 
@@ -236,6 +245,7 @@ public abstract class Blocks {
 		}
 	}
 
+	@Nullable
 	private static Block createBlock(@Nonnull final MMDMaterial material, @Nonnull final String name, @Nonnull final Class<? extends Block> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {
 		if (enabled) {
 			Constructor<?> ctor = null;
@@ -278,6 +288,7 @@ public abstract class Blocks {
 		return net.minecraft.block.Block.class;
 	}
 
+	@Nullable
 	protected static String getOredictFromName(@Nonnull final Names name) {
 		if (nameToOredict.containsKey(name)) {
 			return nameToOredict.get(name);
@@ -296,7 +307,7 @@ public abstract class Blocks {
 		addBlockType(name, clazz, enabled, null);
 	}
 
-	protected static void addBlockType(@Nonnull final Names name, @Nonnull final Class<? extends Block> clazz, @Nonnull final Boolean enabled, final String oredict) {
+	protected static void addBlockType(@Nonnull final Names name, @Nonnull final Class<? extends Block> clazz, @Nonnull final Boolean enabled, @Nullable final String oredict) {
 		if (!nameToClass.containsKey(name)) {
 			nameToClass.put(name, clazz);
 		}
@@ -305,7 +316,7 @@ public abstract class Blocks {
 			nameToEnabled.put(name, enabled);
 		}
 
-		if (!nameToOredict.containsKey(name)) {
+		if ((oredict != null) && (!"".equals(oredict)) && (!nameToOredict.containsKey(name))) {
 			nameToOredict.put(name, oredict);
 		}
 	}
@@ -319,6 +330,7 @@ public abstract class Blocks {
 	 *            The name of the block in question
 	 * @return The block matching that name, or null if there isn't one
 	 */
+	@Nullable
 	public static Block getBlockByName(@Nonnull final String name) {
 		return blockRegistry.get(name);
 	}
@@ -332,6 +344,7 @@ public abstract class Blocks {
 	 * @return The name of the block, or null if the item is not a Base Metals
 	 *         block.
 	 */
+	@Nullable
 	public static String getNameOfBlock(@Nonnull final Block block) {
 		return blockRegistry.inverse().get(block);
 	}

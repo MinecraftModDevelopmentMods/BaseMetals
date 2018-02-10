@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
 
@@ -39,7 +40,7 @@ public class Materials {
 	private static final Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 
-	public static final MMDMaterial emptyMaterial = createOrelessMaterial("empty", MaterialType.METAL, 0, 0, 0, 0);
+	public static final MMDMaterial EMPTY = createOrelessMaterial("empty", MaterialType.METAL, 0, 0, 0, 0);
 
 	protected Materials() {
 		this.REGISTRY = new RegistryBuilder<MMDMaterial>().setName(new ResourceLocation("mmdlib", "materials_registry"))
@@ -320,6 +321,7 @@ public class Materials {
 	 *            The material of interest
 	 * @return The armor material for this material, or null if there isn't one
 	 */
+	@Nullable
 	public static ArmorMaterial getArmorMaterialFor(@Nonnull final MMDMaterial material) {
 		return armorMaterialMap.get(material);
 	}
@@ -331,6 +333,7 @@ public class Materials {
 	 *            The metal of interest
 	 * @return The tool material for this material, or null if there isn't one
 	 */
+	@Nullable
 	public static ToolMaterial getToolMaterialFor(@Nonnull final MMDMaterial material) {
 		return toolMaterialMap.get(material);
 	}
@@ -358,7 +361,7 @@ public class Materials {
 				return instance.REGISTRY.getValue(key);
 			}
 		}
-		return emptyMaterial;
+		return EMPTY;
 	}
 
 	/**

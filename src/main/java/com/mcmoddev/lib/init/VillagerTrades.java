@@ -124,7 +124,7 @@ public abstract class VillagerTrades {
 				continue; // Too expensive
 			}
 
-			for (Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS)) {
+			for (final Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS)) {
 				if (material.hasItem(name)) {
 					final ItemStack itemStack = material.getItemStack(name);
 					final ITradeList[] armorTrades = makeTradePalette(makePurchasePalette(emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2), itemStack));

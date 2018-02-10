@@ -4,7 +4,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class BlockMMDHalfSlab extends BlockMMDSlab {
 
-	public BlockMMDHalfSlab(MMDMaterial material) {
+	public BlockMMDHalfSlab(final MMDMaterial material) {
 		super(material);
 	}
 

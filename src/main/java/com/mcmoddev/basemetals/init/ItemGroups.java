@@ -37,7 +37,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	}
 
 	public static void setupIcons() {
-		MMDMaterial material = Materials.emptyMaterial;
+		MMDMaterial material = Materials.EMPTY;
 		Block blocksTabIconItem;
 		Item itemsTabIconItem;
 		Item toolsTabIconItem;
@@ -48,7 +48,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 			material = Materials.getMaterialByName(MaterialNames.IRON);
 		}
 
-		if (material.equals(Materials.emptyMaterial)) {
+		if (material.isEmpty()) {
 			return;
 		}
 

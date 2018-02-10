@@ -1,5 +1,6 @@
 package com.mcmoddev.basemetals.proxy;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.client.registrations.RegistrationHelper;
 import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
 import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
@@ -52,7 +53,7 @@ public class ClientProxy extends CommonProxy {
 				final String[] names = new String[] { "intact", "slightly_damaged", "very_damaged" };
 				final Item item = Items.getItemByName(name);
 				for (int i = 0; i < 3; i++) {
-					final ResourceLocation rl = new ResourceLocation("basemetals", String.format("%s_%s", name, names[i]));
+					final ResourceLocation rl = new ResourceLocation(BaseMetals.MODID, String.format("%s_%s", name, names[i]));
 					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(rl, "inventory"));
 				}
 			}

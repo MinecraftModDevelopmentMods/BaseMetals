@@ -33,7 +33,7 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
-				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
 					addGassesForMaterial(materialName);
 				});
@@ -46,7 +46,7 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
-				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
 					addOreMultiplicationRecipes(materialName);
 				});

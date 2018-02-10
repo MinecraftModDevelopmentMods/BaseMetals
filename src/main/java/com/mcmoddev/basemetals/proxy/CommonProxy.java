@@ -41,7 +41,11 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
  */
 public class CommonProxy {
 
-	public boolean allsGood = false;
+	private boolean allsGood = false;
+
+	public boolean allsGood() {
+		return allsGood;
+	}
 
 	public void preInit(FMLPreInitializationEvent event) {
 
@@ -60,7 +64,6 @@ public class CommonProxy {
 
 		com.mcmoddev.lib.init.Materials.init();
 		Materials.init();
-		// FuelRegistry.init();
 		Fluids.init();
 		ItemGroups.init();
 		com.mcmoddev.lib.init.Blocks.init();

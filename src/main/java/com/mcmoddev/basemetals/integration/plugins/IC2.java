@@ -37,7 +37,7 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
-				.filter(materialName -> !Materials.getMaterialByName(materialName).equals(Materials.emptyMaterial))
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
 					registerVanillaRecipes(materialName);
 					addMaceratorRecipes(materialName);

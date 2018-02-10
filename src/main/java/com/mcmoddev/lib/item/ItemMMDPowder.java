@@ -15,7 +15,7 @@ public class ItemMMDPowder extends GenericMMDItem {
 	 * @param material
 	 *            The material to make the powder from
 	 */
-	public ItemMMDPowder(MMDMaterial material) {
+	public ItemMMDPowder(final MMDMaterial material) {
 		super(material);
 	}
 }

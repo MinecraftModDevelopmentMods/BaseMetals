@@ -23,7 +23,7 @@ public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObjec
 	 * @param material
 	 *            The material to make the item from
 	 */
-	public GenericMMDItem(MMDMaterial material) {
+	public GenericMMDItem(final MMDMaterial material) {
 		this.material = material;
 	}
 
@@ -32,12 +32,12 @@ public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObjec
 		return this.material;
 	}
 
-	public void setBurnTime(int timeInTicks) {
+	public void setBurnTime(final int timeInTicks) {
 		this.burnTime = timeInTicks;
 	}
 
 	@Override
-	public int getItemBurnTime(@Nonnull ItemStack itemStack) {
+	public int getItemBurnTime(@Nonnull final ItemStack itemStack) {
 		if( itemStack.getItem().equals(this) ) {
 			return this.burnTime;
 		} else {

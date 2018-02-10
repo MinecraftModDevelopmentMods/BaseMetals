@@ -27,9 +27,9 @@ class BlocksTests {
 //	@Test
 //	void testRegisterVanillaRegistersCoalBlock() {
 //		final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
-//		
+//
 //		Block block  = coal.getBlock(net.minecraft.init.Blocks.COAL_BLOCK.getRegistryName().getResourcePath());
-//		
+//
 //		assertNotNull(block);
 //	}
 

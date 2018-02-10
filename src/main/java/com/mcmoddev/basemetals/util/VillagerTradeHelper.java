@@ -4,6 +4,8 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 /**
  * @author Chris on 3/30/2016.
@@ -68,8 +70,8 @@ public class VillagerTradeHelper {
 	 */
 	public static void insertTrades(ResourceLocation professionRL, int careerID, int tradeLevel,
 			EntityVillager.ITradeList... trades) {
-		VillagerRegistry.VillagerProfession profession = ForgeRegistries.VILLAGER_PROFESSIONS.getValue(professionRL);
-		VillagerRegistry.VillagerCareer career = profession.getCareer(careerID);
+		final VillagerProfession profession = ForgeRegistries.VILLAGER_PROFESSIONS.getValue(professionRL);
+		final VillagerCareer career = profession.getCareer(careerID);
 		career.addTrade(tradeLevel, trades);
 	}
 }

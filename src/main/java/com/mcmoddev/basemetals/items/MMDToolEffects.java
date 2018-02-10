@@ -12,6 +12,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -21,6 +22,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -53,33 +55,34 @@ public abstract class MMDToolEffects {
 	 *
 	 * @param material
 	 *            The material
-	 * @param item
+	 * @param itemStack
 	 *            The item
 	 * @param target
 	 *            The target
 	 * @param attacker
 	 *            The attacker
 	 */
-	public static void extraEffectsOnAttack(final MMDMaterial material, final ItemStack item,
+	public static void extraEffectsOnAttack(final MMDMaterial material, final ItemStack itemStack,
 			final EntityLivingBase target, final EntityLivingBase attacker) {
-		if (material.getName().equals(MaterialNames.COLDIRON)) {
+		final String materialName = material.getName();
+		if (materialName.equals(MaterialNames.COLDIRON)) {
 			if (target.isImmuneToFire()) {
 				final DamageSource extraDamage = DamageSource.GENERIC;
 				target.attackEntityFrom(extraDamage, 3f);
 			}
-		} else if (material.getName().equals(MaterialNames.ADAMANTINE)) {
+		} else if (materialName.equals(MaterialNames.ADAMANTINE)) {
 			if (target.getMaxHealth() > 20f) {
 				final DamageSource extraDamage = DamageSource.GENERIC;
 				target.attackEntityFrom(extraDamage, 4f);
 			}
-		} else if (material.getName().equals(MaterialNames.MITHRIL)) {
+		} else if (materialName.equals(MaterialNames.MITHRIL)) {
 			if (target.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD) {
 				final PotionEffect wither = new PotionEffect(MobEffects.WITHER, 60, 3);
 				final PotionEffect blind = new PotionEffect(MobEffects.BLINDNESS, 60, 1);
 				target.addPotionEffect(wither);
 				target.addPotionEffect(blind);
 			}
-		} else if ((material.getName().equals(MaterialNames.AQUARIUM)) && (target.canBreatheUnderwater())) {
+		} else if ((materialName.equals(MaterialNames.AQUARIUM)) && (target.canBreatheUnderwater())) {
 			final DamageSource extraDamage = DamageSource.GENERIC;
 			target.attackEntityFrom(extraDamage, 4f);
 		}
@@ -102,172 +105,119 @@ public abstract class MMDToolEffects {
 		// enchantments could appear
 	}
 
-	public static void extraEffectsOnArmorUpdate(final World w, final EntityPlayer player, final MMDMaterial material,
+	public static void extraEffectsOnArmorUpdate(final World world, final EntityPlayer player, final MMDMaterial material,
 			final ItemStack armor, int i) {
 		// some sanity checks
-		if (armor == ItemStack.EMPTY)
+		if (armor.isEmpty())
 			return;
 		if (armor.getItem() == null)
 			return;
 		if (player == null)
 			return;
 
+		final String materialName = material.getName();
 		if (i % 2 == 0) {
 			// count armor pieces
-			if (material.getName().equals(MaterialNames.STARSTEEL)) {
-				starsteel: {
-					// used to count up the starsteel armor items
-					countArmorPieces(starsteelUpdateCache, player);
-					break starsteel;
-				}
-			}
-			if (material.getName().equals(MaterialNames.LEAD)) {
-				lead: {
-					// used to count up the Lead armor items
-					countArmorPieces(leadUpdateCache, player);
-					break lead;
-				}
-			}
-			if (material.getName().equals(MaterialNames.ADAMANTINE)) {
-				adamantine: {
-					// used to count up the Adamantine armor items
+			switch (materialName) {
+				case MaterialNames.ADAMANTINE:
 					countArmorPieces(adamantineUpdateCache, player);
-					break adamantine;
-				}
+					break;
+				case MaterialNames.LEAD:
+					countArmorPieces(leadUpdateCache, player);
+					break;
+				case MaterialNames.STARSTEEL:
+					countStarsteelPieces(player, armor);
+					break;
+				default:
+					break;
 			}
 		} else {
 			// apply potion effects. Note that "Level I" is actually effect level 0 in the
 			// effect constructor
-			if (material.getName().equals(MaterialNames.STARSTEEL)) {
-				starsteel: {
-					if (!starsteelUpdateCache.containsKey(player))
-						break starsteel;
-					int num = starsteelUpdateCache.get(player).getAndSet(0);
-					if (num == 0)
-						break starsteel;
-					final PotionEffect jumpBoost = new PotionEffect(MobEffects.JUMP_BOOST, EFFECT_DURATION, num - 1,
-							false, false);
-					player.addPotionEffect(jumpBoost);
-					if (num > 1) {
-						final PotionEffect speedBoost = new PotionEffect(MobEffects.SPEED, EFFECT_DURATION, num - 2,
-								false, false);
-						player.addPotionEffect(speedBoost);
-					}
-					break starsteel;
-				}
-			}
-			if (material.getName().equals(MaterialNames.LEAD)) {
-				lead: {
-					if (!(leadUpdateCache.containsKey(player)))
-						break lead;
-					int level = leadUpdateCache.get(player).getAndSet(0) / 2;
-					if (level == 0)
-						break lead;
-					if (level > 0) {
-						final PotionEffect speedLoss = new PotionEffect(MobEffects.SLOWNESS, EFFECT_DURATION, level - 1,
-								false, false);
-						player.addPotionEffect(speedLoss);
-					}
-					break lead;
-				}
-			}
-			if (material.getName().equals(MaterialNames.ADAMANTINE)) {
-				adamantine: {
-					if (!(adamantineUpdateCache.containsKey(player)))
-						break adamantine;
-					int num = adamantineUpdateCache.get(player).getAndSet(0);
-					int level = num / 2;
-					if (level == 0)
-						break adamantine;
-					if (level > 0) {
-						final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION,
-								level - 1, false, false);
-						player.addPotionEffect(protection);
-					}
-					break adamantine;
-				}
-			}
-			// full suit of cold-iron makes you fire-proof
-			if ((material.getName().equals(MaterialNames.COLDIRON)) && (hasFullSuit(player, MaterialNames.COLDIRON))) {
-				final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE, EFFECT_DURATION, 0,
-						false, false);
-				player.addPotionEffect(fireProtection);
-			}
-			// full suit of Mithril protects you from withering, poison, nausea,
-			// and hunger effects
-			if ((material.getName().equals(MaterialNames.MITHRIL)) && (hasFullSuit(player, MaterialNames.MITHRIL))) {
-				final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
-				Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
-				while (effectIterator.hasNext()) {
-					PotionEffect pe = effectIterator.next();
-					Potion p = pe.getPotion();
-					if (p.isBadEffect()) {
-						removeList.add(p);
-					}
-				}
-				for (Potion p : removeList) {
-					player.removePotionEffect(p);
-				}
-			}
-			// full suit of Aquarium makes you breathe and heal under water
-			if ((material.getName().equals(MaterialNames.AQUARIUM))
-					&& ((hasFullSuit(player, MaterialNames.AQUARIUM)) && (player.posY > 0) && (player.posY < 255))) {
-				Block b1 = w.getBlockState(new BlockPos(player.posX, player.posY, player.posZ)).getBlock();
-				Block b2 = w.getBlockState(new BlockPos(player.posX, player.posY + 1, player.posZ)).getBlock();
-				if (b1 == Blocks.WATER && b2 == Blocks.WATER) {
-					final PotionEffect waterBreathing = new PotionEffect(MobEffects.WATER_BREATHING, EFFECT_DURATION, 0,
-							false, false);
-					player.addPotionEffect(waterBreathing);
-					final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION, 0, false,
-							false);
-					player.addPotionEffect(protection);
-					player.removePotionEffect(MobEffects.MINING_FATIGUE);
-				}
+			switch (materialName) {
+				case MaterialNames.ADAMANTINE:
+					applyEffectsForAdamantine(player);
+					break;
+				case MaterialNames.AQUARIUM:
+					// full suit of Aquarium makes you breathe and heal under water
+					applyEffectsForAquarium(player, world);
+					break;
+				case MaterialNames.COLDIRON:
+					// full suit of cold-iron makes you fire-proof
+					applyEffectsForColdiron(player);
+					break;
+				case MaterialNames.LEAD:
+					applyEffectsForLead(player);
+					break;
+				case MaterialNames.MITHRIL:
+					// full suit of Mithril protects you from withering, poison, nausea,
+					// and hunger effects
+					applyEffectsForMithril(player);
+					break;
+				case MaterialNames.STARSTEEL:
+					applyEffectsForStarsteel(player);
+					break;
+				default:
+					break;
 			}
 		}
 	}
 
 	/**
 	 *
-	 * @param material
-	 *            The material
+	 * @param materialName
+	 *            The materialName
 	 * @param tooltipList
 	 *            The tooltip list
 	 */
 	@SideOnly(Side.CLIENT)
-	public static void addToolSpecialPropertiesToolTip(MMDMaterial material, java.util.List<String> tooltipList) {
-		if (material.getName().equals(MaterialNames.ADAMANTINE)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + TOOL, 4));
-		} else if (material.getName().equals(MaterialNames.AQUARIUM)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.AQUARIUM + TOOL, 4));
-		} else if (material.getName().equals(MaterialNames.COLDIRON)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.COLDIRON + TOOL, 3));
-		} else if (material.getName().equals(MaterialNames.MITHRIL)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.MITHRIL + TOOL));
-		} else if (material.getName().equals(MaterialNames.STARSTEEL)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.STARSTEEL + TOOL, 10));
+	public static void addToolSpecialPropertiesToolTip(String materialName, java.util.List<String> tooltipList) {
+		switch (materialName) {
+			case MaterialNames.ADAMANTINE:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + TOOL, 4));
+				break;
+			case MaterialNames.AQUARIUM:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.AQUARIUM + TOOL, 4));
+				break;
+			case MaterialNames.COLDIRON:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.COLDIRON + TOOL, 3));
+				break;
+			case MaterialNames.MITHRIL:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.MITHRIL + TOOL));
+				break;
+			case MaterialNames.STARSTEEL:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.STARSTEEL + TOOL, 10));
+				break;
+			default:
 		}
 	}
 
 	/**
 	 *
-	 * @param material
-	 *            The material
+	 * @param materialName
+	 *            The materialName
 	 * @param tooltipList
 	 *            The tooltip list
 	 */
 	@SideOnly(Side.CLIENT)
-	public static void addArmorSpecialPropertiesToolTip(MMDMaterial material, java.util.List<String> tooltipList) {
-		if (material.getName().equals(MaterialNames.ADAMANTINE)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + ARMOR, 4));
-		} else if (material.getName().equals(MaterialNames.AQUARIUM)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.AQUARIUM + ARMOR, 4));
-		} else if (material.getName().equals(MaterialNames.COLDIRON)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.COLDIRON + ARMOR, 3));
-		} else if (material.getName().equals(MaterialNames.MITHRIL)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.MITHRIL + ARMOR));
-		} else if (material.getName().equals(MaterialNames.STARSTEEL)) {
-			tooltipList.add(I18n.format(TOOLTIP + MaterialNames.STARSTEEL + ARMOR, 10));
+	public static void addArmorSpecialPropertiesToolTip(String materialName, java.util.List<String> tooltipList) {
+		switch (materialName) {
+			case MaterialNames.ADAMANTINE:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + ARMOR, 4));
+				break;
+			case MaterialNames.AQUARIUM:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.AQUARIUM + ARMOR, 4));
+				break;
+			case MaterialNames.COLDIRON:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.COLDIRON + ARMOR, 3));
+				break;
+			case MaterialNames.MITHRIL:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.MITHRIL + ARMOR));
+				break;
+			case MaterialNames.STARSTEEL:
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.STARSTEEL + ARMOR, 10));
+				break;
+			default:
 		}
 	}
 
@@ -280,12 +230,113 @@ public abstract class MMDToolEffects {
 	}
 
 	private static boolean hasFullSuit(EntityPlayer player, String materialName) {
-		MMDMaterial material = Materials.getMaterialByName(materialName);
+		final MMDMaterial material = Materials.getMaterialByName(materialName);
 
 		return (player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == material.getItem(Names.HELMET)
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == material
 						.getItem(Names.CHESTPLATE)
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == material.getItem(Names.LEGGINGS)
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material.getItem(Names.BOOTS));
+	}
+	
+	private static boolean isHolding(EntityPlayer player, String materialName, Names itemName) {
+		if (Materials.hasMaterial(materialName)) {
+			final MMDMaterial material = Materials.getMaterialByName(materialName);
+			final ItemStack heldItemStack = player.getHeldItemMainhand();
+			final Item heldItem = heldItemStack.getItem();
+			if ((!heldItemStack.isEmpty() && heldItem == material.getItem(itemName))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static void countStarsteelPieces(EntityPlayer player, ItemStack armor) {
+		// used to count up the starsteel armor items
+		countArmorPieces(starsteelUpdateCache, player);
+	}
+
+	private static void applyEffectsForStarsteel(EntityPlayer player) {
+		if (!starsteelUpdateCache.containsKey(player))
+			return;
+		final int num = starsteelUpdateCache.get(player).getAndSet(0);
+		if (num == 0)
+			return;
+		final PotionEffect jumpBoost = new PotionEffect(MobEffects.JUMP_BOOST, EFFECT_DURATION, num - 1,
+				false, false);
+		player.addPotionEffect(jumpBoost);
+		if (num > 1) {
+			final PotionEffect speedBoost = new PotionEffect(MobEffects.SPEED, EFFECT_DURATION, num - 2,
+					false, false);
+			player.addPotionEffect(speedBoost);
+		}
+	}
+
+	private static void applyEffectsForLead(EntityPlayer player) {
+		if (!(leadUpdateCache.containsKey(player)))
+			return;
+		final int level = leadUpdateCache.get(player).getAndSet(0) / 2;
+		if (level == 0)
+			return;
+		if (level > 0) {
+			final PotionEffect speedLoss = new PotionEffect(MobEffects.SLOWNESS, EFFECT_DURATION, level - 1,
+					false, false);
+			player.addPotionEffect(speedLoss);
+		}
+	}
+
+	private static void applyEffectsForAdamantine(EntityPlayer player) {
+		if (!(adamantineUpdateCache.containsKey(player)))
+			return;
+		final int num = adamantineUpdateCache.get(player).getAndSet(0);
+		final int level = num / 2;
+		if (level == 0)
+			return;
+		if (level > 0) {
+			final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION,
+					level - 1, false, false);
+			player.addPotionEffect(protection);
+		}
+	}
+
+	private static void applyEffectsForColdiron(EntityPlayer player) {
+		if (hasFullSuit(player, MaterialNames.COLDIRON)) {
+			final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE, EFFECT_DURATION, 0,
+				false, false);
+			player.addPotionEffect(fireProtection);
+		}
+	}
+
+	private static void applyEffectsForMithril(EntityPlayer player) {
+		if (hasFullSuit(player, MaterialNames.MITHRIL)) {
+			final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
+			final Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
+			while (effectIterator.hasNext()) {
+				final PotionEffect pe = effectIterator.next();
+				final Potion p = pe.getPotion();
+				if (p.isBadEffect()) {
+					removeList.add(p);
+				}
+			}
+			for (final Potion p : removeList) {
+				player.removePotionEffect(p);
+			}
+		}
+	}
+
+	private static void applyEffectsForAquarium(EntityPlayer player, World w) {
+		if ((hasFullSuit(player, MaterialNames.AQUARIUM)) && (player.posY > 0) && (player.posY < 255)) {
+			final Block b1 = w.getBlockState(new BlockPos(player.posX, player.posY, player.posZ)).getBlock();
+			final Block b2 = w.getBlockState(new BlockPos(player.posX, player.posY + 1, player.posZ)).getBlock();
+			if (b1 == Blocks.WATER && b2 == Blocks.WATER) {
+				final PotionEffect waterBreathing = new PotionEffect(MobEffects.WATER_BREATHING, EFFECT_DURATION, 0,
+						false, false);
+				player.addPotionEffect(waterBreathing);
+				final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION, 0, false,
+						false);
+				player.addPotionEffect(protection);
+				player.removePotionEffect(MobEffects.MINING_FATIGUE);
+			}
+		}
 	}
 }

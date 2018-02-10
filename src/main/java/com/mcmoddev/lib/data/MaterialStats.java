@@ -38,7 +38,7 @@ public enum MaterialStats implements IStringSerializable {
 	protected static final TreeMap<Integer, MaterialStats> MAP = Maps.newTreeMap();
 
 	static {
-		for (MaterialStats stat : values()) {
+		for (final MaterialStats stat : values()) {
 			MAP.put(stat.ordinal(), stat);
 		}
 	}

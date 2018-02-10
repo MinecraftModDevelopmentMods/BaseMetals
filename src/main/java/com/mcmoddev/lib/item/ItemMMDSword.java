@@ -6,7 +6,6 @@ import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Swords
@@ -26,23 +24,20 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDObject {
 
-	protected final MMDMaterial material;
-	protected final String repairOreDictName;
-	protected static final long REGEN_INTERVAL = 200;
-	protected final float attackDamage;
+	private final MMDMaterial material;
+	private final float attackDamage;
 
 	/**
 	 *
 	 * @param material
 	 *            The material to make the sword from
 	 */
-	public ItemMMDSword(MMDMaterial material) {
+	public ItemMMDSword(final MMDMaterial material) {
 		super(Materials.getToolMaterialFor(material));
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
 		// this.damageVsEntity = attackDamage + metal.getBaseAttackDamage(); // damageVsEntity is private, sadly
 		this.attackDamage = 3F + this.material.getBaseAttackDamage();
-		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 
 	@Override
@@ -67,11 +62,7 @@ public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDOb
 
 	@Override
 	public boolean getIsRepairable(final ItemStack intputItem, final ItemStack repairMaterial) {
-		final List<ItemStack> acceptableItems = OreDictionary.getOres(this.repairOreDictName);
-		for (final ItemStack i : acceptableItems)
-			if (ItemStack.areItemsEqual(i, repairMaterial))
-				return true;
-		return false;
+		return MMDItemHelper.isToolRepairable(repairMaterial, this.material.getCapitalizedName());
 	}
 
 	@Override
@@ -82,12 +73,7 @@ public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDOb
 
 	@Override
 	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
-		if (world.isRemote)
-			return;
-
-		if (this.material.regenerates() && isHeld && (item.getItemDamage() > 0) && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
-			item.setItemDamage(item.getItemDamage() - 1);
-		}
+		MMDItemHelper.doRegeneration(item, world, isHeld, this.material.regenerates());
 	}
 
 	/**
@@ -101,8 +87,8 @@ public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDOb
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material, tooltip);
+	public void addInformation(final ItemStack stack, final World worldIn, final List<String> tooltip, final ITooltipFlag flagIn) {
+		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material.getName(), tooltip);
 	}
 
 	@Override

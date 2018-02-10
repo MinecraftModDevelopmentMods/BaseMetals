@@ -120,7 +120,7 @@ public class ConfigBase {
 			final String outputStr = recipe.substring(i + 2, recipe.length());
 			final ItemStack input = parseStringAsItemStack(inputStr, true);
 			final ItemStack output = parseStringAsItemStack(outputStr, false);
-			if ((input == null) || (output == null)) {
+			if ((input.isEmpty()) || (output.isEmpty())) {
 				BaseMetals.logger.error("Failed to add recipe formula '%s' because the blocks/items could not be found", recipe);
 			} else {
 				CrusherRecipeRegistry.addNewCrusherRecipe(input, output);
@@ -172,7 +172,7 @@ public class ConfigBase {
 		} else {
 			// item not found
 			BaseMetals.logger.info("Failed to find item or block for ID '%s'", id);
-			return null;
+			return ItemStack.EMPTY;
 		}
 
 	}

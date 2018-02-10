@@ -28,12 +28,10 @@ public class CustomFluid extends Fluid {
 	 */
 	public CustomFluid(String fluidName, ResourceLocation still, ResourceLocation flowing) {
 		super(fluidName, still, flowing);
-		if (Materials.getMaterialByName(fluidName) != null) {
+		if (!Materials.getMaterialByName(fluidName).isEmpty()) {
 			this.color = Materials.getMaterialByName(fluidName).getTintColor();
 		}
-		if (((this.color >> 24) & 0xFF) == 0) {
-			this.color |= 0xFF << 24;
-		}
+		checkColor();
 	}
 
 	/**
@@ -50,9 +48,7 @@ public class CustomFluid extends Fluid {
 	public CustomFluid(String fluidName, ResourceLocation still, ResourceLocation flowing, int tintARGB) {
 		super(fluidName, still, flowing);
 		this.color = tintARGB;
-		if (((this.color >> 24) & 0xFF) == 0) {
-			this.color |= 0xFF << 24;
-		}
+		checkColor();
 	}
 
 	/**
@@ -64,12 +60,10 @@ public class CustomFluid extends Fluid {
 		super(fluidName,
 				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
 				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"));
-		if (Materials.getMaterialByName(fluidName) != null) {
+		if (!Materials.getMaterialByName(fluidName).isEmpty()) {
 			this.color = Materials.getMaterialByName(fluidName).getTintColor();
 		}
-		if (((this.color >> 24) & 0xFF) == 0) {
-			this.color |= 0xFF << 24;
-		}
+		checkColor();
 	}
 
 	/**
@@ -84,9 +78,7 @@ public class CustomFluid extends Fluid {
 				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
 				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"));
 		this.color = tintARGB;
-		if (((this.color >> 24) & 0xFF) == 0) {
-			this.color |= 0xFF << 24;
-		}
+		checkColor();
 	}
 
 	@Override
@@ -96,7 +88,13 @@ public class CustomFluid extends Fluid {
 
 	@Override
 	public String getLocalizedName(FluidStack stack) {
-		String s = this.getUnlocalizedName();
+		final String s = this.getUnlocalizedName();
         return s == null ? "" : new TextComponentTranslation(String.format("%s.name", s)).getFormattedText();
+	}
+
+	private void checkColor() {
+		if (((this.color >> 24) & 0xFF) == 0) {
+			this.color |= 0xFF << 24;
+		}
 	}
 }

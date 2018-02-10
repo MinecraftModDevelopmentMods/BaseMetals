@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
@@ -27,7 +28,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	public static Block humanDetector;
 
-	protected Blocks() {
+	private Blocks() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
@@ -118,7 +119,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	private static void createMercury() {
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
-			MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
+			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 			create(Names.ORE, mercury);
 			if (mercury.hasBlock(Names.ORE))
 				mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);

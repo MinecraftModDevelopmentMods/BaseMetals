@@ -7,12 +7,12 @@ public class BlockMMDLever extends net.minecraft.block.BlockLever implements IMM
 
 	final MMDMaterial material;
 
-	public BlockMMDLever(MMDMaterial material) {
+	public BlockMMDLever(final MMDMaterial material) {
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

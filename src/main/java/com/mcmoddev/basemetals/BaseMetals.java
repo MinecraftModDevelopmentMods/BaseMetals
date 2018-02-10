@@ -85,7 +85,7 @@ public class BaseMetals {
 	public static void preInit(FMLPreInitializationEvent event) {
 		proxy.preInit(event);
 
-		if (proxy.allsGood) {
+		if (proxy.allsGood()) {
 			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
 			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
 			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
@@ -98,13 +98,13 @@ public class BaseMetals {
 	@EventHandler
 	public static void init(FMLInitializationEvent event) {
 		proxy.init(event);
-		// if we have anything else to do here, check 'proxy.allsGood' first
+		// if we have anything else to do here, check 'proxy.allsGood()' first
 	}
 
 	@EventHandler
 	public static void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
-		// if we have anything else to do here, check 'proxy.allsGood' first
+		// if we have anything else to do here, check 'proxy.allsGood()' first
 	}
 
 	@SubscribeEvent
