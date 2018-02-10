@@ -35,9 +35,7 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
-				.forEach(materialName -> {
-					addSagMillRecipe(materialName, 3600);
-				});
+				.forEach(materialName -> addSagMillRecipe(materialName, 3600));
 
 		addSagMillRecipe(MaterialNames.COPPER, 2, MaterialNames.GOLD, 1, 360);
 		addSagMillRecipe(MaterialNames.LEAD, 2, MaterialNames.SILVER, 1, 360);
