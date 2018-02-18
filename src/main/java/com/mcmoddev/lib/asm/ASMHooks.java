@@ -32,7 +32,7 @@ public class ASMHooks {
 	public static String getTextureName(HorseArmorType type, EntityHorse entity) {
 		final ItemStack stack = entity.getDataManager().get(ASMHooks.ARMOR_STACK);
 		if (!stack.isEmpty() && stack.getItem() instanceof IHorseArmor)
-			return ((IHorseArmor) stack.getItem()).getArmorTexture(entity, stack);
+			return ((IHorseArmor) stack.getItem()).getHorseArmorTexture(entity, stack);
 		return type.getTextureName();
 	}
 }
