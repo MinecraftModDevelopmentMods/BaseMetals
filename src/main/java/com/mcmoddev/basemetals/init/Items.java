@@ -3,9 +3,6 @@ package com.mcmoddev.basemetals.init;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
@@ -14,8 +11,6 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -114,7 +109,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 						create(Names.CRUSHED, material);
 						create(Names.CRUSHED_PURIFIED, material);
 
-						createMekCrystal(material, ItemGroups.myTabs.itemsTab);
+						createMekCrystal(material, ItemGroups.getTab(SharedStrings.TAB_ITEMS));
 						create(Names.SHARD, material);
 						create(Names.CLUMP, material);
 						create(Names.POWDER_DIRTY, material);
@@ -282,7 +277,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.IRON_CHESTPLATE);
 		iron.addNewItem(Names.HELMET, net.minecraft.init.Items.IRON_HELMET);
 		iron.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
-		iron.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
 		iron.addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
 		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.field_191525_da); // Items.IRON_NUGGET
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
@@ -303,7 +297,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.CHESTPLATE, iron);
 			create(Names.CRACKHAMMER, iron);
 			create(Names.CROSSBOW, iron);
-//			create(Names.DOOR, iron);
 			create(Names.FISHING_ROD, iron);
 			create(Names.HELMET, iron);
 			create(Names.HOE, iron);
@@ -365,22 +358,5 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.GEAR, wood);
 			create(Names.SCYTHE, wood);
 		}
-	}
-
-	@Nullable
-	private static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
-		CreativeTabs tab;
-
-		if ((name.equals(Names.DOOR)) || (name.equals(Names.SLAB))) {
-			tab = ItemGroups.myTabs.blocksTab;
-		} else if ((name.equals(Names.BLEND)) || (name.equals(Names.INGOT)) || (name.equals(Names.NUGGET))
-				|| (name.equals(Names.POWDER)) || (name.equals(Names.SMALLBLEND)) || (name.equals(Names.SMALLPOWDER))
-				|| (name.equals(Names.ROD)) || (name.equals(Names.GEAR))) {
-			tab = ItemGroups.myTabs.itemsTab;
-		} else {
-			tab = ItemGroups.myTabs.toolsTab;
-		}
-
-		return create(name, material, tab);
 	}
 }

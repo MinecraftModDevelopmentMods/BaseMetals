@@ -213,7 +213,7 @@ dependencies {
         exclude module: 'industrialcraft-2'
     }
 
-//  deobfCompile ("com.github.TeamFRM:TAIGA:${taiga_version}") {
+//  deobfProvided ("com.github.TeamFRM:TAIGA:${taiga_version}") {
 //      exclude group: 'mezz.jei'
 //      exclude module: 'Mantle'
 //      exclude module: 'TConstruct'
@@ -241,12 +241,11 @@ dependencies {
     deobfCompile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
 
     deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}"
-//  deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 
     deobfCompile "mcjty.theoneprobe:TheOneProbe:${top_mc_version}-${top_version}"
 //  deobfProvided "mcjty.theoneprobe:TheOneProbe:${top_mc_version}-${top_version}:api"
 
-    deobfProvided "com.github.portablejim:VeinMiner:${veinminer_version}"
+    deobfProvided "portablejim:VeinMiner:${veinminer_version}:api"
 
     deobfCompile "net.industrial-craft:industrialcraft-2:${ic2_version}"
 //  deobfProvided "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
@@ -284,7 +283,7 @@ dependencies {
         exclude module: "Hwyla"
 	}
 
-	deobfProvided "mcjty:compatlayer:${mc_version}-${compatlayer_version}"
+	deobfCompile "mcjty:compatlayer:${mc_version}-${compatlayer_version}"
 }
 
 processResources {

@@ -7,6 +7,7 @@ basemetals.crackhammer=粉碎的方块/物品
 
 #Creative Tabs
 itemGroup.basemetals.blocks=Base Metals方块
+itemGroup.basemetals.combat=Base Metals Combat
 itemGroup.basemetals.items=Base Metals物品
 itemGroup.basemetals.tools=Base Metals工具
 

@@ -2,15 +2,9 @@ package com.mcmoddev.lib.integration.plugins.taiga;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
-import com.mcmoddev.basemetals.init.ItemGroups;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Items;
 import com.mcmoddev.lib.material.MMDMaterial;
-
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 
 public class TAIGAItems extends Items {
 
@@ -48,21 +42,5 @@ public class TAIGAItems extends Items {
 			create(Names.ROD, material);
 			create(Names.GEAR, material);
 		}
-	}
-
-	private static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
-		CreativeTabs tab;
-
-		if ((name.equals(Names.DOOR)) || (name.equals(Names.SLAB))) {
-			tab = ItemGroups.myTabs.blocksTab;
-		} else if ((name.equals(Names.BLEND)) || (name.equals(Names.INGOT)) || (name.equals(Names.NUGGET))
-				|| (name.equals(Names.POWDER)) || (name.equals(Names.SMALLBLEND)) || (name.equals(Names.SMALLPOWDER))
-				|| (name.equals(Names.ROD)) || (name.equals(Names.GEAR))) {
-			tab = ItemGroups.myTabs.itemsTab;
-		} else {
-			tab = ItemGroups.myTabs.toolsTab;
-		}
-
-		return create(name, material, tab);
 	}
 }

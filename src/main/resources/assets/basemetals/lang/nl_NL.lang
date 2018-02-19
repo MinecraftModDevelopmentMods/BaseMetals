@@ -1,6 +1,7 @@
-itemGroup.basemetals.items=Base Metals
-itemGroup.basemetals.tools=Base Metals
-itemGroup.basemetals.blocks=Base Metals
+itemGroup.basemetals.blocks=Base Metals Blocks
+itemGroup.basemetals.combat=Base Metals Combat
+itemGroup.basemetals.items=Base Metals Items
+itemGroup.basemetals.tools=Base Metals Tools
 nei.basemetals.recipehandler.crusher.name=Crushed Bloks/Items
 
 item.basemetals.adamantine_axe.name=Adamanten Bijl

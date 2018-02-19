@@ -330,7 +330,7 @@ public class TCMaterial {
 	/**
 	 * 
 	 * @param mm
-	 *            MMDMaterial this wrapper represents
+	 *            MMDMaterial this represents
 	 * @return the material
 	 */
 	public TCMaterial setMMDMaterial(@Nonnull final MMDMaterial mm) {

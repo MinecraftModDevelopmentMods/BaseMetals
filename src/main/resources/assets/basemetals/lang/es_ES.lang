@@ -1,8 +1,9 @@
 language_support_goals=english (en_US,en_EN,en_CA,en_GB, en_AU, en_PT), italian(IT_it), spanish (es_MX,es_ES), simplified chinese (zh_CN), japanese (ja_JA), portugese (pt_BR), german (de_DE)
 
-itemGroup.basemetals.items=Base Metals
-itemGroup.basemetals.tools=Base Metals
-itemGroup.basemetals.blocks=Base Metals
+itemGroup.basemetals.blocks=Base Metals Blocks
+itemGroup.basemetals.combat=Base Metals Combat
+itemGroup.basemetals.items=Base Metals Items
+itemGroup.basemetals.tools=Base Metals Tools
 nei.basemetals.recipehandler.crusher.name=Almádena
 
 item.basemetals.adamantine_axe.name=Hacha de adamantina
