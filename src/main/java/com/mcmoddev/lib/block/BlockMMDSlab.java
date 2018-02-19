@@ -7,12 +7,10 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -22,8 +20,6 @@ import net.minecraft.world.World;
  *
  */
 public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDObject {
-
-	public static final PropertyEnum<BlockMMDSlab.Variant> VARIANT = PropertyEnum.<BlockMMDSlab.Variant>create("variant", BlockMMDSlab.Variant.class);
 
 	final MMDMaterial material;
 
@@ -45,7 +41,7 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 		if (!this.isDouble())
 			iblockstate = iblockstate.withProperty(HALF, EnumBlockHalf.BOTTOM);
 
-		this.setDefaultState(iblockstate.withProperty(VARIANT, BlockMMDSlab.Variant.DEFAULT));
+		this.setDefaultState(iblockstate);
 	}
 
 	/**
@@ -54,7 +50,7 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 	@Override
 	@Deprecated
 	public IBlockState getStateFromMeta(final int meta) {
-		IBlockState iblockstate = this.getDefaultState().withProperty(VARIANT, BlockMMDSlab.Variant.DEFAULT);
+		IBlockState iblockstate = this.getDefaultState();
 
 		if (!this.isDouble())
 			iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? EnumBlockHalf.BOTTOM : EnumBlockHalf.TOP);
@@ -77,7 +73,7 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return this.isDouble() ? new BlockStateContainer(this, (IProperty[]) new IProperty[] { VARIANT }) : new BlockStateContainer(this, (IProperty[]) new IProperty[] { HALF, VARIANT });
+		return this.isDouble() ? new BlockStateContainer(this, (IProperty[]) new IProperty[0]) : new BlockStateContainer(this, (IProperty[]) new IProperty[] { HALF });
 	}
 
 	@Override
@@ -92,12 +88,12 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 
 	@Override
 	public IProperty<?> getVariantProperty() {
-		return VARIANT;
+		return null;
 	}
 
 	@Override
 	public Comparable<?> getTypeForItem(final ItemStack stack) {
-		return BlockMMDSlab.Variant.DEFAULT;
+		return null;
 	}
 
 	/**
@@ -115,20 +111,6 @@ public class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDO
 	@Deprecated
 	public ItemStack getItem(final World worldIn, final BlockPos pos, final IBlockState state) {
 		return this.material.getItemStack(Names.SLAB);
-	}
-
-	/**
-	 *
-	 * @author Jasmine Iwanek
-	 *
-	 */
-	public enum Variant implements IStringSerializable {
-		DEFAULT;
-
-		@Override
-		public String getName() {
-			return "default";
-		}
 	}
 
 	@Override

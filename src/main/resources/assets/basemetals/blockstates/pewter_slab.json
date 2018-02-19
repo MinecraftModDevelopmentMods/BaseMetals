@@ -1,6 +1,6 @@
 {
     "variants": {
-        "half=bottom,variant=default": { "model": "basemetals:half_slab_pewter" },
-        "half=top,variant=default": { "model": "basemetals:upper_slab_pewter" }
+        "half=bottom": { "model": "basemetals:half_slab_pewter" },
+        "half=top": { "model": "basemetals:upper_slab_pewter" }
     }
 }

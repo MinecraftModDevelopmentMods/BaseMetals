@@ -1,5 +1,5 @@
 {
     "variants": {
-        "variant=default": { "model": "basemetals:lead_block" }
+        "normal": { "model": "basemetals:lead_block" }
     }
 }
