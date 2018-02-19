@@ -283,6 +283,8 @@ dependencies {
         exclude group: 'mezz.jei'
         exclude module: "Hwyla"
 	}
+
+	deobfProvided "mcjty:compatlayer:${mc_version}-${compatlayer_version}"
 }
 
 processResources {
