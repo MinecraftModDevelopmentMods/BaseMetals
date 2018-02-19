@@ -90,6 +90,9 @@ public class TinkersConstructBase implements IIntegration {
 		if( castable )
 			tcm.setCastable();
 
+		tcm.setSourceMaterial(material);
+		tcm.genStatsFromSource();
+
 		return tcm;
 	}
 
