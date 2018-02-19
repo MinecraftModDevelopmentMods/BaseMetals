@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 		name = BaseMetals.NAME,
 		version = BaseMetals.VERSION,
 		dependencies = "required-after:Forge@[12.18.3.2185,);after:tconstruct;after:ic2;after:taiga;before:buildingbricks",
-		acceptedMinecraftVersions = "[1.10.2,)",
+		acceptedMinecraftVersions = "[1.10.2]",
 		certificateFingerprint = "@FINGERPRINT@",
 		updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {
