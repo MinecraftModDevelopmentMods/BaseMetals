@@ -10,11 +10,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;

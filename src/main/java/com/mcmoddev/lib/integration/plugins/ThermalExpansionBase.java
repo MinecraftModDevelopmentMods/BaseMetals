@@ -145,14 +145,6 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 	}
 
-	private static void addCrucibleExtra(@Nonnull final Item input, @Nonnull final FluidStack output, @Nonnull final int energy) {
-		ThermalExpansionHelper.addCrucibleRecipe(energy, new ItemStack(input), output);
-	}
-
-	private static void addCrucibleExtra(@Nonnull final ItemStack input, @Nonnull final FluidStack output, @Nonnull final int energy) {
-		ThermalExpansionHelper.addCrucibleRecipe(energy, input, output);
-	}
-
 	protected static void addPlatePress(@Nonnull final String materialName) {
 		addPlatePress(Materials.getMaterialByName(materialName));
 	}

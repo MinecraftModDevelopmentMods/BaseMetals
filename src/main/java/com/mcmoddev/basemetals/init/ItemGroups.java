@@ -35,8 +35,7 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	 * 
 	 * @param materialName Name of the preferred Material to use for Tab Icons
 	 */
-	public static void setupIcons (String materialName) {
-
+	public static void setupIcons(String materialName) {
 		if (Materials.hasMaterial(materialName)) {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
 

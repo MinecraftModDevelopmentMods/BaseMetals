@@ -16,7 +16,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.entity.passive.EntityVillager.ListEnchantedItemForEmeralds;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
