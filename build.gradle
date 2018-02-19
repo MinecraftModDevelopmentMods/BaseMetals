@@ -99,6 +99,7 @@ version = mc_version + '-' + short_version
 if (System.getenv().BUILD_NUMBER) {
     version += '.' + System.getenv().BUILD_NUMBER
 }
+
 group = 'com.mcmoddev'
 archivesBaseName = 'BaseMetals'
 sourceCompatibility = targetCompatibility = '1.8'
@@ -204,13 +205,11 @@ repositories {
 }
 
 dependencies {
-    // OOMs
     deobfProvided ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'mezz.jei'
         exclude group: 'MCMultiPart'
     }
 
-	// Crashes in game
     deobfProvided ("com.github.TeamFRM:TAIGA:${taiga_version}") {
         exclude group: 'mezz.jei'
         exclude module: 'Mantle'
@@ -244,8 +243,7 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe:${top_mc_version}-${top_version}"
 //  deobfProvided "mcjty.theoneprobe:TheOneProbe:${top_mc_version}-${top_version}:api"
 
-    // Crashes in game
-    deobfProvided "com.github.portablejim:VeinMiner:${veinminer_version}"
+    deobfProvided "portablejim:VeinMiner:${veinminer_version}:api"
 
     deobfCompile "net.industrial-craft:industrialcraft-2:${ic2_version}"
 //  deobfProvided "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
@@ -277,8 +275,10 @@ dependencies {
     deobfCompile "com.enderio.core:EnderCore:${mc_version}-${endercore_version}"
 //  deobfProvided "com.enderio.core:EnderCore:${mc_version}-${endercore_version}:api"
 
-    deobfCompile "com.enderio:EnderIO:${mc_version}-${enderio_version}"
-//  deobfProvided "com.enderio:EnderIO:${mc_version}-${enderio_version}:api"
+//  deobfCompile "com.enderio:EnderIO:${mc_version}-${enderio_version}"
+    deobfProvided "com.enderio:EnderIO:${mc_version}-${enderio_version}:api"
+
+	deobfProvided "mcjty:compatlayer:1.10-${compatlayer_version}"
 }
 
 processResources {
