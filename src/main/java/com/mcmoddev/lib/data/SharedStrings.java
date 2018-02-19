@@ -15,6 +15,7 @@ public class SharedStrings {
 	public static final String TAB_BLOCKS = "blocks";
 	public static final String TAB_ITEMS = "items";
 	public static final String TAB_TOOLS = "tools";
+	public static final String TAB_COMBAT = "combat";
 
 	private SharedStrings() {
 		throw new IllegalAccessError(NOT_INSTANTIABLE);

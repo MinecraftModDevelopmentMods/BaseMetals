@@ -1,14 +1,10 @@
 package com.mcmoddev.basemetals.init;
 
-import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.MMDCreativeTab;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.TabContainer;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 
 /**
  * This class initializes all item groups in Base Metals.
@@ -18,60 +14,47 @@ import net.minecraft.item.Item;
  */
 public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
-	private static final int BLOCKS_TAB_ID = addTab(SharedStrings.TAB_BLOCKS, true);
-	private static final int ITEMS_TAB_ID = addTab(SharedStrings.TAB_ITEMS, true);
-	private static final int TOOLS_TAB_ID = addTab(SharedStrings.TAB_TOOLS, true);
-	private static final MMDCreativeTab blocksTab = getTab(BLOCKS_TAB_ID);
-	private static final MMDCreativeTab itemsTab = getTab(ITEMS_TAB_ID);
-	private static final MMDCreativeTab toolsTab = getTab(TOOLS_TAB_ID);
-	public static final TabContainer myTabs = new TabContainer(blocksTab, itemsTab, toolsTab);
+	private static final MMDCreativeTab blocksTab = addTab(SharedStrings.TAB_BLOCKS);
+	private static final MMDCreativeTab itemsTab = addTab(SharedStrings.TAB_ITEMS);
+	private static final MMDCreativeTab toolsTab = addTab(SharedStrings.TAB_TOOLS);
+	private static final MMDCreativeTab combatTab = addTab(SharedStrings.TAB_COMBAT);
 
 	private ItemGroups() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
-	 *
+	 * Initializer
 	 */
 	public static void init() {
+		// Blank Initializer
 	}
 
-	public static void setupIcons() {
-		MMDMaterial material = Materials.EMPTY;
-		Block blocksTabIconItem;
-		Item itemsTabIconItem;
-		Item toolsTabIconItem;
+	/**
+	 * Sets up icons for a CreativeTab
+	 * 
+	 * @param materialName Name of the preferred Material to use for Tab Icons
+	 */
+	public static void setupIcons (String materialName) {
 
-		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
-			material = Materials.getMaterialByName(MaterialNames.STARSTEEL);
-		} else if (Materials.hasMaterial(MaterialNames.IRON)) {
-			material = Materials.getMaterialByName(MaterialNames.IRON);
+		if (Materials.hasMaterial(materialName)) {
+			final MMDMaterial material = Materials.getMaterialByName(materialName);
+
+			if ((blocksTab != null) && (material.hasBlock(Names.BLOCK))) {
+				blocksTab.setTabIconItem(material.getBlock(Names.BLOCK));
+			}
+
+			if ((itemsTab != null) && (material.hasItem(Names.GEAR))) {
+				itemsTab.setTabIconItem(material.getItem(Names.GEAR));
+			}
+
+			if ((toolsTab != null) && (material.hasItem(Names.PICKAXE))) {
+				toolsTab.setTabIconItem(material.getItem(Names.PICKAXE));
+			}
+
+			if ((combatTab != null) && (material.hasItem(Names.SWORD))) {
+				combatTab.setTabIconItem(material.getItem(Names.SWORD));
+			}
 		}
-
-		if (material.isEmpty()) {
-			return;
-		}
-
-		if (material.hasBlock(Names.BLOCK)) {
-			blocksTabIconItem = material.getBlock(Names.BLOCK);
-		} else {
-			blocksTabIconItem = net.minecraft.init.Blocks.IRON_BLOCK;
-		}
-
-		if (material.hasItem(Names.GEAR)) {
-			itemsTabIconItem = material.getItem(Names.GEAR);
-		} else {
-			itemsTabIconItem = net.minecraft.init.Items.STICK;
-		}
-
-		if (material.hasItem(Names.SWORD)) {
-			toolsTabIconItem = material.getItem(Names.SWORD);
-		} else {
-			toolsTabIconItem = net.minecraft.init.Items.DIAMOND_SWORD;
-		}
-
-		blocksTab.setTabIconItem(blocksTabIconItem);
-		itemsTab.setTabIconItem(itemsTabIconItem);
-		toolsTab.setTabIconItem(toolsTabIconItem);
 	}
 }

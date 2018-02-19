@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.init.ItemGroups;
 import com.mcmoddev.lib.block.*;
 import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.data.Names;
@@ -79,6 +80,16 @@ public abstract class Blocks {
 		addBlockType(Names.ENDORE, BlockMMDOre.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.ORE_END);
 		addBlockType(Names.NETHERORE, BlockMMDNetherOre.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.ORE_NETHER);
 		addBlockType(Names.ORE, BlockMMDOre.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.ORE);
+	}
+
+	@Nullable
+	protected static Block create(@Nonnull final Names name, @Nonnull final String materialName) {
+		return create(name, Materials.getMaterialByName(materialName), ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
+	}
+
+	@Nullable
+	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
+		return create(name, material, ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
 	}
 
 	@Nullable

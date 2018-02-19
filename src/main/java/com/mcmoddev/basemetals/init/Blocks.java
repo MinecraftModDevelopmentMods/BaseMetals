@@ -3,9 +3,6 @@ package com.mcmoddev.basemetals.init;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
@@ -66,7 +63,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		createAnvils();
 
 		if (humanDetector != null) {
-			humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.myTabs.blocksTab);
+			humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
 		}
 	}
 
@@ -263,10 +260,5 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Materials.hasMaterial(MaterialNames.WOOD)) {
 			// Stub
 		}
-	}
-
-	@Nullable
-	protected static Block create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
-		return create(name, material, ItemGroups.myTabs.blocksTab);
 	}
 }
