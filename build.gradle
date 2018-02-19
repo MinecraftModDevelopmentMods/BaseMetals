@@ -18,9 +18,9 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.0.9'
+        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.0.10'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1'
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
     }
 }
 
@@ -49,7 +49,7 @@ project.afterEvaluate {
     // configure jacoco to analyze the junitPlatformTest task
     jacoco {
         // this tool version is compatible with
-        toolVersion = "0.7.6.201602180812"
+        toolVersion = "0.7.9"
         applyTo junitPlatformTestTask
     }
 
@@ -63,7 +63,7 @@ project.afterEvaluate {
 }
 
 junitPlatform {
-    platformVersion '1.0.2' // optional, defaults to plugin version
+    platformVersion '1.0.3' // optional, defaults to plugin version
     //logManager 'org.apache.logging.log4j.jul.LogManager'
     reportsDir file('build/test-results/junit-platform') // this is the default
     // enableStandardTestTask true
@@ -236,7 +236,7 @@ dependencies {
 //  deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
-    compileOnly "com.github.portablejim:VeinMiner:${veinminer_version}"
+    compileOnly "portablejim:VeinMiner:${veinminer_version}"
 
     deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
         exclude group: 'mezz.jei'
