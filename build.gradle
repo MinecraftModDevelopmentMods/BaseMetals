@@ -278,7 +278,7 @@ dependencies {
 //  deobfCompile "com.enderio:EnderIO:${mc_version}-${enderio_version}"
     deobfProvided "com.enderio:EnderIO:${mc_version}-${enderio_version}:api"
 
-	deobfProvided "mcjty:compatlayer:1.10-${compatlayer_version}"
+	deobfCompile "mcjty:compatlayer:1.10-${compatlayer_version}"
 }
 
 processResources {
