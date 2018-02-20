@@ -342,6 +342,15 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	/**
+	 * Gets the Horse armor protection value, where Diamond is 11 in vanilla.
+	 *
+	 * @return the {@link net.minecraft.entity.passive.HorseArmorType#protection} value
+	 */
+	public int getHorseArmorProtection(){
+		return (int) (this.stats.get(MaterialStats.HARDNESS) / 10.0 * 11.0);
+	}
+
+	/**
 	 * Gets the protection value for helmets, chestplates, leg armor, and boots
 	 * made from this material
 	 * 
