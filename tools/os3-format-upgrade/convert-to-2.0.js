@@ -2,8 +2,10 @@ const fs = require("fs"),
       util = require("util"),
       console = require("console");
 
+const input_file = process.argv[2];
+const output_file = process.argv[3];
 
-const original_data = JSON.parse( fs.readFileSync( "basemetals.json" ) );
+const original_data = JSON.parse( fs.readFileSync( input_file ) );
 
 const new_data = { "version": "2.0", "spawns": {} };
 
@@ -29,4 +31,4 @@ for( var i = 0; i < original_data.dimensions.length; i++ ) {
 
 var out =  JSON.stringify( new_data, null, "\t" );
 
-fs.writeFileSync( "basemetals-new.json", out );
+fs.writeFileSync( output_file, out );
