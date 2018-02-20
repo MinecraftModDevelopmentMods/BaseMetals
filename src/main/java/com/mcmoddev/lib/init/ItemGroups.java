@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,7 +23,7 @@ import net.minecraftforge.fml.common.Loader;
  */
 public class ItemGroups {
 
-	public static final java.util.function.BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (ItemStack a, ItemStack b) -> {
+	public static final BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (final ItemStack a, final ItemStack b) -> {
 		final int delta = Items.getSortingValue(a) - Items.getSortingValue(b);
 		if (delta == 0) {
 			return a.getItem().getUnlocalizedName().compareToIgnoreCase(b.getItem().getUnlocalizedName());
@@ -30,6 +31,7 @@ public class ItemGroups {
 		return delta;
 	};
 
+	private static final Map<String, MMDCreativeTab> itemGroupsByFullTabName = new HashMap<>();
 	private static final Map<String, List<MMDCreativeTab>> itemGroupsByModID = new HashMap<>();
 
 	protected ItemGroups() {
@@ -37,15 +39,38 @@ public class ItemGroups {
 	}
 
 	/**
-	 *
+	 * Initializer
 	 */
 	public static void init() {
+		// Blank initializer
 	}
 
-	protected static int addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
+	/**
+	 * Adds a non Searchable CreativeTab
+	 *
+	 * @param name The Name of the CreativeTab
+	 * @return The CreativeTab
+	 */
+	protected static MMDCreativeTab addTab(@Nonnull final String name) {
+		return addTab(name, false);
+	}
+
+	/**
+	 * Adds a CreativeTab
+	 *
+	 * @param name The Name of the CreativeTab
+	 * @param searchable Is is searchable?
+	 * @return The CreativeTab
+	 */
+	protected static MMDCreativeTab addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
 		final String modName = Loader.instance().activeModContainer().getModId();
 		final String internalTabName = String.format("%s.%s", modName, name);
 		final MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable);
+
+		if (!itemGroupsByFullTabName.containsKey(modName)) {
+			itemGroupsByFullTabName.put(internalTabName, tab);
+		}
+
 		if (itemGroupsByModID.containsKey(modName)) {
 			itemGroupsByModID.get(modName).add(tab);
 		} else {
@@ -54,18 +79,30 @@ public class ItemGroups {
 			itemGroupsByModID.put(modName, nl);
 		}
 
-		return itemGroupsByModID.get(modName).size() - 1;
+		return itemGroupsByFullTabName.get(internalTabName);
 	}
 
+	/**
+	 * 
+	 * @param name Name of the tab to get
+	 * @return The Tab
+	 */
 	@Nullable
-	protected static MMDCreativeTab getTab(@Nonnull final int id) {
-		return getTab(Loader.instance().activeModContainer().getModId(), id);
+	public static MMDCreativeTab getTab(@Nonnull final String name) {
+		return getTab(Loader.instance().activeModContainer().getModId(), name);
 	}
 
+	/**
+	 * 
+	 * @param modName the ModID
+	 * @param name Name of the tab to get
+	 * @return The Tab
+	 */
 	@Nullable
-	protected static MMDCreativeTab getTab(@Nonnull final String modName, @Nonnull final int id) {
-		if ((itemGroupsByModID.containsKey(modName)) && (itemGroupsByModID.get(modName).size() > id)) {
-			return itemGroupsByModID.get(modName).get(id);
+	public static MMDCreativeTab getTab(@Nonnull final String modName, @Nonnull final String name) {
+		final String finalName = String.format("%s.%s", modName, name);
+		if (itemGroupsByFullTabName.containsKey(finalName)) {
+			return itemGroupsByFullTabName.get(finalName);
 		}
 		return null;
 	}

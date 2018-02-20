@@ -98,7 +98,7 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 			case MaterialNames.SILVER:
 				return 0xFFFFFFFF;
 			case MaterialNames.STARSTEEL:
-				return 0xFF212135;
+				return 0xFF53393F;
 			case MaterialNames.STEEL:
 				return 0xFFD5E3E5;
 			case MaterialNames.TIN:

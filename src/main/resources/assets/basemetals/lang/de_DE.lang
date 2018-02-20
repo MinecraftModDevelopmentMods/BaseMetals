@@ -2,6 +2,7 @@ basemetals.crackhammer=Zerkleinerte Blöcke / Gegenstände
 
 #Creative Tabs
 itemGroup.basemetals.blocks=Base Metals Blöcke
+itemGroup.basemetals.combat=Base Metals Combat
 itemGroup.basemetals.items=Base Metals Gegenstände
 itemGroup.basemetals.tools=Base Metals Werkzeuge
 

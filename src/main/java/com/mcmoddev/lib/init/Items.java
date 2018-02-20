@@ -25,6 +25,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.integration.plugins.IC2Base;
 import com.mcmoddev.lib.integration.plugins.MekanismBase;
+import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.item.*;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -176,6 +177,33 @@ public abstract class Items {
 		for (int i = 0; i < metlist.size(); i++) {
 			materialSortingValues.put(metlist.get(i), i * 100);
 		}
+	}
+
+	@Nullable
+	protected static Item create(@Nonnull final Names name, @Nonnull final String materialName) {
+		return create(name, Materials.getMaterialByName(materialName));
+	}
+
+	@Nullable
+	protected static Item create(@Nonnull final Names name, @Nonnull final MMDMaterial material) {
+		CreativeTabs tab;
+
+		if ((name.equals(Names.DOOR)) || (name.equals(Names.SLAB))) {
+			tab = ItemGroups.getTab(SharedStrings.TAB_BLOCKS);
+		} else if ((name.equals(Names.SWORD)) || (name.equals(Names.BOW)) || (name.equals(Names.CROSSBOW))
+				|| (name.equals(Names.BOLT)) || (name.equals(Names.ARROW)) || (name.equals(Names.SHIELD))
+				|| (name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS))
+				|| (name.equals(Names.BOOTS)) || (name.equals(Names.HORSE_ARMOR))) {
+			tab = ItemGroups.getTab(SharedStrings.TAB_COMBAT);
+		} else if ((name.equals(Names.SHEARS)) || (name.equals(Names.FISHING_ROD))
+				|| (name.equals(Names.HOE)) || (name.equals(Names.AXE)) || (name.equals(Names.SHOVEL))
+				|| (name.equals(Names.PICKAXE)) || (name.equals(Names.CRACKHAMMER))) {
+			tab = ItemGroups.getTab(SharedStrings.TAB_TOOLS);
+		} else {
+			tab = ItemGroups.getTab(SharedStrings.TAB_ITEMS);
+		}
+
+		return create(name, material, tab);
 	}
 
 	@Nullable

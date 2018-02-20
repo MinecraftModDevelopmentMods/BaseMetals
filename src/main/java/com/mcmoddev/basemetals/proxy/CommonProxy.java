@@ -72,7 +72,7 @@ public class CommonProxy {
 		Items.init();
 
 		// icons have to be setup after the blocks and items are initialized
-		ItemGroups.setupIcons();
+		ItemGroups.setupIcons(MaterialNames.STARSTEEL);
 		VillagerTrades.init();
 
 		MinecraftForge.EVENT_BUS.register(new EventHandler());

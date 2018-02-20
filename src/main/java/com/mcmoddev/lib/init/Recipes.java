@@ -5,7 +5,6 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
@@ -15,6 +14,7 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;

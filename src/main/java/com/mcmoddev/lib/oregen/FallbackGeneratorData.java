@@ -24,9 +24,9 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 
 public class FallbackGeneratorData {
 
-	private final static Map<Integer, Map<MMDMaterial, List<String>>> materials = new TreeMap<>();
-	private final static FallbackGeneratorData INSTANCE = new FallbackGeneratorData();
-	private final static Map<Integer, List<WorldGenMinable>> spawns = new HashMap<>();
+	private static final Map<Integer, Map<MMDMaterial, List<String>>> materials = new TreeMap<>();
+	private static final FallbackGeneratorData INSTANCE = new FallbackGeneratorData();
+	private static final Map<Integer, List<WorldGenMinable>> spawns = new HashMap<>();
 
 	private FallbackGeneratorData() {
 		// blank

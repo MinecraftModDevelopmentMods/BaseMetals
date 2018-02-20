@@ -21,6 +21,7 @@ buildscript {
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.0.10'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1'
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
+        classpath "com.jaredsburrows:gradle-checker-framework-plugin:0.2.0"
     }
 }
 
@@ -30,6 +31,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.sonarqube'
 apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'jacoco'
+//apply plugin: 'com.jaredsburrows.checkerframework'
 
 repositories {
 	mavenLocal()
@@ -49,7 +51,7 @@ project.afterEvaluate {
     // configure jacoco to analyze the junitPlatformTest task
     jacoco {
         // this tool version is compatible with
-        toolVersion = "0.7.9"
+        toolVersion = '0.7.9'
         applyTo junitPlatformTestTask
     }
 
@@ -75,6 +77,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     options.compilerArgs = [
         '-Xlint:deprecation', // deprecation, rawtypes, cast, unchecked, all
+//		'-Xdiags:verbose',
 //      '-Werror'
     ]
 }
@@ -96,6 +99,7 @@ version = mc_version + '-' + short_version
 if (System.getenv().BUILD_NUMBER) {
     version += '.' + System.getenv().BUILD_NUMBER
 }
+
 group = 'com.mcmoddev'
 archivesBaseName = 'BaseMetals'
 sourceCompatibility = targetCompatibility = '1.8'
@@ -200,9 +204,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly ("net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}")
+    deobfProvided ("net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}")
 
-    compileOnly ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
+    deobfProvided ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
         exclude group: 'MCMultiPart'
         exclude group: 'mezz.jei'
         exclude module: 'Chameleon' // mek only uses the storage drawers API, which doesn't need Chameleon
@@ -212,31 +216,33 @@ dependencies {
         exclude module: 'industrialcraft-2'
     }
 
-    deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
-        exclude group: 'mezz.jei'
-    }
-
     deobfCompile ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
         exclude group: 'mezz.jei'
     }
 
-//  We do this to make NEI happy as there is no deobf or dev JEI jar for the deobf instance
+    deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
+        exclude group: 'mezz.jei'
+    }
+
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
 
     deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
 
     deobfCompile ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
-        exclude group: 'mezz.jei'
         exclude group: 'codechicken'
+        exclude group: 'mezz.jei'
     }
 
-    compile "com.mcmoddev:AdditionalLootTables:${mc_version}.1-${alt_version}:deobf"
-    compile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
+    deobfCompile "com.mcmoddev:AdditionalLootTables:${mc_version}.1-${alt_version}:deobf"
+    deobfCompile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
+
     deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}"
 //  deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
-//  compile "mcjty:theoneprobe:TheOneProbe:${mc_version}-${top_version}"
 
-    compileOnly "portablejim:VeinMiner:${veinminer_version}"
+//  deobfCompile "mcjty.theoneprobe:TheOneProbe:${mc_version}-${top_version}"
+//  deobfProvided "mcjty.theoneprobe:TheOneProbe:${top_mc_version}-${top_version}:api"
+
+    deobfProvided "portablejim:VeinMiner:${veinminer_version}"
 
     deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
         exclude group: 'mezz.jei'
