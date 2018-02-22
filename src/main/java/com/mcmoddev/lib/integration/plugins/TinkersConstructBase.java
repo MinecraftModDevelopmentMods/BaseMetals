@@ -65,12 +65,16 @@ public class TinkersConstructBase implements IIntegration {
 		registry.registerAlloy(outputName, output, inputs);
 	}
 
-	protected static TCMaterial registerMaterial(@Nonnull final String materialName, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
-		final MMDMaterial mat = Materials.getMaterialByName(materialName);
-
-		return registerMaterial(mat, craftable, castable);
-	}
-
+    protected static TCMaterial registerMaterial(@Nonnull final String materialName, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
+        if(!Materials.hasMaterial(materialName)) return null;
+        
+        final MMDMaterial mat = Materials.getMaterialByName(materialName);
+        
+        if(mat.isEmpty()) return null;
+        
+        return registerMaterial(mat, craftable, castable);
+    }
+    
 	/**
 	 * Creates a Tinkers Construct
 	 * {@link slimeknights.tconstruct.library.materials.Material}
