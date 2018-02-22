@@ -131,7 +131,6 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	public void initSetup(@Nonnull String forMod) {
-		BaseMetals.logger.fatal("Current Mod: %s (actually: %s)", Loader.instance().activeModContainer().getModId(), forMod);
 		registry.resolveTraits(forMod);
 		registry.integrationsInit(forMod);
 		setMaterialsVisible(forMod);

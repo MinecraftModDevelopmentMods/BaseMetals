@@ -59,7 +59,6 @@ public class TinkersConstructRegistry {
 		final String curMod = Loader.instance().activeModContainer().getModId();
 		Map<String, TCMaterial> work = registry.getOrDefault(curMod, new HashMap<>());
 		if( work.isEmpty() || !work.containsKey(mat.getName()) ) {
-			BaseMetals.logger.fatal("Mod %s + material: %s", curMod, mat.getCapitalizedName());
 			work.put(mat.getName(), TCMaterial.get(mat));
 			registry.put(curMod, work);
 		}
@@ -218,9 +217,9 @@ public class TinkersConstructRegistry {
 	}
 	
 	public void resolveTraits(@Nonnull String forMod) {
-		BaseMetals.logger.fatal("Resolving traits for materials added by mod %s", forMod);
+		BaseMetals.logger.debug("Resolving traits for materials added by mod %s", forMod);
 		for( final Entry<String, TCMaterial> entry : registry.get(forMod).entrySet()) {
-			BaseMetals.logger.fatal("Resolving traits for material %s (%s)", entry.getKey(), entry.getValue());
+			BaseMetals.logger.debug("Resolving traits for material %s (%s)", entry.getKey(), entry.getValue());
 			entry.getValue().resolveTraits();
 		}
 	}
