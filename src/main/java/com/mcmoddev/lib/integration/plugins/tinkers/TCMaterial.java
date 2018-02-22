@@ -638,11 +638,16 @@ public class TCMaterial {
 			for( String traitName : ent.getValue() ) {
 				ITrait temp = TraitRegistry.get(traitName);
 				if( temp != null ) {
-					BaseMetals.logger.fatal("Resolved trait %s to %s", traitName, temp);
+					BaseMetals.logger.fatal("Resolved trait %s (loc: %s) to %s", traitName, loc, temp);
 					resTraits.add(temp);
 				}
 			}
 			this.resolvedTraits.put(loc, resTraits);
+		}
+		for(Entry<String, List<ITrait>> ent: this.resolvedTraits.entrySet()) {
+			for(ITrait trait : ent.getValue()) {
+				BaseMetals.logger.fatal("Material %s has trait %s at loc %s", this.getMMDMaterial().getCapitalizedName(), ent.getKey(), trait);
+			}
 		}
 	}
 	
