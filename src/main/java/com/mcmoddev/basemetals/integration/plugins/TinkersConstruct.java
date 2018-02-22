@@ -7,17 +7,21 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.library.modifiers.IModifier;
 
 /**
  *
@@ -78,26 +82,16 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if(postInit) return;
 		postInit = true;
 		postInitSetup(BaseMetals.MODID);
+		for( IModifier mod : TinkerRegistry.getAllModifiers() ) {
+			BaseMetals.logger.fatal("Modifier (?) %s (%s) has item: %s", mod.getIdentifier(),
+					mod.getClass(), mod.hasItemsToApplyWith());
+		}
 	}
 
 	@SubscribeEvent
 	public void registerModifiers(RegistryEvent.Register<Item> event) {
 		super.modifierSetup();
-		registerModifiers();
 		super.modifierRegister();
-	}
-
-	private void registerModifiers() {
-		if ((Materials.hasMaterial(MaterialNames.LEAD))
-				&& (Materials.getMaterialByName(MaterialNames.LEAD).hasBlock(Names.PLATE))) {
-			registerModifierItem("plated",
-					Item.getItemFromBlock(Materials.getMaterialByName(MaterialNames.LEAD).getBlock(Names.PLATE)));
-		}
-
-		if ((Materials.hasMaterial(MaterialNames.MERCURY))
-				&& (Materials.getMaterialByName(MaterialNames.MERCURY).hasItem(Names.POWDER))) {
-			registerModifierItem("toxic", Materials.getMaterialByName(MaterialNames.MERCURY).getItem(Names.POWDER));
-		}
 	}
 
 	private void registerMelting() {

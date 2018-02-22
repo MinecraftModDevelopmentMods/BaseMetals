@@ -2,20 +2,25 @@ package com.mcmoddev.lib.integration.plugins.tinkers.modifiers;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Materials;
+
 import net.minecraft.nbt.NBTTagCompound;
-import slimeknights.tconstruct.library.modifiers.IModifierDisplay;
 import slimeknights.tconstruct.library.modifiers.ModifierAspect;
-import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 import slimeknights.tconstruct.library.utils.TagUtil;
+import slimeknights.tconstruct.tools.modifiers.ToolModifier;
 
 // We really need nothing here other than to know its been applied.
 
-public class ModifierLeadPlated extends ModifierTrait implements IModifierDisplay {
+public class ModifierLeadPlated extends ToolModifier {
 
 	public ModifierLeadPlated() {
 		super("lead-plated", 0xFFFFFF);
 		
-		addAspects(new ModifierAspect.MultiAspect(this, 0xFFFFFF, 1, 1, 0), ModifierAspect.freeModifier);
+		addAspects(new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this), ModifierAspect.freeModifier);
+		this.addItem("plateLead");
 	}
 
 	@Override

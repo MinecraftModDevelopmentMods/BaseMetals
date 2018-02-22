@@ -54,6 +54,7 @@ public class ModifierRegistry {
 		}
 
 		t.addItem(item);
+		((Modifier)TinkerRegistry.getModifier(t.getIdentifier())).addItem(item);
 		modifiers.put(name, t);
 	}
 
@@ -64,12 +65,6 @@ public class ModifierRegistry {
 	}
 
 	public static void registerModifiers() {
-		for (final Entry<String, Modifier> ent : modifiers.entrySet()) {
-			if (TinkerRegistry.getModifier(ent.getValue().getIdentifier()) == null) {
-				TinkerRegistry.registerModifier(ent.getValue());
-				TinkerRegistry.registerModifierAlias(ent.getValue(),ent.getKey());
-			}
-		}
 	}
 
 	public static Map<String, String> getModifierDetails(@Nonnull final String name) {
