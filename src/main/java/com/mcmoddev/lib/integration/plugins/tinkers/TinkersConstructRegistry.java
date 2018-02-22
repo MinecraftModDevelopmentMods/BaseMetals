@@ -217,9 +217,10 @@ public class TinkersConstructRegistry {
 		}
 	}
 	
-	public void resolveTraits() {
-		final String curMod = Loader.instance().activeModContainer().getModId();
-		for( final Entry<String, TCMaterial> entry : registry.get(curMod).entrySet()) {
+	public void resolveTraits(@Nonnull String forMod) {
+		BaseMetals.logger.fatal("Resolving traits for materials added by mod %s", forMod);
+		for( final Entry<String, TCMaterial> entry : registry.get(forMod).entrySet()) {
+			BaseMetals.logger.fatal("Resolving traits for material %s (%s)", entry.getKey(), entry.getValue());
 			entry.getValue().resolveTraits();
 		}
 	}

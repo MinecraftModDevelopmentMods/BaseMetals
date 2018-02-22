@@ -71,7 +71,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if(init) return;
 		init = true;
 		registerAlloys();
-		initSetup();
+		initSetup(BaseMetals.MODID);
 	}
 
 	public void postInit() {
