@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -39,10 +40,15 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addGassesForMaterial(@Nonnull final String materialName) {
+		if(!Materials.hasMaterial(materialName) || Materials.getMaterialByName(materialName).isEmpty()) {
+			return;
+		}
+		
 		addGassesForMaterial(Materials.getMaterialByName(materialName));
 	}
 
 	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
+		if( material.getFluid() == null) return;
 		final Gas gas1 = new Gas(material.getName(),material.getFluid().getStill().toString());
 		gas1.setUnlocalizedName("gas" + material.getCapitalizedName());
 		GasRegistry.register(gas1);

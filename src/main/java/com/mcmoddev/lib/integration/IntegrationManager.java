@@ -79,6 +79,7 @@ public enum IntegrationManager {
 
 	private void runCallback(@Nonnull final Map<IIntegration, Method> cbs) {
 		for (Entry<IIntegration, Method> ent : cbs.entrySet()) {
+			BaseMetals.logger.debug("Running callback %s for integration %s", ent.getValue().getName(), ent.getKey().toString());
 			try {
 				ent.getValue().invoke(ent.getKey());
 			} catch (final Exception ex) {

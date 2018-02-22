@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -637,6 +638,7 @@ public class TCMaterial {
 			for( String traitName : ent.getValue() ) {
 				ITrait temp = TraitRegistry.get(traitName);
 				if( temp != null ) {
+					BaseMetals.logger.fatal("Resolved trait %s to %s", traitName, temp);
 					resTraits.add(temp);
 				}
 			}

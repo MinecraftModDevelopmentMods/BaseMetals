@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
@@ -14,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * TiC Plugin, redesigned
@@ -26,10 +28,6 @@ public class TinkersConstructBase implements IIntegration {
 	public static final String PLUGIN_MODID = "tconstruct";
 
 	protected static final TinkersConstructRegistry registry = TinkersConstructRegistry.instance;
-
-	private static boolean preInitRun = false;
-	private static boolean initRun = false;
-	private static boolean postInitRun = false;
 
 	@Override
 	public void init() {
@@ -124,30 +122,25 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	public void preInitSetup() {
-		if( preInitRun  ) return;
 		registry.setupIntegrations();
 		registry.addMaterialStats();
-		preInitRun = true;
 	}
 
 	public void setMaterialsVisible() {
 		registry.setMaterialsVisible();
 	}
 
-	public void initSetup() {
-		if( initRun ) return;
-		registry.resolveTraits();
+	public void initSetup(@Nonnull String forMod) {
+		BaseMetals.logger.fatal("Current Mod: %s (actually: %s)", Loader.instance().activeModContainer().getModId(), forMod);
+		registry.resolveTraits(forMod);
 		registry.integrationsInit();
 		setMaterialsVisible();
 		registry.registerMeltings();
-		initRun = true;
 	}
 
 	public void postInitSetup() {
-		if( postInitRun ) return;
 		setMaterialsVisible();
 		registry.registerAlloys();
-		postInitRun = true;
 	}
 
 	public void modifierSetup() {
