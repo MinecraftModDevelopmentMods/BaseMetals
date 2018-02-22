@@ -241,6 +241,8 @@ public class Config extends ConfigBase {
 		Options.thingEnabled(ConfigKeys.FLOWERPOT, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
 		Options.thingEnabled(ConfigKeys.LADDER, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
 		Options.thingEnabled(ConfigKeys.TRIPWIRE_HOOK, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
+		Options.thingEnabled(ConfigKeys.SCYTHE,
+				configuration.getBoolean("Enable Scythe", TOOLS_CAT, false, "Enable Scythe"));
 
 		// Fluid options
 		Options.fluidEnabled("Charcoal",

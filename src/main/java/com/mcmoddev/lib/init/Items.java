@@ -93,7 +93,7 @@ public abstract class Items {
 		addItemType(Names.SHEARS, ItemMMDShears.class, Options.isThingEnabled(ConfigKeys.SHEARS), null);
 		addItemType(Names.SHIELD, ItemMMDShield.class, Options.isThingEnabled(ConfigKeys.SHIELD), Oredicts.SHIELD);
 		addItemType(Names.SHOVEL, ItemMMDShovel.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
-		addItemType(Names.SCYTHE, ItemMMDSickle.class, Options.isThingEnabled("Sickle"), null);
+		addItemType(Names.SCYTHE, ItemMMDSickle.class, Options.isThingEnabled(ConfigKeys.SCYTHE), null);
 		addItemType(Names.SLAB, ItemMMDSlab.class, Options.isThingEnabled(ConfigKeys.SLAB), Oredicts.SLAB);
 		addItemType(Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.isThingEnabled(ConfigKeys.SMALL_DUST), Oredicts.DUST_TINY);
 		addItemType(Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.isThingEnabled(ConfigKeys.SMALL_DUST), Oredicts.DUST_TINY);
