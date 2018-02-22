@@ -173,8 +173,8 @@ public class TinkersConstructRegistry {
 		}
 	}
 	
-	public void integrationsInit() {
-		final String curMod = Loader.instance().activeModContainer().getModId();
+	public void integrationsInit(@Nonnull String forMod) {
+		final String curMod = forMod;
 		for( final Entry<String, TCMaterial> entry : registry.get(curMod).entrySet()) {
 			final TCMaterial work = entry.getValue();
 			final MMDMaterial curMMDMat = work.getMMDMaterial();
@@ -189,8 +189,8 @@ public class TinkersConstructRegistry {
 	}
 	
 	
-	public void registerMeltings() {
-		final String curMod = Loader.instance().activeModContainer().getModId();
+	public void registerMeltings(@Nonnull String forMod) {
+		final String curMod = forMod;
 		Map<Item, FluidStack> myMelts = meltings.getOrDefault(curMod, Collections.emptyMap());
 		
 		if( myMelts.isEmpty())
@@ -206,8 +206,8 @@ public class TinkersConstructRegistry {
 		}		
 	}
 	
-	public void registerAlloys() {
-		final String curMod = Loader.instance().activeModContainer().getModId();
+	public void registerAlloys(@Nonnull String forMod) {
+		final String curMod = forMod;
 		Map<String,AlloyRecipe> curRecipes;
 		if( alloys.containsKey(curMod) ) {
 			curRecipes = alloys.get(curMod);
@@ -225,8 +225,8 @@ public class TinkersConstructRegistry {
 		}
 	}
 
-	public void setMaterialsVisible() {
-		final String curMod = Loader.instance().activeModContainer().getModId();
+	public void setMaterialsVisible(@Nonnull String forMod) {
+		final String curMod = forMod;
 		for( final Entry<String, TCMaterial> entry : registry.get(curMod).entrySet()) {
 			if(entry.getValue().getMaterial().isHidden()) {
 				BaseMetals.logger.debug("Setting material %s to visible", entry.getValue().getMMDMaterial().getCapitalizedName());

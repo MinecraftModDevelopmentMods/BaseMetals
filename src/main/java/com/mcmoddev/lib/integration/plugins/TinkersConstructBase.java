@@ -126,21 +126,21 @@ public class TinkersConstructBase implements IIntegration {
 		registry.addMaterialStats();
 	}
 
-	public void setMaterialsVisible() {
-		registry.setMaterialsVisible();
+	public void setMaterialsVisible(@Nonnull String forMod) {
+		registry.setMaterialsVisible(forMod);
 	}
 
 	public void initSetup(@Nonnull String forMod) {
 		BaseMetals.logger.fatal("Current Mod: %s (actually: %s)", Loader.instance().activeModContainer().getModId(), forMod);
 		registry.resolveTraits(forMod);
-		registry.integrationsInit();
-		setMaterialsVisible();
-		registry.registerMeltings();
+		registry.integrationsInit(forMod);
+		setMaterialsVisible(forMod);
+		registry.registerMeltings(forMod);
 	}
 
-	public void postInitSetup() {
-		setMaterialsVisible();
-		registry.registerAlloys();
+	public void postInitSetup(@Nonnull String forMod) {
+		setMaterialsVisible(forMod);
+		registry.registerAlloys(forMod);
 	}
 
 	public void modifierSetup() {

@@ -64,7 +64,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		preInit = true;
 		preInitSetup();
 		registerMelting();
-		setMaterialsVisible();
+		setMaterialsVisible(BaseMetals.MODID);
 	}
 
 	public void initCallback() {
@@ -77,7 +77,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 	public void postInit() {
 		if(postInit) return;
 		postInit = true;
-		postInitSetup();
+		postInitSetup(BaseMetals.MODID);
 	}
 
 	@SubscribeEvent
