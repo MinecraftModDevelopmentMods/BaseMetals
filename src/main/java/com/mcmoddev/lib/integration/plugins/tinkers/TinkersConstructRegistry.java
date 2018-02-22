@@ -59,6 +59,7 @@ public class TinkersConstructRegistry {
 		final String curMod = Loader.instance().activeModContainer().getModId();
 		Map<String, TCMaterial> work = registry.getOrDefault(curMod, new HashMap<>());
 		if( work.isEmpty() || !work.containsKey(mat.getName()) ) {
+			BaseMetals.logger.fatal("Mod %s + material: %s", curMod, mat.getCapitalizedName());
 			work.put(mat.getName(), TCMaterial.get(mat));
 			registry.put(curMod, work);
 		}
@@ -127,7 +128,7 @@ public class TinkersConstructRegistry {
 
 	public void setupIntegrations() {
 		final String curMod = Loader.instance().activeModContainer().getModId();
-		BaseMetals.logger.debug("setupIntegrations() for mod %s", curMod);
+		BaseMetals.logger.debug("setupIntegrations() for mod %s (%d integrations)", curMod, registry.get(curMod).size());
 		for( final Entry<String, TCMaterial> entry : registry.get(curMod).entrySet()) {
 			BaseMetals.logger.debug("processing material %s from mod %s", entry.getKey(), curMod);
 			TCMaterial material = entry.getValue();
@@ -227,7 +228,7 @@ public class TinkersConstructRegistry {
 		final String curMod = Loader.instance().activeModContainer().getModId();
 		for( final Entry<String, TCMaterial> entry : registry.get(curMod).entrySet()) {
 			if(entry.getValue().getMaterial().isHidden()) {
-				BaseMetals.logger.fatal("Setting material %s to visible", entry.getValue().getMMDMaterial().getCapitalizedName());
+				BaseMetals.logger.debug("Setting material %s to visible", entry.getValue().getMMDMaterial().getCapitalizedName());
 				entry.getValue().getMaterial().setVisible();
 			}
 		}

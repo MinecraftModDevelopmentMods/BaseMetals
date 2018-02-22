@@ -28,6 +28,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase
 		implements IIntegration {
 
+	private static Boolean preInit = false;
+	private static Boolean init = false;
+	private static Boolean postInit = false;
+	
 	@Override
 	public void init() {
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
@@ -56,17 +60,23 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 	}
 
 	public void preInit() {
+		if(preInit) return;
+		preInit = true;
 		preInitSetup();
 		registerMelting();
 		setMaterialsVisible();
 	}
 
 	public void initCallback() {
+		if(init) return;
+		init = true;
 		registerAlloys();
 		initSetup();
 	}
 
 	public void postInit() {
+		if(postInit) return;
+		postInit = true;
 		postInitSetup();
 	}
 
