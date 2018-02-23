@@ -2,11 +2,6 @@ package com.mcmoddev.lib.integration.plugins.tinkers.modifiers;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.init.Materials;
-
 import net.minecraft.nbt.NBTTagCompound;
 import slimeknights.tconstruct.library.modifiers.ModifierAspect;
 import slimeknights.tconstruct.library.utils.TagUtil;

@@ -5,9 +5,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
-import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.init.Materials;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;

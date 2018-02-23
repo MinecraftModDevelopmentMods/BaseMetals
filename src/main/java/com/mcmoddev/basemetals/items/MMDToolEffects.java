@@ -12,7 +12,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -22,7 +21,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -237,18 +235,6 @@ public abstract class MMDToolEffects {
 						.getItem(Names.CHESTPLATE)
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == material.getItem(Names.LEGGINGS)
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material.getItem(Names.BOOTS));
-	}
-	
-	private static boolean isHolding(EntityPlayer player, String materialName, Names itemName) {
-		if (Materials.hasMaterial(materialName)) {
-			final MMDMaterial material = Materials.getMaterialByName(materialName);
-			final ItemStack heldItemStack = player.getHeldItemMainhand();
-			final Item heldItem = heldItemStack.getItem();
-			if ((!heldItemStack.isEmpty() && heldItem == material.getItem(itemName))) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	private static void countStarsteelPieces(EntityPlayer player, ItemStack armor) {
