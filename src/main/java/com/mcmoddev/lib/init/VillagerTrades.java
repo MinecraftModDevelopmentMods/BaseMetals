@@ -108,18 +108,16 @@ public abstract class VillagerTrades {
 				int weapon_mod = (int) (material.getBaseAttackDamage() / 2);
 				int purch = emeraldPurchaseValue(val);
 				
-				if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
-					Arrays.asList(Names.SWORD, Names.CROSSBOW, Names.BOW).stream()
-					.filter(name -> material.hasItem(name))
-					.forEach( name -> tradesTable.computeIfAbsent(ws, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(purch + 7 + weapon_mod - 1, purch + 12 + weapon_mod - 1)))));
-					Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS).stream()
-					.filter(name -> material.hasItem(name))
-					.forEach( name -> tradesTable.computeIfAbsent(as, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(purch + 7 + armor_mod, purch + 12 + armor_mod)))));
-					Arrays.asList(Names.AXE, Names.HOE, Names.SHOVEL, Names.PICKAXE).stream()
-					.filter(name -> material.hasItem(name))
-					.forEach( name -> tradesTable.computeIfAbsent(ts1, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(purch + 7, purch + 12)))));
-					tradesTable.computeIfAbsent(ts2, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(Names.CRACKHAMMER), new PriceInfo(purch + 7, purch + 12))));
-				}
+				Arrays.asList(Names.SWORD, Names.CROSSBOW, Names.BOW).stream()
+				.filter(name -> material.hasItem(name))
+				.forEach( name -> tradesTable.computeIfAbsent(ws, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(purch + 7 + weapon_mod - 1, purch + 12 + weapon_mod - 1)))));
+				Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS).stream()
+				.filter(name -> material.hasItem(name))
+				.forEach( name -> tradesTable.computeIfAbsent(as, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(purch + 7 + armor_mod, purch + 12 + armor_mod)))));
+				Arrays.asList(Names.AXE, Names.HOE, Names.SHOVEL, Names.PICKAXE).stream()
+				.filter(name -> material.hasItem(name))
+				.forEach( name -> tradesTable.computeIfAbsent(ts1, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(purch + 7, purch + 12)))));
+				tradesTable.computeIfAbsent(ts2, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(Names.CRACKHAMMER), new PriceInfo(purch + 7, purch + 12))));
 			}
 		});
 		
