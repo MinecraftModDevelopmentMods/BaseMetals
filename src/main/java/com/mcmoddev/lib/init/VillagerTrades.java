@@ -1,7 +1,5 @@
 package com.mcmoddev.lib.init;
 
-import static org.junit.jupiter.api.DynamicTest.stream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
