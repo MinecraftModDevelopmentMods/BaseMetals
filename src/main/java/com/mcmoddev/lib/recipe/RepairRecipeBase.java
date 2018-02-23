@@ -81,7 +81,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 				}
 			}
 		}
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override

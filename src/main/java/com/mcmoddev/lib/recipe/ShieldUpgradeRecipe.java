@@ -127,7 +127,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem {
 				}
 			}
 		}
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	private int getEnchantCount(InventoryCrafting inv) {

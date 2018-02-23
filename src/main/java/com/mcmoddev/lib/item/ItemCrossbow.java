@@ -157,10 +157,13 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 //		}
 
 		if (!playerIn.capabilities.isCreativeMode && !flag) {
-			return flag ? new ActionResult<>(EnumActionResult.PASS, itemStack) : new ActionResult<>(EnumActionResult.FAIL, itemStack);
+			// the following commented out line is the same as the vanilla bow, and is not needed
+			// the condition for entering this block means that "flag" will always be false here
+			// return flag ? new ActionResult<>(EnumActionResult.PASS, itemStack) : new ActionResult<>(EnumActionResult.FAIL, itemStack);
+			return new ActionResult<>(EnumActionResult.FAIL, itemStack);
 		} else {
 			playerIn.setActiveHand(handIn);
-			return new ActionResult<>(EnumActionResult.SUCCESS, itemStack);
+			return flag ? new ActionResult<>(EnumActionResult.PASS, itemStack) : new ActionResult<>(EnumActionResult.FAIL, itemStack);
 		}
 	}
 }
