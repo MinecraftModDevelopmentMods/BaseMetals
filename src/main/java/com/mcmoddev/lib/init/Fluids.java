@@ -55,17 +55,15 @@ public abstract class Fluids {
 	}
 
 	protected static Fluid addFluid(@Nonnull MMDMaterial material, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
-//		int tintColor;
 		if (material.getFluid() != null) {
 			return material.getFluid();
 		}
-//		tintColor = material.getTintColor();
 
 		final String modID = Loader.instance().activeModContainer().getModId();
 		final Fluid fluid = new CustomFluid(material.getName(),
 				new ResourceLocation(modID, "blocks/molten_metal_still"),
 				new ResourceLocation(modID, "blocks/molten_metal_flow"));
-//				tintColor);
+
 		fluid.setDensity(density);
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);

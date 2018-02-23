@@ -77,7 +77,7 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 		 */
 		@Override
 		public ITextComponent getDisplayName() {
-			return new TextComponentTranslation(this.material.getBlock(Names.ANVIL) + ".name", new Object[0]);
+			return new TextComponentTranslation(this.material.getBlock(Names.ANVIL) + ".name");
 		}
 
 		public Container createContainer(final InventoryPlayer playerInventory, final EntityPlayer playerIn) {

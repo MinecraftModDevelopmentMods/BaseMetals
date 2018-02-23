@@ -204,11 +204,6 @@ public abstract class Blocks {
 	 */
 	@Nullable
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
-
-		if ((block == null) || (name == null)) {
-			return null;
-		}
-
 		final String fullName = getBlockFullName(block, material, name);
 
 		block.setRegistryName(fullName);
