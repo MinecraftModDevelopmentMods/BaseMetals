@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;

@@ -3,7 +3,6 @@ package com.mcmoddev.lib.integration.plugins.tinkers;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 

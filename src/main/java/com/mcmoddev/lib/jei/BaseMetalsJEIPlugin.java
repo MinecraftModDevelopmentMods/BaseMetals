@@ -6,7 +6,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 
-import mezz.jei.api.BlankModPlugin;
+import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
@@ -21,7 +21,7 @@ import mezz.jei.api.recipe.IRecipeWrapperFactory;
  * 
  */
 @JEIPlugin
-public class BaseMetalsJEIPlugin extends BlankModPlugin {
+public class BaseMetalsJEIPlugin implements IModPlugin {
 
 	public static final String JEI_UID = BaseMetals.MODID;
 	public static final String RECIPE_UID = JEI_UID + ".crackhammer";
