@@ -1,7 +1,9 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
@@ -54,21 +56,35 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		final MMDMaterial nickel = Materials.getMaterialByName(MaterialNames.NICKEL);
 		final MMDMaterial zinc = Materials.getMaterialByName(MaterialNames.ZINC);
 
-		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.ZINC)
-				&& Materials.hasMaterial(MaterialNames.BRASS)) {
-			if ((copper.hasItem(Names.INGOT)) && (zinc.hasItem(Names.INGOT)) && (brass.hasItem(Names.INGOT))) {
-				ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 2),
-						zinc.getItemStack(Names.INGOT, 1), brass.getItemStack(Names.INGOT, 3));
-			}
+		if (hasMaterials(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS) &&
+				materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS),
+						Names.INGOT.toString())) {
+			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 2),
+					zinc.getItemStack(Names.INGOT, 1), brass.getItemStack(Names.INGOT, 3));
 		}
 
 		// TODO: Recently fixed for intent, We may also want bronze here
-		if (Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.NICKEL)
-				&& Materials.hasMaterial(MaterialNames.CUPRONICKEL)) {
-			if ((copper.hasItem(Names.INGOT)) && (nickel.hasItem(Names.INGOT)) && (cupronickel.hasItem(Names.INGOT))) {
-				ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3),
-						nickel.getItemStack(Names.INGOT, 1), cupronickel.getItemStack(Names.INGOT, 4));
+		if (hasMaterials(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL) &&
+				materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL),
+						Names.INGOT.toString()) ) {
+			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3),
+					nickel.getItemStack(Names.INGOT, 1), cupronickel.getItemStack(Names.INGOT, 4));
+		}
+	}
+
+	private static boolean materialsHaveItems(List<String> materialNames, String...items) {
+		for (String item : items) {
+			for (String materialName : materialNames) {
+				if (!Materials.getMaterialByName(materialName).hasItem(item)) return false;
 			}
 		}
+		return true;
+	}
+	
+	private static boolean hasMaterials(String...materials) {
+		for (String materialName : materials) {
+			if (!Materials.hasMaterial(materialName)) return false;
+		}
+		return true;
 	}
 }

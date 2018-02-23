@@ -1,5 +1,8 @@
 package com.mcmoddev.lib.init;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
@@ -251,58 +254,37 @@ public abstract class Recipes {
 	}
 
 	private static void makeSimpleRecipes(@Nonnull final MMDMaterial material) {
-		if (material.hasBlock(Names.BLOCK)) {
-			if (material.hasItem(Names.SLAB)) {
-				GameRegistry.addSmelting(material.getItemStack(Names.SLAB),
-						material.getItemStack(Names.NUGGET, 4), 0); // you lose roughly half a nugget
-			}
+		if ((material.hasBlock(Names.BLOCK)) && (material.hasItem(Names.SLAB))) {
+			GameRegistry.addSmelting(material.getItemStack(Names.SLAB),
+					material.getItemStack(Names.NUGGET, 4), 0); // you lose roughly half a nugget
+		}
 
-			if ((material.hasItem(Names.ROD)) && (material.hasBlock(Names.LEVER))) {
-				GameRegistry.addSmelting(material.getBlockItemStack(Names.LEVER),
-						material.getItemStack(Names.INGOT, 1), 0); // you lose the rod
-			}
+		if ((material.hasItem(Names.ROD)) && (material.hasBlock(Names.LEVER))) {
+			GameRegistry.addSmelting(material.getBlockItemStack(Names.LEVER),
+					material.getItemStack(Names.INGOT, 1), 0); // you lose the rod
+		}
 
-			if (material.hasBlock(Names.WALL)) {
-				GameRegistry.addSmelting(material.getBlockItemStack(Names.WALL),
-						material.getBlockItemStack(Names.BLOCK, 1), 0);
-			}
+		if (material.hasBlock(Names.WALL)) {
+			GameRegistry.addSmelting(material.getBlockItemStack(Names.WALL),
+					material.getBlockItemStack(Names.BLOCK, 1), 0);
+		}
 
-			if (isMMDBlock(material, Names.PLATE)) {
-				GameRegistry.addSmelting(material.getBlockItemStack(Names.PLATE),
-						material.getItemStack(Names.INGOT, 1), 0);
-			}
+		Map<Names,Integer> stuff = new TreeMap<>();
+		stuff.put(Names.PLATE, 1);
+		stuff.put(Names.PRESSURE_PLATE, 2);
+		stuff.put(Names.DOOR, 2);
+		stuff.put(Names.TRAPDOOR, 4);
+		stuff.put(Names.HORSE_ARMOR, 6);
+		stuff.put(Names.FISHING_ROD, 1);
 
-			if (isMMDBlock(material, Names.PRESSURE_PLATE)) {
-				GameRegistry.addSmelting(material.getBlockItemStack(Names.PRESSURE_PLATE),
-						material.getItemStack(Names.INGOT, 2), 0);
-			}
+		stuff.entrySet().stream()
+		.filter(ent -> isMMDBlock(material, ent.getKey()))
+		.forEach(ent -> GameRegistry.addSmelting(material.getBlockItemStack(ent.getKey()),
+				material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
 
-			if (isMMDBlock(material, Names.BARS)) {
-				GameRegistry.addSmelting(material.getBlockItemStack(Names.BARS),
-						material.getItemStack(Names.NUGGET, 3), 0); // roughly half a nugget loss
-			}
-
-			if (isMMDItem(material, Names.DOOR)) {
-				GameRegistry.addSmelting(material.getItemStack(Names.DOOR),
-						material.getItemStack(Names.INGOT, 2), 0);
-			}
-
-			if (isMMDBlock(material, Names.TRAPDOOR)) {
-				GameRegistry.addSmelting(material.getBlockItemStack(Names.TRAPDOOR),
-						material.getItemStack(Names.INGOT, 4), 0);
-			}
-
-			// Diamond, Gold & Iron Horse armor are in vanilla so dont do them for vanilla
-			// mats
-			if (isMMDItem(material, Names.HORSE_ARMOR)) {
-				GameRegistry.addSmelting(material.getItemStack(Names.HORSE_ARMOR),
-						material.getItemStack(Names.INGOT, 6), 0); // 1 wool loss
-			}
-
-			if (isMMDItem(material, Names.FISHING_ROD)) {
-				GameRegistry.addSmelting(material.getItemStack(Names.FISHING_ROD),
-						material.getItemStack(Names.INGOT, 1), 0); // 4.5 nugget loss
-			}
+		if (isMMDBlock(material, Names.BARS)) {
+			GameRegistry.addSmelting(material.getBlockItemStack(Names.BARS),
+					material.getItemStack(Names.NUGGET, 3), 0); // roughly half a nugget loss
 		}
 	}
 
@@ -356,50 +338,25 @@ public abstract class Recipes {
 	}
 
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
-		if (material.hasItem(Names.INGOT)) {
-//				&& !(material.getItem(Names.INGOT) instanceof com.mcmoddev.lib.material.IMMDObject)
-//				&& material.hasOre()) {
-			if (Options.furnaceCheese()) {
-				if (material.hasItem(Names.BOOTS))
-					GameRegistry.addSmelting(material.getItemStack(Names.BOOTS),
-							material.getItemStack(Names.INGOT, 4), 0);
+		if ((material.hasItem(Names.INGOT)) && (Options.furnaceCheese())) {
+			Map<Names,Integer> stuff = new TreeMap<>();
+			stuff.put(Names.BOOTS, 4);
+			stuff.put(Names.HELMET, 5);
+			stuff.put(Names.SWORD, 2);
+			stuff.put(Names.SHOVEL, 1);
+			stuff.put(Names.PICKAXE, 3);
+			stuff.put(Names.HOE, 2);
+			stuff.put(Names.AXE, 3);
+			stuff.put(Names.LEGGINGS, 7);
+			stuff.put(Names.CHESTPLATE, 8);
 
-				if (material.hasItem(Names.HELMET))
-					GameRegistry.addSmelting(material.getItemStack(Names.HELMET),
-							material.getItemStack(Names.INGOT, 5), 0);
+			stuff.entrySet().stream().filter(ent -> material.hasItem(ent.getKey()))
+			.forEach(ent-> GameRegistry.addSmelting(material.getItemStack(ent.getKey()),
+					material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
 
-				if (material.hasItem(Names.SWORD))
-					GameRegistry.addSmelting(material.getItemStack(Names.SWORD),
-							material.getItemStack(Names.INGOT, 2), 0);
-
-				if (material.hasItem(Names.SHOVEL))
-					GameRegistry.addSmelting(material.getItemStack(Names.SHOVEL),
-							material.getItemStack(Names.INGOT, 1), 0);
-
-				if (material.hasItem(Names.PICKAXE))
-					GameRegistry.addSmelting(material.getItemStack(Names.PICKAXE),
-							material.getItemStack(Names.INGOT, 3), 0);
-
-				if (material.hasItem(Names.HOE))
-					GameRegistry.addSmelting(material.getItemStack(Names.HOE),
-							material.getItemStack(Names.INGOT, 2), 0);
-
-				if (material.hasItem(Names.AXE))
-					GameRegistry.addSmelting(material.getItemStack(Names.AXE),
-							material.getItemStack(Names.INGOT, 3), 0);
-
-				if (material.hasItem(Names.LEGGINGS))
-					GameRegistry.addSmelting(material.getItemStack(Names.LEGGINGS),
-							material.getItemStack(Names.INGOT, 7), 0);
-
-				if (material.hasItem(Names.CHESTPLATE))
-					GameRegistry.addSmelting(material.getItemStack(Names.CHESTPLATE),
-							material.getItemStack(Names.INGOT, 8), 0);
-
-				if (material.hasItem(Names.CRACKHAMMER))
-					GameRegistry.addSmelting(material.getItemStack(Names.CRACKHAMMER),
-							material.getBlockItemStack(Names.BLOCK, 1), 0);
-			}
+			if (material.hasItem(Names.CRACKHAMMER))
+				GameRegistry.addSmelting(material.getItemStack(Names.CRACKHAMMER),
+						material.getBlockItemStack(Names.BLOCK, 1), 0);
 		}
 	}
 
@@ -439,17 +396,23 @@ public abstract class Recipes {
 		if (material.hasBlock(Names.BLOCK)) {
 			OreDictionary.registerOre(Oredicts.BLOCK + oreDictName, material.getBlockItemStack(Names.BLOCK));
 		}
-		if (material.hasItem(Names.PLATE)) {
-			OreDictionary.registerOre(Oredicts.PLATE + oreDictName, material.getItemStack(Names.PLATE));
-		}
+		
+		Map<Names, String> stuff = new TreeMap<>();
+		stuff.put(Names.PLATE, Oredicts.PLATE);
+		stuff.put(Names.DOOR, Oredicts.DOOR);
+		stuff.put(Names.NUGGET, Oredicts.NUGGET);
+		stuff.put(Names.TRAPDOOR, Oredicts.TRAPDOOR);
+		stuff.put(Names.NUGGET, Oredicts.NUGGET);
+		stuff.put(Names.POWDER, Oredicts.DUST);
+		stuff.put(Names.GEAR, Oredicts.GEAR);
+		stuff.put(Names.ROD, Oredicts.ROD);
+
+		stuff.entrySet().stream()
+		.filter(ent -> material.hasItem(ent.getKey()))
+		.forEach(ent-> OreDictionary.registerOre(ent.getValue()+oreDictName, material.getItemStack(ent.getKey())));
+		
 		if (material.hasBlock(Names.BARS)) {
 			OreDictionary.registerOre(Oredicts.BARS + oreDictName, material.getBlockItemStack(Names.BARS));
-		}
-		if (material.hasItem(Names.DOOR)) {
-			OreDictionary.registerOre(Oredicts.DOOR + oreDictName, material.getItemStack(Names.DOOR));
-		}
-		if (material.hasItem(Names.TRAPDOOR)) {
-			OreDictionary.registerOre(Oredicts.TRAPDOOR + oreDictName, material.getItemStack(Names.TRAPDOOR));
 		}
 		if (material.hasBlend()) {
 			if (material.hasItem(Names.BLEND)) {
@@ -468,22 +431,10 @@ public abstract class Recipes {
 				OreDictionary.registerOre(Oredicts.GEM + oreDictName, material.getItemStack(Names.INGOT)); // For Gem based
 			}
 		}
-		if (material.hasItem(Names.NUGGET)) {
-			OreDictionary.registerOre(Oredicts.NUGGET + oreDictName, material.getItemStack(Names.NUGGET));
-		}
-		if (material.hasItem(Names.POWDER)) {
-			OreDictionary.registerOre(Oredicts.DUST + oreDictName, material.getItemStack(Names.POWDER));
-		}
+
 		if (material.hasItem(Names.SMALLPOWDER)) {
 			OreDictionary.registerOre(Oredicts.DUST_TINY + oreDictName, material.getItemStack(Names.SMALLPOWDER));
 			OreDictionary.registerOre(Oredicts.DUST_SMALL + oreDictName, material.getItemStack(Names.SMALLPOWDER));
-		}
-		if (material.hasItem(Names.GEAR)) {
-			OreDictionary.registerOre(Oredicts.GEAR + oreDictName, material.getItemStack(Names.GEAR));
-		}
-		if (material.hasItem(Names.ROD)) {
-			OreDictionary.registerOre(Oredicts.ROD + oreDictName, material.getItemStack(Names.ROD));
-			OreDictionary.registerOre(Oredicts.STICK + oreDictName, material.getItemStack(Names.ROD));
 		}
 	}
 
@@ -524,10 +475,7 @@ public abstract class Recipes {
 	 * @return boolean Is it IMMDObject?
 	 */
 	protected static boolean isMMDBlock(final MMDMaterial material, Names name) {
-		if ((material.hasBlock(name)) && (material.getBlock(name) instanceof IMMDObject)) {
-			return true;
-		}
-		return false;
+		return ((material.hasBlock(name)) && (material.getBlock(name) instanceof IMMDObject));
 	}
 
 	/**
@@ -536,9 +484,6 @@ public abstract class Recipes {
 	 * @return boolean Is it IMMDObject?
 	 */
 	protected static boolean isMMDItem(final MMDMaterial material, final Names name) {
-		if ((material.hasItem(name)) && (material.getItem(name) instanceof IMMDObject)) {
-			return true;
-		}
-		return false;
+		return ((material.hasItem(name)) && (material.getItem(name) instanceof IMMDObject));
 	}
 }

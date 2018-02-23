@@ -3,6 +3,8 @@ package com.mcmoddev.basemetals.init;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
@@ -140,6 +142,20 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		addToMetList();
 	}
 
+	private static void setBurnTimes(@Nonnull final MMDMaterial mat) {
+		if (mat.hasItem(Names.NUGGET))
+			((ItemMMDNugget) mat.getItem(Names.NUGGET)).setBurnTime(200);
+
+		if (mat.hasItem(Names.POWDER))
+			((ItemMMDPowder) mat.getItem(Names.POWDER)).setBurnTime(1600);
+
+		if (mat.hasItem(Names.SMALLPOWDER))
+			((ItemMMDSmallPowder) mat.getItem(Names.SMALLPOWDER)).setBurnTime(200);
+
+		if (mat.hasBlock(Names.BLOCK))
+			((ItemMMDBlock) mat.getItem("ItemBlock_charcoal_block")).setBurnTime(16000);
+	}
+	
 	private static void doSpecialMats() {
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
 			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
@@ -148,17 +164,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.POWDER, charcoal);
 			create(Names.SMALLPOWDER, charcoal);
 
-			if (charcoal.hasItem(Names.NUGGET))
-				((ItemMMDNugget) charcoal.getItem(Names.NUGGET)).setBurnTime(200);
-
-			if (charcoal.hasItem(Names.POWDER))
-				((ItemMMDPowder) charcoal.getItem(Names.POWDER)).setBurnTime(1600);
-
-			if (charcoal.hasItem(Names.SMALLPOWDER))
-				((ItemMMDSmallPowder) charcoal.getItem(Names.SMALLPOWDER)).setBurnTime(200);
-
-			if (charcoal.hasBlock(Names.BLOCK))
-				((ItemMMDBlock) charcoal.getItem("ItemBlock_charcoal_block")).setBurnTime(16000);
+			setBurnTimes(charcoal);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.COAL)) {
@@ -168,14 +174,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.POWDER, coal);
 			create(Names.SMALLPOWDER, coal);
 
-			if (coal.hasItem(Names.NUGGET))
-				((ItemMMDNugget) coal.getItem(Names.NUGGET)).setBurnTime(200);
-
-			if (coal.hasItem(Names.POWDER))
-				((ItemMMDPowder) coal.getItem(Names.POWDER)).setBurnTime(1600);
-
-			if (coal.hasItem(Names.SMALLPOWDER))
-				((ItemMMDSmallPowder) coal.getItem(Names.SMALLPOWDER)).setBurnTime(200);
+			setBurnTimes(coal);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.REDSTONE)) {
@@ -300,7 +299,6 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.CHESTPLATE, iron);
 			create(Names.CRACKHAMMER, iron);
 			create(Names.CROSSBOW, iron);
-//			create(Names.DOOR, iron);
 			create(Names.FISHING_ROD, iron);
 			create(Names.HELMET, iron);
 			create(Names.HOE, iron);

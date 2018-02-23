@@ -28,15 +28,6 @@ public class MMDCreativeTab extends CreativeTabs {
 	private final boolean searchable;
 	private Comparator<ItemStack> comparator;
 
-	private static final Comparator<ItemStack> DEFAULT = new Comparator<ItemStack>() {
-
-		@Override
-		public int compare(ItemStack first, ItemStack second) {
-			final int delta = Items.getSortingValue(first) - Items.getSortingValue(second);
-			return (delta == 0) ? first.getUnlocalizedName().compareToIgnoreCase(second.getUnlocalizedName()) : delta;
-		}
-	};
-
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable) {
 		this(unlocalizedName, searchable, ItemStack.EMPTY);
 	}
@@ -57,7 +48,10 @@ public class MMDCreativeTab extends CreativeTabs {
 			this.iconItem = iconItem;
 		}
 		this.searchable = searchable;
-		this.setSortingAlgorithm(DEFAULT);
+		this.setSortingAlgorithm((ItemStack first, ItemStack second) -> {
+			final int delta = Items.getSortingValue(first) - Items.getSortingValue(second);
+			return (delta == 0) ? first.getUnlocalizedName().compareToIgnoreCase(second.getUnlocalizedName()) : delta;
+		});
 		if (searchable)
 			setBackgroundImageName("item_search.png");
 	}

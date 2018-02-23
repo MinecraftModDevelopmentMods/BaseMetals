@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,22 +36,23 @@ import net.minecraftforge.registries.RegistryBuilder;
  */
 public class Materials {
 
-	private final IForgeRegistry<MMDMaterial> REGISTRY;
-	public final static Materials instance = new Materials();
+	private static final IForgeRegistry<MMDMaterial> REGISTRY = new RegistryBuilder<MMDMaterial>().setName(new ResourceLocation("mmdlib", "materials_registry"))
+			.setType(MMDMaterial.class).setMaxID(Integer.MAX_VALUE >> 4).create();
+	public static final Materials instance = new Materials();
 	private static final Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();
 	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 
 	public static final MMDMaterial EMPTY = createOrelessMaterial("empty", MaterialType.METAL, 0, 0, 0, 0);
 
 	protected Materials() {
-		this.REGISTRY = new RegistryBuilder<MMDMaterial>().setName(new ResourceLocation("mmdlib", "materials_registry"))
-				.setType(MMDMaterial.class).setMaxID(Integer.MAX_VALUE >> 4).create();
+		// this only exists to allow for the "instance" variable
 	}
 
 	/**
 	 *
 	 */
 	public static void init() {
+		// holdover from earlier versions, basically
 	}
 
 	/**
@@ -279,14 +281,14 @@ public class Materials {
 	protected static MMDMaterial registerMaterial(@Nonnull final MMDMaterial material) {
 		final String modId = Loader.instance().activeModContainer().getModId();
 		final ResourceLocation loc = new ResourceLocation(modId, material.getName());
-		if (instance.REGISTRY.containsKey(loc)) {
+		if (REGISTRY.containsKey(loc)) {
 			BaseMetals.logger.error(
 					"You asked registermaterial() to register an existing material, Don't do that! (Returning pre existing material instead");
 			return Materials.getMaterialByName(material.getName());
 		}
 
 		material.setRegistryName(loc);
-		instance.REGISTRY.register(material);
+		REGISTRY.register(material);
 
 		final String enumName = material.getEnumName();
 		final String texName = material.getName();
@@ -344,7 +346,7 @@ public class Materials {
 	 * @return A Collection of MMDMaterial instances.
 	 */
 	public static Collection<MMDMaterial> getAllMaterials() {
-		return Collections.unmodifiableList(instance.REGISTRY.getValues());
+		return Collections.unmodifiableList(REGISTRY.getValues());
 	}
 
 	/**
@@ -356,9 +358,9 @@ public class Materials {
 	 *         have been registered under that name.
 	 */
 	public static @Nonnull MMDMaterial getMaterialByName(@Nonnull final String materialName) {
-		for (ResourceLocation key : instance.REGISTRY.getKeys()) {
+		for (ResourceLocation key : REGISTRY.getKeys()) {
 			if (key.getResourcePath().equals(materialName)) {
-				return instance.REGISTRY.getValue(key);
+				return REGISTRY.getValue(key);
 			}
 		}
 		return EMPTY;
@@ -374,8 +376,8 @@ public class Materials {
 	 */
 	public static Collection<MMDMaterial> getMaterialsByMod(@Nonnull final String modId) {
 		return Lists.newArrayList(
-				instance.REGISTRY.getEntries().stream().filter((ent) -> ent.getKey().getResourceDomain().equals(modId))
-						.map((ent) -> ent.getValue()).iterator());
+				REGISTRY.getEntries().stream().filter(ent -> ent.getKey().getResourceDomain().equals(modId))
+						.map(Entry::getValue).iterator());
 	}
 
 	/**
@@ -387,14 +389,11 @@ public class Materials {
 	 */
 	public static boolean hasMaterial(@Nonnull final String materialName) {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
-		if ((material.getName().equals(materialName)) && (ConfigBase.Options.isMaterialEnabled(materialName))) {
-			return true;
-		}
-		return false;
+		return ((material.getName().equals(materialName)) && (ConfigBase.Options.isMaterialEnabled(materialName)));
 	}
 
 	public static boolean hasMaterialFromMod(@Nonnull final String modId) {
-		for (ResourceLocation rl : instance.REGISTRY.getKeys()) {
+		for (ResourceLocation rl : REGISTRY.getKeys()) {
 			if (rl.getResourceDomain().equals(modId)) {
 				return true;
 			}

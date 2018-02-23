@@ -30,9 +30,9 @@ import slimeknights.tconstruct.library.modifiers.IModifier;
 public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase
 		implements IIntegration {
 
-	private static Boolean preInit = false;
-	private static Boolean init = false;
-	private static Boolean postInit = false;
+	private Boolean preInit = false;
+	private Boolean init = false;
+	private Boolean postInit = false;
 	
 	@Override
 	public void init() {

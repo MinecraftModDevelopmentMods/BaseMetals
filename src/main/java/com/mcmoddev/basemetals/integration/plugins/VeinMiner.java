@@ -3,6 +3,8 @@ package com.mcmoddev.basemetals.integration.plugins;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
@@ -33,10 +35,12 @@ public class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBas
 				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
 				MaterialNames.WOOD, MaterialNames.ZINC);
 
-		materials.stream().filter(Materials::hasMaterial)
-				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
-				.forEach(materialName -> {
-					addToolsForMaterial(materialName);
-				});
+		materials.stream().filter(Materials::hasMaterial) 
+				.filter(VeinMiner::isMaterialNotEmpty)
+				.forEach(com.mcmoddev.lib.integration.plugins.VeinMinerBase::addToolsForMaterial);
+	}
+	
+	private static boolean isMaterialNotEmpty(@Nonnull String materialName) {
+		return !Materials.getMaterialByName(materialName).isEmpty();
 	}
 }

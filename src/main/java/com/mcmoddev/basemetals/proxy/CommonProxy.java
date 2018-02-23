@@ -83,39 +83,33 @@ public class CommonProxy {
 
 	public void onRemapBlock(RegistryEvent.MissingMappings<Block> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings()) {
-			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)) {
-				if ((Materials.hasMaterial(MaterialNames.MERCURY))
-						&& ("liquid_mercury".equals(mapping.key.getResourcePath()))) {
-					mapping.remap(Materials.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
-				}
+			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
+					&& (Materials.hasMaterial(MaterialNames.MERCURY))
+					&& ("liquid_mercury".equals(mapping.key.getResourcePath()))) {
+				mapping.remap(Materials.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
 			}
 		}
 	}
 
 	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
-			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)) {
-				if ((Materials.hasMaterial(MaterialNames.COAL))
-						&& ("carbon_powder".equals(mapping.key.getResourcePath()))) {
-					mapping.remap(Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
-				}
+			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
+					&& (Materials.hasMaterial(MaterialNames.COAL))
+					&& ("carbon_powder".equals(mapping.key.getResourcePath()))) {
+				mapping.remap(Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
 			}
 		}
 	}
 
 	public void init(FMLInitializationEvent event) {
 		allsGood = false;
-		// com.mcmoddev.lib.init.Recipes.init();
-		// Recipes.init();
 
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		allsGood = true;
 
-		// by this point all materials should have been registered both with MMDLib and
-		// Minecraft
-		// move to a separate function - potentially in FallbackGeneratorData - after
-		// the test
+		// by this point all materials should have been registered both with MMDLib and Minecraft
+		// move to a separate function - potentially in FallbackGeneratorData - after the test
 		for (final MMDMaterial material : Materials.getAllMaterials()) {
 			if (material.hasBlock(Names.ORE)) {
 				FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ORE.toString(),
