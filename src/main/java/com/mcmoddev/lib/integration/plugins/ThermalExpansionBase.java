@@ -30,8 +30,16 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 	}
 
+	protected static void addPulverizerRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
+		if (input.isEmpty() || output.isEmpty() ) {
+			return;
+		}
+
+		ThermalExpansionHelper.addPulverizerRecipe(energy, input, output);		
+	}
+	
 	protected static void addCompactorPressRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
-		if (input.getItem() == null || output.getItem() == null) {
+		if (input.isEmpty() || output.isEmpty() ) {
 			return;
 		}
 
@@ -39,19 +47,45 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addCompactorStorageRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
-
-		if (input.getItem() == null || output.getItem() == null) {
+		if (input.isEmpty() || output.isEmpty() ) {
 			return;
 		}
 
 		ThermalExpansionHelper.addCompactorStorageRecipe(energy, input, output);
 	}
 
+	protected static void addPulverizer(@Nonnull final String materialName) {
+		addPulverizer(Materials.getMaterialByName(materialName));
+	}
+	
+	protected static void addPulverizer(@Nonnull final MMDMaterial material) {
+		if( material.isEmpty() || !material.hasItem(Names.POWDER)) return;
+		
+		/*
+		 * default energy in TE for Ore -> Dust is 4000RF
+		 * default energy in TE for Ingot -> Dust is 2000RF
+		 */
+		final int ENERGY_ORE = 4000;
+		final int ENERGY_INGOT = 2000;
+		ItemStack inputOre = ItemStack.EMPTY;
+		ItemStack inputIngot = ItemStack.EMPTY;
+		ItemStack outputDust = new ItemStack(material.getItem(Names.POWDER));
+		if (material.hasBlock(Names.ORE) && material.getBlock(Names.ORE) != null) {
+			inputOre = new ItemStack( Item.getItemFromBlock(material.getBlock(Names.ORE)) );
+		}
+		if (material.hasItem(Names.INGOT) && material.getItem(Names.INGOT) != null) {
+			inputIngot = new ItemStack(material.getItem(Names.INGOT));
+		}
+		if (!inputOre.isEmpty()) addPulverizerRecipe(ENERGY_ORE, inputOre, outputDust);
+		if (!inputIngot.isEmpty()) addPulverizerRecipe(ENERGY_INGOT, inputIngot, outputDust);
+	}
+	
 	protected static void addFurnace(@Nonnull final String materialName) {
 		addFurnace(Materials.getMaterialByName(materialName));
 	}
 
 	protected static void addFurnace(@Nonnull final MMDMaterial material) {
+		if( material.isEmpty() ) return;
 		/*
 		 * Ore -> Ingot default, according to TE source, is 2000
 		 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
@@ -86,6 +120,7 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addCrucible(@Nonnull final MMDMaterial material) {
+		if( material.isEmpty() ) return;
 		/*
 		 * Default power, according to TE source, is 8000
 		 * This is used for Pyrotheum, Cryotheum, Aerotheum, Petrotheum and Redstone.
@@ -131,6 +166,7 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addPlatePress(@Nonnull final MMDMaterial material) {
+		if( material.isEmpty() ) return;
 		if (material.hasItem(Names.PLATE) && material.hasItem(Names.INGOT)) {
 
 			/*
@@ -146,6 +182,7 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addPressStorage(@Nonnull final MMDMaterial material) {
+		if( material.isEmpty() ) return;
 		/*
 		 * Compactors default is 4000RF per operation
 		 */
