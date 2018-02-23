@@ -65,9 +65,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		createMercury();
 		createAnvils();
 
-		if (humanDetector != null) {
-			humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
-		}
+		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
 	}
 
 	private static void createAnvils() {

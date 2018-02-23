@@ -186,7 +186,7 @@ public abstract class Blocks {
 	 * @return a new block
 	 */
 	@Nullable
-	protected static Block addBlock(@Nonnull final Block block, @Nonnull final Names name, final MMDMaterial material, final CreativeTabs tab) {
+	protected static Block addBlock(@Nonnull final Block block, @Nonnull final Names name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
 		return addBlock(block, name.toString(), material, tab);
 	}
 
@@ -203,7 +203,7 @@ public abstract class Blocks {
 	 * @return a new block
 	 */
 	@Nullable
-	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final MMDMaterial material, final CreativeTabs tab) {
+	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, @Nonnull final MMDMaterial material, final CreativeTabs tab) {
 
 		if ((block == null) || (name == null)) {
 			return null;
