@@ -46,13 +46,17 @@ public class MekanismBase implements IIntegration {
 		addGassesForMaterial(Materials.getMaterialByName(materialName));
 	}
 
+	private static String makeCleanGasName(@Nonnull final MMDMaterial material) {
+		return "clean" + material.getName();
+	}
+	
 	protected static void addGassesForMaterial(@Nonnull final MMDMaterial material) {
 		if( material.getFluid() == null) return;
 		final Gas gas1 = new Gas(material.getName(),material.getFluid().getStill().toString());
 		gas1.setUnlocalizedName("gas" + material.getCapitalizedName());
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas("clean" + material.getName(),material.getFluid().getStill().toString());
+		final Gas gas2 = new Gas(makeCleanGasName(material),material.getFluid().getStill().toString());
 		gas2.setUnlocalizedName("cleanGas" + material.getCapitalizedName());
 		GasRegistry.register(gas2);
 	}
@@ -70,47 +74,20 @@ public class MekanismBase implements IIntegration {
 		final ItemStack shard = material.getItemStack(Names.SHARD);
 		// TODO: check specifically for mek crystal type
 		final ItemStack crystal = material.getItemStack(Names.CRYSTAL);
+		final String cleanGas = makeCleanGasName(material);
 
-		if ((material.hasItem(Names.CLUMP)) && (material.hasItem(Names.POWDER_DIRTY))) {
-			addCrusherRecipe(clump, powderDirty);
-		}
-		if ((material.hasItem(Names.INGOT)) && (material.hasItem(Names.POWDER))) {
-			addCrusherRecipe(ingot, powder);
-		}
+		addCrusherRecipe(clump, powderDirty);
+		addCrusherRecipe(ingot, powder);
+		addEnrichmentChamberRecipe(ore, new ItemStack(powder.getItem(), 2));
+		addEnrichmentChamberRecipe(powderDirty, powder);
+		addPurificationChamberRecipe(ore, new ItemStack(clump.getItem(), 3));
+		addPurificationChamberRecipe(shard, clump);
+		addChemicalInjectionChamberRecipe(ore, new ItemStack(shard.getItem(), 4));
+		addChemicalInjectionChamberRecipe(crystal, shard);
 
-		if (material.hasItem(Names.POWDER)) {
-			if (material.hasBlock(Names.ORE)) {
-				addEnrichmentChamberRecipe(ore, new ItemStack(powder.getItem(), 2));
-			}
-			if (material.hasItem(Names.POWDER_DIRTY)) {
-				addEnrichmentChamberRecipe(powderDirty, powder);
-			}
-		}
-
-		if (material.hasItem(Names.CLUMP)) {
-			if (material.hasBlock(Names.ORE)) {
-				addPurificationChamberRecipe(ore, new ItemStack(clump.getItem(), 3));
-			}
-			if (material.hasItem(Names.SHARD)) {
-				addPurificationChamberRecipe(shard, clump);
-			}
-		}
-
-		if (material.hasItem(Names.SHARD)) {
-			if (material.hasBlock(Names.ORE)) {
-				addChemicalInjectionChamberRecipe(ore, new ItemStack(shard.getItem(), 4));
-			}
-			if (material.hasItem(Names.CRYSTAL)) {
-				addChemicalInjectionChamberRecipe(crystal, shard);
-			}
-		}
-
-		if(material.hasItem(Names.CRYSTAL) && material.hasBlock(Names.ORE)) {
-			// Crystallizer is 200mB for 1 crystal
-			addChemicalCrystallizerRecipe("clean" + material.getName(), 200, crystal);
-			addChemicalWasherRecipe(material.getName(), 1000, "clean" + material.getName());
-			addChemicalDissolutionChamberRecipe(ore, material.getName());
-		}
+		addChemicalCrystallizerRecipe(cleanGas, 200, crystal);
+		addChemicalWasherRecipe(material.getName(), 1000, cleanGas);
+		addChemicalDissolutionChamberRecipe(ore, material.getName());
 	}
 
 	protected static void addMetallurgicInfuserRecipe(@Nonnull final String infuse, @Nonnull int amount, @Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem ) {
@@ -119,25 +96,35 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addCrusherRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+		if (inputItem.isEmpty() || outputItem.isEmpty()) return;
+		
 		RecipeHandler.addCrusherRecipe(inputItem, outputItem);
 	}
 
 	protected static void addEnrichmentChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+		if (inputItem.isEmpty() || outputItem.isEmpty()) return;
+		
 		RecipeHandler.addEnrichmentChamberRecipe(inputItem, outputItem);
 	}
 
 	protected static void addPurificationChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+		if (inputItem.isEmpty() || outputItem.isEmpty()) return;
+		
 		RecipeHandler.addPurificationChamberRecipe(inputItem, outputItem);
 	}
 
 	protected static void addChemicalInjectionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+		if (inputItem.isEmpty() || outputItem.isEmpty()) return;
+		
 		Gas inputGas = GasRegistry.getGas("hydrogenChloride");
 		RecipeHandler.addChemicalInjectionChamberRecipe(inputItem, inputGas, outputItem);
 	}
 
 	// 5x, Slurry to Crystal
 	protected static void addChemicalCrystallizerRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem) {
-		final GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
+		if (outputItem.isEmpty()) return;
+		
+ 		final GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
 		RecipeHandler.addChemicalCrystallizerRecipe(inputGasStack, outputItem);
 	}
 
@@ -150,15 +137,21 @@ public class MekanismBase implements IIntegration {
 
 	// 5x, Ore to Slurry
 	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas, @Nonnull int outputQty) {
+		if (inputItem.isEmpty()) return;
+		
 		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputQty );
 		RecipeHandler.addChemicalDissolutionChamberRecipe(inputItem, outputGasStack);
 	}
 
 	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas) {
+		if (inputItem.isEmpty()) return;
+		
 		addChemicalDissolutionChamberRecipe(inputItem, outputGas, 1000);
 	}
 
 	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem, @Nonnull final FluidStack inputFluid, @Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem,  @Nonnull final String outputGas, @Nonnull final int outputGasQty, int extraEnergy, int ticks ) {
+		if (inputItem.isEmpty() || inputFluid == null) return;
+		
 		final GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
 		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty );
 		RecipeHandler.addPRCRecipe(inputItem, inputFluid, inputGasStack, outputItem, outputGasStack, extraEnergy, ticks);
@@ -169,14 +162,20 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addOsmiumCompressorRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+		if (inputItem.isEmpty() || outputItem.isEmpty()) return;
+		
 		RecipeHandler.addOsmiumCompressorRecipe(inputItem, outputItem);
 	}
 
 	protected static void addCombinerRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+		if (inputItem.isEmpty() || outputItem.isEmpty()) return;
+		
 		RecipeHandler.addCombinerRecipe(inputItem, outputItem);
 	}
 
 	protected static void addChemicalOxidizerRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
+		if (inputItem.isEmpty()) return;
+		
 		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty);
 		RecipeHandler.addChemicalOxidizerRecipe(inputItem, outputGasStack);
 	}
@@ -189,10 +188,14 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addPrecisionSawmillRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+		if (inputItem.isEmpty() || outputItem.isEmpty()) return;
+		
 		RecipeHandler.addPrecisionSawmillRecipe(inputItem, outputItem);
 	}
 
 	protected static void addPrecisionSawmillRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack mainOutput, @Nonnull final ItemStack secondaryOutput, @Nonnull final double chance) {
+		if (inputItem.isEmpty() || mainOutput.isEmpty()) return;
+		
 		RecipeHandler.addPrecisionSawmillRecipe(inputItem, mainOutput, secondaryOutput, chance);
 	}
 

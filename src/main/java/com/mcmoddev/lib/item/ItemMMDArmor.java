@@ -34,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDObject {
 
 	private final String customTexture;
-	private final MMDMaterial mmd_material;
+	private final MMDMaterial mmdMaterial;
 
 	private static final int UPDATE_INTERVAL = 11;
 	private static final Map<EntityPlayer, AtomicLong> playerUpdateTimestampMap = new HashMap<>();
@@ -43,7 +43,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	protected ItemMMDArmor(@Nonnull final MMDMaterial material, @Nonnull final ArmorMaterial armorMat, final int renderIndex,
 							 final EntityEquipmentSlot slot) {
 		super(armorMat, renderIndex, slot);
-		this.mmd_material = material;
+		this.mmdMaterial = material;
 		this.customTexture = Loader.instance().activeModContainer().getModId() + ":textures/models/armor/" + material.getName() + "_layer_" + (slot == EntityEquipmentSlot.LEGS ? 2 : 1) + ".png";
 	}
 
@@ -60,7 +60,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 			for(int i = 0; i < 4; i++) {
 				final ItemStack armorItemStack = player.inventory.armorInventory.get(i);
 				if ((!armorItemStack.isEmpty()) && (armorItemStack.getItem() instanceof ItemMMDArmor)) {
-					MMDToolEffects.extraEffectsOnArmorUpdate(w, player, this.mmd_material, armorItemStack, updateCount);
+					MMDToolEffects.extraEffectsOnArmorUpdate(w, player, this.mmdMaterial, armorItemStack, updateCount);
 				}
 			}
 		}
@@ -113,7 +113,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 
 	@Override
 	public void addInformation(final ItemStack stack, final World worldIn, final List<String> tooltip, final ITooltipFlag flagIn) {
-		MMDToolEffects.addArmorSpecialPropertiesToolTip(this.mmd_material.getName(), tooltip);
+		MMDToolEffects.addArmorSpecialPropertiesToolTip(this.mmdMaterial.getName(), tooltip);
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	@Override
 	public boolean getIsRepairable(final ItemStack srcItemStack, final ItemStack repairMaterial) {
 		// repair with string or wool
-		return MMDItemHelper.isToolRepairable(repairMaterial, this.mmd_material.getCapitalizedName());
+		return MMDItemHelper.isToolRepairable(repairMaterial, this.mmdMaterial.getCapitalizedName());
 	}
 
 	@Override
@@ -146,6 +146,6 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.mmd_material;
+		return this.mmdMaterial;
 	}
 }

@@ -99,7 +99,7 @@ public abstract class MMDToolEffects {
 	 */
 	public static void extraEffectsOnCrafting(final MMDMaterial material, final ItemStack item, final World world,
 			final EntityPlayer crafter) {
-		// TODO: do nothing for now. This would be where achievements or automatic
+		// do nothing for now. This would be where achievements or automatic
 		// enchantments could appear
 	}
 
@@ -124,7 +124,7 @@ public abstract class MMDToolEffects {
 					countArmorPieces(leadUpdateCache, player);
 					break;
 				case MaterialNames.STARSTEEL:
-					countStarsteelPieces(player, armor);
+					countStarsteelPieces(player);
 					break;
 				default:
 					break;
@@ -237,7 +237,7 @@ public abstract class MMDToolEffects {
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material.getItem(Names.BOOTS));
 	}
 	
-	private static void countStarsteelPieces(EntityPlayer player, ItemStack armor) {
+	private static void countStarsteelPieces(EntityPlayer player) {
 		// used to count up the starsteel armor items
 		countArmorPieces(starsteelUpdateCache, player);
 	}

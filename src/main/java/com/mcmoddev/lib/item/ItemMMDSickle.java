@@ -40,7 +40,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 			Material.WEB, Material.LEAVES, Material.PLANTS, Material.VINE, Material.GOURD, Material.CACTUS);
 
 	private final MMDMaterial material;
-	private int actionDiameter;// = 3;
+	private int actionDiameter;
 	private float efficiency;
 	private float attackDamage;
 	private float attackSpeed;
@@ -73,7 +73,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 				.filter(entityPos -> this.isEffective(player.getEntityWorld().getBlockState(entityPos)))
 				.forEach(entityPos -> breakBlock(stack, player.getEntityWorld(), player, pos, entityPos));
 
-		return true;// super.onBlockStartBreak(stack, pos, player);
+		return true;
 	}
 
 	private static void sendPacket(final Entity player, final Packet<?> packet) {
@@ -85,8 +85,6 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	private void breakBlock(final ItemStack tool, final World world, final EntityPlayer player, final BlockPos centralPosition,
 			final BlockPos actualPosition) {
 
-		// ToolHelper.breakExtraBlock(stack, player.getEntityWorld(), player, pos,
-		// refPos);
 		if (world.isAirBlock(actualPosition)) {
 			return;
 		}
@@ -132,7 +130,6 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 			}
 
 			// send an update to the server, so we get an update back
-			// if(PHConstruct.extraBlockUpdates)
 			final NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
 			assert netHandlerPlayClient != null;
 			netHandlerPlayClient.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK,

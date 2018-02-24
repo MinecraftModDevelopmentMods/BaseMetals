@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import javax.annotation.Nonnull;
@@ -57,31 +58,6 @@ public abstract class VillagerTrades {
 		return makeTradePalette(makePurchasePalette(price + priceMod, material.getItemStack(name)));
 	}
 	
-	private static int getSmithId( Names name ) {
-		switch(name) {
-		case SWORD:
-			return WEAPON_SMITH;
-		case CRACKHAMMER:
-		case PICKAXE:
-			return TOOL_SMITH;
-		default:
-			return ARMOR_SMITH;
-		}
-	}
-	
-	private static int getSmith( Names name, int level ) {
-		return getSmithId(name) | level + getTradeLevelMod(name);
-	}
-	
-	private static int getTradeLevelMod( Names name ) {
-		switch(name) {
-		case CRACKHAMMER:
-			return 2;
-		default:
-			return 1;
-		}
-	}
-	
 	protected static void registerCommonTrades() {
 		final String modid = Loader.instance().activeModContainer().getModId();
 		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>();
@@ -100,24 +76,24 @@ public abstract class VillagerTrades {
 			if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
 				final float val = material.getStat(MaterialStats.HARDNESS) + material.getStat(MaterialStats.STRENGTH) + material.getStat(MaterialStats.MAGICAFFINITY) + material.getToolHarvestLevel();
 				int tradeLevel = tradeLevel(val);
-				int as = ARMOR_SMITH | (tradeLevel + 1);
-				int ws = WEAPON_SMITH | (tradeLevel + 1);
-				int ts1 = TOOL_SMITH | (tradeLevel + 1);
-				int ts2 = TOOL_SMITH | (tradeLevel + 2);
-				int armor_mod = (int) (material.getStat(MaterialStats.HARDNESS) / 2);
-				int weapon_mod = (int) (material.getBaseAttackDamage() / 2);
-				int purch = emeraldPurchaseValue(val);
+				int armorSmithKey = ARMOR_SMITH | (tradeLevel + 1);
+				int weaponSmithKey = WEAPON_SMITH | (tradeLevel + 1);
+				int toolSmithKeyOne = TOOL_SMITH | (tradeLevel + 1);
+				int toolSmithKeyTwo = TOOL_SMITH | (tradeLevel + 2);
+				int armorMod = (int) (material.getStat(MaterialStats.HARDNESS) / 2);
+				int weaponMod = (int) (material.getBaseAttackDamage() / 2);
+				int emeraldPurchaseValueBase = emeraldPurchaseValue(val);
 				
 				Arrays.asList(Names.SWORD, Names.CROSSBOW, Names.BOW).stream()
-				.filter(name -> material.hasItem(name))
-				.forEach( name -> tradesTable.computeIfAbsent(ws, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(purch + 7 + weapon_mod - 1, purch + 12 + weapon_mod - 1)))));
+				.filter(material::hasItem)
+				.forEach( name -> tradesTable.computeIfAbsent(weaponSmithKey, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(emeraldPurchaseValueBase + 7 + weaponMod - 1, emeraldPurchaseValueBase + 12 + weaponMod - 1)))));
 				Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS).stream()
-				.filter(name -> material.hasItem(name))
-				.forEach( name -> tradesTable.computeIfAbsent(as, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(purch + 7 + armor_mod, purch + 12 + armor_mod)))));
+				.filter(material::hasItem)
+				.forEach( name -> tradesTable.computeIfAbsent(armorSmithKey, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(emeraldPurchaseValueBase + 7 + armorMod, emeraldPurchaseValueBase + 12 + armorMod)))));
 				Arrays.asList(Names.AXE, Names.HOE, Names.SHOVEL, Names.PICKAXE).stream()
-				.filter(name -> material.hasItem(name))
-				.forEach( name -> tradesTable.computeIfAbsent(ts1, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(purch + 7, purch + 12)))));
-				tradesTable.computeIfAbsent(ts2, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(Names.CRACKHAMMER), new PriceInfo(purch + 7, purch + 12))));
+				.filter(material::hasItem)
+				.forEach( name -> tradesTable.computeIfAbsent(toolSmithKeyOne, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(emeraldPurchaseValueBase + 7, emeraldPurchaseValueBase + 12)))));
+				tradesTable.computeIfAbsent(toolSmithKeyTwo, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(Names.CRACKHAMMER), new PriceInfo(emeraldPurchaseValueBase + 7, emeraldPurchaseValueBase + 12))));
 			}
 		});
 		
@@ -176,10 +152,6 @@ public abstract class VillagerTrades {
 		VillagerTradeHelper.insertTrades(smithRl, smithId, tradeLevel, armorTrades);
 	}
 
-	private static PriceInfo makePriceInfo(int emeraldPurchEnchantedMin, int emeraldPurchEnchantedMax, int priceMod) {
-		return new PriceInfo(emeraldPurchEnchantedMin + priceMod, emeraldPurchEnchantedMax + priceMod);
-	}
-
 	protected static void registerModSpecificTrades() {
 	}
 
@@ -190,8 +162,9 @@ public abstract class VillagerTrades {
 	 */
 	protected static void commitTrades(@Nonnull final Map<Integer, List<ITradeList>> tradesTable) {
 
-		for (final Integer k : tradesTable.keySet()) {
-			final List<ITradeList> trades = tradesTable.get(k);
+		for (final Entry<Integer, List<ITradeList>> ent : tradesTable.entrySet()) {
+			final int k = ent.getKey().intValue();
+			final List<ITradeList> trades = ent.getValue();
 			final int profession = (k >> 16) & 0xFF;
 			final int career = (k >> 8) & 0xFF;
 			final int level = k & 0xFF;

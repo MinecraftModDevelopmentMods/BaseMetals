@@ -1,9 +1,7 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
@@ -55,7 +53,9 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		final MMDMaterial cupronickel = Materials.getMaterialByName(MaterialNames.CUPRONICKEL);
 		final MMDMaterial nickel = Materials.getMaterialByName(MaterialNames.NICKEL);
 		final MMDMaterial zinc = Materials.getMaterialByName(MaterialNames.ZINC);
-
+		final MMDMaterial tin = Materials.getMaterialByName(MaterialNames.TIN);
+		final MMDMaterial bronze = Materials.getMaterialByName(MaterialNames.BRONZE);
+		
 		if (hasMaterials(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS) &&
 				materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS),
 						Names.INGOT.toString())) {
@@ -63,12 +63,18 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 					zinc.getItemStack(Names.INGOT, 1), brass.getItemStack(Names.INGOT, 3));
 		}
 
-		// TODO: Recently fixed for intent, We may also want bronze here
 		if (hasMaterials(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL) &&
 				materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL),
-						Names.INGOT.toString()) ) {
+						Names.INGOT.toString())) {
 			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3),
 					nickel.getItemStack(Names.INGOT, 1), cupronickel.getItemStack(Names.INGOT, 4));
+		}
+		
+		if (hasMaterials(MaterialNames.COPPER, MaterialNames.TIN, MaterialNames.BRONZE) &&
+				materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.TIN, MaterialNames.BRONZE),
+						Names.INGOT.toString())) {
+			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3), 
+					tin.getItemStack(Names.INGOT, 1), bronze.getItemStack(Names.INGOT, 3));
 		}
 	}
 

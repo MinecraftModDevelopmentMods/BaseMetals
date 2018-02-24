@@ -32,6 +32,8 @@ public class IC2Base implements IIntegration {
 		addForgeHammerRecipe(Materials.getMaterialByName(materialName));
 	}
 
+	
+	@SuppressWarnings("unused")
 	private void addForgeHammerRecipe(@Nonnull final MMDMaterial material) {
 /*		final ItemStack hammer = IC2Items.getItem("forge_hammer");
 		final ItemStack plate = material.getItemStack("ItemBlock_"+material.getName()+"_plate", 1);

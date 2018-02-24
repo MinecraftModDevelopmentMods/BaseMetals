@@ -64,6 +64,7 @@ public class ModifierRegistry {
 	}
 
 	public static void registerModifiers() {
+		// blank on purpose - this is a no-op with 2.7.+ and the entire 2.8 and 2.9 series
 	}
 
 	public static Map<String, String> getModifierDetails(@Nonnull final String name) {
