@@ -103,44 +103,24 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 				ICrusherRecipe recipe = CrusherRecipeRegistry.getRecipeForInputItem(targetItem);
 				if (recipe != null) {
 					// hardness check
-					if ((Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
-						Block b = ((ItemBlock) targetItem.getItem()).getBlock();
-						if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
-							// cannot harvest the block, no crush for you!
-							return EnumActionResult.PASS;
-						}
+					if( hardnessCheck(targetItem) ) {
+						return EnumActionResult.PASS;
 					}
+					
 					// crush the item (server side only)
 					if (!w.isRemote) {
 						ItemStack output = recipe.getOutput().copy();
-						int count = output.getCount();
-						int toolDamage;
-						if (Options.crackHammerFullStack()) {
-							output.setCount(targetItem.getCount());
-							if (item.isItemDamaged() && (item.getItemDamage() < output.getCount())) {
-									output.setCount(item.getItemDamage());
-							}
-							toolDamage = output.getCount();
-						} else {
-							output.setCount(1);
-							toolDamage = 1;
-						}
+						int crackedCount = doDamageCheck(output, targetItem, item);
+						
 						double x = target.posX;
 						double y = target.posY;
 						double z = target.posZ;
 
-						if (Options.crackHammerFullStack()) {
-							targetItem.setCount(0);
-						} else {
-							targetItem.shrink(1);
-						}
-						if (targetItem.getCount() <= 0) {
-							w.removeEntity(target);
-						}
-						for (int i = 0; i < count; i++) {
-							w.spawnEntity(new EntityItem(w, x, y, z, output.copy()));
-						}
-						item.damageItem(toolDamage, player);
+						doCrack(targetItem, output, crackedCount);
+						maybeRemoveEntity(targetItem,target,w);
+						spawnResults(output, x, y, z, crackedCount, w);
+						
+						item.damageItem(crackedCount, player);
 					}
 					success = true;
 					break;
@@ -151,6 +131,46 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 			w.playSound(player, coord, SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.BLOCKS, 0.5F, 0.5F + (itemRand.nextFloat() * 0.3F));
 		}
 		return success ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
+	}
+
+	private boolean hardnessCheck(ItemStack targetItem) {
+		if ((Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
+			Block b = ((ItemBlock) targetItem.getItem()).getBlock();
+			if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void spawnResults(ItemStack output, double x, double y, double z, int crackedCount, World w) {
+		for (int i = 0; i < crackedCount; i++) {
+			w.spawnEntity(new EntityItem(w, x, y, z, output.copy()));
+		}
+	}
+
+	private void maybeRemoveEntity(ItemStack targetItem, EntityItem target, World w) {
+		if (targetItem.getCount() <= 0) {
+			w.removeEntity(target);
+		}
+	}
+
+	private void doCrack(ItemStack targetItem, ItemStack output, int crackedCount) {
+		if (Options.crackHammerFullStack()) {
+			targetItem.shrink(crackedCount);
+		} else {
+			targetItem.shrink(1);
+		}
+	}
+
+	private int doDamageCheck(ItemStack output, ItemStack targetItem, ItemStack item) {
+		if (Options.crackHammerFullStack()) {
+			int remainingDamage = item.getMaxDamage() - item.getItemDamage();
+			int crackedCount = Math.min(targetItem.getCount(), Math.min(targetItem.getMaxStackSize(), remainingDamage));
+
+			return crackedCount;
+		}
+		return 1;
 	}
 
 	protected boolean isCrushableBlock(final IBlockState block) {

@@ -6,7 +6,6 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,11 +30,54 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 	/**
 	 * Called when the player stops using an Item (stops holding the right mouse button).
 	 */
+	private boolean getBaseFlag(EntityPlayer entityPlayer, ItemStack stack) {
+		return entityPlayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
+	}
+	
+	private boolean getOtherFlag(EntityPlayer entityPlayer, ItemStack itemStack, ItemStack stack) {
+		return entityPlayer.capabilities.isCreativeMode || (itemStack.getItem() instanceof ItemBolt && ((ItemBolt) itemStack.getItem()).isInfinite(itemStack, stack, entityPlayer));
+	}
+	
+	private void doFireBolt(ItemStack itemStack, EntityPlayer entityPlayer, World worldIn, 
+			float f, ItemStack stack, boolean flag1) {
+		final ItemBolt itemBolt = ((ItemBolt) (itemStack.getItem() instanceof ItemBolt ? itemStack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
+		final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemStack, entityPlayer);
+		entityBolt.shoot(entityPlayer, entityPlayer.rotationPitch, entityPlayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+
+		if (f == 1.0F) {
+			entityBolt.setIsCritical(true);
+		}
+
+		final int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
+
+		if (j > 0) {
+			entityBolt.setDamage(entityBolt.getDamage() + ((double) j * 0.5D) + 0.5D);
+		}
+
+		final int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
+
+		if (k > 0) {
+			entityBolt.setKnockbackStrength(k);
+		}
+
+		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
+			entityBolt.setFire(100);
+		}
+
+		stack.damageItem(1, entityPlayer);
+
+		if (flag1 || entityPlayer.capabilities.isCreativeMode) {
+			entityBolt.pickupStatus = EntityCustomBolt.PickupStatus.CREATIVE_ONLY;
+		}
+
+		worldIn.spawnEntity(entityBolt);
+	}
+	
 	@Override
 	public void onPlayerStoppedUsing(final ItemStack stack, final World worldIn, final EntityLivingBase entityLiving, final int timeLeft) {
 		if (entityLiving instanceof EntityPlayer) {
 			final EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
-			final boolean flag = entityPlayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
+			final boolean flag = getBaseFlag(entityPlayer, stack);
 			// Check for specific Bolts
 			ItemStack itemStack = this.myFindAmmo(entityPlayer);
 
@@ -46,49 +88,13 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 			}
 
 			if (!itemStack.isEmpty() || flag) {
-				if (itemStack.isEmpty()) {
-					itemStack = getBolt();
-					if (itemStack.isEmpty())
-						return; // if its still null at this point, there is something seriously wrong, just bug out
-				}
-
 				final float f = getArrowVelocity(i);
 
 				if ((double) f >= 0.1D) {
-					final boolean flag1 = entityPlayer.capabilities.isCreativeMode || (itemStack.getItem() instanceof ItemBolt && ((ItemBolt) itemStack.getItem()).isInfinite(itemStack, stack, entityPlayer));
+					final boolean flag1 = getOtherFlag(entityPlayer, itemStack, stack);
 
 					if (!worldIn.isRemote) {
-						final ItemBolt itemBolt = ((ItemBolt) (itemStack.getItem() instanceof ItemBolt ? itemStack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
-						final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemStack, entityPlayer);
-						entityBolt.shoot(entityPlayer, entityPlayer.rotationPitch, entityPlayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
-
-						if (f == 1.0F) {
-							entityBolt.setIsCritical(true);
-						}
-
-						final int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
-
-						if (j > 0) {
-							entityBolt.setDamage(entityBolt.getDamage() + ((double) j * 0.5D) + 0.5D);
-						}
-
-						final int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-
-						if (k > 0) {
-							entityBolt.setKnockbackStrength(k);
-						}
-
-						if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-							entityBolt.setFire(100);
-						}
-
-						stack.damageItem(1, entityPlayer);
-
-						if (flag1 || entityPlayer.capabilities.isCreativeMode) {
-							entityBolt.pickupStatus = EntityCustomBolt.PickupStatus.CREATIVE_ONLY;
-						}
-
-						worldIn.spawnEntity(entityBolt);
+						doFireBolt(itemStack, entityPlayer, worldIn, f, stack, flag1);
 					}
 
 					worldIn.playSound((EntityPlayer) null, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, (1.0F / ((itemRand.nextFloat() * 0.4F) + 1.2F)) + (f * 0.5F));
@@ -105,14 +111,6 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 				}
 			}
 		}
-	}
-
-	private ItemStack getBolt() {
-		for (MMDMaterial material : Materials.getAllMaterials()) {
-			if (material.hasItem(Names.BOLT))
-				return new ItemStack(material.getItem(Names.BOLT));
-		}
-		return ItemStack.EMPTY;
 	}
 
 	private ItemStack myFindAmmo(final EntityPlayer player) {
@@ -151,15 +149,7 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 		// Check for specific Arrows
 		final boolean flag = !this.myFindAmmo(playerIn).isEmpty();
 
-//		final ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemStack, worldIn, playerIn, handIn, flag);
-//		if (ret != null) {
-//			return ret;
-//		}
-
 		if (!playerIn.capabilities.isCreativeMode && !flag) {
-			// the following commented out line is the same as the vanilla bow, and is not needed
-			// the condition for entering this block means that "flag" will always be false here
-			// return flag ? new ActionResult<>(EnumActionResult.PASS, itemStack) : new ActionResult<>(EnumActionResult.FAIL, itemStack);
 			return new ActionResult<>(EnumActionResult.FAIL, itemStack);
 		} else {
 			playerIn.setActiveHand(handIn);
