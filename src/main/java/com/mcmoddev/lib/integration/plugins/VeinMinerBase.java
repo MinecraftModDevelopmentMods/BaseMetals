@@ -50,7 +50,7 @@ public class VeinMinerBase implements IIntegration {
 		IMCMessage.addTool(Names.PICKAXE.toString(), ownerModID + ":" + materialName + "_" + Names.PICKAXE.toString());
 		IMCMessage.addTool(Names.SHEARS.toString(), ownerModID + ":" + materialName + "_" + Names.SHEARS.toString());
 		IMCMessage.addTool(Names.SHOVEL.toString(), ownerModID + ":" + materialName + "_" + Names.SHOVEL.toString());
-		// IMCMessage.addTool("crook", ownerModID + ":" + materialName + "_crook");
+
 		IMCMessage.addTool("hammer", ownerModID + ":" + materialName + "_hammer");
 	}
 }

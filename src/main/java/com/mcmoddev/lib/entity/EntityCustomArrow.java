@@ -55,6 +55,12 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	}
 
 	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof EntityCustomArrow)) return false;
+		return super.equals(other);
+	}
+	
+	@Override
 	protected ItemStack getArrowStack() {
 		if (this.itemStack.isEmpty()) {
 			this.itemStack = new ItemStack(Items.ARROW);
@@ -66,19 +72,13 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-
-		final NBTTagCompound itemStackCompound = new NBTTagCompound();
-		this.itemStack.writeToNBT(itemStackCompound);
-
-		compound.setTag("itemstack", itemStackCompound);
-
-		return compound;
+		return EntityHelpers.writeToNBTItemStack(compound, this.itemStack);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-
-		this.itemStack = new ItemStack(compound.getCompoundTag("itemstack"));
+		
+		this.itemStack = EntityHelpers.readFromNBTItemStack(compound);
 	}
 }

@@ -115,7 +115,9 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addChemicalInjectionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
-		if (inputItem.isEmpty() || outputItem.isEmpty()) return;
+		if ((inputItem.isEmpty()) || (outputItem.isEmpty())) {
+			return;
+		}
 		
 		Gas inputGas = GasRegistry.getGas("hydrogenChloride");
 		RecipeHandler.addChemicalInjectionChamberRecipe(inputItem, inputGas, outputItem);
@@ -123,7 +125,9 @@ public class MekanismBase implements IIntegration {
 
 	// 5x, Slurry to Crystal
 	protected static void addChemicalCrystallizerRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem) {
-		if (outputItem.isEmpty()) return;
+		if ((outputItem.isEmpty())) {
+			return;
+		}
 		
  		final GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
 		RecipeHandler.addChemicalCrystallizerRecipe(inputGasStack, outputItem);
@@ -151,7 +155,7 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem, @Nonnull final FluidStack inputFluid, @Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem,  @Nonnull final String outputGas, @Nonnull final int outputGasQty, int extraEnergy, int ticks ) {
-		if (inputItem.isEmpty() || inputFluid == null) return;
+		if (inputItem.isEmpty()) return;
 		
 		final GasStack inputGasStack = new GasStack( GasRegistry.getGas(inputGas), inputGasQty );
 		final GasStack outputGasStack = new GasStack( GasRegistry.getGas(outputGas), outputGasQty );

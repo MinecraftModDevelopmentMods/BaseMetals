@@ -25,7 +25,7 @@ public class RenderCustomBolt extends Render<EntityCustomBolt> {
 	@Override
 	public void doRender(final EntityCustomBolt entity, final double x, final double y, final double z, final float entityYaw, final float partialTicks) {
 		this.bindEntityTexture(entity);
-		RenderHelpers.doArrowOrBoltRender(entity, x, y, z, entityYaw, partialTicks, this.renderOutlines, this.getTeamColor(entity));
+		RenderHelpers.doArrowOrBoltRender(entity, x, y, z, partialTicks, this.renderOutlines, this.getTeamColor(entity));
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 	}
 

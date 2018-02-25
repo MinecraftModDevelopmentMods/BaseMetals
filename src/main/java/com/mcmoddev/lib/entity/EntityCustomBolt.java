@@ -71,22 +71,23 @@ public class EntityCustomBolt extends EntityTippedArrow {
 		return new ItemStack(this.itemStack.getItem(), 1, this.itemStack.getItemDamage());
 	}
 
+
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof EntityCustomBolt)) return false;
+		return super.equals(other);
+	}
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-
-		final NBTTagCompound itemStackCompound = new NBTTagCompound();
-		this.itemStack.writeToNBT(itemStackCompound);
-
-		compound.setTag("itemstack", itemStackCompound);
-
-		return compound;
+		return EntityHelpers.writeToNBTItemStack(compound, this.itemStack);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-
-		this.itemStack = new ItemStack(compound.getCompoundTag("itemstack"));
+		
+		this.itemStack = EntityHelpers.readFromNBTItemStack(compound);
 	}
 }

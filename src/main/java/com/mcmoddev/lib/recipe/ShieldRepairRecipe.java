@@ -8,6 +8,5 @@ public class ShieldRepairRecipe extends RepairRecipeBase {
 
 	public ShieldRepairRecipe(MMDMaterial mat) {
 		super(mat, Names.SHIELD, Oredicts.SHIELD + mat.getCapitalizedName(), Oredicts.PLATE + mat.getCapitalizedName());
-//		super(mat, Names.SHIELD.toString(), Oredicts.SHIELD + mat.getCapitalizedName(), Oredicts.PLATE + mat.getCapitalizedName());
 	}
 }

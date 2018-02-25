@@ -7,7 +7,5 @@ public class ChestplateRepairRecipe extends RepairRecipeBase {
 
 	public ChestplateRepairRecipe(MMDMaterial mat) {
 		super(mat, Names.CHESTPLATE);
-//		super(mat, Names.CHESTPLATE.toString(), mat.getName() + "_" + Names.CHESTPLATE,
-//				Oredicts.PLATE + mat.getCapitalizedName());
 	}
 }

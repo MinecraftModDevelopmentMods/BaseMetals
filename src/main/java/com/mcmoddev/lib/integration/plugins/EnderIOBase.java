@@ -108,13 +108,13 @@ public class EnderIOBase implements IIntegration {
 		// TODO: account for number="int", exp="float" and chance="float" too
 		String msgSecondary = "";
 		if (outputSecondary != null)
-			msgSecondary = String.format("<itemStack oreDictionary=\"%s\"/>\n\t\t", outputSecondary );
+			msgSecondary = String.format("<itemStack oreDictionary=\"%s\"/>%n\t\t", outputSecondary );
 
-		final String messageAlloySmelter = String.format( "<recipeGroup name=\"%s\">\n\t"
-				+ "<recipe name=\"%s\" energyCost=\"%d\">\n\t\t"
-				+ "<input>\n\t\t\t<itemStack oreDictionary=\"%s\"/>\n\t\t</input>\n\t\t"
-				+ "<output>\n\t\t\t<itemStack oreDictionary=\"%s\" />\n\t\t%s</output>\n\t"
-				+ "</recipe>\n</recipeGroup>",
+		final String messageAlloySmelter = String.format( "<recipeGroup name=\"%s\">%n\t"
+				+ "<recipe name=\"%s\" energyCost=\"%d\">%n\t\t"
+				+ "<input>%n\t\t\t<itemStack oreDictionary=\"%s\"/>%n\t\t</input>%n\t\t"
+				+ "<output>%n\t\t\t<itemStack oreDictionary=\"%s\" />%n\t\t%s</output>%n\t"
+				+ "</recipe>%n</recipeGroup>",
 				ownerModID, material, energy, input, output, msgSecondary);
 		// @formatter:on
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:alloysmelter", messageAlloySmelter);
@@ -237,12 +237,12 @@ public class EnderIOBase implements IIntegration {
 			messageSecondary = String.format("<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\" />", secondaryOutput, secondaryQty, secondaryChance);
 
 		// @formatter:off
-		String messageSAGMill = String.format( "<recipeGroup name=\"%s\">\n\t"
-											     +"<recipe name=\"%s\" energyCost=\"%d\">\n\t\t"
-											     	+"<input>\n\t\t\t<itemStack oreDictionary=\"%s\" />\n\t\t</input>\n\t\t"
-											     	+"<output>\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>\n\t\t\t"
-											     		+"%s\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>\n\t\t\t"
-											     		+"<itemStack modId=\"%s\" itemName=\"%s\" number=\"%d\" chance=\"%s\"/>\n\t\t</output>"
+		String messageSAGMill = String.format( "<recipeGroup name=\"%s\">%n\t"
+											     +"<recipe name=\"%s\" energyCost=\"%d\">%n\t\t"
+											     	+"<input>%n\t\t\t<itemStack oreDictionary=\"%s\" />%n\t\t</input>%n\t\t"
+											     	+"<output>%n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>%n\t\t\t"
+											     		+"%s%n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>%n\t\t\t"
+											     		+"<itemStack modId=\"%s\" itemName=\"%s\" number=\"%d\" chance=\"%s\"/>%n\t\t</output>"
 											     +"</recipe>"
 											    +"</recipeGroup>",
 											    ownerModID, materialName, energy, input, primaryOutput, primaryQty, primaryChance,
