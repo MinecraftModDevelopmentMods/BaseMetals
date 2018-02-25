@@ -69,7 +69,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 
 	@Override
 	public boolean onBlockStartBreak(final ItemStack stack, final BlockPos pos, final EntityPlayer player) {
-		this.getEffectedBlocks(pos, player.getEntityWorld(), player, stack, this.actionDiameter).stream()
+		this.getEffectedBlocks(pos, player.getEntityWorld(), stack, this.actionDiameter).stream()
 				.filter(entityPos -> this.isEffective(player.getEntityWorld().getBlockState(entityPos)))
 				.forEach(entityPos -> breakBlock(stack, player.getEntityWorld(), player, pos, entityPos));
 
@@ -159,7 +159,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 		return isEffective.contains(true);
 	}
 
-	private ImmutableList<BlockPos> getEffectedBlocks(final BlockPos pos, final World world, final EntityPlayer player, final ItemStack stack,
+	private ImmutableList<BlockPos> getEffectedBlocks(final BlockPos pos, final World world, final ItemStack stack,
 			final int range) {
 
 		BaseMetals.logger.debug("Entered getEffectedBlocks");
@@ -167,20 +167,6 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 			BaseMetals.logger.debug("Early out because tool-stack is empty");
 			return ImmutableList.of();
 		}
-
-		// where is the player, really ?
-		// FIXME: ties into later tool-effectiveness optimization
-		// IBlockState playerPositionState = world.getBlockState(pos);
-
-		// the below "isEffective" check is also needed, but...
-		// only if we get past this point
-		// FIXME: This should early-out if the original block clicked isn't harvestable
-		// but doesn't work
-		/*
-		 * if (!isToolEffective(stack, playerPositionState)) { BaseMetals.logger.
-		 * debug("Early out because isEffective on players position is false"); return
-		 * ImmutableList.of(); }
-		 */
 
 		final int rangeOff = (range - 1) / 2; // range should always be odd
 

@@ -14,6 +14,10 @@ import static com.blamejared.mtlib.helpers.InputHelper.toStack;
 @ZenClass("mods.mmdlib.CrusherRecipes")
 @ZenRegister
 public class CrusherRecipes {
+	private CrusherRecipes() {
+		// private constructor
+	}
+	
 	private static void removeMatchFull(ItemStack input, ItemStack output) {
 		CrusherRecipeRegistry.getAll().stream()
 		.filter(rec -> rec.getInputs().contains(input))

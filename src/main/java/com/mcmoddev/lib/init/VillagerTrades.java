@@ -128,7 +128,7 @@ public abstract class VillagerTrades {
 	private static void makeTrades(Names[] names, MMDMaterial material, int smithId) {
 		final float val = material.getStat(MaterialStats.HARDNESS) + material.getStat(MaterialStats.STRENGTH) + material.getStat(MaterialStats.MAGICAFFINITY) + material.getToolHarvestLevel();
 		Arrays.asList(names).stream()
-		.filter(name -> material.hasItem(name))
+		.filter(name -> !material.hasItem(name))
 		.forEach( name -> insertTrades(name, material, emeraldPurchaseValue(val), tradeLevel(val), SMITH_RL, smithId));
 	}
 

@@ -15,15 +15,15 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 
+	private static final String ARMOR = "armor";
 	public final MMDMaterial material;
 	public final ItemStack baseItem;
 	public final String materialName;
 	public final String itemName;
 	public final NonNullList<ItemStack> repairMaterials;
 
-	// TODO: Share code with below
 	public RepairRecipeBase(MMDMaterial material, Names itemName) {
-		super(new ResourceLocation("armor"), material.getItemStack(itemName), material.getName() + "_" + itemName.toString(), Oredicts.PLATE + material.getCapitalizedName());
+		super(new ResourceLocation(ARMOR), material.getItemStack(itemName), material.getName() + "_" + itemName.toString(), Oredicts.PLATE + material.getCapitalizedName());
 		this.material = material;
 		this.baseItem = material.getItemStack(itemName);
 		this.materialName = material.getCapitalizedName();
@@ -32,7 +32,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	}
 
 	public RepairRecipeBase(MMDMaterial material, Names itemName, Object...objects) {
-		super(new ResourceLocation("armor"), material.getItemStack(itemName), objects);
+		super(new ResourceLocation(ARMOR), material.getItemStack(itemName), objects);
 		this.material = material;
 		this.baseItem = material.getItemStack(itemName);
 		this.materialName = material.getCapitalizedName();
@@ -41,7 +41,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	}
 
 	public RepairRecipeBase(MMDMaterial material, String itemName, Object...objects) {
-		super(new ResourceLocation("armor"), material.getItemStack(itemName), objects);
+		super(new ResourceLocation(ARMOR), material.getItemStack(itemName), objects);
 		this.material = material;
 		this.baseItem = material.getItemStack(itemName);
 		this.materialName = material.getCapitalizedName();
@@ -49,11 +49,17 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		this.itemName = itemName;
 	}
 
+	private boolean repairMaterialsDoesntContain(ItemStack itemStack) {
+		return !repairMaterials.contains(itemStack);
+	}
+	
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
 		// make sure we have all the materials that can be used for repair, not just what was
 		// available when we were initialized.
-		OreDictionary.getOres(Oredicts.PLATE + this.materialName).stream().filter(item -> !repairMaterials.contains(item) ).forEach(item -> repairMaterials.add(item));
+		OreDictionary.getOres(Oredicts.PLATE + this.materialName).stream()
+		.filter(this::repairMaterialsDoesntContain)
+		.forEach(repairMaterials::add);
 		
 		boolean matched = false;
 		boolean repairMatched = false;

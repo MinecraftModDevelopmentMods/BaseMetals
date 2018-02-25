@@ -9,7 +9,11 @@ import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.util.math.MathHelper;
 
 public class RenderHelpers {
-	public static void doArrowOrBoltRender(final EntityTippedArrow entity, final double x, final double y, final double z, final float entityYaw, final float partialTicks, boolean renderOutlines, int teamColor) {
+	private RenderHelpers() {
+		// private constructor
+	}
+	
+	public static void doArrowOrBoltRender(final EntityTippedArrow entity, final double x, final double y, final double z, final float partialTicks, boolean renderOutlines, int teamColor) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.pushMatrix();
 		GlStateManager.disableLighting();

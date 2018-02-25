@@ -40,6 +40,10 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 	
 	private void doFireBolt(ItemStack itemStack, EntityPlayer entityPlayer, World worldIn, 
 			float f, ItemStack stack, boolean flag1) {
+		if(!(worldIn.isRemote)) {
+			return;
+		}
+		
 		final ItemBolt itemBolt = ((ItemBolt) (itemStack.getItem() instanceof ItemBolt ? itemStack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
 		final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemStack, entityPlayer);
 		entityBolt.shoot(entityPlayer, entityPlayer.rotationPitch, entityPlayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
@@ -71,6 +75,7 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 		}
 
 		worldIn.spawnEntity(entityBolt);
+		worldIn.playSound((EntityPlayer) null, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, (1.0F / ((itemRand.nextFloat() * 0.4F) + 1.2F)) + (f * 0.5F));
 	}
 	
 	@Override
@@ -87,28 +92,31 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 				return;
 			}
 
-			if (!itemStack.isEmpty() || flag) {
-				final float f = getArrowVelocity(i);
+			maybeFireBolt(itemStack, entityPlayer, stack, flag, i, worldIn);
+		}
+	}
 
-				if ((double) f >= 0.1D) {
-					final boolean flag1 = getOtherFlag(entityPlayer, itemStack, stack);
+	private void maybeFireBolt(ItemStack itemStack, EntityPlayer entityPlayer, ItemStack stack, boolean flag, int i,
+			World worldIn) {
+		if (!itemStack.isEmpty() || flag) {
+			final float f = getArrowVelocity(i);
 
-					if (!worldIn.isRemote) {
-						doFireBolt(itemStack, entityPlayer, worldIn, f, stack, flag1);
-					}
+			if ((double) f >= 0.1D) {
+				final boolean flag1 = getOtherFlag(entityPlayer, itemStack, stack);
 
-					worldIn.playSound((EntityPlayer) null, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, (1.0F / ((itemRand.nextFloat() * 0.4F) + 1.2F)) + (f * 0.5F));
+				doFireBolt(itemStack, entityPlayer, worldIn, f, stack, flag1);
+				maybeChangeAmmo(entityPlayer,itemStack,flag1);
+				entityPlayer.addStat(StatList.getObjectUseStats(this));
+			}
+		}
+	}
 
-					if (!flag1 && !entityPlayer.capabilities.isCreativeMode) {
-						itemStack.shrink(1);
+	private void maybeChangeAmmo(EntityPlayer entityPlayer, ItemStack itemStack, boolean flag1) {
+		if (!flag1 && !entityPlayer.capabilities.isCreativeMode) {
+			itemStack.shrink(1);
 
-						if (itemStack.isEmpty()) {
-							entityPlayer.inventory.deleteStack(itemStack);
-						}
-					}
-
-					entityPlayer.addStat(StatList.getObjectUseStats(this));
-				}
+			if (itemStack.isEmpty()) {
+				entityPlayer.inventory.deleteStack(itemStack);
 			}
 		}
 	}

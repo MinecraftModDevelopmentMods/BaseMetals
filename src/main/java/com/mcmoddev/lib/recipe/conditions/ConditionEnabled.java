@@ -23,8 +23,9 @@ public class ConditionEnabled implements IConditionFactory {
 			return () -> Options.isModEnabled(optionValue);
 		case "thing":
 			return () -> Options.isThingEnabled(optionValue);
+		default:
+			return () -> false;
 		}
-		return () -> false;
 	}
 
 }

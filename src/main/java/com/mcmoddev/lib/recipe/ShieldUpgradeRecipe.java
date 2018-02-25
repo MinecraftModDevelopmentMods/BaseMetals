@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
@@ -63,10 +66,49 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem {
 
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		final Map<String, NonNullList<ItemStack>> plates = new HashMap<>();
+		final Map<String, NonNullList<ItemStack>> plates = getPlates();
 
+		Pair<Map<Enchantment, Integer>, ItemStack> matchedBits = Pair.of(Collections.emptyMap(), ItemStack.EMPTY);
+		
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			final ItemStack curItem = inv.getStackInSlot(i);
+
+			if (curItem != null) {
+				matchedBits = matchAndFind(curItem, plates);
+			}
+		}
+
+		BaseMetals.logger.debug("Adding %d enchantments to output item", matchedBits.getLeft().size());
+		if (!(matchedBits.getRight().isEmpty())) {
+			EnchantmentHelper.setEnchantments(matchedBits.getLeft(), matchedBits.getRight());
+		}
+		
+		return matchedBits.getRight();
+	}
+
+	private Pair<Map<Enchantment, Integer>, ItemStack> matchAndFind(ItemStack curItem,
+			Map<String, NonNullList<ItemStack>> plates) {
+		final ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getMetadata());
+		Map<Enchantment, Integer> enchants = Collections.emptyMap();
+		ItemStack plateMatched = null;
+		final ItemStack matcher = new ItemStack(Materials.getMaterialByName(matName).getItem(Names.SHIELD), 1, 0);
+		
+		for (final Entry<String, NonNullList<ItemStack>> ent : plates.entrySet()) {
+			if (OreDictionary.containsMatch(false, ent.getValue(), comp)) {
+				plateMatched = new ItemStack(Materials.getMaterialByName(ent.getKey().toLowerCase()).getItem(Names.SHIELD), 1, 0);
+			}
+		}
+		
+		if (OreDictionary.itemMatches(matcher, comp, false)) {
+			enchants = EnchantmentHelper.getEnchantments(curItem);
+		}
+		return Pair.of(enchants, plateMatched);
+	}
+
+	private Map<String, NonNullList<ItemStack>> getPlates() {
 		final Collection<MMDMaterial> allmats = Materials.getAllMaterials();
 		final int hardness = ((Float) Materials.getMaterialByName(matName).getStat(MaterialStats.HARDNESS)).intValue();
+		final Map<String, NonNullList<ItemStack>> plates = new TreeMap<>();
 
 		for (final MMDMaterial mat : allmats) {
 			if (mat.getStat(MaterialStats.HARDNESS) >= hardness && (!mat.getName().equals(matName))) {
@@ -74,30 +116,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem {
 				plates.put(mat.getName(), mats);
 			}
 		}
-
-		ItemStack plateMatched = null;
-		Map<Enchantment, Integer> enchants = Collections.emptyMap();
-		final ItemStack matcher = new ItemStack(Materials.getMaterialByName(matName).getItem(Names.SHIELD), 1, 0);
-
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			final ItemStack curItem = inv.getStackInSlot(i);
-
-			if (curItem != null) {
-				final ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getMetadata());
-				for (final Entry<String, NonNullList<ItemStack>> ent : plates.entrySet()) {
-					if (OreDictionary.containsMatch(false, ent.getValue(), comp)) {
-						plateMatched = new ItemStack(Materials.getMaterialByName(ent.getKey().toLowerCase()).getItem(Names.SHIELD), 1, 0);
-					}
-				}
-				if (OreDictionary.itemMatches(matcher, comp, false)) {
-					enchants = EnchantmentHelper.getEnchantments(curItem);
-				}
-			}
-		}
-
-		BaseMetals.logger.debug("Adding %d enchantments to output item", enchants.size());
-		EnchantmentHelper.setEnchantments(enchants, plateMatched);
-		return plateMatched;
+		return plates;
 	}
 
 	private MMDMaterial getUpgradeMat(InventoryCrafting inv) {

@@ -8,7 +8,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 import net.minecraftforge.common.crafting.IConditionFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 
-public class hammerEnabled implements IConditionFactory {
+public class HammerEnabled implements IConditionFactory {
 
 	@Override
 	public BooleanSupplier parse(JsonContext context, JsonObject json) {

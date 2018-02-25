@@ -3,6 +3,7 @@ package com.mcmoddev.lib.item;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.data.Names;
@@ -95,42 +96,43 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		if (facing != EnumFacing.UP) {
 			return EnumActionResult.PASS;
 		}
-		List<EntityItem> entities = w.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(coord.getX(), coord.getY() + 1, coord.getZ(), coord.getX() + 1, coord.getY() + 2, coord.getZ() + 1));
-		boolean success = false;
-		for (EntityItem target : entities) {
-			ItemStack targetItem = target.getItem();
-			if (targetItem != null) {
-				ICrusherRecipe recipe = CrusherRecipeRegistry.getRecipeForInputItem(targetItem);
-				if (recipe != null) {
-					// hardness check
-					if( hardnessCheck(targetItem) ) {
-						return EnumActionResult.PASS;
-					}
-					
-					// crush the item (server side only)
-					if (!w.isRemote) {
-						ItemStack output = recipe.getOutput().copy();
-						int crackedCount = doDamageCheck(output, targetItem, item);
-						
-						double x = target.posX;
-						double y = target.posY;
-						double z = target.posZ;
+		/*List<EntityItem> entities = */
+		AxisAlignedBB boundingBox = new AxisAlignedBB(coord.getX(), coord.getY() + 1, coord.getZ(), coord.getX() + 1, coord.getY() + 2, coord.getZ() + 1);
+		List<EntityItem> entities = w.getEntitiesWithinAABB(EntityItem.class, boundingBox).stream()
+				.filter( elem -> !(elem.getItem() == null) )
+				.filter( elem -> !(CrusherRecipeRegistry.getRecipeForInputItem(elem.getItem()) == null))
+				.collect( Collectors.toList());
 
-						doCrack(targetItem, output, crackedCount);
-						maybeRemoveEntity(targetItem,target,w);
-						spawnResults(output, x, y, z, crackedCount, w);
-						
-						item.damageItem(crackedCount, player);
-					}
-					success = true;
-					break;
-				}
+		if( !entities.isEmpty() ) {
+			ItemStack targetItem = entities.get(0).getItem();
+			ICrusherRecipe recipe = CrusherRecipeRegistry.getRecipeForInputItem(targetItem);
+			if( hardnessCheck(targetItem) ) {
+				return EnumActionResult.PASS;
 			}
-		}
-		if (success) {
+
+			maybeDoCrack(recipe, targetItem, item, entities.get(0), player, w);
 			w.playSound(player, coord, SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.BLOCKS, 0.5F, 0.5F + (itemRand.nextFloat() * 0.3F));
+			return EnumActionResult.SUCCESS;
+		} 
+
+		return EnumActionResult.PASS;
+	}
+
+	private void maybeDoCrack(ICrusherRecipe recipe, ItemStack targetItem, ItemStack item, EntityItem target, EntityPlayer player, World w) {
+		if (!w.isRemote) {
+			ItemStack output = recipe.getOutput().copy();
+			int crackedCount = doDamageCheck(targetItem, item);
+			
+			double x = target.posX;
+			double y = target.posY;
+			double z = target.posZ;
+
+			doCrack(targetItem, crackedCount);
+			maybeRemoveEntity(targetItem,target,w);
+			spawnResults(output, x, y, z, crackedCount, w);
+			
+			item.damageItem(crackedCount, player);
 		}
-		return success ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 	}
 
 	private boolean hardnessCheck(ItemStack targetItem) {
@@ -155,7 +157,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		}
 	}
 
-	private void doCrack(ItemStack targetItem, ItemStack output, int crackedCount) {
+	private void doCrack(ItemStack targetItem, int crackedCount) {
 		if (Options.crackHammerFullStack()) {
 			targetItem.shrink(crackedCount);
 		} else {
@@ -163,13 +165,12 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		}
 	}
 
-	private int doDamageCheck(ItemStack output, ItemStack targetItem, ItemStack item) {
+	private int doDamageCheck(ItemStack targetItem, ItemStack item) {
 		if (Options.crackHammerFullStack()) {
 			int remainingDamage = item.getMaxDamage() - item.getItemDamage();
-			int crackedCount = Math.min(targetItem.getCount(), Math.min(targetItem.getMaxStackSize(), remainingDamage));
-
-			return crackedCount;
+			return Math.min(targetItem.getCount(), Math.min(targetItem.getMaxStackSize(), remainingDamage));
 		}
+		
 		return 1;
 	}
 
