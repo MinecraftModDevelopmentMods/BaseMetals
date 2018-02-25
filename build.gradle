@@ -104,6 +104,10 @@ group = 'com.mcmoddev'
 archivesBaseName = 'BaseMetals'
 sourceCompatibility = targetCompatibility = '1.8'
 
+eclipse.project {
+    natures 'org.eclipse.buildship.core.gradleprojectnature'
+}
+
 class Secrets {
     def data = null
 
@@ -412,6 +416,8 @@ sonarqube {
         property 'sonar.login', secret.sonarToken
         property 'sonar.projectName', project.archivesBaseName
         property 'sonar.projectKey', "$project.group:$project.archivesBaseName"
+        property 'sonar.junit.reportPaths', 'build/test-results/junit-platform/*.xml'
+        property 'sonar.jacoco.reportPaths', 'build/jacoco/junitPlatformTest.exec'
     }
 }
 
