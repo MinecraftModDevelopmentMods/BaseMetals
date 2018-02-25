@@ -26,7 +26,7 @@ public enum Names implements IStringSerializable {
 	CASING, DENSE_PLATE, CRUSHED, CRUSHED_PURIFIED,
 
 	// Ores
-	ORE, ENDORE, NETHERORE, MEK_CRYSTAL;
+	ORE, ENDORE, NETHERORE, MEK_CRYSTAL, ITEMBLOCK;
 
 	protected static final TreeMap<Integer, Names> MAP = Maps.newTreeMap();
 
