@@ -73,6 +73,11 @@ public class EntityCustomBolt extends EntityTippedArrow {
 
 
 	@Override
+	public int hashCode() {
+		return super.hashCode() ^ this.getArrowStack().hashCode();
+	}
+
+	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof EntityCustomBolt)) return false;
 		return super.equals(other);
