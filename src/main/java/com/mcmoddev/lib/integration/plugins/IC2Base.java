@@ -31,14 +31,11 @@ public class IC2Base implements IIntegration {
 		}		
 	}
 
-	// This is broken and needs extensive work on our side of things to make it work
-	// IC2 'Recipes.advRecipes' is <em><strong>null</strong></em> at this point
 	protected void addForgeHammerRecipe(@Nonnull final String materialName) {
 		addForgeHammerRecipe(Materials.getMaterialByName(materialName));
 	}
 
 	
-	@SuppressWarnings("unused")
 	private void addForgeHammerRecipe(@Nonnull final MMDMaterial material) {
 		final ItemStack plate = material.getItemStack("ItemBlock_"+material.getName()+"_plate", 1);
 		final ItemStack casing = material.getItemStack(Names.CASING, 2);
