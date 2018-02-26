@@ -39,7 +39,6 @@ public class IC2Base implements IIntegration {
 	private void addForgeHammerRecipe(@Nonnull final MMDMaterial material) {
 		final ItemStack plate = material.getItemStack("ItemBlock_"+material.getName()+"_plate", 1);
 		final ItemStack casing = material.getItemStack(Names.CASING, 2);
-		final ItemStack ingot = material.getItemStack(Names.INGOT, 1);
 		
 		List<IRecipeInput> inputsPlate = Arrays.asList(Recipes.inputFactory.forOreDict("craftingToolForgeHammer"),
 				Recipes.inputFactory.forOreDict(Oredicts.INGOT+material.getCapitalizedName()));
@@ -69,8 +68,10 @@ public class IC2Base implements IIntegration {
 		final String oreDictName = material.getCapitalizedName();
 		final IRecipeInput inputOre = Recipes.inputFactory.forOreDict(Oredicts.ORE + oreDictName);
 		final IRecipeInput inputDensePlate = Recipes.inputFactory.forOreDict(Oredicts.PLATE_DENSE + oreDictName);
-		Recipes.macerator.addRecipe(inputOre, null, false, material.getItemStack(Names.CRUSHED, 2));
-		Recipes.macerator.addRecipe(inputDensePlate, null, false, material.getItemStack(Names.POWDER, 8));
+		if (!material.getItemStack(Names.CRUSHED).isEmpty())
+			Recipes.macerator.addRecipe(inputOre, null, false, material.getItemStack(Names.CRUSHED, 2));
+		if (!material.getItemStack(Names.POWDER).isEmpty())
+			Recipes.macerator.addRecipe(inputDensePlate, null, false, material.getItemStack(Names.POWDER, 8));
 	}
 
 	protected void addMaceratorRecipe(@Nonnull final String oreDict, @Nonnull ItemStack output) {
@@ -87,7 +88,8 @@ public class IC2Base implements IIntegration {
 		final IRecipeInput inputOre = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED + oreDictName);
 		final NBTTagCompound metadata = new NBTTagCompound();
 		metadata.setInteger("amount", 1000);
-		Recipes.oreWashing.addRecipe(inputOre, metadata, false, material.getItemStack(Names.CRUSHED_PURIFIED), material.getItemStack(Names.SMALLPOWDER, 2));
+		if (!(material.getItemStack(Names.CRUSHED_PURIFIED).isEmpty()))
+			Recipes.oreWashing.addRecipe(inputOre, metadata, false, material.getItemStack(Names.CRUSHED_PURIFIED), material.getItemStack(Names.SMALLPOWDER, 2));
 	}
 
 	protected void addThermalCentrifugeRecipes(@Nonnull final String materialName) {
@@ -101,8 +103,10 @@ public class IC2Base implements IIntegration {
 		final IRecipeInput inputOreC = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED + oreDictName);
 		final NBTTagCompound metadata = new NBTTagCompound();
 		metadata.setInteger("minHeat", temp);
-		Recipes.centrifuge.addRecipe(inputOreCP, metadata, false, material.getItemStack(Names.POWDER), material.getItemStack(Names.SMALLPOWDER, 2));
-		Recipes.centrifuge.addRecipe(inputOreC, metadata, false, material.getItemStack(Names.POWDER), material.getItemStack(Names.SMALLPOWDER));
+		if(!((material.getItemStack(Names.POWDER).isEmpty()) || (material.getItemStack(Names.SMALLPOWDER).isEmpty()))) {
+			Recipes.centrifuge.addRecipe(inputOreCP, metadata, false, material.getItemStack(Names.POWDER), material.getItemStack(Names.SMALLPOWDER, 2));
+			Recipes.centrifuge.addRecipe(inputOreC, metadata, false, material.getItemStack(Names.POWDER), material.getItemStack(Names.SMALLPOWDER));
+		}
 	}
 
 	protected void addMetalFormerRecipes(@Nonnull final String materialName) {
@@ -143,6 +147,7 @@ public class IC2Base implements IIntegration {
 		final String oreDictName = material.getCapitalizedName();
 		final IRecipeInput inputIngot = Recipes.inputFactory.forOreDict(Oredicts.PLATE + oreDictName, 9);
 		final ItemStack outputDensePlate = material.getItemStack(Names.DENSE_PLATE);
-		Recipes.compressor.addRecipe(inputIngot, null, false, outputDensePlate);
+		if (!(outputDensePlate.isEmpty()))
+			Recipes.compressor.addRecipe(inputIngot, null, false, outputDensePlate);
 	}
 }
