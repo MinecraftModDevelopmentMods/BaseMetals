@@ -100,9 +100,7 @@ public abstract class Items {
 		addItemType(Names.SWORD, ItemMMDSword.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
 		addItemType(Names.ROD, ItemMMDRod.class, Options.isThingEnabled(ConfigKeys.ROD), Oredicts.ROD);
 		addItemType(Names.GEAR, ItemMMDGear.class, Options.isThingEnabled(ConfigKeys.GEAR), Oredicts.GEAR);
-		
-		addItemType(Names.ITEMBLOCK, ItemMMDBlock.class, true, null);
-		
+
 		addItemType(Names.CASING, GenericMMDItem.class, Options.enableModderSupportThings(), Oredicts.CASING);
 		addItemType(Names.DENSE_PLATE, GenericMMDItem.class, Options.enableModderSupportThings(), Oredicts.PLATE_DENSE);
 
@@ -126,7 +124,6 @@ public abstract class Items {
 	private static void setSortingList() {
 		int ss = 0;
 		classSortingValues.put(BlockMMDOre.class, ++ss * 10000);
-		classSortingValues.put(ItemMMDBlock.class, ++ss * 10000 );
 		classSortingValues.put(BlockMMDBlock.class, ++ss * 10000);
 		classSortingValues.put(BlockMMDPlate.class, ++ss * 10000);
 		classSortingValues.put(BlockMMDBars.class, ++ss * 10000);

@@ -13,12 +13,12 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.item.crafting.IRecipe;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID)
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, initCallback="doHammerRecipes")
 public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements IIntegration {
 
 	@Override
@@ -26,12 +26,12 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-
+		
 		MinecraftForge.EVENT_BUS.register(this);
 	}
-
+	
 	@SubscribeEvent
-	public void regCallback(RegistryEvent.Register<IRecipe> event) {
+	public void mainInteraction(RegistryEvent.Register<IRecipe> event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
 				MaterialNames.STARSTEEL, MaterialNames.ZINC);
@@ -45,7 +45,6 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 					addThermalCentrifugeRecipes(materialName);
 					addMetalFormerRecipes(materialName);
 					addCompressorRecipes(materialName);
-					addForgeHammerRecipe(materialName);
 				});
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
@@ -63,5 +62,20 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 				addMaceratorRecipe(Oredicts.ORE + oreDictName, emerald.getItemStack(Names.POWDER, 2));
 			}
 		}
+
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+	
+	public void doHammerRecipes() {
+		BaseMetals.logger.fatal("IC2 Hammer Recipes, Go!");
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
+				MaterialNames.STARSTEEL, MaterialNames.ZINC);
+		materials.stream().filter(Materials::hasMaterial)
+		.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+		.forEach(materialName -> {
+			BaseMetals.logger.fatal("Adding Forge Hammer recipes for %s", materialName);
+			addForgeHammerRecipe(materialName);
+		});
 	}
 }

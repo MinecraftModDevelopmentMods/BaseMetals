@@ -152,9 +152,9 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		if (mat.hasItem(Names.SMALLPOWDER))
 			((ItemMMDSmallPowder) mat.getItem(Names.SMALLPOWDER)).setBurnTime(200);
 
-		if (mat.hasBlock(Names.BLOCK) && mat.hasItem(Names.ITEMBLOCK) && 
-				(mat.getItem(Names.ITEMBLOCK) instanceof ItemMMDBlock))
-			((ItemMMDBlock) mat.getItem(Names.ITEMBLOCK)).setBurnTime(16000);
+		// simple hack to fix this shit - I give up on trying for more
+		if (mat.hasBlock(Names.BLOCK) && mat.getName().equals(MaterialNames.CHARCOAL))
+			((ItemMMDBlock) mat.getItem("ItemBlock_charcoal_block")).setBurnTime(16000);
 	}
 	
 	private static void doSpecialMats() {

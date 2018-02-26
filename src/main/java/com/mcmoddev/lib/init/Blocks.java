@@ -234,7 +234,7 @@ public abstract class Blocks {
 			final ItemBlock itemBlock = new ItemMMDBlock(material, block);
 			itemBlock.setRegistryName(block.getRegistryName());
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
-			material.addNewItem(Names.ITEMBLOCK, Items.create(Names.ITEMBLOCK, material));
+			material.addNewItem("ItemBlock_" + fullName, itemBlock);
 		}
 	}
 
