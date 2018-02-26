@@ -284,6 +284,8 @@ dependencies {
         exclude group: 'mezz.jei'
     }
 
+//    deobfProvided "com.googlecode.efficient-java-matrix-library:ejml:0.23"
+    
     deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
         exclude group: 'mezz.jei'
         exclude group: 'org.ow2.asm'
