@@ -98,7 +98,7 @@ public class IC2Base implements IIntegration {
 
 	protected void addThermalCentrifugeRecipes(@Nonnull final MMDMaterial material) {
 		final String oreDictName = material.getCapitalizedName();
-		final int temp = material.getFluid().getTemperature() / 2;
+		final int temp = getMaterialTemp(material);
 		final IRecipeInput inputOreCP = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED_PURIFIED + oreDictName);
 		final IRecipeInput inputOreC = Recipes.inputFactory.forOreDict(Oredicts.CRUSHED + oreDictName);
 		final NBTTagCompound metadata = new NBTTagCompound();
@@ -107,6 +107,11 @@ public class IC2Base implements IIntegration {
 			Recipes.centrifuge.addRecipe(inputOreCP, metadata, false, material.getItemStack(Names.POWDER), material.getItemStack(Names.SMALLPOWDER, 2));
 			Recipes.centrifuge.addRecipe(inputOreC, metadata, false, material.getItemStack(Names.POWDER), material.getItemStack(Names.SMALLPOWDER));
 		}
+	}
+
+	private int getMaterialTemp(MMDMaterial material) {
+		if (material.getFluid() != null) return material.getFluid().getTemperature() / 2;
+		return 1000; // same as silver
 	}
 
 	protected void addMetalFormerRecipes(@Nonnull final String materialName) {
