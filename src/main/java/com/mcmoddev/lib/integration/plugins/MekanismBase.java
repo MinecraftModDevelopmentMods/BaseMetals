@@ -149,8 +149,8 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas) {
-		if (inputItem.isEmpty()) return;
-		
+		if ((inputItem.isEmpty()) || (!GasRegistry.containsGas(outputGas))) return;
+			
 		addChemicalDissolutionChamberRecipe(inputItem, outputGas, 1000);
 	}
 
