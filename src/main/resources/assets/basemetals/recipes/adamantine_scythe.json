@@ -31,12 +31,7 @@
 				{
 					"type": "basemetals:enabled",
 					"optionName": "thing",
-					"optionValue": "Sickle"
-				},
-				{
-					"type": "basemetals:enabled",
-					"optionName": "thing",
-					"optionValue": "BasicTools"
+					"optionValue": "Scythe"
 				}
 			]
 		}
