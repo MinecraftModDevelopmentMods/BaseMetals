@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "basemetals:bronze_block" }
+        "variant=default": { "model": "basemetals:bronze_block" }
     }
 }

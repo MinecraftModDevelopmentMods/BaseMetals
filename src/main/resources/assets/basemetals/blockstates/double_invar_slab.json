@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "basemetals:invar_block" }
+        "variant=default": { "model": "basemetals:invar_block" }
     }
 }

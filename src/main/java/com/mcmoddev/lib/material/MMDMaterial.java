@@ -72,6 +72,11 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * unusually uncommon in world generation
 	 */
 	private final boolean isRare;
+	
+	/**
+	 * Can this material's blocks be used as a beacon base?
+	 */
+	private final boolean isBeaconBase;
 
 	/**
 	 * Whether or not this material has a blend that can be smelted to produce
@@ -162,6 +167,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		this.identifier = name;
 		this.titleName = StringUtils.capitalize(name);
 		this.enumName = (Loader.instance().activeModContainer().getModId() + "_" + name).toUpperCase(Locale.ENGLISH);
+		this.isBeaconBase = true;
 		this.isRare = isRare;
 		this.materialType = type;
 		this.hasBlend = hasBlend;
@@ -658,6 +664,10 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 
 	public boolean regenerates() {
 		return this.regenerates;
+	}
+
+	public boolean isBeaconBase() {
+		return this.isBeaconBase;
 	}
 
 	public boolean hasItem(Names name) {

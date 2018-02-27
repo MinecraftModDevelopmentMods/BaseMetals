@@ -1,6 +1,6 @@
 {
     "variants": {
-        "half=bottom": { "model": "basemetals:half_slab_obsidian" },
-        "half=top": { "model": "basemetals:upper_slab_obsidian" }
+        "half=bottom,variant=default": { "model": "basemetals:half_slab_obsidian" },
+        "half=top,variant=default": { "model": "basemetals:upper_slab_obsidian" }
     }
 }

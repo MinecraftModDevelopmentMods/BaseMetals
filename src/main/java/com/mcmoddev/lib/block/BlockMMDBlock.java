@@ -12,7 +12,6 @@ import net.minecraft.world.IBlockAccess;
 public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObject {
 
 	private final MMDMaterial material;
-	private final boolean beaconBase;
 
 	/**
 	 *
@@ -20,14 +19,6 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 *            The material the block is made from
 	 */
 	public BlockMMDBlock(final MMDMaterial material) {
-		this(material, false);
-	}
-
-	public BlockMMDBlock(final MMDMaterial material, final boolean glows) {
-		this(material, glows, false);
-	}
-
-	public BlockMMDBlock(final MMDMaterial material, final boolean glows, final boolean isBeacon) {
 		super(material.getVanillaMaterial());
 		this.material = material;
 
@@ -38,17 +29,13 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
 		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
-		this.beaconBase = isBeacon;
 		// Additional
 		this.fullBlock = true;
-
-		if (glows)
-			this.setLightLevel(0.5f);
 	}
-
+	
 	@Override
 	public boolean isBeaconBase(final IBlockAccess worldObj, final BlockPos pos, final BlockPos beacon) {
-		return beaconBase;
+		return this.material.isBeaconBase();
 	}
 
 	@Override

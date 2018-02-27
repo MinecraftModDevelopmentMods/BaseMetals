@@ -39,8 +39,8 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
 				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM,
 				MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.MITHRIL, MaterialNames.NICKEL,
-				MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.SILVER, MaterialNames.STEEL,
-				MaterialNames.TIN, MaterialNames.ZINC);
+				MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.SILVER, MaterialNames.STARSTEEL,
+				MaterialNames.STEEL, MaterialNames.TIN, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial).forEach(materialName -> {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
@@ -61,7 +61,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			create(Names.WALL, material);
 		});
 
-		createStarSteel();
+//		createStarSteel();
 		createMercury();
 		createAnvils();
 
@@ -73,6 +73,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 				.filter(Materials::hasMaterial).forEach(name -> create(Names.ANVIL, Materials.getMaterialByName(name)));
 	}
 
+	/*
 	private static void createStarSteel() {
 		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
 			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
@@ -111,6 +112,7 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 				starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
 		}
 	}
+	*/
 
 	private static void createMercury() {
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
