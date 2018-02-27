@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
@@ -628,6 +629,10 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return new ItemStack(getBlock(name), amount);
 	}
 
+	public Map<String,Block> getBlockRegistry() {
+		return ImmutableMap.copyOf(this.blocks);
+	}
+	
 	/**
 	 * Get all the blocks that are made from this material
 	 * @return ImmutableList&lt;Block&gt; - the blocks
@@ -760,5 +765,9 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 
 	public boolean isEmpty() {
 		return ("empty".equals(this.getName()));
+	}
+
+	public Map<String, Item> getItemRegistry() {
+		return ImmutableMap.copyOf(this.items);
 	}
 }

@@ -67,15 +67,11 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 	}
 	
 	public void doHammerRecipes() {
-		BaseMetals.logger.fatal("IC2 Hammer Recipes, Go!");
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
 				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 		materials.stream().filter(Materials::hasMaterial)
 		.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
-		.forEach(materialName -> {
-			BaseMetals.logger.fatal("Adding Forge Hammer recipes for %s", materialName);
-			addForgeHammerRecipe(materialName);
-		});
+		.forEach(this::addForgeHammerRecipe);
 	}
 }
