@@ -241,8 +241,6 @@ public abstract class Blocks {
 	}
 
 	private static String getBlockFullName(@Nonnull final Block block, final MMDMaterial material, @Nonnull final String name) {
-		// XXX: Changed
-//		if (block instanceof BlockMMDDoubleSlab) {
 		if (block instanceof BlockMMDSlab.Double) {
 			return String.format( "double_%s_%s", material.getName(), Names.SLAB );
 		} else if ((name.startsWith("nether")) || (name.startsWith("end"))) {

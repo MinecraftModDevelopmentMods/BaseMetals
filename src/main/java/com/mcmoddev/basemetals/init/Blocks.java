@@ -61,7 +61,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			create(Names.WALL, material);
 		});
 
-//		createStarSteel();
 		createMercury();
 		createAnvils();
 
@@ -72,47 +71,6 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
 				.filter(Materials::hasMaterial).forEach(name -> create(Names.ANVIL, Materials.getMaterialByName(name)));
 	}
-
-	/*
-	private static void createStarSteel() {
-		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
-			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
-
-			create(Names.BLOCK, starsteel);
-			create(Names.PLATE, starsteel);
-			create(Names.ORE, starsteel);
-			create(Names.BARS, starsteel);
-			create(Names.DOOR, starsteel);
-			create(Names.TRAPDOOR, starsteel);
-
-			create(Names.BUTTON, starsteel);
-			create(Names.SLAB, starsteel);
-			create(Names.DOUBLE_SLAB, starsteel);
-			create(Names.LEVER, starsteel);
-			create(Names.PRESSURE_PLATE, starsteel);
-			create(Names.STAIRS, starsteel);
-			create(Names.WALL, starsteel);
-
-			if (starsteel.hasBlock(Names.BLOCK))
-				starsteel.getBlock(Names.BLOCK).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.PLATE))
-				starsteel.getBlock(Names.PLATE).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.ORE))
-				starsteel.getBlock(Names.ORE).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.BARS))
-				starsteel.getBlock(Names.BARS).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.DOOR))
-				starsteel.getBlock(Names.DOOR).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.TRAPDOOR))
-				starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
-		}
-	}
-	*/
 
 	private static void createMercury() {
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
