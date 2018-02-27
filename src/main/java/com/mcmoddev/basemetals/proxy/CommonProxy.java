@@ -1,7 +1,22 @@
 package com.mcmoddev.basemetals.proxy;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.HashSet;
 
+import org.apache.commons.io.FileUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.Blocks;
@@ -21,6 +36,7 @@ import com.mcmoddev.lib.oregen.FallbackGeneratorData;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.Block;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -121,6 +137,48 @@ public class CommonProxy {
 				if (material.hasBlock(Names.ENDORE))
 					FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ENDORE.toString(), 1);
 			}
+		}
+		//dumpMaterials();
+	}
+
+	@SuppressWarnings("unused")
+	private void dumpMaterials() {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject materials = new JsonObject();
+		
+		Materials.getAllMaterials().forEach( material -> {
+			JsonObject currentMaterial = new JsonObject();
+			JsonArray blocks = new JsonArray();
+			JsonArray items = new JsonArray();
+			
+			material.getBlockRegistry().entrySet().stream().forEach( ent -> {
+				JsonObject entry = new JsonObject();
+				entry.addProperty("name", ent.getKey());
+				entry.addProperty("ref", ent.getValue().toString());
+				blocks.add(entry);
+			});
+			material.getItemRegistry().entrySet().stream().forEach( ent -> {
+				JsonObject entry = new JsonObject();
+				entry.addProperty("name", ent.getKey());
+				entry.addProperty("ref", ent.getValue().toString());
+				items.add(entry);
+			});
+			
+			currentMaterial.add("blocks", blocks);
+			currentMaterial.add("items", items);
+			materials.add(material.getName(), currentMaterial);
+		});
+		String out = gson.toJson(materials);
+		Path p = Paths.get("logs", "mmd_materials_dump.json");
+		try (BufferedWriter bw = Files.newBufferedWriter(p, StandardCharsets.UTF_8, 
+				StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING)) {
+			bw.write(out);
+		} catch (IOException e) {
+			CrashReport report = CrashReport.makeCrashReport(e, 
+					String.format("Unable to write dump of MMDMaterial registry to %s", 
+							p.toFile().getAbsolutePath()));
+			report.getCategory().addCrashSection("BaseMetals Version", "2.5.0-beta4");
+			BaseMetals.logger.fatal(report.getCompleteReport());
 		}
 	}
 

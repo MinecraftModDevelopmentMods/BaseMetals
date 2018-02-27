@@ -78,7 +78,7 @@ public class MekanismBase implements IIntegration {
 
 		addCrusherRecipe(clump, powderDirty);
 		addCrusherRecipe(ingot, powder);
-		addCrusherRecipe(ore, material.getItemStack(Names.POWDER, 2));
+
 		addEnrichmentChamberRecipe(ore, new ItemStack(powder.getItem(), 2));
 		addEnrichmentChamberRecipe(powderDirty, powder);
 		addPurificationChamberRecipe(ore, new ItemStack(clump.getItem(), 3));

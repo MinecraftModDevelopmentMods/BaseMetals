@@ -194,7 +194,7 @@ public class TinkersConstructRegistry {
 		
 		if( myMelts.isEmpty())
 			return;
-		
+
 		for( final Entry<Item, FluidStack> ent : myMelts.entrySet() ) {
 			Item item = ent.getKey();
 			FluidStack fluidStack = ent.getValue();

@@ -18,8 +18,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import slimeknights.tconstruct.library.TinkerRegistry;
-import slimeknights.tconstruct.library.modifiers.IModifier;
 
 /**
  *
@@ -80,10 +78,6 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		if(postInit) return;
 		postInit = true;
 		postInitSetup(BaseMetals.MODID);
-		for( IModifier mod : TinkerRegistry.getAllModifiers() ) {
-			BaseMetals.logger.fatal("Modifier (?) %s (%s) has item: %s", mod.getIdentifier(),
-					mod.getClass(), mod.hasItemsToApplyWith());
-		}
 	}
 
 	@SubscribeEvent
