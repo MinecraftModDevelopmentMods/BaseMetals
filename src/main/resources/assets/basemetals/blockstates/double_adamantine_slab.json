@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "basemetals:adamantine_block" }
+        "variant=default": { "model": "basemetals:adamantine_block" }
     }
 }

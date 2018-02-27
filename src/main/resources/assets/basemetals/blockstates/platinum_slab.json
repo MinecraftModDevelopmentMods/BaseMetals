@@ -1,6 +1,6 @@
 {
     "variants": {
-        "half=bottom": { "model": "basemetals:half_slab_platinum" },
-        "half=top": { "model": "basemetals:upper_slab_platinum" }
+        "half=bottom,variant=default": { "model": "basemetals:half_slab_platinum" },
+        "half=top,variant=default": { "model": "basemetals:upper_slab_platinum" }
     }
 }

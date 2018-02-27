@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "basemetals:tin_block" }
+        "variant=default": { "model": "basemetals:tin_block" }
     }
 }

@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "basemetals:coldiron_block" }
+        "variant=default": { "model": "basemetals:coldiron_block" }
     }
 }

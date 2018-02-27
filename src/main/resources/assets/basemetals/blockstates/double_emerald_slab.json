@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "minecraft:emerald_block" }
+        "variant=default": { "model": "minecraft:emerald_block" }
     }
 }

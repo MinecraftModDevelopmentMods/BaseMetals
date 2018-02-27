@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "minecraft:iron_block" }
+        "variant=default": { "model": "minecraft:iron_block" }
     }
 }

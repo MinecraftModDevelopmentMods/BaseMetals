@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "minecraft:gold_block" }
+        "variant=default": { "model": "minecraft:gold_block" }
     }
 }
