@@ -17,8 +17,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 /**
- * Hoes
- * 
+ * Hoes.
+ *
  * @author DrCyano
  *
  */
@@ -51,8 +51,9 @@ public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject
 	@Override
 	@Deprecated
 	public int getHarvestLevel(final ItemStack stack, final String typeRequested, final EntityPlayer player, final IBlockState blockState) {
-		if ((typeRequested != null) && this.toolTypes.contains(typeRequested))
+		if ((typeRequested != null) && this.toolTypes.contains(typeRequested)) {
 			return this.material.getToolHarvestLevel();
+		}
 		return -1;
 	}
 
@@ -63,10 +64,11 @@ public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject
 
 	@Override
 	public float getDestroySpeed(final ItemStack tool, final IBlockState target) {
-		if (this.canHarvestBlock(target, tool))
+		if (this.canHarvestBlock(target, tool)) {
 			return Math.max(1.0f, this.material.getToolEfficiency());
-		else
+		} else {
 			return 1.0f;
+		}
 	}
 
 	@Override
@@ -78,8 +80,9 @@ public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject
 
 	@Override
 	public boolean canHarvestBlock(final IBlockState target) {
-		if (this.toolTypes.contains(target.getBlock().getHarvestTool(target)))
+		if (this.toolTypes.contains(target.getBlock().getHarvestTool(target))) {
 			return this.material.getToolHarvestLevel() >= target.getBlock().getHarvestLevel(target);
+		}
 		return false;
 	}
 

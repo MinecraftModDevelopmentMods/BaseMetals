@@ -18,7 +18,7 @@ class EntityHorseTransformer implements ITransformer {
 	}
 
 	@Override
-	public ClassNode transform(ClassNode node, boolean dev) {
+	public ClassNode transform(final ClassNode node, final boolean dev) {
 		final Visitor vis = new Visitor();
 		node.accept(vis);
 		return vis;
@@ -27,13 +27,13 @@ class EntityHorseTransformer implements ITransformer {
 	private static class Visitor extends ClassNodeBase {
 
 		@Override
-		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+		public MethodVisitor visitMethod(final int access, final String name, final String desc, final String signature, final String[] exceptions) {
 			final MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
 			if (ITransformer.oneEquals(ENTITY_INIT, name)) {
 				return new MethodVisitor(Opcodes.ASM5, mv) {
 
 					@Override
-					public void visitInsn(int opcode) {
+					public void visitInsn(final int opcode) {
 						if (opcode == Opcodes.RETURN) {
 							mv.visitVarInsn(ALOAD, 0);
 							mv.visitMethodInsn(INVOKESTATIC, ASMHOOKS_INTERFACE, "onInitHorse",
@@ -58,8 +58,8 @@ class EntityHorseTransformer implements ITransformer {
 				return new MethodVisitor(Opcodes.ASM5, mv) {
 
 					@Override
-					public void visitMethodInsn(int opcode, String owner, String methodCallName, String desc,
-							boolean itf) {
+					public void visitMethodInsn(final int opcode, final String owner, final String methodCallName, final String desc,
+							final boolean itf) {
 						if (ITransformer.oneEquals(GET_TEXTURE_NAME, methodCallName)) {
 							mv.visitVarInsn(ALOAD, 0);
 							mv.visitMethodInsn(INVOKESTATIC, ASMHOOKS_INTERFACE, "getTextureName",

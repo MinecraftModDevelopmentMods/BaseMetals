@@ -12,11 +12,11 @@ import net.minecraftforge.common.crafting.JsonContext;
 public class ConditionEnabled implements IConditionFactory {
 
 	@Override
-	public BooleanSupplier parse(JsonContext context, JsonObject json) {
-		String optionName = JsonUtils.getString(json, "optionName").toLowerCase();
-		String optionValue = JsonUtils.getString(json, "optionValue");
-		
-		switch(optionName) {
+	public BooleanSupplier parse(final JsonContext context, final JsonObject json) {
+		final String optionName = JsonUtils.getString(json, "optionName").toLowerCase();
+		final String optionValue = JsonUtils.getString(json, "optionValue");
+
+		switch (optionName) {
 		case "material":
 			return () -> Options.isMaterialEnabled(optionValue);
 		case "mod":

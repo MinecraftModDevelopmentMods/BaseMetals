@@ -15,8 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 /**
- * Shovels
- * 
+ * Shovels.
+ *
  * @author DrCyano
  *
  */

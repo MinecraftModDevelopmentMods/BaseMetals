@@ -17,10 +17,17 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 
+/**
+ * Anvil.
+ */
 public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
+	/**
+	 *
+	 * @param material
+	 */
 	public BlockMMDAnvil(final MMDMaterial material) {
 		super();
 		this.material = material;
@@ -34,7 +41,7 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 	public MMDMaterial getMMDMaterial() {
 		return this.material;
 	}
-	
+
 	/**
 	 * Called when the block is right clicked by a player.
 	 */
@@ -46,12 +53,18 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 
 		return true;
 	}
-	
+
 	public static class MMDAnvil implements IInteractionObject {
 		private final World world;
 		private final BlockPos position;
 		private final MMDMaterial material;
 
+		/**
+		 *
+		 * @param worldIn
+		 * @param pos
+		 * @param material
+		 */
 		public MMDAnvil(final World worldIn, final BlockPos pos, final MMDMaterial material) {
 			this.world = worldIn;
 			this.position = pos;
@@ -66,14 +79,14 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 		}
 
 		/**
-		 * Returns true if this thing is named
+		 * Returns true if this thing is named.
 		 */
 		public boolean hasCustomName() {
 			return false;
 		}
 
 		/**
-		 * Get the formatted ChatComponent that will be used for the sender's username in chat
+		 * Get the formatted ChatComponent that will be used for the sender's username in chat.
 		 */
 		@Override
 		public ITextComponent getDisplayName() {

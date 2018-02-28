@@ -10,7 +10,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
  */
 public class BlockMMDPressurePlate extends net.minecraft.block.BlockPressurePlate implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *

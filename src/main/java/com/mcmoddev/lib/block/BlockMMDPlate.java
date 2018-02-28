@@ -22,15 +22,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /**
- * Metal Plate
- * 
+ * Plate.
+ *
  * @author DrCyano
  *
  */
 public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObject {
 
 	/**
-	 * Blockstate property
+	 * Blockstate property.
 	 */
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
@@ -179,9 +179,10 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 			default:
 				return defaultState;
 		}
-		if ((Math.abs(up) < 0.25F) && (Math.abs(right) < 0.25F))
+		if ((Math.abs(up) < 0.25F) && (Math.abs(right) < 0.25F)) {
 			// no rotation
 			return defaultState;
+		}
 		final boolean upOrRight = (up + right) > 0;
 		final boolean upOrLeft = (up - right) > 0;
 		if (upOrRight) {

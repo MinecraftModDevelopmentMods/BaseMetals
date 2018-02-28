@@ -11,7 +11,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
  */
 public class BlockMMDStairs extends net.minecraft.block.BlockStairs implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *

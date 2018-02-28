@@ -13,7 +13,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
  * @author Jasmine Iwanek
  *
  */
-public class Fluids extends com.mcmoddev.lib.init.Fluids {
+public final class Fluids extends com.mcmoddev.lib.init.Fluids {
 
 	private Fluids() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);

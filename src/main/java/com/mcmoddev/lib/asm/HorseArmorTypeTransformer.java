@@ -16,7 +16,7 @@ class HorseArmorTypeTransformer implements ITransformer {
 	}
 
 	@Override
-	public ClassNode transform(ClassNode node, boolean dev) {
+	public ClassNode transform(final ClassNode node, final boolean dev) {
 		final Visitor vis = new Visitor();
 		node.accept(vis);
 		return vis;
@@ -25,7 +25,7 @@ class HorseArmorTypeTransformer implements ITransformer {
 	private static class Visitor extends ClassNodeBase {
 
 		@Override
-		public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+		public MethodVisitor visitMethod(final int access, final String name, final String desc, final String signature, final String[] exceptions) {
 			final MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
 			if (ITransformer.oneEquals(GET_BY_ITEM, name)) {
 				return new MethodVisitor(Opcodes.ASM5, mv) {

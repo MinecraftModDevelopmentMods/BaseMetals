@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @author Jasmine Iwanek
  *
  */
-public class Items extends com.mcmoddev.lib.init.Items {
+public final class Items extends com.mcmoddev.lib.init.Items {
 
 	private Items() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -143,20 +143,24 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	}
 
 	private static void setBurnTimes(@Nonnull final MMDMaterial mat) {
-		if (mat.hasItem(Names.NUGGET))
+		if (mat.hasItem(Names.NUGGET)) {
 			((ItemMMDNugget) mat.getItem(Names.NUGGET)).setBurnTime(160);
+		}
 
-		if (mat.hasItem(Names.POWDER))
+		if (mat.hasItem(Names.POWDER)) {
 			((ItemMMDPowder) mat.getItem(Names.POWDER)).setBurnTime(1600);
+		}
 
-		if (mat.hasItem(Names.SMALLPOWDER))
+		if (mat.hasItem(Names.SMALLPOWDER)) {
 			((ItemMMDSmallPowder) mat.getItem(Names.SMALLPOWDER)).setBurnTime(160);
+		}
 
 		// simple hack to fix this shit - I give up on trying for more
-		if (mat.hasBlock(Names.BLOCK) && mat.getName().equals(MaterialNames.CHARCOAL))
+		if (mat.hasBlock(Names.BLOCK) && mat.getName().equals(MaterialNames.CHARCOAL)) {
 			((ItemMMDBlock) mat.getItem("ItemBlock_charcoal_block")).setBurnTime(16000);
+		}
 	}
-	
+
 	private static void doSpecialMats() {
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
 			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
@@ -363,8 +367,12 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event) {
+	public static void registerItems(final RegistryEvent.Register<Item> event) {
 		for (MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID)) {
 			for (Item item : mat.getItems()) {
 				if (item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {

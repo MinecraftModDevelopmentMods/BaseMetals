@@ -30,6 +30,10 @@ public enum IntegrationManager {
 		}
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	public void preInit(@Nonnull final FMLPreInitializationEvent event) {
 		for (final ASMData asmDataItem : event.getAsmData().getAll(MMDPlugin.class.getCanonicalName())) {
 			final String addonId = getAnnotationItem("addonId", asmDataItem);
@@ -58,8 +62,9 @@ public enum IntegrationManager {
 	}
 
 	private void setCallback(@Nonnull final IIntegration i, @Nonnull final String name, @Nonnull final String phase) {
-		if ("".equals(name))
+		if ("".equals(name)) {
 			return;
+		}
 
 		List<Map<IIntegration, Method>> k;
 		if (callbacks.containsKey(phase)) {
@@ -88,6 +93,10 @@ public enum IntegrationManager {
 		}
 	}
 
+	/**
+	 *
+	 * @param phase
+	 */
 	public void runCallbacks(@Nonnull final String phase) {
 		if (callbacks.containsKey(phase)) {
 			final List<Map<IIntegration, Method>> cbs = callbacks.get(phase);

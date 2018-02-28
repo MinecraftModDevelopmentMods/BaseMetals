@@ -17,8 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Swords
- * 
+ * Swords.
+ *
  * @author DrCyano
  *
  */
@@ -50,8 +50,9 @@ public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDOb
 	@Override
 	public boolean onBlockDestroyed(final ItemStack item, final World world, final IBlockState block, final BlockPos coord,
 									final EntityLivingBase entity) {
-		if (block.getBlockHardness(world, coord) != 0.0)
+		if (block.getBlockHardness(world, coord) != 0.0) {
 			item.damageItem(2, entity);
+		}
 		return true;
 	}
 

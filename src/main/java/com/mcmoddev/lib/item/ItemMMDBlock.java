@@ -13,7 +13,7 @@ public class ItemMMDBlock extends ItemBlock implements IMMDObject {
 
 	private int burnTime = 0;
 	private MMDMaterial mmdMaterial;
-	
+
 	public ItemMMDBlock(final MMDMaterial material, final Block block) {
 		super(block);
 		this.mmdMaterial = material;

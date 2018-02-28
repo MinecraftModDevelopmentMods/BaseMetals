@@ -3,7 +3,7 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
- * Ingots
+ * Ingots.
  *
  * @author DrCyano
  *

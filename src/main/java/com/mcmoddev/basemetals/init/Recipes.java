@@ -16,7 +16,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class Recipes extends com.mcmoddev.lib.init.Recipes {
+public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 	private Recipes() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -55,7 +55,7 @@ public class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	@SubscribeEvent
-	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
 		register(event);
 	}
 }

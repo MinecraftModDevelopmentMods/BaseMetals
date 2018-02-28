@@ -11,7 +11,7 @@ import net.minecraftforge.common.crafting.JsonContext;
 public class PlateRepairEnabled implements IConditionFactory {
 
 	@Override
-	public BooleanSupplier parse(JsonContext context, JsonObject json) {
+	public BooleanSupplier parse(final JsonContext context, final JsonObject json) {
 		return () -> Options.enablePlateRepairs();
 	}
 

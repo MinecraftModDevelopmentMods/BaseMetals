@@ -29,6 +29,10 @@ public class RegistrationHelper {
 		registerRender(item);
 	}
 
+	/**
+	 *
+	 * @param name
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerItemRender(@Nonnull final String name) {
 		final Item item = Items.getItemByName(name);
@@ -36,21 +40,31 @@ public class RegistrationHelper {
 		registerRender(item);
 	}
 
+	/**
+	 *
+	 * @param block
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerBlockRender(@Nonnull final Block block) {
 
-		if ((block instanceof BlockDoor) || (block instanceof BlockSlab))
+		if ((block instanceof BlockDoor) || (block instanceof BlockSlab)) {
 			return; // do not add door blocks or slabs
+		}
 
 		registerRender(Item.getItemFromBlock(block));
 	}
 
+	/**
+	 *
+	 * @param name
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerBlockRender(@Nonnull final String name) {
 		final Block block = Blocks.getBlockByName(name);
 
-		if ((block instanceof BlockDoor) || (block instanceof BlockSlab))
+		if ((block instanceof BlockDoor) || (block instanceof BlockSlab)) {
 			return; // do not add door blocks or slabs
+		}
 
 		registerRender(Item.getItemFromBlock(block));
 	}
@@ -61,6 +75,10 @@ public class RegistrationHelper {
 		registerFluidRender(fluid);
 	}
 
+	/**
+	 *
+	 * @param fluid
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerFluidRender(@Nonnull final Fluid fluid) {
 		// final Block block = fluid.getBlock(); // Unfortunately this breaks when
@@ -82,6 +100,10 @@ public class RegistrationHelper {
 		ModelLoader.setCustomStateMapper(block, mapper);
 	}
 
+	/**
+	 *
+	 * @param item
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerRender(@Nonnull final Item item) {
 		final ResourceLocation resourceLocation = item.getRegistryName();

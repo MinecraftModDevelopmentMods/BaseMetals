@@ -5,7 +5,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class LeggingsRepairRecipe extends RepairRecipeBase {
 
-	public LeggingsRepairRecipe(MMDMaterial mat) {
-		super(mat, Names.LEGGINGS);
+	public LeggingsRepairRecipe(final MMDMaterial material) {
+		super(material, Names.LEGGINGS);
 	}
 }

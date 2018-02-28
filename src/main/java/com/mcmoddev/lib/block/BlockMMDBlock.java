@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 /**
- * Metal Block
+ * Block.
  */
 public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObject {
 
@@ -32,7 +32,7 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 		// Additional
 		this.fullBlock = true;
 	}
-	
+
 	@Override
 	public boolean isBeaconBase(final IBlockAccess worldObj, final BlockPos pos, final BlockPos beacon) {
 		return this.material.isBeaconBase();

@@ -16,7 +16,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
  * @author Jasmine Iwanek
  *
  */
-public class Materials extends com.mcmoddev.lib.init.Materials {
+public final class Materials extends com.mcmoddev.lib.init.Materials {
 
 	private Materials() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);

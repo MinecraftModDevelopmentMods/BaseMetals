@@ -4,8 +4,8 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
- * Metal Bars
- * 
+ * Bars.
+ *
  * @author DrCyano
  *
  */

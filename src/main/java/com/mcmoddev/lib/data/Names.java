@@ -41,6 +41,11 @@ public enum Names implements IStringSerializable {
 		return this.name();
 	}
 
+	/**
+	 *
+	 * @param ordinal
+	 * @return
+	 */
 	public static Names getType(@Nonnull int ordinal) {
 		if ((ordinal > values().length) || (ordinal < 0)) {
 			ordinal = 0;

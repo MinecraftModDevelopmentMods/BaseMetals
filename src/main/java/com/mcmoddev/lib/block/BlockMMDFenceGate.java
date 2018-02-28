@@ -7,8 +7,12 @@ import net.minecraft.block.BlockPlanks;
 
 public class BlockMMDFenceGate extends net.minecraft.block.BlockFenceGate implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
+	/**
+	 *
+	 * @param material
+	 */
 	public BlockMMDFenceGate(final MMDMaterial material) {
 		super(BlockPlanks.EnumType.OAK);
 		this.material = material;

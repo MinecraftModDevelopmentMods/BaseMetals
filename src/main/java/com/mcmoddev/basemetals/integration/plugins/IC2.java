@@ -18,20 +18,24 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.item.crafting.IRecipe;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, initCallback="doHammerRecipes")
-public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements IIntegration {
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, initCallback = "doHammerRecipes")
+public final class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements IIntegration {
 
 	@Override
 	public void init() {
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-		
+
 		MinecraftForge.EVENT_BUS.register(this);
 	}
-	
+
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void mainInteraction(RegistryEvent.Register<IRecipe> event) {
+	public void mainInteraction(final RegistryEvent.Register<IRecipe> event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
 				MaterialNames.STARSTEEL, MaterialNames.ZINC);
@@ -65,7 +69,10 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 
 		MinecraftForge.EVENT_BUS.register(this);
 	}
-	
+
+	/**
+	 *
+	 */
 	public void doHammerRecipes() {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,

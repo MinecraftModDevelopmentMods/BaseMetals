@@ -31,8 +31,12 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void regShit(RegistryEvent.Register<IRecipe> event) {
+	public void regShit(final RegistryEvent.Register<IRecipe> event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.COLDIRON,
 				MaterialNames.CUPRONICKEL, MaterialNames.PEWTER, MaterialNames.STARSTEEL, MaterialNames.ZINC,
@@ -55,41 +59,45 @@ public class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.Therm
 		final MMDMaterial zinc = Materials.getMaterialByName(MaterialNames.ZINC);
 		final MMDMaterial tin = Materials.getMaterialByName(MaterialNames.TIN);
 		final MMDMaterial bronze = Materials.getMaterialByName(MaterialNames.BRONZE);
-		
-		if (hasMaterials(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS) &&
-				materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS),
+
+		if (hasMaterials(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS)
+				&& materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS),
 						Names.INGOT.toString())) {
 			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 2),
 					zinc.getItemStack(Names.INGOT, 1), brass.getItemStack(Names.INGOT, 3));
 		}
 
-		if (hasMaterials(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL) &&
-				materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL),
+		if (hasMaterials(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL)
+				&& materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL),
 						Names.INGOT.toString())) {
 			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3),
 					nickel.getItemStack(Names.INGOT, 1), cupronickel.getItemStack(Names.INGOT, 4));
 		}
-		
-		if (hasMaterials(MaterialNames.COPPER, MaterialNames.TIN, MaterialNames.BRONZE) &&
-				materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.TIN, MaterialNames.BRONZE),
+
+		if (hasMaterials(MaterialNames.COPPER, MaterialNames.TIN, MaterialNames.BRONZE)
+				&& materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.TIN, MaterialNames.BRONZE),
 						Names.INGOT.toString())) {
-			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3), 
+			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3),
 					tin.getItemStack(Names.INGOT, 1), bronze.getItemStack(Names.INGOT, 3));
 		}
 	}
 
-	private static boolean materialsHaveItems(List<String> materialNames, String...items) {
-		for (String item : items) {
-			for (String materialName : materialNames) {
-				if (!Materials.getMaterialByName(materialName).hasItem(item)) return false;
+	private static boolean materialsHaveItems(final List<String> materialNames, final String...items) {
+		for (final String item : items) {
+			for (final String materialName : materialNames) {
+				if (!Materials.getMaterialByName(materialName).hasItem(item)) {
+					return false;
+				}
 			}
 		}
 		return true;
 	}
-	
-	private static boolean hasMaterials(String...materials) {
+
+	private static boolean hasMaterials(final String...materials) {
 		for (String materialName : materials) {
-			if (!Materials.hasMaterial(materialName)) return false;
+			if (!Materials.hasMaterial(materialName)) {
+				return false;
+			}
 		}
 		return true;
 	}

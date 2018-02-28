@@ -5,7 +5,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class BootsRepairRecipe extends RepairRecipeBase {
 
-	public BootsRepairRecipe(MMDMaterial mat) {
-		super(mat, Names.BOOTS);
+	public BootsRepairRecipe(final MMDMaterial material) {
+		super(material, Names.BOOTS);
 	}
 }

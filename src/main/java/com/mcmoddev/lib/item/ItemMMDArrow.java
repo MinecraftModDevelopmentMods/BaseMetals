@@ -15,7 +15,7 @@ import net.minecraft.world.World;
  */
 public class ItemMMDArrow extends net.minecraft.item.ItemArrow implements IMMDObject {
 
-	protected final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *

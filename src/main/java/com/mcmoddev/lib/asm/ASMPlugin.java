@@ -22,6 +22,9 @@ public class ASMPlugin implements IFMLLoadingPlugin {
 	//HorseArmor patches present in 1.12.2-14.23.1.2592+
 	private static final boolean NEEDS_HORSE_ARMOR_PATCH = ForgeVersion.getMajorVersion() < 14 || ForgeVersion.getMinorVersion() < 23 || ForgeVersion.getRevisionVersion() < 1 || ForgeVersion.getBuildVersion() < 2592;
 
+	/**
+	 *
+	 */
 	public ASMPlugin() {
 		if (NEEDS_HORSE_ARMOR_PATCH) {
 			transformerList.add(new EntityHorseTransformer());
@@ -32,8 +35,9 @@ public class ASMPlugin implements IFMLLoadingPlugin {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		if (!NEEDS_HORSE_ARMOR_PATCH)
+		if (!NEEDS_HORSE_ARMOR_PATCH) {
 			return null;
+		}
 		return new String[] { ASMTransformer.class.getName() };
 	}
 
@@ -49,7 +53,7 @@ public class ASMPlugin implements IFMLLoadingPlugin {
 	}
 
 	@Override
-	public void injectData(Map<String, Object> data) {
+	public void injectData(final Map<String, Object> data) {
 		Platform.setDev((Boolean) data.get("runtimeDeobfuscationEnabled"));
 	}
 

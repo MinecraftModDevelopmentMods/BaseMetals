@@ -13,18 +13,18 @@ public class ICrusherRecipeWrapper implements IRecipeWrapper {
 
 	private ICrusherRecipe theRecipe;
 
-	public ICrusherRecipeWrapper(ICrusherRecipe recipe) {
+	public ICrusherRecipeWrapper(final ICrusherRecipe recipe) {
 		this.theRecipe = recipe;
 	}
 
 	@Override
-	public void getIngredients(IIngredients ingredients) {
+	public void getIngredients(final IIngredients ingredients) {
 		ingredients.setInputs(ItemStack.class, theRecipe.getInputs());
 		ingredients.setOutput(ItemStack.class, theRecipe.getOutput());
 	}
 
 	@Override
-	public List<String> getTooltipStrings(int mouseX, int mouseY) {
+	public List<String> getTooltipStrings(final int mouseX, final int mouseY) {
 		return Collections.emptyList();
 	}
 }

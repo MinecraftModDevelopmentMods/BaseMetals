@@ -11,9 +11,12 @@ import slimeknights.tconstruct.tools.modifiers.ToolModifier;
 
 public class ModifierLeadPlated extends ToolModifier {
 
+	/**
+	 *
+	 */
 	public ModifierLeadPlated() {
 		super("lead-plated", 0xFFFFFF);
-		
+
 		addAspects(new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this), ModifierAspect.freeModifier);
 		this.addItem("plateLead");
 	}

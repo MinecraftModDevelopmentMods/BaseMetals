@@ -31,8 +31,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventHandler {
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void attackEvent(LivingAttackEvent event) {
+	public void attackEvent(final LivingAttackEvent event) {
 		final float damage = event.getAmount();
 		if (!(event.getEntityLiving() instanceof EntityPlayer)) {
 			return;
@@ -61,11 +65,15 @@ public class EventHandler {
 		}
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public static InventoryCrafting getDummyCraftingInv() {
 		final Container tempContainer = new Container() {
 
 			@Override
-			public boolean canInteractWith(EntityPlayer player) {
+			public boolean canInteractWith(final EntityPlayer player) {
 				return false;
 			}
 		};
@@ -73,8 +81,12 @@ public class EventHandler {
 		return new InventoryCrafting(tempContainer, 2, 1);
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void handleAnvilEvent(AnvilUpdateEvent event) {
+	public void handleAnvilEvent(final AnvilUpdateEvent event) {
 		final ItemStack left = event.getLeft();
 		final ItemStack right = event.getRight();
 
@@ -92,9 +104,13 @@ public class EventHandler {
 		}
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void onUpdate(TickEvent.RenderTickEvent event) {
+	public void onUpdate(final TickEvent.RenderTickEvent event) {
 		if ((Options.requireMMDOreSpawn()) && (Loader.isModLoaded("orespawn"))) {
 			return;
 		}
@@ -108,8 +124,9 @@ public class EventHandler {
 		}
 
 		final GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
-		if (guiscreen == null)
+		if (guiscreen == null) {
 			return;
+		}
 		final FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
 		final int y = (guiscreen.height / 100) * 2;
 		int x = (guiscreen.width / 2);

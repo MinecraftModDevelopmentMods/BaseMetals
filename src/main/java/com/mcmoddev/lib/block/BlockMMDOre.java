@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 /**
- * Ore Block
+ * Ore Block.
  */
 public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObject {
 
@@ -31,6 +31,11 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 		this(material, false);
 	}
 
+	/**
+	 *
+	 * @param material
+	 * @param isSoft
+	 */
 	public BlockMMDOre(final MMDMaterial material, final boolean isSoft) {
 		super();
 		this.material = material;
@@ -59,8 +64,9 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 
 	@Override
 	public boolean canEntityDestroy(final IBlockState bs, final IBlockAccess w, final BlockPos coord, final Entity entity) {
-		if ((this == Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.ORE)) && (entity instanceof net.minecraft.entity.boss.EntityDragon))
+		if ((this == Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.ORE)) && (entity instanceof net.minecraft.entity.boss.EntityDragon)) {
 			return false;
+		}
 		return super.canEntityDestroy(bs, w, coord, entity);
 	}
 
@@ -94,6 +100,8 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 				most = 3;
 				least = 2;
 				break;
+			default:
+				return 1;
 		}
 		total = ((most - least) + fortune) + 1;
 		return least + random.nextInt(total);

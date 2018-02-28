@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.client.renderer;
 
-
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -12,8 +11,18 @@ public class RenderHelpers {
 	private RenderHelpers() {
 		// private constructor
 	}
-	
-	public static void doArrowOrBoltRender(final EntityTippedArrow entity, final double x, final double y, final double z, final float partialTicks, boolean renderOutlines, int teamColor) {
+
+	/**
+	 *
+	 * @param entity
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param partialTicks
+	 * @param renderOutlines
+	 * @param teamColor
+	 */
+	public static void doArrowOrBoltRender(final EntityTippedArrow entity, final double x, final double y, final double z, final float partialTicks, final boolean renderOutlines, final int teamColor) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.pushMatrix();
 		GlStateManager.disableLighting();

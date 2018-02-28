@@ -5,9 +5,14 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class BlockMMDLever extends net.minecraft.block.BlockLever implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
+	/**
+	 *
+	 * @param material
+	 */
 	public BlockMMDLever(final MMDMaterial material) {
+        super();
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();

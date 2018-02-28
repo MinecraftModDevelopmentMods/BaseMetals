@@ -23,8 +23,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Pickaxes
- * 
+ * Pickaxes.
+ *
  * @author DrCyano
  *
  */
@@ -72,8 +72,9 @@ public class ItemMMDPickaxe extends net.minecraft.item.ItemPickaxe implements IM
 
 	@Override
 	public boolean canHarvestBlock(final IBlockState target) {
-		if (this.toolTypes.contains(target.getBlock().getHarvestTool(target)))
+		if (this.toolTypes.contains(target.getBlock().getHarvestTool(target))) {
 			return this.material.getToolHarvestLevel() >= target.getBlock().getHarvestLevel(target);
+		}
 		return super.canHarvestBlock(target);
 	}
 

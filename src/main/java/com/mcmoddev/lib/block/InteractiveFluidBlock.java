@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.Fluid;
 /**
  * This class represents a fluid that applies a function to any living entities
  * that swim in it.
- * 
+ *
  * @author DrCyano
  *
  */
@@ -27,7 +27,7 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 
 	/**
 	 * Constructor for this fluid block.
-	 * 
+	 *
 	 * @param fluid
 	 *            The Fluid of this fluid block
 	 * @param flammable
@@ -44,7 +44,7 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 
 	/**
 	 * Constructor for this fluid block.
-	 * 
+	 *
 	 * @param fluid
 	 *            The Fluid of this fluid block
 	 * @param immersionEffect
@@ -57,19 +57,20 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 
 	/**
 	 * Constructor for this fluid block.
-	 * 
+	 *
 	 * @param fluid
 	 *            The Fluid of this fluid block
 	 */
-	public InteractiveFluidBlock(Fluid fluid) {
+	public InteractiveFluidBlock(final Fluid fluid) {
 		this(fluid, false, null);
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(final World world, final BlockPos coord, final IBlockState state, final Entity entity) {
 		super.onEntityCollidedWithBlock(world, coord, state, entity);
-		if ((this.immersionEffect != null) && (entity instanceof EntityLivingBase))
+		if ((this.immersionEffect != null) && (entity instanceof EntityLivingBase)) {
 			this.immersionEffect.accept(world, (EntityLivingBase) entity);
+		}
 	}
 
 	/**
@@ -87,8 +88,9 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 	 */
 	@Override
 	public int getFlammability(final IBlockAccess world, final BlockPos pos, final EnumFacing face) {
-		if (this.isFlammable)
+		if (this.isFlammable) {
 			return 60;
+		}
 		return 0;
 	}
 
@@ -107,8 +109,9 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 	 */
 	@Override
 	public int getFireSpreadSpeed(final IBlockAccess world, final BlockPos pos, final EnumFacing face) {
-		if (this.isFlammable)
+		if (this.isFlammable) {
 			return 30;
+		}
 		return 0;
 	}
 

@@ -12,9 +12,9 @@ public interface IHorseArmor {
 	/**
 	 * Returns the {@link HorseArmorType} of the custom horse armor.
 	 *
+	 * @param stack {@link ItemStack} being checked (forge compat)
 	 * @return The {@link HorseArmorType} that this horse armor will have the
 	 *         values of.
-	 * @param stack {@link ItemStack} being checked (forge compat)
 	 */
 	HorseArmorType getHorseArmorType(ItemStack stack);
 

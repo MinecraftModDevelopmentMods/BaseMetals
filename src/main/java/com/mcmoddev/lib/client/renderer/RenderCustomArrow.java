@@ -5,6 +5,7 @@ import com.mcmoddev.lib.entity.EntityCustomArrow;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
+
 /**
  *
  * @author Jasmine Iwanek

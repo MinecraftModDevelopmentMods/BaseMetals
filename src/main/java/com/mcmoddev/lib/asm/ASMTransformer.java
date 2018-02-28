@@ -11,7 +11,7 @@ import net.minecraft.launchwrapper.IClassTransformer;
 public class ASMTransformer implements IClassTransformer {
 
 	@Override
-	public byte[] transform(String name, String transformedName, byte[] bytesIn) {
+	public byte[] transform(final String name, final String transformedName, final byte[] bytesIn) {
 		ClassNode classNode = null;
 		for (final ITransformer transformer : ASMPlugin.transformerList) {
 			if (transformedName.equals(transformer.getTarget())) {

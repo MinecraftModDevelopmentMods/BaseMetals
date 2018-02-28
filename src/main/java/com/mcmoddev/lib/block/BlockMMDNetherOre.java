@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 /**
- * Ore Block
+ * Nether Ore Block.
  */
 public class BlockMMDNetherOre extends BlockExplosiveOre implements IMMDObject {
 
@@ -40,8 +40,9 @@ public class BlockMMDNetherOre extends BlockExplosiveOre implements IMMDObject {
 
 	@Override
 	public boolean canEntityDestroy(final IBlockState bs, final IBlockAccess w, final BlockPos coord, final Entity entity) {
-		if ((this == Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.ORE)) && (entity instanceof net.minecraft.entity.boss.EntityDragon))
+		if ((this == Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.ORE)) && (entity instanceof net.minecraft.entity.boss.EntityDragon)) {
 			return false;
+		}
 		return super.canEntityDestroy(bs, w, coord, entity);
 	}
 

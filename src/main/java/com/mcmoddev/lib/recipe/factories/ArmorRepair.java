@@ -18,12 +18,12 @@ import net.minecraftforge.common.crafting.JsonContext;
 public class ArmorRepair implements IRecipeFactory {
 
 	@Override
-	public IRecipe parse(JsonContext context, JsonObject json) {
-		String material = JsonUtils.getString(json, "material");
-		String type = JsonUtils.getString(json, "armorType").toLowerCase();
-		MMDMaterial mat = Materials.getMaterialByName(material.toLowerCase());
-		
-		switch(type) {
+	public IRecipe parse(final JsonContext context, final JsonObject json) {
+		final String material = JsonUtils.getString(json, "material");
+		final String type = JsonUtils.getString(json, "armorType").toLowerCase();
+		final MMDMaterial mat = Materials.getMaterialByName(material.toLowerCase());
+
+		switch (type) {
 		case "boots":
 			return new BootsRepairRecipe(mat);
 		case "leggings":
@@ -35,7 +35,7 @@ public class ArmorRepair implements IRecipeFactory {
 		case "shield":
 			return new ShieldRepairRecipe(mat);
 		default:
-			throw new JsonSyntaxException("Unknown Armor Type '"+type+"' specified!");
+			throw new JsonSyntaxException("Unknown Armor Type '" + type + "' specified!");
 		}
 	}
 

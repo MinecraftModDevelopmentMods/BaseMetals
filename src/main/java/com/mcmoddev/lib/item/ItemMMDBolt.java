@@ -15,7 +15,7 @@ import net.minecraft.world.World;
  */
 public class ItemMMDBolt extends ItemBolt implements IMMDObject {
 
-	protected final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *

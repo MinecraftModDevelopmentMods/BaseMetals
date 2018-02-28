@@ -21,7 +21,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
-public class Mekanism extends MekanismBase implements IIntegration {
+public final class Mekanism extends MekanismBase implements IIntegration {
 
 	@Override
 	public void init() {
@@ -40,12 +40,16 @@ public class Mekanism extends MekanismBase implements IIntegration {
 				.forEach(MekanismBase::addGassesForMaterial);
 	}
 
-	private static boolean isMaterialNotEmpty(@Nonnull String materialName) {
+	private static boolean isMaterialNotEmpty(@Nonnull final String materialName) {
 		return !Materials.getMaterialByName(materialName).isEmpty();
 	}
-	
+
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void regCallback(RegistryEvent.Register<IRecipe> event) {
+	public void regCallback(final RegistryEvent.Register<IRecipe> event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
 				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
 				MaterialNames.STARSTEEL, MaterialNames.ZINC);
@@ -62,7 +66,7 @@ public class Mekanism extends MekanismBase implements IIntegration {
 		}
 	}
 
-	private void addVanillaOreMultiplicationRecipes(String materialName) {
+	private void addVanillaOreMultiplicationRecipes(final String materialName) {
 		if (Materials.hasMaterial(materialName)) {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
 

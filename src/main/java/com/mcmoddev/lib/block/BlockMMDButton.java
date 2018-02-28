@@ -14,8 +14,12 @@ import net.minecraft.util.SoundEvent;
 
 public class BlockMMDButton extends net.minecraft.block.BlockButton implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
+	/**
+	 *
+	 * @param material
+	 */
 	public BlockMMDButton(final MMDMaterial material) {
 		super((material.getType() == MaterialType.WOOD) ? true : false);
 		this.material = material;

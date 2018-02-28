@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDObject {
 
 	public static final PropertyEnum<BlockMMDSlab.Variant> VARIANT = PropertyEnum.<BlockMMDSlab.Variant>create("variant", BlockMMDSlab.Variant.class);
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *
@@ -62,7 +62,7 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 	}
 
 	/**
-	 * Convert the given metadata into a BlockState for this Block
+	 * Convert the given metadata into a BlockState for this Block.
 	 * @deprecated
 	 */
 	@Override
@@ -78,7 +78,7 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 	}
 
 	/**
-	 * Convert the BlockState into the correct metadata value
+	 * Convert the BlockState into the correct metadata value.
 	 */
 	@Override
 	public int getMetaFromState(final IBlockState state) {
@@ -97,7 +97,7 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 	}
 
 	/**
-	 * Returns the slab block name with the type associated with it
+	 * Returns the slab block name with the type associated with it.
 	 */
 	@Override
 	public String getUnlocalizedName(final int meta) {

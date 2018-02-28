@@ -34,17 +34,24 @@ public class Config extends ConfigBase {
 	private static final String INTEGRATION_CAT = "Mod Integration";
 	private static final String MATERIALS_CAT = "Metals";
 	private static final String VANILLA_CAT = "Vanilla";
-	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipies";
+	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipes";
 	private static final String TOOLS_CAT = "Tools and Items";
 	private static final String FLUIDS_CAT = "Fluids";
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent e) {
-		if (e.getModID().equals(BaseMetals.MODID)) {
+	public void onConfigChange(final ConfigChangedEvent.OnConfigChangedEvent event) {
+		if (event.getModID().equals(BaseMetals.MODID)) {
 			init();
 		}
 	}
 
+	/**
+	 *
+	 */
 	public static void init() {
 		if (configuration == null) {
 			configuration = new Configuration(new File(CONFIG_FILE));
