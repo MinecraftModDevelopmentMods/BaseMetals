@@ -235,6 +235,7 @@ public abstract class Recipes {
 			if ((material.hasItem(Names.POWDER)) && (material.hasItem(Names.SMALLPOWDER))) {
 				GameRegistry.addSmelting(material.getItemStack(Names.SMALLPOWDER),
 						material.getItemStack(Names.NUGGET, 1), 0);
+				
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName,
 						material.getItemStack(Names.SMALLPOWDER, 1));
 			}
@@ -301,8 +302,14 @@ public abstract class Recipes {
 			}
 
 			if (material.hasItem(Names.POWDER)) {
+				ItemStack ingot;
+				if (material.getName().equals(MaterialNames.CHARCOAL))
+					ingot = new ItemStack(material.getItem(Names.INGOT), 1, 1);
+				else
+					ingot = material.getItemStack(Names.INGOT);
+					
 				GameRegistry.addSmelting(material.getItemStack(Names.POWDER),
-						material.getItemStack(Names.INGOT, 1), oreSmeltXP);
+						ingot, oreSmeltXP);
 			}
 		}
 	}
