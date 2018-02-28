@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.registry;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 public class CrusherRecipeRegistry {
 	private final IForgeRegistryModifiable<ICrusherRecipe> registry;
 	private static final CrusherRecipeRegistry instance = new CrusherRecipeRegistry();
+	private final List<String> disabledRecipes;
 	
 	private CrusherRecipeRegistry() {
 		this.registry = (IForgeRegistryModifiable<ICrusherRecipe>)new RegistryBuilder<ICrusherRecipe>()
@@ -34,23 +36,46 @@ public class CrusherRecipeRegistry {
 			    .setType(ICrusherRecipe.class)
 			    .setMaxID(Integer.MAX_VALUE >> 4)
 			    .create();
+		this.disabledRecipes = new ArrayList<>();
 	}
 
+	public static void disableRecipe(@Nonnull final String oreDict) {
+		if(!instance.disabledRecipes.contains(oreDict))
+			instance.disabledRecipes.add(oreDict);
+	}
+	
 	// back compat add-recipe stuff
 	public static void addNewCrusherRecipe(@Nonnull final String oreDict, @Nonnull final ItemStack output) {
-		instance.register( new OreDictionaryCrusherRecipe(oreDict, output));
+		if (!instance.disabledRecipes.contains(oreDict) )
+			instance.register( new OreDictionaryCrusherRecipe(oreDict, output));
 	}
 
 	public static void addNewCrusherRecipe(@Nonnull final Block input, @Nonnull final ItemStack output) {
-		instance.register( new ArbitraryCrusherRecipe(input, output));
+		if (recipeAllowed(input)) 
+			instance.register( new ArbitraryCrusherRecipe(input, output));
+	}
+
+	private static boolean recipeAllowed(Block input) {
+		return recipeAllowed(new ItemStack(Item.getItemFromBlock(input)));
 	}
 
 	public static void addNewCrusherRecipe(@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
-		instance.register( new ArbitraryCrusherRecipe(input, output));
+		if (recipeAllowed(input))
+			instance.register( new ArbitraryCrusherRecipe(input, output));
+	}
+
+	private static boolean recipeAllowed(ItemStack input) {
+		List<ItemStack> items = new ArrayList<>();
+		instance.disabledRecipes.stream()
+		.forEach(oreDict -> items.addAll(OreDictionary.getOres(oreDict)));
+		
+		if (items.size() == 0) return true;
+		return items.contains(input);
 	}
 
 	public static void addNewCrusherRecipe(@Nonnull final Item input, @Nonnull final ItemStack output) {
-		instance.register( new ArbitraryCrusherRecipe(input, output));
+		if (recipeAllowed(new ItemStack(input)))
+			instance.register( new ArbitraryCrusherRecipe(input, output));
 	}
 
 	// proper entry point

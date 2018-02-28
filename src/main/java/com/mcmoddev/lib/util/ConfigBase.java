@@ -294,6 +294,8 @@ public class ConfigBase {
 
 		public static void setDisabledRecipes(String[] string) {
 			disabledRecipes = string;
+			Arrays.asList(disabledRecipes).stream()
+			.forEach(com.mcmoddev.lib.registry.CrusherRecipeRegistry::disableRecipe);
 		}
 
 		public static String[] disabledRecipes() {
