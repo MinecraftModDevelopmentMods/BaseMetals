@@ -1,28 +1,30 @@
-def corePlugin = 'com.mcmoddev.lib.asm.ASMPlugin'
-
 buildscript {
-    repositories {
-        jcenter()
-        maven {
-            name = 'forge'
-            url = 'http://files.minecraftforge.net/maven'
-        }
-        maven {
-            name = 'gradle'
-            url 'https://plugins.gradle.org/m2/'
-        }
-        maven {
-            name = 'sonatype'
-            url = 'https://oss.sonatype.org/content/groups/public'
-        }
+  repositories {
+    jcenter()
+    maven {
+      name = 'forge'
+      url = 'http://files.minecraftforge.net/maven'
     }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.0.10'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1'
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
-        classpath "com.jaredsburrows:gradle-checker-framework-plugin:0.2.0"
+    maven {
+      name = 'gradle'
+      url 'https://plugins.gradle.org/m2/'
     }
+    maven {
+      name = 'sonatype'
+      url = 'https://oss.sonatype.org/content/groups/public'
+    }
+  }
+  dependencies {
+    classpath "net.minecraftforge.gradle:${project.fg_version}"
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
+  }
+}
+
+plugins {
+//id "com.github.spotbugs" version "1.6.1"
+//id "com.jaredsburrows.checkerframework" version "0.2.0"
+  id "com.matthewprenger.cursegradle" version "1.0.10"
+  id "org.sonarqube" version "2.6.2"
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -31,212 +33,210 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.sonarqube'
 apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'jacoco'
+//apply plugin: 'spotbugs'
 //apply plugin: 'com.jaredsburrows.checkerframework'
 
 repositories {
-	mavenLocal()
-    mavenCentral()
+  mavenLocal()
+  mavenCentral()
 }
 
 dependencies {
-    testCompile('org.junit.jupiter:junit-jupiter-api:5.0.+')
-    testCompile('org.junit.platform:junit-platform-launcher:1.0.+')
-    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.0.+')
-    testCompile('org.mockito:mockito-core:2.+')
+  testCompile('org.junit.jupiter:junit-jupiter-api:5.0.+')
+  testCompile('org.junit.platform:junit-platform-launcher:1.0.+')
+  testRuntime('org.junit.jupiter:junit-jupiter-engine:5.0.+')
+  testCompile('org.mockito:mockito-core:2.+')
 }
 
 project.afterEvaluate {
-    def junitPlatformTestTask = project.tasks.getByName('junitPlatformTest')
+  def junitPlatformTestTask = project.tasks.getByName('junitPlatformTest')
 
-    // configure jacoco to analyze the junitPlatformTest task
-    jacoco {
-        // this tool version is compatible with
-        toolVersion = '0.7.9'
-        applyTo junitPlatformTestTask
-    }
+  // configure jacoco to analyze the junitPlatformTest task
+  jacoco {
+    // this tool version is compatible with
+    toolVersion = '0.7.9'
+    applyTo junitPlatformTestTask
+  }
 
-    // create junit platform jacoco task
-    project.task(type: JacocoReport, "junitPlatformJacocoReport",
-            {
-                sourceDirectories = files("./src/main")
-                classDirectories = files("$buildDir/classes/main")
-                executionData junitPlatformTestTask
-            })
+  // create junit platform jacoco task
+  project.task(type: JacocoReport, "junitPlatformJacocoReport",
+  {
+    sourceDirectories = files("./src/main")
+    classDirectories = files("$buildDir/classes/main")
+    executionData junitPlatformTestTask
+  })
 }
 
 junitPlatform {
-    platformVersion '1.0.3' // optional, defaults to plugin version
-    //logManager 'org.apache.logging.log4j.jul.LogManager'
-    reportsDir file('build/test-results/junit-platform') // this is the default
-    // enableStandardTestTask true
-    // selectors (optional)
-    // filters (optional)
+  // platformVersion '1.0.3' // optional, defaults to plugin version
+  // logManager 'org.apache.logging.log4j.jul.LogManager'
+  reportsDir file("${project.buildDir}/test-results/junit-platform") // this is the default
+  // enableStandardTestTask true
+  // selectors (optional)
+  // filters (optional)
 }
 
 tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-    options.compilerArgs = [
-        '-Xlint:deprecation', // deprecation, rawtypes, cast, unchecked, all
-//		'-Xdiags:verbose',
-//      '-Werror'
-    ]
+  options.encoding = 'UTF-8'
+  options.compilerArgs = [
+    '-Xlint:deprecation', // deprecation, rawtypes, cast, unchecked, all
+//  '-Xdiags:verbose',
+//  '-Werror'
+  ]
 }
 
 javadoc {
-    failOnError = false
+  failOnError = false
 }
 
-description = 'Base Metals'
 def mod_file = getModFile()
-def mc_version = '1.12'
-
-ext {
-    short_version = getVersion('VERSION', mod_file)
-}
-
+def short_version = getVersion('VERSION', mod_file)
 version = mc_version + '-' + short_version
+def display_version = short_version
 
 if (System.getenv().BUILD_NUMBER) {
-    version += '.' + System.getenv().BUILD_NUMBER
+  version += '.' + System.getenv().BUILD_NUMBER
+  display_version = '.' + System.getenv().BUILD_NUMBER
 }
 
-group = 'com.mcmoddev'
-archivesBaseName = 'BaseMetals'
 sourceCompatibility = targetCompatibility = '1.8'
 
 eclipse.project {
-    buildCommand 'org.eclipse.buildship.core.gradleprojectbuilder'
-    natures 'org.eclipse.buildship.core.gradleprojectnature'
+  buildCommand 'org.eclipse.buildship.core.gradleprojectbuilder'
+  natures 'org.eclipse.buildship.core.gradleprojectnature'
 }
 
 class Secrets {
-    def data = null
+  def data = null
 
-    def getProperty(String key) {
-        return data ? data[key] : ''
-    }
+  def getProperty(String key) {
+    return data ? data[key] : ''
+  }
 }
 
 import groovy.json.JsonSlurper
 
 def secretFile
 if (System.getenv().SECRET_FILE) {
-    secretFile = file System.getenv().SECRET_FILE
+  secretFile = file System.getenv().SECRET_FILE
 } else {
-    secretFile = file 'secret.json'
+  secretFile = file 'secret.json'
 }
 
 project.ext.secret = new Secrets()
 if (secretFile.exists()) {
-    secretFile.withReader {
-        project.ext.secret.data = new JsonSlurper().parse it
-    }
+  secretFile.withReader {
+    project.ext.secret.data = new JsonSlurper().parse it
+  }
 }
 
 minecraft {
-    version = '1.12.1-14.22.1.2485'
-    runDir = 'run'
-    mappings = 'snapshot_20180131'
-    clientJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
-    serverJvmArgs = ["-Dfml.coreMods.load=$corePlugin"]
+  version = "${project.forge_mc_version}-${project.forge_version}"
+  runDir = 'run'
+  mappings = "${project.mcp_mappings}"
 
-    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+  replace '@FINGERPRINT@', project.findProperty('signSHA1')
 
-    if (project.hasProperty('mc_username')) {
-        clientRunArgs += ['--username', "${project.mc_username}"]
-        if (project.hasProperty('mc_password')) {
-            clientRunArgs += ['--password=', "${project.mc_password}"]
-        }
+  if (project.hasProperty('coreplugin')) {
+    clientJvmArgs += ['-Dfml.coreMods.load', project.coreplugin]
+    serverJvmArgs += ['-Dfml.coreMods.load', project.coreplugin]
+  }
+
+  if (project.hasProperty('mc_username')) {
+    clientRunArgs += ['--username', "${project.mc_username}"]
+    if (project.hasProperty('mc_password')) {
+      clientRunArgs += ['--password=', "${project.mc_password}"]
     }
-    if (project.hasProperty('mc_uuid')) {
-        clientRunArgs += ['--uuid', "${project.mc_uuid}"]
-    }
+  }
+  if (project.hasProperty('mc_uuid')) {
+    clientRunArgs += ['--uuid', "${project.mc_uuid}"]
+  }
 
-	// disable server gui
-    serverRunArgs += "nogui"
+  // disable server gui
+  serverRunArgs += "nogui"
 
-	// skip the screen to confirm that you want to load a world with missing registry entries
-    serverJvmArgs += "-Dfml.doNotBackup=true"
-    clientJvmArgs += "-Dfml.doNotBackup=true"
+  // skip the screen to confirm that you want to load a world with missing registry entries
+  serverJvmArgs += "-Dfml.doNotBackup=true"
+  clientJvmArgs += "-Dfml.doNotBackup=true"
 
-	// skip having to confirm on server
-    serverJvmArgs += "-Dfml.queryResult=confirm"
-    
-    //skip jansi warnings in the log
-    serverJvmArgs += "-Dlog4j.skipJansi=true"
-    clientJvmArgs += "-Dlog4j.skipJansi=true"
+  // skip having to confirm on server
+  serverJvmArgs += "-Dfml.queryResult=confirm"
 
-    if (project.hasProperty('client_args')) {
-        clientJvmArgs += "${project.client_args}"
-    }
-    if (project.hasProperty('server_args')) {
-        serverJvmArgs += "${project.server_args}"
-    }
+  //skip jansi warnings in the log
+  serverJvmArgs += "-Dlog4j.skipJansi=true"
+  clientJvmArgs += "-Dlog4j.skipJansi=true"
+
+  if (project.hasProperty('client_args')) {
+    clientJvmArgs += "${project.client_args}"
+  }
+  if (project.hasProperty('server_args')) {
+    serverJvmArgs += "${project.server_args}"
+  }
 }
 
 repositories {
-    maven { // Mantle, TCon, JEI
-        name 'DVS1 Maven FS'
-        url 'http://dvs1.progwml6.com/files/maven/'
+  maven { // Mantle, TCon, JEI
+    name 'DVS1 Maven FS'
+    url 'http://dvs1.progwml6.com/files/maven/'
+  }
+  maven { // CCL, CCC, NEI
+    name 'Chickenbones Repo'
+    url 'http://chickenbones.net/maven/'
+  }
+  maven { // The One Probe, EnderIO, EnderCore
+    name 'tterrag'
+    url 'http://maven.tterrag.com/'
+  }
+  maven { // Tesla
+    name 'MMD'
+    url 'https://maven.mcmoddev.com/'
+  }
+  maven { // MCMultipart
+    name 'amadornes'
+    url 'http://maven.amadornes.com/'
+  }
+  maven { // CraftTweaker, ZenScript
+    name 'blamejared'
+    url 'http://maven.blamejared.com/'
+  }
+  maven { // IC2
+    name 'industrialcraft'
+    url 'http://maven.ic2.player.to/'
+  }
+  maven { // HWYLA
+    name 'tehnut'
+    url 'http://tehnut.info/maven/'
+  }
+  maven { // CoFH
+    name 'Covers Maven'
+    url 'http://maven.covers1624.net/'
+  }
+  maven {
+    name = 'CurseForge'
+    url = 'https://minecraft.curseforge.com/api/maven/'
+  }
+  maven {
+    name 'opencomputers'
+    url 'http://maven.cil.li/'
+  }
+  maven { // Mekanism, TAIGA
+    name 'jitpack'
+    url 'https://jitpack.io/'
+  }
+  maven { // Buildcraft
+    name 'buildcraft'
+    url 'https://mod-buildcraft.com/maven/'
+  }
+  maven { // Storage Drawers
+    name 'thiakil'
+    url 'http://maven.thiakil.com/'
+  }
+  ivy {
+    url "http://ae-mod.info/builds"
+    layout "pattern", {
+    artifact "[module]-[revision](-[classifier])(.[ext])"
     }
-    maven { // CCL, CCC, NEI
-        name 'Chickenbones Repo'
-        url 'http://chickenbones.net/maven/'
-    }
-    maven { // The One Probe, EnderIO, EnderCore
-        name 'tterrag'
-        url 'http://maven.tterrag.com/'
-    }
-    maven { // Tesla
-        name 'MMD'
-        url 'https://maven.mcmoddev.com/'
-    }
-    maven { // MCMultipart
-        name 'amadornes'
-        url 'http://maven.amadornes.com/'
-    }
-    maven { // CraftTweaker, ZenScript
-        name 'blamejared'
-        url 'http://maven.blamejared.com/'
-    }
-    maven { // IC2
-        name 'industrialcraft'
-        url 'http://maven.ic2.player.to/'
-    }
-    maven { // HWYLA
-    	name 'tehnut'
-    	url 'http://tehnut.info/maven/'
-    }
-    maven { // CoFH
-    	name 'Covers Maven'
-    	url 'http://maven.covers1624.net/'
-    }
-	maven {
-        name = 'CurseForge'
-        url = 'https://minecraft.curseforge.com/api/maven/'
-    }
-	maven {
-        name 'opencomputers'
-        url 'http://maven.cil.li/'
-    }
-    maven { // Mekanism, TAIGA
-        name 'jitpack'
-        url 'https://jitpack.io/'
-    }
-    maven { // Buildcraft
-        name 'buildcraft'
-        url 'https://mod-buildcraft.com/maven/'
-    }
-    maven { // Storage Drawers
-        name 'thiakil'
-        url 'http://maven.thiakil.com/'
-    }
-    ivy {
-        url "http://ae-mod.info/builds"
-        layout "pattern", {
-            artifact "[module]-[revision](-[classifier])(.[ext])"
-        }
-	}
+  }
 }
 
 dependencies {
@@ -306,171 +306,169 @@ dependencies {
 }
 
 processResources {
-    inputs.property 'version', project.version
-    inputs.property 'mcversion', project.minecraft.version
+  inputs.property 'version', project.version
+  inputs.property 'mcversion', project.minecraft.version
 
-    from (sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version': short_version, 'mcversion': project.minecraft.version
-    }
+  from (sourceSets.main.resources.srcDirs) {
+    include 'mcmod.info'
+    expand 'version': short_version, 'mcversion': project.minecraft.version
+  }
 
-    from (sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+  from (sourceSets.main.resources.srcDirs) {
+    exclude 'mcmod.info'
+  }
 
-    rename '(.+_at.cfg)', 'META-INF/$1'
+  rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
 jar {
-    manifest {
-        attributes 'FMLCorePluginContainsFMLMod': 'true'
-        attributes 'FMLCorePlugin': corePlugin
+  manifest {
+    if (project.hasProperty('coreplugin')) {
+      attributes 'FMLCorePluginContainsFMLMod': 'true'
+      attributes 'FMLCorePlugin': project.coreplugin
     }
+  }
 }
 
 task deobfJar(type: Jar) {
-    classifier = 'deobf'
-    from sourceSets.main.output
+  classifier = 'deobf'
+  from sourceSets.main.output
 }
 
 task signJar(type: SignJar, dependsOn: reobfJar) {
+  // Skips if the keyStore property is missing.
+  onlyIf {
+    project.hasProperty('keyStore')
+  }
 
-    // Skips if the keyStore property is missing.
-    onlyIf {
-        project.hasProperty('keyStore')
-    }
-
-    // findProperty allows us to reference the property without it existing. 
-    // Using project.propName would cause the script to fail validation if 
-    // the property did not exist. 
-    keyStore = project.findProperty('keyStore')
-    alias = project.findProperty('keyStoreAlias')
-    storePass = project.findProperty('keyStorePass')
-    keyPass = project.findProperty('keyStoreKeyPass')
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
+  // findProperty allows us to reference the property without it existing. 
+  // Using project.propName would cause the script to fail validation if 
+  // the property did not exist. 
+  keyStore = project.findProperty('keyStore')
+  alias = project.findProperty('keyStoreAlias')
+  storePass = project.findProperty('keyStorePass')
+  keyPass = project.findProperty('keyStoreKeyPass')
+  inputFile = jar.archivePath
+  outputFile = jar.archivePath
 }
 
 build.dependsOn signJar
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.getDestinationDir()
+  classifier = 'javadoc'
+  from javadoc.getDestinationDir()
 }
 
 artifacts {
-    archives deobfJar
-    archives sourceJar
-    archives javadocJar
+  archives deobfJar
+  archives sourceJar
+  archives javadocJar
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId project.group
-            artifactId project.archivesBaseName
-            version project.version
-            from components.java
-            artifact sourceJar {
-                classifier 'sources'
-            }
-            artifact deobfJar {
-                classifier 'deobf'
-            }
-            artifact javadocJar {
-                classifier 'javadoc'
-            }
-        }
+  publications {
+    mavenJava(MavenPublication) {
+      groupId project.group
+      artifactId project.archivesBaseName
+      version project.version
+      from components.java
+      artifact sourceJar {
+        classifier 'sources'
+      }
+      artifact deobfJar {
+        classifier 'deobf'
+      }
+      artifact javadocJar {
+        classifier 'javadoc'
+      }
     }
-    repositories {
-        maven {
-            credentials {
-                username secret.username
-                password secret.password
-            }
-            url secret.url
-        }
+  }
+  repositories {
+    maven {
+      credentials {
+        username secret.username
+        password secret.password
+      }
+      url secret.url
     }
+  }
 }
 
 curseforge {
+  if (project.hasProperty('cf_project_id') && project.hasProperty('cf_release_type') &&
+      ((project.cf_release_type == "alpha") || (project.cf_release_type == "beta") || (project.cf_release_type == "release"))) {
     apiKey = secret.curseforgeAPIKey
     project {
-        id = '240967'
-        changelog = file('CHANGELOG.txt')
-        releaseType = 'release'
-        addGameVersion(project.mc_version)
-        def projectName = 'Base Metals'
-        def displayVersion = getVersion('VERSION', mod_file)
-        if (System.getenv().BUILD_NUMBER) {
-            displayVersion += '.' + System.getenv().BUILD_NUMBER
+      id = project.cf_project_id
+      changelog = file('CHANGELOG.txt')
+      releaseType = project.cf_release_type
+      addGameVersion(project.mc_version)
+      mainArtifact(jar) {
+        relations {
+          requiredLibrary 'mmd-orespawn'
+          optionalLibrary 'additional-loot-tables'
         }
-        mainArtifact(jar) {
-            displayName = "$project.description $displayVersion"
-            relations {
-                requiredLibrary 'mmd-orespawn'
-                optionalLibrary 'additional-loot-tables'
-            }
-        }
-        addArtifact(sourceJar) {
-            displayName = "$project.description $displayVersion Sources"
-        }
-        addArtifact(deobfJar) {
-            displayName = "$project.description $displayVersion Development"
-        }
-        addArtifact(javadocJar) {
-            displayName = "$project.description $displayVersion Javadoc"
-        }
+      }
+      addArtifact(sourceJar) {
+        displayName = "$project.description $display_version Sources"
+      }
+      addArtifact(deobfJar) {
+        displayName = "$project.description $display_version Development"
+      }
+      addArtifact(javadocJar) {
+        displayName = "$project.description $display_version Javadoc"
+      }
     }
+  }
 }
 
 sonarqube {
-    properties {
-        property 'sonar.host.url', secret.sonarHost
-        property 'sonar.organization', secret.sonarOrganization
-        property 'sonar.login', secret.sonarToken
-        property 'sonar.projectName', project.archivesBaseName
-        property 'sonar.projectKey', "$project.group:$project.archivesBaseName"
-        property 'sonar.junit.reportPaths', 'build/test-results/junit-platform/*.xml'
-        property 'sonar.jacoco.reportPaths', 'build/jacoco/junitPlatformTest.exec'
-    }
+  properties {
+    property 'sonar.host.url', secret.sonarHost
+    property 'sonar.organization', secret.sonarOrganization
+    property 'sonar.login', secret.sonarToken
+    property 'sonar.projectName', project.archivesBaseName
+    property 'sonar.projectKey', "$project.group:$project.archivesBaseName"
+    property 'sonar.junit.reportPaths', "${project.buildDir}/test-results/junit-platform/*.xml"
+    property 'sonar.jacoco.reportPaths', "${project.buildDir}/jacoco/junitPlatformTest.exec"
+  }
 }
 
 String getModFile() {
-    String path = ''
-    FileTree tree = fileTree(dir: 'src/main/java')
-    tree.include '**/*.java'
-    tree.visit { element ->
-        if (element.file.isFile()) {
-            element.file.eachLine { String s ->
-                s = s.trim()
-                if (s.startsWith('@Mod(')) {
-                    path = "src/main/java/$element.relativePath"
-                }
-            }
+  String path = ''
+  FileTree tree = fileTree(dir: 'src/main/java')
+  tree.include '**/*.java'
+  tree.visit { element ->
+    if (element.file.isFile()) {
+      element.file.eachLine { String s ->
+        s = s.trim()
+        if (s.startsWith('@Mod(')) {
+          path = "src/main/java/$element.relativePath"
         }
+      }
     }
-    return path
+  }
+  return path
 }
 
 String getVersion(String type, String mod_file) {
-    String major = '0'
-    String revision = '0'
-    String patch = '0'
-    File file = file(mod_file)
-	def prefix = ~/^(?:public|protected|private) static final String $type = ".*$/
-    file.eachLine { String s ->
-    	s = s.trim()
-        if (s ==~ prefix || prefix.matcher(s).matches()) {
-        	String[] bits = s.split("=")
-        	String interesting = bits[1].trim()
-        	interesting = interesting.substring(1, interesting.length() - 2)
-            String[] pts = interesting.trim().split("\\.")
+  String major = '0'
+  String revision = '0'
+  String patch = '0'
+  File file = file(mod_file)
+  def prefix = ~/^(?:public|protected|private) static final String $type = ".*$/
+  file.eachLine { String s ->
+    s = s.trim()
+    if (s ==~ prefix || prefix.matcher(s).matches()) {
+      String[] bits = s.split("=")
+      String interesting = bits[1].trim()
+      interesting = interesting.substring(1, interesting.length() - 2)
+      String[] pts = interesting.trim().split("\\.")
 
-            major = pts[0] ?: '0'
-            revision = pts[1] ?: '0'
-            patch = pts[2] ?: '0'
-        }
+      major = pts[0] ?: '0'
+      revision = pts[1] ?: '0'
+      patch = pts[2] ?: '0'
     }
-    return "$major.$revision.$patch"
+  }
+  return "$major.$revision.$patch"
 }
