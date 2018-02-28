@@ -7,7 +7,6 @@ import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -17,15 +16,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 /**
- * Axes
- * 
+ * Axes.
+ *
  * @author DrCyano
  *
  */
 public class ItemMMDAxe extends net.minecraft.item.ItemAxe implements IMMDObject {
 
-	protected final MMDMaterial material;
-	protected final String repairOreDictName;
+	private final MMDMaterial material;
 
 	/**
 	 *
@@ -39,7 +37,6 @@ public class ItemMMDAxe extends net.minecraft.item.ItemAxe implements IMMDObject
 		this.attackDamage = 4F + (2F * this.material.getBaseAttackDamage());
 		this.attackSpeed = -3.5F + Math.min(0.5F, 0.05F * this.material.getStat(MaterialStats.STRENGTH));
 		this.efficiency = this.material.getToolEfficiency();
-		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 
 	@Override

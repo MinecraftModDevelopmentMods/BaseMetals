@@ -7,7 +7,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import net.minecraft.block.BlockDoor;
 
 /**
- * Doors
+ * Doors.
  */
 public class ItemMMDDoor extends net.minecraft.item.ItemDoor implements IMMDObject {
 

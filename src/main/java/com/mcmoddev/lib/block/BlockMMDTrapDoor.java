@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Metal Trap Door
+ * Trap Door.
  */
 public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implements IMMDObject {
 
@@ -43,7 +43,7 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 		} else {
 			final IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
 			worldIn.setBlockState(pos, newState, 2);
-			this.playSound(playerIn, worldIn, pos, ((Boolean)newState.getValue(OPEN)).booleanValue());
+			this.playSound(playerIn, worldIn, pos, ((Boolean) newState.getValue(OPEN)).booleanValue());
 			return true;
 		}
 	}

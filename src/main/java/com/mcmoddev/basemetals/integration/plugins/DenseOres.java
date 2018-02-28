@@ -12,7 +12,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = DenseOres.PLUGIN_MODID)
-public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBase implements IIntegration {
+public final class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBase implements IIntegration {
 
 	@Override
 	public void init() {
@@ -24,8 +24,8 @@ public class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBas
 	}
 
 	/**
-	 * Register all ores that are currently known by the materials registry
-	 * 
+	 * Register all ores that are currently known by the materials registry.
+	 *
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
 	private static void registerOres() {

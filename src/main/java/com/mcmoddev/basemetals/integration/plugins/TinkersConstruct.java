@@ -25,13 +25,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  *
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, preInitCallback = "preInit", initCallback = "initCallback", postInitCallback = "postInit")
-public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase
+public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase
 		implements IIntegration {
 
 	private Boolean preInit = false;
 	private Boolean init = false;
 	private Boolean postInit = false;
-	
+
 	@Override
 	public void init() {
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
@@ -59,29 +59,44 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	/**
+	 *
+	 */
 	public void preInit() {
-		if(preInit) return;
+		if (preInit) {
+			return;
+		}
 		preInit = true;
 		preInitSetup();
 		registerMelting();
 		setMaterialsVisible(BaseMetals.MODID);
 	}
 
+	/**
+	 *
+	 */
 	public void initCallback() {
-		if(init) return;
+		if (init) {
+			return;
+		}
 		init = true;
 		registerAlloys();
 		initSetup(BaseMetals.MODID);
 	}
 
+	/**
+	 *
+	 */
 	public void postInit() {
-		if(postInit) return;
+		if (postInit) {
+			return;
+		}
 		postInit = true;
 		postInitSetup(BaseMetals.MODID);
 	}
 
 	@SubscribeEvent
-	public void registerModifiers(RegistryEvent.Register<Item> event) {
+	public void registerModifiers(final RegistryEvent.Register<Item> event) {
 		super.modifierSetup();
 		super.modifierRegister();
 	}
@@ -104,7 +119,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 	}
 
-	private boolean isTraitLoc(String loc) {
+	private boolean isTraitLoc(final String loc) {
 		switch (loc) {
 			case TraitLocations.BOW:
 			case TraitLocations.BOWSTRING:
@@ -120,7 +135,7 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 	}
 
-	private void addTraits(TCMaterial mat, String[] traits) {
+	private void addTraits(final TCMaterial mat, final String[] traits) {
 		int i = 0;
 		while (i < traits.length) {
 			if (i == (traits.length - 1)) {
@@ -142,20 +157,24 @@ public class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.Tinke
 		}
 	}
 
-	private void registerMaterial(String name, boolean castable, boolean craftable, String... traits) {
-		if (!Materials.hasMaterial(name))
+	private void registerMaterial(final String name, final boolean castable, final boolean craftable, final String... traits) {
+		if (!Materials.hasMaterial(name)) {
 			return;
+		}
 
 		final MMDMaterial mmdMat = Materials.getMaterialByName(name);
 		final TCMaterial mat = registry.newMaterial(name, mmdMat.getTintColor());
 
-		if (mmdMat.isEmpty())
+		if (mmdMat.isEmpty()) {
 			return;
+		}
 
-		if (castable)
+		if (castable) {
 			mat.setCastable();
-		if (craftable)
+		}
+		if (craftable) {
 			mat.setCraftable();
+		}
 
 		mat.setSourceMaterial(mmdMat);
 		mat.genStatsFromSource();

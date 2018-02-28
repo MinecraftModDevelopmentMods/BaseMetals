@@ -245,7 +245,12 @@ public class Oredicts {
 	public static final String NUGGET_CHARCOAL = "nuggetCharcoal";
 	public static final String NUGGET_COAL = "nuggetCoal";
 
-	public static void registerOre(String name, Block block) {
+	/**
+	 *
+	 * @param name
+	 * @param block
+	 */
+	public static void registerOre(final String name, final Block block) {
 		if (block != null) {
 			if (oreDictBlockMap.containsKey(name)) {
 				oreDictBlockMap.get(name).add(block);
@@ -257,7 +262,12 @@ public class Oredicts {
 		}
 	}
 
-	public static void registerOre(String name, Item item) {
+	/**
+	 *
+	 * @param name
+	 * @param item
+	 */
+	public static void registerOre(final String name, final Item item) {
 		if (item != null) {
 			if (oreDictItemMap.containsKey(name)) {
 				oreDictItemMap.get(name).add(item);
@@ -269,7 +279,12 @@ public class Oredicts {
 		}
 	}
 
-	public static void registerOre(String name, ItemStack itemStack) {
+	/**
+	 *
+	 * @param name
+	 * @param itemStack
+	 */
+	public static void registerOre(final String name, final ItemStack itemStack) {
 		if (itemStack != null) {
 			if (oreDictItemStackMap.containsKey(name)) {
 				oreDictItemStackMap.get(name).add(itemStack);
@@ -282,6 +297,9 @@ public class Oredicts {
 
 	}
 
+	/**
+	 *
+	 */
 	public static void registerItemOreDictionaryEntries() {
 		for (final Entry<String, List<Item>> ent : oreDictItemMap.entrySet()) {
 			for (final Item i : ent.getValue()) {
@@ -296,9 +314,12 @@ public class Oredicts {
 					OreDictionary.registerOre(ent.getKey(), is);
 				}
 			}
-		}		
+		}
 	}
 
+	/**
+	 *
+	 */
 	public static void registerBlockOreDictionaryEntries() {
 		for (final Entry<String, List<Block>> ent : oreDictBlockMap.entrySet()) {
 			for (final Block b : ent.getValue()) {

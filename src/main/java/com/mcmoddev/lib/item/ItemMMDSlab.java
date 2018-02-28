@@ -13,7 +13,7 @@ import net.minecraft.block.BlockSlab;
  */
 public class ItemMMDSlab extends net.minecraft.item.ItemSlab implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *

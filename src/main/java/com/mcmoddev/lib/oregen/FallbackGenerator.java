@@ -14,12 +14,14 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class FallbackGenerator implements IWorldGenerator {
 
 	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator,
-			IChunkProvider chunkProvider) {
+	public void generate(final Random random, final int chunkX, final int chunkZ, final World world, final IChunkGenerator chunkGenerator,
+			final IChunkProvider chunkProvider) {
 
 		final int dimension = world.provider.getDimension();
 		final List<WorldGenMinable> ores = new ArrayList<>(FallbackGeneratorData.getInstance().getSpawnsForDimension(dimension));
-		if (dimension != -1 && dimension != 1) ores.addAll(FallbackGeneratorData.getInstance().getSpawnsForDimension(Integer.MIN_VALUE));
+		if (dimension != -1 && dimension != 1) {
+			ores.addAll(FallbackGeneratorData.getInstance().getSpawnsForDimension(Integer.MIN_VALUE));
+		}
 
 		final int minY = getMinYForDimension(dimension);
 		final int maxY = getMaxYForDimension(dimension);
@@ -36,10 +38,10 @@ public class FallbackGenerator implements IWorldGenerator {
 	}
 
 	private int getMaxYForDimension(final int dimension) {
-		return dimension==-1?126:dimension==1?256:80;
+		return dimension == -1 ? 126 : dimension == 1 ? 256 : 80;
 	}
 
 	private int getMinYForDimension(final int dimension) {
-		return dimension==-1||dimension==1?0:16;
+		return dimension == -1 || dimension == 1 ? 0 : 16;
 	}
 }

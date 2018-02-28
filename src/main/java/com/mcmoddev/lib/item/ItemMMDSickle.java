@@ -19,6 +19,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -30,8 +32,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 
@@ -45,6 +45,10 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	private float attackDamage;
 	private float attackSpeed;
 
+	/**
+	 *
+	 * @param material
+	 */
 	public ItemMMDSickle(final MMDMaterial material) {
 		super(material);
 		this.efficiency = material.getToolEfficiency();
@@ -61,8 +65,9 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	@Override
 	public float getDestroySpeed(final ItemStack stack, final IBlockState state) {
 		for (final String type : getToolClasses(stack)) {
-			if (state.getBlock().isToolEffective(type, state))
+			if (state.getBlock().isToolEffective(type, state)) {
 				return efficiency;
+			}
 		}
 		return this.isEffective(state) ? this.efficiency : 1.0F;
 	}
@@ -138,8 +143,8 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	}
 
 	/**
-	 * Determine if a particular tool is effective against a given block/blockstate
-	 * 
+	 * Determine if a particular tool is effective against a given block/blockstate.
+	 *
 	 * @param stack
 	 *            the tool in question
 	 * @param state
@@ -194,13 +199,15 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	 */
 	@Override
 	@Deprecated
+	@SuppressWarnings("unused")
 	public Multimap<String, AttributeModifier> getItemAttributeModifiers(final EntityEquipmentSlot equipmentSlot) {
 		final Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, ItemStack.EMPTY);
 
+		// XXX: We drop the returns in booleans because it makes findbugs happy, maybe we should do something with them?
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
+			final boolean attackDamageReturned = multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
 					new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", (double) this.attackDamage, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
+			final boolean attackSpeedReturned = multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
 					new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", (double) this.attackSpeed, 0));
 		}
 

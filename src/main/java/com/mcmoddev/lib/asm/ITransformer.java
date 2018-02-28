@@ -9,7 +9,13 @@ public interface ITransformer extends Opcodes {
 
 	ClassNode transform(ClassNode node, boolean dev);
 
-	public static boolean oneEquals(String[] names, String target) {
+	/**
+	 *
+	 * @param names
+	 * @param target
+	 * @return
+	 */
+	public static boolean oneEquals(final String[] names, final String target) {
 		for (final String name : names) {
 			if (target.equals(name)) {
 				return true;

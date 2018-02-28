@@ -56,8 +56,8 @@ public class Materials {
 	}
 
 	/**
-	 * Create a oreless material
-	 * 
+	 * Create a oreless material.
+	 *
 	 * @param name
 	 *            Name of the material
 	 * @param type
@@ -83,8 +83,8 @@ public class Materials {
 	}
 
 	/**
-	 * Create a standard material
-	 * 
+	 * Create a standard material.
+	 *
 	 * @param name
 	 *            Name of the material
 	 * @param type
@@ -110,8 +110,8 @@ public class Materials {
 	}
 
 	/**
-	 * Create an alloy material
-	 * 
+	 * Create an alloy material.
+	 *
 	 * @param name
 	 *            Name of the material
 	 * @param type
@@ -137,8 +137,8 @@ public class Materials {
 	}
 
 	/**
-	 * Create a special alloy material which has an ore block
-	 * 
+	 * Create a special alloy material which has an ore block.
+	 *
 	 * @param name
 	 *            Name of the material
 	 * @param type
@@ -164,8 +164,8 @@ public class Materials {
 	}
 
 	/**
-	 * Create a rare, oreless material
-	 * 
+	 * Create a rare, oreless material.
+	 *
 	 * @param name
 	 *            Name of the material
 	 * @param type
@@ -191,8 +191,8 @@ public class Materials {
 	}
 
 	/**
-	 * Create a rare material
-	 * 
+	 * Create a rare material.
+	 *
 	 * @param name
 	 *            Name of the material
 	 * @param type
@@ -218,8 +218,8 @@ public class Materials {
 	}
 
 	/**
-	 * Create a rare alloy material
-	 * 
+	 * Create a rare alloy material.
+	 *
 	 * @param name
 	 *            Name of the material
 	 * @param type
@@ -245,8 +245,8 @@ public class Materials {
 	}
 
 	/**
-	 * Create a special rare alloy material
-	 * 
+	 * Create a special rare alloy material.
+	 *
 	 * @param name
 	 *            Name of the material
 	 * @param type
@@ -272,8 +272,8 @@ public class Materials {
 	}
 
 	/**
-	 * Register a material
-	 * 
+	 * Register a material.
+	 *
 	 * @param material
 	 *            the material to register
 	 * @return the material
@@ -317,7 +317,7 @@ public class Materials {
 	}
 
 	/**
-	 * Gets the armor material for a given material
+	 * Gets the armor material for a given material.
 	 *
 	 * @param material
 	 *            The material of interest
@@ -329,7 +329,7 @@ public class Materials {
 	}
 
 	/**
-	 * Gets the tool material for a given material
+	 * Gets the tool material for a given material.
 	 *
 	 * @param material
 	 *            The metal of interest
@@ -367,8 +367,8 @@ public class Materials {
 	}
 
 	/**
-	 * Gets all materials from a given mod
-	 * 
+	 * Gets all materials from a given mod.
+	 *
 	 * @param modId
 	 *            the ModID of the mod
 	 * @return an immutable collection representing all the materials registered by
@@ -381,7 +381,7 @@ public class Materials {
 	}
 
 	/**
-	 * Checks is a material is enabled and registered
+	 * Checks is a material is enabled and registered.
 	 *
 	 * @param materialName
 	 *            Name of the material to check for
@@ -392,6 +392,11 @@ public class Materials {
 		return ((material.getName().equals(materialName)) && (ConfigBase.Options.isMaterialEnabled(materialName)));
 	}
 
+	/**
+	 *
+	 * @param modId
+	 * @return
+	 */
 	public static boolean hasMaterialFromMod(@Nonnull final String modId) {
 		for (ResourceLocation rl : REGISTRY.getKeys()) {
 			if (rl.getResourceDomain().equals(modId)) {

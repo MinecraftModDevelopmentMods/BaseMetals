@@ -7,8 +7,12 @@ import net.minecraft.block.state.IBlockState;
 
 public class BlockMMDBookshelf extends net.minecraft.block.BlockBookshelf implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
+	/**
+	 *
+	 * @param material
+	 */
 	public BlockMMDBookshelf(final MMDMaterial material) {
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());

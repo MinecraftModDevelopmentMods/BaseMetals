@@ -8,8 +8,8 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import net.minecraft.item.ItemStack;
 
 /**
- * version of Item that stores a material
- * 
+ * version of Item that stores a material.
+ *
  * @author DrCyano
  *
  */
@@ -38,7 +38,7 @@ public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObjec
 
 	@Override
 	public int getItemBurnTime(@Nonnull final ItemStack itemStack) {
-		if( itemStack.getItem().equals(this) ) {
+		if (itemStack.getItem().equals(this)) {
 			return this.burnTime;
 		} else {
 			return itemStack.getItem().getItemBurnTime(itemStack);

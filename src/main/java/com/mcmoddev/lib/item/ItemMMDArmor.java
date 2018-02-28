@@ -26,8 +26,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Armor
- * 
+ * Armor.
+ *
  * @author DrCyano
  *
  */
@@ -57,7 +57,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 		if (!w.isRemote && w.getTotalWorldTime() > playerUpdateTimestampMap.get(player).get()) {
 			playerUpdateTimestampMap.get(player).set(w.getTotalWorldTime() + UPDATE_INTERVAL);
 			final int updateCount = playerUpdateCountMap.get(player).getAndIncrement();
-			for(int i = 0; i < 4; i++) {
+			for (int i = 0; i < 4; i++) {
 				final ItemStack armorItemStack = player.inventory.armorInventory.get(i);
 				if ((!armorItemStack.isEmpty()) && (armorItemStack.getItem() instanceof ItemMMDArmor)) {
 					MMDToolEffects.extraEffectsOnArmorUpdate(w, player, this.mmdMaterial, armorItemStack, updateCount);
@@ -66,6 +66,12 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 		}
 	}
 
+	/**
+	 *
+	 * @param material
+	 * @param name
+	 * @return
+	 */
 	public static ItemMMDArmor createArmor(@Nonnull final MMDMaterial material, final Names name) {
 		EntityEquipmentSlot slot = null;
 		switch (name) {
@@ -117,7 +123,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	}
 
 	/**
-	 * 
+	 *
 	 * @param item
 	 *            The item
 	 * @param world

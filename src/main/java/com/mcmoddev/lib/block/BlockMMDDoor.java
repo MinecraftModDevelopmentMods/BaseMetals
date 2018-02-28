@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Door Block
+ * Door Block.
  *
  * @author DrCyano
  *
@@ -58,6 +58,7 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	}
 
 	@Override
+	@Nullable
 	public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
 		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null : this.material.getItem(Names.DOOR);
 	}
@@ -76,7 +77,7 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 				final IBlockState newState = iblockstate.cycleProperty(BlockDoor.OPEN);
 				worldIn.setBlockState(blockpos, newState, 10);
 				worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
-				this.playSound(playerIn, worldIn, blockpos, ((Boolean)newState.getValue(BlockDoor.OPEN)).booleanValue());
+				this.playSound(playerIn, worldIn, blockpos, ((Boolean) newState.getValue(BlockDoor.OPEN)).booleanValue());
 				return true;
 			}
 		}

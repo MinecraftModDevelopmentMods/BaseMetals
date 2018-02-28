@@ -27,16 +27,16 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
- * Base Metals Client Proxy
+ * Base Metals Client Proxy.
  *
  * @author Jasmine Iwanek
  *
  */
 @EventBusSubscriber
-public class ClientProxy extends CommonProxy {
+public final class ClientProxy extends CommonProxy {
 
 	@Override
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(final FMLPreInitializationEvent event) {
 		super.preInit(event);
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class, RenderCustomArrow::new);
@@ -44,12 +44,16 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public static void registerModels(ModelRegistryEvent event) {
+	public static void registerModels(final ModelRegistryEvent event) {
 		for (final String name : Items.getItemRegistry().keySet()) {
-			if (!name.endsWith(Names.ANVIL.toString()))
+			if (!name.endsWith(Names.ANVIL.toString())) {
 				RegistrationHelper.registerItemRender(name);
-			else {
+			} else {
 				final String[] names = new String[] { "intact", "slightly_damaged", "very_damaged" };
 				final Item item = Items.getItemByName(name);
 				for (int i = 0; i < 3; i++) {
@@ -64,15 +68,19 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void fluidRendering(RegistryEvent.Register<MMDMaterial> event) {
+	public void fluidRendering(final RegistryEvent.Register<MMDMaterial> event) {
 		for (final String name : Fluids.getFluidBlockRegistry().keySet()) {
 			RegistrationHelper.registerFluidRender(name);
 		}
 	}
 
 	@Override
-	public void init(FMLInitializationEvent event) {
+	public void init(final FMLInitializationEvent event) {
 		super.init(event);
 		if (Loader.isModLoaded("waila")) {
 			com.mcmoddev.lib.waila.Waila.init();

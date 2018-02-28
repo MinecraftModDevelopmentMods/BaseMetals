@@ -4,8 +4,8 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 
 /**
- * Gears
- * 
+ * Gears.
+ *
  * @author Jasmine Iwanek
  *
  */

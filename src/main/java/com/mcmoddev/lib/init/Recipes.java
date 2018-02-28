@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
@@ -235,7 +234,7 @@ public abstract class Recipes {
 			if ((material.hasItem(Names.POWDER)) && (material.hasItem(Names.SMALLPOWDER))) {
 				GameRegistry.addSmelting(material.getItemStack(Names.SMALLPOWDER),
 						material.getItemStack(Names.NUGGET, 1), 0);
-				
+
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName,
 						material.getItemStack(Names.SMALLPOWDER, 1));
 			}
@@ -270,7 +269,7 @@ public abstract class Recipes {
 					material.getBlockItemStack(Names.BLOCK, 1), 0);
 		}
 
-		Map<Names,Integer> stuff = new TreeMap<>();
+		Map<Names, Integer> stuff = new TreeMap<>();
 		stuff.put(Names.PLATE, 1);
 		stuff.put(Names.PRESSURE_PLATE, 2);
 		stuff.put(Names.DOOR, 2);
@@ -303,11 +302,12 @@ public abstract class Recipes {
 
 			if (material.hasItem(Names.POWDER)) {
 				ItemStack ingot;
-				if (material.getName().equals(MaterialNames.CHARCOAL))
+				if (material.getName().equals(MaterialNames.CHARCOAL)) {
 					ingot = new ItemStack(material.getItem(Names.INGOT), 1, 1);
-				else
+				} else {
 					ingot = material.getItemStack(Names.INGOT);
-					
+				}
+
 				GameRegistry.addSmelting(material.getItemStack(Names.POWDER),
 						ingot, oreSmeltXP);
 			}
@@ -346,7 +346,7 @@ public abstract class Recipes {
 
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
 		if ((material.hasItem(Names.INGOT)) && (Options.furnaceCheese())) {
-			Map<Names,Integer> stuff = new TreeMap<>();
+			Map<Names, Integer> stuff = new TreeMap<>();
 			stuff.put(Names.BOOTS, 4);
 			stuff.put(Names.HELMET, 5);
 			stuff.put(Names.SWORD, 2);
@@ -358,19 +358,21 @@ public abstract class Recipes {
 			stuff.put(Names.CHESTPLATE, 8);
 
 			stuff.entrySet().stream().filter(ent -> material.hasItem(ent.getKey()))
-			.forEach(ent-> GameRegistry.addSmelting(material.getItemStack(ent.getKey()),
+			.forEach(ent -> GameRegistry.addSmelting(material.getItemStack(ent.getKey()),
 					material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
 
-			if (material.hasItem(Names.CRACKHAMMER))
+			if (material.hasItem(Names.CRACKHAMMER)) {
 				GameRegistry.addSmelting(material.getItemStack(Names.CRACKHAMMER),
 						material.getBlockItemStack(Names.BLOCK, 1), 0);
+			}
 		}
 	}
 
 	private static void initModSpecificRecipes() {
 		for (MMDMaterial material : Materials.getAllMaterials()) {
-			if (material.isEmpty())
+			if (material.isEmpty()) {
 				continue;
+			}
 
 			if (Options.isModEnabled(IC2Base.PLUGIN_MODID)) {
 				if ((isMMDItem(material, Names.CRUSHED)) && material.hasItem(Names.INGOT)) {
@@ -385,7 +387,7 @@ public abstract class Recipes {
 		}
 	}
 
-	protected static void addAdditionalOredicts(@Nonnull final String materialName, String oreDictName) {
+	protected static void addAdditionalOredicts(@Nonnull final String materialName, final String oreDictName) {
 		addAdditionalOredicts(Materials.getMaterialByName(materialName), oreDictName);
 	}
 
@@ -403,7 +405,7 @@ public abstract class Recipes {
 		if (material.hasBlock(Names.BLOCK)) {
 			OreDictionary.registerOre(Oredicts.BLOCK + oreDictName, material.getBlockItemStack(Names.BLOCK));
 		}
-		
+
 		Map<Names, String> stuff = new TreeMap<>();
 		stuff.put(Names.PLATE, Oredicts.PLATE);
 		stuff.put(Names.DOOR, Oredicts.DOOR);
@@ -416,8 +418,8 @@ public abstract class Recipes {
 
 		stuff.entrySet().stream()
 		.filter(ent -> material.hasItem(ent.getKey()))
-		.forEach(ent-> OreDictionary.registerOre(ent.getValue()+oreDictName, material.getItemStack(ent.getKey())));
-		
+		.forEach(ent -> OreDictionary.registerOre(ent.getValue() + oreDictName, material.getItemStack(ent.getKey())));
+
 		if (material.hasBlock(Names.BARS)) {
 			OreDictionary.registerOre(Oredicts.BARS + oreDictName, material.getBlockItemStack(Names.BARS));
 		}
@@ -445,7 +447,11 @@ public abstract class Recipes {
 		}
 	}
 
-	public static void register(RegistryEvent.Register<IRecipe> event) {
+	/**
+	 *
+	 * @param event
+	 */
+	public static void register(final RegistryEvent.Register<IRecipe> event) {
 		String mod = Loader.instance().activeModContainer().getModId();
 		if (!Materials.hasMaterialFromMod(mod)) {
 			return;
@@ -467,7 +473,7 @@ public abstract class Recipes {
 				event.getRegistry().register(buckMerc);
 			}
 		}
-	
+
 		initPureVanillaOredicts();
 		initPureVanillaCrusherRecipes();
 		initVanillaRecipes();
@@ -481,7 +487,7 @@ public abstract class Recipes {
 	 * @param name Name of the Block to check
 	 * @return boolean Is it IMMDObject?
 	 */
-	protected static boolean isMMDBlock(final MMDMaterial material, Names name) {
+	protected static boolean isMMDBlock(final MMDMaterial material, final Names name) {
 		return ((material.hasBlock(name)) && (material.getBlock(name) instanceof IMMDObject));
 	}
 

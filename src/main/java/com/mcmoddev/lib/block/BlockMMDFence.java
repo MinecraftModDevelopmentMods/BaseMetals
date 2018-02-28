@@ -9,8 +9,12 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockMMDFence extends net.minecraft.block.BlockFence implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
+	/**
+	 *
+	 * @param material
+	 */
 	public BlockMMDFence(final MMDMaterial material) {
 		super(material.getVanillaMaterial(), material.getVanillaMaterial().getMaterialMapColor());
 		this.material = material;

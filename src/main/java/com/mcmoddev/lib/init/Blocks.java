@@ -14,11 +14,29 @@ import javax.annotation.Nullable;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.block.*;
+import com.mcmoddev.lib.block.BlockMMDAnvil;
+import com.mcmoddev.lib.block.BlockMMDBars;
+import com.mcmoddev.lib.block.BlockMMDBlock;
+import com.mcmoddev.lib.block.BlockMMDBookshelf;
+import com.mcmoddev.lib.block.BlockMMDButton;
+import com.mcmoddev.lib.block.BlockMMDDoor;
+import com.mcmoddev.lib.block.BlockMMDFence;
+import com.mcmoddev.lib.block.BlockMMDFenceGate;
+import com.mcmoddev.lib.block.BlockMMDFlowerPot;
+import com.mcmoddev.lib.block.BlockMMDLadder;
+import com.mcmoddev.lib.block.BlockMMDLever;
+import com.mcmoddev.lib.block.BlockMMDNetherOre;
+import com.mcmoddev.lib.block.BlockMMDOre;
+import com.mcmoddev.lib.block.BlockMMDPlate;
+import com.mcmoddev.lib.block.BlockMMDPressurePlate;
+import com.mcmoddev.lib.block.BlockMMDSlab;
+import com.mcmoddev.lib.block.BlockMMDStairs;
+import com.mcmoddev.lib.block.BlockMMDTrapDoor;
+import com.mcmoddev.lib.block.BlockMMDTripWireHook;
+import com.mcmoddev.lib.block.BlockMMDWall;
 import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -30,7 +48,6 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.fluids.BlockFluidBase;
 
 /**
  * This class initializes all blocks in Base Metals and provides some utility
@@ -42,7 +59,6 @@ import net.minecraftforge.fluids.BlockFluidBase;
 public abstract class Blocks {
 
 	private static final BiMap<String, Block> blockRegistry = HashBiMap.create(16);
-	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create(16);
 	private static final Map<MMDMaterial, List<Block>> blocksByMaterial = new HashMap<>();
 
 	private static final EnumMap<Names, Class<? extends Block>> nameToClass = new EnumMap<>(Names.class);
@@ -97,7 +113,7 @@ public abstract class Blocks {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            Name of the requested block type
 	 * @param material
@@ -117,7 +133,7 @@ public abstract class Blocks {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            Name of the requested block type
 	 * @param material
@@ -155,13 +171,13 @@ public abstract class Blocks {
 		return block;
 	}
 
-	private static boolean doesThisNeedBlock(Names name) {
-		return ((name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE)) || (name.equals(Names.FLOWER_POT)) ||
-				 (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS)) || (name.equals(Names.TRIPWIRE_HOOK)) ||
-				 (name.equals(Names.WALL)));
+	private static boolean doesThisNeedBlock(final Names name) {
+		return ((name.equals(Names.FENCE)) || (name.equals(Names.FENCE_GATE)) || (name.equals(Names.FLOWER_POT))
+				|| (name.equals(Names.LADDER)) || (name.equals(Names.STAIRS)) || (name.equals(Names.TRIPWIRE_HOOK))
+				|| (name.equals(Names.WALL)));
 	}
 
-	private static boolean doesThisNeedOre(Names name) {
+	private static boolean doesThisNeedOre(final Names name) {
 		return ((name.equals(Names.ORE)) || (name.equals(Names.ENDORE)) || (name.equals(Names.NETHERORE)));
 	}
 
@@ -176,7 +192,7 @@ public abstract class Blocks {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param block
 	 *            the block of interest
 	 * @param name
@@ -193,7 +209,7 @@ public abstract class Blocks {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param block
 	 *            the block of interest
 	 * @param name
@@ -211,12 +227,6 @@ public abstract class Blocks {
 		block.setRegistryName(fullName);
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 
-		if (block instanceof BlockFluidBase) {
-			fluidBlockRegistry.put(fullName, (BlockFluidBase) block);
-		} else {
-			blockRegistry.put(fullName, block);
-		}
-
 		maybeMakeItemBlock(block, material, fullName);
 
 		if (tab != null) {
@@ -228,11 +238,11 @@ public abstract class Blocks {
 			blocksByMaterial.get(material).add(block);
 		}
 
-		return block;
+		return blockRegistry.put(fullName, block);
 	}
 
-	private static void maybeMakeItemBlock(Block block, MMDMaterial material, String fullName) {
-		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab) && (material != null) ) {
+	private static void maybeMakeItemBlock(final Block block, final MMDMaterial material, final String fullName) {
+		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab) && (material != null)) {
 			final ItemBlock itemBlock = new ItemMMDBlock(material, block);
 			itemBlock.setRegistryName(block.getRegistryName());
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
@@ -242,12 +252,12 @@ public abstract class Blocks {
 
 	private static String getBlockFullName(@Nonnull final Block block, final MMDMaterial material, @Nonnull final String name) {
 		if (block instanceof BlockMMDSlab.Double) {
-			return String.format( "double_%s_%s", material.getName(), Names.SLAB );
+			return String.format("double_%s_%s", material.getName(), Names.SLAB);
 		} else if ((name.startsWith("nether")) || (name.startsWith("end"))) {
 			String neededBit = name.substring(0, name.length() - 3);
-			return String.format( "%s_%s_%s", neededBit, material.getName(), Names.ORE );
-		} else if( material != null ) {
-			return String.format("%s_%s", material.getName(), name );
+			return String.format("%s_%s_%s", neededBit, material.getName(), Names.ORE);
+		} else if (material != null) {
+			return String.format("%s_%s", material.getName(), name);
 		} else {
 			return name;
 		}
@@ -362,7 +372,7 @@ public abstract class Blocks {
 	}
 
 	/**
-	 * Gets a map of all blocks added, sorted by material
+	 * Gets a map of all blocks added, sorted by material.
 	 *
 	 * @return An unmodifiable map of added items categorized by material
 	 */

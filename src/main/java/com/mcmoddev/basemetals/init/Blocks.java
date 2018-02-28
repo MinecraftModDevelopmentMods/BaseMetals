@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @author Jasmine Iwanek
  *
  */
-public class Blocks extends com.mcmoddev.lib.init.Blocks {
+public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	public static Block humanDetector;
 
@@ -76,8 +76,9 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 			create(Names.ORE, mercury);
-			if (mercury.hasBlock(Names.ORE))
+			if (mercury.hasBlock(Names.ORE)) {
 				mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
+			}
 		}
 	}
 
@@ -219,8 +220,12 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		for (MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID)) {
 			for (Block block : mat.getBlocks()) {
 				if (block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {

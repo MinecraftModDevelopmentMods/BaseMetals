@@ -30,20 +30,20 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 	/**
 	 * Called when the player stops using an Item (stops holding the right mouse button).
 	 */
-	private boolean getBaseFlag(EntityPlayer entityPlayer, ItemStack stack) {
+	private boolean getBaseFlag(final EntityPlayer entityPlayer, final ItemStack stack) {
 		return entityPlayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
 	}
-	
-	private boolean getOtherFlag(EntityPlayer entityPlayer, ItemStack itemStack, ItemStack stack) {
+
+	private boolean getOtherFlag(final EntityPlayer entityPlayer, final ItemStack itemStack, final ItemStack stack) {
 		return entityPlayer.capabilities.isCreativeMode || (itemStack.getItem() instanceof ItemBolt && ((ItemBolt) itemStack.getItem()).isInfinite(itemStack, stack, entityPlayer));
 	}
-	
-	private void doFireBolt(ItemStack itemStack, EntityPlayer entityPlayer, World worldIn, 
-			float f, ItemStack stack, boolean flag1) {
-		if(!(worldIn.isRemote)) {
+
+	private void doFireBolt(final ItemStack itemStack, final EntityPlayer entityPlayer, final World worldIn,
+			final float f, final ItemStack stack, final boolean flag1) {
+		if (!(worldIn.isRemote)) {
 			return;
 		}
-		
+
 		final ItemBolt itemBolt = ((ItemBolt) (itemStack.getItem() instanceof ItemBolt ? itemStack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
 		final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemStack, entityPlayer);
 		entityBolt.shoot(entityPlayer, entityPlayer.rotationPitch, entityPlayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
@@ -77,7 +77,7 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 		worldIn.spawnEntity(entityBolt);
 		worldIn.playSound((EntityPlayer) null, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, (1.0F / ((itemRand.nextFloat() * 0.4F) + 1.2F)) + (f * 0.5F));
 	}
-	
+
 	@Override
 	public void onPlayerStoppedUsing(final ItemStack stack, final World worldIn, final EntityLivingBase entityLiving, final int timeLeft) {
 		if (entityLiving instanceof EntityPlayer) {
@@ -96,8 +96,8 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 		}
 	}
 
-	private void maybeFireBolt(ItemStack itemStack, EntityPlayer entityPlayer, ItemStack stack, boolean flag, int i,
-			World worldIn) {
+	private void maybeFireBolt(final ItemStack itemStack, final EntityPlayer entityPlayer, final ItemStack stack, final boolean flag, final int i,
+			final World worldIn) {
 		if (!itemStack.isEmpty() || flag) {
 			final float f = getArrowVelocity(i);
 
@@ -105,13 +105,13 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 				final boolean flag1 = getOtherFlag(entityPlayer, itemStack, stack);
 
 				doFireBolt(itemStack, entityPlayer, worldIn, f, stack, flag1);
-				maybeChangeAmmo(entityPlayer,itemStack,flag1);
+				maybeChangeAmmo(entityPlayer, itemStack, flag1);
 				entityPlayer.addStat(StatList.getObjectUseStats(this));
 			}
 		}
 	}
 
-	private void maybeChangeAmmo(EntityPlayer entityPlayer, ItemStack itemStack, boolean flag1) {
+	private void maybeChangeAmmo(final EntityPlayer entityPlayer, final ItemStack itemStack, final boolean flag1) {
 		if (!flag1 && !entityPlayer.capabilities.isCreativeMode) {
 			itemStack.shrink(1);
 

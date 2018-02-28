@@ -18,7 +18,7 @@ import net.minecraft.world.IBlockAccess;
  */
 public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *

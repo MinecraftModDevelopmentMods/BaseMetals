@@ -6,7 +6,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class ItemMMDAnvilBlock extends net.minecraft.item.ItemMultiTexture implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	public ItemMMDAnvilBlock(final MMDMaterial material) {
 		super(material.getBlock(Names.ANVIL), material.getBlock(Names.ANVIL), new String[] {"intact", "slightlyDamaged", "veryDamaged"});

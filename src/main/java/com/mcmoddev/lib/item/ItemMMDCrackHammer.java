@@ -35,7 +35,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Crack Hammers
+ * Crack Hammers.
  */
 @SuppressWarnings("deprecation")
 public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements IMMDObject {
@@ -91,7 +91,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	}
 
 	@Override
-	public EnumActionResult onItemUse(final EntityPlayer player, final World w, final BlockPos coord, EnumHand hand, final EnumFacing facing, final float partialX, final float partialY, final float partialZ) {
+	public EnumActionResult onItemUse(final EntityPlayer player, final World w, final BlockPos coord, final EnumHand hand, final EnumFacing facing, final float partialX, final float partialY, final float partialZ) {
 		final ItemStack item = player.getHeldItemMainhand();
 		if (facing != EnumFacing.UP) {
 			return EnumActionResult.PASS;
@@ -99,43 +99,43 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		/*List<EntityItem> entities = */
 		AxisAlignedBB boundingBox = new AxisAlignedBB(coord.getX(), coord.getY() + 1, coord.getZ(), coord.getX() + 1, coord.getY() + 2, coord.getZ() + 1);
 		List<EntityItem> entities = w.getEntitiesWithinAABB(EntityItem.class, boundingBox).stream()
-				.filter( elem -> !(elem.getItem() == null) )
-				.filter( elem -> !(CrusherRecipeRegistry.getRecipeForInputItem(elem.getItem()) == null))
-				.collect( Collectors.toList());
+				.filter(elem -> (elem.getItem() != null))
+				.filter(elem -> (CrusherRecipeRegistry.getRecipeForInputItem(elem.getItem()) != null))
+				.collect(Collectors.toList());
 
-		if( !entities.isEmpty() ) {
+		if (!entities.isEmpty()) {
 			ItemStack targetItem = entities.get(0).getItem();
 			ICrusherRecipe recipe = CrusherRecipeRegistry.getRecipeForInputItem(targetItem);
-			if( hardnessCheck(targetItem) ) {
+			if (hardnessCheck(targetItem)) {
 				return EnumActionResult.PASS;
 			}
 
 			maybeDoCrack(recipe, targetItem, item, entities.get(0), player, w);
 			w.playSound(player, coord, SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.BLOCKS, 0.5F, 0.5F + (itemRand.nextFloat() * 0.3F));
 			return EnumActionResult.SUCCESS;
-		} 
+		}
 
 		return EnumActionResult.PASS;
 	}
 
-	private void maybeDoCrack(ICrusherRecipe recipe, ItemStack targetItem, ItemStack item, EntityItem target, EntityPlayer player, World w) {
+	private void maybeDoCrack(final ICrusherRecipe recipe, final ItemStack targetItem, final ItemStack item, final EntityItem target, final EntityPlayer player, final World w) {
 		if (!w.isRemote) {
 			ItemStack output = recipe.getOutput().copy();
 			int crackedCount = doDamageCheck(targetItem, item);
-			
+
 			double x = target.posX;
 			double y = target.posY;
 			double z = target.posZ;
 
 			doCrack(targetItem, crackedCount);
-			maybeRemoveEntity(targetItem,target,w);
+			maybeRemoveEntity(targetItem, target, w);
 			spawnResults(output, x, y, z, crackedCount, w);
-			
+
 			item.damageItem(crackedCount, player);
 		}
 	}
 
-	private boolean hardnessCheck(ItemStack targetItem) {
+	private boolean hardnessCheck(final ItemStack targetItem) {
 		if ((Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
 			Block b = ((ItemBlock) targetItem.getItem()).getBlock();
 			if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
@@ -145,19 +145,19 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		return false;
 	}
 
-	private void spawnResults(ItemStack output, double x, double y, double z, int crackedCount, World w) {
+	private void spawnResults(final ItemStack output, final double x, final double y, final double z, final int crackedCount, final World w) {
 		for (int i = 0; i < crackedCount; i++) {
 			w.spawnEntity(new EntityItem(w, x, y, z, output.copy()));
 		}
 	}
 
-	private void maybeRemoveEntity(ItemStack targetItem, EntityItem target, World w) {
+	private void maybeRemoveEntity(final ItemStack targetItem, final EntityItem target, final World w) {
 		if (targetItem.getCount() <= 0) {
 			w.removeEntity(target);
 		}
 	}
 
-	private void doCrack(ItemStack targetItem, int crackedCount) {
+	private void doCrack(final ItemStack targetItem, final int crackedCount) {
 		if (Options.crackHammerFullStack()) {
 			targetItem.shrink(crackedCount);
 		} else {
@@ -165,12 +165,12 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		}
 	}
 
-	private int doDamageCheck(ItemStack targetItem, ItemStack item) {
+	private int doDamageCheck(final ItemStack targetItem, final ItemStack item) {
 		if (Options.crackHammerFullStack()) {
 			int remainingDamage = item.getMaxDamage() - item.getItemDamage();
 			return Math.min(targetItem.getCount(), Math.min(targetItem.getMaxStackSize(), remainingDamage));
 		}
-		
+
 		return 1;
 	}
 
@@ -256,7 +256,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		String toolType = target.getHarvestTool(target.getDefaultState());
 		if (toolTypes.contains(toolType) || target.getMaterial(targetBS) == Material.ROCK) {
 			// can mine like a Pickaxe
-			return this.getHarvestLevel(null, Names.PICKAXE.toString(), player, targetBS) >= target.getHarvestLevel(target.getDefaultState());
+			return this.getHarvestLevel(ItemStack.EMPTY, Names.PICKAXE.toString(), player, targetBS) >= target.getHarvestLevel(target.getDefaultState());
 		} else if (Names.SHOVEL.toString().equals(toolType) && target.getHarvestLevel(target.getDefaultState()) <= 0) {
 			// can be dug with wooden shovel
 			return true;

@@ -38,7 +38,7 @@ import net.minecraftforge.fml.common.Loader;
 public abstract class Fluids {
 
 	private static final BiMap<String, Fluid> fluidRegistry = HashBiMap.create();
-	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create();
+	private static final BiMap<String, BlockFluidClassic> fluidBlockRegistry = HashBiMap.create();
 
 	protected Fluids() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -54,7 +54,7 @@ public abstract class Fluids {
 		return addFluid(Materials.getMaterialByName(materialName), density, viscosity, temperature, luminosity);
 	}
 
-	protected static Fluid addFluid(@Nonnull MMDMaterial material, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
+	protected static Fluid addFluid(@Nonnull final MMDMaterial material, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
 		if (material.getFluid() != null) {
 			return material.getFluid();
 		}
@@ -74,8 +74,7 @@ public abstract class Fluids {
 
 		material.setFluid(fluid);
 
-		fluidRegistry.put(material.getName(), fluid);
-		return fluid;
+		return fluidRegistry.put(material.getName(), fluid);
 	}
 
 	@Nullable
@@ -117,8 +116,8 @@ public abstract class Fluids {
 		material.addNewItem("fluidItemBlock", itemBlock);
 
 		material.setFluidBlock(block);
-		fluidBlockRegistry.put(name, block);
-		return block;
+
+		return fluidBlockRegistry.put(name, block);
 	}
 
 	/**
@@ -163,7 +162,7 @@ public abstract class Fluids {
 	 * @return The fluid block matching that name, or null if there isn't one
 	 */
 	@Nullable
-	public static BlockFluidBase getFluidBlockByName(@Nonnull String name) {
+	public static BlockFluidBase getFluidBlockByName(@Nonnull final String name) {
 		return fluidBlockRegistry.get(name);
 	}
 
@@ -178,7 +177,7 @@ public abstract class Fluids {
 	 *         fluid block.
 	 */
 	@Nullable
-	public static String getNameOfFluidBlock(@Nonnull BlockFluidBase block) {
+	public static String getNameOfFluidBlock(@Nonnull final BlockFluidBase block) {
 		return fluidBlockRegistry.inverse().get(block);
 	}
 

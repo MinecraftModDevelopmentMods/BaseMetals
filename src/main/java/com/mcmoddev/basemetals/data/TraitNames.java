@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.data;
 
 import com.mcmoddev.lib.data.SharedStrings;
 
-public class TraitNames {
+public final class TraitNames {
 
 	public static final String COLDBLOODED = "coldblooded";
 	public static final String INSATIABLE = "insatiable";

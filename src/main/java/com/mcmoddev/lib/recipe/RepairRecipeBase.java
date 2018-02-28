@@ -16,31 +16,38 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 
 	private static final String ARMOR = "armor";
-	public final MMDMaterial material;
-	public final ItemStack baseItem;
-	public final String materialName;
-	public final String itemName;
-	public final NonNullList<ItemStack> repairMaterials;
+	private final MMDMaterial material;
+	private final ItemStack baseItem;
+	private final String materialName;
+	private final String itemName;
+	private final NonNullList<ItemStack> repairMaterials;
 
-	public RepairRecipeBase(MMDMaterial material, Names itemName) {
-		super(new ResourceLocation(ARMOR), material.getItemStack(itemName), material.getName() + "_" + itemName.toString(), Oredicts.PLATE + material.getCapitalizedName());
-		this.material = material;
-		this.baseItem = material.getItemStack(itemName);
-		this.materialName = material.getCapitalizedName();
-		this.repairMaterials = OreDictionary.getOres(Oredicts.PLATE + this.materialName);
-		this.itemName = itemName.toString();
+	/**
+	 *
+	 * @param material
+	 * @param itemName
+	 */
+	public RepairRecipeBase(final MMDMaterial material, final Names itemName) {
+		this(material, itemName.toString(), material.getName() + "_" + itemName.toString(), Oredicts.PLATE + material.getCapitalizedName());
 	}
 
-	public RepairRecipeBase(MMDMaterial material, Names itemName, Object...objects) {
-		super(new ResourceLocation(ARMOR), material.getItemStack(itemName), objects);
-		this.material = material;
-		this.baseItem = material.getItemStack(itemName);
-		this.materialName = material.getCapitalizedName();
-		this.repairMaterials = OreDictionary.getOres(Oredicts.PLATE + this.materialName);
-		this.itemName = itemName.toString();
+	/**
+	 *
+	 * @param material
+	 * @param itemName
+	 * @param objects
+	 */
+	public RepairRecipeBase(final MMDMaterial material, final Names itemName, final Object...objects) {
+		this(material, itemName.toString(), objects);
 	}
 
-	public RepairRecipeBase(MMDMaterial material, String itemName, Object...objects) {
+	/**
+	 *
+	 * @param material
+	 * @param itemName
+	 * @param objects
+	 */
+	public RepairRecipeBase(final MMDMaterial material, final String itemName, final Object...objects) {
 		super(new ResourceLocation(ARMOR), material.getItemStack(itemName), objects);
 		this.material = material;
 		this.baseItem = material.getItemStack(itemName);
@@ -49,18 +56,18 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		this.itemName = itemName;
 	}
 
-	private boolean repairMaterialsDoesntContain(ItemStack itemStack) {
+	private boolean repairMaterialsDoesntContain(final ItemStack itemStack) {
 		return !repairMaterials.contains(itemStack);
 	}
-	
+
 	@Override
-	public boolean matches(InventoryCrafting inv, World worldIn) {
+	public boolean matches(final InventoryCrafting inv, final World worldIn) {
 		// make sure we have all the materials that can be used for repair, not just what was
 		// available when we were initialized.
 		OreDictionary.getOres(Oredicts.PLATE + this.materialName).stream()
 		.filter(this::repairMaterialsDoesntContain)
 		.forEach(repairMaterials::add);
-		
+
 		boolean matched = false;
 		boolean repairMatched = false;
 
@@ -77,7 +84,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		return matched ? repairMatched : false;
 	}
 
-	private ItemStack findBaseItem(InventoryCrafting inv) {
+	private ItemStack findBaseItem(final InventoryCrafting inv) {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			final ItemStack a = inv.getStackInSlot(i);
 			if (a != null) {
@@ -91,7 +98,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	}
 
 	@Override
-	public ItemStack getCraftingResult(InventoryCrafting inv) {
+	public ItemStack getCraftingResult(final InventoryCrafting inv) {
 		ItemStack target = findBaseItem(inv);
 		if (target.isEmpty()) {
 			return this.material.getItemStack(this.itemName);
@@ -103,6 +110,10 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		}
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public int getRecipeSize() {
 		int count = 1;
 		count += OreDictionary.getOres(Oredicts.PLATE + this.materialName).size();
@@ -114,6 +125,10 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		return this.material.getItemStack(this.itemName);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public NonNullList<Object> getInput() {
 		final NonNullList<Object> inputs = NonNullList.create();
 		inputs.add(this.baseItem);

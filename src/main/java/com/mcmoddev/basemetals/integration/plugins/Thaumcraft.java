@@ -6,7 +6,7 @@ import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Thaumcraft.PLUGIN_MODID)
-public class Thaumcraft extends com.mcmoddev.lib.integration.plugins.ThaumcraftBase implements IIntegration {
+public final class Thaumcraft extends com.mcmoddev.lib.integration.plugins.ThaumcraftBase implements IIntegration {
 
 	@Override
 	public void init() {

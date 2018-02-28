@@ -25,9 +25,13 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID, "textures/jei/jeihammeroverlay.png");
 	private final IDrawable background;
 	private final IDrawable icon;
-	protected final IDrawableAnimated hammer;
+	private final IDrawableAnimated hammer;
 
-	public ICrusherRecipeCategory(IGuiHelper guiHelper) {
+	/**
+	 *
+	 * @param guiHelper
+	 */
+	public ICrusherRecipeCategory(final IGuiHelper guiHelper) {
 		this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
 		this.icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
 
@@ -61,7 +65,7 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, @Nonnull ICrusherRecipeWrapper recipeWrapper, IIngredients ingredients) {
+	public void setRecipe(final IRecipeLayout recipeLayout, @Nonnull final ICrusherRecipeWrapper recipeWrapper, final IIngredients ingredients) {
 		final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
 		// init the input slot
@@ -80,12 +84,12 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 	}
 
 	@Override
-	public void drawExtras(Minecraft minecraft) {
+	public void drawExtras(final Minecraft minecraft) {
 		this.hammer.draw(minecraft,  71, 6);
 	}
 
 	@Override
-	public List<String> getTooltipStrings(int mouseX, int mouseY) {
+	public List<String> getTooltipStrings(final int mouseX, final int mouseY) {
 		return Collections.<String>emptyList();
 	}
 }

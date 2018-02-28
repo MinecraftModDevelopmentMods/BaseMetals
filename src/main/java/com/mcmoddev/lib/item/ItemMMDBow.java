@@ -5,7 +5,6 @@ import java.util.List;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -19,8 +18,7 @@ import net.minecraft.world.World;
  */
 public class ItemMMDBow extends net.minecraft.item.ItemBow implements IMMDObject {
 
-	protected final MMDMaterial material;
-	protected final String repairOreDictName;
+	private final MMDMaterial material;
 
 	/**
 	 *
@@ -30,7 +28,6 @@ public class ItemMMDBow extends net.minecraft.item.ItemBow implements IMMDObject
 	public ItemMMDBow(final MMDMaterial material) {
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
-		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 
 	@Override

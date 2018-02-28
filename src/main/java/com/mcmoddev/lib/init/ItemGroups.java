@@ -39,14 +39,14 @@ public class ItemGroups {
 	}
 
 	/**
-	 * Initializer
+	 * Initializer.
 	 */
 	public static void init() {
 		// Blank initializer
 	}
 
 	/**
-	 * Adds a non Searchable CreativeTab
+	 * Adds a non Searchable CreativeTab.
 	 *
 	 * @param name The Name of the CreativeTab
 	 * @return The CreativeTab
@@ -56,7 +56,7 @@ public class ItemGroups {
 	}
 
 	/**
-	 * Adds a CreativeTab
+	 * Adds a CreativeTab.
 	 *
 	 * @param name The Name of the CreativeTab
 	 * @param searchable Is is searchable?
@@ -83,7 +83,7 @@ public class ItemGroups {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name Name of the tab to get
 	 * @return The Tab
 	 */
@@ -93,7 +93,7 @@ public class ItemGroups {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param modName the ModID
 	 * @param name Name of the tab to get
 	 * @return The Tab
@@ -108,7 +108,7 @@ public class ItemGroups {
 	}
 
 	/**
-	 * Gets a map of all tabs added, sorted by modID
+	 * Gets a map of all tabs added, sorted by modID.
 	 *
 	 * @return An unmodifiable map of added tabs categorized by modID
 	 */

@@ -21,7 +21,8 @@ import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.entity.passive.EntityVillager.ListEnchantedItemForEmeralds;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
@@ -54,25 +55,25 @@ public abstract class VillagerTrades {
 		registerCommonTrades();
 	}
 
-	private static ITradeList[] getTrades(Names name, MMDMaterial material, int price, int priceMod) {
+	private static ITradeList[] getTrades(final Names name, final MMDMaterial material, final int price, final int priceMod) {
 		return makeTradePalette(makePurchasePalette(price + priceMod, material.getItemStack(name)));
 	}
-	
+
 	protected static void registerCommonTrades() {
 		final String modid = Loader.instance().activeModContainer().getModId();
 		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>();
 		Materials.getMaterialsByMod(modid).stream()
-		.filter( material -> !material.isEmpty())
-		.filter( material -> !material.isRare())
-		.filter( material -> {
+		.filter(material -> !material.isEmpty())
+		.filter(material -> !material.isRare())
+		.filter(material -> {
 			final float val = material.getStat(MaterialStats.HARDNESS) + material.getStat(MaterialStats.STRENGTH) + material.getStat(MaterialStats.MAGICAFFINITY) + material.getToolHarvestLevel();
 			return emeraldPurchaseValue(val) < 65 && emeraldSaleValue(val) < 65;
 		})
-		.forEach( material -> {
-			makeArmorTrades( material );
-			makeToolTrades( material );
-			makeWeaponTrades( material );
-			makeIngotTrades( material );
+		.forEach(material -> {
+			makeArmorTrades(material);
+			makeToolTrades(material);
+			makeWeaponTrades(material);
+			makeIngotTrades(material);
 			if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
 				final float val = material.getStat(MaterialStats.HARDNESS) + material.getStat(MaterialStats.STRENGTH) + material.getStat(MaterialStats.MAGICAFFINITY) + material.getToolHarvestLevel();
 				int tradeLevel = tradeLevel(val);
@@ -83,25 +84,24 @@ public abstract class VillagerTrades {
 				int armorMod = (int) (material.getStat(MaterialStats.HARDNESS) / 2);
 				int weaponMod = (int) (material.getBaseAttackDamage() / 2);
 				int emeraldPurchaseValueBase = emeraldPurchaseValue(val);
-				
+
 				Arrays.asList(Names.SWORD, Names.CROSSBOW, Names.BOW).stream()
 				.filter(material::hasItem)
-				.forEach( name -> tradesTable.computeIfAbsent(weaponSmithKey, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(emeraldPurchaseValueBase + 7 + weaponMod - 1, emeraldPurchaseValueBase + 12 + weaponMod - 1)))));
+				.forEach(name -> tradesTable.computeIfAbsent(weaponSmithKey, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(emeraldPurchaseValueBase + 7 + weaponMod - 1, emeraldPurchaseValueBase + 12 + weaponMod - 1)))));
 				Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS).stream()
 				.filter(material::hasItem)
-				.forEach( name -> tradesTable.computeIfAbsent(armorSmithKey, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(emeraldPurchaseValueBase + 7 + armorMod, emeraldPurchaseValueBase + 12 + armorMod)))));
+				.forEach(name -> tradesTable.computeIfAbsent(armorSmithKey, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(emeraldPurchaseValueBase + 7 + armorMod, emeraldPurchaseValueBase + 12 + armorMod)))));
 				Arrays.asList(Names.AXE, Names.HOE, Names.SHOVEL, Names.PICKAXE).stream()
 				.filter(material::hasItem)
-				.forEach( name -> tradesTable.computeIfAbsent(toolSmithKeyOne, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(emeraldPurchaseValueBase + 7, emeraldPurchaseValueBase + 12)))));
+				.forEach(name -> tradesTable.computeIfAbsent(toolSmithKeyOne, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(name), new PriceInfo(emeraldPurchaseValueBase + 7, emeraldPurchaseValueBase + 12)))));
 				tradesTable.computeIfAbsent(toolSmithKeyTwo, (Integer key) -> new ArrayList<>()).addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(material.getItem(Names.CRACKHAMMER), new PriceInfo(emeraldPurchaseValueBase + 7, emeraldPurchaseValueBase + 12))));
 			}
 		});
-		
-		
+
 		commitTrades(tradesTable);
 	}
 
-	private static void makeIngotTrades(MMDMaterial material) {
+	private static void makeIngotTrades(final MMDMaterial material) {
 		if (material.hasItem(Names.INGOT)) {
 			final ItemStack itemStack = material.getItemStack(Names.INGOT, 12);
 			if ((!itemStack.getItem().equals(net.minecraft.init.Items.EMERALD)) && (!itemStack.getItem().equals(net.minecraft.init.Items.DIAMOND))) {
@@ -113,42 +113,42 @@ public abstract class VillagerTrades {
 		}
 	}
 
-	private static void makeWeaponTrades(MMDMaterial material) {
-		makeTrades( new Names[] { Names.SWORD, Names.CROSSBOW, Names.BOW }, material, WEAPON_SMITH_ID );
+	private static void makeWeaponTrades(final MMDMaterial material) {
+		makeTrades(new Names[] { Names.SWORD, Names.CROSSBOW, Names.BOW }, material, WEAPON_SMITH_ID);
 	}
 
-	private static void makeToolTrades(MMDMaterial material) {
-		makeTrades( new Names[] { Names.AXE, Names.HOE, Names.SHOVEL, Names.CRACKHAMMER, Names.PICKAXE }, material, TOOL_SMITH_ID);
+	private static void makeToolTrades(final MMDMaterial material) {
+		makeTrades(new Names[] { Names.AXE, Names.HOE, Names.SHOVEL, Names.CRACKHAMMER, Names.PICKAXE }, material, TOOL_SMITH_ID);
 	}
 
-	private static void makeArmorTrades(MMDMaterial material) {
-		makeTrades( new Names[] { Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS }, material, ARMOR_SMITH_ID);
+	private static void makeArmorTrades(final MMDMaterial material) {
+		makeTrades(new Names[] { Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS }, material, ARMOR_SMITH_ID);
 	}
 
-	private static void makeTrades(Names[] names, MMDMaterial material, int smithId) {
+	private static void makeTrades(final Names[] names, final MMDMaterial material, final int smithId) {
 		final float val = material.getStat(MaterialStats.HARDNESS) + material.getStat(MaterialStats.STRENGTH) + material.getStat(MaterialStats.MAGICAFFINITY) + material.getToolHarvestLevel();
 		Arrays.asList(names).stream()
 		.filter(name -> !material.hasItem(name))
-		.forEach( name -> insertTrades(name, material, emeraldPurchaseValue(val), tradeLevel(val), SMITH_RL, smithId));
+		.forEach(name -> insertTrades(name, material, emeraldPurchaseValue(val), tradeLevel(val), SMITH_RL, smithId));
 	}
 
-	private static int getPriceMod( Names name, MMDMaterial material ) {
-		switch(name) {
+	private static int getPriceMod(final Names name, final MMDMaterial material) {
+		switch (name) {
 		case HELMET:
 		case CHESTPLATE:
 		case LEGGINGS:
 		case BOOTS:
-			return (int) (material.getStat(MaterialStats.HARDNESS)/2);
+			return (int) (material.getStat(MaterialStats.HARDNESS) / 2);
 		case SWORD:
 			return ((int) (material.getBaseAttackDamage() / 2)) - 1;
 		default:
 			return 0;
 		}
 	}
-	
-	private static void insertTrades(Names name, MMDMaterial material, int emeraldPurch,
-			int tradeLevel, ResourceLocation smithRl, int smithId) {
-		final ITradeList[] armorTrades = getTrades(name, material, emeraldPurch, getPriceMod(name, material) );
+
+	private static void insertTrades(final Names name, final MMDMaterial material, final int emeraldPurch,
+			final int tradeLevel, final ResourceLocation smithRl, final int smithId) {
+		final ITradeList[] armorTrades = getTrades(name, material, emeraldPurch, getPriceMod(name, material));
 		VillagerTradeHelper.insertTrades(smithRl, smithId, tradeLevel, armorTrades);
 	}
 
@@ -156,7 +156,7 @@ public abstract class VillagerTrades {
 	}
 
 	/**
-	 * Commits a Trade Table
+	 * Commits a Trade Table.
 	 *
 	 * @param tradesTable Trade Table to commit
 	 */
@@ -213,7 +213,7 @@ public abstract class VillagerTrades {
 	}
 
 	/**
-	 * Creates a trade list for a single item (Buy Only)
+	 * Creates a trade list for a single item (Buy Only).
 	 * @param emeraldPrice Price
 	 * @param stackSize Size of Stack
 	 * @param items The Items
@@ -228,7 +228,7 @@ public abstract class VillagerTrades {
 	}
 
 	/**
-	 * Creates a trade list for a single item (Buy Only)
+	 * Creates a trade list for a single item (Buy Only).
 	 * @param emeraldPrice Purchase Value
 	 * @param itemStacks The ItemStacks
 	 * @return ITradeList
@@ -244,7 +244,7 @@ public abstract class VillagerTrades {
 	}
 
 	/**
-	 * Creates a trade list for a single item (Sell Only)
+	 * Creates a trade list for a single item (Sell Only).
 	 *
 	 * @param emeraldValue Sale Value
 	 * @param stackSize Size of the Stack
@@ -260,7 +260,7 @@ public abstract class VillagerTrades {
 	}
 
 	/**
-	 * Creates a trade list for a single item (Sell Only)
+	 * Creates a trade list for a single item (Sell Only).
 	 *
 	 * @param emeraldValue Sale Value
 	 * @param itemStacks The ItemStacks
@@ -277,7 +277,7 @@ public abstract class VillagerTrades {
 	}
 
 	/**
-	 * Creates a trade list (Buy and Sell)
+	 * Creates a trade list (Buy and Sell).
 	 *
 	 * @param list The Trade Lists
 	 * @return ITradeList
@@ -311,8 +311,8 @@ public abstract class VillagerTrades {
 
 		/**
 		 * Creates an ITradeList instance that randomly adds multiple trades at
-		 * a time
-		 * 
+		 * a time.
+		 *
 		 * @param tradeCount
 		 *            Number of trades to add to the merchant's trade menu
 		 * @param tradePalette
@@ -329,10 +329,10 @@ public abstract class VillagerTrades {
 				trades[random.nextInt(trades.length)].addMerchantRecipe(merchant, recipeList, random);
 			}
 		}
-		
+
 		/**
-		 * For debugging purposes only
-		 * 
+		 * For debugging purposes only.
+		 *
 		 * @return String representation
 		 */
 		@Override
@@ -343,7 +343,7 @@ public abstract class VillagerTrades {
 	}
 
 	/**
-	 * A simple, easy to use ITradeList class that holds a single trade recipe
+	 * A simple, easy to use ITradeList class that holds a single trade recipe.
 	 */
 	public static class SimpleTrade implements ITradeList {
 
@@ -357,8 +357,8 @@ public abstract class VillagerTrades {
 		private final int maxTradeVariation;
 
 		/**
-		 * Full constructor for making a trade recipe
-		 * 
+		 * Full constructor for making a trade recipe.
+		 *
 		 * @param in1
 		 *            Item for the left purchase price trade slot
 		 * @param variation1
@@ -393,8 +393,8 @@ public abstract class VillagerTrades {
 
 		/**
 		 * Constructor for making a simple two-for-one trade recipe with price
-		 * variation
-		 * 
+		 * variation.
+		 *
 		 * @param in1
 		 *            Item for the left purchase price trade slot
 		 * @param v1
@@ -415,8 +415,8 @@ public abstract class VillagerTrades {
 
 		/**
 		 * Constructor for making a simple one-for-one trade with price
-		 * variation
-		 * 
+		 * variation.
+		 *
 		 * @param in1
 		 *            Item for the left purchase price trade slot
 		 * @param v1
@@ -431,8 +431,8 @@ public abstract class VillagerTrades {
 		}
 
 		/**
-		 * Constructor for making a simple one-for-one trade
-		 * 
+		 * Constructor for making a simple one-for-one trade.
+		 *
 		 * @param in1
 		 *            Item for the left purchase price trade slot
 		 * @param out
@@ -448,8 +448,8 @@ public abstract class VillagerTrades {
 		}
 
 		/**
-		 * Invoked when the merchant generates its trade menu
-		 * 
+		 * Invoked when the merchant generates its trade menu.
+		 *
 		 * @param recipeList
 		 *            existing trade menu
 		 * @param random

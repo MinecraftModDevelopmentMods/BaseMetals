@@ -19,14 +19,53 @@ import javax.annotation.Nullable;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.block.*;
+import com.mcmoddev.lib.block.BlockMMDBars;
+import com.mcmoddev.lib.block.BlockMMDBlock;
+import com.mcmoddev.lib.block.BlockMMDButton;
+import com.mcmoddev.lib.block.BlockMMDDoor;
+import com.mcmoddev.lib.block.BlockMMDLever;
+import com.mcmoddev.lib.block.BlockMMDOre;
+import com.mcmoddev.lib.block.BlockMMDPlate;
+import com.mcmoddev.lib.block.BlockMMDPressurePlate;
+import com.mcmoddev.lib.block.BlockMMDSlab;
+import com.mcmoddev.lib.block.BlockMMDStairs;
+import com.mcmoddev.lib.block.BlockMMDTrapDoor;
+import com.mcmoddev.lib.block.BlockMMDWall;
+import com.mcmoddev.lib.block.BlockMoltenFluid;
+import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.integration.plugins.IC2Base;
 import com.mcmoddev.lib.integration.plugins.MekanismBase;
-import com.mcmoddev.lib.init.ItemGroups;
-import com.mcmoddev.lib.item.*;
+import com.mcmoddev.lib.item.GenericMMDItem;
+import com.mcmoddev.lib.item.ItemMMDAnvilBlock;
+import com.mcmoddev.lib.item.ItemMMDArmor;
+import com.mcmoddev.lib.item.ItemMMDArrow;
+import com.mcmoddev.lib.item.ItemMMDAxe;
+import com.mcmoddev.lib.item.ItemMMDBlend;
+import com.mcmoddev.lib.item.ItemMMDBolt;
+import com.mcmoddev.lib.item.ItemMMDBow;
+import com.mcmoddev.lib.item.ItemMMDCrackHammer;
+import com.mcmoddev.lib.item.ItemMMDCrossbow;
+import com.mcmoddev.lib.item.ItemMMDDoor;
+import com.mcmoddev.lib.item.ItemMMDFishingRod;
+import com.mcmoddev.lib.item.ItemMMDGear;
+import com.mcmoddev.lib.item.ItemMMDHoe;
+import com.mcmoddev.lib.item.ItemMMDHorseArmor;
+import com.mcmoddev.lib.item.ItemMMDIngot;
+import com.mcmoddev.lib.item.ItemMMDNugget;
+import com.mcmoddev.lib.item.ItemMMDPickaxe;
+import com.mcmoddev.lib.item.ItemMMDPowder;
+import com.mcmoddev.lib.item.ItemMMDRod;
+import com.mcmoddev.lib.item.ItemMMDShears;
+import com.mcmoddev.lib.item.ItemMMDShield;
+import com.mcmoddev.lib.item.ItemMMDShovel;
+import com.mcmoddev.lib.item.ItemMMDSickle;
+import com.mcmoddev.lib.item.ItemMMDSlab;
+import com.mcmoddev.lib.item.ItemMMDSmallBlend;
+import com.mcmoddev.lib.item.ItemMMDSmallPowder;
+import com.mcmoddev.lib.item.ItemMMDSword;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
@@ -213,7 +252,7 @@ public abstract class Items {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            Name of the requested item type
 	 * @param material
@@ -245,11 +284,11 @@ public abstract class Items {
 		return item;
 	}
 
-	private static boolean sanityCheck(Names name, MMDMaterial material) {
+	private static boolean sanityCheck(final Names name, final MMDMaterial material) {
 		return ((material.isEmpty()) || (name == null) || isWrongThingToMake(name, material));
 	}
 
-	private static void setupOredict(Item item, String oredict, Names name, MMDMaterial material) {
+	private static void setupOredict(final Item item, final String oredict, final Names name, final MMDMaterial material) {
 		if (item != null) {
 			if (oredict != null) {
 				Oredicts.registerOre(oredict + material.getCapitalizedName(), item);
@@ -266,14 +305,14 @@ public abstract class Items {
 		}
 	}
 
-	private static boolean isWrongThingToMake(Names name, MMDMaterial material) {
+	private static boolean isWrongThingToMake(final Names name, final MMDMaterial material) {
 		return ((((name.equals(Names.BLEND)) || (name.equals(Names.SMALLBLEND))) && (!material.hasBlend()))
 				|| (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL)))
 				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR))) || (name.equals(Names.SLAB)
 						&& (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB)))));
 	}
 
-	private static boolean isArmor(Names name) {
+	private static boolean isArmor(final Names name) {
 		return ((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS))
 				|| (name.equals(Names.BOOTS)));
 	}
@@ -289,7 +328,7 @@ public abstract class Items {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param item
 	 *            The item to add
 	 * @param name
@@ -315,7 +354,6 @@ public abstract class Items {
 
 		item.setRegistryName(fullName);
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
-		itemRegistry.put(fullName, item);
 
 		if (tab != null) {
 			item.setCreativeTab(tab);
@@ -326,7 +364,7 @@ public abstract class Items {
 			itemsByMaterial.get(material).add(item);
 		}
 
-		return item;
+		return itemRegistry.put(fullName, item);
 	}
 
 	@Nullable
@@ -391,7 +429,7 @@ public abstract class Items {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param material
 	 *            The material base of this item
 	 * @param tab
@@ -416,10 +454,12 @@ public abstract class Items {
 
 	/**
 	 * Uses reflection to expand the size of the combat damage and attack speed
-	 * arrays to prevent initialization index-out-of-bounds errors
+	 * arrays to prevent initialization index-out-of-bounds errors.
 	 *
 	 * @param itemClass
 	 *            The class to modify
+	 * @throws IllegalAccessException
+	 * @throws NoSuchFieldException
 	 */
 	private static void expandCombatArrays(@Nonnull final Class<?> itemClass)
 			throws IllegalAccessException, NoSuchFieldException {
@@ -542,7 +582,7 @@ public abstract class Items {
 	}
 
 	/**
-	 * Gets a map of all items added, sorted by material
+	 * Gets a map of all items added, sorted by material.
 	 *
 	 * @return An unmodifiable map of added items categorized by metal material
 	 */

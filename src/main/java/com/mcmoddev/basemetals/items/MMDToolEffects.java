@@ -31,7 +31,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Tool Effects
+ * Tool Effects.
  */
 public abstract class MMDToolEffects {
 
@@ -103,15 +103,26 @@ public abstract class MMDToolEffects {
 		// enchantments could appear
 	}
 
+	/**
+	 *
+	 * @param world
+	 * @param player
+	 * @param material
+	 * @param armor
+	 * @param i
+	 */
 	public static void extraEffectsOnArmorUpdate(final World world, final EntityPlayer player, final MMDMaterial material,
-			final ItemStack armor, int i) {
+			final ItemStack armor, final int i) {
 		// some sanity checks
-		if (armor.isEmpty())
+		if (armor.isEmpty()) {
 			return;
-		if (armor.getItem() == null)
+		}
+		if (armor.getItem() == null) {
 			return;
-		if (player == null)
+		}
+		if (player == null) {
 			return;
+		}
 
 		final String materialName = material.getName();
 		if (i % 2 == 0) {
@@ -169,7 +180,7 @@ public abstract class MMDToolEffects {
 	 *            The tooltip list
 	 */
 	@SideOnly(Side.CLIENT)
-	public static void addToolSpecialPropertiesToolTip(String materialName, java.util.List<String> tooltipList) {
+	public static void addToolSpecialPropertiesToolTip(final String materialName, final List<String> tooltipList) {
 		switch (materialName) {
 			case MaterialNames.ADAMANTINE:
 				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + TOOL, 4));
@@ -198,7 +209,7 @@ public abstract class MMDToolEffects {
 	 *            The tooltip list
 	 */
 	@SideOnly(Side.CLIENT)
-	public static void addArmorSpecialPropertiesToolTip(String materialName, java.util.List<String> tooltipList) {
+	public static void addArmorSpecialPropertiesToolTip(final String materialName, final List<String> tooltipList) {
 		switch (materialName) {
 			case MaterialNames.ADAMANTINE:
 				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + ARMOR, 4));
@@ -219,7 +230,7 @@ public abstract class MMDToolEffects {
 		}
 	}
 
-	private static void countArmorPieces(Map<EntityPlayer, AtomicInteger> updateCache, EntityPlayer player) {
+	private static void countArmorPieces(final Map<EntityPlayer, AtomicInteger> updateCache, final EntityPlayer player) {
 		if (!(updateCache.containsKey(player))) {
 			updateCache.put(player, new AtomicInteger(0));
 		}
@@ -227,7 +238,7 @@ public abstract class MMDToolEffects {
 		updateCache.get(player).incrementAndGet();
 	}
 
-	private static boolean hasFullSuit(EntityPlayer player, String materialName) {
+	private static boolean hasFullSuit(final EntityPlayer player, final String materialName) {
 		final MMDMaterial material = Materials.getMaterialByName(materialName);
 
 		return (player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == material.getItem(Names.HELMET)
@@ -236,18 +247,20 @@ public abstract class MMDToolEffects {
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == material.getItem(Names.LEGGINGS)
 				&& player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material.getItem(Names.BOOTS));
 	}
-	
-	private static void countStarsteelPieces(EntityPlayer player) {
+
+	private static void countStarsteelPieces(final EntityPlayer player) {
 		// used to count up the starsteel armor items
 		countArmorPieces(starsteelUpdateCache, player);
 	}
 
-	private static void applyEffectsForStarsteel(EntityPlayer player) {
-		if (!starsteelUpdateCache.containsKey(player))
+	private static void applyEffectsForStarsteel(final EntityPlayer player) {
+		if (!starsteelUpdateCache.containsKey(player)) {
 			return;
+		}
 		final int num = starsteelUpdateCache.get(player).getAndSet(0);
-		if (num == 0)
+		if (num == 0) {
 			return;
+		}
 		final PotionEffect jumpBoost = new PotionEffect(MobEffects.JUMP_BOOST, EFFECT_DURATION, num - 1,
 				false, false);
 		player.addPotionEffect(jumpBoost);
@@ -258,12 +271,14 @@ public abstract class MMDToolEffects {
 		}
 	}
 
-	private static void applyEffectsForLead(EntityPlayer player) {
-		if (!(leadUpdateCache.containsKey(player)))
+	private static void applyEffectsForLead(final EntityPlayer player) {
+		if (!(leadUpdateCache.containsKey(player))) {
 			return;
+		}
 		final int level = leadUpdateCache.get(player).getAndSet(0) / 2;
-		if (level == 0)
+		if (level == 0) {
 			return;
+		}
 		if (level > 0) {
 			final PotionEffect speedLoss = new PotionEffect(MobEffects.SLOWNESS, EFFECT_DURATION, level - 1,
 					false, false);
@@ -271,13 +286,15 @@ public abstract class MMDToolEffects {
 		}
 	}
 
-	private static void applyEffectsForAdamantine(EntityPlayer player) {
-		if (!(adamantineUpdateCache.containsKey(player)))
+	private static void applyEffectsForAdamantine(final EntityPlayer player) {
+		if (!(adamantineUpdateCache.containsKey(player))) {
 			return;
+		}
 		final int num = adamantineUpdateCache.get(player).getAndSet(0);
 		final int level = num / 2;
-		if (level == 0)
+		if (level == 0) {
 			return;
+		}
 		if (level > 0) {
 			final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION,
 					level - 1, false, false);
@@ -285,7 +302,7 @@ public abstract class MMDToolEffects {
 		}
 	}
 
-	private static void applyEffectsForColdiron(EntityPlayer player) {
+	private static void applyEffectsForColdiron(final EntityPlayer player) {
 		if (hasFullSuit(player, MaterialNames.COLDIRON)) {
 			final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE, EFFECT_DURATION, 0,
 				false, false);
@@ -293,7 +310,7 @@ public abstract class MMDToolEffects {
 		}
 	}
 
-	private static void applyEffectsForMithril(EntityPlayer player) {
+	private static void applyEffectsForMithril(final EntityPlayer player) {
 		if (hasFullSuit(player, MaterialNames.MITHRIL)) {
 			final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
 			final Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
@@ -310,7 +327,7 @@ public abstract class MMDToolEffects {
 		}
 	}
 
-	private static void applyEffectsForAquarium(EntityPlayer player, World w) {
+	private static void applyEffectsForAquarium(final EntityPlayer player, final World w) {
 		if ((hasFullSuit(player, MaterialNames.AQUARIUM)) && (player.posY > 0) && (player.posY < 255)) {
 			final Block b1 = w.getBlockState(new BlockPos(player.posX, player.posY, player.posZ)).getBlock();
 			final Block b2 = w.getBlockState(new BlockPos(player.posX, player.posY + 1, player.posZ)).getBlock();

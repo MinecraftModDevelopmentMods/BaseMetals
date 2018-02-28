@@ -5,7 +5,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class HelmetRepairRecipe extends RepairRecipeBase {
 
-	public HelmetRepairRecipe(MMDMaterial mat) {
-		super(mat, Names.HELMET);
+	public HelmetRepairRecipe(final MMDMaterial material) {
+		super(material, Names.HELMET);
 	}
 }

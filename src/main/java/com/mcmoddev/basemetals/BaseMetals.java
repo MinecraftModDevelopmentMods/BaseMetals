@@ -48,10 +48,10 @@ public class BaseMetals {
 	@Instance
 	public static BaseMetals instance;
 
-	/** ID of this Mod */
+	/** ID of this Mod. */
 	public static final String MODID = "basemetals";
 
-	/** Display name of this Mod */
+	/** Display name of this Mod. */
 	protected static final String NAME = "Base Metals";
 
 	/**
@@ -77,12 +77,16 @@ public class BaseMetals {
 	}
 
 	@EventHandler
-	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
+	public void onFingerprintViolation(final FMLFingerprintViolationEvent event) {
 		logger.warn(SharedStrings.INVALID_FINGERPRINT);
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@EventHandler
-	public static void preInit(FMLPreInitializationEvent event) {
+	public static void preInit(final FMLPreInitializationEvent event) {
 		proxy.preInit(event);
 
 		if (proxy.allsGood()) {
@@ -96,24 +100,24 @@ public class BaseMetals {
 	}
 
 	@EventHandler
-	public static void init(FMLInitializationEvent event) {
+	public static void init(final FMLInitializationEvent event) {
 		proxy.init(event);
 		// if we have anything else to do here, check 'proxy.allsGood()' first
 	}
 
 	@EventHandler
-	public static void postInit(FMLPostInitializationEvent event) {
+	public static void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);
 		// if we have anything else to do here, check 'proxy.allsGood()' first
 	}
 
 	@SubscribeEvent
-	public void onRemapBlock(RegistryEvent.MissingMappings<Block> event) {
+	public void onRemapBlock(final RegistryEvent.MissingMappings<Block> event) {
 		proxy.onRemapBlock(event);
 	}
 
 	@SubscribeEvent
-	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
+	public void onRemapItem(final RegistryEvent.MissingMappings<Item> event) {
 		proxy.onRemapItem(event);
 	}
 }

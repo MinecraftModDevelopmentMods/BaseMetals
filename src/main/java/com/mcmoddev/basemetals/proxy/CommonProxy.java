@@ -1,17 +1,13 @@
 package com.mcmoddev.basemetals.proxy;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.HashSet;
-
-import org.apache.commons.io.FileUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +46,7 @@ import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
 /**
- * Base Metals Common Proxy
+ * Base Metals Common Proxy.
  *
  * @author Jasmine Iwanek
  *
@@ -59,11 +55,19 @@ public class CommonProxy {
 
 	private boolean allsGood = false;
 
+	/**
+	 * 
+	 * @return if all is good
+	 */
 	public boolean allsGood() {
 		return allsGood;
 	}
 
-	public void preInit(FMLPreInitializationEvent event) {
+	/**
+	 *
+	 * @param event
+	 */
+	public void preInit(final FMLPreInitializationEvent event) {
 
 		Config.init();
 
@@ -97,7 +101,11 @@ public class CommonProxy {
 		allsGood = true;
 	}
 
-	public void onRemapBlock(RegistryEvent.MissingMappings<Block> event) {
+	/**
+	 *
+	 * @param event
+	 */
+	public void onRemapBlock(final RegistryEvent.MissingMappings<Block> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings()) {
 			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
 					&& (Materials.hasMaterial(MaterialNames.MERCURY))
@@ -107,7 +115,11 @@ public class CommonProxy {
 		}
 	}
 
-	public void onRemapItem(RegistryEvent.MissingMappings<Item> event) {
+	/**
+	 *
+	 * @param event
+	 */
+	public void onRemapItem(final RegistryEvent.MissingMappings<Item> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
 			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
 					&& (Materials.hasMaterial(MaterialNames.COAL))
@@ -117,7 +129,11 @@ public class CommonProxy {
 		}
 	}
 
-	public void init(FMLInitializationEvent event) {
+	/**
+	 *
+	 * @param event
+	 */
+	public void init(final FMLInitializationEvent event) {
 		allsGood = false;
 
 		IntegrationManager.INSTANCE.runCallbacks("init");
@@ -131,58 +147,64 @@ public class CommonProxy {
 				FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ORE.toString(),
 						material.getDefaultDimension());
 
-				if (material.hasBlock(Names.NETHERORE))
+				if (material.hasBlock(Names.NETHERORE)) {
 					FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.NETHERORE.toString(), -1);
+				}
 
-				if (material.hasBlock(Names.ENDORE))
+				if (material.hasBlock(Names.ENDORE)) {
 					FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ENDORE.toString(), 1);
+				}
 			}
 		}
-		//dumpMaterials();
+		//dumpMaterials()
 	}
 
 	@SuppressWarnings("unused")
 	private void dumpMaterials() {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		JsonObject materials = new JsonObject();
-		
-		Materials.getAllMaterials().forEach( material -> {
+		final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		final JsonObject materials = new JsonObject();
+
+		Materials.getAllMaterials().forEach(material -> {
 			JsonObject currentMaterial = new JsonObject();
 			JsonArray blocks = new JsonArray();
 			JsonArray items = new JsonArray();
-			
-			material.getBlockRegistry().entrySet().stream().forEach( ent -> {
+
+			material.getBlockRegistry().entrySet().stream().forEach(ent -> {
 				JsonObject entry = new JsonObject();
 				entry.addProperty("name", ent.getKey());
 				entry.addProperty("ref", ent.getValue().toString());
 				blocks.add(entry);
 			});
-			material.getItemRegistry().entrySet().stream().forEach( ent -> {
+			material.getItemRegistry().entrySet().stream().forEach(ent -> {
 				JsonObject entry = new JsonObject();
 				entry.addProperty("name", ent.getKey());
 				entry.addProperty("ref", ent.getValue().toString());
 				items.add(entry);
 			});
-			
+
 			currentMaterial.add("blocks", blocks);
 			currentMaterial.add("items", items);
 			materials.add(material.getName(), currentMaterial);
 		});
-		String out = gson.toJson(materials);
+		final String out = gson.toJson(materials);
 		Path p = Paths.get("logs", "mmd_materials_dump.json");
-		try (BufferedWriter bw = Files.newBufferedWriter(p, StandardCharsets.UTF_8, 
+		try (BufferedWriter bw = Files.newBufferedWriter(p, StandardCharsets.UTF_8,
 				StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING)) {
 			bw.write(out);
 		} catch (IOException e) {
-			CrashReport report = CrashReport.makeCrashReport(e, 
-					String.format("Unable to write dump of MMDMaterial registry to %s", 
+			CrashReport report = CrashReport.makeCrashReport(e,
+					String.format("Unable to write dump of MMDMaterial registry to %s",
 							p.toFile().getAbsolutePath()));
 			report.getCategory().addCrashSection("BaseMetals Version", "2.5.0-beta4");
 			BaseMetals.logger.fatal(report.getCompleteReport());
 		}
 	}
 
-	public void postInit(FMLPostInitializationEvent event) {
+	/**
+	 *
+	 * @param event
+	 */
+	public void postInit(final FMLPostInitializationEvent event) {
 		allsGood = false;
 		IntegrationManager.INSTANCE.runCallbacks("postInit");
 		Config.postInit();

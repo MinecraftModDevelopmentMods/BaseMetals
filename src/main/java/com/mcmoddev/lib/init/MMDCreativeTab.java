@@ -33,16 +33,22 @@ public class MMDCreativeTab extends CreativeTabs {
 	}
 
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final Block iconBlock) {
-		this(unlocalizedName, searchable, new ItemStack(Item.getItemFromBlock(iconBlock)));
+		this(unlocalizedName, searchable, (iconBlock != null) ? new ItemStack(Item.getItemFromBlock(iconBlock)) : ItemStack.EMPTY);
 	}
 
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final Item iconItem) {
-		this(unlocalizedName, searchable, new ItemStack(iconItem));
+		this(unlocalizedName, searchable, (iconItem != null) ? new ItemStack(iconItem) : ItemStack.EMPTY);
 	}
 
-	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final ItemStack iconItem) {
+	/**
+	 *
+	 * @param unlocalizedName
+	 * @param searchable
+	 * @param iconItem
+	 */
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nonnull final ItemStack iconItem) {
 		super(unlocalizedName);
-		if (iconItem == null) {
+		if (iconItem.isEmpty()) {
 			this.iconItem = new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
 		} else {
 			this.iconItem = iconItem;
@@ -52,8 +58,9 @@ public class MMDCreativeTab extends CreativeTabs {
 			final int delta = Items.getSortingValue(first) - Items.getSortingValue(second);
 			return (delta == 0) ? first.getUnlocalizedName().compareToIgnoreCase(second.getUnlocalizedName()) : delta;
 		});
-		if (searchable)
+		if (searchable) {
 			setBackgroundImageName("item_search.png");
+		}
 	}
 
 	@Override
