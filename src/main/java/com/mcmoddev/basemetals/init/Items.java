@@ -144,13 +144,13 @@ public class Items extends com.mcmoddev.lib.init.Items {
 
 	private static void setBurnTimes(@Nonnull final MMDMaterial mat) {
 		if (mat.hasItem(Names.NUGGET))
-			((ItemMMDNugget) mat.getItem(Names.NUGGET)).setBurnTime(200);
+			((ItemMMDNugget) mat.getItem(Names.NUGGET)).setBurnTime(160);
 
 		if (mat.hasItem(Names.POWDER))
 			((ItemMMDPowder) mat.getItem(Names.POWDER)).setBurnTime(1600);
 
 		if (mat.hasItem(Names.SMALLPOWDER))
-			((ItemMMDSmallPowder) mat.getItem(Names.SMALLPOWDER)).setBurnTime(200);
+			((ItemMMDSmallPowder) mat.getItem(Names.SMALLPOWDER)).setBurnTime(160);
 
 		// simple hack to fix this shit - I give up on trying for more
 		if (mat.hasBlock(Names.BLOCK) && mat.getName().equals(MaterialNames.CHARCOAL))

@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -125,7 +126,7 @@ public class MekanismBase implements IIntegration {
 
 	// 5x, Slurry to Crystal
 	protected static void addChemicalCrystallizerRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem) {
-		if ((outputItem.isEmpty())) {
+		if ((outputItem.isEmpty()) || (!GasRegistry.containsGas(inputGas))) {
 			return;
 		}
 		
@@ -149,8 +150,8 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas) {
-		if (inputItem.isEmpty()) return;
-		
+		if ((inputItem.isEmpty()) || (!GasRegistry.containsGas(outputGas))) return;
+			
 		addChemicalDissolutionChamberRecipe(inputItem, outputGas, 1000);
 	}
 
