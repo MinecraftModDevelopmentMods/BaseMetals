@@ -243,7 +243,7 @@ public abstract class Blocks {
 	}
 
 	private static void maybeMakeItemBlock(final Block block, final MMDMaterial material, final String fullName) {
-		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab) && (material != null)) {
+		if (!(block instanceof BlockAnvil) && !(block instanceof BlockDoor) && !(block instanceof BlockSlab) && (!material.isEmpty())) {
 			final ItemBlock itemBlock = new ItemMMDBlock(material, block);
 			itemBlock.setRegistryName(block.getRegistryName());
 			itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
