@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
@@ -531,7 +532,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 *            The block to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
-	public MMDMaterial addNewBlock(final String name, final Block block) {
+	public MMDMaterial addNewBlock(@Nonnull final String name, @Nonnull final Block block) {
 		if (this.blocks.containsKey(name)) {
 			BaseMetals.logger.warn("Tried adding block %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
 			return this;

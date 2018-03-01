@@ -364,7 +364,8 @@ public abstract class Items {
 			itemsByMaterial.get(material).add(item);
 		}
 
-		return itemRegistry.put(fullName, item);
+		itemRegistry.put(fullName, item);
+		return item;
 	}
 
 	@Nullable

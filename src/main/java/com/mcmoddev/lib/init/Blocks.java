@@ -238,7 +238,8 @@ public abstract class Blocks {
 			blocksByMaterial.get(material).add(block);
 		}
 
-		return blockRegistry.put(fullName, block);
+		blockRegistry.put(fullName, block);
+		return block;
 	}
 
 	private static void maybeMakeItemBlock(final Block block, final MMDMaterial material, final String fullName) {
