@@ -289,8 +289,8 @@ dependencies {
 
 //deobfProvided "com.googlecode.efficient-java-matrix-library:ejml:0.23"
 
-  deobfProvided "CraftTweaker2:CraftTweaker2-API:${mc_version}-${ct_version}"
-  deobfProvided "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
+//deobfProvided "CraftTweaker2:CraftTweaker2-API:${mc_version}-${ct_api_version}"
+  deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
 
 //deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
 //  exclude group: 'mezz.jei'

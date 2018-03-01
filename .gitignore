@@ -28,5 +28,6 @@ classes
 
 secret.json
 libs/*
+!/libs/README.txt
 
 .DS_Store
