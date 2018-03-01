@@ -1,7 +1,7 @@
 {
 	"type": "forge:ore_shaped",
 	"result": {
-		"item": "basemetals:charcoal_block",
+		"item": "minecraft:coal_block",
 		"data": 0
 	},
 	"pattern": [
@@ -12,7 +12,7 @@
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "charcoal"
+			"ore": "dustCoal"
 		}
 	},
 	"conditions": [
