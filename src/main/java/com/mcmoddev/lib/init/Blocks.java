@@ -257,7 +257,7 @@ public abstract class Blocks {
 		} else if ((name.startsWith("nether")) || (name.startsWith("end"))) {
 			String neededBit = name.substring(0, name.length() - 3);
 			return String.format("%s_%s_%s", neededBit, material.getName(), Names.ORE);
-		} else if (material != null) {
+		} else if (!material.isEmpty()) {
 			return String.format("%s_%s", material.getName(), name);
 		} else {
 			return name;

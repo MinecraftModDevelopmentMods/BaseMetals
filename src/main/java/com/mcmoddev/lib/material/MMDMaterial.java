@@ -480,7 +480,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 *            The item to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
-	public MMDMaterial addNewItem(final String name, final Item item) {
+	public MMDMaterial addNewItem(@Nonnull final String name, @Nonnull final Item item) {
 		if (this.items.containsKey(name)) {
 			BaseMetals.logger.warn("Tried adding item %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
 			return this;
@@ -500,7 +500,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @param itemStack
 	 * @return
 	 */
-	public MMDMaterial addNewItemFromItemStack(final String name, final ItemStack itemStack) {
+	public MMDMaterial addNewItemFromItemStack(@Nonnull final String name, @Nonnull final ItemStack itemStack) {
 		if (!(itemStack.isEmpty())) {
 			addNewItem(name, itemStack.getItem());
 		}
@@ -552,7 +552,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @param itemStack
 	 * @return
 	 */
-	public MMDMaterial addNewBlockFromItemStack(final String name, final ItemStack itemStack) {
+	public MMDMaterial addNewBlockFromItemStack(@Nonnull final String name, @Nonnull final ItemStack itemStack) {
 		final Item item = itemStack.getItem();
 		final Block block = Block.getBlockFromItem(item);
 		if (block != Blocks.AIR) {
