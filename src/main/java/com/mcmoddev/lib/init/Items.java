@@ -319,12 +319,12 @@ public abstract class Items {
 
 	@Nullable
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final Names name, final CreativeTabs tab) {
-		return addItem(item, name.toString(), Materials.EMPTY, tab);
+		return addItem(item, name.toString(), Materials.DEFAULT, tab);
 	}
 
 	@Nullable
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final CreativeTabs tab) {
-		return addItem(item, name, Materials.EMPTY, tab);
+		return addItem(item, name, Materials.DEFAULT, tab);
 	}
 
 	/**
@@ -343,7 +343,7 @@ public abstract class Items {
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final MMDMaterial material,
 			final CreativeTabs tab) {
 		String fullName;
-		if (!material.isEmpty()) {
+		if ((!material.isEmpty()) && (!material.isDefault())) {
 			if (material.hasItem(name)) {
 				return material.getItem(name);
 			}

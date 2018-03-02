@@ -3,6 +3,7 @@ package com.mcmoddev.basemetals.init;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
@@ -14,6 +15,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 /**
  * This class initializes all blocks in Base Metals.
@@ -22,8 +24,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  *
  */
 public final class Blocks extends com.mcmoddev.lib.init.Blocks {
-
-	public static Block humanDetector;
 
 	private Blocks() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -64,7 +64,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 		createMercury();
 		createAnvils();
 
-		humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
+		addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
 	}
 
 	private static void createAnvils() {
@@ -226,16 +226,15 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	 */
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
-		for (MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID)) {
-			for (Block block : mat.getBlocks()) {
-				if (block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {
-					event.getRegistry().register(block);
-				}
-			}
-		}
+		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
+		.forEach(mat -> regBlocks(event.getRegistry(), mat.getBlocks()));
 
-		if (humanDetector != null) {
-			event.getRegistry().register(humanDetector);
-		}
+		regBlocks(event.getRegistry(), Materials.DEFAULT.getBlocks());
+	}
+
+	private static void regBlocks(IForgeRegistry<Block> registry, ImmutableList<Block> blocks) {
+		blocks.stream()
+		.filter(block -> block.getRegistryName().getResourceDomain().toString().equals(BaseMetals.MODID))
+		.forEach(registry::register);
 	}
 }
