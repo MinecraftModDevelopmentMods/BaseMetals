@@ -41,7 +41,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	/**
 	 * Storage for all "Item" type forms for this material.
 	 */
-	private final Map<String, Item> items = new ConcurrentHashMap<>();
+	private final Map<String, ItemStack> items = new ConcurrentHashMap<>();
 
 	/**
 	 * Storage for all "Block" type forms for this material.
@@ -481,12 +481,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewItem(@Nonnull final String name, @Nonnull final Item item) {
-		if (this.items.containsKey(name)) {
-			BaseMetals.logger.warn("Tried adding item %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
-			return this;
-		}
-		this.items.put(name, item);
-		return this;
+		return this.addNewItemFromItemStack(name,  new ItemStack(item));
 	}
 
 	public MMDMaterial addNewItemFromItemStack(final Names name, final ItemStack itemStack) {
@@ -502,7 +497,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 */
 	public MMDMaterial addNewItemFromItemStack(@Nonnull final String name, @Nonnull final ItemStack itemStack) {
 		if (!(itemStack.isEmpty())) {
-			addNewItem(name, itemStack.getItem());
+			this.items.put(name, itemStack);
 		}
 		return this;
 	}
@@ -587,7 +582,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	@Nullable
 	public Item getItem(final String name) {
 		if (this.items.containsKey(name)) {
-			return this.items.get(name);
+			return this.items.get(name).getItem();
 		}
 		return null;
 	}
@@ -605,7 +600,8 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public ItemStack getItemStack(final String name, final int amount) {
-		return new ItemStack(getItem(name), amount);
+		ItemStack base = this.items.get(name);
+		return new ItemStack(base.getItem(), amount, base.getMetadata());
 	}
 
 	/**
@@ -671,7 +667,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * Get all the items that are made from/with this material.
 	 * @return ImmutableList&lt;Item&gt; - the items
 	 */
-	public ImmutableList<Item> getItems() {
+	public ImmutableList<ItemStack> getItems() {
 		return ImmutableList.copyOf(this.items.values());
 	}
 
@@ -814,7 +810,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return ("default".equalsIgnoreCase(this.getName()));
 	}
 	
-	public Map<String, Item> getItemRegistry() {
+	public Map<String, ItemStack> getItemRegistry() {
 		return ImmutableMap.copyOf(this.items);
 	}
 }
