@@ -7,6 +7,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -26,8 +27,7 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 	 *
 	 */
 	public static void init() {
-		initVanillaRecipes();
-		initModSpecificRecipes();
+		MinecraftForge.EVENT_BUS.register(Recipes.class);
 	}
 
 	protected static void initVanillaRecipes() {
@@ -56,6 +56,8 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 	@SubscribeEvent
 	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
+		initVanillaRecipes();
+		initModSpecificRecipes();
 		register(event);
 	}
 }
