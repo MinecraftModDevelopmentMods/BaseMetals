@@ -41,10 +41,10 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	 *
 	 */
 	public static void init() {
-		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT,
-				new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
-		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT,
-				new ItemStack(net.minecraft.init.Items.COAL, 1, 0).getItem());
+		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 1));
+		Materials.getMaterialByName(MaterialNames.COAL).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 0));
 
 		addDiamondBits();
 		addGoldBits();
@@ -55,7 +55,8 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 		Materials.getMaterialByName(MaterialNames.EMERALD).addNewItem(Names.INGOT, net.minecraft.init.Items.EMERALD);
 		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT, net.minecraft.init.Items.QUARTZ);
 		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER, net.minecraft.init.Items.REDSTONE);
-
+		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItemFromItemStack(Names.INGOT, new ItemStack(net.minecraft.init.Items.DYE, 1, 4));
+		
 		doSpecialMats();
 
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,

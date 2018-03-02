@@ -481,12 +481,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewItem(@Nonnull final String name, @Nonnull final Item item) {
-		if (this.items.containsKey(name)) {
-			BaseMetals.logger.warn("Tried adding item %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
-			return this;
-		}
-		this.items.put(name, new ItemStack(item));
-		return this;
+		return this.addNewItemFromItemStack(name,  new ItemStack(item));
 	}
 
 	public MMDMaterial addNewItemFromItemStack(final Names name, final ItemStack itemStack) {
@@ -502,7 +497,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 */
 	public MMDMaterial addNewItemFromItemStack(@Nonnull final String name, @Nonnull final ItemStack itemStack) {
 		if (!(itemStack.isEmpty())) {
-			addNewItem(name, itemStack.getItem());
+			this.items.put(name, itemStack);
 		}
 		return this;
 	}

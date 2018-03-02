@@ -111,15 +111,19 @@ public abstract class Recipes {
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.GLOWSTONE,
 				new ItemStack(net.minecraft.init.Items.GLOWSTONE_DUST, 4)); // Glowstone to 4 Glowstone Dust
 
+		final MMDMaterial lapis = Materials.getMaterialByName(MaterialNames.LAPIS); 
+		// Lapis Ore to 8 Lapis
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE_LAPIS,
-				new ItemStack(net.minecraft.init.Items.DYE, 8, 4)); // Lapis Ore to 8 Lapis
+				lapis.getItemStack(Names.INGOT, 8));
+		 // Lapis Block to 9 Lapis
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK_LAPIS,
-				new ItemStack(net.minecraft.init.Items.DYE, 9, 4)); // Lapis Block to 9 Lapis
+				lapis.getItemStack(Names.INGOT, 9));
 
+		final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.LAPIS);
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE_REDSTONE,
-				new ItemStack(net.minecraft.init.Items.REDSTONE, 8)); // Redstone Ore to 8 Redstone
+				redstone.getItemStack(Names.POWDER, 8)); // Redstone Ore to 8 Redstone
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK_REDSTONE,
-				new ItemStack(net.minecraft.init.Items.REDSTONE, 9)); // Redstone Block to 9 Redstone
+				redstone.getItemStack(Names.POWDER, 9)); // Redstone Block to 9 Redstone
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.REEDS,
 				new ItemStack(net.minecraft.init.Items.SUGAR, 2)); // Sugar Cane to 2 Sugar
@@ -132,12 +136,13 @@ public abstract class Recipes {
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.BLAZE_ROD,
 				new ItemStack(net.minecraft.init.Items.BLAZE_POWDER, 2)); // Blaze Rod to 2 Blaze Powder
 
+		final MMDMaterial quartz = Materials.getMaterialByName(MaterialNames.QUARTZ);
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE_QUARTZ,
-				new ItemStack(net.minecraft.init.Items.QUARTZ, 2)); // Nether Quartz Ore to 2 Quartz
+				quartz.getItemStack(Names.INGOT, 2)); // Nether Quartz Ore to 2 Quartz
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.QUARTZ_BLOCK,
-				new ItemStack(net.minecraft.init.Items.QUARTZ, 4)); // Quartz Block to 4 Quartz
+				quartz.getItemStack(Names.INGOT, 4)); // Quartz Block to 4 Quartz
 		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 7),
-				new ItemStack(net.minecraft.init.Items.QUARTZ, 2)); // Quartz Slab to 2 Quartz
+				quartz.getItemStack(Names.INGOT, 2)); // Quartz Slab to 2 Quartz
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 0),
 				new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 4)); // Prismarine to Prismarine Shard
