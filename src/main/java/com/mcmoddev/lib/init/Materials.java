@@ -43,7 +43,8 @@ public class Materials {
 	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 
 	public static final MMDMaterial EMPTY = createOrelessMaterial("empty", MaterialType.METAL, 0, 0, 0, 0);
-
+	public static final MMDMaterial DEFAULT = createOrelessMaterial("default", MaterialType.METAL, 0, 0, 0, 0);
+	
 	protected Materials() {
 		// this only exists to allow for the "instance" variable
 	}

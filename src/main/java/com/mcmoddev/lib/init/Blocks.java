@@ -183,12 +183,12 @@ public abstract class Blocks {
 
 	@Nullable
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final Names name, final CreativeTabs tab) {
-		return addBlock(block, name.toString(), Materials.EMPTY, tab);
+		return addBlock(block, name.toString(), Materials.DEFAULT, tab);
 	}
 
 	@Nullable
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name, final CreativeTabs tab) {
-		return addBlock(block, name, Materials.EMPTY, tab);
+		return addBlock(block, name, Materials.DEFAULT, tab);
 	}
 
 	/**
@@ -257,7 +257,7 @@ public abstract class Blocks {
 		} else if ((name.startsWith("nether")) || (name.startsWith("end"))) {
 			String neededBit = name.substring(0, name.length() - 3);
 			return String.format("%s_%s_%s", neededBit, material.getName(), Names.ORE);
-		} else if (!material.isEmpty()) {
+		} else if ((!material.isEmpty()) && (!material.isDefault())) {
 			return String.format("%s_%s", material.getName(), name);
 		} else {
 			return name;

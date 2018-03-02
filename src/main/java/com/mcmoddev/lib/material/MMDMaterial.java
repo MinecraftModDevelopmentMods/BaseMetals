@@ -810,6 +810,10 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return ("empty".equals(this.getName()));
 	}
 
+	public boolean isDefault() {
+		return ("default".equalsIgnoreCase(this.getName()));
+	}
+	
 	public Map<String, Item> getItemRegistry() {
 		return ImmutableMap.copyOf(this.items);
 	}

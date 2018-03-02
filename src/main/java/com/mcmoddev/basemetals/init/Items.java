@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.collect.ImmutableList;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
@@ -22,6 +23,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 /**
  * This class initializes all items in Base Metals.
@@ -373,24 +375,18 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	 */
 	@SubscribeEvent
 	public static void registerItems(final RegistryEvent.Register<Item> event) {
-		for (MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID)) {
-			for (Item item : mat.getItems()) {
-				if (item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID)) {
-					event.getRegistry().register(item);
-				}
-			}
-		}
+		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
+		.forEach( mat -> regItems(event.getRegistry(), mat.getItems()));
 
-		if (Blocks.humanDetector != null) {
-			final ItemBlock itemBlock = new ItemBlock(Blocks.humanDetector);
-
-			itemBlock.setRegistryName("human_detector");
-			itemBlock
-					.setUnlocalizedName(Blocks.humanDetector.getRegistryName().getResourceDomain() + ".human_detector");
-			event.getRegistry().register(itemBlock);
-		}
-
+		regItems(event.getRegistry(), Materials.DEFAULT.getItems());
+		
 		Oredicts.registerItemOreDictionaryEntries();
 		Oredicts.registerBlockOreDictionaryEntries();
+	}
+
+	private static void regItems(IForgeRegistry<Item> registry, ImmutableList<Item> items) {
+		items.stream()
+		.filter( item -> item.getRegistryName().getResourceDomain().toString().equals(BaseMetals.MODID))
+		.forEach(registry::register);
 	}
 }
