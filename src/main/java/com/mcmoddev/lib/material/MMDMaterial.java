@@ -600,8 +600,16 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public ItemStack getItemStack(final String name, final int amount) {
+		if ((!this.hasItem(name)) || (this.items.get(name) == null)) {
+			return ItemStack.EMPTY;
+		}
+		
 		ItemStack base = this.items.get(name);
-		return new ItemStack(base.getItem(), amount, base.getMetadata());
+		if (base.getHasSubtypes()) {
+			return new ItemStack(base.getItem(), amount, base.getMetadata());
+		} else {
+			return new ItemStack(base.getItem(), amount);
+		}
 	}
 
 	/**
