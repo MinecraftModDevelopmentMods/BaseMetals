@@ -1,6 +1,6 @@
 {
     "variants": {
-        "half=bottom": { "model": "basemetals:half_slab_zinc" },
-        "half=top": { "model": "basemetals:upper_slab_zinc" }
+        "half=bottom,variant=default": { "model": "basemetals:half_slab_zinc" },
+        "half=top,variant=default": { "model": "basemetals:upper_slab_zinc" }
     }
 }

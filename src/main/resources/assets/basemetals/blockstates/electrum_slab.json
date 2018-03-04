@@ -1,6 +1,6 @@
 {
     "variants": {
-        "half=bottom": { "model": "basemetals:half_slab_electrum" },
-        "half=top": { "model": "basemetals:upper_slab_electrum" }
+        "half=bottom,variant=default": { "model": "basemetals:half_slab_electrum" },
+        "half=top,variant=default": { "model": "basemetals:upper_slab_electrum" }
     }
 }
