@@ -161,8 +161,8 @@ public abstract class Items {
 
 		classSortingValues.put(BlockMMDButton.class, ++ss * 10000);
 		classSortingValues.put(BlockMMDSlab.class, ++ss * 10000);
-		classSortingValues.put(BlockMMDDoubleSlab.class, ++ss * 10000);
-		classSortingValues.put(BlockMMDHalfSlab.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDSlab.Double.class, ++ss * 10000);
+		classSortingValues.put(BlockMMDSlab.Half.class, ++ss * 10000);
 		classSortingValues.put(BlockMMDLever.class, ++ss * 10000);
 		classSortingValues.put(BlockMMDPressurePlate.class, ++ss * 10000);
 		classSortingValues.put(BlockMMDStairs.class, ++ss * 10000);

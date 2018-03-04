@@ -64,13 +64,13 @@ public abstract class Blocks {
 		addBlockType(Names.BOOKSHELF, BlockMMDBookshelf.class, Options.isThingEnabled(ConfigKeys.BOOKSHELF), null);
 		addBlockType(Names.BUTTON, BlockMMDButton.class, Options.isThingEnabled(ConfigKeys.BUTTON), Oredicts.BUTTON);
 		addBlockType(Names.DOOR, BlockMMDDoor.class, Options.isThingEnabled(ConfigKeys.DOOR), null);
-		addBlockType(Names.DOUBLE_SLAB, BlockMMDDoubleSlab.class, Options.isThingEnabled(ConfigKeys.SLAB), null);
+		addBlockType(Names.DOUBLE_SLAB, BlockMMDSlab.Double.class, Options.isThingEnabled(ConfigKeys.SLAB), null);
 		addBlockType(Names.FLOWER_POT, BlockMMDFlowerPot.class, Options.isThingEnabled(ConfigKeys.FLOWERPOT), null);
 		addBlockType(Names.LADDER, BlockMMDLadder.class, Options.isThingEnabled(ConfigKeys.LADDER), null);
 		addBlockType(Names.LEVER, BlockMMDLever.class, Options.isThingEnabled(ConfigKeys.LEVER), Oredicts.LEVER);
 		addBlockType(Names.PLATE, BlockMMDPlate.class, Options.isThingEnabled(ConfigKeys.PLATE), Oredicts.PLATE);
 		addBlockType(Names.PRESSURE_PLATE, BlockMMDPressurePlate.class, Options.isThingEnabled(ConfigKeys.PRESSURE_PLATE), null);
-		addBlockType(Names.SLAB, BlockMMDSlab.class, Options.isThingEnabled(ConfigKeys.SLAB), null);
+		addBlockType(Names.SLAB, BlockMMDSlab.Half.class, Options.isThingEnabled(ConfigKeys.SLAB), null);
 		addBlockType(Names.STAIRS, BlockMMDStairs.class, Options.isThingEnabled(ConfigKeys.STAIRS), Oredicts.STAIRS);
 		addBlockType(Names.TRAPDOOR, BlockMMDTrapDoor.class, Options.isThingEnabled(ConfigKeys.TRAPDOOR), Oredicts.TRAPDOOR);
 		addBlockType(Names.TRIPWIRE_HOOK, BlockMMDTripWireHook.class, Options.isThingEnabled(ConfigKeys.TRIPWIRE_HOOK), null);
@@ -242,13 +242,13 @@ public abstract class Blocks {
 	}
 
 	private static String getBlockFullName(@Nonnull final Block block, final MMDMaterial material, @Nonnull final String name) {
-		if (block instanceof BlockMMDDoubleSlab) {
-			return String.format( "double_%s_%s", material.getName(), Names.SLAB );
+		if (block instanceof BlockMMDSlab.Double) {
+			return String.format("double_%s_%s", material.getName(), Names.SLAB);
 		} else if ((name.startsWith("nether")) || (name.startsWith("end"))) {
 			String neededBit = name.substring(0, name.length() - 3);
-			return String.format( "%s_%s_%s", neededBit, material.getName(), Names.ORE );
-		} else if( material != null ) {
-			return String.format("%s_%s", material.getName(), name );
+			return String.format("%s_%s_%s", neededBit, material.getName(), Names.ORE);
+		} else if (material != null) {
+			return String.format("%s_%s", material.getName(), name);
 		} else {
 			return name;
 		}
