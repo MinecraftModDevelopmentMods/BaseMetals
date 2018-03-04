@@ -154,7 +154,6 @@ item.basemetals.iron_crackhammer.name=Iron Crack Hammer
 item.basemetals.iron_powder.name=Powdered Iron
 item.basemetals.iron_nugget.name=Iron Nugget
 item.basemetals.gold_powder.name=Powdered Gold
-item.basemetals.gold_crackhammer.name=Golden Crack Hammer
 item.basemetals.lead_axe.name=Lead Axe
 item.basemetals.lead_bars.name=Lead Bars
 item.basemetals.lead_block.name=Lead Block
@@ -419,7 +418,7 @@ achievement.geologist.desc=Make a hammer from a metal block
 achievement.brass_maker.desc=Combine powdered copper and zinc to make brass
 achievement.bronze_maker.desc=Combine powdered copper and tin to make bronze
 achievement.electrum_maker.desc=Combine powdered silver and gold to make electrum
-achievement.steel_maker.desc=Combine powdered iron and charcoal to make steel
+achievement.steel_maker.desc=Combine powdered iron and powdered charcoal to make steel
 achievement.invar_maker.desc=Combine powdered iron and nickel to make invar
 achievement.mithril_maker.desc=Combine powdered silver, cold-iron and mercury to make mithril
 achievement.aquarium_maker.desc=Combine powdered copper and zinc with prismarine crystals to make aquarium
@@ -531,6 +530,8 @@ item.basemetals.steel_gear.name=Steel Gear
 item.basemetals.tin_gear.name=Tin Gear
 item.basemetals.zinc_gear.name=Zinc Gear
 
+item.basemetals.gold_crackhammer.name=Golden Crack Hammer
+
 # Anvils
 tile.basemetals.steel_anvil.intact.name=Steel Anvil
 tile.basemetals.steel_anvil.slightlyDamaged.name=Slightly Damaged Steel Anvil
@@ -572,3 +573,4 @@ item.basemetals.stone_scythe.name=Stone Sickle
 item.basemetals.tin_scythe.name=Tin Sickle
 item.basemetals.wood_scythe.name=Wood Sickle
 item.basemetals.zinc_scythe.name=Zinc Sickle
+

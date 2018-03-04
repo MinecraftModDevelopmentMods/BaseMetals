@@ -437,6 +437,7 @@ item.basemetals.stone_crackhammer.name=Almádena de piedra
 item.bucket.mercury=Cubo de mercurio
 fluid.basemetals.mercury=Mercurio
 
+
 item.basemetals.human_detector.name=Seguridad plato de presión
 
 achievement.cupronickel_maker.desc=Combinar el cobre y el níquel en polvo para hacer cobreníquel
@@ -529,3 +530,4 @@ item.basemetals.starsteel_gear.name=Engranaje de estrellacero
 item.basemetals.steel_gear.name=Engranaje de acero
 item.basemetals.tin_gear.name=Engranaje de estaño
 item.basemetals.zinc_gear.name=Engranaje de zinc
+

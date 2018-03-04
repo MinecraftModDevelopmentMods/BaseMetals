@@ -478,3 +478,4 @@ String getVersion(String type, String mod_file) {
   }
   return "$major.$revision.$patch"
 }
+
