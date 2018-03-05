@@ -131,9 +131,9 @@ if (secretFile.exists()) {
 }
 
 minecraft {
-  version = "${project.forge_mc_version}-${project.forge_version}"
+  version = project.forge_mc_version + '-' + project.forge_version
   runDir = 'run'
-  mappings = "${project.mcp_mappings}"
+  mappings = project.mcp_mappings
 
   replace '@FINGERPRINT@', project.findProperty('signSHA1')
 
@@ -143,34 +143,34 @@ minecraft {
   }
 
   if (project.hasProperty('mc_username')) {
-    clientRunArgs += ['--username', "${project.mc_username}"]
+    clientRunArgs += ['--username', project.mc_username]
     if (project.hasProperty('mc_password')) {
-      clientRunArgs += ['--password=', "${project.mc_password}"]
+      clientRunArgs += ['--password', project.mc_password]
     }
   }
   if (project.hasProperty('mc_uuid')) {
-    clientRunArgs += ['--uuid', "${project.mc_uuid}"]
+    clientRunArgs += ['--uuid', project.mc_uuid]
   }
 
   // disable server gui
-  serverRunArgs += "nogui"
+  serverRunArgs += 'nogui'
 
   // skip the screen to confirm that you want to load a world with missing registry entries
-  serverJvmArgs += "-Dfml.doNotBackup=true"
-  clientJvmArgs += "-Dfml.doNotBackup=true"
+  serverJvmArgs += '-Dfml.doNotBackup=true'
+  clientJvmArgs += '-Dfml.doNotBackup=true'
 
   // skip having to confirm on server
-  serverJvmArgs += "-Dfml.queryResult=confirm"
+  serverJvmArgs += '-Dfml.queryResult=confirm'
 
   //skip jansi warnings in the log
-  serverJvmArgs += "-Dlog4j.skipJansi=true"
-  clientJvmArgs += "-Dlog4j.skipJansi=true"
+  serverJvmArgs += '-Dlog4j.skipJansi=true'
+  clientJvmArgs += '-Dlog4j.skipJansi=true'
 
   if (project.hasProperty('client_args')) {
-    clientJvmArgs += "${project.client_args}"
+    clientJvmArgs += project.client_args
   }
   if (project.hasProperty('server_args')) {
-    serverJvmArgs += "${project.server_args}"
+    serverJvmArgs += project.server_args
   }
 }
 
@@ -358,9 +358,9 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
     project.hasProperty('keyStore')
   }
 
-  // findProperty allows us to reference the property without it existing. 
-  // Using project.propName would cause the script to fail validation if 
-  // the property did not exist. 
+  // findProperty allows us to reference the property without it existing.
+  // Using project.propName would cause the script to fail validation if
+  // the property did not exist.
   keyStore = project.findProperty('keyStore')
   alias = project.findProperty('keyStoreAlias')
   storePass = project.findProperty('keyStorePass')
@@ -413,7 +413,7 @@ publishing {
 
 curseforge {
   if (project.hasProperty('cf_project_id') && project.hasProperty('cf_release_type') &&
-      ((project.cf_release_type == "alpha") || (project.cf_release_type == "beta") || (project.cf_release_type == "release"))) {
+      ((project.cf_release_type == 'alpha') || (project.cf_release_type == 'beta') || (project.cf_release_type == 'release'))) {
     apiKey = secret.curseforgeAPIKey
     project {
       id = project.cf_project_id
