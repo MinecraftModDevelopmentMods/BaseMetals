@@ -306,12 +306,12 @@ public abstract class Recipes {
 			}
 
 			if (material.hasItem(Names.POWDER)) {
-				ItemStack ingot;
-				if (material.getName().equals(MaterialNames.CHARCOAL)) {
-					ingot = new ItemStack(material.getItem(Names.INGOT), 1, 1);
-				} else {
-					ingot = material.getItemStack(Names.INGOT);
+				if (material.getName().equals(MaterialNames.CHARCOAL) || 
+						material.getName().equals(MaterialNames.COAL)) {
+					return;
 				}
+				
+				ItemStack ingot = material.getItemStack(Names.INGOT);
 
 				GameRegistry.addSmelting(material.getItemStack(Names.POWDER),
 						ingot, oreSmeltXP);
@@ -328,8 +328,14 @@ public abstract class Recipes {
 						material.getItemStack(Names.POWDER, Options.twoDustDrop() ? 2 : 1));
 			}
 			if (material.hasItem(Names.INGOT)) {
-				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.INGOT + oreDictName,
-						material.getItemStack(Names.POWDER, 1));
+				if (material.getName().equals(MaterialNames.CHARCOAL) || 
+					 	material.getName().equals(MaterialNames.COAL)) {
+					CrusherRecipeRegistry.addNewCrusherRecipe(material.getItemStack(Names.INGOT), 
+							material.getItemStack(Names.POWDER, 1));
+				} else {
+					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.INGOT + oreDictName,
+							material.getItemStack(Names.POWDER, 1));
+				}
 			}
 			if (material.hasBlock(Names.BLOCK)) {
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName,
