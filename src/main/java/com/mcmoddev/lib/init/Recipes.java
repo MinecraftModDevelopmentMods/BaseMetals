@@ -337,6 +337,7 @@ public abstract class Recipes {
 							material.getItemStack(Names.POWDER, 1));
 				}
 			}
+			
 			if (material.hasBlock(Names.BLOCK)) {
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName,
 						material.getItemStack(Names.POWDER, 9));

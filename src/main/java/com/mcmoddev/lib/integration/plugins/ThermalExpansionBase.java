@@ -73,10 +73,10 @@ public class ThermalExpansionBase implements IIntegration {
 		ItemStack inputIngot = ItemStack.EMPTY;
 		ItemStack outputDust = new ItemStack(material.getItem(Names.POWDER));
 		if (material.hasBlock(Names.ORE) && material.getBlock(Names.ORE) != null) {
-			inputOre = new ItemStack(Item.getItemFromBlock(material.getBlock(Names.ORE)));
+			inputOre = material.getBlockItemStack(Names.ORE);
 		}
 		if (material.hasItem(Names.INGOT) && material.getItem(Names.INGOT) != null) {
-			inputIngot = new ItemStack(material.getItem(Names.INGOT));
+			inputIngot = material.getItemStack(Names.INGOT);
 		}
 		if (!inputOre.isEmpty()) {
 			addPulverizerRecipe(ENERGY_ORE, inputOre, outputDust);
