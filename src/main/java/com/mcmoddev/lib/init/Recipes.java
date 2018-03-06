@@ -236,7 +236,9 @@ public abstract class Recipes {
 						material.getItemStack(Names.NUGGET, 4), 0); // Roughly half a nugget loss
 			}
 
-			if ((material.hasItem(Names.POWDER)) && (material.hasItem(Names.SMALLPOWDER))) {
+			if ((material.hasItem(Names.POWDER)) && (material.hasItem(Names.SMALLPOWDER)) &&
+					(!material.getName().equals(MaterialNames.COAL)) &&
+					(!material.getName().equals(MaterialNames.CHARCOAL))) {
 				GameRegistry.addSmelting(material.getItemStack(Names.SMALLPOWDER),
 						material.getItemStack(Names.NUGGET, 1), 0);
 
