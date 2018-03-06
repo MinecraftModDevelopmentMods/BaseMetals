@@ -239,6 +239,10 @@ public abstract class Blocks {
 		}
 
 		blockRegistry.put(fullName, block);
+		if (material.isDefault()) {
+			material.addNewBlock(fullName, block);
+		}
+		
 		return block;
 	}
 
