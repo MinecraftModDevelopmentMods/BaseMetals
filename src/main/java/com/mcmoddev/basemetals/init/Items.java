@@ -378,8 +378,6 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	public static void registerItems(final RegistryEvent.Register<Item> event) {
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
 		.forEach( mat -> regItems(event.getRegistry(), mat.getItems()));
-
-		regItems(event.getRegistry(), Materials.DEFAULT.getItems());
 		
 		Oredicts.registerItemOreDictionaryEntries();
 		Oredicts.registerBlockOreDictionaryEntries();

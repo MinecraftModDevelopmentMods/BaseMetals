@@ -228,8 +228,6 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
 		.forEach(mat -> regBlocks(event.getRegistry(), mat.getBlocks()));
-
-		regBlocks(event.getRegistry(), Materials.DEFAULT.getBlocks());
 	}
 
 	private static void regBlocks(IForgeRegistry<Block> registry, ImmutableList<Block> blocks) {
