@@ -21,7 +21,7 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	 * @param worldIn
 	 *            The World
 	 */
-	public EntityCustomArrow(World worldIn) {
+	public EntityCustomArrow(final World worldIn) {
 		super(worldIn);
 	}
 
@@ -36,7 +36,7 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	 * @param z
 	 *            Z
 	 */
-	public EntityCustomArrow(World worldIn, double x, double y, double z) {
+	public EntityCustomArrow(final World worldIn, final double x, final double y, final double z) {
 		super(worldIn, x, y, z);
 	}
 
@@ -49,14 +49,27 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	 * @param shooter
 	 *            The Shooter
 	 */
-	public EntityCustomArrow(World worldIn, ItemStack stack, EntityPlayer shooter) {
+	public EntityCustomArrow(final World worldIn, final ItemStack stack, final EntityPlayer shooter) {
 		super(worldIn, shooter);
 		this.itemStack = stack;
 	}
 
 	@Override
+	public int hashCode() {
+		return super.hashCode() ^ this.getArrowStack().hashCode();
+	}
+
+	@Override
+	public boolean equals(final Object other) {
+		if (!(other instanceof EntityCustomArrow)) {
+			return false;
+		}
+		return super.equals(other);
+	}
+
+	@Override
 	protected ItemStack getArrowStack() {
-		if (this.itemStack == null) {
+		if (this.itemStack.isEmpty()) {
 			this.itemStack = new ItemStack(Items.ARROW);
 		}
 
@@ -64,21 +77,15 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT(final NBTTagCompound compound) {
 		super.writeToNBT(compound);
-
-		final NBTTagCompound itemStackCompound = new NBTTagCompound();
-		this.itemStack.writeToNBT(itemStackCompound);
-
-		compound.setTag("itemstack", itemStackCompound);
-
-		return compound;
+		return EntityHelpers.writeToNBTItemStack(compound, this.itemStack);
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void readFromNBT(final NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
-		this.itemStack = new ItemStack(compound.getCompoundTag("itemstack"));
+		this.itemStack = EntityHelpers.readFromNBTItemStack(compound);
 	}
 }

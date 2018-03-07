@@ -3,18 +3,19 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
- * Powders
- * 
+ * Powders.
+ *
  * @author DrCyano
  *
  */
 public class ItemMMDPowder extends GenericMMDItem {
+
 	/**
 	 *
 	 * @param material
 	 *            The material to make the powder from
 	 */
-	public ItemMMDPowder(MMDMaterial material) {
+	public ItemMMDPowder(final MMDMaterial material) {
 		super(material);
 	}
 }

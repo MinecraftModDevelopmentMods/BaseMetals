@@ -6,7 +6,7 @@ import com.mcmoddev.lib.util.Oredicts;
 
 public class ShieldRepairRecipe extends RepairRecipeBase {
 
-	public ShieldRepairRecipe(MMDMaterial mat) {
-		super( mat, Names.SHIELD.toString(), Oredicts.SHIELD + mat.getCapitalizedName(), Oredicts.PLATE + mat.getCapitalizedName());
+	public ShieldRepairRecipe(final MMDMaterial material) {
+		super(material, Names.SHIELD, Oredicts.SHIELD + material.getCapitalizedName(), Oredicts.PLATE + material.getCapitalizedName());
 	}
 }

@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_ne",
-    "textures": {
-        "particle": "basemetals:blocks/diamond_bars",
-        "bars": "basemetals:blocks/diamond_bars",
-        "edge": "basemetals:blocks/diamond_bars"
-    }
-}

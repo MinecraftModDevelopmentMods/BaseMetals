@@ -7,5 +7,20 @@ public interface ITransformer extends Opcodes {
 
 	String getTarget();
 
-	void transform(ClassNode node, boolean dev);
+	ClassNode transform(ClassNode node, boolean dev);
+
+	/**
+	 *
+	 * @param names
+	 * @param target
+	 * @return
+	 */
+	public static boolean oneEquals(final String[] names, final String target) {
+		for (final String name : names) {
+			if (target.equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

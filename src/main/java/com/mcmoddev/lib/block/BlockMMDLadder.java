@@ -5,14 +5,19 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class BlockMMDLadder extends net.minecraft.block.BlockLadder implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
-	public BlockMMDLadder(MMDMaterial material) {
+	/**
+	 *
+	 * @param material
+	 */
+	public BlockMMDLadder(final MMDMaterial material) {
+		super();
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("axe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

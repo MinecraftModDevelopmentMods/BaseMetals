@@ -8,25 +8,36 @@ import javax.annotation.Nullable;
 
 import com.mcmoddev.lib.util.Platform;
 
+import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 
 @Name("BaseMetals")
-@MCVersion("1.12.1")
 @SortingIndex(1001)
 public class ASMPlugin implements IFMLLoadingPlugin {
 
 	static List<ITransformer> transformerList = new ArrayList<>();
 
+	//HorseArmor patches present in 1.12.2-14.23.1.2592+
+	private static final boolean NEEDS_HORSE_ARMOR_PATCH = ForgeVersion.getMajorVersion() < 14 || ForgeVersion.getMinorVersion() < 23 || ForgeVersion.getRevisionVersion() < 1 || ForgeVersion.getBuildVersion() < 2592;
+
+	/**
+	 *
+	 */
 	public ASMPlugin() {
-		transformerList.add(new EntityHorseTransformer());
-		transformerList.add(new HorseArmorTypeTransformer());
+		if (NEEDS_HORSE_ARMOR_PATCH) {
+			transformerList.add(new EntityHorseTransformer());
+			transformerList.add(new HorseArmorTypeTransformer());
+		}
+		//if you add more here, you must remove the check below in getASMTransformerClass()!
 	}
 
 	@Override
 	public String[] getASMTransformerClass() {
+		if (!NEEDS_HORSE_ARMOR_PATCH) {
+			return null;
+		}
 		return new String[] { ASMTransformer.class.getName() };
 	}
 
@@ -42,7 +53,7 @@ public class ASMPlugin implements IFMLLoadingPlugin {
 	}
 
 	@Override
-	public void injectData(Map<String, Object> data) {
+	public void injectData(final Map<String, Object> data) {
 		Platform.setDev((Boolean) data.get("runtimeDeobfuscationEnabled"));
 	}
 

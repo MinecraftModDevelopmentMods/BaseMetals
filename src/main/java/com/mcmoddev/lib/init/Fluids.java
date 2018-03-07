@@ -4,19 +4,21 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.fluids.CustomFluid;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -35,60 +37,52 @@ import net.minecraftforge.fml.common.Loader;
  */
 public abstract class Fluids {
 
-	private static boolean initDone = false;
-
 	private static final BiMap<String, Fluid> fluidRegistry = HashBiMap.create();
-	private static final BiMap<String, BlockFluidBase> fluidBlockRegistry = HashBiMap.create();
-
-	private static final ResourceLocation dizzyPotionKey = new ResourceLocation("nausea");
+	private static final BiMap<String, BlockFluidClassic> fluidBlockRegistry = HashBiMap.create();
 
 	protected Fluids() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		initDone = true;
 	}
 
 	protected static Fluid addFluid(@Nonnull final String materialName, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
 		return addFluid(Materials.getMaterialByName(materialName), density, viscosity, temperature, luminosity);
 	}
 
-	protected static Fluid addFluid(@Nonnull MMDMaterial material, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
-		int tintColor;
+	protected static Fluid addFluid(@Nonnull final MMDMaterial material, @Nonnull final int density, @Nonnull final int viscosity, @Nonnull final int temperature, @Nonnull final int luminosity) {
 		if (material.getFluid() != null) {
 			return material.getFluid();
 		}
-		tintColor = material.getTintColor();
 
+		final String modID = Loader.instance().activeModContainer().getModId();
 		final Fluid fluid = new CustomFluid(material.getName(),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_still"),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId(), "blocks/molten_metal_flow"), tintColor);
+				new ResourceLocation(modID, "blocks/molten_metal_still"),
+				new ResourceLocation(modID, "blocks/molten_metal_flow"));
+
 		fluid.setDensity(density);
 		fluid.setViscosity(viscosity);
 		fluid.setTemperature(temperature);
 		fluid.setLuminosity(luminosity);
-		fluid.setUnlocalizedName(Loader.instance().activeModContainer().getModId() + "." + material.getName());
+		fluid.setUnlocalizedName(modID + "." + material.getName());
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
 
 		material.setFluid(fluid);
 
-		fluidRegistry.put(material.getName(), fluid);
-		return fluid;
+		return fluidRegistry.put(material.getName(), fluid);
 	}
 
+	@Nullable
 	protected static BlockFluidClassic addFluidBlock(@Nonnull final String materialName) {
 		return addFluidBlock(Materials.getMaterialByName(materialName));
 	}
 
+	@Nullable
 	protected static BlockFluidClassic addFluidBlock(@Nonnull final MMDMaterial material) {
 		if (material.getFluidBlock() != null) {
 			return material.getFluidBlock();
@@ -104,12 +98,11 @@ public abstract class Fluids {
 		if (!name.equals(MaterialNames.MERCURY)) {
 			block = new BlockFluidClassic(material.getFluid(), Material.LAVA);
 		} else {
-			block = new InteractiveFluidBlock(getFluidByName(name), false,
-					(World w, EntityLivingBase e) -> {
-						if (w.rand.nextInt(32) == 0) {
-							e.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(dizzyPotionKey), 30 * 20, 2));
-						}
-					});
+			block = new InteractiveFluidBlock(getFluidByName(name), false, (World w, EntityLivingBase e) -> {
+				if (w.rand.nextInt(32) == 0) {
+					e.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 30 * 20, 2));
+				}
+			});
 		}
 
 		block.setRegistryName(name); // fullName
@@ -123,8 +116,8 @@ public abstract class Fluids {
 		material.addNewItem("fluidItemBlock", itemBlock);
 
 		material.setFluidBlock(block);
-		fluidBlockRegistry.put(name, block);
-		return block;
+
+		return fluidBlockRegistry.put(name, block);
 	}
 
 	/**
@@ -136,6 +129,7 @@ public abstract class Fluids {
 	 *            The name of the fluid in question
 	 * @return The fluid matching that name, or null if there isn't one
 	 */
+	@Nullable
 	public static Fluid getFluidByName(@Nonnull final String name) {
 		return fluidRegistry.get(name);
 	}
@@ -149,6 +143,7 @@ public abstract class Fluids {
 	 * @return The name of the fluid, or null if the item is not a Base Metals
 	 *         fluid.
 	 */
+	@Nullable
 	public static String getNameOfFluid(@Nonnull final Fluid fluid) {
 		return fluidRegistry.inverse().get(fluid);
 	}
@@ -166,7 +161,8 @@ public abstract class Fluids {
 	 *            The name of the fluid block in question
 	 * @return The fluid block matching that name, or null if there isn't one
 	 */
-	public static BlockFluidBase getFluidBlockByName(@Nonnull String name) {
+	@Nullable
+	public static BlockFluidBase getFluidBlockByName(@Nonnull final String name) {
 		return fluidBlockRegistry.get(name);
 	}
 
@@ -180,7 +176,8 @@ public abstract class Fluids {
 	 * @return The name of the item, or null if the item is not a Base Metals
 	 *         fluid block.
 	 */
-	public static String getNameOfFluidBlock(@Nonnull BlockFluidBase block) {
+	@Nullable
+	public static String getNameOfFluidBlock(@Nonnull final BlockFluidBase block) {
 		return fluidBlockRegistry.inverse().get(block);
 	}
 

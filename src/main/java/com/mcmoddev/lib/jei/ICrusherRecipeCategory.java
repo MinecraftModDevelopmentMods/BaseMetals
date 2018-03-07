@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.BaseMetals;
 
@@ -16,25 +15,28 @@ import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWrapper> {
+
 	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID, "textures/jei/jeihammeroverlay.png");
 	private final IDrawable background;
 	private final IDrawable icon;
-	protected final IDrawableAnimated hammer;
-	protected final IGuiHelper helper;
+	private final IDrawableAnimated hammer;
 
-	public ICrusherRecipeCategory(IGuiHelper guiHelper) {
-		background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
-		icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
+	/**
+	 *
+	 * @param guiHelper
+	 */
+	public ICrusherRecipeCategory(final IGuiHelper guiHelper) {
+		this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
+		this.icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
 
 		IDrawableStatic hammerDrawable = guiHelper.createDrawable(resourceLocation, 169, 17, 32, 32);
-		hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 100, IDrawableAnimated.StartDirection.BOTTOM, false);
-		helper = guiHelper;
+		this.hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 100, IDrawableAnimated.StartDirection.BOTTOM, false);
 	}
 
 	@Override
@@ -44,12 +46,12 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 
 	@Override
 	public String getModName() {
-		return "basemetals";
+		return 	BaseMetalsJEIPlugin.JEI_UID;
 	}
 
 	@Override
 	public String getTitle() {
-		return Translator.translateToLocal(getUid());
+		return new TextComponentTranslation(String.format(getUid())).getFormattedText();
 	}
 
 	@Override
@@ -57,19 +59,18 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 		return background;
 	}
 
-	@Nullable
 	@Override
 	public IDrawable getIcon() {
 		return icon;
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, @Nonnull ICrusherRecipeWrapper recipeWrapper, IIngredients ingredients) {
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-		
+	public void setRecipe(final IRecipeLayout recipeLayout, @Nonnull final ICrusherRecipeWrapper recipeWrapper, final IIngredients ingredients) {
+		final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+
 		// init the input slot
 		guiItemStacks.init(0, true, 40, 14);
-		
+
 		// init the output slot
 		guiItemStacks.init(1, false, 119, 14);
 
@@ -83,13 +84,12 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 	}
 
 	@Override
-	public void drawExtras(Minecraft minecraft) {
+	public void drawExtras(final Minecraft minecraft) {
 		this.hammer.draw(minecraft,  71, 6);
 	}
 
 	@Override
-	public List<String> getTooltipStrings(int mouseX, int mouseY) {
+	public List<String> getTooltipStrings(final int mouseX, final int mouseY) {
 		return Collections.<String>emptyList();
 	}
-
 }

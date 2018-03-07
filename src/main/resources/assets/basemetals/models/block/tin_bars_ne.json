@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_ne",
-    "textures": {
-        "particle": "basemetals:blocks/tin_bars",
-        "bars": "basemetals:blocks/tin_bars",
-        "edge": "basemetals:blocks/tin_bars"
-    }
-}

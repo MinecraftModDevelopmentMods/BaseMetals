@@ -11,7 +11,7 @@ import net.minecraft.util.IStringSerializable;
 
 public enum Names implements IStringSerializable {
 	// Items
-	ARROW, AXE, BLEND, BOOTS, BOLT, BOW, CHESTPLATE, CRACKHAMMER, CROSSBOW, FISHING_ROD, GEAR, HELMET, HOE, HORSE_ARMOR, INGOT, LEGGINGS, NUGGET, PICKAXE, POWDER, ROD, SHEARS, SHIELD, SHOVEL, SMALLBLEND, SMALLPOWDER, SWORD, GEM,
+	ARROW, AXE, BLEND, BOOTS, BOLT, BOW, CHESTPLATE, CRACKHAMMER, CROSSBOW, FISHING_ROD, GEAR, HELMET, HOE, HORSE_ARMOR, INGOT, LEGGINGS, NUGGET, PICKAXE, POWDER, ROD, SHEARS, SHIELD, SHOVEL, SMALLBLEND, SMALLPOWDER, SWORD, GEM, SCYTHE,
 
 	// Blocks
 	BARS, BLOCK, BOOKSHELF, BUTTON, DOUBLE_SLAB, FLOWER_POT, LADDER, LEVER, PLATE, PRESSURE_PLATE, STAIRS, TRAPDOOR, TRIPWIRE_HOOK, WALL, FENCE, FENCE_GATE,
@@ -41,6 +41,11 @@ public enum Names implements IStringSerializable {
 		return this.name();
 	}
 
+	/**
+	 *
+	 * @param ordinal
+	 * @return
+	 */
 	public static Names getType(@Nonnull int ordinal) {
 		if ((ordinal > values().length) || (ordinal < 0)) {
 			ordinal = 0;

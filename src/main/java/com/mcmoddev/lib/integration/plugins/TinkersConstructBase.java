@@ -16,8 +16,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
- * TiC Plugin, redesigned
- * 
+ * TiC Plugin, redesigned.
+ *
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  *
  */
@@ -25,17 +25,13 @@ public class TinkersConstructBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "tconstruct";
 
-	private static boolean initDone = false;
-
 	protected static final TinkersConstructRegistry registry = TinkersConstructRegistry.instance;
 
 	@Override
 	public void init() {
-		if (initDone || !Options.isModEnabled(PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-
-		initDone = true;
 	}
 
 	protected static void registerExtraMelting(@Nonnull final String materialName, @Nonnull final String type, @Nonnull final String name, @Nonnull final int amountPer) {
@@ -55,26 +51,34 @@ public class TinkersConstructBase implements IIntegration {
 	 *            Array of quantities for input
 	 */
 	protected static void registerAlloy(@Nonnull final String outputName, @Nonnull final int outputQty, @Nonnull final String[] inputName, @Nonnull final int[] inputQty) {
-		FluidStack output = FluidRegistry.getFluidStack(outputName, outputQty);
-		FluidStack[] inputs = new FluidStack[inputName.length];
-		
-		for( int i = 0; i < inputName.length; i++ ) {
+		final FluidStack output = FluidRegistry.getFluidStack(outputName, outputQty);
+		final FluidStack[] inputs = new FluidStack[inputName.length];
+
+		for (int i = 0; i < inputName.length; i++) {
 			inputs[i] = FluidRegistry.getFluidStack(inputName[i], inputQty[i]);
 		}
-		
+
 		registry.registerAlloy(outputName, output, inputs);
 	}
 
-	protected static TCMaterial registerMaterial(@Nonnull final String materialName, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
-		MMDMaterial mat = Materials.getMaterialByName(materialName);
-		
-		return registerMaterial(mat, craftable, castable);
-	}
-	
+    protected static TCMaterial registerMaterial(@Nonnull final String materialName, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
+        if (!Materials.hasMaterial(materialName)) {
+        	return null;
+        }
+
+        final MMDMaterial mat = Materials.getMaterialByName(materialName);
+
+        if (mat.isEmpty()) {
+        	return null;
+        }
+
+        return registerMaterial(mat, craftable, castable);
+    }
+
 	/**
 	 * Creates a Tinkers Construct
-	 * {@link slimeknights.tconstruct.library.materials.Material}
-	 * 
+	 * {@link slimeknights.tconstruct.library.materials.Material}.
+	 *
 	 * @param material
 	 *            Material identifier
 	 * @param craftable
@@ -84,19 +88,24 @@ public class TinkersConstructBase implements IIntegration {
 	 * @return a handle for potential, further manipulation of the material
 	 */
 	protected static TCMaterial registerMaterial(@Nonnull final MMDMaterial material, @Nonnull final boolean craftable, @Nonnull final boolean castable) {
-		TCMaterial tcm = registry.newMaterial(material.getName(), material.getTintColor());
-		if( craftable )
+		final TCMaterial tcm = registry.newMaterial(material.getName(), material.getTintColor());
+		if (craftable) {
 			tcm.setCraftable();
-		if( castable )
+		}
+		if (castable) {
 			tcm.setCastable();
-		
+		}
+
+		tcm.setSourceMaterial(material);
+		tcm.genStatsFromSource();
+
 		return tcm;
 	}
 
 	/**
 	 * Creates a Tinkers Construct
-	 * {@link slimeknights.tconstruct.library.materials.Material}
-	 * 
+	 * {@link slimeknights.tconstruct.library.materials.Material}.
+	 *
 	 * @param material
 	 *            Information about the material and the material itself
 	 */
@@ -105,6 +114,7 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	protected void registerModifierRecipe(@Nonnull final String name, @Nonnull final ItemStack... recipe) {
+
 		ModifierRegistry.setModifierRecipe(name, recipe);
 	}
 
@@ -121,20 +131,24 @@ public class TinkersConstructBase implements IIntegration {
 		registry.addMaterialStats();
 	}
 
-	public void setMaterialsVisible() {
-		registry.setMaterialsVisible();
+	public void setMaterialsVisible(@Nonnull final String forMod) {
+		registry.setMaterialsVisible(forMod);
 	}
 
-	public void initSetup() {
-		registry.resolveTraits();
-		registry.integrationsInit();
-		setMaterialsVisible();
-		registry.registerMeltings();
+	/**
+	 *
+	 * @param forMod
+	 */
+	public void initSetup(@Nonnull final String forMod) {
+		registry.resolveTraits(forMod);
+		registry.integrationsInit(forMod);
+		setMaterialsVisible(forMod);
+		registry.registerMeltings(forMod);
 	}
 
-	public void postInitSetup() {
-		setMaterialsVisible();
-		registry.registerAlloys();
+	public void postInitSetup(@Nonnull final String forMod) {
+		setMaterialsVisible(forMod);
+		registry.registerAlloys(forMod);
 	}
 
 	public void modifierSetup() {

@@ -5,8 +5,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.mcmoddev.lib.data.SharedStrings;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
@@ -19,7 +23,7 @@ import net.minecraftforge.fml.common.Loader;
  */
 public class ItemGroups {
 
-	public static final java.util.function.BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (ItemStack a, ItemStack b) -> {
+	public static final BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (final ItemStack a, final ItemStack b) -> {
 		final int delta = Items.getSortingValue(a) - Items.getSortingValue(b);
 		if (delta == 0) {
 			return a.getItem().getUnlocalizedName().compareToIgnoreCase(b.getItem().getUnlocalizedName());
@@ -27,53 +31,84 @@ public class ItemGroups {
 		return delta;
 	};
 
+	private static final Map<String, MMDCreativeTab> itemGroupsByFullTabName = new HashMap<>();
 	private static final Map<String, List<MMDCreativeTab>> itemGroupsByModID = new HashMap<>();
 
-	private static boolean initDone = false;
-
 	protected ItemGroups() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
-	 *
+	 * Initializer.
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		initDone = true;
+		// Blank initializer
 	}
 
-	protected static int addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
-		String modName = Loader.instance().activeModContainer().getModId();
-		String internalTabName = String.format("%s.%s", modName, name);
-		MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable, null);
+	/**
+	 * Adds a non Searchable CreativeTab.
+	 *
+	 * @param name The Name of the CreativeTab
+	 * @return The CreativeTab
+	 */
+	protected static MMDCreativeTab addTab(@Nonnull final String name) {
+		return addTab(name, false);
+	}
+
+	/**
+	 * Adds a CreativeTab.
+	 *
+	 * @param name The Name of the CreativeTab
+	 * @param searchable Is is searchable?
+	 * @return The CreativeTab
+	 */
+	protected static MMDCreativeTab addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
+		final String modName = Loader.instance().activeModContainer().getModId();
+		final String internalTabName = String.format("%s.%s", modName, name);
+		final MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable);
+
+		if (!itemGroupsByFullTabName.containsKey(modName)) {
+			itemGroupsByFullTabName.put(internalTabName, tab);
+		}
+
 		if (itemGroupsByModID.containsKey(modName)) {
 			itemGroupsByModID.get(modName).add(tab);
 		} else {
-			List<MMDCreativeTab> nl = new ArrayList<>();
+			final List<MMDCreativeTab> nl = new ArrayList<>();
 			nl.add(tab);
 			itemGroupsByModID.put(modName, nl);
 		}
 
-		return itemGroupsByModID.get(modName).size() - 1;
+		return itemGroupsByFullTabName.get(internalTabName);
 	}
 
-	protected static MMDCreativeTab getTab(@Nonnull final int id) {
-		return getTab(Loader.instance().activeModContainer().getModId(), id);
+	/**
+	 *
+	 * @param name Name of the tab to get
+	 * @return The Tab
+	 */
+	@Nullable
+	public static MMDCreativeTab getTab(@Nonnull final String name) {
+		return getTab(Loader.instance().activeModContainer().getModId(), name);
 	}
 
-	protected static MMDCreativeTab getTab(@Nonnull final String modName, @Nonnull final int id) {
-		if ((itemGroupsByModID.containsKey(modName)) && (itemGroupsByModID.get(modName).size() > id)) {
-			return itemGroupsByModID.get(modName).get(id);
+	/**
+	 *
+	 * @param modName the ModID
+	 * @param name Name of the tab to get
+	 * @return The Tab
+	 */
+	@Nullable
+	public static MMDCreativeTab getTab(@Nonnull final String modName, @Nonnull final String name) {
+		final String finalName = String.format("%s.%s", modName, name);
+		if (itemGroupsByFullTabName.containsKey(finalName)) {
+			return itemGroupsByFullTabName.get(finalName);
 		}
 		return null;
 	}
 
 	/**
-	 * Gets a map of all tabs added, sorted by modID
+	 * Gets a map of all tabs added, sorted by modID.
 	 *
 	 * @return An unmodifiable map of added tabs categorized by modID
 	 */

@@ -1,6 +1,7 @@
 {
   "pack":{
-    "pack_format":2,
+    "pack_format":3,
     "description":"Base Metals"
   }
 }
+

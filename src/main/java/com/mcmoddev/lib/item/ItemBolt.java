@@ -3,7 +3,9 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -31,12 +33,12 @@ public class ItemBolt extends net.minecraft.item.Item {
 	 *            The shooter
 	 * @return The Bolt
 	 */
-	public EntityCustomBolt createBolt(World worldIn, ItemStack stack, EntityPlayer shooter) {
+	public EntityCustomBolt createBolt(final World worldIn, final ItemStack stack, final EntityPlayer shooter) {
 		return new EntityCustomBolt(worldIn, stack, shooter);
 	}
 
-	public boolean isInfinite(ItemStack stack, ItemStack crossbow, net.minecraft.entity.player.EntityPlayer player) {
-		int enchant = net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.init.Enchantments.INFINITY, crossbow);
+	public boolean isInfinite(final ItemStack stack, final ItemStack crossbow, final EntityPlayer player) {
+		int enchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, crossbow);
 		return enchant <= 0 ? false : this.getClass() == ItemBolt.class;
 	}
 }

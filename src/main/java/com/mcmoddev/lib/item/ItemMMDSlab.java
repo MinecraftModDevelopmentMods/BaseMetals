@@ -4,7 +4,6 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 
 /**
@@ -14,32 +13,18 @@ import net.minecraft.block.BlockSlab;
  */
 public class ItemMMDSlab extends net.minecraft.item.ItemSlab implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *
 	 * @param material
 	 *            The material to make the slab from
 	 */
-	public ItemMMDSlab(MMDMaterial material) {
-		super((BlockSlab) material.getBlock(Names.SLAB), (BlockSlab) material.getBlock(Names.SLAB), (BlockSlab) material.getBlock(Names.DOUBLE_SLAB));
+	public ItemMMDSlab(final MMDMaterial material) {
+		super(material.getBlock(Names.SLAB), (BlockSlab) material.getBlock(Names.SLAB), (BlockSlab) material.getBlock(Names.DOUBLE_SLAB));
 		this.material = material;
-	}
-
-	/**
-	 *
-	 * @param metal
-	 *            The material to make the slab from
-	 * @param block
-	 *            The block to use to make the slab
-	 * @param slab
-	 *            The half slab block to use to make the slab
-	 * @param doubleslab
-	 *            The double slab block to use to make the slab
-	 */
-	public ItemMMDSlab(MMDMaterial metal, Block block, BlockSlab slab, BlockSlab doubleslab) {
-		super(block, slab, doubleslab);
-		this.material = metal;
+		this.setMaxDamage(0);
+		this.setHasSubtypes(false);
 	}
 
 	@Override

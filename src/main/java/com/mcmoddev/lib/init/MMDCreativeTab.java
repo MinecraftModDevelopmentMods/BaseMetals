@@ -7,7 +7,9 @@ import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.init.Items;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
@@ -22,25 +24,43 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class MMDCreativeTab extends CreativeTabs {
 
 	private ItemStack iconItem;
-	
+
 	private final boolean searchable;
 	private Comparator<ItemStack> comparator;
 
-	private static final Comparator<ItemStack> DEFAULT = new Comparator<ItemStack>() {
-		@Override
-		public int compare(ItemStack first, ItemStack second) {
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable) {
+		this(unlocalizedName, searchable, ItemStack.EMPTY);
+	}
+
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final Block iconBlock) {
+		this(unlocalizedName, searchable, (iconBlock != null) ? new ItemStack(Item.getItemFromBlock(iconBlock)) : ItemStack.EMPTY);
+	}
+
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final Item iconItem) {
+		this(unlocalizedName, searchable, (iconItem != null) ? new ItemStack(iconItem) : ItemStack.EMPTY);
+	}
+
+	/**
+	 *
+	 * @param unlocalizedName
+	 * @param searchable
+	 * @param iconItem
+	 */
+	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nonnull final ItemStack iconItem) {
+		super(unlocalizedName);
+		if (iconItem.isEmpty()) {
+			this.iconItem = new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
+		} else {
+			this.iconItem = iconItem;
+		}
+		this.searchable = searchable;
+		this.setSortingAlgorithm((ItemStack first, ItemStack second) -> {
 			final int delta = Items.getSortingValue(first) - Items.getSortingValue(second);
 			return (delta == 0) ? first.getUnlocalizedName().compareToIgnoreCase(second.getUnlocalizedName()) : delta;
-		}
-	};
-
-	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable, @Nullable final ItemStack iconItem) {
-		super(unlocalizedName);
-		this.iconItem = iconItem;
-		this.searchable = searchable;
-		this.setSortingAlgorithm(DEFAULT);
-		if (searchable)
+		});
+		if (searchable) {
 			setBackgroundImageName("item_search.png");
+		}
 	}
 
 	@Override
@@ -60,14 +80,19 @@ public class MMDCreativeTab extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ItemStack getTabIconItem() {
-		if (this.iconItem == null) {
-			return new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
-		}
 		return this.iconItem;
 	}
 
 	public void setSortingAlgorithm(@Nonnull final Comparator<ItemStack> comparator) {
 		this.comparator = comparator;
+	}
+
+	public void setTabIconItem(@Nonnull final Block iconBlock) {
+		this.iconItem = new ItemStack(Item.getItemFromBlock(iconBlock));
+	}
+
+	public void setTabIconItem(@Nonnull final Item iconItem) {
+		this.iconItem = new ItemStack(iconItem);
 	}
 
 	public void setTabIconItem(@Nonnull final ItemStack iconItem) {

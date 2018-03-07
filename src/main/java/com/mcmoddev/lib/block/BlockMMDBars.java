@@ -4,8 +4,8 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
- * Metal Bars
- * 
+ * Bars.
+ *
  * @author DrCyano
  *
  */
@@ -18,13 +18,13 @@ public class BlockMMDBars extends net.minecraft.block.BlockPane implements IMMDO
 	 * @param material
 	 *            The material the bars are made from
 	 */
-	public BlockMMDBars(MMDMaterial material) {
+	public BlockMMDBars(final MMDMaterial material) {
 		super(material.getVanillaMaterial(), true);
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

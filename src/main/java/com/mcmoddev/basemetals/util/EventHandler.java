@@ -1,6 +1,5 @@
 package com.mcmoddev.basemetals.util;
 
-
 import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -32,22 +31,27 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventHandler {
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void attackEvent(LivingAttackEvent event) {
-		float damage = event.getAmount();
+	public void attackEvent(final LivingAttackEvent event) {
+		final float damage = event.getAmount();
 		if (!(event.getEntityLiving() instanceof EntityPlayer)) {
 			return;
 		}
-		EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-		if (player.getActiveItemStack() == ItemStack.EMPTY) {
+		final EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+		final ItemStack activeItemStack = player.getActiveItemStack();
+		if (activeItemStack.isEmpty()) {
 			return;
 		}
-		ItemStack activeItemStack = player.getActiveItemStack();
-		if ((damage > 0.0F) && (activeItemStack != ItemStack.EMPTY) && (activeItemStack.getItem() instanceof ItemMMDShield)) {
-			int i = 1 + MathHelper.floor(damage);
+		if ((damage > 0.0F)
+				&& (activeItemStack.getItem() instanceof ItemMMDShield)) {
+			final int i = 1 + MathHelper.floor(damage);
 			activeItemStack.damageItem(i, player);
 			if (activeItemStack.getCount() <= 0) {
-				EnumHand enumhand = player.getActiveHand();
+				final EnumHand enumhand = player.getActiveHand();
 				ForgeEventFactory.onPlayerDestroyItem(player, activeItemStack, enumhand);
 				if (enumhand == EnumHand.MAIN_HAND) {
 					player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
@@ -61,10 +65,15 @@ public class EventHandler {
 		}
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public static InventoryCrafting getDummyCraftingInv() {
-		Container tempContainer = new Container() {
+		final Container tempContainer = new Container() {
+
 			@Override
-			public boolean canInteractWith(EntityPlayer player) {
+			public boolean canInteractWith(final EntityPlayer player) {
 				return false;
 			}
 		};
@@ -72,58 +81,74 @@ public class EventHandler {
 		return new InventoryCrafting(tempContainer, 2, 1);
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void handleAnvilEvent(AnvilUpdateEvent event) {
-		ItemStack left = event.getLeft();
-		ItemStack right = event.getRight();
+	public void handleAnvilEvent(final AnvilUpdateEvent event) {
+		final ItemStack left = event.getLeft();
+		final ItemStack right = event.getRight();
 
-		if (left == ItemStack.EMPTY || right == ItemStack.EMPTY || left.getCount() != 1 || right.getCount() != 1) {
+		if (left.isEmpty() || right.isEmpty() || left.getCount() != 1 || right.getCount() != 1) {
 			return;
 		}
 
-		InventoryCrafting recipeInput = getDummyCraftingInv();
+		final InventoryCrafting recipeInput = getDummyCraftingInv();
 		recipeInput.setInventorySlotContents(0, left);
 		recipeInput.setInventorySlotContents(1, right);
-		IRecipe recipe = CraftingManager.findMatchingRecipe(recipeInput, null);
+		final IRecipe recipe = CraftingManager.findMatchingRecipe(recipeInput, null);
 		if ((recipe instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) recipe).matches(recipeInput, null))) {
 			event.setOutput(recipe.getCraftingResult(recipeInput));
 			event.setCost(((ShieldUpgradeRecipe) recipe).getCost(recipeInput));
 		}
 	}
-	
+
+	/**
+	 *
+	 * @param event
+	 */
 	@SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onUpdate (TickEvent.RenderTickEvent event) {
+	@SubscribeEvent
+	public void onUpdate(final TickEvent.RenderTickEvent event) {
 		if ((Options.requireMMDOreSpawn()) && (Loader.isModLoaded("orespawn"))) {
 			return;
 		}
-		
-		if(!Options.fallbackOrespawn()) {
-			return;
-		}
-		
-		if( !Options.requireMMDOreSpawn() ) {
-			return;
-		}
-		
-        GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
-    	FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
-    	int y = (guiscreen.height / 100) * 2;
-    	int x = (guiscreen.width/2);
-        
-        if (guiscreen instanceof GuiMainMenu) {
-        	guiscreen.drawCenteredString(fontRender, "MMD OreSpawn not present, but requested in configuration, using fallback generator!", x, y, 0xffffff00);        	
-        } else if(guiscreen instanceof GuiWorldSelection) {
-        	x = 10;
-        	int widest = fontRender.getStringWidth("This is likely not what you want - try turning off the 'using_orespawn' option");
-        	int shortest = fontRender.getStringWidth("Fallback Ore Spawn Generator Enabled!");
-        	int wrap = widest+50;
 
-        	if( (guiscreen.width/2) <= wrap ) {
-        		wrap = shortest + 50;
-        	}
-        	
-        	fontRender.drawSplitString("Fallback Ore Spawn Generator Enabled!\nThis is likely not what you want - try turning off the 'using_orespawn' option\n(or install MMD OreSpawn)", x, y, wrap, 0xFFFFFF00);
-        }
-    }
+		if (!Options.fallbackOrespawn()) {
+			return;
+		}
+
+		if (!Options.requireMMDOreSpawn()) {
+			return;
+		}
+
+		final GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
+		if (guiscreen == null) {
+			return;
+		}
+		final FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
+		final int y = (guiscreen.height / 100) * 2;
+		int x = (guiscreen.width / 2);
+
+		if (guiscreen instanceof GuiMainMenu) {
+			guiscreen.drawCenteredString(fontRender,
+					"MMD OreSpawn not present, but requested in configuration, using fallback generator!", x, y,
+					0xffffff00);
+		} else if (guiscreen instanceof GuiWorldSelection) {
+			x = 10;
+			final int widest = fontRender
+					.getStringWidth("This is likely not what you want - try turning off the 'using_orespawn' option");
+			final int shortest = fontRender.getStringWidth("Fallback Ore Spawn Generator Enabled!");
+			int wrap = widest + 50;
+
+			if ((guiscreen.width / 2) <= wrap) {
+				wrap = shortest + 50;
+			}
+
+			fontRender.drawSplitString(
+					"Fallback Ore Spawn Generator Enabled!\nThis is likely not what you want - try turning off the 'using_orespawn' option\n(or install MMD OreSpawn)",
+					x, y, wrap, 0xFFFFFF00);
+		}
+	}
 }

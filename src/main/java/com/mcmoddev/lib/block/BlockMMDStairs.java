@@ -11,20 +11,20 @@ import com.mcmoddev.lib.material.MMDMaterial;
  */
 public class BlockMMDStairs extends net.minecraft.block.BlockStairs implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *
 	 * @param material
 	 *            The material the stairs are made from
 	 */
-	public BlockMMDStairs(MMDMaterial material) {
+	public BlockMMDStairs(final MMDMaterial material) {
 		super(material.getBlock(Names.BLOCK).getDefaultState());
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

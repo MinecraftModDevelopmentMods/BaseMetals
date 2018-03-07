@@ -12,26 +12,34 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ASMHooks {
-    
-	public static final DataParameter<ItemStack> ARMOR_STACK = EntityDataManager.createKey(EntityHorse.class, DataSerializers.ITEM_STACK);
+
+	public static final DataParameter<ItemStack> ARMOR_STACK = EntityDataManager.createKey(EntityHorse.class,
+			DataSerializers.ITEM_STACK);
 
 	private ASMHooks() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
 
-	public static void onInitHorse(EntityHorse entity) {
+	public static void onInitHorse(final EntityHorse entity) {
 		entity.getDataManager().register(ASMHooks.ARMOR_STACK, ItemStack.EMPTY);
 	}
 
-	public static void setHorseArmorStack(EntityHorse entity, ItemStack stack) {
+	public static void setHorseArmorStack(final EntityHorse entity, final ItemStack stack) {
 		entity.getDataManager().set(ASMHooks.ARMOR_STACK, stack);
 	}
-	
+
+	/**
+	 *
+	 * @param type
+	 * @param entity
+	 * @return
+	 */
 	@SideOnly(Side.CLIENT)
-	public static String getTextureName(HorseArmorType type, EntityHorse entity) {
+	public static String getTextureName(final HorseArmorType type, final EntityHorse entity) {
 		final ItemStack stack = entity.getDataManager().get(ASMHooks.ARMOR_STACK);
-		if (!stack.isEmpty() && stack.getItem() instanceof IHorseArmor)
-			return ((IHorseArmor) stack.getItem()).getArmorTexture(entity, stack);
+		if (!stack.isEmpty() && stack.getItem() instanceof IHorseArmor) {
+			return ((IHorseArmor) stack.getItem()).getHorseArmorTexture(entity, stack);
+		}
 		return type.getTextureName();
 	}
 }

@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.recipe;
 
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -13,46 +14,79 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public abstract class RepairRecipeBase extends ShapelessOreRecipe {
-	public final MMDMaterial material;
-	public final ItemStack baseItem;
-	public final String materialName;
-	public final String itemName;
-	public final NonNullList<ItemStack> repairMaterials;
-	
-	public RepairRecipeBase(MMDMaterial material, String itemName, Object...objects) {
-		super( new ResourceLocation("armor"), new ItemStack(material.getItem(itemName)), objects);
+
+	private static final String ARMOR = "armor";
+	private final MMDMaterial material;
+	private final ItemStack baseItem;
+	private final String materialName;
+	private final String itemName;
+	private final NonNullList<ItemStack> repairMaterials;
+
+	/**
+	 *
+	 * @param material
+	 * @param itemName
+	 */
+	public RepairRecipeBase(final MMDMaterial material, final Names itemName) {
+		this(material, itemName.toString(), material.getName() + "_" + itemName.toString(), Oredicts.PLATE + material.getCapitalizedName());
+	}
+
+	/**
+	 *
+	 * @param material
+	 * @param itemName
+	 * @param objects
+	 */
+	public RepairRecipeBase(final MMDMaterial material, final Names itemName, final Object...objects) {
+		this(material, itemName.toString(), objects);
+	}
+
+	/**
+	 *
+	 * @param material
+	 * @param itemName
+	 * @param objects
+	 */
+	public RepairRecipeBase(final MMDMaterial material, final String itemName, final Object...objects) {
+		super(new ResourceLocation(ARMOR), material.getItemStack(itemName), objects);
 		this.material = material;
-		this.baseItem = new ItemStack(material.getItem(itemName));
+		this.baseItem = material.getItemStack(itemName);
 		this.materialName = material.getCapitalizedName();
 		this.repairMaterials = OreDictionary.getOres(Oredicts.PLATE + this.materialName);
 		this.itemName = itemName;
 	}
-	
+
+	private boolean repairMaterialsDoesntContain(final ItemStack itemStack) {
+		return !repairMaterials.contains(itemStack);
+	}
+
 	@Override
-	public boolean matches(InventoryCrafting inv, World worldIn) {
+	public boolean matches(final InventoryCrafting inv, final World worldIn) {
 		// make sure we have all the materials that can be used for repair, not just what was
 		// available when we were initialized.
-		OreDictionary.getOres(Oredicts.PLATE + this.materialName).stream().filter(item -> !repairMaterials.contains(item) ).forEach(item -> repairMaterials.add(item));
-		
+		OreDictionary.getOres(Oredicts.PLATE + this.materialName).stream()
+		.filter(this::repairMaterialsDoesntContain)
+		.forEach(repairMaterials::add);
+
 		boolean matched = false;
 		boolean repairMatched = false;
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack item = inv.getStackInSlot(i);
+			final ItemStack item = inv.getStackInSlot(i);
 			if (!repairMatched) {
 				repairMatched = OreDictionary.containsMatch(false, repairMaterials, item);
 			}
 			if (!matched) {
-				boolean hasDamage = item.getItemDamage() > 0 ? true : false;
+				final boolean hasDamage = item.getItemDamage() > 0 ? true : false;
 				matched = OreDictionary.itemMatches(this.baseItem, item, false) ? hasDamage : false;
 			}
 		}
 		return matched ? repairMatched : false;
 	}
 
-	private ItemStack findBaseItem(InventoryCrafting inv) {
+	private ItemStack findBaseItem(final InventoryCrafting inv) {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack a = inv.getStackInSlot(i);
+			final ItemStack a = inv.getStackInSlot(i);
 			if (a != null) {
 				ItemStack comp = new ItemStack(a.getItem(), 1, a.getMetadata());
 				if (OreDictionary.itemMatches(this.baseItem, comp, false)) {
@@ -60,22 +94,26 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 				}
 			}
 		}
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public ItemStack getCraftingResult(InventoryCrafting inv) {
+	public ItemStack getCraftingResult(final InventoryCrafting inv) {
 		ItemStack target = findBaseItem(inv);
-		if (target == null) {
-			return new ItemStack(this.material.getItem(this.itemName));
+		if (target.isEmpty()) {
+			return this.material.getItemStack(this.itemName);
 		} else {
-			ItemStack rv = new ItemStack(target.getItem(), 1, target.getMetadata());
+			final ItemStack rv = new ItemStack(target.getItem(), 1, target.getMetadata());
 			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(target), rv);
 			rv.setItemDamage(0);
 			return rv;
 		}
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public int getRecipeSize() {
 		int count = 1;
 		count += OreDictionary.getOres(Oredicts.PLATE + this.materialName).size();
@@ -84,11 +122,15 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return new ItemStack( this.material.getItem(this.itemName));
+		return this.material.getItemStack(this.itemName);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public NonNullList<Object> getInput() {
-		NonNullList<Object> inputs = NonNullList.create();
+		final NonNullList<Object> inputs = NonNullList.create();
 		inputs.add(this.baseItem);
 		inputs.addAll(OreDictionary.getOres(Oredicts.PLATE + this.materialName));
 		return inputs;

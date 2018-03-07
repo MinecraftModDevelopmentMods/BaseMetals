@@ -1,12 +1,11 @@
 package com.mcmoddev.lib.item;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,128 +25,143 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class ItemCrossbow extends ItemBow {
+public class ItemCrossbow extends net.minecraft.item.ItemBow {
+
+	/**
+	 * Called when the player stops using an Item (stops holding the right mouse button).
+	 */
+	private boolean getBaseFlag(final EntityPlayer entityPlayer, final ItemStack stack) {
+		return entityPlayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
+	}
+
+	private boolean getOtherFlag(final EntityPlayer entityPlayer, final ItemStack itemStack, final ItemStack stack) {
+		return entityPlayer.capabilities.isCreativeMode || (itemStack.getItem() instanceof ItemBolt && ((ItemBolt) itemStack.getItem()).isInfinite(itemStack, stack, entityPlayer));
+	}
+
+	private void doFireBolt(final ItemStack itemStack, final EntityPlayer entityPlayer, final World worldIn,
+			final float f, final ItemStack stack, final boolean flag1) {
+		if (!(worldIn.isRemote)) {
+			return;
+		}
+
+		final ItemBolt itemBolt = ((ItemBolt) (itemStack.getItem() instanceof ItemBolt ? itemStack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
+		final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemStack, entityPlayer);
+		entityBolt.shoot(entityPlayer, entityPlayer.rotationPitch, entityPlayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+
+		if (f == 1.0F) {
+			entityBolt.setIsCritical(true);
+		}
+
+		final int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
+
+		if (j > 0) {
+			entityBolt.setDamage(entityBolt.getDamage() + ((double) j * 0.5D) + 0.5D);
+		}
+
+		final int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
+
+		if (k > 0) {
+			entityBolt.setKnockbackStrength(k);
+		}
+
+		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
+			entityBolt.setFire(100);
+		}
+
+		stack.damageItem(1, entityPlayer);
+
+		if (flag1 || entityPlayer.capabilities.isCreativeMode) {
+			entityBolt.pickupStatus = EntityCustomBolt.PickupStatus.CREATIVE_ONLY;
+		}
+
+		worldIn.spawnEntity(entityBolt);
+		worldIn.playSound((EntityPlayer) null, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, (1.0F / ((itemRand.nextFloat() * 0.4F) + 1.2F)) + (f * 0.5F));
+	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
+	public void onPlayerStoppedUsing(final ItemStack stack, final World worldIn, final EntityLivingBase entityLiving, final int timeLeft) {
 		if (entityLiving instanceof EntityPlayer) {
-			final EntityPlayer entityplayer = (EntityPlayer) entityLiving;
-			final boolean flag = entityplayer.capabilities.isCreativeMode || (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0);
-			ItemStack itemstack = this.myFindAmmo(entityplayer);
+			final EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
+			final boolean flag = getBaseFlag(entityPlayer, stack);
+			// Check for specific Bolts
+			ItemStack itemStack = this.myFindAmmo(entityPlayer);
 
 			int i = this.getMaxItemUseDuration(stack) - timeLeft;
-			i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, (EntityPlayer) entityLiving, i, (itemstack != null) || flag);
+			i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, entityPlayer, i, (!itemStack.isEmpty()) || flag);
 			if (i < 0) {
 				return;
 			}
 
-			if ((itemstack != null) || flag) {
-				if (itemstack == null) {
-					itemstack = getBolt();
-					if( itemstack == null ) return; // if its still null at this point, there is something seriously wrong, just bug out
-				}
+			maybeFireBolt(itemStack, entityPlayer, stack, flag, i, worldIn);
+		}
+	}
 
-				final float f = getArrowVelocity(i);
+	private void maybeFireBolt(final ItemStack itemStack, final EntityPlayer entityPlayer, final ItemStack stack, final boolean flag, final int i,
+			final World worldIn) {
+		if (!itemStack.isEmpty() || flag) {
+			final float f = getArrowVelocity(i);
 
-				if ((double) f >= 0.1D) {
-					final boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemBolt ? ((ItemBolt) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer) : false);
+			if ((double) f >= 0.1D) {
+				final boolean flag1 = getOtherFlag(entityPlayer, itemStack, stack);
 
-					if (!worldIn.isRemote) {
-						final ItemBolt itemBolt = (ItemBolt) ((ItemBolt) (itemstack.getItem() instanceof ItemBolt ? itemstack.getItem() : Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
-						final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemstack, entityplayer);
-						entityBolt.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
-
-						if (f == 1.0F) {
-							entityBolt.setIsCritical(true);
-						}
-
-						final int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
-
-						if (j > 0) {
-							entityBolt.setDamage(entityBolt.getDamage() + ((double) j * 0.5D) + 0.5D);
-						}
-
-						final int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-
-						if (k > 0) {
-							entityBolt.setKnockbackStrength(k);
-						}
-
-						if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-							entityBolt.setFire(100);
-						}
-
-						stack.damageItem(1, entityplayer);
-
-						if (flag1) {
-							entityBolt.pickupStatus = EntityCustomBolt.PickupStatus.CREATIVE_ONLY;
-						}
-
-						worldIn.spawnEntity(entityBolt);
-					}
-
-					worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, (1.0F / ((itemRand.nextFloat() * 0.4F) + 1.2F)) + (f * 0.5F));
-
-					if (!flag1) {
-						itemstack.setCount(itemstack.getCount() - 1);
-
-						if (itemstack.getCount() == 0) {
-							entityplayer.inventory.deleteStack(itemstack);
-						}
-					}
-
-					entityplayer.addStat(StatList.getObjectUseStats(this));
-				}
+				doFireBolt(itemStack, entityPlayer, worldIn, f, stack, flag1);
+				maybeChangeAmmo(entityPlayer, itemStack, flag1);
+				entityPlayer.addStat(StatList.getObjectUseStats(this));
 			}
 		}
 	}
 
-	private ItemStack getBolt() {
-		for( MMDMaterial mat : Materials.getAllMaterials() ) {
-			if( mat.hasItem(Names.BOLT) ) return new ItemStack( mat.getItem(Names.BOLT) );
+	private void maybeChangeAmmo(final EntityPlayer entityPlayer, final ItemStack itemStack, final boolean flag1) {
+		if (!flag1 && !entityPlayer.capabilities.isCreativeMode) {
+			itemStack.shrink(1);
+
+			if (itemStack.isEmpty()) {
+				entityPlayer.inventory.deleteStack(itemStack);
+			}
 		}
-		return null;
 	}
 
-	// Totally needed!
-	private ItemStack myFindAmmo(EntityPlayer player) {
+	private ItemStack myFindAmmo(final EntityPlayer player) {
 		if (this.isBolt(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
 		} else if (this.isBolt(player.getHeldItem(EnumHand.MAIN_HAND))) {
 			return player.getHeldItem(EnumHand.MAIN_HAND);
 		} else {
 			for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
-				final ItemStack itemstack = player.inventory.getStackInSlot(i);
+				final ItemStack itemStack = player.inventory.getStackInSlot(i);
 
-				if (this.isBolt(itemstack)) {
-					return itemstack;
+				if (this.isBolt(itemStack)) {
+					return itemStack;
 				}
 			}
 
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
 	@Override
-	protected boolean isArrow(@Nullable ItemStack stack) {
+	protected boolean isArrow(@Nonnull final ItemStack stack) {
 		return false;
 	}
 
-	protected boolean isBolt(@Nullable ItemStack stack) {
-		// Changed ItemArrow to ItemMetalArrow
-		return (stack != null) && (stack.getItem() instanceof ItemBolt);
+	protected boolean isBolt(@Nonnull final ItemStack stack) {
+		return stack.getItem() instanceof ItemBolt;
 	}
 
-	// Actually needed... le sigh
+	/**
+	 * Called when the equipped item is right clicked.
+	 */
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		final boolean flag = this.myFindAmmo(playerIn) != null;
+	public ActionResult<ItemStack> onItemRightClick(final World worldIn, final EntityPlayer playerIn, final EnumHand handIn) {
+		final ItemStack itemStack = playerIn.getHeldItem(handIn);
+		// Check for specific Arrows
+		final boolean flag = !this.myFindAmmo(playerIn).isEmpty();
 
-		if (!playerIn.capabilities.isCreativeMode && !flag)
-			return new ActionResult<>(EnumActionResult.FAIL, playerIn.getHeldItemMainhand());
-		else {
-			playerIn.setActiveHand(hand);
-			return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItemMainhand());
+		if (!playerIn.capabilities.isCreativeMode && !flag) {
+			return new ActionResult<>(EnumActionResult.FAIL, itemStack);
+		} else {
+			playerIn.setActiveHand(handIn);
+			return flag ? new ActionResult<>(EnumActionResult.PASS, itemStack) : new ActionResult<>(EnumActionResult.FAIL, itemStack);
 		}
 	}
 }

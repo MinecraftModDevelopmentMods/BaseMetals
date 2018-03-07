@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_ne",
-    "textures": {
-        "particle": "basemetals:blocks/coldiron_bars",
-        "bars": "basemetals:blocks/coldiron_bars",
-        "edge": "basemetals:blocks/coldiron_bars"
-    }
-}

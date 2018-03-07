@@ -1,7 +1,10 @@
 package com.mcmoddev.lib.block;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
@@ -12,9 +15,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Metal Trap Door
+ * Trap Door.
  */
-public class BlockMMDTrapDoor extends BlockTrapDoor implements IMMDObject {
+public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implements IMMDObject {
 
 	private final MMDMaterial material;
 
@@ -23,29 +26,43 @@ public class BlockMMDTrapDoor extends BlockTrapDoor implements IMMDObject {
 	 * @param material
 	 *            The material the trapdoor is made from
 	 */
-	public BlockMMDTrapDoor(MMDMaterial material) {
+	public BlockMMDTrapDoor(final MMDMaterial material) {
 		super(material.getVanillaMaterial());
 		this.material = material;
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
 		this.blockSoundType = this.material.getSoundType();
-		this.setHarvestLevel("pickaxe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos coord, IBlockState state, EntityPlayer player,
-			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		// just like with doors - using vanilla as an example, since we are all metal and work like the "Iron Trapdoor", this
-		// should just be:
-		return false;
-		
-/*		if (this.material.getToolHarvestLevel() > 1)
+	public boolean onBlockActivated(final World worldIn, final BlockPos pos, final IBlockState state, final EntityPlayer playerIn, final EnumHand hand, final EnumFacing facing, final float hitX, final float hitY, final float hitZ) {
+		if ((this.material.getToolHarvestLevel() > 1) || (this.material.getType().equals(MaterialType.METAL))) {
+			return false;
+		} else {
+			final IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
+			worldIn.setBlockState(pos, newState, 2);
+			this.playSound(playerIn, worldIn, pos, ((Boolean) newState.getValue(OPEN)).booleanValue());
 			return true;
-		IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
-		world.setBlockState(coord, newState, 2);
-		world.playEvent(player, ((Boolean) newState.getValue(BlockTrapDoor.OPEN)) ? 1003 : 1006, coord, 0);
-		return true; */
+		}
+	}
+
+	// Magic Number mappings from net.minecraft.client.renderer.RenderGlobal#playEvent
+	// SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN = 1037
+	// SoundEvents.BLOCK_WOODEN_TRAPDOOR_OPEN = 1007
+	// SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE = 1036
+	// SoundEvents.BLOCK_WOODEN_TRAPDOOR_CLOSE = 1013
+	@Override
+	protected void playSound(@Nullable final EntityPlayer player, final World worldIn, final BlockPos pos, final boolean open) {
+		int retVal;
+		final boolean isMetal = this.getMMDMaterial().getType().equals(MaterialType.METAL);
+		if (open) {
+			retVal = isMetal ? 1037 : 1007;
+		} else {
+			retVal = isMetal ? 1036 : 1013;
+		}
+		worldIn.playEvent(player, retVal, pos, 0);
 	}
 
 	@Override

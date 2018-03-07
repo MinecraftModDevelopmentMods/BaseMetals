@@ -29,13 +29,18 @@ public class TraitRegistry {
 		return registeredTraits.keySet().contains(name);
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @return
+	 */
 	public static ITrait getTrait(@Nonnull final String name) {
-		if( registeredTraits.isEmpty() ) {
+		if (registeredTraits.isEmpty()) {
 			initTraits();
 			initTiCTraits();
 		}
-		
-		if( registeredTraits.containsKey(name) ) {
+
+		if (registeredTraits.containsKey(name)) {
 			return registeredTraits.get(name);
 		} else {
 			// assume it's a core TiC trait
@@ -47,7 +52,10 @@ public class TraitRegistry {
 		return getTrait(name);
 	}
 
-    public static void initTiCTraits() {
+	/**
+	 *
+	 */
+	public static void initTiCTraits() {
         // hate having to do it this way, but it seems the only way
         registeredTraits.put("alien", TinkerTraits.alien);
         registeredTraits.put("aquadynamic", TinkerTraits.aquadynamic);
@@ -95,14 +103,17 @@ public class TraitRegistry {
         registeredTraits.put("writable", TinkerTraits.writable);
         registeredTraits.put("writable2", TinkerTraits.writable2);
 
-          // arrow shaft traits
+        // arrow shaft traits
         registeredTraits.put("breakable", TinkerTraits.breakable);
         registeredTraits.put("endspeed", TinkerTraits.endspeed);
         registeredTraits.put("freezing", TinkerTraits.freezing);
         registeredTraits.put("hovering", TinkerTraits.hovering);
         registeredTraits.put("splitting", TinkerTraits.splitting);
-    }
-    
+	}
+
+	/**
+	 *
+	 */
 	public static void initTraits() {
 		registeredTraits.put("soft", MMDTraits.soft);
 		registeredTraits.put("sparkly", MMDTraits.sparkly);
@@ -113,13 +124,16 @@ public class TraitRegistry {
 		registeredTraits.put("reactive", MMDTraits.reactive);
 	}
 
+	/**
+	 *
+	 */
 	public static void dumpRegistry() {
 		for (final Entry<String, ITrait> e : registeredTraits.entrySet()) {
 			final String t = String.format("BaseMetals-TCon> Trait: %s - class %s", e.getKey(), e.getValue().getClass().getName());
 			BaseMetals.logger.info(t);
 		}
 	}
-	
+
 	public static void registerTraits() {
 		// not needed anymore
 	}

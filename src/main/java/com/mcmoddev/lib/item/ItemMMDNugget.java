@@ -3,8 +3,8 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
- * Nuggets
- * 
+ * Nuggets.
+ *
  * @author DrCyano
  *
  */
@@ -15,7 +15,7 @@ public class ItemMMDNugget extends GenericMMDItem {
 	 * @param material
 	 *            The material to make the nugget from
 	 */
-	public ItemMMDNugget(MMDMaterial material) {
+	public ItemMMDNugget(final MMDMaterial material) {
 		super(material);
 	}
 }

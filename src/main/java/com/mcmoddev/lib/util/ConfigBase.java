@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
 import net.minecraft.block.Block;
@@ -26,10 +27,10 @@ public class ConfigBase {
 
 	// shut up SonarLint/SonarQube
 	protected ConfigBase() {
-		
+
 	}
-	
-	protected static void manageUserHammerRecipes(Collection<Property> values) {
+
+	protected static void manageUserHammerRecipes(final Collection<Property> values) {
 		for (final Property p : values) {
 			final String[] recipes = p.getString().split(";");
 			for (final String r : recipes) {
@@ -45,7 +46,7 @@ public class ConfigBase {
 		}
 	}
 
-	protected static String[] parseDisabledRecipes(String rawDisabledRecipes) {
+	protected static String[] parseDisabledRecipes(final String rawDisabledRecipes) {
 		if (!rawDisabledRecipes.isEmpty() && rawDisabledRecipes.contains(";")) {
 			return rawDisabledRecipes.split(";");
 		} else {
@@ -53,62 +54,64 @@ public class ConfigBase {
 		}
 	}
 
+	/**
+	 *
+	 */
 	public static void postInit() {
 		addUserRecipes();
 
 		if (Options.autoDetectRecipes()) {
 			// add recipe for every X where the Ore Dictionary has dustX, oreX, and ingotX
 			final Set<String> dictionary = new HashSet<>();
-			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()).stream().filter( item -> !item.contains("Mercury") )
-			.filter( item -> !item.contains("Redstone") ).filter( item -> item.startsWith("dust") )
-			.filter( item -> {
+			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()).stream().filter(item -> !item.contains("Mercury"))
+			.filter(item -> !item.contains("Redstone")).filter(item -> item.startsWith("dust"))
+			.filter(item -> {
 				String ingotX = Oredicts.INGOT.concat(item.substring(4));
 				String oreX = Oredicts.ORE.concat(item.substring(4));
 				return (dictionary.contains(oreX) && dictionary.contains(ingotX) && !OreDictionary.getOres(item).isEmpty());
 			}).collect(Collectors.<String>toSet()));
 
-			addOreRecipes( dictionary );
-			addIngotRecipes( dictionary );
+			addOreRecipes(dictionary);
+			addIngotRecipes(dictionary);
 		}
 	}
 
-	private static void addIngotRecipes(Set<String> dictionary) {
+	private static void addIngotRecipes(final Set<String> dictionary) {
 		dictionary.stream()
-		.filter( entry -> {
-			List<ItemStack> iS = OreDictionary.getOres(Oredicts.INGOT.concat(entry.substring(4)));
-			for( ItemStack i : iS ) {
-				if((CrusherRecipeRegistry.getRecipeForInputItem(i) != null )) {
+		.filter(entry -> {
+			final List<ItemStack> itemstacks = OreDictionary.getOres(Oredicts.INGOT.concat(entry.substring(4)));
+			for (final ItemStack i : itemstacks) {
+				if ((CrusherRecipeRegistry.getRecipeForInputItem(i) != null)) {
 					return true;
 				}
 			}
 			return false;
-		})
-		.forEach( entry -> {
+		}).forEach(entry -> {
 			String ingotX = Oredicts.INGOT.concat(entry.substring(4));
 			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
 			dustX.setCount(2);
 			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", ingotX, dustX);
-			CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX);				
-		});			
+			CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX);
+		});
 	}
 
-	private static void addOreRecipes(Set<String> dictionary) {
+	private static void addOreRecipes(final Set<String> dictionary) {
 		dictionary.stream()
-		.filter( entry -> {
-			List<ItemStack> iS = OreDictionary.getOres(Oredicts.ORE.concat(entry.substring(4)));
-			for( ItemStack i : iS ) {
-				if((CrusherRecipeRegistry.getRecipeForInputItem(i) != null )) {
+		.filter(entry -> {
+			final List<ItemStack> itemstacks = OreDictionary.getOres(Oredicts.ORE.concat(entry.substring(4)));
+			for (final ItemStack i : itemstacks) {
+				if ((CrusherRecipeRegistry.getRecipeForInputItem(i) != null)) {
 					return true;
 				}
 			}
 			return false;
 		})
-		.forEach( entry -> {
-			String oreX = Oredicts.ORE.concat(entry.substring(4));
-			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
+		.forEach(entry -> {
+			final String oreX = Oredicts.ORE.concat(entry.substring(4));
+			final ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
 			dustX.setCount(2);
 			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", oreX, dustX);
-			CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX);				
+			CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX);
 		});
 	}
 
@@ -120,7 +123,7 @@ public class ConfigBase {
 			final String outputStr = recipe.substring(i + 2, recipe.length());
 			final ItemStack input = parseStringAsItemStack(inputStr, true);
 			final ItemStack output = parseStringAsItemStack(outputStr, false);
-			if ((input == null) || (output == null)) {
+			if ((input.isEmpty()) || (output.isEmpty())) {
 				BaseMetals.logger.error("Failed to add recipe formula '%s' because the blocks/items could not be found", recipe);
 			} else {
 				CrusherRecipeRegistry.addNewCrusherRecipe(input, output);
@@ -143,8 +146,8 @@ public class ConfigBase {
 	 * @return An ItemStack representing the item, or null if the item is not
 	 *         found
 	 */
-	public static ItemStack parseStringAsItemStack(String str, final boolean allowWildcard) {
-		String work = str.trim();
+	public static ItemStack parseStringAsItemStack(final String str, final boolean allowWildcard) {
+		final String work = str.trim();
 		int count = 1;
 		int meta;
 		if (allowWildcard) {
@@ -172,7 +175,7 @@ public class ConfigBase {
 		} else {
 			// item not found
 			BaseMetals.logger.info("Failed to find item or block for ID '%s'", id);
-			return null;
+			return ItemStack.EMPTY;
 		}
 
 	}
@@ -181,52 +184,68 @@ public class ConfigBase {
 		// GENERAL
 
 		private static boolean disableAllHammerRecipes = false;
-		public static void setDisableAllHammerRecipes(boolean bool) {
+
+		public static void setDisableAllHammerRecipes(final boolean bool) {
 			disableAllHammerRecipes = bool;
 		}
 
 		private static boolean enforceHardness = true;
-		public static void setEnforceHardness(boolean bool) {
+
+		public static void setEnforceHardness(final boolean bool) {
 			enforceHardness = bool;
 		}
 
 		private static boolean strongHammers = true;
-		public static void setStrongHammers(boolean bool) {
+
+		public static void setStrongHammers(final boolean bool) {
 			strongHammers = bool;
 		}
 
+		private static boolean twoDustDrop = true;
+
+		public static void setTwoDustDrop(final boolean bool) {
+			twoDustDrop = bool;
+		}
+
 		private static boolean autoDetectRecipes = true;
-		public static void setAutoDetectRecipes(boolean bool) {
+
+		public static void setAutoDetectRecipes(final boolean bool) {
 			autoDetectRecipes = bool;
 		}
 
 		private static boolean requireMMDOreSpawn = true;
-		public static void setRequireMMDOreSpawn(boolean bool) {
+
+		public static void setRequireMMDOreSpawn(final boolean bool) {
 			requireMMDOreSpawn = bool;
 		}
 
 		private static boolean enableAchievements = true;
-		public static void setEnableAchievements(boolean bool) {
+
+		public static void setEnableAchievements(final boolean bool) {
 			enableAchievements = bool;
 		}
 
 		private static boolean crackHammerFullStack = false;
-		public static void setCrackHammerFullStack(boolean bool) {
+
+		public static void setCrackHammerFullStack(final boolean bool) {
 			crackHammerFullStack = bool;
 		}
 
 		private static boolean enableShieldUpgrades = true;
-		public static void setEnableShieldUpgrades(boolean bool) {
+
+		public static void setEnableShieldUpgrades(final boolean bool) {
 			enableShieldUpgrades = bool;
 		}
 
 		private static boolean enablePlateRepairs = true;
-		public static void setEnablePlateRepairs(boolean bool) {
+
+		public static void setEnablePlateRepairs(final boolean bool) {
 			enablePlateRepairs = bool;
 		}
 
 		private static boolean enableModderSupportThings = true;
-		public static void setEnableModderSupportThings(boolean bool) {
+
+		public static void setEnableModderSupportThings(final boolean bool) {
 			enableModderSupportThings = bool;
 		}
 
@@ -240,6 +259,10 @@ public class ConfigBase {
 
 		public static boolean strongHammers() {
 			return strongHammers;
+		}
+
+		public static boolean twoDustDrop() {
+			return twoDustDrop;
 		}
 
 		public static boolean autoDetectRecipes() {
@@ -271,16 +294,25 @@ public class ConfigBase {
 		}
 
 		private static String[] disabledRecipes = null;
-		public static void setDisabledRecipes(String[] string) {
+
+		/**
+		 *
+		 * @param string
+		 */
+		public static void setDisabledRecipes(final String[] string) {
 			disabledRecipes = string;
+			Arrays.asList(disabledRecipes).stream()
+			.forEach(com.mcmoddev.lib.registry.CrusherRecipeRegistry::disableRecipe);
 		}
+
 		public static String[] disabledRecipes() {
 			return disabledRecipes;
 		}
 
 		// RECIPE AMOUNTS
 		protected static int gearQuantity = 4;
-		public static void setGearQuantity(int qty) {
+
+		public static void setGearQuantity(final int qty) {
 			gearQuantity = qty;
 		}
 
@@ -289,7 +321,8 @@ public class ConfigBase {
 		}
 
 		private static int plateQuantity = 3;
-		public static void setPlateQuantity(int qty) {
+
+		public static void setPlateQuantity(final int qty) {
 			plateQuantity = qty;
 		}
 
@@ -298,32 +331,54 @@ public class ConfigBase {
 		}
 
 		private static boolean furnaceCheese = true;
-		public static void setFurnaceCheese(boolean bool) {
+
+		public static void setFurnaceCheese(final boolean bool) {
 			furnaceCheese = bool;
 		}
+
 		public static boolean furnaceCheese() {
 			return furnaceCheese;
 		}
 
 		private static boolean furnace1112 = true; // Overridden by FURNACE_CHEESE
-		public static void setFurnace1112(boolean bool) {
+
+		public static void setFurnace1112(final boolean bool) {
 			furnace1112 = bool;
 		}
+
 		public static boolean furnace1112() {
 			return furnace1112;
 		}
-		
+
+		protected static void clearOptions() { // to support testability
+			modEnabled.clear();
+			materialEnabled.clear();
+			thingEnabled.clear();
+			fluidEnabled.clear();
+		}
+
 		// INTEGRATION
 		private static final Map<String, Boolean> modEnabled = new HashMap<>();
-		public static boolean isModEnabled(String modName) {
-			String testName = modName.toLowerCase(Locale.ROOT);
+
+		/**
+		 *
+		 * @param modName
+		 * @return
+		 */
+		public static boolean isModEnabled(final String modName) {
+			final String testName = modName.toLowerCase(Locale.ROOT);
 			if (modEnabled.containsKey(testName)) {
 				return modEnabled.get(testName);
 			}
 			return false;
 		}
 
-		public static void modEnabled(String modName, Boolean bool) {
+		/**
+		 *
+		 * @param modName
+		 * @param bool
+		 */
+		public static void modEnabled(final String modName, final Boolean bool) {
 			if (!modEnabled.containsKey(modName)) {
 				modEnabled.put(modName.toLowerCase(Locale.ROOT), bool);
 			}
@@ -331,15 +386,26 @@ public class ConfigBase {
 
 		// MATERIALS
 		private static final Map<String, Boolean> materialEnabled = new HashMap<>();
-		public static boolean isMaterialEnabled(String name) {
-			String testName = name.toLowerCase(Locale.ROOT);
+
+		/**
+		 *
+		 * @param name
+		 * @return
+		 */
+		public static boolean isMaterialEnabled(final String name) {
+			final String testName = name.toLowerCase(Locale.ROOT);
 			if (materialEnabled.containsKey(testName)) {
 				return materialEnabled.get(testName);
 			}
 			return false;
 		}
 
-		public static void materialEnabled(String materialName, Boolean bool) {
+		/**
+		 *
+		 * @param materialName
+		 * @param bool
+		 */
+		public static void materialEnabled(final String materialName, final Boolean bool) {
 			if (!materialEnabled.containsKey(materialName)) {
 				materialEnabled.put(materialName.toLowerCase(Locale.ROOT), bool);
 			}
@@ -347,47 +413,88 @@ public class ConfigBase {
 
 		// THINGS
 		private static final Map<String, Boolean> thingEnabled = new HashMap<>();
-		public static boolean isThingEnabled(String name) {
-			String testName = name.toLowerCase(Locale.ROOT);
+
+		/**
+		 *
+		 * @param name
+		 * @return
+		 */
+		public static boolean isThingEnabled(final String name) {
+			final String testName = name.toLowerCase(Locale.ROOT);
 			if (thingEnabled.containsKey(testName)) {
 				return thingEnabled.get(testName);
 			}
 			return false;
 		}
 
-		public static void thingEnabled(String name, Boolean bool) {
+		/**
+		 *
+		 * @param name
+		 * @param bool
+		 */
+		public static void thingEnabled(final String name, final Boolean bool) {
 			if (!thingEnabled.containsKey(name)) {
 				thingEnabled.put(name.toLowerCase(Locale.ROOT), bool);
 			}
 		}
 
+		// FLUIDS
+		private static final Map<String, Boolean> fluidEnabled = new HashMap<>();
+
+		/**
+		 *
+		 * @param name
+		 * @return
+		 */
+		public static boolean isFluidEnabled(final String name) {
+			final String testName = name.toLowerCase(Locale.ROOT);
+			if (fluidEnabled.containsKey(testName)) {
+				return fluidEnabled.get(testName);
+			}
+			return false;
+		}
+
+		/**
+		 *
+		 * @param name
+		 * @param bool
+		 */
+		public static void fluidEnabled(final String name, final Boolean bool) {
+			if (!fluidEnabled.containsKey(name)) {
+				fluidEnabled.put(name.toLowerCase(Locale.ROOT), bool);
+			}
+		}
+
 		private static int explosionChance = 0;
+
 		public static int explosionChance() {
 			return explosionChance;
 		}
-		
-		public static void explosionChance(int chance) {
+
+		public static void explosionChance(final int chance) {
 			explosionChance = chance;
 		}
-		
+
 		private static int angerPigmenRange = 0;
+
 		public static int angerPigmenRange() {
 			return angerPigmenRange;
 		}
-		
-		public static void angerPigmenRange(int range) {
+
+		public static void angerPigmenRange(final int range) {
 			angerPigmenRange = range;
 		}
-		
+
 		private Options() {
-			throw new IllegalAccessError("Not a instantiable class");
+			throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 		}
 
 		private static boolean fallbackOrespawn;
-		public static void setFallbackOreSpawn(boolean boolean1) {
+
+		public static void setFallbackOreSpawn(final boolean boolean1) {
 			fallbackOrespawn = boolean1;
 		}
-		
+
 		public static boolean fallbackOrespawn() {
 			return fallbackOrespawn;
 		}

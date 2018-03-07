@@ -7,17 +7,21 @@ import net.minecraft.block.state.IBlockState;
 
 public class BlockMMDBookshelf extends net.minecraft.block.BlockBookshelf implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
-	public BlockMMDBookshelf(MMDMaterial material) {
+	/**
+	 *
+	 * @param material
+	 */
+	public BlockMMDBookshelf(final MMDMaterial material) {
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel("axe", this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
 	}
 
-	public void setFullBlock(boolean val) {
+	public void setFullBlock(final boolean val) {
 		this.fullBlock = val;
 	}
 
@@ -31,7 +35,7 @@ public class BlockMMDBookshelf extends net.minecraft.block.BlockBookshelf implem
 	 */
 	@Override
 	@Deprecated
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube(final IBlockState state) {
 		return this.fullBlock;
 	}
 
@@ -40,7 +44,7 @@ public class BlockMMDBookshelf extends net.minecraft.block.BlockBookshelf implem
 	 */
 	@Override
 	@Deprecated
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube(final IBlockState state) {
 		return this.fullBlock;
 	}
 

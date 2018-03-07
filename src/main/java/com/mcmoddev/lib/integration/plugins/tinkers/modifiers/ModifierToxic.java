@@ -12,12 +12,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.modifiers.IModifierDisplay;
+import slimeknights.tconstruct.library.modifiers.ModifierAspect;
 import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 
-public class ModifierToxic extends ModifierTrait implements IModifierDisplay {
+/**
+ * 
+ */
+public final class ModifierToxic extends ModifierTrait implements IModifierDisplay {
 
+	/**
+	 *
+	 */
 	public ModifierToxic() {
 		super("toxic-modifier", 0xFFFFFF, 1, 0);
+		addAspects(new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this), ModifierAspect.freeModifier);
+		this.addItem("powderMercury");
 	}
 
 	@Override
@@ -32,14 +41,14 @@ public class ModifierToxic extends ModifierTrait implements IModifierDisplay {
 	public boolean isHidden() {
 		return false;
 	}
-	
+
 	  @Override
 	  public List<List<ItemStack>> getItems() {
 	    ImmutableList.Builder<List<ItemStack>> builder = ImmutableList.builder();
 
-	    for(RecipeMatch rm : items) {
+	    for (RecipeMatch rm : items) {
 	      List<ItemStack> in = rm.getInputs();
-	      if(!in.isEmpty()) {
+	      if (!in.isEmpty()) {
 	        builder.add(in);
 	      }
 	    }

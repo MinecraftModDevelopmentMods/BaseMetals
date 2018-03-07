@@ -3,12 +3,13 @@ package com.mcmoddev.lib.integration.plugins.tinkers;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.*;
+import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierFakeDiamond;
+import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierLeadPlated;
+import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierToxic;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,8 +18,8 @@ import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 
 /**
- * Contains static instances of modifiers for registering with TiC
- * 
+ * Contains static instances of modifiers for registering with TiC.
+ *
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  *
  */
@@ -31,6 +32,11 @@ public class ModifierRegistry {
 		throw new IllegalAccessError("Not an instantiable class");
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @param ingredients
+	 */
 	public static void setModifierRecipe(@Nonnull final String name, @Nonnull final ItemStack... ingredients) {
 		final Modifier t = modifiers.get(name);
 		if (t == null) {
@@ -46,17 +52,26 @@ public class ModifierRegistry {
 		setModifierItem(name, item.getItem());
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @param item
+	 */
 	public static void setModifierItem(@Nonnull final String name, @Nonnull final Item item) {
 		final Modifier t = modifiers.get(name);
 		if (t == null) {
 			BaseMetals.logger.error("Trying to add an item to unknown modifier %s, ignoring.", name);
 			return;
 		}
-		
+
 		t.addItem(item);
+		((Modifier) TinkerRegistry.getModifier(t.getIdentifier())).addItem(item);
 		modifiers.put(name, t);
 	}
 
+	/**
+	 *
+	 */
 	public static void initModifiers() {
 		modifiers.put("toxic", new ModifierToxic());
 		modifiers.put("plated", new ModifierLeadPlated());
@@ -64,14 +79,14 @@ public class ModifierRegistry {
 	}
 
 	public static void registerModifiers() {
-		for (final Entry<String, Modifier> ent : modifiers.entrySet()) {
-			if( TinkerRegistry.getModifier(ent.getValue().getIdentifier()) == null ) {
-				TinkerRegistry.registerModifier(ent.getValue());
-				TinkerRegistry.registerModifierAlias(ent.getValue(),ent.getKey());
-			}
-		}
+		// blank on purpose - this is a no-op with 2.7.+ and the entire 2.8 and 2.9 series
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @return
+	 */
 	public static Map<String, String> getModifierDetails(@Nonnull final String name) {
 		final Map<String, String> rv = new HashMap<>();
 		if (modifiers.containsKey(name)) {
@@ -82,5 +97,5 @@ public class ModifierRegistry {
 		} else {
 			return Collections.emptyMap();
 		}
-	}	
+	}
 }

@@ -1,12 +1,13 @@
 package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -16,60 +17,47 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
-public class Recipes extends com.mcmoddev.lib.init.Recipes {
-
-	private static boolean initDone = false;
+public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 	private Recipes() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
-
-		Materials.init();
-		Blocks.init();
-		Items.init();
-
-		initPureVanillaOredicts();
-		initPureVanillaCrusherRecipes();
-		initVanillaRecipes();
-		initGeneralRecipes();
-		initModSpecificRecipes();
-		
-		initDone = true;
+		MinecraftForge.EVENT_BUS.register(Recipes.class);
 	}
 
 	protected static void initVanillaRecipes() {
+		// all recipes for BaseMetals are currently in JSON - this exists in case there
+		// are some we have to add
+		// programmatically
 	}
 
 	private static void initModSpecificRecipes() {
-		if (Options.isMaterialEnabled(MaterialNames.ADAMANTINE)) {
-			// Alt oreDict Adamantite
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamantite");
+		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
+			final MMDMaterial adamantine = Materials.getMaterialByName(MaterialNames.ADAMANTINE);
 
-			// Alt oreDict Adamantium
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamantium");
-
-			// Alt oreDict Adamant
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.ADAMANTINE), "Adamant");
+			addAdditionalOredicts(adamantine, "Adamantite");
+			addAdditionalOredicts(adamantine, "Adamantium");
+			addAdditionalOredicts(adamantine, "Adamant");
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.STEEL)) {
-			final MMDMaterial material = Materials.getMaterialByName(MaterialNames.STEEL);
-			OreDictionary.registerOre(Oredicts.SPROCKET, material.getItem(Names.GEAR));
-		}
+		if (Materials.hasMaterial(MaterialNames.STEEL)) {
+			final MMDMaterial steel = Materials.getMaterialByName(MaterialNames.STEEL);
 
-		// new recipes using rods and gears
+			if (steel.hasItem(Names.GEAR)) {
+				OreDictionary.registerOre(Oredicts.SPROCKET, steel.getItemStack(Names.GEAR));
+			}
+		}
 	}
-	
+
 	@SubscribeEvent
-	public static void registerRecipes( RegistryEvent.Register<IRecipe> event ) {
-		register( event );
+	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
+		initVanillaRecipes();
+		initModSpecificRecipes();
+		register(event);
 	}
 }

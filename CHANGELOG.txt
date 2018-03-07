@@ -1,3 +1,1 @@
-IMPORTANT FIX!
-
-It seems that in 1.12 a lot of mods are adding custom traits to Tinkers' Construct and this has started to cause naming collisions. This release contains a fix for the issue by having all traits added by BaseMetals have a unique internal name that is unlikely to conflict. If you're using any of the Base Metals releases for 1.12, please update to this one immediately.
+2.5.0 for 1.12.x

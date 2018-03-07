@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.block;
 
+import java.util.function.BiConsumer;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -14,18 +16,18 @@ import net.minecraftforge.fluids.Fluid;
 /**
  * This class represents a fluid that applies a function to any living entities
  * that swim in it.
- * 
+ *
  * @author DrCyano
  *
  */
 public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidClassic {
 
-	private final java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect;
+	private final BiConsumer<World, EntityLivingBase> immersionEffect;
 	private final boolean isFlammable;
 
 	/**
 	 * Constructor for this fluid block.
-	 * 
+	 *
 	 * @param fluid
 	 *            The Fluid of this fluid block
 	 * @param flammable
@@ -34,7 +36,7 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 	 *            A function to define what happens to swimming entities. Can be
 	 *            null.
 	 */
-	public InteractiveFluidBlock(Fluid fluid, boolean flammable, java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect) {
+	public InteractiveFluidBlock(final Fluid fluid, final boolean flammable, final BiConsumer<World, EntityLivingBase> immersionEffect) {
 		super(fluid, Material.WATER);
 		this.isFlammable = flammable;
 		this.immersionEffect = immersionEffect;
@@ -42,32 +44,33 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 
 	/**
 	 * Constructor for this fluid block.
-	 * 
+	 *
 	 * @param fluid
 	 *            The Fluid of this fluid block
 	 * @param immersionEffect
 	 *            A function to define what happens to swimming entities. Can be
 	 *            null.
 	 */
-	public InteractiveFluidBlock(Fluid fluid, java.util.function.BiConsumer<net.minecraft.world.World, net.minecraft.entity.EntityLivingBase> immersionEffect) {
+	public InteractiveFluidBlock(final Fluid fluid, final BiConsumer<World, EntityLivingBase> immersionEffect) {
 		this(fluid, false, immersionEffect);
 	}
 
 	/**
 	 * Constructor for this fluid block.
-	 * 
+	 *
 	 * @param fluid
 	 *            The Fluid of this fluid block
 	 */
-	public InteractiveFluidBlock(Fluid fluid) {
+	public InteractiveFluidBlock(final Fluid fluid) {
 		this(fluid, false, null);
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos coord, IBlockState state, Entity entity) {
+	public void onEntityCollidedWithBlock(final World world, final BlockPos coord, final IBlockState state, final Entity entity) {
 		super.onEntityCollidedWithBlock(world, coord, state, entity);
-		if ((this.immersionEffect != null) && (entity instanceof EntityLivingBase))
+		if ((this.immersionEffect != null) && (entity instanceof EntityLivingBase)) {
 			this.immersionEffect.accept(world, (EntityLivingBase) entity);
+		}
 	}
 
 	/**
@@ -84,9 +87,10 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 	 *         block will be consumed by fire
 	 */
 	@Override
-	public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
-		if (this.isFlammable)
+	public int getFlammability(final IBlockAccess world, final BlockPos pos, final EnumFacing face) {
+		if (this.isFlammable) {
 			return 60;
+		}
 		return 0;
 	}
 
@@ -104,18 +108,20 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 	 *         around the block
 	 */
 	@Override
-	public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face) {
-		if (this.isFlammable)
+	public int getFireSpreadSpeed(final IBlockAccess world, final BlockPos pos, final EnumFacing face) {
+		if (this.isFlammable) {
 			return 30;
+		}
 		return 0;
 	}
-	
+
+	// TODO: remove the block overrides and see if fluids are working correctly yet
 	/**
 	 * @deprecated
 	 */
 	@Deprecated
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+	public AxisAlignedBB getCollisionBoundingBox(final IBlockState blockState, final IBlockAccess worldIn, final BlockPos pos) {
 		return NULL_AABB;
 	}
 }

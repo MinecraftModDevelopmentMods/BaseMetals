@@ -1,0 +1,32 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "basemetals:redstone_smallpowder",
+		"data": 0,
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustRedstone"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "Redstone"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "SmallDust"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

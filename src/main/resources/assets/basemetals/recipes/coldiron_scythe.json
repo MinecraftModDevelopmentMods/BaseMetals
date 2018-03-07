@@ -1,0 +1,40 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:coldiron_scythe",
+		"data": 0
+	},
+	"pattern": [
+		"ii ",
+		"  i",
+		" s "
+	],
+	"key": {
+		"i": {
+			"type": "forge:ore_dict",
+			"ore": "ingotColdiron"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "basemetals:enabled",
+					"optionName": "material",
+					"optionValue": "ColdIron"
+				},
+				{
+					"type": "basemetals:enabled",
+					"optionName": "thing",
+					"optionValue": "Scythe"
+				}
+			]
+		}
+	],
+	"group": "tools"
+}

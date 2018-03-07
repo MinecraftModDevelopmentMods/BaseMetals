@@ -1,6 +1,8 @@
 package com.mcmoddev.basemetals.data;
 
-public class TraitNames {
+import com.mcmoddev.lib.data.SharedStrings;
+
+public final class TraitNames {
 
 	public static final String COLDBLOODED = "coldblooded";
 	public static final String INSATIABLE = "insatiable";
@@ -14,6 +16,6 @@ public class TraitNames {
 	public static final String SPARKLY = "sparkly";
 
 	private TraitNames() {
-		throw new IllegalAccessError("Not a instantiable class");
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 }

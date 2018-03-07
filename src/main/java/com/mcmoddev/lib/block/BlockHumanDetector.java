@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * A pressure plate that only activates when a player steps on it
+ * A pressure plate that only activates when a player steps on it.
  */
 public class BlockHumanDetector extends net.minecraft.block.BlockPressurePlate {
 
@@ -19,12 +19,13 @@ public class BlockHumanDetector extends net.minecraft.block.BlockPressurePlate {
 	}
 
 	@Override
-	protected int computeRedstoneStrength(World w, BlockPos pos) {
+	protected int computeRedstoneStrength(final World worldIn, final BlockPos pos) {
 		final AxisAlignedBB axisalignedbb = PRESSURE_AABB.offset(pos);
-		final List<? extends Entity> list = w.<Entity>getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
+		final List<? extends Entity> list = worldIn.<Entity>getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
 
-		if (!list.isEmpty())
+		if (!list.isEmpty()) {
 			return 15;
+		}
 		return 0;
 	}
 }

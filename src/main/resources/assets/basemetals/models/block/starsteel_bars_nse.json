@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/bars_nse",
-    "textures": {
-        "particle": "basemetals:blocks/starsteel_bars",
-        "bars": "basemetals:blocks/starsteel_bars",
-        "edge": "basemetals:blocks/starsteel_bars"
-    }
-}

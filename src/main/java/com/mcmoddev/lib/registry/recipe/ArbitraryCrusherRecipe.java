@@ -15,28 +15,28 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 /**
  * This class is an implementation of the ICrusherRecipe superclass. It uses the
  * <code>ItemStack.areItemsEqual(...)</code> method to check the input item.
- * 
+ *
  * @author DrCyano
  *
  */
 public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> implements ICrusherRecipe {
-	
+
 	private final ItemStack input;
 	private final ItemStack output;
-	
+
 	/**
 	 * Constructs a new instance of this ICrusherRecipe class representing a
 	 * recipe with an input and an output. If the input ItemStack has
 	 * OreDictionary.WILDCARD_VALUE as its damage value, then metadata values
 	 * will be ignored when testing an item for being a valid input for this
 	 * recipe.
-	 * 
+	 *
 	 * @param input
 	 *            The input item as a direct ItemStack reference.
 	 * @param output
 	 *            The result of applying this recipe to an input item
 	 */
-	public ArbitraryCrusherRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output) {
+	public ArbitraryCrusherRecipe(@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
 		this.input = input;
 		this.output = output;
 
@@ -49,16 +49,16 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 	 * OreDictionary.WILDCARD_VALUE as its damage value, then metadata values
 	 * will be ignored when testing an item for being a valid input for this
 	 * recipe.
-	 * 
+	 *
 	 * @param input
 	 *            The input item as an Item reference.
 	 * @param output
 	 *            The result of applying this recipe to an input item
 	 */
-	public ArbitraryCrusherRecipe(@Nonnull Item input, @Nonnull ItemStack output) {
+	public ArbitraryCrusherRecipe(@Nonnull final Item input, @Nonnull final ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
-		
+
 		super.setRegistryName(input.getRegistryName().getResourcePath() + "_to_" + output.getItem().getRegistryName().getResourcePath());
 	}
 
@@ -68,22 +68,22 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 	 * OreDictionary.WILDCARD_VALUE as its damage value, then metadata values
 	 * will be ignored when testing an item for being a valid input for this
 	 * recipe.
-	 * 
+	 *
 	 * @param input
 	 *            The input item as an Item reference.
 	 * @param output
 	 *            The result of applying this recipe to an input item
 	 */
-	public ArbitraryCrusherRecipe(@Nonnull Block input, @Nonnull ItemStack output) {
+	public ArbitraryCrusherRecipe(@Nonnull final Block input, @Nonnull final ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
-		
+
 		super.setRegistryName(input.getRegistryName().getResourcePath() + "_to_" + output.getItem().getRegistryName().getResourcePath());
 	}
 
 	/**
 	 * Gets the output item from applying this recipe.
-	 * 
+	 *
 	 * @return An ItemStack instance of the result of this recipe
 	 */
 	@Override
@@ -93,7 +93,7 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 
 	/**
 	 * Gets the output item from applying this recipe.
-	 * 
+	 *
 	 * @return An ItemStack instance of the result of this recipe
 	 */
 	@Override
@@ -103,16 +103,17 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 
 	/**
 	 * Checks if the given ItemStack instance is the input for this recipe.
-	 * 
+	 *
 	 * @param input
 	 *            An ItemStack to test
 	 * @return Returns true if and only if this recipe should produce an output
 	 *         item from the given input.
 	 */
 	@Override
-	public boolean isValidInput(ItemStack input) {
-		if ((input != null) && (this.input.getItemDamage() == OreDictionary.WILDCARD_VALUE))
+	public boolean isValidInput(@Nonnull final ItemStack input) {
+		if (this.input.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
 			return this.input.getItem() == input.getItem();
+		}
 		return ItemStack.areItemsEqual(this.input, input);
 	}
 
@@ -121,7 +122,7 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 	 * <code>isValidInput(...)</code> would return true. This method is only
 	 * used for displaying recipes in NEI and does not need to be performance
 	 * optimized.
-	 * 
+	 *
 	 * @return A list of allowed inputs.
 	 */
 	@Override

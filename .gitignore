@@ -27,3 +27,7 @@ classes
 /forge-*-changelog.txt
 
 secret.json
+libs/*
+!/libs/README.txt
+
+.DS_Store

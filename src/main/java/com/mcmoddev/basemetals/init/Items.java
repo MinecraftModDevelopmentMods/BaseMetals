@@ -1,28 +1,29 @@
 package com.mcmoddev.basemetals.init;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Arrays;
+import java.util.List;
 
+import javax.annotation.Nonnull;
+
+import com.google.common.collect.ImmutableList;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.item.ItemMMDNugget;
 import com.mcmoddev.lib.item.ItemMMDPowder;
 import com.mcmoddev.lib.item.ItemMMDSmallPowder;
-import com.mcmoddev.lib.item.ItemMMDBlock;
-import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.TabContainer;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 /**
  * This class initializes all items in Base Metals.
@@ -30,236 +31,370 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @author Jasmine Iwanek
  *
  */
-public class Items extends com.mcmoddev.lib.init.Items {
+public final class Items extends com.mcmoddev.lib.init.Items {
 
-	private static boolean initDone = false;
-	private static TabContainer myTabs = ItemGroups.myTabs;
-
-	protected Items() {
-		throw new IllegalAccessError("Not a instantiable class");
+	private Items() {
+		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
 	/**
 	 *
 	 */
 	public static void init() {
-		if (initDone) {
-			return;
-		}
+		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 1));
+		Materials.getMaterialByName(MaterialNames.COAL).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 0));
 
-		com.mcmoddev.basemetals.util.Config.init();
-		Blocks.init();
-		com.mcmoddev.lib.init.Items.init();
-
-		// create and register vanilla stuffs
-		Map<String,MMDMaterial> vanillaMats = new HashMap<>();
-		
-		List<String> vanillaMatNames = Arrays.asList( MaterialNames.CHARCOAL, MaterialNames.COAL, MaterialNames.DIAMOND, 
-				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON, MaterialNames.LAPIS, MaterialNames.OBSIDIAN,
-				MaterialNames.QUARTZ, MaterialNames.REDSTONE, MaterialNames.STONE, MaterialNames.WOOD );
-		
-		vanillaMatNames.forEach( name -> vanillaMats.put(name,  Materials.getMaterialByName(name)) );
-		
-		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT, new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
-		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT, new ItemStack(net.minecraft.init.Items.COAL, 1, 0).getItem());
-		
 		addDiamondBits();
 		addGoldBits();
 		addIronBits();
 		addStoneBits();
 		addWoodBits();
-		
+
 		Materials.getMaterialByName(MaterialNames.EMERALD).addNewItem(Names.INGOT, net.minecraft.init.Items.EMERALD);
-		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItem(Names.POWDER, new ItemStack(net.minecraft.init.Items.DYE, 1, 4).getItem());
 		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT, net.minecraft.init.Items.QUARTZ);
 		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER, net.minecraft.init.Items.REDSTONE);
-
+		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItemFromItemStack(Names.INGOT, new ItemStack(net.minecraft.init.Items.DYE, 1, 4));
+		
 		doSpecialMats();
 
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
+				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.EMERALD,
+				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.OBSIDIAN,
+				MaterialNames.MITHRIL, MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
+				MaterialNames.QUARTZ, MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
+				MaterialNames.TIN, MaterialNames.ZINC);
+
 		// create and register modded stuffs
-		List<String> matsModSupport = Arrays.asList( MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY, MaterialNames.BISMUTH,
-				MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL, MaterialNames.ZINC );
+		final List<String> materialsModSupport = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
+				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
+				MaterialNames.STARSTEEL, MaterialNames.ZINC);
 
-		List<String> myModMats = Arrays.asList( MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY, MaterialNames.AQUARIUM,
-				MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON, MaterialNames.COPPER,
-				MaterialNames.CUPRONICKEL, MaterialNames.EMERALD, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.LEAD,
-				MaterialNames.OBSIDIAN, MaterialNames.MITHRIL, MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM, 
-				MaterialNames.QUARTZ, MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
-				MaterialNames.ZINC);
-		
-		myModMats.stream()
-		.filter( Options::isMaterialEnabled )
-		.filter( name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-		.forEach( name -> createItemsFull( Materials.getMaterialByName(name), myTabs ) );
-		
-		matsModSupport.stream()
-		.filter(  Options::isMaterialEnabled )
-		.filter( name -> !Materials.getMaterialByName(name).equals(Materials.emptyMaterial))
-		.forEach( name -> createItemsModSupport( Materials.getMaterialByName(name), myTabs ) );
+		materials.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+				.forEach(materialName -> {
+					final MMDMaterial material = Materials.getMaterialByName(materialName);
 
-		if (Options.isMaterialEnabled(MaterialNames.MERCURY)) {
+					create(Names.BLEND, material);
+					create(Names.INGOT, material);
+					create(Names.NUGGET, material);
+					create(Names.POWDER, material);
+					create(Names.SMALLBLEND, material);
+					create(Names.SMALLPOWDER, material);
+
+					create(Names.ARROW, material);
+					create(Names.AXE, material);
+					create(Names.BOLT, material);
+					create(Names.BOOTS, material);
+					create(Names.BOW, material);
+					create(Names.CHESTPLATE, material);
+					create(Names.CRACKHAMMER, material);
+					create(Names.CROSSBOW, material);
+					create(Names.DOOR, material);
+					create(Names.FISHING_ROD, material);
+					create(Names.HELMET, material);
+					create(Names.HOE, material);
+					create(Names.HORSE_ARMOR, material);
+					create(Names.LEGGINGS, material);
+					create(Names.PICKAXE, material);
+					create(Names.SHEARS, material);
+					create(Names.SHIELD, material);
+					create(Names.SHOVEL, material);
+					create(Names.SCYTHE, material);
+					create(Names.SLAB, material);
+					create(Names.SWORD, material);
+					create(Names.ROD, material);
+					create(Names.GEAR, material);
+				});
+
+		materialsModSupport.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+				.forEach(materialName -> {
+					final MMDMaterial material = Materials.getMaterialByName(materialName);
+
+					create(Names.CASING, material);
+					create(Names.DENSE_PLATE, material);
+
+					if (material.hasOre()) {
+						create(Names.CRUSHED, material);
+						create(Names.CRUSHED_PURIFIED, material);
+
+						createMekCrystal(material, ItemGroups.getTab(SharedStrings.TAB_ITEMS));
+						create(Names.SHARD, material);
+						create(Names.CLUMP, material);
+						create(Names.POWDER_DIRTY, material);
+						create(Names.CRYSTAL, material);
+					}
+				});
+
+		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 
-			create(Names.INGOT, mercury, myTabs.itemsTab);
-			create(Names.NUGGET, mercury, myTabs.itemsTab);
-			create(Names.POWDER, mercury, myTabs.itemsTab);
-			create(Names.SMALLPOWDER, mercury, myTabs.itemsTab);
+			create(Names.INGOT, mercury);
+			create(Names.NUGGET, mercury);
+			create(Names.POWDER, mercury);
+			create(Names.SMALLPOWDER, mercury);
 		}
 
-		addToMetList();
+		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
+				.filter(Materials::hasMaterial)
+				.forEach(materialName -> create(Names.ANVIL, Materials.getMaterialByName(materialName)));
 
-		initDone = true;
+		addToMetList();
+	}
+
+	private static void setBurnTimes(@Nonnull final MMDMaterial mat) {
+		if (mat.hasItem(Names.NUGGET)) {
+			((ItemMMDNugget) mat.getItem(Names.NUGGET)).setBurnTime(160);
+		}
+
+		if (mat.hasItem(Names.POWDER)) {
+			((ItemMMDPowder) mat.getItem(Names.POWDER)).setBurnTime(1600);
+		}
+
+		if (mat.hasItem(Names.SMALLPOWDER)) {
+			((ItemMMDSmallPowder) mat.getItem(Names.SMALLPOWDER)).setBurnTime(160);
+		}
+
+		// simple hack to fix this shit - I give up on trying for more
+		if (mat.hasBlock(Names.BLOCK) && mat.getName().equals(MaterialNames.CHARCOAL)) {
+			((ItemMMDBlock) mat.getItem("ItemBlock_charcoal_block")).setBurnTime(16000);
+		}
 	}
 
 	private static void doSpecialMats() {
-		if (Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
-			create(Names.NUGGET, Materials.getMaterialByName(MaterialNames.CHARCOAL), myTabs.itemsTab);
-			create(Names.POWDER, Materials.getMaterialByName(MaterialNames.CHARCOAL), myTabs.itemsTab);
-			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.CHARCOAL), myTabs.itemsTab);
-			((ItemMMDNugget)Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem(Names.NUGGET)).setBurnTime(200);
-			((ItemMMDPowder)Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem(Names.POWDER)).setBurnTime(1600);
-			((ItemMMDSmallPowder)Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem(Names.SMALLPOWDER)).setBurnTime(200);
+		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
+			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 
-			((ItemMMDBlock)Materials.getMaterialByName(MaterialNames.CHARCOAL).getItem("ItemBlock_charcoal_block")).setBurnTime(16000);
+			create(Names.NUGGET, charcoal);
+			create(Names.POWDER, charcoal);
+			create(Names.SMALLPOWDER, charcoal);
+
+			setBurnTimes(charcoal);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.COAL)) {
-			create(Names.NUGGET, Materials.getMaterialByName(MaterialNames.COAL), myTabs.itemsTab);
-			create(Names.POWDER, Materials.getMaterialByName(MaterialNames.COAL), myTabs.itemsTab);
-			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.COAL), myTabs.itemsTab);
-			((ItemMMDNugget)Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.NUGGET)).setBurnTime(200);
-			((ItemMMDPowder)Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER)).setBurnTime(1600);
-			((ItemMMDSmallPowder)Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.SMALLPOWDER)).setBurnTime(200);
+		if (Materials.hasMaterial(MaterialNames.COAL)) {
+			final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
+
+			create(Names.NUGGET, coal);
+			create(Names.POWDER, coal);
+			create(Names.SMALLPOWDER, coal);
+
+			setBurnTimes(coal);
 		}
 
-		if (Options.isMaterialEnabled(MaterialNames.REDSTONE)) {
-			create(Names.INGOT, Materials.getMaterialByName(MaterialNames.REDSTONE), myTabs.itemsTab);
-			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.REDSTONE), myTabs.itemsTab);
-		}
-		
-		if (Options.isMaterialEnabled(MaterialNames.LAPIS)) {
-			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.LAPIS), myTabs.itemsTab);
+		if (Materials.hasMaterial(MaterialNames.REDSTONE)) {
+			final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
+
+			create(Names.INGOT, redstone);
+			create(Names.SMALLPOWDER, redstone);
 		}
 
+		if (Materials.hasMaterial(MaterialNames.LAPIS)) {
+			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.LAPIS));
+		}
 	}
 
 	private static void addDiamondBits() {
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.AXE, net.minecraft.init.Items.DIAMOND_AXE);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.HOE, net.minecraft.init.Items.DIAMOND_HOE);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.HORSE_ARMOR, net.minecraft.init.Items.DIAMOND_HORSE_ARMOR);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.PICKAXE, net.minecraft.init.Items.DIAMOND_PICKAXE);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.SHOVEL, net.minecraft.init.Items.DIAMOND_SHOVEL);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.SWORD, net.minecraft.init.Items.DIAMOND_SWORD);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.BOOTS, net.minecraft.init.Items.DIAMOND_BOOTS);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.DIAMOND_CHESTPLATE);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.HELMET, net.minecraft.init.Items.DIAMOND_HELMET);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.LEGGINGS, net.minecraft.init.Items.DIAMOND_LEGGINGS);
-		Materials.getMaterialByName(MaterialNames.DIAMOND).addNewItem(Names.INGOT, net.minecraft.init.Items.DIAMOND);
-		
-		if (Options.isMaterialEnabled(MaterialNames.DIAMOND)) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.DIAMOND), myTabs);
+		final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
+
+		diamond.addNewItem(Names.AXE, net.minecraft.init.Items.DIAMOND_AXE);
+		diamond.addNewItem(Names.HOE, net.minecraft.init.Items.DIAMOND_HOE);
+		diamond.addNewItem(Names.HORSE_ARMOR, net.minecraft.init.Items.DIAMOND_HORSE_ARMOR);
+		diamond.addNewItem(Names.PICKAXE, net.minecraft.init.Items.DIAMOND_PICKAXE);
+		diamond.addNewItem(Names.SHOVEL, net.minecraft.init.Items.DIAMOND_SHOVEL);
+		diamond.addNewItem(Names.SWORD, net.minecraft.init.Items.DIAMOND_SWORD);
+		diamond.addNewItem(Names.BOOTS, net.minecraft.init.Items.DIAMOND_BOOTS);
+		diamond.addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.DIAMOND_CHESTPLATE);
+		diamond.addNewItem(Names.HELMET, net.minecraft.init.Items.DIAMOND_HELMET);
+		diamond.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.DIAMOND_LEGGINGS);
+		diamond.addNewItem(Names.INGOT, net.minecraft.init.Items.DIAMOND);
+
+		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
+			create(Names.BLEND, diamond);
+			create(Names.NUGGET, diamond);
+			create(Names.POWDER, diamond);
+			create(Names.SMALLBLEND, diamond);
+			create(Names.SMALLPOWDER, diamond);
+
+			create(Names.ARROW, diamond);
+			create(Names.BOLT, diamond);
+			create(Names.BOW, diamond);
+			create(Names.CRACKHAMMER, diamond);
+			create(Names.CROSSBOW, diamond);
+			create(Names.DOOR, diamond);
+			create(Names.FISHING_ROD, diamond);
+			create(Names.SHEARS, diamond);
+			create(Names.SHIELD, diamond);
+			create(Names.SLAB, diamond);
+			create(Names.ROD, diamond);
+			create(Names.GEAR, diamond);
+			create(Names.SCYTHE, diamond);
 		}
 	}
 
-	private static void addGoldBits( ) {
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.AXE, net.minecraft.init.Items.GOLDEN_AXE);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.HOE, net.minecraft.init.Items.GOLDEN_HOE);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.HORSE_ARMOR, net.minecraft.init.Items.GOLDEN_HORSE_ARMOR);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.PICKAXE, net.minecraft.init.Items.GOLDEN_PICKAXE);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.SHOVEL, net.minecraft.init.Items.GOLDEN_SHOVEL);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.SWORD, net.minecraft.init.Items.GOLDEN_SWORD);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.BOOTS, net.minecraft.init.Items.GOLDEN_BOOTS);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.GOLDEN_CHESTPLATE);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.HELMET, net.minecraft.init.Items.GOLDEN_HELMET);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.LEGGINGS, net.minecraft.init.Items.GOLDEN_LEGGINGS);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.INGOT, net.minecraft.init.Items.GOLD_INGOT);
-		Materials.getMaterialByName(MaterialNames.GOLD).addNewItem(Names.NUGGET, net.minecraft.init.Items.GOLD_NUGGET);
+	private static void addGoldBits() {
+		final MMDMaterial gold = Materials.getMaterialByName(MaterialNames.GOLD);
 
-		if (Options.isMaterialEnabled(MaterialNames.GOLD)) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.GOLD), myTabs);
+		gold.addNewItem(Names.AXE, net.minecraft.init.Items.GOLDEN_AXE);
+		gold.addNewItem(Names.HOE, net.minecraft.init.Items.GOLDEN_HOE);
+		gold.addNewItem(Names.HORSE_ARMOR, net.minecraft.init.Items.GOLDEN_HORSE_ARMOR);
+		gold.addNewItem(Names.PICKAXE, net.minecraft.init.Items.GOLDEN_PICKAXE);
+		gold.addNewItem(Names.SHOVEL, net.minecraft.init.Items.GOLDEN_SHOVEL);
+		gold.addNewItem(Names.SWORD, net.minecraft.init.Items.GOLDEN_SWORD);
+		gold.addNewItem(Names.BOOTS, net.minecraft.init.Items.GOLDEN_BOOTS);
+		gold.addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.GOLDEN_CHESTPLATE);
+		gold.addNewItem(Names.HELMET, net.minecraft.init.Items.GOLDEN_HELMET);
+		gold.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.GOLDEN_LEGGINGS);
+		gold.addNewItem(Names.INGOT, net.minecraft.init.Items.GOLD_INGOT);
+		gold.addNewItem(Names.NUGGET, net.minecraft.init.Items.GOLD_NUGGET);
+
+		if (Materials.hasMaterial(MaterialNames.GOLD)) {
+			create(Names.BLEND, gold);
+			create(Names.POWDER, gold);
+			create(Names.SMALLBLEND, gold);
+			create(Names.SMALLPOWDER, gold);
+
+			create(Names.ARROW, gold);
+			create(Names.BOLT, gold);
+			create(Names.BOW, gold);
+			create(Names.CRACKHAMMER, gold);
+			create(Names.CROSSBOW, gold);
+			create(Names.DOOR, gold);
+			create(Names.FISHING_ROD, gold);
+			create(Names.SHEARS, gold);
+			create(Names.SHIELD, gold);
+			create(Names.SLAB, gold);
+			create(Names.ROD, gold);
+			create(Names.GEAR, gold);
+			create(Names.SCYTHE, gold);
 		}
 	}
 
-	private static void addIronBits( ) {
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.AXE, net.minecraft.init.Items.IRON_AXE);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.HOE, net.minecraft.init.Items.IRON_HOE);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.HORSE_ARMOR, net.minecraft.init.Items.IRON_HORSE_ARMOR);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.PICKAXE, net.minecraft.init.Items.IRON_PICKAXE);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.SHOVEL, net.minecraft.init.Items.IRON_SHOVEL);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.SWORD, net.minecraft.init.Items.IRON_SWORD);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.BOOTS, net.minecraft.init.Items.IRON_BOOTS);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.IRON_CHESTPLATE);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.HELMET, net.minecraft.init.Items.IRON_HELMET);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
-		Materials.getMaterialByName(MaterialNames.IRON).addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
+	private static void addIronBits() {
+		final MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
 
-		if (Options.isMaterialEnabled(MaterialNames.IRON)) {
-			createItemsFull(Materials.getMaterialByName(MaterialNames.IRON), myTabs);
-		}
-	}
-	
-	private static void addStoneBits( ) {
-		Materials.getMaterialByName(MaterialNames.STONE).addNewItem(Names.AXE, net.minecraft.init.Items.STONE_AXE);
-		Materials.getMaterialByName(MaterialNames.STONE).addNewItem(Names.HOE, net.minecraft.init.Items.STONE_HOE);
-		Materials.getMaterialByName(MaterialNames.STONE).addNewItem(Names.PICKAXE, net.minecraft.init.Items.STONE_PICKAXE);
-		Materials.getMaterialByName(MaterialNames.STONE).addNewItem(Names.SHOVEL, net.minecraft.init.Items.STONE_SHOVEL);
-		Materials.getMaterialByName(MaterialNames.STONE).addNewItem(Names.SWORD, net.minecraft.init.Items.STONE_SWORD);
-		Materials.getMaterialByName(MaterialNames.STONE).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.STONE);
-		Materials.getMaterialByName(MaterialNames.STONE).addNewBlock(Names.SLAB, net.minecraft.init.Blocks.STONE_SLAB);
-		Materials.getMaterialByName(MaterialNames.STONE).addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.DOUBLE_STONE_SLAB);
-		Materials.getMaterialByName(MaterialNames.STONE).addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.STONE_STAIRS);
+		iron.addNewItem(Names.AXE, net.minecraft.init.Items.IRON_AXE);
+		iron.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
+		iron.addNewItem(Names.HOE, net.minecraft.init.Items.IRON_HOE);
+		iron.addNewItem(Names.HORSE_ARMOR, net.minecraft.init.Items.IRON_HORSE_ARMOR);
+		iron.addNewItem(Names.PICKAXE, net.minecraft.init.Items.IRON_PICKAXE);
+		iron.addNewItem(Names.SHOVEL, net.minecraft.init.Items.IRON_SHOVEL);
+		iron.addNewItem(Names.SWORD, net.minecraft.init.Items.IRON_SWORD);
+		iron.addNewItem(Names.BOOTS, net.minecraft.init.Items.IRON_BOOTS);
+		iron.addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.IRON_CHESTPLATE);
+		iron.addNewItem(Names.HELMET, net.minecraft.init.Items.IRON_HELMET);
+		iron.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
+		iron.addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
+		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
+		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
-		if (Options.isMaterialEnabled(MaterialNames.STONE)) {
-			create(Names.CRACKHAMMER, Materials.getMaterialByName(MaterialNames.STONE), myTabs.toolsTab);
-			create(Names.ROD, Materials.getMaterialByName(MaterialNames.STONE), myTabs.itemsTab);
-			create(Names.GEAR, Materials.getMaterialByName(MaterialNames.STONE), myTabs.itemsTab);
-		}
-	}
+		if (Materials.hasMaterial(MaterialNames.IRON)) {
+			create(Names.BLEND, iron);
+			create(Names.INGOT, iron);
+			create(Names.NUGGET, iron);
+			create(Names.POWDER, iron);
+			create(Names.SMALLBLEND, iron);
+			create(Names.SMALLPOWDER, iron);
 
-	private static void addWoodBits( ) {
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewItem(Names.AXE, net.minecraft.init.Items.WOODEN_AXE);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewItem(Names.DOOR, net.minecraft.init.Items.OAK_DOOR);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewItem(Names.HOE, net.minecraft.init.Items.WOODEN_HOE);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewItem(Names.PICKAXE, net.minecraft.init.Items.WOODEN_PICKAXE);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewItem(Names.SHOVEL, net.minecraft.init.Items.WOODEN_SHOVEL);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewItem(Names.SWORD, net.minecraft.init.Items.WOODEN_SWORD);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewBlock(Names.DOOR, net.minecraft.init.Blocks.OAK_DOOR);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewBlock(Names.ORE, net.minecraft.init.Blocks.LOG);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.TRAPDOOR);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.PLANKS);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewBlock(Names.SLAB, net.minecraft.init.Blocks.WOODEN_SLAB);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.DOUBLE_WOODEN_SLAB);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.OAK_STAIRS);
-		Materials.getMaterialByName(MaterialNames.WOOD).addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
-
-		if (Options.isMaterialEnabled(MaterialNames.WOOD)) {
-			create(Names.CRACKHAMMER, Materials.getMaterialByName(MaterialNames.WOOD), myTabs.toolsTab);
-			create(Names.GEAR, Materials.getMaterialByName(MaterialNames.WOOD), myTabs.itemsTab);
+			create(Names.ARROW, iron);
+			create(Names.AXE, iron);
+			create(Names.BOLT, iron);
+			create(Names.BOOTS, iron);
+			create(Names.BOW, iron);
+			create(Names.CHESTPLATE, iron);
+			create(Names.CRACKHAMMER, iron);
+			create(Names.CROSSBOW, iron);
+			create(Names.FISHING_ROD, iron);
+			create(Names.HELMET, iron);
+			create(Names.HOE, iron);
+			create(Names.HORSE_ARMOR, iron);
+			create(Names.LEGGINGS, iron);
+			create(Names.PICKAXE, iron);
+			create(Names.SHEARS, iron);
+			create(Names.SHIELD, iron);
+			create(Names.SHOVEL, iron);
+			create(Names.SLAB, iron);
+			create(Names.SWORD, iron);
+			create(Names.ROD, iron);
+			create(Names.GEAR, iron);
+			create(Names.SCYTHE, iron);
 		}
 	}
 
+	private static void addStoneBits() {
+		final MMDMaterial stone = Materials.getMaterialByName(MaterialNames.STONE);
+
+		stone.addNewItem(Names.AXE, net.minecraft.init.Items.STONE_AXE);
+		stone.addNewItem(Names.HOE, net.minecraft.init.Items.STONE_HOE);
+		stone.addNewItem(Names.PICKAXE, net.minecraft.init.Items.STONE_PICKAXE);
+		stone.addNewItem(Names.SHOVEL, net.minecraft.init.Items.STONE_SHOVEL);
+		stone.addNewItem(Names.SWORD, net.minecraft.init.Items.STONE_SWORD);
+		stone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.STONE);
+		stone.addNewBlock(Names.SLAB, net.minecraft.init.Blocks.STONE_SLAB);
+		stone.addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.DOUBLE_STONE_SLAB);
+		stone.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.STONE_STAIRS);
+
+		if (Materials.hasMaterial(MaterialNames.STONE)) {
+			create(Names.CRACKHAMMER, stone);
+			create(Names.ROD, stone);
+			create(Names.GEAR, stone);
+			create(Names.SCYTHE, stone);
+		}
+	}
+
+	private static void addWoodBits() {
+		final MMDMaterial wood = Materials.getMaterialByName(MaterialNames.WOOD);
+
+		wood.addNewItem(Names.AXE, net.minecraft.init.Items.WOODEN_AXE);
+		wood.addNewItem(Names.DOOR, net.minecraft.init.Items.OAK_DOOR);
+		wood.addNewItem(Names.HOE, net.minecraft.init.Items.WOODEN_HOE);
+		wood.addNewItem(Names.PICKAXE, net.minecraft.init.Items.WOODEN_PICKAXE);
+		wood.addNewItem(Names.SHOVEL, net.minecraft.init.Items.WOODEN_SHOVEL);
+		wood.addNewItem(Names.SWORD, net.minecraft.init.Items.WOODEN_SWORD);
+		wood.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.OAK_DOOR);
+		wood.addNewBlock(Names.ORE, net.minecraft.init.Blocks.LOG);
+		wood.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.TRAPDOOR);
+		wood.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.PLANKS);
+		wood.addNewBlock(Names.SLAB, net.minecraft.init.Blocks.WOODEN_SLAB);
+		wood.addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.DOUBLE_WOODEN_SLAB);
+		wood.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.OAK_STAIRS);
+		wood.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
+
+		if (Materials.hasMaterial(MaterialNames.WOOD)) {
+			create(Names.CRACKHAMMER, wood);
+			create(Names.GEAR, wood);
+			create(Names.SCYTHE, wood);
+		}
+	}
+
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event) {
-		for( MMDMaterial mat : Materials.getMaterialsByMod(BaseMetals.MODID) ) {
-			for( Item item : mat.getItems() ) {
-				if( item.getRegistryName().getResourceDomain().equals(BaseMetals.MODID) ) {
-					event.getRegistry().register(item);
-				}
-			}
-		}
-		
-		if( Blocks.humanDetector != null ) {
-			final ItemBlock itemBlock = new ItemBlock(Blocks.humanDetector);
-			itemBlock.setRegistryName("human_detector");
-			itemBlock.setUnlocalizedName(Blocks.humanDetector.getRegistryName().getResourceDomain() + ".human_detector");
-			event.getRegistry().register(itemBlock);
-		}
+	public static void registerItems(final RegistryEvent.Register<Item> event) {
+		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
+		.forEach( mat -> regItems(event.getRegistry(), mat.getItems()));
 		
 		Oredicts.registerItemOreDictionaryEntries();
 		Oredicts.registerBlockOreDictionaryEntries();
+	}
+
+	private static void regItems(IForgeRegistry<Item> registry, ImmutableList<ItemStack> items) {
+		items.stream()
+		.filter(Items::isThisMod)
+		.map(Items::getItem)
+		.forEach(registry::register);
+	}
+	
+	private static Item getItem(ItemStack it) {
+		return it.getItem();
+	}
+	
+	private static boolean isThisMod(ItemStack it) {
+		return it.getItem().getRegistryName().getResourceDomain().toString().equalsIgnoreCase(BaseMetals.MODID);
 	}
 }
