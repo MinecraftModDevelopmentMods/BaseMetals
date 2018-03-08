@@ -13,19 +13,19 @@ itemGroup.basemetals.items=Base Metals アイテム
 itemGroup.basemetals.tools=Base Metals 道具
 
 #ToolTips
-tooltip.adamantine.tool=ボスに %d の追加ダメージ
+tooltip.adamantine.tool=体力が高いMobに %d の追加ダメージ
 tooltip.adamantine.armor=被ダメージ減少
 
-tooltip.aquarium.tool=水中の敵に %d の追加ダメージ
+tooltip.aquarium.tool=水棲Mobに %d の追加ダメージ
 tooltip.aquarium.armor=セット効果: 水中呼吸
 
-tooltip.coldiron.tool=燃えている敵に %d の追加ダメージ
+tooltip.coldiron.tool=炎耐性のあるMobに %d の追加ダメージ
 tooltip.coldiron.armor=セット効果: 火炎耐性
 
 tooltip.mithril.tool=アンデッドに盲目とウィザー効果
 tooltip.mithril.armor=セット効果: 毒＆ウィザー耐性
 
-tooltip.starsteel.tool=%d 秒ごとに1の耐久力を回復
+tooltip.starsteel.tool=%d 秒ごとに 1 の耐久力を回復
 tooltip.starsteel.armor=移動速度＆跳躍力上昇
 
 #Axes
