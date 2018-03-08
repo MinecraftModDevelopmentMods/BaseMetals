@@ -19,7 +19,7 @@ tooltip.adamantine.armor=被ダメージ減少
 tooltip.aquarium.tool=水棲Mobに %d の追加ダメージ
 tooltip.aquarium.armor=セット効果: 水中呼吸
 
-tooltip.coldiron.tool=炎耐性のあるMobに %d の追加ダメージ
+tooltip.coldiron.tool=火炎耐性のあるMobに %d の追加ダメージ
 tooltip.coldiron.armor=セット効果: 火炎耐性
 
 tooltip.mithril.tool=アンデッドに盲目とウィザー効果
