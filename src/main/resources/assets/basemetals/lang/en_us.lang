@@ -1865,3 +1865,21 @@ tile.basemetals.stone_anvil.veryDamaged.name=Badly Damaged Stone Anvil
 tile.basemetals.adamantine_anvil.intact.name=Adamantine Anvil
 tile.basemetals.adamantine_anvil.slightlyDamaged.name=Slightly Damaged Adamantine Anvil
 tile.basemetals.adamantine_anvil.veryDamaged.name=Badly Damaged Adamantine Anvil
+
+gas.gasAdamantine=Adamantine Slurry
+gas.gasAntimony=Antimony Slurry
+gas.gasBismuth=Bismuth Slurry
+gas.gasColdiron=Cold-Iron Slurry
+gas.gasPlatinum=Platinum Slurry
+gas.gasNickel=Nickel Slurry
+gas.gasStarsteel=Star-Steel Slurry
+gas.gasZinc=Zinc Slurry
+
+gas.cleanGasAdamantine=Clean Adamantine Slurry
+gas.cleanGasAntimony=Clean Antimony Slurry
+gas.cleanGasBismuth=Clean Bismuth Slurry
+gas.cleanGasColdiron=Clean Cold-Iron Slurry
+gas.cleanGasPlatinum=Clean Platinum Slurry
+gas.cleanGasNickel=Clean Nickel Slurry
+gas.cleanGasStarsteel=Clean Star-Steel Slurry
+gas.cleanGasZinc=Clean Zinc Slurry
