@@ -16,7 +16,7 @@ buildscript {
   }
   dependencies {
     classpath "net.minecraftforge.gradle:${project.fg_version}"
-    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
   }
 }
 
@@ -42,9 +42,9 @@ repositories {
 }
 
 dependencies {
-  testCompile('org.junit.jupiter:junit-jupiter-api:5.0.+')
-  testCompile('org.junit.platform:junit-platform-launcher:1.0.+')
-  testRuntime('org.junit.jupiter:junit-jupiter-engine:5.0.+')
+  testCompile('org.junit.jupiter:junit-jupiter-api:5.1.+')
+  testCompile('org.junit.platform:junit-platform-launcher:1.1.+')
+  testRuntime('org.junit.jupiter:junit-jupiter-engine:5.1.+')
   testCompile('org.mockito:mockito-core:2.+')
 }
 
@@ -54,7 +54,7 @@ project.afterEvaluate {
   // configure jacoco to analyze the junitPlatformTest task
   jacoco {
     // this tool version is compatible with
-    toolVersion = '0.7.9'
+    toolVersion = '0.8.0'
     applyTo junitPlatformTestTask
   }
 
@@ -68,9 +68,9 @@ project.afterEvaluate {
 }
 
 junitPlatform {
-  // platformVersion '1.0.3' // optional, defaults to plugin version
+  // platformVersion '1.1.0'
   // logManager 'org.apache.logging.log4j.jul.LogManager'
-  reportsDir file("${project.buildDir}/test-results/junit-platform") // this is the default
+  reportsDir file("${project.buildDir}/test-results/junit-platform")
   // enableStandardTestTask true
   // selectors (optional)
   // filters (optional)
@@ -96,7 +96,7 @@ def display_version = short_version
 
 if (System.getenv().BUILD_NUMBER) {
   version += '.' + System.getenv().BUILD_NUMBER
-  display_version = '.' + System.getenv().BUILD_NUMBER
+  display_version += '.' + System.getenv().BUILD_NUMBER
 }
 
 sourceCompatibility = targetCompatibility = '1.8'
@@ -135,7 +135,11 @@ minecraft {
   runDir = 'run'
   mappings = project.mcp_mappings
 
-  replace '@FINGERPRINT@', project.findProperty('signSHA1')
+  if (project.hasProperty('signSHA1')) {
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+  } else {
+    replace '@FINGERPRINT@', ''
+  }
 
   if (project.hasProperty('coreplugin')) {
     clientJvmArgs += ['-Dfml.coreMods.load', project.coreplugin]
@@ -344,6 +348,7 @@ jar {
       attributes 'FMLCorePluginContainsFMLMod': 'true'
       attributes 'FMLCorePlugin': project.coreplugin
     }
+//  attributes 'FMLAT' : ''
   }
 }
 
@@ -421,7 +426,6 @@ curseforge {
       releaseType = project.cf_release_type
       addGameVersion(project.mc_version)
       mainArtifact(jar) {
-        displayName = "$project.description $display_version"
         relations {
           requiredLibrary 'mmd-orespawn'
           optionalLibrary 'additional-loot-tables'
