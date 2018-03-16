@@ -1,1 +1,0 @@
-Files you place in this directors should never be uploaded to the repo.

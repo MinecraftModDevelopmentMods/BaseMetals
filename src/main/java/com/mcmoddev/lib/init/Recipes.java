@@ -325,32 +325,49 @@ public abstract class Recipes {
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.POWDER)) {
-			if (material.hasOre() || material.hasBlock(Names.ORE)) {
-				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName,
-						material.getItemStack(Names.POWDER, Options.twoDustDrop() ? 2 : 1));
-			}
-			if (material.hasItem(Names.INGOT)) {
-				if (material.getName().equals(MaterialNames.CHARCOAL) || 
-					 	material.getName().equals(MaterialNames.COAL)) {
-					CrusherRecipeRegistry.addNewCrusherRecipe(material.getItemStack(Names.INGOT), 
-							material.getItemStack(Names.POWDER, 1));
-				} else {
-					CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.INGOT + oreDictName,
-							material.getItemStack(Names.POWDER, 1));
-				}
-			}
+			crushOre(material, oreDictName);
+			crushIngot(material, oreDictName);
+			crushBlock(material, oreDictName);
+			doSmallPowder(material, oreDictName);
 			
-			if (material.hasBlock(Names.BLOCK)) {
-				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName,
-						material.getItemStack(Names.POWDER, 9));
-			}
-			if ((material.hasItem(Names.SMALLPOWDER)) && (material.hasItem(Names.NUGGET))) {
-				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName,
-						material.getItemStack(Names.SMALLPOWDER, 1));
-			}
 		}
 	}
 
+	private static void crushOre(@Nonnull final MMDMaterial material, @Nonnull final String oreDictName) {
+		if (material.hasOre() || material.hasBlock(Names.ORE)) {
+			CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName,
+					material.getItemStack(Names.POWDER, Options.twoDustDrop() ? 2 : 1));
+		}
+	}
+
+	private static void crushIngot(@Nonnull final MMDMaterial material, @Nonnull final String oreDictName) {
+		if (material.hasItem(Names.INGOT)) {
+			if (material.getName().equals(MaterialNames.CHARCOAL) || 
+				 	material.getName().equals(MaterialNames.COAL)) {
+				CrusherRecipeRegistry.addNewCrusherRecipe(material.getItemStack(Names.INGOT), 
+						material.getItemStack(Names.POWDER, 1));
+			} else {
+				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.INGOT + oreDictName,
+						material.getItemStack(Names.POWDER, 1));
+			}
+		}
+	}
+	
+	private static void crushBlock(@Nonnull final MMDMaterial material, @Nonnull final String oreDictName) {
+		if (material.hasBlock(Names.BLOCK)) {
+			CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName,
+					material.getItemStack(Names.POWDER, 9));
+		}
+	}
+	
+	private static void doSmallPowder(@Nonnull final MMDMaterial material, @Nonnull final String oreDictName) {
+		if ((material.hasItem(Names.SMALLPOWDER)) && (material.hasItem(Names.NUGGET))) {
+			CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName,
+					material.getItemStack(Names.SMALLPOWDER, 1));
+		}
+
+	}
+	
 	private static void generateBaseTools(@Nonnull final MMDMaterial material) {
 		if (isMMDItem(material, Names.SHEARS)) {
 			GameRegistry.addSmelting(material.getItemStack(Names.SHEARS),

@@ -19,7 +19,6 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -395,6 +394,6 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	}
 	
 	private static boolean isThisMod(ItemStack it) {
-		return it.getItem().getRegistryName().getResourceDomain().toString().equalsIgnoreCase(BaseMetals.MODID);
+		return it.getItem().getRegistryName().getResourceDomain().equalsIgnoreCase(BaseMetals.MODID);
 	}
 }
