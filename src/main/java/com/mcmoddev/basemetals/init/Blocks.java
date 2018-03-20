@@ -232,7 +232,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	private static void regBlocks(IForgeRegistry<Block> registry, ImmutableList<Block> blocks) {
 		blocks.stream()
-		.filter(block -> block.getRegistryName().getResourceDomain().toString().equals(BaseMetals.MODID))
+		.filter(block -> block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
 		.forEach(registry::register);
 	}
 }
