@@ -197,6 +197,7 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			case MaterialNames.STARSTEEL:
 				return 10.0d;
 			case MaterialNames.INVAR:
+			case MaterialNames.MITHRIL:
 				return 9.0d;
 			case MaterialNames.STEEL:
 			case MaterialNames.BRONZE:
@@ -219,7 +220,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 				return 3.0d;
 			case MaterialNames.ANTIMONY:
 			case MaterialNames.BISMUTH:
-			case MaterialNames.MITHRIL:
 			case MaterialNames.LEAD:
 			case MaterialNames.MERCURY:
 			case MaterialNames.PEWTER:
