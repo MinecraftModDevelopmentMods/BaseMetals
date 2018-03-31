@@ -195,7 +195,7 @@ public class BlockMetalPlate extends net.minecraft.block.Block implements IOreDi
                                         final AxisAlignedBB box, final List<AxisAlignedBB> collisionBoxList,
                                         final Entity entity) {
 
-        final EnumFacing orientation = (EnumFacing) world.getBlockState(coord).getValue(FACING);
+        final EnumFacing orientation = (EnumFacing) bs.getValue(FACING);
         super.addCollisionBoxToList(coord, box, collisionBoxList, BOXES[orientation.ordinal()]);
 	}
 	@Override
