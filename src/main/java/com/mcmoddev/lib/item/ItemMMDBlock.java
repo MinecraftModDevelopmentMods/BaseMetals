@@ -9,7 +9,7 @@ import net.minecraft.item.ItemBlock;
 public class ItemMMDBlock extends ItemBlock implements IMMDObject {
 
 	private MMDMaterial mmdMaterial;
-	
+
 	public ItemMMDBlock(final MMDMaterial material, final Block block) {
 		super(block);
 		this.mmdMaterial = material;

@@ -8,7 +8,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class TAIGAItems extends Items {
 
-	public static void init(List<MMDMaterial> materials) {
+	public static void init(final List<MMDMaterial> materials) {
 		for (final MMDMaterial material : materials) {
 			// TODO: This probably shouldn't use the BMe tabs
 

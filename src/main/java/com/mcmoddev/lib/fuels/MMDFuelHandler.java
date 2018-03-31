@@ -10,7 +10,7 @@ class MMDFuelHandler implements IFuelHandler {
 	}
 
 	@Override
-	public int getBurnTime(ItemStack fuel) {
+	public int getBurnTime(final ItemStack fuel) {
 		if (FuelRegistry.getFuels().containsKey(fuel.getItem())) {
 			return FuelRegistry.getFuels().get(fuel.getItem());
 		}

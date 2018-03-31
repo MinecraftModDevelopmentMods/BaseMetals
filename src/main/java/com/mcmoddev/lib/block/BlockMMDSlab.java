@@ -19,13 +19,14 @@ import net.minecraft.world.World;
 
 public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDObject {
 
-	public static final PropertyEnum<BlockMMDSlab.Variant> VARIANT = PropertyEnum.<BlockMMDSlab.Variant>create("variant", BlockMMDSlab.Variant.class);
+	public static final PropertyEnum<BlockMMDSlab.Variant> VARIANT = PropertyEnum.<BlockMMDSlab.Variant>create(
+			"variant", BlockMMDSlab.Variant.class);
 	private final MMDMaterial material;
 
 	/**
 	 *
 	 * @param material
-	 *			The material the slab is made from
+	 *            The material the slab is made from
 	 */
 	public BlockMMDSlab(final MMDMaterial material) {
 		super(material.getVanillaMaterial());
@@ -33,7 +34,8 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 
 		IBlockState iblockstate = this.blockState.getBaseState();
 
@@ -63,15 +65,18 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 
 	/**
 	 * Convert the given metadata into a BlockState for this Block.
+	 *
 	 * @deprecated
 	 */
 	@Override
 	@Deprecated
 	public IBlockState getStateFromMeta(final int meta) {
-		IBlockState iblockstate = this.getDefaultState().withProperty(VARIANT, BlockMMDSlab.Variant.DEFAULT);
+		IBlockState iblockstate = this.getDefaultState().withProperty(VARIANT,
+				BlockMMDSlab.Variant.DEFAULT);
 
 		if (!this.isDouble()) {
-			iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
+			iblockstate = iblockstate.withProperty(HALF,
+					(meta & 8) == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
 		}
 
 		return iblockstate;
@@ -93,7 +98,8 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return this.isDouble() ? new BlockStateContainer(this, (IProperty[]) new IProperty[] { VARIANT }) : new BlockStateContainer(this, (IProperty[]) new IProperty[] { HALF, VARIANT });
+		return this.isDouble() ? new BlockStateContainer(this, new IProperty[] { VARIANT })
+				: new BlockStateContainer(this, new IProperty[] { HALF, VARIANT });
 	}
 
 	/**
@@ -120,6 +126,7 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 			super(material);
 		}
 
+		@Override
 		public boolean isDouble() {
 			return true;
 		}
@@ -131,6 +138,7 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 			super(material);
 		}
 
+		@Override
 		public boolean isDouble() {
 			return false;
 		}

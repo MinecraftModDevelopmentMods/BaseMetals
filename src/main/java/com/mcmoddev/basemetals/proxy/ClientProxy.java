@@ -29,21 +29,26 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class ClientProxy extends CommonProxy {
 
 	@Override
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(final FMLPreInitializationEvent event) {
 		super.preInit(event);
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class, RenderCustomArrow::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityCustomBolt.class, RenderCustomBolt::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class,
+				RenderCustomArrow::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCustomBolt.class,
+				RenderCustomBolt::new);
 
 		for (final String name : Items.getItemRegistry().keySet()) {
-			if (!name.endsWith(Names.ANVIL.toString()))
+			if (!name.endsWith(Names.ANVIL.toString())) {
 				RegistrationHelper.registerItemRender(name);
-			else {
-				final String[] names = new String[] { "intact", "slightly_damaged", "very_damaged" };
+			} else {
+				final String[] names = new String[] { "intact", "slightly_damaged",
+						"very_damaged" };
 				final Item item = Items.getItemByName(name);
 				for (int i = 0; i < 3; i++) {
-					final ResourceLocation rl = new ResourceLocation(BaseMetals.MODID, String.format("%s_%s", name, names[i]));
-					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(rl, "inventory"));
+					final ResourceLocation rl = new ResourceLocation(BaseMetals.MODID,
+							String.format("%s_%s", name, names[i]));
+					ModelLoader.setCustomModelResourceLocation(item, i,
+							new ModelResourceLocation(rl, "inventory"));
 				}
 			}
 		}
@@ -58,7 +63,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void init(FMLInitializationEvent event) {
+	public void init(final FMLInitializationEvent event) {
 		super.init(event);
 		if (Loader.isModLoaded("waila")) {
 			com.mcmoddev.lib.waila.Waila.init();

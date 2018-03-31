@@ -19,8 +19,11 @@ public class TraitSparkly extends AbstractTrait {
 	}
 
 	@Override
-	public void onUpdate(@Nonnull final ItemStack tool, @Nonnull final World world, @Nonnull final Entity entity, @Nonnull final int itemSlot, @Nonnull final boolean isHeld) {
-		if (!world.isRemote && isHeld && tool.isItemDamaged() && ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
+	public void onUpdate(@Nonnull final ItemStack tool, @Nonnull final World world,
+			@Nonnull final Entity entity, @Nonnull final int itemSlot,
+			@Nonnull final boolean isHeld) {
+		if (!world.isRemote && isHeld && tool.isItemDamaged()
+				&& ((world.getTotalWorldTime() % REGEN_INTERVAL) == 0)) {
 			ToolHelper.healTool(tool, 1, (EntityLivingBase) entity);
 		}
 	}

@@ -7,6 +7,7 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -18,7 +19,7 @@ import net.minecraft.block.Block;
  * @author Jasmine Iwanek
  *
  */
-public class Blocks extends com.mcmoddev.lib.init.Blocks {
+public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	public static Block humanDetector;
 
@@ -32,11 +33,13 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 	public static void init() {
 		registerVanilla();
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM,
-				MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.MITHRIL, MaterialNames.NICKEL,
-				MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.SILVER, MaterialNames.STEEL,
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
+				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
+				MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM,
+				MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.MITHRIL,
+				MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
+				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
 				MaterialNames.TIN, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial).forEach(materialName -> {
@@ -58,65 +61,26 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 			create(Names.WALL, material);
 		});
 
-		createStarSteel();
 		createMercury();
 		createAnvils();
 
-		if (humanDetector != null) {
-			humanDetector = addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
-		}
+		humanDetector = addBlock(new BlockHumanDetector(), "human_detector",
+				ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
 	}
 
 	private static void createAnvils() {
 		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
-				.filter(Materials::hasMaterial).forEach(name -> create(Names.ANVIL, Materials.getMaterialByName(name)));
-	}
-
-	private static void createStarSteel() {
-		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
-			final MMDMaterial starsteel = Materials.getMaterialByName(MaterialNames.STARSTEEL);
-
-			create(Names.BLOCK, starsteel);
-			create(Names.PLATE, starsteel);
-			create(Names.ORE, starsteel);
-			create(Names.BARS, starsteel);
-			create(Names.DOOR, starsteel);
-			create(Names.TRAPDOOR, starsteel);
-
-			create(Names.BUTTON, starsteel);
-			create(Names.SLAB, starsteel);
-			create(Names.DOUBLE_SLAB, starsteel);
-			create(Names.LEVER, starsteel);
-			create(Names.PRESSURE_PLATE, starsteel);
-			create(Names.STAIRS, starsteel);
-			create(Names.WALL, starsteel);
-
-			if (starsteel.hasBlock(Names.BLOCK))
-				starsteel.getBlock(Names.BLOCK).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.PLATE))
-				starsteel.getBlock(Names.PLATE).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.ORE))
-				starsteel.getBlock(Names.ORE).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.BARS))
-				starsteel.getBlock(Names.BARS).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.DOOR))
-				starsteel.getBlock(Names.DOOR).setLightLevel(0.5f);
-
-			if (starsteel.hasBlock(Names.TRAPDOOR))
-				starsteel.getBlock(Names.TRAPDOOR).setLightLevel(0.5f);
-		}
+				.filter(Materials::hasMaterial)
+				.forEach(name -> create(Names.ANVIL, Materials.getMaterialByName(name)));
 	}
 
 	private static void createMercury() {
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 			create(Names.ORE, mercury);
-			if (mercury.hasBlock(Names.ORE))
+			if (mercury.hasBlock(Names.ORE)) {
 				mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
+			}
 		}
 	}
 
@@ -146,14 +110,16 @@ public class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		gold.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
 		gold.addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
-		gold.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
+		gold.addNewBlock(Names.PRESSURE_PLATE,
+				net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
 
 		iron.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
 		iron.addNewBlock(Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
 		iron.addNewBlock(Names.BARS, net.minecraft.init.Blocks.IRON_BARS);
 		iron.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.IRON_DOOR);
 		iron.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR);
-		iron.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+		iron.addNewBlock(Names.PRESSURE_PLATE,
+				net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
 
 		lapis.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.LAPIS_BLOCK);
 		lapis.addNewBlock(Names.ORE, net.minecraft.init.Blocks.LAPIS_ORE);

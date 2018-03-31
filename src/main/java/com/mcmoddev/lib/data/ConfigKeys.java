@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.data;
 
-
 public class ConfigKeys {
 
 	public static final String BASICS = "Basics";
@@ -32,6 +31,7 @@ public class ConfigKeys {
 	public static final String FLOWERPOT = "flowerpot";
 	public static final String LADDER = "ladder";
 	public static final String TRIPWIRE_HOOK = "tripwire";
+	public static final String SCYTHE = "scythe";
 
 	private ConfigKeys() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);

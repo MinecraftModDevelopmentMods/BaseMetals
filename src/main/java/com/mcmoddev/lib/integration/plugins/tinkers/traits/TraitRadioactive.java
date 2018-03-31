@@ -23,11 +23,13 @@ public class TraitRadioactive extends AbstractTrait {
 	}
 
 	@Override
-	public void onUpdate(@Nonnull final ItemStack tool, @Nonnull final World world, @Nonnull final Entity entity, @Nonnull final int itemSlot, @Nonnull final boolean isSelected) {
-		if (!ToolHelper.isBroken(tool) && entity instanceof EntityPlayer) {
-			EntityLivingBase player = (EntityPlayer) entity;
-			NBTTagCompound root = TagUtil.getTagSafe(tool);
-			NBTTagCompound extra = TagUtil.getExtraTag(root);
+	public void onUpdate(@Nonnull final ItemStack tool, @Nonnull final World world,
+			@Nonnull final Entity entity, @Nonnull final int itemSlot,
+			@Nonnull final boolean isSelected) {
+		if (!ToolHelper.isBroken(tool) && (entity instanceof EntityPlayer)) {
+			final EntityLivingBase player = (EntityPlayer) entity;
+			final NBTTagCompound root = TagUtil.getTagSafe(tool);
+			final NBTTagCompound extra = TagUtil.getExtraTag(root);
 			if (!extra.getBoolean("plated")) {
 				if ((new Random()).nextInt(100) >= 50) {
 					player.addPotionEffect(new PotionEffect(MobEffects.POISON, 10, 1));

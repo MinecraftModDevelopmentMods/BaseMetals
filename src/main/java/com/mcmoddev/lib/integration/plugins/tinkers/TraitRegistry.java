@@ -41,31 +41,32 @@ public class TraitRegistry {
 	}
 
 	public static void initMetalsTraits() {
-		final Field[] fields = com.mcmoddev.lib.integration.plugins.tinkers.traits.MMDTraits.class.getDeclaredFields();
+		final Field[] fields = com.mcmoddev.lib.integration.plugins.tinkers.traits.MMDTraits.class
+				.getDeclaredFields();
 		registerFieldArray(fields);
 	}
 
 	/*
-	public static void initTAIGATraits() {
-		final Field[] fields = com.sosnitzka.taiga.MaterialTraits.class.getDeclaredFields();
-		registerFieldArray(fields);
-	}
-	*/
+	 * public static void initTAIGATraits() { final Field[] fields =
+	 * com.sosnitzka.taiga.MaterialTraits.class.getDeclaredFields(); registerFieldArray(fields); }
+	 */
 
 	private static void registerFieldArray(@Nonnull final Field[] regList) {
 		for (final Field f : regList) {
-			Class<?> clazz = f.getType();
+			final Class<?> clazz = f.getType();
 			try {
 				registeredTraits.put(f.getName(), (ITrait) f.get(clazz));
 			} catch (final Exception ex) {
-				BaseMetals.logger.error("tried to register trait " + f.getName() + ", caught exception", ex);
+				BaseMetals.logger
+						.error("tried to register trait " + f.getName() + ", caught exception", ex);
 			}
 		}
 	}
 
 	public static void dumpRegistry() {
 		for (final Entry<String, ITrait> e : registeredTraits.entrySet()) {
-			final String t = String.format("BaseMetals-TCon> Trait: %s - class %s", e.getKey(), e.getValue().getClass().getName());
+			final String t = String.format("BaseMetals-TCon> Trait: %s - class %s", e.getKey(),
+					e.getValue().getClass().getName());
 			BaseMetals.logger.info(t);
 		}
 	}

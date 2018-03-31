@@ -20,7 +20,7 @@ public class Platform {
 	}
 
 	/**
-	 * Check if the code is running on the server instance
+	 * Check if the code is running on the server instance.
 	 *
 	 * @return True if running on the server
 	 */
@@ -29,7 +29,7 @@ public class Platform {
 	}
 
 	/**
-	 * Check if the code is running on the client instance
+	 * Check if the code is running on the client instance.
 	 *
 	 * @return True if running on the client
 	 */
@@ -38,7 +38,7 @@ public class Platform {
 	}
 
 	/**
-	 * Compare two ItemStacks to see if they are the same
+	 * Compare two ItemStacks to see if they are the same.
 	 *
 	 * @param itemStack1
 	 *            ItemStack 1 to compare
@@ -47,12 +47,14 @@ public class Platform {
 	 *
 	 * @return True is they are the same
 	 */
-	public static boolean isSameItem(@Nonnull ItemStack itemStack1, @Nonnull ItemStack itemStack2) {
-		return ((!itemStack1.isEmpty()) && (!itemStack2.isEmpty()) && (itemStack1.isItemEqual(itemStack2)));
+	public static boolean isSameItem(@Nonnull final ItemStack itemStack1,
+			@Nonnull final ItemStack itemStack2) {
+		return ((!itemStack1.isEmpty()) && (!itemStack2.isEmpty())
+				&& (itemStack1.isItemEqual(itemStack2)));
 	}
 
 	/**
-	 * Rotate EnumFacing around clockwise
+	 * Rotate EnumFacing around clockwise.
 	 *
 	 * @param forward
 	 *            EnumFacing to rotate
@@ -75,7 +77,7 @@ public class Platform {
 	}
 
 	/**
-	 * Rotate EnumFacing around anti-clockwise
+	 * Rotate EnumFacing around anti-clockwise.
 	 *
 	 * @param forward
 	 *            EnumFacing to rotate
@@ -98,40 +100,47 @@ public class Platform {
 	}
 
 	/**
-	 * Get PropertyString from BlockState properties
+	 * Get PropertyString from BlockState properties.
 	 *
-	 * @param values Values
-	 * @param extrasArgs Extra Args
+	 * @param values
+	 *            Values
+	 * @param extrasArgs
+	 *            Extra Args
 	 *
 	 * @return PropertyString
 	 */
-	public static String getPropertyString(Map<IProperty<?>, Comparable<?>> values, String... extrasArgs) {
+	public static String getPropertyString(final Map<IProperty<?>, Comparable<?>> values,
+			final String... extrasArgs) {
 		final StringBuilder stringbuilder = new StringBuilder();
 		for (final Map.Entry<IProperty<?>, Comparable<?>> entry : values.entrySet()) {
-			if (stringbuilder.length() != 0)
+			if (stringbuilder.length() != 0) {
 				stringbuilder.append(",");
+			}
 			final IProperty<?> iproperty = entry.getKey();
 			stringbuilder.append(iproperty.getName());
 			stringbuilder.append("=");
 			stringbuilder.append(getPropertyName(iproperty, (Comparable<?>) entry.getValue()));
 		}
-		if (stringbuilder.length() == 0)
+		if (stringbuilder.length() == 0) {
 			stringbuilder.append("inventory");
+		}
 		for (final String args : extrasArgs) {
-			if (stringbuilder.length() != 0)
+			if (stringbuilder.length() != 0) {
 				stringbuilder.append(",");
+			}
 			stringbuilder.append(args);
 		}
 		return stringbuilder.toString();
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T extends Comparable<T>> String getPropertyName(IProperty<T> property, Comparable<?> comparable) {
+	private static <T extends Comparable<T>> String getPropertyName(final IProperty<T> property,
+			final Comparable<?> comparable) {
 		return property.getName((T) comparable);
 	}
 
 	/**
-	 * Check if the code is running on a dev-environment instance
+	 * Check if the code is running on a dev-environment instance.
 	 *
 	 * @return True if running in a dev-environment
 	 */
@@ -139,8 +148,9 @@ public class Platform {
 		return devEnv;
 	}
 
-	public static void setDev(boolean dev) {
-		if (!(devEnv))
+	public static void setDev(final boolean dev) {
+		if (!(devEnv)) {
 			devEnv = dev;
+		}
 	}
 }

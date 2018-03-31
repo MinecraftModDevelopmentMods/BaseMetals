@@ -11,7 +11,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
  */
 public class BlockMMDStairs extends net.minecraft.block.BlockStairs implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *
@@ -24,7 +24,8 @@ public class BlockMMDStairs extends net.minecraft.block.BlockStairs implements I
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

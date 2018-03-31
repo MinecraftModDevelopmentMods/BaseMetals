@@ -15,7 +15,10 @@ public class TraitHeavy extends AbstractTrait {
 	}
 
 	@Override
-	public float knockBack(@Nonnull final ItemStack tool, @Nonnull final EntityLivingBase player, @Nonnull final EntityLivingBase target, @Nonnull final float damage, @Nonnull final float knockback, @Nonnull final float newKnockback, @Nonnull final boolean isCritical) {
+	public float knockBack(@Nonnull final ItemStack tool, @Nonnull final EntityLivingBase player,
+			@Nonnull final EntityLivingBase target, @Nonnull final float damage,
+			@Nonnull final float knockback, @Nonnull final float newKnockback,
+			@Nonnull final boolean isCritical) {
 		return newKnockback + ToolHelper.getAttackStat(tool);
 	}
 }

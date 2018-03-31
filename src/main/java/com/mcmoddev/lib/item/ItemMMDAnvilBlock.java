@@ -6,7 +6,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class ItemMMDAnvilBlock extends net.minecraft.item.ItemAnvilBlock implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	public ItemMMDAnvilBlock(final MMDMaterial material) {
 		super(material.getBlock(Names.ANVIL));
@@ -22,5 +22,5 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemAnvilBlock impleme
 	@Override
 	public int getMetadata(final int damage) {
 		return damage << 2;
-    }
+	}
 }

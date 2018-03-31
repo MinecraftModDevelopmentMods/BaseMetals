@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
-import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
@@ -32,13 +32,15 @@ public class FallbackGeneratorData {
 		// blank
 	}
 
-	public void addMaterial(@Nonnull final String materialName, @Nonnull final String blockName, @Nullable final Integer dimension) {
+	public void addMaterial(@Nonnull final String materialName, @Nonnull final String blockName,
+			@Nullable final Integer dimension) {
 		final MMDMaterial mat = Materials.getMaterialByName(materialName);
-		final int targetDim = dimension!=null?dimension:Integer.MIN_VALUE;
-		final Map<MMDMaterial, List<String>> blockMap = materials.getOrDefault(targetDim, new HashMap<MMDMaterial,List<String>>());
+		final int targetDim = dimension != null ? dimension : Integer.MIN_VALUE;
+		final Map<MMDMaterial, List<String>> blockMap = materials.getOrDefault(targetDim,
+				new HashMap<MMDMaterial, List<String>>());
 		final List<String> blocks = blockMap.getOrDefault(mat, new ArrayList<>());
 
-		if( !blocks.contains(blockName) ) {
+		if (!blocks.contains(blockName)) {
 			blocks.add(blockName);
 		}
 
@@ -47,10 +49,13 @@ public class FallbackGeneratorData {
 	}
 
 	static class StonePredicate implements Predicate<IBlockState> {
+
 		private StonePredicate() {
 		}
-		public boolean apply(IBlockState comp) {
-			if (comp != null && comp.getBlock() == Blocks.STONE) {
+
+		@Override
+		public boolean apply(final IBlockState comp) {
+			if ((comp != null) && (comp.getBlock() == Blocks.STONE)) {
 				final BlockStone.EnumType block = comp.getValue(BlockStone.VARIANT);
 				return block.isNatural();
 			}
@@ -59,9 +64,12 @@ public class FallbackGeneratorData {
 	}
 
 	static class NetherPredicate implements Predicate<IBlockState> {
+
 		private NetherPredicate() {
 		}
-		public boolean apply(IBlockState comp) {
+
+		@Override
+		public boolean apply(final IBlockState comp) {
 			if (comp != null) {
 				final Block b = comp.getBlock();
 				return b.equals(Blocks.NETHERRACK);
@@ -71,9 +79,12 @@ public class FallbackGeneratorData {
 	}
 
 	static class EndPredicate implements Predicate<IBlockState> {
+
 		private EndPredicate() {
 		}
-		public boolean apply(IBlockState comp) {
+
+		@Override
+		public boolean apply(final IBlockState comp) {
 			if (comp != null) {
 				final Block b = comp.getBlock();
 				return b.equals(Blocks.END_STONE);
@@ -85,31 +96,35 @@ public class FallbackGeneratorData {
 	public void setup() {
 		for (final Entry<Integer, Map<MMDMaterial, List<String>>> matMap : materials.entrySet()) {
 			final Map<MMDMaterial, List<String>> mats = matMap.getValue();
-			final List<WorldGenMinable> spawnList = spawns.getOrDefault(matMap.getKey(), new ArrayList<>());
-			final Predicate<IBlockState> pred = getPredicateForDimension(matMap.getKey());
+			final List<WorldGenMinable> spawnList = spawns.getOrDefault(matMap.getKey(),
+					new ArrayList<>());
+			final Predicate<IBlockState> pred = this.getPredicateForDimension(matMap.getKey());
 
-			for (final Entry<MMDMaterial, List<String>> matList : mats.entrySet() ) {
-				MMDMaterial mat = matList.getKey();
-				matList.getValue().stream().forEach(blockName -> spawnList.add(new WorldGenMinable(mat.getBlock(blockName).getDefaultState(),mat.getSpawnSize()>0?mat.getSpawnSize():8,pred)) );
+			for (final Entry<MMDMaterial, List<String>> matList : mats.entrySet()) {
+				final MMDMaterial mat = matList.getKey();
+				matList.getValue().stream()
+						.forEach(blockName -> spawnList
+								.add(new WorldGenMinable(mat.getBlock(blockName).getDefaultState(),
+										mat.getSpawnSize() > 0 ? mat.getSpawnSize() : 8, pred)));
 			}
 			spawns.put(matMap.getKey(), spawnList);
 		}
 	}
 
-	private Predicate<IBlockState> getPredicateForDimension(Integer key) {
-		switch(key) {
-		case -1:
-			return new NetherPredicate();
-		case 1:
-			return new EndPredicate();
-		case 0:
-		case Integer.MIN_VALUE:
-		default:
-			return new StonePredicate();
+	private Predicate<IBlockState> getPredicateForDimension(final Integer key) {
+		switch (key) {
+			case -1:
+				return new NetherPredicate();
+			case 1:
+				return new EndPredicate();
+			case 0:
+			case Integer.MIN_VALUE:
+			default:
+				return new StonePredicate();
 		}
 	}
 
-	public List<WorldGenMinable> getSpawnsForDimension(int dimension) {
+	public List<WorldGenMinable> getSpawnsForDimension(final int dimension) {
 		return ImmutableList.copyOf(spawns.getOrDefault(dimension, Collections.emptyList()));
 	}
 

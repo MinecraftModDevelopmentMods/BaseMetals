@@ -15,7 +15,7 @@ import net.minecraft.item.Item;
  * @author Jasmine Iwanek
  *
  */
-public class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
+public final class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 
 	private VillagerTrades() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);

@@ -15,12 +15,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /**
- * Metal Block
+ * Block.
  */
 public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObject {
 
 	private final MMDMaterial material;
-	private final boolean beaconBase;
 
 	/**
 	 *
@@ -28,35 +27,26 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 *            The material the block is made from
 	 */
 	public BlockMMDBlock(final MMDMaterial material) {
-		this(material, false);
-	}
-
-	public BlockMMDBlock(final MMDMaterial material, final boolean glows) {
-		this(material, glows, false);
-	}
-
-	public BlockMMDBlock(final MMDMaterial material, final boolean glows, final boolean isBeacon) {
 		super(material.getVanillaMaterial());
 		this.material = material;
 
 		this.setSoundType(this.material.getSoundType());
 		this.fullBlock = true;
-		this.lightOpacity = 255;
+		this.setLightOpacity(255);
+//		this.lightOpacity = 255;
 		this.translucent = false;
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
-		this.beaconBase = isBeacon;
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 		// Additional
 		this.fullBlock = true;
-
-		if (glows)
-			this.setLightLevel(0.5f);
 	}
 
 	@Override
-	public boolean isBeaconBase(final IBlockAccess worldObj, final BlockPos pos, final BlockPos beacon) {
-		return beaconBase;
+	public boolean isBeaconBase(final IBlockAccess worldObj, final BlockPos pos,
+			final BlockPos beacon) {
+		return this.material.isBeaconBase();
 	}
 
 	@Override
@@ -65,7 +55,8 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		// achievement
 		if ((Options.enableAchievements()) && (placer instanceof EntityPlayer)) {
-			((EntityPlayer) placer).addStat(Achievements.getAchievementByName(AchievementNames.BLOCKTASTIC), 1);
+			((EntityPlayer) placer)
+					.addStat(Achievements.getAchievementByName(AchievementNames.BLOCKTASTIC), 1);
 		}
 	}
 

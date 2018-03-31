@@ -11,7 +11,8 @@ import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
-public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase implements IIntegration {
+public final class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase
+		implements IIntegration {
 
 	@Override
 	public void init() {
@@ -19,15 +20,16 @@ public class Mekanism extends com.mcmoddev.lib.integration.plugins.MekanismBase 
 			return;
 		}
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL, MaterialNames.ZINC);
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+				MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
 					addGassesForMaterial(materialName);
-				addOreMultiplicationRecipes(materialName);
+					addOreMultiplicationRecipes(materialName);
 				});
 	}
 }

@@ -5,8 +5,9 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class LeggingsRepairRecipe extends RepairRecipeBase {
 
-	public LeggingsRepairRecipe(MMDMaterial mat) {
-		super(mat, Names.LEGGINGS);
-//		super(mat, Names.LEGGINGS.toString(), mat.getName() + "_" + Names.LEGGINGS, Oredicts.PLATE + mat.getCapitalizedName());
+	public LeggingsRepairRecipe(final MMDMaterial material) {
+		super(material, Names.LEGGINGS);
+		// super(material, Names.LEGGINGS.toString(), material.getName() + "_" + Names.LEGGINGS,
+		// Oredicts.PLATE + material.getCapitalizedName());
 	}
 }

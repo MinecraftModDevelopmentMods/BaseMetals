@@ -15,7 +15,7 @@ import net.minecraft.world.World;
  */
 public class ItemMMDArrow extends net.minecraft.item.ItemArrow implements IMMDObject {
 
-	protected final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *
@@ -36,7 +36,8 @@ public class ItemMMDArrow extends net.minecraft.item.ItemArrow implements IMMDOb
 	 *            The shooter
 	 * @return The Custom Arrow
 	 */
-	public EntityCustomArrow createArrow(final World worldIn, final ItemStack stack, final EntityPlayer shooter) {
+	public EntityCustomArrow createArrow(final World worldIn, final ItemStack stack,
+			final EntityPlayer shooter) {
 		return new EntityCustomArrow(worldIn, stack, shooter);
 	}
 

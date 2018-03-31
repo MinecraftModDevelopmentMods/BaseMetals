@@ -42,7 +42,7 @@ public class FuelRegistry {
 		return Collections.unmodifiableMap(fuels);
 	}
 
-	public static void addFuel(String oreDict, int burnTime) {
+	public static void addFuel(final String oreDict, final int burnTime) {
 		if (!fuelDicts.containsKey(oreDict)) {
 			fuelDicts.put(oreDict, burnTime);
 		}

@@ -17,11 +17,12 @@ public class TraitBrittle extends AbstractTrait {
 	}
 
 	@Override
-	public void beforeBlockBreak(@Nonnull final ItemStack tool, @Nonnull final BlockEvent.BreakEvent event) {
-		Block block = event.getState().getBlock();
+	public void beforeBlockBreak(@Nonnull final ItemStack tool,
+			@Nonnull final BlockEvent.BreakEvent event) {
+		final Block block = event.getState().getBlock();
 		if (block.getDefaultState().getMaterial() == Material.ROCK) {
-			Integer durability = ToolHelper.getCurrentDurability(tool);
-			Integer damageDone = random.nextInt(Math.min(5, durability - 1));
+			final Integer durability = ToolHelper.getCurrentDurability(tool);
+			final Integer damageDone = random.nextInt(Math.min(5, durability - 1));
 			ToolHelper.damageTool(tool, damageDone.intValue(), event.getPlayer());
 		}
 	}

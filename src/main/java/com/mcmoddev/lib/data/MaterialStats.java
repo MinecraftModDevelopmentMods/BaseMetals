@@ -45,7 +45,7 @@ public enum MaterialStats implements IStringSerializable {
 
 	@Override
 	public String getName() {
-		return name().toLowerCase();
+		return this.name().toLowerCase();
 	}
 
 	public static MaterialStats getType(@Nonnull int ordinal) {
@@ -57,6 +57,6 @@ public enum MaterialStats implements IStringSerializable {
 
 	@Override
 	public String toString() {
-		return getName();
+		return this.getName();
 	}
 }

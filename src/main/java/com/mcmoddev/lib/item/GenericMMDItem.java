@@ -4,8 +4,8 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
- * version of Item that stores a material
- * 
+ * version of Item that stores a material.
+ *
  * @author DrCyano
  *
  */
