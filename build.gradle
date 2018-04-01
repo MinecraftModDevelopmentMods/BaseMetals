@@ -16,7 +16,7 @@ buildscript {
   }
   dependencies {
     classpath "net.minecraftforge.gradle:${project.fg_version}"
-    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.+'
   }
 }
 
@@ -42,9 +42,9 @@ repositories {
 }
 
 dependencies {
-  testCompile('org.junit.jupiter:junit-jupiter-api:5.0.+')
-  testCompile('org.junit.platform:junit-platform-launcher:1.0.+')
-  testRuntime('org.junit.jupiter:junit-jupiter-engine:5.0.+')
+  testCompile('org.junit.jupiter:junit-jupiter-api:5.1.+')
+  testCompile('org.junit.platform:junit-platform-launcher:1.1.+')
+  testRuntime('org.junit.jupiter:junit-jupiter-engine:5.1.+')
   testCompile('org.mockito:mockito-core:2.+')
 }
 
@@ -54,7 +54,7 @@ project.afterEvaluate {
   // configure jacoco to analyze the junitPlatformTest task
   jacoco {
     // this tool version is compatible with
-    toolVersion = '0.7.9'
+    toolVersion = '0.8.0'
     applyTo junitPlatformTestTask
   }
 
@@ -68,9 +68,9 @@ project.afterEvaluate {
 }
 
 junitPlatform {
-  // platformVersion '1.0.3' // optional, defaults to plugin version
+  // platformVersion '1.1.0'
   // logManager 'org.apache.logging.log4j.jul.LogManager'
-  reportsDir file("${project.buildDir}/test-results/junit-platform") // this is the default
+  reportsDir file("${project.buildDir}/test-results/junit-platform")
   // enableStandardTestTask true
   // selectors (optional)
   // filters (optional)
@@ -96,7 +96,7 @@ def display_version = short_version
 
 if (System.getenv().BUILD_NUMBER) {
   version += '.' + System.getenv().BUILD_NUMBER
-  display_version = '.' + System.getenv().BUILD_NUMBER
+  display_version += '.' + System.getenv().BUILD_NUMBER
 }
 
 sourceCompatibility = targetCompatibility = '1.8'
@@ -131,46 +131,50 @@ if (secretFile.exists()) {
 }
 
 minecraft {
-  version = "${project.forge_mc_version}-${project.forge_version}"
+  version = project.forge_mc_version + '-' + project.forge_version
   runDir = 'run'
-  mappings = "${project.mcp_mappings}"
+  mappings = project.mcp_mappings
 
-  replace '@FINGERPRINT@', project.findProperty('signSHA1')
+  if (project.hasProperty('signSHA1')) {
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+  } else {
+    replace '@FINGERPRINT@', ''
+  }
 
   if (project.hasProperty('coreplugin')) {
-    clientJvmArgs += ['-Dfml.coreMods.load', project.coreplugin]
-    serverJvmArgs += ['-Dfml.coreMods.load', project.coreplugin]
+    clientJvmArgs += '-Dfml.coreMods.load=' + project.coreplugin
+    serverJvmArgs += '-Dfml.coreMods.load=' + project.coreplugin
   }
 
   if (project.hasProperty('mc_username')) {
-    clientRunArgs += ['--username', "${project.mc_username}"]
+    clientRunArgs += ['--username', project.mc_username]
     if (project.hasProperty('mc_password')) {
-      clientRunArgs += ['--password=', "${project.mc_password}"]
+      clientRunArgs += ['--password', project.mc_password]
     }
   }
   if (project.hasProperty('mc_uuid')) {
-    clientRunArgs += ['--uuid', "${project.mc_uuid}"]
+    clientRunArgs += ['--uuid', project.mc_uuid]
   }
 
   // disable server gui
-  serverRunArgs += "nogui"
+  serverRunArgs += 'nogui'
 
   // skip the screen to confirm that you want to load a world with missing registry entries
-  serverJvmArgs += "-Dfml.doNotBackup=true"
-  clientJvmArgs += "-Dfml.doNotBackup=true"
+  serverJvmArgs += '-Dfml.doNotBackup=true'
+  clientJvmArgs += '-Dfml.doNotBackup=true'
 
   // skip having to confirm on server
-  serverJvmArgs += "-Dfml.queryResult=confirm"
+  serverJvmArgs += '-Dfml.queryResult=confirm'
 
   //skip jansi warnings in the log
-  serverJvmArgs += "-Dlog4j.skipJansi=true"
-  clientJvmArgs += "-Dlog4j.skipJansi=true"
+  serverJvmArgs += '-Dlog4j.skipJansi=true'
+  clientJvmArgs += '-Dlog4j.skipJansi=true'
 
   if (project.hasProperty('client_args')) {
-    clientJvmArgs += "${project.client_args}"
+    clientJvmArgs += project.client_args
   }
   if (project.hasProperty('server_args')) {
-    serverJvmArgs += "${project.server_args}"
+    serverJvmArgs += project.server_args
   }
 }
 
@@ -272,8 +276,8 @@ dependencies {
     exclude group: 'mezz.jei'
   }
 
-  deobfCompile "com.mcmoddev:AdditionalLootTables:${mc_version}.1-${alt_version}:deobf"
-  deobfCompile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}:deobf"
+  deobfCompile "com.mcmoddev:AdditionalLootTables:${mc_version}.1-${alt_version}"
+  deobfCompile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
 
   deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}"
 //deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
@@ -333,6 +337,7 @@ jar {
       attributes 'FMLCorePluginContainsFMLMod': 'true'
       attributes 'FMLCorePlugin': project.coreplugin
     }
+//  attributes 'FMLAT' : ''
   }
 }
 
@@ -347,9 +352,9 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
     project.hasProperty('keyStore')
   }
 
-  // findProperty allows us to reference the property without it existing. 
-  // Using project.propName would cause the script to fail validation if 
-  // the property did not exist. 
+  // findProperty allows us to reference the property without it existing.
+  // Using project.propName would cause the script to fail validation if
+  // the property did not exist.
   keyStore = project.findProperty('keyStore')
   alias = project.findProperty('keyStoreAlias')
   storePass = project.findProperty('keyStorePass')
@@ -402,7 +407,7 @@ publishing {
 
 curseforge {
   if (project.hasProperty('cf_project_id') && project.hasProperty('cf_release_type') &&
-      ((project.cf_release_type == "alpha") || (project.cf_release_type == "beta") || (project.cf_release_type == "release"))) {
+      ((project.cf_release_type == 'alpha') || (project.cf_release_type == 'beta') || (project.cf_release_type == 'release'))) {
     apiKey = secret.curseforgeAPIKey
     project {
       id = project.cf_project_id
@@ -433,8 +438,10 @@ sonarqube {
     property 'sonar.host.url', secret.sonarHost
     property 'sonar.organization', secret.sonarOrganization
     property 'sonar.login', secret.sonarToken
-    property 'sonar.projectName', project.archivesBaseName
-    property 'sonar.projectKey', "$project.group:$project.archivesBaseName"
+    // property 'sonar.projectName', project.archivesBaseName
+    // property 'sonar.projectKey', "$project.group:$project.archivesBaseName"
+    // property 'sonar.branch.name', 'master-1.12'
+    // property 'sonar.branch.target', ''
     property 'sonar.junit.reportPaths', "${project.buildDir}/test-results/junit-platform/*.xml"
     property 'sonar.jacoco.reportPaths', "${project.buildDir}/jacoco/junitPlatformTest.exec"
   }
@@ -478,4 +485,3 @@ String getVersion(String type, String mod_file) {
   }
   return "$major.$revision.$patch"
 }
-
