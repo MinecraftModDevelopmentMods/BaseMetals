@@ -2,7 +2,6 @@ package com.mcmoddev.lib.client.registrations;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.lib.client.renderer.FluidStateMapper;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Blocks;
@@ -83,13 +82,14 @@ public class RegistrationHelper {
 	public static void registerFluidRender(@Nonnull final Fluid fluid) {
 		// final Block block = fluid.getBlock(); // Unfortunately this breaks when
 		// another mod registered it's fluid before us.
-		final Block block = Fluids.getFluidBlockByName(fluid.getName());
+		final Block block = com.mcmoddev.lib.init.Fluids.getFluidBlockByName(fluid.getName());
 		final Item item = Item.getItemFromBlock(block);
 		final ResourceLocation resourceLocation = block.getRegistryName();
 		final FluidStateMapper mapper = new FluidStateMapper(
 				resourceLocation.getResourceDomain() + ":" + fluid.getName());
 
-		if (!resourceLocation.getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
+		if (!resourceLocation.getResourceDomain()
+				.equals(Loader.instance().activeModContainer().getModId())) {
 			return;
 		}
 
@@ -108,11 +108,13 @@ public class RegistrationHelper {
 	public static void registerRender(@Nonnull final Item item) {
 		final ResourceLocation resourceLocation = item.getRegistryName();
 
-		if (!resourceLocation.getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
+		if (!resourceLocation.getResourceDomain()
+				.equals(Loader.instance().activeModContainer().getModId())) {
 			return;
 		}
 
-		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(resourceLocation, "inventory"));
+		ModelLoader.setCustomModelResourceLocation(item, 0,
+				new ModelResourceLocation(resourceLocation, "inventory"));
 	}
 
 	private RegistrationHelper() {

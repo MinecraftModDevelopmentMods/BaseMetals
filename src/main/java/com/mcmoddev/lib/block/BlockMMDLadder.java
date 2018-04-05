@@ -17,7 +17,8 @@ public class BlockMMDLadder extends net.minecraft.block.BlockLadder implements I
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

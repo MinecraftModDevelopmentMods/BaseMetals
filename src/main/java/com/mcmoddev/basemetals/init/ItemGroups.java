@@ -33,7 +33,8 @@ public final class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	/**
 	 * Sets up icons for a CreativeTab.
 	 *
-	 * @param materialName Name of the preferred Material to use for Tab Icons
+	 * @param materialName
+	 *            Name of the preferred Material to use for Tab Icons
 	 */
 	public static void setupIcons(final String materialName) {
 		if (Materials.hasMaterial(materialName)) {

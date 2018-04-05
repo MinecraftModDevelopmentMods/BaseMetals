@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 
 public class ICrusherRecipeWrapper implements IRecipeWrapper {
 
-	private ICrusherRecipe theRecipe;
+	private final ICrusherRecipe theRecipe;
 
 	public ICrusherRecipeWrapper(final ICrusherRecipe recipe) {
 		this.theRecipe = recipe;
@@ -19,8 +19,8 @@ public class ICrusherRecipeWrapper implements IRecipeWrapper {
 
 	@Override
 	public void getIngredients(final IIngredients ingredients) {
-		ingredients.setInputs(ItemStack.class, theRecipe.getInputs());
-		ingredients.setOutput(ItemStack.class, theRecipe.getOutput());
+		ingredients.setInputs(ItemStack.class, this.theRecipe.getInputs());
+		ingredients.setOutput(ItemStack.class, this.theRecipe.getOutput());
 	}
 
 	@Override

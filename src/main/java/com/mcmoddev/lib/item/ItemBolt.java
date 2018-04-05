@@ -33,12 +33,14 @@ public class ItemBolt extends net.minecraft.item.Item {
 	 *            The shooter
 	 * @return The Bolt
 	 */
-	public EntityCustomBolt createBolt(final World worldIn, final ItemStack stack, final EntityPlayer shooter) {
+	public EntityCustomBolt createBolt(final World worldIn, final ItemStack stack,
+			final EntityPlayer shooter) {
 		return new EntityCustomBolt(worldIn, stack, shooter);
 	}
 
-	public boolean isInfinite(final ItemStack stack, final ItemStack crossbow, final EntityPlayer player) {
-		int enchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, crossbow);
+	public boolean isInfinite(final ItemStack stack, final ItemStack crossbow,
+			final EntityPlayer player) {
+		final int enchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, crossbow);
 		return enchant <= 0 ? false : this.getClass() == ItemBolt.class;
 	}
 }

@@ -285,7 +285,7 @@ public class Oredicts {
 	 * @param itemStack
 	 */
 	public static void registerOre(final String name, final ItemStack itemStack) {
-		if (itemStack != null) {
+		if (!itemStack.isEmpty()) {
 			if (oreDictItemStackMap.containsKey(name)) {
 				oreDictItemStackMap.get(name).add(itemStack);
 			} else {
@@ -303,14 +303,16 @@ public class Oredicts {
 	public static void registerItemOreDictionaryEntries() {
 		for (final Entry<String, List<Item>> ent : oreDictItemMap.entrySet()) {
 			for (final Item i : ent.getValue()) {
-				if (i.getRegistryName().getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
+				if (i.getRegistryName().getResourceDomain()
+						.equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), i);
 				}
 			}
 		}
 		for (final Entry<String, List<ItemStack>> ent : oreDictItemStackMap.entrySet()) {
 			for (final ItemStack is : ent.getValue()) {
-				if (is.getItem().getRegistryName().getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
+				if (is.getItem().getRegistryName().getResourceDomain()
+						.equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), is);
 				}
 			}
@@ -323,7 +325,8 @@ public class Oredicts {
 	public static void registerBlockOreDictionaryEntries() {
 		for (final Entry<String, List<Block>> ent : oreDictBlockMap.entrySet()) {
 			for (final Block b : ent.getValue()) {
-				if (b.getRegistryName().getResourceDomain().equals(Loader.instance().activeModContainer().getModId())) {
+				if (b.getRegistryName().getResourceDomain()
+						.equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), b);
 				}
 			}

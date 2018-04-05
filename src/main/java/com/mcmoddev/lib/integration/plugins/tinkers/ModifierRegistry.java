@@ -37,10 +37,12 @@ public class ModifierRegistry {
 	 * @param name
 	 * @param ingredients
 	 */
-	public static void setModifierRecipe(@Nonnull final String name, @Nonnull final ItemStack... ingredients) {
+	public static void setModifierRecipe(@Nonnull final String name,
+			@Nonnull final ItemStack... ingredients) {
 		final Modifier t = modifiers.get(name);
 		if (t == null) {
-			BaseMetals.logger.error("Trying to add a recipe to unknown modifier %s, ignoring.", name);
+			BaseMetals.logger.error("Trying to add a recipe to unknown modifier %s, ignoring.",
+					name);
 			return;
 		}
 
@@ -60,7 +62,8 @@ public class ModifierRegistry {
 	public static void setModifierItem(@Nonnull final String name, @Nonnull final Item item) {
 		final Modifier t = modifiers.get(name);
 		if (t == null) {
-			BaseMetals.logger.error("Trying to add an item to unknown modifier %s, ignoring.", name);
+			BaseMetals.logger.error("Trying to add an item to unknown modifier %s, ignoring.",
+					name);
 			return;
 		}
 
@@ -90,7 +93,7 @@ public class ModifierRegistry {
 	public static Map<String, String> getModifierDetails(@Nonnull final String name) {
 		final Map<String, String> rv = new HashMap<>();
 		if (modifiers.containsKey(name)) {
-			Modifier t = modifiers.get(name);
+			final Modifier t = modifiers.get(name);
 			rv.put("name", t.getLocalizedName());
 			rv.put("desc", t.getLocalizedDesc());
 			return rv;

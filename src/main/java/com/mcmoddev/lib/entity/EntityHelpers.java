@@ -15,7 +15,8 @@ public class EntityHelpers {
 	 * @param itemStack
 	 * @return
 	 */
-	public static NBTTagCompound writeToNBTItemStack(final NBTTagCompound compound, final ItemStack itemStack) {
+	public static NBTTagCompound writeToNBTItemStack(final NBTTagCompound compound,
+			final ItemStack itemStack) {
 		final NBTTagCompound itemStackCompound = new NBTTagCompound();
 		itemStack.writeToNBT(itemStackCompound);
 		compound.setTag("itemstack", itemStackCompound);

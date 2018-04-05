@@ -13,7 +13,8 @@ public class HammerEnabled implements IConditionFactory {
 
 	@Override
 	public BooleanSupplier parse(final JsonContext context, final JsonObject json) {
-		return () -> !Options.disableAllHammerRecipes() && Options.isThingEnabled(ConfigKeys.CRACKHAMMER);
+		return () -> !Options.disableAllHammerRecipes()
+				&& Options.isThingEnabled(ConfigKeys.CRACKHAMMER);
 	}
 
 }

@@ -16,7 +16,8 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
  *
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = EnderIO.PLUGIN_MODID)
-public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase implements IIntegration {
+public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase
+		implements IIntegration {
 
 	/**
 	 *
@@ -27,11 +28,13 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase im
 			return;
 		}
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.COLDIRON, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR,
-				MaterialNames.MITHRIL, MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.STARSTEEL,
-				MaterialNames.STEEL, MaterialNames.TIN, MaterialNames.ZINC);
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
+				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
+				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR,
+				MaterialNames.MITHRIL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
+				MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
+				MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())

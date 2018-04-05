@@ -22,27 +22,25 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
- * This is the entry point for this Mod. If you are writing your own Mod that
- * uses this Mod, the classes of interest to you are the init classes (classes
- * in package com.mcmoddev.basemetals.init) and the CrusherRecipeRegistry class
- * (in package com.mcmoddev.basemetals.registry). Note that you should add
- * 'dependencies = "required-after:basemetals"' to your &#64;Mod annotation
- * (e.g. <br>
- * &#64;Mod(modid = "moremetals", name="More Metals!", version = "1.2.3",
- * dependencies = "required-after:basemetals") <br>
+ * This is the entry point for this Mod. If you are writing your own Mod that uses this Mod, the
+ * classes of interest to you are the init classes (classes in package com.mcmoddev.basemetals.init)
+ * and the CrusherRecipeRegistry class (in package com.mcmoddev.basemetals.registry). Note that you
+ * should add 'dependencies = "required-after:basemetals"' to your &#64;Mod annotation (e.g. <br>
+ * &#64;Mod(modid = "moremetals", name="More Metals!", version = "1.2.3", dependencies =
+ * "required-after:basemetals") <br>
  * )
  *
  * @author Jasmine Iwanek
  *
  */
 @Mod(
-		modid = BaseMetals.MODID,
-		name = BaseMetals.NAME,
-		version = BaseMetals.VERSION,
-		dependencies = "required-after:forge@[14.21.1.2387,);after:tconstruct;after:ic2;before:buildingbricks",
-		acceptedMinecraftVersions = "[1.12,)",
-		certificateFingerprint = "@FINGERPRINT@",
-		updateJSON = BaseMetals.UPDATEJSON)
+	modid = BaseMetals.MODID,
+	name = BaseMetals.NAME,
+	version = BaseMetals.VERSION,
+	dependencies = "required-after:forge@[14.21.1.2387,);after:tconstruct;after:ic2;before:buildingbricks",
+	acceptedMinecraftVersions = "[1.12,)",
+	certificateFingerprint = "@FINGERPRINT@",
+	updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {
 
 	@Instance
@@ -55,18 +53,21 @@ public class BaseMetals {
 	protected static final String NAME = "Base Metals";
 
 	/**
-	 * Version number, in Major.Minor.Patch format. The minor number is
-	 * increased whenever a change is made that has the potential to break
-	 * compatibility with other mods that depend on this one.
+	 * Version number, in Major.Minor.Patch format. The minor number is increased whenever a change
+	 * is made that has the potential to break compatibility with other mods that depend on this
+	 * one.
 	 */
 	protected static final String VERSION = "2.5.0-beta5";
 
-	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL + "BaseMetals/master/update.json";
+	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL
+			+ "BaseMetals/master/update.json";
 
-	private static final String PROXY_BASE = SharedStrings.MMD_PROXY_GROUP + MODID + SharedStrings.DOT_PROXY_DOT;
+	private static final String PROXY_BASE = SharedStrings.MMD_PROXY_GROUP + MODID
+			+ SharedStrings.DOT_PROXY_DOT;
 
-	@SidedProxy(clientSide = PROXY_BASE + SharedStrings.CLIENTPROXY, serverSide = PROXY_BASE
-			+ SharedStrings.SERVERPROXY)
+	@SidedProxy(
+				clientSide = PROXY_BASE + SharedStrings.CLIENTPROXY,
+				serverSide = PROXY_BASE + SharedStrings.SERVERPROXY)
 	public static CommonProxy proxy;
 
 	public static final Logger logger = LogManager.getFormatterLogger(BaseMetals.MODID);

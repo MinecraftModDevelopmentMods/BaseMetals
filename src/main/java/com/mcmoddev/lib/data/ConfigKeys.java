@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.data;
 
-
 public class ConfigKeys {
 
 	public static final String BASICS = "Basics";

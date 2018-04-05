@@ -76,46 +76,60 @@ public abstract class Recipes {
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.STONE,
 				new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1)); // Stone to Cobblestone
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.STONEBRICK,
-				new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1)); // Stone Bricks to Cobblestone
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 0),
-				new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 3)); // Stone Slab to Cobblestone Slab
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 5),
-				new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 3)); // Stone Bricks Slab to Cobblestone Slab
+				new ItemStack(net.minecraft.init.Blocks.COBBLESTONE, 1)); // Stone Bricks to
+																			// Cobblestone
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 0),
+				new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 3)); // Stone Slab to
+																			// Cobblestone Slab
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 5),
+				new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 3)); // Stone Bricks Slab to
+																			// Cobblestone Slab
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.COBBLESTONE,
 				new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1)); // Cobblestone to Gravel
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.MOSSY_COBBLESTONE,
 				new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1)); // Mossy Cobblestone to Gravel
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.COBBLESTONE_WALL, 1, 0),
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.COBBLESTONE_WALL, 1, 0),
 				new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1)); // Cobblestone Wall to Gravel
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.COBBLESTONE_WALL, 1, 1),
-				new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1)); // Mossy Cobblestone Wall to Gravel
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.COBBLESTONE_WALL, 1, 1),
+				new ItemStack(net.minecraft.init.Blocks.GRAVEL, 1)); // Mossy Cobblestone Wall to
+																		// Gravel
 
-		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.GRAVEL, new ItemStack(net.minecraft.init.Blocks.SAND, 1)); // Gravel
-																														// to
-																														// Sand
+		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.GRAVEL,
+				new ItemStack(net.minecraft.init.Blocks.SAND, 1)); // Gravel
+																	// to
+																	// Sand
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SANDSTONE,
 				new ItemStack(net.minecraft.init.Blocks.SAND, 4)); // Sandstone to Sand
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 1),
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 1),
 				new ItemStack(net.minecraft.init.Blocks.SAND, 2)); // Sandstone Slab to 2 Sand
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.GLASS,
 				new ItemStack(net.minecraft.init.Blocks.SAND, 1)); // Glass to Sand
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.RED_SANDSTONE,
 				new ItemStack(net.minecraft.init.Blocks.SAND, 4, 1)); // Red Sandstone to Red Sand
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB2, 1, 0),
-				new ItemStack(net.minecraft.init.Blocks.SAND, 2, 1)); // Red Sandstone Slab to 2 Red Sand
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.STONE_SLAB2, 1, 0),
+				new ItemStack(net.minecraft.init.Blocks.SAND, 2, 1)); // Red Sandstone Slab to 2 Red
+																		// Sand
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.STAINED_GLASS,
-				new ItemStack(net.minecraft.init.Blocks.SAND, 4, 1)); // Red Stained Glass to Red Sand
+				new ItemStack(net.minecraft.init.Blocks.SAND, 4, 1)); // Red Stained Glass to Red
+																		// Sand
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.GLOWSTONE,
-				new ItemStack(net.minecraft.init.Items.GLOWSTONE_DUST, 4)); // Glowstone to 4 Glowstone Dust
+				new ItemStack(net.minecraft.init.Items.GLOWSTONE_DUST, 4)); // Glowstone to 4
+																			// Glowstone Dust
 
-		final MMDMaterial lapis = Materials.getMaterialByName(MaterialNames.LAPIS); 
+		final MMDMaterial lapis = Materials.getMaterialByName(MaterialNames.LAPIS);
 		// Lapis Ore to 8 Lapis
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE_LAPIS,
 				lapis.getItemStack(Names.INGOT, 8));
-		 // Lapis Block to 9 Lapis
+		// Lapis Block to 9 Lapis
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK_LAPIS,
 				lapis.getItemStack(Names.INGOT, 9));
 
@@ -134,29 +148,42 @@ public abstract class Recipes {
 				new ItemStack(net.minecraft.init.Items.DYE, 3, 15)); // Bone to 3 Bonemeal
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Items.BLAZE_ROD,
-				new ItemStack(net.minecraft.init.Items.BLAZE_POWDER, 2)); // Blaze Rod to 2 Blaze Powder
+				new ItemStack(net.minecraft.init.Items.BLAZE_POWDER, 2)); // Blaze Rod to 2 Blaze
+																			// Powder
 
 		final MMDMaterial quartz = Materials.getMaterialByName(MaterialNames.QUARTZ);
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE_QUARTZ,
 				quartz.getItemStack(Names.INGOT, 2)); // Nether Quartz Ore to 2 Quartz
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.QUARTZ_BLOCK,
 				quartz.getItemStack(Names.INGOT, 4)); // Quartz Block to 4 Quartz
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 7),
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.STONE_SLAB, 1, 7),
 				quartz.getItemStack(Names.INGOT, 2)); // Quartz Slab to 2 Quartz
 
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 0),
-				new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 4)); // Prismarine to Prismarine Shard
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 1),
-				new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 9)); // Brismarine Bricks to Prismarine Shard
-		CrusherRecipeRegistry.addNewCrusherRecipe(new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 2),
-				new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 8)); // Dark Prismarine to Prismarine Shard
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 0),
+				new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 4)); // Prismarine to
+																				// Prismarine Shard
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 1),
+				new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 9)); // Brismarine Bricks
+																				// to Prismarine
+																				// Shard
+		CrusherRecipeRegistry.addNewCrusherRecipe(
+				new ItemStack(net.minecraft.init.Blocks.PRISMARINE, 1, 2),
+				new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD, 8)); // Dark Prismarine to
+																				// Prismarine Shard
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SEA_LANTERN,
-				new ItemStack(net.minecraft.init.Items.PRISMARINE_CRYSTALS, 5)); // Sea Lantern to 5 Prismarine Crystals
-																					// to Prismarine Shard
+				new ItemStack(net.minecraft.init.Items.PRISMARINE_CRYSTALS, 5)); // Sea Lantern to 5
+																					// Prismarine
+																					// Crystals
+																					// to Prismarine
+																					// Shard
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SLIME_BLOCK,
-				new ItemStack(net.minecraft.init.Items.SLIME_BALL, 9)); // Slime Block to 9 Slime Balls
+				new ItemStack(net.minecraft.init.Items.SLIME_BALL, 9)); // Slime Block to 9 Slime
+																		// Balls
 
 	}
 
@@ -180,7 +207,8 @@ public abstract class Recipes {
 			makeNuggetRecipes(material);
 
 			// then the rest of the basic stuff
-			makeSimpleRecipes(material); // slab, wall, small-powder, rod, lever, crackhammer, trapdoor, etc...
+			makeSimpleRecipes(material); // slab, wall, small-powder, rod, lever, crackhammer,
+											// trapdoor, etc...
 			makeModRecipes(material); // rod, gear, etc...
 
 			// ranged weapons all use the 'ROD' of a material
@@ -236,9 +264,9 @@ public abstract class Recipes {
 						material.getItemStack(Names.NUGGET, 4), 0); // Roughly half a nugget loss
 			}
 
-			if ((material.hasItem(Names.POWDER)) && (material.hasItem(Names.SMALLPOWDER)) &&
-					(!material.getName().equals(MaterialNames.COAL)) &&
-					(!material.getName().equals(MaterialNames.CHARCOAL))) {
+			if ((material.hasItem(Names.POWDER)) && (material.hasItem(Names.SMALLPOWDER))
+					&& (!material.getName().equals(MaterialNames.COAL))
+					&& (!material.getName().equals(MaterialNames.CHARCOAL))) {
 				GameRegistry.addSmelting(material.getItemStack(Names.SMALLPOWDER),
 						material.getItemStack(Names.NUGGET, 1), 0);
 
@@ -256,7 +284,8 @@ public abstract class Recipes {
 		if (material.hasItem(Names.GEAR) && (material.hasItem(Names.INGOT))) {
 			// if there is no ingot, no cheese
 			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)),
-					material.getItemStack(Names.INGOT, Options.gearQuantity()), 0); // you lose the rod
+					material.getItemStack(Names.INGOT, Options.gearQuantity()), 0); // you lose the
+																					// rod
 		}
 	}
 
@@ -276,7 +305,7 @@ public abstract class Recipes {
 					material.getBlockItemStack(Names.BLOCK, 1), 0);
 		}
 
-		Map<Names, Integer> stuff = new TreeMap<>();
+		final Map<Names, Integer> stuff = new TreeMap<>();
 		stuff.put(Names.PLATE, 1);
 		stuff.put(Names.PRESSURE_PLATE, 2);
 		stuff.put(Names.DOOR, 2);
@@ -284,10 +313,9 @@ public abstract class Recipes {
 		stuff.put(Names.HORSE_ARMOR, 6);
 		stuff.put(Names.FISHING_ROD, 1);
 
-		stuff.entrySet().stream()
-		.filter(ent -> isMMDBlock(material, ent.getKey()))
-		.forEach(ent -> GameRegistry.addSmelting(material.getBlockItemStack(ent.getKey()),
-				material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
+		stuff.entrySet().stream().filter(ent -> isMMDBlock(material, ent.getKey()))
+				.forEach(ent -> GameRegistry.addSmelting(material.getBlockItemStack(ent.getKey()),
+						material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
 
 		if (isMMDBlock(material, Names.BARS)) {
 			GameRegistry.addSmelting(material.getBlockItemStack(Names.BARS),
@@ -308,15 +336,15 @@ public abstract class Recipes {
 			}
 
 			if (material.hasItem(Names.POWDER)) {
-				if (material.getName().equals(MaterialNames.CHARCOAL) || 
-						material.getName().equals(MaterialNames.COAL)) {
+				if (material.getName().equals(MaterialNames.CHARCOAL)
+						|| material.getName().equals(MaterialNames.COAL)) {
 					return;
 				}
-				
-				ItemStack ingot = material.getItemStack(Names.INGOT);
 
-				GameRegistry.addSmelting(material.getItemStack(Names.POWDER),
-						ingot, oreSmeltXP);
+				final ItemStack ingot = material.getItemStack(Names.INGOT);
+				final ItemStack powder = material.getItemStack(Names.POWDER);
+
+				GameRegistry.addSmelting(powder, ingot, oreSmeltXP);
 			}
 		}
 	}
@@ -329,22 +357,23 @@ public abstract class Recipes {
 			crushIngot(material, oreDictName);
 			crushBlock(material, oreDictName);
 			doSmallPowder(material, oreDictName);
-			
 		}
 	}
 
-	private static void crushOre(@Nonnull final MMDMaterial material, @Nonnull final String oreDictName) {
+	private static void crushOre(@Nonnull final MMDMaterial material,
+			@Nonnull final String oreDictName) {
 		if (material.hasOre() || material.hasBlock(Names.ORE)) {
 			CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE + oreDictName,
 					material.getItemStack(Names.POWDER, Options.twoDustDrop() ? 2 : 1));
 		}
 	}
 
-	private static void crushIngot(@Nonnull final MMDMaterial material, @Nonnull final String oreDictName) {
+	private static void crushIngot(@Nonnull final MMDMaterial material,
+			@Nonnull final String oreDictName) {
 		if (material.hasItem(Names.INGOT)) {
-			if (material.getName().equals(MaterialNames.CHARCOAL) || 
-				 	material.getName().equals(MaterialNames.COAL)) {
-				CrusherRecipeRegistry.addNewCrusherRecipe(material.getItemStack(Names.INGOT), 
+			if (material.getName().equals(MaterialNames.CHARCOAL)
+					|| material.getName().equals(MaterialNames.COAL)) {
+				CrusherRecipeRegistry.addNewCrusherRecipe(material.getItemStack(Names.INGOT),
 						material.getItemStack(Names.POWDER, 1));
 			} else {
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.INGOT + oreDictName,
@@ -352,22 +381,24 @@ public abstract class Recipes {
 			}
 		}
 	}
-	
-	private static void crushBlock(@Nonnull final MMDMaterial material, @Nonnull final String oreDictName) {
+
+	private static void crushBlock(@Nonnull final MMDMaterial material,
+			@Nonnull final String oreDictName) {
 		if (material.hasBlock(Names.BLOCK)) {
 			CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK + oreDictName,
 					material.getItemStack(Names.POWDER, 9));
 		}
 	}
-	
-	private static void doSmallPowder(@Nonnull final MMDMaterial material, @Nonnull final String oreDictName) {
+
+	private static void doSmallPowder(@Nonnull final MMDMaterial material,
+			@Nonnull final String oreDictName) {
 		if ((material.hasItem(Names.SMALLPOWDER)) && (material.hasItem(Names.NUGGET))) {
 			CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName,
 					material.getItemStack(Names.SMALLPOWDER, 1));
 		}
 
 	}
-	
+
 	private static void generateBaseTools(@Nonnull final MMDMaterial material) {
 		if (isMMDItem(material, Names.SHEARS)) {
 			GameRegistry.addSmelting(material.getItemStack(Names.SHEARS),
@@ -377,7 +408,7 @@ public abstract class Recipes {
 
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
 		if ((material.hasItem(Names.INGOT)) && (Options.furnaceCheese())) {
-			Map<Names, Integer> stuff = new TreeMap<>();
+			final Map<Names, Integer> stuff = new TreeMap<>();
 			stuff.put(Names.BOOTS, 4);
 			stuff.put(Names.HELMET, 5);
 			stuff.put(Names.SWORD, 2);
@@ -389,8 +420,8 @@ public abstract class Recipes {
 			stuff.put(Names.CHESTPLATE, 8);
 
 			stuff.entrySet().stream().filter(ent -> material.hasItem(ent.getKey()))
-			.forEach(ent -> GameRegistry.addSmelting(material.getItemStack(ent.getKey()),
-					material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
+					.forEach(ent -> GameRegistry.addSmelting(material.getItemStack(ent.getKey()),
+							material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
 
 			if (material.hasItem(Names.CRACKHAMMER)) {
 				GameRegistry.addSmelting(material.getItemStack(Names.CRACKHAMMER),
@@ -400,17 +431,18 @@ public abstract class Recipes {
 	}
 
 	private static void initModSpecificRecipes() {
-		for (MMDMaterial material : Materials.getAllMaterials()) {
+		for (final MMDMaterial material : Materials.getAllMaterials()) {
 			if (material.isEmpty()) {
 				continue;
 			}
 
 			if (Options.isModEnabled(IC2Base.PLUGIN_MODID)) {
 				if ((isMMDItem(material, Names.CRUSHED)) && material.hasItem(Names.INGOT)) {
-					GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED), material.getItemStack(Names.INGOT),
-							material.getOreSmeltXP());
+					GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED),
+							material.getItemStack(Names.INGOT), material.getOreSmeltXP());
 				}
-				if ((isMMDItem(material, Names.CRUSHED_PURIFIED)) && material.hasItem(Names.INGOT)) {
+				if ((isMMDItem(material, Names.CRUSHED_PURIFIED))
+						&& material.hasItem(Names.INGOT)) {
 					GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED_PURIFIED),
 							material.getItemStack(Names.INGOT), material.getOreSmeltXP());
 				}
@@ -418,7 +450,8 @@ public abstract class Recipes {
 		}
 	}
 
-	protected static void addAdditionalOredicts(@Nonnull final String materialName, final String oreDictName) {
+	protected static void addAdditionalOredicts(@Nonnull final String materialName,
+			final String oreDictName) {
 		addAdditionalOredicts(Materials.getMaterialByName(materialName), oreDictName);
 	}
 
@@ -431,13 +464,15 @@ public abstract class Recipes {
 		final String oreDictName = StringUtils.capitalize(oreDictNameIn);
 
 		if ((material.hasOre()) && (material.hasBlock(Names.ORE))) {
-			OreDictionary.registerOre(Oredicts.ORE + oreDictName, material.getBlockItemStack(Names.ORE));
+			OreDictionary.registerOre(Oredicts.ORE + oreDictName,
+					material.getBlockItemStack(Names.ORE));
 		}
 		if (material.hasBlock(Names.BLOCK)) {
-			OreDictionary.registerOre(Oredicts.BLOCK + oreDictName, material.getBlockItemStack(Names.BLOCK));
+			OreDictionary.registerOre(Oredicts.BLOCK + oreDictName,
+					material.getBlockItemStack(Names.BLOCK));
 		}
 
-		Map<Names, String> stuff = new TreeMap<>();
+		final Map<Names, String> stuff = new TreeMap<>();
 		stuff.put(Names.PLATE, Oredicts.PLATE);
 		stuff.put(Names.DOOR, Oredicts.DOOR);
 		stuff.put(Names.NUGGET, Oredicts.NUGGET);
@@ -447,34 +482,42 @@ public abstract class Recipes {
 		stuff.put(Names.GEAR, Oredicts.GEAR);
 		stuff.put(Names.ROD, Oredicts.ROD);
 
-		stuff.entrySet().stream()
-		.filter(ent -> material.hasItem(ent.getKey()))
-		.forEach(ent -> OreDictionary.registerOre(ent.getValue() + oreDictName, material.getItemStack(ent.getKey())));
+		stuff.entrySet().stream().filter(ent -> material.hasItem(ent.getKey()))
+				.forEach(ent -> OreDictionary.registerOre(ent.getValue() + oreDictName,
+						material.getItemStack(ent.getKey())));
 
 		if (material.hasBlock(Names.BARS)) {
-			OreDictionary.registerOre(Oredicts.BARS + oreDictName, material.getBlockItemStack(Names.BARS));
+			OreDictionary.registerOre(Oredicts.BARS + oreDictName,
+					material.getBlockItemStack(Names.BARS));
 		}
 		if (material.hasBlend()) {
 			if (material.hasItem(Names.BLEND)) {
-				OreDictionary.registerOre(Oredicts.DUST + oreDictName, material.getItemStack(Names.BLEND));
+				OreDictionary.registerOre(Oredicts.DUST + oreDictName,
+						material.getItemStack(Names.BLEND));
 			}
 			if (material.hasItem(Names.SMALLBLEND)) {
-				OreDictionary.registerOre(Oredicts.DUST_TINY + oreDictName, material.getItemStack(Names.SMALLBLEND));
-				OreDictionary.registerOre(Oredicts.DUST_SMALL + oreDictName, material.getItemStack(Names.SMALLBLEND));
+				OreDictionary.registerOre(Oredicts.DUST_TINY + oreDictName,
+						material.getItemStack(Names.SMALLBLEND));
+				OreDictionary.registerOre(Oredicts.DUST_SMALL + oreDictName,
+						material.getItemStack(Names.SMALLBLEND));
 			}
 		}
 		if (material.hasItem(Names.INGOT)) {
 			if (material.getType() != MaterialType.GEM) {
-				OreDictionary.registerOre(Oredicts.INGOT + oreDictName, material.getItemStack(Names.INGOT)); // For non-gem
-																										// based
+				OreDictionary.registerOre(Oredicts.INGOT + oreDictName,
+						material.getItemStack(Names.INGOT)); // For non-gem
+				// based
 			} else if (material.getType() == MaterialType.GEM) {
-				OreDictionary.registerOre(Oredicts.GEM + oreDictName, material.getItemStack(Names.INGOT)); // For Gem based
+				OreDictionary.registerOre(Oredicts.GEM + oreDictName,
+						material.getItemStack(Names.INGOT)); // For Gem based
 			}
 		}
 
 		if (material.hasItem(Names.SMALLPOWDER)) {
-			OreDictionary.registerOre(Oredicts.DUST_TINY + oreDictName, material.getItemStack(Names.SMALLPOWDER));
-			OreDictionary.registerOre(Oredicts.DUST_SMALL + oreDictName, material.getItemStack(Names.SMALLPOWDER));
+			OreDictionary.registerOre(Oredicts.DUST_TINY + oreDictName,
+					material.getItemStack(Names.SMALLPOWDER));
+			OreDictionary.registerOre(Oredicts.DUST_SMALL + oreDictName,
+					material.getItemStack(Names.SMALLPOWDER));
 		}
 	}
 
@@ -483,7 +526,7 @@ public abstract class Recipes {
 	 * @param event
 	 */
 	public static void register(final RegistryEvent.Register<IRecipe> event) {
-		String mod = Loader.instance().activeModContainer().getModId();
+		final String mod = Loader.instance().activeModContainer().getModId();
 		if (!Materials.hasMaterialFromMod(mod)) {
 			return;
 		}
@@ -491,15 +534,18 @@ public abstract class Recipes {
 		// the following is broken, as the event *DOES* *NOT* *WORK* right and the call
 		// asks the
 		if (mod.equals(BaseMetals.MODID) && Materials.hasMaterial(MaterialNames.MERCURY)) {
-			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY), "Quicksilver");
+			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY),
+					"Quicksilver");
 
 			if (FluidRegistry.isUniversalBucketEnabled()) {
-				final ItemStack bucketMercury = FluidUtil.getFilledBucket(
-						new FluidStack(Materials.getMaterialByName(MaterialNames.MERCURY).getFluid(), 1000));
-				ShapelessOreRecipe buckMerc = new ShapelessOreRecipe(new ResourceLocation("basemetals", "bucket"),
-						bucketMercury, net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY,
-						Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY,
-						Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY);
+				final ItemStack bucketMercury = FluidUtil.getFilledBucket(new FluidStack(
+						Materials.getMaterialByName(MaterialNames.MERCURY).getFluid(), 1000));
+				final ShapelessOreRecipe buckMerc = new ShapelessOreRecipe(
+						new ResourceLocation("basemetals", "bucket"), bucketMercury,
+						net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY,
+						Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY,
+						Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY,
+						Oredicts.INGOT_MERCURY);
 				buckMerc.setRegistryName("basemetals", "mercury_bucket");
 				event.getRegistry().register(buckMerc);
 			}
@@ -514,8 +560,10 @@ public abstract class Recipes {
 	}
 
 	/**
-	 * @param material The Material
-	 * @param name Name of the Block to check
+	 * @param material
+	 *            The Material
+	 * @param name
+	 *            Name of the Block to check
 	 * @return boolean Is it IMMDObject?
 	 */
 	protected static boolean isMMDBlock(final MMDMaterial material, final Names name) {
@@ -523,8 +571,10 @@ public abstract class Recipes {
 	}
 
 	/**
-	 * @param material The Material
-	 * @param name Name of the item to check
+	 * @param material
+	 *            The Material
+	 * @param name
+	 *            Name of the item to check
 	 * @return boolean Is it IMMDObject?
 	 */
 	protected static boolean isMMDItem(final MMDMaterial material, final Names name) {

@@ -37,7 +37,8 @@ public class ItemMMDBolt extends ItemBolt implements IMMDObject {
 	 * @return The Custom Bolt
 	 */
 	@Override
-	public EntityCustomBolt createBolt(final World worldIn, final ItemStack stack, final EntityPlayer shooter) {
+	public EntityCustomBolt createBolt(final World worldIn, final ItemStack stack,
+			final EntityPlayer shooter) {
 		return new EntityCustomBolt(worldIn, stack, shooter);
 	}
 

@@ -56,8 +56,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	private BlockFluidClassic fluidBlock;
 
 	/*
-	 * Material Statistics - see com.mcmoddev.lib.data.MaterialStats for current
-	 * known and used ones
+	 * Material Statistics - see com.mcmoddev.lib.data.MaterialStats for current known and used ones
 	 */
 	private final Map<MaterialStats, Float> stats = new TreeMap<>();
 
@@ -70,8 +69,8 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	private boolean regenerates = false;
 
 	/**
-	 * Rare metals, like platinum, are never found in villager trades and
-	 * unusually uncommon in world generation.
+	 * Rare metals, like platinum, are never found in villager trades and unusually uncommon in
+	 * world generation.
 	 */
 	private final boolean isRare;
 
@@ -81,8 +80,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	private final boolean isBeaconBase;
 
 	/**
-	 * Whether or not this material has a blend that can be smelted to produce.
-	 * it
+	 * Whether or not this material has a blend that can be smelted to produce. it
 	 */
 	private final boolean hasBlend;
 
@@ -135,19 +133,17 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @param type
 	 *            Base type of the material - is it a Metal, a Mineral, a Gem ?
 	 * @param hardness
-	 *            hardness on a scale from 0 to 10 (or more), where 0 is
-	 *            non-solid and Diamond is 10. For reference, Wood is 3, Stone
-	 *            is 5, Iron is 8, Diamond is 10. Used for damage, armor
-	 *            protection, and tool effectiveness calculations
+	 *            hardness on a scale from 0 to 10 (or more), where 0 is non-solid and Diamond is
+	 *            10. For reference, Wood is 3, Stone is 5, Iron is 8, Diamond is 10. Used for
+	 *            damage, armor protection, and tool effectiveness calculations
 	 * @param strength
-	 *            durability on a scale from 0 to 10 (or more). For reference,
-	 *            Leather is 2.5, Gold is 3, Wood is 2, Stone is 4, Iron is 8,
-	 *            Diamond is 10. Used for item durability calculations and blast
-	 *            resistance
+	 *            durability on a scale from 0 to 10 (or more). For reference, Leather is 2.5, Gold
+	 *            is 3, Wood is 2, Stone is 4, Iron is 8, Diamond is 10. Used for item durability
+	 *            calculations and blast resistance
 	 * @param magic
-	 *            Scale from 0 to 10 (or more) on how magical the material is.
-	 *            For reference, Stone is 2, Iron is 4.5, Diamond is 4, Wood is
-	 *            6, Gold is 10. Used to calculate enchantability
+	 *            Scale from 0 to 10 (or more) on how magical the material is. For reference, Stone
+	 *            is 2, Iron is 4.5, Diamond is 4, Wood is 6, Gold is 10. Used to calculate
+	 *            enchantability
 	 * @param tintColor
 	 *            Color Info for the metal
 	 * @param isRare
@@ -157,7 +153,9 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @param hasBlend
 	 *            If true this material has a blend
 	 */
-	public MMDMaterial(final String name, final MaterialType type, final float hardness, final float strength, final float magic, final int tintColor, final boolean isRare, final boolean hasOre, final boolean hasBlend) {
+	public MMDMaterial(final String name, final MaterialType type, final float hardness,
+			final float strength, final float magic, final int tintColor, final boolean isRare,
+			final boolean hasOre, final boolean hasBlend) {
 		// material stats
 		this.stats.put(MaterialStats.HARDNESS, hardness);
 		this.stats.put(MaterialStats.STRENGTH, strength);
@@ -168,7 +166,8 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		this.tintColor = tintColor;
 		this.identifier = name;
 		this.titleName = StringUtils.capitalize(name);
-		this.enumName = (Loader.instance().activeModContainer().getModId() + "_" + name).toUpperCase(Locale.ENGLISH);
+		this.enumName = (Loader.instance().activeModContainer().getModId() + "_" + name)
+				.toUpperCase(Locale.ENGLISH);
 		this.isBeaconBase = true;
 		this.isRare = isRare;
 		this.materialType = type;
@@ -232,8 +231,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	/**
 	 * Gets the tool harvest level.
 	 *
-	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool
-	 *         equivalent)
+	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool equivalent)
 	 */
 	public int getToolHarvestLevel() {
 		return (int) (this.stats.get(MaterialStats.HARDNESS) / 3f);
@@ -259,11 +257,10 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	/**
-	 * Gets the tool harvest level needed from a tool trying to mine this
-	 * material's ore and other blocks.
+	 * Gets the tool harvest level needed from a tool trying to mine this material's ore and other
+	 * blocks.
 	 *
-	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool
-	 *         equivalent)
+	 * @return an integer from -1 (equivalent to no tool) to 3 (diamond tool equivalent)
 	 */
 	public int getRequiredHarvestLevel() {
 		return (int) clamp((0.9f * this.stats.get(MaterialStats.HARDNESS)) / 3f, -1, 3);
@@ -309,8 +306,8 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	/**
-	 * Gets the number used to determine how quickly a block is mined with a
-	 * tool made from this material.
+	 * Gets the number used to determine how quickly a block is mined with a tool made from this
+	 * material.
 	 *
 	 * @return the number used to determine how quickly a block is mined
 	 */
@@ -348,8 +345,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	/**
 	 * Gets the number used to determine how much damage an armor item can take.
 	 *
-	 * @return The number used to determine how much damage an armor item can
-	 *         take.
+	 * @return The number used to determine how much damage an armor item can take.
 	 */
 	public int getArmorMaxDamageFactor() {
 		return (int) (2.0f * this.stats.get(MaterialStats.STRENGTH));
@@ -361,15 +357,15 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return the {@link net.minecraft.entity.passive.HorseArmorType#protection} value
 	 */
 	public int getHorseArmorProtection() {
-		return (int) (this.stats.get(MaterialStats.HARDNESS) / 10.0 * 11.0);
+		return (int) ((this.stats.get(MaterialStats.HARDNESS) / 10.0) * 11.0);
 	}
 
 	/**
-	 * Gets the protection value for helmets, chestplates, leg armor, and boots
-	 * made from this material.
+	 * Gets the protection value for helmets, chestplates, leg armor, and boots made from this
+	 * material.
 	 *
-	 * @return the protection value for helmets, chestplates, leg armor, and
-	 *         boots made from this material
+	 * @return the protection value for helmets, chestplates, leg armor, and boots made from this
+	 *         material
 	 */
 	public int[] getDamageReductionArray() {
 		if (this.cache == null) {
@@ -430,8 +426,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	/**
-	 * Sets the blast resistance of the material. Should only be used as a
-	 * builder method.
+	 * Sets the blast resistance of the material. Should only be used as a builder method.
 	 *
 	 * @param resistance
 	 *            The resistance for the material.
@@ -443,8 +438,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	/**
-	 * Sets the base weapon damage for the material. Should only be used as a
-	 * builder method.
+	 * Sets the base weapon damage for the material. Should only be used as a builder method.
 	 *
 	 * @param damage
 	 *            The base damage of the material.
@@ -459,14 +453,13 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * Adds a new item to the list of known items made from this material.
 	 *
 	 * @param name
-	 *            The name of the item. Existing names can be found in
-	 *            com.mcmoddev.lib.data.Names
+	 *            The name of the item. Existing names can be found in com.mcmoddev.lib.data.Names
 	 * @param item
 	 *            The item to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewItem(final Names name, final Item item) {
-		addNewItem(name.toString(), item);
+		this.addNewItem(name.toString(), item);
 		return this;
 	}
 
@@ -474,18 +467,17 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * Adds a new item to the list of known items made from this material.
 	 *
 	 * @param name
-	 *            The name of the item. Existing names can be found in
-	 *            com.mcmoddev.lib.data.Names
+	 *            The name of the item. Existing names can be found in com.mcmoddev.lib.data.Names
 	 * @param item
 	 *            The item to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewItem(@Nonnull final String name, @Nonnull final Item item) {
-		return this.addNewItemFromItemStack(name,  new ItemStack(item));
+		return this.addNewItemFromItemStack(name, new ItemStack(item));
 	}
 
 	public MMDMaterial addNewItemFromItemStack(final Names name, final ItemStack itemStack) {
-		addNewItemFromItemStack(name.toString(), itemStack);
+		this.addNewItemFromItemStack(name.toString(), itemStack);
 		return this;
 	}
 
@@ -495,7 +487,8 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @param itemStack
 	 * @return
 	 */
-	public MMDMaterial addNewItemFromItemStack(@Nonnull final String name, @Nonnull final ItemStack itemStack) {
+	public MMDMaterial addNewItemFromItemStack(@Nonnull final String name,
+			@Nonnull final ItemStack itemStack) {
 		if (!(itemStack.isEmpty())) {
 			this.items.put(name, itemStack);
 		}
@@ -506,14 +499,13 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * Adds a new block to the list of known items made from this material.
 	 *
 	 * @param name
-	 *            The name of the block. Existing names can be found in
-	 *            com.mcmoddev.lib.data.Names
+	 *            The name of the block. Existing names can be found in com.mcmoddev.lib.data.Names
 	 * @param block
 	 *            The block to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewBlock(final Names name, final Block block) {
-		addNewBlock(name.toString(), block);
+		this.addNewBlock(name.toString(), block);
 		return this;
 	}
 
@@ -521,15 +513,16 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * Adds a new block to the list of known items made from this material.
 	 *
 	 * @param name
-	 *            The name of the block. Existing names can be found in
-	 *            com.mcmoddev.lib.data.Names
+	 *            The name of the block. Existing names can be found in com.mcmoddev.lib.data.Names
 	 * @param block
 	 *            The block to add
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewBlock(@Nonnull final String name, @Nonnull final Block block) {
 		if (this.blocks.containsKey(name)) {
-			BaseMetals.logger.warn("Tried adding block %s to a material (%s) that already has it, don't do that!", name, this.getCapitalizedName());
+			BaseMetals.logger.warn(
+					"Tried adding block %s to a material (%s) that already has it, don't do that!",
+					name, this.getCapitalizedName());
 			return this;
 		}
 		this.blocks.put(name, block);
@@ -537,7 +530,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public MMDMaterial addNewBlockFromItemStack(final Names name, final ItemStack itemStack) {
-		addNewBlockFromItemStack(name.toString(), itemStack);
+		this.addNewBlockFromItemStack(name.toString(), itemStack);
 		return this;
 	}
 
@@ -547,37 +540,34 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @param itemStack
 	 * @return
 	 */
-	public MMDMaterial addNewBlockFromItemStack(@Nonnull final String name, @Nonnull final ItemStack itemStack) {
+	public MMDMaterial addNewBlockFromItemStack(@Nonnull final String name,
+			@Nonnull final ItemStack itemStack) {
 		final Item item = itemStack.getItem();
 		final Block block = Block.getBlockFromItem(item);
 		if (block != Blocks.AIR) {
-			addNewBlock(name, block);
+			this.addNewBlock(name, block);
 		}
 		return this;
 	}
 
 	/**
-	 * Get the item with name 'name' if it exists, null is returned if the item
-	 * does not exist.
+	 * Get the item with name 'name' if it exists, null is returned if the item does not exist.
 	 *
 	 * @param name
 	 *            Name of the item to retrieve
-	 * @return the Item registered with the material, null if one of that name
-	 *         was not registered
+	 * @return the Item registered with the material, null if one of that name was not registered
 	 */
 	@Nullable
 	public Item getItem(final Names name) {
-		return getItem(name.toString());
+		return this.getItem(name.toString());
 	}
 
 	/**
-	 * Get the item with name 'name' if it exists, null is returned if the item
-	 * does not exist.
+	 * Get the item with name 'name' if it exists, null is returned if the item does not exist.
 	 *
 	 * @param name
 	 *            Name of the item to retrieve
-	 * @return the Item registered with the material, null if one of that name
-	 *         was not registered
+	 * @return the Item registered with the material, null if one of that name was not registered
 	 */
 	@Nullable
 	public Item getItem(final String name) {
@@ -588,23 +578,23 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public ItemStack getItemStack(final Names name) {
-		return getItemStack(name.toString(), 1);
+		return this.getItemStack(name.toString(), 1);
 	}
 
 	public ItemStack getItemStack(final String name) {
-		return new ItemStack(getItem(name), 1);
+		return new ItemStack(this.getItem(name), 1);
 	}
 
 	public ItemStack getItemStack(final Names name, final int amount) {
-		return getItemStack(name.toString(), amount);
+		return this.getItemStack(name.toString(), amount);
 	}
 
 	public ItemStack getItemStack(final String name, final int amount) {
 		if ((!this.hasItem(name)) || (this.items.get(name) == null)) {
 			return ItemStack.EMPTY;
 		}
-		
-		ItemStack base = this.items.get(name);
+
+		final ItemStack base = this.items.get(name);
 		if (base.getHasSubtypes()) {
 			return new ItemStack(base.getItem(), amount, base.getMetadata());
 		} else {
@@ -613,13 +603,11 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	/**
-	 * Get the block with name 'name' if it exists, null is returned if the
-	 * block does not exist.
+	 * Get the block with name 'name' if it exists, null is returned if the block does not exist.
 	 *
 	 * @param name
 	 *            Name of the item to retrieve
-	 * @return the Block registered with the material, null if one of that name
-	 *         was not registered
+	 * @return the Block registered with the material, null if one of that name was not registered
 	 */
 	@Nullable
 	public Block getBlock(final Names name) {
@@ -627,13 +615,11 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	/**
-	 * Get the block with name 'name' if it exists, null is returned if the
-	 * block does not exist.
+	 * Get the block with name 'name' if it exists, null is returned if the block does not exist.
 	 *
 	 * @param name
 	 *            Name of the item to retrieve
-	 * @return the Block registered with the material, null if one of that name
-	 *         was not registered
+	 * @return the Block registered with the material, null if one of that name was not registered
 	 */
 	@Nullable
 	public Block getBlock(final String name) {
@@ -648,7 +634,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public ItemStack getBlockItemStack(final String name) {
-		return new ItemStack(getBlock(name), 1);
+		return new ItemStack(this.getBlock(name), 1);
 	}
 
 	public ItemStack getBlockItemStack(final Names name, final int amount) {
@@ -656,7 +642,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public ItemStack getBlockItemStack(final String name, final int amount) {
-		return new ItemStack(getBlock(name), amount);
+		return new ItemStack(this.getBlock(name), amount);
 	}
 
 	public Map<String, Block> getBlockRegistry() {
@@ -665,6 +651,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 
 	/**
 	 * Get all the blocks that are made from this material.
+	 *
 	 * @return ImmutableList&lt;Block&gt; - the blocks
 	 */
 	public ImmutableList<Block> getBlocks() {
@@ -673,6 +660,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 
 	/**
 	 * Get all the items that are made from/with this material.
+	 *
 	 * @return ImmutableList&lt;Item&gt; - the items
 	 */
 	public ImmutableList<ItemStack> getItems() {
@@ -817,7 +805,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	public boolean isDefault() {
 		return ("default".equalsIgnoreCase(this.getName()));
 	}
-	
+
 	public Map<String, ItemStack> getItemRegistry() {
 		return ImmutableMap.copyOf(this.items);
 	}

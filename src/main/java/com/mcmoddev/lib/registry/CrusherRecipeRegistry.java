@@ -21,21 +21,19 @@ import net.minecraftforge.registries.IForgeRegistryModifiable;
 import net.minecraftforge.registries.RegistryBuilder;
 
 /**
- * Original code by Dr. Cyano (aka: cyanobacterium on GitHub)
- * Rewritten entirely as part of the 1.12 porting by D. Hazelton, 20-SEP-2017
+ * Original code by Dr. Cyano (aka: cyanobacterium on GitHub) Rewritten entirely as part of the 1.12
+ * porting by D. Hazelton, 20-SEP-2017
  */
 public class CrusherRecipeRegistry {
+
 	private final IForgeRegistryModifiable<ICrusherRecipe> registry;
 	private static final CrusherRecipeRegistry instance = new CrusherRecipeRegistry();
 	private final List<String> disabledRecipes;
 
 	private CrusherRecipeRegistry() {
 		this.registry = (IForgeRegistryModifiable<ICrusherRecipe>) new RegistryBuilder<ICrusherRecipe>()
-				.setName(new ResourceLocation("mmdlib", "crusher_registry"))
-			    .allowModification()
-			    .setType(ICrusherRecipe.class)
-			    .setMaxID(Integer.MAX_VALUE >> 4)
-			    .create();
+				.setName(new ResourceLocation("mmdlib", "crusher_registry")).allowModification()
+				.setType(ICrusherRecipe.class).setMaxID(Integer.MAX_VALUE >> 4).create();
 		this.disabledRecipes = new ArrayList<>();
 	}
 
@@ -55,7 +53,8 @@ public class CrusherRecipeRegistry {
 	 * @param oreDict
 	 * @param output
 	 */
-	public static void addNewCrusherRecipe(@Nonnull final String oreDict, @Nonnull final ItemStack output) {
+	public static void addNewCrusherRecipe(@Nonnull final String oreDict,
+			@Nonnull final ItemStack output) {
 		if (!instance.disabledRecipes.contains(oreDict)) {
 			instance.register(new OreDictionaryCrusherRecipe(oreDict, output));
 		}
@@ -66,7 +65,8 @@ public class CrusherRecipeRegistry {
 	 * @param input
 	 * @param output
 	 */
-	public static void addNewCrusherRecipe(@Nonnull final Block input, @Nonnull final ItemStack output) {
+	public static void addNewCrusherRecipe(@Nonnull final Block input,
+			@Nonnull final ItemStack output) {
 		if (recipeAllowed(input)) {
 			instance.register(new ArbitraryCrusherRecipe(input, output));
 		}
@@ -77,7 +77,8 @@ public class CrusherRecipeRegistry {
 	 * @param input
 	 * @param output
 	 */
-	public static void addNewCrusherRecipe(@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
+	public static void addNewCrusherRecipe(@Nonnull final ItemStack input,
+			@Nonnull final ItemStack output) {
 		if (recipeAllowed(input)) {
 			instance.register(new ArbitraryCrusherRecipe(input, output));
 		}
@@ -88,7 +89,8 @@ public class CrusherRecipeRegistry {
 	 * @param input
 	 * @param output
 	 */
-	public static void addNewCrusherRecipe(@Nonnull final Item input, @Nonnull final ItemStack output) {
+	public static void addNewCrusherRecipe(@Nonnull final Item input,
+			@Nonnull final ItemStack output) {
 		if (recipeAllowed(new ItemStack(input))) {
 			instance.register(new ArbitraryCrusherRecipe(input, output));
 		}
@@ -99,9 +101,9 @@ public class CrusherRecipeRegistry {
 	}
 
 	private static boolean recipeAllowed(final ItemStack input) {
-		List<ItemStack> items = new ArrayList<>();
+		final List<ItemStack> items = new ArrayList<>();
 		instance.disabledRecipes.stream()
-		.forEach(oreDict -> items.addAll(OreDictionary.getOres(oreDict)));
+				.forEach(oreDict -> items.addAll(OreDictionary.getOres(oreDict)));
 
 		if (items.isEmpty()) {
 			return true;
@@ -131,14 +133,15 @@ public class CrusherRecipeRegistry {
 
 	/**
 	 * get an ICrusherRecipe for a given input, if one exists.
+	 *
 	 * @param itemStack
 	 * @return
 	 */
 	public static ICrusherRecipe getRecipeForInputItem(@Nonnull final ItemStack itemStack) {
-		Iterator<ICrusherRecipe> iter = instance.registry.iterator();
+		final Iterator<ICrusherRecipe> iter = instance.registry.iterator();
 
 		while (iter.hasNext()) {
-			ICrusherRecipe cur = iter.next();
+			final ICrusherRecipe cur = iter.next();
 			if (cur.isValidInput(itemStack)) {
 				return cur;
 			}
@@ -154,7 +157,7 @@ public class CrusherRecipeRegistry {
 	 * @return
 	 */
 	public static ResourceLocation getNameForInputItem(@Nonnull final ItemStack itemStack) {
-		ICrusherRecipe r = getRecipeForInputItem(itemStack);
+		final ICrusherRecipe r = getRecipeForInputItem(itemStack);
 
 		if (r != null) {
 			return instance.registry.getKey(r);
@@ -181,9 +184,9 @@ public class CrusherRecipeRegistry {
 	 * @param oreDictName
 	 */
 	public static void removeByInput(@Nonnull final String oreDictName) {
-		NonNullList<ItemStack> itemStacks = OreDictionary.getOres(oreDictName);
+		final NonNullList<ItemStack> itemStacks = OreDictionary.getOres(oreDictName);
 
-		for (ItemStack itemStack : itemStacks) {
+		for (final ItemStack itemStack : itemStacks) {
 			removeByName(getNameForInputItem(itemStack));
 		}
 	}

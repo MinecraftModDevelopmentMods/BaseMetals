@@ -45,11 +45,16 @@ public class VeinMinerBase implements IIntegration {
 	 */
 	protected static void addToolsForMaterial(@Nonnull final String materialName) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
-		IMCMessage.addTool(Names.AXE.toString(), ownerModID + ":" + materialName + "_" + Names.AXE.toString());
-		IMCMessage.addTool(Names.HOE.toString(), ownerModID + ":" + materialName + "_" + Names.HOE.toString());
-		IMCMessage.addTool(Names.PICKAXE.toString(), ownerModID + ":" + materialName + "_" + Names.PICKAXE.toString());
-		IMCMessage.addTool(Names.SHEARS.toString(), ownerModID + ":" + materialName + "_" + Names.SHEARS.toString());
-		IMCMessage.addTool(Names.SHOVEL.toString(), ownerModID + ":" + materialName + "_" + Names.SHOVEL.toString());
+		IMCMessage.addTool(Names.AXE.toString(),
+				ownerModID + ":" + materialName + "_" + Names.AXE.toString());
+		IMCMessage.addTool(Names.HOE.toString(),
+				ownerModID + ":" + materialName + "_" + Names.HOE.toString());
+		IMCMessage.addTool(Names.PICKAXE.toString(),
+				ownerModID + ":" + materialName + "_" + Names.PICKAXE.toString());
+		IMCMessage.addTool(Names.SHEARS.toString(),
+				ownerModID + ":" + materialName + "_" + Names.SHEARS.toString());
+		IMCMessage.addTool(Names.SHOVEL.toString(),
+				ownerModID + ":" + materialName + "_" + Names.SHOVEL.toString());
 
 		IMCMessage.addTool("hammer", ownerModID + ":" + materialName + "_hammer");
 	}

@@ -12,7 +12,8 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = DenseOres.PLUGIN_MODID)
-public final class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBase implements IIntegration {
+public final class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseOresBase
+		implements IIntegration {
 
 	@Override
 	public void init() {
@@ -29,9 +30,10 @@ public final class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseO
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
 	private static void registerOres() {
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD,
-				MaterialNames.MERCURY, MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.MERCURY,
+				MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
 				MaterialNames.TIN, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
@@ -46,7 +48,8 @@ public final class DenseOres extends com.mcmoddev.lib.integration.plugins.DenseO
 						default:
 							baseMaterial = Oredicts.STONE;
 					}
-					registerOre(String.format("%s_%s", materialName, Oredicts.ORE), baseMaterial, 0);
+					registerOre(String.format("%s_%s", materialName, Oredicts.ORE), baseMaterial,
+							0);
 				});
 	}
 }

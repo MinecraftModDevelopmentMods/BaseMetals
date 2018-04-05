@@ -17,7 +17,8 @@ public class TraitSoft extends AbstractTrait {
 	}
 
 	@Override
-	public int onToolDamage(@Nonnull final ItemStack tool, @Nonnull final int damage, @Nonnull final int newDamage, @Nonnull final EntityLivingBase entity) {
+	public int onToolDamage(@Nonnull final ItemStack tool, @Nonnull final int damage,
+			@Nonnull final int newDamage, @Nonnull final EntityLivingBase entity) {
 		return super.onToolDamage(tool, damage, newDamage + ((int) (damage * 1.25f)), entity);
 	}
 }

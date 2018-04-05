@@ -21,7 +21,8 @@ public class ItemMMDSlab extends net.minecraft.item.ItemSlab implements IMMDObje
 	 *            The material to make the slab from
 	 */
 	public ItemMMDSlab(final MMDMaterial material) {
-		super(material.getBlock(Names.SLAB), (BlockSlab) material.getBlock(Names.SLAB), (BlockSlab) material.getBlock(Names.DOUBLE_SLAB));
+		super(material.getBlock(Names.SLAB), (BlockSlab) material.getBlock(Names.SLAB),
+				(BlockSlab) material.getBlock(Names.DOUBLE_SLAB));
 		this.material = material;
 		this.setMaxDamage(0);
 		this.setHasSubtypes(false);

@@ -7,10 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
- * Superclass for all crushed-item recipes. For recipes that use the
- * OreDictionary to describe the input item, use the OreDictionaryCrusherRecipe
- * class. If not using the OreDictionary, use the ArbitraryCrusherRecipe class.
- * Note that you should use the OreDictionary for most recipes.
+ * Superclass for all crushed-item recipes. For recipes that use the OreDictionary to describe the
+ * input item, use the OreDictionaryCrusherRecipe class. If not using the OreDictionary, use the
+ * ArbitraryCrusherRecipe class. Note that you should use the OreDictionary for most recipes.
  *
  * @author DrCyano
  *
@@ -36,16 +35,15 @@ public interface ICrusherRecipe extends IForgeRegistryEntry<ICrusherRecipe> {
 	 *
 	 * @param input
 	 *            An ItemStack to test
-	 * @return Returns true if and only if this recipe should produce an output
-	 *         item from the given input.
+	 * @return Returns true if and only if this recipe should produce an output item from the given
+	 *         input.
 	 */
 	public abstract boolean isValidInput(ItemStack input);
 
 	/**
-	 * Returns a list of all registered blocks/items for which
-	 * <code>isValidInput(...)</code> would return true. This method is only
-	 * used for displaying recipes in NEI and does not need to be performance
-	 * optimized.
+	 * Returns a list of all registered blocks/items for which <code>isValidInput(...)</code> would
+	 * return true. This method is only used for displaying recipes in NEI and does not need to be
+	 * performance optimized.
 	 *
 	 * @return A list of allowed inputs.
 	 */

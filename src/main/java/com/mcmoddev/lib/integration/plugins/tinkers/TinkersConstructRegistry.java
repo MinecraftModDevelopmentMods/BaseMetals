@@ -14,9 +14,9 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
 import slimeknights.tconstruct.library.MaterialIntegration;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
@@ -64,18 +64,18 @@ public class TinkersConstructRegistry {
 
 	/**
 	 *
-	 * @param mat
+	 * @param material
 	 * @return
 	 */
-	public TCMaterial newMaterial(@Nonnull final MMDMaterial mat) {
+	public TCMaterial newMaterial(@Nonnull final MMDMaterial material) {
 		final String curMod = Loader.instance().activeModContainer().getModId();
 		final Map<String, TCMaterial> work = registry.getOrDefault(curMod, new HashMap<>());
-		if (work.isEmpty() || !work.containsKey(mat.getName())) {
-			work.put(mat.getName(), TCMaterial.get(mat));
+		if (work.isEmpty() || !work.containsKey(material.getName())) {
+			work.put(material.getName(), TCMaterial.get(material));
 			registry.put(curMod, work);
 		}
 
-		return work.get(mat.getName());
+		return work.get(material.getName());
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class TinkersConstructRegistry {
 			}
 		}
 
-		return newMaterial(name, 0xFFFFFFFF);
+		return this.newMaterial(name, 0xFFFFFFFF);
 	}
 
 	/**
@@ -124,7 +124,8 @@ public class TinkersConstructRegistry {
 	 * @param result
 	 * @param input
 	 */
-	public void registerAlloy(@Nonnull final String name, @Nonnull final FluidStack result, final FluidStack... input) {
+	public void registerAlloy(@Nonnull final String name, @Nonnull final FluidStack result,
+			final FluidStack... input) {
 		final String curMod = Loader.instance().activeModContainer().getModId();
 		final Map<String, AlloyRecipe> curRecipes = alloys.getOrDefault(curMod, new HashMap<>());
 		if (curRecipes.containsKey(name)) {
@@ -167,7 +168,8 @@ public class TinkersConstructRegistry {
 	 */
 	public void setupIntegrations() {
 		final String curMod = Loader.instance().activeModContainer().getModId();
-		BaseMetals.logger.debug("setupIntegrations() for mod %s (%d integrations)", curMod, registry.get(curMod).size());
+		BaseMetals.logger.debug("setupIntegrations() for mod %s (%d integrations)", curMod,
+				registry.get(curMod).size());
 		for (final Entry<String, TCMaterial> entry : registry.get(curMod).entrySet()) {
 			BaseMetals.logger.debug("processing material %s from mod %s", entry.getKey(), curMod);
 			final TCMaterial material = entry.getValue();
@@ -182,7 +184,8 @@ public class TinkersConstructRegistry {
 				material.getMaterial().setCastable(true);
 			}
 
-			MaterialIntegration integration = new MaterialIntegration(material.getMaterial(), material.getFluid(), material.getMMDMaterial().getCapitalizedName());
+			final MaterialIntegration integration = new MaterialIntegration(material.getMaterial(),
+					material.getFluid(), material.getMMDMaterial().getCapitalizedName());
 
 			if (material.getRepresentativeItemName() != null) {
 				integration.setRepresentativeItem(material.getRepresentativeItemName());
@@ -192,7 +195,8 @@ public class TinkersConstructRegistry {
 				integration.toolforge();
 			}
 
-			final List<MaterialIntegration> cmi = integrations.getOrDefault(curMod, new ArrayList<>());
+			final List<MaterialIntegration> cmi = integrations.getOrDefault(curMod,
+					new ArrayList<>());
 			cmi.add(integration);
 			integrations.put(curMod, cmi);
 			TinkerRegistry.integrate(integration);
@@ -230,7 +234,7 @@ public class TinkersConstructRegistry {
 			curMat.addItem(rI, 1, 144);
 			curMat.setRepresentativeItem(rI);
 			curMat.addCommonItems(curMMDMat.getCapitalizedName());
-			addTraits(work);
+			this.addTraits(work);
 		}
 	}
 
@@ -278,7 +282,8 @@ public class TinkersConstructRegistry {
 	public void resolveTraits(@Nonnull final String forMod) {
 		BaseMetals.logger.debug("Resolving traits for materials added by mod %s", forMod);
 		for (final Entry<String, TCMaterial> entry : registry.get(forMod).entrySet()) {
-			BaseMetals.logger.debug("Resolving traits for material %s (%s)", entry.getKey(), entry.getValue());
+			BaseMetals.logger.debug("Resolving traits for material %s (%s)", entry.getKey(),
+					entry.getValue());
 			entry.getValue().resolveTraits();
 		}
 	}
@@ -291,7 +296,8 @@ public class TinkersConstructRegistry {
 		final String curMod = forMod;
 		for (final Entry<String, TCMaterial> entry : registry.get(curMod).entrySet()) {
 			if (entry.getValue().getMaterial().isHidden()) {
-				BaseMetals.logger.debug("Setting material %s to visible", entry.getValue().getMMDMaterial().getCapitalizedName());
+				BaseMetals.logger.debug("Setting material %s to visible",
+						entry.getValue().getMMDMaterial().getCapitalizedName());
 				entry.getValue().getMaterial().setVisible();
 			}
 		}

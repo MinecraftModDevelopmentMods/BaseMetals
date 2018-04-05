@@ -14,15 +14,15 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenClass("mods.mmdlib.CrusherRecipes")
 @ZenRegister
 public class CrusherRecipes {
+
 	private CrusherRecipes() {
 		// private constructor
 	}
 
 	private static void removeMatchFull(final ItemStack input, final ItemStack output) {
-		CrusherRecipeRegistry.getAll().stream()
-		.filter(rec -> rec.getInputs().contains(input))
-		.filter(rec -> rec.getOutput().equals(output))
-		.forEach(rec -> CrusherRecipeRegistry.removeByName(rec.getRegistryName()));
+		CrusherRecipeRegistry.getAll().stream().filter(rec -> rec.getInputs().contains(input))
+				.filter(rec -> rec.getOutput().equals(output))
+				.forEach(rec -> CrusherRecipeRegistry.removeByName(rec.getRegistryName()));
 	}
 
 	private static void removeMatch(final ItemStack input) {

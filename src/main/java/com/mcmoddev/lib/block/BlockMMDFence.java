@@ -21,12 +21,14 @@ public class BlockMMDFence extends net.minecraft.block.BlockFence implements IMM
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 	}
 
 	// We don't specifically need this, but it does mean less logic being run on each check
 	@Override
-	public boolean canPlaceTorchOnTop(final IBlockState state, final IBlockAccess world, final BlockPos pos) {
+	public boolean canPlaceTorchOnTop(final IBlockState state, final IBlockAccess world,
+			final BlockPos pos) {
 		return true;
 	}
 

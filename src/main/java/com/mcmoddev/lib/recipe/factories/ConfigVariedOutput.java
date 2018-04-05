@@ -27,72 +27,78 @@ public class ConfigVariedOutput implements IRecipeFactory {
 
 	@Override
 	public IRecipe parse(final JsonContext context, final JsonObject json) {
-		String confKey = JsonUtils.getString(json, "config_key");
+		final String confKey = JsonUtils.getString(json, "config_key");
 		int resAmount = 0;
 
 		switch (confKey) {
-		case "gear":
-			resAmount = Options.gearQuantity();
-			break;
-		case "plate":
-			resAmount = Options.plateQuantity();
-			break;
-		default:
-			BaseMetals.logger.error("Unknown quantity config value {}, setting to 1", confKey);
-			resAmount = 1;
+			case "gear":
+				resAmount = Options.gearQuantity();
+				break;
+			case "plate":
+				resAmount = Options.plateQuantity();
+				break;
+			default:
+				BaseMetals.logger.error("Unknown quantity config value {}, setting to 1", confKey);
+				resAmount = 1;
 		}
 
-		// load the data here, map the ingredients, setup the primer and return the ShapedOreRecipe :)
+		// load the data here, map the ingredients, setup the primer and return the ShapedOreRecipe
+		// :)
 		final Map<Character, Ingredient> ingMap = Maps.newHashMap();
 
 		JsonUtils.getJsonObject(json, "key").entrySet().stream()
-		.filter(ent -> ent.getKey().length() == 1 && !ent.getKey().isEmpty())
-		.forEach(ent -> ingMap.put(ent.getKey().toCharArray()[0], CraftingHelper.getIngredient(ent.getValue(), context)));
+				.filter(ent -> (ent.getKey().length() == 1) && !ent.getKey().isEmpty())
+				.forEach(ent -> ingMap.put(ent.getKey().toCharArray()[0],
+						CraftingHelper.getIngredient(ent.getValue(), context)));
 
-        ingMap.put(' ', Ingredient.EMPTY);
+		ingMap.put(' ', Ingredient.EMPTY);
 
-        JsonArray patternJ = JsonUtils.getJsonArray(json, "pattern");
-        if (patternJ.size() == 0) {
-        	throw new JsonSyntaxException("Invalid pattern: empty pattern not allows");
-        }
+		final JsonArray patternJ = JsonUtils.getJsonArray(json, "pattern");
+		if (patternJ.size() == 0) {
+			throw new JsonSyntaxException("Invalid pattern: empty pattern not allows");
+		}
 
-        final String[] pattern = new String[patternJ.size()];
+		final String[] pattern = new String[patternJ.size()];
 
-        for (int x = 0; x < pattern.length; ++x) {
-            final String line = JsonUtils.getString(patternJ.get(x), "pattern[" + x + "]");
-            if (x > 0 && pattern[0].length() != line.length()) {
-                throw new JsonSyntaxException("Invalid pattern: each row must  be the same width");
-            }
-            pattern[x] = line;
-        }
+		for (int x = 0; x < pattern.length; ++x) {
+			final String line = JsonUtils.getString(patternJ.get(x), "pattern[" + x + "]");
+			if ((x > 0) && (pattern[0].length() != line.length())) {
+				throw new JsonSyntaxException("Invalid pattern: each row must  be the same width");
+			}
+			pattern[x] = line;
+		}
 
 		final ShapedPrimer primer = new ShapedPrimer();
-        primer.width = pattern[0].length();
-        primer.height = pattern.length;
-        primer.mirrored = true;
-        primer.input = NonNullList.withSize(primer.width * primer.height, Ingredient.EMPTY);
-        final Set<Character> keys = Sets.newHashSet(ingMap.keySet());
-        keys.remove(' ');
+		primer.width = pattern[0].length();
+		primer.height = pattern.length;
+		primer.mirrored = true;
+		primer.input = NonNullList.withSize(primer.width * primer.height, Ingredient.EMPTY);
+		final Set<Character> keys = Sets.newHashSet(ingMap.keySet());
+		keys.remove(' ');
 
-        int x = 0;
-        for (final String line : pattern) {
-        	for (final char chr : line.toCharArray()) {
-        		final Ingredient ing = ingMap.get(chr);
-        		if (ing == null) {
-        			throw new JsonSyntaxException("Pattern references symbol '" + chr + "' but it's not defined in the key");
-        		}
-        		primer.input.set(x++, ing);
-        		keys.remove(chr);
-        	}
-        }
+		int x = 0;
+		for (final String line : pattern) {
+			for (final char chr : line.toCharArray()) {
+				final Ingredient ing = ingMap.get(chr);
+				if (ing == null) {
+					throw new JsonSyntaxException("Pattern references symbol '" + chr
+							+ "' but it's not defined in the key");
+				}
+				primer.input.set(x++, ing);
+				keys.remove(chr);
+			}
+		}
 
-        if (!keys.isEmpty()) {
-        	throw new JsonSyntaxException("Key defines symbols that aren't used in pattern: " + keys);
-        }
+		if (!keys.isEmpty()) {
+			throw new JsonSyntaxException(
+					"Key defines symbols that aren't used in pattern: " + keys);
+		}
 
 		final String group = JsonUtils.getString(json, "group", "");
-        final ItemStack result = CraftingHelper.getItemStack(JsonUtils.getJsonObject(json, "result"), context);
-        result.setCount(resAmount);
-        return new ShapedOreRecipe(group.isEmpty() ? null : new ResourceLocation(group), result, primer);
+		final ItemStack result = CraftingHelper
+				.getItemStack(JsonUtils.getJsonObject(json, "result"), context);
+		result.setCount(resAmount);
+		return new ShapedOreRecipe(group.isEmpty() ? null : new ResourceLocation(group), result,
+				primer);
 	}
 }

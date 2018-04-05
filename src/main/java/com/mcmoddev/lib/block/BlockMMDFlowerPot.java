@@ -14,13 +14,16 @@ public class BlockMMDFlowerPot extends net.minecraft.block.BlockFlowerPot implem
 	 * @param material
 	 */
 	public BlockMMDFlowerPot(final MMDMaterial material) {
-        super();
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CONTENTS, BlockFlowerPot.EnumFlowerType.EMPTY).withProperty(LEGACY_DATA, Integer.valueOf(0)));
+		super();
+		this.setDefaultState(this.blockState.getBaseState()
+				.withProperty(CONTENTS, BlockFlowerPot.EnumFlowerType.EMPTY)
+				.withProperty(LEGACY_DATA, Integer.valueOf(0)));
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

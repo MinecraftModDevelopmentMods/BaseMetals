@@ -78,8 +78,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 /**
- * This class initializes all items in Base Metals and provides some utility
- * methods for looking up items.
+ * This class initializes all items in Base Metals and provides some utility methods for looking up
+ * items.
  *
  * @author Jasmine Iwanek
  *
@@ -89,7 +89,8 @@ public abstract class Items {
 	private static final BiMap<String, Item> itemRegistry = HashBiMap.create(34);
 	private static final Map<MMDMaterial, List<Item>> itemsByMaterial = new HashMap<>();
 
-	private static final EnumMap<Names, Class<? extends Item>> nameToClass = new EnumMap<>(Names.class);
+	private static final EnumMap<Names, Class<? extends Item>> nameToClass = new EnumMap<>(
+			Names.class);
 	private static final EnumMap<Names, String> nameToOredict = new EnumMap<>(Names.class);
 	private static final EnumMap<Names, Boolean> nameToEnabled = new EnumMap<>(Names.class);
 
@@ -107,48 +108,86 @@ public abstract class Items {
 	 *
 	 */
 	public static void init() {
-		addItemType(Names.CRYSTAL, ItemMMDIngot.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.CRYSTAL);
-		addItemType(Names.GEM, ItemMMDIngot.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.GEM);
-		addItemType(Names.ANVIL, ItemMMDAnvilBlock.class, Options.isThingEnabled(ConfigKeys.ANVIL), null);
-		addItemType(Names.ARROW, ItemMMDArrow.class, Options.isThingEnabled(ConfigKeys.BOW_AND_ARROW), Oredicts.ARROW);
-		addItemType(Names.AXE, ItemMMDAxe.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
-		addItemType(Names.BLEND, ItemMMDBlend.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.DUST);
-		addItemType(Names.BOLT, ItemMMDBolt.class, Options.isThingEnabled(ConfigKeys.CROSSBOW_AND_BOLT), null);
-		addItemType(Names.BOOTS, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR), null);
-		addItemType(Names.BOW, ItemMMDBow.class, Options.isThingEnabled(ConfigKeys.BOW_AND_ARROW), null);
-		addItemType(Names.CHESTPLATE, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR), null);
-		addItemType(Names.CRACKHAMMER, ItemMMDCrackHammer.class, Options.isThingEnabled(ConfigKeys.CRACKHAMMER), null);
-		addItemType(Names.CROSSBOW, ItemMMDCrossbow.class, Options.isThingEnabled(ConfigKeys.CROSSBOW_AND_BOLT), null);
+		addItemType(Names.CRYSTAL, ItemMMDIngot.class, Options.isThingEnabled(ConfigKeys.BASICS),
+				Oredicts.CRYSTAL);
+		addItemType(Names.GEM, ItemMMDIngot.class, Options.isThingEnabled(ConfigKeys.BASICS),
+				Oredicts.GEM);
+		addItemType(Names.ANVIL, ItemMMDAnvilBlock.class, Options.isThingEnabled(ConfigKeys.ANVIL),
+				null);
+		addItemType(Names.ARROW, ItemMMDArrow.class,
+				Options.isThingEnabled(ConfigKeys.BOW_AND_ARROW), Oredicts.ARROW);
+		addItemType(Names.AXE, ItemMMDAxe.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS),
+				null);
+		addItemType(Names.BLEND, ItemMMDBlend.class, Options.isThingEnabled(ConfigKeys.BASICS),
+				Oredicts.DUST);
+		addItemType(Names.BOLT, ItemMMDBolt.class,
+				Options.isThingEnabled(ConfigKeys.CROSSBOW_AND_BOLT), null);
+		addItemType(Names.BOOTS, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR),
+				null);
+		addItemType(Names.BOW, ItemMMDBow.class, Options.isThingEnabled(ConfigKeys.BOW_AND_ARROW),
+				null);
+		addItemType(Names.CHESTPLATE, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR),
+				null);
+		addItemType(Names.CRACKHAMMER, ItemMMDCrackHammer.class,
+				Options.isThingEnabled(ConfigKeys.CRACKHAMMER), null);
+		addItemType(Names.CROSSBOW, ItemMMDCrossbow.class,
+				Options.isThingEnabled(ConfigKeys.CROSSBOW_AND_BOLT), null);
 		addItemType(Names.DOOR, ItemMMDDoor.class, Options.isThingEnabled(ConfigKeys.DOOR), null);
-		addItemType(Names.FISHING_ROD, ItemMMDFishingRod.class, Options.isThingEnabled(ConfigKeys.FISHING_ROD), null);
-		addItemType(Names.HELMET, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR), null);
-		addItemType(Names.HOE, ItemMMDHoe.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
-		addItemType(Names.HORSE_ARMOR, ItemMMDHorseArmor.class, Options.isThingEnabled(ConfigKeys.HORSE_ARMOR), null);
-		addItemType(Names.INGOT, ItemMMDIngot.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.INGOT);
-		addItemType(Names.LEGGINGS, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR), null);
-		addItemType(Names.NUGGET, ItemMMDNugget.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.NUGGET);
-		addItemType(Names.PICKAXE, ItemMMDPickaxe.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
-		addItemType(Names.POWDER, ItemMMDPowder.class, Options.isThingEnabled(ConfigKeys.BASICS), Oredicts.DUST);
-		addItemType(Names.SHEARS, ItemMMDShears.class, Options.isThingEnabled(ConfigKeys.SHEARS), null);
-		addItemType(Names.SHIELD, ItemMMDShield.class, Options.isThingEnabled(ConfigKeys.SHIELD), Oredicts.SHIELD);
-		addItemType(Names.SHOVEL, ItemMMDShovel.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
-		addItemType(Names.SCYTHE, ItemMMDSickle.class, Options.isThingEnabled(ConfigKeys.SCYTHE), null);
-		addItemType(Names.SLAB, ItemMMDSlab.class, Options.isThingEnabled(ConfigKeys.SLAB), Oredicts.SLAB);
-		addItemType(Names.SMALLBLEND, ItemMMDSmallBlend.class, Options.isThingEnabled(ConfigKeys.SMALL_DUST), Oredicts.DUST_TINY);
-		addItemType(Names.SMALLPOWDER, ItemMMDSmallPowder.class, Options.isThingEnabled(ConfigKeys.SMALL_DUST), Oredicts.DUST_TINY);
-		addItemType(Names.SWORD, ItemMMDSword.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
-		addItemType(Names.ROD, ItemMMDRod.class, Options.isThingEnabled(ConfigKeys.ROD), Oredicts.ROD);
-		addItemType(Names.GEAR, ItemMMDGear.class, Options.isThingEnabled(ConfigKeys.GEAR), Oredicts.GEAR);
+		addItemType(Names.FISHING_ROD, ItemMMDFishingRod.class,
+				Options.isThingEnabled(ConfigKeys.FISHING_ROD), null);
+		addItemType(Names.HELMET, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR),
+				null);
+		addItemType(Names.HOE, ItemMMDHoe.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS),
+				null);
+		addItemType(Names.HORSE_ARMOR, ItemMMDHorseArmor.class,
+				Options.isThingEnabled(ConfigKeys.HORSE_ARMOR), null);
+		addItemType(Names.INGOT, ItemMMDIngot.class, Options.isThingEnabled(ConfigKeys.BASICS),
+				Oredicts.INGOT);
+		addItemType(Names.LEGGINGS, ItemMMDArmor.class, Options.isThingEnabled(ConfigKeys.ARMOR),
+				null);
+		addItemType(Names.NUGGET, ItemMMDNugget.class, Options.isThingEnabled(ConfigKeys.BASICS),
+				Oredicts.NUGGET);
+		addItemType(Names.PICKAXE, ItemMMDPickaxe.class,
+				Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
+		addItemType(Names.POWDER, ItemMMDPowder.class, Options.isThingEnabled(ConfigKeys.BASICS),
+				Oredicts.DUST);
+		addItemType(Names.SHEARS, ItemMMDShears.class, Options.isThingEnabled(ConfigKeys.SHEARS),
+				null);
+		addItemType(Names.SHIELD, ItemMMDShield.class, Options.isThingEnabled(ConfigKeys.SHIELD),
+				Oredicts.SHIELD);
+		addItemType(Names.SHOVEL, ItemMMDShovel.class,
+				Options.isThingEnabled(ConfigKeys.BASIC_TOOLS), null);
+		addItemType(Names.SCYTHE, ItemMMDSickle.class, Options.isThingEnabled(ConfigKeys.SCYTHE),
+				null);
+		addItemType(Names.SLAB, ItemMMDSlab.class, Options.isThingEnabled(ConfigKeys.SLAB),
+				Oredicts.SLAB);
+		addItemType(Names.SMALLBLEND, ItemMMDSmallBlend.class,
+				Options.isThingEnabled(ConfigKeys.SMALL_DUST), Oredicts.DUST_TINY);
+		addItemType(Names.SMALLPOWDER, ItemMMDSmallPowder.class,
+				Options.isThingEnabled(ConfigKeys.SMALL_DUST), Oredicts.DUST_TINY);
+		addItemType(Names.SWORD, ItemMMDSword.class, Options.isThingEnabled(ConfigKeys.BASIC_TOOLS),
+				null);
+		addItemType(Names.ROD, ItemMMDRod.class, Options.isThingEnabled(ConfigKeys.ROD),
+				Oredicts.ROD);
+		addItemType(Names.GEAR, ItemMMDGear.class, Options.isThingEnabled(ConfigKeys.GEAR),
+				Oredicts.GEAR);
 
-		addItemType(Names.CASING, GenericMMDItem.class, Options.enableModderSupportThings(), Oredicts.CASING);
-		addItemType(Names.DENSE_PLATE, GenericMMDItem.class, Options.enableModderSupportThings(), Oredicts.PLATE_DENSE);
+		addItemType(Names.CASING, GenericMMDItem.class, Options.enableModderSupportThings(),
+				Oredicts.CASING);
+		addItemType(Names.DENSE_PLATE, GenericMMDItem.class, Options.enableModderSupportThings(),
+				Oredicts.PLATE_DENSE);
 
-		addItemType(Names.CRUSHED, GenericMMDItem.class, Options.isModEnabled(IC2Base.PLUGIN_MODID), Oredicts.CRUSHED);
-		addItemType(Names.CRUSHED_PURIFIED, GenericMMDItem.class, Options.isModEnabled(IC2Base.PLUGIN_MODID), Oredicts.CRUSHED_PURIFIED);
+		addItemType(Names.CRUSHED, GenericMMDItem.class, Options.isModEnabled(IC2Base.PLUGIN_MODID),
+				Oredicts.CRUSHED);
+		addItemType(Names.CRUSHED_PURIFIED, GenericMMDItem.class,
+				Options.isModEnabled(IC2Base.PLUGIN_MODID), Oredicts.CRUSHED_PURIFIED);
 
-		addItemType(Names.SHARD, GenericMMDItem.class, Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.SHARD);
-		addItemType(Names.CLUMP, GenericMMDItem.class, Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.CLUMP);
-		addItemType(Names.POWDER_DIRTY, GenericMMDItem.class, Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.DUST_DIRTY);
+		addItemType(Names.SHARD, GenericMMDItem.class,
+				Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.SHARD);
+		addItemType(Names.CLUMP, GenericMMDItem.class,
+				Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.CLUMP);
+		addItemType(Names.POWDER_DIRTY, GenericMMDItem.class,
+				Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.DUST_DIRTY);
 
 		try {
 			expandCombatArrays(net.minecraft.item.ItemAxe.class);
@@ -175,7 +214,8 @@ public abstract class Items {
 		classSortingValues.put(ItemMMDPowder.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDBlend.class, classSortingValues.get(ItemMMDPowder.class));
 		classSortingValues.put(ItemMMDSmallPowder.class, ++ss * 10000);
-		classSortingValues.put(ItemMMDSmallBlend.class, classSortingValues.get(ItemMMDSmallPowder.class));
+		classSortingValues.put(ItemMMDSmallBlend.class,
+				classSortingValues.get(ItemMMDSmallPowder.class));
 		classSortingValues.put(ItemMMDCrackHammer.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDPickaxe.class, ++ss * 10000);
 		classSortingValues.put(ItemMMDShovel.class, ++ss * 10000);
@@ -212,7 +252,8 @@ public abstract class Items {
 	protected static void addToMetList() {
 		final List<MMDMaterial> metlist = new ArrayList<>(Materials.getAllMaterials().size());
 		metlist.addAll(Materials.getAllMaterials());
-		metlist.sort((MMDMaterial a, MMDMaterial b) -> a.getName().compareToIgnoreCase(b.getName()));
+		metlist.sort((final MMDMaterial a, final MMDMaterial b) -> a.getName()
+				.compareToIgnoreCase(b.getName()));
 		for (int i = 0; i < metlist.size(); i++) {
 			materialSortingValues.put(metlist.get(i), i * 100);
 		}
@@ -229,14 +270,17 @@ public abstract class Items {
 
 		if ((name.equals(Names.DOOR)) || (name.equals(Names.SLAB))) {
 			tab = ItemGroups.getTab(SharedStrings.TAB_BLOCKS);
-		} else if ((name.equals(Names.SWORD)) || (name.equals(Names.BOW)) || (name.equals(Names.CROSSBOW))
-				|| (name.equals(Names.BOLT)) || (name.equals(Names.ARROW)) || (name.equals(Names.SHIELD))
-				|| (name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS))
-				|| (name.equals(Names.BOOTS)) || (name.equals(Names.HORSE_ARMOR))) {
+		} else if ((name.equals(Names.SWORD)) || (name.equals(Names.BOW))
+				|| (name.equals(Names.CROSSBOW)) || (name.equals(Names.BOLT))
+				|| (name.equals(Names.ARROW)) || (name.equals(Names.SHIELD))
+				|| (name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE))
+				|| (name.equals(Names.LEGGINGS)) || (name.equals(Names.BOOTS))
+				|| (name.equals(Names.HORSE_ARMOR))) {
 			tab = ItemGroups.getTab(SharedStrings.TAB_COMBAT);
 		} else if ((name.equals(Names.SHEARS)) || (name.equals(Names.FISHING_ROD))
-				|| (name.equals(Names.HOE)) || (name.equals(Names.AXE)) || (name.equals(Names.SHOVEL))
-				|| (name.equals(Names.PICKAXE)) || (name.equals(Names.CRACKHAMMER))) {
+				|| (name.equals(Names.HOE)) || (name.equals(Names.AXE))
+				|| (name.equals(Names.SHOVEL)) || (name.equals(Names.PICKAXE))
+				|| (name.equals(Names.CRACKHAMMER))) {
 			tab = ItemGroups.getTab(SharedStrings.TAB_TOOLS);
 		} else {
 			tab = ItemGroups.getTab(SharedStrings.TAB_ITEMS);
@@ -276,7 +320,8 @@ public abstract class Items {
 			return createArmorItem(name, material, tab);
 		}
 
-		final Item item = createItem(material, name.toString(), getClassFromName(name), isNameEnabled(name), tab);
+		final Item item = createItem(material, name.toString(), getClassFromName(name),
+				isNameEnabled(name), tab);
 
 		final String oredict = getOredictFromName(name);
 		setupOredict(item, oredict, name, material);
@@ -288,7 +333,8 @@ public abstract class Items {
 		return ((material.isEmpty()) || (name == null) || isWrongThingToMake(name, material));
 	}
 
-	private static void setupOredict(final Item item, final String oredict, final Names name, final MMDMaterial material) {
+	private static void setupOredict(final Item item, final String oredict, final Names name,
+			final MMDMaterial material) {
 		if (item != null) {
 			if (oredict != null) {
 				Oredicts.registerOre(oredict + material.getCapitalizedName(), item);
@@ -306,24 +352,28 @@ public abstract class Items {
 	}
 
 	private static boolean isWrongThingToMake(final Names name, final MMDMaterial material) {
-		return ((((name.equals(Names.BLEND)) || (name.equals(Names.SMALLBLEND))) && (!material.hasBlend()))
+		return ((((name.equals(Names.BLEND)) || (name.equals(Names.SMALLBLEND)))
+				&& (!material.hasBlend()))
 				|| (name.equals(Names.ANVIL) && (!material.hasBlock(Names.ANVIL)))
-				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR))) || (name.equals(Names.SLAB)
-						&& (!material.hasBlock(Names.SLAB) && (!material.hasBlock(Names.DOUBLE_SLAB)))));
+				|| (name.equals(Names.DOOR) && (!material.hasBlock(Names.DOOR)))
+				|| (name.equals(Names.SLAB) && (!material.hasBlock(Names.SLAB)
+						&& (!material.hasBlock(Names.DOUBLE_SLAB)))));
 	}
 
 	private static boolean isArmor(final Names name) {
-		return ((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE)) || (name.equals(Names.LEGGINGS))
-				|| (name.equals(Names.BOOTS)));
+		return ((name.equals(Names.HELMET)) || (name.equals(Names.CHESTPLATE))
+				|| (name.equals(Names.LEGGINGS)) || (name.equals(Names.BOOTS)));
 	}
 
 	@Nullable
-	protected static Item addItem(@Nonnull final Item item, @Nonnull final Names name, final CreativeTabs tab) {
+	protected static Item addItem(@Nonnull final Item item, @Nonnull final Names name,
+			final CreativeTabs tab) {
 		return addItem(item, name.toString(), Materials.DEFAULT, tab);
 	}
 
 	@Nullable
-	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final CreativeTabs tab) {
+	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name,
+			final CreativeTabs tab) {
 		return addItem(item, name, Materials.DEFAULT, tab);
 	}
 
@@ -340,8 +390,8 @@ public abstract class Items {
 	 * @return the item that was added
 	 */
 	@Nullable
-	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name, final MMDMaterial material,
-			final CreativeTabs tab) {
+	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name,
+			final MMDMaterial material, final CreativeTabs tab) {
 		String fullName;
 		if ((!material.isEmpty()) && (!material.isDefault())) {
 			if (material.hasItem(name)) {
@@ -360,7 +410,7 @@ public abstract class Items {
 		}
 
 		if (!material.isEmpty()) {
-			itemsByMaterial.computeIfAbsent(material, (MMDMaterial g) -> new ArrayList<>());
+			itemsByMaterial.computeIfAbsent(material, (final MMDMaterial g) -> new ArrayList<>());
 			itemsByMaterial.get(material).add(item);
 		}
 
@@ -370,7 +420,8 @@ public abstract class Items {
 
 	@Nullable
 	private static Item createItem(@Nonnull final MMDMaterial material, @Nonnull final String name,
-			@Nonnull final Class<? extends Item> clazz, @Nonnull final boolean enabled, final CreativeTabs tab) {
+			@Nonnull final Class<? extends Item> clazz, @Nonnull final boolean enabled,
+			final CreativeTabs tab) {
 		if (material.hasItem(name)) {
 			return material.getItem(name);
 		}
@@ -382,7 +433,8 @@ public abstract class Items {
 			try {
 				ctor = clazz.getConstructor(material.getClass());
 			} catch (NoSuchMethodException | SecurityException ex) {
-				BaseMetals.logger.error("Class for Item named %s does not have the correct constructor", name, ex);
+				BaseMetals.logger.error(
+						"Class for Item named %s does not have the correct constructor", name, ex);
 				return null;
 			}
 
@@ -390,10 +442,11 @@ public abstract class Items {
 				inst = (Item) ctor.newInstance(material);
 			} catch (IllegalAccessException | IllegalArgumentException | InstantiationException
 					| InvocationTargetException | ExceptionInInitializerError ex) {
-				BaseMetals.logger.error("Unable to create new instance of Item class for item name %s of material %s",
+				BaseMetals.logger.error(
+						"Unable to create new instance of Item class for item name %s of material %s",
 						name, material.getCapitalizedName(), ex);
 				return null;
-			} catch (Exception ex) {
+			} catch (final Exception ex) {
 				BaseMetals.logger.error("Unable to create Item named %s for material %s", name,
 						material.getCapitalizedName(), ex);
 				return null;
@@ -409,8 +462,8 @@ public abstract class Items {
 	}
 
 	@Nullable
-	private static Item createArmorItem(@Nonnull final Names name, @Nonnull final MMDMaterial material,
-			final CreativeTabs tab) {
+	private static Item createArmorItem(@Nonnull final Names name,
+			@Nonnull final MMDMaterial material, final CreativeTabs tab) {
 		if (!(isNameEnabled(name))) {
 			return null;
 		}
@@ -438,13 +491,16 @@ public abstract class Items {
 	 * @return the item this function created
 	 */
 	@Nullable
-	protected static Item createMekCrystal(@Nonnull final MMDMaterial material, final CreativeTabs tab) {
+	protected static Item createMekCrystal(@Nonnull final MMDMaterial material,
+			final CreativeTabs tab) {
 		if (material.hasItem(Names.CRYSTAL)) {
 			return material.getItem(Names.CRYSTAL);
 		}
 
 		final Item item = createItem(material, Names.CRYSTAL.toString(), GenericMMDItem.class,
-				(Options.isModEnabled(MekanismBase.PLUGIN_MODID) && material.getType() != MaterialType.CRYSTAL), tab);
+				(Options.isModEnabled(MekanismBase.PLUGIN_MODID)
+						&& (material.getType() != MaterialType.CRYSTAL)),
+				tab);
 		if (item != null) {
 			Oredicts.registerOre(Oredicts.CRYSTAL + material.getCapitalizedName(), item);
 			return item;
@@ -454,8 +510,8 @@ public abstract class Items {
 	}
 
 	/**
-	 * Uses reflection to expand the size of the combat damage and attack speed
-	 * arrays to prevent initialization index-out-of-bounds errors.
+	 * Uses reflection to expand the size of the combat damage and attack speed arrays to prevent
+	 * initialization index-out-of-bounds errors.
 	 *
 	 * @param itemClass
 	 *            The class to modify
@@ -471,12 +527,14 @@ public abstract class Items {
 			if (Modifier.isStatic(field.getModifiers()) && field.getType().isArray()
 					&& field.getType().getComponentType().equals(float.class)) {
 				BaseMetals.logger.info("%s: Expanding array variable %s.%s to size %d",
-						Thread.currentThread().getStackTrace()[0].toString(), itemClass.getSimpleName(),
-						field.getName(), expandedSize);
+						Thread.currentThread().getStackTrace()[0].toString(),
+						itemClass.getSimpleName(), field.getName(), expandedSize);
 				field.setAccessible(true); // bypass 'private' key word
 				final Field modifiersField = Field.class.getDeclaredField("modifiers");
 				modifiersField.setAccessible(true);
-				modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL); // bypass 'final' keyword
+				modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL); // bypass
+																						// 'final'
+																						// keyword
 				final float[] newArray = new float[expandedSize];
 				Arrays.fill(newArray, 0F);
 				System.arraycopy(field.get(null), 0, newArray, 0, Array.getLength(field.get(null)));
@@ -496,15 +554,18 @@ public abstract class Items {
 		int materialVal = 9900;
 		if ((itemStack.getItem() instanceof ItemBlock)
 				&& (((ItemBlock) itemStack.getItem()).getBlock() instanceof IMMDObject)) {
-			classVal = classSortingValues.computeIfAbsent(((ItemBlock) itemStack.getItem()).getBlock().getClass(),
-					(Class<?> clazz) -> 990000);
+			classVal = classSortingValues.computeIfAbsent(
+					((ItemBlock) itemStack.getItem()).getBlock().getClass(),
+					(final Class<?> clazz) -> 990000);
 			materialVal = materialSortingValues.computeIfAbsent(
 					((IMMDObject) ((ItemBlock) itemStack.getItem()).getBlock()).getMMDMaterial(),
-					(MMDMaterial material) -> 9900);
+					(final MMDMaterial material) -> 9900);
 		} else if (itemStack.getItem() instanceof IMMDObject) {
-			classVal = classSortingValues.computeIfAbsent(itemStack.getItem().getClass(), (Class<?> clazz) -> 990000);
-			materialVal = materialSortingValues.computeIfAbsent(((IMMDObject) itemStack.getItem()).getMMDMaterial(),
-					(MMDMaterial material) -> 9900);
+			classVal = classSortingValues.computeIfAbsent(itemStack.getItem().getClass(),
+					(final Class<?> clazz) -> 990000);
+			materialVal = materialSortingValues.computeIfAbsent(
+					((IMMDObject) itemStack.getItem()).getMMDMaterial(),
+					(final MMDMaterial material) -> 9900);
 		}
 		return classVal + materialVal + (itemStack.getMetadata() % 100);
 	}
@@ -531,13 +592,14 @@ public abstract class Items {
 		return false;
 	}
 
-	protected static void addItemType(@Nonnull final Names name, @Nonnull final Class<? extends Item> clazz,
-			@Nonnull final Boolean enabled) {
+	protected static void addItemType(@Nonnull final Names name,
+			@Nonnull final Class<? extends Item> clazz, @Nonnull final Boolean enabled) {
 		addItemType(name, clazz, enabled, null);
 	}
 
-	protected static void addItemType(@Nonnull final Names name, @Nonnull final Class<? extends Item> clazz,
-			@Nonnull final Boolean enabled, @Nullable final String oredict) {
+	protected static void addItemType(@Nonnull final Names name,
+			@Nonnull final Class<? extends Item> clazz, @Nonnull final Boolean enabled,
+			@Nullable final String oredict) {
 		if (!nameToClass.containsKey(name)) {
 			nameToClass.put(name, clazz);
 		}
@@ -552,9 +614,9 @@ public abstract class Items {
 	}
 
 	/**
-	 * Gets an item by its name. The name is the name as it is registered in the
-	 * GameRegistry, not its unlocalized name (the unlocalized name is the
-	 * registered name plus the prefix "basemetals.")
+	 * Gets an item by its name. The name is the name as it is registered in the GameRegistry, not
+	 * its unlocalized name (the unlocalized name is the registered name plus the prefix
+	 * "basemetals.")
 	 *
 	 * @param name
 	 *            The name of the item in question
@@ -566,8 +628,8 @@ public abstract class Items {
 	}
 
 	/**
-	 * This is the reverse of the getItemByName(...) method, returning the
-	 * registered name of an item instance (Base Metals items only).
+	 * This is the reverse of the getItemByName(...) method, returning the registered name of an
+	 * item instance (Base Metals items only).
 	 *
 	 * @param item
 	 *            The item in question

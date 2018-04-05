@@ -24,17 +24,19 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 
 		this.setSoundType(this.material.getSoundType());
 		this.fullBlock = true;
-		this.lightOpacity = 255;
+		this.setLightOpacity(255);
 		this.translucent = false;
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 		// Additional
 		this.fullBlock = true;
 	}
 
 	@Override
-	public boolean isBeaconBase(final IBlockAccess worldObj, final BlockPos pos, final BlockPos beacon) {
+	public boolean isBeaconBase(final IBlockAccess worldObj, final BlockPos pos,
+			final BlockPos beacon) {
 		return this.material.isBeaconBase();
 	}
 

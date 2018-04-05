@@ -17,14 +17,14 @@ public class ConditionEnabled implements IConditionFactory {
 		final String optionValue = JsonUtils.getString(json, "optionValue");
 
 		switch (optionName) {
-		case "material":
-			return () -> Options.isMaterialEnabled(optionValue);
-		case "mod":
-			return () -> Options.isModEnabled(optionValue);
-		case "thing":
-			return () -> Options.isThingEnabled(optionValue);
-		default:
-			return () -> false;
+			case "material":
+				return () -> Options.isMaterialEnabled(optionValue);
+			case "mod":
+				return () -> Options.isModEnabled(optionValue);
+			case "thing":
+				return () -> Options.isThingEnabled(optionValue);
+			default:
+				return () -> false;
 		}
 	}
 

@@ -26,13 +26,14 @@ public class DenseOresBase implements IIntegration {
 	 * @param name
 	 *            Oredictionary name of this ore in its source mod
 	 * @param underlying
-	 *            One of "stone", "netherrack", "end_stone" or "obsidian" - this
-	 *            determines the background of the dense ore texture
+	 *            One of "stone", "netherrack", "end_stone" or "obsidian" - this determines the
+	 *            background of the dense ore texture
 	 * @param meta
 	 *            The metadata value for this ore in the source block
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
-	protected static void registerOre(@Nonnull final String name, @Nonnull final String underlying, @Nonnull final int meta) {
+	protected static void registerOre(@Nonnull final String name, @Nonnull final String underlying,
+			@Nonnull final int meta) {
 		final String modID = Loader.instance().activeModContainer().getModId();
 		registerOre(name, modID, underlying, meta);
 	}
@@ -45,13 +46,14 @@ public class DenseOresBase implements IIntegration {
 	 * @param modID
 	 *            ID of mod that is the source of this ore
 	 * @param underlying
-	 *            One of "stone", "netherrack", "end_stone" or "obsidian" - this
-	 *            determines the background of the dense ore texture
+	 *            One of "stone", "netherrack", "end_stone" or "obsidian" - this determines the
+	 *            background of the dense ore texture
 	 * @param meta
 	 *            The metadata value for this ore in the source block
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
-	protected static void registerOre(@Nonnull final String name, @Nonnull final String modID, @Nonnull final String underlying, @Nonnull final int meta) {
+	protected static void registerOre(@Nonnull final String name, @Nonnull final String modID,
+			@Nonnull final String underlying, @Nonnull final int meta) {
 		final NBTTagCompound mess = new NBTTagCompound();
 
 		mess.setString("baseBlock", String.format("%s:%s", modID, name));
@@ -92,13 +94,13 @@ public class DenseOresBase implements IIntegration {
 	 *            The metadata value for this ore in the source block
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
-	protected static void registerNetherOre(@Nonnull final String name, @Nonnull final String modID, @Nonnull final int meta) {
+	protected static void registerNetherOre(@Nonnull final String name, @Nonnull final String modID,
+			@Nonnull final int meta) {
 		registerOre(String.format("nether_%s", name), modID, "netherrack", meta);
 	}
 
 	/**
-	 * Register a single ore that spawns in the end and has an oredict of
-	 * 'end_&lt;name&gt;_ore'.
+	 * Register a single ore that spawns in the end and has an oredict of 'end_&lt;name&gt;_ore'.
 	 *
 	 * @param name
 	 *            Oredictionary name of this ore in its source mod
@@ -112,8 +114,7 @@ public class DenseOresBase implements IIntegration {
 	}
 
 	/**
-	 * Register a single ore that spawns in the end and has an oredict of
-	 * 'end_&lt;name&gt;_ore'.
+	 * Register a single ore that spawns in the end and has an oredict of 'end_&lt;name&gt;_ore'.
 	 *
 	 * @param name
 	 *            Oredictionary name of this ore in its source mod
@@ -123,7 +124,8 @@ public class DenseOresBase implements IIntegration {
 	 *            The metadata value for this ore in the source block
 	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
 	 */
-	protected static void registerEndOre(@Nonnull final String name, @Nonnull final String modID, @Nonnull final int meta) {
+	protected static void registerEndOre(@Nonnull final String name, @Nonnull final String modID,
+			@Nonnull final int meta) {
 		registerOre(String.format("end_%s", name), modID, "end_stone", meta);
 	}
 }

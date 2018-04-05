@@ -17,12 +17,14 @@ public class ModifierFakeDiamond extends ToolModifier {
 	public ModifierFakeDiamond() {
 		super("fake-diamond", 0x00FF00);
 
-		addAspects(new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this), ModifierAspect.freeModifier);
+		this.addAspects(new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this),
+				ModifierAspect.freeModifier);
 		// add the modifier item here
 	}
 
 	@Override
-	public void applyEffect(@Nonnull final NBTTagCompound rootCompound, @Nonnull final NBTTagCompound modifierTag) {
+	public void applyEffect(@Nonnull final NBTTagCompound rootCompound,
+			@Nonnull final NBTTagCompound modifierTag) {
 		final ToolNBT data = TagUtil.getToolStats(rootCompound);
 		final ToolNBT base = TagUtil.getOriginalToolStats(rootCompound);
 

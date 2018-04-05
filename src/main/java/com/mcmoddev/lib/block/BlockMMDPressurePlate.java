@@ -8,7 +8,8 @@ import com.mcmoddev.lib.material.MMDMaterial;
  * @author Jasmine Iwanek
  *
  */
-public class BlockMMDPressurePlate extends net.minecraft.block.BlockPressurePlate implements IMMDObject {
+public class BlockMMDPressurePlate extends net.minecraft.block.BlockPressurePlate
+		implements IMMDObject {
 
 	private final MMDMaterial material;
 
@@ -23,7 +24,8 @@ public class BlockMMDPressurePlate extends net.minecraft.block.BlockPressurePlat
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 	}
 
 	@Override

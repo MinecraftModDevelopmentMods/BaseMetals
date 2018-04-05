@@ -12,15 +12,15 @@ public interface IHorseArmor {
 	/**
 	 * Returns the {@link HorseArmorType} of the custom horse armor.
 	 *
-	 * @param stack {@link ItemStack} being checked (forge compat)
-	 * @return The {@link HorseArmorType} that this horse armor will have the
-	 *         values of.
+	 * @param stack
+	 *            {@link ItemStack} being checked (forge compat)
+	 * @return The {@link HorseArmorType} that this horse armor will have the values of.
 	 */
 	HorseArmorType getHorseArmorType(ItemStack stack);
 
 	/**
-	 * Returns the location of the custom horse armor texture, similar to how
-	 * player armor texture works.
+	 * Returns the location of the custom horse armor texture, similar to how player armor texture
+	 * works.
 	 *
 	 * @param horse
 	 *            The Horse, which has this item equipped

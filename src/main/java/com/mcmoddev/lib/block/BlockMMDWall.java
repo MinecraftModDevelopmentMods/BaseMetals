@@ -31,7 +31,8 @@ public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDO
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 	}
 
 	@Override
@@ -41,7 +42,8 @@ public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDO
 
 	// We don't specifically need this, but it does mean less logic being run on each check
 	@Override
-	public boolean canPlaceTorchOnTop(final IBlockState state, final IBlockAccess world, final BlockPos pos) {
+	public boolean canPlaceTorchOnTop(final IBlockState state, final IBlockAccess world,
+			final BlockPos pos) {
 		return true;
 	}
 

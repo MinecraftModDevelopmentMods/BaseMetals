@@ -39,7 +39,8 @@ public class ConfigBase {
 					continue;
 				}
 				if (!(recipe.contains("->"))) {
-					throw new IllegalArgumentException("Malformed hammer recipe expression '" + recipe + "'. Should be in format 'modid:itemname->modid:itemname'");
+					throw new IllegalArgumentException("Malformed hammer recipe expression '"
+							+ recipe + "'. Should be in format 'modid:itemname->modid:itemname'");
 				}
 				UserCrusherRecipes.add(recipe);
 			}
@@ -63,13 +64,15 @@ public class ConfigBase {
 		if (Options.autoDetectRecipes()) {
 			// add recipe for every X where the Ore Dictionary has dustX, oreX, and ingotX
 			final Set<String> dictionary = new HashSet<>();
-			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()).stream().filter(item -> !item.contains("Mercury"))
-			.filter(item -> !item.contains("Redstone")).filter(item -> item.startsWith("dust"))
-			.filter(item -> {
-				String ingotX = Oredicts.INGOT.concat(item.substring(4));
-				String oreX = Oredicts.ORE.concat(item.substring(4));
-				return (dictionary.contains(oreX) && dictionary.contains(ingotX) && !OreDictionary.getOres(item).isEmpty());
-			}).collect(Collectors.<String>toSet()));
+			dictionary.addAll(Arrays.asList(OreDictionary.getOreNames()).stream()
+					.filter(item -> !item.contains("Mercury"))
+					.filter(item -> !item.contains("Redstone"))
+					.filter(item -> item.startsWith("dust")).filter(item -> {
+						final String ingotX = Oredicts.INGOT.concat(item.substring(4));
+						final String oreX = Oredicts.ORE.concat(item.substring(4));
+						return (dictionary.contains(oreX) && dictionary.contains(ingotX)
+								&& !OreDictionary.getOres(item).isEmpty());
+					}).collect(Collectors.<String>toSet()));
 
 			addOreRecipes(dictionary);
 			addIngotRecipes(dictionary);
@@ -77,9 +80,9 @@ public class ConfigBase {
 	}
 
 	private static void addIngotRecipes(final Set<String> dictionary) {
-		dictionary.stream()
-		.filter(entry -> {
-			final List<ItemStack> itemstacks = OreDictionary.getOres(Oredicts.INGOT.concat(entry.substring(4)));
+		dictionary.stream().filter(entry -> {
+			final List<ItemStack> itemstacks = OreDictionary
+					.getOres(Oredicts.INGOT.concat(entry.substring(4)));
 			for (final ItemStack i : itemstacks) {
 				if ((CrusherRecipeRegistry.getRecipeForInputItem(i) != null)) {
 					return true;
@@ -87,30 +90,31 @@ public class ConfigBase {
 			}
 			return false;
 		}).forEach(entry -> {
-			String ingotX = Oredicts.INGOT.concat(entry.substring(4));
-			ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
+			final String ingotX = Oredicts.INGOT.concat(entry.substring(4));
+			final ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
 			dustX.setCount(2);
-			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", ingotX, dustX);
+			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", ingotX,
+					dustX);
 			CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX);
 		});
 	}
 
 	private static void addOreRecipes(final Set<String> dictionary) {
-		dictionary.stream()
-		.filter(entry -> {
-			final List<ItemStack> itemstacks = OreDictionary.getOres(Oredicts.ORE.concat(entry.substring(4)));
+		dictionary.stream().filter(entry -> {
+			final List<ItemStack> itemstacks = OreDictionary
+					.getOres(Oredicts.ORE.concat(entry.substring(4)));
 			for (final ItemStack i : itemstacks) {
 				if ((CrusherRecipeRegistry.getRecipeForInputItem(i) != null)) {
 					return true;
 				}
 			}
 			return false;
-		})
-		.forEach(entry -> {
+		}).forEach(entry -> {
 			final String oreX = Oredicts.ORE.concat(entry.substring(4));
 			final ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
 			dustX.setCount(2);
-			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", oreX, dustX);
+			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", oreX,
+					dustX);
 			CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX);
 		});
 	}
@@ -124,7 +128,9 @@ public class ConfigBase {
 			final ItemStack input = parseStringAsItemStack(inputStr, true);
 			final ItemStack output = parseStringAsItemStack(outputStr, false);
 			if ((input.isEmpty()) || (output.isEmpty())) {
-				BaseMetals.logger.error("Failed to add recipe formula '%s' because the blocks/items could not be found", recipe);
+				BaseMetals.logger.error(
+						"Failed to add recipe formula '%s' because the blocks/items could not be found",
+						recipe);
 			} else {
 				CrusherRecipeRegistry.addNewCrusherRecipe(input, output);
 			}
@@ -132,19 +138,15 @@ public class ConfigBase {
 	}
 
 	/**
-	 * Parses a String in the format (stack-size)*(modid):(item/block
-	 * name)#(metadata value). The stacksize and metadata value parameters are
-	 * optional.
+	 * Parses a String in the format (stack-size)*(modid):(item/block name)#(metadata value). The
+	 * stacksize and metadata value parameters are optional.
 	 *
 	 * @param str
-	 *            A String describing an ItemStack (e.g. "4*minecraft:dye#15" or
-	 *            "minecraft:bow")
+	 *            A String describing an ItemStack (e.g. "4*minecraft:dye#15" or "minecraft:bow")
 	 * @param allowWildcard
-	 *            If true, then item strings that do not specify a metadata
-	 *            value will use the OreDictionary wildcard value. If false,
-	 *            then the default meta value is 0 instead.
-	 * @return An ItemStack representing the item, or null if the item is not
-	 *         found
+	 *            If true, then item strings that do not specify a metadata value will use the
+	 *            OreDictionary wildcard value. If false, then the default meta value is 0 instead.
+	 * @return An ItemStack representing the item, or null if the item is not found
 	 */
 	public static ItemStack parseStringAsItemStack(final String str, final boolean allowWildcard) {
 		final String work = str.trim();
@@ -302,7 +304,7 @@ public class ConfigBase {
 		public static void setDisabledRecipes(final String[] string) {
 			disabledRecipes = string;
 			Arrays.asList(disabledRecipes).stream()
-			.forEach(com.mcmoddev.lib.registry.CrusherRecipeRegistry::disableRecipe);
+					.forEach(com.mcmoddev.lib.registry.CrusherRecipeRegistry::disableRecipe);
 		}
 
 		public static String[] disabledRecipes() {

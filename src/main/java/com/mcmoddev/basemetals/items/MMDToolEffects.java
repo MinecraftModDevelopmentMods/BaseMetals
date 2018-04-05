@@ -80,7 +80,8 @@ public abstract class MMDToolEffects {
 				target.addPotionEffect(wither);
 				target.addPotionEffect(blind);
 			}
-		} else if ((materialName.equals(MaterialNames.AQUARIUM)) && (target.canBreatheUnderwater())) {
+		} else if ((materialName.equals(MaterialNames.AQUARIUM))
+				&& (target.canBreatheUnderwater())) {
 			final DamageSource extraDamage = DamageSource.GENERIC;
 			target.attackEntityFrom(extraDamage, 4f);
 		}
@@ -97,8 +98,8 @@ public abstract class MMDToolEffects {
 	 * @param crafter
 	 *            The crafter
 	 */
-	public static void extraEffectsOnCrafting(final MMDMaterial material, final ItemStack item, final World world,
-			final EntityPlayer crafter) {
+	public static void extraEffectsOnCrafting(final MMDMaterial material, final ItemStack item,
+			final World world, final EntityPlayer crafter) {
 		// do nothing for now. This would be where achievements or automatic
 		// enchantments could appear
 	}
@@ -111,8 +112,8 @@ public abstract class MMDToolEffects {
 	 * @param armor
 	 * @param i
 	 */
-	public static void extraEffectsOnArmorUpdate(final World world, final EntityPlayer player, final MMDMaterial material,
-			final ItemStack armor, final int i) {
+	public static void extraEffectsOnArmorUpdate(final World world, final EntityPlayer player,
+			final MMDMaterial material, final ItemStack armor, final int i) {
 		// some sanity checks
 		if (armor.isEmpty()) {
 			return;
@@ -125,7 +126,7 @@ public abstract class MMDToolEffects {
 		}
 
 		final String materialName = material.getName();
-		if (i % 2 == 0) {
+		if ((i % 2) == 0) {
 			// count armor pieces
 			switch (materialName) {
 				case MaterialNames.ADAMANTINE:
@@ -180,7 +181,8 @@ public abstract class MMDToolEffects {
 	 *            The tooltip list
 	 */
 	@SideOnly(Side.CLIENT)
-	public static void addToolSpecialPropertiesToolTip(final String materialName, final List<String> tooltipList) {
+	public static void addToolSpecialPropertiesToolTip(final String materialName,
+			final List<String> tooltipList) {
 		switch (materialName) {
 			case MaterialNames.ADAMANTINE:
 				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + TOOL, 4));
@@ -209,7 +211,8 @@ public abstract class MMDToolEffects {
 	 *            The tooltip list
 	 */
 	@SideOnly(Side.CLIENT)
-	public static void addArmorSpecialPropertiesToolTip(final String materialName, final List<String> tooltipList) {
+	public static void addArmorSpecialPropertiesToolTip(final String materialName,
+			final List<String> tooltipList) {
 		switch (materialName) {
 			case MaterialNames.ADAMANTINE:
 				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + ARMOR, 4));
@@ -230,7 +233,8 @@ public abstract class MMDToolEffects {
 		}
 	}
 
-	private static void countArmorPieces(final Map<EntityPlayer, AtomicInteger> updateCache, final EntityPlayer player) {
+	private static void countArmorPieces(final Map<EntityPlayer, AtomicInteger> updateCache,
+			final EntityPlayer player) {
 		if (!(updateCache.containsKey(player))) {
 			updateCache.put(player, new AtomicInteger(0));
 		}
@@ -241,11 +245,14 @@ public abstract class MMDToolEffects {
 	private static boolean hasFullSuit(final EntityPlayer player, final String materialName) {
 		final MMDMaterial material = Materials.getMaterialByName(materialName);
 
-		return (player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == material.getItem(Names.HELMET)
-				&& player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == material
-						.getItem(Names.CHESTPLATE)
-				&& player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == material.getItem(Names.LEGGINGS)
-				&& player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material.getItem(Names.BOOTS));
+		return ((player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == material
+				.getItem(Names.HELMET))
+				&& (player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == material
+						.getItem(Names.CHESTPLATE))
+				&& (player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == material
+						.getItem(Names.LEGGINGS))
+				&& (player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material
+						.getItem(Names.BOOTS)));
 	}
 
 	private static void countStarsteelPieces(final EntityPlayer player) {
@@ -261,12 +268,12 @@ public abstract class MMDToolEffects {
 		if (num == 0) {
 			return;
 		}
-		final PotionEffect jumpBoost = new PotionEffect(MobEffects.JUMP_BOOST, EFFECT_DURATION, num - 1,
-				false, false);
+		final PotionEffect jumpBoost = new PotionEffect(MobEffects.JUMP_BOOST, EFFECT_DURATION,
+				num - 1, false, false);
 		player.addPotionEffect(jumpBoost);
 		if (num > 1) {
-			final PotionEffect speedBoost = new PotionEffect(MobEffects.SPEED, EFFECT_DURATION, num - 2,
-					false, false);
+			final PotionEffect speedBoost = new PotionEffect(MobEffects.SPEED, EFFECT_DURATION,
+					num - 2, false, false);
 			player.addPotionEffect(speedBoost);
 		}
 	}
@@ -280,8 +287,8 @@ public abstract class MMDToolEffects {
 			return;
 		}
 		if (level > 0) {
-			final PotionEffect speedLoss = new PotionEffect(MobEffects.SLOWNESS, EFFECT_DURATION, level - 1,
-					false, false);
+			final PotionEffect speedLoss = new PotionEffect(MobEffects.SLOWNESS, EFFECT_DURATION,
+					level - 1, false, false);
 			player.addPotionEffect(speedLoss);
 		}
 	}
@@ -304,16 +311,18 @@ public abstract class MMDToolEffects {
 
 	private static void applyEffectsForColdiron(final EntityPlayer player) {
 		if (hasFullSuit(player, MaterialNames.COLDIRON)) {
-			final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE, EFFECT_DURATION, 0,
-				false, false);
+			final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE,
+					EFFECT_DURATION, 0, false, false);
 			player.addPotionEffect(fireProtection);
 		}
 	}
 
 	private static void applyEffectsForMithril(final EntityPlayer player) {
 		if (hasFullSuit(player, MaterialNames.MITHRIL)) {
-			final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent modification error
-			final Iterator<PotionEffect> effectIterator = player.getActivePotionEffects().iterator();
+			final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent
+																// modification error
+			final Iterator<PotionEffect> effectIterator = player.getActivePotionEffects()
+					.iterator();
 			while (effectIterator.hasNext()) {
 				final PotionEffect pe = effectIterator.next();
 				final Potion p = pe.getPotion();
@@ -328,15 +337,19 @@ public abstract class MMDToolEffects {
 	}
 
 	private static void applyEffectsForAquarium(final EntityPlayer player, final World w) {
-		if ((hasFullSuit(player, MaterialNames.AQUARIUM)) && (player.posY > 0) && (player.posY < 255)) {
-			final Block b1 = w.getBlockState(new BlockPos(player.posX, player.posY, player.posZ)).getBlock();
-			final Block b2 = w.getBlockState(new BlockPos(player.posX, player.posY + 1, player.posZ)).getBlock();
-			if (b1 == Blocks.WATER && b2 == Blocks.WATER) {
-				final PotionEffect waterBreathing = new PotionEffect(MobEffects.WATER_BREATHING, EFFECT_DURATION, 0,
-						false, false);
+		if ((hasFullSuit(player, MaterialNames.AQUARIUM)) && (player.posY > 0)
+				&& (player.posY < 255)) {
+			final Block b1 = w.getBlockState(new BlockPos(player.posX, player.posY, player.posZ))
+					.getBlock();
+			final Block b2 = w
+					.getBlockState(new BlockPos(player.posX, player.posY + 1, player.posZ))
+					.getBlock();
+			if ((b1 == Blocks.WATER) && (b2 == Blocks.WATER)) {
+				final PotionEffect waterBreathing = new PotionEffect(MobEffects.WATER_BREATHING,
+						EFFECT_DURATION, 0, false, false);
 				player.addPotionEffect(waterBreathing);
-				final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE, EFFECT_DURATION, 0, false,
-						false);
+				final PotionEffect protection = new PotionEffect(MobEffects.RESISTANCE,
+						EFFECT_DURATION, 0, false, false);
 				player.addPotionEffect(protection);
 				player.removePotionEffect(MobEffects.MINING_FATIGUE);
 			}

@@ -13,17 +13,18 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfessio
  */
 public class VillagerTradeHelper {
 
-	private static final ResourceLocation[] professionList = { new ResourceLocation("minecraft:farmer"),
-			new ResourceLocation("minecraft:librarian"), new ResourceLocation("minecraft:priest"),
-			new ResourceLocation("minecraft:smith"), new ResourceLocation("minecraft:butcher") };
+	private static final ResourceLocation[] professionList = {
+			new ResourceLocation("minecraft:farmer"), new ResourceLocation("minecraft:librarian"),
+			new ResourceLocation("minecraft:priest"), new ResourceLocation("minecraft:smith"),
+			new ResourceLocation("minecraft:butcher") };
 
 	protected VillagerTradeHelper() {
 		throw new IllegalAccessError("Not a instantiable class");
 	}
 
 	/**
-	 * Inserts one or more trades to the default villager trade table using dark
-	 * magic (aka java reflection).
+	 * Inserts one or more trades to the default villager trade table using dark magic (aka java
+	 * reflection).
 	 *
 	 * @param professionID
 	 *            Villager profession ID (0-4)
@@ -34,8 +35,8 @@ public class VillagerTradeHelper {
 	 * @param trades
 	 *            Trades to add to the given level
 	 */
-	public static void insertTrades(final int professionID, final int careerID, final int tradeLevel,
-			final EntityVillager.ITradeList... trades) {
+	public static void insertTrades(final int professionID, final int careerID,
+			final int tradeLevel, final EntityVillager.ITradeList... trades) {
 		final ResourceLocation profession = professionList[professionID];
 		insertTrades(profession, careerID, tradeLevel, trades);
 	}
@@ -52,8 +53,8 @@ public class VillagerTradeHelper {
 	 * @param trades
 	 *            Trades to add to the given level
 	 */
-	public static void insertTrades(final String professionName, final int careerID, final int tradeLevel,
-			final EntityVillager.ITradeList... trades) {
+	public static void insertTrades(final String professionName, final int careerID,
+			final int tradeLevel, final EntityVillager.ITradeList... trades) {
 		insertTrades(new ResourceLocation(professionName), careerID, tradeLevel, trades);
 	}
 
@@ -69,9 +70,10 @@ public class VillagerTradeHelper {
 	 * @param trades
 	 *            Trades to add to the given level
 	 */
-	public static void insertTrades(final ResourceLocation professionRL, final int careerID, final int tradeLevel,
-			final EntityVillager.ITradeList... trades) {
-		final VillagerProfession profession = ForgeRegistries.VILLAGER_PROFESSIONS.getValue(professionRL);
+	public static void insertTrades(final ResourceLocation professionRL, final int careerID,
+			final int tradeLevel, final EntityVillager.ITradeList... trades) {
+		final VillagerProfession profession = ForgeRegistries.VILLAGER_PROFESSIONS
+				.getValue(professionRL);
 		final VillagerCareer career = profession.getCareer(careerID);
 		career.addTrade(tradeLevel, trades);
 	}

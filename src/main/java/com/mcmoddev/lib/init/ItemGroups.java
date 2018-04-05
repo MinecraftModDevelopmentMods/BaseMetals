@@ -23,10 +23,12 @@ import net.minecraftforge.fml.common.Loader;
  */
 public class ItemGroups {
 
-	public static final BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (final ItemStack a, final ItemStack b) -> {
+	public static final BiFunction<ItemStack, ItemStack, Integer> sortingAlgorithm = (
+			final ItemStack a, final ItemStack b) -> {
 		final int delta = Items.getSortingValue(a) - Items.getSortingValue(b);
 		if (delta == 0) {
-			return a.getItem().getUnlocalizedName().compareToIgnoreCase(b.getItem().getUnlocalizedName());
+			return a.getItem().getUnlocalizedName()
+					.compareToIgnoreCase(b.getItem().getUnlocalizedName());
 		}
 		return delta;
 	};
@@ -48,7 +50,8 @@ public class ItemGroups {
 	/**
 	 * Adds a non Searchable CreativeTab.
 	 *
-	 * @param name The Name of the CreativeTab
+	 * @param name
+	 *            The Name of the CreativeTab
 	 * @return The CreativeTab
 	 */
 	protected static MMDCreativeTab addTab(@Nonnull final String name) {
@@ -58,11 +61,14 @@ public class ItemGroups {
 	/**
 	 * Adds a CreativeTab.
 	 *
-	 * @param name The Name of the CreativeTab
-	 * @param searchable Is is searchable?
+	 * @param name
+	 *            The Name of the CreativeTab
+	 * @param searchable
+	 *            Is is searchable?
 	 * @return The CreativeTab
 	 */
-	protected static MMDCreativeTab addTab(@Nonnull final String name, @Nonnull final boolean searchable) {
+	protected static MMDCreativeTab addTab(@Nonnull final String name,
+			@Nonnull final boolean searchable) {
 		final String modName = Loader.instance().activeModContainer().getModId();
 		final String internalTabName = String.format("%s.%s", modName, name);
 		final MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable);
@@ -84,7 +90,8 @@ public class ItemGroups {
 
 	/**
 	 *
-	 * @param name Name of the tab to get
+	 * @param name
+	 *            Name of the tab to get
 	 * @return The Tab
 	 */
 	@Nullable
@@ -94,8 +101,10 @@ public class ItemGroups {
 
 	/**
 	 *
-	 * @param modName the ModID
-	 * @param name Name of the tab to get
+	 * @param modName
+	 *            the ModID
+	 * @param name
+	 *            Name of the tab to get
 	 * @return The Tab
 	 */
 	@Nullable

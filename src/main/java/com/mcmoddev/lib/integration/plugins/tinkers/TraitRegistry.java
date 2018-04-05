@@ -56,59 +56,59 @@ public class TraitRegistry {
 	 *
 	 */
 	public static void initTiCTraits() {
-        // hate having to do it this way, but it seems the only way
-        registeredTraits.put("alien", TinkerTraits.alien);
-        registeredTraits.put("aquadynamic", TinkerTraits.aquadynamic);
-        registeredTraits.put("aridiculous", TinkerTraits.aridiculous);
-        registeredTraits.put("autosmelt", TinkerTraits.autosmelt);
-        registeredTraits.put("baconlicious", TinkerTraits.baconlicious);
-        registeredTraits.put("cheap", TinkerTraits.cheap);
-        registeredTraits.put("cheapskate", TinkerTraits.cheapskate);
-        registeredTraits.put("coldblooded", TinkerTraits.coldblooded);
-        registeredTraits.put("crude", TinkerTraits.crude);
-        registeredTraits.put("crude2", TinkerTraits.crude2);
-        registeredTraits.put("crumbling", TinkerTraits.crumbling);
-        registeredTraits.put("dense", TinkerTraits.dense);
-        registeredTraits.put("depthdigger", TinkerTraits.depthdigger);
-        registeredTraits.put("duritos", TinkerTraits.duritos);
-        registeredTraits.put("ecological", TinkerTraits.ecological);
-        registeredTraits.put("enderference", TinkerTraits.enderference);
-        registeredTraits.put("established", TinkerTraits.established);
-        registeredTraits.put("flammable", TinkerTraits.flammable);
-        registeredTraits.put("fractured", TinkerTraits.fractured);
-        registeredTraits.put("hellish", TinkerTraits.hellish);
-        registeredTraits.put("holy", TinkerTraits.holy);
-        registeredTraits.put("insatiable", TinkerTraits.insatiable);
-        registeredTraits.put("jagged", TinkerTraits.jagged);
-        registeredTraits.put("lightweight", TinkerTraits.lightweight);
-        registeredTraits.put("magnetic", TinkerTraits.magnetic);
-        registeredTraits.put("magnetic2", TinkerTraits.magnetic2);
-        registeredTraits.put("momentum", TinkerTraits.momentum);
-        registeredTraits.put("petramor", TinkerTraits.petramor);
-        registeredTraits.put("poisonous", TinkerTraits.poisonous);
-        registeredTraits.put("prickly", TinkerTraits.prickly);
-        registeredTraits.put("sharp", TinkerTraits.sharp);
-        registeredTraits.put("shocking", TinkerTraits.shocking);
-        registeredTraits.put("slimeyGreen", TinkerTraits.slimeyGreen);
-        registeredTraits.put("slimeyBlue", TinkerTraits.slimeyBlue);
-        registeredTraits.put("spiky", TinkerTraits.spiky);
-        registeredTraits.put("splintering", TinkerTraits.splintering);
-        registeredTraits.put("splinters", TinkerTraits.splinters);
-        registeredTraits.put("squeaky", TinkerTraits.squeaky);
-        registeredTraits.put("superheat", TinkerTraits.superheat);
-        registeredTraits.put("stiff", TinkerTraits.stiff);
-        registeredTraits.put("stonebound", TinkerTraits.stonebound);
-        registeredTraits.put("tasty", TinkerTraits.tasty);
-        registeredTraits.put("unnatural", TinkerTraits.unnatural);
-        registeredTraits.put("writable", TinkerTraits.writable);
-        registeredTraits.put("writable2", TinkerTraits.writable2);
+		// hate having to do it this way, but it seems the only way
+		registeredTraits.put("alien", TinkerTraits.alien);
+		registeredTraits.put("aquadynamic", TinkerTraits.aquadynamic);
+		registeredTraits.put("aridiculous", TinkerTraits.aridiculous);
+		registeredTraits.put("autosmelt", TinkerTraits.autosmelt);
+		registeredTraits.put("baconlicious", TinkerTraits.baconlicious);
+		registeredTraits.put("cheap", TinkerTraits.cheap);
+		registeredTraits.put("cheapskate", TinkerTraits.cheapskate);
+		registeredTraits.put("coldblooded", TinkerTraits.coldblooded);
+		registeredTraits.put("crude", TinkerTraits.crude);
+		registeredTraits.put("crude2", TinkerTraits.crude2);
+		registeredTraits.put("crumbling", TinkerTraits.crumbling);
+		registeredTraits.put("dense", TinkerTraits.dense);
+		registeredTraits.put("depthdigger", TinkerTraits.depthdigger);
+		registeredTraits.put("duritos", TinkerTraits.duritos);
+		registeredTraits.put("ecological", TinkerTraits.ecological);
+		registeredTraits.put("enderference", TinkerTraits.enderference);
+		registeredTraits.put("established", TinkerTraits.established);
+		registeredTraits.put("flammable", TinkerTraits.flammable);
+		registeredTraits.put("fractured", TinkerTraits.fractured);
+		registeredTraits.put("hellish", TinkerTraits.hellish);
+		registeredTraits.put("holy", TinkerTraits.holy);
+		registeredTraits.put("insatiable", TinkerTraits.insatiable);
+		registeredTraits.put("jagged", TinkerTraits.jagged);
+		registeredTraits.put("lightweight", TinkerTraits.lightweight);
+		registeredTraits.put("magnetic", TinkerTraits.magnetic);
+		registeredTraits.put("magnetic2", TinkerTraits.magnetic2);
+		registeredTraits.put("momentum", TinkerTraits.momentum);
+		registeredTraits.put("petramor", TinkerTraits.petramor);
+		registeredTraits.put("poisonous", TinkerTraits.poisonous);
+		registeredTraits.put("prickly", TinkerTraits.prickly);
+		registeredTraits.put("sharp", TinkerTraits.sharp);
+		registeredTraits.put("shocking", TinkerTraits.shocking);
+		registeredTraits.put("slimeyGreen", TinkerTraits.slimeyGreen);
+		registeredTraits.put("slimeyBlue", TinkerTraits.slimeyBlue);
+		registeredTraits.put("spiky", TinkerTraits.spiky);
+		registeredTraits.put("splintering", TinkerTraits.splintering);
+		registeredTraits.put("splinters", TinkerTraits.splinters);
+		registeredTraits.put("squeaky", TinkerTraits.squeaky);
+		registeredTraits.put("superheat", TinkerTraits.superheat);
+		registeredTraits.put("stiff", TinkerTraits.stiff);
+		registeredTraits.put("stonebound", TinkerTraits.stonebound);
+		registeredTraits.put("tasty", TinkerTraits.tasty);
+		registeredTraits.put("unnatural", TinkerTraits.unnatural);
+		registeredTraits.put("writable", TinkerTraits.writable);
+		registeredTraits.put("writable2", TinkerTraits.writable2);
 
-        // arrow shaft traits
-        registeredTraits.put("breakable", TinkerTraits.breakable);
-        registeredTraits.put("endspeed", TinkerTraits.endspeed);
-        registeredTraits.put("freezing", TinkerTraits.freezing);
-        registeredTraits.put("hovering", TinkerTraits.hovering);
-        registeredTraits.put("splitting", TinkerTraits.splitting);
+		// arrow shaft traits
+		registeredTraits.put("breakable", TinkerTraits.breakable);
+		registeredTraits.put("endspeed", TinkerTraits.endspeed);
+		registeredTraits.put("freezing", TinkerTraits.freezing);
+		registeredTraits.put("hovering", TinkerTraits.hovering);
+		registeredTraits.put("splitting", TinkerTraits.splitting);
 	}
 
 	/**
@@ -129,7 +129,8 @@ public class TraitRegistry {
 	 */
 	public static void dumpRegistry() {
 		for (final Entry<String, ITrait> e : registeredTraits.entrySet()) {
-			final String t = String.format("BaseMetals-TCon> Trait: %s - class %s", e.getKey(), e.getValue().getClass().getName());
+			final String t = String.format("BaseMetals-TCon> Trait: %s - class %s", e.getKey(),
+					e.getValue().getClass().getName());
 			BaseMetals.logger.info(t);
 		}
 	}

@@ -28,14 +28,17 @@ public final class HorseArmorUtils {
 	 * @param hash
 	 * @return
 	 */
-	public static HorseArmorType getArmorType(final int protection, @Nonnull final String lowerName, @Nonnull final String hash) {
+	public static HorseArmorType getArmorType(final int protection, @Nonnull final String lowerName,
+			@Nonnull final String hash) {
 		final String name = lowerName.toUpperCase(Locale.ENGLISH);
 
 		if (HorseArmorUtils.TYPES.containsKey(name)) {
 			return HorseArmorUtils.TYPES.get(name);
 		}
 
-		final HorseArmorType type = EnumHelper.addEnum(HorseArmorType.class, name.replace(" ", "_"), new Class[] { int.class, String.class, String.class }, protection, name.toLowerCase(), hash);
+		final HorseArmorType type = EnumHelper.addEnum(HorseArmorType.class, name.replace(" ", "_"),
+				new Class[] { int.class, String.class, String.class }, protection,
+				name.toLowerCase(), hash);
 		HorseArmorUtils.TYPES.put(name, type);
 
 		return type;

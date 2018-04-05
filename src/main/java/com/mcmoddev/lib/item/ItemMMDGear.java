@@ -19,9 +19,11 @@ public class ItemMMDGear extends GenericMMDItem {
 	public ItemMMDGear(final MMDMaterial material) {
 		super(material);
 		if (material.getType().equals(MaterialType.WOOD)) {
-			setBurnTime(300); // Coal has 80 second burn, doing 8 items - that's 10s/it or 200t/it - Planks
-								// are reported at 1.5 items per plank, ie: 300 ticks. So we're using that
-								// as the burn-time for gears
+			this.setBurnTime(300); // Coal has 80 second burn, doing 8 items - that's 10s/it or
+									// 200t/it - Planks
+									// are reported at 1.5 items per plank, ie: 300 ticks. So we're
+									// using that
+									// as the burn-time for gears
 		}
 	}
 }

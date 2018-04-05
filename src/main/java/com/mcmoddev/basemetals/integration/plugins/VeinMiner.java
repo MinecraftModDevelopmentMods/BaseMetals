@@ -19,7 +19,8 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
  *
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = VeinMiner.PLUGIN_MODID)
-public final class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBase implements IIntegration {
+public final class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBase
+		implements IIntegration {
 
 	@Override
 	public void init() {
@@ -27,16 +28,17 @@ public final class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMi
 			return;
 		}
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.DIAMOND,
-				MaterialNames.ELECTRUM, MaterialNames.GOLD, MaterialNames.INVAR, MaterialNames.IRON, MaterialNames.LEAD,
-				MaterialNames.MITHRIL, MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
-				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN,
-				MaterialNames.WOOD, MaterialNames.ZINC);
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
+				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
+				MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.DIAMOND,
+				MaterialNames.ELECTRUM, MaterialNames.GOLD, MaterialNames.INVAR, MaterialNames.IRON,
+				MaterialNames.LEAD, MaterialNames.MITHRIL, MaterialNames.NICKEL,
+				MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.SILVER,
+				MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN, MaterialNames.WOOD,
+				MaterialNames.ZINC);
 
-		materials.stream().filter(Materials::hasMaterial)
-				.filter(VeinMiner::isMaterialNotEmpty)
+		materials.stream().filter(Materials::hasMaterial).filter(VeinMiner::isMaterialNotEmpty)
 				.forEach(com.mcmoddev.lib.integration.plugins.VeinMinerBase::addToolsForMaterial);
 	}
 

@@ -19,7 +19,8 @@ public class MMDContainerRepair extends ContainerRepair {
 	 * @param worldIn
 	 * @param player
 	 */
-	public MMDContainerRepair(final InventoryPlayer playerInventory, final World worldIn, final EntityPlayer player) {
+	public MMDContainerRepair(final InventoryPlayer playerInventory, final World worldIn,
+			final EntityPlayer player) {
 		super(playerInventory, worldIn, player);
 		this.myPos = BlockPos.ORIGIN;
 		this.myWorld = worldIn;
@@ -32,19 +33,20 @@ public class MMDContainerRepair extends ContainerRepair {
 	 * @param blockPosIn
 	 * @param player
 	 */
-	public MMDContainerRepair(final InventoryPlayer playerInventory, final World worldIn, final BlockPos blockPosIn,
-			final EntityPlayer player) {
+	public MMDContainerRepair(final InventoryPlayer playerInventory, final World worldIn,
+			final BlockPos blockPosIn, final EntityPlayer player) {
 		super(playerInventory, worldIn, blockPosIn, player);
 		this.myPos = blockPosIn;
 		this.myWorld = worldIn;
 	}
 
 	@Override
-    public boolean canInteractWith(final EntityPlayer playerIn) {
+	public boolean canInteractWith(final EntityPlayer playerIn) {
 		if (!(this.myWorld.getBlockState(this.myPos).getBlock() instanceof BlockMMDAnvil)) {
 			return false;
 		} else {
-			return playerIn.getDistanceSq((double) this.myPos.getX() + 0.5D, (double) this.myPos.getY() + 0.5D, (double) this.myPos.getZ() + 0.5D) <= 64.0D;
+			return playerIn.getDistanceSq(this.myPos.getX() + 0.5D, this.myPos.getY() + 0.5D,
+					this.myPos.getZ() + 0.5D) <= 64.0D;
 		}
 	}
 }

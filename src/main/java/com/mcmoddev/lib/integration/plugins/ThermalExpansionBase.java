@@ -30,7 +30,8 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 	}
 
-	protected static void addPulverizerRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
+	protected static void addPulverizerRecipe(@Nonnull final int energy,
+			@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
 		if (input.isEmpty() || output.isEmpty()) {
 			return;
 		}
@@ -38,7 +39,8 @@ public class ThermalExpansionBase implements IIntegration {
 		ThermalExpansionHelper.addPulverizerRecipe(energy, input, output);
 	}
 
-	protected static void addCompactorPressRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
+	protected static void addCompactorPressRecipe(@Nonnull final int energy,
+			@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
 		if (input.isEmpty() || output.isEmpty()) {
 			return;
 		}
@@ -46,7 +48,8 @@ public class ThermalExpansionBase implements IIntegration {
 		ThermalExpansionHelper.addCompactorPressRecipe(energy, input, output);
 	}
 
-	protected static void addCompactorStorageRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
+	protected static void addCompactorStorageRecipe(@Nonnull final int energy,
+			@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
 		if (input.isEmpty() || output.isEmpty()) {
 			return;
 		}
@@ -64,18 +67,18 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 
 		/*
-		 * default energy in TE for Ore -> Dust is 4000RF
-		 * default energy in TE for Ingot -> Dust is 2000RF
+		 * default energy in TE for Ore -> Dust is 4000RF default energy in TE for Ingot -> Dust is
+		 * 2000RF
 		 */
 		final int ENERGY_ORE = 4000;
 		final int ENERGY_INGOT = 2000;
 		ItemStack inputOre = ItemStack.EMPTY;
 		ItemStack inputIngot = ItemStack.EMPTY;
-		ItemStack outputDust = new ItemStack(material.getItem(Names.POWDER));
-		if (material.hasBlock(Names.ORE) && material.getBlock(Names.ORE) != null) {
+		final ItemStack outputDust = new ItemStack(material.getItem(Names.POWDER));
+		if (material.hasBlock(Names.ORE) && (material.getBlock(Names.ORE) != null)) {
 			inputOre = material.getBlockItemStack(Names.ORE);
 		}
-		if (material.hasItem(Names.INGOT) && material.getItem(Names.INGOT) != null) {
+		if (material.hasItem(Names.INGOT) && (material.getItem(Names.INGOT) != null)) {
 			inputIngot = material.getItemStack(Names.INGOT);
 		}
 		if (!inputOre.isEmpty()) {
@@ -95,28 +98,28 @@ public class ThermalExpansionBase implements IIntegration {
 			return;
 		}
 		/*
-		 * Ore -> Ingot default, according to TE source, is 2000
-		 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
+		 * Ore -> Ingot default, according to TE source, is 2000 dust -> Ingot default, according to
+		 * same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
 		 */
 		final int ENERGY_ORE = 2000;
 		final int ENERGY_DUST = 1400;
 		ItemStack ore;
-		if (material.hasBlock(Names.ORE) && material.getBlock(Names.ORE) != null) {
+		if (material.hasBlock(Names.ORE) && (material.getBlock(Names.ORE) != null)) {
 			ore = material.getBlockItemStack(Names.ORE, 1);
-		} else if (material.hasItem(Names.BLEND) && material.getItem(Names.BLEND) != null) {
+		} else if (material.hasItem(Names.BLEND) && (material.getItem(Names.BLEND) != null)) {
 			ore = material.getItemStack(Names.BLEND, 1);
 		} else {
 			return;
 		}
 
-		if ((!material.hasItem(Names.INGOT)) || material.getItem(Names.INGOT) == null) {
+		if ((!material.hasItem(Names.INGOT)) || (material.getItem(Names.INGOT) == null)) {
 			return;
 		}
 
 		if (material.hasItem(Names.INGOT)) {
 			final ItemStack ingot = material.getItemStack(Names.INGOT, 1);
 			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
-			if (material.hasItem(Names.POWDER) && material.getItem(Names.POWDER) != null) {
+			if (material.hasItem(Names.POWDER) && (material.getItem(Names.POWDER) != null)) {
 				final ItemStack dust = material.getItemStack(Names.POWDER, 1);
 				ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
 			}
@@ -132,12 +135,9 @@ public class ThermalExpansionBase implements IIntegration {
 			return;
 		}
 		/*
-		 * Default power, according to TE source, is 8000
-		 * This is used for Pyrotheum, Cryotheum, Aerotheum, Petrotheum and Redstone.
-		 * Redstone Block is 72000
-		 * Glowstone and Ender Pearl are 20000
-		 * Glowstone block is 80000
-		 * Cobblestone/Stone/Obsidian is 320000
+		 * Default power, according to TE source, is 8000 This is used for Pyrotheum, Cryotheum,
+		 * Aerotheum, Petrotheum and Redstone. Redstone Block is 72000 Glowstone and Ender Pearl are
+		 * 20000 Glowstone block is 80000 Cobblestone/Stone/Obsidian is 320000
 		 */
 		final int ENERGY_QTY = 8000;
 
@@ -163,11 +163,14 @@ public class ThermalExpansionBase implements IIntegration {
 
 		// TODO: Can we getBlockItemStack instead?
 		if (material.hasBlock(Names.PLATE)) {
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, new ItemStack(Item.getItemFromBlock(material.getBlock(Names.PLATE))), baseFluid);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY,
+					new ItemStack(Item.getItemFromBlock(material.getBlock(Names.PLATE))),
+					baseFluid);
 		}
 
 		if (material.hasItem(Names.NUGGET)) {
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, material.getItemStack(Names.NUGGET), nuggetFluid);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY,
+					material.getItemStack(Names.NUGGET), nuggetFluid);
 		}
 	}
 
@@ -185,7 +188,8 @@ public class ThermalExpansionBase implements IIntegration {
 			 * Compactors default is 4000RF per operation
 			 */
 			final int ENERGY_QTY = 4000;
-			addCompactorPressRecipe(ENERGY_QTY, new ItemStack(material.getItem(Names.INGOT)), new ItemStack(material.getBlock(Names.PLATE)));
+			addCompactorPressRecipe(ENERGY_QTY, new ItemStack(material.getItem(Names.INGOT)),
+					new ItemStack(material.getBlock(Names.PLATE)));
 		}
 	}
 

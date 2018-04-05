@@ -13,8 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ASMHooks {
 
-	public static final DataParameter<ItemStack> ARMOR_STACK = EntityDataManager.createKey(EntityHorse.class,
-			DataSerializers.ITEM_STACK);
+	public static final DataParameter<ItemStack> ARMOR_STACK = EntityDataManager
+			.createKey(EntityHorse.class, DataSerializers.ITEM_STACK);
 
 	private ASMHooks() {
 		throw new IllegalAccessError("Not a instantiable class");
@@ -37,7 +37,7 @@ public class ASMHooks {
 	@SideOnly(Side.CLIENT)
 	public static String getTextureName(final HorseArmorType type, final EntityHorse entity) {
 		final ItemStack stack = entity.getDataManager().get(ASMHooks.ARMOR_STACK);
-		if (!stack.isEmpty() && stack.getItem() instanceof IHorseArmor) {
+		if (!stack.isEmpty() && (stack.getItem() instanceof IHorseArmor)) {
 			return ((IHorseArmor) stack.getItem()).getHorseArmorTexture(entity, stack);
 		}
 		return type.getTextureName();

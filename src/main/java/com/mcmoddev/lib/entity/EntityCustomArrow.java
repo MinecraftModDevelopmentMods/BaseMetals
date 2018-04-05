@@ -49,7 +49,8 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	 * @param shooter
 	 *            The Shooter
 	 */
-	public EntityCustomArrow(final World worldIn, final ItemStack stack, final EntityPlayer shooter) {
+	public EntityCustomArrow(final World worldIn, final ItemStack stack,
+			final EntityPlayer shooter) {
 		super(worldIn, shooter);
 		this.itemStack = stack;
 	}

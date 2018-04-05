@@ -310,7 +310,7 @@ dependencies {
     exclude group: 'mezz.jei'
   }
 
-  deobfCompile ("com.blamejared:MTLib:3.0.1.+") {
+  deobfCompile ("com.blamejared:MTLib:${mtlib_version}") {
     exclude group: 'mezz.jei'
   }
 }

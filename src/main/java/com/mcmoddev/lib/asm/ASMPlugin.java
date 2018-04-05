@@ -19,8 +19,10 @@ public class ASMPlugin implements IFMLLoadingPlugin {
 
 	static List<ITransformer> transformerList = new ArrayList<>();
 
-	//HorseArmor patches present in 1.12.2-14.23.1.2592+
-	private static final boolean NEEDS_HORSE_ARMOR_PATCH = ForgeVersion.getMajorVersion() < 14 || ForgeVersion.getMinorVersion() < 23 || ForgeVersion.getRevisionVersion() < 1 || ForgeVersion.getBuildVersion() < 2592;
+	// HorseArmor patches present in 1.12.2-14.23.1.2592+
+	private static final boolean NEEDS_HORSE_ARMOR_PATCH = (ForgeVersion.getMajorVersion() < 14)
+			|| (ForgeVersion.getMinorVersion() < 23) || (ForgeVersion.getRevisionVersion() < 1)
+			|| (ForgeVersion.getBuildVersion() < 2592);
 
 	/**
 	 *
@@ -30,7 +32,7 @@ public class ASMPlugin implements IFMLLoadingPlugin {
 			transformerList.add(new EntityHorseTransformer());
 			transformerList.add(new HorseArmorTypeTransformer());
 		}
-		//if you add more here, you must remove the check below in getASMTransformerClass()!
+		// if you add more here, you must remove the check below in getASMTransformerClass()!
 	}
 
 	@Override

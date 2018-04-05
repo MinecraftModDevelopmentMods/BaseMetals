@@ -47,8 +47,10 @@ public class Platform {
 	 *
 	 * @return True is they are the same
 	 */
-	public static boolean isSameItem(@Nonnull final ItemStack itemStack1, @Nonnull final ItemStack itemStack2) {
-		return ((!itemStack1.isEmpty()) && (!itemStack2.isEmpty()) && (itemStack1.isItemEqual(itemStack2)));
+	public static boolean isSameItem(@Nonnull final ItemStack itemStack1,
+			@Nonnull final ItemStack itemStack2) {
+		return ((!itemStack1.isEmpty()) && (!itemStack2.isEmpty())
+				&& (itemStack1.isItemEqual(itemStack2)));
 	}
 
 	/**
@@ -100,12 +102,15 @@ public class Platform {
 	/**
 	 * Get PropertyString from BlockState properties.
 	 *
-	 * @param values Values
-	 * @param extrasArgs Extra Args
+	 * @param values
+	 *            Values
+	 * @param extrasArgs
+	 *            Extra Args
 	 *
 	 * @return PropertyString
 	 */
-	public static String getPropertyString(final Map<IProperty<?>, Comparable<?>> values, final String... extrasArgs) {
+	public static String getPropertyString(final Map<IProperty<?>, Comparable<?>> values,
+			final String... extrasArgs) {
 		final StringBuilder stringbuilder = new StringBuilder();
 		for (final Map.Entry<IProperty<?>, Comparable<?>> entry : values.entrySet()) {
 			if (stringbuilder.length() != 0) {
@@ -129,7 +134,8 @@ public class Platform {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T extends Comparable<T>> String getPropertyName(final IProperty<T> property, final Comparable<?> comparable) {
+	private static <T extends Comparable<T>> String getPropertyName(final IProperty<T> property,
+			final Comparable<?> comparable) {
 		return property.getName((T) comparable);
 	}
 

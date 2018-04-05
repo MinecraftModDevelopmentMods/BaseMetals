@@ -17,12 +17,14 @@ public class ModifierLeadPlated extends ToolModifier {
 	public ModifierLeadPlated() {
 		super("lead-plated", 0xFFFFFF);
 
-		addAspects(new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this), ModifierAspect.freeModifier);
+		this.addAspects(new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this),
+				ModifierAspect.freeModifier);
 		this.addItem("plateLead");
 	}
 
 	@Override
-	public void applyEffect(@Nonnull final NBTTagCompound rootCompound, @Nonnull final NBTTagCompound modifierTag) {
+	public void applyEffect(@Nonnull final NBTTagCompound rootCompound,
+			@Nonnull final NBTTagCompound modifierTag) {
 		modifierTag.setBoolean("plated", true);
 		TagUtil.setExtraTag(rootCompound, modifierTag);
 	}

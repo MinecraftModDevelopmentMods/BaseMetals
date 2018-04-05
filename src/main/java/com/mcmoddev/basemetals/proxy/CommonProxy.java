@@ -29,6 +29,7 @@ import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.oregen.FallbackGenerator;
 import com.mcmoddev.lib.oregen.FallbackGeneratorData;
+import com.mcmoddev.lib.util.ConfigBase;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.Block;
@@ -56,11 +57,11 @@ public class CommonProxy {
 	private boolean allsGood = false;
 
 	/**
-	 * 
+	 *
 	 * @return if all is good
 	 */
 	public boolean allsGood() {
-		return allsGood;
+		return this.allsGood;
 	}
 
 	/**
@@ -91,13 +92,12 @@ public class CommonProxy {
 		com.mcmoddev.lib.init.Items.init();
 		Items.init();
 
-		// icons have to be setup after the blocks and items are initialized
 		VillagerTrades.init();
 
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		IntegrationManager.INSTANCE.preInit(event);
 		IntegrationManager.INSTANCE.runCallbacks("preInit");
-		allsGood = true;
+		this.allsGood = true;
 	}
 
 	/**
@@ -109,7 +109,8 @@ public class CommonProxy {
 			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
 					&& (Materials.hasMaterial(MaterialNames.MERCURY))
 					&& ("liquid_mercury".equals(mapping.key.getResourcePath()))) {
-				mapping.remap(Materials.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
+				mapping.remap(com.mcmoddev.lib.init.Materials
+						.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
 			}
 		}
 	}
@@ -123,7 +124,8 @@ public class CommonProxy {
 			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
 					&& (Materials.hasMaterial(MaterialNames.COAL))
 					&& ("carbon_powder".equals(mapping.key.getResourcePath()))) {
-				mapping.remap(Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
+				mapping.remap(com.mcmoddev.lib.init.Materials.getMaterialByName(MaterialNames.COAL)
+						.getItem(Names.POWDER));
 			}
 		}
 	}
@@ -133,31 +135,33 @@ public class CommonProxy {
 	 * @param event
 	 */
 	public void init(final FMLInitializationEvent event) {
-		allsGood = false;
+		this.allsGood = false;
 
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
-		allsGood = true;
+		this.allsGood = true;
 
 		// by this point all materials should have been registered both with MMDLib and Minecraft
 		// move to a separate function - potentially in FallbackGeneratorData - after the test
-		for (final MMDMaterial material : Materials.getAllMaterials()) {
+		for (final MMDMaterial material : com.mcmoddev.lib.init.Materials.getAllMaterials()) {
 			if (material.hasBlock(Names.ORE)) {
-				FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ORE.toString(),
-						material.getDefaultDimension());
+				FallbackGeneratorData.getInstance().addMaterial(material.getName(),
+						Names.ORE.toString(), material.getDefaultDimension());
 
 				if (material.hasBlock(Names.NETHERORE)) {
-					FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.NETHERORE.toString(), -1);
+					FallbackGeneratorData.getInstance().addMaterial(material.getName(),
+							Names.NETHERORE.toString(), -1);
 				}
 
 				if (material.hasBlock(Names.ENDORE)) {
-					FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ENDORE.toString(), 1);
+					FallbackGeneratorData.getInstance().addMaterial(material.getName(),
+							Names.ENDORE.toString(), 1);
 				}
 			}
 		}
 
 		ItemGroups.setupIcons(MaterialNames.STARSTEEL);
-		//dumpMaterials()
+		// dumpMaterials()
 	}
 
 	@SuppressWarnings("unused")
@@ -165,19 +169,19 @@ public class CommonProxy {
 		final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		final JsonObject materials = new JsonObject();
 
-		Materials.getAllMaterials().forEach(material -> {
-			JsonObject currentMaterial = new JsonObject();
-			JsonArray blocks = new JsonArray();
-			JsonArray items = new JsonArray();
+		com.mcmoddev.lib.init.Materials.getAllMaterials().forEach(material -> {
+			final JsonObject currentMaterial = new JsonObject();
+			final JsonArray blocks = new JsonArray();
+			final JsonArray items = new JsonArray();
 
 			material.getBlockRegistry().entrySet().stream().forEach(ent -> {
-				JsonObject entry = new JsonObject();
+				final JsonObject entry = new JsonObject();
 				entry.addProperty("name", ent.getKey());
 				entry.addProperty("ref", ent.getValue().toString());
 				blocks.add(entry);
 			});
 			material.getItemRegistry().entrySet().stream().forEach(ent -> {
-				JsonObject entry = new JsonObject();
+				final JsonObject entry = new JsonObject();
 				entry.addProperty("name", ent.getKey());
 				entry.addProperty("ref", ent.getValue().toString());
 				items.add(entry);
@@ -188,15 +192,16 @@ public class CommonProxy {
 			materials.add(material.getName(), currentMaterial);
 		});
 		final String out = gson.toJson(materials);
-		Path p = Paths.get("logs", "mmd_materials_dump.json");
+		final Path p = Paths.get("logs", "mmd_materials_dump.json");
 		try (BufferedWriter bw = Files.newBufferedWriter(p, StandardCharsets.UTF_8,
-				StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING)) {
+				StandardOpenOption.CREATE, StandardOpenOption.WRITE,
+				StandardOpenOption.TRUNCATE_EXISTING)) {
 			bw.write(out);
-		} catch (IOException e) {
-			CrashReport report = CrashReport.makeCrashReport(e,
+		} catch (final IOException e) {
+			final CrashReport report = CrashReport.makeCrashReport(e,
 					String.format("Unable to write dump of MMDMaterial registry to %s",
 							p.toFile().getAbsolutePath()));
-			report.getCategory().addCrashSection("BaseMetals Version", "2.5.0-beta4");
+			report.getCategory().addCrashSection("BaseMetals Version", "2.5.0-beta5");
 			BaseMetals.logger.fatal(report.getCompleteReport());
 		}
 	}
@@ -206,10 +211,10 @@ public class CommonProxy {
 	 * @param event
 	 */
 	public void postInit(final FMLPostInitializationEvent event) {
-		allsGood = false;
+		this.allsGood = false;
 		IntegrationManager.INSTANCE.runCallbacks("postInit");
-		Config.postInit();
-		allsGood = true;
+		ConfigBase.postInit();
+		this.allsGood = true;
 		FallbackGeneratorData.getInstance().setup();
 	}
 }

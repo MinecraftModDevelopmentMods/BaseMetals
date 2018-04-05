@@ -3,6 +3,7 @@ package com.mcmoddev.basemetals.init;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -43,6 +44,12 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 			addAdditionalOredicts(adamantine, "Adamantite");
 			addAdditionalOredicts(adamantine, "Adamantium");
 			addAdditionalOredicts(adamantine, "Adamant");
+		}
+
+		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
+			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
+
+			addAdditionalOredicts(mercury, "Quicksilver");
 		}
 
 		if (Materials.hasMaterial(MaterialNames.STEEL)) {

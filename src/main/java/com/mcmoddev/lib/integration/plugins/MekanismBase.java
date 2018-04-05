@@ -29,7 +29,6 @@ public class MekanismBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "mekanism";
 
-
 	@Override
 	public void init() {
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
@@ -38,7 +37,8 @@ public class MekanismBase implements IIntegration {
 	}
 
 	protected static void addGassesForMaterial(@Nonnull final String materialName) {
-		if (!Materials.hasMaterial(materialName) || Materials.getMaterialByName(materialName).isEmpty()) {
+		if (!Materials.hasMaterial(materialName)
+				|| Materials.getMaterialByName(materialName).isEmpty()) {
 			return;
 		}
 
@@ -53,7 +53,8 @@ public class MekanismBase implements IIntegration {
 		gas1.setUnlocalizedName("gas" + material.getCapitalizedName());
 		GasRegistry.register(gas1);
 
-		final Gas gas2 = new Gas(makeCleanGasName(material), material.getFluid().getStill().toString());
+		final Gas gas2 = new Gas(makeCleanGasName(material),
+				material.getFluid().getStill().toString());
 		gas2.setUnlocalizedName("cleanGas" + material.getCapitalizedName());
 		GasRegistry.register(gas2);
 	}
@@ -92,12 +93,15 @@ public class MekanismBase implements IIntegration {
 		addChemicalDissolutionChamberRecipe(ore, material.getName());
 	}
 
-	protected static void addMetallurgicInfuserRecipe(@Nonnull final String infuse, @Nonnull final int amount, @Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+	protected static void addMetallurgicInfuserRecipe(@Nonnull final String infuse,
+			@Nonnull final int amount, @Nonnull final ItemStack inputItem,
+			@Nonnull final ItemStack outputItem) {
 		final InfuseType infuseType = InfuseRegistry.get(infuse);
 		RecipeHandler.addMetallurgicInfuserRecipe(infuseType, amount, inputItem, outputItem);
 	}
 
-	protected static void addCrusherRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+	protected static void addCrusherRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final ItemStack outputItem) {
 		if (inputItem.isEmpty() || outputItem.isEmpty()) {
 			return;
 		}
@@ -105,7 +109,8 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addCrusherRecipe(inputItem, outputItem);
 	}
 
-	protected static void addEnrichmentChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+	protected static void addEnrichmentChamberRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final ItemStack outputItem) {
 		if (inputItem.isEmpty() || outputItem.isEmpty()) {
 			return;
 		}
@@ -113,7 +118,8 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addEnrichmentChamberRecipe(inputItem, outputItem);
 	}
 
-	protected static void addPurificationChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+	protected static void addPurificationChamberRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final ItemStack outputItem) {
 		if (inputItem.isEmpty() || outputItem.isEmpty()) {
 			return;
 		}
@@ -121,34 +127,38 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addPurificationChamberRecipe(inputItem, outputItem);
 	}
 
-	protected static void addChemicalInjectionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+	protected static void addChemicalInjectionChamberRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final ItemStack outputItem) {
 		if ((inputItem.isEmpty()) || (outputItem.isEmpty())) {
 			return;
 		}
 
-		Gas inputGas = GasRegistry.getGas("hydrogenChloride");
+		final Gas inputGas = GasRegistry.getGas("hydrogenChloride");
 		RecipeHandler.addChemicalInjectionChamberRecipe(inputItem, inputGas, outputItem);
 	}
 
 	// 5x, Slurry to Crystal
-	protected static void addChemicalCrystallizerRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem) {
+	protected static void addChemicalCrystallizerRecipe(@Nonnull final String inputGas,
+			@Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem) {
 		if ((outputItem.isEmpty()) || (!GasRegistry.containsGas(inputGas))) {
 			return;
 		}
 
- 		final GasStack inputGasStack = new GasStack(GasRegistry.getGas(inputGas), inputGasQty);
+		final GasStack inputGasStack = new GasStack(GasRegistry.getGas(inputGas), inputGasQty);
 		RecipeHandler.addChemicalCrystallizerRecipe(inputGasStack, outputItem);
 	}
 
 	// 5x, Slurry to "clean" Slurry
-	protected static void addChemicalWasherRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final String outputGas) {
+	protected static void addChemicalWasherRecipe(@Nonnull final String inputGas,
+			@Nonnull final int inputGasQty, @Nonnull final String outputGas) {
 		final GasStack inputGasStack = new GasStack(GasRegistry.getGas(inputGas), inputGasQty);
 		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), inputGasQty);
 		RecipeHandler.addChemicalWasherRecipe(inputGasStack, outputGasStack);
 	}
 
 	// 5x, Ore to Slurry
-	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas, @Nonnull final int outputQty) {
+	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final String outputGas, @Nonnull final int outputQty) {
 		if (inputItem.isEmpty()) {
 			return;
 		}
@@ -157,7 +167,8 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addChemicalDissolutionChamberRecipe(inputItem, outputGasStack);
 	}
 
-	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas) {
+	protected static void addChemicalDissolutionChamberRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final String outputGas) {
 		if ((inputItem.isEmpty()) || (!GasRegistry.containsGas(outputGas))) {
 			return;
 		}
@@ -165,21 +176,31 @@ public class MekanismBase implements IIntegration {
 		addChemicalDissolutionChamberRecipe(inputItem, outputGas, 1000);
 	}
 
-	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem, @Nonnull final FluidStack inputFluid, @Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem,  @Nonnull final String outputGas, @Nonnull final int outputGasQty, final int extraEnergy, final int ticks) {
+	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final FluidStack inputFluid, @Nonnull final String inputGas,
+			@Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem,
+			@Nonnull final String outputGas, @Nonnull final int outputGasQty, final int extraEnergy,
+			final int ticks) {
 		if (inputItem.isEmpty()) {
 			return;
 		}
 
 		final GasStack inputGasStack = new GasStack(GasRegistry.getGas(inputGas), inputGasQty);
 		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), outputGasQty);
-		RecipeHandler.addPRCRecipe(inputItem, inputFluid, inputGasStack, outputItem, outputGasStack, extraEnergy, ticks);
+		RecipeHandler.addPRCRecipe(inputItem, inputFluid, inputGasStack, outputItem, outputGasStack,
+				extraEnergy, ticks);
 	}
 
-	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem, @Nonnull final FluidStack inputFluid, @Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
-		addPRCRecipe(inputItem, inputFluid, inputGas, inputGasQty, outputItem, outputGas, outputGasQty, 0, 60);
+	protected static void addPRCRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final FluidStack inputFluid, @Nonnull final String inputGas,
+			@Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem,
+			@Nonnull final String outputGas, @Nonnull final int outputGasQty) {
+		addPRCRecipe(inputItem, inputFluid, inputGas, inputGasQty, outputItem, outputGas,
+				outputGasQty, 0, 60);
 	}
 
-	protected static void addOsmiumCompressorRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+	protected static void addOsmiumCompressorRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final ItemStack outputItem) {
 		if (inputItem.isEmpty() || outputItem.isEmpty()) {
 			return;
 		}
@@ -187,7 +208,8 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addOsmiumCompressorRecipe(inputItem, outputItem);
 	}
 
-	protected static void addCombinerRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+	protected static void addCombinerRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final ItemStack outputItem) {
 		if (inputItem.isEmpty() || outputItem.isEmpty()) {
 			return;
 		}
@@ -195,7 +217,8 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addCombinerRecipe(inputItem, outputItem);
 	}
 
-	protected static void addChemicalOxidizerRecipe(@Nonnull final ItemStack inputItem, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
+	protected static void addChemicalOxidizerRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final String outputGas, @Nonnull final int outputGasQty) {
 		if (inputItem.isEmpty()) {
 			return;
 		}
@@ -204,14 +227,21 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addChemicalOxidizerRecipe(inputItem, outputGasStack);
 	}
 
-	protected static void addChemicalInfuserRecipe(@Nonnull final String leftInputGas, @Nonnull final int leftInputGasQty, @Nonnull final String rightInputGas, @Nonnull final int rightInputGasQty, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
-		final GasStack leftInputGasStack = new GasStack(GasRegistry.getGas(leftInputGas), leftInputGasQty);
-		final GasStack rightInputGasStack = new GasStack(GasRegistry.getGas(rightInputGas), rightInputGasQty);
+	protected static void addChemicalInfuserRecipe(@Nonnull final String leftInputGas,
+			@Nonnull final int leftInputGasQty, @Nonnull final String rightInputGas,
+			@Nonnull final int rightInputGasQty, @Nonnull final String outputGas,
+			@Nonnull final int outputGasQty) {
+		final GasStack leftInputGasStack = new GasStack(GasRegistry.getGas(leftInputGas),
+				leftInputGasQty);
+		final GasStack rightInputGasStack = new GasStack(GasRegistry.getGas(rightInputGas),
+				rightInputGasQty);
 		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), outputGasQty);
-		RecipeHandler.addChemicalInfuserRecipe(leftInputGasStack, rightInputGasStack, outputGasStack);
+		RecipeHandler.addChemicalInfuserRecipe(leftInputGasStack, rightInputGasStack,
+				outputGasStack);
 	}
 
-	protected static void addPrecisionSawmillRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack outputItem) {
+	protected static void addPrecisionSawmillRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final ItemStack outputItem) {
 		if (inputItem.isEmpty() || outputItem.isEmpty()) {
 			return;
 		}
@@ -219,7 +249,9 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addPrecisionSawmillRecipe(inputItem, outputItem);
 	}
 
-	protected static void addPrecisionSawmillRecipe(@Nonnull final ItemStack inputItem, @Nonnull final ItemStack mainOutput, @Nonnull final ItemStack secondaryOutput, @Nonnull final double chance) {
+	protected static void addPrecisionSawmillRecipe(@Nonnull final ItemStack inputItem,
+			@Nonnull final ItemStack mainOutput, @Nonnull final ItemStack secondaryOutput,
+			@Nonnull final double chance) {
 		if (inputItem.isEmpty() || mainOutput.isEmpty()) {
 			return;
 		}
@@ -227,20 +259,32 @@ public class MekanismBase implements IIntegration {
 		RecipeHandler.addPrecisionSawmillRecipe(inputItem, mainOutput, secondaryOutput, chance);
 	}
 
-	protected static void addElectrolyticSeparatorRecipe(@Nonnull final String inputFluidName, @Nonnull final int inputFluidQty, @Nonnull final String leftOutputGas, @Nonnull final int leftOutputGasQty, @Nonnull final String rightOutputGas, @Nonnull final int rightOutputGasQty, @Nonnull final int energy) {
-		final FluidStack inputFluid = new FluidStack(FluidRegistry.getFluid(inputFluidName), inputFluidQty);
-		final GasStack leftOutput = new GasStack(GasRegistry.getGas(leftOutputGas), leftOutputGasQty);
-		final GasStack rightOutput = new GasStack(GasRegistry.getGas(rightOutputGas), rightOutputGasQty);
+	protected static void addElectrolyticSeparatorRecipe(@Nonnull final String inputFluidName,
+			@Nonnull final int inputFluidQty, @Nonnull final String leftOutputGas,
+			@Nonnull final int leftOutputGasQty, @Nonnull final String rightOutputGas,
+			@Nonnull final int rightOutputGasQty, @Nonnull final int energy) {
+		final FluidStack inputFluid = new FluidStack(FluidRegistry.getFluid(inputFluidName),
+				inputFluidQty);
+		final GasStack leftOutput = new GasStack(GasRegistry.getGas(leftOutputGas),
+				leftOutputGasQty);
+		final GasStack rightOutput = new GasStack(GasRegistry.getGas(rightOutputGas),
+				rightOutputGasQty);
 		RecipeHandler.addElectrolyticSeparatorRecipe(inputFluid, energy, leftOutput, rightOutput);
 	}
 
-	protected static void addThermalEvaporationRecipe(@Nonnull final String inputFluidName, @Nonnull final int inputFluidQty, @Nonnull final String outputFluidName, @Nonnull final int outputFluidQty) {
-		final FluidStack inputFluid = new FluidStack(FluidRegistry.getFluid(inputFluidName), inputFluidQty);
-		FluidStack outputFluid = new FluidStack(FluidRegistry.getFluid(outputFluidName), outputFluidQty);
+	protected static void addThermalEvaporationRecipe(@Nonnull final String inputFluidName,
+			@Nonnull final int inputFluidQty, @Nonnull final String outputFluidName,
+			@Nonnull final int outputFluidQty) {
+		final FluidStack inputFluid = new FluidStack(FluidRegistry.getFluid(inputFluidName),
+				inputFluidQty);
+		final FluidStack outputFluid = new FluidStack(FluidRegistry.getFluid(outputFluidName),
+				outputFluidQty);
 		RecipeHandler.addThermalEvaporationRecipe(inputFluid, outputFluid);
 	}
 
-	protected static void addSolarNeutronRecipe(@Nonnull final String inputGas, @Nonnull final int inputGasQty, @Nonnull final String outputGas, @Nonnull final int outputGasQty) {
+	protected static void addSolarNeutronRecipe(@Nonnull final String inputGas,
+			@Nonnull final int inputGasQty, @Nonnull final String outputGas,
+			@Nonnull final int outputGasQty) {
 		final GasStack inputGasStack = new GasStack(GasRegistry.getGas(inputGas), inputGasQty);
 		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), outputGasQty);
 		RecipeHandler.addSolarNeutronRecipe(inputGasStack, outputGasStack);

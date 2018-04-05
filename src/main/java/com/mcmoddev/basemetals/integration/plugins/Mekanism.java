@@ -11,9 +11,9 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.MekanismBase;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
-import com.mcmoddev.lib.integration.plugins.MekanismBase;
 
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,12 +31,12 @@ public final class Mekanism extends MekanismBase implements IIntegration {
 
 		MinecraftForge.EVENT_BUS.register(this);
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL, MaterialNames.ZINC);
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+				MaterialNames.ZINC);
 
-		materials.stream().filter(Materials::hasMaterial)
-				.filter(Mekanism::isMaterialNotEmpty)
+		materials.stream().filter(Materials::hasMaterial).filter(Mekanism::isMaterialNotEmpty)
 				.forEach(MekanismBase::addGassesForMaterial);
 	}
 
@@ -50,19 +50,19 @@ public final class Mekanism extends MekanismBase implements IIntegration {
 	 */
 	@SubscribeEvent
 	public void regCallback(final RegistryEvent.Register<IRecipe> event) {
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL, MaterialNames.ZINC);
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+				MaterialNames.ZINC);
 
-		materials.stream().filter(Materials::hasMaterial)
-				.filter(Mekanism::isMaterialNotEmpty)
+		materials.stream().filter(Materials::hasMaterial).filter(Mekanism::isMaterialNotEmpty)
 				.forEach(MekanismBase::addOreMultiplicationRecipes);
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
-			addVanillaOreMultiplicationRecipes(MaterialNames.DIAMOND);
+			this.addVanillaOreMultiplicationRecipes(MaterialNames.DIAMOND);
 		}
 		if (Materials.hasMaterial(MaterialNames.EMERALD)) {
-			addVanillaOreMultiplicationRecipes(MaterialNames.EMERALD);
+			this.addVanillaOreMultiplicationRecipes(MaterialNames.EMERALD);
 		}
 	}
 
@@ -71,10 +71,12 @@ public final class Mekanism extends MekanismBase implements IIntegration {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
 
 			if (material.hasBlock(Names.ORE) && (material.hasItem(Names.INGOT))) {
-				addCrusherRecipe(material.getBlockItemStack(Names.ORE), material.getItemStack(Names.INGOT, 2));
+				addCrusherRecipe(material.getBlockItemStack(Names.ORE),
+						material.getItemStack(Names.INGOT, 2));
 			}
 			if (material.hasItem(Names.INGOT) && (material.hasItem(Names.POWDER))) {
-				addCrusherRecipe(material.getItemStack(Names.INGOT), material.getItemStack(Names.POWDER));
+				addCrusherRecipe(material.getItemStack(Names.INGOT),
+						material.getItemStack(Names.POWDER));
 			}
 			if (material.hasBlock(Names.ORE) && (material.hasItem(Names.POWDER))) {
 				addPurificationChamberRecipe(material.getBlockItemStack(Names.ORE),

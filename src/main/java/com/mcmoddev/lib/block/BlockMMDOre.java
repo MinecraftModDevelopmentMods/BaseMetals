@@ -58,13 +58,16 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 	}
 
 	@Override
-	public int getExpDrop(final IBlockState bs, final IBlockAccess w, final BlockPos coord, final int i) {
+	public int getExpDrop(final IBlockState bs, final IBlockAccess w, final BlockPos coord,
+			final int i) {
 		return 0; // XP comes from smelting
 	}
 
 	@Override
-	public boolean canEntityDestroy(final IBlockState bs, final IBlockAccess w, final BlockPos coord, final Entity entity) {
-		if ((this == Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.ORE)) && (entity instanceof net.minecraft.entity.boss.EntityDragon)) {
+	public boolean canEntityDestroy(final IBlockState bs, final IBlockAccess w,
+			final BlockPos coord, final Entity entity) {
+		if ((this == Materials.getMaterialByName(MaterialNames.STARSTEEL).getBlock(Names.ORE))
+				&& (entity instanceof net.minecraft.entity.boss.EntityDragon)) {
 			return false;
 		}
 		return super.canEntityDestroy(bs, w, coord, entity);

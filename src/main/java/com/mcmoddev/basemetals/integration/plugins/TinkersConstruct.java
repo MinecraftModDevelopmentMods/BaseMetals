@@ -25,8 +25,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  *
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, preInitCallback = "preInit", initCallback = "initCallback", postInitCallback = "postInit")
-public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase
-		implements IIntegration {
+public final class TinkersConstruct
+		extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase implements IIntegration {
 
 	private Boolean preInit = false;
 	private Boolean init = false;
@@ -38,21 +38,23 @@ public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins
 			return;
 		}
 
-		registerMaterial(MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
+		this.registerMaterial(MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED,
+				TraitNames.INSATIABLE);
 		registerMaterial(MaterialNames.ANTIMONY, true, false);
-		registerMaterial(MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC, TraitLocations.HEAD,
-				TraitNames.JAGGED, TraitLocations.HEAD, TraitNames.AQUADYNAMIC);
+		this.registerMaterial(MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC,
+				TraitLocations.HEAD, TraitNames.JAGGED, TraitLocations.HEAD,
+				TraitNames.AQUADYNAMIC);
 		registerMaterial(MaterialNames.BISMUTH, true, false);
-		registerMaterial(MaterialNames.BRASS, true, false, TraitNames.DENSE);
-		registerMaterial(MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
+		this.registerMaterial(MaterialNames.BRASS, true, false, TraitNames.DENSE);
+		this.registerMaterial(MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
 		registerMaterial(MaterialNames.CUPRONICKEL, true, false);
 		registerMaterial(MaterialNames.INVAR, true, false);
-		registerMaterial(MaterialNames.MITHRIL, true, false, TraitNames.HOLY);
+		this.registerMaterial(MaterialNames.MITHRIL, true, false, TraitNames.HOLY);
 		registerMaterial(MaterialNames.NICKEL, true, false);
-		registerMaterial(MaterialNames.PEWTER, true, false, TraitNames.SOFT);
+		this.registerMaterial(MaterialNames.PEWTER, true, false, TraitNames.SOFT);
 		registerMaterial(MaterialNames.PLATINUM, true, false);
-		registerMaterial(MaterialNames.STARSTEEL, true, false, TraitNames.ENDERFERENCE, TraitLocations.HEAD,
-				TraitNames.SPARKLY);
+		this.registerMaterial(MaterialNames.STARSTEEL, true, false, TraitNames.ENDERFERENCE,
+				TraitLocations.HEAD, TraitNames.SPARKLY);
 		registerMaterial(MaterialNames.TIN, true, false);
 		registerMaterial(MaterialNames.ZINC, true, false);
 
@@ -63,36 +65,36 @@ public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins
 	 *
 	 */
 	public void preInit() {
-		if (preInit) {
+		if (this.preInit) {
 			return;
 		}
-		preInit = true;
-		preInitSetup();
-		registerMelting();
-		setMaterialsVisible(BaseMetals.MODID);
+		this.preInit = true;
+		this.preInitSetup();
+		this.registerMelting();
+		this.setMaterialsVisible(BaseMetals.MODID);
 	}
 
 	/**
 	 *
 	 */
 	public void initCallback() {
-		if (init) {
+		if (this.init) {
 			return;
 		}
-		init = true;
-		registerAlloys();
-		initSetup(BaseMetals.MODID);
+		this.init = true;
+		this.registerAlloys();
+		this.initSetup(BaseMetals.MODID);
 	}
 
 	/**
 	 *
 	 */
 	public void postInit() {
-		if (postInit) {
+		if (this.postInit) {
 			return;
 		}
-		postInit = true;
-		postInitSetup(BaseMetals.MODID);
+		this.postInit = true;
+		this.postInitSetup(BaseMetals.MODID);
 	}
 
 	@SubscribeEvent
@@ -109,7 +111,8 @@ public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins
 
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
-			registry.registerMelting(mercury.getItem(Names.INGOT), FluidRegistry.getFluidStack(mercury.getName(), 144));
+			registry.registerMelting(mercury.getItem(Names.INGOT),
+					FluidRegistry.getFluidStack(mercury.getName(), 144));
 		}
 
 		if (Materials.hasMaterial(MaterialNames.PRISMARINE)) {
@@ -142,9 +145,9 @@ public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins
 				// can only be a "general" trait
 				mat.addTrait("general", traits[i]);
 			} else {
-				String item = traits[i];
-				if (isTraitLoc(item)) {
-					if (i + 1 >= traits.length) {
+				final String item = traits[i];
+				if (this.isTraitLoc(item)) {
+					if ((i + 1) >= traits.length) {
 						return;
 					}
 					i++;
@@ -157,7 +160,8 @@ public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins
 		}
 	}
 
-	private void registerMaterial(final String name, final boolean castable, final boolean craftable, final String... traits) {
+	private void registerMaterial(final String name, final boolean castable,
+			final boolean craftable, final String... traits) {
 		if (!Materials.hasMaterial(name)) {
 			return;
 		}
@@ -180,14 +184,15 @@ public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins
 		mat.genStatsFromSource();
 
 		if (traits.length > 0) {
-			addTraits(mat, traits);
+			this.addTraits(mat, traits);
 		}
 
 		mat.settle();
 	}
 
 	private void registerAlloys() {
-		if (Materials.hasMaterial(MaterialNames.AQUARIUM) && Materials.hasMaterial(MaterialNames.COPPER)
+		if (Materials.hasMaterial(MaterialNames.AQUARIUM)
+				&& Materials.hasMaterial(MaterialNames.COPPER)
 				&& Materials.hasMaterial(MaterialNames.ZINC)) {
 			final FluidStack output = FluidRegistry.getFluidStack(MaterialNames.AQUARIUM, 3);
 			final FluidStack copper = FluidRegistry.getFluidStack(MaterialNames.COPPER, 2);
@@ -196,7 +201,8 @@ public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins
 			registry.registerAlloy(MaterialNames.AQUARIUM, output, copper, zinc, prismarine);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.CUPRONICKEL) && Materials.hasMaterial(MaterialNames.COPPER)
+		if (Materials.hasMaterial(MaterialNames.CUPRONICKEL)
+				&& Materials.hasMaterial(MaterialNames.COPPER)
 				&& Materials.hasMaterial(MaterialNames.NICKEL)) {
 			final FluidStack output = FluidRegistry.getFluidStack(MaterialNames.CUPRONICKEL, 4);
 			final FluidStack copper = FluidRegistry.getFluidStack(MaterialNames.COPPER, 3);
@@ -204,15 +210,18 @@ public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins
 			registry.registerAlloy(MaterialNames.CUPRONICKEL, output, copper, nickel);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.INVAR) && Materials.hasMaterial(MaterialNames.NICKEL)) {
+		if (Materials.hasMaterial(MaterialNames.INVAR)
+				&& Materials.hasMaterial(MaterialNames.NICKEL)) {
 			final FluidStack output = FluidRegistry.getFluidStack(MaterialNames.INVAR, 3);
 			final FluidStack iron = FluidRegistry.getFluidStack(MaterialNames.IRON, 2);
 			final FluidStack nickel = FluidRegistry.getFluidStack(MaterialNames.NICKEL, 1);
 			registry.registerAlloy(MaterialNames.INVAR, output, iron, nickel);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.MITHRIL) && Materials.hasMaterial(MaterialNames.COLDIRON)
-				&& Materials.hasMaterial(MaterialNames.SILVER) && Materials.hasMaterial(MaterialNames.MERCURY)) {
+		if (Materials.hasMaterial(MaterialNames.MITHRIL)
+				&& Materials.hasMaterial(MaterialNames.COLDIRON)
+				&& Materials.hasMaterial(MaterialNames.SILVER)
+				&& Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final FluidStack output = FluidRegistry.getFluidStack(MaterialNames.MITHRIL, 3);
 			final FluidStack coldiron = FluidRegistry.getFluidStack(MaterialNames.COLDIRON, 1);
 			final FluidStack silver = FluidRegistry.getFluidStack(MaterialNames.SILVER, 2);
@@ -221,7 +230,8 @@ public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins
 		}
 
 		if (Materials.hasMaterial(MaterialNames.PEWTER) && Materials.hasMaterial(MaterialNames.LEAD)
-				&& Materials.hasMaterial(MaterialNames.COPPER) && Materials.hasMaterial(MaterialNames.TIN)) {
+				&& Materials.hasMaterial(MaterialNames.COPPER)
+				&& Materials.hasMaterial(MaterialNames.TIN)) {
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
 			final FluidStack output = FluidRegistry.getFluidStack(MaterialNames.PEWTER, 144);
 			final FluidStack copper = FluidRegistry.getFluidStack(MaterialNames.COPPER, 2);

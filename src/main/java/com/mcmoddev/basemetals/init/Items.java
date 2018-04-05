@@ -10,6 +10,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.item.ItemMMDNugget;
@@ -51,25 +52,32 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 		addStoneBits();
 		addWoodBits();
 
-		Materials.getMaterialByName(MaterialNames.EMERALD).addNewItem(Names.INGOT, net.minecraft.init.Items.EMERALD);
-		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT, net.minecraft.init.Items.QUARTZ);
-		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER, net.minecraft.init.Items.REDSTONE);
-		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItemFromItemStack(Names.INGOT, new ItemStack(net.minecraft.init.Items.DYE, 1, 4));
-		
+		Materials.getMaterialByName(MaterialNames.EMERALD).addNewItem(Names.INGOT,
+				net.minecraft.init.Items.EMERALD);
+		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.DYE, 1, 4));
+		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT,
+				net.minecraft.init.Items.QUARTZ);
+		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER,
+				net.minecraft.init.Items.REDSTONE);
+
 		doSpecialMats();
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.EMERALD,
-				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.OBSIDIAN,
-				MaterialNames.MITHRIL, MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
-				MaterialNames.QUARTZ, MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
+				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
+				MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.EMERALD,
+				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.LEAD,
+				MaterialNames.OBSIDIAN, MaterialNames.MITHRIL, MaterialNames.NICKEL,
+				MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.QUARTZ,
+				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
 				MaterialNames.TIN, MaterialNames.ZINC);
 
 		// create and register modded stuffs
-		final List<String> materialsModSupport = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL, MaterialNames.ZINC);
+		final List<String> materialsModSupport = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+				MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
@@ -138,28 +146,28 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
-				.filter(Materials::hasMaterial)
-				.forEach(materialName -> create(Names.ANVIL, Materials.getMaterialByName(materialName)));
+				.filter(Materials::hasMaterial).forEach(materialName -> create(Names.ANVIL,
+						Materials.getMaterialByName(materialName)));
 
 		addToMetList();
 	}
 
-	private static void setBurnTimes(@Nonnull final MMDMaterial mat) {
-		if (mat.hasItem(Names.NUGGET)) {
-			((ItemMMDNugget) mat.getItem(Names.NUGGET)).setBurnTime(160);
+	private static void setBurnTimes(@Nonnull final MMDMaterial material) {
+		if (material.hasItem(Names.NUGGET)) {
+			((ItemMMDNugget) material.getItem(Names.NUGGET)).setBurnTime(160);
 		}
 
-		if (mat.hasItem(Names.POWDER)) {
-			((ItemMMDPowder) mat.getItem(Names.POWDER)).setBurnTime(1600);
+		if (material.hasItem(Names.POWDER)) {
+			((ItemMMDPowder) material.getItem(Names.POWDER)).setBurnTime(1600);
 		}
 
-		if (mat.hasItem(Names.SMALLPOWDER)) {
-			((ItemMMDSmallPowder) mat.getItem(Names.SMALLPOWDER)).setBurnTime(160);
+		if (material.hasItem(Names.SMALLPOWDER)) {
+			((ItemMMDSmallPowder) material.getItem(Names.SMALLPOWDER)).setBurnTime(160);
 		}
 
 		// simple hack to fix this shit - I give up on trying for more
-		if (mat.hasBlock(Names.BLOCK) && mat.getName().equals(MaterialNames.CHARCOAL)) {
-			((ItemMMDBlock) mat.getItem("ItemBlock_charcoal_block")).setBurnTime(16000);
+		if (material.hasBlock(Names.BLOCK) && material.getName().equals(MaterialNames.CHARCOAL)) {
+			((ItemMMDBlock) material.getItem("ItemBlock_charcoal_block")).setBurnTime(16000);
 		}
 	}
 
@@ -376,24 +384,25 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	@SubscribeEvent
 	public static void registerItems(final RegistryEvent.Register<Item> event) {
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
-		.forEach( mat -> regItems(event.getRegistry(), mat.getItems()));
-		
+				.forEach(mat -> regItems(event.getRegistry(), mat.getItems()));
+
+		// regItems(event.getRegistry(), Materials.DEFAULT.getItems());
+
 		Oredicts.registerItemOreDictionaryEntries();
 		Oredicts.registerBlockOreDictionaryEntries();
 	}
 
-	private static void regItems(IForgeRegistry<Item> registry, ImmutableList<ItemStack> items) {
-		items.stream()
-		.filter(Items::isThisMod)
-		.map(Items::getItem)
-		.forEach(registry::register);
+	private static void regItems(final IForgeRegistry<Item> registry,
+			final ImmutableList<ItemStack> items) {
+		items.stream().filter(Items::isThisMod).map(Items::getItem).forEach(registry::register);
 	}
-	
-	private static Item getItem(ItemStack it) {
+
+	private static Item getItem(final ItemStack it) {
 		return it.getItem();
 	}
-	
-	private static boolean isThisMod(ItemStack it) {
-		return it.getItem().getRegistryName().getResourceDomain().equalsIgnoreCase(BaseMetals.MODID);
+
+	private static boolean isThisMod(final ItemStack it) {
+		return it.getItem().getRegistryName().getResourceDomain()
+				.equalsIgnoreCase(BaseMetals.MODID);
 	}
 }

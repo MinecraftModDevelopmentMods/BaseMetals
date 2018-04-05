@@ -9,6 +9,7 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -35,12 +36,14 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	public static void init() {
 		registerVanilla();
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM,
-				MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.MITHRIL, MaterialNames.NICKEL,
-				MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.SILVER, MaterialNames.STARSTEEL,
-				MaterialNames.STEEL, MaterialNames.TIN, MaterialNames.ZINC);
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
+				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
+				MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM,
+				MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.MITHRIL,
+				MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
+				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
+				MaterialNames.TIN, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial).forEach(materialName -> {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
@@ -64,12 +67,14 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 		createMercury();
 		createAnvils();
 
-		addBlock(new BlockHumanDetector(), "human_detector", ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
+		addBlock(new BlockHumanDetector(), "human_detector",
+				ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
 	}
 
 	private static void createAnvils() {
 		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
-				.filter(Materials::hasMaterial).forEach(name -> create(Names.ANVIL, Materials.getMaterialByName(name)));
+				.filter(Materials::hasMaterial)
+				.forEach(name -> create(Names.ANVIL, Materials.getMaterialByName(name)));
 	}
 
 	private static void createMercury() {
@@ -106,14 +111,16 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		gold.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
 		gold.addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
-		gold.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
+		gold.addNewBlock(Names.PRESSURE_PLATE,
+				net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
 
 		iron.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
 		iron.addNewBlock(Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
 		iron.addNewBlock(Names.BARS, net.minecraft.init.Blocks.IRON_BARS);
 		iron.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.IRON_DOOR);
 		iron.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR);
-		iron.addNewBlock(Names.PRESSURE_PLATE, net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+		iron.addNewBlock(Names.PRESSURE_PLATE,
+				net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
 
 		lapis.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.LAPIS_BLOCK);
 		lapis.addNewBlock(Names.ORE, net.minecraft.init.Blocks.LAPIS_ORE);
@@ -227,12 +234,15 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
-		.forEach(mat -> regBlocks(event.getRegistry(), mat.getBlocks()));
+				.forEach(mat -> regBlocks(event.getRegistry(), mat.getBlocks()));
+
+		// regBlocks(event.getRegistry(), Materials.DEFAULT.getBlocks());
 	}
 
-	private static void regBlocks(IForgeRegistry<Block> registry, ImmutableList<Block> blocks) {
-		blocks.stream()
-		.filter(block -> block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
-		.forEach(registry::register);
+	private static void regBlocks(final IForgeRegistry<Block> registry,
+			final ImmutableList<Block> blocks) {
+		blocks.stream().filter(
+				block -> block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
+				.forEach(registry::register);
 	}
 }

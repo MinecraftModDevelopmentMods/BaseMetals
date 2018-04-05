@@ -2,8 +2,8 @@ package com.mcmoddev.lib.item;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -36,20 +36,22 @@ public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDOb
 		super(Materials.getToolMaterialFor(material));
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
-		// this.damageVsEntity = attackDamage + metal.getBaseAttackDamage(); // damageVsEntity is private, sadly
+		// this.damageVsEntity = attackDamage + material.getBaseAttackDamage(); // damageVsEntity is
+		// private, sadly
 		this.attackDamage = 3F + this.material.getBaseAttackDamage();
 	}
 
 	@Override
-	public boolean hitEntity(final ItemStack item, final EntityLivingBase target, final EntityLivingBase attacker) {
+	public boolean hitEntity(final ItemStack item, final EntityLivingBase target,
+			final EntityLivingBase attacker) {
 		item.damageItem(1, attacker);
 		MMDToolEffects.extraEffectsOnAttack(this.material, item, target, attacker);
 		return true;
 	}
 
 	@Override
-	public boolean onBlockDestroyed(final ItemStack item, final World world, final IBlockState block, final BlockPos coord,
-									final EntityLivingBase entity) {
+	public boolean onBlockDestroyed(final ItemStack item, final World world,
+			final IBlockState block, final BlockPos coord, final EntityLivingBase entity) {
 		if (block.getBlockHardness(world, coord) != 0.0) {
 			item.damageItem(2, entity);
 		}
@@ -73,14 +75,14 @@ public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDOb
 	}
 
 	@Override
-	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
+	public void onUpdate(final ItemStack item, final World world, final Entity player,
+			final int inventoryIndex, final boolean isHeld) {
 		MMDItemHelper.doRegeneration(item, world, isHeld, this.material.regenerates());
 	}
 
 	/**
 	 *
-	 * @return The amount of damage dealt to an entity when attacked by this
-	 *         item
+	 * @return The amount of damage dealt to an entity when attacked by this item
 	 */
 	@Override
 	public float getAttackDamage() {
@@ -88,7 +90,8 @@ public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDOb
 	}
 
 	@Override
-	public void addInformation(final ItemStack stack, final World worldIn, final List<String> tooltip, final ITooltipFlag flagIn) {
+	public void addInformation(final ItemStack stack, final World worldIn,
+			final List<String> tooltip, final ITooltipFlag flagIn) {
 		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material.getName(), tooltip);
 	}
 

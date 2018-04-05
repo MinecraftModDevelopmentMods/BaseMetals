@@ -46,8 +46,7 @@ public class EventHandler {
 		if (activeItemStack.isEmpty()) {
 			return;
 		}
-		if ((damage > 0.0F)
-				&& (activeItemStack.getItem() instanceof ItemMMDShield)) {
+		if ((damage > 0.0F) && (activeItemStack.getItem() instanceof ItemMMDShield)) {
 			final int i = 1 + MathHelper.floor(damage);
 			activeItemStack.damageItem(i, player);
 			if (activeItemStack.getCount() <= 0) {
@@ -59,7 +58,8 @@ public class EventHandler {
 					player.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, ItemStack.EMPTY);
 				}
 				if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-					player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, 0.8F, 0.8F + player.world.rand.nextFloat() * 0.4F);
+					player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, 0.8F,
+							0.8F + (player.world.rand.nextFloat() * 0.4F));
 				}
 			}
 		}
@@ -90,7 +90,8 @@ public class EventHandler {
 		final ItemStack left = event.getLeft();
 		final ItemStack right = event.getRight();
 
-		if (left.isEmpty() || right.isEmpty() || left.getCount() != 1 || right.getCount() != 1) {
+		if (left.isEmpty() || right.isEmpty() || (left.getCount() != 1)
+				|| (right.getCount() != 1)) {
 			return;
 		}
 
@@ -98,7 +99,8 @@ public class EventHandler {
 		recipeInput.setInventorySlotContents(0, left);
 		recipeInput.setInventorySlotContents(1, right);
 		final IRecipe recipe = CraftingManager.findMatchingRecipe(recipeInput, null);
-		if ((recipe instanceof ShieldUpgradeRecipe) && (((ShieldUpgradeRecipe) recipe).matches(recipeInput, null))) {
+		if ((recipe instanceof ShieldUpgradeRecipe)
+				&& (((ShieldUpgradeRecipe) recipe).matches(recipeInput, null))) {
 			event.setOutput(recipe.getCraftingResult(recipeInput));
 			event.setCost(((ShieldUpgradeRecipe) recipe).getCost(recipeInput));
 		}
@@ -133,12 +135,12 @@ public class EventHandler {
 
 		if (guiscreen instanceof GuiMainMenu) {
 			guiscreen.drawCenteredString(fontRender,
-					"MMD OreSpawn not present, but requested in configuration, using fallback generator!", x, y,
-					0xffffff00);
+					"MMD OreSpawn not present, but requested in configuration, using fallback generator!",
+					x, y, 0xffffff00);
 		} else if (guiscreen instanceof GuiWorldSelection) {
 			x = 10;
-			final int widest = fontRender
-					.getStringWidth("This is likely not what you want - try turning off the 'using_orespawn' option");
+			final int widest = fontRender.getStringWidth(
+					"This is likely not what you want - try turning off the 'using_orespawn' option");
 			final int shortest = fontRender.getStringWidth("Fallback Ore Spawn Generator Enabled!");
 			int wrap = widest + 50;
 

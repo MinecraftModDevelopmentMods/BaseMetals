@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 public class ItemMMDBlock extends ItemBlock implements IMMDObject {
 
 	private int burnTime = 0;
-	private MMDMaterial mmdMaterial;
+	private final MMDMaterial mmdMaterial;
 
 	public ItemMMDBlock(final MMDMaterial material, final Block block) {
 		super(block);
