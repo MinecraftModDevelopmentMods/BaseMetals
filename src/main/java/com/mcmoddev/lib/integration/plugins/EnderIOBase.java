@@ -1,7 +1,13 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -9,8 +15,23 @@ import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
+import net.minecraft.crash.CrashReport;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.apache.commons.lang3.tuple.Triple;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -87,6 +108,55 @@ public class EnderIOBase implements IIntegration {
 		addAlloySmelterRecipe(Materials.getMaterialByName(materialName), outputSecondary, energy);
 	}
 
+	private static final Element mapToElement(@Nonnull Document baseDoc, @Nonnull final Triple<String,Integer,Float> ing) {
+		Element el;
+		if(ing.getRight() == 0f) {
+			el = baseDoc.createElement("input");
+		} else {
+			el = baseDoc.createElement("output");
+			el.setAttribute("chance", ing.getRight().toString());
+		}
+		el.setAttribute("name", ing.getLeft().toString());
+		el.setAttribute("amount", ing.getMiddle().toString());
+		return el;		
+	}
+	
+	private static final void addRecipeIMC(@Nonnull final String recipeType, @Nonnull final String recipeName, @Nonnull int energy, final List<Triple<String,Integer,Float>> recipe) {
+		boolean gotInput = false;
+		DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder;
+		try {
+			builder = fac.newDocumentBuilder();
+			Document rec = builder.newDocument();
+			
+			Element root = rec.createElement("recipe");
+			Element base = rec.createElement(recipeType);
+			
+			root.setAttribute("name", recipeName);
+			root.setAttribute("required", "false");
+			
+			base.setAttribute("energy", String.format("%d", energy));
+			
+			recipe.stream()
+			.map( ing -> mapToElement(rec,ing))
+			.forEach( el -> base.appendChild(el));
+							
+			rec.appendChild(base);
+			root.appendChild(rec);
+			
+	        Transformer tf = TransformerFactory.newInstance().newTransformer();
+	        tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+	        tf.setOutputProperty(OutputKeys.INDENT, "yes");
+	        Writer out = new StringWriter();
+	        tf.transform(new DOMSource(root), new StreamResult(out));
+			FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:xml", out.toString());
+		} catch (ParserConfigurationException | TransformerFactoryConfigurationError | TransformerException e) {
+			CrashReport report = CrashReport.makeCrashReport(e, "Error building XML for EnderIO IMC");
+			report.getCategory().addCrashSection("BaseMetals Version", BaseMetals.getVersion());
+			BaseMetals.logger.error(report.getCompleteReport());
+		}		
+	}
+	
 	/**
 	 *
 	 * @param material
@@ -108,22 +178,12 @@ public class EnderIOBase implements IIntegration {
 		if (!(material.hasOre())) {
 			return; // Only run for Ore types
 		}
-
-		// @formatter:off
-		// TODO: account for number="int", exp="float" and chance="float" too
-		String msgSecondary = "";
-		if (outputSecondary != null) {
-			msgSecondary = String.format("<itemStack oreDictionary=\"%s\"/>%n\t\t", outputSecondary);
+		
+		List<Triple<String,Integer,Float>> rec = Arrays.asList( Triple.of(input, 1, 0f), Triple.of(output, 2, 1.0f) );
+		if(outputSecondary != null) {
+			rec.add( Triple.of(outputSecondary, 1, 0.5f));
 		}
-
-		final String messageAlloySmelter = String.format("<recipeGroup name=\"%s\">%n\t"
-				+ "<recipe name=\"%s\" energyCost=\"%d\">%n\t\t"
-				+ "<input>%n\t\t\t<itemStack oreDictionary=\"%s\"/>%n\t\t</input>%n\t\t"
-				+ "<output>%n\t\t\t<itemStack oreDictionary=\"%s\" />%n\t\t%s</output>%n\t"
-				+ "</recipe>%n</recipeGroup>",
-				ownerModID, material, energy, input, output, msgSecondary);
-		// @formatter:on
-		FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:alloysmelter", messageAlloySmelter);
+		addRecipeIMC("alloying", String.format("%s: %s to %s", ownerModID, input, output), energy, rec);
 	}
 
 	/**
@@ -220,54 +280,26 @@ public class EnderIOBase implements IIntegration {
 			@Nonnull final int secondaryQty, @Nonnull final int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
-		final String materialName = material.getName();
 		final String capitalizedName = material.getCapitalizedName();
 
 		final String input = Oredicts.ORE + capitalizedName;
-
+		
 		String primaryOutput = Oredicts.DUST + capitalizedName;
-		String secondaryOutput = Oredicts.DUST + outputSecondary;
+		String secondaryOutput = Oredicts.DUST;
+		
 		if (material.getType() == MaterialType.GEM) {
 			primaryOutput = Oredicts.GEM + capitalizedName;
-			secondaryOutput = Oredicts.GEM + outputSecondary;
+			secondaryOutput = Oredicts.GEM;
 		}
-
-		final String primaryChance = "1.0";
-		final String secondaryChance = "0.1";
-
-		final String rockModID = "minecraft";
-		final String rockName = "cobblestone";
-
-		final int rockQty = 1;
-		final String rockChance = "0.15";
-		// If we had a way to know what the base material was (stone, gravel, endstone, sandstone,
-		// etc...)
-		// we could have this as a 'final' and fill it out right here
-		String messageSecondary = "";
-
-		if (!(material.hasOre())) {
-			return; // Only run for Ore types
+		
+		List<Triple<String,Integer,Float>> rec = Arrays.asList( Triple.of(input, 1, 0f), Triple.of(primaryOutput, primaryQty, 1.0f) );
+		if( outputSecondary != null) {
+			secondaryOutput += outputSecondary;
+			rec.add(Triple.of(secondaryOutput, secondaryQty, 0.1f));
 		}
-
-		if (outputSecondary != null) {
-			messageSecondary = String.format(
-					"<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\" />",
-					secondaryOutput, secondaryQty, secondaryChance);
-		}
-
-		// @formatter:off
-		final String messageSAGMill = String.format("<recipeGroup name=\"%s\">%n\t"
-											     + "<recipe name=\"%s\" energyCost=\"%d\">%n\t\t"
-											     	+ "<input>%n\t\t\t<itemStack oreDictionary=\"%s\" />%n\t\t</input>%n\t\t"
-											     	+ "<output>%n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>%n\t\t\t"
-											     		+ "%s%n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>%n\t\t\t"
-											     		+ "<itemStack modId=\"%s\" itemName=\"%s\" number=\"%d\" chance=\"%s\"/>%n\t\t</output>"
-											     + "</recipe>"
-											    + "</recipeGroup>",
-											    ownerModID, materialName, energy, input, primaryOutput, primaryQty, primaryChance,
-											    messageSecondary, secondaryOutput, secondaryQty, secondaryChance, rockModID,
-											    rockName, rockQty, rockChance);
-		// @formatter:on
-		FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:sagmill", messageSAGMill);
+		
+		rec.add(Triple.of("minecraft:cobblestone", 1, 0.15f));
+		
+		addRecipeIMC("sagmilling", String.format("%s: %s to %s", ownerModID, input, primaryOutput), energy, rec);
 	}
 }

@@ -200,6 +200,7 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 				return 12.0d;
 			case MaterialNames.STARSTEEL:
 				return 10.0d;
+			case MaterialNames.MITHRIL:
 			case MaterialNames.INVAR:
 			case MaterialNames.MITHRIL:
 				return 9.0d;
