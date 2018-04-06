@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -108,21 +109,7 @@ public class EnderIOBase implements IIntegration {
 		addAlloySmelterRecipe(Materials.getMaterialByName(materialName), outputSecondary, energy);
 	}
 
-	private static final Element mapToElement(@Nonnull Document baseDoc, @Nonnull final Triple<String,Integer,Float> ing) {
-		Element el;
-		if(ing.getRight() == 0f) {
-			el = baseDoc.createElement("input");
-		} else {
-			el = baseDoc.createElement("output");
-			el.setAttribute("chance", ing.getRight().toString());
-		}
-		el.setAttribute("name", ing.getLeft().toString());
-		el.setAttribute("amount", ing.getMiddle().toString());
-		return el;		
-	}
-	
 	private static final void addRecipeIMC(@Nonnull final String recipeType, @Nonnull final String recipeName, @Nonnull int energy, final List<Triple<String,Integer,Float>> recipe) {
-		boolean gotInput = false;
 		DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
 		try {
@@ -137,10 +124,31 @@ public class EnderIOBase implements IIntegration {
 			
 			base.setAttribute("energy", String.format("%d", energy));
 			
+			List<Element> elems = new ArrayList<>();
+			
 			recipe.stream()
-			.map( ing -> mapToElement(rec,ing))
-			.forEach( el -> base.appendChild(el));
-							
+			.filter(ing -> ing.getRight() == 0f)
+			.forEach(ing -> {
+				Element out = rec.createElement("output");
+				out.setAttribute("name", ing.getLeft());
+				out.setAttribute("amount", ing.getMiddle().toString());
+				elems.add(out);
+			});
+
+			recipe.stream()
+			.filter(ing -> ing.getRight() > 0f)
+			.forEach(ing -> {
+				Element out = rec.createElement("output");
+				if(ing.getRight() != 1f) {
+					out.setAttribute("chance", ing.getRight().toString());
+				}
+				out.setAttribute("name", ing.getLeft());
+				out.setAttribute("amount", ing.getMiddle().toString());
+				elems.add(out);
+			});
+
+			elems.stream().forEach(base::appendChild);
+			
 			rec.appendChild(base);
 			root.appendChild(rec);
 			
@@ -155,6 +163,33 @@ public class EnderIOBase implements IIntegration {
 			report.getCategory().addCrashSection("BaseMetals Version", BaseMetals.getVersion());
 			BaseMetals.logger.error(report.getCompleteReport());
 		}		
+	}
+	
+	/**
+	 * 
+	 * @param material   Only used for naming the recipe in the IMC
+	 * @param energy     How much RF/How many "micro-infinities" does this take ?
+	 * @param outputItem What does this produce? (should be an ore-dictionary entry but can be a string-form of a ResourceLocation
+	 * @param outputQty  How many does it produce
+	 * @param recipe     Array containing the inputs, in the form of:
+	 *                   new Object[] { "name", quantity }
+	 *                   - "chance" for input ingredients is "0f" so its left off here
+	 *                   - alloy smelter doesn't do secondary outputs
+	 */
+	protected static void addAlloySmelterAlloy(@Nonnull final MMDMaterial material, final int energy,
+			@Nonnull final String outputItem, @Nonnull final int outputQty, @Nonnull Object[] recipe) {
+		List<Triple<String,Integer,Float>> rec = Arrays.asList(Triple.of(outputItem, outputQty, 1.0f));
+		
+		int i = 0;
+		while(i < (recipe.length - 2)) {
+			rec.add(Triple.of((String)recipe[i++], Integer.valueOf((int)recipe[i++]), 0f));
+		}
+		
+		final String ownerModID = Loader.instance().activeModContainer().getModId();
+
+		final String capitalizedName = material.getCapitalizedName();
+		
+		addRecipeIMC("alloying", String.format("%s: alloy recipe for %s", ownerModID, capitalizedName), energy, rec);
 	}
 	
 	/**
