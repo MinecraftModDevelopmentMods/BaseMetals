@@ -77,6 +77,10 @@ public class BaseMetals {
 		FluidRegistry.enableUniversalBucket();
 	}
 
+	public static String getVersion() {
+		return VERSION;
+	}
+	
 	@EventHandler
 	public void onFingerprintViolation(final FMLFingerprintViolationEvent event) {
 		logger.warn(SharedStrings.INVALID_FINGERPRINT);
