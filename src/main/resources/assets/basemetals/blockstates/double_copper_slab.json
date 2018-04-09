@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "basemetals:copper_block" }
+        "variant=default": { "model": "basemetals:copper_block" }
     }
 }

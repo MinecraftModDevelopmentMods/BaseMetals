@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "minecraft:obsidian" }
+        "variant=default": { "model": "minecraft:obsidian" }
     }
 }

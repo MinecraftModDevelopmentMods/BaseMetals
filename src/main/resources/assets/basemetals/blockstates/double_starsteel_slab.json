@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "basemetals:starsteel_block" }
+        "variant=default": { "model": "basemetals:starsteel_block" }
     }
 }

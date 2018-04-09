@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "basemetals:cupronickel_block" }
+        "variant=default": { "model": "basemetals:cupronickel_block" }
     }
 }
