@@ -9,6 +9,7 @@ public class BlockMMDTripWireHook extends net.minecraft.block.BlockTripWireHook
 	private final MMDMaterial material;
 
 	public BlockMMDTripWireHook(final MMDMaterial material) {
+		super();
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();

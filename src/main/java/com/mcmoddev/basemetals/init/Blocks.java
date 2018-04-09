@@ -12,6 +12,7 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 
 /**
  * This class initializes all blocks in Base Metals.
@@ -96,8 +97,6 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 		final MMDMaterial obsidian = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
 		final MMDMaterial quartz = Materials.getMaterialByName(MaterialNames.QUARTZ);
 		final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
-		// final MMDMaterial stone = Materials.getMaterialByName(MaterialNames.STONE);
-		// final MMDMaterial wood = Materials.getMaterialByName(MaterialNames.WOOD);
 
 		coal.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
 		coal.addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
@@ -128,9 +127,9 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		quartz.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
 		quartz.addNewBlock(Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
-		// quartz.addNewBlock(Names.SLAB, net.minecraft.init.Blocks.);
-		// quartz.addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.);
-		// quartz.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.);
+		// quartz.addNewBlockFromItemStack(Names.SLAB, new ItemStack(net.minecraft.init.Blocks.STONE_SLAB,1, 7));
+		// quartz.addNewBlockFromItemStack(Names.DOUBLE_SLAB, new ItemStack(net.minecraft.init.Blocks.DOUBLE_STONE_SLAB, 1, 7));
+		quartz.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.QUARTZ_STAIRS);
 
 		redstone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
 		redstone.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);

@@ -8,6 +8,7 @@ public class BlockMMDLadder extends net.minecraft.block.BlockLadder implements I
 	private final MMDMaterial material;
 
 	public BlockMMDLadder(final MMDMaterial material) {
+		super();
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();

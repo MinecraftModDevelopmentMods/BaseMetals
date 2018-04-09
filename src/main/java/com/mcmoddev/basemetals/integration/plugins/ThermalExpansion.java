@@ -37,7 +37,7 @@ public final class ThermalExpansion extends com.mcmoddev.lib.integration.plugins
 					addCrucible(materialName);
 					addPlatePress(materialName);
 					addPressStorage(materialName);
-//					addPulverizer(materialName);
+					addPulverizer(materialName);
 				});
 
 		final MMDMaterial brass = Materials.getMaterialByName(MaterialNames.BRASS);

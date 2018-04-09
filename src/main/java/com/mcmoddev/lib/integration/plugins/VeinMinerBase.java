@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Loader;
 import portablejim.veinminer.api.IMCMessage;
 
 /**
- * VeinMiner Integration Plugin
+ * VeinMiner Integration Plugin.
  *
  * @author Jasmine Iwanek
  *
@@ -28,7 +28,7 @@ public class VeinMinerBase implements IIntegration {
 	}
 
 	/**
-	 * Add tools to the VeinMiner list from a Material
+	 * Add tools to the VeinMiner list from a Material.
 	 *
 	 * @param material
 	 *            Material to add
@@ -38,7 +38,7 @@ public class VeinMinerBase implements IIntegration {
 	}
 
 	/**
-	 * Add tools to the VeinMiner list from a Material
+	 * Add tools to the VeinMiner list from a Material.
 	 *
 	 * @param materialName
 	 *            Name of Material to add

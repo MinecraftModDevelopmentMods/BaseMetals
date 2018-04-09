@@ -19,7 +19,7 @@ import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 
 /**
- * Contains static instances of modifiers for registering with TiC
+ * Contains static instances of modifiers for registering with TiC.
  *
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  *

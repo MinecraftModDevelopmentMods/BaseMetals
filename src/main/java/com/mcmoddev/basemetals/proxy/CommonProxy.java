@@ -113,10 +113,8 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		this.allsGood = true;
 
-		// by this point all materials should have been registered both with MMDLib and
-		// Minecraft
-		// move to a separate function - potentially in FallbackGeneratorData - after
-		// the test
+		// by this point all materials should have been registered both with MMDLib and Minecraft
+		// move to a separate function - potentially in FallbackGeneratorData - after the test
 		for (final MMDMaterial material : com.mcmoddev.lib.init.Materials.getAllMaterials()) {
 			if (material.hasBlock(Names.ORE)) {
 				FallbackGeneratorData.getInstance().addMaterial(material.getName(),

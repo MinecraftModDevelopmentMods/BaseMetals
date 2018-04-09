@@ -33,7 +33,6 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 		this.setSoundType(this.material.getSoundType());
 		this.fullBlock = true;
 		this.setLightOpacity(255);
-//		this.lightOpacity = 255;
 		this.translucent = false;
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();

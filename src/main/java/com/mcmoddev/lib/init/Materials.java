@@ -32,7 +32,7 @@ import net.minecraftforge.fml.common.Loader;
  * @author Jasmine Iwanek
  *
  */
-public abstract class Materials {
+public class Materials {
 
 	private static final Map<String, MMDMaterial> allMaterials = new HashMap<>();
 	private static final Map<MMDMaterial, ArmorMaterial> armorMaterialMap = new HashMap<>();

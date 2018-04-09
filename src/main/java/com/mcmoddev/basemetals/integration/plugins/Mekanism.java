@@ -3,6 +3,8 @@ package com.mcmoddev.basemetals.integration.plugins;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
@@ -25,11 +27,14 @@ public final class Mekanism extends com.mcmoddev.lib.integration.plugins.Mekanis
 				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
 				MaterialNames.ZINC);
 
-		materials.stream().filter(Materials::hasMaterial)
-				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+		materials.stream().filter(Materials::hasMaterial).filter(Mekanism::isMaterialNotEmpty)
 				.forEach(materialName -> {
 					addGassesForMaterial(materialName);
 					addOreMultiplicationRecipes(materialName);
 				});
+	}
+
+	private static boolean isMaterialNotEmpty(@Nonnull final String materialName) {
+		return !Materials.getMaterialByName(materialName).isEmpty();
 	}
 }

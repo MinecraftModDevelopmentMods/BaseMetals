@@ -48,7 +48,6 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -277,6 +276,10 @@ public abstract class Blocks {
 		}
 
 		blockRegistry.put(fullName, block);
+		if (material.isDefault()) {
+			material.addNewBlock(fullName, block);
+		}
+
 		return block;
 	}
 

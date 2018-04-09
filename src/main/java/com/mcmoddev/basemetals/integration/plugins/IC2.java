@@ -13,14 +13,20 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID)
-public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements IIntegration {
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, initCallback = "doHammerRecipes")
+public final class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base
+		implements IIntegration {
 
 	@Override
 	public void init() {
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
+
+		MinecraftForge.EVENT_BUS.register(this);
 
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
@@ -36,7 +42,6 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 					this.addThermalCentrifugeRecipes(materialName);
 					this.addMetalFormerRecipes(materialName);
 					this.addCompressorRecipes(materialName);
-					this.addForgeHammerRecipe(materialName);
 				});
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
@@ -56,5 +61,20 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 						emerald.getItemStack(Names.POWDER, 2));
 			}
 		}
+
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	/**
+	 *
+	 */
+	public void doHammerRecipes() {
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+				MaterialNames.ZINC);
+		materials.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+				.forEach(this::addForgeHammerRecipe);
 	}
 }

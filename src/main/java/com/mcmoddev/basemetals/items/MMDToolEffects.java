@@ -104,7 +104,7 @@ public abstract class MMDToolEffects {
 	 */
 	public static void extraEffectsOnCrafting(final MMDMaterial material, final ItemStack item,
 			final World world, final EntityPlayer crafter) {
-		// TODO: do nothing for now. This would be where achievements or automatic
+		// do nothing for now. This would be where achievements or automatic
 		// enchantments could appear
 	}
 

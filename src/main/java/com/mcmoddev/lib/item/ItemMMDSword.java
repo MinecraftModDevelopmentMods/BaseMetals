@@ -35,7 +35,7 @@ public class ItemMMDSword extends net.minecraft.item.ItemSword implements IMMDOb
 		super(Materials.getToolMaterialFor(material));
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
-		// this.damageVsEntity = attackDamage + metal.getBaseAttackDamage(); // damageVsEntity is
+		// this.damageVsEntity = attackDamage + material.getBaseAttackDamage(); // damageVsEntity is
 		// private, sadly
 		this.attackDamage = 3F + this.material.getBaseAttackDamage();
 	}

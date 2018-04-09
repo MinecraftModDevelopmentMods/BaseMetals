@@ -3,6 +3,7 @@ package com.mcmoddev.lib.item;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.data.AchievementNames;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
@@ -95,68 +96,96 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 
 	@Override
 	public EnumActionResult onItemUse(final EntityPlayer player, final World w,
-			final BlockPos coord, EnumHand hand, final EnumFacing facing,
+			final BlockPos coord, final EnumHand hand, final EnumFacing facing,
 			final float partialX, final float partialY, final float partialZ) {
 		final ItemStack item = player.getHeldItemMainhand();
 		if (facing != EnumFacing.UP) {
 			return EnumActionResult.PASS;
 		}
-		List<EntityItem> entities = w.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(coord.getX(), coord.getY() + 1, coord.getZ(), coord.getX() + 1, coord.getY() + 2, coord.getZ() + 1));
-		boolean success = false;
-		for (EntityItem target : entities) {
-			ItemStack targetItem = target.getItem();
-			if (targetItem != null) {
-				ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(targetItem);
-				if (recipe != null) {
-					// hardness check
-					if ((Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
-						Block b = ((ItemBlock) targetItem.getItem()).getBlock();
-						if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
-							// cannot harvest the block, no crush for you!
-							return EnumActionResult.PASS;
-						}
-					}
-					// crush the item (server side only)
-					if (!w.isRemote) {
-						ItemStack output = recipe.getOutput().copy();
-						int count = output.getCount();
-						int toolDamage;
-						if (Options.crackHammerFullStack()) {
-							output.setCount(targetItem.getCount());
-							if (item.isItemDamaged() && (item.getItemDamage() < output.getCount())) {
-									output.setCount(item.getItemDamage());
-							}
-							toolDamage = output.getCount();
-						} else {
-							output.setCount(1);
-							toolDamage = 1;
-						}
-						double x = target.posX;
-						double y = target.posY;
-						double z = target.posZ;
+		/* List<EntityItem> entities = */
+		final AxisAlignedBB boundingBox = new AxisAlignedBB(coord.getX(), coord.getY() + 1,
+				coord.getZ(), coord.getX() + 1, coord.getY() + 2, coord.getZ() + 1);
+		final List<EntityItem> entities = w.getEntitiesWithinAABB(EntityItem.class, boundingBox)
+				.stream().filter(elem -> (elem.getItem() != null))
+				.filter(elem -> (CrusherRecipeRegistry.getInstance()
+						.getRecipeForInputItem(elem.getItem()) != null))
+				.collect(Collectors.toList());
 
-						if (Options.crackHammerFullStack()) {
-							targetItem.setCount(0);
-						} else {
-							targetItem.shrink(1);
-						}
-						if (targetItem.getCount() <= 0) {
-							w.removeEntity(target);
-						}
-						for (int i = 0; i < count; i++) {
-							w.spawnEntity(new EntityItem(w, x, y, z, output.copy()));
-						}
-						item.damageItem(toolDamage, player);
-					}
-					success = true;
-					break;
-				}
+		if (!entities.isEmpty()) {
+			final ItemStack targetItem = entities.get(0).getItem();
+			final ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(targetItem);
+			if (this.hardnessCheck(targetItem)) {
+				return EnumActionResult.PASS;
+			}
+
+			this.maybeDoCrack(recipe, targetItem, item, entities.get(0), player, w);
+			w.playSound(player, coord, SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.BLOCKS, 0.5F,
+					0.5F + (itemRand.nextFloat() * 0.3F));
+			return EnumActionResult.SUCCESS;
+		}
+
+		return EnumActionResult.PASS;
+	}
+
+	private void maybeDoCrack(final ICrusherRecipe recipe, final ItemStack targetItem,
+			final ItemStack item, final EntityItem target, final EntityPlayer player,
+			final World w) {
+		if (!w.isRemote) {
+			final ItemStack output = recipe.getOutput().copy();
+			final int crackedCount = this.doDamageCheck(targetItem, item);
+
+			final double x = target.posX;
+			final double y = target.posY;
+			final double z = target.posZ;
+
+			this.doCrack(targetItem, crackedCount);
+			this.maybeRemoveEntity(targetItem, target, w);
+			this.spawnResults(output, x, y, z, crackedCount, w);
+
+			item.damageItem(crackedCount, player);
+		}
+	}
+
+	private boolean hardnessCheck(final ItemStack targetItem) {
+		if ((Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
+			final Block b = ((ItemBlock) targetItem.getItem()).getBlock();
+			if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
+				return true;
 			}
 		}
-		if (success) {
-			w.playSound(player, coord, SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.BLOCKS, 0.5F, 0.5F + (itemRand.nextFloat() * 0.3F));
+		return false;
+	}
+
+	private void spawnResults(final ItemStack output, final double x, final double y,
+			final double z, final int crackedCount, final World w) {
+		for (int i = 0; i < crackedCount; i++) {
+			w.spawnEntity(new EntityItem(w, x, y, z, output.copy()));
 		}
-		return success ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
+	}
+
+	private void maybeRemoveEntity(final ItemStack targetItem, final EntityItem target,
+			final World w) {
+		if (targetItem.getCount() <= 0) {
+			w.removeEntity(target);
+		}
+	}
+
+	private void doCrack(final ItemStack targetItem, final int crackedCount) {
+		if (Options.crackHammerFullStack()) {
+			targetItem.shrink(crackedCount);
+		} else {
+			targetItem.shrink(1);
+		}
+	}
+
+	private int doDamageCheck(final ItemStack targetItem, final ItemStack item) {
+		if (Options.crackHammerFullStack()) {
+			final int remainingDamage = item.getMaxDamage() - item.getItemDamage();
+			return Math.min(targetItem.getCount(),
+					Math.min(targetItem.getMaxStackSize(), remainingDamage));
+		}
+
+		return 1;
 	}
 
 	protected boolean isCrushableBlock(final IBlockState block) {
@@ -175,6 +204,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		if (blockState == null) {
 			return null;
 		}
+
 		final Block block = blockState.getBlock();
 		if (Item.getItemFromBlock(block) == null) {
 			return null;

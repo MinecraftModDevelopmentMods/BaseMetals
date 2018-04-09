@@ -241,6 +241,7 @@ public class EnderIOBase implements IIntegration {
 		// final String rockName = "sandstone";
 		// final String rockName = "netherrack";
 		// final String rockName = "end_stone";
+
 		final int rockQty = 1;
 		final String rockChance = "0.15";
 		// If we had a way to know what the base material was (stone, gravel, endstone, sandstone,

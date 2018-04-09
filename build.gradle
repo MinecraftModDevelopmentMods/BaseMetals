@@ -244,8 +244,10 @@ repositories {
 }
 
 dependencies {
+//deobfCompile ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
   deobfProvided ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
     exclude group: 'MCMultiPart'
+    exclude group: 'MCMultiPart2'
     exclude group: 'mezz.jei'
     exclude module: "Chameleon" // mek only uses the storage drawers API, which doesn't need Chameleon
     exclude module: "Hwyla"
@@ -287,8 +289,8 @@ dependencies {
 
   deobfProvided "portablejim:VeinMiner:${veinminer_version}:api"
 
-  deobfCompile "net.industrial-craft:industrialcraft-2:${ic2_version}"
-//deobfProvided "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
+//deobfCompile "net.industrial-craft:industrialcraft-2:${ic2_version}"
+  deobfProvided "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
 
   deobfCompile ("MineTweaker3:MineTweaker3-MC1112-Main:${mc_version}-${minetweaker_version}") {
     exclude group: 'org.ow2.asm'
@@ -303,24 +305,28 @@ dependencies {
     exclude group: 'mezz.jei'
   }
 
+//deobfCompile ("cofh:ThermalFoundation:${mc_version}-${thermal_foundation_version}:universal") {
   deobfProvided ("cofh:ThermalFoundation:${mc_version}-${thermal_foundation_version}:universal") {
     exclude module: 'CoFHCore'
   }
 
+//deobfCompile ("cofh:ThermalExpansion:${mc_version}-${thermal_expansion_version}:universal") {
   deobfProvided ("cofh:ThermalExpansion:${mc_version}-${thermal_expansion_version}:universal") {
     exclude group: 'codechicken'
     exclude group: 'mezz.jei'
     exclude module: 'CoFHCore'
-//  exclude module: 'ThermalFoundation'
+    exclude module: 'ThermalFoundation'
   }
 
   deobfCompile "com.enderio.core:EnderCore:${mc_version}-${endercore_version}"
 //deobfProvided "com.enderio.core:EnderCore:${mc_version}-${endercore_version}:api"
 
-//deobfCompile ("com.enderio:EnderIO-Base:${mc_version}-${enderio_version})") {
+//deobfCompile ("com.enderio:EnderIO-Base:${mc_version}-${enderio_version}") {
   deobfProvided ("com.enderio:EnderIO-Base:${mc_version}-${enderio_version}:api") {
     exclude group: 'mezz.jei'
     exclude module: "Hwyla"
+    exclude module: 'EnderCore'
+    exclude module: 'TheOneProbe'
   }
 
   deobfCompile "mcjty:compatlayer:${mc_version}-${compatlayer_version}"
