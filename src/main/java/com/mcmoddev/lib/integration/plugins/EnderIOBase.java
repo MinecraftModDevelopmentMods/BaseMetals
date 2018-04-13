@@ -358,7 +358,7 @@ public class EnderIOBase implements IIntegration {
 		if(material.hasOre()) {
 			List<Triple<String,Integer,Float>> rec2 = new ArrayList<>();
 			rec2.add( Triple.of(Oredicts.INGOT+capitalizedName, 1, 0f) );
-			rec2.add( Triple.of(primaryOutput, primaryQty, 1.0f) );
+			rec2.add( Triple.of(primaryOutput, 1, 1.0f) );
 			if( outputSecondary != null) {
 				rec2.add(Triple.of(secondaryOutput, secondaryQty, 0.1f));
 			}
