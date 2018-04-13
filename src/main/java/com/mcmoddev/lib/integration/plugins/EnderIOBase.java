@@ -3,7 +3,6 @@ package com.mcmoddev.lib.integration.plugins;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -42,7 +41,9 @@ import org.w3c.dom.Element;
 public class EnderIOBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "enderio";
-
+	private static final String NS_URI = "http://enderio.com/recipes";
+	private static final String NS_SCHEMA = NS_URI + " recipes.xsd";
+	
 	/**
 	 *
 	 */
@@ -116,27 +117,32 @@ public class EnderIOBase implements IIntegration {
 			builder = fac.newDocumentBuilder();
 			Document rec = builder.newDocument();
 			
-			Element root = rec.createElement("recipe");
+			Element root = rec.createElement("enderio:recipes");
+			root.setAttribute("xmlns:enderio", NS_URI);
+			root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			root.setAttribute("xsi:schemaLocation", NS_SCHEMA);
+			rec.appendChild(root);
+			Element thisRecipe = rec.createElement("recipe");
 			Element base = rec.createElement(recipeType);
 			
-			root.setAttribute("name", recipeName);
-			root.setAttribute("required", "false");
+			thisRecipe.setAttribute("name", recipeName);
+			thisRecipe.setAttribute("required", "false");
 			
 			base.setAttribute("energy", String.format("%d", energy));
 			
 			List<Element> elems = new ArrayList<>();
 			
 			recipe.stream()
-			.filter(ing -> ing.getRight() == 0f)
+			.filter(ing -> ing.getRight().floatValue() == 0f)
 			.forEach(ing -> {
-				Element out = rec.createElement("output");
+				Element out = rec.createElement("input");
 				out.setAttribute("name", ing.getLeft());
 				out.setAttribute("amount", ing.getMiddle().toString());
 				elems.add(out);
 			});
 
 			recipe.stream()
-			.filter(ing -> ing.getRight() > 0f)
+			.filter(ing -> ing.getRight().floatValue() > 0f)
 			.forEach(ing -> {
 				Element out = rec.createElement("output");
 				if(ing.getRight() != 1f) {
@@ -149,8 +155,8 @@ public class EnderIOBase implements IIntegration {
 
 			elems.stream().forEach(base::appendChild);
 			
-			rec.appendChild(base);
-			root.appendChild(rec);
+			thisRecipe.appendChild(base);
+			root.appendChild(thisRecipe);
 			
 	        Transformer tf = TransformerFactory.newInstance().newTransformer();
 	        tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
@@ -178,10 +184,11 @@ public class EnderIOBase implements IIntegration {
 	 */
 	protected static void addAlloySmelterAlloy(@Nonnull final MMDMaterial material, final int energy,
 			@Nonnull final String outputItem, @Nonnull final int outputQty, @Nonnull Object[] recipe) {
-		List<Triple<String,Integer,Float>> rec = Arrays.asList(Triple.of(outputItem, outputQty, 1.0f));
+		List<Triple<String,Integer,Float>> rec = new ArrayList<>();
+		rec.add(Triple.of(outputItem, outputQty, 1.0f));
 		
 		int i = 0;
-		while(i < (recipe.length - 2)) {
+		while(i < recipe.length) {
 			rec.add(Triple.of((String)recipe[i++], Integer.valueOf((int)recipe[i++]), 0f));
 		}
 		
@@ -214,7 +221,10 @@ public class EnderIOBase implements IIntegration {
 			return; // Only run for Ore types
 		}
 		
-		List<Triple<String,Integer,Float>> rec = Arrays.asList( Triple.of(input, 1, 0f), Triple.of(output, 2, 1.0f) );
+		List<Triple<String,Integer,Float>> rec = new ArrayList<>();
+		rec.add( Triple.of(input, 1, 0f) );
+		rec.add( Triple.of(output, 2, 1.0f) );
+		
 		if(outputSecondary != null) {
 			rec.add( Triple.of(outputSecondary, 1, 0.5f));
 		}
@@ -317,7 +327,12 @@ public class EnderIOBase implements IIntegration {
 
 		final String capitalizedName = material.getCapitalizedName();
 
-		final String input = Oredicts.ORE + capitalizedName;
+		final String input;
+		if(material.hasOre()) {
+			input = Oredicts.ORE + capitalizedName;
+		} else {
+			input = Oredicts.INGOT + capitalizedName;
+		}
 		
 		String primaryOutput = Oredicts.DUST + capitalizedName;
 		String secondaryOutput = Oredicts.DUST;
@@ -327,7 +342,11 @@ public class EnderIOBase implements IIntegration {
 			secondaryOutput = Oredicts.GEM;
 		}
 		
-		List<Triple<String,Integer,Float>> rec = Arrays.asList( Triple.of(input, 1, 0f), Triple.of(primaryOutput, primaryQty, 1.0f) );
+		List<Triple<String,Integer,Float>> rec = new ArrayList<>();
+		
+		rec.add( Triple.of(input, 1, 0f) );
+		rec.add( Triple.of(primaryOutput, primaryQty, 1.0f) );
+		
 		if( outputSecondary != null) {
 			secondaryOutput += outputSecondary;
 			rec.add(Triple.of(secondaryOutput, secondaryQty, 0.1f));
@@ -336,5 +355,15 @@ public class EnderIOBase implements IIntegration {
 		rec.add(Triple.of("minecraft:cobblestone", 1, 0.15f));
 		
 		addRecipeIMC("sagmilling", String.format("%s: %s to %s", ownerModID, input, primaryOutput), energy, rec);
+		if(material.hasOre()) {
+			List<Triple<String,Integer,Float>> rec2 = new ArrayList<>();
+			rec2.add( Triple.of(Oredicts.INGOT+capitalizedName, 1, 0f) );
+			rec2.add( Triple.of(primaryOutput, 1, 1.0f) );
+			if( outputSecondary != null) {
+				rec2.add(Triple.of(secondaryOutput, secondaryQty, 0.1f));
+			}
+			rec2.add(Triple.of("minecraft:cobblestone", 1, 0.15f));
+			addRecipeIMC("sagmilling", String.format("%s: %s to %s", ownerModID, Oredicts.INGOT+capitalizedName, primaryOutput), energy, rec2);
+		}
 	}
 }
