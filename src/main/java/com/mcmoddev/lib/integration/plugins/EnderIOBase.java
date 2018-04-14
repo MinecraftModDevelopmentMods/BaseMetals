@@ -326,12 +326,15 @@ public class EnderIOBase implements IIntegration {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
 		final String capitalizedName = material.getCapitalizedName();
-
+		boolean noSecondary = false;
+		
 		final String input;
 		if(material.hasOre()) {
 			input = Oredicts.ORE + capitalizedName;
 		} else {
 			input = Oredicts.INGOT + capitalizedName;
+			// no secondary outputs on ingot -> dust
+			noSecondary = true;
 		}
 		
 		String primaryOutput = Oredicts.DUST + capitalizedName;
@@ -345,24 +348,31 @@ public class EnderIOBase implements IIntegration {
 		List<Triple<String,Integer,Float>> rec = new ArrayList<>();
 		
 		rec.add( Triple.of(input, 1, 0f) );
-		rec.add( Triple.of(primaryOutput, primaryQty, 1.0f) );
+		if(!noSecondary) {
+			rec.add( Triple.of(primaryOutput, primaryQty, 1.0f) );
+		} else {
+			// if its ingot -> dust, its always 1:1
+			rec.add( Triple.of(primaryOutput, 1, 1.0f) );
+		}
 		
-		if( outputSecondary != null) {
+		if( outputSecondary != null && !noSecondary) {
 			secondaryOutput += outputSecondary;
 			rec.add(Triple.of(secondaryOutput, secondaryQty, 0.1f));
 		}
 		
-		rec.add(Triple.of("minecraft:cobblestone", 1, 0.15f));
+		if(!noSecondary) {
+			rec.add(Triple.of("minecraft:cobblestone", 1, 0.15f));
+		}
 		
 		addRecipeIMC("sagmilling", String.format("%s: %s to %s", ownerModID, input, primaryOutput), energy, rec);
 		if(material.hasOre()) {
 			List<Triple<String,Integer,Float>> rec2 = new ArrayList<>();
 			rec2.add( Triple.of(Oredicts.INGOT+capitalizedName, 1, 0f) );
 			rec2.add( Triple.of(primaryOutput, 1, 1.0f) );
-			if( outputSecondary != null) {
-				rec2.add(Triple.of(secondaryOutput, secondaryQty, 0.1f));
-			}
-			rec2.add(Triple.of("minecraft:cobblestone", 1, 0.15f));
+			
+			/*
+			 * Secondary outs would go here, but ingot -> powder doesn't do secondaries
+			 */
 			addRecipeIMC("sagmilling", String.format("%s: %s to %s", ownerModID, Oredicts.INGOT+capitalizedName, primaryOutput), energy, rec2);
 		}
 	}
