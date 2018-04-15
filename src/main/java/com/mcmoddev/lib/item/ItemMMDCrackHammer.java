@@ -120,6 +120,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 			this.maybeDoCrack(recipe, targetItem, item, entities.get(0), player, w);
 			w.playSound(player, coord, SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.BLOCKS, 0.5F,
 					0.5F + (itemRand.nextFloat() * 0.3F));
+
 			return EnumActionResult.SUCCESS;
 		}
 
@@ -142,6 +143,10 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 			this.spawnResults(output, x, y, z, crackedCount, w);
 
 			item.damageItem(crackedCount, player);
+			// if the items damage is maxed, lets increase it anyway and put it out of its misery
+			if(item.getMaxDamage() == item.getItemDamage()) {
+				item.damageItem(1, player);
+			}
 		}
 	}
 
