@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -79,6 +81,11 @@ public class BaseMetals {
 
 	public static String getVersion() {
 		return VERSION;
+	}
+	
+	@EventHandler
+	public static void constructing(final FMLConstructionEvent event) {
+		IntegrationManager.INSTANCE.setup(event);
 	}
 	
 	@EventHandler
