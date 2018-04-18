@@ -121,7 +121,7 @@ public enum IntegrationManager {
 		MinecraftForge.EVENT_BUS.post(new IntegrationInitEvent());
 	}
 	
-	public void posInitPhase() {
+	public void postInitPhase() {
 		MinecraftForge.EVENT_BUS.post(new IntegrationPostInitEvent());
 	}
 

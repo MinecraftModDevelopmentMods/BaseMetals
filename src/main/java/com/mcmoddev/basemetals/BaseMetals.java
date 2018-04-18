@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 
 /**
  * This is the entry point for this Mod. If you are writing your own Mod that uses this Mod, the
@@ -85,7 +86,11 @@ public class BaseMetals {
 	
 	@EventHandler
 	public static void constructing(final FMLConstructionEvent event) {
-		IntegrationManager.INSTANCE.setup(event);
+		try {
+			IntegrationManager.INSTANCE.setup(event);
+		} catch (InvalidVersionSpecificationException e) {
+			logger.error("Error loading version information for plugins: %s", e);
+		}
 	}
 	
 	@EventHandler
