@@ -13,16 +13,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-/*import com.mcmoddev.basemetals.init.Blocks;
-import com.mcmoddev.basemetals.init.Fluids;
-*/import com.mcmoddev.basemetals.init.ItemGroups;
-//import com.mcmoddev.basemetals.init.Items;
+import com.mcmoddev.basemetals.init.ItemGroups;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.init.VillagerTrades;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
+
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.events.*;
@@ -89,15 +88,7 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterBlocks());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterItems());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterFluids());
-/*		com.mcmoddev.lib.init.Materials.init();
-		Materials.init();
-		Fluids.init();
-		ItemGroups.init();
-		com.mcmoddev.lib.init.Blocks.init();
-		Blocks.init();
-		com.mcmoddev.lib.init.Items.init();
-		Items.init();
-*/
+
 		VillagerTrades.init();
 
 		IntegrationManager.INSTANCE.preInit(event);

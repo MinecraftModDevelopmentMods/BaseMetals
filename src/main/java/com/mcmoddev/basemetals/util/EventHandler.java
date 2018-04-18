@@ -1,8 +1,14 @@
 package com.mcmoddev.basemetals.util;
 
+import com.mcmoddev.lib.events.*;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+
+import com.mcmoddev.basemetals.init.Blocks;
+import com.mcmoddev.basemetals.init.Fluids;
+import com.mcmoddev.basemetals.init.Items;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -153,4 +159,25 @@ public class EventHandler {
 					x, y, wrap, 0xFFFFFF00);
 		}
 	}
+	
+	@SubscribeEvent
+	public static void mmdlibRegisterMaterials(MMDLibRegisterMaterials ev) {
+		Materials.init();
+	}
+	
+	@SubscribeEvent
+	public static void mmdlibRegisterBlocks(MMDLibRegisterBlocks ev) {
+		Blocks.init();
+	}
+
+	@SubscribeEvent
+	public static void mmdlibRegisterItems(MMDLibRegisterItems ev) {
+		Items.init();
+	}
+	
+	@SubscribeEvent
+	public static void mmdlibRegisterFluids(MMDLibRegisterFluids ev) {
+		Fluids.init();
+	}
+
 }
