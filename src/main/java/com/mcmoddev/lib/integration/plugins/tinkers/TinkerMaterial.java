@@ -30,7 +30,7 @@ import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.library.TinkerRegistry;
 
-public class NewTCMaterial  extends IForgeRegistryEntry.Impl<NewTCMaterial> implements IMMDObject {
+public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> implements IMMDObject {
 	@SuppressWarnings("rawtypes")
 	private final Map<TinkersStat, IStat> stats = Maps.<TinkersStat, IStat>newConcurrentMap();
 	private String name;
@@ -46,7 +46,7 @@ public class NewTCMaterial  extends IForgeRegistryEntry.Impl<NewTCMaterial> impl
 	private final Map<String, Integer> extraMelting = Maps.newConcurrentMap();
 	private final Map<TinkersStatTypes, IMaterialStats> tinkersStats = Maps.newConcurrentMap();
 	
-	public NewTCMaterial(MMDMaterial basis) {
+	public TinkerMaterial(MMDMaterial basis) {
 		this.material = basis;
 		this.name = basis.getCapitalizedName();
 		this.tintColor = basis.getTintColor();
@@ -98,12 +98,12 @@ public class NewTCMaterial  extends IForgeRegistryEntry.Impl<NewTCMaterial> impl
 		}
 	}
 
-	public NewTCMaterial toggleToolForge() {
+	public TinkerMaterial toggleToolForge() {
 		this.toolForge = !this.toolForge;
 		return this;
 	}
 	
-	public NewTCMaterial setToolForge(boolean val) {
+	public TinkerMaterial setToolForge(boolean val) {
 		this.toolForge = val;
 		return this;
 	}
@@ -112,25 +112,25 @@ public class NewTCMaterial  extends IForgeRegistryEntry.Impl<NewTCMaterial> impl
 		return this.toolForge;
 	}
 
-	public NewTCMaterial toggleCastable() {
+	public TinkerMaterial toggleCastable() {
 		this.castable = !this.castable;
 		if (this.castable && this.craftable) this.craftable = false;
 		return this;
 	}
 
-	public NewTCMaterial toggleCraftable() {
+	public TinkerMaterial toggleCraftable() {
 		this.craftable = !this.craftable;
 		if (this.craftable && this.castable) this.castable = false;
 		return this;
 	}
 
-	public NewTCMaterial setCastable(boolean val) {
+	public TinkerMaterial setCastable(boolean val) {
 		this.castable = val;
 		if (this.castable && this.craftable) this.craftable = false;
 		return this;
 	}
 	
-	public NewTCMaterial setCraftable(boolean val) {
+	public TinkerMaterial setCraftable(boolean val) {
 		this.craftable = val;
 		if (this.craftable && this.castable) this.castable = false;
 		return this;
@@ -144,22 +144,22 @@ public class NewTCMaterial  extends IForgeRegistryEntry.Impl<NewTCMaterial> impl
 		return this.craftable;
 	}
 	
-	public NewTCMaterial setStat(TinkersStat stat, IntStat value) {
+	public TinkerMaterial setStat(TinkersStat stat, IntStat value) {
 		this.stats.put(stat, value);
 		return this;
 	}
 
-	public NewTCMaterial setStat(TinkersStat stat, FloatStat value) {
+	public TinkerMaterial setStat(TinkersStat stat, FloatStat value) {
 		this.stats.put(stat, value);
 		return this;
 	}
 
-	public NewTCMaterial setStat(TinkersStat stat, BoolStat value) {
+	public TinkerMaterial setStat(TinkersStat stat, BoolStat value) {
 		this.stats.put(stat, value);
 		return this;
 	}
 
-	public NewTCMaterial setTintColor(int color) {
+	public TinkerMaterial setTintColor(int color) {
 		this.tintColor = color;
 		return this;
 	}
@@ -202,7 +202,7 @@ public class NewTCMaterial  extends IForgeRegistryEntry.Impl<NewTCMaterial> impl
 		}
 	}
 
-	public NewTCMaterial setName(String newName) {
+	public TinkerMaterial setName(String newName) {
 		this.name = newName;
 		return this;
 	}
@@ -211,7 +211,7 @@ public class NewTCMaterial  extends IForgeRegistryEntry.Impl<NewTCMaterial> impl
 		return this.name;
 	}
 
-	public NewTCMaterial addTrait(String name, TinkersTraitLocation location) {
+	public TinkerMaterial addTrait(String name, TinkersTraitLocation location) {
 		ITrait resolved = TinkerRegistry.getTrait(name);
 		List<ITrait> ct = this.traits.getOrDefault(location, new ArrayList<>());
 		ct.add(resolved);
@@ -328,7 +328,7 @@ public class NewTCMaterial  extends IForgeRegistryEntry.Impl<NewTCMaterial> impl
 		return this.material;
 	}
 
-	public NewTCMaterial addExtraMelting(String itemName, int amount) {
+	public TinkerMaterial addExtraMelting(String itemName, int amount) {
 		this.extraMelting.put(itemName, Integer.valueOf(amount));
 		return this;
 	}

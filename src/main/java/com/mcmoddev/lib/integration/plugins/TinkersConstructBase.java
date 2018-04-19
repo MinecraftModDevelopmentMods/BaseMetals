@@ -3,7 +3,7 @@ package com.mcmoddev.lib.integration.plugins;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.integration.plugins.tinkers.NewTCMaterial;
+import com.mcmoddev.lib.integration.plugins.tinkers.TinkerMaterial;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
@@ -21,11 +21,11 @@ import net.minecraftforge.registries.RegistryBuilder;
 public class TinkersConstructBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "tconstruct";
-	private static final IForgeRegistry<NewTCMaterial> registry = new RegistryBuilder<NewTCMaterial>()
+	private static final IForgeRegistry<TinkerMaterial> registry = new RegistryBuilder<TinkerMaterial>()
 			.disableSaving()
 			.setMaxID(Integer.MAX_VALUE)
 			.setName(new ResourceLocation("mmdlib", "tinker_registry"))
-			.setType(NewTCMaterial.class)
+			.setType(TinkerMaterial.class)
 			.create();
 
 	@Override
@@ -35,11 +35,11 @@ public class TinkersConstructBase implements IIntegration {
 		}
 	}
 
-	public NewTCMaterial newMaterial(@Nonnull MMDMaterial material) {
-		return new NewTCMaterial(material);
+	public TinkerMaterial newMaterial(@Nonnull MMDMaterial material) {
+		return new TinkerMaterial(material);
 	}
 	
-	public void registerMaterial(@Nonnull NewTCMaterial material) {
+	public void registerMaterial(@Nonnull TinkerMaterial material) {
 		String activeMod = Loader.instance().activeModContainer().getModId();
 		ResourceLocation name = new ResourceLocation(activeMod, material.getName().toLowerCase());
 		if(material.getRegistryName()==null)
@@ -47,7 +47,7 @@ public class TinkersConstructBase implements IIntegration {
 		registry.register(material);
 	}
 	
-	public NewTCMaterial getMaterial(@Nonnull String name) {
+	public TinkerMaterial getMaterial(@Nonnull String name) {
 		if (name.matches(":")) {
 			return this.getMaterial(new ResourceLocation(name));
 		}
@@ -55,11 +55,11 @@ public class TinkersConstructBase implements IIntegration {
 		return this.getMaterial(Loader.instance().activeModContainer().getModId(), name);
 	}
 	
-	public NewTCMaterial getMaterial(@Nonnull String modId, @Nonnull String name) {
+	public TinkerMaterial getMaterial(@Nonnull String modId, @Nonnull String name) {
 		return this.getMaterial(new ResourceLocation(modId, name));
 	}
 	
-	public NewTCMaterial getMaterial(@Nonnull ResourceLocation key) {
+	public TinkerMaterial getMaterial(@Nonnull ResourceLocation key) {
 		return registry.getValue(key);
 	}
 	
@@ -75,7 +75,7 @@ public class TinkersConstructBase implements IIntegration {
 		this.addExtraMelting(this.getMaterial(loc), name, amount);
 	}
 	
-	public void addExtraMelting(NewTCMaterial material, @Nonnull String name, int amount) {
+	public void addExtraMelting(TinkerMaterial material, @Nonnull String name, int amount) {
 		if(material == null) return;
 		
 		material.addExtraMelting(name, amount);
