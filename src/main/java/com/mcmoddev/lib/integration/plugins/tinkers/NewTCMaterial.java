@@ -1,16 +1,31 @@
 package com.mcmoddev.lib.integration.plugins.tinkers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
+import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
+import slimeknights.tconstruct.library.materials.BowMaterialStats;
+import slimeknights.tconstruct.library.materials.BowStringMaterialStats;
+import slimeknights.tconstruct.library.materials.ExtraMaterialStats;
+import slimeknights.tconstruct.library.materials.FletchingMaterialStats;
+import slimeknights.tconstruct.library.materials.HandleMaterialStats;
+import slimeknights.tconstruct.library.materials.HeadMaterialStats;
+import slimeknights.tconstruct.library.materials.IMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.traits.ITrait;
+import slimeknights.tconstruct.library.TinkerRegistry;
 
 public class NewTCMaterial implements IMMDObject {
 	public interface IStat<T> {
@@ -41,6 +56,10 @@ public class NewTCMaterial implements IMMDObject {
 		BOW_RANGE, BOWSTRING_MODIFIER, ARROWSHAFT_MODIFIER, FLETCHING_ACCURACY,
 		EXTRA_DURABILITY, BOW_DAMAGE, FLETCHING_MODIFIER, ARROWSHAFT_BONUS_AMMO
 	}
+
+	public enum TinkersStatTypes {
+		HEAD, HANDLE, EXTRA, BOW, BOWSTRING, ARROWSHAFT, FLETCHING
+	}
 	
 	@SuppressWarnings("rawtypes")
 	private final Map<TinkersStat, IStat> stats = Maps.<TinkersStat, IStat>newConcurrentMap();
@@ -50,8 +69,9 @@ public class NewTCMaterial implements IMMDObject {
 	private Material tinkersMaterial;
 
 	// book keeping stuffs - trait handling bits
-	private final Map<TinkersTraitLocation, List<ITrait>> resolvedTraits = Maps.newConcurrentMap();
+	private final Map<TinkersTraitLocation, List<ITrait>> traits = Maps.newConcurrentMap();
 	private final Map<String, Integer> extraMelting = Maps.newConcurrentMap();
+	private final Map<TinkersStatTypes, IMaterialStats> tinkersStats = Maps.newConcurrentMap();
 	
 	public NewTCMaterial(MMDMaterial basis) {
 		this.material = basis;
@@ -182,8 +202,11 @@ public class NewTCMaterial implements IMMDObject {
 	}
 	
 	public NewTCMaterial addTrait(String name, TinkersTraitLocation location) {
-		/* get the trait, somehow */
-		/* add the trait to the material */
+		ITrait resolved = TinkerRegistry.getTrait(name);
+		List<ITrait> ct = this.traits.getOrDefault(location, new ArrayList<>());
+		ct.add(resolved);
+		this.traits.put(location, ct);
+		
 		return this;
 	}
 	
@@ -197,6 +220,76 @@ public class NewTCMaterial implements IMMDObject {
 		}
 
 		return val;
+	}
+
+	public void settle() {
+		this.tinkersMaterial = new Material(this.name, this.tintColor);
+		this.tinkersMaterial.addCommonItems(this.material.getCapitalizedName());
+		if (this.traits.size() > 0) {
+			this.traits.entrySet().stream()
+			.filter(ent -> ent.getKey() == TinkersTraitLocation.GENERAL)
+			.forEach(ent -> ent.getValue().forEach( trait -> this.tinkersMaterial.addTrait(trait)));
+		}
+
+	
+		Arrays.asList(TinkersStatTypes.values()).stream()
+		.forEach( stat -> this.tinkersStats.computeIfAbsent(stat, k -> this.getDefaultStat(k)) );
+
+	}
+
+	public ImmutableMap<TinkersTraitLocation, List<ITrait>> getTraits() {
+		Map<TinkersTraitLocation, List<ITrait>> rv = Maps.newConcurrentMap();
+		
+		this.traits.entrySet().stream()
+		.filter(ent -> ent.getKey() != TinkersTraitLocation.GENERAL)
+		.forEach(ent -> {
+			List<ITrait> traits = rv.getOrDefault(ent.getKey(), Lists.newArrayList());
+			traits.addAll(ent.getValue());
+			rv.put(ent.getKey(), traits);
+		});
+		return ImmutableMap.copyOf(rv);
+	}
+	
+	public ImmutableList<ITrait> getTraits(TinkersTraitLocation location) {
+		return ImmutableList.copyOf(this.traits.getOrDefault(location, new ArrayList<>()));
+	}
+	
+	public List<IMaterialStats> getStats() {
+		List<IMaterialStats> rv = new ArrayList<>();
+		for(TinkersStatTypes k : TinkersStatTypes.values()) {
+			rv.add(this.tinkersStats.getOrDefault(k, this.getDefaultStat(k)));
+		}
+		// generate stats, add them to rv
+		return rv;
+	}
+	
+	private IMaterialStats getDefaultStat(TinkersStatTypes k) {
+		switch(k) {
+		case ARROWSHAFT:
+			return new ArrowShaftMaterialStats(this.getFloatStat(TinkersStat.ARROWSHAFT_MODIFIER),
+					this.getIntStat(TinkersStat.ARROWSHAFT_BONUS_AMMO));
+		case BOW:
+			return new BowMaterialStats(this.getFloatStat(TinkersStat.BOW_DRAW_SPEED),
+					this.getFloatStat(TinkersStat.BOW_RANGE), this.getFloatStat(TinkersStat.BOW_DAMAGE));
+		case BOWSTRING:
+			return new BowStringMaterialStats(this.getFloatStat(TinkersStat.BOWSTRING_MODIFIER));
+		case EXTRA:
+			return new ExtraMaterialStats(this.getIntStat(TinkersStat.EXTRA_DURABILITY));
+		case FLETCHING:
+			return new FletchingMaterialStats(this.getFloatStat(TinkersStat.FLETCHING_ACCURACY),
+					this.getFloatStat(TinkersStat.FLETCHING_MODIFIER));
+		case HANDLE:
+			return new HandleMaterialStats(this.getFloatStat(TinkersStat.BODY_MODIFIER),
+					this.getIntStat(TinkersStat.BODY_DURABILITY));
+		case HEAD:
+			return new HeadMaterialStats(this.getIntStat(TinkersStat.HEAD_DURABILITY),
+					this.getFloatStat(TinkersStat.MINING_SPEED), 
+					this.getFloatStat(TinkersStat.HEAD_ATTACK_DAMAGE),
+					this.getIntStat(TinkersStat.MINING_LEVEL));
+		default:
+			BaseMetals.logger.error("Unknown Tinkers Stat Type %s, returning null (cross your fingers, this will probably cause a crash)", k);
+			return null;
+		}
 	}
 
 	@Override
