@@ -12,9 +12,12 @@ import com.google.common.collect.Maps;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
 import slimeknights.tconstruct.library.materials.BowMaterialStats;
 import slimeknights.tconstruct.library.materials.BowStringMaterialStats;
@@ -27,7 +30,7 @@ import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.library.TinkerRegistry;
 
-public class NewTCMaterial implements IMMDObject {
+public class NewTCMaterial  extends IForgeRegistryEntry.Impl<NewTCMaterial> implements IMMDObject {
 	@SuppressWarnings("rawtypes")
 	private final Map<TinkersStat, IStat> stats = Maps.<TinkersStat, IStat>newConcurrentMap();
 	private String name;
@@ -238,7 +241,28 @@ public class NewTCMaterial implements IMMDObject {
 			.forEach(ent -> ent.getValue().forEach( trait -> this.tinkersMaterial.addTrait(trait)));
 		}
 
-	
+		this.tinkersMaterial.setCastable(this.castable);
+		this.tinkersMaterial.setCraftable(this.craftable);
+		this.tinkersMaterial.setFluid(this.material.getFluid());
+		
+		ItemStack represents = null;
+		switch(this.material.getType()) {
+		case GEM:
+			represents = this.material.getItemStack(Names.GEM);
+			break;
+		case CRYSTAL:
+		case MINERAL:
+		case METAL:
+			represents = this.material.getItemStack(Names.INGOT);
+			break;
+		case ROCK:
+		case WOOD:
+			represents = this.material.getBlockItemStack(Names.BLOCK);
+			break;
+		}
+		
+		if(represents != null) this.tinkersMaterial.setRepresentativeItem(represents);
+		
 		Arrays.asList(TinkersStatTypes.values()).stream()
 		.forEach( stat -> this.tinkersStats.computeIfAbsent(stat, k -> this.getDefaultStat(k)) );
 
