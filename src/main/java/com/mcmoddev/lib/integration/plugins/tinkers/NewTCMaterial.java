@@ -297,4 +297,12 @@ public class NewTCMaterial implements IMMDObject {
 		return this.material;
 	}
 
+	public NewTCMaterial addExtraMelting(String itemName, int amount) {
+		this.extraMelting.put(itemName, Integer.valueOf(amount));
+		return this;
+	}
+	
+	public ImmutableMap<String,Integer> getExtraMeltings() {
+		return ImmutableMap.copyOf(this.extraMelting);
+	}
 }
