@@ -28,46 +28,16 @@ import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.library.TinkerRegistry;
 
 public class NewTCMaterial implements IMMDObject {
-	public interface IStat<T> {
-		T value();
-	}
-	
-	public class IntStat implements IStat<Integer> {
-		public Integer value() {
-			return 0;
-		}
-	}
-	
-	public class FloatStat implements IStat<Float> {
-		public Float value() {
-			return 0f;
-		}
-	}
-	
-	public class BoolStat implements IStat<Boolean> {
-		public Boolean value() {
-			return false;
-		}
-	}
-
-	public enum TinkersStat {
-		HEAD_DURABILITY, MINING_SPEED, MINING_LEVEL, HEAD_ATTACK_DAMAGE,
-		BODY_DURABILITY, BODY_MODIFIER, EXTRA_DURABILTIY, BOW_DRAW_SPEED,
-		BOW_RANGE, BOWSTRING_MODIFIER, ARROWSHAFT_MODIFIER, FLETCHING_ACCURACY,
-		EXTRA_DURABILITY, BOW_DAMAGE, FLETCHING_MODIFIER, ARROWSHAFT_BONUS_AMMO
-	}
-
-	public enum TinkersStatTypes {
-		HEAD, HANDLE, EXTRA, BOW, BOWSTRING, ARROWSHAFT, FLETCHING
-	}
-	
 	@SuppressWarnings("rawtypes")
 	private final Map<TinkersStat, IStat> stats = Maps.<TinkersStat, IStat>newConcurrentMap();
 	private String name;
 	private int tintColor;
 	private final MMDMaterial material;
 	private Material tinkersMaterial;
-
+	private boolean toolForge = false;
+	private boolean craftable = false;
+	private boolean castable = true;
+	
 	// book keeping stuffs - trait handling bits
 	private final Map<TinkersTraitLocation, List<ITrait>> traits = Maps.newConcurrentMap();
 	private final Map<String, Integer> extraMelting = Maps.newConcurrentMap();
@@ -125,6 +95,52 @@ public class NewTCMaterial implements IMMDObject {
 		}
 	}
 
+	public NewTCMaterial toggleToolForge() {
+		this.toolForge = !this.toolForge;
+		return this;
+	}
+	
+	public NewTCMaterial setToolForge(boolean val) {
+		this.toolForge = val;
+		return this;
+	}
+	
+	public boolean getToolForge() {
+		return this.toolForge;
+	}
+
+	public NewTCMaterial toggleCastable() {
+		this.castable = !this.castable;
+		if (this.castable && this.craftable) this.craftable = false;
+		return this;
+	}
+
+	public NewTCMaterial toggleCraftable() {
+		this.craftable = !this.craftable;
+		if (this.craftable && this.castable) this.castable = false;
+		return this;
+	}
+
+	public NewTCMaterial setCastable(boolean val) {
+		this.castable = val;
+		if (this.castable && this.craftable) this.craftable = false;
+		return this;
+	}
+	
+	public NewTCMaterial setCraftable(boolean val) {
+		this.craftable = val;
+		if (this.craftable && this.castable) this.castable = false;
+		return this;
+	}
+
+	public boolean getCastable() {
+		return this.castable;
+	}
+	
+	public boolean getCraftable() {
+		return this.craftable;
+	}
+	
 	public NewTCMaterial setStat(TinkersStat stat, IntStat value) {
 		this.stats.put(stat, value);
 		return this;
@@ -192,15 +208,6 @@ public class NewTCMaterial implements IMMDObject {
 		return this.name;
 	}
 
-	public enum TinkersTraitLocation {
-		HEAD, HANDLE, EXTRA, BOW, BOWSTRING, PROJECTILE, SHAFT, FLETCHING, GENERAL;
-		
-		@Override
-		public String toString() {
-			return this.name().toLowerCase();
-		}
-	}
-	
 	public NewTCMaterial addTrait(String name, TinkersTraitLocation location) {
 		ITrait resolved = TinkerRegistry.getTrait(name);
 		List<ITrait> ct = this.traits.getOrDefault(location, new ArrayList<>());
@@ -305,4 +312,46 @@ public class NewTCMaterial implements IMMDObject {
 	public ImmutableMap<String,Integer> getExtraMeltings() {
 		return ImmutableMap.copyOf(this.extraMelting);
 	}
+	
+	public enum TinkersStat {
+		HEAD_DURABILITY, MINING_SPEED, MINING_LEVEL, HEAD_ATTACK_DAMAGE,
+		BODY_DURABILITY, BODY_MODIFIER, EXTRA_DURABILTIY, BOW_DRAW_SPEED,
+		BOW_RANGE, BOWSTRING_MODIFIER, ARROWSHAFT_MODIFIER, FLETCHING_ACCURACY,
+		EXTRA_DURABILITY, BOW_DAMAGE, FLETCHING_MODIFIER, ARROWSHAFT_BONUS_AMMO
+	}
+
+	public enum TinkersStatTypes {
+		HEAD, HANDLE, EXTRA, BOW, BOWSTRING, ARROWSHAFT, FLETCHING
+	}
+	
+	public enum TinkersTraitLocation {
+		HEAD, HANDLE, EXTRA, BOW, BOWSTRING, PROJECTILE, SHAFT, FLETCHING, GENERAL;
+		
+		@Override
+		public String toString() {
+			return this.name().toLowerCase();
+		}
+	}
+	
+	public interface IStat<T> {
+		T value();
+	}
+	
+	public class IntStat implements IStat<Integer> {
+		public Integer value() {
+			return 0;
+		}
+	}
+	
+	public class FloatStat implements IStat<Float> {
+		public Float value() {
+			return 0f;
+		}
+	}
+	
+	public class BoolStat implements IStat<Boolean> {
+		public Boolean value() {
+			return false;
+		}
+	}	
 }
