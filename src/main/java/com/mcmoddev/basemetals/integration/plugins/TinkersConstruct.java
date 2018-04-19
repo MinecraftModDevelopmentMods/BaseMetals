@@ -6,9 +6,12 @@ import com.mcmoddev.basemetals.data.TraitNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.IntegrationInitEvent;
+import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
+import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.integration.plugins.tinkers.TCMaterial;
-import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
+import com.mcmoddev.lib.integration.plugins.tinkers.TinkerMaterial;
+import static com.mcmoddev.lib.integration.plugins.tinkers.TinkerMaterial.TinkersTraitLocation;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
@@ -24,13 +27,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @author Jasmine Iwanek
  *
  */
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, preInitCallback = "preInit", initCallback = "initCallback", postInitCallback = "postInit")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, versions="tconstruct@[2.7.4.0,)")
 public final class TinkersConstruct
 		extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase implements IIntegration {
-
-	private Boolean preInit = false;
-	private Boolean init = false;
-	private Boolean postInit = false;
 
 	@Override
 	public void init() {
@@ -42,7 +41,7 @@ public final class TinkersConstruct
 				TraitNames.INSATIABLE);
 		registerMaterial(MaterialNames.ANTIMONY, true, false);
 		this.registerMaterial(MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC,
-				TraitLocations.HEAD, TraitNames.JAGGED, TraitLocations.HEAD,
+				TinkersTraitLocation.HEAD, TraitNames.JAGGED, TinkersTraitLocation.HEAD,
 				TraitNames.AQUADYNAMIC);
 		registerMaterial(MaterialNames.BISMUTH, true, false);
 		this.registerMaterial(MaterialNames.BRASS, true, false, TraitNames.DENSE);
@@ -54,16 +53,31 @@ public final class TinkersConstruct
 		this.registerMaterial(MaterialNames.PEWTER, true, false, TraitNames.SOFT);
 		registerMaterial(MaterialNames.PLATINUM, true, false);
 		this.registerMaterial(MaterialNames.STARSTEEL, true, false, TraitNames.ENDERFERENCE,
-				TraitLocations.HEAD, TraitNames.SPARKLY);
+				TinkersTraitLocation.HEAD, TraitNames.SPARKLY);
 		registerMaterial(MaterialNames.TIN, true, false);
 		registerMaterial(MaterialNames.ZINC, true, false);
 
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	@SubscribeEvent
+	public void preInit(IntegrationPreInitEvent ev) {
+		
+	}
+	
+	@SubscribeEvent
+	public void init(IntegrationInitEvent ev) {
+		
+	}
+
+	@SubscribeEvent
+	public void postInit(IntegrationPostInitEvent ev) {
+		
+	}
+
 	/**
 	 *
-	 */
+	 *
 	public void preInit() {
 		if (this.preInit) {
 			return;
@@ -76,7 +90,7 @@ public final class TinkersConstruct
 
 	/**
 	 *
-	 */
+	 *
 	public void initCallback() {
 		if (this.init) {
 			return;
@@ -88,7 +102,7 @@ public final class TinkersConstruct
 
 	/**
 	 *
-	 */
+	 *
 	public void postInit() {
 		if (this.postInit) {
 			return;
@@ -96,7 +110,8 @@ public final class TinkersConstruct
 		this.postInit = true;
 		this.postInitSetup(BaseMetals.MODID);
 	}
-
+	
+	
 	@SubscribeEvent
 	public void registerModifiers(final RegistryEvent.Register<Item> event) {
 		super.modifierSetup();
@@ -124,14 +139,14 @@ public final class TinkersConstruct
 
 	private boolean isTraitLoc(final String loc) {
 		switch (loc) {
-			case TraitLocations.BOW:
-			case TraitLocations.BOWSTRING:
-			case TraitLocations.EXTRA:
-			case TraitLocations.FLETCHING:
-			case TraitLocations.HANDLE:
-			case TraitLocations.HEAD:
-			case TraitLocations.PROJECTILE:
-			case TraitLocations.SHAFT:
+			case TinkersTraitLocation.BOW:
+			case TinkersTraitLocation.BOWSTRING:
+			case TinkersTraitLocation.EXTRA:
+			case TinkersTraitLocation.FLETCHING:
+			case TinkersTraitLocation.HANDLE:
+			case TinkersTraitLocation.HEAD:
+			case TinkersTraitLocation.PROJECTILE:
+			case TinkersTraitLocation.SHAFT:
 				return true;
 			default:
 				return false;
@@ -247,4 +262,5 @@ public final class TinkersConstruct
 			registry.registerAlloy(MaterialNames.STEEL, output, iron, coal);
 		}
 	}
+	*/
 }

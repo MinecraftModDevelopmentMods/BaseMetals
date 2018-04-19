@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkerMaterial;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -80,4 +81,43 @@ public class TinkersConstructBase implements IIntegration {
 		
 		material.addExtraMelting(name, amount);
 	}
+	
+	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable, Object...traits) {
+		registerMaterial(materialName, craftable, castable, true, traits);
+	}
+	
+	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable,
+			boolean toolForge, Object...traits) {
+		MMDMaterial material = Materials.getMaterialByName(materialName);
+		TinkerMaterial mat = newMaterial(material);
+		mat.setCastable(castable);
+		mat.setCraftable(craftable);
+		mat.setToolForge(toolForge);
+		
+		int i = 0;
+		while (i < traits.length) {
+			if (traits[i] instanceof TinkerMaterial.TinkersTraitLocation) {
+				mat.addTrait((String)traits[i+1], (TinkerMaterial.TinkersTraitLocation)traits[i]);
+				i++;
+			} else {
+				mat.addTrait((String)traits[i], TinkerMaterial.TinkersTraitLocation.GENERAL);
+			}
+			i++;
+		}
+		
+		mat.setRegistryName(materialName);
+		registerMaterial(mat);
+	}
+	
+	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable, boolean toolForge) {
+		MMDMaterial material = Materials.getMaterialByName(materialName);
+		TinkerMaterial mat = newMaterial(material);
+		mat.setCastable(castable);
+		mat.setCraftable(craftable);
+		mat.setToolForge(toolForge);
+		
+		mat.setRegistryName(materialName);
+		registerMaterial(mat);		
+	}
+	
 }
