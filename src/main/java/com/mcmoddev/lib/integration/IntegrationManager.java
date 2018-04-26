@@ -94,8 +94,6 @@ public enum IntegrationManager {
 				BaseMetals.logger.fatal("Null for addonId(%s), pluginId(%s) or class (%s) - ignoring",addonId,pluginId,clazz);
 				continue;
 			} else {
-
-				BaseMetals.logger.fatal("addonId: %s -- pluginId: %s -- clazz: %s", addonId, pluginId, clazz);
 				if ((event.getModMetadata().modId.equals(addonId)) && (Loader.isModLoaded(pluginId))) {
 					String pluginVersion = FMLCommonHandler.instance().findContainerFor(pluginId).getVersion();
 					VersionMatch matcher = this.plugins.get(addonId).getOrDefault(pluginId, (match) -> true);
@@ -106,12 +104,7 @@ public enum IntegrationManager {
 
 					IIntegration integration;
 					try {
-						Class cl = Class.forName(clazz);
-						BaseMetals.logger.fatal("Class: %s", cl);
-						Class cla = cl.asSubclass(IIntegration.class);
-						BaseMetals.logger.fatal("asSubclass: %s", cla);
 						integration = Class.forName(clazz).asSubclass(IIntegration.class).newInstance();
-						BaseMetals.logger.fatal("Instance: %s", integration);
 						this.integrations.add(integration);
 
 						integration.init();
