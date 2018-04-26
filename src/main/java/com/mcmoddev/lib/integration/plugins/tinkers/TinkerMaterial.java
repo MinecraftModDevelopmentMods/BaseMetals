@@ -54,43 +54,43 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		for( TinkersStat k : TinkersStat.values()) {
 			switch(k) {
 			case HEAD_DURABILITY:
-				this.stats.put(k, () -> Integer.valueOf(basis.getToolDurability()));
+				this.stats.put(k, () -> new IntStat(basis.getToolDurability()));
 				break;
 			case MINING_SPEED:
-				this.stats.put(k, () -> Float.valueOf(basis.getStat(MaterialStats.HARDNESS) * 0.85f));
+				this.stats.put(k, () -> new FloatStat(basis.getStat(MaterialStats.HARDNESS) * 0.85f));
 				break;
 			case MINING_LEVEL:
-				this.stats.put(k, () -> Integer.valueOf(basis.getToolHarvestLevel()));
+				this.stats.put(k, () -> new IntStat(basis.getToolHarvestLevel()));
 			case HEAD_ATTACK_DAMAGE:
-				this.stats.put(k, () -> Float.valueOf(basis.getBaseAttackDamage() * 2));
+				this.stats.put(k, () -> new FloatStat(basis.getBaseAttackDamage() * 2));
 				break;
 			case BODY_DURABILITY:
-				this.stats.put(k, () -> Integer.valueOf(basis.getToolDurability() / 7));
+				this.stats.put(k, () -> new IntStat(basis.getToolDurability() / 7));
 				break;
 			case BODY_MODIFIER:
-				this.stats.put(k, () -> Float.valueOf(basis.getStat(MaterialStats.HARDNESS) 
+				this.stats.put(k, () -> new FloatStat(basis.getStat(MaterialStats.HARDNESS) 
 						+ (basis.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9));
 				break;
 			case EXTRA_DURABILTIY:			
-				this.stats.put(k, () -> Integer.valueOf(basis.getToolDurability() / 10));
+				this.stats.put(k, () -> new IntStat(basis.getToolDurability() / 10));
 				break;
 			case BOW_DRAW_SPEED:
-				this.stats.put(k, () -> Float.valueOf(this.calcDrawSpeed(basis.getToolDurability())));
+				this.stats.put(k, () -> new FloatStat(this.calcDrawSpeed(basis.getToolDurability())));
 				break;
 			case BOW_DAMAGE:
-				this.stats.put(k, () -> Float.valueOf(basis.getBaseAttackDamage() + 3));
+				this.stats.put(k, () -> new FloatStat(basis.getBaseAttackDamage() + 3));
 				break;
 			case BOW_RANGE:
-				this.stats.put(k, () -> Float.valueOf(15.0f));
+				this.stats.put(k, () -> new FloatStat(15.0f));
 				break;
 			case BOWSTRING_MODIFIER:
 			case ARROWSHAFT_MODIFIER:
 			case FLETCHING_ACCURACY:
 			case FLETCHING_MODIFIER:
-				this.stats.put(k, () -> Float.valueOf(1.0f));
+				this.stats.put(k, () -> new FloatStat(1.0f));
 				break;
 			case ARROWSHAFT_BONUS_AMMO:
-				this.stats.put(k, () -> Integer.valueOf(1));
+				this.stats.put(k, () -> new IntStat(1));
 				break;
 			default:
 				BaseMetals.logger.error("Unknown Tinkers' Construct Stat %s, ignoring", k);	
@@ -233,13 +233,14 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	}
 
 	public void settle() {
+		if (this.tinkersMaterial != null) return;
 		this.tinkersMaterial = new Material(this.name, this.tintColor);
 		this.tinkersMaterial.addCommonItems(this.material.getCapitalizedName());
-		if (this.traits.size() > 0) {
+/*		if (this.traits.size() > 0) {
 			this.traits.entrySet().stream()
 			.filter(ent -> ent.getKey() == TinkersTraitLocation.GENERAL)
 			.forEach(ent -> ent.getValue().forEach( trait -> this.tinkersMaterial.addTrait(trait)));
-		}
+		} */
 
 		this.tinkersMaterial.setCastable(this.castable);
 		this.tinkersMaterial.setCraftable(this.craftable);
@@ -362,20 +363,38 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	}
 	
 	public class IntStat implements IStat<Integer> {
+		private final Integer val;
+
+		public IntStat(Integer v) {
+			this.val  = v;
+		}
+		
 		public Integer value() {
-			return 0;
+			return this.val;
 		}
 	}
 	
 	public class FloatStat implements IStat<Float> {
+		private final Float val;
+		
+		public FloatStat(Float v) {
+			this.val = v;
+		}
+		
 		public Float value() {
-			return 0f;
+			return this.val;
 		}
 	}
 	
 	public class BoolStat implements IStat<Boolean> {
+		private final Boolean val;
+		
+		public BoolStat(Boolean v) {
+			this.val = v;
+		}
+		
 		public Boolean value() {
-			return false;
+			return this.val;
 		}
 	}
 	
