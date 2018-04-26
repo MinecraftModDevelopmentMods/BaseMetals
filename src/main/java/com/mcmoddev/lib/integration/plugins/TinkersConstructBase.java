@@ -242,6 +242,10 @@ public class TinkersConstructBase implements IIntegration {
 
 	private void setupIntegrations() {
 		for (TinkerMaterial mat : registry.getValues()) {
+			if (mat.getMMDMaterial().equals(Materials.EMPTY) || mat.getName().toLowerCase().equals("empty")) {
+				continue;
+			}
+			
 			mat.settle();
 
 			Material m = mat.getTinkerMaterial();
@@ -302,14 +306,20 @@ public class TinkersConstructBase implements IIntegration {
 		.forEach( tm -> {
 			tm.getTraits().entrySet().stream()
 			.forEach( trait -> {
+				BaseMetals.logger.fatal("Sanity Check: trait == %s (key: %s, value: %s (size: %d))", trait, trait.getKey(), trait.getValue(), trait.getValue().size());
 				if(trait.getKey().equals(TinkersTraitLocation.GENERAL)) {
-					trait.getValue().stream().forEach( t -> tm.getTinkerMaterial().addTrait(t));
+					trait.getValue().stream().forEach( t -> {
+						BaseMetals.logger.fatal("Adding Trait %s (%s) to location %s", t.getIdentifier(), t, TinkersTraitLocation.GENERAL);
+						tm.getTinkerMaterial().addTrait(t);
+					});
 				} else {
-					TinkersTraitLocation loc = trait.getKey();
-					trait.getValue().stream().forEach( t -> tm.getTinkerMaterial().addTrait(t, loc.toString()));
+					trait.getValue().stream().filter( k -> k != null).forEach( t -> {
+						BaseMetals.logger.fatal("Adding Trait %s (%s) to location %s", t.getIdentifier(), t, trait.getKey().name());
+						tm.getTinkerMaterial().addTrait(t, trait.getKey().toString());
+					});
 				}
 			});
-			
+
 		});
 	}
 	
