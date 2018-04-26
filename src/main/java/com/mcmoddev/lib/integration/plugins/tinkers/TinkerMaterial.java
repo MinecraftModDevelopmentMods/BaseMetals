@@ -71,7 +71,7 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 				this.stats.put(k, () -> Float.valueOf(basis.getStat(MaterialStats.HARDNESS) 
 						+ (basis.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9));
 				break;
-			case EXTRA_DURABILITY:
+			case EXTRA_DURABILTIY:			
 				this.stats.put(k, () -> Integer.valueOf(basis.getToolDurability() / 10));
 				break;
 			case BOW_DRAW_SPEED:
@@ -305,7 +305,7 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		case BOWSTRING:
 			return new BowStringMaterialStats(this.getFloatStat(TinkersStat.BOWSTRING_MODIFIER));
 		case EXTRA:
-			return new ExtraMaterialStats(this.getIntStat(TinkersStat.EXTRA_DURABILITY));
+			return new ExtraMaterialStats(this.getIntStat(TinkersStat.EXTRA_DURABILTIY));
 		case FLETCHING:
 			return new FletchingMaterialStats(this.getFloatStat(TinkersStat.FLETCHING_ACCURACY),
 					this.getFloatStat(TinkersStat.FLETCHING_MODIFIER));
@@ -341,7 +341,7 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		HEAD_DURABILITY, MINING_SPEED, MINING_LEVEL, HEAD_ATTACK_DAMAGE,
 		BODY_DURABILITY, BODY_MODIFIER, EXTRA_DURABILTIY, BOW_DRAW_SPEED,
 		BOW_RANGE, BOWSTRING_MODIFIER, ARROWSHAFT_MODIFIER, FLETCHING_ACCURACY,
-		EXTRA_DURABILITY, BOW_DAMAGE, FLETCHING_MODIFIER, ARROWSHAFT_BONUS_AMMO
+		BOW_DAMAGE, FLETCHING_MODIFIER, ARROWSHAFT_BONUS_AMMO
 	}
 
 	public enum TinkersStatTypes {
