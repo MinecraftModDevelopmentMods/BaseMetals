@@ -262,7 +262,7 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		}
 		
 		if(represents != null) this.tinkersMaterial.setRepresentativeItem(represents);
-		
+	
 		Arrays.asList(TinkersStatTypes.values()).stream()
 		.forEach( stat -> this.tinkersStats.computeIfAbsent(stat, k -> this.getDefaultStat(k)) );
 
