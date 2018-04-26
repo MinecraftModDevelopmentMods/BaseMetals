@@ -90,29 +90,24 @@ public enum IntegrationManager {
 			final String pluginId = this.getAnnotationItem("pluginId", asmDataItem);
 			final String clazz = asmDataItem.getClassName();
 
-			if (addonId == null || pluginId == null || clazz == null) {
-				BaseMetals.logger.fatal("Null for addonId(%s), pluginId(%s) or class (%s) - ignoring",addonId,pluginId,clazz);
-				continue;
-			} else {
-				if ((event.getModMetadata().modId.equals(addonId)) && (Loader.isModLoaded(pluginId))) {
-					String pluginVersion = FMLCommonHandler.instance().findContainerFor(pluginId).getVersion();
-					VersionMatch matcher = this.plugins.get(addonId).getOrDefault(pluginId, (match) -> true);
-					if (!matcher.matches(pluginVersion)) {
-						BaseMetals.logger.error("Version %s of mod %s is not valid for this mods (%s) integration with it - %s required", pluginVersion, pluginId, addonId, matcher.asString());
-						break;
-					}
+			if ((event.getModMetadata().modId.equals(addonId)) && (Loader.isModLoaded(pluginId))) {
+				String pluginVersion = FMLCommonHandler.instance().findContainerFor(pluginId).getVersion();
+				VersionMatch matcher = this.plugins.get(addonId).getOrDefault(pluginId, (match) -> true);
+				if (!matcher.matches(pluginVersion)) {
+					BaseMetals.logger.error("Version %s of mod %s is not valid for this mods (%s) integration with it - %s required", pluginVersion, pluginId, addonId, matcher.asString());
+					break;
+				}
 
-					IIntegration integration;
-					try {
-						integration = Class.forName(clazz).asSubclass(IIntegration.class).newInstance();
-						this.integrations.add(integration);
+				IIntegration integration;
+				try {
+					integration = Class.forName(clazz).asSubclass(IIntegration.class).newInstance();
+					this.integrations.add(integration);
 
-						integration.init();
+					integration.init();
 
-						BaseMetals.logger.debug("Loaded " + pluginId + " for " + addonId);
-					} catch (final Exception ex) {
-						BaseMetals.logger.error("Couldn't load " + pluginId + " for " + addonId, ex);
-					}
+					BaseMetals.logger.debug("Loaded " + pluginId + " for " + addonId);
+				} catch (final Exception ex) {
+					BaseMetals.logger.error("Couldn't load " + pluginId + " for " + addonId, ex);
 				}
 			}
 		}
