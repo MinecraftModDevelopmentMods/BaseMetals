@@ -13,18 +13,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.init.Blocks;
-import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.ItemGroups;
-import com.mcmoddev.basemetals.init.Items;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.init.VillagerTrades;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
+
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.events.*;
 import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.oregen.FallbackGenerator;
@@ -82,21 +82,18 @@ public class CommonProxy {
 						SharedStrings.ORESPAWN_MISSING_TEXT);
 			}
 		}
+		MinecraftForge.EVENT_BUS.register(new EventHandler());
 
-		com.mcmoddev.lib.init.Materials.init();
-		Materials.init();
-		Fluids.init();
-		ItemGroups.init();
-		com.mcmoddev.lib.init.Blocks.init();
-		Blocks.init();
-		com.mcmoddev.lib.init.Items.init();
-		Items.init();
+		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterMaterials());
+		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterBlocks());
+		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterItems());
+		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterFluids());
 
 		VillagerTrades.init();
 
-		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		IntegrationManager.INSTANCE.preInit(event);
-		IntegrationManager.INSTANCE.runCallbacks("preInit");
+		MinecraftForge.EVENT_BUS.post(new MMLibPreInitSync());
+		IntegrationManager.INSTANCE.preInitPhase();
 		this.allsGood = true;
 	}
 
@@ -137,7 +134,6 @@ public class CommonProxy {
 	public void init(final FMLInitializationEvent event) {
 		this.allsGood = false;
 
-		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		this.allsGood = true;
 
@@ -161,6 +157,7 @@ public class CommonProxy {
 		}
 
 		ItemGroups.setupIcons(MaterialNames.STARSTEEL);
+		IntegrationManager.INSTANCE.initPhase();
 		// dumpMaterials()
 	}
 
@@ -212,9 +209,9 @@ public class CommonProxy {
 	 */
 	public void postInit(final FMLPostInitializationEvent event) {
 		this.allsGood = false;
-		IntegrationManager.INSTANCE.runCallbacks("postInit");
 		ConfigBase.postInit();
 		this.allsGood = true;
 		FallbackGeneratorData.getInstance().setup();
+		IntegrationManager.INSTANCE.postInitPhase();
 	}
 }

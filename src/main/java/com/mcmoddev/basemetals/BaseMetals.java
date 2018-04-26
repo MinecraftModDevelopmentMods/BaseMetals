@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -15,11 +16,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 
 /**
  * This is the entry point for this Mod. If you are writing your own Mod that uses this Mod, the
@@ -79,6 +82,15 @@ public class BaseMetals {
 
 	public static String getVersion() {
 		return VERSION;
+	}
+	
+	@EventHandler
+	public static void constructing(final FMLConstructionEvent event) {
+		try {
+			IntegrationManager.INSTANCE.setup(event);
+		} catch (InvalidVersionSpecificationException e) {
+			logger.error("Error loading version information for plugins: %s", e);
+		}
 	}
 	
 	@EventHandler

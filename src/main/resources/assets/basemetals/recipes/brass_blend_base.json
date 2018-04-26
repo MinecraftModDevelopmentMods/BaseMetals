@@ -2,10 +2,14 @@
 	"result": {
 		"item": "basemetals:brass_blend",
 		"data": 0,
-		"count": 3
+		"count": 4
 	},
 	"type": "forge:ore_shapeless",
 	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustCopper"
+		},
 		{
 			"type": "forge:ore_dict",
 			"ore": "dustCopper"

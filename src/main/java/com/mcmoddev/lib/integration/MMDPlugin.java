@@ -22,20 +22,8 @@ public @interface MMDPlugin {
 	String pluginId() default "";
 
 	/**
-	 *
-	 * @return The preInit phase callback name for the plugin
+	 * 
+	 * @return The required versions for this plugins needed mods
 	 */
-	String preInitCallback() default "";
-
-	/**
-	 *
-	 * @return The init phase callback name for the plugin
-	 */
-	String initCallback() default "";
-
-	/**
-	 *
-	 * @return The postInit phase callback name for the plugin
-	 */
-	String postInitCallback() default "";
+	String versions() default "";
 }
