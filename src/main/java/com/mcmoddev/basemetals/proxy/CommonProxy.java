@@ -54,21 +54,15 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
  */
 public class CommonProxy {
 
-	private boolean allsGood = false;
-
-	/**
-	 *
-	 * @return if all is good
-	 */
-	public boolean allsGood() {
-		return this.allsGood;
-	}
-
 	/**
 	 *
 	 * @param event
 	 */
 	public void preInit(final FMLPreInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
+		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Recipes.class);
 
 		Config.init();
 
@@ -94,7 +88,6 @@ public class CommonProxy {
 		IntegrationManager.INSTANCE.preInit(event);
 		MinecraftForge.EVENT_BUS.post(new MMLibPreInitSync());
 		IntegrationManager.INSTANCE.preInitPhase();
-		this.allsGood = true;
 	}
 
 	/**
@@ -132,10 +125,7 @@ public class CommonProxy {
 	 * @param event
 	 */
 	public void init(final FMLInitializationEvent event) {
-		this.allsGood = false;
-
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
-		this.allsGood = true;
 
 		// by this point all materials should have been registered both with MMDLib and Minecraft
 		// move to a separate function - potentially in FallbackGeneratorData - after the test
@@ -208,9 +198,7 @@ public class CommonProxy {
 	 * @param event
 	 */
 	public void postInit(final FMLPostInitializationEvent event) {
-		this.allsGood = false;
 		ConfigBase.postInit();
-		this.allsGood = true;
 		FallbackGeneratorData.getInstance().setup();
 		IntegrationManager.INSTANCE.postInitPhase();
 	}
