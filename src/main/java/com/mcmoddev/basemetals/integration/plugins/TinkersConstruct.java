@@ -25,6 +25,10 @@ import net.minecraftforge.fluids.FluidStack;
 public final class TinkersConstruct
 		extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase implements IIntegration {
 
+	public TinkersConstruct() {
+		super();
+	}
+	
 	@Override
 	public void init() {
 		super.init();

@@ -65,11 +65,10 @@ import net.minecraftforge.registries.RegistryBuilder;
  * @since 2018-04-26
  */
 public class TinkersConstructBase implements IIntegration {
-
 	public static final String PLUGIN_MODID = "tconstruct";
 	private static final IForgeRegistry<TinkerMaterial> registry = new RegistryBuilder<TinkerMaterial>()
 			.disableSaving()
-			.setMaxID(Integer.MAX_VALUE)
+			.setMaxID( 65535 )
 			.setName(new ResourceLocation("mmdlib", "tinker_registry"))
 			.setType(TinkerMaterial.class)
 			.create();
@@ -79,6 +78,10 @@ public class TinkersConstructBase implements IIntegration {
 	private static final Map<String, Modifier> modifiers = new HashMap<>();
 	private static final List<Pair<ItemStack, FluidStack>> extraMeltings = new LinkedList<>();
 	private static final List<MaterialIntegration> integrations = new LinkedList<>();
+
+	public TinkersConstructBase() {
+		BaseMetals.logger.fatal("TinkersConstructBase constructor");
+	}
 
 	@Override
 	public void init() {
