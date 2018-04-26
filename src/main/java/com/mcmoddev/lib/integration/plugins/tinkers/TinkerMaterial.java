@@ -377,5 +377,13 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		public Boolean value() {
 			return false;
 		}
-	}	
+	}
+	
+	public Material getTinkerMaterial() {
+		return this.tinkersMaterial;
+	}
+	
+	public IMaterialStats getStat(TinkersStatTypes type) {
+		return tinkersStats.get(type);
+	}
 }
