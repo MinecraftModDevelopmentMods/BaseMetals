@@ -58,6 +58,10 @@ public class Materials {
 		// holdover from earlier versions, basically
 	}
 
+	public static void dumpRegistry() {
+		REGISTRY.getEntries().stream().forEach( ent -> BaseMetals.logger.fatal("Material %s - %s (%s)", ent.getKey(), ent.getValue().getCapitalizedName(), ent.getValue()));
+	}
+	
 	/**
 	 * Create a oreless material.
 	 *

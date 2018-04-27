@@ -9,7 +9,6 @@ import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -105,15 +104,6 @@ public class BaseMetals {
 	@EventHandler
 	public static void preInit(final FMLPreInitializationEvent event) {
 		proxy.preInit(event);
-
-		if (proxy.allsGood()) {
-			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
-			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
-			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
-			MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Recipes.class);
-		} else {
-			logger.fatal("Something went wrong during the proxy preInit() call!");
-		}
 	}
 
 	@EventHandler

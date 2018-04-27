@@ -1,14 +1,15 @@
 package com.mcmoddev.basemetals.util;
 
 import com.mcmoddev.lib.events.*;
+
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 import com.mcmoddev.lib.util.ConfigBase.Options;
-
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
+
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
