@@ -92,6 +92,7 @@ public class TinkersConstructBase implements IIntegration {
 		MinecraftForge.EVENT_BUS.post(new TinkersTraitRegistryEvent());
 		registerModifiers();
 		MinecraftForge.EVENT_BUS.post(new TinkersModifierRegistryEvent());
+		
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
@@ -169,7 +170,7 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable,
-			boolean toolForge, Object...traits) {
+			boolean toolForge, Object...traitsList) {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
 		TinkerMaterial mat = newMaterial(material);
 		mat.setCastable(castable);
@@ -177,12 +178,12 @@ public class TinkersConstructBase implements IIntegration {
 		mat.setToolForge(toolForge);
 
 		int i = 0;
-		while (i < traits.length) {
-			if (traits[i] instanceof TinkerMaterial.TinkersTraitLocation) {
-				mat.addTrait((String)traits[i+1], (TinkerMaterial.TinkersTraitLocation)traits[i]);
+		while (i < traitsList.length) {
+			if (traitsList[i] instanceof TinkerMaterial.TinkersTraitLocation) {
+				mat.addTrait((String)traitsList[i+1], (TinkerMaterial.TinkersTraitLocation)traitsList[i]);
 				i++;
 			} else {
-				mat.addTrait((String)traits[i], TinkerMaterial.TinkersTraitLocation.GENERAL);
+				mat.addTrait((String)traitsList[i], TinkerMaterial.TinkersTraitLocation.GENERAL);
 			}
 			i++;
 		}

@@ -216,7 +216,8 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		List<ITrait> ct = this.traits.getOrDefault(location, new ArrayList<>());
 		ct.add(resolved);
 		this.traits.put(location, ct);
-		
+
+		BaseMetals.logger.fatal("resolved trait name %s to %s", name, resolved);
 		return this;
 	}
 	
