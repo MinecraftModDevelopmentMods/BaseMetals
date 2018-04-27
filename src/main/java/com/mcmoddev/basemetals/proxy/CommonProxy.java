@@ -18,6 +18,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.ItemGroups;
 import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.basemetals.init.Recipes;
 import com.mcmoddev.basemetals.init.VillagerTrades;
 import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
@@ -59,10 +60,7 @@ public class CommonProxy {
 	 * @param event
 	 */
 	public void preInit(final FMLPreInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Items.class);
-		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Blocks.class);
 		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
-		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.init.Recipes.class);
 
 		Config.init();
 
@@ -76,13 +74,22 @@ public class CommonProxy {
 						SharedStrings.ORESPAWN_MISSING_TEXT);
 			}
 		}
+		
+		com.mcmoddev.lib.init.Materials.init();
+		com.mcmoddev.lib.init.Blocks.init();
+		com.mcmoddev.lib.init.Items.init();
+		com.mcmoddev.lib.init.Fluids.init();
+		com.mcmoddev.lib.init.ItemGroups.init();
+		com.mcmoddev.lib.init.Recipes.init();
+
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterMaterials());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterBlocks());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterItems());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterFluids());
-
+		
+		Recipes.init();
 		VillagerTrades.init();
 
 		IntegrationManager.INSTANCE.preInit(event);

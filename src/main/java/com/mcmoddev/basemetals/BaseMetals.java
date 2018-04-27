@@ -9,7 +9,6 @@ import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -104,7 +103,6 @@ public class BaseMetals {
 	 */
 	@EventHandler
 	public static void preInit(final FMLPreInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.util.EventHandler.class);
 		proxy.preInit(event);
 	}
 

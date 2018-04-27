@@ -21,6 +21,7 @@ import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -150,6 +151,7 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 						Materials.getMaterialByName(materialName)));
 
 		addToMetList();
+		MinecraftForge.EVENT_BUS.register(Items.class);
 	}
 
 	private static void setBurnTimes(@Nonnull final MMDMaterial material) {

@@ -14,6 +14,7 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -47,7 +48,6 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		materials.stream().filter(Materials::hasMaterial).forEach(materialName -> {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
-
 			create(Names.BLOCK, material);
 			create(Names.PLATE, material);
 			create(Names.ORE, material);
@@ -69,6 +69,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		addBlock(new BlockHumanDetector(), "human_detector",
 				ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
+		MinecraftForge.EVENT_BUS.register(Blocks.class);
 	}
 
 	private static void createAnvils() {
