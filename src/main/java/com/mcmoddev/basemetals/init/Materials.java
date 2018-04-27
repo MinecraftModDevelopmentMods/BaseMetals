@@ -1,12 +1,10 @@
 package com.mcmoddev.basemetals.init;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
@@ -44,11 +42,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.CUPRONICKEL,
 				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
 				MaterialNames.PEWTER, MaterialNames.STEEL);
-
-		List<String> everything = new ArrayList<>();
-		everything.addAll(materials);
-		everything.addAll(alloyMaterials);
-		everything.stream().forEach(name -> BaseMetals.logger.fatal("Material %s is %s", name, Options.isMaterialEnabled(name)?"enabled":"not enabled"));
 		
 		materials.stream().filter(Options::isMaterialEnabled)
 				.forEach(name -> createMaterial(name, MaterialType.METAL, getHardness(name),

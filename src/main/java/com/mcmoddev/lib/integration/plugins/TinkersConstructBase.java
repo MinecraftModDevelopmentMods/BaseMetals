@@ -308,9 +308,15 @@ public class TinkersConstructBase implements IIntegration {
 			tm.getTraits().entrySet().stream()
 			.forEach( trait -> {
 				if(trait.getKey().equals(TinkersTraitLocation.GENERAL)) {
-					trait.getValue().stream().forEach( t -> tm.getTinkerMaterial().addTrait(t));
+					trait.getValue().stream()
+					.map(TinkerRegistry::getTrait)
+					.filter(t -> t != null)
+					.forEach( t -> tm.getTinkerMaterial().addTrait(t));
 				} else {
-					trait.getValue().stream().filter( k -> k != null).forEach( t -> tm.getTinkerMaterial().addTrait(t, trait.getKey().toString()));
+					trait.getValue().stream()
+					.map(TinkerRegistry::getTrait)
+					.filter( t -> t != null)
+					.forEach( t -> tm.getTinkerMaterial().addTrait(t, trait.getKey().toString()));
 				}
 			});
 		});

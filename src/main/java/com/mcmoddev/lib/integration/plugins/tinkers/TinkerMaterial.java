@@ -27,8 +27,6 @@ import slimeknights.tconstruct.library.materials.HandleMaterialStats;
 import slimeknights.tconstruct.library.materials.HeadMaterialStats;
 import slimeknights.tconstruct.library.materials.IMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
-import slimeknights.tconstruct.library.traits.ITrait;
-import slimeknights.tconstruct.library.TinkerRegistry;
 
 public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> implements IMMDObject {
 	@SuppressWarnings("rawtypes")
@@ -42,7 +40,7 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	private boolean castable = true;
 	
 	// book keeping stuffs - trait handling bits
-	private final Map<TinkersTraitLocation, List<ITrait>> traits = Maps.newConcurrentMap();
+	private final Map<TinkersTraitLocation, List<String>> traits = Maps.newConcurrentMap();
 	private final Map<String, Integer> extraMelting = Maps.newConcurrentMap();
 	private final Map<TinkersStatTypes, IMaterialStats> tinkersStats = Maps.newConcurrentMap();
 	
@@ -212,12 +210,10 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	}
 
 	public TinkerMaterial addTrait(String name, TinkersTraitLocation location) {
-		ITrait resolved = TinkerRegistry.getTrait(name);
-		List<ITrait> ct = this.traits.getOrDefault(location, new ArrayList<>());
-		ct.add(resolved);
-		this.traits.put(location, ct);
-
-		BaseMetals.logger.fatal("resolved trait name %s to %s", name, resolved);
+		List<String> traitsForLoc = this.traits.getOrDefault(location, new ArrayList<>());
+		traitsForLoc.add(name);
+		this.traits.put(location, traitsForLoc);
+		
 		return this;
 	}
 	
@@ -270,20 +266,20 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 
 	}
 
-	public ImmutableMap<TinkersTraitLocation, List<ITrait>> getTraits() {
-		Map<TinkersTraitLocation, List<ITrait>> rv = Maps.newConcurrentMap();
+	public ImmutableMap<TinkersTraitLocation, List<String>> getTraits() {
+		Map<TinkersTraitLocation, List<String>> rv = Maps.newConcurrentMap();
 		
 		this.traits.entrySet().stream()
 		.filter(ent -> ent.getKey() != TinkersTraitLocation.GENERAL)
 		.forEach(ent -> {
-			List<ITrait> traits = rv.getOrDefault(ent.getKey(), Lists.newArrayList());
+			List<String> traits = rv.getOrDefault(ent.getKey(), Lists.newArrayList());
 			traits.addAll(ent.getValue());
 			rv.put(ent.getKey(), traits);
 		});
 		return ImmutableMap.copyOf(rv);
 	}
 	
-	public ImmutableList<ITrait> getTraits(TinkersTraitLocation location) {
+	public ImmutableList<String> getTraits(TinkersTraitLocation location) {
 		return ImmutableList.copyOf(this.traits.getOrDefault(location, new ArrayList<>()));
 	}
 	

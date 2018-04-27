@@ -104,7 +104,7 @@ public class BaseMetals {
 	@EventHandler
 	public static void preInit(final FMLPreInitializationEvent event) {
 		proxy.preInit(event);
-		com.mcmoddev.lib.init.Materials.dumpRegistry();
+		//com.mcmoddev.lib.init.Materials.dumpRegistry();
 	}
 
 	@EventHandler

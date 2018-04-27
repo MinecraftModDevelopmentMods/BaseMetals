@@ -82,8 +82,6 @@ public class CommonProxy {
 		com.mcmoddev.lib.init.ItemGroups.init();
 		com.mcmoddev.lib.init.Recipes.init();
 
-		MinecraftForge.EVENT_BUS.register(new EventHandler());
-
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterMaterials());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterBlocks());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterItems());
