@@ -58,7 +58,7 @@ public enum IntegrationManager {
 				for (String entry : versions.split(";")) {
 					String[] bits = entry.split("@");
 					String targetModId = bits[0];
-					if (bits[1].matches("[\\[\\(][\\w\\d\\.\\+,]+[\\]\\)]")) {
+					if (bits[1].matches("[\\[\\(]?[\\w\\d\\.\\+,]+[\\]\\)]?")) {
 						rv.put(targetModId, new VersionMatch() {
 							private final VersionRange myRange = VersionRange.createFromVersionSpec(bits[1]);
 							public boolean matches(String otherVersion) {
