@@ -18,7 +18,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = ThermalExpansion.PLUGIN_MODID, versions = ThermalExpansion.PLUGIN_MODID+"@(,5.3.12.17];")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = ThermalExpansion.PLUGIN_MODID,
+           versions = ThermalExpansion.PLUGIN_MODID+"@(,5.3.12.17];")
 public final class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansionBase
 		implements IIntegration {
 

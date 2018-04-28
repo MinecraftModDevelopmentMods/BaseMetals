@@ -58,7 +58,7 @@ public enum IntegrationManager {
 				for (String entry : versions.split(";")) {
 					String[] bits = entry.split("@");
 					String targetModId = bits[0];
-					if (bits[1].matches("[\\[\\(][\\w\\d\\.\\+]+[\\]\\)]")) {
+					if (bits[1].matches("[\\[\\(][\\w\\d\\.\\+,]+[\\]\\)]")) {
 						rv.put(targetModId, new VersionMatch() {
 							private final VersionRange myRange = VersionRange.createFromVersionSpec(bits[1]);
 							public boolean matches(String otherVersion) {
@@ -68,14 +68,17 @@ public enum IntegrationManager {
 								return myRange.toStringFriendly();
 							}
 						});
+						BaseMetals.logger.fatal("versions: %s - %s!!%s - %s", entry, bits[0], bits[1], rv);
 					} else {
 						rv.put(targetModId, (match) -> true);
 					}
+					this.plugins.put(addonId, rv);
 				}
 			} else {
 				this.plugins.computeIfAbsent(addonId, (val) -> Maps.newConcurrentMap());
 				Map<String,VersionMatch> rv = this.plugins.get(addonId);
 				rv.put(modId, (match) -> true);
+				this.plugins.put(addonId, rv);
 			}
 		}
 	}
@@ -93,9 +96,10 @@ public enum IntegrationManager {
 			if ((event.getModMetadata().modId.equals(addonId)) && (Loader.isModLoaded(pluginId))) {
 				String pluginVersion = FMLCommonHandler.instance().findContainerFor(pluginId).getVersion();
 				VersionMatch matcher = this.plugins.get(addonId).getOrDefault(pluginId, (match) -> true);
+
 				if (!matcher.matches(pluginVersion)) {
 					BaseMetals.logger.error("Version %s of mod %s is not valid for this mods (%s) integration with it - %s required", pluginVersion, pluginId, addonId, matcher.asString());
-					break;
+					continue;
 				}
 
 				IIntegration integration;
