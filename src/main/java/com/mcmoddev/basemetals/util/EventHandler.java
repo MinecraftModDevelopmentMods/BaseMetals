@@ -2,7 +2,6 @@ package com.mcmoddev.basemetals.util;
 
 import com.mcmoddev.lib.events.*;
 
-import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -31,11 +30,13 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@EventBusSubscriber
 public class EventHandler {
 
 	/**
@@ -43,7 +44,7 @@ public class EventHandler {
 	 * @param event
 	 */
 	@SubscribeEvent
-	public void attackEvent(final LivingAttackEvent event) {
+	public static void attackEvent(final LivingAttackEvent event) {
 		final float damage = event.getAmount();
 		if (!(event.getEntityLiving() instanceof EntityPlayer)) {
 			return;
@@ -93,7 +94,7 @@ public class EventHandler {
 	 * @param event
 	 */
 	@SubscribeEvent
-	public void handleAnvilEvent(final AnvilUpdateEvent event) {
+	public static void handleAnvilEvent(final AnvilUpdateEvent event) {
 		final ItemStack left = event.getLeft();
 		final ItemStack right = event.getRight();
 
@@ -119,7 +120,7 @@ public class EventHandler {
 	 */
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void onUpdate(final TickEvent.RenderTickEvent event) {
+	public static void onUpdate(final TickEvent.RenderTickEvent event) {
 		if ((Options.requireMMDOreSpawn()) && (Loader.isModLoaded("orespawn"))) {
 			return;
 		}
@@ -163,7 +164,7 @@ public class EventHandler {
 	
 	@SubscribeEvent
 	public static void mmdlibRegisterMaterials(MMDLibRegisterMaterials ev) {
-		Materials.init();
+		com.mcmoddev.basemetals.init.Materials.init();
 	}
 	
 	@SubscribeEvent

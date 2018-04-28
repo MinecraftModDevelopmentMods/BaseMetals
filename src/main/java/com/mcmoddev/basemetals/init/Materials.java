@@ -42,7 +42,7 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.CUPRONICKEL,
 				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
 				MaterialNames.PEWTER, MaterialNames.STEEL);
-
+		
 		materials.stream().filter(Options::isMaterialEnabled)
 				.forEach(name -> createMaterial(name, MaterialType.METAL, getHardness(name),
 						getStrength(name), getMagic(name), getColor(name)));

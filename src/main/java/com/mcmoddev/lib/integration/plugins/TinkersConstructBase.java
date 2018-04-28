@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -13,6 +14,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.integration.plugins.TinkersModifierRegistryEvent;
 import com.mcmoddev.basemetals.integration.plugins.TinkersTraitRegistryEvent;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
@@ -30,8 +32,8 @@ import com.mcmoddev.lib.integration.plugins.tinkers.traits.TraitSoft;
 import com.mcmoddev.lib.integration.plugins.tinkers.traits.TraitSparkly;
 import com.mcmoddev.lib.integration.plugins.tinkers.traits.TraitToxic;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Oredicts;
 
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.MaterialIntegration;
@@ -81,6 +83,8 @@ public class TinkersConstructBase implements IIntegration {
 
 	public TinkersConstructBase() {
 		BaseMetals.logger.fatal("TinkersConstructBase constructor");
+		
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
@@ -92,14 +96,19 @@ public class TinkersConstructBase implements IIntegration {
 		MinecraftForge.EVENT_BUS.post(new TinkersTraitRegistryEvent());
 		registerModifiers();
 		MinecraftForge.EVENT_BUS.post(new TinkersModifierRegistryEvent());
-		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@SubscribeEvent
 	public void registerModifiers(final RegistryEvent.Register<Item> event) {
-		/**
-		 * actually register modifiers and traits with TiCon here
-		 */
+		traits.entrySet().stream()
+		.map(te -> te.getValue())
+		.filter(trait -> TinkerRegistry.getTrait(trait.getIdentifier()) == null)
+		.forEach(trait -> TinkerRegistry.addTrait(trait));
+		
+		modifiers.entrySet().stream()
+		.map(me -> me.getValue())
+		.filter(mod -> TinkerRegistry.getModifier(mod.identifier) == null)
+		.forEach(modifier -> TinkerRegistry.registerModifier(modifier));
 	}
 
 
@@ -169,7 +178,7 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable,
-			boolean toolForge, Object...traits) {
+			boolean toolForge, Object...traitsList) {
 		MMDMaterial material = Materials.getMaterialByName(materialName);
 		TinkerMaterial mat = newMaterial(material);
 		mat.setCastable(castable);
@@ -177,12 +186,12 @@ public class TinkersConstructBase implements IIntegration {
 		mat.setToolForge(toolForge);
 
 		int i = 0;
-		while (i < traits.length) {
-			if (traits[i] instanceof TinkerMaterial.TinkersTraitLocation) {
-				mat.addTrait((String)traits[i+1], (TinkerMaterial.TinkersTraitLocation)traits[i]);
+		while (i < traitsList.length) {
+			if (traitsList[i] instanceof TinkerMaterial.TinkersTraitLocation) {
+				mat.addTrait((String)traitsList[i+1], (TinkerMaterial.TinkersTraitLocation)traitsList[i]);
 				i++;
 			} else {
-				mat.addTrait((String)traits[i], TinkerMaterial.TinkersTraitLocation.GENERAL);
+				mat.addTrait((String)traitsList[i], TinkerMaterial.TinkersTraitLocation.GENERAL);
 			}
 			i++;
 		}
@@ -230,12 +239,45 @@ public class TinkersConstructBase implements IIntegration {
 	@SubscribeEvent
 	public void init(IntegrationInitEvent ev) {
 		registerExtraMeltings();
+		addItemsToMaterials();
 		addTraits();
 		ensureMaterialsVisible();
 	}
 
+	private void addItemsToMaterials() {
+		registry.getValues().stream()
+		.forEach( tm -> {
+			tm.getTinkerMaterial().addCommonItems(tm.getMMDMaterial().getCapitalizedName());
+			tm.getTinkerMaterial().addItemIngot(Oredicts.INGOT+tm.getMMDMaterial().getCapitalizedName());
+			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getItemStack(Names.INGOT), 1, Material.VALUE_Ingot);
+			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getBlockItemStack(Names.BLOCK), 1, Material.VALUE_Block);
+			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getItemStack(Names.SHARD), 1, Material.VALUE_Shard);
+			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getBlockItemStack(Names.ORE), 1, Material.VALUE_Ingot*2);
+			
+			ItemStack represents = null;
+			
+			switch(tm.getMMDMaterial().getType()) {
+			case GEM:
+				represents = tm.getMMDMaterial().getItemStack(Names.GEM);
+				break;
+			case CRYSTAL:
+			case MINERAL:
+			case METAL:
+				represents = tm.getMMDMaterial().getItemStack(Names.INGOT);
+				break;
+			case ROCK:
+			case WOOD:
+				represents = tm.getMMDMaterial().getBlockItemStack(Names.BLOCK);
+				break;
+			}
+			
+			if(represents != null) tm.getTinkerMaterial().setRepresentativeItem(represents);
+		});
+	}
+
 	@SubscribeEvent
 	public void postInit(IntegrationPostInitEvent ev) {
+		integrations.stream().forEach( mi -> mi.integrate() );
 		registerAlloyRecipes();
 		ensureMaterialsVisible();
 	}
@@ -250,17 +292,7 @@ public class TinkersConstructBase implements IIntegration {
 
 			Material m = mat.getTinkerMaterial();
 
-			final MaterialIntegration integration = new MaterialIntegration(m, mat.getMMDMaterial().getFluid(),
-					mat.getName());
-
-
-			if (mat.getCraftable()) {
-				integration.material.setCraftable(true);
-			} else if (mat.getCastable()) {
-				integration.material.setCastable(true);
-			}
-
-			integration.setRepresentativeItem(Oredicts.INGOT+mat.getMMDMaterial().getCapitalizedName());
+			final MaterialIntegration integration = new MaterialIntegration(m, mat.getMMDMaterial().getFluid());
 
 			if (mat.getToolForge()) {
 				integration.toolforge();
@@ -282,14 +314,11 @@ public class TinkersConstructBase implements IIntegration {
 			final ArrowShaftMaterialStats arrowStats = (ArrowShaftMaterialStats) mat.getStat(TinkersStatTypes.ARROWSHAFT);
 			final FletchingMaterialStats fletchingStats = (FletchingMaterialStats) mat.getStat(TinkersStatTypes.FLETCHING);
 
-			if (TinkerRegistry.getMaterial(mat.getName()).equals(mat.getTinkerMaterial())) {
-				// the material was properly registered
-				final Material work = mat.getTinkerMaterial();
-				TinkerRegistry.addMaterialStats(work, headStats, handleStats, extraStats);
-				TinkerRegistry.addMaterialStats(work, bowStats);
-				TinkerRegistry.addMaterialStats(work, arrowStats);
-				TinkerRegistry.addMaterialStats(work, fletchingStats);
-			}
+			final Material work = mat.getTinkerMaterial();
+			TinkerRegistry.addMaterialStats(work, headStats, handleStats, extraStats);
+			TinkerRegistry.addMaterialStats(work, bowStats);
+			TinkerRegistry.addMaterialStats(work, arrowStats);
+			TinkerRegistry.addMaterialStats(work, fletchingStats);
 		}
 	}
 	
@@ -300,26 +329,49 @@ public class TinkersConstructBase implements IIntegration {
 	private void registerExtraMeltings() {
 		extraMeltings.stream().forEach( p -> TinkerRegistry.registerMelting(new MeltingRecipe(RecipeMatch.of(p.getLeft()), p.getRight())));
 	}
+
+	@Nullable
+	private ITrait getTrait(String name) {
+		ITrait tr = TinkerRegistry.getTrait(name);
+		
+		if (tr == null) {
+			tr = TinkerRegistry.getTrait("mmd-"+name);
+		}
+
+		return tr;
+	}
+
+	private void addGenericTrait(@Nullable ITrait tr, TinkerMaterial tm) {
+		if (tr != null) {
+			tm.getTinkerMaterial().addTrait(tr);
+		}
+	}
+
+	private void addTraitLocation(@Nullable ITrait tr, TinkerMaterial tm, TinkersTraitLocation loc) {
+		if (tr != null) {
+			tm.getTinkerMaterial().addTrait(tr, loc.toString());
+		}		
+	}
 	
-	private void addTraits() {
+	private void addTraits() {		
 		registry.getValues().stream()
 		.forEach( tm -> {
-			tm.getTraits().entrySet().stream()
-			.forEach( trait -> {
-				if(trait.getKey().equals(TinkersTraitLocation.GENERAL)) {
-					trait.getValue().stream().forEach( t -> tm.getTinkerMaterial().addTrait(t));
-				} else {
-					trait.getValue().stream().filter( k -> k != null).forEach( t -> tm.getTinkerMaterial().addTrait(t, trait.getKey().toString()));
+			for(TinkersTraitLocation loc : TinkersTraitLocation.values()) {
+				if (tm.getTraits(loc).size() > 0) {
+					if (loc == TinkersTraitLocation.GENERAL) {
+						tm.getTraits(loc).stream()
+						.forEach( t -> addGenericTrait(getTrait(t), tm));
+					} else {
+						tm.getTraits(loc).stream()
+						.forEach( t -> addTraitLocation(getTrait(t), tm, loc));
+					}
 				}
-			});
+			}
 		});
 	}
 	
 	private void registerAlloyRecipes() {
 		alloys.entrySet().stream()
-		.forEach( e -> {
-			BaseMetals.logger.debug("adding alloy recipe %s", e.getKey());
-			TinkerRegistry.registerAlloy(e.getValue());
-		});
+		.forEach(e -> TinkerRegistry.registerAlloy(e.getValue()));
 	}
 }
