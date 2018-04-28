@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -328,6 +329,29 @@ public class TinkersConstructBase implements IIntegration {
 	private void registerExtraMeltings() {
 		extraMeltings.stream().forEach( p -> TinkerRegistry.registerMelting(new MeltingRecipe(RecipeMatch.of(p.getLeft()), p.getRight())));
 	}
+
+	@Nullable
+	private ITrait getTrait(String name) {
+		ITrait tr = TinkerRegistry.getTrait(name);
+		
+		if (tr == null) {
+			tr = TinkerRegistry.getTrait("mmd-"+name);
+		}
+
+		return tr;
+	}
+
+	private void addGenericTrait(@Nullable ITrait tr, TinkerMaterial tm) {
+		if (tr != null) {
+			tm.getTinkerMaterial().addTrait(tr);
+		}
+	}
+
+	private void addTraitLocation(@Nullable ITrait tr, TinkerMaterial tm, TinkersTraitLocation loc) {
+		if (tr != null) {
+			tm.getTinkerMaterial().addTrait(tr, loc.toString());
+		}		
+	}
 	
 	private void addTraits() {		
 		registry.getValues().stream()
@@ -336,34 +360,10 @@ public class TinkersConstructBase implements IIntegration {
 				if (tm.getTraits(loc).size() > 0) {
 					if (loc == TinkersTraitLocation.GENERAL) {
 						tm.getTraits(loc).stream()
-						.forEach( t -> { 
-							ITrait tr = null;
-							if (t != null) {
-								tr = TinkerRegistry.getTrait(t);
-							}
-							
-							if (tr == null) {
-								tr = TinkerRegistry.getTrait("mmd-"+t);
-							}
-							if (tr != null) {
-								tm.getTinkerMaterial().addTrait(tr);
-							}
-						});
+						.forEach( t -> addGenericTrait(getTrait(t), tm));
 					} else {
 						tm.getTraits(loc).stream()
-						.forEach( t -> { 
-							ITrait tr = null;
-							if (t != null) {
-								tr = TinkerRegistry.getTrait(t);
-							}
-							
-							if (tr == null) {
-								tr = TinkerRegistry.getTrait("mmd-"+t);
-							}
-							if (tr != null) {
-								tm.getTinkerMaterial().addTrait(tr, loc.toString());
-							}
-						});
+						.forEach( t -> addTraitLocation(getTrait(t), tm, loc));
 					}
 				}
 			}
