@@ -12,11 +12,9 @@ import com.google.common.collect.Maps;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
-import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
 import slimeknights.tconstruct.library.materials.BowMaterialStats;
@@ -210,9 +208,9 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	}
 
 	public TinkerMaterial addTrait(String name, TinkersTraitLocation location) {
-		List<String> traitsForLoc = this.traits.getOrDefault(location, new ArrayList<>());
-		traitsForLoc.add(name);
-		this.traits.put(location, traitsForLoc);
+		List<String> baseTraits = this.traits.getOrDefault(location, new ArrayList<>());
+		baseTraits.add(name);
+		this.traits.put(location, baseTraits);
 		
 		return this;
 	}
@@ -233,34 +231,13 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		if (this.tinkersMaterial != null) return;
 		this.tinkersMaterial = new Material(this.name, this.tintColor);
 		this.tinkersMaterial.addCommonItems(this.material.getCapitalizedName());
-/*		if (this.traits.size() > 0) {
-			this.traits.entrySet().stream()
-			.filter(ent -> ent.getKey() == TinkersTraitLocation.GENERAL)
-			.forEach(ent -> ent.getValue().forEach( trait -> this.tinkersMaterial.addTrait(trait)));
-		} */
 
-		this.tinkersMaterial.setCastable(this.castable);
-		this.tinkersMaterial.setCraftable(this.craftable);
 		this.tinkersMaterial.setFluid(this.material.getFluid());
-		
-		ItemStack represents = null;
-		switch(this.material.getType()) {
-		case GEM:
-			represents = this.material.getItemStack(Names.GEM);
-			break;
-		case CRYSTAL:
-		case MINERAL:
-		case METAL:
-			represents = this.material.getItemStack(Names.INGOT);
-			break;
-		case ROCK:
-		case WOOD:
-			represents = this.material.getBlockItemStack(Names.BLOCK);
-			break;
+
+		if (this.craftable) {
+			this.tinkersMaterial.setCraftable(true);
 		}
 		
-		if(represents != null) this.tinkersMaterial.setRepresentativeItem(represents);
-	
 		Arrays.asList(TinkersStatTypes.values()).stream()
 		.forEach( stat -> this.tinkersStats.computeIfAbsent(stat, k -> this.getDefaultStat(k)) );
 
