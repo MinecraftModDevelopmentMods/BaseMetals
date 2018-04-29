@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.ActiveModData;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
@@ -22,6 +23,7 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 
@@ -293,7 +295,14 @@ public class Materials {
 	 * @return the material
 	 */
 	protected static MMDMaterial registerMaterial(@Nonnull final MMDMaterial material) {
-		final String modId = Loader.instance().activeModContainer().getModId();
+		ModContainer base = Loader.instance().activeModContainer();
+		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+		
+		if (!base.equals(temp)) {
+			Loader.instance().setActiveModContainer(temp);
+		}
+		
+		final String modId = temp.getModId();
 		final ResourceLocation loc = new ResourceLocation(modId, material.getName());
 		if (REGISTRY.containsKey(loc)) {
 			BaseMetals.logger.error(
@@ -329,6 +338,10 @@ public class Materials {
 			BaseMetals.logger.error("Failed to create tool material enum for " + material);
 		}
 		toolMaterialMap.put(material, toolMaterial);
+		
+		if (!base.equals(temp)) {
+			Loader.instance().setActiveModContainer(base);
+		}
 
 		return material;
 	}

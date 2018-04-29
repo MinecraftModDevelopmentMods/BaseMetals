@@ -77,8 +77,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 
 /**
  * This class initializes all items in Base Metals and provides some utility methods for looking up
@@ -404,9 +404,16 @@ public abstract class Items {
 			fullName = name;
 		}
 
-		item.setRegistryName(new ResourceLocation(ActiveModData.instance.activeMod(),fullName));
-		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
+		ModContainer base = Loader.instance().activeModContainer();
+		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
 
+		if (!base.equals(temp)) {
+			Loader.instance().setActiveModContainer(temp);
+		}
+		
+		item.setRegistryName(fullName);
+		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
+		
 		if (tab != null) {
 			item.setCreativeTab(tab);
 		}
@@ -417,6 +424,11 @@ public abstract class Items {
 		}
 
 		itemRegistry.put(fullName, item);
+		
+		if (!base.equals(temp)) {
+			Loader.instance().setActiveModContainer(base);
+		}
+
 		return item;
 	}
 

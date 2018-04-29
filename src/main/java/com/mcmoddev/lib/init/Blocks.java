@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.block.BlockMMDAnvil;
 import com.mcmoddev.lib.block.BlockMMDBars;
@@ -41,6 +42,7 @@ import com.mcmoddev.lib.item.ItemMMDBlock;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
+import com.mcmoddev.lib.data.ActiveModData;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
@@ -48,6 +50,9 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 
 /**
  * This class initializes all blocks in Base Metals and provides some utility methods for looking up
@@ -259,7 +264,14 @@ public abstract class Blocks {
 			@Nonnull final MMDMaterial material, final CreativeTabs tab) {
 		final String fullName = getBlockFullName(block, material, name);
 
-		block.setRegistryName(fullName);
+		ModContainer base = Loader.instance().activeModContainer();
+		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+		
+		if (!base.equals(temp)) {
+			Loader.instance().setActiveModContainer(temp);
+		}
+		
+		block.setRegistryName(new ResourceLocation(ActiveModData.instance.activeMod(),fullName));
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 
 		maybeMakeItemBlock(block, material, fullName);
@@ -276,6 +288,10 @@ public abstract class Blocks {
 		blockRegistry.put(fullName, block);
 		if (material.isDefault()) {
 			material.addNewBlock(fullName, block);
+		}
+
+		if (!base.equals(temp)) {
+			Loader.instance().setActiveModContainer(base);
 		}
 
 		return block;
