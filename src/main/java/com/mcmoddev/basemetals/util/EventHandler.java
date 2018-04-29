@@ -5,6 +5,7 @@ import com.mcmoddev.lib.events.*;
 import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
@@ -164,22 +165,25 @@ public class EventHandler {
 	
 	@SubscribeEvent
 	public static void mmdlibRegisterMaterials(MMDLibRegisterMaterials ev) {
+		ev.setActive(BaseMetals.MODID);
 		com.mcmoddev.basemetals.init.Materials.init();
 	}
 	
 	@SubscribeEvent
 	public static void mmdlibRegisterBlocks(MMDLibRegisterBlocks ev) {
+		ev.setActive(BaseMetals.MODID);
 		Blocks.init();
 	}
 
 	@SubscribeEvent
 	public static void mmdlibRegisterItems(MMDLibRegisterItems ev) {
+		ev.setActive(BaseMetals.MODID);
 		Items.init();
 	}
 	
 	@SubscribeEvent
 	public static void mmdlibRegisterFluids(MMDLibRegisterFluids ev) {
+		ev.setActive(BaseMetals.MODID);
 		Fluids.init();
 	}
-
 }

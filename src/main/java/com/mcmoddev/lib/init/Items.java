@@ -33,6 +33,7 @@ import com.mcmoddev.lib.block.BlockMMDTrapDoor;
 import com.mcmoddev.lib.block.BlockMMDWall;
 import com.mcmoddev.lib.block.BlockMoltenFluid;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
+import com.mcmoddev.lib.data.ActiveModData;
 import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
@@ -76,6 +77,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 
 /**
  * This class initializes all items in Base Metals and provides some utility methods for looking up
@@ -85,7 +88,6 @@ import net.minecraft.item.ItemStack;
  *
  */
 public abstract class Items {
-
 	private static final BiMap<String, Item> itemRegistry = HashBiMap.create(34);
 	private static final Map<MMDMaterial, List<Item>> itemsByMaterial = new HashMap<>();
 
@@ -402,7 +404,7 @@ public abstract class Items {
 			fullName = name;
 		}
 
-		item.setRegistryName(fullName);
+		item.setRegistryName(new ResourceLocation(ActiveModData.instance.activeMod(),fullName));
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
 
 		if (tab != null) {
