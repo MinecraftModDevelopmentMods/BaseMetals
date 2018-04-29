@@ -82,8 +82,6 @@ public class TinkersConstructBase implements IIntegration {
 	private static final List<MaterialIntegration> integrations = new LinkedList<>();
 
 	public TinkersConstructBase() {
-		BaseMetals.logger.fatal("TinkersConstructBase constructor");
-		
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 

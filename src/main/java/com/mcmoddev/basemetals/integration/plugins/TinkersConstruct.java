@@ -21,7 +21,8 @@ import net.minecraftforge.fluids.FluidStack;
  * @author Jasmine Iwanek
  *
  */
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, versions="tconstruct@[2.7.4.0,)")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID,
+           versions=TinkersConstruct.PLUGIN_MODID+"@[1.12.2-2.7.4.0,)")
 public final class TinkersConstruct
 		extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase implements IIntegration {
 
