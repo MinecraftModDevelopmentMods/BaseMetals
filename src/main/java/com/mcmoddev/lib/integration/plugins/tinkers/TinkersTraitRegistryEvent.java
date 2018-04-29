@@ -1,4 +1,4 @@
-package com.mcmoddev.basemetals.integration.plugins;
+package com.mcmoddev.lib.integration.plugins.tinkers;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
 

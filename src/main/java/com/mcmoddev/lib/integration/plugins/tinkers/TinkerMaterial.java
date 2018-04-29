@@ -41,6 +41,24 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	private final Map<TinkersTraitLocation, List<String>> traits = Maps.newConcurrentMap();
 	private final Map<String, Integer> extraMelting = Maps.newConcurrentMap();
 	private final Map<TinkersStatTypes, IMaterialStats> tinkersStats = Maps.newConcurrentMap();
+	private boolean statsAdded = false;
+	private boolean registered = false;
+	
+	public void setRegistered() {
+		registered = true;
+	}
+	
+	public boolean registered() {
+		return this.registered;
+	}
+	
+	public void setStatsAdded() {
+		statsAdded = true;
+	}
+	
+	public boolean statsAdded() {
+		return this.statsAdded;
+	}
 	
 	public TinkerMaterial(MMDMaterial basis) {
 		this.material = basis;

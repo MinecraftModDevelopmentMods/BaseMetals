@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,14 +12,14 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.mcmoddev.basemetals.init.Materials;
-import com.mcmoddev.basemetals.integration.plugins.TinkersModifierRegistryEvent;
-import com.mcmoddev.basemetals.integration.plugins.TinkersTraitRegistryEvent;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkerMaterial;
+import com.mcmoddev.lib.integration.plugins.tinkers.TinkersModifierRegistryEvent;
+import com.mcmoddev.lib.integration.plugins.tinkers.TinkersTraitRegistryEvent;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkerMaterial.TinkersStatTypes;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkerMaterial.TinkersTraitLocation;
 import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierFakeDiamond;
@@ -55,6 +56,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -242,8 +244,15 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	private void addItemsToMaterials() {
-		registry.getValues().stream()
-		.forEach( tm -> {
+		registry.getEntries().stream()
+		.forEach( ert -> {
+			ModContainer base = Loader.instance().activeModContainer();
+			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
+
+			if (!base.equals(next)) Loader.instance().setActiveModContainer(next);
+
+			TinkerMaterial tm = ert.getValue();
+
 			tm.getTinkerMaterial().addCommonItems(tm.getMMDMaterial().getCapitalizedName());
 			tm.getTinkerMaterial().addItemIngot(Oredicts.INGOT+tm.getMMDMaterial().getCapitalizedName());
 			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getItemStack(Names.INGOT), 1, Material.VALUE_Ingot);
@@ -269,6 +278,8 @@ public class TinkersConstructBase implements IIntegration {
 			}
 			
 			if(represents != null) tm.getTinkerMaterial().setRepresentativeItem(represents);
+			
+			if (!base.equals(next)) Loader.instance().setActiveModContainer(base);
 		});
 	}
 
@@ -280,11 +291,18 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	private void setupIntegrations() {
-		for (TinkerMaterial mat : registry.getValues()) {
-			if (mat.getMMDMaterial().equals(Materials.EMPTY) || mat.getName().toLowerCase().equals("empty")) {
-				continue;
-			}
-			
+		registry.getEntries().stream()
+		.filter(ert -> !ert.getValue().getMMDMaterial().isEmpty() && !ert.getValue().getName().equalsIgnoreCase("empty"))
+		.filter(ert -> TinkerRegistry.getMaterial(ert.getValue().getName().toLowerCase()).equals(Material.UNKNOWN))
+		.filter(ert -> !ert.getValue().registered())
+		.forEach( ert -> {
+			ModContainer base = Loader.instance().activeModContainer();
+			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
+
+			if (!base.equals(next)) Loader.instance().setActiveModContainer(next);
+
+			TinkerMaterial mat = ert.getValue();
+
 			mat.settle();
 
 			Material m = mat.getTinkerMaterial();
@@ -298,27 +316,42 @@ public class TinkersConstructBase implements IIntegration {
 			integrations.add(integration);
 			TinkerRegistry.integrate(integration);
 			integration.preInit();
-		}
+			mat.setRegistered();
+			if (!base.equals(next)) Loader.instance().setActiveModContainer(base);
+		});
 	}
 
 	private void addMaterialStats() {
-		for (final TinkerMaterial mat : registry.getValues()) {
-			mat.settle(); // be double sure!
-			final HeadMaterialStats headStats = (HeadMaterialStats) mat.getStat(TinkersStatTypes.HEAD);
-			final HandleMaterialStats handleStats = (HandleMaterialStats) mat.getStat(TinkersStatTypes.HANDLE);
-			final ExtraMaterialStats extraStats = (ExtraMaterialStats) mat.getStat(TinkersStatTypes.EXTRA);
-			final BowMaterialStats bowStats = (BowMaterialStats) mat.getStat(TinkersStatTypes.BOW);
-			final ArrowShaftMaterialStats arrowStats = (ArrowShaftMaterialStats) mat.getStat(TinkersStatTypes.ARROWSHAFT);
-			final FletchingMaterialStats fletchingStats = (FletchingMaterialStats) mat.getStat(TinkersStatTypes.FLETCHING);
+		registry.getEntries().stream()
+		.forEach( ert -> {
+			ModContainer base = Loader.instance().activeModContainer();
+			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
 
-			final Material work = mat.getTinkerMaterial();
-			TinkerRegistry.addMaterialStats(work, headStats, handleStats, extraStats);
-			TinkerRegistry.addMaterialStats(work, bowStats);
-			TinkerRegistry.addMaterialStats(work, arrowStats);
-			TinkerRegistry.addMaterialStats(work, fletchingStats);
-		}
+			if (!base.equals(next)) Loader.instance().setActiveModContainer(next);
+
+			TinkerMaterial mat = ert.getValue();
+
+			if (!mat.statsAdded()) {
+				mat.settle(); // be double sure!
+				final HeadMaterialStats headStats = (HeadMaterialStats) mat.getStat(TinkersStatTypes.HEAD);
+				final HandleMaterialStats handleStats = (HandleMaterialStats) mat.getStat(TinkersStatTypes.HANDLE);
+				final ExtraMaterialStats extraStats = (ExtraMaterialStats) mat.getStat(TinkersStatTypes.EXTRA);
+				final BowMaterialStats bowStats = (BowMaterialStats) mat.getStat(TinkersStatTypes.BOW);
+				final ArrowShaftMaterialStats arrowStats = (ArrowShaftMaterialStats) mat.getStat(TinkersStatTypes.ARROWSHAFT);
+				final FletchingMaterialStats fletchingStats = (FletchingMaterialStats) mat.getStat(TinkersStatTypes.FLETCHING);
+
+				final Material work = mat.getTinkerMaterial();
+				TinkerRegistry.addMaterialStats(work, headStats, handleStats, extraStats);
+				TinkerRegistry.addMaterialStats(work, bowStats);
+				TinkerRegistry.addMaterialStats(work, arrowStats);
+				TinkerRegistry.addMaterialStats(work, fletchingStats);
+				mat.setStatsAdded();
+			}
+
+			if (!base.equals(next)) Loader.instance().setActiveModContainer(base);
+		});
 	}
-	
+
 	private void ensureMaterialsVisible() {
 		registry.getValues().stream().forEach( mat -> mat.getTinkerMaterial().setVisible());
 	}
@@ -339,21 +372,39 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	private void addGenericTrait(@Nullable ITrait tr, TinkerMaterial tm) {
-		if (tr != null) {
-			tm.getTinkerMaterial().addTrait(tr);
+		try {
+			if (tr != null) {
+				if(tm.getTinkerMaterial().getAllTraits().contains(tr)) return;
+				TinkerRegistry.addMaterialTrait(tm.getTinkerMaterial(), tr, null);
+			}
+		} catch(slimeknights.tconstruct.library.TinkerAPIException ex) {
+			// We do nothing as this is just here because sometimes we run this twice...
 		}
 	}
 
 	private void addTraitLocation(@Nullable ITrait tr, TinkerMaterial tm, TinkersTraitLocation loc) {
-		if (tr != null) {
-			tm.getTinkerMaterial().addTrait(tr, loc.toString());
-		}		
+		try {
+			if (tr != null) {
+				if(tm.getTinkerMaterial().getAllTraitsForStats(loc.toString()).contains(tr)) return;
+				TinkerRegistry.addMaterialTrait(tm.getTinkerMaterial(), tr, loc.toString());
+			}		
+		} catch(slimeknights.tconstruct.library.TinkerAPIException ex) {
+			// We do nothing as this is just here because sometimes we run this twice...
+		}
 	}
 	
-	private void addTraits() {		
-		registry.getValues().stream()
-		.forEach( tm -> {
-			for(TinkersTraitLocation loc : TinkersTraitLocation.values()) {
+	private void addTraits() {
+		registry.getEntries().stream()
+		.forEach( ert -> {
+			ModContainer base = Loader.instance().activeModContainer();
+			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
+			
+			if (!base.equals(next)) Loader.instance().setActiveModContainer(next);
+			
+			TinkerMaterial tm = ert.getValue();
+
+			Arrays.asList(TinkersTraitLocation.values()).stream()
+			.forEach( loc -> {
 				if (tm.getTraits(loc).size() > 0) {
 					if (loc == TinkersTraitLocation.GENERAL) {
 						tm.getTraits(loc).stream()
@@ -363,7 +414,8 @@ public class TinkersConstructBase implements IIntegration {
 						.forEach( t -> addTraitLocation(getTrait(t), tm, loc));
 					}
 				}
-			}
+			});
+			if (!base.equals(next)) Loader.instance().setActiveModContainer(base);
 		});
 	}
 	
