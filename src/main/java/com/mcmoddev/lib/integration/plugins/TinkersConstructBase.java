@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.integration.plugins.TinkersModifierRegistryEvent;
 import com.mcmoddev.basemetals.integration.plugins.TinkersTraitRegistryEvent;

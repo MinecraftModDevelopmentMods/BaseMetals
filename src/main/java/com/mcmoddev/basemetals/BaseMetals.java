@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.mcmoddev.basemetals.proxy.CommonProxy;
+import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.integration.IntegrationManager;
 
@@ -90,6 +91,8 @@ public class BaseMetals {
 		} catch (InvalidVersionSpecificationException e) {
 			logger.error("Error loading version information for plugins: %s", e);
 		}
+		
+		Config.init();
 	}
 	
 	@EventHandler

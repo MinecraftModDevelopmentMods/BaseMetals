@@ -39,27 +39,35 @@ public final class TinkersConstruct
 
 		MinecraftForge.EVENT_BUS.register(this);
 		
-		this.registerMaterial(MaterialNames.ADAMANTINE, true, false, TraitNames.COLDBLOODED,
-				TraitNames.INSATIABLE);
-		registerMaterial(MaterialNames.ANTIMONY, true, false);
-		this.registerMaterial(MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC,
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE), MaterialNames.ADAMANTINE, 
+				true, false, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, true, false);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, true, false, TraitNames.AQUADYNAMIC,
 				TinkersTraitLocation.HEAD, TraitNames.JAGGED, TinkersTraitLocation.HEAD,
 				TraitNames.AQUADYNAMIC);
-		registerMaterial(MaterialNames.BISMUTH, true, false);
-		this.registerMaterial(MaterialNames.BRASS, true, false, TraitNames.DENSE);
-		this.registerMaterial(MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
-		registerMaterial(MaterialNames.CUPRONICKEL, true, false);
-		registerMaterial(MaterialNames.INVAR, true, false);
-		this.registerMaterial(MaterialNames.MITHRIL, true, false, TraitNames.HOLY);
-		registerMaterial(MaterialNames.NICKEL, true, false);
-		this.registerMaterial(MaterialNames.PEWTER, true, false, TraitNames.SOFT);
-		registerMaterial(MaterialNames.PLATINUM, true, false);
-		this.registerMaterial(MaterialNames.STARSTEEL, true, false, TraitNames.ENDERFERENCE,
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.BISMUTH), MaterialNames.BISMUTH, true, false);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, true, false, TraitNames.DENSE);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, true, false, TraitNames.FREEZING);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.CUPRONICKEL), MaterialNames.CUPRONICKEL, true, false);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.INVAR), MaterialNames.INVAR, true, false);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.MITHRIL), MaterialNames.MITHRIL, true, false, TraitNames.HOLY);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.NICKEL), MaterialNames.NICKEL, true, false);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.PEWTER), MaterialNames.PEWTER, true, false, TraitNames.SOFT);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.PLATINUM), MaterialNames.PLATINUM, true, false);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.STARSTEEL), MaterialNames.STARSTEEL, true, false, TraitNames.ENDERFERENCE,
 				TinkersTraitLocation.HEAD, TraitNames.SPARKLY);
-		registerMaterial(MaterialNames.TIN, true, false);
-		registerMaterial(MaterialNames.ZINC, true, false);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.TIN), MaterialNames.TIN, true, false);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, true, false);
 		registerAlloys();
 		registerMeltings();
+	}
+
+	private void registerMaterial( boolean active, String name, boolean castable, boolean craftable, Object...traits) {
+		if(active) this.registerMaterial(name, castable, craftable, traits);
+	}
+	
+	private void registerMaterial( boolean active, String name, boolean castable, boolean craftable) {
+		if(active) this.registerMaterial(name, castable, craftable);		
 	}
 
 	private void registerMeltings() {

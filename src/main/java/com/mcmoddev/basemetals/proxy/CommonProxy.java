@@ -20,7 +20,6 @@ import com.mcmoddev.basemetals.init.ItemGroups;
 import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.init.Recipes;
 import com.mcmoddev.basemetals.init.VillagerTrades;
-import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.basemetals.util.EventHandler;
 
 import com.mcmoddev.lib.data.Names;
@@ -61,8 +60,6 @@ public class CommonProxy {
 	 */
 	public void preInit(final FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
-
-		Config.init();
 
 		if ((Options.requireMMDOreSpawn()) && (!Loader.isModLoaded(SharedStrings.ORESPAWN_MODID))) {
 			if (Options.fallbackOrespawn()) {
