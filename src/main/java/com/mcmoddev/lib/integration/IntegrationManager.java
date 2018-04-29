@@ -93,7 +93,7 @@ public enum IntegrationManager {
 			final String pluginId = this.getAnnotationItem("pluginId", asmDataItem);
 			final String clazz = asmDataItem.getClassName();
 
-			if ((event.getModMetadata().modId.equals(addonId)) && (Loader.isModLoaded(pluginId))) {
+			if (Loader.isModLoaded(pluginId)) {
 				String pluginVersion = FMLCommonHandler.instance().findContainerFor(pluginId).getVersion();
 				VersionMatch matcher = this.plugins.get(addonId).getOrDefault(pluginId, (match) -> true);
 
