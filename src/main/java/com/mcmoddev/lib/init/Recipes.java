@@ -1,7 +1,9 @@
 package com.mcmoddev.lib.init;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
@@ -20,6 +22,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -229,24 +232,24 @@ public abstract class Recipes {
 
 	private static void makeBowRecipes(@Nonnull final MMDMaterial material) {
 		if (isMMDItem(material, Names.ARROW)) {
-			GameRegistry.addSmelting(material.getItemStack(Names.ARROW),
+			addFurnaceRecipe(material.getItemStack(Names.ARROW),
 					material.getItemStack(Names.NUGGET, 1), 0); // 0.25 nugget loss
 		}
 
 		if (isMMDItem(material, Names.BOW)) {
-			GameRegistry.addSmelting(material.getItemStack(Names.BOW),
+			addFurnaceRecipe(material.getItemStack(Names.BOW),
 					material.getItemStack(Names.INGOT, 1), 0); // 4.5 nugget loss
 		}
 	}
 
 	private static void makeCrossbowRecipes(@Nonnull final MMDMaterial material) {
 		if ((material.hasItem(Names.GEAR)) && (material.hasItem(Names.CROSSBOW))) {
-			GameRegistry.addSmelting(material.getItemStack(Names.CROSSBOW),
+			addFurnaceRecipe(material.getItemStack(Names.CROSSBOW),
 					material.getItemStack(Names.INGOT, 2 + Options.gearQuantity()), 0);
 		}
 
 		if (material.hasItem(Names.BOLT)) {
-			GameRegistry.addSmelting(material.getItemStack(Names.BOLT),
+			addFurnaceRecipe(material.getItemStack(Names.BOLT),
 					material.getItemStack(Names.NUGGET, 2), 0); // 0.25 nugget loss
 		}
 	}
@@ -256,18 +259,18 @@ public abstract class Recipes {
 
 		if (material.hasItem(Names.NUGGET)) {
 			if (isMMDBlock(material, Names.BUTTON)) {
-				GameRegistry.addSmelting(material.getBlockItemStack(Names.BUTTON),
+				addFurnaceRecipe(material.getBlockItemStack(Names.BUTTON),
 						material.getItemStack(Names.NUGGET, 2), 0);
 			}
 			if (material.hasItem(Names.ROD)) {
-				GameRegistry.addSmelting(material.getItemStack(Names.ROD),
+				addFurnaceRecipe(material.getItemStack(Names.ROD),
 						material.getItemStack(Names.NUGGET, 4), 0); // Roughly half a nugget loss
 			}
 
 			if ((material.hasItem(Names.POWDER)) && (material.hasItem(Names.SMALLPOWDER))
 					&& (!material.getName().equals(MaterialNames.COAL))
 					&& (!material.getName().equals(MaterialNames.CHARCOAL))) {
-				GameRegistry.addSmelting(material.getItemStack(Names.SMALLPOWDER),
+				addFurnaceRecipe(material.getItemStack(Names.SMALLPOWDER),
 						material.getItemStack(Names.NUGGET, 1), 0);
 
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName,
@@ -275,7 +278,7 @@ public abstract class Recipes {
 			}
 		}
 		if (material.hasItem(Names.SMALLBLEND)) {
-			GameRegistry.addSmelting(material.getItemStack(Names.SMALLBLEND),
+			addFurnaceRecipe(material.getItemStack(Names.SMALLBLEND),
 					material.getItemStack(Names.NUGGET, 1), 0);
 		}
 	}
@@ -283,7 +286,7 @@ public abstract class Recipes {
 	private static void makeModRecipes(@Nonnull final MMDMaterial material) {
 		if (material.hasItem(Names.GEAR) && (material.hasItem(Names.INGOT))) {
 			// if there is no ingot, no cheese
-			GameRegistry.addSmelting(new ItemStack(material.getItem(Names.GEAR)),
+			addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)),
 					material.getItemStack(Names.INGOT, Options.gearQuantity()), 0); // you lose the
 																					// rod
 		}
@@ -291,17 +294,17 @@ public abstract class Recipes {
 
 	private static void makeSimpleRecipes(@Nonnull final MMDMaterial material) {
 		if ((material.hasBlock(Names.BLOCK)) && (material.hasItem(Names.SLAB))) {
-			GameRegistry.addSmelting(material.getItemStack(Names.SLAB),
+			addFurnaceRecipe(material.getItemStack(Names.SLAB),
 					material.getItemStack(Names.NUGGET, 4), 0); // you lose roughly half a nugget
 		}
 
 		if ((material.hasItem(Names.ROD)) && (material.hasBlock(Names.LEVER))) {
-			GameRegistry.addSmelting(material.getBlockItemStack(Names.LEVER),
+			addFurnaceRecipe(material.getBlockItemStack(Names.LEVER),
 					material.getItemStack(Names.INGOT, 1), 0); // you lose the rod
 		}
 
 		if (material.hasBlock(Names.WALL)) {
-			GameRegistry.addSmelting(material.getBlockItemStack(Names.WALL),
+			addFurnaceRecipe(material.getBlockItemStack(Names.WALL),
 					material.getBlockItemStack(Names.BLOCK, 1), 0);
 		}
 
@@ -314,11 +317,11 @@ public abstract class Recipes {
 		stuff.put(Names.FISHING_ROD, 1);
 
 		stuff.entrySet().stream().filter(ent -> isMMDBlock(material, ent.getKey()))
-				.forEach(ent -> GameRegistry.addSmelting(material.getBlockItemStack(ent.getKey()),
+				.forEach(ent -> addFurnaceRecipe(material.getBlockItemStack(ent.getKey()),
 						material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
 
 		if (isMMDBlock(material, Names.BARS)) {
-			GameRegistry.addSmelting(material.getBlockItemStack(Names.BARS),
+			addFurnaceRecipe(material.getBlockItemStack(Names.BARS),
 					material.getItemStack(Names.NUGGET, 3), 0); // roughly half a nugget loss
 		}
 	}
@@ -328,10 +331,10 @@ public abstract class Recipes {
 
 		if (material.hasItem(Names.INGOT)) {
 			if (material.hasOre()) {
-				GameRegistry.addSmelting(material.getBlockItemStack(Names.ORE),
+				addFurnaceRecipe(material.getBlockItemStack(Names.ORE),
 						material.getItemStack(Names.INGOT, 1), oreSmeltXP);
 			} else if (material.hasBlend()) {
-				GameRegistry.addSmelting(material.getItemStack(Names.BLEND),
+				addFurnaceRecipe(material.getItemStack(Names.BLEND),
 						material.getItemStack(Names.INGOT, 1), oreSmeltXP);
 			}
 
@@ -344,7 +347,7 @@ public abstract class Recipes {
 				final ItemStack ingot = material.getItemStack(Names.INGOT);
 				final ItemStack powder = material.getItemStack(Names.POWDER);
 
-				GameRegistry.addSmelting(powder, ingot, oreSmeltXP);
+				addFurnaceRecipe(powder, ingot, oreSmeltXP);
 			}
 		}
 	}
@@ -401,11 +404,49 @@ public abstract class Recipes {
 
 	private static void generateBaseTools(@Nonnull final MMDMaterial material) {
 		if (isMMDItem(material, Names.SHEARS)) {
-			GameRegistry.addSmelting(material.getItemStack(Names.SHEARS),
+			addFurnaceRecipe(material.getItemStack(Names.SHEARS),
 					material.getItemStack(Names.INGOT, 2), 0);
 		}
 	}
 
+	private static void addFurnaceRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output, float experience) {
+		if(input.isEmpty()) return;
+		GameRegistry.addSmelting(input, output, (float)((double)((int)(experience * 100))/100));
+	}
+	
+	public static void dumpFurnaceRecipes() {
+		Map<ItemStack, ItemStack> smeltingMap = FurnaceRecipes.instance().getSmeltingList();
+		
+		smeltingMap.entrySet().forEach( ent -> com.mcmoddev.basemetals.BaseMetals.logger.fatal("Furnace Recipe, key %s, value %s", ent.getKey(), ent.getValue()));
+	}
+	
+	private static ItemStack findMatchingItemStack(List<ItemStack> list, ItemStack match) {
+		for (ItemStack item : list) {
+			if (item.getCount() == match.getCount() && 
+					(item.getItemDamage() == OreDictionary.WILDCARD_VALUE ||
+					 item.getItemDamage() == match.getItemDamage() ||
+					 match.getItemDamage() == OreDictionary.WILDCARD_VALUE) &&
+					item.getItem().equals(match.getItem()))
+				return item;
+		}
+		
+		return ItemStack.EMPTY;
+	}
+	
+	private static void maybeRemoveRecipe(@Nonnull ItemStack forItem) {
+		Map<ItemStack, ItemStack> smeltingMap = FurnaceRecipes.instance().getSmeltingList();
+		ItemStack matcher = findMatchingItemStack(smeltingMap.keySet().stream().collect(Collectors.toList()), forItem);
+
+		if (matcher.isEmpty()) return;
+		
+		ItemStack output = smeltingMap.getOrDefault(matcher, ItemStack.EMPTY);
+		
+		if(output.isEmpty()) return;
+		
+		FurnaceRecipes.instance().getSmeltingList().remove(matcher, output);
+		com.mcmoddev.basemetals.BaseMetals.logger.fatal("removed recipe %s -> %s", matcher, output);
+	}
+	
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
 		if ((material.hasItem(Names.INGOT)) && (Options.furnaceCheese())) {
 			final Map<Names, Integer> stuff = new TreeMap<>();
@@ -419,12 +460,18 @@ public abstract class Recipes {
 			stuff.put(Names.LEGGINGS, 7);
 			stuff.put(Names.CHESTPLATE, 8);
 
+			
 			stuff.entrySet().stream().filter(ent -> material.hasItem(ent.getKey()))
-					.forEach(ent -> GameRegistry.addSmelting(material.getItemStack(ent.getKey()),
-							material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
+					.forEach(ent -> {
+						ItemStack target = material.getItemStack(ent.getKey());
+						target.setItemDamage(OreDictionary.WILDCARD_VALUE);
+						maybeRemoveRecipe(target);
+						addFurnaceRecipe(material.getItemStack(ent.getKey()),
+							material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0);
+					});
 
 			if (material.hasItem(Names.CRACKHAMMER)) {
-				GameRegistry.addSmelting(material.getItemStack(Names.CRACKHAMMER),
+				addFurnaceRecipe(material.getItemStack(Names.CRACKHAMMER),
 						material.getBlockItemStack(Names.BLOCK, 1), 0);
 			}
 		}
@@ -438,12 +485,12 @@ public abstract class Recipes {
 
 			if (Options.isModEnabled(IC2Base.PLUGIN_MODID)) {
 				if ((isMMDItem(material, Names.CRUSHED)) && material.hasItem(Names.INGOT)) {
-					GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED),
+					addFurnaceRecipe(material.getItemStack(Names.CRUSHED),
 							material.getItemStack(Names.INGOT), material.getOreSmeltXP());
 				}
 				if ((isMMDItem(material, Names.CRUSHED_PURIFIED))
 						&& material.hasItem(Names.INGOT)) {
-					GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED_PURIFIED),
+					addFurnaceRecipe(material.getItemStack(Names.CRUSHED_PURIFIED),
 							material.getItemStack(Names.INGOT), material.getOreSmeltXP());
 				}
 			}

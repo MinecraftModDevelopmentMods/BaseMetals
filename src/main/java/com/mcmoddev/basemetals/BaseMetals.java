@@ -113,13 +113,12 @@ public class BaseMetals {
 	@EventHandler
 	public static void init(final FMLInitializationEvent event) {
 		proxy.init(event);
-		// if we have anything else to do here, check 'proxy.allsGood()' first
 	}
 
 	@EventHandler
 	public static void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);
-		// if we have anything else to do here, check 'proxy.allsGood()' first
+		//com.mcmoddev.lib.init.Recipes.dumpFurnaceRecipes();
 	}
 
 	@SubscribeEvent
