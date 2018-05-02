@@ -1,41 +1,42 @@
 {
-	"type": "forge:ore_shaped",
-	"result": {
-		"item": "basemetals:platinum_rod",
-		"data": 0,
-		"count": 4
-	},
-	"pattern": [
-		"x",
-		"x"
-	],
-	"key": {
-		"x": {
-			"type": "forge:ore_dict",
-			"ore": "ingotPlatinum"
-		}
-	},
-	"conditions": [
-		{
-			"type": "forge:and",
-			"values": [
-				{
-					"type": "basemetals:enabled",
-					"optionName": "material",
-					"optionValue": "Platinum"
-				},
-				{
-					"type": "basemetals:enabled",
-					"optionName": "thing",
-					"optionValue": "Rod"
-				},
-				{
-					"type": "basemetals:enabled",
-					"optionName": "thing",
-					"optionValue": "Basics"
-				}
-			]
-		}
-	],
-	"group": "misc"
+   "conditions" : [
+      {
+         "values" : [
+            {
+               "optionValue" : "Platinum",
+               "optionName" : "material",
+               "type" : "basemetals:enabled"
+            },
+            {
+               "type" : "basemetals:enabled",
+               "optionValue" : "Rod",
+               "optionName" : "thing"
+            },
+            {
+               "optionName" : "thing",
+               "optionValue" : "Basics",
+               "type" : "basemetals:enabled"
+            }
+         ],
+         "type" : "forge:and"
+      }
+   ],
+   "config_key" : "rod",
+   "result" : {
+      "item" : "basemetals:platinum_rod",
+      "data" : 0
+   },
+   "key" : {
+      "x" : {
+         "type" : "forge:ore_dict",
+         "ore" : "ingotPlatinum"
+      }
+   },
+   "type" : "basemetals:variableOutputOre",
+   "pattern" : [
+      "x",
+      "x"
+   ],
+   "group" : "misc"
 }
+

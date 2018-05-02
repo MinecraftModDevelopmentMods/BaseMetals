@@ -206,6 +206,8 @@ public class Config extends ConfigBase {
 				"Number of Gears per recipe"));
 		Options.setPlateQuantity(configuration.getInt("Plate Quantity", TOOLS_CAT, 3, 1, 64,
 				"Number of Plates per recipe"));
+		Options.setRodQuantity(configuration.getInt("Rod Quantity", TOOLS_CAT, 4, 1, 64,
+				"Number of Rods per recipe"));
 		Options.setFurnaceCheese(configuration.getBoolean("Furnace Cheese", TOOLS_CAT, true,
 				"Melt down armor and tools for full value"));
 		Options.setFurnace1112(configuration.getBoolean("Furnace1112", TOOLS_CAT, true,
