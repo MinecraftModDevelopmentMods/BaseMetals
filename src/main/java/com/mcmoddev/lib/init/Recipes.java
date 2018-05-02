@@ -251,6 +251,7 @@ public abstract class Recipes {
 		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
 		
 		if ((material.hasItem(Names.GEAR)) && (material.hasItem(Names.CROSSBOW))) {
+			// TODO: Fix to use CheeseMath
 			int extras = 4 / Options.gearQuantity();
 			addFurnaceRecipe(material.getItemStack(Names.CROSSBOW),
 					material.getItemStack(Names.INGOT, 2 + extras), baseXP);
