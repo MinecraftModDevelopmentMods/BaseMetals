@@ -29,7 +29,7 @@
    "key" : {
       "x" : {
          "type" : "forge:ore_dict",
-         "ore" : "ingotDiamond"
+         "ore" : "gemDiamond"
       }
    },
    "type" : "basemetals:variableOutputOre",

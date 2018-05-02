@@ -10,8 +10,8 @@
 	],
 	"key": {
 		"x": {
-			"type": "forge:ore_dict",
-			"ore": "stone"
+			"item": "minecraft:stonebrick",
+			"data": 0
 		},
 		"y": {
 			"type": "forge:ore_dict",

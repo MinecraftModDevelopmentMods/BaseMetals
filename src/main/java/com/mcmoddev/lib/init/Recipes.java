@@ -251,10 +251,9 @@ public abstract class Recipes {
 		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
 		
 		if ((material.hasItem(Names.GEAR)) && (material.hasItem(Names.CROSSBOW))) {
-			// TODO: Fix to use CheeseMath
-			int extras = 4 / Options.gearQuantity();
+			int count = CheeseMath.getIngotCount(material, material.getItemStack(Names.CROSSBOW));
 			addFurnaceRecipe(material.getItemStack(Names.CROSSBOW),
-					material.getItemStack(Names.INGOT, 2 + extras), baseXP);
+					material.getItemStack(Names.INGOT, count), baseXP);
 		}
 
 		if (material.hasItem(Names.BOLT)) {
@@ -274,8 +273,20 @@ public abstract class Recipes {
 						material.getItemStack(Names.NUGGET, 2), nuggetXP);
 			}
 			if (material.hasItem(Names.ROD)) {
-				addFurnaceRecipe(material.getItemStack(Names.ROD),
-						material.getItemStack(Names.NUGGET, 4), nuggetXP); // Roughly half a nugget loss
+				int cheeseQty = CheeseMath.getNuggetCount(material, material.getItemStack(Names.ROD));
+				ItemStack out = cheeseQty >= 9?material.getItemStack(Names.INGOT):cheeseQty>0?material.getItemStack(Names.NUGGET):ItemStack.EMPTY;
+				float xp = nuggetXP;
+				
+				if (!out.isEmpty()) { 
+					if (cheeseQty>=9) {
+						cheeseQty /= 9;
+						xp = baseXP;
+					}
+					out.setCount(cheeseQty);
+					addFurnaceRecipe(material.getItemStack(Names.ROD), out, xp);
+				} else {
+					BaseMetals.logger.fatal("Rods per craft set to %d - got %d nuggets when trying to generate a cheese recipe, stopping it from happening (material %s)", Options.rodQuantity(), cheeseQty, material.getName());
+				}
 			}
 
 			if ((material.hasItem(Names.POWDER)) && (material.hasItem(Names.SMALLPOWDER))
@@ -296,16 +307,16 @@ public abstract class Recipes {
 
 	private static void makeModRecipes(@Nonnull final MMDMaterial material) {
 		if (material.hasItem(Names.GEAR) && (material.hasItem(Names.INGOT))) {
-			int resCount = CheeseMath.getNuggetCount(material, material.getItemStack(Names.GEAR)) / Options.gearQuantity();
+			int resCount = CheeseMath.getNuggetCount(material, material.getItemStack(Names.GEAR));
 			float ingotXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
 			float nuggetXP = Float.valueOf(String.format("%01.2f", ingotXP / 9.0f)).floatValue();
 			
 			if (resCount < 9 && resCount > 0) {
 				addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)), material.getItemStack(Names.NUGGET, resCount), nuggetXP);
 			} else if (resCount >= 9) {
-				addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)), material.getItemStack(Names.INGOT, resCount/9), nuggetXP);				
+				addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)), material.getItemStack(Names.INGOT, resCount/9), ingotXP);				
 			} else {
-				BaseMetals.logger.warn("Gears Per Craft set to %d - this makes furnace cheese for gears not possible", Options.gearQuantity());
+				BaseMetals.logger.warn("Gears Per Craft set to %d - got a result nugget count of %d when trying to make the cheese recipe for Gears (material %s)", Options.gearQuantity(), resCount, material.getName());
 			}
 		}
 	}
@@ -347,7 +358,7 @@ public abstract class Recipes {
 			} else if(nuggetCount > 0) {
 				addFurnaceRecipe(material.getBlockItemStack(Names.PLATE), material.getItemStack(Names.NUGGET, nuggetCount), baseXP);
 			} else {
-				BaseMetals.logger.warn("Plates Per Craft set to %d - this makes cheese impossible", Options.plateQuantity());
+				BaseMetals.logger.warn("Plates Per Craft set to %d - got a result nugget count of %d when trying to make the cheese recipe for plates (material %s)", Options.plateQuantity(), nuggetCount, material.getName());
 			}
 		}
 		

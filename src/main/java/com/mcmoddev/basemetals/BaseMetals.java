@@ -10,6 +10,7 @@ import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.integration.IntegrationManager;
+import com.mcmoddev.lib.util.CheeseMath;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
