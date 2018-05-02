@@ -124,7 +124,6 @@ public class BaseMetals {
 		//com.mcmoddev.lib.init.Materials.dumpRegistry();
 		//com.mcmoddev.lib.init.Recipes.dumpFurnaceRecipes();
 		//com.mcmoddev.lib.init.ItemGroups.dumpTabs();
-		logger.fatal("Diamond gear: %d - %s", CheeseMath.getNuggetCount(Materials.getMaterialByName(MaterialNames.DIAMOND), Materials.getMaterialByName(MaterialNames.DIAMOND).getItemStack(Names.GEAR)), Materials.getMaterialByName(MaterialNames.DIAMOND).getItemStack(Names.GEAR));
 	}
 
 	@SubscribeEvent
