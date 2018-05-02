@@ -1,41 +1,42 @@
 {
-	"type": "forge:ore_shaped",
-	"result": {
-		"item": "basemetals:zinc_rod",
-		"data": 0,
-		"count": 4
-	},
-	"pattern": [
-		"x",
-		"x"
-	],
-	"key": {
-		"x": {
-			"type": "forge:ore_dict",
-			"ore": "ingotZinc"
-		}
-	},
-	"conditions": [
-		{
-			"type": "forge:and",
-			"values": [
-				{
-					"type": "basemetals:enabled",
-					"optionName": "material",
-					"optionValue": "Zinc"
-				},
-				{
-					"type": "basemetals:enabled",
-					"optionName": "thing",
-					"optionValue": "Rod"
-				},
-				{
-					"type": "basemetals:enabled",
-					"optionName": "thing",
-					"optionValue": "Basics"
-				}
-			]
-		}
-	],
-	"group": "misc"
+   "conditions" : [
+      {
+         "values" : [
+            {
+               "optionValue" : "Zinc",
+               "optionName" : "material",
+               "type" : "basemetals:enabled"
+            },
+            {
+               "type" : "basemetals:enabled",
+               "optionValue" : "Rod",
+               "optionName" : "thing"
+            },
+            {
+               "optionName" : "thing",
+               "optionValue" : "Basics",
+               "type" : "basemetals:enabled"
+            }
+         ],
+         "type" : "forge:and"
+      }
+   ],
+   "config_key" : "rod",
+   "result" : {
+      "item" : "basemetals:zinc_rod",
+      "data" : 0
+   },
+   "key" : {
+      "x" : {
+         "type" : "forge:ore_dict",
+         "ore" : "ingotZinc"
+      }
+   },
+   "type" : "basemetals:variableOutputOre",
+   "pattern" : [
+      "x",
+      "x"
+   ],
+   "group" : "misc"
 }
+

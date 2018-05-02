@@ -37,6 +37,9 @@ public class ConfigVariedOutput implements IRecipeFactory {
 			case "plate":
 				resAmount = Options.plateQuantity();
 				break;
+			case "rod":
+				resAmount = Options.rodQuantity();
+				break;
 			default:
 				BaseMetals.logger.error("Unknown quantity config value {}, setting to 1", confKey);
 				resAmount = 1;
