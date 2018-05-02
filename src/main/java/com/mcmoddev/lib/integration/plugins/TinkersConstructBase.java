@@ -353,7 +353,7 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	private void ensureMaterialsVisible() {
-		registry.getValues().stream().forEach( mat -> mat.getTinkerMaterial().setVisible());
+		registry.getEntries().stream().map(ent -> ent.getValue()).forEach( mat -> mat.getTinkerMaterial().setVisible());
 	}
 	
 	private void registerExtraMeltings() {

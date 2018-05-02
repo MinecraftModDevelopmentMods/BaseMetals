@@ -18,6 +18,7 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
+import com.mcmoddev.lib.util.CheeseMath;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -231,47 +232,57 @@ public abstract class Recipes {
 	}
 
 	private static void makeBowRecipes(@Nonnull final MMDMaterial material) {
+		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
+		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
+		
 		if (isMMDItem(material, Names.ARROW)) {
 			addFurnaceRecipe(material.getItemStack(Names.ARROW),
-					material.getItemStack(Names.NUGGET, 1), 0); // 0.25 nugget loss
+					material.getItemStack(Names.NUGGET, 1), nuggetXP); // 0.25 nugget loss
 		}
 
 		if (isMMDItem(material, Names.BOW)) {
 			addFurnaceRecipe(material.getItemStack(Names.BOW),
-					material.getItemStack(Names.INGOT, 1), 0); // 4.5 nugget loss
+					material.getItemStack(Names.INGOT, 1), baseXP); // 4.5 nugget loss
 		}
 	}
 
 	private static void makeCrossbowRecipes(@Nonnull final MMDMaterial material) {
+		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
+		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
+		
 		if ((material.hasItem(Names.GEAR)) && (material.hasItem(Names.CROSSBOW))) {
+			// TODO: Fix to use CheeseMath
+			int extras = 4 / Options.gearQuantity();
 			addFurnaceRecipe(material.getItemStack(Names.CROSSBOW),
-					material.getItemStack(Names.INGOT, 2 + Options.gearQuantity()), 0);
+					material.getItemStack(Names.INGOT, 2 + extras), baseXP);
 		}
 
 		if (material.hasItem(Names.BOLT)) {
 			addFurnaceRecipe(material.getItemStack(Names.BOLT),
-					material.getItemStack(Names.NUGGET, 2), 0); // 0.25 nugget loss
+					material.getItemStack(Names.NUGGET, 2), nuggetXP); // 0.25 nugget loss
 		}
 	}
 
 	private static void makeNuggetRecipes(@Nonnull final MMDMaterial material) {
+		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
+		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.NUGGET)) {
 			if (isMMDBlock(material, Names.BUTTON)) {
 				addFurnaceRecipe(material.getBlockItemStack(Names.BUTTON),
-						material.getItemStack(Names.NUGGET, 2), 0);
+						material.getItemStack(Names.NUGGET, 2), nuggetXP);
 			}
 			if (material.hasItem(Names.ROD)) {
 				addFurnaceRecipe(material.getItemStack(Names.ROD),
-						material.getItemStack(Names.NUGGET, 4), 0); // Roughly half a nugget loss
+						material.getItemStack(Names.NUGGET, 4), nuggetXP); // Roughly half a nugget loss
 			}
 
 			if ((material.hasItem(Names.POWDER)) && (material.hasItem(Names.SMALLPOWDER))
 					&& (!material.getName().equals(MaterialNames.COAL))
 					&& (!material.getName().equals(MaterialNames.CHARCOAL))) {
 				addFurnaceRecipe(material.getItemStack(Names.SMALLPOWDER),
-						material.getItemStack(Names.NUGGET, 1), 0);
+						material.getItemStack(Names.NUGGET, 1), nuggetXP);
 
 				CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.NUGGET + oreDictName,
 						material.getItemStack(Names.SMALLPOWDER, 1));
@@ -279,28 +290,38 @@ public abstract class Recipes {
 		}
 		if (material.hasItem(Names.SMALLBLEND)) {
 			addFurnaceRecipe(material.getItemStack(Names.SMALLBLEND),
-					material.getItemStack(Names.NUGGET, 1), 0);
+					material.getItemStack(Names.NUGGET, 1), nuggetXP);
 		}
 	}
 
 	private static void makeModRecipes(@Nonnull final MMDMaterial material) {
 		if (material.hasItem(Names.GEAR) && (material.hasItem(Names.INGOT))) {
-			// if there is no ingot, no cheese
-			addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)),
-					material.getItemStack(Names.INGOT, Options.gearQuantity()), 0); // you lose the
-																					// rod
+			int resCount = CheeseMath.getNuggetCount(material, material.getItemStack(Names.GEAR)) / Options.gearQuantity();
+			float ingotXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
+			float nuggetXP = Float.valueOf(String.format("%01.2f", ingotXP / 9.0f)).floatValue();
+			
+			if (resCount < 9 && resCount > 0) {
+				addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)), material.getItemStack(Names.NUGGET, resCount), nuggetXP);
+			} else if (resCount >= 9) {
+				addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)), material.getItemStack(Names.INGOT, resCount/9), nuggetXP);				
+			} else {
+				BaseMetals.logger.warn("Gears Per Craft set to %d - this makes furnace cheese for gears not possible", Options.gearQuantity());
+			}
 		}
 	}
 
 	private static void makeSimpleRecipes(@Nonnull final MMDMaterial material) {
+		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
+		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
+		
 		if ((material.hasBlock(Names.BLOCK)) && (material.hasItem(Names.SLAB))) {
 			addFurnaceRecipe(material.getItemStack(Names.SLAB),
-					material.getItemStack(Names.NUGGET, 4), 0); // you lose roughly half a nugget
+					material.getItemStack(Names.NUGGET, 4), nuggetXP); // you lose roughly half a nugget
 		}
 
 		if ((material.hasItem(Names.ROD)) && (material.hasBlock(Names.LEVER))) {
 			addFurnaceRecipe(material.getBlockItemStack(Names.LEVER),
-					material.getItemStack(Names.INGOT, 1), 0); // you lose the rod
+					material.getItemStack(Names.INGOT, 1), baseXP); // you lose the rod
 		}
 
 		if (material.hasBlock(Names.WALL)) {
@@ -309,7 +330,6 @@ public abstract class Recipes {
 		}
 
 		final Map<Names, Integer> stuff = new TreeMap<>();
-		stuff.put(Names.PLATE, 1);
 		stuff.put(Names.PRESSURE_PLATE, 2);
 		stuff.put(Names.DOOR, 2);
 		stuff.put(Names.TRAPDOOR, 4);
@@ -318,11 +338,22 @@ public abstract class Recipes {
 
 		stuff.entrySet().stream().filter(ent -> isMMDBlock(material, ent.getKey()))
 				.forEach(ent -> addFurnaceRecipe(material.getBlockItemStack(ent.getKey()),
-						material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0));
+						material.getItemStack(Names.INGOT, ent.getValue().intValue()), baseXP));
 
+		if(material.hasBlock(Names.PLATE) && isMMDBlock(material, Names.PLATE)) {
+			int nuggetCount = CheeseMath.getNuggetCount(material, material.getBlockItemStack(Names.PLATE));
+			if (nuggetCount > 9) {
+				addFurnaceRecipe(material.getBlockItemStack(Names.PLATE), material.getItemStack(Names.INGOT, CheeseMath.getIngotCount(material, material.getItemStack(Names.PLATE))), nuggetXP);
+			} else if(nuggetCount > 0) {
+				addFurnaceRecipe(material.getBlockItemStack(Names.PLATE), material.getItemStack(Names.NUGGET, nuggetCount), baseXP);
+			} else {
+				BaseMetals.logger.warn("Plates Per Craft set to %d - this makes cheese impossible", Options.plateQuantity());
+			}
+		}
+		
 		if (isMMDBlock(material, Names.BARS)) {
 			addFurnaceRecipe(material.getBlockItemStack(Names.BARS),
-					material.getItemStack(Names.NUGGET, 3), 0); // roughly half a nugget loss
+					material.getItemStack(Names.NUGGET, 3), nuggetXP); // roughly half a nugget loss
 		}
 	}
 
@@ -405,19 +436,25 @@ public abstract class Recipes {
 	private static void generateBaseTools(@Nonnull final MMDMaterial material) {
 		if (isMMDItem(material, Names.SHEARS)) {
 			addFurnaceRecipe(material.getItemStack(Names.SHEARS),
-					material.getItemStack(Names.INGOT, 2), 0);
+					material.getItemStack(Names.INGOT, 2), material.getOreSmeltXP());
 		}
 	}
 
 	private static void addFurnaceRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output, float experience) {
+		maybeRemoveRecipe(input);
 		if(input.isEmpty()) return;
-		GameRegistry.addSmelting(input, output, (float)((double)((int)(experience * 100))/100));
+		float actualXP = Math.max(FurnaceRecipes.instance().getSmeltingExperience(output), experience);
+		GameRegistry.addSmelting(input, output, actualXP);
 	}
 	
 	public static void dumpFurnaceRecipes() {
 		Map<ItemStack, ItemStack> smeltingMap = FurnaceRecipes.instance().getSmeltingList();
 		
-		smeltingMap.entrySet().forEach( ent -> com.mcmoddev.basemetals.BaseMetals.logger.fatal("Furnace Recipe, key %s, value %s", ent.getKey(), ent.getValue()));
+		smeltingMap.entrySet().forEach( ent -> {
+			ItemStack res = FurnaceRecipes.instance().getSmeltingResult(ent.getKey());
+			float exp = FurnaceRecipes.instance().getSmeltingExperience(res);
+			BaseMetals.logger.fatal("Furnace Recipe, %s -> %s with %01.2f exp", ent.getKey(), ent.getValue(), exp);
+		});
 	}
 	
 	private static ItemStack findMatchingItemStack(List<ItemStack> list, ItemStack match) {
@@ -444,10 +481,11 @@ public abstract class Recipes {
 		if(output.isEmpty()) return;
 		
 		FurnaceRecipes.instance().getSmeltingList().remove(matcher, output);
-		com.mcmoddev.basemetals.BaseMetals.logger.fatal("removed recipe %s -> %s", matcher, output);
 	}
 	
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
+		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
+		
 		if ((material.hasItem(Names.INGOT)) && (Options.furnaceCheese())) {
 			final Map<Names, Integer> stuff = new TreeMap<>();
 			stuff.put(Names.BOOTS, 4);
@@ -467,7 +505,7 @@ public abstract class Recipes {
 						target.setItemDamage(OreDictionary.WILDCARD_VALUE);
 						maybeRemoveRecipe(target);
 						addFurnaceRecipe(material.getItemStack(ent.getKey()),
-							material.getItemStack(Names.INGOT, ent.getValue().intValue()), 0);
+							material.getItemStack(Names.INGOT, ent.getValue().intValue()), baseXP);
 					});
 
 			if (material.hasItem(Names.CRACKHAMMER)) {

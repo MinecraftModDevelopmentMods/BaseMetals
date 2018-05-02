@@ -71,12 +71,13 @@ public class CommonProxy {
 						SharedStrings.ORESPAWN_MISSING_TEXT);
 			}
 		}
-		
+
+		com.mcmoddev.lib.init.ItemGroups.init();
+
 		com.mcmoddev.lib.init.Materials.init();
 		com.mcmoddev.lib.init.Blocks.init();
 		com.mcmoddev.lib.init.Items.init();
 		com.mcmoddev.lib.init.Fluids.init();
-		com.mcmoddev.lib.init.ItemGroups.init();
 		com.mcmoddev.lib.init.Recipes.init();
 
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterMaterials());

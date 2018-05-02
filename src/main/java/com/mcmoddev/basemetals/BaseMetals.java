@@ -3,8 +3,11 @@ package com.mcmoddev.basemetals;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 import com.mcmoddev.basemetals.util.Config;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.integration.IntegrationManager;
 
@@ -107,7 +110,6 @@ public class BaseMetals {
 	@EventHandler
 	public static void preInit(final FMLPreInitializationEvent event) {
 		proxy.preInit(event);
-		//com.mcmoddev.lib.init.Materials.dumpRegistry();
 	}
 
 	@EventHandler
@@ -118,7 +120,9 @@ public class BaseMetals {
 	@EventHandler
 	public static void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);
+		//com.mcmoddev.lib.init.Materials.dumpRegistry();
 		//com.mcmoddev.lib.init.Recipes.dumpFurnaceRecipes();
+		//com.mcmoddev.lib.init.ItemGroups.dumpTabs();
 	}
 
 	@SubscribeEvent
