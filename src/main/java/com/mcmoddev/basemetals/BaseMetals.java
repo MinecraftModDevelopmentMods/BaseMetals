@@ -10,6 +10,7 @@ import com.mcmoddev.basemetals.util.Config;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.integration.IntegrationManager;
+import com.mcmoddev.lib.util.CheeseMath;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -123,6 +124,7 @@ public class BaseMetals {
 		//com.mcmoddev.lib.init.Materials.dumpRegistry();
 		//com.mcmoddev.lib.init.Recipes.dumpFurnaceRecipes();
 		//com.mcmoddev.lib.init.ItemGroups.dumpTabs();
+		logger.fatal("Diamond gear: %d - %s", CheeseMath.getNuggetCount(Materials.getMaterialByName(MaterialNames.DIAMOND), Materials.getMaterialByName(MaterialNames.DIAMOND).getItemStack(Names.GEAR)), Materials.getMaterialByName(MaterialNames.DIAMOND).getItemStack(Names.GEAR));
 	}
 
 	@SubscribeEvent

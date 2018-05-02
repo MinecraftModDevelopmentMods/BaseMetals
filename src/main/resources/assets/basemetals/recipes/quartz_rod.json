@@ -29,7 +29,7 @@
    "key" : {
       "x" : {
          "type" : "forge:ore_dict",
-         "ore" : "ingotQuartz"
+         "ore" : "gemQuartz"
       }
    },
    "type" : "basemetals:variableOutputOre",
