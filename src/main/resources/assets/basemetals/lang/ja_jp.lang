@@ -7,10 +7,10 @@
 basemetals.crackhammer=ブロック/アイテムを破壊
 
 #Creative Tabs
-itemGroup.basemetals.blocks=Base Metals ブロック
-itemGroup.basemetals.combat=Base Metals 戦闘
-itemGroup.basemetals.items=Base Metals アイテム
-itemGroup.basemetals.tools=Base Metals 道具
+itemGroup.basemetals.blocks=Base Metals: ブロック
+itemGroup.basemetals.combat=Base Metals: 戦闘
+itemGroup.basemetals.items=Base Metals: アイテム
+itemGroup.basemetals.tools=Base Metals: 道具
 
 #ToolTips
 tooltip.adamantine.tool=体力が高いMobに %d の追加ダメージ
@@ -50,7 +50,7 @@ item.basemetals.platinum_axe.name=プラチナの斧
 item.basemetals.quartz_axe.name=石英の斧
 item.basemetals.silver_axe.name=銀の斧
 item.basemetals.starsteel_axe.name=スタースチールの斧
-item.basemetals.steel_axe.name=鋼の斧
+item.basemetals.steel_axe.name=鋼鉄の斧
 item.basemetals.tin_axe.name=錫の斧
 item.basemetals.zinc_axe.name=亜鉛の斧
 
@@ -76,7 +76,7 @@ item.basemetals.pewter_sword.name=ピューターの剣
 item.basemetals.platinum_sword.name=プラチナの剣
 item.basemetals.silver_sword.name=銀の剣
 item.basemetals.starsteel_sword.name=スタースチールの剣
-item.basemetals.steel_sword.name=鋼の剣
+item.basemetals.steel_sword.name=鋼鉄の剣
 item.basemetals.tin_sword.name=錫の剣
 item.basemetals.zinc_sword.name=亜鉛の剣
 
@@ -102,7 +102,7 @@ item.basemetals.platinum_pickaxe.name=プラチナのツルハシ
 item.basemetals.quartz_pickaxe.name=石英のツルハシ
 item.basemetals.silver_pickaxe.name=銀のツルハシ
 item.basemetals.starsteel_pickaxe.name=スタースチールのツルハシ
-item.basemetals.steel_pickaxe.name=鋼のツルハシ
+item.basemetals.steel_pickaxe.name=鋼鉄のツルハシ
 item.basemetals.tin_pickaxe.name=錫のツルハシ
 item.basemetals.zinc_pickaxe.name=亜鉛のツルハシ
 
@@ -128,7 +128,7 @@ item.basemetals.platinum_shovel.name=プラチナのシャベル
 item.basemetals.quartz_shovel.name=石英のシャベル
 item.basemetals.silver_shovel.name=銀のシャベル
 item.basemetals.starsteel_shovel.name=スタースチールのシャベル
-item.basemetals.steel_shovel.name=鋼のシャベル
+item.basemetals.steel_shovel.name=鋼鉄のシャベル
 item.basemetals.tin_shovel.name=錫のシャベル
 item.basemetals.zinc_shovel.name=亜鉛のシャベル
 
@@ -154,7 +154,7 @@ item.basemetals.platinum_hoe.name=プラチナのクワ
 item.basemetals.quartz_hoe.name=石英のクワ
 item.basemetals.silver_hoe.name=銀のクワ
 item.basemetals.starsteel_hoe.name=スタースチールのクワ
-item.basemetals.steel_hoe.name=鋼のクワ
+item.basemetals.steel_hoe.name=鋼鉄のクワ
 item.basemetals.tin_hoe.name=錫のクワ
 item.basemetals.zinc_hoe.name=亜鉛のクワ
 
@@ -183,7 +183,7 @@ item.basemetals.quartz_crackhammer.name=石英のクラックハンマー
 item.basemetals.nickel_crackhammer.name=ニッケルのクラックハンマー
 item.basemetals.silver_crackhammer.name=銀のクラックハンマー
 item.basemetals.starsteel_crackhammer.name=スタースチールのクラックハンマー
-item.basemetals.steel_crackhammer.name=鋼のクラックハンマー
+item.basemetals.steel_crackhammer.name=鋼鉄のクラックハンマー
 item.basemetals.stone_crackhammer.name=石のクラックハンマー
 item.basemetals.tin_crackhammer.name=錫のクラックハンマー
 item.basemetals.wood_crackhammer.name=木のクラックハンマー
@@ -213,7 +213,7 @@ item.basemetals.platinum_shears.name=プラチナのハサミ
 item.basemetals.quartz_shears.name=石英のハサミ
 item.basemetals.silver_shears.name=銀のハサミ
 item.basemetals.starsteel_shears.name=スタースチールのハサミ
-item.basemetals.steel_shears.name=鋼のハサミ
+item.basemetals.steel_shears.name=鋼鉄のハサミ
 item.basemetals.tin_shears.name=錫のハサミ
 item.basemetals.zinc_shears.name=亜鉛のハサミ
 
@@ -242,7 +242,7 @@ item.basemetals.platinum_bow.name=プラチナの弓
 item.basemetals.quartz_bow.name=石英の弓
 item.basemetals.silver_bow.name=銀の弓
 item.basemetals.starsteel_bow.name=スタースチールの弓
-item.basemetals.steel_bow.name=鋼の弓
+item.basemetals.steel_bow.name=鋼鉄の弓
 item.basemetals.tin_bow.name=錫の弓
 item.basemetals.zinc_bow.name=亜鉛の弓
 
@@ -271,7 +271,7 @@ item.basemetals.platinum_crossbow.name=プラチナのクロスボウ
 item.basemetals.quartz_crossbow.name=石英のクロスボウ
 item.basemetals.silver_crossbow.name=銀のクロスボウ
 item.basemetals.starsteel_crossbow.name=スタースチールのクロスボウ
-item.basemetals.steel_crossbow.name=鋼のクロスボウ
+item.basemetals.steel_crossbow.name=鋼鉄のクロスボウ
 item.basemetals.tin_crossbow.name=錫のクロスボウ
 item.basemetals.zinc_crossbow.name=亜鉛のクロスボウ
 
@@ -300,7 +300,7 @@ item.basemetals.platinum_fishing_rod.name=プラチナの釣り竿
 item.basemetals.quartz_fishing_rod.name=石英の釣り竿
 item.basemetals.silver_fishing_rod.name=銀の釣り竿
 item.basemetals.starsteel_fishing_rod.name=スタースチールの釣り竿
-item.basemetals.steel_fishing_rod.name=鋼の釣り竿
+item.basemetals.steel_fishing_rod.name=鋼鉄の釣り竿
 item.basemetals.tin_fishing_rod.name=錫の釣り竿
 item.basemetals.zinc_fishing_rod.name=亜鉛の釣り竿
 
@@ -328,8 +328,8 @@ item.basemetals.pewter_scythe.name=ピューターの鎌
 item.basemetals.platinum_scythe.name=プラチナの鎌
 item.basemetals.quartz_scythe.name=石英の鎌
 item.basemetals.silver_scythe.name=銀の鎌
-item.basemetals.starsteel_scythe.name=Star鋼の鎌
-item.basemetals.steel_scythe.name=鋼の鎌
+item.basemetals.starsteel_scythe.name=Star鋼鉄の鎌
+item.basemetals.steel_scythe.name=鋼鉄の鎌
 item.basemetals.stone_scythe.name=石の鎌
 item.basemetals.tin_scythe.name=錫の鎌
 item.basemetals.wood_scythe.name=木の鎌
@@ -360,7 +360,7 @@ item.basemetals.platinum_shield.name=プラチナの盾
 item.basemetals.quartz_shield.name=石英の盾
 item.basemetals.silver_shield.name=銀の盾
 item.basemetals.starsteel_shield.name=スタースチールの盾
-item.basemetals.steel_shield.name=鋼の盾
+item.basemetals.steel_shield.name=鋼鉄の盾
 item.basemetals.tin_shield.name=錫の盾
 item.basemetals.zinc_shield.name=亜鉛の盾
 
@@ -389,7 +389,7 @@ item.basemetals.platinum_arrow.name=プラチナの矢
 item.basemetals.quartz_arrow.name=石英の矢
 item.basemetals.silver_arrow.name=銀の矢
 item.basemetals.starsteel_arrow.name=スタースチールの矢
-item.basemetals.steel_arrow.name=鋼の矢
+item.basemetals.steel_arrow.name=鋼鉄の矢
 item.basemetals.tin_arrow.name=錫の矢
 item.basemetals.zinc_arrow.name=亜鉛の矢
 
@@ -418,7 +418,7 @@ item.basemetals.platinum_bolt.name=プラチナのボルト
 item.basemetals.quartz_bolt.name=石英のボルト
 item.basemetals.silver_bolt.name=銀のボルト
 item.basemetals.starsteel_bolt.name=スタースチールのボルト
-item.basemetals.steel_bolt.name=鋼のボルト
+item.basemetals.steel_bolt.name=鋼鉄のボルト
 item.basemetals.tin_bolt.name=錫のボルト
 item.basemetals.zinc_bolt.name=亜鉛のボルト
 
@@ -529,10 +529,10 @@ item.basemetals.starsteel_chestplate.name=スタースチールのチェスト�
 item.basemetals.starsteel_helmet.name=スタースチールのヘルメット
 item.basemetals.starsteel_leggings.name=スタースチールのレギンス
     #Steel
-item.basemetals.steel_boots.name=鋼のブーツ
-item.basemetals.steel_chestplate.name=鋼のチェストプレート
-item.basemetals.steel_helmet.name=鋼のヘルメット
-item.basemetals.steel_leggings.name=鋼のレギンス
+item.basemetals.steel_boots.name=鋼鉄のブーツ
+item.basemetals.steel_chestplate.name=鋼鉄のチェストプレート
+item.basemetals.steel_helmet.name=鋼鉄のヘルメット
+item.basemetals.steel_leggings.name=鋼鉄のレギンス
     #Tin
 item.basemetals.tin_boots.name=錫のブーツ
 item.basemetals.tin_chestplate.name=錫のチェストプレート
@@ -567,7 +567,7 @@ item.basemetals.platinum_horse_armor.name=プラチナの馬鎧
 item.basemetals.quartz_horse_armor.name=石英の馬鎧
 item.basemetals.silver_horse_armor.name=銀の馬鎧
 item.basemetals.starsteel_horse_armor.name=スタースチールの馬鎧
-item.basemetals.steel_horse_armor.name=鋼の馬鎧
+item.basemetals.steel_horse_armor.name=鋼鉄の馬鎧
 item.basemetals.tin_horse_armor.name=錫の馬鎧
 item.basemetals.zinc_horse_armor.name=亜鉛の馬鎧
 
@@ -593,7 +593,7 @@ item.basemetals.platinum_ingot.name=プラチナインゴット
 item.basemetals.redstone_ingot.name=レッドストーンインゴット
 item.basemetals.silver_ingot.name=銀インゴット
 item.basemetals.starsteel_ingot.name=スタースチールインゴット
-item.basemetals.steel_ingot.name=鋼インゴット
+item.basemetals.steel_ingot.name=鋼鉄インゴット
 item.basemetals.tin_ingot.name=錫インゴット
 item.basemetals.zinc_ingot.name=亜鉛インゴット
 
@@ -622,7 +622,7 @@ item.basemetals.platinum_bars.name=プラチナ格子
 item.basemetals.quartz_bars.name=石英格子
 item.basemetals.silver_bars.name=銀格子
 item.basemetals.starsteel_bars.name=スタースチール格子
-item.basemetals.steel_bars.name=鋼格子
+item.basemetals.steel_bars.name=鋼鉄格子
 item.basemetals.tin_bars.name=錫格子
 item.basemetals.zinc_bars.name=亜鉛格子
     #Tile
@@ -649,7 +649,7 @@ tile.basemetals.platinum_bars.name=プラチナ格子
 tile.basemetals.quartz_bars.name=石英格子
 tile.basemetals.silver_bars.name=銀格子
 tile.basemetals.starsteel_bars.name=スタースチール格子
-tile.basemetals.steel_bars.name=鋼格子
+tile.basemetals.steel_bars.name=鋼鉄格子
 tile.basemetals.tin_bars.name=錫格子
 tile.basemetals.zinc_bars.name=亜鉛格子
 
@@ -680,11 +680,11 @@ item.basemetals.platinum_nugget.name=プラチナ塊
 item.basemetals.quartz_nugget.name=石英の欠片
 item.basemetals.silver_nugget.name=銀塊
 item.basemetals.starsteel_nugget.name=スタースチール塊
-item.basemetals.steel_nugget.name=鋼塊
+item.basemetals.steel_nugget.name=鋼鉄塊
 item.basemetals.tin_nugget.name=錫塊
 item.basemetals.zinc_nugget.name=亜鉛塊
 
-#Powdered
+#Dusts
 item.basemetals.adamantine_powder.name=アダマントの粉末
 item.basemetals.aquarium_powder.name=アクアリウムの粉末
 item.basemetals.antimony_powder.name=アンチモンの粉末
@@ -712,12 +712,12 @@ item.basemetals.platinum_powder.name=プラチナの粉末
 item.basemetals.quartz_powder.name=石英の粉末
 item.basemetals.silver_powder.name=銀の粉末
 item.basemetals.starsteel_powder.name=スタースチールの粉末
-item.basemetals.steel_powder.name=鋼の粉末
+item.basemetals.steel_powder.name=鋼鉄の粉末
 item.basemetals.tin_powder.name=錫の粉末
 item.basemetals.wood_powder.name=おがくず
 item.basemetals.zinc_powder.name=亜鉛の粉末
 
-#Small Powders
+#Small Dusts
 item.basemetals.adamantine_smallpowder.name=アダマントの少粉末
 item.basemetals.aquarium_smallpowder.name=アクアリウムの少粉末
 item.basemetals.antimony_smallpowder.name=アンチモンの少粉末
@@ -748,7 +748,7 @@ item.basemetals.quartz_smallpowder.name=石英の少粉末
 item.basemetals.redstone_smallpowder.name=レッドストーンの少粉末
 item.basemetals.silver_smallpowder.name=銀の少粉末
 item.basemetals.starsteel_smallpowder.name=スタースチールの少粉末
-item.basemetals.steel_smallpowder.name=鋼の少粉末
+item.basemetals.steel_smallpowder.name=鋼鉄の少粉末
 item.basemetals.tin_smallpowder.name=錫の少粉末
 item.basemetals.wood_powder.name=おがくずの少粉末
 item.basemetals.zinc_smallpowder.name=亜鉛の少粉末
@@ -774,7 +774,7 @@ item.basemetals.pewter_crushed.name=砕いたピューター
 item.basemetals.platinum_crushed.name=砕いたプラチナ
 item.basemetals.silver_crushed.name=砕いた銀
 item.basemetals.starsteel_crushed.name=砕いたスタースチール
-item.basemetals.steel_crushed.name=砕いた鋼
+item.basemetals.steel_crushed.name=砕いた鋼鉄
 item.basemetals.tin_crushed.name=砕いた錫
 item.basemetals.zinc_crushed.name=砕いた亜鉛
 
@@ -799,7 +799,7 @@ item.basemetals.pewter_crushed_purified.name=砕いた精製ピューター
 item.basemetals.platinum_crushed_purified.name=砕いた精製プラチナ
 item.basemetals.silver_crushed_purified.name=砕いた精製銀
 item.basemetals.starsteel_crushed_purified.name=砕いた精製スタースチール
-item.basemetals.steel_crushed_purified.name=砕いた精製鋼
+item.basemetals.steel_crushed_purified.name=砕いた精製鋼鉄
 item.basemetals.tin_crushed_purified.name=砕いた精製錫
 item.basemetals.zinc_crushed_purified.name=砕いた精製亜鉛
 
@@ -847,7 +847,7 @@ item.basemetals.electrum_blend.name=エレクトラムブレンド
 item.basemetals.invar_blend.name=インバーブレンド
 item.basemetals.mithril_blend.name=ミスリルブレンド
 item.basemetals.pewter_blend.name=ピューターブレンド
-item.basemetals.steel_blend.name=鋼ブレンド
+item.basemetals.steel_blend.name=鋼鉄ブレンド
 
 #Small Blends
 item.basemetals.aquarium_smallblend.name=アクアリウムブレンドの小塊
@@ -858,7 +858,7 @@ item.basemetals.electrum_smallblend.name=エレクトラムブレンドの小塊
 item.basemetals.invar_smallblend.name=インバーブレンドの小塊
 item.basemetals.mithril_smallblend.name=ミスリルブレンドの小塊
 item.basemetals.pewter_smallblend.name=ピューターブレンドの小塊
-item.basemetals.steel_smallblend.name=鋼ブレンドの小塊
+item.basemetals.steel_smallblend.name=鋼鉄ブレンドの小塊
 
 #Block Of...
     #Item
@@ -882,7 +882,7 @@ item.basemetals.pewter_block.name=ピューターブロック
 item.basemetals.cupronickel_block.name=白銅ブロック
 item.basemetals.silver_block.name=銀ブロック
 item.basemetals.starsteel_block.name=スタースチールブロック
-item.basemetals.steel_block.name=鋼ブロック
+item.basemetals.steel_block.name=鋼鉄ブロック
 item.basemetals.tin_block.name=錫ブロック
 item.basemetals.zinc_block.name=亜鉛ブロック  
     #Tile
@@ -905,7 +905,7 @@ tile.basemetals.pewter_block.name=ピューターブロック
 tile.basemetals.platinum_block.name=プラチナブロック
 tile.basemetals.silver_block.name=銀ブロック
 tile.basemetals.starsteel_block.name=スタースチールブロック
-tile.basemetals.steel_block.name=鋼ブロック
+tile.basemetals.steel_block.name=鋼鉄ブロック
 tile.basemetals.tin_block.name=錫ブロック
 tile.basemetals.zinc_block.name=亜鉛ブロック
     
@@ -931,7 +931,7 @@ fluid.basemetals.pewter=溶融ピューター
 fluid.basemetals.platinum=溶融プラチナ
 fluid.basemetals.silver=溶融銀
 fluid.basemetals.starsteel=溶融スタースチール
-fluid.basemetals.steel=溶融鋼
+fluid.basemetals.steel=溶融鋼鉄
 fluid.basemetals.tin=溶融錫
 fluid.basemetals.zinc=溶融亜鉛
 	#Fluid.name
@@ -960,7 +960,7 @@ fluid.basemetals.prismarine.name=溶融プリズマリン
 fluid.basemetals.redstone.name=溶融レッドストーン
 fluid.basemetals.silver.name=溶融銀
 fluid.basemetals.starsteel.name=溶融スタースチール
-fluid.basemetals.steel.name=溶融鋼
+fluid.basemetals.steel.name=溶融鋼鉄
 fluid.basemetals.tin.name=溶融錫
 fluid.basemetals.zinc.name=溶融亜鉛
     #Tile
@@ -993,7 +993,7 @@ tile.basemetals.prismarine.name=溶融プリズマリン
 tile.basemetals.redstone.name=溶融レッドストーン
 tile.basemetals.silver.name=溶融銀
 tile.basemetals.starsteel.name=溶融スタースチール
-tile.basemetals.steel.name=溶融鋼
+tile.basemetals.steel.name=溶融鋼鉄
 tile.basemetals.tin.name=溶融錫
 tile.basemetals.zinc.name=溶融亜鉛
     #Bucket
@@ -1023,7 +1023,7 @@ item.bucket.prismarine=溶融プリズマリンバケツ
 item.bucket.redstone=溶融レッドストーンバケツ
 item.bucket.silver=溶融銀バケツ
 item.bucket.starsteel=溶融スタースチールバケツ
-item.bucket.steel=溶融鋼バケツ
+item.bucket.steel=溶融鋼鉄バケツ
 item.bucket.tin=溶融錫バケツ
 item.bucket.zinc=溶融亜鉛バケツ
 	Material
@@ -1046,9 +1046,32 @@ material.pewter.name=ピューター
 material.platinum.name=プラチナ
 material.silver.name=銀
 material.starsteel.name=スタースチール
-material.steel.name=鋼
+material.steel.name=鋼鉄
 material.tin.name=錫
 material.zinc.name=亜鉛
+
+material.mercury.prefix=水銀の%s
+material.adamantine.prefix=アダマントの%s
+material.antimony.prefix=アンチモンの%s
+material.aquarium.prefix=アクアリウムの%s
+material.bismuth.prefix=ビスマスの%s
+material.brass.prefix=黄銅の%s
+material.bronze.prefix=青銅の%s
+material.coldiron.prefix=コールドアイアンの%s
+material.copper.prefix=銅の%s
+material.cupronickel.prefix=白銅の%s
+material.electrum.prefix=エレクトラムの%s
+material.invar.prefix=インバーの%s
+material.lead.prefix=鉛の%s
+material.mithril.prefix=ミスリルの%s
+material.nickel.prefix=ニッケルの%s
+material.pewter.prefix=ピューターの%s
+material.platinum.prefix=プラチナの%s
+material.silver.prefix=銀の%s
+material.starsteel.prefix=スタースチールの%s
+material.steel.prefix=鋼鉄の%s
+material.tin.prefix=錫の%s
+material.zinc.prefix=亜鉛の%s
 
 #Doors
     #Item
@@ -1075,7 +1098,7 @@ item.basemetals.platinum_door.name=プラチナのドア
 item.basemetals.quartz_door.name=石英のドア
 item.basemetals.silver_door.name=銀のドア
 item.basemetals.starsteel_door.name=スタースチールのドア
-item.basemetals.steel_door.name=鋼のドア
+item.basemetals.steel_door.name=鋼鉄のドア
 item.basemetals.tin_door.name=錫のドア
 item.basemetals.zinc_door.name=亜鉛のドア
     #Tile
@@ -1102,7 +1125,7 @@ tile.basemetals.platinum_door.name=プラチナのドア
 tile.basemetals.quartz_door.name=石英のドア
 tile.basemetals.silver_door.name=銀のドア
 tile.basemetals.starsteel_door.name=スタースチールのドア
-tile.basemetals.steel_door.name=鋼のドア
+tile.basemetals.steel_door.name=鋼鉄のドア
 tile.basemetals.tin_door.name=錫のドア
 tile.basemetals.zinc_door.name=亜鉛のドア
     
@@ -1131,7 +1154,7 @@ tile.basemetals.platinum_trapdoor.name=プラチナのトラップドア
 tile.basemetals.quartz_trapdoor.name=石英のトラップドア
 tile.basemetals.silver_trapdoor.name=銀のトラップドア
 tile.basemetals.starsteel_trapdoor.name=スタースチールのトラップドア
-tile.basemetals.steel_trapdoor.name=鋼のトラップドア
+tile.basemetals.steel_trapdoor.name=鋼鉄のトラップドア
 tile.basemetals.tin_trapdoor.name=錫のトラップドア
 tile.basemetals.zinc_trapdoor.name=亜鉛のトラップドア
     #Items
@@ -1158,7 +1181,7 @@ item.basemetals.platinum_trapdoor.name=プラチナのトラップドア
 item.basemetals.quartz_trapdoor.name=石英のトラップドア
 item.basemetals.silver_trapdoor.name=銀のトラップドア
 item.basemetals.starsteel_trapdoor.name=スタースチールのトラップドア
-item.basemetals.steel_trapdoor.name=鋼のトラップドア
+item.basemetals.steel_trapdoor.name=鋼鉄のトラップドア
 item.basemetals.tin_trapdoor.name=錫のトラップドア
 
 #Gears
@@ -1186,7 +1209,7 @@ item.basemetals.platinum_gear.name=プラチナの歯車
 item.basemetals.quartz_gear.name=石英の歯車
 item.basemetals.silver_gear.name=銀の歯車
 item.basemetals.starsteel_gear.name=スタースチールの歯車
-item.basemetals.steel_gear.name=鋼の歯車
+item.basemetals.steel_gear.name=鋼鉄の歯車
 item.basemetals.stone_gear.name=石の歯車
 item.basemetals.tin_gear.name=錫の歯車
 item.basemetals.wood_gear.name=木の歯車
@@ -1217,7 +1240,7 @@ item.basemetals.platinum_rod.name=プラチナの棒
 item.basemetals.quartz_rod.name=石英の棒
 item.basemetals.silver_rod.name=銀の棒
 item.basemetals.starsteel_rod.name=スタースチールの棒
-item.basemetals.steel_rod.name=鋼の棒
+item.basemetals.steel_rod.name=鋼鉄の棒
 item.basemetals.stone_rod.name=石の棒
 item.basemetals.tin_rod.name=錫の棒
 item.basemetals.zinc_rod.name=亜鉛の棒
@@ -1243,7 +1266,7 @@ item.basemetals.pewter_plate.name=ピューターのプレート
 item.basemetals.platinum_plate.name=プラチナのプレート
 item.basemetals.silver_plate.name=銀のプレート
 item.basemetals.starsteel_plate.name=スタースチールのプレート
-item.basemetals.steel_plate.name=鋼のプレート
+item.basemetals.steel_plate.name=鋼鉄のプレート
 item.basemetals.tin_plate.name=錫のプレート
 item.basemetals.zinc_plate.name=亜鉛のプレート
 item.basemetals.iron_plate.name=鉄のプレート
@@ -1268,7 +1291,7 @@ tile.basemetals.pewter_plate.name=ピューターのプレート
 tile.basemetals.platinum_plate.name=プラチナのプレート
 tile.basemetals.silver_plate.name=銀のプレート
 tile.basemetals.starsteel_plate.name=スタースチールのプレート
-tile.basemetals.steel_plate.name=鋼のプレート
+tile.basemetals.steel_plate.name=鋼鉄のプレート
 tile.basemetals.tin_plate.name=錫のプレート
 tile.basemetals.zinc_plate.name=亜鉛のプレート
 tile.basemetals.iron_plate.name=鉄のプレート
@@ -1305,7 +1328,7 @@ item.basemetals.platinum_button.name=プラチナのボタン
 item.basemetals.quartz_button.name=石英のボタン
 item.basemetals.silver_button.name=銀のボタン
 item.basemetals.starsteel_button.name=スタースチールのボタン
-item.basemetals.steel_button.name=鋼のボタン
+item.basemetals.steel_button.name=鋼鉄のボタン
 item.basemetals.tin_button.name=錫のボタン
 item.basemetals.zinc_button.name=亜鉛のボタン
 item.basemetals.iron_button.name=鉄のボタン
@@ -1334,7 +1357,7 @@ tile.basemetals.platinum_button.name=プラチナのボタン
 tile.basemetals.quartz_button.name=石英のボタン
 tile.basemetals.silver_button.name=銀のボタン
 tile.basemetals.starsteel_button.name=スタースチールのボタン
-tile.basemetals.steel_button.name=鋼のボタン
+tile.basemetals.steel_button.name=鋼鉄のボタン
 tile.basemetals.tin_button.name=錫のボタン
 tile.basemetals.zinc_button.name=亜鉛のボタン
 tile.basemetals.iron_button.name=鉄のボタン
@@ -1364,7 +1387,7 @@ item.basemetals.platinum_pressure_plate.name=プラチナの感圧板
 item.basemetals.quartz_pressure_plate.name=石英の感圧板
 item.basemetals.silver_pressure_plate.name=銀の感圧板
 item.basemetals.starsteel_pressure_plate.name=スタースチールの感圧板
-item.basemetals.steel_pressure_plate.name=鋼の感圧板
+item.basemetals.steel_pressure_plate.name=鋼鉄の感圧板
 item.basemetals.tin_pressure_plate.name=錫の感圧板
 item.basemetals.zinc_pressure_plate.name=亜鉛の感圧板
 item.basemetals.iron_pressure_plate.name=鉄の感圧板
@@ -1392,7 +1415,7 @@ tile.basemetals.platinum_pressure_plate.name=プラチナの感圧板
 tile.basemetals.quartz_pressure_plate.name=石英の感圧板
 tile.basemetals.silver_pressure_plate.name=銀の感圧板
 tile.basemetals.starsteel_pressure_plate.name=スタースチールの感圧板
-tile.basemetals.steel_pressure_plate.name=鋼の感圧板
+tile.basemetals.steel_pressure_plate.name=鋼鉄の感圧板
 tile.basemetals.tin_pressure_plate.name=錫の感圧板
 tile.basemetals.zinc_pressure_plate.name=亜鉛の感圧板
 tile.basemetals.iron_pressure_plate.name=鉄の感圧板
@@ -1417,7 +1440,7 @@ item.basemetals.pewter_crystal.name=ピューターの結晶
 item.basemetals.platinum_crystal.name=プラチナの結晶
 item.basemetals.silver_crystal.name=銀の結晶
 item.basemetals.starsteel_crystal.name=スタースチールの結晶
-item.basemetals.steel_crystal.name=鋼の結晶
+item.basemetals.steel_crystal.name=鋼鉄の結晶
 item.basemetals.tin_crystal.name=錫の結晶
 item.basemetals.zinc_crystal.name=亜鉛の結晶
 
@@ -1440,7 +1463,7 @@ item.basemetals.pewter_clump.name=ピューターのクランプ
 item.basemetals.platinum_clump.name=プラチナのクランプ
 item.basemetals.silver_clump.name=銀のクランプ
 item.basemetals.starsteel_clump.name=スタースチールのクランプ
-item.basemetals.steel_clump.name=鋼のクランプ
+item.basemetals.steel_clump.name=鋼鉄のクランプ
 item.basemetals.tin_clump.name=錫のクランプ
 item.basemetals.zinc_clump.name=亜鉛のクランプ
 
@@ -1463,7 +1486,7 @@ item.basemetals.pewter_shard.name=ピューターの欠片
 item.basemetals.platinum_shard.name=プラチナの欠片
 item.basemetals.silver_shard.name=銀の欠片
 item.basemetals.starsteel_shard.name=スタースチールの欠片
-item.basemetals.steel_shard.name=鋼の欠片
+item.basemetals.steel_shard.name=鋼鉄の欠片
 item.basemetals.tin_shard.name=錫の欠片
 item.basemetals.zinc_shard.name=亜鉛の欠片
 
@@ -1488,7 +1511,7 @@ item.basemetals.pewter_powder_dirty.name=ピューターの汚れた粉末
 item.basemetals.platinum_powder_dirty.name=プラチナの汚れた粉末
 item.basemetals.silver_powder_dirty.name=銀の汚れた粉末
 item.basemetals.starsteel_powder_dirty.name=スタースチールの汚れた粉末
-item.basemetals.steel_powder_dirty.name=鋼の汚れた粉末
+item.basemetals.steel_powder_dirty.name=鋼鉄の汚れた粉末
 item.basemetals.tin_powder_dirty.name=錫の汚れた粉末
 item.basemetals.zinc_powder_dirty.name=亜鉛の汚れた粉末
 
@@ -1512,7 +1535,7 @@ item.basemetals.pewter_casing.name=ピューターのケーシング
 item.basemetals.platinum_casing.name=プラチナのケーシング
 item.basemetals.silver_casing.name=銀のケーシング
 item.basemetals.starsteel_casing.name=スタースチールのケーシング
-item.basemetals.steel_casing.name=鋼のケーシング
+item.basemetals.steel_casing.name=鋼鉄のケーシング
 item.basemetals.tin_casing.name=錫のケーシング
 item.basemetals.zinc_casing.name=亜鉛のケーシング
 item.basemetals.iron_casing.name=鉄のケーシング
@@ -1538,7 +1561,7 @@ item.basemetals.pewter_dense_plate.name=ピューターの高密度プレート
 item.basemetals.platinum_dense_plate.name=プラチナの高密度プレート
 item.basemetals.silver_dense_plate.name=銀の高密度プレート
 item.basemetals.starsteel_dense_plate.name=スタースチールの高密度プレート
-item.basemetals.steel_dense_plate.name=鋼の高密度プレート
+item.basemetals.steel_dense_plate.name=鋼鉄の高密度プレート
 item.basemetals.tin_dense_plate.name=錫の高密度プレート
 item.basemetals.zinc_dense_plate.name=亜鉛の高密度プレート
 item.basemetals.iron_dense_plate.name=鉄の高密度プレート
@@ -1562,7 +1585,7 @@ tile.basemetals.pewter_dense_plate.name=ピューターの高密度プレート
 tile.basemetals.platinum_dense_plate.name=プラチナの高密度プレート
 tile.basemetals.silver_dense_plate.name=銀の高密度プレート
 tile.basemetals.starsteel_dense_plate.name=スタースチールの高密度プレート
-tile.basemetals.steel_dense_plate.name=鋼の高密度プレート
+tile.basemetals.steel_dense_plate.name=鋼鉄の高密度プレート
 tile.basemetals.tin_dense_plate.name=錫の高密度プレート
 tile.basemetals.zinc_dense_plate.name=亜鉛の高密度プレート
 tile.basemetals.iron_dense_plate.name=鉄の高密度プレート
@@ -1593,7 +1616,7 @@ item.basemetals.pewter_slab.name=ピューターのハーフブロック
 item.basemetals.platinum_slab.name=プラチナのハーフブロック
 item.basemetals.silver_slab.name=銀のハーフブロック
 item.basemetals.starsteel_slab.name=スタースチールのハーフブロック
-item.basemetals.steel_slab.name=鋼のハーフブロック
+item.basemetals.steel_slab.name=鋼鉄のハーフブロック
 item.basemetals.tin_slab.name=錫のハーフブロック
 item.basemetals.zinc_slab.name=亜鉛のハーフブロック
     #Tile
@@ -1620,7 +1643,7 @@ tile.basemetals.pewter_slab.name=ピューターのハーフブロック
 tile.basemetals.platinum_slab.name=プラチナのハーフブロック
 tile.basemetals.silver_slab.name=銀のハーフブロック
 tile.basemetals.starsteel_slab.name=スタースチールのハーフブロック
-tile.basemetals.steel_slab.name=鋼のハーフブロック
+tile.basemetals.steel_slab.name=鋼鉄のハーフブロック
 tile.basemetals.tin_slab.name=錫のハーフブロック
 tile.basemetals.zinc_slab.name=亜鉛のハーフブロック
 
@@ -1650,7 +1673,7 @@ item.basemetals.platinum_lever.name=プラチナのレバー
 item.basemetals.quartz_lever.name=石英のレバー
 item.basemetals.silver_lever.name=銀のレバー
 item.basemetals.starsteel_lever.name=スタースチールのレバー
-item.basemetals.steel_lever.name=鋼のレバー
+item.basemetals.steel_lever.name=鋼鉄のレバー
 item.basemetals.tin_lever.name=錫のレバー
 item.basemetals.zinc_lever.name=亜鉛のレバー
     #Tile
@@ -1678,7 +1701,7 @@ tile.basemetals.platinum_lever.name=プラチナのレバー
 tile.basemetals.quartz_lever.name=石英のレバー
 tile.basemetals.silver_lever.name=銀のレバー
 tile.basemetals.starsteel_lever.name=スタースチールのレバー
-tile.basemetals.steel_lever.name=鋼のレバー
+tile.basemetals.steel_lever.name=鋼鉄のレバー
 tile.basemetals.tin_lever.name=錫のレバー
 tile.basemetals.zinc_lever.name=亜鉛のレバー
 
@@ -1707,7 +1730,7 @@ item.basemetals.pewter_stairs.name=ピューターの階段
 item.basemetals.platinum_stairs.name=プラチナの階段
 item.basemetals.silver_stairs.name=銀の階段
 item.basemetals.starsteel_stairs.name=スタースチールの階段
-item.basemetals.steel_stairs.name=鋼の階段
+item.basemetals.steel_stairs.name=鋼鉄の階段
 item.basemetals.tin_stairs.name=錫の階段
 item.basemetals.zinc_stairs.name=亜鉛の階段
     #Tile
@@ -1734,7 +1757,7 @@ tile.basemetals.pewter_stairs.name=ピューターの階段
 tile.basemetals.platinum_stairs.name=プラチナの階段
 tile.basemetals.silver_stairs.name=銀の階段
 tile.basemetals.starsteel_stairs.name=スタースチールの階段
-tile.basemetals.steel_stairs.name=鋼の階段
+tile.basemetals.steel_stairs.name=鋼鉄の階段
 tile.basemetals.tin_stairs.name=錫の階段
 tile.basemetals.zinc_stairs.name=亜鉛の階段
 
@@ -1764,7 +1787,7 @@ item.basemetals.platinum_wall.name=プラチナの壁
 item.basemetals.quartz_wall.name=石英の壁
 item.basemetals.silver_wall.name=銀の壁
 item.basemetals.starsteel_wall.name=スタースチールの壁
-item.basemetals.steel_wall.name=鋼の壁
+item.basemetals.steel_wall.name=鋼鉄の壁
 item.basemetals.tin_wall.name=錫の壁
 item.basemetals.zinc_wall.name=亜鉛の壁
     #Tile
@@ -1792,20 +1815,20 @@ tile.basemetals.platinum_wall.name=プラチナの壁
 tile.basemetals.quartz_wall.name=石英の壁
 tile.basemetals.silver_wall.name=銀の壁
 tile.basemetals.starsteel_wall.name=スタースチールの壁
-tile.basemetals.steel_wall.name=鋼の壁
+tile.basemetals.steel_wall.name=鋼鉄の壁
 tile.basemetals.tin_wall.name=錫の壁
 tile.basemetals.zinc_wall.name=亜鉛の壁
 
 modifier.mmd-toxic.name=有毒物質
-modifier.mmd-toxic.desc=かなり危険。道具や武器に使うと毒や盲目の効果を与えます。
+modifier.mmd-toxic.desc=かなり危険 - 道具や武器に使うと毒や盲目の効果を与えます。
 modifier.mmd-sparkly.name=キラキラ
-modifier.mmd-sparkly.desc=その輝きで自己修復します。
+modifier.mmd-sparkly.desc=自己修復、ピカピカでキラキラするもの。
 modifier.mmd-soft.name=柔らかい
 modifier.mmd-soft.desc=柔らかくより早く耐久力を消耗するため、何度も使う道具には適していません。
 modifier.mmd-brittle.name=脆い
 modifier.mmd-brittle.desc=耐久力が減るに従ってより多くのダメージを与えますが、自分にもダメージを与えます。
 modifier.mmd-heavy.name=重い
-modifier.mmd-heavy.desc=これはとても高密度です。これで作られた道具を使うと通常よりも多く満腹度を消費します。
+modifier.mmd-heavy.desc=これはとても高密度です - これで作られた道具を使うと通常よりも多く満腹度を消費します。
 modifier.mmd-reactive.name=反応性
 modifier.mmd-reactive.desc=水と反応してより早く消耗します。
 modifier.mmd-radioactive.name=放射性
@@ -1813,16 +1836,34 @@ modifier.mmd-radioactive.desc=何らかの方法で放射線から身を守ら�
 
 modifier.toxic-modifier.name=有毒物質
 modifier.toxic-modifier.desc=§o毒の反撃！§r\n水銀には非常に毒性があり、神経に影響を与えます。\n武器や道具に追加すると、敵を一時的に盲目にする効果があります。
-modifier.lead-plated.name=鉛のプレート
-modifier.lead-plated.desc=§o安全第一§r\nもしプルトニウムやウランを持っていて、武器に良いと思うなら、その放射線から身を守ることを忘れないでください。鉛のプレートを使えば、敵にダメージを与えつつ自身への放射線の影響を防ぎます。
+modifier.lead-plated.name=鉛メッキ
+modifier.lead-plated.desc=§o安全第一§r\nもしプルトニウムやウラニウムを持っていて、武器に良いと思うなら、その放射線から身を守ることを忘れないでください。\n鉛のプレートを使えば、敵にダメージを与えつつ自身への放射線の影響を防ぎます。
 
 # Anvils
-tile.basemetals.steel_anvil.intact.name=鋼の金床
-tile.basemetals.steel_anvil.slightlyDamaged.name=少し壊れた鋼の金床
-tile.basemetals.steel_anvil.veryDamaged.name=かなり壊れた鋼の金床
+tile.basemetals.steel_anvil.intact.name=鋼鉄の金床
+tile.basemetals.steel_anvil.slightlyDamaged.name=少し壊れた鋼鉄の金床
+tile.basemetals.steel_anvil.veryDamaged.name=かなり壊れた鋼鉄の金床
 tile.basemetals.stone_anvil.intact.name=石の金床
 tile.basemetals.stone_anvil.slightlyDamaged.name=少し壊れた石の金床
 tile.basemetals.stone_anvil.veryDamaged.name=かなり壊れた石の金床
 tile.basemetals.adamantine_anvil.intact.name=アダマントの金床
 tile.basemetals.adamantine_anvil.slightlyDamaged.name=少し壊れたアダマントの金床
 tile.basemetals.adamantine_anvil.veryDamaged.name=かなり壊れたアダマントの金床
+
+gas.gasAdamantine=アダマントのスラリー
+gas.gasAntimony=アンチモンのスラリー
+gas.gasBismuth=ビスマスのスラリー
+gas.gasColdiron=コールドアイアンのスラリー
+gas.gasPlatinum=プラチナのスラリー
+gas.gasNickel=ニッケルのスラリー
+gas.gasStarsteel=スタースチールのスラリー
+gas.gasZinc=亜鉛のスラリー
+
+gas.cleanGasAdamantine=きれいなアダマントのスラリー
+gas.cleanGasAntimony=きれいなアンチモンのスラリー
+gas.cleanGasBismuth=きれいなビスマスのスラリー
+gas.cleanGasColdiron=きれいなコールドアイアンのスラリー
+gas.cleanGasPlatinum=きれいなプラチナのスラリー
+gas.cleanGasNickel=きれいなニッケルのスラリー
+gas.cleanGasStarsteel=きれいなスタースチールのスラリー
+gas.cleanGasZinc=きれいな亜鉛のスラリー
