@@ -10,6 +10,8 @@ import java.util.function.BiFunction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.ActiveModData;
 import com.mcmoddev.lib.data.SharedStrings;
 
 import net.minecraft.item.ItemStack;
@@ -58,6 +60,16 @@ public class ItemGroups {
 		return addTab(name, false);
 	}
 
+	public static void dumpTabs() {
+		BaseMetals.logger.fatal("CREATIVE TABS (by internal reference name):");
+		itemGroupsByFullTabName.entrySet().stream().forEach( ent -> BaseMetals.logger.fatal("Tab fullname: %s, object: %s", ent.getKey(), ent.getValue()));
+		BaseMetals.logger.fatal("CREATIVE TABS (by mod-id reference name):");
+		itemGroupsByModID.entrySet().stream().forEach( ent -> {
+			BaseMetals.logger.fatal("Mod %s", ent.getKey());
+			ent.getValue().stream().forEach( tab -> BaseMetals.logger.fatal("tab name: %s is %s", tab.getTabLabel(), tab));
+		});
+	}
+	
 	/**
 	 * Adds a CreativeTab.
 	 *
@@ -69,8 +81,13 @@ public class ItemGroups {
 	 */
 	protected static MMDCreativeTab addTab(@Nonnull final String name,
 			@Nonnull final boolean searchable) {
-		final String modName = Loader.instance().activeModContainer().getModId();
+		final String modName = ActiveModData.instance.activeMod();
 		final String internalTabName = String.format("%s.%s", modName, name);
+		
+		if (itemGroupsByFullTabName.containsKey(internalTabName)) {
+			return itemGroupsByFullTabName.get(internalTabName);
+		}
+		
 		final MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable);
 
 		if (!itemGroupsByFullTabName.containsKey(modName)) {
@@ -96,7 +113,8 @@ public class ItemGroups {
 	 */
 	@Nullable
 	public static MMDCreativeTab getTab(@Nonnull final String name) {
-		return getTab(Loader.instance().activeModContainer().getModId(), name);
+		final String modName = ActiveModData.instance.activeMod();
+		return getTab(modName, name);
 	}
 
 	/**
@@ -110,10 +128,7 @@ public class ItemGroups {
 	@Nullable
 	public static MMDCreativeTab getTab(@Nonnull final String modName, @Nonnull final String name) {
 		final String finalName = String.format("%s.%s", modName, name);
-		if (itemGroupsByFullTabName.containsKey(finalName)) {
-			return itemGroupsByFullTabName.get(finalName);
-		}
-		return null;
+		return itemGroupsByFullTabName.getOrDefault(finalName, addTab(name, true));
 	}
 
 	/**

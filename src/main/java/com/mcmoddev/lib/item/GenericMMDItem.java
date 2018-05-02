@@ -44,4 +44,10 @@ public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObjec
 			return itemStack.getItem().getItemBurnTime(itemStack);
 		}
 	}
+	
+/*	@Override
+	public float getSmeltingExperience(ItemStack itemStack) {
+		// clamp to the valid range
+		return Math.min(1.0f, Math.max(material.getOreSmeltXP(), 0.0f));
+	}*/
 }

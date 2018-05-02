@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -376,7 +377,7 @@ public class Materials {
 	 * @return A Collection of MMDMaterial instances.
 	 */
 	public static Collection<MMDMaterial> getAllMaterials() {
-		return Collections.unmodifiableList(REGISTRY.getValues());
+		return Collections.unmodifiableList(REGISTRY.getEntries().stream().map(ent -> ent.getValue()).collect(Collectors.toList()));
 	}
 
 	/**
