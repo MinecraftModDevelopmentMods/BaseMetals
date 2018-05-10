@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -32,11 +31,7 @@ public class CheeseMath {
 	private static NonNullList<Ingredient> getRecipeIngredients(@Nonnull ItemStack outputItem) {
 		IRecipe target = getRecipeFor(outputItem);
 		
-		if (target != null) {
-			return target.getIngredients();
-		} else {
-			return NonNullList.<Ingredient>create();
-		}
+		return target == null?NonNullList.<Ingredient>create():target.getIngredients();
 	}
 	
 	private static ItemStack getItemStackFromList(List<ItemStack> isl, ItemStack target) {

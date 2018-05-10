@@ -187,8 +187,11 @@ public abstract class Recipes {
 
 		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.SLIME_BLOCK,
 				new ItemStack(net.minecraft.init.Items.SLIME_BALL, 9)); // Slime Block to 9 Slime
-																		// Balls
-
+                                                                        // Balls
+		// Thermal Expansion and others have decided that Obsidian crushes to 4 obsidian dust
+		// Match them instead of being a special snowflake
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.OBSIDIAN, 
+				Materials.getMaterialByName(MaterialNames.OBSIDIAN).getItemStack(Names.POWDER, 4));
 	}
 
 	protected static void initVanillaRecipes() {
