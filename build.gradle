@@ -415,6 +415,7 @@ curseforge {
       releaseType = project.cf_release_type
       addGameVersion(project.mc_version)
       mainArtifact(jar) {
+        displayName = "$project.description $displayVersion"
         relations {
           requiredLibrary 'mmd-orespawn'
           optionalLibrary 'additional-loot-tables'
