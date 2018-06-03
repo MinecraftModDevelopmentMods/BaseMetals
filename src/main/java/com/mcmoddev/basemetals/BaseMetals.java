@@ -3,14 +3,10 @@ package com.mcmoddev.basemetals;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 import com.mcmoddev.basemetals.util.Config;
-import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.integration.IntegrationManager;
-import com.mcmoddev.lib.util.CheeseMath;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

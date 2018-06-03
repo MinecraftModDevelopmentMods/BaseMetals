@@ -2,10 +2,15 @@ package com.mcmoddev.lib.item;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.collect.Multimap;
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item;
 
 /**
  * version of Item that stores a material.
@@ -13,7 +18,7 @@ import net.minecraft.item.ItemStack;
  * @author DrCyano
  *
  */
-public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObject {
+public class GenericMMDItem extends Item implements IMMDObject {
 
 	private int burnTime = 0;
 	private final MMDMaterial material;
@@ -44,7 +49,7 @@ public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObjec
 			return itemStack.getItem().getItemBurnTime(itemStack);
 		}
 	}
-	
+
 /*	@Override
 	public float getSmeltingExperience(ItemStack itemStack) {
 		// clamp to the valid range

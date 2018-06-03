@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -34,8 +35,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraft.item.ItemTool;
 
-public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
+public class ItemMMDSickle extends ItemTool implements IMMDObject {
 
 	public static final ImmutableSet<Material> vanilla_materials = ImmutableSet.of(Material.WEB,
 			Material.LEAVES, Material.PLANTS, Material.VINE, Material.GOURD, Material.CACTUS);
@@ -51,7 +53,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	 * @param material
 	 */
 	public ItemMMDSickle(final MMDMaterial material) {
-		super(material);
+		super(Materials.getToolMaterialFor(material), null);
 		this.efficiency = material.getToolEfficiency();
 		this.setMaxDamage(material.getToolDurability());
 		this.material = material;
@@ -215,8 +217,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	@SuppressWarnings("unused")
 	public Multimap<String, AttributeModifier> getItemAttributeModifiers(
 			final EntityEquipmentSlot equipmentSlot) {
-		final Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(
-				equipmentSlot, ItemStack.EMPTY);
+		final Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
 
 		// XXX: We drop the returns in booleans because it makes findbugs happy, maybe we should do
 		// something with them?
