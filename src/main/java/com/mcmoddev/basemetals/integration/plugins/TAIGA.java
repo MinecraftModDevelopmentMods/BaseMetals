@@ -6,7 +6,7 @@ import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TAIGA.PLUGIN_MODID)
-public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implements IIntegration {
+public final class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implements IIntegration {
 
 	@Override
 	public void init() {

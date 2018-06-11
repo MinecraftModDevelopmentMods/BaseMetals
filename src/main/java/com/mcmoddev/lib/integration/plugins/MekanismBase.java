@@ -156,7 +156,7 @@ public class MekanismBase implements IIntegration {
 			@Nonnull final ItemStack outputItem) {
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		// TODO - Check
+		// TODO: Check
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setString(INFUSE_TYPE, infuse);
 		recipeTag.setInteger(INFUSE_AMOUNT, amount);
@@ -319,7 +319,7 @@ public class MekanismBase implements IIntegration {
 
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		// TODO - Check
+		// TODO: Check
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
 
@@ -337,6 +337,7 @@ public class MekanismBase implements IIntegration {
 		// TODO - Check
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
+
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "CombinerRecipe", recipeTag);
 	}
 
@@ -349,7 +350,7 @@ public class MekanismBase implements IIntegration {
 		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), outputGasQty);
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		// TODO - Check
+		// TODO: Check
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputGasStack.write(new NBTTagCompound()));
 
@@ -367,7 +368,7 @@ public class MekanismBase implements IIntegration {
 		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), outputGasQty);
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		// TODO
+		// TODO: Check
 		recipeTag.setTag(LEFT_INPUT, leftInputGasStack.write(new NBTTagCompound()));
 		recipeTag.setTag(RIGHT_INPUT, rightInputGasStack.write(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputGasStack.write(new NBTTagCompound()));
@@ -383,7 +384,7 @@ public class MekanismBase implements IIntegration {
 
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		// TODO - Check
+		// TODO: Check
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputItem.writeToNBT(new NBTTagCompound()));
 
@@ -399,7 +400,7 @@ public class MekanismBase implements IIntegration {
 
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		// TODO - Check
+		// TODO: Check
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(PRIMARY_OUTPUT, primaryOutput.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(SECONDARY_OUTPUT, secondaryOutput.writeToNBT(new NBTTagCompound()));
@@ -420,7 +421,7 @@ public class MekanismBase implements IIntegration {
 				rightOutputGasQty);
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		// TODO - check
+		// TODO: Check
 		recipeTag.setTag(INPUT, inputFluid.writeToNBT(new NBTTagCompound()));
 		recipeTag.setDouble("energyUsage", energy);
 		recipeTag.setTag(LEFT_OUTPUT, leftOutput.write(new NBTTagCompound()));
@@ -438,7 +439,7 @@ public class MekanismBase implements IIntegration {
 				outputFluidQty);
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		// TODO - Check
+		// TODO: Check
 		recipeTag.setTag(INPUT, inputFluid.writeToNBT(new NBTTagCompound()));
 		recipeTag.setTag(OUTPUT, outputFluid.writeToNBT(new NBTTagCompound()));
 
@@ -452,7 +453,7 @@ public class MekanismBase implements IIntegration {
 		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), outputGasQty);
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
-		// TODO - Check
+		// TODO: Check
 		recipeTag.setTag(GAS_INPUT, inputGasStack.write(new NBTTagCompound()));
 		recipeTag.setTag(GAS_OUTPUT, outputGasStack.write(new NBTTagCompound()));
 

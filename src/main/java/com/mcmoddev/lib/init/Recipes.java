@@ -818,10 +818,15 @@ public abstract class Recipes {
 			tinyDustIngredients[i] = String.format("%s%s", Oredicts.DUST_TINY, oreDictName);
 		}
 
-		GameRegistry.addRecipe(new ShapelessOreRecipe(material.getItemStack(Names.BLEND, outputQty),
-				dustIngredients));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(
-				material.getItemStack(Names.SMALLBLEND, outputQty), tinyDustIngredients));
+		if (material.hasItem(Names.BLEND)) {
+			GameRegistry.addRecipe(
+					new ShapelessOreRecipe(material.getItemStack(Names.BLEND, outputQty),
+					dustIngredients));
+		}
+		if (material.hasItem(Names.SMALLBLEND)) {
+			GameRegistry.addRecipe(new ShapelessOreRecipe(
+					material.getItemStack(Names.SMALLBLEND, outputQty), tinyDustIngredients));
+		}
 	}
 
 	protected static void addSimpleAlloyRecipe(@Nonnull final String materialName,
@@ -836,11 +841,16 @@ public abstract class Recipes {
 		final String oredict1 = StringUtils.capitalize(oredict1In);
 		final String oredict2 = StringUtils.capitalize(oredict2In);
 
-		GameRegistry.addRecipe(new ShapelessOreRecipe(material.getItemStack(Names.BLEND, outputQty),
-				Oredicts.DUST + oredict1, Oredicts.DUST + oredict2));
-		GameRegistry.addRecipe(
-				new ShapelessOreRecipe(material.getItemStack(Names.SMALLBLEND, outputQty),
-						Oredicts.DUST_TINY + oredict1, Oredicts.DUST_TINY + oredict2));
+		if (material.hasItem(Names.BLEND)) {
+			GameRegistry.addRecipe(
+					new ShapelessOreRecipe(material.getItemStack(Names.BLEND, outputQty),
+					Oredicts.DUST + oredict1, Oredicts.DUST + oredict2));
+		}
+		if (material.hasItem(Names.SMALLBLEND)) {
+			GameRegistry.addRecipe(
+					new ShapelessOreRecipe(material.getItemStack(Names.SMALLBLEND, outputQty),
+							Oredicts.DUST_TINY + oredict1, Oredicts.DUST_TINY + oredict2));
+		}
 	}
 
 	/**

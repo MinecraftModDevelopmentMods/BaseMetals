@@ -5,7 +5,6 @@ import java.util.List;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

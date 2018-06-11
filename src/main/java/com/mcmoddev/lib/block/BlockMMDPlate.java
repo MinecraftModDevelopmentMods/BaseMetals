@@ -249,7 +249,6 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 			final BlockPos pos, final AxisAlignedBB entityBox,
 			final List<AxisAlignedBB> collidingBoxes, @Nullable final Entity entityIn,
 			final boolean isActualState) {
-//		final EnumFacing orientation = worldIn.getBlockState(pos).getValue(FACING);
 		final EnumFacing orientation = state.getValue(FACING);
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, BOXES[orientation.ordinal()]);
 	}

@@ -9,7 +9,6 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import cofh.api.util.ThermalExpansionHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 //import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -97,20 +96,16 @@ public class ThermalExpansionBase implements IIntegration {
 		 */
 		final int ENERGY_ORE = 4000;
 		final int ENERGY_INGOT = 2000;
-		ItemStack inputOre = ItemStack.EMPTY;
-		ItemStack inputIngot = ItemStack.EMPTY;
+		final ItemStack inputOre = material.getBlockItemStack(Names.ORE);
+		final ItemStack inputIngot = material.getItemStack(Names.INGOT);
 		final ItemStack outputDust = material.getItemStack(Names.POWDER);
-		if (material.hasBlock(Names.ORE) && (material.getBlock(Names.ORE) != null)) {
-			inputOre = material.getBlockItemStack(Names.ORE);
-		}
-		if (material.hasItem(Names.INGOT) && (material.getItem(Names.INGOT) != null)) {
-			inputIngot = material.getItemStack(Names.INGOT);
-		}
-		if (!inputOre.isEmpty()) {
-			addPulverizerRecipe(ENERGY_ORE, inputOre, outputDust);
-		}
-		if (!inputIngot.isEmpty()) {
-			addPulverizerRecipe(ENERGY_INGOT, inputIngot, outputDust);
+		if (material.hasItem(Names.POWDER)) {
+			if (material.hasBlock(Names.ORE)) {
+				addPulverizerRecipe(ENERGY_ORE, inputOre, outputDust);
+			}
+			if (material.hasItem(Names.INGOT)) {
+				addPulverizerRecipe(ENERGY_INGOT, inputIngot, outputDust);
+			}
 		}
 	}
 
@@ -130,22 +125,22 @@ public class ThermalExpansionBase implements IIntegration {
 		final int ENERGY_ORE = 2000;
 		final int ENERGY_DUST = 1400;
 		ItemStack ore;
-		if (material.hasBlock(Names.ORE) && (material.getBlock(Names.ORE) != null)) {
+		if (material.hasBlock(Names.ORE)) {
 			ore = material.getBlockItemStack(Names.ORE, 1);
-		} else if (material.hasItem(Names.BLEND) && (material.getItem(Names.BLEND) != null)) {
+		} else if (material.hasItem(Names.BLEND)) {
 			ore = material.getItemStack(Names.BLEND, 1);
 		} else {
 			return;
 		}
 
-		if ((!material.hasItem(Names.INGOT)) || (material.getItem(Names.INGOT) == null)) {
+		if (!material.hasItem(Names.INGOT)) {
 			return;
 		}
 
 		if (material.hasItem(Names.INGOT)) {
 			final ItemStack ingot = material.getItemStack(Names.INGOT, 1);
 			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
-			if (material.hasItem(Names.POWDER) && (material.getItem(Names.POWDER) != null)) {
+			if (material.hasItem(Names.POWDER)) {
 				final ItemStack dust = material.getItemStack(Names.POWDER, 1);
 				ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
 			}
@@ -175,7 +170,7 @@ public class ThermalExpansionBase implements IIntegration {
 		final FluidStack baseFluid = FluidRegistry.getFluidStack(materialName, 144);
 		final FluidStack nuggetFluid = FluidRegistry.getFluidStack(materialName, 16);
 
-		if ((material.hasBlock(Names.ORE)) && (material.getBlock(Names.ORE) != null)) {
+		if (material.hasBlock(Names.ORE)) {
 			final ItemStack ore = material.getBlockItemStack(Names.ORE);
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ore, oreFluid);
 		}
@@ -188,10 +183,9 @@ public class ThermalExpansionBase implements IIntegration {
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dust, baseFluid);
 		}
 
-		// TODO: Can we getBlockItemStack instead?
 		if (material.hasBlock(Names.PLATE)) {
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY,
-					new ItemStack(Item.getItemFromBlock(material.getBlock(Names.PLATE))),
+					material.getBlockItemStack(Names.PLATE),
 					baseFluid);
 		}
 

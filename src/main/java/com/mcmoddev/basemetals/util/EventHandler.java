@@ -185,11 +185,12 @@ public class EventHandler {
 			return;
 		}
 
-		final GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
+		final Minecraft minecraft = Minecraft.getMinecraft();
+		final GuiScreen guiscreen = minecraft.currentScreen;
 		if (guiscreen == null) {
 			return;
 		}
-		final FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
+		final FontRenderer fontRender = minecraft.fontRenderer;
 		final int y = (guiscreen.height / 100) * 2;
 		int x = (guiscreen.width / 2);
 

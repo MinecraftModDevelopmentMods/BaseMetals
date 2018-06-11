@@ -41,7 +41,7 @@ public class IC2Base implements IIntegration {
 				1);
 		final ItemStack casing = material.getItemStack(Names.CASING, 2);
 
-		if (plate.isEmpty()) {
+		if (!material.hasItem(Names.PLATE)) {
 			return;
 		}
 
@@ -75,11 +75,11 @@ public class IC2Base implements IIntegration {
 		final IRecipeInput inputOre = Recipes.inputFactory.forOreDict(Oredicts.ORE + oreDictName);
 		final IRecipeInput inputDensePlate = Recipes.inputFactory
 				.forOreDict(Oredicts.PLATE_DENSE + oreDictName);
-		if (!material.getItemStack(Names.CRUSHED).isEmpty()) {
+		if (material.hasItem(Names.CRUSHED)) {
 			Recipes.macerator.addRecipe(inputOre, null, false,
 					material.getItemStack(Names.CRUSHED, 2));
 		}
-		if (!material.getItemStack(Names.POWDER).isEmpty()) {
+		if (material.hasItem(Names.POWDER)) {
 			Recipes.macerator.addRecipe(inputDensePlate, null, false,
 					material.getItemStack(Names.POWDER, 8));
 		}
@@ -101,9 +101,8 @@ public class IC2Base implements IIntegration {
 				.forOreDict(Oredicts.CRUSHED + oreDictName);
 		final NBTTagCompound metadata = new NBTTagCompound();
 		metadata.setInteger("amount", 1000);
-		if (!(material.getItemStack(Names.CRUSHED_PURIFIED).isEmpty())) {
-			if (material.hasItem(Names.SMALLPOWDER)
-					&& !material.getItemStack(Names.SMALLPOWDER).isEmpty()) {
+		if ((material.hasItem(Names.CRUSHED_PURIFIED))) {
+			if (material.hasItem(Names.SMALLPOWDER)) {
 				Recipes.oreWashing.addRecipe(inputOre, metadata, false,
 						material.getItemStack(Names.CRUSHED_PURIFIED),
 						material.getItemStack(Names.SMALLPOWDER, 2));
@@ -127,8 +126,8 @@ public class IC2Base implements IIntegration {
 				.forOreDict(Oredicts.CRUSHED + oreDictName);
 		final NBTTagCompound metadata = new NBTTagCompound();
 		metadata.setInteger("minHeat", temp);
-		if (!((material.getItemStack(Names.POWDER).isEmpty())
-				|| (material.getItemStack(Names.SMALLPOWDER).isEmpty()))) {
+		if (((material.hasItem(Names.POWDER))
+				&& (material.hasItem(Names.SMALLPOWDER)))) {
 			Recipes.centrifuge.addRecipe(inputOreCP, metadata, false,
 					material.getItemStack(Names.POWDER),
 					material.getItemStack(Names.SMALLPOWDER, 2));
@@ -160,23 +159,15 @@ public class IC2Base implements IIntegration {
 		final ItemStack outputCasing = material.getItemStack(Names.CASING, 2);
 		final ItemStack outputFence = material.getBlockItemStack(Names.FENCE, 1);
 
-		if (!(outputPlate.isEmpty())) {
+		if (material.hasBlock(Names.PLATE)) {
 			Recipes.metalformerRolling.addRecipe(inputIngot, null, false, outputPlate);
-		} else {
-			BaseMetals.logger.fatal(
-					"Material %s has no plate (getBlockItemStack(Names.PLATE, 1).isEmpty()",
-					material.getCapitalizedName());
 		}
 
-		if (!(outputCasing.isEmpty())) {
+		if (material.hasItem(Names.CASING)) {
 			Recipes.metalformerRolling.addRecipe(inputPlate, null, false, outputCasing);
-		} else {
-			BaseMetals.logger.fatal(
-					"Material %s has no casing (getItemStack(Names.CASING, 2).isEmpty()",
-					material.getCapitalizedName());
 		}
 
-		if ((!outputFence.isEmpty())) {
+		if (material.hasBlock(Names.FENCE)) {
 			Recipes.metalformerExtruding.addRecipe(inputCasing, null, false, outputFence);
 		}
 	}
@@ -190,8 +181,7 @@ public class IC2Base implements IIntegration {
 		final IRecipeInput inputIngot = Recipes.inputFactory
 				.forOreDict(Oredicts.PLATE + oreDictName, 9);
 		final ItemStack outputDensePlate = material.getItemStack(Names.DENSE_PLATE);
-		if (!(outputDensePlate.isEmpty()) && ((material.hasItem(Names.PLATE))
-				&& !(material.getItemStack(Names.PLATE).isEmpty()))) {
+		if ((material.hasItem(Names.DENSE_PLATE)) && (material.hasItem(Names.PLATE))) {
 			Recipes.compressor.addRecipe(inputIngot, null, false, outputDensePlate);
 		}
 	}

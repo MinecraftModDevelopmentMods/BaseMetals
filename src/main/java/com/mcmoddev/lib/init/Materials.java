@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.common.collect.Lists;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.SharedStrings;
@@ -52,6 +51,7 @@ public class Materials {
 	 *
 	 */
 	public static void init() {
+		// Default Constructor
 	}
 
 	/**
@@ -404,10 +404,7 @@ public class Materials {
 	 */
 	public static boolean hasMaterial(@Nonnull final String materialName) {
 		final MMDMaterial material = Materials.getMaterialByName(materialName);
-		if ((material.getName().equals(materialName))
-				&& (ConfigBase.Options.isMaterialEnabled(materialName))) {
-			return true;
-		}
-		return false;
+		return ((material.getName().equals(materialName))
+				&& (ConfigBase.Options.isMaterialEnabled(materialName)));
 	}
 }

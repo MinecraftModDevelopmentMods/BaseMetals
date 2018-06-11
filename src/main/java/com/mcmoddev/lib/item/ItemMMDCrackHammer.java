@@ -102,7 +102,6 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		if (facing != EnumFacing.UP) {
 			return EnumActionResult.PASS;
 		}
-		/* List<EntityItem> entities = */
 		final AxisAlignedBB boundingBox = new AxisAlignedBB(coord.getX(), coord.getY() + 1,
 				coord.getZ(), coord.getX() + 1, coord.getY() + 2, coord.getZ() + 1);
 		final List<EntityItem> entities = w.getEntitiesWithinAABB(EntityItem.class, boundingBox)
@@ -215,7 +214,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 
 	@Override
 	public ToolMaterial getToolMaterial() {
-		return toolMaterial;
+		return this.toolMaterial;
 	}
 
 	@Override

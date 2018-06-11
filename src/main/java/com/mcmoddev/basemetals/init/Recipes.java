@@ -40,17 +40,10 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 	protected static void initVanillaRecipes() {
 		if (!Options.disableAllHammerRecipes()) {
 			if (Options.isMaterialEnabled(MaterialNames.WOOD)) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(
-						Materials.getMaterialByName(MaterialNames.WOOD)
-								.getItemStack(Names.CRACKHAMMER),
-						"x", "/", "/", 'x', Oredicts.LOG_WOOD, '/', Oredicts.STICK_WOOD));
+				crackHammerHelper(MaterialNames.WOOD, Oredicts.LOG_WOOD);
 			}
 			if (Options.isMaterialEnabled(MaterialNames.STONE)) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(
-						Materials.getMaterialByName(MaterialNames.STONE)
-								.getItemStack(Names.CRACKHAMMER),
-						"x", "/", "/", 'x', net.minecraft.init.Blocks.STONEBRICK, '/',
-						Oredicts.STICK_WOOD));
+				crackHammerHelper(MaterialNames.STONE, net.minecraft.init.Blocks.STONEBRICK);
 			}
 		}
 
@@ -60,6 +53,16 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 		if (Materials.hasMaterial(MaterialNames.COAL)) {
 			coalCharcoalHelper(MaterialNames.COAL);
+		}
+	}
+
+	private static void crackHammerHelper(String materialName, Object headPart) {
+		MMDMaterial material = Materials.getMaterialByName(materialName);
+		if (material.hasItem(Names.CRACKHAMMER)) {
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					material.getItemStack(Names.CRACKHAMMER),
+					"x", "/", "/", 'x', headPart, '/',
+					Oredicts.STICK_WOOD));
 		}
 	}
 

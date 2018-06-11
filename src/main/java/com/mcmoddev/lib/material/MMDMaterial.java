@@ -79,7 +79,7 @@ public class MMDMaterial {
 	private final boolean isBeaconBase;
 
 	/**
-	 * Whether or not this material has a blend that can be smelted to produce. it
+	 * Whether or not this material has a blend that can be smelted to produce it.
 	 */
 	private final boolean hasBlend;
 
@@ -558,7 +558,7 @@ public class MMDMaterial {
 	 */
 	@Nullable
 	public Item getItem(final String name) {
-		if (this.items.containsKey(name)) {
+		if (this.hasItem(name)) {
 			return this.items.get(name).getItem();
 		}
 		return null;
@@ -577,7 +577,7 @@ public class MMDMaterial {
 	}
 
 	public ItemStack getItemStack(final String name, final int amount) {
-		if ((!this.hasItem(name)) || (this.items.get(name) == null)) {
+		if (!this.hasItem(name)) {
 			return ItemStack.EMPTY;
 		}
 
@@ -610,7 +610,7 @@ public class MMDMaterial {
 	 */
 	@Nullable
 	public Block getBlock(final String name) {
-		if (this.blocks.containsKey(name)) {
+		if (this.hasBlock(name)) {
 			return this.blocks.get(name);
 		}
 		return null;
@@ -621,7 +621,7 @@ public class MMDMaterial {
 	}
 
 	public ItemStack getBlockItemStack(final String name) {
-		return new ItemStack(this.getBlock(name), 1);
+		return this.getBlockItemStack(name, 1);
 	}
 
 	public ItemStack getBlockItemStack(final Names name, final int amount) {
@@ -629,6 +629,9 @@ public class MMDMaterial {
 	}
 
 	public ItemStack getBlockItemStack(final String name, final int amount) {
+		if (!this.hasBlock(name)) {
+			return ItemStack.EMPTY;
+		}
 		return new ItemStack(this.getBlock(name), amount);
 	}
 

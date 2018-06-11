@@ -12,7 +12,6 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 
 /**
  * This class initializes all blocks in Base Metals.

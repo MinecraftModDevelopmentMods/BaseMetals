@@ -10,7 +10,7 @@ public class SharedStrings {
 	public static final String CLIENTPROXY = "ClientProxy";
 	public static final String SERVERPROXY = "ServerProxy";
 	public static final String ORESPAWN_MODID = "orespawn";
-	public static final String ORESPAWN_VERSION = "3.2.0";
+	public static final String ORESPAWN_VERSION = "3.2.2";
 	public static final String ORESPAWN_MISSING_TEXT = "MMD Ore Spawn Mod (fallback generator disabled, MMD OreSpawn enabled)";
 	public static final String TAB_BLOCKS = "blocks";
 	public static final String TAB_ITEMS = "items";

@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -25,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
@@ -35,19 +37,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 
-public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
+public class ItemMMDSickle extends ItemTool implements IMMDObject {
 
-	public static final ImmutableSet<Material> vanilla_materials = ImmutableSet.of(Material.WEB,
+	private static final ImmutableSet<Material> vanilla_materials = ImmutableSet.of(Material.WEB,
 			Material.LEAVES, Material.PLANTS, Material.VINE, Material.GOURD, Material.CACTUS);
 
 	private final MMDMaterial material;
 	private final int actionDiameter;// = 3;
-	private final float efficiencyOnProperMaterial;
 	private float attackDamage;
-	private float attackSpeed;
 
 	public ItemMMDSickle(final MMDMaterial material) {
-		super(material);
+		super(Materials.getToolMaterialFor(material), null);
 		this.efficiencyOnProperMaterial = material.getToolEfficiency();
 		this.setMaxDamage(material.getToolDurability());
 		this.material = material;
@@ -61,7 +61,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 
 	@Override
 	public float getStrVsBlock(final ItemStack stack, final IBlockState state) {
-		for (final String type : getToolClasses(stack)) {
+		for (final String type : this.getToolClasses(stack)) {
 			if (state.getBlock().isToolEffective(type, state)) {
 				return this.efficiencyOnProperMaterial;
 			}
@@ -72,7 +72,8 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	@Override
 	public boolean onBlockStartBreak(final ItemStack stack, final BlockPos pos,
 			final EntityPlayer player) {
-		this.getEffectedBlocks(pos, player.getEntityWorld(), player, stack, this.actionDiameter).stream()
+		this.getEffectedBlocks(pos, player.getEntityWorld(), player, stack, this.actionDiameter)
+				.stream()
 				.filter(entityPos -> this
 						.isEffective(player.getEntityWorld().getBlockState(entityPos)))
 				.forEach(entityPos -> this.breakBlock(stack, player.getEntityWorld(), player, pos,

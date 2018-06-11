@@ -80,7 +80,8 @@ public abstract class Fluids {
 
 		material.setFluid(fluid);
 
-		return fluidRegistry.put(material.getName(), fluid);
+		fluidRegistry.put(material.getName(), fluid);
+		return fluid;
 	}
 
 	@Nullable
@@ -125,8 +126,8 @@ public abstract class Fluids {
 		material.addNewItem("fluidItemBlock", itemBlock);
 
 		material.setFluidBlock(block);
-
-		return fluidBlockRegistry.put(name, block);
+		fluidBlockRegistry.put(name, block);
+		return block;
 	}
 
 	/**

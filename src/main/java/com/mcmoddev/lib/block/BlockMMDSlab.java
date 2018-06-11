@@ -17,6 +17,11 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ *
+ * @author Jasmine Iwanek
+ *
+ */
 public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDObject {
 
 	public static final PropertyEnum<BlockMMDSlab.Variant> VARIANT = PropertyEnum.<BlockMMDSlab.Variant>create(

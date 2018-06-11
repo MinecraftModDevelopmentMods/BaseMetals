@@ -49,12 +49,7 @@ public class ItemMMDShield extends net.minecraft.item.ItemShield implements IMMD
 
 	@Override
 	public String getItemStackDisplayName(final ItemStack stack) {
-//		if (stack.getSubCompound("BlockEntityTag") != null) {
-//			final String coloredName = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
-//			return new TextComponentTranslation(String.format(coloredName)).getFormattedText();
-//		} else {
-			final String name = String.format("%s.name", this.getUnlocalizedName());
-			return new TextComponentTranslation(name).getFormattedText();
-//		}
+		final String name = String.format("%s.name", this.getUnlocalizedName());
+		return new TextComponentTranslation(name).getFormattedText();
 	}
 }
