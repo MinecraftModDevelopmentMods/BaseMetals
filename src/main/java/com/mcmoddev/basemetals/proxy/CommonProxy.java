@@ -21,6 +21,7 @@ import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.oregen.FallbackGenerator;
 import com.mcmoddev.lib.oregen.FallbackGeneratorData;
+import com.mcmoddev.lib.util.ConfigBase;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -36,7 +37,7 @@ import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
 /**
- * Base Metals Common Proxy
+ * Base Metals Common Proxy.
  *
  * @author Jasmine Iwanek
  *
@@ -46,10 +47,10 @@ public class CommonProxy {
 	private boolean allsGood = false;
 
 	public boolean allsGood() {
-		return allsGood;
+		return this.allsGood;
 	}
 
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(final FMLPreInitializationEvent event) {
 
 		Config.init();
 
@@ -76,31 +77,33 @@ public class CommonProxy {
 
 		VillagerTrades.init();
 
-		// FMLInterModComms.sendFunctionMessage("orespawn", "api", "com.mcmoddev.orespawn.BaseMetalsOreSpawn");
-
 		IntegrationManager.INSTANCE.preInit(event);
 		IntegrationManager.INSTANCE.runCallbacks("preInit");
-		allsGood = true;
+		this.allsGood = true;
 	}
 
-	public void onRemap(FMLMissingMappingsEvent event) {
+	public void onRemap(final FMLMissingMappingsEvent event) {
 		for (final MissingMapping mapping : event.get()) {
 			if (mapping.resourceLocation.getResourceDomain().equals(BaseMetals.MODID)) {
 				if (mapping.type.equals(GameRegistry.Type.BLOCK)) {
-					if ((Materials.hasMaterial(MaterialNames.MERCURY)) && ("liquid_mercury".equals(mapping.resourceLocation.getResourcePath()))) {
-						mapping.remap(Materials.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
+					if ((Materials.hasMaterial(MaterialNames.MERCURY)) && ("liquid_mercury"
+							.equals(mapping.resourceLocation.getResourcePath()))) {
+						mapping.remap(com.mcmoddev.lib.init.Materials
+								.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
 					}
 				} else if (mapping.type.equals(GameRegistry.Type.ITEM)) {
-					if ((Materials.hasMaterial(MaterialNames.COAL)) && ("carbon_powder".equals(mapping.resourceLocation.getResourcePath()))) {
-						mapping.remap(Materials.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
+					if ((Materials.hasMaterial(MaterialNames.COAL)) && ("carbon_powder"
+							.equals(mapping.resourceLocation.getResourcePath()))) {
+						mapping.remap(com.mcmoddev.lib.init.Materials
+								.getMaterialByName(MaterialNames.COAL).getItem(Names.POWDER));
 					}
 				}
 			}
 		}
 	}
 
-	public void init(FMLInitializationEvent event) {
-		allsGood = false;
+	public void init(final FMLInitializationEvent event) {
+		this.allsGood = false;
 		com.mcmoddev.lib.init.Recipes.init();
 		Recipes.init();
 
@@ -108,33 +111,35 @@ public class CommonProxy {
 		FuelRegistry.register();
 		IntegrationManager.INSTANCE.runCallbacks("init");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
-		allsGood = true;
+		this.allsGood = true;
 
-		// by this point all materials should have been registered both with MMDLib and
-		// Minecraft
-		// move to a separate function - potentially in FallbackGeneratorData - after
-		// the test
-		for (final MMDMaterial material : Materials.getAllMaterials()) {
+		// by this point all materials should have been registered both with MMDLib and Minecraft
+		// move to a separate function - potentially in FallbackGeneratorData - after the test
+		for (final MMDMaterial material : com.mcmoddev.lib.init.Materials.getAllMaterials()) {
 			if (material.hasBlock(Names.ORE)) {
-				FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ORE.toString(),
-						material.getDefaultDimension());
+				FallbackGeneratorData.getInstance().addMaterial(material.getName(),
+						Names.ORE.toString(), material.getDefaultDimension());
 
-				if (material.hasBlock(Names.NETHERORE))
-					FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.NETHERORE.toString(), -1);
+				if (material.hasBlock(Names.NETHERORE)) {
+					FallbackGeneratorData.getInstance().addMaterial(material.getName(),
+							Names.NETHERORE.toString(), -1);
+				}
 
-				if (material.hasBlock(Names.ENDORE))
-					FallbackGeneratorData.getInstance().addMaterial(material.getName(), Names.ENDORE.toString(), 1);
+				if (material.hasBlock(Names.ENDORE)) {
+					FallbackGeneratorData.getInstance().addMaterial(material.getName(),
+							Names.ENDORE.toString(), 1);
+				}
 			}
 		}
 
 		ItemGroups.setupIcons(MaterialNames.STARSTEEL);
 	}
 
-	public void postInit(FMLPostInitializationEvent event) {
-		allsGood = false;
+	public void postInit(final FMLPostInitializationEvent event) {
+		this.allsGood = false;
 		IntegrationManager.INSTANCE.runCallbacks("postInit");
-		Config.postInit();
-		allsGood = true;
+		ConfigBase.postInit();
+		this.allsGood = true;
 		FallbackGeneratorData.getInstance().setup();
 	}
 }

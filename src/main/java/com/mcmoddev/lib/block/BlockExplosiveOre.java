@@ -16,6 +16,6 @@ public class BlockExplosiveOre extends net.minecraft.block.BlockOre {
 	}
 
 	public boolean doesExplode() {
-		return explode;
+		return this.explode;
 	}
 }

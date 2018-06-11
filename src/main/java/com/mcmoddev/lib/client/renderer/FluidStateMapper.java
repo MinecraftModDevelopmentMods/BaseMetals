@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {
 
-	public final ModelResourceLocation location;
+	private final ModelResourceLocation location;
 
 	public FluidStateMapper(final String resourceLocation) {
 		this.location = new ModelResourceLocation(resourceLocation, "fluid");
@@ -28,12 +28,12 @@ public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinit
 	@Nonnull
 	@Override
 	protected ModelResourceLocation getModelResourceLocation(@Nonnull final IBlockState state) {
-		return location;
+		return this.location;
 	}
 
 	@Nonnull
 	@Override
 	public ModelResourceLocation getModelLocation(@Nonnull final ItemStack stack) {
-		return location;
+		return this.location;
 	}
 }

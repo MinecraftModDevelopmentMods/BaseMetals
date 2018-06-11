@@ -23,20 +23,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
- * This class handles all of the recipes for the crack hammer, collectively
- * referred to as crusher recipes (the crack hammer is meant to be equivalent to
- * the pulverizers and rock crushers from mods like Thermal Expansion). Adding a
- * new crusher recipe is as simple as calling one of the
- * addNewCrusherRecipe(...) static functions. To get the recipe(s) for a given
- * block or item, use
+ * This class handles all of the recipes for the crack hammer, collectively referred to as crusher
+ * recipes (the crack hammer is meant to be equivalent to the pulverizers and rock crushers from
+ * mods like Thermal Expansion). Adding a new crusher recipe is as simple as calling one of the
+ * addNewCrusherRecipe(...) static functions. To get the recipe(s) for a given block or item, use
  * CrusherRecipeRegistry.getInstance().getRecipeForInputItem(...) or
- * CrusherRecipeRegistry.getInstance().getRecipesForOutputItem(...). Added
- * crusher recipes will automatically appear in the NEI crusher recipe section.
+ * CrusherRecipeRegistry.getInstance().getRecipesForOutputItem(...). Added crusher recipes will
+ * automatically appear in the NEI crusher recipe section.
  * <p>
- * To see all of the default crusher recipes, look at the source code of the
- * class cyano.basemetals.init.Recipes
+ * To see all of the default crusher recipes, look at the source code of the class
+ * cyano.basemetals.init.Recipes
  * </p>
- * 
+ *
  * @author DrCyano
  *
  */
@@ -52,7 +50,7 @@ public class CrusherRecipeRegistry {
 
 	/**
 	 * Gets a singleton instance of CrusherRecipeRegistry
-	 * 
+	 *
 	 * @return A global instance of CrusherRecipeRegistry
 	 */
 	public static CrusherRecipeRegistry getInstance() {
@@ -69,25 +67,25 @@ public class CrusherRecipeRegistry {
 	}
 
 	/**
-	 * Adds a new crusher recipe (for the crack hammer and other rock crushers)
-	 * where the input item is an OreDictionary name. This means that any item
-	 * registered with the OreDictionary will be converted into the specified
-	 * output item.
-	 * 
+	 * Adds a new crusher recipe (for the crack hammer and other rock crushers) where the input item
+	 * is an OreDictionary name. This means that any item registered with the OreDictionary will be
+	 * converted into the specified output item.
+	 *
 	 * @param oreDictionaryName
 	 *            Name in the ore dictionary (e.g. "logWood")
 	 * @param output
 	 *            The item to create as the result of this crusher recipe.
 	 */
-	public static void addNewCrusherRecipe(final String oreDictionaryName, final ItemStack output) { // preferred method
+	public static void addNewCrusherRecipe(final String oreDictionaryName, final ItemStack output) { // preferred
+																										// method
 		getInstance().addRecipe(new OreDictionaryCrusherRecipe(oreDictionaryName, output));
 	}
 
 	/**
-	 * Adds a new crusher recipe (for the crack hammer and other rock crushers)
-	 * where the input item is specified by an ItemStack. This means that only
-	 * the specified item will be converted into the specified output item.
-	 * 
+	 * Adds a new crusher recipe (for the crack hammer and other rock crushers) where the input item
+	 * is specified by an ItemStack. This means that only the specified item will be converted into
+	 * the specified output item.
+	 *
 	 * @param input
 	 *            Item to be crushed
 	 * @param output
@@ -95,18 +93,21 @@ public class CrusherRecipeRegistry {
 	 */
 	public static void addNewCrusherRecipe(final ItemStack input, final ItemStack output) {
 		if ((input == null) || (output == null)) {
-			BaseMetals.logger.error("%s: Crusher recipe not registered because of null input or output. \n %s", CrusherRecipeRegistry.class, Arrays.toString(Thread.currentThread().getStackTrace()).replace(", ", "\n").replace("[", "").replace("]", ""));
+			BaseMetals.logger.error(
+					"%s: Crusher recipe not registered because of null input or output. \n %s",
+					CrusherRecipeRegistry.class,
+					Arrays.toString(Thread.currentThread().getStackTrace()).replace(", ", "\n")
+							.replace("[", "").replace("]", ""));
 		}
 
 		getInstance().addRecipe(new ArbitraryCrusherRecipe(input, output));
 	}
 
 	/**
-	 * Adds a new crusher recipe (for the crack hammer and other rock crushers)
-	 * where the input item is specified by an Item instance. This means that
-	 * only the specified item will be converted into the specified output item.
-	 * Note that this will assume an item metadata value of 0.
-	 * 
+	 * Adds a new crusher recipe (for the crack hammer and other rock crushers) where the input item
+	 * is specified by an Item instance. This means that only the specified item will be converted
+	 * into the specified output item. Note that this will assume an item metadata value of 0.
+	 *
 	 * @param input
 	 *            Item to be crushed
 	 * @param output
@@ -117,12 +118,11 @@ public class CrusherRecipeRegistry {
 	}
 
 	/**
-	 * Adds a new crusher recipe (for the crack hammer and other rock crushers)
-	 * where the input item is a block. This means that any block of this type
-	 * will be converted into the specified output item. If you want to restrict
-	 * the block inputs to certain metadata values, convert the block into an
-	 * ItemStack instead of providing it as a block instance.
-	 * 
+	 * Adds a new crusher recipe (for the crack hammer and other rock crushers) where the input item
+	 * is a block. This means that any block of this type will be converted into the specified
+	 * output item. If you want to restrict the block inputs to certain metadata values, convert the
+	 * block into an ItemStack instead of providing it as a block instance.
+	 *
 	 * @param input
 	 *            Block to be crushed
 	 * @param output
@@ -130,19 +130,17 @@ public class CrusherRecipeRegistry {
 	 */
 	public static void addNewCrusherRecipe(final Block input, final ItemStack output) {
 		getInstance().addRecipe(new ArbitraryCrusherRecipe(input, output));
-/*
-{
-			@Override
-			public boolean isValidInput(ItemStack in) {
-				return input.equals(Block.getBlockFromItem(in.getItem()));
-			}
-		});
-*/
+		/*
+		 * {
+		 * 
+		 * @Override public boolean isValidInput(ItemStack in) { return
+		 * input.equals(Block.getBlockFromItem(in.getItem())); } });
+		 */
 	}
 
 	/**
-	 * Clears the fast-look-up cache. If recipes are added after the game
-	 * starts, call this method to ensure that the new recipes will be used.
+	 * Clears the fast-look-up cache. If recipes are added after the game starts, call this method
+	 * to ensure that the new recipes will be used.
 	 */
 	public void clearCache() {
 		this.recipeByInputCache.clear();
@@ -151,26 +149,25 @@ public class CrusherRecipeRegistry {
 
 	/**
 	 * This is the universal method for adding new crusher recipes
-	 * 
+	 *
 	 * @param crusherRecipe
 	 *            An implementation of the ICrusherRecipe interface.
 	 */
-	public void addRecipe(ICrusherRecipe crusherRecipe) {
+	public void addRecipe(final ICrusherRecipe crusherRecipe) {
 		this.recipes.add(crusherRecipe);
 	}
 
 	/**
-	 * Gets a list of crusher recipes whose output is equal to the specified
-	 * output item. If there are no such recipes, then null is returned (instead
-	 * of an empty list).
-	 * 
+	 * Gets a list of crusher recipes whose output is equal to the specified output item. If there
+	 * are no such recipes, then null is returned (instead of an empty list).
+	 *
 	 * @param output
 	 *            The item resulting from the crushing of another item or block
-	 * @return A list of recipes producing the requested item, or null if no
-	 *         such recipes exist
+	 * @return A list of recipes producing the requested item, or null if no such recipes exist
 	 */
-	public List<ICrusherRecipe> getRecipesForOutputItem(ItemStack output) {
-		final Integer hashKey = output.getItem().getUnlocalizedName().hashCode() + (56 * output.getMetadata());
+	public List<ICrusherRecipe> getRecipesForOutputItem(final ItemStack output) {
+		final Integer hashKey = output.getItem().getUnlocalizedName().hashCode()
+				+ (56 * output.getMetadata());
 		if (this.recipeByOutputCache.containsKey(hashKey)) {
 			final List<ICrusherRecipe> recipeCache = this.recipeByOutputCache.get(hashKey);
 			if (recipeCache.isEmpty()) {
@@ -204,30 +201,29 @@ public class CrusherRecipeRegistry {
 	}
 
 	/**
-	 * Gets a list of crusher recipes whose output is equal to the specified
-	 * output item. If there are no such recipes, then null is returned (instead
-	 * of an empty list).
-	 * 
+	 * Gets a list of crusher recipes whose output is equal to the specified output item. If there
+	 * are no such recipes, then null is returned (instead of an empty list).
+	 *
 	 * @param output
 	 *            The block resulting from the crushing of another item or block
-	 * @return A list of recipes producing the requested item, or null if no
-	 *         such recipes exist
+	 * @return A list of recipes producing the requested item, or null if no such recipes exist
 	 */
-	public List<ICrusherRecipe> getRecipesForOutputItem(IBlockState output) {
-		return getRecipesForOutputItem(new ItemStack(output.getBlock(), 1, output.getBlock().getMetaFromState(output)));
+	public List<ICrusherRecipe> getRecipesForOutputItem(final IBlockState output) {
+		return this.getRecipesForOutputItem(
+				new ItemStack(output.getBlock(), 1, output.getBlock().getMetaFromState(output)));
 	}
 
 	/**
-	 * Gets the recipe for crushing the specified item, or null if ther is no
-	 * recipe accepting the item.
-	 * 
+	 * Gets the recipe for crushing the specified item, or null if ther is no recipe accepting the
+	 * item.
+	 *
 	 * @param input
 	 *            The item/block to crush
-	 * @return The crusher recipe for crushing this item/block, or null if no
-	 *         such recipe exists
+	 * @return The crusher recipe for crushing this item/block, or null if no such recipe exists
 	 */
-	public ICrusherRecipe getRecipeForInputItem(ItemStack input) {
-		final Integer hashKey = input.getItem().getUnlocalizedName().hashCode() + (56 * input.getMetadata());
+	public ICrusherRecipe getRecipeForInputItem(final ItemStack input) {
+		final Integer hashKey = input.getItem().getUnlocalizedName().hashCode()
+				+ (56 * input.getMetadata());
 		if (this.recipeByInputCache.containsKey(hashKey)) {
 			return this.recipeByInputCache.get(hashKey);
 		} else {
@@ -250,21 +246,21 @@ public class CrusherRecipeRegistry {
 	}
 
 	/**
-	 * Gets the recipe for crushing the specified item, or null if there is no
-	 * recipe accepting the item.
-	 * 
+	 * Gets the recipe for crushing the specified item, or null if there is no recipe accepting the
+	 * item.
+	 *
 	 * @param input
 	 *            The item/block to crush
-	 * @return The crusher recipe for crushing this item/block, or null if no
-	 *         such recipe exists
+	 * @return The crusher recipe for crushing this item/block, or null if no such recipe exists
 	 */
-	public ICrusherRecipe getRecipeForInputItem(IBlockState input) {
-		return getRecipeForInputItem(new ItemStack(input.getBlock(), 1, input.getBlock().getMetaFromState(input)));
+	public ICrusherRecipe getRecipeForInputItem(final IBlockState input) {
+		return this.getRecipeForInputItem(
+				new ItemStack(input.getBlock(), 1, input.getBlock().getMetaFromState(input)));
 	}
 
 	/**
 	 * Gets all registered crusher recipes
-	 * 
+	 *
 	 * @return An unmodifiable list of all registered crusher recipes
 	 */
 	public Collection<ICrusherRecipe> getAllRecipes() {

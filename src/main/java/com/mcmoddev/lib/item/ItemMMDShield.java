@@ -29,7 +29,8 @@ public class ItemMMDShield extends net.minecraft.item.ItemShield implements IMMD
 	}
 
 	@Override
-	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
+	public void onUpdate(final ItemStack item, final World world, final Entity player,
+			final int inventoryIndex, final boolean isHeld) {
 		MMDItemHelper.doRegeneration(item, world, isHeld, this.material.regenerates());
 	}
 
@@ -48,12 +49,13 @@ public class ItemMMDShield extends net.minecraft.item.ItemShield implements IMMD
 
 	@Override
 	public String getItemStackDisplayName(final ItemStack stack) {
-//		if (stack.getSubCompound("BlockEntityTag", false) != null) {
-//			final String coloredName = String.format("%s.%s.name", this.getUnlocalizedName(), ItemBanner.getBaseColor(stack));
-//			return new TextComponentTranslation(String.format(coloredName)).getFormattedText();
-//		} else {
-			final String name = String.format("%s.name", this.getUnlocalizedName());
-			return new TextComponentTranslation(name).getFormattedText();
-//		}
+		// if (stack.getSubCompound("BlockEntityTag", false) != null) {
+		// final String coloredName = String.format("%s.%s.name", this.getUnlocalizedName(),
+		// ItemBanner.getBaseColor(stack));
+		// return new TextComponentTranslation(String.format(coloredName)).getFormattedText();
+		// } else {
+		final String name = String.format("%s.name", this.getUnlocalizedName());
+		return new TextComponentTranslation(name).getFormattedText();
+		// }
 	}
 }

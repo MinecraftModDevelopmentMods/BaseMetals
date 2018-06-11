@@ -13,32 +13,38 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class LeverInfoController implements IWailaDataProvider {
+public final class LeverInfoController implements IWailaDataProvider {
 
 	@Override
-	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+	public ItemStack getWailaStack(final IWailaDataAccessor accessor,
+			final IWailaConfigHandler config) {
 		return null;
 	}
 
 	@Override
-	public List<String> getWailaHead(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+	public List<String> getWailaHead(final ItemStack itemStack, final List<String> currentTip,
+			final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
 		return currentTip;
 	}
 
 	@Override
-	public List<String> getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		final String redstoneOn = (accessor.getMetadata() & 8) == 0 ? I18n.format("hud.msg.off") : I18n.format("hud.msg.on");
+	public List<String> getWailaBody(final ItemStack itemStack, final List<String> currentTip,
+			final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
+		final String redstoneOn = (accessor.getMetadata() & 8) == 0 ? I18n.format("hud.msg.off")
+				: I18n.format("hud.msg.on");
 		currentTip.add(I18n.format("%s : %s", I18n.format("hud.msg.state"), redstoneOn));
 		return currentTip;
 	}
 
 	@Override
-	public List<String> getWailaTail(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+	public List<String> getWailaTail(final ItemStack itemStack, final List<String> currentTip,
+			final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
 		return currentTip;
 	}
 
 	@Override
-	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+	public NBTTagCompound getNBTData(final EntityPlayerMP player, final TileEntity te,
+			final NBTTagCompound tag, final World world, final BlockPos pos) {
 		return tag;
 	}
 }

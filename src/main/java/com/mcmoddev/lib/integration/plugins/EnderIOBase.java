@@ -2,6 +2,9 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
+
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -11,6 +14,8 @@ import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -56,7 +61,8 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addAlloySmelterRecipe(@Nonnull final String materialName, @Nonnull final int energy) {
+	protected static void addAlloySmelterRecipe(@Nonnull final String materialName,
+			@Nonnull final int energy) {
 		addAlloySmelterRecipe(Materials.getMaterialByName(materialName), null, energy);
 	}
 
@@ -67,7 +73,8 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material, @Nonnull final int energy) {
+	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material,
+			@Nonnull final int energy) {
 		addAlloySmelterRecipe(material, null, energy);
 	}
 
@@ -80,8 +87,9 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addAlloySmelterRecipe(@Nonnull final String materialName, final String outputSecondary, @Nonnull final int energy) {
-			addAlloySmelterRecipe(Materials.getMaterialByName(materialName), outputSecondary, energy);
+	protected static void addAlloySmelterRecipe(@Nonnull final String materialName,
+			final String outputSecondary, @Nonnull final int energy) {
+		addAlloySmelterRecipe(Materials.getMaterialByName(materialName), outputSecondary, energy);
 	}
 
 	/**
@@ -93,7 +101,8 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material, final String outputSecondary, @Nonnull final int energy) {
+	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material,
+			final String outputSecondary, @Nonnull final int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
 		final String capitalizedName = material.getCapitalizedName();
@@ -101,18 +110,32 @@ public class EnderIOBase implements IIntegration {
 		final String input = Oredicts.ORE + capitalizedName;
 		final String output = Oredicts.INGOT + capitalizedName;
 
-		if (!(material.hasOre()))
+		if (!(material.hasOre())) {
 			return; // Only run for Ore types
+		}
 
+		if (!(material.hasBlock(Names.ORE))) {
+			return;
+		}
+
+		if (!(material.hasItem(Names.INGOT))) {
+			return;
+		}
 		// @formatter:off
-		// TODO: account for number="int", exp="float" and chance="float" too
-		final String messageAlloySmelter = String.format( "<recipeGroup name=\"%s\">\n\t"
-															+ "<recipe name=\"%s\" energyCost=\"%d\">\n\t\t"
-																+ "<input>\n\t\t\t<itemStack oreDictionary=\"%s\"/>\n\t\t</input>\n\t\t"
-																+ "<output>\n\t\t\t<itemStack oreDictionary=\"%s\" />\n\t\t</output>\n\t"
-															+ "</recipe>\n</recipeGroup>",
-															ownerModID, material, energy, input, output);
+		// TODO: Account for number="int", exp="float" and chance="float" too
+		String msgSecondary = "";
+		if (outputSecondary != null) {
+			msgSecondary = String.format("<itemStack oreDictionary=\"%s\"/>%n\t\t", outputSecondary);
+		}
+
+		final String messageAlloySmelter = String.format("<recipeGroup name=\"%s\">%n\t"
+				+ "<recipe name=\"%s\" energyCost=\"%d\">%n\t\t"
+				+ "<input>%n\t\t\t<itemStack oreDictionary=\"%s\"/>%n\t\t</input>%n\t\t"
+				+ "<output>%n\t\t\t<itemStack oreDictionary=\"%s\" />%n\t\t%s</output>%n\t"
+				+ "</recipe>%n</recipeGroup>",
+				ownerModID, material, energy, input, output, msgSecondary);
 		// @formatter:on
+		BaseMetals.logger.warn("BMEEIO" + messageAlloySmelter);
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:alloysmelter", messageAlloySmelter);
 	}
 
@@ -132,7 +155,8 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addSagMillRecipe(@Nonnull final String materialName, @Nonnull final int energy) {
+	protected static void addSagMillRecipe(@Nonnull final String materialName,
+			@Nonnull final int energy) {
 		addSagMillRecipe(Materials.getMaterialByName(materialName), null, energy);
 	}
 
@@ -145,7 +169,8 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addSagMillRecipe(@Nonnull final String materialName, final String outputSecondary, @Nonnull final int energy) {
+	protected static void addSagMillRecipe(@Nonnull final String materialName,
+			final String outputSecondary, @Nonnull final int energy) {
 		addSagMillRecipe(Materials.getMaterialByName(materialName), outputSecondary, energy);
 	}
 
@@ -158,9 +183,10 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material, final String outputSecondary, @Nonnull final int energy) {
+	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material,
+			final String outputSecondary, @Nonnull final int energy) {
 		int primaryQty = 2;
-		int secondaryQty = 1;
+		final int secondaryQty = 1;
 
 		if (material.getType() == MaterialType.MINERAL) {
 			primaryQty = 4;
@@ -182,8 +208,11 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addSagMillRecipe(@Nonnull final String materialName, @Nonnull final int primaryQty, @Nonnull final String outputSecondary, @Nonnull final int secondaryQty, @Nonnull final int energy) {
-		addSagMillRecipe(Materials.getMaterialByName(materialName), primaryQty, outputSecondary, secondaryQty, energy);
+	protected static void addSagMillRecipe(@Nonnull final String materialName,
+			@Nonnull final int primaryQty, @Nonnull final String outputSecondary,
+			@Nonnull final int secondaryQty, @Nonnull final int energy) {
+		addSagMillRecipe(Materials.getMaterialByName(materialName), primaryQty, outputSecondary,
+				secondaryQty, energy);
 	}
 
 	/**
@@ -199,7 +228,9 @@ public class EnderIOBase implements IIntegration {
 	 * @param energy
 	 *            How much energy it costs to perform
 	 */
-	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material, @Nonnull final int primaryQty, final String outputSecondary, @Nonnull final int secondaryQty, @Nonnull final int energy) {
+	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material,
+			@Nonnull final int primaryQty, final String outputSecondary,
+			@Nonnull final int secondaryQty, @Nonnull final int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
 		final String materialName = material.getName();
@@ -208,10 +239,18 @@ public class EnderIOBase implements IIntegration {
 		final String input = Oredicts.ORE + capitalizedName;
 
 		String primaryOutput = Oredicts.DUST + capitalizedName;
-		String secondaryOutput = Oredicts.DUST + outputSecondary;
+		String secondaryOutput = Oredicts.DUST + StringUtils.capitalize(outputSecondary);
 		if (material.getType() == MaterialType.GEM) {
 			primaryOutput = Oredicts.GEM + capitalizedName;
-			secondaryOutput = Oredicts.GEM + outputSecondary;
+			secondaryOutput = Oredicts.GEM + StringUtils.capitalize(outputSecondary);
+		}
+
+		if (!(material.hasBlock(Names.ORE))) {
+			return;
+		}
+
+		if ((!(material.hasItem(Names.POWDER))) && (!(material.hasItem(Names.GEM)))) {
+			return;
 		}
 
 		final String primaryChance = "1.0";
@@ -223,30 +262,37 @@ public class EnderIOBase implements IIntegration {
 		// final String rockName = "sandstone";
 		// final String rockName = "netherrack";
 		// final String rockName = "end_stone";
+
 		final int rockQty = 1;
 		final String rockChance = "0.15";
+		// If we had a way to know what the base material was (stone, gravel, endstone, sandstone,
+		// etc...)
+		// we could have this as a 'final' and fill it out right here
 		String messageSecondary = "";
 
-		if (!(material.hasOre()))
+		if (!(material.hasOre())) {
 			return; // Only run for Ore types
+		}
 
-		if (outputSecondary != null)
-			messageSecondary = String.format("<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\" />", secondaryOutput, secondaryQty, secondaryChance);
-			// messageSecondary = "<itemStack oreDictionary=\"" + rockOredict + "\" number=\"" + rockQty + "\" chance=\"" + rockChance + "\" />" +
+		if (outputSecondary != null) {
+			messageSecondary = String.format(
+					"<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>",
+					secondaryOutput, secondaryQty, secondaryChance);
+		}
 
 		// @formatter:off
-		String messageSAGMill = String.format( "<recipeGroup name=\"%s\">\n\t"
-											     +"<recipe name=\"%s\" energyCost=\"%d\">\n\t\t"
-											     	+"<input>\n\t\t\t<itemStack oreDictionary=\"%s\" />\n\t\t</input>\n\t\t"
-											     	+"<output>\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>\n\t\t\t"
-											     		+"%s\n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>\n\t\t\t"
-											     		+"<itemStack modId=\"%s\" itemName=\"%s\" number=\"%d\" chance=\"%s\"/>\n\t\t</output>"
-											     +"</recipe>"
-											    +"</recipeGroup>",
+		final String messageSAGMill = String.format("<recipeGroup name=\"%s\">%n\t"
+											     + "<recipe name=\"%s\" energyCost=\"%d\">%n\t\t"
+											     	+ "<input>%n\t\t\t<itemStack oreDictionary=\"%s\" />%n\t\t</input>%n\t\t"
+											     	+ "<output>%n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>%n\t\t\t"
+											     		+ "%s%n\t\t\t<itemStack oreDictionary=\"%s\" number=\"%d\" chance=\"%s\"/>%n\t\t\t"
+											     		+ "<itemStack modId=\"%s\" itemName=\"%s\" number=\"%d\" chance=\"%s\"/>%n\t\t</output>%n\t"
+											     + "</recipe>%n"
+											    + "</recipeGroup>",
 											    ownerModID, materialName, energy, input, primaryOutput, primaryQty, primaryChance,
-											    messageSecondary, secondaryOutput, secondaryQty, secondaryChance, rockModID, 
-											    rockName, rockQty, rockChance );
-											       
+											    messageSecondary, secondaryOutput, secondaryQty, secondaryChance, rockModID,
+											    rockName, rockQty, rockChance);
+		BaseMetals.logger.warn("BMEEIO\n" + messageSAGMill);
 		// @formatter:on
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "recipe:sagmill", messageSAGMill);
 	}

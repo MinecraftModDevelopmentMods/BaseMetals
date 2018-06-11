@@ -3,8 +3,8 @@ package com.mcmoddev.lib.item;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 /**
- * Nuggets
- * 
+ * Nuggets.
+ *
  * @author DrCyano
  *
  */

@@ -16,7 +16,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
  * @author Jasmine Iwanek
  *
  */
-public class Materials extends com.mcmoddev.lib.init.Materials {
+public final class Materials extends com.mcmoddev.lib.init.Materials {
 
 	private Materials() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -32,29 +32,33 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		// Oreless because our Recipe code can tend to be silly otherwise
 		createVanillaMats();
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.LEAD,
-				MaterialNames.MERCURY, MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.MERCURY,
+				MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
 				MaterialNames.STARSTEEL, MaterialNames.TIN, MaterialNames.ZINC);
 
-		final List<String> alloyMaterials = Arrays.asList(MaterialNames.AQUARIUM, MaterialNames.BRASS,
-				MaterialNames.BRONZE, MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR,
-				MaterialNames.MITHRIL, MaterialNames.PEWTER, MaterialNames.STEEL);
+		final List<String> alloyMaterials = Arrays.asList(MaterialNames.AQUARIUM,
+				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.CUPRONICKEL,
+				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
+				MaterialNames.PEWTER, MaterialNames.STEEL);
 
-		materials.stream().filter(Options::isMaterialEnabled).forEach(name -> createMaterial(name, MaterialType.METAL,
-				getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+		materials.stream().filter(Options::isMaterialEnabled)
+				.forEach(name -> createMaterial(name, MaterialType.METAL, getHardness(name),
+						getStrength(name), getMagic(name), getColor(name)));
 
-		alloyMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createAlloyMaterial(name,
-				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+		alloyMaterials.stream().filter(Options::isMaterialEnabled)
+				.forEach(name -> createAlloyMaterial(name, MaterialType.METAL, getHardness(name),
+						getStrength(name), getMagic(name), getColor(name)));
 
 		// Mod Materials
-		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
-			Materials.getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4)
+		if (hasMaterial(MaterialNames.ADAMANTINE)) {
+			getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4)
 					.setDefaultDimension(-1);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.STARSTEEL)) {
-			Materials.getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
+		if (hasMaterial(MaterialNames.STARSTEEL)) {
+			getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
 					.setDefaultDimension(1).setRegenerates(true);
 		}
 	}
@@ -241,8 +245,8 @@ public class Materials extends com.mcmoddev.lib.init.Materials {
 		createOrelessMaterial(MaterialNames.ENDER, MaterialType.GEM, 2, 2, 6, 0xFF063931);
 		createOrelessMaterial(MaterialNames.QUARTZ, MaterialType.GEM, 5, 4, 2, 0xFFEAE3DB);
 		createOrelessMaterial(MaterialNames.OBSIDIAN, MaterialType.ROCK, 10, 15, 4, 0xFF101019);
-		createOrelessMaterial(MaterialNames.LAPIS, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
-		createOrelessMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
-		createOrelessMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF7B7B7B);
+		createOrelessMaterial(MaterialNames.LAPIS, MaterialType.MINERAL, 1, 1, 1, 0xFF26619c);
+		createOrelessMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7fb8a4);
+		createOrelessMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF720000);
 	}
 }

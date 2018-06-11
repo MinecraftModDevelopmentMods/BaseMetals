@@ -19,14 +19,19 @@ public class TraitReactive extends AbstractTrait {
 	}
 
 	@Override
-	public void onUpdate(@Nonnull final ItemStack tool, @Nonnull final World world, @Nonnull final Entity entity, @Nonnull final int itemSlot, @Nonnull final boolean isSelected) {
-		if (!world.isRemote && entity instanceof EntityPlayer && entity.isWet() && ((EntityPlayer) entity).getActiveItemStack() == tool) {
+	public void onUpdate(@Nonnull final ItemStack tool, @Nonnull final World world,
+			@Nonnull final Entity entity, @Nonnull final int itemSlot,
+			@Nonnull final boolean isSelected) {
+		if (!world.isRemote && (entity instanceof EntityPlayer) && entity.isWet()
+				&& (((EntityPlayer) entity).getActiveItemStack() == tool)) {
 			ToolHelper.damageTool(tool, 5, (EntityLivingBase) entity);
 		}
 	}
 
 	@Override
-	public void onHit(@Nonnull final ItemStack tool, @Nonnull final EntityLivingBase player, @Nonnull final EntityLivingBase target, @Nonnull final float damage, @Nonnull final boolean isCritical) {
+	public void onHit(@Nonnull final ItemStack tool, @Nonnull final EntityLivingBase player,
+			@Nonnull final EntityLivingBase target, @Nonnull final float damage,
+			@Nonnull final boolean isCritical) {
 		if (target.canBreatheUnderwater()) {
 			// do extra damage
 			final DamageSource extraDamage = DamageSource.onFire;

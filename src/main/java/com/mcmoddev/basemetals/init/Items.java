@@ -3,10 +3,13 @@ package com.mcmoddev.basemetals.init;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.fuels.FuelRegistry;
+import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
@@ -19,7 +22,7 @@ import net.minecraft.item.ItemStack;
  * @author Jasmine Iwanek
  *
  */
-public class Items extends com.mcmoddev.lib.init.Items {
+public final class Items extends com.mcmoddev.lib.init.Items {
 
 	private Items() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -29,10 +32,10 @@ public class Items extends com.mcmoddev.lib.init.Items {
 	 *
 	 */
 	public static void init() {
-		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItem(Names.INGOT,
-				new ItemStack(net.minecraft.init.Items.COAL, 1, 1).getItem());
-		Materials.getMaterialByName(MaterialNames.COAL).addNewItem(Names.INGOT,
-				new ItemStack(net.minecraft.init.Items.COAL, 1, 0).getItem());
+		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 1));
+		Materials.getMaterialByName(MaterialNames.COAL).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 0));
 
 		addDiamondBits();
 		addGoldBits();
@@ -40,25 +43,32 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		addStoneBits();
 		addWoodBits();
 
-		Materials.getMaterialByName(MaterialNames.EMERALD).addNewItem(Names.INGOT, net.minecraft.init.Items.EMERALD);
-//		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItem(Names.POWDER, new ItemStack(net.minecraft.init.Items.DYE, 1, 4).getItem());
-		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT, net.minecraft.init.Items.QUARTZ);
-		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER, net.minecraft.init.Items.REDSTONE);
+		Materials.getMaterialByName(MaterialNames.EMERALD).addNewItem(Names.INGOT,
+				net.minecraft.init.Items.EMERALD);
+		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.DYE, 1, 4));
+		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT,
+				net.minecraft.init.Items.QUARTZ);
+		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER,
+				net.minecraft.init.Items.REDSTONE);
 
 		doSpecialMats();
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.AQUARIUM, MaterialNames.BISMUTH, MaterialNames.BRASS, MaterialNames.BRONZE,
-				MaterialNames.COLDIRON, MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.EMERALD,
-				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.LEAD, MaterialNames.OBSIDIAN,
-				MaterialNames.MITHRIL, MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
-				MaterialNames.QUARTZ, MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
+				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
+				MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.EMERALD,
+				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.LEAD,
+				MaterialNames.OBSIDIAN, MaterialNames.MITHRIL, MaterialNames.NICKEL,
+				MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.QUARTZ,
+				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
 				MaterialNames.TIN, MaterialNames.ZINC);
 
 		// create and register modded stuffs
-		final List<String> materialsModSupport = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL, MaterialNames.ZINC);
+		final List<String> materialsModSupport = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+				MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
@@ -127,10 +137,31 @@ public class Items extends com.mcmoddev.lib.init.Items {
 		}
 
 		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
-				.filter(Materials::hasMaterial)
-				.forEach(materialName -> create(Names.ANVIL, Materials.getMaterialByName(materialName)));
+				.filter(Materials::hasMaterial).forEach(materialName -> create(Names.ANVIL,
+						Materials.getMaterialByName(materialName)));
 
 		addToMetList();
+	}
+
+	private static void setBurnTimes(@Nonnull final MMDMaterial material) {
+		final String capitalizedName = material.getCapitalizedName();
+		if (material.hasItem(Names.NUGGET)) {
+			FuelRegistry.addFuel(Oredicts.NUGGET + "_" + capitalizedName, 200);
+		}
+
+		if (material.hasItem(Names.POWDER)) {
+			FuelRegistry.addFuel(Oredicts.DUST + "_" + capitalizedName, 1600);
+		}
+
+		if (material.hasItem(Names.SMALLPOWDER)) {
+			FuelRegistry.addFuel(Oredicts.DUST_SMALL + "_" + capitalizedName, 200);
+			FuelRegistry.addFuel(Oredicts.DUST_TINY + "_" + capitalizedName, 200);
+		}
+
+		// simple hack to fix this shit - I give up on trying for more
+		if (material.hasBlock(Names.BLOCK) && material.getName().equals(MaterialNames.CHARCOAL)) {
+			FuelRegistry.addFuel(Oredicts.BLOCK_CHARCOAL, 16000);
+		}
 	}
 
 	private static void doSpecialMats() {
@@ -141,19 +172,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.POWDER, charcoal);
 			create(Names.SMALLPOWDER, charcoal);
 
-			if (charcoal.hasItem(Names.NUGGET))
-				FuelRegistry.addFuel(Oredicts.NUGGET_CHARCOAL, 200);
-
-			if (charcoal.hasItem(Names.POWDER))
-				FuelRegistry.addFuel(Oredicts.DUST_CHARCOAL, 1600);
-
-			if (charcoal.hasItem(Names.SMALLPOWDER)) {
-				FuelRegistry.addFuel(Oredicts.DUST_SMALL_CHARCOAL, 200);
-				FuelRegistry.addFuel(Oredicts.DUST_TINY_CHARCOAL, 200);
-			}
-
-			if (charcoal.hasBlock(Names.BLOCK))
-				FuelRegistry.addFuel(Oredicts.BLOCK_CHARCOAL, 16000);
+			setBurnTimes(charcoal);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.COAL)) {
@@ -163,16 +182,7 @@ public class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.POWDER, coal);
 			create(Names.SMALLPOWDER, coal);
 
-			if (coal.hasItem(Names.NUGGET))
-				FuelRegistry.addFuel(Oredicts.NUGGET_COAL, 200);
-
-			if (coal.hasItem(Names.POWDER))
-				FuelRegistry.addFuel(Oredicts.DUST_COAL, 1600);
-
-			if (coal.hasItem(Names.SMALLPOWDER)) {
-				FuelRegistry.addFuel(Oredicts.DUST_SMALL_COAL, 200);
-				FuelRegistry.addFuel(Oredicts.DUST_TINY_COAL, 200);
-			}
+			setBurnTimes(coal);
 		}
 
 		if (Materials.hasMaterial(MaterialNames.REDSTONE)) {

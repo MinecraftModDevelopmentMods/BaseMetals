@@ -7,14 +7,15 @@ import net.minecraft.block.state.IBlockState;
 
 public class BlockMMDBookshelf extends net.minecraft.block.BlockBookshelf implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	public BlockMMDBookshelf(final MMDMaterial material) {
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 	}
 
 	public void setFullBlock(final boolean val) {

@@ -5,9 +5,9 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class ChestplateRepairRecipe extends RepairRecipeBase {
 
-	public ChestplateRepairRecipe(MMDMaterial mat) {
-		super(mat, Names.CHESTPLATE);
-//		super(mat, Names.CHESTPLATE.toString(), mat.getName() + "_" + Names.CHESTPLATE,
-//				Oredicts.PLATE + mat.getCapitalizedName());
+	public ChestplateRepairRecipe(final MMDMaterial material) {
+		super(material, Names.CHESTPLATE);
+		// super(material, Names.CHESTPLATE.toString(), material.getName() + "_" + Names.CHESTPLATE,
+		// Oredicts.PLATE + material.getCapitalizedName());
 	}
 }

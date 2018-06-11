@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Loader;
 import portablejim.veinminer.api.IMCMessage;
 
 /**
- * VeinMiner Integration Plugin
+ * VeinMiner Integration Plugin.
  *
  * @author Jasmine Iwanek
  *
@@ -28,7 +28,7 @@ public class VeinMinerBase implements IIntegration {
 	}
 
 	/**
-	 * Add tools to the VeinMiner list from a Material
+	 * Add tools to the VeinMiner list from a Material.
 	 *
 	 * @param material
 	 *            Material to add
@@ -38,19 +38,26 @@ public class VeinMinerBase implements IIntegration {
 	}
 
 	/**
-	 * Add tools to the VeinMiner list from a Material
+	 * Add tools to the VeinMiner list from a Material.
 	 *
 	 * @param materialName
 	 *            Name of Material to add
 	 */
 	protected static void addToolsForMaterial(@Nonnull final String materialName) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
-		IMCMessage.addTool(Names.AXE.toString(), ownerModID + ":" + materialName + "_" + Names.AXE.toString());
-		IMCMessage.addTool(Names.HOE.toString(), ownerModID + ":" + materialName + "_" + Names.HOE.toString());
-		IMCMessage.addTool(Names.PICKAXE.toString(), ownerModID + ":" + materialName + "_" + Names.PICKAXE.toString());
-		IMCMessage.addTool(Names.SHEARS.toString(), ownerModID + ":" + materialName + "_" + Names.SHEARS.toString());
-		IMCMessage.addTool(Names.SHOVEL.toString(), ownerModID + ":" + materialName + "_" + Names.SHOVEL.toString());
-		// IMCMessage.addTool("crook", ownerModID + ":" + materialName + "_crook");
-		IMCMessage.addTool("hammer", ownerModID + ":" + materialName + "_hammer");
+		final String axe = Names.AXE.toString();
+		final String hoe = Names.HOE.toString();
+		final String pickaxe = Names.PICKAXE.toString();
+		final String shears = Names.SHEARS.toString();
+		final String shovel = Names.SHOVEL.toString();
+		// final String crook = "crook"
+		final String hammer = "hammer";
+		IMCMessage.addTool(axe, ownerModID + ":" + materialName + "_" + axe);
+		IMCMessage.addTool(hoe, ownerModID + ":" + materialName + "_" + hoe);
+		IMCMessage.addTool(pickaxe, ownerModID + ":" + materialName + "_" + pickaxe);
+		IMCMessage.addTool(shears, ownerModID + ":" + materialName + "_" + shears);
+		IMCMessage.addTool(shovel, ownerModID + ":" + materialName + "_" + shovel);
+		// IMCMessage.addTool(crook, ownerModID + ":" + materialName + "_" + crook)
+		IMCMessage.addTool(hammer, ownerModID + ":" + materialName + "_" + hammer);
 	}
 }

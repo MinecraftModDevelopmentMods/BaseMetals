@@ -20,7 +20,7 @@ public class CrusherRecipeHandler implements IRecipeHandler<ICrusherRecipeWrappe
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid(@Nonnull ICrusherRecipeWrapper recipe) {
+	public String getRecipeCategoryUid(@Nonnull final ICrusherRecipeWrapper recipe) {
 		return BaseMetalsJEIPlugin.RECIPE_UID;
 	}
 
@@ -30,12 +30,12 @@ public class CrusherRecipeHandler implements IRecipeHandler<ICrusherRecipeWrappe
 	}
 
 	@Override
-	public IRecipeWrapper getRecipeWrapper(ICrusherRecipeWrapper recipe) {
+	public IRecipeWrapper getRecipeWrapper(final ICrusherRecipeWrapper recipe) {
 		return recipe;
 	}
 
 	@Override
-	public boolean isRecipeValid(ICrusherRecipeWrapper recipe) {
+	public boolean isRecipeValid(final ICrusherRecipeWrapper recipe) {
 		return true;
 	}
 }

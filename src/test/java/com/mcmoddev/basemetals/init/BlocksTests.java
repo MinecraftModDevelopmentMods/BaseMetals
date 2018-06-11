@@ -9,7 +9,7 @@ class BlocksTests {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-//		Blocks.registerVanilla() ; 
+		// Blocks.registerVanilla()
 	}
 
 	@AfterAll
@@ -24,13 +24,13 @@ class BlocksTests {
 	void tearDown() throws Exception {
 	}
 
-//	@Test
-//	void testRegisterVanillaRegistersCoalBlock() {
-//		final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
-//
-//		Block block  = coal.getBlock(net.minecraft.init.Blocks.COAL_BLOCK.getRegistryName().getResourcePath());
-//
-//		assertNotNull(block);
-//	}
-
+	// @Test
+	// void testRegisterVanillaRegistersCoalBlock() {
+	// final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL)
+	//
+	// Block block =
+	// coal.getBlock(net.minecraft.init.Blocks.COAL_BLOCK.getRegistryName().getResourcePath())
+	//
+	// assertNotNull(block)
+	// }
 }

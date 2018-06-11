@@ -25,25 +25,28 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Armor
- * 
+ * Armor.
+ *
  * @author DrCyano
  *
  */
 public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDObject {
 
 	private final String customTexture;
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	private static final int UPDATE_INTERVAL = 11;
 	private static final Map<EntityPlayer, AtomicLong> playerUpdateTimestampMap = new HashMap<>();
 	private static final Map<EntityPlayer, AtomicInteger> playerUpdateCountMap = new HashMap<>();
 
-	protected ItemMMDArmor(@Nonnull final MMDMaterial material, @Nonnull final ArmorMaterial armorMat, final int renderIndex,
-							 final EntityEquipmentSlot slot) {
+	protected ItemMMDArmor(@Nonnull final MMDMaterial material,
+			@Nonnull final ArmorMaterial armorMat, final int renderIndex,
+			final EntityEquipmentSlot slot) {
 		super(armorMat, renderIndex, slot);
-		this.material = material;
-		this.customTexture = Loader.instance().activeModContainer().getModId() + ":textures/models/armor/" + material.getName() + "_layer_" + (slot == EntityEquipmentSlot.LEGS ? 2 : 1) + ".png";
+		this.mmdMaterial = material;
+		this.customTexture = Loader.instance().activeModContainer().getModId()
+				+ ":textures/models/armor/" + material.getName() + "_layer_"
+				+ (slot == EntityEquipmentSlot.LEGS ? 2 : 1) + ".png";
 	}
 
 	@Override
@@ -53,13 +56,15 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 			playerUpdateCountMap.put(player, new AtomicInteger(0));
 			return;
 		}
-		if (!w.isRemote && w.getTotalWorldTime() > playerUpdateTimestampMap.get(player).get()) {
+		if (!w.isRemote && (w.getTotalWorldTime() > playerUpdateTimestampMap.get(player).get())) {
 			playerUpdateTimestampMap.get(player).set(w.getTotalWorldTime() + UPDATE_INTERVAL);
 			final int updateCount = playerUpdateCountMap.get(player).getAndIncrement();
-			for(int i = 0; i < 4; i++) {
+			for (int i = 0; i < 4; i++) {
 				final ItemStack armorItemStack = player.inventory.armorInventory[i];
-				if (armorItemStack != null && (armorItemStack.getItem() instanceof ItemMMDArmor)) {
-					MMDToolEffects.extraEffectsOnArmorUpdate(w, player, this.material, armorItemStack, updateCount);
+				if ((armorItemStack != null)
+						&& (armorItemStack.getItem() instanceof ItemMMDArmor)) {
+					MMDToolEffects.extraEffectsOnArmorUpdate(w, player, this.mmdMaterial,
+							armorItemStack, updateCount);
 				}
 			}
 		}
@@ -68,19 +73,19 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	public static ItemMMDArmor createArmor(@Nonnull final MMDMaterial material, final Names name) {
 		EntityEquipmentSlot slot = null;
 		switch (name) {
-		case HELMET:
-			slot = EntityEquipmentSlot.HEAD;
-			break;
-		case CHESTPLATE:
-			slot = EntityEquipmentSlot.CHEST;
-			break;
-		case LEGGINGS:
-			slot = EntityEquipmentSlot.LEGS;
-			break;
-		case BOOTS:
-			slot = EntityEquipmentSlot.FEET;
-			break;
-		default:
+			case HELMET:
+				slot = EntityEquipmentSlot.HEAD;
+				break;
+			case CHESTPLATE:
+				slot = EntityEquipmentSlot.CHEST;
+				break;
+			case LEGGINGS:
+				slot = EntityEquipmentSlot.LEGS;
+				break;
+			case BOOTS:
+				slot = EntityEquipmentSlot.FEET;
+				break;
+			default:
 		}
 
 		return createArmorBase(material, slot);
@@ -94,7 +99,8 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	 *            Type of armor
 	 * @return The armor
 	 */
-	protected static ItemMMDArmor createArmorBase(@Nonnull final MMDMaterial material, final EntityEquipmentSlot slot) {
+	protected static ItemMMDArmor createArmorBase(@Nonnull final MMDMaterial material,
+			final EntityEquipmentSlot slot) {
 		final ArmorMaterial amaterial = Materials.getArmorMaterialFor(material);
 		if (amaterial == null) {
 			// uh-oh
@@ -106,18 +112,20 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public String getArmorTexture(final ItemStack stack, final Entity e, final EntityEquipmentSlot slot, final String layer) {
-		return customTexture;
+	public String getArmorTexture(final ItemStack stack, final Entity e,
+			final EntityEquipmentSlot slot, final String layer) {
+		return this.customTexture;
 	}
 
 	@Override
-	public void addInformation(final ItemStack stack, final EntityPlayer player, final List<String> tooltip, final boolean b) {
+	public void addInformation(final ItemStack stack, final EntityPlayer player,
+			final List<String> tooltip, final boolean b) {
 		super.addInformation(stack, player, tooltip, b);
-		MMDToolEffects.addArmorSpecialPropertiesToolTip(this.material.getName(), tooltip);
+		MMDToolEffects.addArmorSpecialPropertiesToolTip(this.mmdMaterial.getName(), tooltip);
 	}
 
 	/**
-	 * 
+	 *
 	 * @param item
 	 *            The item
 	 * @param world
@@ -125,7 +133,8 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	 * @param crafter
 	 *            The crafter
 	 */
-	public void extraEffectsOnCrafting(final ItemStack item, final World world, final EntityPlayer crafter) {
+	public void extraEffectsOnCrafting(final ItemStack item, final World world,
+			final EntityPlayer crafter) {
 		//
 	}
 
@@ -135,17 +144,18 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 	@Override
 	public boolean getIsRepairable(final ItemStack srcItemStack, final ItemStack repairMaterial) {
 		// repair with string or wool
-		return MMDItemHelper.isToolRepairable(repairMaterial, this.material.getCapitalizedName());
+		return MMDItemHelper.isToolRepairable(repairMaterial,
+				this.mmdMaterial.getCapitalizedName());
 	}
 
 	@Override
 	public void onCreated(final ItemStack item, final World world, final EntityPlayer crafter) {
 		super.onCreated(item, world, crafter);
-		extraEffectsOnCrafting(item, world, crafter);
+		this.extraEffectsOnCrafting(item, world, crafter);
 	}
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

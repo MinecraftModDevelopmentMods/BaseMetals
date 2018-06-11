@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.TinkersConstructBase;
 import com.mcmoddev.lib.integration.plugins.taiga.TAIGAItems;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.sosnitzka.taiga.Blocks;
 import com.sosnitzka.taiga.Items;
 
@@ -21,11 +22,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TAIGA.PLUGIN_MODID)
-public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implements IIntegration {
+public final class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implements IIntegration {
 
 	@Override
 	public void init() {
-		if (!Options.isModEnabled(PLUGIN_MODID) && (!Options.isModEnabled(TinkersConstruct.PLUGIN_MODID))) {
+		if (!Options.isModEnabled(PLUGIN_MODID)
+				&& (!Options.isModEnabled(TinkersConstructBase.PLUGIN_MODID))) {
 			return;
 		}
 
@@ -54,12 +56,22 @@ public class TAIGA extends com.mcmoddev.lib.integration.plugins.TAIGABase implem
 						final float harvestLevel = k.getHarvestLevel(null);
 						final float resist = k.getExplosionResistance(null);
 
-						final MMDMaterial repThis = createOrelessMaterial(name, MaterialType.METAL, harvestLevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);
+						final MMDMaterial repThis = createOrelessMaterial(name, MaterialType.METAL,
+								harvestLevel * 3.0f, resist / 2.5f, 1.0f, 0x00000000);
 
 						repThis.addNewBlock(Names.BLOCK, k);
-						repThis.addNewItem(Names.INGOT, new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Ingot").get(Items.class), 1).getItem());
-						repThis.addNewItem(Names.POWDER, new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Dust").get(Items.class), 1).getItem());
-						repThis.addNewItem(Names.NUGGET, new ItemStack((Item) Items.class.getField(name.toLowerCase() + "Nugget").get(Items.class), 1).getItem());
+						repThis.addNewItem(Names.INGOT,
+								new ItemStack((Item) Items.class
+										.getField(name.toLowerCase() + "Ingot").get(Items.class), 1)
+												.getItem());
+						repThis.addNewItem(Names.POWDER,
+								new ItemStack((Item) Items.class
+										.getField(name.toLowerCase() + "Dust").get(Items.class), 1)
+												.getItem());
+						repThis.addNewItem(Names.NUGGET,
+								new ItemStack((Item) Items.class
+										.getField(name.toLowerCase() + "Nugget").get(Items.class),
+										1).getItem());
 
 						materials.add(repThis);
 					}

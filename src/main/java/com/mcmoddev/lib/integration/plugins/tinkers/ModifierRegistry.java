@@ -8,7 +8,9 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.*;
+import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierFakeDiamond;
+import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierLeadPlated;
+import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierToxic;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,8 +19,8 @@ import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 
 /**
- * Contains static instances of modifiers for registering with TiC
- * 
+ * Contains static instances of modifiers for registering with TiC.
+ *
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  *
  */
@@ -31,10 +33,12 @@ public class ModifierRegistry {
 		throw new IllegalAccessError("Not an instantiable class");
 	}
 
-	public static void setModifierRecipe(@Nonnull final String name, @Nonnull final ItemStack... ingredients) {
+	public static void setModifierRecipe(@Nonnull final String name,
+			@Nonnull final ItemStack... ingredients) {
 		final Modifier t = modifiers.get(name);
 		if (t == null) {
-			BaseMetals.logger.error("Trying to add a recipe to unknown modifier %s, ignoring.", name);
+			BaseMetals.logger.error("Trying to add a recipe to unknown modifier %s, ignoring.",
+					name);
 			return;
 		}
 
@@ -48,7 +52,8 @@ public class ModifierRegistry {
 	public static void setModifierItem(@Nonnull final String name, @Nonnull final Item item) {
 		final Modifier t = modifiers.get(name);
 		if (t == null) {
-			BaseMetals.logger.error("Trying to add an item to unknown modifier %s, ignoring.", name);
+			BaseMetals.logger.error("Trying to add an item to unknown modifier %s, ignoring.",
+					name);
 			return;
 		}
 
@@ -70,7 +75,7 @@ public class ModifierRegistry {
 	public static Map<String, String> getModifierDetails(@Nonnull final String name) {
 		final Map<String, String> rv = new HashMap<>();
 		if (modifiers.containsKey(name)) {
-			Modifier t = modifiers.get(name);
+			final Modifier t = modifiers.get(name);
 			rv.put("name", t.getLocalizedName());
 			rv.put("desc", t.getLocalizedDesc());
 			return rv;

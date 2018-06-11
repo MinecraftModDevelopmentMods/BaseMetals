@@ -8,16 +8,16 @@ import net.minecraft.item.ItemStack;
 
 public class ICrusherRecipeWrapper extends BlankRecipeWrapper {
 
-	private ICrusherRecipe theRecipe;
+	private final ICrusherRecipe theRecipe;
 
-	public ICrusherRecipeWrapper(ICrusherRecipe recipe) {
+	public ICrusherRecipeWrapper(final ICrusherRecipe recipe) {
 		this.theRecipe = recipe;
 	}
 
 	@Override
-	public void getIngredients(IIngredients ingredients) {
+	public void getIngredients(final IIngredients ingredients) {
 		// TODO: Verify Inputs
-		ingredients.setInputs(ItemStack.class, theRecipe.getInputs());
-		ingredients.setOutput(ItemStack.class, theRecipe.getOutput());
+		ingredients.setInputs(ItemStack.class, this.theRecipe.getInputs());
+		ingredients.setOutput(ItemStack.class, this.theRecipe.getOutput());
 	}
 }

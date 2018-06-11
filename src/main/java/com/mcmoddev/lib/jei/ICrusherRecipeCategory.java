@@ -22,17 +22,20 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWrapper> {
 
-	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID, "textures/jei/JEIhammeroverlay.png");
+	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID,
+			"textures/jei/JEIhammeroverlay.png");
 	private final IDrawable background;
 	private final IDrawable icon;
-	protected final IDrawableAnimated hammer;
+	private final IDrawableAnimated hammer;
 
-	public ICrusherRecipeCategory(IGuiHelper guiHelper) {
-		this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
-		this.icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
+	public ICrusherRecipeCategory(final IGuiHelper guiHelper) {
+		this.background = guiHelper.createDrawable(this.resourceLocation, 0, 0, 166, 130);
+		this.icon = guiHelper.createDrawable(this.resourceLocation, 170, 2, 16, 16);
 
-		IDrawableStatic hammerDrawable = guiHelper.createDrawable(resourceLocation, 169, 17, 32, 32);
-		this.hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 200, IDrawableAnimated.StartDirection.BOTTOM, false);
+		final IDrawableStatic hammerDrawable = guiHelper.createDrawable(this.resourceLocation, 169,
+				17, 32, 32);
+		this.hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 200,
+				IDrawableAnimated.StartDirection.BOTTOM, false);
 	}
 
 	@Override
@@ -42,26 +45,27 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 
 	@Override
 	public String getTitle() {
-		return new TextComponentTranslation(String.format(getUid())).getFormattedText();
+		return new TextComponentTranslation(String.format(this.getUid())).getFormattedText();
 	}
 
 	@Override
 	public IDrawable getBackground() {
-		return background;
+		return this.background;
 	}
 
 	@Override
 	public IDrawable getIcon() {
-		return icon;
+		return this.icon;
 	}
 
 	@Override
-	public void drawExtras(Minecraft minecraft) {
+	public void drawExtras(final Minecraft minecraft) {
 		this.hammer.draw(minecraft, 71, 6);
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, @Nonnull ICrusherRecipeWrapper recipeWrapper, IIngredients ingredients) {
+	public void setRecipe(final IRecipeLayout recipeLayout,
+			@Nonnull final ICrusherRecipeWrapper recipeWrapper, final IIngredients ingredients) {
 		final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
 		// init the input slot
@@ -71,8 +75,8 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 		guiItemStacks.init(1, false, 119, 14);
 
 		// load the output and input bits
-		List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
-		List<ItemStack> outputs = ingredients.getOutputs(ItemStack.class);
+		final List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
+		final List<ItemStack> outputs = ingredients.getOutputs(ItemStack.class);
 
 		// setup the data
 		guiItemStacks.set(0, inputs.get(0));
@@ -80,7 +84,7 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 	}
 
 	@Override
-	public List<String> getTooltipStrings(int mouseX, int mouseY) {
+	public List<String> getTooltipStrings(final int mouseX, final int mouseY) {
 		return Collections.<String>emptyList();
 	}
 }

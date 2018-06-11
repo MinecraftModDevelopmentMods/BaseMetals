@@ -5,7 +5,6 @@ import java.util.List;
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,8 +18,7 @@ import net.minecraft.world.World;
  */
 public class ItemMMDBow extends ItemBow implements IMMDObject {
 
-	protected final MMDMaterial material;
-	protected final String repairOreDictName;
+	private final MMDMaterial material;
 
 	/**
 	 *
@@ -30,7 +28,6 @@ public class ItemMMDBow extends ItemBow implements IMMDObject {
 	public ItemMMDBow(final MMDMaterial material) {
 		this.material = material;
 		this.setMaxDamage(this.material.getToolDurability());
-		this.repairOreDictName = Oredicts.INGOT + this.material.getCapitalizedName();
 	}
 
 	@Override
@@ -39,12 +36,14 @@ public class ItemMMDBow extends ItemBow implements IMMDObject {
 	}
 
 	@Override
-	public void onUpdate(final ItemStack item, final World world, final Entity player, final int inventoryIndex, final boolean isHeld) {
+	public void onUpdate(final ItemStack item, final World world, final Entity player,
+			final int inventoryIndex, final boolean isHeld) {
 		MMDItemHelper.doRegeneration(item, world, isHeld, this.material.regenerates());
 	}
 
 	@Override
-	public void addInformation(final ItemStack stack, final EntityPlayer player, final List<String> tooltip, final boolean b) {
+	public void addInformation(final ItemStack stack, final EntityPlayer player,
+			final List<String> tooltip, final boolean b) {
 		super.addInformation(stack, player, tooltip, b);
 		MMDToolEffects.addToolSpecialPropertiesToolTip(this.material.getName(), tooltip);
 	}

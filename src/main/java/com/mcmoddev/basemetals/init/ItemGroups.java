@@ -12,7 +12,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
  * @author Jasmine Iwanek
  *
  */
-public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
+public final class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 
 	private static final MMDCreativeTab blocksTab = addTab(SharedStrings.TAB_BLOCKS);
 	private static final MMDCreativeTab itemsTab = addTab(SharedStrings.TAB_ITEMS);
@@ -24,18 +24,19 @@ public class ItemGroups extends com.mcmoddev.lib.init.ItemGroups {
 	}
 
 	/**
-	 * Initializer
+	 * Initializer.
 	 */
 	public static void init() {
 		// Blank Initializer
 	}
 
 	/**
-	 * Sets up icons for a CreativeTab
-	 * 
-	 * @param materialName Name of the preferred Material to use for Tab Icons
+	 * Sets up icons for a CreativeTab.
+	 *
+	 * @param materialName
+	 *            Name of the preferred Material to use for Tab Icons
 	 */
-	public static void setupIcons(String materialName) {
+	public static void setupIcons(final String materialName) {
 		if (Materials.hasMaterial(materialName)) {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
 

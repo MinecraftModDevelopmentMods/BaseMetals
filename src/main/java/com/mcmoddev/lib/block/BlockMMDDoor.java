@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Door Block
+ * Door Block.
  *
  * @author DrCyano
  *
@@ -43,7 +43,8 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 
@@ -59,24 +60,31 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 
 	@Override
 	public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
-		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null : this.material.getItem(Names.DOOR);
+		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null
+				: this.material.getItem(Names.DOOR);
 	}
 
 	@Override
-	public boolean onBlockActivated(final World worldIn, final BlockPos pos, final IBlockState state, final EntityPlayer playerIn,
-			final EnumHand hand, final ItemStack heldItem, final EnumFacing facing, final float hitX, final float hitY, final float hitZ) {
-		if ((this.material.getToolHarvestLevel() > 1) || (this.material.getType().equals(MaterialType.METAL))) {
+	public boolean onBlockActivated(final World worldIn, final BlockPos pos,
+			final IBlockState state, final EntityPlayer playerIn, final EnumHand hand,
+			final ItemStack heldItem, final EnumFacing facing, final float hitX, final float hitY,
+			final float hitZ) {
+		if ((this.material.getToolHarvestLevel() > 1)
+				|| (this.material.getType().equals(MaterialType.METAL))) {
 			return false;
 		} else {
-			final BlockPos blockpos = (state.getValue(BlockDoor.HALF) == EnumDoorHalf.LOWER) ? pos : pos.down();
-			final IBlockState iblockstate = pos.equals(blockpos) ? state : worldIn.getBlockState(blockpos);
+			final BlockPos blockpos = (state.getValue(BlockDoor.HALF) == EnumDoorHalf.LOWER) ? pos
+					: pos.down();
+			final IBlockState iblockstate = pos.equals(blockpos) ? state
+					: worldIn.getBlockState(blockpos);
 			if (iblockstate.getBlock() != this) {
 				return false;
 			} else {
 				final IBlockState newState = iblockstate.cycleProperty(BlockDoor.OPEN);
 				worldIn.setBlockState(blockpos, newState, 10);
 				worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
-				this.playSound(playerIn, worldIn, blockpos, ((Boolean)newState.getValue(BlockDoor.OPEN)).booleanValue());
+				this.playSound(playerIn, worldIn, blockpos,
+						newState.getValue(BlockDoor.OPEN).booleanValue());
 				return true;
 			}
 		}
@@ -87,7 +95,8 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	// SoundEvents.BLOCK_WOODEN_DOOR_OPEN = 1006
 	// SoundEvents.BLOCK_IRON_DOOR_CLOSE = 1011
 	// SoundEvents.BLOCK_WOODEN_DOOR_CLOSE = 1012
-	protected void playSound(@Nullable final EntityPlayer player, final World worldIn, final BlockPos pos, final boolean open) {
+	protected void playSound(@Nullable final EntityPlayer player, final World worldIn,
+			final BlockPos pos, final boolean open) {
 		int retVal;
 		final boolean isMetal = this.getMMDMaterial().getType().equals(MaterialType.METAL);
 		if (open) {

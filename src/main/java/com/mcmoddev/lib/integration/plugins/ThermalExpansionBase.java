@@ -9,12 +9,11 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import cofh.api.util.ThermalExpansionHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+//import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
+//import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 // Parts of this are based on code from older versions of CoFHLib
 // Other parts are lifted from the "ThermalExpansionHelper" of the 1.7 versions
@@ -24,9 +23,9 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 public class ThermalExpansionBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "thermalexpansion";
-	private static final String INPUT = "input";
-	private static final String OUTPUT = "output";
-	private static final String ENERGY = "energy";
+	// private static final String INPUT = "input";
+	// private static final String OUTPUT = "output";
+	// private static final String ENERGY = "energy";
 
 	@Override
 	public void init() {
@@ -35,11 +34,29 @@ public class ThermalExpansionBase implements IIntegration {
 		}
 	}
 
-	protected static void addCompactorPressRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
-		if (input.getItem() == null || output.getItem() == null) {
+	protected static void addPulverizerRecipe(@Nonnull final int energy,
+			@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
+		if ((input == null) || (output == null)) {
+			return;
+		}
+		if ((input.getItem() == null) || (output.getItem() == null)) {
 			return;
 		}
 
+		ThermalExpansionHelper.addPulverizerRecipe(energy, input, output);
+	}
+
+	protected static void addCompactorPressRecipe(@Nonnull final int energy,
+			@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
+		if ((input == null) || (output == null)) {
+			return;
+		}
+		if ((input.getItem() == null) || (output.getItem() == null)) {
+			return;
+		}
+
+		ThermalExpansionHelper.addCompactorPressRecipe(energy, input, output);
+		/*
 		final NBTTagCompound toSend = new NBTTagCompound();
 
 		toSend.setInteger(ENERGY, energy);
@@ -48,14 +65,20 @@ public class ThermalExpansionBase implements IIntegration {
 		input.writeToNBT(toSend.getCompoundTag(INPUT));
 		output.writeToNBT(toSend.getCompoundTag(OUTPUT));
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "addcompactorpressrecipe", toSend);
+		*/
 	}
 
-	protected static void addCompactorStorageRecipe(@Nonnull final int energy, @Nonnull final ItemStack input, @Nonnull final ItemStack output) {
-
-		if (input.getItem() == null || output.getItem() == null) {
+	protected static void addCompactorStorageRecipe(@Nonnull final int energy,
+			@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
+		if ((input == null) || (output == null)) {
+			return;
+		}
+		if ((input.getItem() == null) || (output.getItem() == null)) {
 			return;
 		}
 
+		ThermalExpansionHelper.addCompactorStorageRecipe(energy, input, output);
+		/*
 		final NBTTagCompound toSend = new NBTTagCompound();
 
 		toSend.setInteger(ENERGY, energy);
@@ -64,6 +87,36 @@ public class ThermalExpansionBase implements IIntegration {
 		input.writeToNBT(toSend.getCompoundTag(INPUT));
 		output.writeToNBT(toSend.getCompoundTag(OUTPUT));
 		FMLInterModComms.sendMessage(PLUGIN_MODID, "addcompactorstoragerecipe", toSend);
+		*/
+	}
+
+	protected static void addPulverizer(@Nonnull final String materialName) {
+		addPulverizer(Materials.getMaterialByName(materialName));
+	}
+
+	protected static void addPulverizer(@Nonnull final MMDMaterial material) {
+		if (material.isEmpty() || !material.hasItem(Names.POWDER)) {
+			return;
+		}
+
+		/*
+		 * default energy in TE for Ore -> Dust is 4000RF default energy in TE for Ingot -> Dust is
+		 * 2000RF
+		 */
+		final int ENERGY_ORE = 4000;
+		final int ENERGY_INGOT = 2000;
+		ItemStack inputOre = material.getBlockItemStack(Names.ORE);
+		ItemStack inputIngot = material.getItemStack(Names.INGOT);
+		final ItemStack outputDust = material.getItemStack(Names.POWDER);
+
+		if (material.hasItem(Names.POWDER)) {
+			if (material.hasBlock(Names.ORE)) {
+				addPulverizerRecipe(ENERGY_ORE, inputOre, outputDust);
+			}
+			if (material.hasItem(Names.INGOT)) {
+				addPulverizerRecipe(ENERGY_INGOT, inputIngot, outputDust);
+			}
+		}
 	}
 
 	protected static void addFurnace(@Nonnull final String materialName) {
@@ -71,29 +124,29 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addFurnace(@Nonnull final MMDMaterial material) {
+		if (material.isEmpty()) {
+			return;
+		}
+
 		/*
-		 * Ore -> Ingot default, according to TE source, is 2000
-		 * dust -> Ingot default, according to same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
+		 * Ore -> Ingot default, according to TE source, is 2000 dust -> Ingot default, according to
+		 * same, is DEFAULT * 14 / 20 - at the 2000RF default, this is 1400
 		 */
 		final int ENERGY_ORE = 2000;
 		final int ENERGY_DUST = 1400;
 		ItemStack ore;
-		if (material.hasBlock(Names.ORE) && material.getBlock(Names.ORE) != null) {
+		if (material.hasBlock(Names.ORE)) {
 			ore = material.getBlockItemStack(Names.ORE, 1);
-		} else if (material.hasItem(Names.BLEND) && material.getItem(Names.BLEND) != null) {
+		} else if (material.hasItem(Names.BLEND)) {
 			ore = material.getItemStack(Names.BLEND, 1);
 		} else {
-			return;
-		}
-
-		if ((!material.hasItem(Names.INGOT)) || material.getItem(Names.INGOT) == null) {
 			return;
 		}
 
 		if (material.hasItem(Names.INGOT)) {
 			final ItemStack ingot = material.getItemStack(Names.INGOT, 1);
 			ThermalExpansionHelper.addFurnaceRecipe(ENERGY_ORE, ore, ingot);
-			if (material.hasItem(Names.POWDER) && material.getItem(Names.POWDER) != null) {
+			if (material.hasItem(Names.POWDER)) {
 				final ItemStack dust = material.getItemStack(Names.POWDER, 1);
 				ThermalExpansionHelper.addFurnaceRecipe(ENERGY_DUST, dust, ingot);
 			}
@@ -105,13 +158,14 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addCrucible(@Nonnull final MMDMaterial material) {
+		if (material.isEmpty()) {
+			return;
+		}
+
 		/*
-		 * Default power, according to TE source, is 8000
-		 * This is used for Pyrotheum, Cryotheum, Aerotheum, Petrotheum and Redstone.
-		 * Redstone Block is 72000
-		 * Glowstone and Ender Pearl are 20000
-		 * Glowstone block is 80000
-		 * Cobblestone/Stone/Obsidian is 320000
+		 * Default power, according to TE source, is 8000 This is used for Pyrotheum, Cryotheum,
+		 * Aerotheum, Petrotheum and Redstone. Redstone Block is 72000 Glowstone and Ender Pearl are
+		 * 20000 Glowstone block is 80000 Cobblestone/Stone/Obsidian is 320000
 		 */
 		final int ENERGY_QTY = 8000;
 
@@ -122,7 +176,7 @@ public class ThermalExpansionBase implements IIntegration {
 		final FluidStack baseFluid = FluidRegistry.getFluidStack(materialName, 144);
 		final FluidStack nuggetFluid = FluidRegistry.getFluidStack(materialName, 16);
 
-		if ((material.hasBlock(Names.ORE)) && (material.getBlock(Names.ORE) != null)) {
+		if (material.hasBlock(Names.ORE)) {
 			final ItemStack ore = material.getBlockItemStack(Names.ORE);
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ore, oreFluid);
 		}
@@ -135,13 +189,15 @@ public class ThermalExpansionBase implements IIntegration {
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dust, baseFluid);
 		}
 
-		// TODO: Can we getBlockItemStack instead?
 		if (material.hasBlock(Names.PLATE)) {
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, new ItemStack(Item.getItemFromBlock(material.getBlock(Names.PLATE))), baseFluid);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY,
+					material.getBlockItemStack(Names.PLATE),
+					baseFluid);
 		}
 
 		if (material.hasItem(Names.NUGGET)) {
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, material.getItemStack(Names.NUGGET), nuggetFluid);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY,
+					material.getItemStack(Names.NUGGET), nuggetFluid);
 		}
 	}
 
@@ -150,13 +206,17 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addPlatePress(@Nonnull final MMDMaterial material) {
+		if (material.isEmpty()) {
+			return;
+		}
 		if (material.hasItem(Names.PLATE) && material.hasItem(Names.INGOT)) {
 
 			/*
 			 * Compactors default is 4000RF per operation
 			 */
 			final int ENERGY_QTY = 4000;
-			addCompactorPressRecipe(ENERGY_QTY, new ItemStack(material.getItem(Names.INGOT)), new ItemStack(material.getBlock(Names.PLATE)));
+			addCompactorPressRecipe(ENERGY_QTY, material.getItemStack(Names.INGOT),
+					material.getBlockItemStack(Names.PLATE));
 		}
 	}
 
@@ -165,16 +225,25 @@ public class ThermalExpansionBase implements IIntegration {
 	}
 
 	protected static void addPressStorage(@Nonnull final MMDMaterial material) {
+		if (material.isEmpty()) {
+			return;
+		}
 		/*
 		 * Compactors default is 4000RF per operation
 		 */
 		final int ENERGY_QTY = 4000;
 		final ItemStack ingotStack = material.getItemStack(Names.INGOT);
-		final ItemStack ingotsStack = new ItemStack(ingotStack.getItem(), 9);
+		final ItemStack ingotsStack = material.getItemStack(Names.INGOT, 9);
 		final ItemStack nuggetsStack = material.getItemStack(Names.NUGGET, 9);
 		final ItemStack blockStack = material.getBlockItemStack(Names.BLOCK, 1);
 
-		addCompactorStorageRecipe(ENERGY_QTY, ingotsStack, blockStack);
-		addCompactorStorageRecipe(ENERGY_QTY, nuggetsStack, ingotStack);
+		if (material.hasItem(Names.INGOT)) {
+			if (material.hasBlock(Names.BLOCK)) {
+				addCompactorStorageRecipe(ENERGY_QTY, ingotsStack, blockStack);
+			}
+			if (material.hasItem(Names.NUGGET)) {
+				addCompactorStorageRecipe(ENERGY_QTY, nuggetsStack, ingotStack);
+			}
+		}
 	}
 }

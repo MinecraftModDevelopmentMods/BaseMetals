@@ -13,8 +13,11 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID)
-public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements IIntegration {
+import net.minecraftforge.common.MinecraftForge;
+
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, initCallback = "doHammerRecipes")
+public final class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base
+		implements IIntegration {
 
 	@Override
 	public void init() {
@@ -22,27 +25,28 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 			return;
 		}
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY,
-				MaterialNames.BISMUTH, MaterialNames.COLDIRON, MaterialNames.PLATINUM, MaterialNames.NICKEL,
-				MaterialNames.STARSTEEL, MaterialNames.ZINC);
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+				MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
-					registerVanillaRecipes(materialName);
-					addMaceratorRecipes(materialName);
-					addOreWashingPlantRecipes(materialName);
-					addThermalCentrifugeRecipes(materialName);
-					addMetalFormerRecipes(materialName);
-					addCompressorRecipes(materialName);
-					addForgeHammerRecipe(materialName);
+					this.registerVanillaRecipes(materialName);
+					this.addMaceratorRecipes(materialName);
+					this.addOreWashingPlantRecipes(materialName);
+					this.addThermalCentrifugeRecipes(materialName);
+					this.addMetalFormerRecipes(materialName);
+					this.addCompressorRecipes(materialName);
 				});
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
 			final String oreDictName = diamond.getCapitalizedName();
 			if (diamond.hasItem(Names.POWDER)) {
-				addMaceratorRecipe(Oredicts.ORE + oreDictName, diamond.getItemStack(Names.POWDER, 2));
+				this.addMaceratorRecipe(Oredicts.ORE + oreDictName,
+						diamond.getItemStack(Names.POWDER, 2));
 			}
 		}
 
@@ -50,8 +54,24 @@ public class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base implements
 			final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
 			final String oreDictName = emerald.getCapitalizedName();
 			if (emerald.hasItem(Names.POWDER)) {
-				addMaceratorRecipe(Oredicts.ORE + oreDictName, emerald.getItemStack(Names.POWDER, 2));
+				this.addMaceratorRecipe(Oredicts.ORE + oreDictName,
+						emerald.getItemStack(Names.POWDER, 2));
 			}
 		}
+
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	/**
+	 *
+	 */
+	public void doHammerRecipes() {
+		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+				MaterialNames.ZINC);
+		materials.stream().filter(Materials::hasMaterial)
+				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+				.forEach(this::addForgeHammerRecipe);
 	}
 }

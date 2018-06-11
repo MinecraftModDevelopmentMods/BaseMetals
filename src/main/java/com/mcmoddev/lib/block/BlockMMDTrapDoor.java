@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Metal Trap Door
+ * Trap Door.
  */
 public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implements IMMDObject {
 
@@ -33,18 +33,23 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
 		this.blockSoundType = this.material.getSoundType();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 
 	@Override
-	public boolean onBlockActivated(final World worldIn, final BlockPos pos, final IBlockState state, final EntityPlayer playerIn, final EnumHand hand, final ItemStack heldItem, final EnumFacing facing, final float hitX, final float hitY, final float hitZ) {
-		if ((this.material.getToolHarvestLevel() > 1) || (this.material.getType().equals(MaterialType.METAL))) {
+	public boolean onBlockActivated(final World worldIn, final BlockPos pos,
+			final IBlockState state, final EntityPlayer playerIn, final EnumHand hand,
+			final ItemStack heldItem, final EnumFacing facing, final float hitX, final float hitY,
+			final float hitZ) {
+		if ((this.material.getToolHarvestLevel() > 1)
+				|| (this.material.getType().equals(MaterialType.METAL))) {
 			return false;
 		} else {
 			final IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
 			worldIn.setBlockState(pos, newState, 2);
-			this.playSound(playerIn, worldIn, pos, ((Boolean)newState.getValue(OPEN)).booleanValue());
+			this.playSound(playerIn, worldIn, pos, newState.getValue(OPEN).booleanValue());
 			return true;
 		}
 	}
@@ -55,7 +60,8 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	// SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE = 1036
 	// SoundEvents.BLOCK_WOODEN_TRAPDOOR_CLOSE = 1013
 	@Override
-	protected void playSound(@Nullable final EntityPlayer player, final World worldIn, final BlockPos pos, final boolean open) {
+	protected void playSound(@Nullable final EntityPlayer player, final World worldIn,
+			final BlockPos pos, final boolean open) {
 		int retVal;
 		final boolean isMetal = this.getMMDMaterial().getType().equals(MaterialType.METAL);
 		if (open) {

@@ -31,25 +31,26 @@ public enum IntegrationManager {
 	}
 
 	public void preInit(@Nonnull final FMLPreInitializationEvent event) {
-		for (final ASMData asmDataItem : event.getAsmData().getAll(MMDPlugin.class.getCanonicalName())) {
-			final String addonId = getAnnotationItem("addonId", asmDataItem);
-			final String pluginId = getAnnotationItem("pluginId", asmDataItem);
-			final String preInitCallback = getAnnotationItem("preInitCallback", asmDataItem);
-			final String initCallback = getAnnotationItem("initCallback", asmDataItem);
-			final String postInitCallback = getAnnotationItem("postInitCallback", asmDataItem);
+		for (final ASMData asmDataItem : event.getAsmData()
+				.getAll(MMDPlugin.class.getCanonicalName())) {
+			final String addonId = this.getAnnotationItem("addonId", asmDataItem);
+			final String pluginId = this.getAnnotationItem("pluginId", asmDataItem);
+			final String preInitCallback = this.getAnnotationItem("preInitCallback", asmDataItem);
+			final String initCallback = this.getAnnotationItem("initCallback", asmDataItem);
+			final String postInitCallback = this.getAnnotationItem("postInitCallback", asmDataItem);
 			final String clazz = asmDataItem.getClassName();
 
 			if ((event.getModMetadata().modId.equals(addonId)) && (Loader.isModLoaded(pluginId))) {
 				IIntegration integration;
 				try {
 					integration = Class.forName(clazz).asSubclass(IIntegration.class).newInstance();
-					integrations.add(integration);
+					this.integrations.add(integration);
 					integration.init();
 
 					BaseMetals.logger.debug("Loaded " + pluginId + " for " + addonId);
-					setCallback(integration, preInitCallback, "preInit");
-					setCallback(integration, initCallback, "init");
-					setCallback(integration, postInitCallback, "postInit");
+					this.setCallback(integration, preInitCallback, "preInit");
+					this.setCallback(integration, initCallback, "init");
+					this.setCallback(integration, postInitCallback, "postInit");
 				} catch (final Exception ex) {
 					BaseMetals.logger.error("Couldn't load " + pluginId + " for " + addonId, ex);
 				}
@@ -57,13 +58,15 @@ public enum IntegrationManager {
 		}
 	}
 
-	private void setCallback(@Nonnull final IIntegration i, @Nonnull final String name, @Nonnull final String phase) {
-		if ("".equals(name))
+	private void setCallback(@Nonnull final IIntegration i, @Nonnull final String name,
+			@Nonnull final String phase) {
+		if ("".equals(name)) {
 			return;
+		}
 
 		List<Map<IIntegration, Method>> k;
-		if (callbacks.containsKey(phase)) {
-			k = callbacks.get(phase);
+		if (this.callbacks.containsKey(phase)) {
+			k = this.callbacks.get(phase);
 		} else {
 			k = Lists.newArrayList();
 		}
@@ -71,14 +74,15 @@ public enum IntegrationManager {
 		try {
 			mmm.put(i, i.getClass().getMethod(name));
 			k.add(mmm);
-			callbacks.put(phase, k);
+			this.callbacks.put(phase, k);
 		} catch (final Exception ex) {
-			BaseMetals.logger.debug("Exception adding callback " + name + " for loading phase " + phase, ex);
+			BaseMetals.logger
+					.debug("Exception adding callback " + name + " for loading phase " + phase, ex);
 		}
 	}
 
 	private void runCallback(@Nonnull final Map<IIntegration, Method> cbs) {
-		for (Entry<IIntegration, Method> ent : cbs.entrySet()) {
+		for (final Entry<IIntegration, Method> ent : cbs.entrySet()) {
 			try {
 				ent.getValue().invoke(ent.getKey());
 			} catch (final Exception ex) {
@@ -88,10 +92,10 @@ public enum IntegrationManager {
 	}
 
 	public void runCallbacks(@Nonnull final String phase) {
-		if (callbacks.containsKey(phase)) {
-			final List<Map<IIntegration, Method>> cbs = callbacks.get(phase);
+		if (this.callbacks.containsKey(phase)) {
+			final List<Map<IIntegration, Method>> cbs = this.callbacks.get(phase);
 			for (final Map<IIntegration, Method> map : cbs) {
-				runCallback(map);
+				this.runCallback(map);
 			}
 		}
 	}

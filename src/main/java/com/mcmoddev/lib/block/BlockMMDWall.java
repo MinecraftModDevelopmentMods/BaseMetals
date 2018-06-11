@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDObject {
 
-	final MMDMaterial material;
+	private final MMDMaterial material;
 
 	/**
 	 *
@@ -35,18 +35,21 @@ public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDO
 		this.setSoundType(this.material.getSoundType());
 		this.blockHardness = this.material.getBlockHardness();
 		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(), this.material.getRequiredHarvestLevel());
+		this.setHarvestLevel(this.material.getHarvestTool(),
+				this.material.getRequiredHarvestLevel());
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(final Item itemIn, final CreativeTabs tab, final List<ItemStack> list) {
+	public void getSubBlocks(final Item itemIn, final CreativeTabs tab,
+			final List<ItemStack> list) {
 		list.add(new ItemStack(itemIn));
 	}
 
 	// We don't specifically need this, but it does mean less logic being run on each check
 	@Override
-	public boolean canPlaceTorchOnTop(final IBlockState state, final IBlockAccess world, final BlockPos pos) {
+	public boolean canPlaceTorchOnTop(final IBlockState state, final IBlockAccess world,
+			final BlockPos pos) {
 		return true;
 	}
 

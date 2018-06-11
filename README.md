@@ -52,9 +52,9 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 
 ###Fantasy Metals
 
-**Aquarium**: 
-
 **Adamantine**: (found in the Nether): Adamantine is a rare magical metal that is as strong as diamond, maybe even stronger. Armor made from Adamantine grants resistance to damage and tools made from adamantine are extra effective against monsters that have more than 10 hearts of health.
+
+**Aquarium**: 
 
 **Cold-Iron**: (found in the Nether): Cold-Iron is a magical metal that is as strong as iron. Tools made from Cold Iron are extra effective against denizens of the Nether and any creature that is immune to fire.
 

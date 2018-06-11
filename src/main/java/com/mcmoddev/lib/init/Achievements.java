@@ -40,25 +40,32 @@ public abstract class Achievements {
 	public static void init() {
 	}
 
-	protected static Achievement makeAchievement(@Nonnull final String baseName, @Nonnull final Achievement requirement, @Nonnull final int x, @Nonnull final int y, @Nonnull final Item icon, @Nonnull final AchievementPage page) {
+	protected static Achievement makeAchievement(@Nonnull final String baseName,
+			@Nonnull final Achievement requirement, @Nonnull final int x, @Nonnull final int y,
+			@Nonnull final Item icon, @Nonnull final AchievementPage page) {
 		return makeAchievement(baseName, requirement, x, y, new ItemStack(icon), page);
 	}
 
-	protected static Achievement makeAchievement(@Nonnull final String baseName, @Nonnull final Achievement requirement, @Nonnull final int x, @Nonnull final int y, @Nonnull final Block icon, @Nonnull final AchievementPage page) {
+	protected static Achievement makeAchievement(@Nonnull final String baseName,
+			@Nonnull final Achievement requirement, @Nonnull final int x, @Nonnull final int y,
+			@Nonnull final Block icon, @Nonnull final AchievementPage page) {
 		return makeAchievement(baseName, requirement, x, y, new ItemStack(icon), page);
 	}
 
-	protected static Achievement makeAchievement(@Nonnull String baseName, @Nonnull Achievement requirement, @Nonnull final int x, @Nonnull final int y, @Nonnull final ItemStack icon, @Nonnull final AchievementPage page) {
-		final Achievement a = new Achievement(baseName, baseName, x, y, icon, requirement).registerStat();
+	protected static Achievement makeAchievement(@Nonnull final String baseName,
+			@Nonnull final Achievement requirement, @Nonnull final int x, @Nonnull final int y,
+			@Nonnull final ItemStack icon, @Nonnull final AchievementPage page) {
+		final Achievement a = new Achievement(baseName, baseName, x, y, icon, requirement)
+				.registerStat();
 		achievementRegistry.put(baseName, a);
 		page.getAchievements().add(a);
 		return a;
 	}
 
 	/**
-	 * Gets an achievement by its name. The name is the name as it is registered in
-	 * the GameRegistry, not its unlocalized name (the unlocalized name is the
-	 * registered name plus the prefix "basemetals.")
+	 * Gets an achievement by its name. The name is the name as it is registered in the
+	 * GameRegistry, not its unlocalized name (the unlocalized name is the registered name plus the
+	 * prefix "basemetals.")
 	 *
 	 * @param name
 	 *            The name of the achievement in question
@@ -70,13 +77,12 @@ public abstract class Achievements {
 	}
 
 	/**
-	 * This is the reverse of the getAchievementByName(...) method, returning the
-	 * registered name of an achievement instance (Base Metals achievements only).
+	 * This is the reverse of the getAchievementByName(...) method, returning the registered name of
+	 * an achievement instance (Base Metals achievements only).
 	 *
 	 * @param a
 	 *            The achievement in question
-	 * @return The name of the achievement, or null if the item is not a Base Metals
-	 *         achievement.
+	 * @return The name of the achievement, or null if the item is not a Base Metals achievement.
 	 */
 	@Nullable
 	public static String getNameOfAchievement(@Nonnull final Achievement a) {

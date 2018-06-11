@@ -11,13 +11,19 @@ import javax.annotation.Nonnull;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.materials.ArrowShaftMaterialStats;
+import slimeknights.tconstruct.library.materials.BowMaterialStats;
+import slimeknights.tconstruct.library.materials.BowStringMaterialStats;
+import slimeknights.tconstruct.library.materials.ExtraMaterialStats;
+import slimeknights.tconstruct.library.materials.FletchingMaterialStats;
+import slimeknights.tconstruct.library.materials.HandleMaterialStats;
+import slimeknights.tconstruct.library.materials.HeadMaterialStats;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
 
 /**
  * Created by Daniel Hazelton on 2/21/2017.
- * 
+ *
  * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
  */
 public class TCMaterial {
@@ -65,7 +71,7 @@ public class TCMaterial {
 
 	/**
 	 * Barebones, minimalist constructor.
-	 * 
+	 *
 	 * @param name
 	 *            name of the material
 	 */
@@ -75,7 +81,7 @@ public class TCMaterial {
 
 	/**
 	 * This is the preferred constructor
-	 * 
+	 *
 	 * @param name
 	 *            name of the material
 	 * @param material
@@ -83,14 +89,14 @@ public class TCMaterial {
 	 */
 	public TCMaterial(@Nonnull final String name, @Nonnull final MMDMaterial material) {
 		this.headDurability = material.getToolDurability();
-		this.miningSpeed = material.getStat(MaterialStats.MAGICAFFINITY) * 3 / 2;
+		this.miningSpeed = (material.getStat(MaterialStats.MAGICAFFINITY) * 3) / 2;
 		this.miningLevel = material.getToolHarvestLevel();
 		this.headAttackDamage = material.getBaseAttackDamage() * 2;
 		this.bodyDurability = material.getToolDurability() / 7;
 		this.bodyModifier = (material.getStat(MaterialStats.HARDNESS)
-				+ material.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9;
+				+ (material.getStat(MaterialStats.MAGICAFFINITY) * 2)) / 9;
 		this.extraDurability = material.getToolDurability() / 10;
-		this.bowDrawingSpeed = calcDrawSpeed(material.getToolDurability());
+		this.bowDrawingSpeed = this.calcDrawSpeed(material.getToolDurability());
 		this.bowDamage = material.getBaseAttackDamage() + 3;
 		this.bowRange = 15.0f;
 		this.bowstringModifier = 1.0f;
@@ -104,7 +110,7 @@ public class TCMaterial {
 
 	/**
 	 * Internal function for calculating the draw-speed of a TiC bow
-	 * 
+	 *
 	 * @param durability
 	 *            durability of the material
 	 * @return the calculated draw speed
@@ -123,7 +129,7 @@ public class TCMaterial {
 
 	/**
 	 * Generate the properties of the material from the MetalMaterial it represents
-	 * 
+	 *
 	 * @return the material
 	 */
 	public TCMaterial genFromMaterial() {
@@ -131,14 +137,14 @@ public class TCMaterial {
 			return this;
 		}
 		this.headDurability = this.mmdMaterial.getToolDurability();
-		this.miningSpeed = this.mmdMaterial.getStat(MaterialStats.MAGICAFFINITY) * 3 / 2;
+		this.miningSpeed = (this.mmdMaterial.getStat(MaterialStats.MAGICAFFINITY) * 3) / 2;
 		this.miningLevel = this.mmdMaterial.getToolHarvestLevel();
 		this.headAttackDamage = this.mmdMaterial.getBaseAttackDamage() * 2;
 		this.bodyDurability = this.mmdMaterial.getToolDurability() / 7;
 		this.bodyModifier = (this.mmdMaterial.getStat(MaterialStats.HARDNESS)
-				+ this.mmdMaterial.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9;
+				+ (this.mmdMaterial.getStat(MaterialStats.MAGICAFFINITY) * 2)) / 9;
 		this.extraDurability = this.mmdMaterial.getToolDurability() / 10;
-		this.bowDrawingSpeed = calcDrawSpeed(this.mmdMaterial.getToolDurability());
+		this.bowDrawingSpeed = this.calcDrawSpeed(this.mmdMaterial.getToolDurability());
 		this.bowDamage = this.mmdMaterial.getBaseAttackDamage() + 3;
 		this.bowRange = 15.0f;
 		this.bowstringModifier = 1.0f;
@@ -153,16 +159,15 @@ public class TCMaterial {
 	}
 
 	/**
-	 * Generate the properties of the material and set it to be based on the
-	 * passed-in material
-	 * 
+	 * Generate the properties of the material and set it to be based on the passed-in material
+	 *
 	 * @param mat
 	 *            The MetalMaterial to set this material to represent
 	 * @return the material
 	 */
 	public TCMaterial genFromMaterial(@Nonnull final MMDMaterial mat) {
 		this.mmdMaterial = mat;
-		return genFromMaterial();
+		return this.genFromMaterial();
 	}
 
 	/**
@@ -187,8 +192,8 @@ public class TCMaterial {
 
 	/**
 	 * @param extraDurability
-	 *            durability of material when used as a tool extra part (binding,
-	 *            large plate, etc...)
+	 *            durability of material when used as a tool extra part (binding, large plate,
+	 *            etc...)
 	 * @return the material
 	 */
 	public TCMaterial setExtraDurability(@Nonnull final int extraDurability) {
@@ -208,8 +213,7 @@ public class TCMaterial {
 
 	/**
 	 * @param shaftBonusAmmo
-	 *            Amount of ammo you get when crafting arrows/bolts with this
-	 *            material as the shaft
+	 *            Amount of ammo you get when crafting arrows/bolts with this material as the shaft
 	 * @return the material
 	 */
 	public TCMaterial setShaftBonusAmmo(@Nonnull final int shaftBonusAmmo) {
@@ -328,23 +332,23 @@ public class TCMaterial {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param mm
 	 *            MMDMaterial this represents
 	 * @return the material
 	 */
 	public TCMaterial setMMDMaterial(@Nonnull final MMDMaterial mm) {
 		this.mmdMaterial = mm;
-		return genFromMaterial();
+		return this.genFromMaterial();
 	}
 
 	/**
-	 * Craftable and Castable are mutually exclusive, this will unset castable if it
-	 * is set and the parameter is 'true'
-	 * 
+	 * Craftable and Castable are mutually exclusive, this will unset castable if it is set and the
+	 * parameter is 'true'
+	 *
 	 * @param iscraftable
-	 *            boolean true/false - is this material capable of being crafted
-	 *            into parts at a part maker ?
+	 *            boolean true/false - is this material capable of being crafted into parts at a
+	 *            part maker ?
 	 * @return the material
 	 */
 	public TCMaterial setCraftable(@Nonnull final boolean iscraftable) {
@@ -360,12 +364,12 @@ public class TCMaterial {
 	}
 
 	/**
-	 * Craftable and Castable are mutually exclusive, this will unset craftable if
-	 * it is set and the parameter is 'true'
-	 * 
+	 * Craftable and Castable are mutually exclusive, this will unset craftable if it is set and the
+	 * parameter is 'true'
+	 *
 	 * @param iscastable
-	 *            boolean true/false - is this material capable of being cast into
-	 *            parts at the smeltery ?
+	 *            boolean true/false - is this material capable of being cast into parts at the
+	 *            smeltery ?
 	 * @return the material
 	 */
 	public TCMaterial setCastable(@Nonnull final boolean iscastable) {
@@ -392,7 +396,7 @@ public class TCMaterial {
 
 	/**
 	 * the 'Name' parameter is not used, at this time
-	 * 
+	 *
 	 * @param newName
 	 *            name for the material
 	 * @return the material
@@ -489,10 +493,10 @@ public class TCMaterial {
 
 	/**
 	 * Add a trait for a given tool part/use - "general" for overall/any undefined
-	 * 
+	 *
 	 * @param name
-	 *            Trait name - can be any that are available in TiC or one of the
-	 *            customs ones added by this plugin
+	 *            Trait name - can be any that are available in TiC or one of the customs ones added
+	 *            by this plugin
 	 * @param loc
 	 *            Location/part to attach trait to
 	 * @return The material
@@ -507,7 +511,7 @@ public class TCMaterial {
 				return this;
 			}
 		} else {
-			List<AbstractTrait> t = new ArrayList<>();
+			final List<AbstractTrait> t = new ArrayList<>();
 			t.add((AbstractTrait) trait);
 			this.traits.put(loc, t);
 		}
@@ -516,9 +520,9 @@ public class TCMaterial {
 	}
 
 	/**
-	 * Add the named trait to general/overall use, covers only those positions that
-	 * do not have traits specifically attached
-	 * 
+	 * Add the named trait to general/overall use, covers only those positions that do not have
+	 * traits specifically attached
+	 *
 	 * @param name
 	 *            Name of the trait to add
 	 * @return The material
@@ -529,10 +533,9 @@ public class TCMaterial {
 
 	/**
 	 * Get a list of all traits on a given location
-	 * 
+	 *
 	 * @param location
-	 *            Location to get traits for, null/unsupplied means the same as
-	 *            "general"
+	 *            Location to get traits for, null/unsupplied means the same as "general"
 	 * @return Either an unmodifiable list of traits or the empty list
 	 */
 	public List<AbstractTrait> getTraits(@Nonnull final String location) {
@@ -545,7 +548,7 @@ public class TCMaterial {
 
 	/**
 	 * Get the complete set of locations that have defined traits in this material
-	 * 
+	 *
 	 * @return Either the full set of locations with defined traits or the empty set
 	 */
 	public Set<String> getTraitLocations() {
@@ -556,17 +559,19 @@ public class TCMaterial {
 	}
 
 	/**
-	 * Sets applies the changes and sets up stuff internally to assist with the
-	 * material registration
+	 * Sets applies the changes and sets up stuff internally to assist with the material
+	 * registration
 	 */
 	public void settle() {
-		this.headStats = new HeadMaterialStats(headDurability, miningSpeed, headAttackDamage, miningLevel);
-		this.handleStats = new HandleMaterialStats(bodyModifier, bodyDurability);
-		this.extraStats = new ExtraMaterialStats(extraDurability);
-		this.bowStats = new BowMaterialStats(bowDrawingSpeed, bowRange, bowDamage);
-		this.bowStringStats = new BowStringMaterialStats(bowstringModifier);
-		this.arrowShaftStats = new ArrowShaftMaterialStats(shaftModifier, shaftBonusAmmo);
-		this.fletchingStats = new FletchingMaterialStats(fletchingAccuracy, fletchingModifier);
+		this.headStats = new HeadMaterialStats(this.headDurability, this.miningSpeed,
+				this.headAttackDamage, this.miningLevel);
+		this.handleStats = new HandleMaterialStats(this.bodyModifier, this.bodyDurability);
+		this.extraStats = new ExtraMaterialStats(this.extraDurability);
+		this.bowStats = new BowMaterialStats(this.bowDrawingSpeed, this.bowRange, this.bowDamage);
+		this.bowStringStats = new BowStringMaterialStats(this.bowstringModifier);
+		this.arrowShaftStats = new ArrowShaftMaterialStats(this.shaftModifier, this.shaftBonusAmmo);
+		this.fletchingStats = new FletchingMaterialStats(this.fletchingAccuracy,
+				this.fletchingModifier);
 	}
 
 	public HeadMaterialStats getHeadStats() {

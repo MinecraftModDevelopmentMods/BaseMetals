@@ -1,7 +1,7 @@
 package com.mcmoddev.basemetals.proxy;
 
 /**
- * Base Metals Server Proxy
+ * Base Metals Server Proxy.
  *
  * @author Jasmine Iwanek
  *

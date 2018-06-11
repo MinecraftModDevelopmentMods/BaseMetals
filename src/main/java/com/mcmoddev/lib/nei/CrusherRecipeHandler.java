@@ -43,8 +43,9 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	}
 
 	@Override
-	public void loadUsageRecipes(ItemStack ingredient) {
-		final ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance().getRecipeForInputItem(ingredient);
+	public void loadUsageRecipes(final ItemStack ingredient) {
+		final ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance()
+				.getRecipeForInputItem(ingredient);
 		if (recipe == null) {
 			return;
 		}
@@ -52,18 +53,21 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	}
 
 	@Override
-	public void loadCraftingRecipes(ItemStack result) {
-		final List<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance().getRecipesForOutputItem(result);
+	public void loadCraftingRecipes(final ItemStack result) {
+		final List<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance()
+				.getRecipesForOutputItem(result);
 		if (recipes == null) {
 			return; // no crusher recipes
 		}
 		for (final ICrusherRecipe r : recipes) {
-			this.arecipes.addAll(r.getValidInputs().stream().map(input -> new CrusherPair(input.copy(), r.getOutput().copy())).collect(Collectors.toList()));
+			this.arecipes.addAll(r.getValidInputs().stream()
+					.map(input -> new CrusherPair(input.copy(), r.getOutput().copy()))
+					.collect(Collectors.toList()));
 		}
 	}
 
 	@Override
-	public void loadUsageRecipes(String inputId, Object... ingredients) {
+	public void loadUsageRecipes(final String inputId, final Object... ingredients) {
 		if (inputId.equals(CRUSHER) && (this.getClass() == CrusherRecipeHandler.class)) {
 			this.loadCraftingRecipes("smelting");
 		} else {
@@ -72,10 +76,15 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	}
 
 	@Override
-	public void loadCraftingRecipes(String outputId, Object... results) {
-		if (outputId.equals(CRUSHER) && (this.getClass() == CrusherRecipeHandler.class)) { // we don't want overstep subclasses
+	public void loadCraftingRecipes(final String outputId, final Object... results) {
+		if (outputId.equals(CRUSHER) && (this.getClass() == CrusherRecipeHandler.class)) { // we
+																							// don't
+																							// want
+																							// overstep
+																							// subclasses
 			// add all crusher recipes
-			final Collection<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance().getAllRecipes();
+			final Collection<ICrusherRecipe> recipes = CrusherRecipeRegistry.getInstance()
+					.getAllRecipes();
 			if (recipes == null) {
 				return;
 			}
@@ -83,10 +92,13 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 				if (r == null) {
 					continue;
 				}
-				this.arecipes.addAll(r.getValidInputs().stream().map(input -> new CrusherPair(input.copy(), r.getOutput().copy())).collect(Collectors.toList()));
+				this.arecipes.addAll(r.getValidInputs().stream()
+						.map(input -> new CrusherPair(input.copy(), r.getOutput().copy()))
+						.collect(Collectors.toList()));
 			}
-		} else
+		} else {
 			super.loadCraftingRecipes(outputId, results);
+		}
 	}
 
 	@Override
@@ -96,13 +108,13 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public String getRecipeName() {
-//		TODO: Finish this
+		// TODO: Finish this
 		final String key = BaseMetals.MODID + ".crusher";
-//		if (I18n.canTranslate(key)) {
-			return new TextComponentTranslation(String.format(key)).getFormattedText();
-//		} else {
-//			return "Crusher";
-//		}
+		// if (I18n.canTranslate(key)) {
+		return new TextComponentTranslation(String.format(key)).getFormattedText();
+		// } else {
+		// return "Crusher";
+		// }
 	}
 
 	@Override
@@ -122,24 +134,26 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	 */
 	public static class GuiCrusher extends GuiContainer {
 
-		ResourceLocation guiDisplayImage = new ResourceLocation(BaseMetals.MODID + ":textures/gui/nei/nei_crusher.png");
+		ResourceLocation guiDisplayImage = new ResourceLocation(
+				BaseMetals.MODID + ":textures/gui/nei/nei_crusher.png");
 
 		/**
 		 *
 		 * @param container
 		 *            Container
 		 */
-		public GuiCrusher(Container container) {
+		public GuiCrusher(final Container container) {
 			super(container);
 		}
 
 		@Override
-		protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
+		protected void drawGuiContainerBackgroundLayer(final float f, final int i, final int j) {
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			final int x = (this.width - this.xSize) / 2;
 			final int y = (this.height - this.ySize) / 2;
 			this.mc.renderEngine.bindTexture(this.guiDisplayImage);
-			this.drawTexturedModalRect(x, y, 0, 0, 176, 76); // x, y, textureOffsetX, textureOffsetY, width, height)
+			this.drawTexturedModalRect(x, y, 0, 0, 176, 76); // x, y, textureOffsetX,
+																// textureOffsetY, width, height)
 		}
 	}
 
@@ -151,7 +165,7 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 	public static class ContainerCrusher extends Container {
 
 		@Override
-		public boolean canInteractWith(EntityPlayer playerIn) {
+		public boolean canInteractWith(final EntityPlayer playerIn) {
 			return true;
 		}
 	}
@@ -190,7 +204,8 @@ public class CrusherRecipeHandler extends TemplateRecipeHandler {
 
 		@Override
 		public List<PositionedStack> getIngredients() {
-			return this.getCycledIngredients(CrusherRecipeHandler.this.cycleticks / 48, Collections.singletonList(this.ingred));
+			return this.getCycledIngredients(CrusherRecipeHandler.this.cycleticks / 48,
+					Collections.singletonList(this.ingred));
 		}
 
 		@Override

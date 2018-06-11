@@ -40,43 +40,41 @@ public class TinkersConstructRegistry {
 	private static TinkersConstructRegistry instance;
 
 	/**
-	 * Hacky-ass shit constructor. Be warned that this creates a semi-circular data
-	 * structure.
-	 * 
+	 * Hacky-ass shit constructor. Be warned that this creates a semi-circular data structure.
+	 *
 	 * @constructor
 	 */
 	private TinkersConstructRegistry() {
-		if (instance == null)
-			instance = this;
+		// blank, hidden default constructor
 	}
 
 	/**
-	 * Return the existing instance or create a new one - if one doesn't exist - and
-	 * return it
-	 * 
+	 * Return the existing instance or create a new one - if one doesn't exist - and return it
+	 *
 	 * @return an instance of the registry
 	 */
 	public static TinkersConstructRegistry getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new TinkersConstructRegistry();
+		}
 
 		return instance;
 	}
 
 	/**
 	 * Has a material with the given name been registered ?
-	 * 
+	 *
 	 * @param name
 	 *            The name to test for
 	 * @return Boolean truth value of whether or not the item has been registered
 	 */
 	public boolean isRegistered(@Nonnull final String name) {
-		return registry.containsKey(name);
+		return this.registry.containsKey(name);
 	}
 
 	/**
 	 * Used internally to add an entry to the registry
-	 * 
+	 *
 	 * @param name
 	 *            name of material being registered
 	 * @param mat
@@ -84,17 +82,17 @@ public class TinkersConstructRegistry {
 	 * @return the material
 	 */
 	private TCMaterial put(@Nonnull final String name, @Nonnull final TCMaterial mat) {
-		if (isRegistered(name)) {
-			return registry.get(name);
+		if (this.isRegistered(name)) {
+			return this.registry.get(name);
 		}
-		registry.put(name, mat);
+		this.registry.put(name, mat);
 		return mat;
 	}
 
 	/**
-	 * Used internally to access the registry and grab an entry. Helps to minimize
-	 * some potential issues.
-	 * 
+	 * Used internally to access the registry and grab an entry. Helps to minimize some potential
+	 * issues.
+	 *
 	 * @param name
 	 *            name used for material during registration
 	 * @return the request material
@@ -104,9 +102,9 @@ public class TinkersConstructRegistry {
 	}
 
 	/**
-	 * Get a the named material, returning a new one of the correct name if an
-	 * existing one is not available
-	 * 
+	 * Get a the named material, returning a new one of the correct name if an existing one is not
+	 * available
+	 *
 	 * @param name
 	 *            Name of the material
 	 * @return Reference to the material asked for or a new one of the correct name
@@ -120,7 +118,7 @@ public class TinkersConstructRegistry {
 
 	/**
 	 * Get a material of a given name based on a given MMDMaterial
-	 * 
+	 *
 	 * @param name
 	 *            name of the material
 	 * @param material
@@ -137,7 +135,7 @@ public class TinkersConstructRegistry {
 
 	/**
 	 * Private internal function for adding a MaterialIntegration to said list
-	 * 
+	 *
 	 * @param m
 	 *            The MaterialIntegration to add to the list
 	 */
@@ -147,13 +145,12 @@ public class TinkersConstructRegistry {
 
 	/**
 	 * Private internal that handles actual material registration and creates the
-	 * MaterialIntegration objects
-	 * used to make sure that our materials are properly registered with TiC
-	 * 
+	 * MaterialIntegration objects used to make sure that our materials are properly registered with
+	 * TiC
+	 *
 	 * @param mat
 	 *            The material being registered.
-	 * @return Hopefully TCCode.SUCCESS, but can be any number of the various error
-	 *         code returns
+	 * @return Hopefully TCCode.SUCCESS, but can be any number of the various error code returns
 	 */
 	private TCCode register(@Nonnull final TCMaterial mat) {
 		final String matName = mat.getName().toLowerCase();
@@ -201,7 +198,7 @@ public class TinkersConstructRegistry {
 				return TCCode.BAD_MATERIAL;
 		}
 
-		registerFluid(mmdMaterial, mat.getAmountPer());
+		this.registerFluid(mmdMaterial, mat.getAmountPer());
 
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHeadStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getHandleStats());
@@ -211,9 +208,7 @@ public class TinkersConstructRegistry {
 		TinkerRegistry.addMaterialStats(tcmat, mat.getArrowShaftStats());
 		TinkerRegistry.addMaterialStats(tcmat, mat.getFletchingStats());
 
-		tcmat.setFluid(fluid)
-				.setCraftable(mat.getCraftable())
-				.setCastable(mat.getCastable())
+		tcmat.setFluid(fluid).setCraftable(mat.getCraftable()).setCastable(mat.getCastable())
 				.addItem(matRepItem, 1, Material.VALUE_Ingot);
 		tcmat.setRepresentativeItem(matRepItem);
 
@@ -232,17 +227,17 @@ public class TinkersConstructRegistry {
 
 	/**
 	 * Register all materials in the registry
-	 * 
+	 *
 	 * @return Any TCCode that represents an error or TCCode.SUCCESS
 	 */
 	public TCCode registerAll() {
-		for (final Entry<String, TCMaterial> ent : registry.entrySet()) {
+		for (final Entry<String, TCMaterial> ent : this.registry.entrySet()) {
 			// log ent.getKey() - the material name - here ?
-			final TCCode rv = register(ent.getValue());
+			final TCCode rv = this.register(ent.getValue());
 			// Either we've had a success or the material is already registered
 			// in those two cases, we carry on. Otherwise we return the error and
 			// halt
-			if (rv != TCCode.SUCCESS && rv != TCCode.MATERIAL_ALREADY_REGISTERED) {
+			if ((rv != TCCode.SUCCESS) && (rv != TCCode.MATERIAL_ALREADY_REGISTERED)) {
 				return rv;
 			}
 		}
@@ -250,10 +245,10 @@ public class TinkersConstructRegistry {
 	}
 
 	/**
-	 * Register an item as melting to a given amount of a specific output fluid
-	 * As we have no real method of detecting errors here, we could have this return
-	 * void. Using TCCode for orthogonality and possible future utility
-	 * 
+	 * Register an item as melting to a given amount of a specific output fluid As we have no real
+	 * method of detecting errors here, we could have this return void. Using TCCode for
+	 * orthogonality and possible future utility
+	 *
 	 * @param input
 	 *            The Item to be melted
 	 * @param output
@@ -273,7 +268,7 @@ public class TinkersConstructRegistry {
 
 	/**
 	 * Same as the other function, but using an ore-dict
-	 * 
+	 *
 	 * @param oredictName
 	 *            OreDictionary entry to use as the input item
 	 * @param output
@@ -292,33 +287,34 @@ public class TinkersConstructRegistry {
 	}
 
 	/**
-	 * Internal helper to get a FluidStack from a pair of parameters to the variadic
-	 * 'registerAlloy' function
-	 * 
+	 * Internal helper to get a FluidStack from a pair of parameters to the variadic 'registerAlloy'
+	 * function
+	 *
 	 * @param fluid
 	 *            String, Fluid or MetalMaterial representing the fluid
 	 * @param amt
-	 *            passed in as an Object, but actually an Integer representing the
-	 *            amount of the fluid, in mB, that is in the stack
-	 * @return a FluidStack representing the Fluid+Amount pair of parameters passed
-	 *         in
+	 *            passed in as an Object, but actually an Integer representing the amount of the
+	 *            fluid, in mB, that is in the stack
+	 * @return a FluidStack representing the Fluid+Amount pair of parameters passed in
 	 */
-	private static FluidStack getFluidStack(@Nonnull final Object fluid, @Nonnull final Object amt) {
+	private static FluidStack getFluidStack(@Nonnull final Object fluid,
+			@Nonnull final Object amt) {
 		final Integer amount = (Integer) amt;
 		if (fluid instanceof String) {
 			return new FluidStack(FluidRegistry.getFluid((String) fluid), amount.intValue());
 		} else if (fluid instanceof MMDMaterial) {
-			return new FluidStack(FluidRegistry.getFluid(((MMDMaterial) fluid).getName()), amount.intValue());
+			return new FluidStack(FluidRegistry.getFluid(((MMDMaterial) fluid).getName()),
+					amount.intValue());
 		} else if (fluid instanceof Fluid) {
-			return new FluidStack(FluidRegistry.getFluid(((Fluid) fluid).getName()), amount.intValue());
+			return new FluidStack(FluidRegistry.getFluid(((Fluid) fluid).getName()),
+					amount.intValue());
 		}
 		return null;
 	}
 
 	/**
-	 * Register an alloy with the given recipe, name and output fluid in the
-	 * specified amount
-	 * 
+	 * Register an alloy with the given recipe, name and output fluid in the specified amount
+	 *
 	 * @param name
 	 *            Name of the alloy
 	 * @param output
@@ -326,8 +322,8 @@ public class TinkersConstructRegistry {
 	 * @param outputAmount
 	 *            Amount of fluid produced
 	 * @param recipe
-	 *            A chunk of String/Fluid/MetalMaterial/TCMaterial followed by an
-	 *            amount - must be at least two entries (4 items)
+	 *            A chunk of String/Fluid/MetalMaterial/TCMaterial followed by an amount - must be
+	 *            at least two entries (4 items)
 	 * @return Any TCCode that represents an error or TCCode.SUCCESS
 	 */
 	public TCCode registerAlloy(@Nonnull final String name, @Nonnull final Fluid output,
@@ -349,7 +345,7 @@ public class TinkersConstructRegistry {
 
 	/**
 	 * Variant for backwards compat
-	 * 
+	 *
 	 * @param output
 	 *            Oredict name of output fluid
 	 * @param outputQty
@@ -377,9 +373,8 @@ public class TinkersConstructRegistry {
 	}
 
 	/**
-	 * Register the ability to cast a block of material from a specified quantity of
-	 * a fluid
-	 * 
+	 * Register the ability to cast a block of material from a specified quantity of a fluid
+	 *
 	 * @param block
 	 *            Block that is created
 	 * @param source
@@ -388,17 +383,19 @@ public class TinkersConstructRegistry {
 	 *            Amount of fluid being poured
 	 * @return Any TCCode that represents an error or TCCode.SUCCESS
 	 */
-	public TCCode registerBasin(@Nonnull final Block block, @Nonnull final Fluid source, @Nonnull final int sourceQty) {
+	public TCCode registerBasin(@Nonnull final Block block, @Nonnull final Fluid source,
+			@Nonnull final int sourceQty) {
 		if (sourceQty == 0) {
 			return TCCode.FAILURE_PARAMETER_ERROR;
 		}
-		TinkerRegistry.registerBasinCasting(new ItemStack(block), null, source, sourceQty);
+		TinkerRegistry.registerBasinCasting(new ItemStack(block), null, source,
+				sourceQty);
 		return TCCode.SUCCESS;
 	}
 
 	/**
 	 * Register a casting table piece. This is either an ingot, a nugget or a gem
-	 * 
+	 *
 	 * @param output
 	 *            Item that is output
 	 * @param source
@@ -412,20 +409,19 @@ public class TinkersConstructRegistry {
 		if (sourceQty == 0) {
 			return TCCode.FAILURE_PARAMETER_ERROR;
 		}
-		TinkerRegistry.registerTableCasting(new ItemStack(output), null, source, sourceQty);
+		TinkerRegistry.registerTableCasting(new ItemStack(output), null, source,
+				sourceQty);
 		return TCCode.SUCCESS;
 	}
 
 	/**
-	 * Register all the fluids a MetalMaterial might melt into, at the amountPer
-	 * amount
-	 * 
+	 * Register all the fluids a MetalMaterial might melt into, at the amountPer amount
+	 *
 	 * @param base
 	 *            MetalMaterial that is the base for this fluid
 	 * @param amountPer
 	 *            How much per ingot/single item of the material
-	 * @return TCCode.SUCCESS - at this point there are no failure points in this
-	 *         routine
+	 * @return TCCode.SUCCESS - at this point there are no failure points in this routine
 	 */
 	public TCCode registerFluid(@Nonnull final MMDMaterial base, @Nonnull final int amountPer) {
 		final String materialName = base.getName();
@@ -433,93 +429,117 @@ public class TinkersConstructRegistry {
 		final String oreDictName = base.getCapitalizedName();
 
 		// hacky fix for Coal being itemCoal and not ingotCoal
-		if (MaterialNames.COAL.equals(base.getName()))
-			meltingHelper("itemCoal", output, amountPer);
+		if (MaterialNames.COAL.equals(base.getName())) {
+			this.meltingHelper("itemCoal", output, amountPer);
+		}
 
-		meltingHelper(Oredicts.ORE + oreDictName, output, amountPer * 2);
-		meltingHelper(Oredicts.BLOCK + oreDictName, output, amountPer * 9);
-		meltingHelper(Oredicts.INGOT + oreDictName, output, amountPer);
-		meltingHelper(Oredicts.NUGGET + oreDictName, output, amountPer / 9);
-		meltingHelper(Oredicts.DUST + oreDictName, output, amountPer);
-		meltingHelper(Oredicts.DUST_SMALL + oreDictName, output, amountPer / 9);
-		if (base.hasBlock(Names.NETHERORE))
-			meltingHelper(base.getBlock(Names.NETHERORE), output, amountPer * 4);
+		this.meltingHelper(Oredicts.ORE + oreDictName, output, amountPer * 2);
+		this.meltingHelper(Oredicts.BLOCK + oreDictName, output, amountPer * 9);
+		this.meltingHelper(Oredicts.INGOT + oreDictName, output, amountPer);
+		this.meltingHelper(Oredicts.NUGGET + oreDictName, output, amountPer / 9);
+		this.meltingHelper(Oredicts.DUST + oreDictName, output, amountPer);
+		this.meltingHelper(Oredicts.DUST_SMALL + oreDictName, output, amountPer / 9);
+		if (base.hasBlock(Names.NETHERORE)) {
+			this.meltingHelper(base.getBlock(Names.NETHERORE), output, amountPer * 4);
+		}
 
-		if (base.hasBlock(Names.ENDORE))
-			meltingHelper(base.getBlock(Names.ENDORE), output, amountPer * 4);
+		if (base.hasBlock(Names.ENDORE)) {
+			this.meltingHelper(base.getBlock(Names.ENDORE), output, amountPer * 4);
+		}
 
-		if (base.hasBlock(Names.SLAB))
-			meltingHelper(base.getBlock(Names.SLAB), output, (amountPer * 4) + (amountPer / 2));
+		if (base.hasBlock(Names.SLAB)) {
+			this.meltingHelper(base.getBlock(Names.SLAB), output,
+					(amountPer * 4) + (amountPer / 2));
+		}
 
-		if (base.hasBlock(Names.WALL))
-			meltingHelper(base.getBlock(Names.WALL), output, amountPer * 9);
+		if (base.hasBlock(Names.WALL)) {
+			this.meltingHelper(base.getBlock(Names.WALL), output, amountPer * 9);
+		}
 
-		if (base.hasItem(Names.BOOTS))
-			meltingHelper(base.getItem(Names.BOOTS), output, amountPer * 4);
+		if (base.hasItem(Names.BOOTS)) {
+			this.meltingHelper(base.getItem(Names.BOOTS), output, amountPer * 4);
+		}
 
-		if (base.hasItem(Names.HELMET))
-			meltingHelper(base.getItem(Names.HELMET), output, amountPer * 5);
+		if (base.hasItem(Names.HELMET)) {
+			this.meltingHelper(base.getItem(Names.HELMET), output, amountPer * 5);
+		}
 
-		if (base.hasItem(Names.CHESTPLATE))
-			meltingHelper(base.getItem(Names.CHESTPLATE), output, amountPer * 8);
+		if (base.hasItem(Names.CHESTPLATE)) {
+			this.meltingHelper(base.getItem(Names.CHESTPLATE), output, amountPer * 8);
+		}
 
-		if (base.hasItem(Names.LEGGINGS))
-			meltingHelper(base.getItem(Names.LEGGINGS), output, amountPer * 7);
+		if (base.hasItem(Names.LEGGINGS)) {
+			this.meltingHelper(base.getItem(Names.LEGGINGS), output, amountPer * 7);
+		}
 
-		if (base.hasItem(Names.SHEARS))
-			meltingHelper(base.getItem(Names.SHEARS), output, amountPer * 2);
+		if (base.hasItem(Names.SHEARS)) {
+			this.meltingHelper(base.getItem(Names.SHEARS), output, amountPer * 2);
+		}
 
-		if (base.hasBlock(Names.PRESSURE_PLATE))
-			meltingHelper(base.getBlock(Names.PRESSURE_PLATE), output, amountPer * 2);
+		if (base.hasBlock(Names.PRESSURE_PLATE)) {
+			this.meltingHelper(base.getBlock(Names.PRESSURE_PLATE), output, amountPer * 2);
+		}
 
-		if (base.hasBlock(Names.BARS))
-			meltingHelper(base.getBlock(Names.BARS), output, ((amountPer / 9) * 3) + 6); // Fun math
+		if (base.hasBlock(Names.BARS)) {
+			this.meltingHelper(base.getBlock(Names.BARS), output, ((amountPer / 9) * 3) + 6); // Fun
+																								// math
+		}
 
-		if (base.hasItem(Names.ROD))
-			meltingHelper(base.getItem(Names.ROD), output, amountPer / 2);
+		if (base.hasItem(Names.ROD)) {
+			this.meltingHelper(base.getItem(Names.ROD), output, amountPer / 2);
+		}
 
-		if (base.hasItem(Names.DOOR))
-			meltingHelper(base.getItem(Names.DOOR), output, amountPer * 2);
+		if (base.hasItem(Names.DOOR)) {
+			this.meltingHelper(base.getItem(Names.DOOR), output, amountPer * 2);
+		}
 
-		if (base.hasBlock(Names.TRAPDOOR))
-			meltingHelper(base.getBlock(Names.TRAPDOOR), output, amountPer * 4);
+		if (base.hasBlock(Names.TRAPDOOR)) {
+			this.meltingHelper(base.getBlock(Names.TRAPDOOR), output, amountPer * 4);
+		}
 
-		if (base.hasBlock(Names.BUTTON))
-			meltingHelper(base.getBlock(Names.BUTTON), output, (amountPer / 9) * 2);
+		if (base.hasBlock(Names.BUTTON)) {
+			this.meltingHelper(base.getBlock(Names.BUTTON), output, (amountPer / 9) * 2);
+		}
 
 		return TCCode.SUCCESS;
 	}
 
 	/*
-	 * The following functions are helpers to help make the registerMelting function
-	 * a touch less complex
+	 * The following functions are helpers to help make the registerMelting function a touch less
+	 * complex
 	 */
-	private void meltingHelper(@Nonnull final Item item, @Nonnull final Fluid output, @Nonnull final int amount) {
+	private void meltingHelper(@Nonnull final Item item, @Nonnull final Fluid output,
+			@Nonnull final int amount) {
 		if (item != null) {
 			TinkerRegistry.registerMelting(item, output, amount);
-//		} else {
-//			BaseMetals.logger.error("Attempted to register null item for fluid " + output.getName());
+			// } else {
+			// BaseMetals.logger.error("Attempted to register null item for fluid " +
+			// output.getName());
 		}
 	}
 
-	private void meltingHelper(@Nonnull final String itemName, @Nonnull final Fluid output, @Nonnull final int amount) {
+	private void meltingHelper(@Nonnull final String itemName, @Nonnull final Fluid output,
+			@Nonnull final int amount) {
 		if (!OreDictionary.getOres(itemName).isEmpty()) {
 			TinkerRegistry.registerMelting(itemName, output, amount);
-//		} else {
-//			BaseMetals.logger.error("Attempted to register oredict for missing item " + itemName);
+			// } else {
+			// BaseMetals.logger.error("Attempted to register oredict for missing item " +
+			// itemName);
 		}
 	}
 
-	private void meltingHelper(@Nonnull final Block block, @Nonnull final Fluid output, @Nonnull final int amount) {
+	private void meltingHelper(@Nonnull final Block block, @Nonnull final Fluid output,
+			@Nonnull final int amount) {
 		if (block != null) {
 			TinkerRegistry.registerMelting(block, output, amount);
-//		} else {
-//			BaseMetals.logger.error("Attempted to register null block for fluid " + output.getName());
+			// } else {
+			// BaseMetals.logger.error("Attempted to register null block for fluid " +
+			// output.getName());
 		}
 	}
 
 	public void integrateRecipes() {
-		for (final MaterialIntegration m : integrations) {
+		for (final MaterialIntegration m : this.integrations) {
 			m.integrateRecipes();
 		}
 	}
