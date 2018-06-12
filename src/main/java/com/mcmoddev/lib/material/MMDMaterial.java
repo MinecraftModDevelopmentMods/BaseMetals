@@ -80,7 +80,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	private final boolean isBeaconBase;
 
 	/**
-	 * Whether or not this material has a blend that can be smelted to produce. it
+	 * Whether or not this material has a blend that can be smelted to produce it.
 	 */
 	private final boolean hasBlend;
 

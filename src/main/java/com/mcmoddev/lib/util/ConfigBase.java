@@ -502,11 +502,11 @@ public class ConfigBase {
 		}
 
 		protected static int rodQuantity = 4;
-		
+
 		public static void setRodQuantity(int quantity) {
 			rodQuantity = quantity;
 		}
-		
+
 		public static int rodQuantity() {
 			return rodQuantity;
 		}

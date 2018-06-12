@@ -26,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
@@ -35,11 +36,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraft.item.ItemTool;
 
 public class ItemMMDSickle extends ItemTool implements IMMDObject {
 
-	public static final ImmutableSet<Material> vanilla_materials = ImmutableSet.of(Material.WEB,
+	private static final ImmutableSet<Material> vanilla_materials = ImmutableSet.of(Material.WEB,
 			Material.LEAVES, Material.PLANTS, Material.VINE, Material.GOURD, Material.CACTUS);
 
 	private final MMDMaterial material;
@@ -118,13 +118,8 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 
 			final TileEntity tileEntity = world.getTileEntity(actualPosition);
 
-			if (block.removedByPlayer(bsatapos, world, actualPosition, player, true)) { // boolean
-																						// is if
-																						// block can
-																						// be
-																						// harvested,
-																						// checked
-																						// above
+			if (block.removedByPlayer(bsatapos, world, actualPosition, player, true)) { // boolean is if block can be
+																						// harvested, checked above
 				block.onBlockDestroyedByPlayer(world, actualPosition, bsatapos);
 				block.harvestBlock(world, player, actualPosition, bsatapos, tileEntity, tool);
 				block.dropXpOnBlockBreak(world, actualPosition, xp);
