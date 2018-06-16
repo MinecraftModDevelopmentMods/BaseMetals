@@ -18,7 +18,7 @@ public class BlockMMDButton extends net.minecraft.block.BlockButton implements I
 
 	/**
 	 *
-	 * @param material
+	 * @param material The material the Button is made from
 	 */
 	public BlockMMDButton(final MMDMaterial material) {
 		super((material.getType() == MaterialType.WOOD) ? true : false);

@@ -23,6 +23,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class RegistrationHelper {
 
+	/**
+	 *
+	 * @param item The Item to register
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerItemRender(@Nonnull final Item item) {
 		registerRender(item);
@@ -30,7 +34,7 @@ public class RegistrationHelper {
 
 	/**
 	 *
-	 * @param name
+	 * @param name The name of the Item to register
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerItemRender(@Nonnull final String name) {
@@ -41,7 +45,7 @@ public class RegistrationHelper {
 
 	/**
 	 *
-	 * @param block
+	 * @param block The Block to register
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerBlockRender(@Nonnull final Block block) {
@@ -55,7 +59,7 @@ public class RegistrationHelper {
 
 	/**
 	 *
-	 * @param name
+	 * @param block The name of the Block to register
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerBlockRender(@Nonnull final String name) {
@@ -76,7 +80,7 @@ public class RegistrationHelper {
 
 	/**
 	 *
-	 * @param fluid
+	 * @param fluid The Fluid to register
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerFluidRender(@Nonnull final Fluid fluid) {
@@ -102,7 +106,7 @@ public class RegistrationHelper {
 
 	/**
 	 *
-	 * @param item
+	 * @param item The Item to register
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerRender(@Nonnull final Item item) {

@@ -213,8 +213,8 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		if (Item.getItemFromBlock(block) == null) {
 			return null;
 		}
-		return CrusherRecipeRegistry
-				.getRecipeForInputItem(new ItemStack(block, 1, block.getMetaFromState(blockState)));
+		return CrusherRecipeRegistry.getRecipeForInputItem(
+				new ItemStack(block, 1, block.getMetaFromState(blockState)));
 	}
 
 	@Override

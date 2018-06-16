@@ -11,7 +11,7 @@ public class BlockMMDFenceGate extends net.minecraft.block.BlockFenceGate implem
 
 	/**
 	 *
-	 * @param material
+	 * @param material The material the Fence Gate is made from
 	 */
 	public BlockMMDFenceGate(final MMDMaterial material) {
 		super(BlockPlanks.EnumType.OAK);

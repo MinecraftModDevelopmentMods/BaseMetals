@@ -88,6 +88,7 @@ import net.minecraftforge.fml.common.ModContainer;
  *
  */
 public abstract class Items {
+
 	private static final BiMap<String, Item> itemRegistry = HashBiMap.create(34);
 	private static final Map<MMDMaterial, List<Item>> itemsByMaterial = new HashMap<>();
 

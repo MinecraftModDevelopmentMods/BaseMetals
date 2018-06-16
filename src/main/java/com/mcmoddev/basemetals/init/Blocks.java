@@ -48,6 +48,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		materials.stream().filter(Materials::hasMaterial).forEach(materialName -> {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
+
 			create(Names.BLOCK, material);
 			create(Names.PLATE, material);
 			create(Names.ORE, material);
@@ -69,6 +70,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		addBlock(new BlockHumanDetector(), "human_detector",
 				ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
+
 		MinecraftForge.EVENT_BUS.register(Blocks.class);
 	}
 

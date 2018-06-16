@@ -7,6 +7,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.TinkersConstructBase;
 import static com.mcmoddev.lib.integration.plugins.tinkers.TinkerMaterial.TinkersTraitLocation;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
@@ -22,9 +23,8 @@ import net.minecraftforge.fluids.FluidStack;
  *
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID,
-           versions=TinkersConstruct.PLUGIN_MODID+"@[1.12.2-2.7.4.0,)")
-public final class TinkersConstruct
-		extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase implements IIntegration {
+           versions = TinkersConstruct.PLUGIN_MODID + "@[1.12.2-2.7.4.0,)")
+public final class TinkersConstruct extends TinkersConstructBase implements IIntegration {
 
 	public TinkersConstruct() {
 		super();

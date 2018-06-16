@@ -13,7 +13,7 @@ public class BlockMMDFence extends net.minecraft.block.BlockFence implements IMM
 
 	/**
 	 *
-	 * @param material
+	 * @param material The material the Fence is made from
 	 */
 	public BlockMMDFence(final MMDMaterial material) {
 		super(material.getVanillaMaterial(), material.getVanillaMaterial().getMaterialMapColor());

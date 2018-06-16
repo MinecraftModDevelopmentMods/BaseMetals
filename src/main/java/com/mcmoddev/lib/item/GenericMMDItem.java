@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Multimap;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.material.IMMDObject;
+import com.mcmoddev.lib.material.IMMDBurnableObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -18,7 +19,7 @@ import net.minecraft.item.Item;
  * @author DrCyano
  *
  */
-public class GenericMMDItem extends Item implements IMMDObject {
+public class GenericMMDItem extends Item implements IMMDObject, IMMDBurnableObject {
 
 	private int burnTime = 0;
 	private final MMDMaterial material;
@@ -37,6 +38,7 @@ public class GenericMMDItem extends Item implements IMMDObject {
 		return this.material;
 	}
 
+	@Override
 	public void setBurnTime(final int timeInTicks) {
 		this.burnTime = timeInTicks;
 	}

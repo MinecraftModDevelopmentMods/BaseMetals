@@ -266,12 +266,12 @@ public abstract class Blocks {
 
 		ModContainer base = Loader.instance().activeModContainer();
 		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
-		
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
 		}
-		
-		block.setRegistryName(new ResourceLocation(ActiveModData.instance.activeMod(),fullName));
+
+		block.setRegistryName(new ResourceLocation(ActiveModData.instance.activeMod(), fullName));
 		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
 
 		maybeMakeItemBlock(block, material, fullName);

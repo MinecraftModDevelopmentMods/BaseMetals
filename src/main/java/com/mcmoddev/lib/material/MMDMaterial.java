@@ -634,7 +634,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public ItemStack getBlockItemStack(final String name) {
-		return new ItemStack(this.getBlock(name), 1);
+		return this.getBlockItemStack(name, 1);
 	}
 
 	public ItemStack getBlockItemStack(final Names name, final int amount) {

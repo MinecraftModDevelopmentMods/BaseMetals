@@ -12,10 +12,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.item.ItemMMDBlock;
-import com.mcmoddev.lib.item.ItemMMDNugget;
-import com.mcmoddev.lib.item.ItemMMDPowder;
-import com.mcmoddev.lib.item.ItemMMDSmallPowder;
+import com.mcmoddev.lib.material.IMMDBurnableObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -33,6 +30,10 @@ import net.minecraftforge.registries.IForgeRegistry;
  *
  */
 public final class Items extends com.mcmoddev.lib.init.Items {
+
+	private static final int BLOCK_BURN_TIME = 16000;
+	private static final int INGOT_BURN_TIME = 1600;
+	private static final int NUGGET_BURN_TIME = 200;
 
 	private Items() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -151,25 +152,26 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 						Materials.getMaterialByName(materialName)));
 
 		addToMetList();
+
 		MinecraftForge.EVENT_BUS.register(Items.class);
 	}
 
 	private static void setBurnTimes(@Nonnull final MMDMaterial material) {
 		if (material.hasItem(Names.NUGGET)) {
-			((ItemMMDNugget) material.getItem(Names.NUGGET)).setBurnTime(160);
+			((IMMDBurnableObject) material.getItem(Names.NUGGET)).setBurnTime(NUGGET_BURN_TIME);
 		}
 
 		if (material.hasItem(Names.POWDER)) {
-			((ItemMMDPowder) material.getItem(Names.POWDER)).setBurnTime(1600);
+			((IMMDBurnableObject) material.getItem(Names.POWDER)).setBurnTime(INGOT_BURN_TIME);
 		}
 
 		if (material.hasItem(Names.SMALLPOWDER)) {
-			((ItemMMDSmallPowder) material.getItem(Names.SMALLPOWDER)).setBurnTime(160);
+			((IMMDBurnableObject) material.getItem(Names.SMALLPOWDER)).setBurnTime(NUGGET_BURN_TIME);
 		}
 
 		// simple hack to fix this shit - I give up on trying for more
 		if (material.hasBlock(Names.BLOCK) && material.getName().equals(MaterialNames.CHARCOAL)) {
-			((ItemMMDBlock) material.getItem("ItemBlock_charcoal_block")).setBurnTime(16000);
+			((IMMDBurnableObject) material.getItem("ItemBlock_charcoal_block")).setBurnTime(BLOCK_BURN_TIME);
 		}
 	}
 

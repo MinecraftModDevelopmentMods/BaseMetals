@@ -111,8 +111,8 @@ public class Config extends ConfigBase {
 		Options.modEnabled(VeinMinerBase.PLUGIN_MODID,
 				configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
 						"If false, then Base Metals will not try and integrate with VeinMiner"));
-		Options.modEnabled("taiga", configuration.getBoolean("taiga_integration", INTEGRATION_CAT,
-				true,
+		Options.modEnabled("taiga", configuration.getBoolean("taiga_integration",
+				INTEGRATION_CAT, true,
 				"Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals"));
 		Options.modEnabled(DenseOresBase.PLUGIN_MODID,
 				configuration.getBoolean("denseores", INTEGRATION_CAT, true,

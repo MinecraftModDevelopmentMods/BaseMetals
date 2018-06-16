@@ -10,6 +10,7 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.IC2Base;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
@@ -19,9 +20,13 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, versions=IC2.PLUGIN_MODID+"@[2.8.57-ex112,)")
-public final class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base
-		implements IIntegration {
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, versions = IC2.PLUGIN_MODID + "@[2.8.57-ex112,)")
+public final class IC2 extends IC2Base implements IIntegration {
+
+	private static final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+			MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+			MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+			MaterialNames.ZINC);
 
 	@Override
 	public void init() {
@@ -38,10 +43,6 @@ public final class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base
 	 */
 	@SubscribeEvent
 	public void mainInteraction(final RegistryEvent.Register<IRecipe> event) {
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
-				MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
@@ -79,11 +80,7 @@ public final class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base
 	 *
 	 */
 	@SubscribeEvent
-	public void doHammerRecipes(IntegrationInitEvent ev) {
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
-				MaterialNames.ZINC);
+	public void doHammerRecipes(IntegrationInitEvent event) {
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(this::addForgeHammerRecipe);

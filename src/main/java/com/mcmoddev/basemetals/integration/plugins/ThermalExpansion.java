@@ -9,6 +9,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.ThermalExpansionBase;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
@@ -19,9 +20,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = ThermalExpansion.PLUGIN_MODID,
-           versions = ThermalExpansion.PLUGIN_MODID+"@(,5.3.12.17];")
-public final class ThermalExpansion extends com.mcmoddev.lib.integration.plugins.ThermalExpansionBase
-		implements IIntegration {
+           versions = ThermalExpansion.PLUGIN_MODID + "@(,5.3.12.17];")
+public final class ThermalExpansion extends ThermalExpansionBase implements IIntegration {
 
 	@Override
 	public void init() {
@@ -88,7 +88,7 @@ public final class ThermalExpansion extends com.mcmoddev.lib.integration.plugins
 			final String... items) {
 		for (final String item : items) {
 			for (final String materialName : materialNames) {
-				if (!com.mcmoddev.lib.init.Materials.getMaterialByName(materialName)
+				if (!Materials.getMaterialByName(materialName)
 						.hasItem(item)) {
 					return false;
 				}
@@ -99,7 +99,7 @@ public final class ThermalExpansion extends com.mcmoddev.lib.integration.plugins
 
 	private static boolean hasMaterials(final String... materials) {
 		for (final String materialName : materials) {
-			if (!com.mcmoddev.lib.init.Materials.hasMaterial(materialName)) {
+			if (!Materials.hasMaterial(materialName)) {
 				return false;
 			}
 		}
