@@ -59,7 +59,7 @@ public class RegistrationHelper {
 
 	/**
 	 *
-	 * @param block The name of the Block to register
+	 * @param name The name of the Block to register
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerBlockRender(@Nonnull final String name) {
