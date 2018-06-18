@@ -1,15 +1,15 @@
 #Created by MrTrollNugNug(Cazsius) 12/17/16
     #Note: All Catagories are sorted by Relevance. All Subcatagories are sorted...
     #in Alphabetical Order.
-#繁體中文由NatsuArashi (shkl0206@gmil.com) 整理(3/30/17)
+#繁體中文由 NatsuArashi (shkl0206@gmail.com) 整理(18,june,18)
 #NEI/JEI
 basemetals.crackhammer=敲碎的方塊/物品
 
 #Creative Tabs
-itemGroup.basemetals.blocks=Base Metals Blocks
-itemGroup.basemetals.combat=Base Metals Combat
-itemGroup.basemetals.items=Base Metals Items
-itemGroup.basemetals.tools=Base Metals Tools
+itemGroup.basemetals.blocks=Base Metals 方塊
+itemGroup.basemetals.combat=Base Metals 戰鬥
+itemGroup.basemetals.items=Base Metals 物品
+itemGroup.basemetals.tools=Base Metals 工具
 
 #ToolTips
 tooltip.adamantine.tool=對堅硬敵人造成外 %d 傷害
@@ -24,7 +24,7 @@ tooltip.coldiron.armor=套裝效果：火焰抗性
 tooltip.mithril.tool=對不死系致盲及凋零
 tooltip.mithril.armor=套裝效果：抗毒＆抗凋零
 
-tooltip.starsteel.tool=每 %d 秒修復1點耐久值
+tooltip.starsteel.tool=每 %d 秒修復 1 點耐久值
 tooltip.starsteel.armor=重量減輕
 
 #Achievements
@@ -42,6 +42,7 @@ achievement.invar_maker=殷鋼
 achievement.juggernaut=札格納特
 achievement.metallurgy=冶煉學
 achievement.mithril_maker=秘銀
+achievement.pewter_maker=白鑞
 achievement.moon_boots=月步者
 achievement.scuba_diver=潛水員
 achievement.steel_maker=鋼
@@ -60,6 +61,7 @@ achievement.invar_maker.desc=混合鐵粉與鎳粉，燒製成殷鋼
 achievement.juggernaut.desc=穿上整套精金裝甲
 achievement.metallurgy.desc=混合任一種合金粉末
 achievement.mithril_maker.desc=混合銀、寒鐵粉末和水銀，並燒製秘銀
+achievement.pewter_maker.desc=混合 ??? 和 ??? 粉末來製造白鑞
 achievement.moon_boots.desc=穿上一雙星鋼靴
 achievement.scuba_diver.desc=穿上海洋合金套裝並潛入水中
 achievement.steel_maker.desc=混合鐵粉和碳粉，並燒製成鋼
@@ -341,6 +343,38 @@ item.basemetals.steel_fishing_rod.name=鋼釣竿
 item.basemetals.tin_fishing_rod.name=錫釣竿
 item.basemetals.zinc_fishing_rod.name=鋅釣竿
 
+
+#Sickles
+item.basemetals.adamantine_scythe.name=精金鐮
+item.basemetals.antimony_scythe.name=銻鐮
+item.basemetals.aquarium_scythe.name=海洋合金鐮
+item.basemetals.bismuth_scythe.name=鉍鐮
+item.basemetals.brass_scythe.name=黃銅鐮
+item.basemetals.bronze_scythe.name=青銅鐮
+item.basemetals.coldiron_scythe.name=寒鐵鐮
+item.basemetals.copper_scythe.name=銅鐮
+item.basemetals.cupronickel_scythe.name=白銅鐮
+item.basemetals.diamond_scythe.name=鑽石鐮
+item.basemetals.electrum_scythe.name=玫瑰金鐮
+item.basemetals.emerald_scythe.name=綠寶石鐮
+item.basemetals.gold_scythe.name=金鐮
+item.basemetals.invar_scythe.name=殷鋼鐮
+item.basemetals.iron_scythe.name=鐵鐮
+item.basemetals.lead_scythe.name=鉛鐮
+item.basemetals.mithril_scythe.name=秘銀鐮
+item.basemetals.nickel_scythe.name=鎳鐮
+item.basemetals.obsidian_scythe.name=黑曜石鐮
+item.basemetals.pewter_scythe.name=白鑞鐮
+item.basemetals.platinum_scythe.name=白金鐮
+item.basemetals.quartz_scythe.name=石英鐮
+item.basemetals.silver_scythe.name=銀鐮
+item.basemetals.starsteel_scythe.name=星鋼鐮
+item.basemetals.steel_scythe.name=鋼鐮
+item.basemetals.stone_scythe.name=石鐮
+item.basemetals.tin_scythe.name=錫鐮
+item.basemetals.wood_scythe.name=木鐮
+item.basemetals.zinc_scythe.name=鋅鐮
+
 #Shields
 item.basemetals.adamantine_shield.name=精金盾
 item.basemetals.aquarium_shield.name=海洋合金盾
@@ -551,31 +585,31 @@ item.basemetals.zinc_helmet.name=鋅頭盔
 item.basemetals.zinc_leggings.name=鋅腿甲
 
 #Horse Armor
-item.basemetals.adamantine_horsearmor.name=精金馬鎧
-item.basemetals.aquarium_horsearmor.name=海洋合金馬鎧
-item.basemetals.antimony_horsearmor.name=銻馬鎧
-item.basemetals.bismuth_horsearmor.name=鉍馬鎧
-item.basemetals.brass_horsearmor.name=黃銅馬鎧
-item.basemetals.bronze_horsearmor.name=青銅馬鎧
-item.basemetals.coldiron_horsearmor.name=寒鐵馬鎧
-item.basemetals.copper_horsearmor.name=銅馬鎧
-item.basemetals.cupronickel_horsearmor.name=白銅馬鎧
-item.basemetals.electrum_horsearmor.name=玫瑰金馬鎧
-item.basemetals.emerald_horsearmor.name=綠寶石馬鎧
-item.basemetals.invar_horsearmor.name=殷鋼馬鎧
-item.basemetals.lead_horsearmor.name=鉛馬鎧
-item.basemetals.mercury_horsearmor.name=汞馬鎧
-item.basemetals.mithril_horsearmor.name=秘銀馬鎧
-item.basemetals.nickel_horsearmor.name=鎳馬鎧
-item.basemetals.obsidian_horsearmor.name=黑曜石馬鎧
-item.basemetals.pewter_horsearmor.name=白鑞馬鎧
-item.basemetals.platinum_horsearmor.name=白金馬鎧
-item.basemetals.quartz_horsearmor.name=石英馬鎧
-item.basemetals.silver_horsearmor.name=銀馬鎧
-item.basemetals.starsteel_horsearmor.name=星鋼馬鎧
-item.basemetals.steel_horsearmor.name=鋼馬鎧
-item.basemetals.tin_horsearmor.name=錫馬鎧
-item.basemetals.zinc_horsearmor.name=鋅馬鎧
+item.basemetals.adamantine_horse_armor.name=精金馬鎧
+item.basemetals.aquarium_horse_armor.name=海洋合金馬鎧
+item.basemetals.antimony_horse_armor.name=銻馬鎧
+item.basemetals.bismuth_horse_armor.name=鉍馬鎧
+item.basemetals.brass_horse_armor.name=黃銅馬鎧
+item.basemetals.bronze_horse_armor.name=青銅馬鎧
+item.basemetals.coldiron_horse_armor.name=寒鐵馬鎧
+item.basemetals.copper_horse_armor.name=銅馬鎧
+item.basemetals.cupronickel_horse_armor.name=白銅馬鎧
+item.basemetals.electrum_horse_armor.name=玫瑰金馬鎧
+item.basemetals.emerald_horse_armor.name=綠寶石馬鎧
+item.basemetals.invar_horse_armor.name=殷鋼馬鎧
+item.basemetals.lead_horse_armor.name=鉛馬鎧
+item.basemetals.mercury_horse_armor.name=汞馬鎧
+item.basemetals.mithril_horse_armor.name=秘銀馬鎧
+item.basemetals.nickel_horse_armor.name=鎳馬鎧
+item.basemetals.obsidian_horse_armor.name=黑曜石馬鎧
+item.basemetals.pewter_horse_armor.name=白鑞馬鎧
+item.basemetals.platinum_horse_armor.name=白金馬鎧
+item.basemetals.quartz_horse_armor.name=石英馬鎧
+item.basemetals.silver_horse_armor.name=銀馬鎧
+item.basemetals.starsteel_horse_armor.name=星鋼馬鎧
+item.basemetals.steel_horse_armor.name=鋼馬鎧
+item.basemetals.tin_horse_armor.name=錫馬鎧
+item.basemetals.zinc_horse_armor.name=鋅馬鎧
 
 #Ingot
 item.basemetals.adamantine_ingot.name=精金錠
@@ -596,6 +630,7 @@ item.basemetals.nickel_ingot.name=鎳錠
 item.basemetals.obsidian_ingot.name=黑曜石錠
 item.basemetals.pewter_ingot.name=白鑞錠
 item.basemetals.platinum_ingot.name=白金錠
+item.basemetals.redstone_ingot.name=紅石錠
 item.basemetals.silver_ingot.name=銀錠
 item.basemetals.starsteel_ingot.name=星鋼錠
 item.basemetals.steel_ingot.name=鋼錠
@@ -749,7 +784,8 @@ item.basemetals.nickel_smallpowder.name=一小堆鎳粉末
 item.basemetals.obsidian_smallpowder.name=一小堆黑曜石粉末
 item.basemetals.pewter_smallpowder.name=一小堆白鑞粉末
 item.basemetals.platinum_smallpowder.name=一小堆白金粉末
-item.basemetals.quartz_smallpowder.name=一小堆石英粉塵
+item.basemetals.quartz_smallpowder.name=一小堆石英粉末
+item.basemetals.redstone_smallpowder.name=一小堆紅石粉末
 item.basemetals.silver_smallpowder.name=一小堆銀粉末
 item.basemetals.starsteel_smallpowder.name=一小堆星鋼粉末
 item.basemetals.steel_smallpowder.name=一小堆鋼粉末
@@ -853,7 +889,7 @@ item.basemetals.mithril_blend.name=秘銀混合物
 item.basemetals.pewter_blend.name=白鑞混合物
 item.basemetals.steel_blend.name=鋼混合物
 
-#Small混合物s
+#Small Blends
 item.basemetals.aquarium_smallblend.name=一小堆海洋合金混合物
 item.basemetals.brass_smallblend.name=一小堆黃銅混合物
 item.basemetals.bronze_smallblend.name=一小堆青銅混合物
@@ -896,6 +932,7 @@ tile.basemetals.antimony_block.name=銻磚
 tile.basemetals.bismuth_block.name=鉍磚
 tile.basemetals.brass_block.name=黃銅磚
 tile.basemetals.bronze_block.name=青銅磚
+tile.basemetals.charcoal_block.name=木炭磚
 tile.basemetals.coldiron_block.name=寒鐵磚
 tile.basemetals.copper_block.name=銅磚
 tile.basemetals.cupronickel_block.name=白銅磚
@@ -925,7 +962,7 @@ fluid.basemetals.coldiron=熔融寒鐵
 fluid.basemetals.copper=熔融銅
 fluid.basemetals.cupronickel=熔融白銅
 fluid.basemetals.electrum=熔融玫瑰金
-fluid.basemetals.ender=熔融Ender
+fluid.basemetals.ender=熔融終界質
 fluid.basemetals.invar=熔融殷鋼
 fluid.basemetals.lead=熔融鉛
 fluid.basemetals.mithril=熔融秘銀
@@ -982,7 +1019,7 @@ tile.basemetals.cupronickel.name=熔融白銅
 tile.basemetals.diamond.name=熔融鑽石
 tile.basemetals.electrum.name=熔融玫瑰金
 tile.basemetals.emerald.name=熔融綠寶石
-tile.basemetals.ender.name=熔融終介質
+tile.basemetals.ender.name=熔融終界質
 tile.basemetals.gold.name=熔融金
 tile.basemetals.invar.name=熔融殷鋼
 tile.basemetals.iron.name=熔融鐵
@@ -1015,7 +1052,7 @@ item.bucket.cupronickel=桶裝熔融白銅
 item.bucket.diamond=桶裝熔融鑽石
 item.bucket.electrum=桶裝熔融玫瑰金
 item.bucket.emerald=桶裝熔融綠寶石
-item.bucket.ender=桶裝熔融Ender
+item.bucket.ender=桶裝熔融終界質
 item.bucket.invar=桶裝熔融殷鋼
 item.bucket.lead=桶裝熔融鉛
 item.bucket.mithril=桶裝熔融秘銀
@@ -1800,10 +1837,50 @@ tile.basemetals.tin_wall.name=錫牆
 tile.basemetals.zinc_wall.name=鋅牆
 
 modifier.mmd-toxic.name=毒性
-modifier.mmd-sparkly.name=發光
+modifier.mmd-toxic.desc=Rather dangerous - will poison and blind things hit with tools or weapons.
+modifier.mmd-sparkly.name=閃耀
+modifier.mmd-sparkly.desc=Self-Repairing, shiny and sparkly stuff
 modifier.mmd-soft.name=柔軟
+modifier.mmd-soft.desc=Not really good for tools that will see a lot of use as they'll wear out faster
 modifier.mmd-brittle.name=脆弱
+modifier.mmd-brittle.desc=As it breaks down it does more damage - but beware, it will hurt you as well!
 modifier.mmd-heavy.name=沉重
+modifier.mmd-heavy.desc=This stuff is really, really dense - it'll tire you out faster to use any tools made from this
 modifier.mmd-reactive.name=高活性
+modifier.mmd-reactive.desc=Reacts with water to wear out faster
 modifier.mmd-radioactive.name=放射性
+modifier.mmd-radioactive.desc=Dangerous to hold and use unless you can somehow shield yourself from the effects.
 
+modifier.toxic-modifier.name=毒性
+modifier.toxic-modifier.desc=§oTOXIC AVENGER!§r\nMercury and it's ethyl and methyl salts are extremely toxic and have neuro-degenerative effects.\nAdding some to a weapon or tool gives it the ability to poison and temporarily blind your enemies.
+modifier.lead-plated.name=鉛板
+modifier.lead-plated.desc=§oSafety First§r\nIf you've got some Plutonium or Uranium around and think it'd be great for a weapon, don't forget to add some shielding.\nA nice lead plate will stop the deadly radiation from affection you while still letting it harm your enemies.
+
+# Anvils
+tile.basemetals.steel_anvil.intact.name=鋼砧
+tile.basemetals.steel_anvil.slightlyDamaged.name=輕微耗損的鋼砧
+tile.basemetals.steel_anvil.veryDamaged.name=嚴重耗損的鋼砧
+tile.basemetals.stone_anvil.intact.name=Stone砧
+tile.basemetals.stone_anvil.slightlyDamaged.name=輕微耗損的石砧
+tile.basemetals.stone_anvil.veryDamaged.name=嚴重耗損的石砧
+tile.basemetals.adamantine_anvil.intact.name=精金砧
+tile.basemetals.adamantine_anvil.slightlyDamaged.name=輕微耗損的精金砧
+tile.basemetals.adamantine_anvil.veryDamaged.name=嚴重耗損的精金砧
+
+gas.gasAdamantine=精金漿
+gas.gasAntimony=銻漿
+gas.gasBismuth=鉍漿
+gas.gasColdiron=寒鐵漿
+gas.gasPlatinum=白金漿
+gas.gasNickel=鎳漿
+gas.gasStarsteel=星鋼漿
+gas.gasZinc=鋅漿
+
+gas.cleanGasAdamantine=純淨的精金漿
+gas.cleanGasAntimony=純淨的銻漿
+gas.cleanGasBismuth=純淨的鉍漿
+gas.cleanGasColdiron=純淨的寒鐵漿
+gas.cleanGasPlatinum=純淨的白金漿
+gas.cleanGasNickel=純淨的鎳漿
+gas.cleanGasStarsteel=純淨的星鋼漿
+gas.cleanGasZinc=純淨的鋅漿
