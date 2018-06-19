@@ -2,14 +2,10 @@ package com.mcmoddev.lib.item;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.Multimap;
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.IMMDBurnableObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
 

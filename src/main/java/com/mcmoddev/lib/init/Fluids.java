@@ -66,8 +66,8 @@ public abstract class Fluids {
 			return material.getFluid();
 		}
 
-		ModContainer base = Loader.instance().activeModContainer();
-		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+		final ModContainer base = Loader.instance().activeModContainer();
+		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
 		
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
@@ -102,13 +102,13 @@ public abstract class Fluids {
 
 	@Nullable
 	protected static BlockFluidClassic addFluidBlock(@Nonnull final MMDMaterial material) {
-		ModContainer base = Loader.instance().activeModContainer();
-		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
-		
+		final ModContainer base = Loader.instance().activeModContainer();
+		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
 		}
-		
+
 		if (material.getFluidBlock() != null) {
 			return material.getFluidBlock();
 		}

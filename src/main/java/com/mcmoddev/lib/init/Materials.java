@@ -296,13 +296,13 @@ public class Materials {
 	 * @return the material
 	 */
 	protected static MMDMaterial registerMaterial(@Nonnull final MMDMaterial material) {
-		ModContainer base = Loader.instance().activeModContainer();
-		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
-		
+		final ModContainer base = Loader.instance().activeModContainer();
+		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
 		}
-		
+
 		final String modId = temp.getModId();
 		final ResourceLocation loc = new ResourceLocation(modId, material.getName());
 		if (REGISTRY.containsKey(loc)) {
@@ -339,7 +339,7 @@ public class Materials {
 			BaseMetals.logger.error("Failed to create tool material enum for " + material);
 		}
 		toolMaterialMap.put(material, toolMaterial);
-		
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(base);
 		}

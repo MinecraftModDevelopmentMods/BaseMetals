@@ -15,7 +15,6 @@ import com.mcmoddev.lib.data.ActiveModData;
 import com.mcmoddev.lib.data.SharedStrings;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Loader;
 
 /**
  * This class initializes all item groups in Base Metals.
@@ -69,7 +68,7 @@ public class ItemGroups {
 			ent.getValue().stream().forEach( tab -> BaseMetals.logger.fatal("tab name: %s is %s", tab.getTabLabel(), tab));
 		});
 	}
-	
+
 	/**
 	 * Adds a CreativeTab.
 	 *

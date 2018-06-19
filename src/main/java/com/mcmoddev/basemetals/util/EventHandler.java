@@ -165,26 +165,26 @@ public class EventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void mmdlibRegisterMaterials(MMDLibRegisterMaterials ev) {
-		ev.setActive(BaseMetals.MODID);
+	public static void mmdlibRegisterMaterials(MMDLibRegisterMaterials event) {
+		event.setActive(BaseMetals.MODID);
 		com.mcmoddev.basemetals.init.Materials.init();
 	}
 	
 	@SubscribeEvent
-	public static void mmdlibRegisterBlocks(MMDLibRegisterBlocks ev) {
-		ev.setActive(BaseMetals.MODID);
+	public static void mmdlibRegisterBlocks(MMDLibRegisterBlocks event) {
+		event.setActive(BaseMetals.MODID);
 		Blocks.init();
 	}
 
 	@SubscribeEvent
-	public static void mmdlibRegisterItems(MMDLibRegisterItems ev) {
-		ev.setActive(BaseMetals.MODID);
+	public static void mmdlibRegisterItems(MMDLibRegisterItems event) {
+		event.setActive(BaseMetals.MODID);
 		Items.init();
 	}
 	
 	@SubscribeEvent
-	public static void mmdlibRegisterFluids(MMDLibRegisterFluids ev) {
-		ev.setActive(BaseMetals.MODID);
+	public static void mmdlibRegisterFluids(MMDLibRegisterFluids event) {
+		event.setActive(BaseMetals.MODID);
 		Fluids.init();
 	}
 }

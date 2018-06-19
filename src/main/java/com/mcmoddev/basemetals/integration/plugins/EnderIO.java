@@ -51,25 +51,31 @@ public class EnderIO extends EnderIOBase implements IIntegration {
 		addSagMillRecipe(MaterialNames.SILVER, 2, MaterialNames.LEAD, 1, 3600);
 		addSagMillRecipe(MaterialNames.IRON, 2, MaterialNames.NICKEL, 1, 3600);
 
+		final String COPPER = "Copper";
+		final String IRON = "Iron";
+		final String NICKEL = "Nickel";
+		final String SILVER = "Silver";
+		final String TIN = "Tin";
+		final String ZINC = "Zinc";
 		final List<Pair<Integer, Triple<String, Integer, Object[]>>> alloys = Arrays.asList(
 				Pair.of(3, Triple.of(MaterialNames.AQUARIUM, 20000,
-						new Object[] { Oredicts.INGOT + "Copper", 2, Oredicts.INGOT + "Zinc", 1, Oredicts.DUST + "Prismarine", 1 })),
+						new Object[] { Oredicts.INGOT + COPPER, 2, Oredicts.INGOT + ZINC, 1, Oredicts.DUST + "Prismarine", 1 })),
 				Pair.of(3, Triple.of(MaterialNames.BRASS, 2000,
-						new Object[] { Oredicts.INGOT + "Copper", 2, Oredicts.INGOT + "Zinc", 1 })),
+						new Object[] { Oredicts.INGOT + COPPER, 2, Oredicts.INGOT + ZINC, 1 })),
 				Pair.of(4, Triple.of(MaterialNames.BRONZE, 2000,
-						new Object[] { Oredicts.INGOT + "Copper", 3, Oredicts.INGOT + "Tin", 1 })),
+						new Object[] { Oredicts.INGOT + COPPER, 3, Oredicts.INGOT + TIN, 1 })),
 				Pair.of(4, Triple.of(MaterialNames.CUPRONICKEL, 3000,
-						new Object[] { Oredicts.INGOT + "Copper", 3, Oredicts.INGOT + "Nickel", 1})),
+						new Object[] { Oredicts.INGOT + COPPER, 3, Oredicts.INGOT + NICKEL, 1})),
 				Pair.of(3, Triple.of(MaterialNames.INVAR, 3000,
-						new Object[] { Oredicts.INGOT + "Iron", 2, Oredicts.INGOT + "Nickel", 1})),
+						new Object[] { Oredicts.INGOT + IRON, 2, Oredicts.INGOT + NICKEL, 1})),
 				Pair.of(2, Triple.of(MaterialNames.ELECTRUM, 2000,
-						new Object[] { Oredicts.INGOT + "Gold", 1, Oredicts.INGOT + "Silver", 1 })),
+						new Object[] { Oredicts.INGOT + "Gold", 1, Oredicts.INGOT + SILVER, 1 })),
 				Pair.of(2, Triple.of(MaterialNames.MITHRIL, 10000,
-						new Object[] { Oredicts.INGOT + "Silver", 2, Oredicts.INGOT + "Coldiron", 1, Oredicts.INGOT + "Mercury", 1 })),
+						new Object[] { Oredicts.INGOT + SILVER, 2, Oredicts.INGOT + "Coldiron", 1, Oredicts.INGOT + "Mercury", 1 })),
 				Pair.of(3, Triple.of(MaterialNames.PEWTER, 2000,
-						new Object[] { Oredicts.INGOT + "Tin", 1, Oredicts.INGOT + "Copper", 1, Oredicts.INGOT+"Lead", 1 })),
+						new Object[] { Oredicts.INGOT + TIN, 1, Oredicts.INGOT + COPPER, 1, Oredicts.INGOT + "Lead", 1 })),
 				Pair.of(8, Triple.of(MaterialNames.STEEL, 5000,
-						new Object[] { Oredicts.INGOT + "Iron", 8, "itemCoal", 1 })));
+						new Object[] { Oredicts.INGOT + IRON, 8, "itemCoal", 1 })));
 		alloys.stream()
 		.filter(p -> Materials.hasMaterial(p.getRight().getLeft()))
 		.forEach(p-> {

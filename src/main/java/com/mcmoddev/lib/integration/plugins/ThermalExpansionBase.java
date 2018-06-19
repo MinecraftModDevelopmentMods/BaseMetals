@@ -161,10 +161,9 @@ public class ThermalExpansionBase implements IIntegration {
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dust, baseFluid);
 		}
 
-		// TODO: Can we getBlockItemStack instead?
 		if (material.hasBlock(Names.PLATE)) {
 			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY,
-					new ItemStack(Item.getItemFromBlock(material.getBlock(Names.PLATE))),
+					material.getBlockItemStack(Names.PLATE),
 					baseFluid);
 		}
 
@@ -188,8 +187,8 @@ public class ThermalExpansionBase implements IIntegration {
 			 * Compactors default is 4000RF per operation
 			 */
 			final int ENERGY_QTY = 4000;
-			addCompactorPressRecipe(ENERGY_QTY, new ItemStack(material.getItem(Names.INGOT)),
-					new ItemStack(material.getBlock(Names.PLATE)));
+			addCompactorPressRecipe(ENERGY_QTY, material.getItemStack(Names.INGOT),
+					material.getBlockItemStack(Names.PLATE));
 		}
 	}
 
@@ -206,7 +205,7 @@ public class ThermalExpansionBase implements IIntegration {
 		 */
 		final int ENERGY_QTY = 4000;
 		final ItemStack ingotStack = material.getItemStack(Names.INGOT);
-		final ItemStack ingotsStack = new ItemStack(ingotStack.getItem(), 9);
+		final ItemStack ingotsStack = material.getItemStack(Names.INGOT, 9);
 		final ItemStack nuggetsStack = material.getItemStack(Names.NUGGET, 9);
 		final ItemStack blockStack = material.getBlockItemStack(Names.BLOCK, 1);
 

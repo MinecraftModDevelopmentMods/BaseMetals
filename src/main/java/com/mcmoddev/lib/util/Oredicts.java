@@ -16,9 +16,9 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class Oredicts {
 
-	private static Map<String, List<Item>> oreDictItemMap = new HashMap<>();
-	private static Map<String, List<Block>> oreDictBlockMap = new HashMap<>();
-	private static Map<String, List<ItemStack>> oreDictItemStackMap = new HashMap<>();
+	private static final Map<String, List<Item>> oreDictItemMap = new HashMap<>();
+	private static final Map<String, List<Block>> oreDictBlockMap = new HashMap<>();
+	private static final Map<String, List<ItemStack>> oreDictItemStackMap = new HashMap<>();
 
 	// See net.minecraftforge.oredict.OreDictionary.initVanillaEntries() for Vanilla oreDict names
 

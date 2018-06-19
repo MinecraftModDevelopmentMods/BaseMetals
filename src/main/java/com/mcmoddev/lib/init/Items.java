@@ -405,16 +405,16 @@ public abstract class Items {
 			fullName = name;
 		}
 
-		ModContainer base = Loader.instance().activeModContainer();
-		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+		final ModContainer base = Loader.instance().activeModContainer();
+		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
 
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
 		}
-		
+
 		item.setRegistryName(fullName);
 		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
-		
+
 		if (tab != null) {
 			item.setCreativeTab(tab);
 		}
@@ -425,7 +425,7 @@ public abstract class Items {
 		}
 
 		itemRegistry.put(fullName, item);
-		
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(base);
 		}

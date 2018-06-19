@@ -25,7 +25,7 @@ public enum IntegrationManager {
 
 	private final List<IIntegration> integrations = Lists.newArrayList();
 	private final Map<String,Map<String, VersionMatch>> plugins = Maps.newConcurrentMap();
-	
+
 	private String getAnnotationItem(@Nonnull final String item, @Nonnull final ASMData asmData) {
 		if (asmData.getAnnotationInfo().get(item) != null) {
 			return asmData.getAnnotationInfo().get(item).toString();
@@ -40,7 +40,7 @@ public enum IntegrationManager {
 			return "any";
 		};
 	}
-	
+
 	/**
 	 * Harvest the version requirements during the FMLConstructionEvent phase and set them up for use
 	 * @param event FMLConstructionEvent
@@ -64,6 +64,7 @@ public enum IntegrationManager {
 							public boolean matches(String otherVersion) {
 								return myRange.containsVersion(new DefaultArtifactVersion(otherVersion));
 							}
+							@Override
 							public String asString() {
 								return myRange.toStringFriendly();
 							}
@@ -82,7 +83,7 @@ public enum IntegrationManager {
 			}
 		}
 	}
-	
+
 	/**
 	 *
 	 * @param event
@@ -116,17 +117,16 @@ public enum IntegrationManager {
 			}
 		}
 	}
-	
+
 	public void preInitPhase() {
 		MinecraftForge.EVENT_BUS.post(new IntegrationPreInitEvent());
 	}
-	
+
 	public void initPhase() {
 		MinecraftForge.EVENT_BUS.post(new IntegrationInitEvent());
 	}
-	
+
 	public void postInitPhase() {
 		MinecraftForge.EVENT_BUS.post(new IntegrationPostInitEvent());
 	}
-
 }

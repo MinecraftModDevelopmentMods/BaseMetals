@@ -264,8 +264,8 @@ public abstract class Blocks {
 			@Nonnull final MMDMaterial material, final CreativeTabs tab) {
 		final String fullName = getBlockFullName(block, material, name);
 
-		ModContainer base = Loader.instance().activeModContainer();
-		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+		final ModContainer base = Loader.instance().activeModContainer();
+		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
 
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
