@@ -148,6 +148,10 @@ public class Platform {
 		return devEnv;
 	}
 
+	/**
+	 *
+	 * @param dev
+	 */
 	public static void setDev(final boolean dev) {
 		if (!(devEnv)) {
 			devEnv = dev;

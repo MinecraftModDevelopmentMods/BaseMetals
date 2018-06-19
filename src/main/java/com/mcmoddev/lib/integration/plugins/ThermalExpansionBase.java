@@ -227,7 +227,7 @@ public class ThermalExpansionBase implements IIntegration {
 		 */
 		final int ENERGY_QTY = 4000;
 		final ItemStack ingotStack = material.getItemStack(Names.INGOT);
-		final ItemStack ingotsStack = new ItemStack(ingotStack.getItem(), 9);
+		final ItemStack ingotsStack = material.getItemStack(Names.INGOT, 9);
 		final ItemStack nuggetsStack = material.getItemStack(Names.NUGGET, 9);
 		final ItemStack blockStack = material.getBlockItemStack(Names.BLOCK, 1);
 

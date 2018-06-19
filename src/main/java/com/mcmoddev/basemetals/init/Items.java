@@ -11,6 +11,7 @@ import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.material.IMMDBurnableObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -23,6 +24,10 @@ import net.minecraft.item.ItemStack;
  *
  */
 public final class Items extends com.mcmoddev.lib.init.Items {
+
+	private static final int BLOCK_BURN_TIME = 16000;
+	private static final int INGOT_BURN_TIME = 1600;
+	private static final int NUGGET_BURN_TIME = 200;
 
 	private Items() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -146,21 +151,21 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	private static void setBurnTimes(@Nonnull final MMDMaterial material) {
 		final String capitalizedName = material.getCapitalizedName();
 		if (material.hasItem(Names.NUGGET)) {
-			FuelRegistry.addFuel(Oredicts.NUGGET + "_" + capitalizedName, 200);
+			FuelRegistry.addFuel(Oredicts.NUGGET + "_" + capitalizedName, NUGGET_BURN_TIME);
 		}
 
 		if (material.hasItem(Names.POWDER)) {
-			FuelRegistry.addFuel(Oredicts.DUST + "_" + capitalizedName, 1600);
+			FuelRegistry.addFuel(Oredicts.DUST + "_" + capitalizedName, INGOT_BURN_TIME);
 		}
 
 		if (material.hasItem(Names.SMALLPOWDER)) {
-			FuelRegistry.addFuel(Oredicts.DUST_SMALL + "_" + capitalizedName, 200);
-			FuelRegistry.addFuel(Oredicts.DUST_TINY + "_" + capitalizedName, 200);
+			FuelRegistry.addFuel(Oredicts.DUST_SMALL + "_" + capitalizedName, NUGGET_BURN_TIME);
+			FuelRegistry.addFuel(Oredicts.DUST_TINY + "_" + capitalizedName, NUGGET_BURN_TIME);
 		}
 
 		// simple hack to fix this shit - I give up on trying for more
 		if (material.hasBlock(Names.BLOCK) && material.getName().equals(MaterialNames.CHARCOAL)) {
-			FuelRegistry.addFuel(Oredicts.BLOCK_CHARCOAL, 16000);
+			FuelRegistry.addFuel(Oredicts.BLOCK_CHARCOAL, BLOCK_BURN_TIME);
 		}
 	}
 

@@ -78,6 +78,10 @@ public class BaseMetals {
 		logger.warn(SharedStrings.INVALID_FINGERPRINT);
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@EventHandler
 	public static void preInit(final FMLPreInitializationEvent event) {
 		proxy.preInit(event);

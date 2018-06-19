@@ -28,6 +28,12 @@ public class ASMHooks {
 		entity.getDataManager().set(ASMHooks.ARMOR_STACK, stack);
 	}
 
+	/**
+	 *
+	 * @param type
+	 * @param entity
+	 * @return
+	 */
 	@SideOnly(Side.CLIENT)
 	public static String getTextureName(final HorseArmorType type, final EntityHorse entity) {
 		final ItemStack stack = entity.getDataManager().get(ASMHooks.ARMOR_STACK);

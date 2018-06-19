@@ -70,6 +70,12 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 		}
 	}
 
+	/**
+	 *
+	 * @param material
+	 * @param name
+	 * @return
+	 */
 	public static ItemMMDArmor createArmor(@Nonnull final MMDMaterial material, final Names name) {
 		EntityEquipmentSlot slot = null;
 		switch (name) {

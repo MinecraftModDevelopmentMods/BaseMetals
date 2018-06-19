@@ -8,8 +8,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 
-public class ModifierToxic extends ModifierTrait {
+/**
+ *
+ */
+public final class ModifierToxic extends ModifierTrait {
 
+	/**
+	 *
+	 */
 	public ModifierToxic() {
 		super("toxic-modifier", 0xFFFFFF, 1, 0);
 	}

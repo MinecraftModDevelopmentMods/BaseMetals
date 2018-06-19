@@ -24,6 +24,10 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 
 	private final MMDMaterial material;
 
+	/**
+	 *
+	 * @param material The material the Anvil is made from
+	 */
 	public BlockMMDAnvil(final MMDMaterial material) {
 		super();
 		this.material = material;
@@ -59,6 +63,12 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 		private final BlockPos position;
 		private final MMDMaterial material;
 
+		/**
+		 *
+		 * @param worldIn
+		 * @param pos
+		 * @param material
+		 */
 		public MMDAnvil(final World worldIn, final BlockPos pos, final MMDMaterial material) {
 			this.world = worldIn;
 			this.position = pos;

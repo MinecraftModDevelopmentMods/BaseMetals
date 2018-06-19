@@ -7,6 +7,10 @@ public class BlockMMDLadder extends net.minecraft.block.BlockLadder implements I
 
 	private final MMDMaterial material;
 
+	/**
+	 *
+	 * @param material The material the Ladder is made from
+	 */
 	public BlockMMDLadder(final MMDMaterial material) {
 		super();
 		this.material = material;

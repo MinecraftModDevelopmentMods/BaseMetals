@@ -23,11 +23,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class RegistrationHelper {
 
+	/**
+	 *
+	 * @param item The Item to register
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerItemRender(@Nonnull final Item item) {
 		registerRender(item);
 	}
 
+	/**
+	 *
+	 * @param name The name of the Item to register
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerItemRender(@Nonnull final String name) {
 		final Item item = Items.getItemByName(name);
@@ -35,6 +43,10 @@ public class RegistrationHelper {
 		registerRender(item);
 	}
 
+	/**
+	 *
+	 * @param block The Block to register
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerBlockRender(@Nonnull final Block block) {
 
@@ -45,6 +57,10 @@ public class RegistrationHelper {
 		registerRender(Item.getItemFromBlock(block));
 	}
 
+	/**
+	 *
+	 * @param name The name of the Block to register
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerBlockRender(@Nonnull final String name) {
 		final Block block = Blocks.getBlockByName(name);
@@ -62,6 +78,10 @@ public class RegistrationHelper {
 		registerFluidRender(fluid);
 	}
 
+	/**
+	 *
+	 * @param fluid The Fluid to register
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerFluidRender(@Nonnull final Fluid fluid) {
 		// final Block block = fluid.getBlock(); // Unfortunately this breaks when
@@ -84,6 +104,10 @@ public class RegistrationHelper {
 		ModelLoader.setCustomStateMapper(block, mapper);
 	}
 
+	/**
+	 *
+	 * @param item The Item to register
+	 */
 	@SideOnly(Side.CLIENT)
 	public static void registerRender(@Nonnull final Item item) {
 		final ResourceLocation resourceLocation = item.getRegistryName();

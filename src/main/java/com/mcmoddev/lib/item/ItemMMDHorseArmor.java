@@ -20,6 +20,10 @@ public class ItemMMDHorseArmor extends GenericMMDItem implements IHorseArmor {
 
 	private final HorseArmorType myArmorType;
 
+	/**
+	 *
+	 * @param material
+	 */
 	public ItemMMDHorseArmor(final MMDMaterial material) {
 		super(material);
 		this.setMaxStackSize(1);

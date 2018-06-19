@@ -480,6 +480,12 @@ public class MMDMaterial {
 		return this;
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @param itemStack
+	 * @return
+	 */
 	public MMDMaterial addNewItemFromItemStack(@Nonnull final String name,
 			@Nonnull final ItemStack itemStack) {
 		if (!(itemStack.isEmpty())) {
@@ -527,6 +533,12 @@ public class MMDMaterial {
 		return this;
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @param itemStack
+	 * @return
+	 */
 	public MMDMaterial addNewBlockFromItemStack(@Nonnull final String name,
 			@Nonnull final ItemStack itemStack) {
 		final Item item = itemStack.getItem();
@@ -693,6 +705,11 @@ public class MMDMaterial {
 		return this.hasBlock(name.toString());
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @return
+	 */
 	public float getStat(final MaterialStats name) {
 		if (this.stats.containsKey(name)) {
 			return this.stats.get(name).floatValue();
@@ -724,6 +741,10 @@ public class MMDMaterial {
 		this.regenerates = regen;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public final Material getVanillaMaterial() {
 		switch (this.getType()) {
 			case METAL:
@@ -740,6 +761,10 @@ public class MMDMaterial {
 		}
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public final SoundType getSoundType() {
 		switch (this.getType()) {
 			case METAL:

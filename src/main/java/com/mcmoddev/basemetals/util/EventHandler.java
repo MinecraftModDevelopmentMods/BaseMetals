@@ -43,6 +43,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventHandler {
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
 	public void attackEvent(final LivingAttackEvent event) {
 		final float damage = event.getAmount();
@@ -135,6 +139,10 @@ public class EventHandler {
 		}
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public static InventoryCrafting getDummyCraftingInv() {
 		final Container tempContainer = new Container() {
 
@@ -147,6 +155,10 @@ public class EventHandler {
 		return new InventoryCrafting(tempContainer, 2, 1);
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
 	public void handleAnvilEvent(final AnvilUpdateEvent event) {
 		final ItemStack left = event.getLeft();
@@ -170,6 +182,10 @@ public class EventHandler {
 		}
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onUpdate(final TickEvent.RenderTickEvent event) {

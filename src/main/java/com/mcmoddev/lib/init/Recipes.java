@@ -4,9 +4,9 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.integration.plugins.IC2Base;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
@@ -196,6 +196,10 @@ public abstract class Recipes {
 				new ItemStack(net.minecraft.init.Items.SLIME_BALL, 9)); // Slime Block to 9 Slime
 																		// Balls
 
+		// Thermal Expansion and others have decided that Obsidian crushes to 4 obsidian dust
+		// Match them instead of being a special snowflake
+		CrusherRecipeRegistry.addNewCrusherRecipe(net.minecraft.init.Blocks.OBSIDIAN, 
+				Materials.getMaterialByName(MaterialNames.OBSIDIAN).getItemStack(Names.POWDER, 4));
 	}
 
 	protected static void initVanillaRecipes() {
@@ -264,7 +268,6 @@ public abstract class Recipes {
 						"xyx", "xxx", " x ", 'y', Oredicts.PLANK_WOOD, 'x',
 						Oredicts.INGOT + oreDictName));
 			}
-			// TODO: Furnace Cheese
 			GameRegistry.addSmelting(material.getItemStack(Names.SHIELD),
 					material.getItemStack(Names.INGOT, 6), 0); // 1 wood loss
 			if (material.hasItem(Names.PLATE)) {
@@ -353,7 +356,7 @@ public abstract class Recipes {
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.ROD)) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(material.getItemStack(Names.ROD, 4), "x",
+			GameRegistry.addRecipe(new ShapedOreRecipe(material.getItemStack(Names.ROD, Options.rodQuantity()), "x",
 					"x", 'x', Oredicts.INGOT + oreDictName));
 
 			if (material.hasItem(Names.GEAR)) {
@@ -388,18 +391,20 @@ public abstract class Recipes {
 																	// nugget
 			}
 
-			if ((material.hasItem(Names.ROD)) && (material.hasBlock(Names.LEVER))) {
+			if (material.hasBlock(Names.LEVER)) {
 				GameRegistry.addRecipe(
 						new ShapedOreRecipe(material.getBlockItemStack(Names.LEVER), "x", "y", 'x',
-								Oredicts.ROD + oreDictName, 'y', Oredicts.INGOT + oreDictName));
+								Oredicts.STICK_WOOD, 'y', Oredicts.INGOT + oreDictName));
 				GameRegistry.addSmelting(material.getBlockItemStack(Names.LEVER),
-						material.getItemStack(Names.INGOT, 1), 0); // you lose the rod
+						material.getItemStack(Names.INGOT, 1), 0);
 			}
 
 			if (material.hasBlock(Names.STAIRS)) {
 				GameRegistry
 						.addRecipe(new ShapedOreRecipe(material.getBlockItemStack(Names.STAIRS, 4),
 								"x  ", "xx ", "xxx", 'x', Oredicts.BLOCK + oreDictName));
+//				GameRegistry.addSmelting(material.getBlockItemStack(Names.STAIRS),
+//						material.getItemStack(Names.INGOT, 13), 0); // You lose half an ingot
 			}
 
 			if (material.hasBlock(Names.WALL)) {
@@ -696,18 +701,6 @@ public abstract class Recipes {
 		for (final MMDMaterial material : Materials.getAllMaterials()) {
 			if (material.isEmpty()) {
 				continue;
-			}
-
-			if (Options.isModEnabled(IC2Base.PLUGIN_MODID)) {
-				if ((isMMDItem(material, Names.CRUSHED)) && material.hasItem(Names.INGOT)) {
-					GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED),
-							material.getItemStack(Names.INGOT), material.getOreSmeltXP());
-				}
-				if ((isMMDItem(material, Names.CRUSHED_PURIFIED))
-						&& material.hasItem(Names.INGOT)) {
-					GameRegistry.addSmelting(material.getItemStack(Names.CRUSHED_PURIFIED),
-							material.getItemStack(Names.INGOT), material.getOreSmeltXP());
-				}
 			}
 		}
 	}

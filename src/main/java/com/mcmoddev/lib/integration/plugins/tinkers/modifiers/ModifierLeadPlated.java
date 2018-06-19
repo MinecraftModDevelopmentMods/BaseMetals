@@ -10,6 +10,9 @@ import slimeknights.tconstruct.library.utils.TagUtil;
 
 public class ModifierLeadPlated extends ModifierTrait {
 
+	/**
+	 *
+	 */
 	public ModifierLeadPlated() {
 		super("lead-plated", 0xFFFFFF, 1, 0);
 	}

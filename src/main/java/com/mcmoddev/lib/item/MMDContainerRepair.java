@@ -13,6 +13,12 @@ public class MMDContainerRepair extends ContainerRepair {
 	private final BlockPos myPos;
 	private final World myWorld;
 
+	/**
+	 *
+	 * @param playerInventory
+	 * @param worldIn
+	 * @param player
+	 */
 	public MMDContainerRepair(final InventoryPlayer playerInventory, final World worldIn,
 			final EntityPlayer player) {
 		super(playerInventory, worldIn, player);
@@ -20,6 +26,13 @@ public class MMDContainerRepair extends ContainerRepair {
 		this.myWorld = worldIn;
 	}
 
+	/**
+	 *
+	 * @param playerInventory
+	 * @param worldIn
+	 * @param blockPosIn
+	 * @param player
+	 */
 	public MMDContainerRepair(final InventoryPlayer playerInventory, final World worldIn,
 			final BlockPos blockPosIn, final EntityPlayer player) {
 		super(playerInventory, worldIn, blockPosIn, player);

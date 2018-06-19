@@ -32,6 +32,12 @@ public class FallbackGeneratorData {
 		// blank
 	}
 
+	/**
+	 *
+	 * @param materialName
+	 * @param blockName
+	 * @param dimension
+	 */
 	public void addMaterial(@Nonnull final String materialName, @Nonnull final String blockName,
 			@Nullable final Integer dimension) {
 		final MMDMaterial mat = Materials.getMaterialByName(materialName);
@@ -93,6 +99,9 @@ public class FallbackGeneratorData {
 		}
 	}
 
+	/**
+	 *
+	 */
 	public void setup() {
 		for (final Entry<Integer, Map<MMDMaterial, List<String>>> matMap : materials.entrySet()) {
 			final Map<MMDMaterial, List<String>> mats = matMap.getValue();

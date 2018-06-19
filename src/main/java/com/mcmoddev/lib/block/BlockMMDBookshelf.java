@@ -9,6 +9,10 @@ public class BlockMMDBookshelf extends net.minecraft.block.BlockBookshelf implem
 
 	private final MMDMaterial material;
 
+	/**
+	 *
+	 * @param material The material the Bookshelf is made from
+	 */
 	public BlockMMDBookshelf(final MMDMaterial material) {
 		this.material = material;
 		this.setSoundType(this.material.getSoundType());

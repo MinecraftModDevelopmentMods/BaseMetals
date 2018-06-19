@@ -249,20 +249,6 @@ public abstract class MMDToolEffects {
 						.getItem(Names.LEGGINGS))
 				&& (player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material
 						.getItem(Names.BOOTS)));
-/*
-		return ((!player.inventory.armorInventory.get(3).isEmpty())
-				&& (player.inventory.armorInventory.get(3).getItem() == material
-						.getItem(Names.HELMET))
-				&& (!player.inventory.armorInventory.get(2).isEmpty())
-				&& (player.inventory.armorInventory.get(2).getItem() == material
-						.getItem(Names.CHESTPLATE))
-				&& (!player.inventory.armorInventory.get(1).isEmpty())
-				&& (player.inventory.armorInventory.get(1).getItem() == material
-						.getItem(Names.LEGGINGS))
-				&& (!player.inventory.armorInventory.get(0).isEmpty())
-				&& (player.inventory.armorInventory.get(0).getItem() == material
-						.getItem(Names.BOOTS)));
-*/
 	}
 
 	private static boolean isHolding(final EntityPlayer player, final String materialName,
