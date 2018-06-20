@@ -234,18 +234,33 @@ public class Oredicts {
 	public static final String NUGGET_CHARCOAL = "nuggetCharcoal";
 	public static final String NUGGET_COAL = "nuggetCoal";
 
+	/**
+	 *
+	 * @param name
+	 * @param block
+	 */
 	public static void registerOre(final String name, final Block block) {
 		if (block != null) {
 			OreDictionary.registerOre(name, block);
 		}
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @param item
+	 */
 	public static void registerOre(final String name, final Item item) {
 		if (item != null) {
 			OreDictionary.registerOre(name, item);
 		}
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @param itemStack
+	 */
 	public static void registerOre(final String name, final ItemStack itemStack) {
 		if (itemStack != null) {
 			OreDictionary.registerOre(name, itemStack);

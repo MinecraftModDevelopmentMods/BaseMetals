@@ -28,6 +28,10 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 	private final IDrawable icon;
 	private final IDrawableAnimated hammer;
 
+	/**
+	 *
+	 * @param guiHelper
+	 */
 	public ICrusherRecipeCategory(final IGuiHelper guiHelper) {
 		this.background = guiHelper.createDrawable(this.resourceLocation, 0, 0, 166, 130);
 		this.icon = guiHelper.createDrawable(this.resourceLocation, 170, 2, 16, 16);

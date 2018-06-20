@@ -45,14 +45,23 @@ public class MMDCreativeTab extends CreativeTabs {
 
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable,
 			@Nullable final Block iconBlock) {
-		this(unlocalizedName, searchable, new ItemStack(Item.getItemFromBlock(iconBlock)));
+		this(unlocalizedName, searchable,
+				(iconBlock != null) ? new ItemStack(Item.getItemFromBlock(iconBlock))
+						: (ItemStack) null);
 	}
 
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable,
 			@Nullable final Item iconItem) {
-		this(unlocalizedName, searchable, new ItemStack(iconItem));
+		this(unlocalizedName, searchable,
+				(iconItem != null) ? new ItemStack(iconItem) : (ItemStack) null);
 	}
 
+	/**
+	 *
+	 * @param unlocalizedName
+	 * @param searchable
+	 * @param iconItem
+	 */
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable,
 			@Nullable final ItemStack iconItem) {
 		super(unlocalizedName);

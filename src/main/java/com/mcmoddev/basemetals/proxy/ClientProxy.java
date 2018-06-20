@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * Base Metals Client Proxy
+ * Base Metals Client Proxy.
  *
  * @author Jasmine Iwanek
  *

@@ -39,6 +39,10 @@ public class Config extends ConfigBase {
 	private static final String TOOLS_CAT = "Tools and Items";
 	private static final String FLUIDS_CAT = "Fluids";
 
+	/**
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
 	public void onConfigChange(final ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID().equals(BaseMetals.MODID)) {
@@ -46,6 +50,9 @@ public class Config extends ConfigBase {
 		}
 	}
 
+	/**
+	 *
+	 */
 	public static void init() {
 		if (configuration == null) {
 			configuration = new Configuration(new File(CONFIG_FILE));
@@ -200,6 +207,8 @@ public class Config extends ConfigBase {
 				"Number of Gears per recipe"));
 		Options.setPlateQuantity(configuration.getInt("Plate Quantity", TOOLS_CAT, 3, 1, 64,
 				"Number of Plates per recipe"));
+		Options.setRodQuantity(configuration.getInt("Rod Quantity", TOOLS_CAT, 4, 1, 64,
+				"Number of Rods per recipe"));
 		Options.setFurnaceCheese(configuration.getBoolean("Furnace Cheese", TOOLS_CAT, true,
 				"Melt down armor and tools for full value"));
 		Options.setFurnace1112(configuration.getBoolean("Furnace1112", TOOLS_CAT, true,

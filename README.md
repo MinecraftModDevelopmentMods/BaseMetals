@@ -37,7 +37,7 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 ###Metal Alloys
 *Metal alloys are made by crafting together the powdered forms of the required metals, and then smelting the resulting alloy blend in a furnace.*
 
-**Brass**: This alloy of copper and zinc (2:1 ratio) is soft, but has a beautiful golden color.
+**Brass**: This alloy of copper and zinc (3:1 ratio) is soft, but has a beautiful golden color.
 
 **Bronze**: This alloy of copper and tin (3:1 ratio) is as hard as iron, but not quite as durable.
 

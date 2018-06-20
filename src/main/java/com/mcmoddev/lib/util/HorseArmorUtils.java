@@ -21,6 +21,13 @@ public final class HorseArmorUtils {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
+	/**
+	 *
+	 * @param protection
+	 * @param lowerName
+	 * @param hash
+	 * @return
+	 */
 	public static HorseArmorType getArmorType(final int protection, @Nonnull final String lowerName,
 			@Nonnull final String hash) {
 		final String name = lowerName.toUpperCase(Locale.ENGLISH);

@@ -105,8 +105,8 @@ public class ThermalExpansionBase implements IIntegration {
 		 */
 		final int ENERGY_ORE = 4000;
 		final int ENERGY_INGOT = 2000;
-		ItemStack inputOre = material.getBlockItemStack(Names.ORE);
-		ItemStack inputIngot = material.getItemStack(Names.INGOT);
+		final ItemStack inputOre = material.getBlockItemStack(Names.ORE);
+		final ItemStack inputIngot = material.getItemStack(Names.INGOT);
 		final ItemStack outputDust = material.getItemStack(Names.POWDER);
 
 		if (material.hasItem(Names.POWDER)) {

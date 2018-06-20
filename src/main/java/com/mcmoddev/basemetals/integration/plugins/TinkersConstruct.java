@@ -7,6 +7,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.TinkersConstructBase;
 import com.mcmoddev.lib.integration.plugins.tinkers.ModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitLocations;
 import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
@@ -21,8 +22,7 @@ import net.minecraft.item.Item;
  *
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, initCallback = "doSecondPass")
-public final class TinkersConstruct extends com.mcmoddev.lib.integration.plugins.TinkersConstructBase
-		implements IIntegration {
+public final class TinkersConstruct extends TinkersConstructBase implements IIntegration {
 
 	@Override
 	public void init() {

@@ -357,7 +357,7 @@ public abstract class Recipes {
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.ROD)) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(material.getItemStack(Names.ROD, 4), "x",
+			GameRegistry.addRecipe(new ShapedOreRecipe(material.getItemStack(Names.ROD, Options.rodQuantity()), "x",
 					"x", 'x', Oredicts.INGOT + oreDictName));
 
 			if (material.hasItem(Names.GEAR)) {
@@ -795,7 +795,7 @@ public abstract class Recipes {
 					material.getItemStack(thingName));
 		}
 	}
-	
+
 	protected static void addAlloyRecipe(@Nonnull final String materialName, final int outputQty,
 			final Object... ingredients) {
 		if (Materials.hasMaterial(materialName)) {

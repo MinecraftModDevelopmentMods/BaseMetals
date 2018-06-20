@@ -55,6 +55,9 @@ public class ConfigBase {
 		}
 	}
 
+	/**
+	 *
+	 */
 	public static void postInit() {
 		addUserRecipes();
 
@@ -296,6 +299,10 @@ public class ConfigBase {
 
 		private static String[] disabledRecipes = null;
 
+		/**
+		 *
+		 * @param string
+		 */
 		public static void setDisabledRecipes(final String[] string) {
 			disabledRecipes = string;
 		}
@@ -355,6 +362,11 @@ public class ConfigBase {
 		// INTEGRATION
 		private static final Map<String, Boolean> modEnabled = new HashMap<>();
 
+		/**
+		 *
+		 * @param modName
+		 * @return
+		 */
 		public static boolean isModEnabled(final String modName) {
 			final String testName = modName.toLowerCase(Locale.ROOT);
 			if (modEnabled.containsKey(testName)) {
@@ -363,6 +375,11 @@ public class ConfigBase {
 			return false;
 		}
 
+		/**
+		 *
+		 * @param modName
+		 * @param bool
+		 */
 		public static void modEnabled(final String modName, final Boolean bool) {
 			if (!modEnabled.containsKey(modName)) {
 				modEnabled.put(modName.toLowerCase(Locale.ROOT), bool);
@@ -372,6 +389,11 @@ public class ConfigBase {
 		// MATERIALS
 		private static final Map<String, Boolean> materialEnabled = new HashMap<>();
 
+		/**
+		 *
+		 * @param name
+		 * @return
+		 */
 		public static boolean isMaterialEnabled(final String name) {
 			final String testName = name.toLowerCase(Locale.ROOT);
 			if (materialEnabled.containsKey(testName)) {
@@ -380,6 +402,11 @@ public class ConfigBase {
 			return false;
 		}
 
+		/**
+		 *
+		 * @param materialName
+		 * @param bool
+		 */
 		public static void materialEnabled(final String materialName, final Boolean bool) {
 			if (!materialEnabled.containsKey(materialName)) {
 				materialEnabled.put(materialName.toLowerCase(Locale.ROOT), bool);
@@ -389,6 +416,11 @@ public class ConfigBase {
 		// THINGS
 		private static final Map<String, Boolean> thingEnabled = new HashMap<>();
 
+		/**
+		 *
+		 * @param name
+		 * @return
+		 */
 		public static boolean isThingEnabled(final String name) {
 			final String testName = name.toLowerCase(Locale.ROOT);
 			if (thingEnabled.containsKey(testName)) {
@@ -397,6 +429,11 @@ public class ConfigBase {
 			return false;
 		}
 
+		/**
+		 *
+		 * @param name
+		 * @param bool
+		 */
 		public static void thingEnabled(final String name, final Boolean bool) {
 			if (!thingEnabled.containsKey(name)) {
 				thingEnabled.put(name.toLowerCase(Locale.ROOT), bool);
@@ -406,6 +443,11 @@ public class ConfigBase {
 		// FLUIDS
 		private static final Map<String, Boolean> fluidEnabled = new HashMap<>();
 
+		/**
+		 *
+		 * @param name
+		 * @return
+		 */
 		public static boolean isFluidEnabled(final String name) {
 			final String testName = name.toLowerCase(Locale.ROOT);
 			if (fluidEnabled.containsKey(testName)) {
@@ -414,6 +456,11 @@ public class ConfigBase {
 			return false;
 		}
 
+		/**
+		 *
+		 * @param name
+		 * @param bool
+		 */
 		public static void fluidEnabled(final String name, final Boolean bool) {
 			if (!fluidEnabled.containsKey(name)) {
 				fluidEnabled.put(name.toLowerCase(Locale.ROOT), bool);
@@ -452,6 +499,16 @@ public class ConfigBase {
 
 		public static boolean fallbackOrespawn() {
 			return fallbackOrespawn;
+		}
+
+		protected static int rodQuantity = 4;
+
+		public static void setRodQuantity(int quantity) {
+			rodQuantity = quantity;
+		}
+
+		public static int rodQuantity() {
+			return rodQuantity;
 		}
 	}
 }

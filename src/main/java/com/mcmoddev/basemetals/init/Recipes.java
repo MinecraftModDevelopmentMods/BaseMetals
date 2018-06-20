@@ -124,26 +124,26 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 			addAdditionalOredicts(adamantine, "Adamant");
 		}
 
-			addAlloyRecipe(MaterialNames.AQUARIUM, 3,
-					MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.ZINC,
-					MaterialNames.PRISMARINE, MaterialNames.PRISMARINE, MaterialNames.PRISMARINE);
+		addAlloyRecipe(MaterialNames.AQUARIUM, 3,
+				MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.ZINC,
+				MaterialNames.PRISMARINE, MaterialNames.PRISMARINE, MaterialNames.PRISMARINE);
 
-			addAlloyRecipe(MaterialNames.BRASS, 4,
-					MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.ZINC);
+		addAlloyRecipe(MaterialNames.BRASS, 4,
+				MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.ZINC);
 
-			addAlloyRecipe(MaterialNames.BRONZE, 4,
-					MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER,
-					MaterialNames.TIN);
+		addAlloyRecipe(MaterialNames.BRONZE, 4,
+				MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER,
+				MaterialNames.TIN);
 
-			addAlloyRecipe(MaterialNames.CUPRONICKEL, 4,
-					MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER,
-					MaterialNames.NICKEL);
+		addAlloyRecipe(MaterialNames.CUPRONICKEL, 4,
+				MaterialNames.COPPER, MaterialNames.COPPER, MaterialNames.COPPER,
+				MaterialNames.NICKEL);
 
-			addSimpleAlloyRecipe(MaterialNames.ELECTRUM, 2,
-					MaterialNames.GOLD, MaterialNames.SILVER);
+		addSimpleAlloyRecipe(MaterialNames.ELECTRUM, 2,
+				MaterialNames.GOLD, MaterialNames.SILVER);
 
-			addAlloyRecipe(MaterialNames.INVAR, 3, MaterialNames.IRON,
-					MaterialNames.IRON, MaterialNames.NICKEL);
+		addAlloyRecipe(MaterialNames.INVAR, 3, MaterialNames.IRON,
+				MaterialNames.IRON, MaterialNames.NICKEL);
 
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
@@ -164,9 +164,9 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 			}
 		}
 
-			addAlloyRecipe(MaterialNames.MITHRIL, 3,
-					MaterialNames.SILVER, MaterialNames.SILVER, MaterialNames.COLDIRON,
-					MaterialNames.MERCURY);
+		addAlloyRecipe(MaterialNames.MITHRIL, 3,
+				MaterialNames.SILVER, MaterialNames.SILVER, MaterialNames.COLDIRON,
+				MaterialNames.MERCURY);
 
 		if (Materials.hasMaterial(MaterialNames.STEEL)) {
 			final MMDMaterial steel = Materials.getMaterialByName(MaterialNames.STEEL);

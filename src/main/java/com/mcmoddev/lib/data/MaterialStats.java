@@ -46,6 +46,11 @@ public enum MaterialStats implements IStringSerializable {
 		return this.name().toLowerCase();
 	}
 
+	/**
+	 *
+	 * @param ordinal
+	 * @return
+	 */
 	public static MaterialStats getType(@Nonnull int ordinal) {
 		if ((ordinal > values().length) || (ordinal < 0)) {
 			ordinal = 0;

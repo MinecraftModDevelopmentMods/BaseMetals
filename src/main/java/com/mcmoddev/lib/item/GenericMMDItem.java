@@ -1,7 +1,13 @@
 package com.mcmoddev.lib.item;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.lib.material.IMMDObject;
+import com.mcmoddev.lib.material.IMMDBurnableObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item;
 
 /**
  * version of Item that stores a material.
@@ -9,8 +15,9 @@ import com.mcmoddev.lib.material.MMDMaterial;
  * @author DrCyano
  *
  */
-public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObject {
+public class GenericMMDItem extends Item implements IMMDObject, IMMDBurnableObject {
 
+	private int burnTime = 0;
 	private final MMDMaterial material;
 
 	/**
@@ -25,5 +32,19 @@ public class GenericMMDItem extends net.minecraft.item.Item implements IMMDObjec
 	@Override
 	public MMDMaterial getMMDMaterial() {
 		return this.material;
+	}
+
+	@Override
+	public void setBurnTime(final int timeInTicks) {
+		this.burnTime = timeInTicks;
+	}
+
+	@Override
+	public int getItemBurnTime(@Nonnull final ItemStack itemStack) {
+		if (itemStack.getItem().equals(this)) {
+			return this.burnTime;
+		} else {
+			return ((IMMDBurnableObject) itemStack.getItem()).getItemBurnTime(itemStack);
+		}
 	}
 }

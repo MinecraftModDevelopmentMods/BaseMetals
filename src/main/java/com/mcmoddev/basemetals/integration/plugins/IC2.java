@@ -9,6 +9,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.IC2Base;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
@@ -16,19 +17,18 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraftforge.common.MinecraftForge;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, initCallback = "doHammerRecipes")
-public final class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base
-		implements IIntegration {
+public final class IC2 extends IC2Base implements IIntegration {
+
+	private static final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+			MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+			MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+			MaterialNames.ZINC);
 
 	@Override
 	public void init() {
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
-				MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
@@ -66,10 +66,6 @@ public final class IC2 extends com.mcmoddev.lib.integration.plugins.IC2Base
 	 *
 	 */
 	public void doHammerRecipes() {
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
-				MaterialNames.ZINC);
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(this::addForgeHammerRecipe);

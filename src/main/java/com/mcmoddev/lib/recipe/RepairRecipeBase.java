@@ -22,16 +22,33 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	private final String itemName;
 	private final List<ItemStack> repairMaterials;
 
+	/**
+	 *
+	 * @param material
+	 * @param itemName
+	 */
 	public RepairRecipeBase(final MMDMaterial material, final Names itemName) {
 		this(material, itemName.toString(), material.getName() + "_" + itemName.toString(),
 				Oredicts.PLATE + material.getCapitalizedName());
 	}
 
+	/**
+	 *
+	 * @param material
+	 * @param itemName
+	 * @param objects
+	 */
 	public RepairRecipeBase(final MMDMaterial material, final Names itemName,
 			final Object... objects) {
 		this(material, itemName.toString(), objects);
 	}
 
+	/**
+	 *
+	 * @param material
+	 * @param itemName
+	 * @param objects
+	 */
 	public RepairRecipeBase(final MMDMaterial material, final String itemName,
 			final Object... objects) {
 		super(material.getItemStack(itemName), objects);
@@ -95,6 +112,10 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		}
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	@Override
 	public int getRecipeSize() {
 		int count = 1;
@@ -107,6 +128,10 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		return this.material.getItemStack(this.itemName);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	@Override
 	public ArrayList<Object> getInput() {
 		final ArrayList<Object> inputs = new ArrayList<>();

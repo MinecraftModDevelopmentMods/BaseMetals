@@ -10,7 +10,7 @@ import slimeknights.tconstruct.library.utils.ToolHelper;
 
 public class TraitHeavy extends AbstractTrait {
 
-	TraitHeavy() {
+	public TraitHeavy() {
 		super("mmd-heavy", TextFormatting.BLACK);
 	}
 

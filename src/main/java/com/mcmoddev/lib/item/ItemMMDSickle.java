@@ -43,9 +43,13 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 			Material.LEAVES, Material.PLANTS, Material.VINE, Material.GOURD, Material.CACTUS);
 
 	private final MMDMaterial material;
-	private final int actionDiameter;// = 3;
+	private final int actionDiameter;
 	private float attackDamage;
 
+	/**
+	 *
+	 * @param material
+	 */
 	public ItemMMDSickle(final MMDMaterial material) {
 		super(Materials.getToolMaterialFor(material), null);
 		this.efficiencyOnProperMaterial = material.getToolEfficiency();

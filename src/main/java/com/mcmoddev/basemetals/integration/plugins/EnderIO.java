@@ -8,6 +8,7 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
+import com.mcmoddev.lib.integration.plugins.EnderIOBase;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 /**
@@ -16,8 +17,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
  *
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = EnderIO.PLUGIN_MODID)
-public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase
-		implements IIntegration {
+public class EnderIO extends EnderIOBase implements IIntegration {
 
 	/**
 	 *
@@ -44,5 +44,6 @@ public class EnderIO extends com.mcmoddev.lib.integration.plugins.EnderIOBase
 		addSagMillRecipe(MaterialNames.LEAD, 2, MaterialNames.SILVER, 1, 3600);
 		addSagMillRecipe(MaterialNames.NICKEL, 2, MaterialNames.PLATINUM, 1, 3600);
 		addSagMillRecipe(MaterialNames.SILVER, 2, MaterialNames.LEAD, 1, 3600);
+		addSagMillRecipe(MaterialNames.IRON, 2, MaterialNames.NICKEL, 1, 3600);
 	}
 }

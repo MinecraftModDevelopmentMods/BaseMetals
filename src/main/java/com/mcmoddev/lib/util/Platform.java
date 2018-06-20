@@ -38,7 +38,7 @@ public class Platform {
 	}
 
 	/**
-	 * Compare two ItemStacks to see if they are the same
+	 * Compare two ItemStacks to see if they are the same.
 	 *
 	 * @param itemStack1
 	 *            ItemStack 1 to compare
@@ -147,6 +147,10 @@ public class Platform {
 		return devEnv;
 	}
 
+	/**
+	 *
+	 * @param dev
+	 */
 	public static void setDev(final boolean dev) {
 		if (!(devEnv)) {
 			devEnv = dev;

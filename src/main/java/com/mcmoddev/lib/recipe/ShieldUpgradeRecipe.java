@@ -152,6 +152,11 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		}
 	}
 
+	/**
+	 *
+	 * @param inv
+	 * @return
+	 */
 	public int getCost(final InventoryCrafting inv) {
 		final MMDMaterial shieldMat = Materials.getMaterialByName(this.materialName);
 		final MMDMaterial upgradeMat = this.getUpgradeMat(inv);
