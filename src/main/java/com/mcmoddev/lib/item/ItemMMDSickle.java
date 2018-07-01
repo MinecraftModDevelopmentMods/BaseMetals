@@ -44,9 +44,6 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 
 	private final MMDMaterial material;
 	private final int actionDiameter;
-	private final float efficiency;
-	private float attackDamage;
-	private float attackSpeed;
 
 	/**
 	 *

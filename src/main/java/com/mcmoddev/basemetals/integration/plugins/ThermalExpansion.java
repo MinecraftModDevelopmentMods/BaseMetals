@@ -34,7 +34,7 @@ public final class ThermalExpansion extends ThermalExpansionBase implements IInt
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void regShit(final RegistryEvent.Register<IRecipe> event) {

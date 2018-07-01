@@ -382,8 +382,9 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	}
 
 	/**
+	 * Registers Items for this mod.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public static void registerItems(final RegistryEvent.Register<Item> event) {

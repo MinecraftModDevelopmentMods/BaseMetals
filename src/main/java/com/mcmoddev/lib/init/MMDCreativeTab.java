@@ -31,6 +31,12 @@ public class MMDCreativeTab extends CreativeTabs {
 		this(unlocalizedName, searchable, ItemStack.EMPTY);
 	}
 
+	/**
+	 * 
+	 * @param unlocalizedName
+	 * @param searchable
+	 * @param iconBlock
+	 */
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable,
 			@Nullable final Block iconBlock) {
 		this(unlocalizedName, searchable,

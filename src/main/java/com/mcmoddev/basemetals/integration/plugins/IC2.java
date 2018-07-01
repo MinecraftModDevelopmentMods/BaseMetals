@@ -39,7 +39,7 @@ public final class IC2 extends IC2Base implements IIntegration {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void mainInteraction(final RegistryEvent.Register<IRecipe> event) {

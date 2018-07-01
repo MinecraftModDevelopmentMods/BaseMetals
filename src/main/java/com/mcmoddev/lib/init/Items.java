@@ -73,6 +73,7 @@ import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -567,19 +568,21 @@ public abstract class Items {
 	public static int getSortingValue(@Nonnull final ItemStack itemStack) {
 		int classVal = 990000;
 		int materialVal = 9900;
-		if ((itemStack.getItem() instanceof ItemBlock)
-				&& (((ItemBlock) itemStack.getItem()).getBlock() instanceof IMMDObject)) {
+		final Item item = itemStack.getItem();
+		if ((item instanceof ItemBlock)
+				&& (((ItemBlock) item).getBlock() instanceof IMMDObject)) {
+			final Block block = ((ItemBlock) item).getBlock();
 			classVal = classSortingValues.computeIfAbsent(
-					((ItemBlock) itemStack.getItem()).getBlock().getClass(),
+					block.getClass(),
 					(final Class<?> clazz) -> 990000);
 			materialVal = materialSortingValues.computeIfAbsent(
-					((IMMDObject) ((ItemBlock) itemStack.getItem()).getBlock()).getMMDMaterial(),
+					((IMMDObject) block).getMMDMaterial(),
 					(final MMDMaterial material) -> 9900);
-		} else if (itemStack.getItem() instanceof IMMDObject) {
-			classVal = classSortingValues.computeIfAbsent(itemStack.getItem().getClass(),
+		} else if (item instanceof IMMDObject) {
+			classVal = classSortingValues.computeIfAbsent(item.getClass(),
 					(final Class<?> clazz) -> 990000);
 			materialVal = materialSortingValues.computeIfAbsent(
-					((IMMDObject) itemStack.getItem()).getMMDMaterial(),
+					((IMMDObject) item).getMMDMaterial(),
 					(final MMDMaterial material) -> 9900);
 		}
 		return classVal + materialVal + (itemStack.getMetadata() % 100);

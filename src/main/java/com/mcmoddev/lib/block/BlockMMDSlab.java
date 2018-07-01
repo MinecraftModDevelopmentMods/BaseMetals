@@ -103,8 +103,8 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return this.isDouble() ? new BlockStateContainer(this, new IProperty[] { VARIANT })
-				: new BlockStateContainer(this, new IProperty[] { HALF, VARIANT });
+		return this.isDouble() ? new BlockStateContainer(this, (IProperty[]) new IProperty[] { VARIANT })
+				: new BlockStateContainer(this, (IProperty[]) new IProperty[] { HALF, VARIANT });
 	}
 
 	/**

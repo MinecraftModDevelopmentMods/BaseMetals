@@ -6,6 +6,6 @@ package com.mcmoddev.basemetals.proxy;
  * @author Jasmine Iwanek
  *
  */
-public class ServerProxy extends CommonProxy {
+public final class ServerProxy extends CommonProxy {
 	// Nothing to see here people
 }

@@ -1,7 +1,5 @@
 package com.mcmoddev.lib.recipe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +19,14 @@ public class ToolReturnRecipe extends ShapelessOreRecipe {
 
 	private final ItemStack theTool;
 	private final List<ItemStack> ingredients;
-	
+
+	/**
+	 * 
+	 * @param ident
+	 * @param tool
+	 * @param result
+	 * @param ingredients
+	 */
 	public ToolReturnRecipe(final ResourceLocation ident, final ItemStack tool,
 			final ItemStack result, final ItemStack... ingredients) {
 		super(ident, result, (Object[]) ingredients);
@@ -30,9 +35,9 @@ public class ToolReturnRecipe extends ShapelessOreRecipe {
 	}
 
 	private boolean itemStackMatches(ItemStack left, ItemStack right) {
-		return left.getItem().equals(right.getItem()) &&
-				(left.getMetadata() == OreDictionary.WILDCARD_VALUE ||
-				(left.getMetadata() == right.getMetadata()));
+		return left.getItem().equals(right.getItem())
+				&& (left.getMetadata() == OreDictionary.WILDCARD_VALUE
+				|| (left.getMetadata() == right.getMetadata()));
 	}
 	
 	@Override
@@ -40,10 +45,11 @@ public class ToolReturnRecipe extends ShapelessOreRecipe {
 		Map<ItemStack,Boolean> matches = this.ingredients.stream().collect(Collectors.toMap(x -> x, x -> false));
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack slot = inv.getStackInSlot(i);
-			if (matches.keySet().stream().anyMatch( x -> itemStackMatches(x, slot))) {
+			if (matches.keySet().stream().anyMatch(x -> itemStackMatches(x, slot))) {
 				ItemStack k = matches.keySet().stream().filter(x -> itemStackMatches(x, slot)).distinct().findFirst().orElse(ItemStack.EMPTY);
-				if (!k.isEmpty())
+				if (!k.isEmpty()) {
 					matches.put(k, true);
+				}
 			}
 		}
 		

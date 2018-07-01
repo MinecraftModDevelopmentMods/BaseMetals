@@ -42,6 +42,8 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
  */
 public abstract class Recipes {
 
+	protected static final String DEFAULT_ORESMELT_XP = "%01.2f";
+
 	protected Recipes() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
@@ -236,9 +238,9 @@ public abstract class Recipes {
 	}
 
 	private static void makeBowRecipes(@Nonnull final MMDMaterial material) {
-		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
-		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
-		
+		final float baseXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
+		final float nuggetXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, baseXP / 9.0f));
+
 		if (isMMDItem(material, Names.ARROW)) {
 			addFurnaceRecipe(material.getItemStack(Names.ARROW),
 					material.getItemStack(Names.NUGGET, 1), nuggetXP); // 0.25 nugget loss
@@ -251,24 +253,24 @@ public abstract class Recipes {
 	}
 
 	private static void makeCrossbowRecipes(@Nonnull final MMDMaterial material) {
-		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
-		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
-		
+		final float baseXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
+		final float nuggetXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, baseXP / 9.0f));
+
 		if ((material.hasItem(Names.GEAR)) && (material.hasItem(Names.CROSSBOW))) {
-			int count = CheeseMath.getIngotCount(material, material.getItemStack(Names.CROSSBOW));
+			final int count = CheeseMath.getIngotCount(material, material.getItemStack(Names.CROSSBOW));
 			addFurnaceRecipe(material.getItemStack(Names.CROSSBOW),
 					material.getItemStack(Names.INGOT, count), baseXP);
 		}
 
 		if (material.hasItem(Names.BOLT)) {
 			addFurnaceRecipe(material.getItemStack(Names.BOLT),
-					material.getItemStack(Names.NUGGET, 2), nuggetXP); // 0.25 nugget loss
+					material.getItemStack(Names.NUGGET, 2), nuggetXP); // 0.25 Nugget loss
 		}
 	}
 
 	private static void makeNuggetRecipes(@Nonnull final MMDMaterial material) {
-		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
-		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
+		final float baseXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
+		final float nuggetXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, baseXP / 9.0f));
 		final String oreDictName = material.getCapitalizedName();
 
 		if (material.hasItem(Names.NUGGET)) {
@@ -278,11 +280,11 @@ public abstract class Recipes {
 			}
 			if (material.hasItem(Names.ROD)) {
 				int cheeseQty = CheeseMath.getNuggetCount(material, material.getItemStack(Names.ROD));
-				ItemStack out = cheeseQty >= 9?material.getItemStack(Names.INGOT):cheeseQty>0?material.getItemStack(Names.NUGGET):ItemStack.EMPTY;
+				final ItemStack out = cheeseQty >= 9 ? material.getItemStack(Names.INGOT) : cheeseQty > 0 ? material.getItemStack(Names.NUGGET) : ItemStack.EMPTY;
 				float xp = nuggetXP;
-				
+
 				if (!out.isEmpty()) { 
-					if (cheeseQty>=9) {
+					if (cheeseQty >= 9) {
 						cheeseQty /= 9;
 						xp = baseXP;
 					}
@@ -311,14 +313,14 @@ public abstract class Recipes {
 
 	private static void makeModRecipes(@Nonnull final MMDMaterial material) {
 		if (material.hasItem(Names.GEAR) && (material.hasItem(Names.INGOT))) {
-			int resCount = CheeseMath.getNuggetCount(material, material.getItemStack(Names.GEAR));
-			float ingotXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
-			float nuggetXP = Float.valueOf(String.format("%01.2f", ingotXP / 9.0f)).floatValue();
-			
+			final int resCount = CheeseMath.getNuggetCount(material, material.getItemStack(Names.GEAR));
+			final float ingotXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
+			final float nuggetXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, ingotXP / 9.0f));
+
 			if (resCount < 9 && resCount > 0) {
 				addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)), material.getItemStack(Names.NUGGET, resCount), nuggetXP);
 			} else if (resCount >= 9) {
-				addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)), material.getItemStack(Names.INGOT, resCount/9), ingotXP);				
+				addFurnaceRecipe(new ItemStack(material.getItem(Names.GEAR)), material.getItemStack(Names.INGOT, resCount / 9), ingotXP);
 			} else {
 				BaseMetals.logger.warn("Gears Per Craft set to %d - got a result nugget count of %d when trying to make the cheese recipe for Gears (material %s)", Options.gearQuantity(), resCount, material.getName());
 			}
@@ -326,9 +328,9 @@ public abstract class Recipes {
 	}
 
 	private static void makeSimpleRecipes(@Nonnull final MMDMaterial material) {
-		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
-		float nuggetXP = Float.valueOf(String.format("%01.2f", baseXP / 9.0f)).floatValue();
-		
+		final float baseXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
+		final float nuggetXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, baseXP / 9.0f));
+
 		if ((material.hasBlock(Names.BLOCK)) && (material.hasItem(Names.SLAB))) {
 			addFurnaceRecipe(material.getItemStack(Names.SLAB),
 					material.getItemStack(Names.NUGGET, 4), nuggetXP); // you lose roughly half a nugget
@@ -355,11 +357,11 @@ public abstract class Recipes {
 				.forEach(ent -> addFurnaceRecipe(material.getBlockItemStack(ent.getKey()),
 						material.getItemStack(Names.INGOT, ent.getValue().intValue()), baseXP));
 
-		if(material.hasBlock(Names.PLATE) && isMMDBlock(material, Names.PLATE)) {
+		if (material.hasBlock(Names.PLATE) && isMMDBlock(material, Names.PLATE)) {
 			int nuggetCount = CheeseMath.getNuggetCount(material, material.getBlockItemStack(Names.PLATE));
 			if (nuggetCount > 9) {
 				addFurnaceRecipe(material.getBlockItemStack(Names.PLATE), material.getItemStack(Names.INGOT, CheeseMath.getIngotCount(material, material.getItemStack(Names.PLATE))), nuggetXP);
-			} else if(nuggetCount > 0) {
+			} else if (nuggetCount > 0) {
 				addFurnaceRecipe(material.getBlockItemStack(Names.PLATE), material.getItemStack(Names.NUGGET, nuggetCount), baseXP);
 			} else {
 				BaseMetals.logger.warn("Plates Per Craft set to %d - got a result nugget count of %d when trying to make the cheese recipe for plates (material %s)", Options.plateQuantity(), nuggetCount, material.getName());
@@ -457,50 +459,60 @@ public abstract class Recipes {
 
 	private static void addFurnaceRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output, float experience) {
 		maybeRemoveRecipe(input);
-		if(input.isEmpty()) return;
-		float actualXP = Math.max(FurnaceRecipes.instance().getSmeltingExperience(output), experience);
+		if (input.isEmpty()) {
+			return;
+		}
+		final float actualXP = Math.max(FurnaceRecipes.instance().getSmeltingExperience(output), experience);
 		GameRegistry.addSmelting(input, output, actualXP);
 	}
-	
+
+	/**
+	 * 
+	 */
 	public static void dumpFurnaceRecipes() {
-		Map<ItemStack, ItemStack> smeltingMap = FurnaceRecipes.instance().getSmeltingList();
+		final Map<ItemStack, ItemStack> smeltingMap = FurnaceRecipes.instance().getSmeltingList();
 		
-		smeltingMap.entrySet().forEach( ent -> {
-			ItemStack res = FurnaceRecipes.instance().getSmeltingResult(ent.getKey());
-			float exp = FurnaceRecipes.instance().getSmeltingExperience(res);
+		smeltingMap.entrySet().forEach(ent -> {
+			final ItemStack res = FurnaceRecipes.instance().getSmeltingResult(ent.getKey());
+			final float exp = FurnaceRecipes.instance().getSmeltingExperience(res);
 			BaseMetals.logger.fatal("Furnace Recipe, %s -> %s with %01.2f exp", ent.getKey(), ent.getValue(), exp);
 		});
 	}
 	
 	private static ItemStack findMatchingItemStack(List<ItemStack> list, ItemStack match) {
-		for (ItemStack item : list) {
-			if (item.getCount() == match.getCount() && 
-					(item.getItemDamage() == OreDictionary.WILDCARD_VALUE ||
-					 item.getItemDamage() == match.getItemDamage() ||
-					 match.getItemDamage() == OreDictionary.WILDCARD_VALUE) &&
-					item.getItem().equals(match.getItem()))
+		for (final ItemStack item : list) {
+			if (item.getCount() == match.getCount()
+					&& (item.getItemDamage() == OreDictionary.WILDCARD_VALUE
+					|| item.getItemDamage() == match.getItemDamage()
+					|| match.getItemDamage() == OreDictionary.WILDCARD_VALUE)
+					&& item.getItem().equals(match.getItem())) {
 				return item;
+			}
 		}
 		
 		return ItemStack.EMPTY;
 	}
 	
 	private static void maybeRemoveRecipe(@Nonnull ItemStack forItem) {
-		Map<ItemStack, ItemStack> smeltingMap = FurnaceRecipes.instance().getSmeltingList();
-		ItemStack matcher = findMatchingItemStack(smeltingMap.keySet().stream().collect(Collectors.toList()), forItem);
+		final Map<ItemStack, ItemStack> smeltingMap = FurnaceRecipes.instance().getSmeltingList();
+		final ItemStack matcher = findMatchingItemStack(smeltingMap.keySet().stream().collect(Collectors.toList()), forItem);
 
-		if (matcher.isEmpty()) return;
+		if (matcher.isEmpty()) {
+			return;
+		}
 		
-		ItemStack output = smeltingMap.getOrDefault(matcher, ItemStack.EMPTY);
+		final ItemStack output = smeltingMap.getOrDefault(matcher, ItemStack.EMPTY);
 		
-		if(output.isEmpty()) return;
+		if (output.isEmpty()) {
+			return;
+		}
 		
 		FurnaceRecipes.instance().getSmeltingList().remove(matcher, output);
 	}
 	
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
-		float baseXP = Float.valueOf(String.format("%01.2f", material.getOreSmeltXP())).floatValue();
-		
+		final float baseXP = Float.parseFloat(String.format(DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
+
 		if ((material.hasItem(Names.INGOT)) && (Options.furnaceCheese())) {
 			final Map<Names, Integer> stuff = new TreeMap<>();
 			stuff.put(Names.BOOTS, 4);
@@ -623,7 +635,7 @@ public abstract class Recipes {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	public static void register(final RegistryEvent.Register<IRecipe> event) {
 		final String mod = Loader.instance().activeModContainer().getModId();
@@ -660,6 +672,8 @@ public abstract class Recipes {
 	}
 
 	/**
+	 * Checks whether the named Block is an IMMDObject.
+	 *
 	 * @param material
 	 *            The Material
 	 * @param name
@@ -671,6 +685,8 @@ public abstract class Recipes {
 	}
 
 	/**
+	 * Checks whether the named Item is an IMMDObject.
+	 *
 	 * @param material
 	 *            The Material
 	 * @param name

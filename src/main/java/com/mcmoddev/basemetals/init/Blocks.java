@@ -231,8 +231,9 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	}
 
 	/**
+	 * Registers Blocks for this mod.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {

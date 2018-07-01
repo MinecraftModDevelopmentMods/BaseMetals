@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @author Jasmine Iwanek
  *
  */
-public class Config extends ConfigBase {
+public final class Config extends ConfigBase {
 
 	private static Configuration configuration;
 	private static final String CONFIG_FILE = "config/BaseMetals.cfg";
@@ -39,8 +39,9 @@ public class Config extends ConfigBase {
 	private static final String FLUIDS_CAT = "Fluids";
 
 	/**
+	 * Fired when the configuration changes.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void onConfigChange(final ConfigChangedEvent.OnConfigChangedEvent event) {

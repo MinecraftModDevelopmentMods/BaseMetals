@@ -44,7 +44,7 @@ import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationExcep
 	acceptedMinecraftVersions = "[1.12,)",
 	certificateFingerprint = "@FINGERPRINT@",
 	updateJSON = BaseMetals.UPDATEJSON)
-public class BaseMetals {
+public final class BaseMetals {
 
 	@Instance
 	public static BaseMetals instance;
@@ -83,7 +83,11 @@ public class BaseMetals {
 	public static String getVersion() {
 		return VERSION;
 	}
-	
+
+	/**
+	 * 
+	 * @param event The Event.
+	 */
 	@EventHandler
 	public static void constructing(final FMLConstructionEvent event) {
 		try {
@@ -102,7 +106,7 @@ public class BaseMetals {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@EventHandler
 	public static void preInit(final FMLPreInitializationEvent event) {
@@ -114,6 +118,10 @@ public class BaseMetals {
 		proxy.init(event);
 	}
 
+	/**
+	 * 
+	 * @param event The Event.
+	 */
 	@EventHandler
 	public static void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);

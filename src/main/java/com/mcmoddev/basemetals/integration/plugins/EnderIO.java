@@ -22,7 +22,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
  *
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = EnderIO.PLUGIN_MODID)
-public class EnderIO extends EnderIOBase implements IIntegration {
+public final class EnderIO extends EnderIOBase implements IIntegration {
 
 	/**
 	 *
@@ -78,7 +78,7 @@ public class EnderIO extends EnderIOBase implements IIntegration {
 						new Object[] { Oredicts.INGOT + IRON, 8, "itemCoal", 1 })));
 		alloys.stream()
 		.filter(p -> Materials.hasMaterial(p.getRight().getLeft()))
-		.forEach(p-> {
+		.forEach(p -> {
 			final String name = p.getRight().getLeft();
 			final int count = p.getLeft();
 			final int cost = p.getRight().getMiddle();

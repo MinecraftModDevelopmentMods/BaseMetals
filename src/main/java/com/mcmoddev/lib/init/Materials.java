@@ -62,7 +62,7 @@ public class Materials {
 	}
 
 	public static void dumpRegistry() {
-		REGISTRY.getEntries().stream().forEach( ent -> BaseMetals.logger.fatal("Material %s - %s (%s)", ent.getKey(), ent.getValue().getCapitalizedName(), ent.getValue()));
+		REGISTRY.getEntries().stream().forEach(ent -> BaseMetals.logger.fatal("Material %s - %s (%s)", ent.getKey(), ent.getValue().getCapitalizedName(), ent.getValue()));
 	}
 	
 	/**
@@ -426,8 +426,8 @@ public class Materials {
 
 	/**
 	 *
-	 * @param modId
-	 * @return
+	 * @param modId The Modid to check the material against.
+	 * @return Boolean value stating whether the material was from the mod specified.
 	 */
 	public static boolean hasMaterialFromMod(@Nonnull final String modId) {
 		for (final ResourceLocation rl : REGISTRY.getKeys()) {

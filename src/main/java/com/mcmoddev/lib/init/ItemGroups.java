@@ -59,16 +59,6 @@ public class ItemGroups {
 		return addTab(name, false);
 	}
 
-	public static void dumpTabs() {
-		BaseMetals.logger.fatal("CREATIVE TABS (by internal reference name):");
-		itemGroupsByFullTabName.entrySet().stream().forEach( ent -> BaseMetals.logger.fatal("Tab fullname: %s, object: %s", ent.getKey(), ent.getValue()));
-		BaseMetals.logger.fatal("CREATIVE TABS (by mod-id reference name):");
-		itemGroupsByModID.entrySet().stream().forEach( ent -> {
-			BaseMetals.logger.fatal("Mod %s", ent.getKey());
-			ent.getValue().stream().forEach( tab -> BaseMetals.logger.fatal("tab name: %s is %s", tab.getTabLabel(), tab));
-		});
-	}
-
 	/**
 	 * Adds a CreativeTab.
 	 *
@@ -102,6 +92,19 @@ public class ItemGroups {
 		}
 
 		return itemGroupsByFullTabName.get(internalTabName);
+	}
+
+	/**
+	 * 
+	 */
+	public static void dumpTabs() {
+		BaseMetals.logger.fatal("CREATIVE TABS (by internal reference name):");
+		itemGroupsByFullTabName.entrySet().stream().forEach(ent -> BaseMetals.logger.fatal("Tab fullname: %s, object: %s", ent.getKey(), ent.getValue()));
+		BaseMetals.logger.fatal("CREATIVE TABS (by mod-id reference name):");
+		itemGroupsByModID.entrySet().stream().forEach(ent -> {
+			BaseMetals.logger.fatal("Mod %s", ent.getKey());
+			ent.getValue().stream().forEach(tab -> BaseMetals.logger.fatal("tab name: %s is %s", tab.getTabLabel(), tab));
+		});
 	}
 
 	/**

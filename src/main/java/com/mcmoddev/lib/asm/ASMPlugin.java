@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 
 @Name("BaseMetals")
 @SortingIndex(1001)
-public class ASMPlugin implements IFMLLoadingPlugin {
+public final class ASMPlugin implements IFMLLoadingPlugin {
 
 	static List<ITransformer> transformerList = new ArrayList<>();
 

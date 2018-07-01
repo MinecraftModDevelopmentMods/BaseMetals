@@ -59,14 +59,18 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	public boolean statsAdded() {
 		return this.statsAdded;
 	}
-	
+
+	/**
+	 * 
+	 * @param basis
+	 */
 	public TinkerMaterial(MMDMaterial basis) {
 		this.material = basis;
 		this.name = basis.getCapitalizedName();
 		this.tintColor = basis.getTintColor();
 		
-		for( TinkersStat k : TinkersStat.values()) {
-			switch(k) {
+		for (TinkersStat k : TinkersStat.values()) {
+			switch (k) {
 			case HEAD_DURABILITY:
 				this.stats.put(k, () -> new IntStat(basis.getToolDurability()));
 				break;
@@ -75,6 +79,7 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 				break;
 			case MINING_LEVEL:
 				this.stats.put(k, () -> new IntStat(basis.getToolHarvestLevel()));
+				break;
 			case HEAD_ATTACK_DAMAGE:
 				this.stats.put(k, () -> new FloatStat(basis.getBaseAttackDamage() * 2));
 				break;
@@ -126,27 +131,53 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		return this.toolForge;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public TinkerMaterial toggleCastable() {
 		this.castable = !this.castable;
-		if (this.castable && this.craftable) this.craftable = false;
+		if (this.castable && this.craftable) {
+			this.craftable = false;
+		}
 		return this;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public TinkerMaterial toggleCraftable() {
 		this.craftable = !this.craftable;
-		if (this.craftable && this.castable) this.castable = false;
+		if (this.craftable && this.castable) {
+			this.castable = false;
+		}
 		return this;
 	}
 
+	/**
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public TinkerMaterial setCastable(boolean val) {
 		this.castable = val;
-		if (this.castable && this.craftable) this.craftable = false;
+		if (this.castable && this.craftable) {
+			this.craftable = false;
+		}
 		return this;
 	}
-	
+
+	/**
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public TinkerMaterial setCraftable(boolean val) {
 		this.craftable = val;
-		if (this.craftable && this.castable) this.castable = false;
+		if (this.craftable && this.castable) {
+			this.castable = false;
+		}
 		return this;
 	}
 
@@ -181,7 +212,12 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	public int getTintColor() {
 		return this.tintColor;
 	}
-	
+
+	/**
+	 * 
+	 * @param stat
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
 	public Float getFloatStat(TinkersStat stat) {
 		IStat r = this.stats.get(stat);
@@ -194,6 +230,11 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		}
 	}
 
+	/**
+	 * 
+	 * @param stat
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
 	public Integer getIntStat(TinkersStat stat) {
 		IStat r = this.stats.get(stat);
@@ -206,13 +247,18 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		}
 	}
 
+	/**
+	 * 
+	 * @param stat
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
 	public Boolean getBoolStat(TinkersStat stat) {
 		IStat r = this.stats.get(stat);
 		if (r.value() instanceof Boolean) {
 			return (Boolean)r.value();
 		} else {
-			return Boolean.valueOf((Float)r.value()!=0f);
+			return Boolean.valueOf((Float)r.value() != 0f);
 		}
 	}
 
@@ -225,6 +271,12 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		return this.name;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @param location
+	 * @return
+	 */
 	public TinkerMaterial addTrait(String name, TinkersTraitLocation location) {
 		List<String> baseTraits = this.traits.getOrDefault(location, new ArrayList<>());
 		baseTraits.add(name);
@@ -245,8 +297,13 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		return val;
 	}
 
+	/**
+	 * 
+	 */
 	public void settle() {
-		if (this.tinkersMaterial != null) return;
+		if (this.tinkersMaterial != null) {
+			return;
+		}
 		this.tinkersMaterial = new Material(this.name, this.tintColor);
 		this.tinkersMaterial.addCommonItems(this.material.getCapitalizedName());
 
@@ -257,19 +314,22 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 		}
 		
 		Arrays.asList(TinkersStatTypes.values()).stream()
-		.forEach( stat -> this.tinkersStats.computeIfAbsent(stat, k -> this.getDefaultStat(k)) );
-
+		.forEach(stat -> this.tinkersStats.computeIfAbsent(stat, k -> this.getDefaultStat(k)));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public ImmutableMap<TinkersTraitLocation, List<String>> getTraits() {
 		Map<TinkersTraitLocation, List<String>> rv = Maps.newConcurrentMap();
 		
 		this.traits.entrySet().stream()
 		.filter(ent -> ent.getKey() != TinkersTraitLocation.GENERAL)
 		.forEach(ent -> {
-			List<String> traits = rv.getOrDefault(ent.getKey(), Lists.newArrayList());
-			traits.addAll(ent.getValue());
-			rv.put(ent.getKey(), traits);
+			List<String> traitsTemp = rv.getOrDefault(ent.getKey(), Lists.newArrayList());
+			traitsTemp.addAll(ent.getValue());
+			rv.put(ent.getKey(), traitsTemp);
 		});
 		return ImmutableMap.copyOf(rv);
 	}
@@ -277,10 +337,14 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	public ImmutableList<String> getTraits(TinkersTraitLocation location) {
 		return ImmutableList.copyOf(this.traits.getOrDefault(location, new ArrayList<>()));
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public List<IMaterialStats> getStats() {
 		List<IMaterialStats> rv = new ArrayList<>();
-		for(TinkersStatTypes k : TinkersStatTypes.values()) {
+		for (TinkersStatTypes k : TinkersStatTypes.values()) {
 			rv.add(this.tinkersStats.getOrDefault(k, this.getDefaultStat(k)));
 		}
 		// generate stats, add them to rv
@@ -288,7 +352,7 @@ public class TinkerMaterial  extends IForgeRegistryEntry.Impl<TinkerMaterial> im
 	}
 	
 	private IMaterialStats getDefaultStat(TinkersStatTypes k) {
-		switch(k) {
+		switch (k) {
 		case ARROWSHAFT:
 			return new ArrowShaftMaterialStats(this.getFloatStat(TinkersStat.ARROWSHAFT_MODIFIER),
 					this.getIntStat(TinkersStat.ARROWSHAFT_BONUS_AMMO));

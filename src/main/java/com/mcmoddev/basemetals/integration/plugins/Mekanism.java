@@ -46,7 +46,7 @@ public final class Mekanism extends MekanismBase implements IIntegration {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void regCallback(final RegistryEvent.Register<IRecipe> event) {

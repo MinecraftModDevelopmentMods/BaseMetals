@@ -8,7 +8,9 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.TinkersConstructBase;
+
 import static com.mcmoddev.lib.integration.plugins.tinkers.TinkerMaterial.TinkersTraitLocation;
+
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
@@ -62,12 +64,16 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 		registerMeltings();
 	}
 
-	private void registerMaterial( boolean active, String name, boolean castable, boolean craftable, Object...traits) {
-		if(active) this.registerMaterial(name, castable, craftable, traits);
+	private void registerMaterial(boolean active, String name, boolean castable, boolean craftable, Object...traits) {
+		if  (active) {
+			this.registerMaterial(name, castable, craftable, traits);
+		}
 	}
 	
-	private void registerMaterial( boolean active, String name, boolean castable, boolean craftable) {
-		if(active) this.registerMaterial(name, castable, craftable);		
+	private void registerMaterial(boolean active, String name, boolean castable, boolean craftable) {
+		if  (active) {
+			this.registerMaterial(name, castable, craftable);
+		}
 	}
 
 	private void registerMeltings() {

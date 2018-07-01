@@ -312,7 +312,7 @@ public class ConfigBase {
 		}
 
 		// RECIPE AMOUNTS
-		protected static int gearQuantity = 4;
+		private static int gearQuantity = 4;
 
 		public static void setGearQuantity(final int qty) {
 			gearQuantity = qty;
@@ -501,7 +501,7 @@ public class ConfigBase {
 			return fallbackOrespawn;
 		}
 
-		protected static int rodQuantity = 4;
+		private static int rodQuantity = 4;
 
 		public static void setRodQuantity(int quantity) {
 			rodQuantity = quantity;

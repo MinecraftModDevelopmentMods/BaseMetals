@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.data;
 
 import com.mcmoddev.lib.data.SharedStrings;
 
-public class MaterialNames {
+public final class MaterialNames {
 
 	public static final String ADAMANTINE = "adamantine";
 	public static final String ANTIMONY = "antimony";

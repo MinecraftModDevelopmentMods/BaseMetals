@@ -71,7 +71,7 @@ public class TinkersConstructBase implements IIntegration {
 	public static final String PLUGIN_MODID = "tconstruct";
 	private static final IForgeRegistry<TinkerMaterial> registry = new RegistryBuilder<TinkerMaterial>()
 			.disableSaving()
-			.setMaxID( 65535 )
+			.setMaxID(65535)
 			.setName(new ResourceLocation("mmdlib", "tinker_registry"))
 			.setType(TinkerMaterial.class)
 			.create();
@@ -97,6 +97,22 @@ public class TinkersConstructBase implements IIntegration {
 		MinecraftForge.EVENT_BUS.post(new TinkersModifierRegistryEvent());
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
+	@SubscribeEvent
+	public void init(final IntegrationInitEvent event) {
+		registerExtraMeltings();
+		addItemsToMaterials();
+		addTraits();
+		ensureMaterialsVisible();
+	}
+
+	/**
+	 * 
+	 * @param event
+	 */
 	@SubscribeEvent
 	public void registerModifiers(final RegistryEvent.Register<Item> event) {
 		traits.entrySet().stream()
@@ -110,6 +126,11 @@ public class TinkersConstructBase implements IIntegration {
 		.forEach(modifier -> TinkerRegistry.registerModifier(modifier));
 	}
 
+	private void registerModifiers() {
+		registerModifier("fake diamond", new ModifierFakeDiamond());
+		registerModifier("lead plated", new ModifierLeadPlated());
+		registerModifier("toxic", new ModifierToxic());
+	}
 
 	private void registerTraits() {
 		registerTrait("brittle", new TraitBrittle());
@@ -120,24 +141,82 @@ public class TinkersConstructBase implements IIntegration {
 		registerTrait("toxic", new TraitToxic());
 	}
 
-	private void registerModifiers() {
-		registerModifier("fake diamond", new ModifierFakeDiamond());
-		registerModifier("lead plated", new ModifierLeadPlated());
-		registerModifier("toxic", new ModifierToxic());
-	}
-
 	public TinkerMaterial newMaterial(@Nonnull MMDMaterial material) {
 		return new TinkerMaterial(material);
 	}
 
+	/**
+	 * 
+	 * @param material
+	 */
 	public void registerMaterial(@Nonnull TinkerMaterial material) {
 		String activeMod = Loader.instance().activeModContainer().getModId();
 		ResourceLocation name = new ResourceLocation(activeMod, material.getName().toLowerCase());
-		if(material.getRegistryName()==null)
+		if  (material.getRegistryName() == null) {
 			material.setRegistryName(name);
+		}
 		registry.register(material);
 	}
 
+	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable, Object...traits) {
+		registerMaterial(materialName, craftable, castable, true, traits);
+	}
+
+	/**
+	 * 
+	 * @param materialName
+	 * @param craftable
+	 * @param castable
+	 * @param toolForge
+	 * @param traitsList
+	 */
+	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable,
+			boolean toolForge, Object...traitsList) {
+		MMDMaterial material = Materials.getMaterialByName(materialName);
+		TinkerMaterial mat = newMaterial(material);
+		mat.setCastable(castable);
+		mat.setCraftable(craftable);
+		mat.setToolForge(toolForge);
+
+		int i = 0;
+		while (i < traitsList.length) {
+			if (traitsList[i] instanceof TinkerMaterial.TinkersTraitLocation) {
+				mat.addTrait((String)traitsList[i + 1], (TinkerMaterial.TinkersTraitLocation)traitsList[i]);
+				i++;
+			} else {
+				mat.addTrait((String)traitsList[i], TinkerMaterial.TinkersTraitLocation.GENERAL);
+			}
+			i++;
+		}
+
+		mat.setRegistryName(materialName);
+		registerMaterial(mat);
+	}
+
+	/**
+	 * 
+	 * @param materialName
+	 * @param craftable
+	 * @param castable
+	 * @param toolForge
+	 */
+	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable, boolean toolForge) {
+		MMDMaterial material = Materials.getMaterialByName(materialName);
+		TinkerMaterial mat = newMaterial(material);
+		mat.setCastable(castable);
+		mat.setCraftable(craftable);
+		mat.setToolForge(toolForge);
+
+		mat.setRegistryName(materialName);
+		mat.settle();
+		registerMaterial(mat);		
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public TinkerMaterial getMaterial(@Nonnull String name) {
 		if (name.matches(":")) {
 			return this.getMaterial(new ResourceLocation(name));
@@ -166,49 +245,18 @@ public class TinkersConstructBase implements IIntegration {
 		this.addExtraMelting(this.getMaterial(loc), name, amount);
 	}
 
+	/**
+	 * 
+	 * @param material
+	 * @param name
+	 * @param amount
+	 */
 	public void addExtraMelting(TinkerMaterial material, @Nonnull String name, int amount) {
-		if(material == null) return;
-
-		material.addExtraMelting(name, amount);
-	}
-
-	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable, Object...traits) {
-		registerMaterial(materialName, craftable, castable, true, traits);
-	}
-
-	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable,
-			boolean toolForge, Object...traitsList) {
-		MMDMaterial material = Materials.getMaterialByName(materialName);
-		TinkerMaterial mat = newMaterial(material);
-		mat.setCastable(castable);
-		mat.setCraftable(craftable);
-		mat.setToolForge(toolForge);
-
-		int i = 0;
-		while (i < traitsList.length) {
-			if (traitsList[i] instanceof TinkerMaterial.TinkersTraitLocation) {
-				mat.addTrait((String)traitsList[i+1], (TinkerMaterial.TinkersTraitLocation)traitsList[i]);
-				i++;
-			} else {
-				mat.addTrait((String)traitsList[i], TinkerMaterial.TinkersTraitLocation.GENERAL);
-			}
-			i++;
+		if (material == null) {
+			return;
 		}
 
-		mat.setRegistryName(materialName);
-		registerMaterial(mat);
-	}
-
-	public void registerMaterial(@Nonnull String materialName, boolean craftable, boolean castable, boolean toolForge) {
-		MMDMaterial material = Materials.getMaterialByName(materialName);
-		TinkerMaterial mat = newMaterial(material);
-		mat.setCastable(castable);
-		mat.setCraftable(craftable);
-		mat.setToolForge(toolForge);
-
-		mat.setRegistryName(materialName);
-		mat.settle();
-		registerMaterial(mat);		
+		material.addExtraMelting(name, amount);
 	}
 
 	public void registerAlloy(@Nonnull String materialName, FluidStack result, FluidStack...recipe) {
@@ -227,42 +275,39 @@ public class TinkersConstructBase implements IIntegration {
 		extraMeltings.add(Pair.of(item, fluid));
 	}
 
-
+	/**
+	 * 
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void preInit(IntegrationPreInitEvent ev) {
+	public void preInit(final IntegrationPreInitEvent event) {
 		setupIntegrations();
 		addMaterialStats();
 		ensureMaterialsVisible();
 	}
 
-	@SubscribeEvent
-	public void init(IntegrationInitEvent ev) {
-		registerExtraMeltings();
-		addItemsToMaterials();
-		addTraits();
-		ensureMaterialsVisible();
-	}
-
 	private void addItemsToMaterials() {
 		registry.getEntries().stream()
-		.forEach( ert -> {
+		.forEach(ert -> {
 			ModContainer base = Loader.instance().activeModContainer();
 			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
 
-			if (!base.equals(next)) Loader.instance().setActiveModContainer(next);
+			if (!base.equals(next)) {
+				Loader.instance().setActiveModContainer(next);
+			}
 
 			TinkerMaterial tm = ert.getValue();
 
 			tm.getTinkerMaterial().addCommonItems(tm.getMMDMaterial().getCapitalizedName());
-			tm.getTinkerMaterial().addItemIngot(Oredicts.INGOT+tm.getMMDMaterial().getCapitalizedName());
+			tm.getTinkerMaterial().addItemIngot(Oredicts.INGOT + tm.getMMDMaterial().getCapitalizedName());
 			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getItemStack(Names.INGOT), 1, Material.VALUE_Ingot);
 			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getBlockItemStack(Names.BLOCK), 1, Material.VALUE_Block);
 			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getItemStack(Names.SHARD), 1, Material.VALUE_Shard);
-			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getBlockItemStack(Names.ORE), 1, Material.VALUE_Ingot*2);
+			tm.getTinkerMaterial().addItem(tm.getMMDMaterial().getBlockItemStack(Names.ORE), 1, Material.VALUE_Ingot * 2);
 			
 			ItemStack represents = null;
 			
-			switch(tm.getMMDMaterial().getType()) {
+			switch (tm.getMMDMaterial().getType()) {
 			case GEM:
 				represents = tm.getMMDMaterial().getItemStack(Names.GEM);
 				break;
@@ -273,19 +318,28 @@ public class TinkersConstructBase implements IIntegration {
 				break;
 			case ROCK:
 			case WOOD:
+			default:
 				represents = tm.getMMDMaterial().getBlockItemStack(Names.BLOCK);
 				break;
 			}
 			
-			if(represents != null) tm.getTinkerMaterial().setRepresentativeItem(represents);
+			if (represents != null) {
+				tm.getTinkerMaterial().setRepresentativeItem(represents);
+			}
 			
-			if (!base.equals(next)) Loader.instance().setActiveModContainer(base);
+			if  (!base.equals(next)) {
+				Loader.instance().setActiveModContainer(base);
+			}
 		});
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	@SubscribeEvent
-	public void postInit(IntegrationPostInitEvent ev) {
-		integrations.stream().forEach( mi -> mi.integrate() );
+	public void postInit(IntegrationPostInitEvent event) {
+		integrations.stream().forEach(mi -> mi.integrate());
 		registerAlloyRecipes();
 		ensureMaterialsVisible();
 	}
@@ -295,11 +349,13 @@ public class TinkersConstructBase implements IIntegration {
 		.filter(ert -> !ert.getValue().getMMDMaterial().isEmpty() && !ert.getValue().getName().equalsIgnoreCase("empty"))
 		.filter(ert -> TinkerRegistry.getMaterial(ert.getValue().getName().toLowerCase()).equals(Material.UNKNOWN))
 		.filter(ert -> !ert.getValue().registered())
-		.forEach( ert -> {
+		.forEach(ert -> {
 			ModContainer base = Loader.instance().activeModContainer();
 			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
 
-			if (!base.equals(next)) Loader.instance().setActiveModContainer(next);
+			if (!base.equals(next)) {
+				Loader.instance().setActiveModContainer(next);
+			}
 
 			TinkerMaterial mat = ert.getValue();
 
@@ -317,17 +373,21 @@ public class TinkersConstructBase implements IIntegration {
 			TinkerRegistry.integrate(integration);
 			integration.preInit();
 			mat.setRegistered();
-			if (!base.equals(next)) Loader.instance().setActiveModContainer(base);
+			if (!base.equals(next)) {
+				Loader.instance().setActiveModContainer(base);
+			}
 		});
 	}
 
 	private void addMaterialStats() {
 		registry.getEntries().stream()
-		.forEach( ert -> {
+		.forEach(ert -> {
 			ModContainer base = Loader.instance().activeModContainer();
 			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
 
-			if (!base.equals(next)) Loader.instance().setActiveModContainer(next);
+			if (!base.equals(next)) {
+				Loader.instance().setActiveModContainer(next);
+			}
 
 			TinkerMaterial mat = ert.getValue();
 
@@ -348,16 +408,18 @@ public class TinkersConstructBase implements IIntegration {
 				mat.setStatsAdded();
 			}
 
-			if (!base.equals(next)) Loader.instance().setActiveModContainer(base);
+			if (!base.equals(next)) {
+				Loader.instance().setActiveModContainer(base);
+			}
 		});
 	}
 
 	private void ensureMaterialsVisible() {
-		registry.getEntries().stream().map(ent -> ent.getValue()).forEach( mat -> mat.getTinkerMaterial().setVisible());
+		registry.getEntries().stream().map(ent -> ent.getValue()).forEach(mat -> mat.getTinkerMaterial().setVisible());
 	}
 	
 	private void registerExtraMeltings() {
-		extraMeltings.stream().forEach( p -> TinkerRegistry.registerMelting(new MeltingRecipe(RecipeMatch.of(p.getLeft()), p.getRight())));
+		extraMeltings.stream().forEach(p -> TinkerRegistry.registerMelting(new MeltingRecipe(RecipeMatch.of(p.getLeft()), p.getRight())));
 	}
 
 	@Nullable
@@ -365,7 +427,7 @@ public class TinkersConstructBase implements IIntegration {
 		ITrait tr = TinkerRegistry.getTrait(name);
 		
 		if (tr == null) {
-			tr = TinkerRegistry.getTrait("mmd-"+name);
+			tr = TinkerRegistry.getTrait("mmd-" + name);
 		}
 
 		return tr;
@@ -374,10 +436,12 @@ public class TinkersConstructBase implements IIntegration {
 	private void addGenericTrait(@Nullable ITrait tr, TinkerMaterial tm) {
 		try {
 			if (tr != null) {
-				if(tm.getTinkerMaterial().getAllTraits().contains(tr)) return;
+				if (tm.getTinkerMaterial().getAllTraits().contains(tr)) {
+					return;
+				}
 				TinkerRegistry.addMaterialTrait(tm.getTinkerMaterial(), tr, null);
 			}
-		} catch(slimeknights.tconstruct.library.TinkerAPIException ex) {
+		} catch (slimeknights.tconstruct.library.TinkerAPIException ex) {
 			// We do nothing as this is just here because sometimes we run this twice...
 		}
 	}
@@ -385,37 +449,43 @@ public class TinkersConstructBase implements IIntegration {
 	private void addTraitLocation(@Nullable ITrait tr, TinkerMaterial tm, TinkersTraitLocation loc) {
 		try {
 			if (tr != null) {
-				if(tm.getTinkerMaterial().getAllTraitsForStats(loc.toString()).contains(tr)) return;
+				if (tm.getTinkerMaterial().getAllTraitsForStats(loc.toString()).contains(tr)) {
+					return;
+				}
 				TinkerRegistry.addMaterialTrait(tm.getTinkerMaterial(), tr, loc.toString());
-			}		
-		} catch(slimeknights.tconstruct.library.TinkerAPIException ex) {
+			}
+		} catch (slimeknights.tconstruct.library.TinkerAPIException ex) {
 			// We do nothing as this is just here because sometimes we run this twice...
 		}
 	}
 	
 	private void addTraits() {
 		registry.getEntries().stream()
-		.forEach( ert -> {
+		.forEach(ert -> {
 			ModContainer base = Loader.instance().activeModContainer();
 			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
 			
-			if (!base.equals(next)) Loader.instance().setActiveModContainer(next);
+			if  (!base.equals(next)) {
+				Loader.instance().setActiveModContainer(next);
+			}
 			
 			TinkerMaterial tm = ert.getValue();
 
 			Arrays.asList(TinkersTraitLocation.values()).stream()
-			.forEach( loc -> {
-				if (tm.getTraits(loc).size() > 0) {
+			.forEach(loc -> {
+				if (!tm.getTraits(loc).isEmpty()) {
 					if (loc == TinkersTraitLocation.GENERAL) {
 						tm.getTraits(loc).stream()
-						.forEach( t -> addGenericTrait(getTrait(t), tm));
+						.forEach(t -> addGenericTrait(getTrait(t), tm));
 					} else {
 						tm.getTraits(loc).stream()
-						.forEach( t -> addTraitLocation(getTrait(t), tm, loc));
+						.forEach(t -> addTraitLocation(getTrait(t), tm, loc));
 					}
 				}
 			});
-			if (!base.equals(next)) Loader.instance().setActiveModContainer(base);
+			if (!base.equals(next)) {
+				Loader.instance().setActiveModContainer(base);
+			}
 		});
 	}
 	

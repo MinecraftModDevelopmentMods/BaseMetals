@@ -247,8 +247,8 @@ public class Oredicts {
 
 	/**
 	 *
-	 * @param name
-	 * @param block
+	 * @param name The name to register the Block against.
+	 * @param block The Block to register.
 	 */
 	public static void registerOre(final String name, final Block block) {
 		if (block != null) {
@@ -264,8 +264,8 @@ public class Oredicts {
 
 	/**
 	 *
-	 * @param name
-	 * @param item
+	 * @param name The name to register the Item against.
+	 * @param item the Item to register.
 	 */
 	public static void registerOre(final String name, final Item item) {
 		if (item != null) {
@@ -281,8 +281,8 @@ public class Oredicts {
 
 	/**
 	 *
-	 * @param name
-	 * @param itemStack
+	 * @param name The name to register the ItemStack against.
+	 * @param itemStack the ItemStack to register.
 	 */
 	public static void registerOre(final String name, final ItemStack itemStack) {
 		if (!itemStack.isEmpty()) {

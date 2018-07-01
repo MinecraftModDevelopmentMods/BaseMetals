@@ -226,7 +226,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { FACING });
+		return new BlockStateContainer(this, (IProperty[]) new IProperty[] { FACING });
 	}
 
 	/**

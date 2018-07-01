@@ -1,15 +1,16 @@
 package com.mcmoddev.basemetals.util;
 
-import com.mcmoddev.lib.events.*;
-
-import com.mcmoddev.lib.item.ItemMMDShield;
-import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
-
+import com.mcmoddev.lib.events.MMDLibRegisterBlocks;
+import com.mcmoddev.lib.events.MMDLibRegisterFluids;
+import com.mcmoddev.lib.events.MMDLibRegisterItems;
+import com.mcmoddev.lib.events.MMDLibRegisterMaterials;
+import com.mcmoddev.lib.item.ItemMMDShield;
+import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -38,7 +39,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber
-public class EventHandler {
+public final class EventHandler {
+
+	public EventHandler() {
+		// throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
+	}
 
 	/**
 	 *

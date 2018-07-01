@@ -47,8 +47,9 @@ public final class ClientProxy extends CommonProxy {
 	}
 
 	/**
+	 * Registers Block and Item models for this mod.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public static void registerModels(final ModelRegistryEvent event) {
@@ -74,8 +75,9 @@ public final class ClientProxy extends CommonProxy {
 	}
 
 	/**
+	 * Registers Fluid models for this mod.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void fluidRendering(final RegistryEvent.Register<MMDMaterial> event) {

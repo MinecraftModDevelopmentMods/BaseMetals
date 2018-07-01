@@ -74,7 +74,6 @@ public class MekanismBase implements IIntegration {
 		final ItemStack powder = material.getItemStack(Names.POWDER);
 		final ItemStack ore = material.getBlockItemStack(Names.ORE);
 		final ItemStack shard = material.getItemStack(Names.SHARD);
-		// TODO: check specifically for mek crystal type
 		final ItemStack crystal = material.getItemStack(Names.CRYSTAL);
 		final String cleanGas = makeCleanGasName(material);
 

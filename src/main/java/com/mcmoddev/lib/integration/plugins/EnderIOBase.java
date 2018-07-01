@@ -18,6 +18,8 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.crash.CrashReport;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -43,6 +45,7 @@ public class EnderIOBase implements IIntegration {
 	public static final String PLUGIN_MODID = "enderio";
 	private static final String NS_URI = "http://enderio.com/recipes";
 	private static final String NS_SCHEMA = NS_URI + " recipes.xsd";
+	private static final String FORMAT_STRING = "%s: %s to %s";
 
 	/**
 	 *
@@ -110,12 +113,43 @@ public class EnderIOBase implements IIntegration {
 		addAlloySmelterRecipe(Materials.getMaterialByName(materialName), outputSecondary, energy);
 	}
 
+	/**
+	 *
+	 * @param material
+	 *            The Material
+	 * @param outputSecondary
+	 *            The secondary output
+	 * @param energy
+	 *            How much energy it costs to perform
+	 */
+	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material,
+			final String outputSecondary, @Nonnull final int energy) {
+		final String ownerModID = Loader.instance().activeModContainer().getModId();
+
+		final String capitalizedName = material.getCapitalizedName();
+
+		final String input = Oredicts.ORE + capitalizedName;
+		final String output = Oredicts.INGOT + capitalizedName;
+
+		if (!(material.hasOre())) {
+			return; // Only run for Ore types
+		}
+
+		final List<Triple<String,Integer,Float>> rec = new ArrayList<>();
+		rec.add(Triple.of(input, 1, 0f));
+		rec.add(Triple.of(output, 2, 1.0f));
+
+		if (outputSecondary != null) {
+			rec.add(Triple.of(outputSecondary, 1, 0.5f));
+		}
+		addRecipeIMC("alloying", String.format(FORMAT_STRING, ownerModID, input, output), energy, rec);
+	}
+
 	private static final void addRecipeIMC(@Nonnull final String recipeType, @Nonnull final String recipeName, @Nonnull int energy, final List<Triple<String,Integer,Float>> recipe) {
-		final DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder;
 		try {
-			builder = fac.newDocumentBuilder();
-			Document rec = builder.newDocument();
+			final DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
+			final DocumentBuilder builder = fac.newDocumentBuilder();
+			final Document rec = builder.newDocument();
 
 			final Element root = rec.createElement("enderio:recipes");
 			root.setAttribute("xmlns:enderio", NS_URI);
@@ -145,7 +179,7 @@ public class EnderIOBase implements IIntegration {
 			.filter(ing -> ing.getRight().floatValue() > 0f)
 			.forEach(ing -> {
 				final Element out = rec.createElement("output");
-				if(ing.getRight() != 1f) {
+				if (ing.getRight() != 1f) {
 					out.setAttribute("chance", ing.getRight().toString());
 				}
 				out.setAttribute("name", ing.getLeft());
@@ -158,7 +192,9 @@ public class EnderIOBase implements IIntegration {
 			thisRecipe.appendChild(base);
 			root.appendChild(thisRecipe);
 
-			final Transformer tf = TransformerFactory.newInstance().newTransformer();
+			final TransformerFactory factory = TransformerFactory.newInstance();
+			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			final Transformer tf = factory.newTransformer();
 			tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			tf.setOutputProperty(OutputKeys.INDENT, "yes");
 			final Writer out = new StringWriter();
@@ -183,12 +219,12 @@ public class EnderIOBase implements IIntegration {
 	 *                   - alloy smelter doesn't do secondary outputs
 	 */
 	protected static void addAlloySmelterAlloy(@Nonnull final MMDMaterial material, final int energy,
-			@Nonnull final String outputItem, @Nonnull final int outputQty, @Nonnull Object[] recipe) {
+			@Nonnull final String outputItem, @Nonnull final int outputQty, @Nonnull final Object[] recipe) {
 		final List<Triple<String,Integer,Float>> rec = new ArrayList<>();
 		rec.add(Triple.of(outputItem, outputQty, 1.0f));
 
 		int i = 0;
-		while(i < recipe.length) {
+		while (i < recipe.length) {
 			rec.add(Triple.of((String)recipe[i++], Integer.valueOf((int)recipe[i++]), 0f));
 		}
 
@@ -197,38 +233,6 @@ public class EnderIOBase implements IIntegration {
 		final String capitalizedName = material.getCapitalizedName();
 
 		addRecipeIMC("alloying", String.format("%s: alloy recipe for %s", ownerModID, capitalizedName), energy, rec);
-	}
-
-	/**
-	 *
-	 * @param material
-	 *            The Material
-	 * @param outputSecondary
-	 *            The secondary output
-	 * @param energy
-	 *            How much energy it costs to perform
-	 */
-	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material,
-			final String outputSecondary, @Nonnull final int energy) {
-		final String ownerModID = Loader.instance().activeModContainer().getModId();
-
-		final String capitalizedName = material.getCapitalizedName();
-
-		final String input = Oredicts.ORE + capitalizedName;
-		final String output = Oredicts.INGOT + capitalizedName;
-
-		if (!(material.hasOre())) {
-			return; // Only run for Ore types
-		}
-
-		final List<Triple<String,Integer,Float>> rec = new ArrayList<>();
-		rec.add(Triple.of(input, 1, 0f));
-		rec.add(Triple.of(output, 2, 1.0f));
-
-		if (outputSecondary != null) {
-			rec.add( Triple.of(outputSecondary, 1, 0.5f));
-		}
-		addRecipeIMC("alloying", String.format("%s: %s to %s", ownerModID, input, output), energy, rec);
 	}
 
 	/**
@@ -347,7 +351,7 @@ public class EnderIOBase implements IIntegration {
 
 		final List<Triple<String,Integer,Float>> rec = new ArrayList<>();
 
-		rec.add( Triple.of(input, 1, 0f) );
+		rec.add(Triple.of(input, 1, 0f));
 		if (!noSecondary) {
 			rec.add(Triple.of(primaryOutput, primaryQty, 1.0f));
 		} else {
@@ -364,16 +368,16 @@ public class EnderIOBase implements IIntegration {
 			rec.add(Triple.of("minecraft:cobblestone", 1, 0.15f));
 		}
 
-		addRecipeIMC("sagmilling", String.format("%s: %s to %s", ownerModID, input, primaryOutput), energy, rec);
+		addRecipeIMC("sagmilling", String.format(FORMAT_STRING, ownerModID, input, primaryOutput), energy, rec);
 		if (material.hasOre()) {
-			List<Triple<String,Integer,Float>> rec2 = new ArrayList<>();
-			rec2.add(Triple.of(Oredicts.INGOT+capitalizedName, 1, 0f));
+			final List<Triple<String, Integer, Float>> rec2 = new ArrayList<>();
+			rec2.add(Triple.of(Oredicts.INGOT + capitalizedName, 1, 0f));
 			rec2.add(Triple.of(primaryOutput, 1, 1.0f));
 
 			/*
 			 * Secondary outs would go here, but ingot -> powder doesn't do secondaries
 			 */
-			addRecipeIMC("sagmilling", String.format("%s: %s to %s", ownerModID, Oredicts.INGOT+capitalizedName, primaryOutput), energy, rec2);
+			addRecipeIMC("sagmilling", String.format(FORMAT_STRING, ownerModID, Oredicts.INGOT + capitalizedName, primaryOutput), energy, rec2);
 		}
 	}
 }

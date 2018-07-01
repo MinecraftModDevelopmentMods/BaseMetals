@@ -8,6 +8,10 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemMultiTexture imple
 
 	private final MMDMaterial material;
 
+	/**
+	 * 
+	 * @param material
+	 */
 	public ItemMMDAnvilBlock(final MMDMaterial material) {
 		super(material.getBlock(Names.ANVIL), material.getBlock(Names.ANVIL),
 				new String[] { "intact", "slightlyDamaged", "veryDamaged" });

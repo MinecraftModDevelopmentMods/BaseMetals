@@ -10,6 +10,6 @@ public class ActiveModData {
 	}
 	
 	public String activeMod() {
-		return activeMod==null?"basemetals":activeMod;
+		return activeMod == null ? "basemetals" : activeMod;
 	}
 }

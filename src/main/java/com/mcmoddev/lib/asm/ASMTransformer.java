@@ -8,7 +8,7 @@ import com.mcmoddev.lib.util.Platform;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 
-public class ASMTransformer implements IClassTransformer {
+public final class ASMTransformer implements IClassTransformer {
 
 	@Override
 	public byte[] transform(final String name, final String transformedName, final byte[] bytesIn) {

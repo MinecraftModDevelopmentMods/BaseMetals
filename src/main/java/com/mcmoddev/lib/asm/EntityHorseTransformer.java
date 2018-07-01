@@ -4,7 +4,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 
-class EntityHorseTransformer implements ITransformer {
+public final class EntityHorseTransformer implements ITransformer {
 
 	private static final String ASMHOOKS_INTERFACE = "com/mcmoddev/lib/asm/ASMHooks";
 	private static final String[] ENTITY_INIT = { "func_70088_a", "entityInit" };

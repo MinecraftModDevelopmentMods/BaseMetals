@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
@@ -37,8 +38,9 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 
 	private boolean getOtherFlag(final EntityPlayer entityPlayer, final ItemStack itemStack,
 			final ItemStack stack) {
+		final Item item = itemStack.getItem();
 		return entityPlayer.capabilities.isCreativeMode
-				|| ((itemStack.getItem() instanceof ItemBolt) && ((ItemBolt) itemStack.getItem())
+				|| ((item instanceof ItemBolt) && ((ItemBolt) item)
 						.isInfinite(itemStack, stack, entityPlayer));
 	}
 
@@ -48,8 +50,9 @@ public class ItemCrossbow extends net.minecraft.item.ItemBow {
 			return;
 		}
 
-		final ItemBolt itemBolt = ((ItemBolt) (itemStack.getItem() instanceof ItemBolt
-				? itemStack.getItem()
+		final Item item = itemStack.getItem();
+		final ItemBolt itemBolt = ((ItemBolt) (item instanceof ItemBolt
+				? item
 				: Materials.getMaterialByName(MaterialNames.IRON).getItem(Names.BOLT)));
 		final EntityCustomBolt entityBolt = itemBolt.createBolt(worldIn, itemStack, entityPlayer);
 		entityBolt.shoot(entityPlayer, entityPlayer.rotationPitch, entityPlayer.rotationYaw, 0.0F,
