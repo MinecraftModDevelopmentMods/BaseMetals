@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -18,7 +19,8 @@ public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
 	private final List<ItemStack> inputs;
 	private final ItemStack output;
 	private final String oreDictSource;
-
+	private final ResourceLocation resLoc;
+	
 	/**
 	 * Constructs a new instance of this ICrusherRecipe class representing a recipe with an input
 	 * and an output.
@@ -32,8 +34,15 @@ public class OreDictionaryCrusherRecipe implements ICrusherRecipe {
 		this.oreDictSource = oreDictionaryID;
 		this.inputs = OreDictionary.getOres(this.oreDictSource);
 		this.output = results;
+		String name = String.format("%s_to_%s|%d", oreDictionaryID,
+				output.getItem().getRegistryName().getResourcePath(), output.getMetadata());
+		this.resLoc = new ResourceLocation(name);
 	}
 
+	public ResourceLocation getResourceLocation() {
+		return this.resLoc;
+	}
+	
 	/**
 	 * Gets the output item from applying this recipe.
 	 *

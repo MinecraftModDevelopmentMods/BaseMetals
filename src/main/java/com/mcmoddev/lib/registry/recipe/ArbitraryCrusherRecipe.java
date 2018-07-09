@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -22,7 +23,7 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 
 	private final ItemStack input;
 	private final ItemStack output;
-
+	private final ResourceLocation resLoc;
 	/**
 	 * Constructs a new instance of this ICrusherRecipe class representing a recipe with an input
 	 * and an output. If the input ItemStack has OreDictionary.WILDCARD_VALUE as its damage value,
@@ -37,8 +38,14 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	public ArbitraryCrusherRecipe(@Nonnull final ItemStack input, @Nonnull final ItemStack output) {
 		this.input = input;
 		this.output = output;
+		String name = String.format("%s|%d_to_%s|%d", input.getItem().getRegistryName().getResourcePath(), input.getMetadata(),
+				output.getItem().getRegistryName().getResourcePath(), output.getMetadata());
+		this.resLoc = new ResourceLocation(name);
 	}
 
+	public ResourceLocation getResourceLocation() {
+		return this.resLoc;
+	}
 	/**
 	 * Constructs a new instance of this ICrusherRecipe class representing a recipe with an input
 	 * and an output. If the input ItemStack has OreDictionary.WILDCARD_VALUE as its damage value,
@@ -53,6 +60,9 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	public ArbitraryCrusherRecipe(@Nonnull final Item input, @Nonnull final ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
+		String name = String.format("%s|0_to_%s|%d", input.getRegistryName().getResourcePath(),
+				output.getItem().getRegistryName().getResourcePath(), output.getMetadata());
+		this.resLoc = new ResourceLocation(name);
 	}
 
 	/**
@@ -69,6 +79,9 @@ public class ArbitraryCrusherRecipe implements ICrusherRecipe {
 	public ArbitraryCrusherRecipe(@Nonnull final Block input, @Nonnull final ItemStack output) {
 		this.input = new ItemStack(input);
 		this.output = output;
+		String name = String.format("%s|0_to_%s|%d", input.getRegistryName().getResourcePath(),
+				output.getItem().getRegistryName().getResourcePath(), output.getMetadata());
+		this.resLoc = new ResourceLocation(name);
 	}
 
 	/**

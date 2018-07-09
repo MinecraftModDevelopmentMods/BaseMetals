@@ -1,27 +1,22 @@
 package com.mcmoddev.lib.registry;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.registry.recipe.ArbitraryCrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.OreDictionaryCrusherRecipe;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.RegistrySimple;
 
 /**
  * This class handles all of the recipes for the crack hammer, collectively referred to as crusher
@@ -40,13 +35,8 @@ import net.minecraftforge.oredict.OreDictionary;
  *
  */
 public class CrusherRecipeRegistry {
-
-	private final List<ICrusherRecipe> recipes = new ArrayList<>();
-
-	private final Map<Integer, ICrusherRecipe> recipeByInputCache = new HashMap<>();
-	private final Map<Integer, List<ICrusherRecipe>> recipeByOutputCache = new HashMap<>();
-
-	private static final Lock initLock = new ReentrantLock();
+	private final RegistrySimple<ResourceLocation,ICrusherRecipe> recipes = new RegistrySimple<>();
+	
 	private static CrusherRecipeRegistry instance = null;
 
 	/**
@@ -56,13 +46,7 @@ public class CrusherRecipeRegistry {
 	 */
 	public static CrusherRecipeRegistry getInstance() {
 		if (instance == null) {
-			initLock.lock();
-			try {
-				// thread-safe singleton instantiation
-				instance = new CrusherRecipeRegistry();
-			} finally {
-				initLock.unlock();
-			}
+			instance = new CrusherRecipeRegistry();
 		}
 		return instance;
 	}
@@ -148,22 +132,13 @@ public class CrusherRecipeRegistry {
 	}
 
 	/**
-	 * Clears the fast-look-up cache. If recipes are added after the game starts, call this method
-	 * to ensure that the new recipes will be used.
-	 */
-	public void clearCache() {
-		this.recipeByInputCache.clear();
-		this.recipeByOutputCache.clear();
-	}
-
-	/**
 	 * This is the universal method for adding new crusher recipes
 	 *
 	 * @param crusherRecipe
 	 *            An implementation of the ICrusherRecipe interface.
 	 */
 	public void addRecipe(final ICrusherRecipe crusherRecipe) {
-		this.recipes.add(crusherRecipe);
+		this.recipes.putObject(crusherRecipe.getResourceLocation(), crusherRecipe);
 	}
 
 	/**
@@ -175,38 +150,10 @@ public class CrusherRecipeRegistry {
 	 * @return A list of recipes producing the requested item, or null if no such recipes exist
 	 */
 	public List<ICrusherRecipe> getRecipesForOutputItem(final ItemStack output) {
-		final Integer hashKey = output.getItem().getUnlocalizedName().hashCode()
-				+ (56 * output.getMetadata());
-		if (this.recipeByOutputCache.containsKey(hashKey)) {
-			final List<ICrusherRecipe> recipeCache = this.recipeByOutputCache.get(hashKey);
-			if (recipeCache.isEmpty()) {
-				return Collections.emptyList();
-			}
-			return recipeCache;
-		} else {
-			final List<ICrusherRecipe> recipeCache = new ArrayList<>();
-			for (final ICrusherRecipe r : this.recipes) {
-				if (ItemStack.areItemsEqual(r.getOutput(), output)) {
-					for (final String s : Options.disabledRecipes()) {
-						final NonNullList<ItemStack> ores = OreDictionary.getOres(s);
-						for (final ItemStack input : r.getValidInputs()) {
-							if (OreDictionary.containsMatch(false, ores, input)) {
-								this.recipeByInputCache.put(hashKey, null);
-								return new ArrayList<>();
-							}
-						}
-					}
-					recipeCache.add(r);
-				}
-			}
-
-			if (recipeCache.isEmpty()) {
-				this.recipeByOutputCache.put(hashKey, Collections.emptyList());
-				return Collections.emptyList();
-			}
-			this.recipeByOutputCache.put(hashKey, recipeCache);
-			return recipeCache;
-		}
+		return this.recipes.getKeys().stream()
+				.filter(rl -> this.recipes.getObject(rl).getOutput().equals(output))
+				.map(rl -> this.recipes.getObject(rl))
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -231,27 +178,10 @@ public class CrusherRecipeRegistry {
 	 * @return The crusher recipe for crushing this item/block, or null if no such recipe exists
 	 */
 	public ICrusherRecipe getRecipeForInputItem(final ItemStack input) {
-		final Integer hashKey = input.getItem().getUnlocalizedName().hashCode()
-				+ (56 * input.getMetadata());
-		if (this.recipeByInputCache.containsKey(hashKey)) {
-			return this.recipeByInputCache.get(hashKey);
-		} else {
-			for (final ICrusherRecipe r : this.recipes) {
-				if (r.isValidInput(input)) {
-					for (final String s : Options.disabledRecipes()) {
-						final NonNullList<ItemStack> ores = OreDictionary.getOres(s);
-						if (OreDictionary.containsMatch(false, ores, input)) {
-							this.recipeByInputCache.put(hashKey, null);
-							return null;
-						}
-					}
-					this.recipeByInputCache.put(hashKey, r);
-					return r;
-				}
-			}
-			this.recipeByInputCache.put(hashKey, null);
-			return null;
-		}
+		return this.recipes.getKeys().stream()
+				.filter(rl -> this.recipes.getObject(rl).getInputs().contains(input))
+				.map(rl -> this.recipes.getObject(rl))
+				.findFirst().orElse(null);
 	}
 
 	/**
@@ -273,22 +203,9 @@ public class CrusherRecipeRegistry {
 	 * @return An unmodifiable list of all registered crusher recipes
 	 */
 	public Collection<ICrusherRecipe> getAllRecipes() {
-		final List<ICrusherRecipe> filtered = new ArrayList<>();
-		for (final ICrusherRecipe r : this.recipes) {
-			boolean matched = false;
-			for (final String s : Options.disabledRecipes()) {
-				final List<ItemStack> ores = OreDictionary.getOres(s);
-				for (final ItemStack ore : ores) {
-					if (r.isValidInput(ore)) {
-						matched = true;
-						continue;
-					}
-				}
-			}
-			if (!matched) {
-				filtered.add(r);
-			}
-		}
-		return Collections.unmodifiableList(filtered);
+		return Collections.unmodifiableList(
+				this.recipes.getKeys().stream()
+				.map(rl -> this.recipes.getObject(rl))
+				.collect(Collectors.toList()));
 	}
 }

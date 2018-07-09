@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * Superclass for all crushed-item recipes. For recipes that use the OreDictionary to describe the
@@ -47,4 +48,12 @@ public interface ICrusherRecipe {
 	 * @return A list of allowed inputs.
 	 */
 	public abstract Collection<ItemStack> getValidInputs();
+	
+	/**
+	 * Returns a ResourceLocation describing the recipe
+	 * 
+	 * @return A ResourceLocation
+	 */
+	
+	public abstract ResourceLocation getResourceLocation();
 }
