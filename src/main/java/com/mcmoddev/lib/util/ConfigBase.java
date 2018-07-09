@@ -78,7 +78,6 @@ public class ConfigBase {
 			addIngotRecipes(dictionary);
 		}
 
-		CrusherRecipeRegistry.getInstance().clearCache();
 	}
 
 	private static void addIngotRecipes(final Set<String> dictionary) {
