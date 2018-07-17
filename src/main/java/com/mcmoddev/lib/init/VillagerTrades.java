@@ -110,17 +110,13 @@ public abstract class VillagerTrades {
 			if (material.hasItem(name)) {
 				final ItemStack itemStack = material.getItemStack(name);
 				registerTrade(TOOL_SMITH_ID, itemStack, emeraldPurch, tradeLevel);
+				final PriceInfo priceRange = new PriceInfo(emeraldPurch + ENCHANTED_MIN, emeraldPurch + ENCHANTED_MAX);
+				if (!name.equals(Names.CRACKHAMMER)) {
+					registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 1), magicAffinity);
+				} else {
+					registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 2), magicAffinity);
+				}
 			}
-		}
-		// TODO: Stop using this and instead register enchanted trades for all tools.
-		final PriceInfo priceRange = new PriceInfo(emeraldPurch + ENCHANTED_MIN, emeraldPurch + ENCHANTED_MAX);
-		if (material.hasItem(Names.CRACKHAMMER)) {
-			final ItemStack itemStack = material.getItemStack(Names.CRACKHAMMER);
-			registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 2), magicAffinity);
-		}
-		if (material.hasItem(Names.PICKAXE)) {
-			final ItemStack itemStack = material.getItemStack(Names.PICKAXE);
-			registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 1), magicAffinity);
 		}
 	}
 
