@@ -126,7 +126,7 @@ public abstract class VillagerTrades {
 
 	protected static void registerWeaponTrades(@Nonnull final MMDMaterial material, final int tradeLevel, final int emeraldPurch, final float magicAffinity) {
 		for (final Names name : Arrays.asList(Names.SWORD, Names.CROSSBOW, Names.BOW)) {
-			if (material.hasItem(Names.SWORD)) {
+			if (material.hasItem(name)) {
 				final ItemStack itemStack = material.getItemStack(Names.SWORD);
 				registerTrade(WEAPON_SMITH_ID, itemStack, (emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1, tradeLevel);
 				final PriceInfo priceRange = new PriceInfo(
