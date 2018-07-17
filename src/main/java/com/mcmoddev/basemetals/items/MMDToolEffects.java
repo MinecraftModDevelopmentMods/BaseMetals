@@ -257,7 +257,7 @@ public abstract class MMDToolEffects {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
 			final ItemStack heldItemStack = player.getHeldItemMainhand();
 			final Item heldItem = heldItemStack.getItem();
-			return ((!heldItemStack.isEmpty() && (heldItem == material.getItem(itemName))));
+			return (!heldItemStack.isEmpty() && (heldItem == material.getItem(itemName)));
 		}
 		return false;
 	}
