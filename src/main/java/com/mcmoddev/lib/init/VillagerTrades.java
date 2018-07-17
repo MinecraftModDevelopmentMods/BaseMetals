@@ -71,7 +71,6 @@ public abstract class VillagerTrades {
 			// For reference, Iron has a value of 21.5, Gold would be 14, Copper
 			// is 14, and Diamond is 30
 			final int emeraldPurch = emeraldPurchaseValue(value);
-			final PriceInfo priceRange = new PriceInfo(emeraldPurch + ENCHANTED_MIN, emeraldPurch + ENCHANTED_MAX);
 			final int emeraldSale = emeraldSaleValue(value);
 			final int tradeLevel = tradeLevel(value);
 			final float magicAffinity = material.getStat(MaterialStats.MAGICAFFINITY);
@@ -81,48 +80,14 @@ public abstract class VillagerTrades {
 			}
 
 			registerArmorTrades(material, tradeLevel, emeraldPurch, magicAffinity);
-			if (material.hasItem(Names.CRACKHAMMER)) {
-				final ItemStack itemStack = material.getItemStack(Names.CRACKHAMMER);
-				registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 2), magicAffinity);
-			}
-			if (material.hasItem(Names.SWORD)) {
-				final ItemStack itemStack = material.getItemStack(Names.SWORD);
-				registerTrade(WEAPON_SMITH_ID, itemStack, (emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1, tradeLevel);
-				final PriceInfo swordPriceRange = new PriceInfo(
-						((emeraldPurch + ENCHANTED_MIN)
-								+ (int) (material.getBaseAttackDamage() / 2))
-								- 1,
-						((emeraldPurch + ENCHANTED_MAX)
-								+ (int) (material.getBaseAttackDamage() / 2))
-								- 1);
-				registerEnchantedTrade(WEAPON_SMITH_ID, itemStack, swordPriceRange, (tradeLevel + 1), magicAffinity);
-			}
-			registerToolTrades(material, tradeLevel, emeraldPurch);
-			if (material.hasItem(Names.PICKAXE)) {
-				final ItemStack itemStack = material.getItemStack(Names.PICKAXE);
-				registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 1), magicAffinity);
-			}
-			if (material.hasItem(Names.INGOT)) {
-				final ItemStack itemStack = material.getItemStack(Names.INGOT, 12);
-				if ((!itemStack.getItem().equals(net.minecraft.init.Items.EMERALD))
-						&& (!itemStack.getItem().equals(net.minecraft.init.Items.DIAMOND))) {
-					final ITradeList[] ingotTrades = makeTradePalette(
-							makePurchasePalette(emeraldPurch, itemStack),
-							makeSalePalette(emeraldSale, itemStack));
-					VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, tradeLevel,
-							ingotTrades);
-					VillagerTradeHelper.insertTrades(SMITH_RL, WEAPON_SMITH_ID, tradeLevel,
-							ingotTrades);
-					VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, tradeLevel,
-							ingotTrades);
-				}
-			}
+			registerWeaponTrades(material, tradeLevel, emeraldPurch, magicAffinity);
+			registerToolTrades(material, tradeLevel, emeraldPurch, magicAffinity);
+			registerIngotTrades(material, tradeLevel, emeraldPurch, emeraldSale);
 		}
 	}
 
 	protected static void registerArmorTrades(@Nonnull final MMDMaterial material, final int tradeLevel, final int emeraldPurch, final float magicAffinity) {
-		for (final Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS,
-				Names.BOOTS)) {
+		for (final Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS)) {
 			if (material.hasItem(name)) {
 				final ItemStack itemStack = material.getItemStack(name);
 				registerTrade(ARMOR_SMITH_ID, itemStack, emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2), tradeLevel);
@@ -140,13 +105,58 @@ public abstract class VillagerTrades {
 		}
 	}
 
-	protected static void registerToolTrades(@Nonnull final MMDMaterial material, final int tradeLevel, final int emeraldPurch) {
+	protected static void registerToolTrades(@Nonnull final MMDMaterial material, final int tradeLevel, final int emeraldPurch, final float magicAffinity) {
 		for (final Names name : Arrays.asList(Names.AXE, Names.PICKAXE, Names.HOE, Names.SHOVEL, Names.CRACKHAMMER, Names.SCYTHE)) {
 			if (material.hasItem(name)) {
 				final ItemStack itemStack = material.getItemStack(name);
 				registerTrade(TOOL_SMITH_ID, itemStack, emeraldPurch, tradeLevel);
 			}
 		}
+		// TODO: Stop using this and instead register enchanted trades for all tools.
+		final PriceInfo priceRange = new PriceInfo(emeraldPurch + ENCHANTED_MIN, emeraldPurch + ENCHANTED_MAX);
+		if (material.hasItem(Names.CRACKHAMMER)) {
+			final ItemStack itemStack = material.getItemStack(Names.CRACKHAMMER);
+			registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 2), magicAffinity);
+		}
+		if (material.hasItem(Names.PICKAXE)) {
+			final ItemStack itemStack = material.getItemStack(Names.PICKAXE);
+			registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 1), magicAffinity);
+		}
+	}
+
+	protected static void registerWeaponTrades(@Nonnull final MMDMaterial material, final int tradeLevel, final int emeraldPurch, final float magicAffinity) {
+		for (final Names name : Arrays.asList(Names.SWORD, Names.CROSSBOW, Names.BOW)) {
+			if (material.hasItem(Names.SWORD)) {
+				final ItemStack itemStack = material.getItemStack(Names.SWORD);
+				registerTrade(WEAPON_SMITH_ID, itemStack, (emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1, tradeLevel);
+				final PriceInfo priceRange = new PriceInfo(
+						((emeraldPurch + ENCHANTED_MIN)
+								+ (int) (material.getBaseAttackDamage() / 2))
+								- 1,
+						((emeraldPurch + ENCHANTED_MAX)
+								+ (int) (material.getBaseAttackDamage() / 2))
+								- 1);
+				registerEnchantedTrade(WEAPON_SMITH_ID, itemStack, priceRange, (tradeLevel + 1), magicAffinity);
+			}
+		}
+	}
+
+	protected static void registerIngotTrades(@Nonnull final MMDMaterial material, final int tradeLevel, final int emeraldPurch, final int emeraldSale) {
+			if (material.hasItem(Names.INGOT)) {
+				final ItemStack itemStack = material.getItemStack(Names.INGOT, 12);
+				if ((!itemStack.getItem().equals(net.minecraft.init.Items.EMERALD))
+						&& (!itemStack.getItem().equals(net.minecraft.init.Items.DIAMOND))) {
+					final ITradeList[] ingotTrades = makeTradePalette(
+							makePurchasePalette(emeraldPurch, itemStack),
+							makeSalePalette(emeraldSale, itemStack));
+					VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, tradeLevel,
+							ingotTrades);
+					VillagerTradeHelper.insertTrades(SMITH_RL, WEAPON_SMITH_ID, tradeLevel,
+							ingotTrades);
+					VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, tradeLevel,
+							ingotTrades);
+				}
+			}
 	}
 
 	protected static void registerTrade(final int id, @Nonnull final ItemStack itemStack, @Nonnull final int emeraldPurch, final int tradeLevel) {
