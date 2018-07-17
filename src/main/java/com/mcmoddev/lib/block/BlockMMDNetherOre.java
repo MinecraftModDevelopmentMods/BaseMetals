@@ -12,6 +12,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+import javax.annotation.Nullable;
+
 /**
  * Nether Ore Block.
  */
@@ -35,8 +37,8 @@ public class BlockMMDNetherOre extends net.minecraft.block.BlockOre implements I
 	}
 
 	@Override
-	public int getExpDrop(final IBlockState bs, final IBlockAccess w, final BlockPos coord,
-			final int i) {
+	public int getExpDrop(@Nullable final IBlockState bs, final IBlockAccess w, final BlockPos coord,
+	                      final int i) {
 		return 0; // XP comes from smelting
 	}
 

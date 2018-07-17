@@ -83,7 +83,7 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 				.forEach(entityPos -> this.breakBlock(stack, player.getEntityWorld(), player, pos,
 						entityPos));
 
-		return true;// super.onBlockStartBreak(stack, pos, player);
+		return true;// super.onBlockStartBreak(stack, pos, player)
 	}
 
 	private static void sendPacket(final Entity player, final Packet<?> packet) {
@@ -187,7 +187,7 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 
 		// where is the player, really ?
 		// FIXME: ties into later tool-effectiveness optimization
-		// IBlockState playerPositionState = world.getBlockState(pos);
+		// IBlockState playerPositionState = world.getBlockState(pos)
 
 		// the below "isEffective" check is also needed, but...
 		// only if we get past this point
@@ -227,8 +227,7 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 	@Deprecated
 	public Multimap<String, AttributeModifier> getItemAttributeModifiers(
 			final EntityEquipmentSlot equipmentSlot) {
-		final Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(
-				equipmentSlot, ItemStack.EMPTY);
+		final Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
 			final boolean attackDamageReturned = multimap

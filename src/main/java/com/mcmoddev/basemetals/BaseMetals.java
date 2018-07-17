@@ -73,6 +73,10 @@ public class BaseMetals {
 		FluidRegistry.enableUniversalBucket();
 	}
 
+	/**
+	 *
+	 * @param event The Event.
+	 */
 	@EventHandler
 	public void onFingerprintViolation(final FMLFingerprintViolationEvent event) {
 		logger.warn(SharedStrings.INVALID_FINGERPRINT);
@@ -80,23 +84,35 @@ public class BaseMetals {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@EventHandler
 	public static void preInit(final FMLPreInitializationEvent event) {
 		proxy.preInit(event);
 	}
 
+	/**
+	 *
+	 * @param event The Event.
+	 */
 	@EventHandler
 	public static void init(final FMLInitializationEvent event) {
 		proxy.init(event);
 	}
 
+	/**
+	 *
+	 * @param event The Event.
+	 */
 	@EventHandler
 	public static void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);
 	}
 
+	/**
+	 *
+	 * @param event The Event.
+	 */
 	@EventHandler
 	public static void onRemap(final FMLMissingMappingsEvent event) {
 		proxy.onRemap(event);

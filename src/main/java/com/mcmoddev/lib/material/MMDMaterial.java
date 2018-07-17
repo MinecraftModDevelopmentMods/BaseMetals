@@ -68,25 +68,9 @@ public class MMDMaterial {
 	private boolean regenerates = false;
 
 	/**
-	 * Rare metals, like platinum, are never found in villager trades and unusually uncommon in
-	 * world generation.
-	 */
-	private final boolean isRare;
-
-	/**
 	 * Whether this material's blocks be used as a beacon base.
 	 */
 	private final boolean isBeaconBase;
-
-	/**
-	 * Whether or not this material has a blend that can be smelted to produce it.
-	 */
-	private final boolean hasBlend;
-
-	/**
-	 * Whether this material is meant to have an Ore.
-	 */
-	private final boolean hasOre;
 
 	/*
 	 * Miscelaneous Material Information
@@ -117,10 +101,16 @@ public class MMDMaterial {
 		WOOD, ROCK, METAL, MINERAL, GEM, CRYSTAL
 	}
 
+	public enum MaterialClass {
+		ORELESS, NORMAL, ALLOY, SPECIAL, ORELESS_RARE, RARE, RARE_ALLOY, RARE_SPECIAL
+	}
+
 	/**
 	 * The type of material this is.
 	 */
 	private final MaterialType materialType;
+
+	private final MaterialClass materialClass;
 
 	private int spawnSize;
 
@@ -145,16 +135,9 @@ public class MMDMaterial {
 	 *            enchantability
 	 * @param tintColor
 	 *            Color Info for the metal
-	 * @param isRare
-	 *            If true, this metal is designated as an extremely rare metal
-	 * @param hasOre
-	 *            If true this material has an ore
-	 * @param hasBlend
-	 *            If true this material has a blend
 	 */
-	public MMDMaterial(final String name, final MaterialType type, final float hardness,
-			final float strength, final float magic, final int tintColor, final boolean isRare,
-			final boolean hasOre, final boolean hasBlend) {
+	public MMDMaterial(final String name, final MaterialType type, final MaterialClass matClass, final float hardness,
+	                   final float strength, final float magic, final int tintColor) {
 		// material stats
 		this.stats.put(MaterialStats.HARDNESS, hardness);
 		this.stats.put(MaterialStats.STRENGTH, strength);
@@ -168,12 +151,11 @@ public class MMDMaterial {
 		this.enumName = (Loader.instance().activeModContainer().getModId() + "_" + name)
 				.toUpperCase(Locale.ENGLISH);
 		this.isBeaconBase = true;
-		this.isRare = isRare;
 		this.materialType = type;
-		this.hasBlend = hasBlend;
-		this.hasOre = hasOre;
 		this.spawnSize = 8;
 		this.defaultDimension = Integer.MIN_VALUE;
+
+		this.materialClass = matClass;
 	}
 
 	public String getName() {
@@ -669,16 +651,50 @@ public class MMDMaterial {
 		return ImmutableList.copyOf(this.items.values());
 	}
 
+	/**
+	 * Whether this material is meant to have an Ore.
+	 */
 	public boolean hasOre() {
-		return this.hasOre;
+		switch (this.materialClass) {
+			case NORMAL:
+			case SPECIAL:
+			case RARE:
+			case RARE_SPECIAL:
+				return true;
+			default:
+				return false;
+		}
 	}
 
+	/**
+	 * Whether or not this material has a blend that can be smelted to produce it.
+	 */
 	public boolean hasBlend() {
-		return this.hasBlend;
+		switch (this.materialClass) {
+			case ALLOY:
+			case SPECIAL:
+			case RARE_ALLOY:
+			case RARE_SPECIAL:
+				return true;
+			default:
+				return false;
+		}
 	}
 
+	/**
+	 * Rare metals, like platinum, are never found in villager trades and unusually uncommon in
+	 * world generation.
+	 */
 	public boolean isRare() {
-		return this.isRare;
+		switch (this.materialClass) {
+			case ORELESS_RARE:
+			case RARE:
+			case RARE_ALLOY:
+			case RARE_SPECIAL:
+				return true;
+			default:
+				return false;
+		}
 	}
 
 	public boolean regenerates() {
@@ -801,7 +817,7 @@ public class MMDMaterial {
 	}
 
 	public boolean isEmpty() {
-		return ("empty".equals(this.getName()));
+		return ("empty".equalsIgnoreCase(this.getName()));
 	}
 
 	public boolean isDefault() {

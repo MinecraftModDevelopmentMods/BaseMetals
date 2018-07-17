@@ -43,7 +43,7 @@ public class FallbackGeneratorData {
 		final MMDMaterial mat = Materials.getMaterialByName(materialName);
 		final int targetDim = dimension != null ? dimension : Integer.MIN_VALUE;
 		final Map<MMDMaterial, List<String>> blockMap = materials.getOrDefault(targetDim,
-				new HashMap<MMDMaterial, List<String>>());
+				new HashMap<>());
 		final List<String> blocks = blockMap.getOrDefault(mat, new ArrayList<>());
 
 		if (!blocks.contains(blockName)) {

@@ -11,5 +11,5 @@ public interface IMMDObject {
 	 *
 	 * @return The Material
 	 */
-	public MMDMaterial getMMDMaterial();
+	MMDMaterial getMMDMaterial();
 }

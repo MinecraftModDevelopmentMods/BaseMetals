@@ -211,19 +211,19 @@ public abstract class MMDToolEffects {
 			final List<String> tooltipList) {
 		switch (materialName) {
 			case MaterialNames.ADAMANTINE:
-				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + ARMOR, 4));
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.ADAMANTINE + ARMOR));
 				break;
 			case MaterialNames.AQUARIUM:
-				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.AQUARIUM + ARMOR, 4));
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.AQUARIUM + ARMOR));
 				break;
 			case MaterialNames.COLDIRON:
-				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.COLDIRON + ARMOR, 3));
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.COLDIRON + ARMOR));
 				break;
 			case MaterialNames.MITHRIL:
 				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.MITHRIL + ARMOR));
 				break;
 			case MaterialNames.STARSTEEL:
-				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.STARSTEEL + ARMOR, 10));
+				tooltipList.add(I18n.format(TOOLTIP + MaterialNames.STARSTEEL + ARMOR));
 				break;
 			default:
 		}
@@ -257,9 +257,7 @@ public abstract class MMDToolEffects {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
 			final ItemStack heldItemStack = player.getHeldItemMainhand();
 			final Item heldItem = heldItemStack.getItem();
-			if ((!heldItemStack.isEmpty() && (heldItem == material.getItem(itemName)))) {
-				return true;
-			}
+			return ((!heldItemStack.isEmpty() && (heldItem == material.getItem(itemName))));
 		}
 		return false;
 	}

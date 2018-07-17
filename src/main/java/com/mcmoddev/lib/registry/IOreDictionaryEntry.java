@@ -12,5 +12,5 @@ public interface IOreDictionaryEntry {
 	 *
 	 * @return The Ore Dictionary Name
 	 */
-	public abstract String getOreDictionaryName();
+	String getOreDictionaryName();
 }

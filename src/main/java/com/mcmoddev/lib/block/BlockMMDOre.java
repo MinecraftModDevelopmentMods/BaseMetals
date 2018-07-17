@@ -15,6 +15,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+import javax.annotation.Nullable;
+
 /**
  * Ore Block.
  */
@@ -58,8 +60,8 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 	}
 
 	@Override
-	public int getExpDrop(final IBlockState bs, final IBlockAccess w, final BlockPos coord,
-			final int i) {
+	public int getExpDrop(@Nullable final IBlockState bs, final IBlockAccess w, final BlockPos coord,
+	                      final int i) {
 		return 0; // XP comes from smelting
 	}
 
@@ -80,8 +82,8 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 
 	@Override
 	public int quantityDropped(final IBlockState state, final int fortune, final Random random) {
-		int most = 1;
-		int least = 1;
+		int most;
+		int least;
 		int total;
 		switch (this.material.getType()) {
 			case WOOD:

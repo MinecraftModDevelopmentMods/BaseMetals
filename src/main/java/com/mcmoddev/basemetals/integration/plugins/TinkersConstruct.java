@@ -14,8 +14,6 @@ import com.mcmoddev.lib.integration.plugins.tinkers.TraitRegistry;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
-import net.minecraft.item.Item;
-
 /**
  *
  * @author Jasmine Iwanek
@@ -43,7 +41,7 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 		registerMaterial(MaterialNames.BISMUTH).setCastable(true);
 		registerMaterial(MaterialNames.BRASS).setCastable(true).addTrait(TraitNames.DENSE);
 		// registerMaterial(MaterialNames.BRONZE)
-		// .setCastable(true);
+		// .setCastable(true)
 		registerMaterial(MaterialNames.COLDIRON).setCastable(true).addTrait(TraitNames.FREEZING);
 		registerMaterial(MaterialNames.CUPRONICKEL).setCastable(true);
 		registerMaterial(MaterialNames.INVAR).setCastable(true);
@@ -75,15 +73,16 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 		if ((Materials.hasMaterial(MaterialNames.LEAD))
 				&& (Materials.getMaterialByName(MaterialNames.LEAD).hasBlock(Names.PLATE))) {
 
-			this.registerModifierItem("plated", Item.getItemFromBlock(
-					Materials.getMaterialByName(MaterialNames.LEAD).getBlock(Names.PLATE)));
+			this.registerModifierItem("plated",
+					Materials.getMaterialByName(MaterialNames.LEAD).getBlockItemStack(Names.PLATE));
 		}
 
-		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
+		if ((Materials.hasMaterial(MaterialNames.MERCURY))
+				&& (Materials.getMaterialByName(MaterialNames.MERCURY).hasItem(Names.POWDER))) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 			registry.registerFluid(mercury, 144);
-			if (Options.isThingEnabled("Basics")) {
-				this.registerModifierItem("toxic", mercury.getItem(Names.POWDER));
+			if (mercury.hasItem(Names.POWDER)) {
+				this.registerModifierItem("toxic", mercury.getItemStack(Names.POWDER));
 			}
 		}
 

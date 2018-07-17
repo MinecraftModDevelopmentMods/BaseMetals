@@ -41,11 +41,13 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+
 public class EventHandler {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void attackEvent(final LivingAttackEvent event) {
@@ -108,33 +110,44 @@ public class EventHandler {
 		if (item instanceof ItemMMDIngot) {
 			event.player.addStat(Achievements.getAchievementByName(AchievementNames.THIS_IS_NEW),
 					1);
-			if (materialName.equals(MaterialNames.AQUARIUM)) {
-				event.player.addStat(
-						Achievements.getAchievementByName(AchievementNames.AQUARIUM_MAKER), 1);
-			} else if (materialName.equals(MaterialNames.BRASS)) {
-				event.player.addStat(
-						Achievements.getAchievementByName(AchievementNames.BRASS_MAKER), 1);
-			} else if (materialName.equals(MaterialNames.BRONZE)) {
-				event.player.addStat(
-						Achievements.getAchievementByName(AchievementNames.BRONZE_MAKER), 1);
-			} else if (materialName.equals(MaterialNames.ELECTRUM)) {
-				event.player.addStat(
-						Achievements.getAchievementByName(AchievementNames.ELECTRUM_MAKER), 1);
-			} else if (materialName.equals(MaterialNames.STEEL)) {
-				event.player.addStat(
-						Achievements.getAchievementByName(AchievementNames.STEEL_MAKER), 1);
-			} else if (materialName.equals(MaterialNames.INVAR)) {
-				event.player.addStat(
-						Achievements.getAchievementByName(AchievementNames.INVAR_MAKER), 1);
-			} else if (materialName.equals(MaterialNames.MITHRIL)) {
-				event.player.addStat(
-						Achievements.getAchievementByName(AchievementNames.MITHRIL_MAKER), 1);
-			} else if (materialName.equals(MaterialNames.CUPRONICKEL)) {
-				event.player.addStat(
-						Achievements.getAchievementByName(AchievementNames.CUPRONICKEL_MAKER), 1);
-			} else if (materialName.equals(MaterialNames.PEWTER)) {
-				event.player.addStat(
-						Achievements.getAchievementByName(AchievementNames.PEWTER_MAKER), 1);
+			switch (materialName) {
+				case MaterialNames.AQUARIUM:
+					event.player.addStat(
+							Achievements.getAchievementByName(AchievementNames.AQUARIUM_MAKER), 1);
+					return;
+				case MaterialNames.BRASS:
+					event.player.addStat(
+							Achievements.getAchievementByName(AchievementNames.BRASS_MAKER), 1);
+					return;
+				case MaterialNames.BRONZE:
+					event.player.addStat(
+							Achievements.getAchievementByName(AchievementNames.BRONZE_MAKER), 1);
+					return;
+				case MaterialNames.ELECTRUM:
+					event.player.addStat(
+							Achievements.getAchievementByName(AchievementNames.ELECTRUM_MAKER), 1);
+					return;
+				case MaterialNames.STEEL:
+					event.player.addStat(
+							Achievements.getAchievementByName(AchievementNames.STEEL_MAKER), 1);
+					return;
+				case MaterialNames.INVAR:
+					event.player.addStat(
+							Achievements.getAchievementByName(AchievementNames.INVAR_MAKER), 1);
+					return;
+				case MaterialNames.MITHRIL:
+					event.player.addStat(
+							Achievements.getAchievementByName(AchievementNames.MITHRIL_MAKER), 1);
+					return;
+				case MaterialNames.CUPRONICKEL:
+					event.player.addStat(
+							Achievements.getAchievementByName(AchievementNames.CUPRONICKEL_MAKER), 1);
+					return;
+				case MaterialNames.PEWTER:
+					event.player.addStat(
+							Achievements.getAchievementByName(AchievementNames.PEWTER_MAKER), 1);
+					return;
+				default:
 			}
 		}
 	}
@@ -147,7 +160,7 @@ public class EventHandler {
 		final Container tempContainer = new Container() {
 
 			@Override
-			public boolean canInteractWith(final EntityPlayer player) {
+			public boolean canInteractWith(@Nullable final EntityPlayer player) {
 				return false;
 			}
 		};
@@ -157,7 +170,7 @@ public class EventHandler {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void handleAnvilEvent(final AnvilUpdateEvent event) {
@@ -184,7 +197,7 @@ public class EventHandler {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

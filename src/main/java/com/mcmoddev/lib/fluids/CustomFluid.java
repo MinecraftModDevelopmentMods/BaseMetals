@@ -76,11 +76,7 @@ public class CustomFluid extends Fluid {
 	 *            The color
 	 */
 	public CustomFluid(final String fluidName, final int tintARGB) {
-		super(fluidName,
-				new ResourceLocation(Loader.instance().activeModContainer().getModId(),
-						"blocks/molten_metal_still"),
-				new ResourceLocation(Loader.instance().activeModContainer().getModId(),
-						"blocks/molten_metal_flow"));
+		this(fluidName);
 		this.color = tintARGB;
 		this.checkColor();
 	}

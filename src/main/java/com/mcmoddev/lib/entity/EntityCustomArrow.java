@@ -45,7 +45,7 @@ public class EntityCustomArrow extends EntityTippedArrow {
 	 * @param worldIn
 	 *            The World
 	 * @param stack
-	 *            The itemstack
+	 *            The ItemStack
 	 * @param shooter
 	 *            The Shooter
 	 */

@@ -41,6 +41,6 @@ public class ItemBolt extends net.minecraft.item.Item {
 	public boolean isInfinite(final ItemStack stack, final ItemStack crossbow,
 			final EntityPlayer player) {
 		final int enchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, crossbow);
-		return enchant <= 0 ? false : this.getClass() == ItemBolt.class;
+		return enchant > 0 && this.getClass() == ItemBolt.class;
 	}
 }

@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
@@ -69,7 +70,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	}
 
 	private static void createAnvils() {
-		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
+		Stream.of(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE)
 				.filter(Materials::hasMaterial)
 				.forEach(name -> create(Names.ANVIL, Materials.getMaterialByName(name)));
 	}
@@ -126,8 +127,8 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		quartz.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
 		quartz.addNewBlock(Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
-		// quartz.addNewBlockFromItemStack(Names.SLAB, new ItemStack(net.minecraft.init.Blocks.STONE_SLAB,1, 7));
-		// quartz.addNewBlockFromItemStack(Names.DOUBLE_SLAB, new ItemStack(net.minecraft.init.Blocks.DOUBLE_STONE_SLAB, 1, 7));
+		// quartz.addNewBlockFromItemStack(Names.SLAB, new ItemStack(net.minecraft.init.Blocks.STONE_SLAB,1, 7))
+		// quartz.addNewBlockFromItemStack(Names.DOUBLE_SLAB, new ItemStack(net.minecraft.init.Blocks.DOUBLE_STONE_SLAB, 1, 7))
 		quartz.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.QUARTZ_STAIRS);
 
 		redstone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);

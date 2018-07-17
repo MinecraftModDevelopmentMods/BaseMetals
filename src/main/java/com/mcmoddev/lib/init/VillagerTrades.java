@@ -17,6 +17,7 @@ import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.entity.passive.EntityVillager.ListEnchantedItemForEmeralds;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
@@ -26,6 +27,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.fml.common.Loader;
+import stanhebben.zenscript.annotations.NotNull;
 
 /**
  *
@@ -34,14 +36,14 @@ import net.minecraftforge.fml.common.Loader;
  */
 public abstract class VillagerTrades {
 
-	protected static final int ARMOR_SMITH = (3 << 16) | (1 << 8);
-	protected static final int WEAPON_SMITH = (3 << 16) | (2 << 8);
-	protected static final int TOOL_SMITH = (3 << 16) | (3 << 8);
 	protected static final ResourceLocation SMITH_RL = new ResourceLocation("minecraft:smith");
 	protected static final int ARMOR_SMITH_ID = 1;
 	protected static final int WEAPON_SMITH_ID = 2;
 	protected static final int TOOL_SMITH_ID = 3;
 	protected static final int TRADES_PER_LEVEL = 4;
+
+	protected static final int emeraldPurchEnchantedMin = 7;
+	protected static final int emeraldPurchEnchantedMax = 12;
 
 	protected VillagerTrades() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -56,15 +58,9 @@ public abstract class VillagerTrades {
 
 	protected static void registerCommonTrades() {
 		final String modid = Loader.instance().activeModContainer().getModId();
-		// integer is used as byte data: (unused) (profession) (career) (level)
-		final Map<Integer, List<ITradeList>> tradesTable = new HashMap<>();
-
-		// Minecraft stores trades in a 4D array:
-		// [Profession ID][Sub-profession ID][villager level - 1][trades]
 
 		for (final MMDMaterial material : Materials.getMaterialsByMod(modid)) {
-
-			if (material == null) {
+			if (material.isEmpty()) {
 				return;
 			}
 
@@ -79,8 +75,7 @@ public abstract class VillagerTrades {
 			// For reference, Iron has a value of 21.5, Gold would be 14, Copper
 			// is 14, and Diamond is 30
 			final int emeraldPurch = emeraldPurchaseValue(value);
-			final int emeraldPurchEnchantedMin = emeraldPurch + 7;
-			final int emeraldPurchEnchantedMax = emeraldPurch + 12;
+			final PriceInfo priceRange = new PriceInfo(emeraldPurch + emeraldPurchEnchantedMin, emeraldPurch + emeraldPurchEnchantedMax);
 			final int emeraldSale = emeraldSaleValue(value);
 			final int tradeLevel = tradeLevel(value);
 
@@ -88,95 +83,32 @@ public abstract class VillagerTrades {
 				continue; // Too expensive
 			}
 
-			for (final Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS,
-					Names.BOOTS)) {
-				if (material.hasItem(name)) {
-					final ItemStack itemStack = material.getItemStack(name);
-					final ITradeList[] armorTrades = makeTradePalette(makePurchasePalette(
-							emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2),
-							itemStack));
-					VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, tradeLevel,
-							armorTrades);
-					if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
-						tradesTable
-								.computeIfAbsent(ARMOR_SMITH | (tradeLevel + 1),
-										(final Integer key) -> new ArrayList<>())
-								.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(
-										itemStack.getItem(),
-										new PriceInfo(emeraldPurchEnchantedMin
-												+ (int) (material.getStat(MaterialStats.HARDNESS)
-														/ 2),
-												emeraldPurchEnchantedMax + (int) (material
-														.getStat(MaterialStats.HARDNESS) / 2)))));
-						// VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, tradeLevel,
-						// enchantedArmorTrades);
-					}
-				}
-			}
+			registerArmorTrades(material, tradeLevel, emeraldPurch);
 			if (material.hasItem(Names.CRACKHAMMER)) {
 				final ItemStack itemStack = material.getItemStack(Names.CRACKHAMMER);
-				final ITradeList[] hammerTrades = makeTradePalette(
-						makePurchasePalette(emeraldPurch, itemStack));
-				VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, tradeLevel, hammerTrades);
 				if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
-					tradesTable
-							.computeIfAbsent(TOOL_SMITH | (tradeLevel + 2),
-									(final Integer key) -> new ArrayList<>())
-							.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(
-									itemStack.getItem(), new PriceInfo(emeraldPurchEnchantedMin,
-											emeraldPurchEnchantedMax))));
-					// VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, tradeLevel,
-					// enchantedHammerTrades);
+					registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 2));
 				}
 			}
 			if (material.hasItem(Names.SWORD)) {
 				final ItemStack itemStack = material.getItemStack(Names.SWORD);
-				final ITradeList[] swordTrades = makeTradePalette(makePurchasePalette(
-						(emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1,
-						itemStack));
-				VillagerTradeHelper.insertTrades(SMITH_RL, WEAPON_SMITH_ID, tradeLevel,
-						swordTrades);
+				registerTrade(WEAPON_SMITH_ID, itemStack, (emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1, tradeLevel);
 				if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
-					tradesTable
-							.computeIfAbsent(WEAPON_SMITH | (tradeLevel + 1),
-									(final Integer key) -> new ArrayList<>())
-							.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(
-									itemStack.getItem(),
-									new PriceInfo(
-											(emeraldPurchEnchantedMin
-													+ (int) (material.getBaseAttackDamage() / 2))
-													- 1,
-											(emeraldPurchEnchantedMax
-													+ (int) (material.getBaseAttackDamage() / 2))
-													- 1))));
-					// VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, tradeLevel,
-					// enchantedSwordTrades);
+					final PriceInfo swordPriceRange = new PriceInfo(
+							((emeraldPurch + emeraldPurchEnchantedMin)
+									+ (int) (material.getBaseAttackDamage() / 2))
+									- 1,
+							((emeraldPurch + emeraldPurchEnchantedMax)
+									+ (int) (material.getBaseAttackDamage() / 2))
+									- 1);
+					registerEnchantedTrade(WEAPON_SMITH_ID, itemStack, swordPriceRange, (tradeLevel + 1));
 				}
 			}
-			for (final Names name : Arrays.asList(Names.AXE, Names.HOE, Names.SHOVEL)) {
-				if (material.hasItem(name)) {
-					final ItemStack itemStack = material.getItemStack(name);
-					final ITradeList[] toolTrades = makeTradePalette(
-							makePurchasePalette(emeraldPurch, itemStack));
-					VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, tradeLevel,
-							toolTrades);
-				}
-			}
+			registerToolTrades(material, tradeLevel, emeraldPurch);
 			if (material.hasItem(Names.PICKAXE)) {
 				final ItemStack itemStack = material.getItemStack(Names.PICKAXE);
-				final ITradeList[] pickaxeTrades = makeTradePalette(
-						makePurchasePalette(emeraldPurch, itemStack));
-				VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, tradeLevel,
-						pickaxeTrades);
 				if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
-					tradesTable
-							.computeIfAbsent(TOOL_SMITH | (tradeLevel + 1),
-									(final Integer key) -> new ArrayList<>())
-							.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(
-									itemStack.getItem(), new PriceInfo(emeraldPurchEnchantedMin,
-											emeraldPurchEnchantedMax))));
-					// VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, tradeLevel,
-					// enchantedPickaxeTrades);
+					registerEnchantedTrade(TOOL_SMITH_ID, itemStack, priceRange, (tradeLevel + 1));
 				}
 			}
 			if (material.hasItem(Names.INGOT)) {
@@ -195,11 +127,66 @@ public abstract class VillagerTrades {
 				}
 			}
 		}
+	}
 
-		commitTrades(tradesTable);
+	protected static void registerArmorTrades(@Nonnull final MMDMaterial material, final int tradeLevel, final int emeraldPurch) {
+		for (final Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS,
+				Names.BOOTS)) {
+			if (material.hasItem(name)) {
+				final ItemStack itemStack = material.getItemStack(name);
+				registerTrade(ARMOR_SMITH_ID, itemStack, emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2), tradeLevel);
+				if (material.getStat(MaterialStats.MAGICAFFINITY) > 5) {
+					PriceInfo priceRange = new PriceInfo(
+							((emeraldPurch + emeraldPurchEnchantedMin)
+									+ (int) (material.getBaseAttackDamage() / 2))
+									- 1,
+							((emeraldPurch + emeraldPurchEnchantedMax)
+									+ (int) (material.getBaseAttackDamage() / 2))
+									- 1);
+					registerEnchantedTrade(ARMOR_SMITH_ID, itemStack, priceRange, (tradeLevel + 1));
+				}
+			}
+		}
+	}
+
+	protected static void registerToolTrades(@Nonnull final MMDMaterial material, final int tradeLevel, final int emeraldPurch) {
+		for (final Names name : Arrays.asList(Names.AXE, Names.PICKAXE, Names.HOE, Names.SHOVEL, Names.CRACKHAMMER, Names.SCYTHE)) {
+			if (material.hasItem(name)) {
+				final ItemStack itemStack = material.getItemStack(name);
+				registerTrade(TOOL_SMITH_ID, itemStack, emeraldPurch, tradeLevel);
+			}
+		}
+	}
+
+	protected static void registerTrade(final int id, @Nonnull final ItemStack itemStack, @Nonnull final int emeraldPurch, final int tradeLevel) {
+		final ITradeList[] trades = makeTradePalette(
+				makePurchasePalette(emeraldPurch, itemStack));
+		VillagerTradeHelper.insertTrades(SMITH_RL, id, tradeLevel, trades);
+	}
+
+	protected static void registerEnchantedTrade(final int id, @Nonnull final ItemStack itemStack, @Nonnull final PriceInfo priceRange, final int tradeLevel) {
+		final ListEnchantedItemForEmeralds trade = new ListEnchantedItemForEmeralds(
+				itemStack.getItem(), priceRange);
+
+		final MultiTradeGenerator multiTrade = new MultiTradeGenerator(TRADES_PER_LEVEL, Collections.singletonList(trade));
+		VillagerTradeHelper.insertTrades(SMITH_RL, id, tradeLevel, multiTrade);
 	}
 
 	protected static void registerModSpecificTrades() {
+	}
+
+	protected static void registerBurnableTrades(@Nonnull final String materialName) {
+		if (Materials.hasMaterial(materialName)) {
+			final MMDMaterial material = Materials.getMaterialByName(materialName);
+			if (material.hasItem(Names.POWDER)) {
+				final Item powder = material.getItem(Names.POWDER);
+				final ITradeList[] trades = makePurchasePalette(1, 10, powder);
+
+				VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, 1, trades);
+				VillagerTradeHelper.insertTrades(SMITH_RL, WEAPON_SMITH_ID, 1, trades);
+				VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, 1, trades);
+			}
+		}
 	}
 
 	/**
@@ -207,18 +194,10 @@ public abstract class VillagerTrades {
 	 *
 	 * @param tradesTable
 	 *            Trade Table to commit
+	 * @deprecated
 	 */
+	@Deprecated
 	protected static void commitTrades(@Nonnull final Map<Integer, List<ITradeList>> tradesTable) {
-
-		for (final Integer k : tradesTable.keySet()) {
-			final List<ITradeList> trades = tradesTable.get(k);
-			final int profession = (k >> 16) & 0xFF;
-			final int career = (k >> 8) & 0xFF;
-			final int level = k & 0xFF;
-
-			VillagerTradeHelper.insertTrades(profession, career, level,
-					new MultiTradeGenerator(TRADES_PER_LEVEL, trades));
-		}
 	}
 
 	/**
@@ -525,7 +504,7 @@ public abstract class VillagerTrades {
 		 * @param recipeList
 		 *            existing trade menu
 		 * @param random
-		 *            a psuedorandom number generator instance
+		 *            a pseudorandom number generator instance
 		 */
 		@Override
 		public void addMerchantRecipe(@Nonnull final IMerchant merchant,
@@ -545,7 +524,7 @@ public abstract class VillagerTrades {
 				in1.setCount(in1.getCount() + random.nextInt(this.maxInputMarkup1));
 			}
 			ItemStack in2 = ItemStack.EMPTY;
-			if ((!this.input2.isEmpty()) && (this.input2.getItem() != null)) {
+			if (!this.input2.isEmpty()) {
 				in2 = this.input2.copy();
 				if (this.maxInputMarkup2 > 0) {
 					in2.setCount(in2.getCount() + random.nextInt(this.maxInputMarkup2));

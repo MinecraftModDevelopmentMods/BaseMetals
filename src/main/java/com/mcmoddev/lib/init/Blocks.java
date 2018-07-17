@@ -256,7 +256,7 @@ public abstract class Blocks {
 	 *            which creative tab is it on
 	 * @return a new block
 	 */
-	@Nullable
+	@Nonnull
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name,
 			@Nonnull final MMDMaterial material, final CreativeTabs tab) {
 		final String fullName = getBlockFullName(block, material, name);
@@ -316,7 +316,7 @@ public abstract class Blocks {
 			@Nonnull final String name, @Nonnull final Class<? extends Block> clazz,
 			@Nonnull final boolean enabled, final CreativeTabs tab) {
 		if (enabled) {
-			Constructor<?> ctor = null;
+			Constructor<?> ctor;
 			Block inst = null;
 			try {
 				ctor = clazz.getConstructor(material.getClass());

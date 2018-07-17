@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 
@@ -11,7 +12,6 @@ import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.fuels.FuelRegistry;
 import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.material.IMMDBurnableObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
@@ -141,7 +141,7 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 			create(Names.SMALLPOWDER, mercury);
 		}
 
-		Arrays.asList(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE).stream()
+		Stream.of(MaterialNames.STONE, MaterialNames.STEEL, MaterialNames.ADAMANTINE)
 				.filter(Materials::hasMaterial).forEach(materialName -> create(Names.ANVIL,
 						Materials.getMaterialByName(materialName)));
 

@@ -55,7 +55,7 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	@Override
 	@Deprecated
 	public ItemStack getItem(final World w, final BlockPos c, final IBlockState bs) {
-		return new ItemStack(this.material.getItem(Names.DOOR));
+		return this.material.getItemStack(Names.DOOR);
 	}
 
 	@Override

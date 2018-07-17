@@ -65,8 +65,8 @@ public class EntityCustomBolt extends EntityTippedArrow {
 	protected ItemStack getBoltStack() {
 		if (this.itemStack.isEmpty()) {
 			// FIXME - this is potentially unreliable
-			this.itemStack = new ItemStack(com.mcmoddev.lib.init.Materials
-					.getMaterialByName(MaterialNames.WOOD).getItem(Names.BOLT));
+			this.itemStack = com.mcmoddev.lib.init.Materials
+					.getMaterialByName(MaterialNames.WOOD).getItemStack(Names.BOLT);
 		}
 
 		return new ItemStack(this.itemStack.getItem(), 1, this.itemStack.getItemDamage());

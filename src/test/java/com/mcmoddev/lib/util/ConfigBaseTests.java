@@ -33,20 +33,20 @@ class ConfigBaseTests {
 
 	@Test
 	void testIsModEnabledDetectsModIsNotPresent() {
-		Assertions.assertEquals(false, Options.isModEnabled(name));
+		Assertions.assertFalse(Options.isModEnabled(name));
 	}
 
 	@Test
 	void testIsModEnabledDetectsModIsEnabled() {
 		Options.modEnabled(name, true);
 
-		Assertions.assertEquals(true, Options.isModEnabled(name));
+		Assertions.assertTrue(Options.isModEnabled(name));
 	}
 
 	@Test
 	void testIsModEnabledDetectsModIsDisabled() {
 		Options.modEnabled(name, false);
 
-		Assertions.assertEquals(false, Options.isModEnabled(name));
+		Assertions.assertFalse(Options.isModEnabled(name));
 	}
 }

@@ -41,7 +41,7 @@ public class Config extends ConfigBase {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void onConfigChange(final ConfigChangedEvent.OnConfigChangedEvent event) {

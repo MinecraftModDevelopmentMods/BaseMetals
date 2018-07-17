@@ -14,6 +14,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialClass;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.ConfigBase;
 
@@ -38,10 +39,10 @@ public class Materials {
 	private static final Map<MMDMaterial, ToolMaterial> toolMaterialMap = new HashMap<>();
 	private static final Map<String, Set<MMDMaterial>> modSourceMaterialMap = new HashMap<>();
 
-	public static final MMDMaterial EMPTY = createOrelessMaterial("empty", MaterialType.METAL, 0, 0,
-			0, 0);
-	public static final MMDMaterial DEFAULT = createOrelessMaterial("default", MaterialType.METAL,
-			0, 0, 0, 0);
+	public static final MMDMaterial EMPTY = createMaterial("empty", MaterialType.METAL,
+			MaterialClass.ORELESS, 0, 0, 0, 0);
+	public static final MMDMaterial DEFAULT = createMaterial("default", MaterialType.METAL,
+			MaterialClass.ORELESS, 0, 0, 0, 0);
 
 	protected Materials() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
@@ -71,13 +72,15 @@ public class Materials {
 	 *            material tint color - used in several places, including in the TiC plugin, where
 	 *            it determines tool-part color
 	 * @return the new material
+	 * @deprecated
 	 */
+	@Deprecated
 	protected static MMDMaterial createOrelessMaterial(@Nonnull final String name,
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, false, false, false);
+		final MMDMaterial material = new MMDMaterial(name, type, MaterialClass.ORELESS, (float) hardness, (float) strength,
+				(float) magic, tintColor);
 
 		return registerMaterial(material);
 	}
@@ -104,8 +107,38 @@ public class Materials {
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, false, true, false);
+		final MMDMaterial material = new MMDMaterial(name, type, MaterialClass.NORMAL, (float) hardness, (float) strength,
+				(float) magic, tintColor);
+
+		return registerMaterial(material);
+	}
+
+	/**
+	 * Create a material material.
+	 *
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param matClass
+	 *            the classification of the material (normal, alloy, special, rare, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the TiC plugin, where
+	 *            it determines tool-part color
+	 * @return the new material
+	 */
+	protected static MMDMaterial createMaterial(@Nonnull final String name,
+	                                            @Nonnull final MaterialType type, @Nonnull final MMDMaterial.MaterialClass matClass,
+	                                            @Nonnull final double hardness, @Nonnull final double strength,
+	                                            @Nonnull final double magic, @Nonnull final int tintColor) {
+		final MMDMaterial material = new MMDMaterial(name, type, matClass, (float) hardness, (float) strength,
+				(float) magic, tintColor);
 
 		return registerMaterial(material);
 	}
@@ -127,13 +160,15 @@ public class Materials {
 	 *            material tint color - used in several places, including in the TiC plugin, where
 	 *            it determines tool-part color
 	 * @return the new material
+	 * @deprecated
 	 */
+	@Deprecated
 	protected static MMDMaterial createAlloyMaterial(@Nonnull final String name,
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, false, false, true);
+		final MMDMaterial material = new MMDMaterial(name, type, MaterialClass.ALLOY, (float) hardness, (float) strength,
+				(float) magic, tintColor);
 
 		return registerMaterial(material);
 	}
@@ -155,13 +190,15 @@ public class Materials {
 	 *            material tint color - used in several places, including in the TiC plugin, where
 	 *            it determines tool-part color
 	 * @return the new material
+	 * @deprecated
 	 */
+	@Deprecated
 	protected static MMDMaterial createSpecialMaterial(@Nonnull final String name,
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, false, true, true);
+		final MMDMaterial material = new MMDMaterial(name, type, MaterialClass.SPECIAL, (float) hardness, (float) strength,
+				(float) magic, tintColor);
 
 		return registerMaterial(material);
 	}
@@ -183,13 +220,15 @@ public class Materials {
 	 *            material tint color - used in several places, including in the TiC plugin, where
 	 *            it determines tool-part color
 	 * @return the new material
+	 * @deprecated
 	 */
+	@Deprecated
 	protected static MMDMaterial createOrelessRareMaterial(@Nonnull final String name,
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, true, false, false);
+		final MMDMaterial material = new MMDMaterial(name, type, MaterialClass.ORELESS_RARE, (float) hardness, (float) strength,
+				(float) magic, tintColor);
 
 		return registerMaterial(material);
 	}
@@ -211,13 +250,15 @@ public class Materials {
 	 *            material tint color - used in several places, including in the TiC plugin, where
 	 *            it determines tool-part color
 	 * @return the new material
+	 * @deprecated
 	 */
+	@Deprecated
 	protected static MMDMaterial createRareMaterial(@Nonnull final String name,
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, true, true, false);
+		final MMDMaterial material = new MMDMaterial(name, type, MaterialClass.RARE, (float) hardness, (float) strength,
+				(float) magic, tintColor);
 
 		return registerMaterial(material);
 	}
@@ -239,12 +280,14 @@ public class Materials {
 	 *            material tint color - used in several places, including in the TiC plugin, where
 	 *            it determines tool-part color
 	 * @return the new material
+	 * @deprecated
 	 */
+	@Deprecated
 	protected static MMDMaterial createRareAlloyMaterial(@Nonnull final String name,
 			@Nonnull final MaterialType type, final double hardness, @Nonnull final double strength,
 			@Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, true, false, true);
+		final MMDMaterial material = new MMDMaterial(name, type, MaterialClass.RARE_ALLOY, (float) hardness, (float) strength,
+				(float) magic, tintColor);
 
 		return registerMaterial(material);
 	}
@@ -266,13 +309,15 @@ public class Materials {
 	 *            material tint color - used in several places, including in the TiC plugin, where
 	 *            it determines tool-part color
 	 * @return the new material
+	 * @deprecated
 	 */
+	@Deprecated
 	protected static MMDMaterial createRareSpecialMaterial(@Nonnull final String name,
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, true, true, true);
+		final MMDMaterial material = new MMDMaterial(name, type, MaterialClass.RARE_SPECIAL, (float) hardness, (float) strength,
+				(float) magic, tintColor);
 
 		return registerMaterial(material);
 	}
@@ -287,7 +332,7 @@ public class Materials {
 	protected static MMDMaterial registerMaterial(@Nonnull final MMDMaterial material) {
 		if (Materials.getAllMaterials().contains(material)) {
 			BaseMetals.logger.error(
-					"You asked registermaterial() to register an existing material, Don't do that! (Returning pre existing material instead");
+					"You asked registerMaterial() to register an existing material, Don't do that! (Returning pre existing material instead");
 			return Materials.getMaterialByName(material.getName());
 		}
 

@@ -176,7 +176,7 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 			// addAlloyRecipe(steel, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON,
 			// MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON,
-			// MaterialNames.IRON, "Carbon");
+			// MaterialNames.IRON, "Carbon")
 
 			addAlloyRecipe(steel, 8, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON,
 					MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON, MaterialNames.IRON,
@@ -199,7 +199,7 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 							"x/x", "x x", 'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD));
 			// GameRegistry.addRecipe(new ShapedOreRecipe(new
 			// ItemStack(net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE), "xx", 'x',
-			// Oredicts.INGOTSTEEL));
+			// Oredicts.INGOT_STEEL))
 			GameRegistry.addRecipe(new ShapedOreRecipe(
 					new ItemStack(net.minecraft.init.Blocks.TRIPWIRE_HOOK), "x  ", "/  ", "w  ",
 					'x', Oredicts.INGOT_STEEL, '/', Oredicts.STICK_WOOD, 'w', Oredicts.PLANK_WOOD));
@@ -217,12 +217,12 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 							"sxs", "s*s", 'x', Oredicts.INGOT_STEEL, 'w', Oredicts.PLANK_WOOD, 's',
 							Oredicts.COBBLESTONE, '*', Oredicts.DUST_REDSTONE));
 			// GameRegistry.addRecipe(new ShapedOreRecipe(new
-			// ItemStack(net.minecraft.init.Items.SHEARS), "x ", " x", 'x', Oredicts.INGOT_STEEL));
+			// ItemStack(net.minecraft.init.Items.SHEARS), "x ", " x", 'x', Oredicts.INGOT_STEEL))
 			// GameRegistry.addRecipe(new ShapedOreRecipe(new
-			// ItemStack(net.minecraft.init.Items.SHEARS), " x", "x ", 'x', Oredicts.INGOT_STEEL));
+			// ItemStack(net.minecraft.init.Items.SHEARS), " x", "x ", 'x', Oredicts.INGOT_STEEL))
 			// GameRegistry.addRecipe(new ShapedOreRecipe(new
 			// ItemStack(net.minecraft.init.Items.SHIELD), "wxw", "www", " w ", 'w',
-			// Oredicts.PLANK_WOOD, 'x', Oredicts.INGOT_STEEL));
+			// Oredicts.PLANK_WOOD, 'x', Oredicts.INGOT_STEEL))
 		}
 
 		// new recipes using rods and gears

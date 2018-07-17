@@ -429,8 +429,8 @@ public abstract class Items {
 		}
 
 		if (enabled) {
-			Constructor<?> ctor = null;
-			Item inst = null;
+			Constructor<?> ctor;
+			Item inst;
 
 			try {
 				ctor = clazz.getConstructor(material.getClass());

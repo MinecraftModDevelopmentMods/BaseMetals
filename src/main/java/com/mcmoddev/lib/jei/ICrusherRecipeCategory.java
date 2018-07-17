@@ -22,8 +22,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWrapper> {
 
-	private final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID,
-			"textures/jei/jeihammeroverlay.png");
 	private final IDrawable background;
 	private final IDrawable icon;
 	private final IDrawableAnimated hammer;
@@ -33,10 +31,12 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 	 * @param guiHelper
 	 */
 	public ICrusherRecipeCategory(final IGuiHelper guiHelper) {
-		this.background = guiHelper.createDrawable(this.resourceLocation, 0, 0, 166, 130);
-		this.icon = guiHelper.createDrawable(this.resourceLocation, 170, 2, 16, 16);
+		final ResourceLocation resourceLocation = new ResourceLocation(BaseMetals.MODID,
+			"textures/jei/jeihammeroverlay.png");
+		this.background = guiHelper.createDrawable(resourceLocation, 0, 0, 166, 130);
+		this.icon = guiHelper.createDrawable(resourceLocation, 170, 2, 16, 16);
 
-		final IDrawableStatic hammerDrawable = guiHelper.createDrawable(this.resourceLocation, 169,
+		final IDrawableStatic hammerDrawable = guiHelper.createDrawable(resourceLocation, 169,
 				17, 32, 32);
 		this.hammer = guiHelper.createAnimatedDrawable(hammerDrawable, 200,
 				IDrawableAnimated.StartDirection.BOTTOM, false);
