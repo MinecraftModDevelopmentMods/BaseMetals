@@ -230,9 +230,11 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 		final Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
+			@SuppressWarnings("unused")
 			final boolean attackDamageReturned = multimap
 					.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(
 							ATTACK_DAMAGE_MODIFIER, "Tool modifier", this.attackDamage, 0));
+			@SuppressWarnings("unused")
 			final boolean attackSpeedReturned = multimap
 					.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(
 							ATTACK_SPEED_MODIFIER, "Tool modifier", this.attackSpeed, 0));

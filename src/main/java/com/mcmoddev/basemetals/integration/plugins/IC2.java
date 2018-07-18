@@ -15,7 +15,6 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, initCallback = "doHammerRecipes")
 public final class IC2 extends IC2Base implements IIntegration {
