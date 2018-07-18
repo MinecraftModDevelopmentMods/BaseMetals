@@ -36,7 +36,7 @@ public class OreDictionaryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrushe
 		this.output = results;
 
 		super.setRegistryName(
-				oreDictionaryID + "_to_" + results.getItem().getRegistryName().getResourcePath());
+				oreDictionaryID + "_to_" + results.getItem().getRegistryName().getPath());
 	}
 
 	/**

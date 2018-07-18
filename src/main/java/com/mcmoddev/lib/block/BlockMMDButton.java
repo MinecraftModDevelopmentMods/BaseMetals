@@ -14,27 +14,27 @@ import net.minecraft.world.World;
 
 public class BlockMMDButton extends net.minecraft.block.BlockButton implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
-	 * @param material The material the Button is made from
+	 * @param mmdMaterial The material the Button is made from
 	 */
-	public BlockMMDButton(final MMDMaterial material) {
-		super((material.getType() == MaterialType.WOOD) ? true : false);
-		this.material = material;
-		this.setSoundType(this.material.getSoundType());
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+	public BlockMMDButton(final MMDMaterial mmdMaterial) {
+		super((mmdMaterial.getType() == MaterialType.WOOD) ? true : false);
+		this.mmdMaterial = mmdMaterial;
+		this.setSoundType(this.mmdMaterial.getSoundType());
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 	}
 
 	@Override
 	protected void playClickSound(final EntityPlayer player, final World worldIn,
 			final BlockPos pos) {
 		SoundEvent soundEvent = SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON;
-		if (this.blockMaterial == Material.WOOD) {
+		if (this.material == Material.WOOD) {
 			soundEvent = SoundEvents.BLOCK_WOOD_BUTTON_CLICK_ON;
 		}
 		worldIn.playSound(player, pos, soundEvent, SoundCategory.BLOCKS, 0.3F, 0.6F);
@@ -43,7 +43,7 @@ public class BlockMMDButton extends net.minecraft.block.BlockButton implements I
 	@Override
 	protected void playReleaseSound(final World worldIn, final BlockPos pos) {
 		SoundEvent soundEvent = SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF;
-		if (this.blockMaterial == Material.WOOD) {
+		if (this.material == Material.WOOD) {
 			soundEvent = SoundEvents.BLOCK_WOOD_BUTTON_CLICK_OFF;
 		}
 		worldIn.playSound((EntityPlayer) null, pos, soundEvent, SoundCategory.BLOCKS, 0.3F, 0.5F);
@@ -51,6 +51,6 @@ public class BlockMMDButton extends net.minecraft.block.BlockButton implements I
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

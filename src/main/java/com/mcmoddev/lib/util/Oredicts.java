@@ -303,7 +303,7 @@ public class Oredicts {
 	public static void registerItemOreDictionaryEntries() {
 		for (final Entry<String, List<Item>> ent : oreDictItemMap.entrySet()) {
 			for (final Item i : ent.getValue()) {
-				if (i.getRegistryName().getResourceDomain()
+				if (i.getRegistryName().getNamespace()
 						.equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), i);
 				}
@@ -311,7 +311,7 @@ public class Oredicts {
 		}
 		for (final Entry<String, List<ItemStack>> ent : oreDictItemStackMap.entrySet()) {
 			for (final ItemStack is : ent.getValue()) {
-				if (is.getItem().getRegistryName().getResourceDomain()
+				if (is.getItem().getRegistryName().getNamespace()
 						.equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), is);
 				}
@@ -325,7 +325,7 @@ public class Oredicts {
 	public static void registerBlockOreDictionaryEntries() {
 		for (final Entry<String, List<Block>> ent : oreDictBlockMap.entrySet()) {
 			for (final Block b : ent.getValue()) {
-				if (b.getRegistryName().getResourceDomain()
+				if (b.getRegistryName().getNamespace()
 						.equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), b);
 				}

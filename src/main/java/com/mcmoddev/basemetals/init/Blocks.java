@@ -246,7 +246,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	private static void regBlocks(final IForgeRegistry<Block> registry,
 			final ImmutableList<Block> blocks) {
 		blocks.stream().filter(
-				block -> block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
+				block -> block.getRegistryName().getNamespace().equals(BaseMetals.MODID))
 				.forEach(registry::register);
 	}
 }

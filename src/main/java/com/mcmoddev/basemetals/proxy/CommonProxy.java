@@ -104,9 +104,9 @@ public class CommonProxy {
 	 */
 	public void onRemapBlock(final RegistryEvent.MissingMappings<Block> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings()) {
-			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
+			if (mapping.key.getNamespace().equals(BaseMetals.MODID)
 					&& (Materials.hasMaterial(MaterialNames.MERCURY))
-					&& ("liquid_mercury".equals(mapping.key.getResourcePath()))) {
+					&& ("liquid_mercury".equals(mapping.key.getPath()))) {
 				mapping.remap(com.mcmoddev.lib.init.Materials
 						.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
 			}
@@ -120,9 +120,9 @@ public class CommonProxy {
 	 */
 	public void onRemapItem(final RegistryEvent.MissingMappings<Item> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
-			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
+			if (mapping.key.getNamespace().equals(BaseMetals.MODID)
 					&& (Materials.hasMaterial(MaterialNames.COAL))
-					&& ("carbon_powder".equals(mapping.key.getResourcePath()))) {
+					&& ("carbon_powder".equals(mapping.key.getPath()))) {
 				mapping.remap(com.mcmoddev.lib.init.Materials.getMaterialByName(MaterialNames.COAL)
 						.getItem(Names.POWDER));
 			}

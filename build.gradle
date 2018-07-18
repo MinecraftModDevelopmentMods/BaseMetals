@@ -241,12 +241,18 @@ repositories {
     name 'thiakil'
     url 'http://maven.thiakil.com/'
   }
+  maven { // Applied Energistics
+    name 'forge'
+    url 'https://files.minecraftforge.net/maven/'
+  }
+  /*
   ivy {
     url 'http://ae-mod.info/builds'
     layout "pattern", {
     artifact "[module]-[revision](-[classifier])(.[ext])"
     }
   }
+  */
 }
 
 dependencies {
@@ -288,19 +294,21 @@ dependencies {
   deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}"
 //deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 
-deobfCompile "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}"
-//deobfProvided "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}:api"
+  deobfProvided "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}:api"
+  runtime "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}"
 
   deobfProvided "portablejim:VeinMiner:${veinminer_version}"
 
-  deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
+  deobfProvided ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
     exclude group: 'mezz.jei'
   }
 
+  runtime "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
+
 //deobfProvided "com.googlecode.efficient-java-matrix-library:ejml:0.23"
 
-//deobfProvided "CraftTweaker2:CraftTweaker2-API:${mc_version}-${ct_api_version}"
-  deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
+  deobfProvided "CraftTweaker2:CraftTweaker2-API:${ct_api_version}"
+  runtime "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
 
 //deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
 //  exclude group: 'mezz.jei'

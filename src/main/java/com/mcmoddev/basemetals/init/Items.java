@@ -407,7 +407,7 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	}
 
 	private static boolean isThisMod(final ItemStack it) {
-		return it.getItem().getRegistryName().getResourceDomain()
+		return it.getItem().getRegistryName().getNamespace()
 				.equalsIgnoreCase(BaseMetals.MODID);
 	}
 }

@@ -45,7 +45,7 @@ public class ItemMMDHorseArmor extends GenericMMDItem implements IHorseArmor {
 	}
 
 	private String getArmorTexture() {
-		return this.getRegistryName().getResourceDomain()
+		return this.getRegistryName().getNamespace()
 				+ ":textures/entity/horse/armor/horse_armor_" + this.getMMDMaterial().getName()
 				+ ".png";
 	}

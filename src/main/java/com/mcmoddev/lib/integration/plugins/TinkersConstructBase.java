@@ -290,7 +290,7 @@ public class TinkersConstructBase implements IIntegration {
 		registry.getEntries().stream()
 		.forEach(ert -> {
 			ModContainer base = Loader.instance().activeModContainer();
-			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
+			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getNamespace());
 
 			if (!base.equals(next)) {
 				Loader.instance().setActiveModContainer(next);
@@ -351,7 +351,7 @@ public class TinkersConstructBase implements IIntegration {
 		.filter(ert -> !ert.getValue().registered())
 		.forEach(ert -> {
 			ModContainer base = Loader.instance().activeModContainer();
-			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
+			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getNamespace());
 
 			if (!base.equals(next)) {
 				Loader.instance().setActiveModContainer(next);
@@ -383,7 +383,7 @@ public class TinkersConstructBase implements IIntegration {
 		registry.getEntries().stream()
 		.forEach(ert -> {
 			ModContainer base = Loader.instance().activeModContainer();
-			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
+			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getNamespace());
 
 			if (!base.equals(next)) {
 				Loader.instance().setActiveModContainer(next);
@@ -463,7 +463,7 @@ public class TinkersConstructBase implements IIntegration {
 		registry.getEntries().stream()
 		.forEach(ert -> {
 			ModContainer base = Loader.instance().activeModContainer();
-			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getResourceDomain());
+			ModContainer next = Loader.instance().getIndexedModList().get(ert.getKey().getNamespace());
 			
 			if  (!base.equals(next)) {
 				Loader.instance().setActiveModContainer(next);

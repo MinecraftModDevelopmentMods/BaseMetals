@@ -111,8 +111,8 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 	 * Returns the slab block name with the type associated with it.
 	 */
 	@Override
-	public String getUnlocalizedName(final int meta) {
-		return super.getUnlocalizedName();
+	public String getTranslationKey(final int meta) {
+		return super.getTranslationKey();
 	}
 
 	@Override

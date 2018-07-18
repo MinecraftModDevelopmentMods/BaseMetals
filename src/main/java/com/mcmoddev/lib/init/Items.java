@@ -414,7 +414,7 @@ public abstract class Items {
 		}
 
 		item.setRegistryName(fullName);
-		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
+		item.setTranslationKey(item.getRegistryName().getNamespace() + "." + fullName);
 
 		if (tab != null) {
 			item.setCreativeTab(tab);

@@ -132,13 +132,13 @@ public abstract class Fluids {
 		}
 
 		block.setRegistryName(name); // fullName
-		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
+		block.setTranslationKey(block.getRegistryName().getNamespace() + "." + name);
 		material.addNewBlock("fluid", block);
 		block.setCreativeTab(CreativeTabs.MISC);
 
 		final ItemBlock itemBlock = new ItemBlock(block);
 		itemBlock.setRegistryName(name); // fullName
-		itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
+		itemBlock.setTranslationKey(block.getRegistryName().getNamespace() + "." + name);
 		material.addNewItem("fluidItemBlock", itemBlock);
 
 		material.setFluidBlock(block);
