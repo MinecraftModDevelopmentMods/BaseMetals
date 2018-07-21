@@ -68,7 +68,7 @@ public abstract class Fluids {
 
 		final ModContainer base = Loader.instance().activeModContainer();
 		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
-		
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
 		}

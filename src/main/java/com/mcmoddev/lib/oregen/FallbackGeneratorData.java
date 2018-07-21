@@ -54,7 +54,7 @@ public class FallbackGeneratorData {
 		materials.put(targetDim, blockMap);
 	}
 
-	static class StonePredicate implements Predicate<IBlockState> {
+	static final class StonePredicate implements Predicate<IBlockState> {
 
 		private StonePredicate() {
 		}
@@ -69,7 +69,7 @@ public class FallbackGeneratorData {
 		}
 	}
 
-	static class NetherPredicate implements Predicate<IBlockState> {
+	static final class NetherPredicate implements Predicate<IBlockState> {
 
 		private NetherPredicate() {
 		}
@@ -84,7 +84,7 @@ public class FallbackGeneratorData {
 		}
 	}
 
-	static class EndPredicate implements Predicate<IBlockState> {
+	static final class EndPredicate implements Predicate<IBlockState> {
 
 		private EndPredicate() {
 		}

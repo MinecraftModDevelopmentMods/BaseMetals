@@ -21,14 +21,14 @@ public interface ICrusherRecipe extends IForgeRegistryEntry<ICrusherRecipe> {
 	 *
 	 * @return An ItemStack instance of the result of this recipe
 	 */
-	public abstract List<ItemStack> getInputs();
+	List<ItemStack> getInputs();
 
 	/**
 	 * Gets the output item from applying this recipe.
 	 *
 	 * @return An ItemStack instance of the result of this recipe
 	 */
-	public abstract ItemStack getOutput();
+	ItemStack getOutput();
 
 	/**
 	 * Checks if the given ItemStack instance is the input for this recipe.
@@ -38,7 +38,7 @@ public interface ICrusherRecipe extends IForgeRegistryEntry<ICrusherRecipe> {
 	 * @return Returns true if and only if this recipe should produce an output item from the given
 	 *         input.
 	 */
-	public abstract boolean isValidInput(ItemStack input);
+	boolean isValidInput(ItemStack input);
 
 	/**
 	 * Returns a list of all registered blocks/items for which <code>isValidInput(...)</code> would
@@ -47,5 +47,5 @@ public interface ICrusherRecipe extends IForgeRegistryEntry<ICrusherRecipe> {
 	 *
 	 * @return A list of allowed inputs.
 	 */
-	public abstract Collection<ItemStack> getValidInputs();
+	Collection<ItemStack> getValidInputs();
 }

@@ -6,19 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-
-import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
-import com.mcmoddev.lib.util.ConfigBase.Options;
-import com.mcmoddev.lib.util.Oredicts;
-
-import net.minecraft.crash.CrashReport;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,6 +21,18 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.lang3.tuple.Triple;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Oredicts;
+
+import net.minecraft.crash.CrashReport;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 /**
  *
@@ -135,7 +134,7 @@ public class EnderIOBase implements IIntegration {
 			return; // Only run for Ore types
 		}
 
-		final List<Triple<String,Integer,Float>> rec = new ArrayList<>();
+		final List<Triple<String, Integer, Float>> rec = new ArrayList<>();
 		rec.add(Triple.of(input, 1, 0f));
 		rec.add(Triple.of(output, 2, 1.0f));
 
@@ -145,7 +144,7 @@ public class EnderIOBase implements IIntegration {
 		addRecipeIMC("alloying", String.format(FORMAT_STRING, ownerModID, input, output), energy, rec);
 	}
 
-	private static final void addRecipeIMC(@Nonnull final String recipeType, @Nonnull final String recipeName, @Nonnull int energy, final List<Triple<String,Integer,Float>> recipe) {
+	private static void addRecipeIMC(@Nonnull final String recipeType, @Nonnull final String recipeName, @Nonnull final int energy, final List<Triple<String,Integer,Float>> recipe) {
 		try {
 			final DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
 			final DocumentBuilder builder = fac.newDocumentBuilder();
@@ -204,11 +203,11 @@ public class EnderIOBase implements IIntegration {
 			final CrashReport report = CrashReport.makeCrashReport(e, "Error building XML for EnderIO IMC");
 			report.getCategory().addCrashSection("BaseMetals Version", BaseMetals.getVersion());
 			BaseMetals.logger.error(report.getCompleteReport());
-		}		
+		}
 	}
 
 	/**
-	 * 
+	 *
 	 * @param material   Only used for naming the recipe in the IMC
 	 * @param energy     How much RF/How many "micro-infinities" does this take ?
 	 * @param outputItem What does this produce? (should be an ore-dictionary entry but can be a string-form of a ResourceLocation

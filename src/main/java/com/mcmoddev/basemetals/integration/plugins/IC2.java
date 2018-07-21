@@ -80,7 +80,7 @@ public final class IC2 extends IC2Base implements IIntegration {
 	 *
 	 */
 	@SubscribeEvent
-	public void doHammerRecipes(IntegrationInitEvent event) {
+	public void doHammerRecipes(final IntegrationInitEvent event) {
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(this::addForgeHammerRecipe);

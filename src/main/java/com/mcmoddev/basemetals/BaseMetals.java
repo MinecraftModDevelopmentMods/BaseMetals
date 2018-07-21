@@ -85,7 +85,7 @@ public final class BaseMetals {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param event The Event.
 	 */
 	@EventHandler
@@ -95,10 +95,10 @@ public final class BaseMetals {
 		} catch (InvalidVersionSpecificationException e) {
 			logger.error("Error loading version information for plugins: %s", e);
 		}
-		
+
 		Config.init();
 	}
-	
+
 	@EventHandler
 	public void onFingerprintViolation(final FMLFingerprintViolationEvent event) {
 		logger.warn(SharedStrings.INVALID_FINGERPRINT);
@@ -119,7 +119,7 @@ public final class BaseMetals {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param event The Event.
 	 */
 	@EventHandler

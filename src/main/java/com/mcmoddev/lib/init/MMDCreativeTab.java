@@ -32,7 +32,7 @@ public class MMDCreativeTab extends CreativeTabs {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param unlocalizedName
 	 * @param searchable
 	 * @param iconBlock

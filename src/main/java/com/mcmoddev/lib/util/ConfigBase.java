@@ -503,7 +503,7 @@ public class ConfigBase {
 
 		private static int rodQuantity = 4;
 
-		public static void setRodQuantity(int quantity) {
+		public static void setRodQuantity(final int quantity) {
 			rodQuantity = quantity;
 		}
 

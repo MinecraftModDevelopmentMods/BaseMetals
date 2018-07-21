@@ -590,7 +590,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @param amount
 	 * @return

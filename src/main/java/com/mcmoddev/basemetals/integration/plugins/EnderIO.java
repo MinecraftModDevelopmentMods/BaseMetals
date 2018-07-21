@@ -13,8 +13,8 @@ import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.EnderIOBase;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Oredicts;
 
 /**
  *
@@ -87,6 +87,6 @@ public final class EnderIO extends EnderIOBase implements IIntegration {
 			final MMDMaterial material = Materials.getMaterialByName(name);
 			addAlloySmelterAlloy(material, cost, Oredicts.INGOT + material.getCapitalizedName(), count, recipe);
 		});
-		
+
 	}
 }

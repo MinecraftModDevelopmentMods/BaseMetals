@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
  */
 public interface IMMDBurnableObject {
 
-	public void setBurnTime(final int timeInTicks);
+	void setBurnTime(int timeInTicks);
 
-	public int getItemBurnTime(@Nonnull final ItemStack itemStack);
+	int getItemBurnTime(@Nonnull ItemStack itemStack);
 }

@@ -18,35 +18,36 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-
 public class CheeseMath {
 
 	private CheeseMath() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
-	private static IRecipe getRecipeFor(@Nonnull ItemStack outputItem) {
-		final IRecipe target = GameRegistry.findRegistry(IRecipe.class).getValuesCollection().stream()
-		.filter(rec ->	rec.getRecipeOutput().getItem().equals(outputItem.getItem())
-				&& (rec.getRecipeOutput().getMetadata() == OreDictionary.WILDCARD_VALUE
-				|| rec.getRecipeOutput().getMetadata() == outputItem.getMetadata()))
-		.findFirst().orElse(null);
+	private static IRecipe getRecipeFor(@Nonnull final ItemStack outputItem) {
+		final IRecipe target = GameRegistry.findRegistry(IRecipe.class).getValuesCollection()
+				.stream()
+				.filter(rec -> rec.getRecipeOutput().getItem().equals(outputItem.getItem())
+						&& (rec.getRecipeOutput().getMetadata() == OreDictionary.WILDCARD_VALUE
+								|| rec.getRecipeOutput().getMetadata() == outputItem.getMetadata()))
+				.findFirst().orElse(null);
 		return target;
 	}
-	
-	private static NonNullList<Ingredient> getRecipeIngredients(@Nonnull ItemStack outputItem) {
+
+	private static NonNullList<Ingredient> getRecipeIngredients(@Nonnull final ItemStack outputItem) {
 		IRecipe target = getRecipeFor(outputItem);
-		
+
 		return target == null ? NonNullList.<Ingredient>create() : target.getIngredients();
 	}
-	
-	private static ItemStack getItemStackFromList(List<ItemStack> isl, ItemStack target) {
+
+	private static ItemStack getItemStackFromList(final List<ItemStack> isl, final ItemStack target) {
 		return isl.stream()
-		.filter(is -> is.getItem().equals(target.getItem()) && is.getMetadata() == target.getMetadata())
-		.findFirst().orElse(ItemStack.EMPTY);
+				.filter(is -> is.getItem().equals(target.getItem())
+						&& is.getMetadata() == target.getMetadata())
+				.findFirst().orElse(ItemStack.EMPTY);
 	}
-	
-	private static int getOutputCount(@Nonnull ItemStack outputItem) {
+
+	private static int getOutputCount(@Nonnull final ItemStack outputItem) {
 		IRecipe t = getRecipeFor(outputItem);
 		if (t == null) {
 			return 1;
@@ -54,15 +55,13 @@ public class CheeseMath {
 			return t.getRecipeOutput().getCount();
 		}
 	}
-	
-	protected static List<ItemStack> getIngredients(@Nonnull ItemStack outputItem) {
+
+	protected static List<ItemStack> getIngredients(@Nonnull final ItemStack outputItem) {
 		List<ItemStack> ingredients = new ArrayList<>();
-		
+
 		NonNullList<Ingredient> ing = getRecipeIngredients(outputItem);
 		if (!ing.isEmpty()) {
-			ing.stream()
-			.map(i -> i.getMatchingStacks())
-			.forEach(isa -> {
+			ing.stream().map(i -> i.getMatchingStacks()).forEach(isa -> {
 				for (ItemStack is : isa) {
 					ItemStack t = getItemStackFromList(ingredients, is);
 					if (t.isEmpty()) {
@@ -75,47 +74,43 @@ public class CheeseMath {
 				}
 			});
 		}
-		
+
 		return ImmutableList.copyOf(ingredients);
 	}
-	
-	private static boolean itemStackMatches(ItemStack left, ItemStack right) {
+
+	private static boolean itemStackMatches(final ItemStack left, final ItemStack right) {
 		return left.getItem().equals(right.getItem())
 				&& ((left.getMetadata() == OreDictionary.WILDCARD_VALUE
-				|| right.getMetadata() == OreDictionary.WILDCARD_VALUE)
-				|| (left.getMetadata() == right.getMetadata()));
+						|| right.getMetadata() == OreDictionary.WILDCARD_VALUE)
+						|| (left.getMetadata() == right.getMetadata()));
 	}
-	
-	private static boolean materialHasItem(MMDMaterial material, ItemStack match) {
-		return material.getItems().stream()
-		.map(x -> itemStackMatches(x, match))
-		.distinct()
-		.collect(Collectors.toList())
-		.contains(true);
+
+	private static boolean materialHasItem(final MMDMaterial material, final ItemStack match) {
+		return material.getItems().stream().map(x -> itemStackMatches(x, match)).distinct()
+				.collect(Collectors.toList()).contains(true);
 	}
-	
-	private static int rawNuggetCount(@Nonnull MMDMaterial material, @Nonnull ItemStack outputItem) {
-		return getIngredients(outputItem).stream()
-		.mapToInt(itemStack -> {
+
+	private static int rawNuggetCount(@Nonnull final MMDMaterial material,
+			@Nonnull final ItemStack outputItem) {
+		return getIngredients(outputItem).stream().mapToInt(itemStack -> {
 			if (itemStackMatches(itemStack, material.getItemStack(Names.INGOT))) {
 				return itemStack.getCount() * 9;
 			} else if (itemStackMatches(itemStack, material.getItemStack(Names.NUGGET))) {
 				return itemStack.getCount();
 			} else if (materialHasItem(material, itemStack)) {
-				return getNuggetCount(material,itemStack) * itemStack.getCount();
+				return getNuggetCount(material, itemStack) * itemStack.getCount();
 			}
 			return 0;
-		})
-		.sum();
+		}).sum();
 	}
 
 	/**
-	 * 
+	 *
 	 * @param material
 	 * @param outputItem
 	 * @return
 	 */
-	public static int getIngotCount(@Nonnull MMDMaterial material, @Nonnull ItemStack outputItem) {
+	public static int getIngotCount(@Nonnull final MMDMaterial material, @Nonnull final ItemStack outputItem) {
 		if (outputItem.isEmpty()) {
 			return 0;
 		}
@@ -123,15 +118,15 @@ public class CheeseMath {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param material
 	 * @param outputItem
 	 * @return
 	 */
-	public static int getNuggetCount(@Nonnull MMDMaterial material, @Nonnull ItemStack outputItem) {
+	public static int getNuggetCount(@Nonnull final MMDMaterial material, @Nonnull final ItemStack outputItem) {
 		if (outputItem.isEmpty()) {
 			return 0;
 		}
-		return rawNuggetCount(material,outputItem) / getOutputCount(outputItem);
+		return rawNuggetCount(material, outputItem) / getOutputCount(outputItem);
 	}
 }

@@ -21,7 +21,7 @@ public class ToolReturnRecipe extends ShapelessOreRecipe {
 	private final List<ItemStack> ingredients;
 
 	/**
-	 * 
+	 *
 	 * @param ident
 	 * @param tool
 	 * @param result
@@ -34,28 +34,30 @@ public class ToolReturnRecipe extends ShapelessOreRecipe {
 		this.ingredients = Lists.newArrayList(ingredients);
 	}
 
-	private boolean itemStackMatches(ItemStack left, ItemStack right) {
+	private boolean itemStackMatches(final ItemStack left, final ItemStack right) {
 		return left.getItem().equals(right.getItem())
 				&& (left.getMetadata() == OreDictionary.WILDCARD_VALUE
-				|| (left.getMetadata() == right.getMetadata()));
+						|| (left.getMetadata() == right.getMetadata()));
 	}
-	
+
 	@Override
-	public boolean matches(InventoryCrafting inv, World worldIn) {
-		Map<ItemStack,Boolean> matches = this.ingredients.stream().collect(Collectors.toMap(x -> x, x -> false));
+	public boolean matches(final InventoryCrafting inv, final World worldIn) {
+		Map<ItemStack, Boolean> matches = this.ingredients.stream()
+				.collect(Collectors.toMap(x -> x, x -> false));
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack slot = inv.getStackInSlot(i);
 			if (matches.keySet().stream().anyMatch(x -> itemStackMatches(x, slot))) {
-				ItemStack k = matches.keySet().stream().filter(x -> itemStackMatches(x, slot)).distinct().findFirst().orElse(ItemStack.EMPTY);
+				ItemStack k = matches.keySet().stream().filter(x -> itemStackMatches(x, slot))
+						.distinct().findFirst().orElse(ItemStack.EMPTY);
 				if (!k.isEmpty()) {
 					matches.put(k, true);
 				}
 			}
 		}
-		
+
 		return !matches.containsValue(false);
 	}
-	
+
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(final InventoryCrafting inv) {
 		final NonNullList<ItemStack> remnants = NonNullList.withSize(inv.getSizeInventory(),

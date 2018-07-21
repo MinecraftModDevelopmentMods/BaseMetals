@@ -9,7 +9,7 @@ public class ItemMMDAnvilBlock extends net.minecraft.item.ItemMultiTexture imple
 	private final MMDMaterial material;
 
 	/**
-	 * 
+	 *
 	 * @param material
 	 */
 	public ItemMMDAnvilBlock(final MMDMaterial material) {

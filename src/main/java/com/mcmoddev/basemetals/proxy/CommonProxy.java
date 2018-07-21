@@ -88,7 +88,7 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterBlocks());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterItems());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterFluids());
-		
+
 		Recipes.init();
 		VillagerTrades.init();
 

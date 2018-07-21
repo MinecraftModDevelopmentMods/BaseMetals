@@ -24,7 +24,7 @@ public enum IntegrationManager {
 	INSTANCE;
 
 	private final List<IIntegration> integrations = Lists.newArrayList();
-	private final Map<String,Map<String, VersionMatch>> plugins = Maps.newConcurrentMap();
+	private final Map<String, Map<String, VersionMatch>> plugins = Maps.newConcurrentMap();
 
 	private String getAnnotationItem(@Nonnull final String item, @Nonnull final ASMData asmData) {
 		if (asmData.getAnnotationInfo().get(item) != null) {
@@ -62,7 +62,7 @@ public enum IntegrationManager {
 					if (bits[1].matches("[\\[\\(]?[\\w\\d\\.\\+,]+[\\]\\)]?")) {
 						rv.put(targetModId, new VersionMatch() {
 							private final VersionRange myRange = VersionRange.createFromVersionSpec(bits[1]);
-							public boolean matches(String otherVersion) {
+							public boolean matches(final String otherVersion) {
 								return myRange.containsVersion(new DefaultArtifactVersion(otherVersion));
 							}
 

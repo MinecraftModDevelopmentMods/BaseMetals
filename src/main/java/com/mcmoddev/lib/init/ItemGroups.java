@@ -72,11 +72,11 @@ public class ItemGroups {
 			@Nonnull final boolean searchable) {
 		final String modName = ActiveModData.instance.activeMod();
 		final String internalTabName = String.format("%s.%s", modName, name);
-		
+
 		if (itemGroupsByFullTabName.containsKey(internalTabName)) {
 			return itemGroupsByFullTabName.get(internalTabName);
 		}
-		
+
 		final MMDCreativeTab tab = new MMDCreativeTab(internalTabName, searchable);
 
 		if (!itemGroupsByFullTabName.containsKey(modName)) {
@@ -95,7 +95,7 @@ public class ItemGroups {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public static void dumpTabs() {
 		BaseMetals.logger.fatal("CREATIVE TABS (by internal reference name):");
