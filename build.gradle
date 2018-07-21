@@ -470,6 +470,14 @@ curseforge {
         relations {
           requiredLibrary 'mmd-orespawn'
           optionalLibrary 'additional-loot-tables'
+          optionalLibrary 'crafttweaker'
+          optionalLibrary 'hwyla'
+          optionalLibrary 'industrial-craft'
+          optionalLibrary 'mekanism'
+          optionalLibrary 'the-one-probe'
+          optionalLibrary 'thermalexpansion'
+          optionalLibrary 'tinkers-construct'
+          optionalLibrary 'veinminer'
         }
       }
       if (project.hasProperty('doAPIJar')) {
