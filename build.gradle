@@ -291,6 +291,7 @@ dependencies {
     exclude module: 'industrialcraft-2'
     exclude module: 'OpenComputers'
   }
+  /*
   runtime ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
     exclude group: 'com.mod-buildcraft'
     exclude group: 'CraftTweaker2'
@@ -305,85 +306,99 @@ dependencies {
     exclude module: 'industrialcraft-2'
     exclude module: 'OpenComputers'
   }
+  */
 
   // TODO: We don't use this
   deobfProvided ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
     exclude group: 'mezz.jei'
   }
+  /*
   runtime ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
     exclude group: 'mezz.jei'
   }
+  */
 
   deobfProvided ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
     exclude group: 'mezz.jei'
   }
+  /*
   runtime ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
     exclude group: 'mezz.jei'
   }
+  */
 
   deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}"
-  runtime "mezz.jei:jei_${mc_version}:${jei_version}"
+//runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
   // TODO: We don't use this
   deobfProvided "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
-  runtime "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+//runtime "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
 
   deobfProvided ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
     exclude group: 'codechicken'
     exclude group: 'mezz.jei'
   }
+  /*
   runtime ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
     exclude group: 'codechicken'
     exclude group: 'mezz.jei'
   }
+  */
 
   // TODO: We don't use this
   deobfProvided "MCMultiPart2:MCMultiPart:${mcmp_version}"
-  runtime "MCMultiPart2:MCMultiPart:${mcmp_version}"
+//runtime "MCMultiPart2:MCMultiPart:${mcmp_version}"
 //deobfProvided "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 //runtime "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 
   deobfProvided ("mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}:api") {
     exclude group: 'cofh'
   }
+  /*
   runtime ("mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}") {
     exclude group: 'cofh'
   }
+  */
 
   deobfProvided "portablejim:VeinMiner:${veinminer_version}"
-  runtime "portablejim:VeinMiner:${veinminer_version}"
+//runtime "portablejim:VeinMiner:${veinminer_version}"
 
   deobfProvided ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
     exclude group: 'mezz.jei'
   }
-  runtime "net.industrial-craft:industrialcraft-2:${ic2_version}"
+//runtime "net.industrial-craft:industrialcraft-2:${ic2_version}"
 
   // TODO: We don't use this
 //deobfProvided "com.googlecode.efficient-java-matrix-library:ejml:0.23"
 //runtime "com.googlecode.efficient-java-matrix-library:ejml:0.23"
 
   deobfProvided "CraftTweaker2:CraftTweaker2-API:${ct_api_version}"
-  runtime "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
+//runtime "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
 
   // TODO: We don't use this
-//deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
-//  exclude group: 'mezz.jei'
-//  exclude group: 'org.ow2.asm'
-//}
-//runtime "MineTweaker3:MineTweaker3-API:${minetweaker_version}"
+  /*
+  deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
+    exclude group: 'mezz.jei'
+    exclude group: 'org.ow2.asm'
+  }
+  runtime "MineTweaker3:MineTweaker3-API:${minetweaker_version}"
+  */
 
   deobfProvided ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
     exclude group: 'mezz.jei'
   }
-  runtime "mcp.mobius.waila:Hwyla:${hwyla_version}"
+//runtime "mcp.mobius.waila:Hwyla:${hwyla_version}"
 
   deobfProvided ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
     exclude group: 'mezz.jei'
   }
+  /*
   runtime ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
     exclude group: 'mezz.jei'
   }
+  */
 
+  /*
   runtime ("cofh:CoFHWorld:${mc_version}-${cofhworld_version}:universal") {
     exclude group: 'mezz.jei'
   }
@@ -397,6 +412,7 @@ dependencies {
     exclude group: 'cofh'
     exclude group: 'mezz.jei'
   }
+  */
 
   deobfProvided ("com.blamejared:MTLib:${mtlib_version}") {
     exclude group: 'mezz.jei'
