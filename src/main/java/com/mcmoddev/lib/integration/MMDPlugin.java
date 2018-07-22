@@ -22,7 +22,7 @@ public @interface MMDPlugin {
 	String pluginId() default "";
 
 	/**
-	 * 
+	 *
 	 * @return The required versions for this plugins needed mods
 	 */
 	String versions() default "";

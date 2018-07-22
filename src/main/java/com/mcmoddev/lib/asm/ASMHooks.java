@@ -11,7 +11,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ASMHooks {
+public final class ASMHooks {
 
 	public static final DataParameter<ItemStack> ARMOR_STACK = EntityDataManager
 			.createKey(EntityHorse.class, DataSerializers.ITEM_STACK);

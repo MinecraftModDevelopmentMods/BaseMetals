@@ -9,7 +9,7 @@ public class BlockMMDLever extends net.minecraft.block.BlockLever implements IMM
 
 	/**
 	 *
-	 * @param material
+	 * @param material The material the Lever is made from
 	 */
 	public BlockMMDLever(final MMDMaterial material) {
 		super();

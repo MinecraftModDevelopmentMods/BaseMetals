@@ -48,6 +48,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		materials.stream().filter(Materials::hasMaterial).forEach(materialName -> {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
+
 			create(Names.BLOCK, material);
 			create(Names.PLATE, material);
 			create(Names.ORE, material);
@@ -69,6 +70,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 		addBlock(new BlockHumanDetector(), "human_detector",
 				ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
+
 		MinecraftForge.EVENT_BUS.register(Blocks.class);
 	}
 
@@ -229,8 +231,9 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	}
 
 	/**
+	 * Registers Blocks for this mod.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
@@ -243,7 +246,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	private static void regBlocks(final IForgeRegistry<Block> registry,
 			final ImmutableList<Block> blocks) {
 		blocks.stream().filter(
-				block -> block.getRegistryName().getResourceDomain().equals(BaseMetals.MODID))
+				block -> block.getRegistryName().getNamespace().equals(BaseMetals.MODID))
 				.forEach(registry::register);
 	}
 }

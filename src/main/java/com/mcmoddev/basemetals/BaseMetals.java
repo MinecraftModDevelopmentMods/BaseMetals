@@ -3,14 +3,10 @@ package com.mcmoddev.basemetals;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 import com.mcmoddev.basemetals.util.Config;
-import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.integration.IntegrationManager;
-import com.mcmoddev.lib.util.CheeseMath;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -48,7 +44,7 @@ import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationExcep
 	acceptedMinecraftVersions = "[1.12,)",
 	certificateFingerprint = "@FINGERPRINT@",
 	updateJSON = BaseMetals.UPDATEJSON)
-public class BaseMetals {
+public final class BaseMetals {
 
 	@Instance
 	public static BaseMetals instance;
@@ -87,7 +83,11 @@ public class BaseMetals {
 	public static String getVersion() {
 		return VERSION;
 	}
-	
+
+	/**
+	 *
+	 * @param event The Event.
+	 */
 	@EventHandler
 	public static void constructing(final FMLConstructionEvent event) {
 		try {
@@ -95,10 +95,10 @@ public class BaseMetals {
 		} catch (InvalidVersionSpecificationException e) {
 			logger.error("Error loading version information for plugins: %s", e);
 		}
-		
+
 		Config.init();
 	}
-	
+
 	@EventHandler
 	public void onFingerprintViolation(final FMLFingerprintViolationEvent event) {
 		logger.warn(SharedStrings.INVALID_FINGERPRINT);
@@ -106,7 +106,7 @@ public class BaseMetals {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@EventHandler
 	public static void preInit(final FMLPreInitializationEvent event) {
@@ -118,6 +118,10 @@ public class BaseMetals {
 		proxy.init(event);
 	}
 
+	/**
+	 *
+	 * @param event The Event.
+	 */
 	@EventHandler
 	public static void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);

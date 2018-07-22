@@ -3,7 +3,6 @@ package com.mcmoddev.basemetals.init;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.init.MMDCreativeTab;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 

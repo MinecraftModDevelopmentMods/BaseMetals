@@ -17,6 +17,11 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ *
+ * @author Jasmine Iwanek
+ *
+ */
 public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab implements IMMDObject {
 
 	public static final PropertyEnum<BlockMMDSlab.Variant> VARIANT = PropertyEnum.<BlockMMDSlab.Variant>create(
@@ -98,16 +103,16 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return this.isDouble() ? new BlockStateContainer(this, new IProperty[] { VARIANT })
-				: new BlockStateContainer(this, new IProperty[] { HALF, VARIANT });
+		return this.isDouble() ? new BlockStateContainer(this, (IProperty[]) new IProperty[] { VARIANT })
+				: new BlockStateContainer(this, (IProperty[]) new IProperty[] { HALF, VARIANT });
 	}
 
 	/**
 	 * Returns the slab block name with the type associated with it.
 	 */
 	@Override
-	public String getUnlocalizedName(final int meta) {
-		return super.getUnlocalizedName();
+	public String getTranslationKey(final int meta) {
+		return super.getTranslationKey();
 	}
 
 	@Override

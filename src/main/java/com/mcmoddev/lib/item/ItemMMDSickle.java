@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
@@ -25,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
@@ -35,23 +37,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 
-public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
+public class ItemMMDSickle extends ItemTool implements IMMDObject {
 
-	public static final ImmutableSet<Material> vanilla_materials = ImmutableSet.of(Material.WEB,
+	private static final ImmutableSet<Material> vanilla_materials = ImmutableSet.of(Material.WEB,
 			Material.LEAVES, Material.PLANTS, Material.VINE, Material.GOURD, Material.CACTUS);
 
 	private final MMDMaterial material;
 	private final int actionDiameter;
-	private final float efficiency;
-	private float attackDamage;
-	private float attackSpeed;
 
 	/**
 	 *
 	 * @param material
 	 */
 	public ItemMMDSickle(final MMDMaterial material) {
-		super(material);
+		super(Materials.getToolMaterialFor(material), null);
 		this.efficiency = material.getToolEfficiency();
 		this.setMaxDamage(material.getToolDurability());
 		this.material = material;
@@ -116,14 +115,9 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 
 			final TileEntity tileEntity = world.getTileEntity(actualPosition);
 
-			if (block.removedByPlayer(bsatapos, world, actualPosition, player, true)) { // boolean
-																						// is if
-																						// block can
-																						// be
-																						// harvested,
-																						// checked
-																						// above
-				block.onBlockDestroyedByPlayer(world, actualPosition, bsatapos);
+			if (block.removedByPlayer(bsatapos, world, actualPosition, player, true)) { // boolean is if block can be
+																						// harvested, checked above
+				block.onPlayerDestroy(world, actualPosition, bsatapos);
 				block.harvestBlock(world, player, actualPosition, bsatapos, tileEntity, tool);
 				block.dropXpOnBlockBreak(world, actualPosition, xp);
 			}
@@ -132,7 +126,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 		} else {
 			world.playBroadcastSound(2001, actualPosition, Block.getStateId(bsatapos));
 			if (block.removedByPlayer(bsatapos, world, actualPosition, player, true)) {
-				block.onBlockDestroyedByPlayer(world, actualPosition, bsatapos);
+				block.onPlayerDestroy(world, actualPosition, bsatapos);
 			}
 
 			tool.onBlockDestroyed(world, bsatapos, actualPosition, player);
@@ -215,8 +209,7 @@ public class ItemMMDSickle extends GenericMMDItem implements IMMDObject {
 	@SuppressWarnings("unused")
 	public Multimap<String, AttributeModifier> getItemAttributeModifiers(
 			final EntityEquipmentSlot equipmentSlot) {
-		final Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(
-				equipmentSlot, ItemStack.EMPTY);
+		final Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
 
 		// XXX: We drop the returns in booleans because it makes findbugs happy, maybe we should do
 		// something with them?

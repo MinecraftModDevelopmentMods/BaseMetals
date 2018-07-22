@@ -61,6 +61,11 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 	}
 
+	/**
+	 *
+	 * @param event
+	 *            The Event.
+	 */
 	@SubscribeEvent
 	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
 		initVanillaRecipes();

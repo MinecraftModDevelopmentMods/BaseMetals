@@ -73,6 +73,7 @@ import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -88,6 +89,7 @@ import net.minecraftforge.fml.common.ModContainer;
  *
  */
 public abstract class Items {
+
 	private static final BiMap<String, Item> itemRegistry = HashBiMap.create(34);
 	private static final Map<MMDMaterial, List<Item>> itemsByMaterial = new HashMap<>();
 
@@ -404,16 +406,16 @@ public abstract class Items {
 			fullName = name;
 		}
 
-		ModContainer base = Loader.instance().activeModContainer();
-		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+		final ModContainer base = Loader.instance().activeModContainer();
+		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
 
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
 		}
-		
+
 		item.setRegistryName(fullName);
-		item.setUnlocalizedName(item.getRegistryName().getResourceDomain() + "." + fullName);
-		
+		item.setTranslationKey(item.getRegistryName().getNamespace() + "." + fullName);
+
 		if (tab != null) {
 			item.setCreativeTab(tab);
 		}
@@ -424,7 +426,7 @@ public abstract class Items {
 		}
 
 		itemRegistry.put(fullName, item);
-		
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(base);
 		}
@@ -566,19 +568,21 @@ public abstract class Items {
 	public static int getSortingValue(@Nonnull final ItemStack itemStack) {
 		int classVal = 990000;
 		int materialVal = 9900;
-		if ((itemStack.getItem() instanceof ItemBlock)
-				&& (((ItemBlock) itemStack.getItem()).getBlock() instanceof IMMDObject)) {
+		final Item item = itemStack.getItem();
+		if ((item instanceof ItemBlock)
+				&& (((ItemBlock) item).getBlock() instanceof IMMDObject)) {
+			final Block block = ((ItemBlock) item).getBlock();
 			classVal = classSortingValues.computeIfAbsent(
-					((ItemBlock) itemStack.getItem()).getBlock().getClass(),
+					block.getClass(),
 					(final Class<?> clazz) -> 990000);
 			materialVal = materialSortingValues.computeIfAbsent(
-					((IMMDObject) ((ItemBlock) itemStack.getItem()).getBlock()).getMMDMaterial(),
+					((IMMDObject) block).getMMDMaterial(),
 					(final MMDMaterial material) -> 9900);
-		} else if (itemStack.getItem() instanceof IMMDObject) {
-			classVal = classSortingValues.computeIfAbsent(itemStack.getItem().getClass(),
+		} else if (item instanceof IMMDObject) {
+			classVal = classSortingValues.computeIfAbsent(item.getClass(),
 					(final Class<?> clazz) -> 990000);
 			materialVal = materialSortingValues.computeIfAbsent(
-					((IMMDObject) itemStack.getItem()).getMMDMaterial(),
+					((IMMDObject) item).getMMDMaterial(),
 					(final MMDMaterial material) -> 9900);
 		}
 		return classVal + materialVal + (itemStack.getMetadata() % 100);

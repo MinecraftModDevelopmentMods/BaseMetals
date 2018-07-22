@@ -93,6 +93,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 				slot = EntityEquipmentSlot.FEET;
 				break;
 			default:
+				return null;
 		}
 
 		return createArmorBase(material, slot);

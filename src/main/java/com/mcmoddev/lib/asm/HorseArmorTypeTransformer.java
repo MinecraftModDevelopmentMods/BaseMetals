@@ -5,7 +5,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 
-class HorseArmorTypeTransformer implements ITransformer {
+public final class HorseArmorTypeTransformer implements ITransformer {
 
 	private static final String HORSE_INTERFACE = "com/mcmoddev/lib/common/item/IHorseArmor";
 	private static final String[] GET_BY_ITEM = { "func_188576_a", "getByItem" };

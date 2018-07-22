@@ -11,7 +11,7 @@ public class BlockMMDFlowerPot extends net.minecraft.block.BlockFlowerPot implem
 
 	/**
 	 *
-	 * @param material
+	 * @param material The material the Flower Pot is made from
 	 */
 	public BlockMMDFlowerPot(final MMDMaterial material) {
 		super();

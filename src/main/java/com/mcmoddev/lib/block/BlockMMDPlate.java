@@ -216,7 +216,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	@Override
 	@Deprecated
 	public IBlockState getStateFromMeta(final int meta) {
-		return this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
+		return this.getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta));
 	}
 
 	@Override
@@ -226,7 +226,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { FACING });
+		return new BlockStateContainer(this, (IProperty[]) new IProperty[] { FACING });
 	}
 
 	/**

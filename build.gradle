@@ -16,15 +16,15 @@ buildscript {
   }
   dependencies {
     classpath "net.minecraftforge.gradle:${project.fg_version}"
-    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.+'
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.2.+'
+//  classpath 'com.jaredsburrows:gradle-checker-framework-plugin:0.2.1'
   }
 }
 
 plugins {
-//id "com.github.spotbugs" version "1.6.1"
-//id "com.jaredsburrows.checkerframework" version "0.2.1"
-  id "com.matthewprenger.cursegradle" version "1.0.10"
-  id "org.sonarqube" version "2.6.2"
+//id 'com.github.spotbugs' version '1.6.2'
+  id 'com.matthewprenger.cursegradle' version '1.0.11'
+  id 'org.sonarqube' version '2.6.2'
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -33,7 +33,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.sonarqube'
 apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'jacoco'
-//apply plugin: 'spotbugs'
+//apply plugin: 'com.github.spotbugs'
 //apply plugin: 'com.jaredsburrows.checkerframework'
 
 repositories {
@@ -76,6 +76,12 @@ junitPlatform {
   // filters (optional)
 }
 
+/*
+spotbugs {
+  toolVersion = '3.1.5'
+}
+*/
+
 tasks.withType(JavaCompile) {
   options.encoding = 'UTF-8'
   options.compilerArgs = [
@@ -87,6 +93,18 @@ tasks.withType(JavaCompile) {
 
 javadoc {
   failOnError = false
+}
+
+test {
+//  useJUnitPlatform()
+/*
+    useJUnitPlatform {
+    includeTags 'fast', 'smoke & feature-a'
+    // excludeTags 'slow', 'ci'
+    includeEngines 'junit-jupiter'
+    // excludeEngines 'junit-vintage'
+  }
+*/
 }
 
 def mod_file = getModFile()
@@ -235,84 +253,176 @@ repositories {
     name 'thiakil'
     url 'http://maven.thiakil.com/'
   }
+  maven { // Applied Energistics
+    name 'forge'
+    url 'https://files.minecraftforge.net/maven/'
+  }
+  /*
   ivy {
-    url "http://ae-mod.info/builds"
+    url 'http://ae-mod.info/builds'
     layout "pattern", {
     artifact "[module]-[revision](-[classifier])(.[ext])"
     }
   }
+  */
 }
 
 dependencies {
-  deobfProvided ("net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}")
+  deobfProvided "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
+  runtime "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
+  deobfProvided "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
+  runtime "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
+
+  // TODO: We don't use this
+  deobfProvided "net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}"
+//runtime "net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}"
 
   deobfProvided ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
+    exclude group: 'com.mod-buildcraft'
     exclude group: 'CraftTweaker2'
     exclude group: 'MCMultiPart2'
     exclude group: 'cofh'
     exclude group: 'com.blamejared'
     exclude group: 'mezz.jei'
     exclude group: 'net.darkhax.tesla'
-    exclude module: 'Chameleon' // mek only uses the storage drawers API, which doesn't need Chameleon
+    exclude module: 'CTM'
     exclude module: 'Hwyla'
     exclude module: 'InventoryTweaks'
     exclude module: 'industrialcraft-2'
+    exclude module: 'OpenComputers'
   }
+  /*
+  runtime ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
+    exclude group: 'com.mod-buildcraft'
+    exclude group: 'CraftTweaker2'
+    exclude group: 'MCMultiPart2'
+    exclude group: 'cofh'
+    exclude group: 'com.blamejared'
+    exclude group: 'mezz.jei'
+    exclude group: 'net.darkhax.tesla'
+    exclude module: 'CTM'
+    exclude module: 'Hwyla'
+    exclude module: 'InventoryTweaks'
+    exclude module: 'industrialcraft-2'
+    exclude module: 'OpenComputers'
+  }
+  */
 
-  deobfCompile ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
+  // TODO: We don't use this
+  deobfProvided ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
     exclude group: 'mezz.jei'
   }
-
-  deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
+  /*
+  runtime ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
     exclude group: 'mezz.jei'
   }
+  */
 
-  deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+  deobfProvided ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
+    exclude group: 'mezz.jei'
+  }
+  /*
+  runtime ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
+    exclude group: 'mezz.jei'
+  }
+  */
 
-  deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+  deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}"
+//runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
-  deobfCompile ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
+  // TODO: We don't use this
+  deobfProvided "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+//runtime "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+
+  deobfProvided ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
     exclude group: 'codechicken'
     exclude group: 'mezz.jei'
   }
+  /*
+  runtime ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
+    exclude group: 'codechicken'
+    exclude group: 'mezz.jei'
+  }
+  */
 
-  deobfCompile "com.mcmoddev:AdditionalLootTables:${mc_version}.1-${alt_version}"
-  deobfCompile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
+  // TODO: We don't use this
+  deobfProvided "MCMultiPart2:MCMultiPart:${mcmp_version}"
+//runtime "MCMultiPart2:MCMultiPart:${mcmp_version}"
+//deobfProvided "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
+//runtime "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 
-  deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}"
-//deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
-
-//deobfCompile "mcjty.theoneprobe:TheOneProbe:${mc_version}-${top_version}"
-//deobfProvided "mcjty.theoneprobe:TheOneProbe:${top_mc_version}-${top_version}:api"
+  deobfProvided ("mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}:api") {
+    exclude group: 'cofh'
+  }
+  /*
+  runtime ("mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}") {
+    exclude group: 'cofh'
+  }
+  */
 
   deobfProvided "portablejim:VeinMiner:${veinminer_version}"
+//runtime "portablejim:VeinMiner:${veinminer_version}"
 
-  deobfCompile ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
+  deobfProvided ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
     exclude group: 'mezz.jei'
   }
+//runtime "net.industrial-craft:industrialcraft-2:${ic2_version}"
 
+  // TODO: We don't use this
 //deobfProvided "com.googlecode.efficient-java-matrix-library:ejml:0.23"
+//runtime "com.googlecode.efficient-java-matrix-library:ejml:0.23"
 
-//deobfProvided "CraftTweaker2:CraftTweaker2-API:${mc_version}-${ct_api_version}"
-  deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
+  deobfProvided "CraftTweaker2:CraftTweaker2-API:${ct_api_version}"
+//runtime "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
 
-//deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
-//  exclude group: 'mezz.jei'
-//  exclude group: 'org.ow2.asm'
-//}
+  // TODO: We don't use this
+  /*
+  deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
+    exclude group: 'mezz.jei'
+    exclude group: 'org.ow2.asm'
+  }
+  runtime "MineTweaker3:MineTweaker3-API:${minetweaker_version}"
+  */
 
-  deobfCompile ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
+  deobfProvided ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
+    exclude group: 'mezz.jei'
+  }
+//runtime "mcp.mobius.waila:Hwyla:${hwyla_version}"
+
+  deobfProvided ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
+    exclude group: 'mezz.jei'
+  }
+  /*
+  runtime ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
+    exclude group: 'mezz.jei'
+  }
+  */
+
+  /*
+  runtime ("cofh:CoFHWorld:${mc_version}-${cofhworld_version}:universal") {
     exclude group: 'mezz.jei'
   }
 
-  // CoFHCore for TE integration
-  deobfCompile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
+  runtime ("cofh:ThermalFoundation:${mc_version}-${thermal_foundation_version}:universal") {
+    exclude group: 'cofh'
     exclude group: 'mezz.jei'
   }
+  runtime ("cofh:ThermalExpansion:${mc_version}-${thermal_expansion_version}:universal") {
+    exclude group: 'codechicken'
+    exclude group: 'cofh'
+    exclude group: 'mezz.jei'
+  }
+  */
 
-  deobfCompile ("com.blamejared:MTLib:${mtlib_version}") {
+  deobfProvided ("com.blamejared:MTLib:${mtlib_version}") {
     exclude group: 'mezz.jei'
   }
+  /*
+  runtime ("com.blamejared:MTLib:${mtlib_version}") {
+    exclude group: 'mezz.jei'
+  }
+  */
+  // TODO: Dense Ores, EnderCore, EnderIO, ThaumCraft
 }
 
 processResources {
@@ -339,6 +449,11 @@ jar {
     }
 //  attributes 'FMLAT' : ''
   }
+}
+
+task apiJar(type: Jar) {
+  classifier = 'apiClasses'
+  from apiClasses
 }
 
 task deobfJar(type: Jar) {
@@ -371,9 +486,18 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
-  archives deobfJar
-  archives sourceJar
-  archives javadocJar
+  if (project.hasProperty('doAPIJar')) {
+    archives apiJar
+  }
+  if (project.hasProperty('doDeobfJar')) {
+    archives deobfJar
+  }
+  if (project.hasProperty('doSourceJar')) {
+    archives sourceJar
+  }
+  if (project.hasProperty('doJavadocJar')) {
+    archives javadocJar
+  }
 }
 
 publishing {
@@ -383,14 +507,25 @@ publishing {
       artifactId project.archivesBaseName
       version project.version
       from components.java
-      artifact sourceJar {
-        classifier 'sources'
+      if (project.hasProperty('doSourceJar')) {
+        artifact sourceJar {
+          classifier 'sources'
+        }
       }
-      artifact deobfJar {
-        classifier 'deobf'
+      if (project.hasProperty('doAPIJar')) {
+        artifact apiJar {
+          classifier 'api'
+        }
       }
-      artifact javadocJar {
-        classifier 'javadoc'
+      if (project.hasProperty('doDeobfJar')) {
+        artifact deobfJar {
+          classifier 'deobf'
+        }
+      }
+      if (project.hasProperty('doJavadocJar')) {
+        artifact javadocJar {
+          classifier 'javadoc'
+        }
       }
     }
   }
@@ -406,12 +541,12 @@ publishing {
 }
 
 curseforge {
-  if (project.hasProperty('cf_project_id') && project.hasProperty('cf_release_type') &&
+  if (project.hasProperty('cf_project_id') && project.hasProperty('cf_release_type') && project.hasProperty('cf_changelog_filename') &&
       ((project.cf_release_type == 'alpha') || (project.cf_release_type == 'beta') || (project.cf_release_type == 'release'))) {
     apiKey = secret.curseforgeAPIKey
     project {
       id = project.cf_project_id
-      changelog = file('CHANGELOG.txt')
+      changelog = file(project.cf_changelog_filename)
       releaseType = project.cf_release_type
       addGameVersion(project.mc_version)
       mainArtifact(jar) {
@@ -419,16 +554,35 @@ curseforge {
         relations {
           requiredLibrary 'mmd-orespawn'
           optionalLibrary 'additional-loot-tables'
+          optionalLibrary 'crafttweaker'
+          optionalLibrary 'hwyla'
+          optionalLibrary 'industrial-craft'
+          optionalLibrary 'mekanism'
+          optionalLibrary 'the-one-probe'
+          optionalLibrary 'thermalexpansion'
+          optionalLibrary 'tinkers-construct'
+          optionalLibrary 'veinminer'
         }
       }
-      addArtifact(sourceJar) {
-        displayName = "$project.description $display_version Sources"
+      if (project.hasProperty('doAPIJar')) {
+        addArtifact(apiJar) {
+          displayName = "$project.description $display_version API"
+        }
       }
-      addArtifact(deobfJar) {
-        displayName = "$project.description $display_version Development"
+      if (project.hasProperty('doSourceJar')) {
+        addArtifact(sourceJar) {
+          displayName = "$project.description $display_version Sources"
+        }
       }
-      addArtifact(javadocJar) {
-        displayName = "$project.description $display_version Javadoc"
+      if (project.hasProperty('doDeobfJar')) {
+        addArtifact(deobfJar) {
+          displayName = "$project.description $display_version Development"
+        }
+      }
+      if (project.hasProperty('doJavadocJar')) {
+        addArtifact(javadocJar) {
+          displayName = "$project.description $display_version Javadoc"
+        }
       }
     }
   }

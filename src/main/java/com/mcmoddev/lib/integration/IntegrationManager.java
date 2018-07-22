@@ -24,8 +24,8 @@ public enum IntegrationManager {
 	INSTANCE;
 
 	private final List<IIntegration> integrations = Lists.newArrayList();
-	private final Map<String,Map<String, VersionMatch>> plugins = Maps.newConcurrentMap();
-	
+	private final Map<String, Map<String, VersionMatch>> plugins = Maps.newConcurrentMap();
+
 	private String getAnnotationItem(@Nonnull final String item, @Nonnull final ASMData asmData) {
 		if (asmData.getAnnotationInfo().get(item) != null) {
 			return asmData.getAnnotationInfo().get(item).toString();
@@ -36,13 +36,14 @@ public enum IntegrationManager {
 
 	private interface VersionMatch {
 		boolean matches(String otherVersion);
+
 		default String asString() {
 			return "any";
-		};
+		}
 	}
-	
+
 	/**
-	 * Harvest the version requirements during the FMLConstructionEvent phase and set them up for use
+	 * Harvest the version requirements during the FMLConstructionEvent phase and set them up for use.
 	 * @param event FMLConstructionEvent
 	 * @throws InvalidVersionSpecificationException
 	 */
@@ -53,7 +54,7 @@ public enum IntegrationManager {
 			final String modId = this.getAnnotationItem("pluginId", asmDataItem);
 			final String versions = this.getAnnotationItem("versions", asmDataItem);
 			if (!versions.equals("")) {
-				this.plugins.computeIfAbsent(addonId, (val) -> Maps.newConcurrentMap());
+				this.plugins.computeIfAbsent(addonId, val -> Maps.newConcurrentMap());
 				Map<String,VersionMatch> rv = this.plugins.get(addonId);
 				for (String entry : versions.split(";")) {
 					String[] bits = entry.split("@");
@@ -61,31 +62,33 @@ public enum IntegrationManager {
 					if (bits[1].matches("[\\[\\(]?[\\w\\d\\.\\+,]+[\\]\\)]?")) {
 						rv.put(targetModId, new VersionMatch() {
 							private final VersionRange myRange = VersionRange.createFromVersionSpec(bits[1]);
-							public boolean matches(String otherVersion) {
+							public boolean matches(final String otherVersion) {
 								return myRange.containsVersion(new DefaultArtifactVersion(otherVersion));
 							}
+
+							@Override
 							public String asString() {
 								return myRange.toStringFriendly();
 							}
 						});
 						BaseMetals.logger.fatal("versions: %s - %s!!%s - %s", entry, bits[0], bits[1], rv);
 					} else {
-						rv.put(targetModId, (match) -> true);
+						rv.put(targetModId, match -> true);
 					}
 					this.plugins.put(addonId, rv);
 				}
 			} else {
-				this.plugins.computeIfAbsent(addonId, (val) -> Maps.newConcurrentMap());
+				this.plugins.computeIfAbsent(addonId, val -> Maps.newConcurrentMap());
 				Map<String,VersionMatch> rv = this.plugins.get(addonId);
-				rv.put(modId, (match) -> true);
+				rv.put(modId, match -> true);
 				this.plugins.put(addonId, rv);
 			}
 		}
 	}
-	
+
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	public void preInit(@Nonnull final FMLPreInitializationEvent event) {
 		for (final ASMData asmDataItem : event.getAsmData().getAll(MMDPlugin.class.getCanonicalName())) {
@@ -95,7 +98,7 @@ public enum IntegrationManager {
 
 			if (Loader.isModLoaded(pluginId)) {
 				String pluginVersion = FMLCommonHandler.instance().findContainerFor(pluginId).getVersion();
-				VersionMatch matcher = this.plugins.get(addonId).getOrDefault(pluginId, (match) -> true);
+				VersionMatch matcher = this.plugins.get(addonId).getOrDefault(pluginId, match -> true);
 
 				if (!matcher.matches(pluginVersion)) {
 					BaseMetals.logger.error("Version %s of mod %s is not valid for this mods (%s) integration with it - %s required", pluginVersion, pluginId, addonId, matcher.asString());
@@ -116,17 +119,16 @@ public enum IntegrationManager {
 			}
 		}
 	}
-	
+
 	public void preInitPhase() {
 		MinecraftForge.EVENT_BUS.post(new IntegrationPreInitEvent());
 	}
-	
+
 	public void initPhase() {
 		MinecraftForge.EVENT_BUS.post(new IntegrationInitEvent());
 	}
-	
+
 	public void postInitPhase() {
 		MinecraftForge.EVENT_BUS.post(new IntegrationPostInitEvent());
 	}
-
 }

@@ -1533,11 +1533,11 @@ item.basemetals.zinc_powder_dirty.name=Dirty Zinc Dust
 
 #Item Casing
     #Item
-item.basemetals.adamantine_casing.name=Adamantine Item Item Casing
-item.basemetals.aquarium_casing.name=Aquarium Item Item Casing
-item.basemetals.antimony_casing.name=Antimony Item Item Casing
-item.basemetals.bismuth_casing.name=Bismuth Item Item Casing
-item.basemetals.brass_casing.name=Brass Item Item Casing
+item.basemetals.adamantine_casing.name=Adamantine Item Casing
+item.basemetals.aquarium_casing.name=Aquarium Item Casing
+item.basemetals.antimony_casing.name=Antimony Item Casing
+item.basemetals.bismuth_casing.name=Bismuth Item Casing
+item.basemetals.brass_casing.name=Brass Item Casing
 item.basemetals.bronze_casing.name=Bronze Item Casing
 item.basemetals.coldiron_casing.name=Cold-Iron Item Casing
 item.basemetals.copper_casing.name=Copper Item Casing

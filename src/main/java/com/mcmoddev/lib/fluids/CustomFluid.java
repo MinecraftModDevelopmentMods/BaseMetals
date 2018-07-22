@@ -16,8 +16,6 @@ import net.minecraftforge.fml.common.Loader;
  */
 public class CustomFluid extends Fluid {
 
-	private int color;
-
 	/**
 	 *
 	 * @param fluidName

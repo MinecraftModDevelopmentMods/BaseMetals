@@ -23,6 +23,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
 public final class Mekanism extends MekanismBase implements IIntegration {
 
+	private static final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
+			MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
+			MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
+			MaterialNames.ZINC);
+
 	@Override
 	public void init() {
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
@@ -30,11 +35,6 @@ public final class Mekanism extends MekanismBase implements IIntegration {
 		}
 
 		MinecraftForge.EVENT_BUS.register(this);
-
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
-				MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial).filter(Mekanism::isMaterialNotEmpty)
 				.forEach(MekanismBase::addGassesForMaterial);
@@ -46,14 +46,10 @@ public final class Mekanism extends MekanismBase implements IIntegration {
 
 	/**
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void regCallback(final RegistryEvent.Register<IRecipe> event) {
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
-				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
-				MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial).filter(Mekanism::isMaterialNotEmpty)
 				.forEach(MekanismBase::addOreMultiplicationRecipes);

@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.ItemGroups;
@@ -21,10 +20,13 @@ import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.basemetals.init.Recipes;
 import com.mcmoddev.basemetals.init.VillagerTrades;
 import com.mcmoddev.basemetals.util.EventHandler;
-
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.events.*;
+import com.mcmoddev.lib.events.MMDLibRegisterBlocks;
+import com.mcmoddev.lib.events.MMDLibRegisterFluids;
+import com.mcmoddev.lib.events.MMDLibRegisterItems;
+import com.mcmoddev.lib.events.MMDLibRegisterMaterials;
+import com.mcmoddev.lib.events.MMLibPreInitSync;
 import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.oregen.FallbackGenerator;
@@ -55,9 +57,11 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 public class CommonProxy {
 
 	/**
+	 * Pre Initialization for this mod.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
+	@SuppressWarnings("deprecation")
 	public void preInit(final FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
 
@@ -84,7 +88,7 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterBlocks());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterItems());
 		MinecraftForge.EVENT_BUS.post(new MMDLibRegisterFluids());
-		
+
 		Recipes.init();
 		VillagerTrades.init();
 
@@ -94,14 +98,15 @@ public class CommonProxy {
 	}
 
 	/**
+	 * Fired when Blocks get Remapped.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	public void onRemapBlock(final RegistryEvent.MissingMappings<Block> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings()) {
-			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
+			if (mapping.key.getNamespace().equals(BaseMetals.MODID)
 					&& (Materials.hasMaterial(MaterialNames.MERCURY))
-					&& ("liquid_mercury".equals(mapping.key.getResourcePath()))) {
+					&& ("liquid_mercury".equals(mapping.key.getPath()))) {
 				mapping.remap(com.mcmoddev.lib.init.Materials
 						.getMaterialByName(MaterialNames.MERCURY).getFluidBlock());
 			}
@@ -109,14 +114,15 @@ public class CommonProxy {
 	}
 
 	/**
+	 * Fired when Items Get Remapped.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	public void onRemapItem(final RegistryEvent.MissingMappings<Item> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
-			if (mapping.key.getResourceDomain().equals(BaseMetals.MODID)
+			if (mapping.key.getNamespace().equals(BaseMetals.MODID)
 					&& (Materials.hasMaterial(MaterialNames.COAL))
-					&& ("carbon_powder".equals(mapping.key.getResourcePath()))) {
+					&& ("carbon_powder".equals(mapping.key.getPath()))) {
 				mapping.remap(com.mcmoddev.lib.init.Materials.getMaterialByName(MaterialNames.COAL)
 						.getItem(Names.POWDER));
 			}
@@ -124,8 +130,9 @@ public class CommonProxy {
 	}
 
 	/**
+	 * Initialization for this mod.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	public void init(final FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
@@ -197,8 +204,9 @@ public class CommonProxy {
 	}
 
 	/**
+	 * Post Initialization for this mod.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	public void postInit(final FMLPostInitializationEvent event) {
 		ConfigBase.postInit();

@@ -66,9 +66,9 @@ public abstract class Fluids {
 			return material.getFluid();
 		}
 
-		ModContainer base = Loader.instance().activeModContainer();
-		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
-		
+		final ModContainer base = Loader.instance().activeModContainer();
+		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
 		}
@@ -102,13 +102,13 @@ public abstract class Fluids {
 
 	@Nullable
 	protected static BlockFluidClassic addFluidBlock(@Nonnull final MMDMaterial material) {
-		ModContainer base = Loader.instance().activeModContainer();
-		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
-		
+		final ModContainer base = Loader.instance().activeModContainer();
+		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
 		}
-		
+
 		if (material.getFluidBlock() != null) {
 			return material.getFluidBlock();
 		}
@@ -132,13 +132,13 @@ public abstract class Fluids {
 		}
 
 		block.setRegistryName(name); // fullName
-		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
+		block.setTranslationKey(block.getRegistryName().getNamespace() + "." + name);
 		material.addNewBlock("fluid", block);
 		block.setCreativeTab(CreativeTabs.MISC);
 
 		final ItemBlock itemBlock = new ItemBlock(block);
 		itemBlock.setRegistryName(name); // fullName
-		itemBlock.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + name);
+		itemBlock.setTranslationKey(block.getRegistryName().getNamespace() + "." + name);
 		material.addNewItem("fluidItemBlock", itemBlock);
 
 		material.setFluidBlock(block);

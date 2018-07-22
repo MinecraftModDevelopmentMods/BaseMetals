@@ -26,7 +26,7 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 
 	/**
 	 *
-	 * @param material
+	 * @param material The material the Anvil is made from
 	 */
 	public BlockMMDAnvil(final MMDMaterial material) {
 		super();

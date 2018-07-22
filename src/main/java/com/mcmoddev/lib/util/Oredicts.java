@@ -16,9 +16,9 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class Oredicts {
 
-	private static Map<String, List<Item>> oreDictItemMap = new HashMap<>();
-	private static Map<String, List<Block>> oreDictBlockMap = new HashMap<>();
-	private static Map<String, List<ItemStack>> oreDictItemStackMap = new HashMap<>();
+	private static final Map<String, List<Item>> oreDictItemMap = new HashMap<>();
+	private static final Map<String, List<Block>> oreDictBlockMap = new HashMap<>();
+	private static final Map<String, List<ItemStack>> oreDictItemStackMap = new HashMap<>();
 
 	// See net.minecraftforge.oredict.OreDictionary.initVanillaEntries() for Vanilla oreDict names
 
@@ -247,8 +247,8 @@ public class Oredicts {
 
 	/**
 	 *
-	 * @param name
-	 * @param block
+	 * @param name The name to register the Block against.
+	 * @param block The Block to register.
 	 */
 	public static void registerOre(final String name, final Block block) {
 		if (block != null) {
@@ -264,8 +264,8 @@ public class Oredicts {
 
 	/**
 	 *
-	 * @param name
-	 * @param item
+	 * @param name The name to register the Item against.
+	 * @param item the Item to register.
 	 */
 	public static void registerOre(final String name, final Item item) {
 		if (item != null) {
@@ -281,8 +281,8 @@ public class Oredicts {
 
 	/**
 	 *
-	 * @param name
-	 * @param itemStack
+	 * @param name The name to register the ItemStack against.
+	 * @param itemStack the ItemStack to register.
 	 */
 	public static void registerOre(final String name, final ItemStack itemStack) {
 		if (!itemStack.isEmpty()) {
@@ -303,7 +303,7 @@ public class Oredicts {
 	public static void registerItemOreDictionaryEntries() {
 		for (final Entry<String, List<Item>> ent : oreDictItemMap.entrySet()) {
 			for (final Item i : ent.getValue()) {
-				if (i.getRegistryName().getResourceDomain()
+				if (i.getRegistryName().getNamespace()
 						.equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), i);
 				}
@@ -311,7 +311,7 @@ public class Oredicts {
 		}
 		for (final Entry<String, List<ItemStack>> ent : oreDictItemStackMap.entrySet()) {
 			for (final ItemStack is : ent.getValue()) {
-				if (is.getItem().getRegistryName().getResourceDomain()
+				if (is.getItem().getRegistryName().getNamespace()
 						.equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), is);
 				}
@@ -325,7 +325,7 @@ public class Oredicts {
 	public static void registerBlockOreDictionaryEntries() {
 		for (final Entry<String, List<Block>> ent : oreDictBlockMap.entrySet()) {
 			for (final Block b : ent.getValue()) {
-				if (b.getRegistryName().getResourceDomain()
+				if (b.getRegistryName().getNamespace()
 						.equals(Loader.instance().activeModContainer().getModId())) {
 					OreDictionary.registerOre(ent.getKey(), b);
 				}

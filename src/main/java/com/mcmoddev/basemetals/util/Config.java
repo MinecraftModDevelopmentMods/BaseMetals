@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @author Jasmine Iwanek
  *
  */
-public class Config extends ConfigBase {
+public final class Config extends ConfigBase {
 
 	private static Configuration configuration;
 	private static final String CONFIG_FILE = "config/BaseMetals.cfg";
@@ -39,8 +39,9 @@ public class Config extends ConfigBase {
 	private static final String FLUIDS_CAT = "Fluids";
 
 	/**
+	 * Fired when the configuration changes.
 	 *
-	 * @param event
+	 * @param event The Event.
 	 */
 	@SubscribeEvent
 	public void onConfigChange(final ConfigChangedEvent.OnConfigChangedEvent event) {
@@ -111,8 +112,8 @@ public class Config extends ConfigBase {
 		Options.modEnabled(VeinMinerBase.PLUGIN_MODID,
 				configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
 						"If false, then Base Metals will not try and integrate with VeinMiner"));
-		Options.modEnabled("taiga", configuration.getBoolean("taiga_integration", INTEGRATION_CAT,
-				true,
+		Options.modEnabled("taiga", configuration.getBoolean("taiga_integration",
+				INTEGRATION_CAT, true,
 				"Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals"));
 		Options.modEnabled(DenseOresBase.PLUGIN_MODID,
 				configuration.getBoolean("denseores", INTEGRATION_CAT, true,

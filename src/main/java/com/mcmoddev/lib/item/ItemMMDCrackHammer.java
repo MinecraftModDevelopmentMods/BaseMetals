@@ -144,16 +144,17 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 
 			item.damageItem(crackedCount, player);
 			// if the items damage is maxed, lets increase it anyway and put it out of its misery
-			if(item.getMaxDamage() == item.getItemDamage()) {
+			if (item.getMaxDamage() == item.getItemDamage()) {
 				item.damageItem(1, player);
 			}
 		}
 	}
 
-	private boolean hardnessCheck(final ItemStack targetItem) {
-		if ((Options.enforceHardness()) && (targetItem.getItem() instanceof ItemBlock)) {
-			final Block b = ((ItemBlock) targetItem.getItem()).getBlock();
-			if (!this.canHarvestBlock(b.getStateFromMeta(targetItem.getMetadata()))) {
+	private boolean hardnessCheck(final ItemStack targetItemStack) {
+		final Item targetItem = targetItemStack.getItem();
+		if ((Options.enforceHardness()) && (targetItem instanceof ItemBlock)) {
+			final Block b = ((ItemBlock) targetItem).getBlock();
+			if (!this.canHarvestBlock(b.getStateFromMeta(targetItemStack.getMetadata()))) {
 				return true;
 			}
 		}
@@ -213,8 +214,8 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		if (Item.getItemFromBlock(block) == null) {
 			return null;
 		}
-		return CrusherRecipeRegistry
-				.getRecipeForInputItem(new ItemStack(block, 1, block.getMetaFromState(blockState)));
+		return CrusherRecipeRegistry.getRecipeForInputItem(
+				new ItemStack(block, 1, block.getMetaFromState(blockState)));
 	}
 
 	@Override

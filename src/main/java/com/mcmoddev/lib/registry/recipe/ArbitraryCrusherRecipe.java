@@ -40,8 +40,8 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 		this.input = input;
 		this.output = output;
 
-		super.setRegistryName(input.getItem().getRegistryName().getResourcePath() + "_to_"
-				+ output.getItem().getRegistryName().getResourcePath());
+		super.setRegistryName(input.getItem().getRegistryName().getPath() + "_to_"
+				+ output.getItem().getRegistryName().getPath());
 	}
 
 	/**
@@ -59,8 +59,8 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 		this.input = new ItemStack(input);
 		this.output = output;
 
-		super.setRegistryName(input.getRegistryName().getResourcePath() + "_to_"
-				+ output.getItem().getRegistryName().getResourcePath());
+		super.setRegistryName(input.getRegistryName().getPath() + "_to_"
+				+ output.getItem().getRegistryName().getPath());
 	}
 
 	/**
@@ -78,8 +78,8 @@ public class ArbitraryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRec
 		this.input = new ItemStack(input);
 		this.output = output;
 
-		super.setRegistryName(input.getRegistryName().getResourcePath() + "_to_"
-				+ output.getItem().getRegistryName().getResourcePath());
+		super.setRegistryName(input.getRegistryName().getPath() + "_to_"
+				+ output.getItem().getRegistryName().getPath());
 	}
 
 	/**

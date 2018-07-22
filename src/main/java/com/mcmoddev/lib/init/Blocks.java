@@ -264,15 +264,15 @@ public abstract class Blocks {
 			@Nonnull final MMDMaterial material, final CreativeTabs tab) {
 		final String fullName = getBlockFullName(block, material, name);
 
-		ModContainer base = Loader.instance().activeModContainer();
-		ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
-		
+		final ModContainer base = Loader.instance().activeModContainer();
+		final ModContainer temp = Loader.instance().getIndexedModList().get(ActiveModData.instance.activeMod());
+
 		if (!base.equals(temp)) {
 			Loader.instance().setActiveModContainer(temp);
 		}
-		
-		block.setRegistryName(new ResourceLocation(ActiveModData.instance.activeMod(),fullName));
-		block.setUnlocalizedName(block.getRegistryName().getResourceDomain() + "." + fullName);
+
+		block.setRegistryName(new ResourceLocation(ActiveModData.instance.activeMod(), fullName));
+		block.setTranslationKey(block.getRegistryName().getNamespace() + "." + fullName);
 
 		maybeMakeItemBlock(block, material, fullName);
 
@@ -303,8 +303,8 @@ public abstract class Blocks {
 				&& !(block instanceof BlockSlab) && (!material.isEmpty())) {
 			final ItemBlock itemBlock = new ItemMMDBlock(material, block);
 			itemBlock.setRegistryName(block.getRegistryName());
-			itemBlock.setUnlocalizedName(
-					block.getRegistryName().getResourceDomain() + "." + fullName);
+			itemBlock.setTranslationKey(
+					block.getRegistryName().getNamespace() + "." + fullName);
 			material.addNewItem("ItemBlock_" + fullName, itemBlock);
 		}
 	}

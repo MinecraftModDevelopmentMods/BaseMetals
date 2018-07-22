@@ -33,8 +33,8 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 
 	/**
 	 *
-	 * @param material
-	 * @param isSoft
+	 * @param material The material the ore is made from
+	 * @param isSoft is this a soft block?
 	 */
 	public BlockMMDOre(final MMDMaterial material, final boolean isSoft) {
 		super();

@@ -1,15 +1,16 @@
 package com.mcmoddev.basemetals.util;
 
-import com.mcmoddev.lib.events.*;
-
-import com.mcmoddev.lib.item.ItemMMDShield;
-import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
-import com.mcmoddev.lib.util.ConfigBase.Options;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
-
+import com.mcmoddev.lib.events.MMDLibRegisterBlocks;
+import com.mcmoddev.lib.events.MMDLibRegisterFluids;
+import com.mcmoddev.lib.events.MMDLibRegisterItems;
+import com.mcmoddev.lib.events.MMDLibRegisterMaterials;
+import com.mcmoddev.lib.item.ItemMMDShield;
+import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
+import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -38,7 +39,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber
-public class EventHandler {
+public final class EventHandler {
+
+	public EventHandler() {
+		// throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
+	}
 
 	/**
 	 *
@@ -134,11 +139,12 @@ public class EventHandler {
 			return;
 		}
 
-		final GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
+		final Minecraft minecraft = Minecraft.getMinecraft();
+		final GuiScreen guiscreen = minecraft.currentScreen;
 		if (guiscreen == null) {
 			return;
 		}
-		final FontRenderer fontRender = Minecraft.getMinecraft().fontRenderer;
+		final FontRenderer fontRender = minecraft.fontRenderer;
 		final int y = (guiscreen.height / 100) * 2;
 		int x = (guiscreen.width / 2);
 
@@ -162,28 +168,28 @@ public class EventHandler {
 					x, y, wrap, 0xFFFFFF00);
 		}
 	}
-	
+
 	@SubscribeEvent
-	public static void mmdlibRegisterMaterials(MMDLibRegisterMaterials ev) {
-		ev.setActive(BaseMetals.MODID);
+	public static void mmdlibRegisterMaterials(final MMDLibRegisterMaterials event) {
+		event.setActive(BaseMetals.MODID);
 		com.mcmoddev.basemetals.init.Materials.init();
 	}
-	
+
 	@SubscribeEvent
-	public static void mmdlibRegisterBlocks(MMDLibRegisterBlocks ev) {
-		ev.setActive(BaseMetals.MODID);
+	public static void mmdlibRegisterBlocks(final MMDLibRegisterBlocks event) {
+		event.setActive(BaseMetals.MODID);
 		Blocks.init();
 	}
 
 	@SubscribeEvent
-	public static void mmdlibRegisterItems(MMDLibRegisterItems ev) {
-		ev.setActive(BaseMetals.MODID);
+	public static void mmdlibRegisterItems(final MMDLibRegisterItems event) {
+		event.setActive(BaseMetals.MODID);
 		Items.init();
 	}
-	
+
 	@SubscribeEvent
-	public static void mmdlibRegisterFluids(MMDLibRegisterFluids ev) {
-		ev.setActive(BaseMetals.MODID);
+	public static void mmdlibRegisterFluids(final MMDLibRegisterFluids event) {
+		event.setActive(BaseMetals.MODID);
 		Fluids.init();
 	}
 }

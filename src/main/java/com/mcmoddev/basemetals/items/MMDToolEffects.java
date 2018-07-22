@@ -246,7 +246,7 @@ public abstract class MMDToolEffects {
 		final MMDMaterial material = Materials.getMaterialByName(materialName);
 
 		return ((player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == material
-				.getItem(Names.HELMET))
+						.getItem(Names.HELMET))
 				&& (player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == material
 						.getItem(Names.CHESTPLATE))
 				&& (player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == material

@@ -1,4 +1,5 @@
 package com.mcmoddev.lib.integration;
+
 import com.google.common.collect.Lists;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;

@@ -80,7 +80,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	private final boolean isBeaconBase;
 
 	/**
-	 * Whether or not this material has a blend that can be smelted to produce. it
+	 * Whether or not this material has a blend that can be smelted to produce it.
 	 */
 	private final boolean hasBlend;
 
@@ -589,6 +589,12 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return this.getItemStack(name.toString(), amount);
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @param amount
+	 * @return
+	 */
 	public ItemStack getItemStack(final String name, final int amount) {
 		if ((!this.hasItem(name)) || (this.items.get(name) == null)) {
 			return ItemStack.EMPTY;
@@ -634,7 +640,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public ItemStack getBlockItemStack(final String name) {
-		return new ItemStack(this.getBlock(name), 1);
+		return this.getBlockItemStack(name, 1);
 	}
 
 	public ItemStack getBlockItemStack(final Names name, final int amount) {

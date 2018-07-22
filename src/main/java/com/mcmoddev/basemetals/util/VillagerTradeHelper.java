@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfessio
  *
  * @author Chris on 3/30/2016.
  */
-public class VillagerTradeHelper {
+public final class VillagerTradeHelper {
 
 	private static final ResourceLocation[] professionList = {
 			new ResourceLocation("minecraft:farmer"), new ResourceLocation("minecraft:librarian"),
