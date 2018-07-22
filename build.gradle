@@ -256,16 +256,16 @@ dependencies {
     exclude module: 'TConstruct'
   }
 
-  deobfCompile "slimeknights.mantle:Mantle:${mc_version}-${mantle_version}"
+  deobfProvided "slimeknights.mantle:Mantle:${mc_version}-${mantle_version}"
 
-  deobfCompile "slimeknights:TConstruct:${mc_version}-${tconstruct_version}"
+  deobfProvided "slimeknights:TConstruct:${mc_version}-${tconstruct_version}"
 
-  deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+  deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}"
 //deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
 
-  deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+  deobfProvided "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
 
-  deobfCompile ("codechicken:CodeChickenCore:${mc_version}-${ccc_version}:universal") {
+  deobfProvided ("codechicken:CodeChickenCore:${mc_version}-${ccc_version}:universal") {
     exclude group: 'codechicken'
   }
 
@@ -275,38 +275,38 @@ dependencies {
     exclude group: 'mezz.jei'
   }
 
-  deobfCompile "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
-  deobfCompile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
+  deobfProvided "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
+  runtime "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
+  deobfProvided "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
+  runtime "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
 
-  deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
+  deobfProvided "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
 
-  deobfCompile "mcjty.theoneprobe:TheOneProbe:${top_mc_version}-${top_version}"
+  deobfProvided "mcjty.theoneprobe:TheOneProbe:${top_mc_version}-${top_version}"
 //deobfProvided "mcjty.theoneprobe:TheOneProbe:${top_mc_version}-${top_version}:api"
 
   deobfProvided "portablejim:VeinMiner:${veinminer_version}:api"
 
-  deobfCompile "net.industrial-craft:industrialcraft-2:${ic2_version}"
+  deobfProvided "net.industrial-craft:industrialcraft-2:${ic2_version}"
 //deobfProvided "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
 
-  deobfCompile ("MineTweaker3:MineTweaker3-MC1102-Main:${mc_version}-${minetweaker_version}") {
+  deobfProvided ("MineTweaker3:MineTweaker3-MC1102-Main:${mc_version}-${minetweaker_version}") {
     exclude group: 'org.ow2.asm'
   }
 
-  deobfCompile "com.blamejared:MTLib:${mtlib_version}"
+  deobfProvided "com.blamejared:MTLib:${mtlib_version}"
 
-  deobfCompile "mcp.mobius.waila:Hwyla:${hwyla_version}"
+  deobfProvided "mcp.mobius.waila:Hwyla:${hwyla_version}"
 //deobfProvided "mcp.mobius.waila:Hwyla:${hwyla_version}:api"
 
-  deobfCompile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
+  deobfProvided ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
     exclude group: 'mezz.jei'
   }
 
-//deobfCompile ("cofh:ThermalFoundation:${mc_version}-${thermal_foundation_version}:universal") {
   deobfProvided ("cofh:ThermalFoundation:${mc_version}-${thermal_foundation_version}:universal") {
     exclude module: 'CoFHCore'
   }
 
-//deobfCompile ("cofh:ThermalExpansion:${mc_version}-${thermal_expansion_version}:universal") {
   deobfProvided ("cofh:ThermalExpansion:${mc_version}-${thermal_expansion_version}:universal") {
     exclude group: 'codechicken'
     exclude group: 'mezz.jei'
@@ -314,13 +314,13 @@ dependencies {
     exclude module: 'ThermalFoundation'
   }
 
-  deobfCompile "com.enderio.core:EnderCore:${mc_version}-${endercore_version}"
+  deobfProvided "com.enderio.core:EnderCore:${mc_version}-${endercore_version}"
 //deobfProvided "com.enderio.core:EnderCore:${mc_version}-${endercore_version}:api"
 
-//deobfCompile "com.enderio:EnderIO:${mc_version}-${enderio_version}"
+//deobfProvided "com.enderio:EnderIO:${mc_version}-${enderio_version}"
   deobfProvided "com.enderio:EnderIO:${mc_version}-${enderio_version}:api"
 
-  deobfCompile "mcjty:compatlayer:1.10-${compatlayer_version}"
+  deobfProvided "mcjty:compatlayer:1.10-${compatlayer_version}"
 }
 
 processResources {
