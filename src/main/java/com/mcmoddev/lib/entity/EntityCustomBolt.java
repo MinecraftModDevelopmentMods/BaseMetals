@@ -25,6 +25,7 @@ public class EntityCustomBolt extends EntityTippedArrow {
 	 */
 	public EntityCustomBolt(final World worldIn) {
 		super(worldIn);
+		this.itemStack = ItemStack.EMPTY;
 	}
 
 	/**
@@ -40,6 +41,7 @@ public class EntityCustomBolt extends EntityTippedArrow {
 	 */
 	public EntityCustomBolt(final World worldIn, final double x, final double y, final double z) {
 		super(worldIn, x, y, z);
+		this.itemStack = ItemStack.EMPTY;
 	}
 
 	/**
