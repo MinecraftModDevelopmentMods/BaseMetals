@@ -268,77 +268,145 @@ repositories {
 }
 
 dependencies {
-  deobfCompile "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
-  deobfCompile "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
+  deobfProvided "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
+  runtime "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
+  deobfProvided "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
+  runtime "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
 
-  deobfProvided ("net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}")
+  // TODO: We don't use this
+  deobfProvided "net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}"
+//runtime "net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}"
 
   deobfProvided ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
+    exclude group: 'com.mod-buildcraft'
     exclude group: 'CraftTweaker2'
     exclude group: 'MCMultiPart2'
     exclude group: 'cofh'
     exclude group: 'com.blamejared'
     exclude group: 'mezz.jei'
     exclude group: 'net.darkhax.tesla'
-    exclude module: 'Chameleon' // mek only uses the storage drawers API, which doesn't need Chameleon
+    exclude module: 'CTM'
     exclude module: 'Hwyla'
     exclude module: 'InventoryTweaks'
     exclude module: 'industrialcraft-2'
+    exclude module: 'OpenComputers'
+  }
+  runtime ("com.github.aidancbrady:Mekanism:${mekanism_version}") {
+    exclude group: 'com.mod-buildcraft'
+    exclude group: 'CraftTweaker2'
+    exclude group: 'MCMultiPart2'
+    exclude group: 'cofh'
+    exclude group: 'com.blamejared'
+    exclude group: 'mezz.jei'
+    exclude group: 'net.darkhax.tesla'
+    exclude module: 'CTM'
+    exclude module: 'Hwyla'
+    exclude module: 'InventoryTweaks'
+    exclude module: 'industrialcraft-2'
+    exclude module: 'OpenComputers'
   }
 
-  deobfCompile ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
+  // TODO: We don't use this
+  deobfProvided ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
+    exclude group: 'mezz.jei'
+  }
+  runtime ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
     exclude group: 'mezz.jei'
   }
 
-  deobfCompile ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
+  deobfProvided ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
+    exclude group: 'mezz.jei'
+  }
+  runtime ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
     exclude group: 'mezz.jei'
   }
 
-  deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+  deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}"
+  runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
-  deobfCompile "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+  // TODO: We don't use this
+  deobfProvided "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+  runtime "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
 
-  deobfCompile ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
+  deobfProvided ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
+    exclude group: 'codechicken'
+    exclude group: 'mezz.jei'
+  }
+  runtime ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
     exclude group: 'codechicken'
     exclude group: 'mezz.jei'
   }
 
-  deobfCompile "MCMultiPart2:MCMultiPart:${mcmp_version}"
-//deobfCompile "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
+  // TODO: We don't use this
+  deobfProvided "MCMultiPart2:MCMultiPart:${mcmp_version}"
+  runtime "MCMultiPart2:MCMultiPart:${mcmp_version}"
+//deobfProvided "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
+//runtime "MCMultiPart2:MCMultiPart-exp:${mcmp_experimental_version}"
 
-  deobfProvided "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}:api"
-  runtime "mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}"
+  deobfProvided ("mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}:api") {
+    exclude group: 'cofh'
+  }
+  runtime ("mcjty.theoneprobe:TheOneProbe-${mc_version}:${mc_version}-${top_version}") {
+    exclude group: 'cofh'
+  }
 
   deobfProvided "portablejim:VeinMiner:${veinminer_version}"
+  runtime "portablejim:VeinMiner:${veinminer_version}"
 
   deobfProvided ("net.industrial-craft:industrialcraft-2:${ic2_version}:api") {
     exclude group: 'mezz.jei'
   }
+  runtime "net.industrial-craft:industrialcraft-2:${ic2_version}"
 
-  runtime "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
-
+  // TODO: We don't use this
 //deobfProvided "com.googlecode.efficient-java-matrix-library:ejml:0.23"
+//runtime "com.googlecode.efficient-java-matrix-library:ejml:0.23"
 
   deobfProvided "CraftTweaker2:CraftTweaker2-API:${ct_api_version}"
   runtime "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
 
+  // TODO: We don't use this
 //deobfCompile ("MineTweaker3:MineTweaker3-API:${minetweaker_version}") {
 //  exclude group: 'mezz.jei'
 //  exclude group: 'org.ow2.asm'
 //}
+//runtime "MineTweaker3:MineTweaker3-API:${minetweaker_version}"
 
-  deobfCompile ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
+  deobfProvided ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
+    exclude group: 'mezz.jei'
+  }
+  runtime "mcp.mobius.waila:Hwyla:${hwyla_version}"
+
+  deobfProvided ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
+    exclude group: 'mezz.jei'
+  }
+  runtime ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
     exclude group: 'mezz.jei'
   }
 
-  // CoFHCore for TE integration
-  deobfCompile ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
+  runtime ("cofh:CoFHWorld:${mc_version}-${cofhworld_version}:universal") {
     exclude group: 'mezz.jei'
   }
 
-  deobfCompile ("com.blamejared:MTLib:${mtlib_version}") {
+  runtime ("cofh:ThermalFoundation:${mc_version}-${thermal_foundation_version}:universal") {
+    exclude group: 'cofh'
     exclude group: 'mezz.jei'
   }
+  runtime ("cofh:ThermalExpansion:${mc_version}-${thermal_expansion_version}:universal") {
+    exclude group: 'codechicken'
+    exclude group: 'cofh'
+    exclude group: 'mezz.jei'
+  }
+
+  deobfProvided ("com.blamejared:MTLib:${mtlib_version}") {
+    exclude group: 'mezz.jei'
+  }
+  /*
+  runtime ("com.blamejared:MTLib:${mtlib_version}") {
+    exclude group: 'mezz.jei'
+  }
+  */
+  // TODO: Dense Ores, EnderCore, EnderIO, ThaumCraft
 }
 
 processResources {
