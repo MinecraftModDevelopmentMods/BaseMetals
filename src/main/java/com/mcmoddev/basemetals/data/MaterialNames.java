@@ -2,6 +2,15 @@ package com.mcmoddev.basemetals.data;
 
 import com.mcmoddev.lib.data.SharedStrings;
 
+/**
+ * <h2><u>Material Names:</u></h2>
+ * This class contains references to commonly used material names.<br>
+ * <br>
+ * The Strings contained within this class are the String representations
+ * of common metals that can be available in Minecraft, other mods, and Base Metals.<br>
+ * <br>
+ * Refer to these Strings when referencing a particular metal type.
+ */
 public final class MaterialNames {
 
 	public static final String ADAMANTINE = "adamantine";

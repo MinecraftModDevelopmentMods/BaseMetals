@@ -8,6 +8,20 @@ import net.minecraft.util.text.TextFormatting;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.utils.ToolHelper;
 
+/**
+ * <h2><u>Heavy Tool Modifier:</u></h2>
+ * <b>Name:</b> heavy
+ * <br>
+ * <b>Desc:</b>
+ * Increases the knockback of the tool by the factor of the tool's attack stat.
+ *
+ * <br>
+ * <b>String Reference:<br></b>
+ * "heavy"<br>
+ * "mmd-heavy"<br>
+ *
+ * @author Java doc author: Vase of Petunias
+ */
 public class TraitHeavy extends AbstractTrait {
 
 	public TraitHeavy() {

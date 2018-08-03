@@ -10,8 +10,27 @@ import net.minecraft.world.World;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.utils.ToolHelper;
 
+/**
+ * <h2><u>Sparkly Tool Modifier:</u></h2>
+ * <b>Name:</b> sparkly
+ * <br>
+ * <b>Desc:</b> This modifier, when applied to tools, has an automatic durability repair effect. Heals the tool for
+ * 1 durability every 200 ticks. (10 seconds)
+ *
+ * <br>
+ * <b>String Reference:<br></b>
+ * TraitNames.SPARKLY<br>
+ * "sparkly"<br>
+ * "mmd-sparkly"<br>
+ * {@link com.mcmoddev.basemetals.data.TraitNames}
+ *
+ * @author Java doc author: Vase of Petunias
+ */
 public class TraitSparkly extends AbstractTrait {
 
+	/**
+	 * <b>Units of game ticks:</b> 200 ticks (10 seconds)
+	 */
 	private static final int REGEN_INTERVAL = 200;
 
 	public TraitSparkly() {
