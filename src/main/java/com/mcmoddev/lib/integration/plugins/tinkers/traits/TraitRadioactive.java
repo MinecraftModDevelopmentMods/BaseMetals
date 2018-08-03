@@ -16,6 +16,22 @@ import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.utils.TagUtil;
 import slimeknights.tconstruct.library.utils.ToolHelper;
 
+/**
+ * <h2><u>Radioactive Tool Modifier:</u></h2>
+ * <b>Name:</b> radioactive
+ * <br>
+ * <b>Desc:</b>
+ * Does nothing if the tool is broken or if the tool is plated with lead.
+ * Otherwise, there is a 50% chance of having the tool either apply nausea for 1 second or poison for half a second.
+ * Effects are applied when ever the tool is within the player's inventory.
+ *
+ * <br>
+ * <b>String Reference:<br></b>
+ * "radioactive"
+ * "mmd-radioactive"
+ *
+ * @author Java doc author: Vase of Petunias
+ */
 public class TraitRadioactive extends AbstractTrait {
 
 	public TraitRadioactive() {

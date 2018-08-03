@@ -9,6 +9,20 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 
+/**
+ * <h2><u>Toxic Tool Modifier:</u></h2>
+ * <b>Name:</b> toxic
+ * <br>
+ * <b>Desc:</b>
+ * Applies poison 2 for 5 seconds as well as blindness for 2.5 seconds when a living entity is hit.
+ *
+ * <br>
+ * <b>String Reference:<br></b>
+ * "toxic"
+ * "mmd-toxic"
+ *
+ * @author Java doc author: Vase of Petunias
+ */
 public class TraitToxic extends AbstractTrait {
 
 	public TraitToxic() {

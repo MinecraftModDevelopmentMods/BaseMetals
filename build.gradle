@@ -269,9 +269,9 @@ repositories {
 
 dependencies {
   deobfProvided "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
-  runtime "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
+  //runtime "com.mcmoddev:AdditionalLootTables:${mc_version}-${alt_version}"
   deobfProvided "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
-  runtime "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
+  //runtime "com.mcmoddev:OreSpawn:${mc_version}-${orespawn_version}"
 
   // TODO: We don't use this
   deobfProvided "net.darkhax.tesla:Tesla-${mc_version}.2:${tesla_version}"
