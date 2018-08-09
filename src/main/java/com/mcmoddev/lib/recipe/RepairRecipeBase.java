@@ -75,15 +75,21 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			final ItemStack item = inv.getStackInSlot(i);
+			
+			if(item.isEmpty()) {
+				break;
+			}
+			
 			if (!repairMatched) {
 				repairMatched = OreDictionary.containsMatch(false, this.repairMaterials, item);
 			}
+			
 			if (!matched) {
-				final boolean hasDamage = item.getItemDamage() > 0 ? true : false;
-				matched = OreDictionary.itemMatches(this.baseItem, item, false) ? hasDamage : false;
+				matched = this.baseItem.getItem() == item.getItem() && item.getItemDamage() > 0;
 			}
 		}
-		return matched ? repairMatched : false;
+
+		return matched && repairMatched;
 	}
 
 	private ItemStack findBaseItem(final InventoryCrafting inv) {
