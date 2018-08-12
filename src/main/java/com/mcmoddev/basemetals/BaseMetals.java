@@ -58,12 +58,12 @@ import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationExcep
 	modid = BaseMetals.MODID,
 	name = BaseMetals.NAME,
 	version = BaseMetals.VERSION,
-	dependencies = "required-after:forge@[14.21.1.2387,);after:tconstruct;after:ic2;before:buildingbricks",
+	dependencies = "required-after:forge@[14.21.1.2387,);before:tconstruct;after:ic2;before:buildingbricks",
 	acceptedMinecraftVersions = "[1.12,)",
 	certificateFingerprint = "@FINGERPRINT@",
 	updateJSON = BaseMetals.UPDATEJSON)
 public final class BaseMetals {
-
+	
 	@Instance
 	public static BaseMetals instance;
 
@@ -114,7 +114,7 @@ public final class BaseMetals {
 	/**
 	 * <b>Called when Forge sets up Base Metals:</b> <br>
 	 * - This method will set up all addons for Base Metals. <br>
-	 * Refer to {@link com.mcmoddev.lib.integration.IntegrationManager#setup(FMLConstructionEvent)} documentation.
+	 * Refer to {@link com.mcmoddev.lib.integration.IntegrationManager#doSetupTasks(FMLConstructionEvent)} documentation.
 	 * <br>
 	 * - Initializes Base Metals config {@link Config#init()}.
 	 * <br><br>
@@ -125,7 +125,7 @@ public final class BaseMetals {
 	@EventHandler
 	public static void constructing(final FMLConstructionEvent event) {
 		try {
-			IntegrationManager.INSTANCE.setup(event);
+			IntegrationManager.INSTANCE.doSetupTasks(event);
 		} catch (InvalidVersionSpecificationException e) {
 			logger.error("Error loading version information for plugins: %s", e);
 		}
