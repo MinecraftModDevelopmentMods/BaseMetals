@@ -313,22 +313,22 @@ dependencies {
     exclude group: 'mezz.jei'
   }
   
-  runtime ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
-    exclude group: 'mezz.jei'
-  }
+//  runtime ("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}") {
+//    exclude group: 'mezz.jei'
+//  }
   
 
   deobfProvided ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
     exclude group: 'mezz.jei'
   }
   
-  runtime ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
-    exclude group: 'mezz.jei'
-  }
+//  runtime ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
+//    exclude group: 'mezz.jei'
+//  }
   
 
   deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}"
-  runtime "mezz.jei:jei_${mc_version}:${jei_version}"
+//  runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
   // TODO: We don't use this
   deobfProvided "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
@@ -373,7 +373,7 @@ dependencies {
 //runtime "com.googlecode.efficient-java-matrix-library:ejml:0.23"
 
   deobfProvided "CraftTweaker2:CraftTweaker2-API:${ct_api_version}"
-  runtime "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
+  //runtime "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
 
   // TODO: We don't use this
   /*
@@ -387,7 +387,7 @@ dependencies {
   deobfProvided ("mcp.mobius.waila:Hwyla:${hwyla_version}") {
     exclude group: 'mezz.jei'
   }
-  runtime "mcp.mobius.waila:Hwyla:${hwyla_version}"
+//  runtime "mcp.mobius.waila:Hwyla:${hwyla_version}"
 
   deobfProvided ("cofh:CoFHCore:${mc_version}-${cofhcore_version}:universal") {
     exclude group: 'mezz.jei'
