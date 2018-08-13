@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.mcmoddev.basemetals.BaseMetals;
@@ -33,7 +35,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem {
 	}
 
 	@Override
-	public boolean matches(final InventoryCrafting inv, final World worldIn) {
+	public boolean matches(final InventoryCrafting inv, @Nullable final World worldIn) {
 		final NonNullList<ItemStack> upgradeMats = NonNullList.create();
 		final Collection<MMDMaterial> allmats = Materials.getAllMaterials();
 		final MMDMaterial input = Materials.getMaterialByName(this.materialName);
