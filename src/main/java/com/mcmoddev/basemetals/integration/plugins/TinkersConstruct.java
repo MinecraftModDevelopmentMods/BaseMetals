@@ -20,6 +20,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -31,7 +32,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, versions = TinkersConstruct.PLUGIN_MODID
 		+ "@[1.12.2-2.7.4.0,)")
-public final class TinkersConstruct extends TinkersConstructBase implements IIntegration {
+public final class TinkersConstruct implements IIntegration {
+
+	public static final String PLUGIN_MODID = TinkersConstructBase.PLUGIN_MODID;
 
 	public TinkersConstruct() {
 		// do nothing
@@ -39,7 +42,7 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 
 	@Override
 	public void init() {
-		super.init();
+		TinkersConstructBase.INSTANCE.init();
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
@@ -48,6 +51,13 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 	
 	@SubscribeEvent
 	public void materialRegistration(MaterialRegistrationEvent ev) {
+		Fluid ssr = FluidRegistry.getFluid(MaterialNames.STARSTEEL);
+		Fluid ssm = Materials.getMaterialByName(MaterialNames.STARSTEEL).getFluid();
+		Fluid adr = FluidRegistry.getFluid(MaterialNames.ADAMANTINE);
+		Fluid adm = Materials.getMaterialByName(MaterialNames.ADAMANTINE).getFluid();
+		
+		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Star-steel fluid is: [registry] %s (%s), [material] %s (%s)", ssr.getName(), ssr, ssm.getName(), ssm);
+		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Adamantine fluid is: [registry] %s (%s), [material] %s (%s)", adr.getName(), adr, adm.getName(), adm);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE),
 				MaterialNames.ADAMANTINE, true, false, ev, TraitNames.COLDBLOODED,
 				TraitNames.INSATIABLE);
@@ -81,8 +91,6 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 				false, ev);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, true,
 				false, ev);
-//		registerMyAlloys();
-//		registerMeltings();
 	}
 
 	private void registerMaterial(final boolean active, final String name, final boolean castable, final boolean craftable,
@@ -90,8 +98,9 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 		if (active) {
 			TinkersMaterial mat = new TinkersMaterial(Materials.getMaterialByName(name))
 					.setCastable(castable).setCraftable(craftable).setToolForge(true);
+			
 			int i = 0;
-			int tc = 0;
+
 			while(i < traits.length) {
 				TinkerTraitLocation loc;
 				String trait;
@@ -100,18 +109,14 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 					loc = (TinkerTraitLocation)item;
 					trait = ((String)traits[++i]).toLowerCase(Locale.US);
 					
-					BaseMetals.logger.fatal("adding trait %s to location %s", trait, loc);
 					mat.addTrait(trait, loc);
 				} else {
 					trait = ((String)item).toLowerCase(Locale.US);
-					BaseMetals.logger.fatal("adding trait %s", trait);
 					mat.addTrait(trait);
 				}
 				i++;
-				tc++;
 			}
-			
-			BaseMetals.logger.fatal("(A) Registering material %s (%s) with %d traits", name, mat, tc);
+
 			ev.getRegistry().register(mat.create());
 		}
 	}
@@ -122,7 +127,6 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 			TinkersMaterial mat = new TinkersMaterial(Materials.getMaterialByName(name))
 					.setCastable(castable).setCraftable(craftable).setToolForge(true).create();
 
-			BaseMetals.logger.fatal("(B) Registering material %s (%s)", name, mat);
 			ev.getRegistry().register(mat);
 		}
 	}
@@ -130,20 +134,20 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 	@SubscribeEvent
 	public void registerMeltings(TinkersExtraMeltingsEvent ev) {
 		if (Materials.hasMaterial(MaterialNames.COAL)) {
-			addExtraMelting(FluidRegistry.getFluidStack(MaterialNames.COAL, 144),
+			TinkersConstructBase.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(MaterialNames.COAL, 144),
 					new ItemStack(net.minecraft.init.Items.COAL));
 		}
 
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
-			addExtraMelting(FluidRegistry.getFluidStack(mercury.getName(), 144),
+			TinkersConstructBase.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(mercury.getName(), 144),
 					mercury.getItemStack(Names.INGOT));
 		}
 
 		if (Materials.hasMaterial(MaterialNames.PRISMARINE)) {
 			final MMDMaterial prismarine = Materials.getMaterialByName(MaterialNames.PRISMARINE);
-			addExtraMelting(FluidRegistry.getFluidStack(prismarine.getName(), 144),
-					prismarine.getItemStack(Names.INGOT));
+			TinkersConstructBase.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(prismarine.getName(), 144),
+					new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD));
 		}
 	}
 

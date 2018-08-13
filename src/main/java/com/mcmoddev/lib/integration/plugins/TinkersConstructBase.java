@@ -1,12 +1,16 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import java.util.Deque;
 import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Queues;
+
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
 import com.mcmoddev.lib.integration.plugins.tinkers.*;
@@ -48,7 +52,9 @@ import slimeknights.tconstruct.library.traits.ITrait;
 public class TinkersConstructBase implements IIntegration {
 
 	public static final String PLUGIN_MODID = "tconstruct";
-
+	
+	private static boolean initDone = false;
+	
 	// registries
 	private static final IForgeRegistry<TinkersMaterial> materialsRegistry = new RegistryBuilder<TinkersMaterial>()
 			.disableSaving().setMaxID(65535)
@@ -61,12 +67,16 @@ public class TinkersConstructBase implements IIntegration {
 	private static final List<Pair<FluidStack,List<FluidStack>>> alloys = Lists.newCopyOnWriteArrayList();
 	private static final List<Pair<ItemStack, FluidStack>> extraMeltings = Lists.newCopyOnWriteArrayList();
 	public static final TinkersConstructBase INSTANCE = new TinkersConstructBase();
+
+	private static final Deque<Material> materialsToAdd = Queues.newArrayDeque();
 	
 	@Override
 	public void init() {
-		if (!Options.isModEnabled(PLUGIN_MODID)) {
+		if (!Options.isModEnabled(PLUGIN_MODID) || initDone) {
 			return;
 		}
+		initDone = true;
+		
 		MinecraftForge.EVENT_BUS.register(this);
 		registerInternalTraits();
 		registerInternalModifiers();
@@ -84,11 +94,8 @@ public class TinkersConstructBase implements IIntegration {
 		MinecraftForge.EVENT_BUS.post(new TinkersAlloyRecipeEvent(materialsRegistry));
 		MinecraftForge.EVENT_BUS.post(new TinkersExtraMeltingsEvent());
 		addMaterialStats();
-		addTraitsToMaterials();
 		materialIntegrationPreInit();
 		addMaterials();
-		setupExtraSmeltingRecipes();
-		registerAlloys();
 	}
 
 	/**
@@ -96,15 +103,21 @@ public class TinkersConstructBase implements IIntegration {
 	 * @param event
 	 */
 	@SubscribeEvent
+	public void init(final IntegrationInitEvent event) {
+		addTraitsToMaterials();
+		modifiersRegistry.get(new ResourceLocation("lead_plated")).addItem(Oredicts.PLATE+"Lead");
+		modifiersRegistry.get(new ResourceLocation("toxic")).addItem(Oredicts.DUST+"Mercury");
+		setupExtraSmeltingRecipes();
+		registerAlloys();
+	}
+	
+	/**
+	 * 
+	 * @param event
+	 */
+	@SubscribeEvent
 	public void postInit(final IntegrationPostInitEvent event) {
-		// shards
-		// stuff like Fortify and Extra Mod bits
-		// Cating Table stuff not handled automagically
-		// Smelter Fuels -- Event ?
-		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Tinkers Material Registry Dump Start");
-		TinkerRegistry.getAllMaterials().stream()
-		.forEach(material -> com.mcmoddev.basemetals.BaseMetals.logger.fatal("Material %s (%s -- %s)", material.getIdentifier(), material.getLocalizedName(), material));
-		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Tinkers Material Registry Dump End");
+		// purposefully blank
 	}
 
 	public void addAlloyRecipe(String outputName, Integer outputAmount, Object...recipe) {
@@ -146,10 +159,10 @@ public class TinkersConstructBase implements IIntegration {
 	
 	// private, internal stuff from here on out
 
-	@SuppressWarnings("deprecation")
 	private void addMaterials() {
-		materialsRegistry.getValues().stream()
-		.forEach(tm -> TinkerRegistry.addMaterial(tm.getTinkerMaterial()));
+		while(!materialsToAdd.isEmpty()) {
+			TinkerRegistry.addMaterial(materialsToAdd.pop());
+		}
 	}
 	
 	private void registerInternalTraits() {
@@ -168,27 +181,28 @@ public class TinkersConstructBase implements IIntegration {
 		modifiersRegistry.register(new ResourceLocation("toxic"), new ModifierToxic());
 	}
 	
-	@SuppressWarnings("deprecation")
 	private void materialIntegrationPreInit() {
-		materialsRegistry.getValues().stream()
-		.forEach(tm -> {
+		materialsRegistry.getEntries().stream()
+		.forEach(ent -> {
+			TinkersMaterial tm = ent.getValue();
+
 			Material m = TinkerRegistry.getMaterial(tm.getName());
 			MMDMaterial base = tm.getMMDMaterial();
 			if(m == Material.UNKNOWN) m = tm.create().getTinkerMaterial();
-			
+
 			m.setCastable(tm.getCastable()).setCraftable(tm.getCraftable());
 
 			m.addItemIngot(Oredicts.INGOT+base.getCapitalizedName());
 			m.setVisible();
+			m.setFluid(base.getFluid());
 			
 			if(tm.getToolForge())
 				TinkerRegistry.integrate(m, base.getFluid(), base.getCapitalizedName()).toolforge();
 			else
 				TinkerRegistry.integrate(m, base.getFluid(), base.getCapitalizedName());
 				
-			com.mcmoddev.basemetals.BaseMetals.logger.fatal("Material %s - %s // %s (%s == %s  ??)", base.getName(), tm.getTinkerMaterial(), m, m.getIdentifier(), TinkerRegistry.getMaterial(base.getName()));
-			
-			
+			if(!materialsToAdd.contains(m))
+				materialsToAdd.addLast(m);
 		});
 	}
 	
@@ -213,15 +227,11 @@ public class TinkersConstructBase implements IIntegration {
 				if(m == Material.UNKNOWN) m = tm.getTinkerMaterial();
 				if( trait != null) {
 					if(tp.getValue() == TinkerTraitLocation.GENERAL) {
-						com.mcmoddev.basemetals.BaseMetals.logger.fatal("Adding trait %s to material %s", trait.getIdentifier(), m.getIdentifier());
 						m.addTrait(trait);
 					} else {
 						loc = tp.getValue().toString().toLowerCase(Locale.US);
-						com.mcmoddev.basemetals.BaseMetals.logger.fatal("Adding trait %s to material %s for trait location %s", trait.getIdentifier(), m.getIdentifier(), loc);
 						m.addTrait(trait, loc);
 					}
-				} else {
-					com.mcmoddev.basemetals.BaseMetals.logger.fatal("Trait %s does not exist ?", tp.getKey());
 				}
 			})
 		);
@@ -247,9 +257,6 @@ public class TinkersConstructBase implements IIntegration {
 				inputs.add(rawRecipe.get(i));
 			}
 
-			String temp = String.join(", ", inputs.stream().map( f -> String.format("%s@%dmB", f.getLocalizedName(), f.amount)).toArray(String[]::new));
-			com.mcmoddev.basemetals.BaseMetals.logger.fatal("Adding alloy recipe to make %s@%dmB from [ %s ]", output.getLocalizedName(), output.amount, temp);
-			
 			AlloyRecipe recipe = new AlloyRecipe(output, inputs.toArray(new FluidStack[inputs.size()]));
 			TinkerRegistry.registerAlloy(recipe);
 		});
@@ -259,21 +266,8 @@ public class TinkersConstructBase implements IIntegration {
 			List<FluidStack> inputs = p.getRight();
 			FluidStack output = p.getLeft();
 
-			String temp = String.join(", ", inputs.stream().map( f -> String.format("%s@%dmB", f.getLocalizedName(), f.amount)).toArray(String[]::new));
-			com.mcmoddev.basemetals.BaseMetals.logger.fatal("Adding alloy recipe to make %s@%dmB from [ %s ]", output.getLocalizedName(), output.amount, temp);
-
 			AlloyRecipe recipe = new AlloyRecipe(output, inputs.toArray(new FluidStack[inputs.size()]));
 			TinkerRegistry.registerAlloy(recipe);
 		});
 	}
-	
-	/*private void addCommonItemsToMaterials() {
-		integrations.keySet().stream()
-		.forEach(mat -> {
-			Material rm = TinkerRegistry.getMaterial(mat.getName());
-			if(rm == Material.UNKNOWN) rm = mat.getTinkerMaterial();
-			MMDMaterial base = mat.getMMDMaterial();
-			rm.addCommonItems(base.getCapitalizedName());
-		});
-	}*/
 }
