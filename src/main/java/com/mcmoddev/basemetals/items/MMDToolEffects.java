@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
@@ -112,7 +114,7 @@ public abstract class MMDToolEffects {
 	 * @param armor
 	 * @param i
 	 */
-	public static void extraEffectsOnArmorUpdate(final World world, final EntityPlayer player,
+	public static void extraEffectsOnArmorUpdate(final World world, @Nullable final EntityPlayer player,
 			final MMDMaterial material, final ItemStack armor, final int i) {
 		// some sanity checks
 		if (armor.isEmpty()) {

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -205,7 +207,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		return this.getCrusherRecipe(block.getDefaultState());
 	}
 
-	protected ICrusherRecipe getCrusherRecipe(final IBlockState blockState) {
+	protected ICrusherRecipe getCrusherRecipe(@Nullable final IBlockState blockState) {
 		if (blockState == null) {
 			return null;
 		}

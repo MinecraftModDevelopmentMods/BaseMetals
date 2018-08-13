@@ -26,7 +26,7 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 
 	public static final PropertyEnum<BlockMMDSlab.Variant> VARIANT = PropertyEnum.<BlockMMDSlab.Variant>create(
 			"variant", BlockMMDSlab.Variant.class);
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -35,12 +35,12 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 	 */
 	public BlockMMDSlab(final MMDMaterial material) {
 		super(material.getVanillaMaterial());
-		this.material = material;
-		this.setSoundType(this.material.getSoundType());
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.mmdMaterial = material;
+		this.setSoundType(this.mmdMaterial.getSoundType());
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 
 		IBlockState iblockstate = this.blockState.getBaseState();
 
@@ -56,7 +56,7 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 	 */
 	@Override
 	public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
-		return this.material.getItem(Names.SLAB);
+		return this.mmdMaterial.getItem(Names.SLAB);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 	@Override
 	@Deprecated
 	public ItemStack getItem(final World worldIn, final BlockPos pos, final IBlockState state) {
-		return this.material.getItemStack(Names.SLAB);
+		return this.mmdMaterial.getItemStack(Names.SLAB);
 	}
 
 	/**
@@ -160,6 +160,6 @@ public abstract class BlockMMDSlab extends net.minecraft.block.BlockSlab impleme
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

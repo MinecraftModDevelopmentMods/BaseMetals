@@ -34,7 +34,7 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	private static final float THICKNESS = 1.0f / 16.0f;
 
@@ -47,12 +47,12 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 	 */
 	public BlockMMDPlate(final MMDMaterial material) {
 		super(material.getVanillaMaterial());
-		this.material = material;
-		this.blockSoundType = this.material.getSoundType();
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.mmdMaterial = material;
+		this.blockSoundType = this.mmdMaterial.getSoundType();
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		this.useNeighborBrightness = true;
 	}
@@ -255,6 +255,6 @@ public class BlockMMDPlate extends net.minecraft.block.Block implements IMMDObje
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

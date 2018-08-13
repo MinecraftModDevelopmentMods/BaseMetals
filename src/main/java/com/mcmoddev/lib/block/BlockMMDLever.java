@@ -5,7 +5,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 public class BlockMMDLever extends net.minecraft.block.BlockLever implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -13,16 +13,16 @@ public class BlockMMDLever extends net.minecraft.block.BlockLever implements IMM
 	 */
 	public BlockMMDLever(final MMDMaterial material) {
 		super();
-		this.material = material;
-		this.setSoundType(this.material.getSoundType());
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.mmdMaterial = material;
+		this.setSoundType(this.mmdMaterial.getSoundType());
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 	}
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

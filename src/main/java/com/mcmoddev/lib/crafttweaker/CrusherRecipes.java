@@ -2,6 +2,8 @@ package com.mcmoddev.lib.crafttweaker;
 
 import static com.blamejared.mtlib.helpers.InputHelper.toStack;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
 import crafttweaker.annotations.ZenRegister;
@@ -35,7 +37,7 @@ public class CrusherRecipes {
 	 * @param output
 	 */
 	@ZenMethod
-	public static void remove(final IItemStack input, @Optional final IItemStack output) {
+	public static void remove(final IItemStack input, @Optional @Nullable final IItemStack output) {
 		if (output != null) {
 			removeMatchFull(toStack(input), toStack(output));
 		} else {

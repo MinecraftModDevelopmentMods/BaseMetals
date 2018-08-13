@@ -22,7 +22,7 @@ import net.minecraft.world.World;
  */
 public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -30,17 +30,17 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 	 */
 	public BlockMMDAnvil(final MMDMaterial material) {
 		super();
-		this.material = material;
-		this.setSoundType(this.material.getSoundType());
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.mmdMaterial = material;
+		this.setSoundType(this.mmdMaterial.getSoundType());
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 	}
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 			final IBlockState state, final EntityPlayer playerIn, final EnumHand hand,
 			final EnumFacing facing, final float hitX, final float hitY, final float hitZ) {
 		if (!worldIn.isRemote) {
-			playerIn.displayGui(new BlockMMDAnvil.MMDAnvil(worldIn, pos, this.material));
+			playerIn.displayGui(new BlockMMDAnvil.MMDAnvil(worldIn, pos, this.mmdMaterial));
 		}
 
 		return true;

@@ -6,7 +6,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 public class BlockMMDTripWireHook extends net.minecraft.block.BlockTripWireHook
 		implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -14,16 +14,16 @@ public class BlockMMDTripWireHook extends net.minecraft.block.BlockTripWireHook
 	 */
 	public BlockMMDTripWireHook(final MMDMaterial material) {
 		super();
-		this.material = material;
-		this.setSoundType(this.material.getSoundType());
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.mmdMaterial = material;
+		this.setSoundType(this.mmdMaterial.getSoundType());
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 	}
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

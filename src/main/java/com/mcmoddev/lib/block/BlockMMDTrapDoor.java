@@ -19,7 +19,7 @@ import net.minecraft.world.World;
  */
 public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -28,12 +28,12 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	 */
 	public BlockMMDTrapDoor(final MMDMaterial material) {
 		super(material.getVanillaMaterial());
-		this.material = material;
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.blockSoundType = this.material.getSoundType();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.mmdMaterial = material;
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.blockSoundType = this.mmdMaterial.getSoundType();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 
@@ -41,8 +41,8 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	public boolean onBlockActivated(final World worldIn, final BlockPos pos,
 			final IBlockState state, final EntityPlayer playerIn, final EnumHand hand,
 			final EnumFacing facing, final float hitX, final float hitY, final float hitZ) {
-		if ((this.material.getToolHarvestLevel() > 1)
-				|| (this.material.getType().equals(MaterialType.METAL))) {
+		if ((this.mmdMaterial.getToolHarvestLevel() > 1)
+				|| (this.mmdMaterial.getType().equals(MaterialType.METAL))) {
 			return false;
 		} else {
 			final IBlockState newState = state.cycleProperty(BlockTrapDoor.OPEN);
@@ -72,6 +72,6 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

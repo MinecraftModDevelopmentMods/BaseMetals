@@ -9,7 +9,7 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockMMDFence extends net.minecraft.block.BlockFence implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -17,12 +17,12 @@ public class BlockMMDFence extends net.minecraft.block.BlockFence implements IMM
 	 */
 	public BlockMMDFence(final MMDMaterial material) {
 		super(material.getVanillaMaterial(), material.getVanillaMaterial().getMaterialMapColor());
-		this.material = material;
-		this.setSoundType(this.material.getSoundType());
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.mmdMaterial = material;
+		this.setSoundType(this.mmdMaterial.getSoundType());
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 	}
 
 	// We don't specifically need this, but it does mean less logic being run on each check
@@ -34,6 +34,6 @@ public class BlockMMDFence extends net.minecraft.block.BlockFence implements IMM
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

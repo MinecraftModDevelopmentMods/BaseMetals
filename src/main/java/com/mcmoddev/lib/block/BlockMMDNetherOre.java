@@ -17,7 +17,7 @@ import net.minecraft.world.IBlockAccess;
  */
 public class BlockMMDNetherOre extends BlockExplosiveOre implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -26,12 +26,12 @@ public class BlockMMDNetherOre extends BlockExplosiveOre implements IMMDObject {
 	 */
 	public BlockMMDNetherOre(final MMDMaterial material) {
 		super();
-		this.material = material;
+		this.mmdMaterial = material;
 		this.setSoundType(SoundType.STONE);
-		this.blockHardness = Math.max(5f, this.material.getOreBlockHardness());
-		this.blockResistance = Math.max(1.5f, this.material.getBlastResistance() * 0.75f);
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.blockHardness = Math.max(5f, this.mmdMaterial.getOreBlockHardness());
+		this.blockResistance = Math.max(1.5f, this.mmdMaterial.getBlastResistance() * 0.75f);
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 	}
 
 	@Override
@@ -52,6 +52,6 @@ public class BlockMMDNetherOre extends BlockExplosiveOre implements IMMDObject {
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

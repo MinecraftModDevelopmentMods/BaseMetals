@@ -18,7 +18,7 @@ import net.minecraft.world.IBlockAccess;
  */
 public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -27,12 +27,12 @@ public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDO
 	 */
 	public BlockMMDWall(final MMDMaterial material) {
 		super(material.getBlock(Names.BLOCK));
-		this.material = material;
-		this.setSoundType(this.material.getSoundType());
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.mmdMaterial = material;
+		this.setSoundType(this.mmdMaterial.getSoundType());
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 	}
 
 	@Override
@@ -49,6 +49,6 @@ public class BlockMMDWall extends net.minecraft.block.BlockWall implements IMMDO
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

@@ -20,7 +20,7 @@ import net.minecraft.world.IBlockAccess;
  */
 public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -38,7 +38,7 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 	 */
 	public BlockMMDOre(final MMDMaterial material, final boolean isSoft) {
 		super();
-		this.material = material;
+		this.mmdMaterial = material;
 		float hardnessMax = 5f;
 		float resistMax = 1.5f;
 		String tool = "pickaxe";
@@ -52,9 +52,9 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 			this.setSoundType(SoundType.STONE);
 		}
 
-		this.blockHardness = Math.max(hardnessMax, this.material.getOreBlockHardness());
-		this.blockResistance = Math.max(resistMax, this.material.getBlastResistance() * 0.75f);
-		this.setHarvestLevel(tool, this.material.getRequiredHarvestLevel());
+		this.blockHardness = Math.max(hardnessMax, this.mmdMaterial.getOreBlockHardness());
+		this.blockResistance = Math.max(resistMax, this.mmdMaterial.getBlastResistance() * 0.75f);
+		this.setHarvestLevel(tool, this.mmdMaterial.getRequiredHarvestLevel());
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 		int most = 1;
 		int least = 1;
 		int total;
-		switch (this.material.getType()) {
+		switch (this.mmdMaterial.getType()) {
 			case WOOD:
 			case ROCK:
 			case METAL:
@@ -112,13 +112,13 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 
 	@Override
 	public Item getItemDropped(final IBlockState state, final Random random, final int fortune) {
-		switch (this.material.getType()) {
+		switch (this.mmdMaterial.getType()) {
 			case CRYSTAL:
-				return this.material.getItem(Names.CRYSTAL);
+				return this.mmdMaterial.getItem(Names.CRYSTAL);
 			case GEM:
-				return this.material.getItem(Names.GEM);
+				return this.mmdMaterial.getItem(Names.GEM);
 			case MINERAL:
-				return this.material.getItem(Names.POWDER);
+				return this.mmdMaterial.getItem(Names.POWDER);
 			default:
 				return Item.getItemFromBlock(this);
 		}

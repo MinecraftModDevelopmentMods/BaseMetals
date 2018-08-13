@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockAccess;
  */
 public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -20,16 +20,16 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 */
 	public BlockMMDBlock(final MMDMaterial material) {
 		super(material.getVanillaMaterial());
-		this.material = material;
+		this.mmdMaterial = material;
 
-		this.setSoundType(this.material.getSoundType());
+		this.setSoundType(this.mmdMaterial.getSoundType());
 		this.fullBlock = true;
 		this.setLightOpacity(255);
 		this.translucent = false;
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 		// Additional
 		this.fullBlock = true;
 	}
@@ -37,11 +37,11 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	@Override
 	public boolean isBeaconBase(final IBlockAccess worldObj, final BlockPos pos,
 			final BlockPos beacon) {
-		return this.material.isBeaconBase();
+		return this.mmdMaterial.isBeaconBase();
 	}
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }
