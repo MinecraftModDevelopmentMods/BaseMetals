@@ -27,7 +27,6 @@ public final class ModifierToxic extends ModifierTrait implements IModifierDispl
 		super("toxic-modifier", 0xFFFFFF, 1, 0);
 		this.addAspects(new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this),
 				ModifierAspect.freeModifier);
-		this.addItem("powderMercury");
 	}
 
 	@Override
