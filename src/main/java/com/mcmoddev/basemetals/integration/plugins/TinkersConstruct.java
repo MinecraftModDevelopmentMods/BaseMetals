@@ -20,6 +20,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -50,6 +51,13 @@ public final class TinkersConstruct implements IIntegration {
 	
 	@SubscribeEvent
 	public void materialRegistration(MaterialRegistrationEvent ev) {
+		Fluid ssr = FluidRegistry.getFluid(MaterialNames.STARSTEEL);
+		Fluid ssm = Materials.getMaterialByName(MaterialNames.STARSTEEL).getFluid();
+		Fluid adr = FluidRegistry.getFluid(MaterialNames.ADAMANTINE);
+		Fluid adm = Materials.getMaterialByName(MaterialNames.ADAMANTINE).getFluid();
+		
+		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Star-steel fluid is: [registry] %s (%s), [material] %s (%s)", ssr.getName(), ssr, ssm.getName(), ssm);
+		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Adamantine fluid is: [registry] %s (%s), [material] %s (%s)", adr.getName(), adr, adm.getName(), adm);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE),
 				MaterialNames.ADAMANTINE, true, false, ev, TraitNames.COLDBLOODED,
 				TraitNames.INSATIABLE);
@@ -90,8 +98,9 @@ public final class TinkersConstruct implements IIntegration {
 		if (active) {
 			TinkersMaterial mat = new TinkersMaterial(Materials.getMaterialByName(name))
 					.setCastable(castable).setCraftable(craftable).setToolForge(true);
+			
 			int i = 0;
-			int tc = 0;
+
 			while(i < traits.length) {
 				TinkerTraitLocation loc;
 				String trait;
@@ -106,7 +115,6 @@ public final class TinkersConstruct implements IIntegration {
 					mat.addTrait(trait);
 				}
 				i++;
-				tc++;
 			}
 
 			ev.getRegistry().register(mat.create());
@@ -139,7 +147,7 @@ public final class TinkersConstruct implements IIntegration {
 		if (Materials.hasMaterial(MaterialNames.PRISMARINE)) {
 			final MMDMaterial prismarine = Materials.getMaterialByName(MaterialNames.PRISMARINE);
 			TinkersConstructBase.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(prismarine.getName(), 144),
-					prismarine.getItemStack(Names.INGOT));
+					new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD));
 		}
 	}
 
