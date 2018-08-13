@@ -436,8 +436,11 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	private void registerExtraMeltings() {
-		extraMeltings.stream().forEach(p -> TinkerRegistry
-				.registerMelting(new MeltingRecipe(RecipeMatch.of(p.getLeft()), p.getRight())));
+		extraMeltings.stream().forEach(p -> {
+			if ((!p.getLeft().isEmpty()) && (p.getRight() != null)) {
+				TinkerRegistry.registerMelting(new MeltingRecipe(RecipeMatch.of(p.getLeft()), p.getRight()));
+			}
+		});
 	}
 
 	@Nullable
