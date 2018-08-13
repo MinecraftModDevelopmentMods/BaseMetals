@@ -1,5 +1,7 @@
 package com.mcmoddev.basemetals.util;
 
+import javax.annotation.Nonnull;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
@@ -83,7 +85,7 @@ public final class EventHandler {
 	 *
 	 * @return
 	 */
-	public static InventoryCrafting getDummyCraftingInv() {
+	@Nonnull public static InventoryCrafting getDummyCraftingInv() {
 		final Container tempContainer = new Container() {
 
 			@Override
