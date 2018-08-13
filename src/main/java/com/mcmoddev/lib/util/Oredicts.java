@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.lib.data.SharedStrings;
 
 import net.minecraft.block.Block;
@@ -250,7 +252,7 @@ public class Oredicts {
 	 * @param name The name to register the Block against.
 	 * @param block The Block to register.
 	 */
-	public static void registerOre(final String name, final Block block) {
+	public static void registerOre(final String name, @Nullable final Block block) {
 		if (block != null) {
 			if (oreDictBlockMap.containsKey(name)) {
 				oreDictBlockMap.get(name).add(block);
@@ -267,7 +269,7 @@ public class Oredicts {
 	 * @param name The name to register the Item against.
 	 * @param item the Item to register.
 	 */
-	public static void registerOre(final String name, final Item item) {
+	public static void registerOre(final String name, @Nullable final Item item) {
 		if (item != null) {
 			if (oreDictItemMap.containsKey(name)) {
 				oreDictItemMap.get(name).add(item);

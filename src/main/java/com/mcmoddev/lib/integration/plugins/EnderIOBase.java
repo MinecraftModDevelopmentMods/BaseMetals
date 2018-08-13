@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -122,7 +123,7 @@ public class EnderIOBase implements IIntegration {
 	 *            How much energy it costs to perform
 	 */
 	protected static void addAlloySmelterRecipe(@Nonnull final MMDMaterial material,
-			final String outputSecondary, @Nonnull final int energy) {
+			@Nullable final String outputSecondary, @Nonnull final int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 
 		final String capitalizedName = material.getCapitalizedName();
@@ -279,9 +280,12 @@ public class EnderIOBase implements IIntegration {
 	 *            How much energy it costs to perform
 	 */
 	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material,
-			final String outputSecondary, @Nonnull final int energy) {
+			@Nullable final String outputSecondary, @Nonnull final int energy) {
 		int primaryQty = 2;
-		final int secondaryQty = 1;
+		int secondaryQty = 1;
+		if (outputSecondary == null) {
+			secondaryQty = 0;
+		}
 
 		if (material.getType() == MaterialType.MINERAL) {
 			primaryQty = 4;
@@ -324,7 +328,7 @@ public class EnderIOBase implements IIntegration {
 	 *            How much energy it costs to perform
 	 */
 	protected static void addSagMillRecipe(@Nonnull final MMDMaterial material,
-			@Nonnull final int primaryQty, final String outputSecondary,
+			@Nonnull final int primaryQty, @Nullable final String outputSecondary,
 			@Nonnull final int secondaryQty, @Nonnull final int energy) {
 		final String ownerModID = Loader.instance().activeModContainer().getModId();
 

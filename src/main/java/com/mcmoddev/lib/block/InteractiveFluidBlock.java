@@ -2,12 +2,13 @@ package com.mcmoddev.lib.block;
 
 import java.util.function.BiConsumer;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -35,7 +36,7 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 	 *            A function to define what happens to swimming entities. Can be null.
 	 */
 	public InteractiveFluidBlock(final Fluid fluid, final boolean flammable,
-			final BiConsumer<World, EntityLivingBase> immersionEffect) {
+			@Nullable final BiConsumer<World, EntityLivingBase> immersionEffect) {
 		super(fluid, Material.WATER);
 		this.isFlammable = flammable;
 		this.immersionEffect = immersionEffect;
@@ -114,16 +115,5 @@ public class InteractiveFluidBlock extends net.minecraftforge.fluids.BlockFluidC
 			return 30;
 		}
 		return 0;
-	}
-
-	// TODO: remove the block overrides and see if fluids are working correctly yet
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public AxisAlignedBB getCollisionBoundingBox(final IBlockState blockState,
-			final IBlockAccess worldIn, final BlockPos pos) {
-		return NULL_AABB;
 	}
 }

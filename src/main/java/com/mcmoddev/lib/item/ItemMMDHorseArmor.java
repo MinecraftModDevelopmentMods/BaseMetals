@@ -2,6 +2,8 @@ package com.mcmoddev.lib.item;
 
 import java.util.Locale;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.common.item.IHorseArmor;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -31,7 +33,7 @@ public class ItemMMDHorseArmor extends GenericMMDItem implements IHorseArmor {
 	}
 
 	@Override
-	public HorseArmorType getHorseArmorType(final ItemStack stack) {
+	public HorseArmorType getHorseArmorType(@Nullable final ItemStack stack) {
 		if ((stack != null) && (stack.getItem() != this)) { // NB stack CAN be null, when our ASM
 															// does it
 			return HorseArmorType.NONE;

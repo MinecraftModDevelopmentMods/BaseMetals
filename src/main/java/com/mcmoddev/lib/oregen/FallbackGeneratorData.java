@@ -60,7 +60,7 @@ public class FallbackGeneratorData {
 		}
 
 		@Override
-		public boolean apply(final IBlockState comp) {
+		public boolean apply(@Nullable final IBlockState comp) {
 			if ((comp != null) && (comp.getBlock() == Blocks.STONE)) {
 				final BlockStone.EnumType block = comp.getValue(BlockStone.VARIANT);
 				return block.isNatural();
@@ -75,7 +75,7 @@ public class FallbackGeneratorData {
 		}
 
 		@Override
-		public boolean apply(final IBlockState comp) {
+		public boolean apply(@Nullable final IBlockState comp) {
 			if (comp != null) {
 				final Block b = comp.getBlock();
 				return b.equals(Blocks.NETHERRACK);
@@ -90,7 +90,7 @@ public class FallbackGeneratorData {
 		}
 
 		@Override
-		public boolean apply(final IBlockState comp) {
+		public boolean apply(@Nullable final IBlockState comp) {
 			if (comp != null) {
 				final Block b = comp.getBlock();
 				return b.equals(Blocks.END_STONE);

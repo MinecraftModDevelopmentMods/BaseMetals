@@ -327,8 +327,7 @@ public abstract class Items {
 		final Item item = createItem(material, name.toString(), getClassFromName(name),
 				isNameEnabled(name), tab);
 
-		final String oredict = getOredictFromName(name);
-		setupOredict(item, oredict, name, material);
+		setupOredict(item, getOredictFromName(name), name, material);
 
 		return item;
 	}
@@ -337,7 +336,7 @@ public abstract class Items {
 		return ((material.isEmpty()) || (name == null) || isWrongThingToMake(name, material));
 	}
 
-	private static void setupOredict(final Item item, final String oredict, final Names name,
+	private static void setupOredict(@Nullable final Item item, @Nullable final String oredict, final Names name,
 			final MMDMaterial material) {
 		if (item != null) {
 			if (oredict != null) {
@@ -395,7 +394,7 @@ public abstract class Items {
 	 */
 	@Nullable
 	protected static Item addItem(@Nonnull final Item item, @Nonnull final String name,
-			final MMDMaterial material, final CreativeTabs tab) {
+			final MMDMaterial material, @Nullable final CreativeTabs tab) {
 		String fullName;
 		if ((!material.isEmpty()) && (!material.isDefault())) {
 			if (material.hasItem(name)) {

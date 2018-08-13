@@ -3,6 +3,8 @@ package com.mcmoddev.lib.item;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -50,7 +52,7 @@ public class ItemMMDHoe extends net.minecraft.item.ItemHoe implements IMMDObject
 	 */
 	@Override
 	@Deprecated
-	public int getHarvestLevel(final ItemStack stack, final String typeRequested,
+	public int getHarvestLevel(final ItemStack stack, @Nullable final String typeRequested,
 			final EntityPlayer player, final IBlockState blockState) {
 		if ((typeRequested != null) && this.toolTypes.contains(typeRequested)) {
 			return this.material.getToolHarvestLevel();

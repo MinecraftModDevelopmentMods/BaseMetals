@@ -261,7 +261,7 @@ public abstract class Blocks {
 	 */
 	@Nullable
 	protected static Block addBlock(@Nonnull final Block block, @Nonnull final String name,
-			@Nonnull final MMDMaterial material, final CreativeTabs tab) {
+			@Nonnull final MMDMaterial material, @Nullable final CreativeTabs tab) {
 		final String fullName = getBlockFullName(block, material, name);
 
 		final ModContainer base = Loader.instance().activeModContainer();
