@@ -31,7 +31,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = TinkersConstruct.PLUGIN_MODID, versions = TinkersConstruct.PLUGIN_MODID
 		+ "@[1.12.2-2.7.4.0,)")
-public final class TinkersConstruct extends TinkersConstructBase implements IIntegration {
+public final class TinkersConstruct implements IIntegration {
+
+	public static final String PLUGIN_MODID = TinkersConstructBase.PLUGIN_MODID;
 
 	public TinkersConstruct() {
 		// do nothing
@@ -39,7 +41,7 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 
 	@Override
 	public void init() {
-		super.init();
+		TinkersConstructBase.INSTANCE.init();
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
@@ -81,8 +83,6 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 				false, ev);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, true,
 				false, ev);
-//		registerMyAlloys();
-//		registerMeltings();
 	}
 
 	private void registerMaterial(final boolean active, final String name, final boolean castable, final boolean craftable,
@@ -130,19 +130,19 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 	@SubscribeEvent
 	public void registerMeltings(TinkersExtraMeltingsEvent ev) {
 		if (Materials.hasMaterial(MaterialNames.COAL)) {
-			addExtraMelting(FluidRegistry.getFluidStack(MaterialNames.COAL, 144),
+			TinkersConstructBase.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(MaterialNames.COAL, 144),
 					new ItemStack(net.minecraft.init.Items.COAL));
 		}
 
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
-			addExtraMelting(FluidRegistry.getFluidStack(mercury.getName(), 144),
+			TinkersConstructBase.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(mercury.getName(), 144),
 					mercury.getItemStack(Names.INGOT));
 		}
 
 		if (Materials.hasMaterial(MaterialNames.PRISMARINE)) {
 			final MMDMaterial prismarine = Materials.getMaterialByName(MaterialNames.PRISMARINE);
-			addExtraMelting(FluidRegistry.getFluidStack(prismarine.getName(), 144),
+			TinkersConstructBase.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(prismarine.getName(), 144),
 					prismarine.getItemStack(Names.INGOT));
 		}
 	}
