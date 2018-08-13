@@ -8,8 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
-import com.mcmoddev.basemetals.init.Materials;
-import com.mcmoddev.lib.data.Names;
+
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
@@ -41,9 +40,7 @@ import net.minecraftforge.fluids.FluidStack;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
-import slimeknights.tconstruct.library.smeltery.MeltingRecipe;
 import slimeknights.tconstruct.library.traits.ITrait;
-import slimeknights.tconstruct.smeltery.events.TinkerSmelteryEvent;
 
 /**
  * TiC Plugin, redesigned.
@@ -121,22 +118,8 @@ public class TinkersConstructBase implements IIntegration {
 	@SubscribeEvent
 	public void postInit(final IntegrationPostInitEvent event) {
 		// purposefully blank
-		Materials.getAllMaterials().stream()
-		.filter( mmdMat -> mmdMat.hasItem(Names.INGOT))
-		.forEach( mmdMat -> {
-			MeltingRecipe rec = TinkerRegistry.getMelting(mmdMat.getItemStack(Names.INGOT));
-			if(rec != null) {
-				FluidStack result = rec.getResult();
-				com.mcmoddev.basemetals.BaseMetals.logger.fatal("Recipe for %s ingot has %s@%dmB output (fluid %s)", mmdMat.getName(), result.getLocalizedName(), result.amount, result.getFluid());
-			}
-		});
 	}
 
-	@SubscribeEvent
-	public void blargh(TinkerSmelteryEvent.OnMelting ev) {
-		com.mcmoddev.basemetals.BaseMetals.logger.fatal("item stack: %s (%s@%d) -> %s@%smB", ev.itemStack, ev.itemStack.getDisplayName(), ev.itemStack.getCount(), ev.result.getLocalizedName(), ev.result.amount);
-	}
-	
 	public void addAlloyRecipe(String outputName, Integer outputAmount, Object...recipe) {
 		FluidStack output = FluidRegistry.getFluidStack(outputName, outputAmount);
 		List<FluidStack> ingredients = Lists.newCopyOnWriteArrayList();
@@ -220,10 +203,6 @@ public class TinkersConstructBase implements IIntegration {
 				
 			if(!materialsToAdd.contains(m))
 				materialsToAdd.addLast(m);
-			
-			Fluid fl = m.getFluid();
-			
-			com.mcmoddev.basemetals.BaseMetals.logger.fatal("fluid %s for material %s (%s // (base material) %s // %s) -- castable? %s :: craftable? %s", fl.getName(), m.getIdentifier(), fl, base.getFluid(), m, m.isCastable(), m.isCraftable());
 		});
 	}
 	
@@ -260,10 +239,8 @@ public class TinkersConstructBase implements IIntegration {
 	
 	private void setupExtraSmeltingRecipes() {
 		// loop over our registered Extra Smelting recipes
-		extraMeltings.stream().forEach( emt -> {
-			com.mcmoddev.basemetals.BaseMetals.logger.fatal("melting for %s@%d to %s@%dmB", emt.getLeft().getDisplayName(), emt.getLeft().getCount(), emt.getRight().getLocalizedName(), emt.getRight().amount);
-			TinkerRegistry.registerMelting(emt.getLeft(), emt.getRight().getFluid(), emt.getRight().amount);
-		});
+		extraMeltings.stream().forEach( emt ->
+			TinkerRegistry.registerMelting(emt.getLeft(), emt.getRight().getFluid(), emt.getRight().amount));
 	}
 
 	private void registerAlloys() {
