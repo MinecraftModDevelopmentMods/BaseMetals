@@ -98,14 +98,16 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 		return this;
 	}
 
+	public TinkersMaterial addAlloyRecipe(int outputAmount, FluidStack...recipe) {
+		this.recipeOutput = FluidRegistry.getFluidStack(this.getMMDMaterial().getName(), outputAmount);
+		this.recipe.addAll((List<FluidStack>)Arrays.asList(recipe).stream().map(obj -> (FluidStack)obj).collect(Collectors.toList()));
+		return this;
+	}
+	
 	public TinkersMaterial addAlloyRecipe(int outputAmount, Object...recipe) {
 		this.recipeOutput = FluidRegistry.getFluidStack(this.getMMDMaterial().getName(), outputAmount);
-		if(recipe[0] instanceof FluidStack) {
-			this.recipe.addAll((List<FluidStack>)Arrays.asList(recipe).stream().map(obj -> (FluidStack)obj).collect(Collectors.toList()));
-		} else {
-			for(int i = 0; i < recipe.length; i += 2) {
-				this.recipe.add(FluidRegistry.getFluidStack((String)recipe[i], (Integer)recipe[i+1]));
-			}
+		for(int i = 0; i < recipe.length; i += 2) {
+			this.recipe.add(FluidRegistry.getFluidStack((String)recipe[i], (Integer)recipe[i+1]));
 		}
 		return this;
 	}
