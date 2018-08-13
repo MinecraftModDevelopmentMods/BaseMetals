@@ -58,7 +58,7 @@ import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationExcep
 	modid = BaseMetals.MODID,
 	name = BaseMetals.NAME,
 	version = BaseMetals.VERSION,
-	dependencies = "required-after:forge@[14.21.1.2387,);before:tconstruct;after:ic2;before:buildingbricks",
+	dependencies = "required-after:forge@[14.21.1.2387,);after:tconstruct;after:ic2;before:buildingbricks",
 	acceptedMinecraftVersions = "[1.12,)",
 	certificateFingerprint = "@FINGERPRINT@",
 	updateJSON = BaseMetals.UPDATEJSON)

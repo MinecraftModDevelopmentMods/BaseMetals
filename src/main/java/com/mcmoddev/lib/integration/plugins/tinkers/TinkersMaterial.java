@@ -40,7 +40,7 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	private List<FluidStack> recipe = Lists.newCopyOnWriteArrayList();
 	private Set<Pair<ItemStack,Integer>> extraMeltings;
 	private ItemStack representativeItem;
-	private Material ticonMat;
+	private Material ticonMat = Material.UNKNOWN;
 	private MMDMaterial baseMaterial;
 	private FluidStack recipeOutput;
 	private boolean toolForge;
@@ -231,10 +231,9 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	}
 	
 	public TinkersMaterial create() {
+		if(this.ticonMat != Material.UNKNOWN) return this;
+		
 		this.ticonMat = new Material(this.baseMaterial.getName(), this.baseMaterial.getTintColor());
-//		this.ticonMat.addCommonItems(this.baseMaterial.getCapitalizedName());
-		this.ticonMat.setFluid(this.baseMaterial.getFluid());
-		this.items.stream().forEach(is -> this.ticonMat.addItem(is, is.getCount(), is.getCount()));
 		
 		return this;
 	}
@@ -269,8 +268,8 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	}
 	
 	public Material getTinkerMaterial() {
-		if(this.ticonMat == null) {
-			this.create();
+		if(this.ticonMat == Material.UNKNOWN) {
+			return this.create().getTinkerMaterial();
 		}
 		
 		return this.ticonMat;

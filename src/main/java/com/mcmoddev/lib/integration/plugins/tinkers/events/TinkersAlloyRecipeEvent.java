@@ -4,17 +4,15 @@ import java.util.Optional;
 
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkersMaterial;
 
-import net.minecraftforge.fml.common.eventhandler.GenericEvent;
-import net.minecraftforge.fml.common.eventhandler.IContextSetter;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.registries.IForgeRegistry;
 
 
-public class TinkersAlloyRecipeEvent extends GenericEvent<TinkersMaterial> implements IContextSetter {
+public class TinkersAlloyRecipeEvent extends Event {
 
     private final IForgeRegistry<TinkersMaterial> registry;
     
     public TinkersAlloyRecipeEvent(IForgeRegistry<TinkersMaterial> registry) {
-    	super(registry.getRegistrySuperType());
     	this.registry = registry;
     }
     

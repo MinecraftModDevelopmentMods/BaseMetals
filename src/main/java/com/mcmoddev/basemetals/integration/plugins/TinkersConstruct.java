@@ -16,7 +16,6 @@ import com.mcmoddev.lib.integration.plugins.tinkers.events.MaterialRegistrationE
 import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersAlloyRecipeEvent;
 import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersExtraMeltingsEvent;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import net.minecraft.item.ItemStack;
@@ -92,22 +91,27 @@ public final class TinkersConstruct extends TinkersConstructBase implements IInt
 			TinkersMaterial mat = new TinkersMaterial(Materials.getMaterialByName(name))
 					.setCastable(castable).setCraftable(craftable).setToolForge(true);
 			int i = 0;
-			
+			int tc = 0;
 			while(i < traits.length) {
 				TinkerTraitLocation loc;
 				String trait;
 				Object item = traits[i];
 				if(item instanceof TinkerTraitLocation) {
 					loc = (TinkerTraitLocation)item;
-					trait = (String)traits[++i];
-					mat.addTrait(trait.toLowerCase(Locale.US), loc);
+					trait = ((String)traits[++i]).toLowerCase(Locale.US);
+					
+					BaseMetals.logger.fatal("adding trait %s to location %s", trait, loc);
+					mat.addTrait(trait, loc);
 				} else {
-					trait = (String)item;
+					trait = ((String)item).toLowerCase(Locale.US);
+					BaseMetals.logger.fatal("adding trait %s", trait);
 					mat.addTrait(trait);
 				}
 				i++;
+				tc++;
 			}
-			BaseMetals.logger.fatal("(A) Registering material %s (%s)", name, mat);
+			
+			BaseMetals.logger.fatal("(A) Registering material %s (%s) with %d traits", name, mat, tc);
 			ev.getRegistry().register(mat.create());
 		}
 	}
