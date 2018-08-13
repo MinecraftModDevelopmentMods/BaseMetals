@@ -100,18 +100,15 @@ public final class TinkersConstruct implements IIntegration {
 					loc = (TinkerTraitLocation)item;
 					trait = ((String)traits[++i]).toLowerCase(Locale.US);
 					
-					BaseMetals.logger.fatal("adding trait %s to location %s", trait, loc);
 					mat.addTrait(trait, loc);
 				} else {
 					trait = ((String)item).toLowerCase(Locale.US);
-					BaseMetals.logger.fatal("adding trait %s", trait);
 					mat.addTrait(trait);
 				}
 				i++;
 				tc++;
 			}
-			
-			BaseMetals.logger.fatal("(A) Registering material %s (%s) with %d traits", name, mat, tc);
+
 			ev.getRegistry().register(mat.create());
 		}
 	}
@@ -122,7 +119,6 @@ public final class TinkersConstruct implements IIntegration {
 			TinkersMaterial mat = new TinkersMaterial(Materials.getMaterialByName(name))
 					.setCastable(castable).setCraftable(craftable).setToolForge(true).create();
 
-			BaseMetals.logger.fatal("(B) Registering material %s (%s)", name, mat);
 			ev.getRegistry().register(mat);
 		}
 	}
