@@ -66,6 +66,7 @@ public class TinkersConstructBase implements IIntegration {
 	private static final List<Pair<FluidStack,List<FluidStack>>> alloys = Lists.newCopyOnWriteArrayList();
 	private static final List<Pair<ItemStack, FluidStack>> extraMeltings = Lists.newCopyOnWriteArrayList();
 	public static final TinkersConstructBase INSTANCE = new TinkersConstructBase();
+
 	private static final Deque<Material> materialsToAdd = Queues.newArrayDeque();
 	
 	@Override
@@ -99,7 +100,7 @@ public class TinkersConstructBase implements IIntegration {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param event
 	 */
 	@SubscribeEvent
