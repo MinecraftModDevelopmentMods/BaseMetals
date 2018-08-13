@@ -19,7 +19,6 @@ public class ModifierLeadPlated extends ToolModifier {
 
 		this.addAspects(new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this),
 				ModifierAspect.freeModifier);
-		this.addItem("plateLead");
 	}
 
 	@Override

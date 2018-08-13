@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDObject {
 
-	private final MMDMaterial material;
+	private final MMDMaterial mmdMaterial;
 
 	/**
 	 *
@@ -39,12 +39,12 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	 */
 	public BlockMMDDoor(final MMDMaterial material) {
 		super((material.getToolHarvestLevel() > 0) ? material.getVanillaMaterial() : Material.ROCK);
-		this.material = material;
-		this.setSoundType(this.material.getSoundType());
-		this.blockHardness = this.material.getBlockHardness();
-		this.blockResistance = this.material.getBlastResistance();
-		this.setHarvestLevel(this.material.getHarvestTool(),
-				this.material.getRequiredHarvestLevel());
+		this.mmdMaterial = material;
+		this.setSoundType(this.mmdMaterial.getSoundType());
+		this.blockHardness = this.mmdMaterial.getBlockHardness();
+		this.blockResistance = this.mmdMaterial.getBlastResistance();
+		this.setHarvestLevel(this.mmdMaterial.getHarvestTool(),
+				this.mmdMaterial.getRequiredHarvestLevel());
 		this.disableStats();
 	}
 
@@ -54,23 +54,23 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	@SideOnly(Side.CLIENT)
 	@Override
 	@Deprecated
-	public ItemStack getItem(final World w, final BlockPos c, final IBlockState bs) {
-		return new ItemStack(this.material.getItem(Names.DOOR));
+	public ItemStack getItem(final World worldIn, final BlockPos pos, final IBlockState state) {
+		return new ItemStack(this.mmdMaterial.getItem(Names.DOOR));
 	}
 
 	@Override
 	@Nullable
 	public Item getItemDropped(final IBlockState state, final Random rand, final int fortune) {
 		return (state.getValue(BlockDoor.HALF) == EnumDoorHalf.UPPER) ? null
-				: this.material.getItem(Names.DOOR);
+				: this.mmdMaterial.getItem(Names.DOOR);
 	}
 
 	@Override
 	public boolean onBlockActivated(final World worldIn, final BlockPos pos,
 			final IBlockState state, final EntityPlayer playerIn, final EnumHand hand,
 			final EnumFacing facing, final float hitX, final float hitY, final float hitZ) {
-		if ((this.material.getToolHarvestLevel() > 1)
-				|| (this.material.getType().equals(MaterialType.METAL))) {
+		if ((this.mmdMaterial.getToolHarvestLevel() > 1)
+				|| (this.mmdMaterial.getType().equals(MaterialType.METAL))) {
 			return false;
 		} else {
 			final BlockPos blockpos = (state.getValue(BlockDoor.HALF) == EnumDoorHalf.LOWER) ? pos
@@ -109,6 +109,6 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 
 	@Override
 	public MMDMaterial getMMDMaterial() {
-		return this.material;
+		return this.mmdMaterial;
 	}
 }

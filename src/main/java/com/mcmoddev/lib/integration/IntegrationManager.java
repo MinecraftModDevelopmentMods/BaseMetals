@@ -98,7 +98,7 @@ public enum IntegrationManager {
 	 * @throws InvalidVersionSpecificationException
 	 *             Thrown if the version specification is not a valid Maven Artifact Version.
 	 */
-	public void setup(@Nonnull final FMLConstructionEvent event)
+	public void doSetupTasks(@Nonnull final FMLConstructionEvent event)
 			throws InvalidVersionSpecificationException {
 		for (final ASMData asmDataItem : event.getASMHarvestedData()
 				.getAll(MMDPlugin.class.getCanonicalName())) {
