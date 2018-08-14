@@ -5,14 +5,14 @@ import java.io.File;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.ConfigKeys;
-import com.mcmoddev.lib.integration.plugins.DenseOresBase;
-import com.mcmoddev.lib.integration.plugins.EnderIOBase;
-import com.mcmoddev.lib.integration.plugins.IC2Base;
-import com.mcmoddev.lib.integration.plugins.MekanismBase;
-import com.mcmoddev.lib.integration.plugins.ThaumcraftBase;
-import com.mcmoddev.lib.integration.plugins.ThermalExpansionBase;
-import com.mcmoddev.lib.integration.plugins.TinkersConstructBase;
-import com.mcmoddev.lib.integration.plugins.VeinMinerBase;
+import com.mcmoddev.lib.integration.plugins.DenseOres;
+import com.mcmoddev.lib.integration.plugins.EnderIO;
+import com.mcmoddev.lib.integration.plugins.IC2;
+import com.mcmoddev.lib.integration.plugins.Mekanism;
+import com.mcmoddev.lib.integration.plugins.Thaumcraft;
+import com.mcmoddev.lib.integration.plugins.ThermalExpansion;
+import com.mcmoddev.lib.integration.plugins.TinkersConstruct;
+import com.mcmoddev.lib.integration.plugins.VeinMiner;
 import com.mcmoddev.lib.util.Config;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -94,31 +94,31 @@ public final class BMeConfig extends Config {
 				"disable this and using_orespawn to make MMDLib based mods not spawn any ores"));
 
 		// INTEGRATION
-		Options.modEnabled(EnderIOBase.PLUGIN_MODID,
+		Options.modEnabled(EnderIO.PLUGIN_MODID,
 				configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
 						"If false, then Base Metals will not try and integrate with Ender IO"));
-		Options.modEnabled(IC2Base.PLUGIN_MODID,
+		Options.modEnabled(IC2.PLUGIN_MODID,
 				configuration.getBoolean("ic2_integration", INTEGRATION_CAT, true,
 						"If false, then Base Metals will not try and integrate with IC2"));
-		Options.modEnabled(MekanismBase.PLUGIN_MODID,
+		Options.modEnabled(Mekanism.PLUGIN_MODID,
 				configuration.getBoolean("mekanism_integration", INTEGRATION_CAT, true,
 						"If false, then Base Metals will not try and integrate with Mekanism"));
-		Options.modEnabled(ThaumcraftBase.PLUGIN_MODID,
+		Options.modEnabled(Thaumcraft.PLUGIN_MODID,
 				configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
 						"If false, then Base Metals will not try and integrate with Thaumcraft"));
-		Options.modEnabled(TinkersConstructBase.PLUGIN_MODID, configuration.getBoolean(
+		Options.modEnabled(TinkersConstruct.PLUGIN_MODID, configuration.getBoolean(
 				"tinkers_construct_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Tinkers Construct"));
-		Options.modEnabled(VeinMinerBase.PLUGIN_MODID,
+		Options.modEnabled(VeinMiner.PLUGIN_MODID,
 				configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
 						"If false, then Base Metals will not try and integrate with VeinMiner"));
 		Options.modEnabled("taiga", configuration.getBoolean("taiga_integration",
 				INTEGRATION_CAT, true,
 				"Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals"));
-		Options.modEnabled(DenseOresBase.PLUGIN_MODID,
+		Options.modEnabled(DenseOres.PLUGIN_MODID,
 				configuration.getBoolean("denseores", INTEGRATION_CAT, true,
 						"If DenseOres is available, this will allow automatic integration"));
-		Options.modEnabled(ThermalExpansionBase.PLUGIN_MODID, configuration.getBoolean(
+		Options.modEnabled(ThermalExpansion.PLUGIN_MODID, configuration.getBoolean(
 				"thermal_expansion", INTEGRATION_CAT, true,
 				"If Thermal Expansion is available, this wil automatically integrate materials with the various machines"));
 

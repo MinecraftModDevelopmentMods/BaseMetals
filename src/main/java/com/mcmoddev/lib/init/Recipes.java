@@ -13,7 +13,7 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.integration.plugins.IC2Base;
+import com.mcmoddev.lib.integration.plugins.IC2;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
@@ -575,7 +575,7 @@ public abstract class Recipes {
 				continue;
 			}
 
-			if (Options.isModEnabled(IC2Base.PLUGIN_MODID)) {
+			if (Options.isModEnabled(IC2.PLUGIN_MODID)) {
 				if ((isMMDItem(material, Names.CRUSHED)) && material.hasItem(Names.INGOT)) {
 					addFurnaceRecipe(material.getItemStack(Names.CRUSHED),
 							material.getItemStack(Names.INGOT), material.getOreSmeltXP());

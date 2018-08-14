@@ -18,8 +18,8 @@ import com.mcmoddev.lib.util.Config.Options;
  * @author Jasmine Iwanek
  *
  */
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = VeinMiner.PLUGIN_MODID)
-public final class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMinerBase
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeVeinMiner.PLUGIN_MODID)
+public final class BMeVeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMiner
 		implements IIntegration {
 
 	@Override
@@ -38,8 +38,8 @@ public final class VeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMi
 				MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.TIN, MaterialNames.WOOD,
 				MaterialNames.ZINC);
 
-		materials.stream().filter(Materials::hasMaterial).filter(VeinMiner::isMaterialNotEmpty)
-				.forEach(com.mcmoddev.lib.integration.plugins.VeinMinerBase::addToolsForMaterial);
+		materials.stream().filter(Materials::hasMaterial).filter(BMeVeinMiner::isMaterialNotEmpty)
+				.forEach(com.mcmoddev.lib.integration.plugins.VeinMiner::addToolsForMaterial);
 	}
 
 	private static boolean isMaterialNotEmpty(@Nonnull final String materialName) {

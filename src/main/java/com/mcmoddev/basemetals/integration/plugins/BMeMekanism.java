@@ -11,7 +11,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.integration.plugins.MekanismBase;
+import com.mcmoddev.lib.integration.plugins.Mekanism;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
 
@@ -20,8 +20,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = Mekanism.PLUGIN_MODID)
-public final class Mekanism extends MekanismBase implements IIntegration {
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeMekanism.PLUGIN_MODID)
+public final class BMeMekanism extends Mekanism implements IIntegration {
 
 	private static final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 			MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
@@ -36,8 +36,8 @@ public final class Mekanism extends MekanismBase implements IIntegration {
 
 		MinecraftForge.EVENT_BUS.register(this);
 
-		materials.stream().filter(Materials::hasMaterial).filter(Mekanism::isMaterialNotEmpty)
-				.forEach(MekanismBase::addGassesForMaterial);
+		materials.stream().filter(Materials::hasMaterial).filter(BMeMekanism::isMaterialNotEmpty)
+				.forEach(Mekanism::addGassesForMaterial);
 	}
 
 	private static boolean isMaterialNotEmpty(@Nonnull final String materialName) {
@@ -51,8 +51,8 @@ public final class Mekanism extends MekanismBase implements IIntegration {
 	@SubscribeEvent
 	public void regCallback(final RegistryEvent.Register<IRecipe> event) {
 
-		materials.stream().filter(Materials::hasMaterial).filter(Mekanism::isMaterialNotEmpty)
-				.forEach(MekanismBase::addOreMultiplicationRecipes);
+		materials.stream().filter(Materials::hasMaterial).filter(BMeMekanism::isMaterialNotEmpty)
+				.forEach(Mekanism::addOreMultiplicationRecipes);
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			this.addVanillaOreMultiplicationRecipes(MaterialNames.DIAMOND);

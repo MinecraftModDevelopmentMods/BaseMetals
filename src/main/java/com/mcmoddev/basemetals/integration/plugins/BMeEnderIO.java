@@ -11,7 +11,7 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.integration.plugins.EnderIOBase;
+import com.mcmoddev.lib.integration.plugins.EnderIO;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
 import com.mcmoddev.lib.util.Oredicts;
@@ -21,8 +21,8 @@ import com.mcmoddev.lib.util.Oredicts;
  * @author Jasmine Iwanek
  *
  */
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = EnderIO.PLUGIN_MODID)
-public final class EnderIO extends EnderIOBase implements IIntegration {
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeEnderIO.PLUGIN_MODID)
+public final class BMeEnderIO extends EnderIO implements IIntegration {
 
 	/**
 	 *

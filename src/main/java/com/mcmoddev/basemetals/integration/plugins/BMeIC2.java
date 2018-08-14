@@ -10,7 +10,7 @@ import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.integration.plugins.IC2Base;
+import com.mcmoddev.lib.integration.plugins.IC2;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
 import com.mcmoddev.lib.util.Oredicts;
@@ -20,8 +20,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = IC2.PLUGIN_MODID, versions = IC2.PLUGIN_MODID + "@[2.8.57-ex112,)")
-public final class IC2 extends IC2Base implements IIntegration {
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeIC2.PLUGIN_MODID, versions = BMeIC2.PLUGIN_MODID + "@[2.8.57-ex112,)")
+public final class BMeIC2 extends IC2 implements IIntegration {
 
 	private static final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 			MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,

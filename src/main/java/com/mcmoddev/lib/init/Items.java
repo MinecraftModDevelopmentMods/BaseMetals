@@ -37,8 +37,8 @@ import com.mcmoddev.lib.data.ActiveModData;
 import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.integration.plugins.IC2Base;
-import com.mcmoddev.lib.integration.plugins.MekanismBase;
+import com.mcmoddev.lib.integration.plugins.IC2;
+import com.mcmoddev.lib.integration.plugins.Mekanism;
 import com.mcmoddev.lib.item.GenericMMDItem;
 import com.mcmoddev.lib.item.ItemMMDAnvilBlock;
 import com.mcmoddev.lib.item.ItemMMDArmor;
@@ -181,17 +181,17 @@ public abstract class Items {
 		addItemType(Names.DENSE_PLATE, GenericMMDItem.class, Options.enableModderSupportThings(),
 				Oredicts.PLATE_DENSE);
 
-		addItemType(Names.CRUSHED, GenericMMDItem.class, Options.isModEnabled(IC2Base.PLUGIN_MODID),
+		addItemType(Names.CRUSHED, GenericMMDItem.class, Options.isModEnabled(IC2.PLUGIN_MODID),
 				Oredicts.CRUSHED);
 		addItemType(Names.CRUSHED_PURIFIED, GenericMMDItem.class,
-				Options.isModEnabled(IC2Base.PLUGIN_MODID), Oredicts.CRUSHED_PURIFIED);
+				Options.isModEnabled(IC2.PLUGIN_MODID), Oredicts.CRUSHED_PURIFIED);
 
 		addItemType(Names.SHARD, GenericMMDItem.class,
-				Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.SHARD);
+				Options.isModEnabled(Mekanism.PLUGIN_MODID), Oredicts.SHARD);
 		addItemType(Names.CLUMP, GenericMMDItem.class,
-				Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.CLUMP);
+				Options.isModEnabled(Mekanism.PLUGIN_MODID), Oredicts.CLUMP);
 		addItemType(Names.POWDER_DIRTY, GenericMMDItem.class,
-				Options.isModEnabled(MekanismBase.PLUGIN_MODID), Oredicts.DUST_DIRTY);
+				Options.isModEnabled(Mekanism.PLUGIN_MODID), Oredicts.DUST_DIRTY);
 
 		try {
 			expandCombatArrays(net.minecraft.item.ItemAxe.class);
@@ -513,7 +513,7 @@ public abstract class Items {
 		}
 
 		final Item item = createItem(material, Names.CRYSTAL.toString(), GenericMMDItem.class,
-				(Options.isModEnabled(MekanismBase.PLUGIN_MODID)
+				(Options.isModEnabled(Mekanism.PLUGIN_MODID)
 						&& (material.getType() != MaterialType.CRYSTAL)),
 				tab);
 		if (item != null) {
