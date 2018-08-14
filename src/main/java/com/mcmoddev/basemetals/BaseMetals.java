@@ -33,10 +33,10 @@ import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationExcep
  * <br>
  * <b>Annotation Info:</b> <br>
  * - <b>Dependencies: </b> <br>
- * &nbsp&nbsp&nbsp&nbsp - Forge <i>[v 14.21.1.2387 or higher] (loads after)</i> <br>
- * &nbsp&nbsp&nbsp&nbsp - Tinkers Construct <i>[any] (loads after)</i> <br>
- * &nbsp&nbsp&nbsp&nbsp - IC2 <i>[any] (loads after)</i> <br>
- * &nbsp&nbsp&nbsp&nbsp - Building Bricks <i>[any] (loads before)</i> <br>
+ * &nbsp;&nbsp;&nbsp;&nbsp; - Forge <i>[v 14.21.1.2387 or higher] (loads after)</i> <br>
+ * &nbsp;&nbsp;&nbsp;&nbsp; - Tinkers Construct <i>[any] (loads after)</i> <br>
+ * &nbsp;&nbsp;&nbsp;&nbsp; - IC2 <i>[any] (loads after)</i> <br>
+ * &nbsp;&nbsp;&nbsp;&nbsp; - Building Bricks <i>[any] (loads before)</i> <br>
  * - <b>Minecraft Versions: </b>1.12 or greater <br>
  * <br>
  * <b>Project pages: </b> <br>

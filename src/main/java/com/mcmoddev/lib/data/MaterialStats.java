@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.data;
 
+import java.util.Locale;
 import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
@@ -43,7 +44,7 @@ public enum MaterialStats implements IStringSerializable {
 
 	@Override
 	public String getName() {
-		return this.name().toLowerCase();
+		return this.name().toLowerCase(Locale.ROOT);
 	}
 
 	/**

@@ -30,7 +30,7 @@ public final class HorseArmorUtils {
 	 */
 	public static HorseArmorType getArmorType(final int protection, @Nonnull final String lowerName,
 			@Nonnull final String hash) {
-		final String name = lowerName.toUpperCase(Locale.ENGLISH);
+		final String name = lowerName.toUpperCase(Locale.ROOT);
 
 		if (HorseArmorUtils.TYPES.containsKey(name)) {
 			return HorseArmorUtils.TYPES.get(name);
@@ -38,7 +38,7 @@ public final class HorseArmorUtils {
 
 		final HorseArmorType type = EnumHelper.addEnum(HorseArmorType.class, name.replace(" ", "_"),
 				new Class[] { int.class, String.class, String.class }, protection,
-				name.toLowerCase(), hash);
+				name.toLowerCase(Locale.ROOT), hash);
 		HorseArmorUtils.TYPES.put(name, type);
 
 		return type;

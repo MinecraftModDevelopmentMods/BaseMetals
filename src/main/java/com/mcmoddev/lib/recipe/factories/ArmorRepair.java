@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.recipe.factories;
 
+import java.util.Locale;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mcmoddev.lib.init.Materials;
@@ -20,8 +22,8 @@ public class ArmorRepair implements IRecipeFactory {
 	@Override
 	public IRecipe parse(final JsonContext context, final JsonObject json) {
 		final String material = JsonUtils.getString(json, "material");
-		final String type = JsonUtils.getString(json, "armorType").toLowerCase();
-		final MMDMaterial mat = Materials.getMaterialByName(material.toLowerCase());
+		final String type = JsonUtils.getString(json, "armorType").toLowerCase(Locale.ROOT);
+		final MMDMaterial mat = Materials.getMaterialByName(material.toLowerCase(Locale.ROOT));
 
 		switch (type) {
 			case "boots":

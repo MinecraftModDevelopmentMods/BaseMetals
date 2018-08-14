@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.recipe.conditions;
 
+import java.util.Locale;
 import java.util.function.BooleanSupplier;
 
 import com.google.gson.JsonObject;
@@ -13,7 +14,7 @@ public class ConditionEnabled implements IConditionFactory {
 
 	@Override
 	public BooleanSupplier parse(final JsonContext context, final JsonObject json) {
-		final String optionName = JsonUtils.getString(json, "optionName").toLowerCase();
+		final String optionName = JsonUtils.getString(json, "optionName").toLowerCase(Locale.ROOT);
 		final String optionValue = JsonUtils.getString(json, "optionValue");
 
 		switch (optionName) {
