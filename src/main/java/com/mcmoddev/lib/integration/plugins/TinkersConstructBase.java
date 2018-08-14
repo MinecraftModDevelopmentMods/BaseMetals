@@ -23,7 +23,7 @@ import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.*;
 import com.mcmoddev.lib.integration.plugins.tinkers.traits.*;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

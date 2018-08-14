@@ -16,7 +16,7 @@ import com.mcmoddev.lib.integration.plugins.tinkers.events.MaterialRegistrationE
 import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersAlloyRecipeEvent;
 import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersExtraMeltingsEvent;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;

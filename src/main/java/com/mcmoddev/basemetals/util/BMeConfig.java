@@ -13,7 +13,7 @@ import com.mcmoddev.lib.integration.plugins.ThaumcraftBase;
 import com.mcmoddev.lib.integration.plugins.ThermalExpansionBase;
 import com.mcmoddev.lib.integration.plugins.TinkersConstructBase;
 import com.mcmoddev.lib.integration.plugins.VeinMinerBase;
-import com.mcmoddev.lib.util.ConfigBase;
+import com.mcmoddev.lib.util.Config;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @author Jasmine Iwanek
  *
  */
-public final class Config extends ConfigBase {
+public final class BMeConfig extends Config {
 
 	private static Configuration configuration;
 	private static final String CONFIG_FILE = "config/BaseMetals.cfg";
@@ -56,7 +56,7 @@ public final class Config extends ConfigBase {
 	public static void init() {
 		if (configuration == null) {
 			configuration = new Configuration(new File(CONFIG_FILE));
-			MinecraftForge.EVENT_BUS.register(new Config());
+			MinecraftForge.EVENT_BUS.register(new BMeConfig());
 		}
 
 		// GENERAL

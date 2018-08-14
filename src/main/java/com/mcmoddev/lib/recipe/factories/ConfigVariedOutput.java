@@ -9,7 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

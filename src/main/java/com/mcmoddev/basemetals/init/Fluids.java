@@ -6,7 +6,7 @@ import java.util.List;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 /**
  * This class initializes all fluids in Base Metals.

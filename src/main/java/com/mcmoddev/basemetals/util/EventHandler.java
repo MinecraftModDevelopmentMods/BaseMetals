@@ -12,7 +12,7 @@ import com.mcmoddev.lib.events.MMDLibRegisterItems;
 import com.mcmoddev.lib.events.MMDLibRegisterMaterials;
 import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

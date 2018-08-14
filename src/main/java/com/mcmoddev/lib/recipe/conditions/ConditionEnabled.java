@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.function.BooleanSupplier;
 
 import com.google.gson.JsonObject;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 import net.minecraft.util.JsonUtils;
 import net.minecraftforge.common.crafting.IConditionFactory;

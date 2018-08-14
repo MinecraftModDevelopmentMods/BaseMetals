@@ -1,7 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 public class ThaumcraftBase implements IIntegration {
 

@@ -31,8 +31,8 @@ import com.mcmoddev.lib.integration.IntegrationManager;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.oregen.FallbackGenerator;
 import com.mcmoddev.lib.oregen.FallbackGeneratorData;
-import com.mcmoddev.lib.util.ConfigBase;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config;
+import com.mcmoddev.lib.util.Config.Options;
 
 import net.minecraft.block.Block;
 import net.minecraft.crash.CrashReport;
@@ -209,7 +209,7 @@ public class CommonProxy {
 	 * @param event The Event.
 	 */
 	public void postInit(final FMLPostInitializationEvent event) {
-		ConfigBase.postInit();
+		Config.postInit();
 		FallbackGeneratorData.getInstance().setup();
 		IntegrationManager.INSTANCE.postInitPhase();
 	}

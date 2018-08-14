@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 import net.minecraftforge.fml.common.Loader;
 import portablejim.veinminer.api.IMCMessage;

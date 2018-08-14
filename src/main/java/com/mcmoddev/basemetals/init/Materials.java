@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 /**
  * This class initializes all of the materials in Base Metals.

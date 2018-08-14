@@ -3,7 +3,7 @@ package com.mcmoddev.basemetals.integration.plugins;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = Thaumcraft.PLUGIN_MODID)
 public final class Thaumcraft extends com.mcmoddev.lib.integration.plugins.ThaumcraftBase

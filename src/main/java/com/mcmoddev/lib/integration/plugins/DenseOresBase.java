@@ -3,7 +3,7 @@ package com.mcmoddev.lib.integration.plugins;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.lib.integration.IIntegration;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Loader;

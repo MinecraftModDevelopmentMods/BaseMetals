@@ -12,7 +12,7 @@ import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.IC2Base;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.ConfigBase.Options;
+import com.mcmoddev.lib.util.Config.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.crafting.IRecipe;

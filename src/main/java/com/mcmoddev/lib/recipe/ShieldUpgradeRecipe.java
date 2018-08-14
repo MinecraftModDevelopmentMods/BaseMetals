@@ -2,6 +2,7 @@ package com.mcmoddev.lib.recipe;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -101,7 +102,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem {
 
 		for (final Entry<String, NonNullList<ItemStack>> ent : plates.entrySet()) {
 			if (OreDictionary.containsMatch(false, ent.getValue(), comp)) {
-				plateMatched = new ItemStack(Materials.getMaterialByName(ent.getKey().toLowerCase())
+				plateMatched = new ItemStack(Materials.getMaterialByName(ent.getKey().toLowerCase(Locale.ROOT))
 						.getItem(Names.SHIELD), 1, 0);
 			}
 		}

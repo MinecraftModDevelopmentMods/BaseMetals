@@ -16,7 +16,7 @@ import com.mcmoddev.lib.data.ActiveModData;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
-import com.mcmoddev.lib.util.ConfigBase;
+import com.mcmoddev.lib.util.Config;
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item.ToolMaterial;
@@ -421,7 +421,7 @@ public class Materials {
 	public static boolean hasMaterial(@Nonnull final String materialName) {
 		final MMDMaterial material = Materials.getMaterialByName(materialName);
 		return ((material.getName().equals(materialName))
-				&& (ConfigBase.Options.isMaterialEnabled(materialName)));
+				&& (Config.Options.isMaterialEnabled(materialName)));
 	}
 
 	/**
