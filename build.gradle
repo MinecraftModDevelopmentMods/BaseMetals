@@ -15,9 +15,9 @@ buildscript {
     }
   }
   dependencies {
-    classpath "net.minecraftforge.gradle:${project.fg_version}"
     classpath 'org.junit.platform:junit-platform-gradle-plugin:1.2.+'
 //  classpath 'com.jaredsburrows:gradle-checker-framework-plugin:0.2.1'
+    classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: project.fg_version
   }
 }
 
