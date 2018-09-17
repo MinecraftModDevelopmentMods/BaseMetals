@@ -487,7 +487,7 @@ public class Config {
 			angerPigmenRange = range;
 		}
 
-		private Options() {
+		protected Options() {
 			throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 		}
 
