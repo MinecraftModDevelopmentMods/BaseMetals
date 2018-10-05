@@ -139,7 +139,7 @@ public abstract class Recipes {
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK_LAPIS,
 				lapis.getItemStack(Names.INGOT, 9));
 
-		final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.LAPIS);
+		final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.ORE_REDSTONE,
 				redstone.getItemStack(Names.POWDER, 8)); // Redstone Ore to 8 Redstone
 		CrusherRecipeRegistry.addNewCrusherRecipe(Oredicts.BLOCK_REDSTONE,
