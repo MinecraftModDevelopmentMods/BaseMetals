@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -141,11 +142,18 @@ public class ThermalExpansion implements IIntegration {
 		final int ENERGY_QTY = 8000;
 
 		final String materialName = material.getName();
-		final ItemStack ingot = material.getItemStack(Names.INGOT);
-		final ItemStack dust = material.getItemStack(Names.POWDER);
-		final FluidStack oreFluid = FluidRegistry.getFluidStack(materialName, 288);
-		final FluidStack baseFluid = FluidRegistry.getFluidStack(materialName, 144);
-		final FluidStack nuggetFluid = FluidRegistry.getFluidStack(materialName, 16);
+		final FluidStack oreFluid;
+		final FluidStack baseFluid;
+		final FluidStack nuggetFluid;
+		if (materialName.equals(MaterialNames.REDSTONE)) { // Note: Redstone is and should be the only exception. Would more exceptions arise in the future, then this implementation needs to be restructured.
+			oreFluid = FluidRegistry.getFluidStack(materialName, 360);
+			baseFluid = FluidRegistry.getFluidStack(materialName, 100);
+			nuggetFluid = FluidRegistry.getFluidStack(materialName, 0); //unused in this case
+		} else {
+			oreFluid = FluidRegistry.getFluidStack(materialName, 288);
+			baseFluid = FluidRegistry.getFluidStack(materialName, 144);
+			nuggetFluid = FluidRegistry.getFluidStack(materialName, 16);
+		}
 
 		if ((material.hasBlock(Names.ORE)) && (material.getBlock(Names.ORE) != null)) {
 			final ItemStack ore = material.getBlockItemStack(Names.ORE);
@@ -153,22 +161,29 @@ public class ThermalExpansion implements IIntegration {
 		}
 
 		if (material.hasItem(Names.INGOT)) {
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, ingot, baseFluid);
+			final ItemStack ingot = material.getItemStack(Names.INGOT);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY / 2, ingot, baseFluid);
 		}
 
 		if (material.hasItem(Names.POWDER)) {
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY, dust, baseFluid);
+			final ItemStack dust = material.getItemStack(Names.POWDER);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY / 4, dust, baseFluid);
 		}
 
 		if (material.hasBlock(Names.PLATE)) {
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY,
-					material.getBlockItemStack(Names.PLATE),
-					baseFluid);
+			final ItemStack plate = material.getBlockItemStack(Names.PLATE);
+			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY / 2,	plate, baseFluid);
 		}
 
-		if (material.hasItem(Names.NUGGET)) {
-			ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY,
-					material.getItemStack(Names.NUGGET), nuggetFluid);
+		if (!materialName.equals(MaterialNames.REDSTONE)) { // Note: Redstone is and should be the only exception. Would more exceptions arise in the future, then this implementation needs to be restructured.
+			if (material.hasItem(Names.NUGGET)) {
+				final ItemStack nugget = material.getItemStack(Names.NUGGET);
+				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY / 16, nugget, nuggetFluid);
+			}
+			if (material.hasItem(Names.SMALLPOWDER)) {
+				final ItemStack smallPowder = material.getItemStack(Names.SMALLPOWDER);
+				ThermalExpansionHelper.addCrucibleRecipe(ENERGY_QTY / 32, smallPowder, nuggetFluid);
+			}
 		}
 	}
 
