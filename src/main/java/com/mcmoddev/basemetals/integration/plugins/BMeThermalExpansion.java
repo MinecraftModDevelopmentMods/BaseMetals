@@ -42,7 +42,7 @@ public final class BMeThermalExpansion extends ThermalExpansion implements IInte
 				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
 				MaterialNames.BRASS, MaterialNames.COLDIRON, MaterialNames.CUPRONICKEL,
 				MaterialNames.PEWTER, MaterialNames.STARSTEEL, MaterialNames.ZINC,
-				MaterialNames.MERCURY);
+				MaterialNames.MERCURY, MaterialNames.REDSTONE);
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
