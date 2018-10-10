@@ -208,9 +208,9 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 
 		final float hardnessFactor = 1.25f;
 
-		int durability = (int) (2.0f * Integer.valueOf(this.baseMaterial.getArmorMaxDamageFactor()));
+		int durability = (int) (2.0f * this.baseMaterial.getArmorMaxDamageFactor());
 
-		float defense = hardnessFactor * Float.valueOf(this.baseMaterial.getDamageReductionArray()[EntityEquipmentSlot.CHEST.getIndex()]) + minimum;
+		float defense = hardnessFactor * (float) this.baseMaterial.getDamageReductionArray()[EntityEquipmentSlot.CHEST.getIndex()] + minimum;
 
 		return new CoreMaterialStats(durability, defense);
 	}
@@ -218,9 +218,9 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public PlatesMaterialStats getPlatesStats()
 	{
 		// TODO: needs proper stat calculation
-		float modifier = Float.valueOf((this.baseMaterial.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9);
+		float modifier = (this.baseMaterial.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9;
 
-		int durability = Integer.valueOf(this.baseMaterial.getToolDurability() / 7);
+		int durability = this.baseMaterial.getToolDurability() / 7;
 
 		float toughness = this.baseMaterial.getStat(MaterialStats.HARDNESS) > 10
 				? (int) (this.baseMaterial.getStat(MaterialStats.HARDNESS) / 5) : 0;
@@ -231,7 +231,7 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public TrimMaterialStats getTrimStats()
 	{
 		// TODO: needs proper stat calculation
-		int durability = Integer.valueOf(this.baseMaterial.getToolDurability() / 10);
+		int durability = this.baseMaterial.getToolDurability() / 10;
 
 		return new TrimMaterialStats(durability);
 	}
