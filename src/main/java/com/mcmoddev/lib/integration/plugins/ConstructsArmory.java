@@ -1,10 +1,10 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.google.common.collect.Queues;
-import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
+import com.mcmoddev.lib.integration.plugins.tinkers.TinkerModifierRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkerTraitLocation;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkerTraitRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkersMaterial;
@@ -34,6 +34,10 @@ public class ConstructsArmory extends TinkersConstruct {
 	public static final String PLUGIN_MODID = "conarm";
 	
 	private static boolean initDone = false;
+
+	private static final IForgeRegistry<TinkersMaterial> materialsRegistry = TinkersConstruct.getMaterialsRegistry();
+	private static final TinkerTraitRegistry traitsRegistry = TinkersConstruct.getTraitsRegistry(); // technically does nothing
+	private static final TinkerModifierRegistry modifiersRegistry = TinkersConstruct.getModifiersRegistry(); // technically does nothing
 	
 	// other storage
 	public static final ConstructsArmory INSTANCE = new ConstructsArmory();

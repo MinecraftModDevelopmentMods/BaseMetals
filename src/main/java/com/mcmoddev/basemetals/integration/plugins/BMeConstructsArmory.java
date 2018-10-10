@@ -3,7 +3,6 @@ package com.mcmoddev.basemetals.integration.plugins;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.ConstructsArmory;
-import com.mcmoddev.lib.integration.plugins.TinkersConstruct;
 import com.mcmoddev.lib.util.Config;
 import net.minecraftforge.common.MinecraftForge;
 
