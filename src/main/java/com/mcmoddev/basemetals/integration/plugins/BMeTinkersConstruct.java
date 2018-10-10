@@ -81,12 +81,12 @@ public class BMeTinkersConstruct implements IIntegration {
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, ev);
 	}
 
-	private void registerMaterial(final boolean active, final String name,
+	protected void registerMaterial(final boolean active, final String name,
 								  MaterialRegistrationEvent ev, final Object... traits) {
 		registerMaterial(active, name, true, false, ev, traits);
 	}
 
-	private void registerMaterial(final boolean active, final String name, final boolean castable, final boolean craftable,
+	protected void registerMaterial(final boolean active, final String name, final boolean castable, final boolean craftable,
 			MaterialRegistrationEvent ev, final Object... traits) {
 		if (active) {
 			TinkersMaterial mat = new TinkersMaterial(Materials.getMaterialByName(name))

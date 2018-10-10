@@ -5,14 +5,7 @@ import java.io.File;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.ConfigKeys;
-import com.mcmoddev.lib.integration.plugins.DenseOres;
-import com.mcmoddev.lib.integration.plugins.EnderIO;
-import com.mcmoddev.lib.integration.plugins.IC2;
-import com.mcmoddev.lib.integration.plugins.Mekanism;
-import com.mcmoddev.lib.integration.plugins.Thaumcraft;
-import com.mcmoddev.lib.integration.plugins.ThermalExpansion;
-import com.mcmoddev.lib.integration.plugins.TinkersConstruct;
-import com.mcmoddev.lib.integration.plugins.VeinMiner;
+import com.mcmoddev.lib.integration.plugins.*;
 import com.mcmoddev.lib.util.Config;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -109,6 +102,9 @@ public final class BMeConfig extends Config {
 		Options.modEnabled(TinkersConstruct.PLUGIN_MODID, configuration.getBoolean(
 				"tinkers_construct_integration", INTEGRATION_CAT, true,
 				"If false, then Base Metals will not try and integrate with Tinkers Construct"));
+		Options.modEnabled(ConstructsArmory.PLUGIN_MODID, configuration.getBoolean(
+				"constructs_armory_integration", INTEGRATION_CAT, true,
+				"If false, then Base Metals will not try and integrate with Construct's Armory"));
 		Options.modEnabled(VeinMiner.PLUGIN_MODID,
 				configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
 						"If false, then Base Metals will not try and integrate with VeinMiner"));

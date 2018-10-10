@@ -1,5 +1,8 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import c4.conarm.lib.materials.CoreMaterialStats;
+import c4.conarm.lib.materials.PlatesMaterialStats;
+import c4.conarm.lib.materials.TrimMaterialStats;
 import com.google.common.collect.Queues;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
@@ -73,7 +76,7 @@ public class ConstructsArmory extends TinkersConstruct {
 	public void init(final IntegrationInitEvent event) {
 		addTraitsToMaterials();
 	}
-	
+
 	/**
 	 * 
 	 * @param event
