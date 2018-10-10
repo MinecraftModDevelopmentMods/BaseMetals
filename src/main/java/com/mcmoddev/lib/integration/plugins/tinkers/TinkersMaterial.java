@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import c4.conarm.lib.materials.CoreMaterialStats;
+import c4.conarm.lib.materials.PlatesMaterialStats;
+import c4.conarm.lib.materials.TrimMaterialStats;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
@@ -195,6 +198,36 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 				Integer.valueOf(this.baseMaterial.getToolHarvestLevel())).intValue();
 		
 		return new HeadMaterialStats(durability, speed, damage, miningLevel);
+	}
+
+	public CoreMaterialStats getCoreStats()
+	{
+		// TODO: needs proper stat calculation
+		int durability = 0;
+
+		float defense = 0f;
+
+		return new CoreMaterialStats(durability, defense);
+	}
+
+	public PlatesMaterialStats getPlatesStats()
+	{
+		// TODO: needs proper stat calculation
+		float modifier = 0f;
+
+		int durability = 0;
+
+		float toughness = 0f;
+
+		return new PlatesMaterialStats(modifier, durability, toughness);
+	}
+
+	public TrimMaterialStats getTrimStats()
+	{
+		// TODO: needs proper stat calculation
+		int extra = 0;
+
+		return new TrimMaterialStats(extra);
 	}
 
 	public TinkersMaterial setToolForge(boolean toolForge) {

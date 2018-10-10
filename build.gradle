@@ -325,6 +325,14 @@ dependencies {
 //  runtime ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
 //    exclude group: 'mezz.jei'
 //  }
+
+  deobfProvided ("constructs-armory:conarm:${mc_version}.2:${conarm_version}") {
+    exclude group: 'mezz.jei'
+  }
+
+//  runtime ("slimeknights:TConstruct:${mc_version}-${conarm_version}") {
+//    exclude group: 'mezz.jei'
+//  }
   
 
   deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}"
