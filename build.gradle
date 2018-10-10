@@ -318,7 +318,7 @@ dependencies {
 //  }
   
 
-  deobfProvided ("slimeknights:TConstruct:${mc_version}-${tconstruct_version}") {
+  deobfProvided ("slimeknights:TConstruct:${mc_version}.2-${tconstruct_version}") {
     exclude group: 'mezz.jei'
   }
   
@@ -335,14 +335,14 @@ dependencies {
 //  }
   
 
-  deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}"
+  deobfProvided "mezz.jei:jei_${mc_version}.2:${jei_version}"
 //  runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
   // TODO: We don't use this
-  deobfProvided "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
+  deobfProvided "codechicken:CodeChickenLib:${mc_version}.2-${ccl_version}:universal"
 //runtime "codechicken:CodeChickenLib:${mc_version}-${ccl_version}:universal"
 
-  deobfProvided ("codechicken:NotEnoughItems:${mc_version}-${nei_version}:universal") {
+  deobfProvided ("codechicken:NotEnoughItems:${mc_version}.2-${nei_version}:universal") {
     exclude group: 'codechicken'
     exclude group: 'mezz.jei'
   }

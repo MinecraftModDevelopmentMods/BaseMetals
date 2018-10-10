@@ -203,9 +203,9 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public CoreMaterialStats getCoreStats()
 	{
 		// TODO: needs proper stat calculation
-		int durability = 0;
+		int durability = 10;
 
-		float defense = 0f;
+		float defense = 10f;
 
 		return new CoreMaterialStats(durability, defense);
 	}
@@ -213,11 +213,11 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public PlatesMaterialStats getPlatesStats()
 	{
 		// TODO: needs proper stat calculation
-		float modifier = 0f;
+		float modifier = 10f;
 
-		int durability = 0;
+		int durability = 10;
 
-		float toughness = 0f;
+		float toughness = 10f;
 
 		return new PlatesMaterialStats(modifier, durability, toughness);
 	}
@@ -225,7 +225,7 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public TrimMaterialStats getTrimStats()
 	{
 		// TODO: needs proper stat calculation
-		int extra = 0;
+		int extra = 10;
 
 		return new TrimMaterialStats(extra);
 	}

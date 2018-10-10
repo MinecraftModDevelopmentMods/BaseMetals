@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import com.google.common.collect.Queues;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
@@ -7,6 +8,7 @@ import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkerTraitLocation;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkerTraitRegistry;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkersMaterial;
+import com.mcmoddev.lib.integration.plugins.tinkers.events.MaterialRegistrationEvent;
 import com.mcmoddev.lib.util.Config.Options;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -17,6 +19,7 @@ import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.traits.ITrait;
 
+import java.util.Deque;
 import java.util.Locale;
 
 /**
@@ -26,21 +29,16 @@ import java.util.Locale;
  * @since 2018-10-10
  */
 
-public class ConstructsArmory implements IIntegration {
+public class ConstructsArmory extends TinkersConstruct {
 
-	public static final String PLUGIN_MODID = "carmory";
+	public static final String PLUGIN_MODID = "conarm";
 	
 	private static boolean initDone = false;
 	
-	// registries
-	private static final IForgeRegistry<TinkersMaterial> materialsRegistry = new RegistryBuilder<TinkersMaterial>()
-			.disableSaving().setMaxID(65535)
-			.setName(new ResourceLocation("mmdlib", "tinker_registry"))
-			.setType(TinkersMaterial.class).create();
-	private static final TinkerTraitRegistry traitsRegistry = new TinkerTraitRegistry(); // technically does nothing
-	
 	// other storage
 	public static final ConstructsArmory INSTANCE = new ConstructsArmory();
+
+	private static final Deque<Material> materialsToAdd = Queues.newArrayDeque();
 	
 	@Override
 	public void init() {
@@ -58,7 +56,9 @@ public class ConstructsArmory implements IIntegration {
 	 */
 	@SubscribeEvent
 	public void preInit(final IntegrationPreInitEvent event) {
+		MinecraftForge.EVENT_BUS.post(new MaterialRegistrationEvent(materialsRegistry));
 		addMaterialStats();
+		addMaterials();
 	}
 
 	/**
@@ -77,6 +77,12 @@ public class ConstructsArmory implements IIntegration {
 	@SubscribeEvent
 	public void postInit(final IntegrationPostInitEvent event) {
 		// purposefully blank
+	}
+
+	private void addMaterials() {
+		while(!materialsToAdd.isEmpty()) {
+			TinkerRegistry.addMaterial(materialsToAdd.pop());
+		}
 	}
 	
 	private void addMaterialStats() {
