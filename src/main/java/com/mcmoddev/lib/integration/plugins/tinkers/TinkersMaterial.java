@@ -222,7 +222,8 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 
 		int durability = Integer.valueOf(this.baseMaterial.getToolDurability() / 7);
 
-		float toughness = 10f;
+		float toughness = this.baseMaterial.getStat(MaterialStats.HARDNESS) > 10
+				? (int) (this.baseMaterial.getStat(MaterialStats.HARDNESS) / 5) : 0;
 
 		return new PlatesMaterialStats(modifier, durability, toughness);
 	}
