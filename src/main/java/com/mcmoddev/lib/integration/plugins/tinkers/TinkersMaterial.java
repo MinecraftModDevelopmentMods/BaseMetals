@@ -231,8 +231,7 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public TrimMaterialStats getTrimStats()
 	{
 		// TODO: needs proper stat calculation
-		int durability = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.EXTRA_DURABILTIY,
-				Integer.valueOf(this.baseMaterial.getToolDurability() / 10)).intValue();;
+		int durability = Integer.valueOf(this.baseMaterial.getToolDurability() / 10);
 
 		return new TrimMaterialStats(durability);
 	}
