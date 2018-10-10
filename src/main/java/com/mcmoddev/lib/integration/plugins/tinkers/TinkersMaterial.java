@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import c4.conarm.lib.materials.CoreMaterialStats;
 import c4.conarm.lib.materials.PlatesMaterialStats;
 import c4.conarm.lib.materials.TrimMaterialStats;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
@@ -203,9 +204,13 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public CoreMaterialStats getCoreStats()
 	{
 		// TODO: needs proper stat calculation
-		int durability = 10;
+		final float minimum = 5f;
 
-		float defense = 10f;
+		final float hardnessFactor = 1.25f;
+
+		int durability = (int) (2.0f * Integer.valueOf(this.baseMaterial.getArmorMaxDamageFactor()));
+
+		float defense = hardnessFactor * Float.valueOf(this.baseMaterial.getDamageReductionArray()[EntityEquipmentSlot.CHEST.getIndex()]) + minimum;
 
 		return new CoreMaterialStats(durability, defense);
 	}
@@ -213,9 +218,9 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public PlatesMaterialStats getPlatesStats()
 	{
 		// TODO: needs proper stat calculation
-		float modifier = 10f;
+		float modifier = Float.valueOf((this.baseMaterial.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9);
 
-		int durability = 10;
+		int durability = Integer.valueOf(this.baseMaterial.getToolDurability() / 7);
 
 		float toughness = 10f;
 
@@ -225,9 +230,10 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public TrimMaterialStats getTrimStats()
 	{
 		// TODO: needs proper stat calculation
-		int extra = 10;
+		int durability = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.EXTRA_DURABILTIY,
+				Integer.valueOf(this.baseMaterial.getToolDurability() / 10)).intValue();;
 
-		return new TrimMaterialStats(extra);
+		return new TrimMaterialStats(durability);
 	}
 
 	public TinkersMaterial setToolForge(boolean toolForge) {

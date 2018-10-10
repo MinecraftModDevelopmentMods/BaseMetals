@@ -33,9 +33,9 @@ public class ConstructsArmory extends TinkersConstruct {
 	
 	private static boolean initDone = false;
 
-	private static final IForgeRegistry<TinkersMaterial> materialsRegistry = TinkersConstruct.getMaterialsRegistry();
-	private static final TinkerTraitRegistry traitsRegistry = TinkersConstruct.getTraitsRegistry(); // technically does nothing
-	private static final TinkerModifierRegistry modifiersRegistry = TinkersConstruct.getModifiersRegistry(); // technically does nothing
+//	private static final IForgeRegistry<TinkersMaterial> materialsRegistry = TinkersConstruct.getMaterialsRegistry();
+//	private static final TinkerTraitRegistry traitsRegistry = TinkersConstruct.getTraitsRegistry(); // technically does nothing
+//	private static final TinkerModifierRegistry modifiersRegistry = TinkersConstruct.getModifiersRegistry(); // technically does nothing
 	
 	// other storage
 	public static final ConstructsArmory INSTANCE = new ConstructsArmory();
