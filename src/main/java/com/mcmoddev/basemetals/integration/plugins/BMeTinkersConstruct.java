@@ -62,8 +62,9 @@ public class BMeTinkersConstruct implements IIntegration {
 				MaterialNames.ADAMANTINE, ev, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, ev);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, ev,
-				TraitNames.AQUADYNAMIC, TinkerTraitLocation.HEAD, TraitNames.JAGGED,
-				TinkerTraitLocation.HEAD, TraitNames.AQUADYNAMIC);
+				TraitNames.AQUADYNAMIC, TinkerTraitLocation.HEAD,
+				TraitNames.JAGGED, TinkerTraitLocation.HEAD,
+				TraitNames.AQUADYNAMIC);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.BISMUTH), MaterialNames.BISMUTH, ev);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, ev, TraitNames.DENSE);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, ev, TraitNames.FREEZING);

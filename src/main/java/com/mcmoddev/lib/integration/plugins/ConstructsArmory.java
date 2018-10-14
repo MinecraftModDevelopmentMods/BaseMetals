@@ -40,42 +40,42 @@ public class ConstructsArmory extends TinkersConstruct {
 	// other storage
 	public static final ConstructsArmory INSTANCE = new ConstructsArmory();
 
-	private static final Deque<Material> materialsToAdd = Queues.newArrayDeque();
+//	private static final Deque<Material> materialsToAdd = Queues.newArrayDeque();
 	
-	@Override
-	public void init() {
-		if (!Options.isModEnabled(PLUGIN_MODID) || initDone) {
-			return;
-		}
-		initDone = true;
-		
-		MinecraftForge.EVENT_BUS.register(this);
-	}
+//	@Override
+//	public void init() {
+//		if (!Options.isModEnabled(PLUGIN_MODID) || initDone) {
+//			return;
+//		}
+//		initDone = true;
+//
+//		MinecraftForge.EVENT_BUS.register(this);
+//	}
 	
-	/**
-	 *
-	 * @param event
-	 */
-	@SubscribeEvent
-	public void preInit(final IntegrationPreInitEvent event) {
-		// purposefully blank
-	}
+//	/**
+//	 *
+//	 * @param event
+//	 */
+//	@SubscribeEvent
+//	public void preInit(final IntegrationPreInitEvent event) {
+//		// purposefully blank
+//	}
 
-	/**
-	 * 
-	 * @param event
-	 */
-	@SubscribeEvent
-	public void init(final IntegrationInitEvent event) {
-		// purposefully blank
-	}
-
-	/**
-	 * 
-	 * @param event
-	 */
-	@SubscribeEvent
-	public void postInit(final IntegrationPostInitEvent event) {
-		// purposefully blank
-	}
+//	/**
+//	 *
+//	 * @param event
+//	 */
+//	@SubscribeEvent
+//	public void init(final IntegrationInitEvent event) {
+//		// purposefully blank
+//	}
+//
+//	/**
+//	 *
+//	 * @param event
+//	 */
+//	@SubscribeEvent
+//	public void postInit(final IntegrationPostInitEvent event) {
+//		// purposefully blank
+//	}
 }
