@@ -195,6 +195,10 @@ public final class TraitNames {
 	 */
 	public static final String FREEZING = "freezing";
 
+	public static final String ICY = "icy";
+
+	public static final String MALLEABLE = "malleable";
+
 	private TraitNames() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}

@@ -51,13 +51,13 @@ public final class BMeConstructsArmory extends BMeTinkersConstruct {
                             addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.dense);
                             break;
                         case MaterialNames.COLDIRON:
-//                            addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.freezing);
+                            addArmorTrait(mat.getTinkerMaterial(), MMDTraits.icy);
                             break;
                         case MaterialNames.MITHRIL:
                             addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.blessed);
                             break;
                         case MaterialNames.PEWTER:
-//                            addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.soft);
+                            addArmorTrait(mat.getTinkerMaterial(), MMDTraits.malleable);
                             break;
                         case MaterialNames.STARSTEEL:
                             addArmorTrait(mat.getTinkerMaterial(), MMDTraits.sparkly, ArmorTraits.enderport);

@@ -1864,6 +1864,12 @@ modifier.mmd-sparkly.desc=Self-Repairing, shiny and sparkly stuff
 modifier.mmd-soft.name=Soft
 modifier.mmd-soft.desc=Not really good for tools that will see a lot of use as they'll wear out faster
 
+modifier.mmd-icy_armor.name=Eternal Ice
+modifier.mmd-icy_armor.desc=This material is so cold not even the ever burning fires of the Nether can make you sweat
+
+modifier.mmd-malleable_armor.name=Malleable
+modifier.mmd-malleable_armor.desc=Perhaps appropriate for armors that will see a lot of use as they'll wear out slower
+
 # Anvils
 tile.basemetals.steel_anvil.intact.name=Steel Anvil
 tile.basemetals.steel_anvil.slightlyDamaged.name=Slightly Damaged Steel Anvil
