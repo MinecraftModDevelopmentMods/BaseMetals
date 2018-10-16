@@ -39,7 +39,23 @@ public @interface MMDPlugin {
 	 * SemVer. It must also start with an open parentheses or square bracket, contain one or more
 	 * sets of version numbers and end with a closing parentheses or square bracket.
 	 * 
+	 * More specifically, this can take a semicolon separated list of modid\@version pairs, such as:
+	 * tconstruct@[1.12.2-2.7.4.0,);conarm@[1.12.2-2.10.1.87,) and it will try to match all given mods
+	 * and versions, rejecting if they are not present.
+	 * 
 	 * @return The required versions for this plugins needed mods
 	 */
 	String versions() default "";
+	
+	/**
+	 * <p>
+	 * In deference to the existing nature and use of the "versions" data, we introduce the "ordering" data - which serves
+	 * a similar role, but for providing some ordering to init() and making sure we load the plugins in the correct order.
+	 * <p>
+	 * This gets a string, formatted a pair of key-value pairs separated by a semi-colon - such as: before:basemetals@thermalexpansion,
+	 * basemetals@mekanism;after:basemetals@tconstruct and should result in the mod having its init() call made in that order.
+	 * 
+	 * @return The ordering dependency string
+	 */
+	String ordering() default "";
 }
