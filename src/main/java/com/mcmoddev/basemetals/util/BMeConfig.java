@@ -275,6 +275,8 @@ public final class BMeConfig extends Config {
 		Options.thingEnabled(ConfigKeys.EXPERIMENTAL, configuration.getBoolean(
 				"Enable Experimental", TOOLS_CAT, false,
 				"Enable experimental features (Don't blame us if they burn down your cat or kill your house)"));
+		Options.setEnableModderSupportThings(configuration.getBoolean("Enable Mod Support", TOOLS_CAT, true, 
+				"Enable some pieces to support other mods and integrating with them (currently just 'casings' and 'dense plates')"));
 		// Add some utility bits that are referenced
 		Options.thingEnabled(ConfigKeys.ANVIL, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
 		Options.thingEnabled(ConfigKeys.BOOKSHELF, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
