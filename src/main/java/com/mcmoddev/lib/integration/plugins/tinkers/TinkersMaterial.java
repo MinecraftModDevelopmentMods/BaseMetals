@@ -37,8 +37,6 @@ import slimeknights.tconstruct.library.materials.HandleMaterialStats;
 import slimeknights.tconstruct.library.materials.HeadMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
 
-import static java.lang.Float.*;
-
 public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> implements IMMDObject {
 	private Map<String, Number> rawStats;
 	private List<Pair<String, TinkerTraitLocation>> traits;
@@ -124,7 +122,7 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 		 * the crappy defaults don't get used
 		 */
 		float modifier = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.ARROWSHAFT_MODIFIER,
-				valueOf(1.0f)).floatValue();
+				Float.valueOf(1.0f)).floatValue();
 		int bonus = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.ARROWSHAFT_BONUS_AMMO,
 				Integer.valueOf(1)).intValue();
 		return new ArrowShaftMaterialStats(modifier, bonus);
@@ -149,9 +147,9 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 		float speed = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.BOW_DRAW_SPEED,
 				calcDrawSpeed(this.baseMaterial.getToolDurability())).floatValue();
 		float damage = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.BOW_DAMAGE,
-				valueOf(this.baseMaterial.getBaseAttackDamage() + 3)).floatValue();
+				Float.valueOf(this.baseMaterial.getBaseAttackDamage() + 3)).floatValue();
 		float range = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.BOW_RANGE,
-				valueOf(15)).floatValue();
+				Float.valueOf(15)).floatValue();
 
 		return new BowMaterialStats(speed, range, damage);
 	}
@@ -174,9 +172,9 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public FletchingMaterialStats getFletchingStats() {
 		// TODO: this needs to have something besides the default, like others
 		float accuracy = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.FLETCHING_ACCURACY,
-				valueOf(1.0f)).floatValue();
+				Float.valueOf(1.0f)).floatValue();
 		float modifier = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.FLETCHING_MODIFIER,
-				valueOf(1.0f)).floatValue();
+				Float.valueOf(1.0f)).floatValue();
 
 		return new FletchingMaterialStats(accuracy, modifier);
 	}
@@ -185,7 +183,7 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 		int durability = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.BODY_DURABILITY,
 				this.baseMaterial.getToolDurability() / 7).intValue();
 		float modifier = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.BODY_MODIFIER,
-				valueOf((this.baseMaterial.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9)).floatValue();
+				Float.valueOf((this.baseMaterial.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9)).floatValue();
 		
 		return new HandleMaterialStats(modifier, durability);
 	}
@@ -194,9 +192,9 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 		int durability = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.HEAD_DURABILITY,
 				this.baseMaterial.getToolDurability()).intValue();
 		float speed = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.MINING_SPEED,
-				valueOf(this.baseMaterial.getStat(MaterialStats.HARDNESS) * 0.85f)).floatValue();
+				Float.valueOf(this.baseMaterial.getStat(MaterialStats.HARDNESS) * 0.85f)).floatValue();
 		float damage = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.HEAD_ATTACK_DAMAGE,
-				valueOf(this.baseMaterial.getBaseAttackDamage() * 2)).floatValue();
+				Float.valueOf(this.baseMaterial.getBaseAttackDamage() * 2)).floatValue();
 		int miningLevel = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.MINING_LEVEL,
 				this.baseMaterial.getToolHarvestLevel()).intValue();
 		
