@@ -32,7 +32,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeTinkersConstruct.PLUGIN_MODID, versions = BMeTinkersConstruct.PLUGIN_MODID
 		+ "@[1.12.2-2.7.4.0,)")
-public final class BMeTinkersConstruct implements IIntegration {
+public class BMeTinkersConstruct implements IIntegration {
 
 	public static final String PLUGIN_MODID = TinkersConstruct.PLUGIN_MODID;
 
@@ -59,41 +59,35 @@ public final class BMeTinkersConstruct implements IIntegration {
 		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Star-steel fluid is: [registry] %s (%s), [material] %s (%s)", ssr.getName(), ssr, ssm.getName(), ssm);
 		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Adamantine fluid is: [registry] %s (%s), [material] %s (%s)", adr.getName(), adr, adm.getName(), adm);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE),
-				MaterialNames.ADAMANTINE, true, false, ev, TraitNames.COLDBLOODED,
-				TraitNames.INSATIABLE);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY,
-				true, false, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM,
-				true, false, ev, TraitNames.AQUADYNAMIC, TinkerTraitLocation.HEAD, TraitNames.JAGGED,
-				TinkerTraitLocation.HEAD, TraitNames.AQUADYNAMIC);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.BISMUTH), MaterialNames.BISMUTH,
-				true, false, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, true,
-				false, ev, TraitNames.DENSE);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON,
-				true, false, ev, TraitNames.FREEZING);
+				MaterialNames.ADAMANTINE, ev, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, ev);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, ev,
+				TraitNames.AQUADYNAMIC, TinkerTraitLocation.HEAD,
+				TraitNames.JAGGED, TinkerTraitLocation.HEAD,
+				TraitNames.AQUADYNAMIC);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.BISMUTH), MaterialNames.BISMUTH, ev);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, ev, TraitNames.DENSE);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, ev, TraitNames.FREEZING);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.CUPRONICKEL),
-				MaterialNames.CUPRONICKEL, true, false, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.INVAR), MaterialNames.INVAR, true,
-				false, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.MITHRIL), MaterialNames.MITHRIL,
-				true, false, ev, TraitNames.HOLY);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.NICKEL), MaterialNames.NICKEL,
-				true, false, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.PEWTER), MaterialNames.PEWTER,
-				true, false, ev, TraitNames.SOFT);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.PLATINUM), MaterialNames.PLATINUM,
-				true, false, ev);
+				MaterialNames.CUPRONICKEL, ev);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.INVAR), MaterialNames.INVAR, ev);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.MITHRIL), MaterialNames.MITHRIL, ev, TraitNames.HOLY);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.NICKEL), MaterialNames.NICKEL, ev);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.PEWTER), MaterialNames.PEWTER, ev, TraitNames.SOFT);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.PLATINUM), MaterialNames.PLATINUM, ev);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.STARSTEEL),
-				MaterialNames.STARSTEEL, true, false, ev, TraitNames.ENDERFERENCE,
+				MaterialNames.STARSTEEL, ev, TraitNames.ENDERFERENCE,
 				TinkerTraitLocation.HEAD, TraitNames.SPARKLY);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.TIN), MaterialNames.TIN, true,
-				false, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, true,
-				false, ev);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.TIN), MaterialNames.TIN, ev);
+		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, ev);
 	}
 
-	private void registerMaterial(final boolean active, final String name, final boolean castable, final boolean craftable,
+	protected void registerMaterial(final boolean active, final String name,
+								  MaterialRegistrationEvent ev, final Object... traits) {
+		registerMaterial(active, name, true, false, ev, traits);
+	}
+
+	protected void registerMaterial(final boolean active, final String name, final boolean castable, final boolean craftable,
 			MaterialRegistrationEvent ev, final Object... traits) {
 		if (active) {
 			TinkersMaterial mat = new TinkersMaterial(Materials.getMaterialByName(name))

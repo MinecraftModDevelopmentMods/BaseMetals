@@ -8,6 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import c4.conarm.lib.materials.CoreMaterialStats;
+import c4.conarm.lib.materials.PlatesMaterialStats;
+import c4.conarm.lib.materials.TrimMaterialStats;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
@@ -153,14 +157,14 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	public BowStringMaterialStats getBowStringStats() {
 		// TODO: this needs to have something besides the default, like others
 		float modifier = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.BOWSTRING_MODIFIER,
-				Float.valueOf(1.0f)).floatValue();
+				1.0f).floatValue();
 
 		return new BowStringMaterialStats(modifier);
 	}
 	
 	public ExtraMaterialStats getExtraStats() {
 		int durability = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.EXTRA_DURABILTIY,
-				Integer.valueOf(this.baseMaterial.getToolDurability() / 10)).intValue();
+				this.baseMaterial.getToolDurability() / 10).intValue();
 
 		return new ExtraMaterialStats(durability);
 	}
@@ -177,7 +181,7 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	
 	public HandleMaterialStats getHandleStats() {
 		int durability = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.BODY_DURABILITY,
-				Integer.valueOf(this.baseMaterial.getToolDurability() / 7)).intValue();
+				this.baseMaterial.getToolDurability() / 7).intValue();
 		float modifier = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.BODY_MODIFIER,
 				Float.valueOf((this.baseMaterial.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9)).floatValue();
 		
@@ -186,15 +190,50 @@ public class TinkersMaterial extends IForgeRegistryEntry.Impl<TinkersMaterial> i
 	
 	public HeadMaterialStats getHeadStats() {
 		int durability = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.HEAD_DURABILITY,
-				Integer.valueOf(this.baseMaterial.getToolDurability())).intValue();
+				this.baseMaterial.getToolDurability()).intValue();
 		float speed = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.MINING_SPEED,
 				Float.valueOf(this.baseMaterial.getStat(MaterialStats.HARDNESS) * 0.85f)).floatValue();
 		float damage = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.HEAD_ATTACK_DAMAGE,
 				Float.valueOf(this.baseMaterial.getBaseAttackDamage() * 2)).floatValue();
 		int miningLevel = this.rawStats.getOrDefault(TinkerConstants.TinkerStatNames.MINING_LEVEL,
-				Integer.valueOf(this.baseMaterial.getToolHarvestLevel())).intValue();
+				this.baseMaterial.getToolHarvestLevel()).intValue();
 		
 		return new HeadMaterialStats(durability, speed, damage, miningLevel);
+	}
+
+	public CoreMaterialStats getCoreStats()
+	{
+		// TODO: needs proper stat calculation
+		final float minimum = 5f;
+
+		final float hardnessFactor = 1.25f;
+
+		int durability = (int) (2.0f * this.baseMaterial.getArmorMaxDamageFactor());
+
+		float defense = hardnessFactor * (float) this.baseMaterial.getDamageReductionArray()[EntityEquipmentSlot.CHEST.getIndex()] + minimum;
+
+		return new CoreMaterialStats(durability, defense);
+	}
+
+	public PlatesMaterialStats getPlatesStats()
+	{
+		// TODO: needs proper stat calculation
+		float modifier = (this.baseMaterial.getStat(MaterialStats.MAGICAFFINITY) * 2) / 9;
+
+		int durability = this.baseMaterial.getToolDurability() / 7;
+
+		float toughness = this.baseMaterial.getStat(MaterialStats.HARDNESS) > 10
+				? (int) (this.baseMaterial.getStat(MaterialStats.HARDNESS) / 5) : 0;
+
+		return new PlatesMaterialStats(modifier, durability, toughness);
+	}
+
+	public TrimMaterialStats getTrimStats()
+	{
+		// TODO: needs proper stat calculation
+		int durability = this.baseMaterial.getToolDurability() / 10;
+
+		return new TrimMaterialStats(durability);
 	}
 
 	public TinkersMaterial setToolForge(boolean toolForge) {

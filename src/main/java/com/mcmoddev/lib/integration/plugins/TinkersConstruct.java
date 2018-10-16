@@ -60,9 +60,21 @@ public class TinkersConstruct implements IIntegration {
 			.disableSaving().setMaxID(65535)
 			.setName(new ResourceLocation("mmdlib", "tinker_registry"))
 			.setType(TinkersMaterial.class).create();
-	private static final TinkerTraitRegistry traitsRegistry = new TinkerTraitRegistry(); // technically does nothing	
+	private static final TinkerTraitRegistry traitsRegistry = new TinkerTraitRegistry(); // technically does nothing
 	private static final TinkerModifierRegistry modifiersRegistry = new TinkerModifierRegistry(); // technically does nothing
-	
+
+	protected static IForgeRegistry<TinkersMaterial> getMaterialsRegistry() {
+		return materialsRegistry;
+	}
+
+	protected static TinkerTraitRegistry getTraitsRegistry() {
+		return traitsRegistry;
+	}
+
+	protected static TinkerModifierRegistry getModifiersRegistry() {
+		return modifiersRegistry;
+	}
+
 	// other storage
 	private static final List<Pair<FluidStack,List<FluidStack>>> alloys = Lists.newCopyOnWriteArrayList();
 	private static final List<Pair<ItemStack, FluidStack>> extraMeltings = Lists.newCopyOnWriteArrayList();
