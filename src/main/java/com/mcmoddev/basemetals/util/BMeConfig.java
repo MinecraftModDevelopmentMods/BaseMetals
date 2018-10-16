@@ -92,7 +92,13 @@ public final class BMeConfig extends Config {
 		// fallback orespawn can live as a 'thingEnabled' for a bit...
 		Options.setFallbackOreSpawn(configuration.getBoolean("fallback_orespawn", GENERAL_CAT, true,
 				"disable this and using_orespawn to make MMDLib based mods not spawn any ores"));
-
+		Options.thingEnabled(ConfigKeys.IC2ITEMS_WITHOUT_PLUGIN, 
+				configuration.getBoolean("Enable IC2 Items", GENERAL_CAT, false, 
+						"Enable the items for IC2 support even if the IC2 plugin is disabled"));
+		Options.thingEnabled(ConfigKeys.MEKITEMS_WITHOUT_PLUGIN, 
+				configuration.getBoolean("Enable Mekanism Items", GENERAL_CAT, false, 
+						"Enable the items for Mekanism support even if the Mekanism plugin is disabled"));
+		
 		// INTEGRATION
 		Options.modEnabled(EnderIO.PLUGIN_MODID,
 				configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
