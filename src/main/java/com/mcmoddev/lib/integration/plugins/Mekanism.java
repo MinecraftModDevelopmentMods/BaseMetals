@@ -88,7 +88,7 @@ public class Mekanism implements IIntegration {
 		addChemicalInjectionChamberRecipe(crystal, shard);
 
 		addChemicalCrystallizerRecipe(cleanGas, 200, crystal);
-		addChemicalWasherRecipe(material.getName(), 1000, cleanGas);
+		addChemicalWasherRecipe(material.getName(), cleanGas);
 		addChemicalDissolutionChamberRecipe(ore, material.getName());
 	}
 
@@ -148,10 +148,9 @@ public class Mekanism implements IIntegration {
 	}
 
 	// 5x, Slurry to "clean" Slurry
-	protected static void addChemicalWasherRecipe(@Nonnull final String inputGas,
-			@Nonnull final int inputGasQty, @Nonnull final String outputGas) {
-		final GasStack inputGasStack = new GasStack(GasRegistry.getGas(inputGas), inputGasQty);
-		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), inputGasQty);
+	protected static void addChemicalWasherRecipe(@Nonnull final String inputGas, @Nonnull final String outputGas) {
+		final GasStack inputGasStack = new GasStack(GasRegistry.getGas(inputGas), 1);
+		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), 1);
 		RecipeHandler.addChemicalWasherRecipe(inputGasStack, outputGasStack);
 	}
 
