@@ -1,46 +1,43 @@
 package com.mcmoddev.lib.integration.plugins;
 
-import java.util.Deque;
-import java.util.List;
-import java.util.Locale;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
-
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
-import com.mcmoddev.lib.integration.plugins.tinkers.*;
-import com.mcmoddev.lib.integration.plugins.tinkers.events.MaterialRegistrationEvent;
-import com.mcmoddev.lib.integration.plugins.tinkers.events.ModifierRegistrationEvent;
-import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersAlloyRecipeEvent;
-import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersExtraMeltingsEvent;
-import com.mcmoddev.lib.integration.plugins.tinkers.events.TraitRegistrationEvent;
-import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.*;
-import com.mcmoddev.lib.integration.plugins.tinkers.traits.*;
+import com.mcmoddev.lib.integration.plugins.tinkers.TinkerModifierRegistry;
+import com.mcmoddev.lib.integration.plugins.tinkers.TinkerTraitLocation;
+import com.mcmoddev.lib.integration.plugins.tinkers.TinkerTraitRegistry;
+import com.mcmoddev.lib.integration.plugins.tinkers.TinkersMaterial;
+import com.mcmoddev.lib.integration.plugins.tinkers.events.*;
+import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierFakeDiamond;
+import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierLeadPlated;
+import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierToxic;
+import com.mcmoddev.lib.integration.plugins.tinkers.traits.MMDTraits;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 import com.mcmoddev.lib.util.Config.Options;
-
+import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
+import org.apache.commons.lang3.tuple.Pair;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
 import slimeknights.tconstruct.library.traits.ITrait;
+
+import java.util.Deque;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * TiC Plugin, redesigned.
@@ -281,5 +278,17 @@ public class TinkersConstruct implements IIntegration {
 			AlloyRecipe recipe = new AlloyRecipe(output, inputs.toArray(new FluidStack[inputs.size()]));
 			TinkerRegistry.registerAlloy(recipe);
 		});
+	}
+
+	public static void registerTableCasting(ItemStack output, ItemStack cast, Fluid fluid, int amount){
+		TinkerRegistry.registerTableCasting(output, cast, fluid, amount);
+	}
+
+	private static void registerBasinCasting(ItemStack output, ItemStack cast, Fluid fluid, int amount){
+		TinkerRegistry.registerBasinCasting(output, cast, fluid, amount);
+	}
+
+	public static void registerBasinCasting(ItemStack output, Fluid fluid, int amount){
+		registerBasinCasting(output, ItemStack.EMPTY, fluid, amount);
 	}
 }

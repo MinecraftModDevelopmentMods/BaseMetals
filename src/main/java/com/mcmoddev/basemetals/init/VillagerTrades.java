@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.util.VillagerTradeHelper;
+import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
@@ -25,8 +26,10 @@ public final class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 	 *
 	 */
 	public static void init() {
-		registerCommonTrades();
-		registerModSpecificTrades();
+		if (com.mcmoddev.lib.util.Config.Options.isThingEnabled(ConfigKeys.VILLAGER_TRADES)) {
+			registerCommonTrades();
+			registerModSpecificTrades();
+		}
 	}
 
 	protected static void registerModSpecificTrades() {
