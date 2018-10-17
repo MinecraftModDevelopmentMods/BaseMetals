@@ -82,6 +82,9 @@ public final class BMeConfig extends Config {
 		Options.setTwoDustDrop(configuration.getBoolean("hammer_produces_two_dust", GENERAL_CAT,
 				true,
 				"If true, then the crack hammer when crushing ingots/ores two dust will drop"));
+		Options.thingEnabled(ConfigKeys.VILLAGER_TRADES, configuration.getBoolean("Enable Villager Trades", 
+				GENERAL_CAT, true, "No, not the Village People, trades with Villagers.\n" + 
+						"Basically... if you don't want BaseMetals (or other *Metals items and blocks) registered as trades with various villagers, set this to false"));
 		// fallback orespawn can live as a 'thingEnabled' for a bit...
 		Options.setFallbackOreSpawn(configuration.getBoolean("fallback_orespawn", GENERAL_CAT, true,
 				"disable this and using_orespawn to make MMDLib based mods not spawn any ores"));
