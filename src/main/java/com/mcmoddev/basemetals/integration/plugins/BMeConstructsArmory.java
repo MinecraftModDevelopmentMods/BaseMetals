@@ -36,33 +36,35 @@ public final class BMeConstructsArmory extends BMeTinkersConstruct {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void materialRegistration(MaterialRegistrationEvent ev) {
-        ev.getRegistry().getEntries().stream()
-                .map(ent -> ent.getValue())
-                .forEach(mat -> {
-                    TinkerRegistry.addMaterialStats(mat.getTinkerMaterial(), mat.getCoreStats(), mat.getPlatesStats(), mat.getTrimStats());
-                    switch (mat.getName()){
-                        case MaterialNames.ADAMANTINE:
-                            addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.vengeful, ArmorTraits.prideful);
-                            break;
-                        case MaterialNames.AQUARIUM:
-                            addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.rough, ArmorTraits.aquaspeed);
-                            break;
-                        case MaterialNames.BRASS:
-                            addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.dense);
-                            break;
-                        case MaterialNames.COLDIRON:
-                            addArmorTrait(mat.getTinkerMaterial(), MMDTraits.icy);
-                            break;
-                        case MaterialNames.MITHRIL:
-                            addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.blessed);
-                            break;
-                        case MaterialNames.PEWTER:
-                            addArmorTrait(mat.getTinkerMaterial(), MMDTraits.malleable);
-                            break;
-                        case MaterialNames.STARSTEEL:
-                            addArmorTrait(mat.getTinkerMaterial(), MMDTraits.sparkly, ArmorTraits.enderport);
-                            break;
-                    }
-                });
+        if(Config.Options.isModEnabled(PLUGIN_MODID)){
+            ev.getRegistry().getEntries().stream()
+                    .map(ent -> ent.getValue())
+                    .forEach(mat -> {
+                        TinkerRegistry.addMaterialStats(mat.getTinkerMaterial(), mat.getCoreStats(), mat.getPlatesStats(), mat.getTrimStats());
+                        switch (mat.getName()){
+                            case MaterialNames.ADAMANTINE:
+                                addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.vengeful, ArmorTraits.prideful);
+                                break;
+                            case MaterialNames.AQUARIUM:
+                                addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.rough, ArmorTraits.aquaspeed);
+                                break;
+                            case MaterialNames.BRASS:
+                                addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.dense);
+                                break;
+                            case MaterialNames.COLDIRON:
+                                addArmorTrait(mat.getTinkerMaterial(), MMDTraits.icy);
+                                break;
+                            case MaterialNames.MITHRIL:
+                                addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.blessed);
+                                break;
+                            case MaterialNames.PEWTER:
+                                addArmorTrait(mat.getTinkerMaterial(), MMDTraits.malleable);
+                                break;
+                            case MaterialNames.STARSTEEL:
+                                addArmorTrait(mat.getTinkerMaterial(), MMDTraits.sparkly, ArmorTraits.enderport);
+                                break;
+                        }
+                    });
+        }
     }
 }
