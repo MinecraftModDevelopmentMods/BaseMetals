@@ -56,8 +56,6 @@ public class BMeTinkersConstruct implements IIntegration {
 		Fluid adr = FluidRegistry.getFluid(MaterialNames.ADAMANTINE);
 		Fluid adm = Materials.getMaterialByName(MaterialNames.ADAMANTINE).getFluid();
 		
-		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Star-steel fluid is: [registry] %s (%s), [material] %s (%s)", ssr.getName(), ssr, ssm.getName(), ssm);
-		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Adamantine fluid is: [registry] %s (%s), [material] %s (%s)", adr.getName(), adr, adm.getName(), adm);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE),
 				MaterialNames.ADAMANTINE, ev, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
 		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, ev);
