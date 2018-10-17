@@ -34,7 +34,6 @@ import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
 import slimeknights.tconstruct.library.traits.ITrait;
-import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
 import java.util.Deque;
 import java.util.List;
