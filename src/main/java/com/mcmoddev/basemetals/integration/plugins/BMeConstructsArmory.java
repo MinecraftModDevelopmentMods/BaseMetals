@@ -1,10 +1,13 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
+
 import c4.conarm.common.armor.traits.ArmorTraits;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.ConstructsArmory;
+import com.mcmoddev.lib.integration.plugins.armory.traits.MMDTraitsCA;
 import com.mcmoddev.lib.integration.plugins.tinkers.events.MaterialRegistrationEvent;
 import com.mcmoddev.lib.integration.plugins.tinkers.traits.MMDTraits;
 import com.mcmoddev.lib.util.Config;
@@ -13,11 +16,11 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import slimeknights.tconstruct.library.TinkerRegistry;
 
-import static c4.conarm.lib.materials.ArmorMaterials.addArmorTrait;
+import static com.mcmoddev.lib.integration.plugins.ConstructsArmory.*;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeConstructsArmory.PLUGIN_MODID, versions = BMeConstructsArmory.PLUGIN_MODID
         + "@[1.12.2-2.10.1.87,)")
-public final class BMeConstructsArmory extends BMeTinkersConstruct {
+public final class BMeConstructsArmory implements IIntegration {
 
     public static final String PLUGIN_MODID = ConstructsArmory.PLUGIN_MODID;
 
@@ -27,11 +30,11 @@ public final class BMeConstructsArmory extends BMeTinkersConstruct {
 
     @Override
     public void init() {
-        ConstructsArmory.INSTANCE.init();
+        INSTANCE.init();
         if (!Config.Options.isModEnabled(PLUGIN_MODID)) {
             return;
         }
-        MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(this);    
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -52,13 +55,13 @@ public final class BMeConstructsArmory extends BMeTinkersConstruct {
                                 addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.dense);
                                 break;
                             case MaterialNames.COLDIRON:
-                                addArmorTrait(mat.getTinkerMaterial(), MMDTraits.icy);
+                                addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.icy);
                                 break;
                             case MaterialNames.MITHRIL:
                                 addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.blessed);
                                 break;
                             case MaterialNames.PEWTER:
-                                addArmorTrait(mat.getTinkerMaterial(), MMDTraits.malleable);
+                                addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.malleable);
                                 break;
                             case MaterialNames.STARSTEEL:
                                 addArmorTrait(mat.getTinkerMaterial(), MMDTraits.sparkly, ArmorTraits.enderport);
