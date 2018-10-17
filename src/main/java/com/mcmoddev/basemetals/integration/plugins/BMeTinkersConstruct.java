@@ -127,22 +127,26 @@ public class BMeTinkersConstruct implements IIntegration {
 
 	@SubscribeEvent
 	public void registerMeltings(TinkersExtraMeltingsEvent ev) {
-		if (Materials.hasMaterial(MaterialNames.COAL)) {
+		if (isMaterialFluidEnabled(MaterialNames.COAL)) {
 			TinkersConstruct.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(MaterialNames.COAL, 144),
 					new ItemStack(net.minecraft.init.Items.COAL));
 		}
 
-		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
+		if (isMaterialFluidEnabled(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 			TinkersConstruct.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(mercury.getName(), 144),
 					mercury.getItemStack(Names.INGOT));
 		}
 
-		if (Materials.hasMaterial(MaterialNames.PRISMARINE)) {
+		if (isMaterialFluidEnabled(MaterialNames.PRISMARINE)) {
 			final MMDMaterial prismarine = Materials.getMaterialByName(MaterialNames.PRISMARINE);
 			TinkersConstruct.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(prismarine.getName(), 144),
 					new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD));
 		}
+	}
+
+	private boolean isMaterialFluidEnabled(String identifier){
+		return Options.isMaterialEnabled(identifier) && FluidRegistry.getFluid(identifier) != null;
 	}
 
 	@SubscribeEvent
