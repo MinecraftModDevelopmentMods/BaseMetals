@@ -197,7 +197,7 @@ public final class BMeConfig extends Config {
 				configuration.getBoolean("EnableQuartz", VANILLA_CAT, true,
 						"Enable Nether Quartz Items and Materials (not currently in use)"));
 		Options.materialEnabled(MaterialNames.OBSIDIAN, configuration.getBoolean("EnableObsidian",
-				VANILLA_CAT, true, "Enable Obsidian Items and Materials (not currently in use)"));
+				VANILLA_CAT, true, "Enable Obsidian Items and Materials"));
 		Options.materialEnabled(MaterialNames.LAPIS,
 				configuration.getBoolean("EnableLapis", VANILLA_CAT, true,
 						"Enable Lapis Lazuli Items and Materials (not currently in use)"));
