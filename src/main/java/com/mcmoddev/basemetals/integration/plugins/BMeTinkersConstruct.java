@@ -8,6 +8,7 @@ import com.mcmoddev.basemetals.data.TraitNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.TinkersConstruct;
 import com.mcmoddev.lib.integration.plugins.tinkers.TinkerTraitLocation;
@@ -18,12 +19,18 @@ import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersExtraMeltingsE
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import slimeknights.tconstruct.smeltery.TinkerSmeltery;
+
+import static com.mcmoddev.lib.integration.plugins.TinkersConstruct.registerBasinCasting;
+import static com.mcmoddev.lib.integration.plugins.TinkersConstruct.registerTableCasting;
 
 /**
  *
@@ -48,7 +55,22 @@ public class BMeTinkersConstruct implements IIntegration {
 		}
 		MinecraftForge.EVENT_BUS.register(this);
 	}
-	
+
+	@SubscribeEvent
+	public void postInit(final IntegrationPostInitEvent event){
+		registerPrismarineFullCasting();
+	}
+
+	public static void registerPrismarineFullCasting(){
+		int gemAmount = 144;
+		int blockAmount = 4 * gemAmount;
+
+		Fluid fluid = FluidRegistry.getFluid(MaterialNames.PRISMARINE);
+		registerTableCasting(new ItemStack(Items.PRISMARINE_SHARD, 1), TinkerSmeltery.castGem, fluid, gemAmount);
+		registerBasinCasting(new ItemStack(Blocks.PRISMARINE, 1),fluid, blockAmount);
+
+	}
+
 	@SubscribeEvent
 	public void materialRegistration(MaterialRegistrationEvent ev) {
 		Fluid ssr = FluidRegistry.getFluid(MaterialNames.STARSTEEL);
@@ -58,28 +80,29 @@ public class BMeTinkersConstruct implements IIntegration {
 		
 		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Star-steel fluid is: [registry] %s (%s), [material] %s (%s)", ssr.getName(), ssr, ssm.getName(), ssm);
 		com.mcmoddev.basemetals.BaseMetals.logger.fatal("Adamantine fluid is: [registry] %s (%s), [material] %s (%s)", adr.getName(), adr, adm.getName(), adm);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE),
-				MaterialNames.ADAMANTINE, ev, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, ev,
+		registerMaterial(MaterialNames.ADAMANTINE, ev, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
+		registerMaterial(MaterialNames.ANTIMONY, ev);
+		registerMaterial(MaterialNames.AQUARIUM, ev,
 				TraitNames.AQUADYNAMIC, TinkerTraitLocation.HEAD,
 				TraitNames.JAGGED, TinkerTraitLocation.HEAD,
 				TraitNames.AQUADYNAMIC);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.BISMUTH), MaterialNames.BISMUTH, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.BRASS), MaterialNames.BRASS, ev, TraitNames.DENSE);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.COLDIRON), MaterialNames.COLDIRON, ev, TraitNames.FREEZING);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.CUPRONICKEL),
-				MaterialNames.CUPRONICKEL, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.INVAR), MaterialNames.INVAR, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.MITHRIL), MaterialNames.MITHRIL, ev, TraitNames.HOLY);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.NICKEL), MaterialNames.NICKEL, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.PEWTER), MaterialNames.PEWTER, ev, TraitNames.SOFT);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.PLATINUM), MaterialNames.PLATINUM, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.STARSTEEL),
-				MaterialNames.STARSTEEL, ev, TraitNames.ENDERFERENCE,
+		registerMaterial(MaterialNames.BISMUTH, ev);
+		registerMaterial(MaterialNames.BRASS, ev, TraitNames.DENSE);
+		registerMaterial(MaterialNames.COLDIRON, ev, TraitNames.FREEZING);
+		registerMaterial(MaterialNames.CUPRONICKEL, ev);
+		registerMaterial(MaterialNames.INVAR, ev);
+		registerMaterial(MaterialNames.MITHRIL, ev, TraitNames.HOLY);
+		registerMaterial(MaterialNames.NICKEL, ev);
+		registerMaterial(MaterialNames.PEWTER, ev, TraitNames.SOFT);
+		registerMaterial(MaterialNames.PLATINUM, ev);
+		registerMaterial(MaterialNames.STARSTEEL, ev, TraitNames.ENDERFERENCE,
 				TinkerTraitLocation.HEAD, TraitNames.SPARKLY);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.TIN), MaterialNames.TIN, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ZINC), MaterialNames.ZINC, ev);
+		registerMaterial(MaterialNames.TIN, ev);
+		registerMaterial(MaterialNames.ZINC, ev);
+	}
+
+	protected void registerMaterial(final String name, MaterialRegistrationEvent ev, final Object... traits){
+		registerMaterial(Options.isMaterialEnabled(name), name, ev, traits);
 	}
 
 	protected void registerMaterial(final boolean active, final String name,
