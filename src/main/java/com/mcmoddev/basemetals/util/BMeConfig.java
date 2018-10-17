@@ -205,7 +205,7 @@ public final class BMeConfig extends Config {
 				configuration.getBoolean("EnablePrismarine", VANILLA_CAT, true,
 						"Enable Prismarine Items and Materials (not currently in use)"));
 		Options.materialEnabled(MaterialNames.REDSTONE, configuration.getBoolean("EnableRedstone",
-				VANILLA_CAT, true, "Enable Redstone Items and Materials (not currently in use)"));
+				VANILLA_CAT, true, "Enable Redstone Items and Materials"));
 
 		// RECIPE AMOUNTS/TOOL&ITEM DISABLING
 		Options.setGearQuantity(configuration.getInt("Gear Quantity", TOOLS_CAT, 4, 1, 64,
