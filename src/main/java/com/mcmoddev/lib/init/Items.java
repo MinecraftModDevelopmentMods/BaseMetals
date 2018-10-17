@@ -181,17 +181,22 @@ public abstract class Items {
 		addItemType(Names.DENSE_PLATE, GenericMMDItem.class, Options.enableModderSupportThings(),
 				Oredicts.PLATE_DENSE);
 
-		addItemType(Names.CRUSHED, GenericMMDItem.class, Options.isModEnabled(IC2.PLUGIN_MODID),
+		addItemType(Names.CRUSHED, GenericMMDItem.class, Options.isModEnabled(IC2.PLUGIN_MODID) ||
+				Options.isThingEnabled(ConfigKeys.IC2ITEMS_WITHOUT_PLUGIN),
 				Oredicts.CRUSHED);
 		addItemType(Names.CRUSHED_PURIFIED, GenericMMDItem.class,
-				Options.isModEnabled(IC2.PLUGIN_MODID), Oredicts.CRUSHED_PURIFIED);
+				Options.isModEnabled(IC2.PLUGIN_MODID) || Options.isThingEnabled(ConfigKeys.IC2ITEMS_WITHOUT_PLUGIN),
+				Oredicts.CRUSHED_PURIFIED);
 
 		addItemType(Names.SHARD, GenericMMDItem.class,
-				Options.isModEnabled(Mekanism.PLUGIN_MODID), Oredicts.SHARD);
+				Options.isModEnabled(Mekanism.PLUGIN_MODID) ||
+				Options.isThingEnabled(ConfigKeys.MEKITEMS_WITHOUT_PLUGIN), Oredicts.SHARD);
 		addItemType(Names.CLUMP, GenericMMDItem.class,
-				Options.isModEnabled(Mekanism.PLUGIN_MODID), Oredicts.CLUMP);
+				Options.isModEnabled(Mekanism.PLUGIN_MODID) ||
+				Options.isThingEnabled(ConfigKeys.MEKITEMS_WITHOUT_PLUGIN), Oredicts.CLUMP);
 		addItemType(Names.POWDER_DIRTY, GenericMMDItem.class,
-				Options.isModEnabled(Mekanism.PLUGIN_MODID), Oredicts.DUST_DIRTY);
+				Options.isModEnabled(Mekanism.PLUGIN_MODID) ||
+				Options.isThingEnabled(ConfigKeys.MEKITEMS_WITHOUT_PLUGIN), Oredicts.DUST_DIRTY);
 
 		try {
 			expandCombatArrays(net.minecraft.item.ItemAxe.class);
