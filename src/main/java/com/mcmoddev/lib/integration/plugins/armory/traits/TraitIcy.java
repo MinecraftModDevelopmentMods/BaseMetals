@@ -1,4 +1,4 @@
-package com.mcmoddev.lib.integration.plugins.tinkers.traits;
+package com.mcmoddev.lib.integration.plugins.armory.traits;
 
 import c4.conarm.lib.traits.AbstractArmorTrait;
 import com.mcmoddev.basemetals.data.MaterialNames;
