@@ -52,5 +52,6 @@ public class ConstructsArmory implements IIntegration {
 		traitsRegistry.register("mmd-toxic-ca", MMDTraitsCA.toxic);
 		traitsRegistry.register("mmd-reactive-ca", MMDTraitsCA.reactive);
 		traitsRegistry.register("mmd-brittle-ca", MMDTraitsCA.brittle);
+		traitsRegistry.register("mmd-poisonous-ca", MMDTraitsCA.poisonous);
 	}
 }

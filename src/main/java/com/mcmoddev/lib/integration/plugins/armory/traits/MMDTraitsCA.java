@@ -48,6 +48,8 @@ public class MMDTraitsCA {
 
     public static final AbstractTrait brittle = new TraitBrittle();
 
+    public static final AbstractTrait poisonous = new TraitPoisonous();
+
     private MMDTraitsCA() {
 
     }
