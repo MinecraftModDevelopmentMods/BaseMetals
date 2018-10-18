@@ -4,10 +4,14 @@ import c4.conarm.lib.traits.AbstractArmorTrait;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.utils.ToolHelper;
 
@@ -47,14 +51,16 @@ public class TraitReactive extends AbstractArmorTrait {
 		}
 	}
 
-//	@Override
-//	public void onHit(@Nonnull final ItemStack tool, @Nonnull final EntityLivingBase player,
-//			@Nonnull final EntityLivingBase target, @Nonnull final float damage,
-//			@Nonnull final boolean isCritical) {
-//		if (target.canBreatheUnderwater()) {
-//			// do extra damage
-//			final DamageSource extraDamage = DamageSource.ON_FIRE;
-//			target.attackEntityFrom(extraDamage, isCritical ? 8f : 4f);
-//		}
-//	}
+	@Override
+	public float onHurt(ItemStack armor, EntityPlayer player, DamageSource source, float damage, float newDamage, LivingHurtEvent evt) {
+		Entity entity = source.getTrueSource();
+		if (entity instanceof EntityLivingBase && !(entity instanceof FakePlayer)) {
+			EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+			if (entityLivingBase.canBreatheUnderwater()){
+				final DamageSource extraDamage = DamageSource.ON_FIRE;
+				entityLivingBase.attackEntityFrom(extraDamage, 4f);
+			}
+		}
+		return super.onHurt(armor, player, source, damage, newDamage, evt);
+	}
 }
