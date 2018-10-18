@@ -31,15 +31,6 @@ public class NBTCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> i
 			return Arrays.asList(input);
 		}
 	}
-	
-	private final class defaultValidItem implements Predicate<ItemStack> {
-
-		@Override
-		public boolean test(ItemStack input) {
-			return OreDictionary.itemMatches(inputItem, input, true);
-		}
-		
-	}
 
 	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback, final InputMunger inputCallback, final Predicate<ItemStack> validItemCallback) {
 		inputItem = input;
@@ -50,27 +41,15 @@ public class NBTCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> i
 	}
 
 	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback, final InputMunger inputCallback) {
-		inputItem = input;
-		outputCallback = nbtCallback;
-		outputItem = outputCallback.run(inputItem);
-		this.inputCallback = inputCallback;
-		this.validItemCallback = new defaultValidItem();
+		this(input, nbtCallback, inputCallback, (in) -> OreDictionary.itemMatches(input, in, false));
 	}
 
 	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback, final Predicate<ItemStack> validItemCallback) {
-		inputItem = input;
-		outputCallback = nbtCallback;
-		outputItem = outputCallback.run(inputItem);
-		this.inputCallback = new defaultMunger();
-		this.validItemCallback = validItemCallback;
+		this(input, nbtCallback, (in) -> Arrays.asList(in), validItemCallback);
 	}
 	
 	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback) {
-		inputItem = input;
-		outputCallback = nbtCallback;
-		outputItem = outputCallback.run(inputItem);
-		this.inputCallback = new defaultMunger();
-		this.validItemCallback = new defaultValidItem();
+		this(input, nbtCallback, (in) -> Arrays.asList(in), (in) -> OreDictionary.itemMatches(input, in, false));
 	}
 	
 	@Override
