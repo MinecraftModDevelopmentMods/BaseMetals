@@ -92,8 +92,8 @@ public class BMeTinkersConstruct implements IIntegration {
 		registerMaterial(MaterialNames.MITHRIL, ev,
 				TraitNames.HOLY);
 		registerMaterial(MaterialNames.NICKEL, ev,
-				TraitNames.SHOCKING, TinkerTraitLocation.HEAD,
 				TraitNames.MAGNETIC, TinkerTraitLocation.HEAD,
+				TraitNames.SHOCKING, TinkerTraitLocation.HEAD,
 				TraitNames.MAGNETIC2,
 				TraitNames.SHOCKING);
 		registerMaterial(MaterialNames.PEWTER, ev,

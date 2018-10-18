@@ -15,6 +15,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.tools.TinkerTraits;
 
 import static com.mcmoddev.lib.integration.plugins.ConstructsArmory.*;
 
@@ -48,6 +49,9 @@ public final class BMeConstructsArmory implements IIntegration {
                             case MaterialNames.ADAMANTINE:
                                 addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.vengeful, ArmorTraits.prideful);
                                 break;
+                            case MaterialNames.ANTIMONY:
+                                addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.brittle);
+                                break;
                             case MaterialNames.AQUARIUM:
                                 addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.rough, ArmorTraits.aquaspeed);
                                 break;
@@ -58,10 +62,14 @@ public final class BMeConstructsArmory implements IIntegration {
                                 addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.icy);
                                 break;
                             case MaterialNames.LEAD:
-                                addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.malleable);
+                                addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.malleable); // Not being applied for some reason
                                 break;
                             case MaterialNames.MITHRIL:
                                 addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.blessed);
+                                break;
+                            case MaterialNames.NICKEL:
+                                addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.magnetic2, ArmorTraits.magnetic);
+                                addArmorTrait(mat.getTinkerMaterial(), TinkerTraits.shocking);
                                 break;
                             case MaterialNames.PEWTER:
                                 addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.malleable);
@@ -69,6 +77,8 @@ public final class BMeConstructsArmory implements IIntegration {
                             case MaterialNames.STARSTEEL:
                                 addArmorTrait(mat.getTinkerMaterial(), MMDTraits.sparkly, ArmorTraits.enderport);
                                 break;
+                            case MaterialNames.ZINC:
+                                addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.reactive);
                         }
                     });
         }
