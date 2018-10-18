@@ -47,10 +47,10 @@ public class ConstructsArmory implements IIntegration {
 	}
 
 	private void registerInternalTraits() {
-		traitsRegistry.register("icy-ca", MMDTraitsCA.icy);
-		traitsRegistry.register("malleable-ca", MMDTraitsCA.malleable);
-		traitsRegistry.register("toxic-ca", MMDTraitsCA.toxic);
-		traitsRegistry.register("reactive-ca", MMDTraitsCA.reactive);
-		traitsRegistry.register("brittle-ca", MMDTraitsCA.brittle);
+		traitsRegistry.register("mmd-icy-ca", MMDTraitsCA.icy);
+		traitsRegistry.register("mmd-malleable-ca", MMDTraitsCA.malleable);
+		traitsRegistry.register("mmd-toxic-ca", MMDTraitsCA.toxic);
+		traitsRegistry.register("mmd-reactive-ca", MMDTraitsCA.reactive);
+		traitsRegistry.register("mmd-brittle-ca", MMDTraitsCA.brittle);
 	}
 }
