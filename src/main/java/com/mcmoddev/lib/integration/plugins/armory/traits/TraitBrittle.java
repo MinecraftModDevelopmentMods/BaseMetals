@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
 public class TraitBrittle extends AbstractArmorTrait {
 
 	public TraitBrittle() {
-		super("mmd-brittle-ca", TextFormatting.RED);
+		super("mmd-brittle", TextFormatting.RED);
 	}
 
 //	@Override

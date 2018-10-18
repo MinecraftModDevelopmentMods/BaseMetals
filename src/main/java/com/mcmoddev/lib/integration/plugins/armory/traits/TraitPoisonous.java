@@ -8,7 +8,7 @@ import net.minecraft.potion.PotionEffect;
 
 public class TraitPoisonous extends AbstractArmorTrait {
     public TraitPoisonous() {
-        super("poisonous", 16777215);
+        super("mmd-poisonous", 16777215);
     }
 
 //    public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {

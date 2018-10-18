@@ -34,7 +34,7 @@ import javax.annotation.Nonnull;
 public class TraitReactive extends AbstractArmorTrait {
 
 	public TraitReactive() {
-		super("mmd-reactive-ca", TextFormatting.BLACK);
+		super("mmd-reactive", TextFormatting.BLACK);
 	}
 
 	@Override

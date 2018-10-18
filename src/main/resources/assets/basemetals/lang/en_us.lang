@@ -1857,6 +1857,18 @@ modifier.toxic-modifier.desc=§oTOXIC AVENGER!§r\nMercury and it's ethyl and me
 modifier.lead-plated.name=Lead Plated
 modifier.lead-plated.desc=§oSafety First§r\nIf you've got some Plutonium or Uranium around and think it'd be great for a weapon, don't forget to add some shielding.\nA nice lead plate will stop the deadly radiation from affection you while still letting it harm your enemies.
 
+modifier.mmd-poisonous_armor.name=Poisonous
+modifier.mmd-poisonous_armor.desc=
+
+modifier.mmd-toxic_armor.name=Toxic
+modifier.mmd-toxic_armor.desc=Rather dangerous - will poison and blind things when hit.
+
+modifier.mmd-reactive_armor.name=Reactive
+modifier.mmd-reactive_armor.desc=Reacts with water to wear out faster
+
+modifier.mmd-brittle_armor.name=Brittle
+modifier.mmd-brittle_armor.desc=
+
 # Base Metals Modifier
 modifier.mmd-sparkly.name=Sparkly
 modifier.mmd-sparkly.desc=Self-Repairing, shiny and sparkly stuff

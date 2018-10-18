@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 public class TraitToxic extends AbstractArmorTrait {
 
 	public TraitToxic() {
-		super("mmd-toxic-ca", TextFormatting.GREEN);
+		super("mmd-toxic", TextFormatting.GREEN);
 	}
 
 //	@Override
