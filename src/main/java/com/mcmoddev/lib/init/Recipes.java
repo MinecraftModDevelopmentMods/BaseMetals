@@ -1,14 +1,5 @@
 package com.mcmoddev.lib.init;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
@@ -21,7 +12,6 @@ import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.util.CheeseMath;
 import com.mcmoddev.lib.util.Config.Options;
 import com.mcmoddev.lib.util.Oredicts;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
@@ -34,6 +24,13 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -677,7 +674,7 @@ public abstract class Recipes {
 			addAdditionalOredicts(Materials.getMaterialByName(MaterialNames.MERCURY),
 					"Quicksilver");
 
-			if (FluidRegistry.isUniversalBucketEnabled()) {
+			if (FluidRegistry.isUniversalBucketEnabled() && FluidRegistry.getFluid(MaterialNames.MERCURY) != null) {
 				final ItemStack bucketMercury = FluidUtil.getFilledBucket(new FluidStack(
 						Materials.getMaterialByName(MaterialNames.MERCURY).getFluid(), 1000));
 				final ShapelessOreRecipe buckMerc = new ShapelessOreRecipe(

@@ -145,63 +145,71 @@ public class BMeTinkersConstruct implements IIntegration {
 
 	@SubscribeEvent
 	public void registerMeltings(TinkersExtraMeltingsEvent ev) {
-		if (Materials.hasMaterial(MaterialNames.COAL)) {
+		if (isMaterialFluidEnabled(MaterialNames.COAL)) {
 			TinkersConstruct.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(MaterialNames.COAL, 144),
 					new ItemStack(net.minecraft.init.Items.COAL));
 		}
 
-		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
+		if (isMaterialFluidEnabled(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 			TinkersConstruct.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(mercury.getName(), 144),
 					mercury.getItemStack(Names.INGOT));
 		}
 
-		if (Materials.hasMaterial(MaterialNames.PRISMARINE)) {
+		if (isMaterialFluidEnabled(MaterialNames.PRISMARINE)) {
 			final MMDMaterial prismarine = Materials.getMaterialByName(MaterialNames.PRISMARINE);
 			TinkersConstruct.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(prismarine.getName(), 144),
 					new ItemStack(net.minecraft.init.Items.PRISMARINE_SHARD));
 		}
 	}
 
+	private boolean isMaterialFluidEnabled(String identifier){
+		return Options.isMaterialEnabled(identifier) && FluidRegistry.getFluid(identifier) != null;
+	}
+
+	private boolean isValidAlloyMaterial(String identifier){
+		return Materials.hasMaterial(identifier) && FluidRegistry.getFluid(identifier) != null;
+	}
+
 	@SubscribeEvent
 	public void registerMyAlloys(TinkersAlloyRecipeEvent ev) {
-		if (Materials.hasMaterial(MaterialNames.AQUARIUM)
-				&& Materials.hasMaterial(MaterialNames.COPPER)
-				&& Materials.hasMaterial(MaterialNames.ZINC)) {
+		if (isValidAlloyMaterial(MaterialNames.AQUARIUM)
+				&& isValidAlloyMaterial(MaterialNames.COPPER)
+				&& isValidAlloyMaterial(MaterialNames.ZINC)) {
 			final FluidStack copper = FluidRegistry.getFluidStack(MaterialNames.COPPER, 2);
 			final FluidStack zinc = FluidRegistry.getFluidStack(MaterialNames.ZINC, 1);
 			final FluidStack prismarine = FluidRegistry.getFluidStack(MaterialNames.PRISMARINE, 3);
 			ev.addAlloyRecipe(MaterialNames.AQUARIUM, 3, copper, zinc, prismarine);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.CUPRONICKEL)
-				&& Materials.hasMaterial(MaterialNames.COPPER)
-				&& Materials.hasMaterial(MaterialNames.NICKEL)) {
+		if (isValidAlloyMaterial(MaterialNames.CUPRONICKEL)
+				&& isValidAlloyMaterial(MaterialNames.COPPER)
+				&& isValidAlloyMaterial(MaterialNames.NICKEL)) {
 			final FluidStack copper = FluidRegistry.getFluidStack(MaterialNames.COPPER, 3);
 			final FluidStack nickel = FluidRegistry.getFluidStack(MaterialNames.NICKEL, 1);
 			ev.addAlloyRecipe(MaterialNames.CUPRONICKEL, 4, copper, nickel);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.INVAR)
-				&& Materials.hasMaterial(MaterialNames.NICKEL)) {
+		if (isValidAlloyMaterial(MaterialNames.INVAR)
+				&& isValidAlloyMaterial(MaterialNames.NICKEL)) {
 			final FluidStack iron = FluidRegistry.getFluidStack(MaterialNames.IRON, 2);
 			final FluidStack nickel = FluidRegistry.getFluidStack(MaterialNames.NICKEL, 1);
 			ev.addAlloyRecipe(MaterialNames.INVAR, 3, iron, nickel);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.MITHRIL)
-				&& Materials.hasMaterial(MaterialNames.COLDIRON)
-				&& Materials.hasMaterial(MaterialNames.SILVER)
-				&& Materials.hasMaterial(MaterialNames.MERCURY)) {
+		if (isValidAlloyMaterial(MaterialNames.MITHRIL)
+				&& isValidAlloyMaterial(MaterialNames.COLDIRON)
+				&& isValidAlloyMaterial(MaterialNames.SILVER)
+				&& isValidAlloyMaterial(MaterialNames.MERCURY)) {
 			final FluidStack coldiron = FluidRegistry.getFluidStack(MaterialNames.COLDIRON, 1);
 			final FluidStack silver = FluidRegistry.getFluidStack(MaterialNames.SILVER, 2);
 			final FluidStack mercury = FluidRegistry.getFluidStack(MaterialNames.MERCURY, 1);
 			ev.addAlloyRecipe(MaterialNames.MITHRIL, 3, coldiron, silver, mercury);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.PEWTER) && Materials.hasMaterial(MaterialNames.LEAD)
-				&& Materials.hasMaterial(MaterialNames.COPPER)
-				&& Materials.hasMaterial(MaterialNames.TIN)) {
+		if (isValidAlloyMaterial(MaterialNames.PEWTER) && Materials.hasMaterial(MaterialNames.LEAD)
+				&& isValidAlloyMaterial(MaterialNames.COPPER)
+				&& isValidAlloyMaterial(MaterialNames.TIN)) {
 			// this makes what the "Worshipful Company of Pewterers" called "trifle"
 			final FluidStack copper = FluidRegistry.getFluidStack(MaterialNames.COPPER, 2);
 			final FluidStack tin = FluidRegistry.getFluidStack(MaterialNames.TIN, 137);
@@ -209,7 +217,7 @@ public class BMeTinkersConstruct implements IIntegration {
 			ev.addAlloyRecipe(MaterialNames.PEWTER, 144, copper, tin, lead);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.STEEL)) {
+		if (isValidAlloyMaterial(MaterialNames.STEEL)) {
 			final FluidStack iron = FluidRegistry.getFluidStack(MaterialNames.IRON, 8);
 			final FluidStack coal = FluidRegistry.getFluidStack(MaterialNames.COAL, 1);
 			ev.addAlloyRecipe(MaterialNames.STEEL, 8, iron, coal);

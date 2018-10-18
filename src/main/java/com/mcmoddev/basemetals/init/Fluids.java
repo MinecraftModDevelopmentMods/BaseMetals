@@ -50,7 +50,7 @@ public final class Fluids extends com.mcmoddev.lib.init.Fluids {
 					addFluidBlock(materialName);
 				});
 
-		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
+		if (Materials.hasMaterial(MaterialNames.MERCURY) && Options.isFluidEnabled(MaterialNames.MERCURY)) {
 			addFluid(MaterialNames.MERCURY, 13594, 2000, 769, 0);
 			addFluidBlock(MaterialNames.MERCURY);
 		}

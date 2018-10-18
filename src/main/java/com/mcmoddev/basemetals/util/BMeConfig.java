@@ -333,6 +333,8 @@ public final class BMeConfig extends Config {
 				"Enable the molten fluid of Invar"));
 		Options.fluidEnabled("Lead", configuration.getBoolean("Enabled Lead", FLUIDS_CAT, true,
 				"Enable the molten fluid of Lead"));
+		Options.fluidEnabled("Mercury", configuration.getBoolean("Enabled Mercury", FLUIDS_CAT, true,
+				"Enable the molten fluid of Mercury"));
 		Options.fluidEnabled("Mithril", configuration.getBoolean("Enabled Mithril", FLUIDS_CAT,
 				true, "Enable the molten fluid of Mithril"));
 		Options.fluidEnabled("Nickel", configuration.getBoolean("Enabled Nickel", FLUIDS_CAT, true,
