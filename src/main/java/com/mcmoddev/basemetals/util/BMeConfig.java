@@ -195,9 +195,9 @@ public final class BMeConfig extends Config {
 				VANILLA_CAT, true, "Enable Ender Items and Materials (not currently in use)"));
 		Options.materialEnabled(MaterialNames.QUARTZ,
 				configuration.getBoolean("EnableQuartz", VANILLA_CAT, true,
-						"Enable Nether Quartz Items and Materials (not currently in use)"));
+						"Enable Nether Quartz Items and Materials"));
 		Options.materialEnabled(MaterialNames.OBSIDIAN, configuration.getBoolean("EnableObsidian",
-				VANILLA_CAT, true, "Enable Obsidian Items and Materials (not currently in use)"));
+				VANILLA_CAT, true, "Enable Obsidian Items and Materials"));
 		Options.materialEnabled(MaterialNames.LAPIS,
 				configuration.getBoolean("EnableLapis", VANILLA_CAT, true,
 						"Enable Lapis Lazuli Items and Materials (not currently in use)"));
@@ -205,7 +205,7 @@ public final class BMeConfig extends Config {
 				configuration.getBoolean("EnablePrismarine", VANILLA_CAT, true,
 						"Enable Prismarine Items and Materials (not currently in use)"));
 		Options.materialEnabled(MaterialNames.REDSTONE, configuration.getBoolean("EnableRedstone",
-				VANILLA_CAT, true, "Enable Redstone Items and Materials (not currently in use)"));
+				VANILLA_CAT, true, "Enable Redstone Items and Materials"));
 
 		// RECIPE AMOUNTS/TOOL&ITEM DISABLING
 		Options.setGearQuantity(configuration.getInt("Gear Quantity", TOOLS_CAT, 4, 1, 64,
