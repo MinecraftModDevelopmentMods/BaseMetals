@@ -10,8 +10,9 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 
 /**
  * <h2><u>Icy Armor Modifier</u></h2>
@@ -56,8 +57,11 @@ public class TraitIcy extends AbstractArmorTrait {
         player.addPotionEffect(fireProtection);
     }
 
-//    @Override
-//    public void onAbilityTick(int level, World world, EntityPlayer player) {
-//        applyFireProtection(player);
-//    }
+    @Override
+    public float onDamaged(ItemStack armor, EntityPlayer player, DamageSource source, float damage, float newDamage, LivingDamageEvent evt) {
+        if(source.isFireDamage()){
+            newDamage = 0f;
+        }
+        return newDamage;
+    }
 }

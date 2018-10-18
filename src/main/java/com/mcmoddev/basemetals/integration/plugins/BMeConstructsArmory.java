@@ -57,6 +57,9 @@ public final class BMeConstructsArmory implements IIntegration {
                             case MaterialNames.COLDIRON:
                                 addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.icy);
                                 break;
+                            case MaterialNames.LEAD:
+                                addArmorTrait(mat.getTinkerMaterial(), MMDTraitsCA.malleable);
+                                break;
                             case MaterialNames.MITHRIL:
                                 addArmorTrait(mat.getTinkerMaterial(), ArmorTraits.blessed);
                                 break;

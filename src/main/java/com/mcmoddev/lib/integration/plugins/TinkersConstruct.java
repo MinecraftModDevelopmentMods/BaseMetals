@@ -2,6 +2,8 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.data.TraitNames;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
@@ -170,7 +172,24 @@ public class TinkersConstruct implements IIntegration {
 
 	private void addMaterials() {
 		while(!materialsToAdd.isEmpty()) {
-			TinkerRegistry.addMaterial(materialsToAdd.pop());
+			Material material = materialsToAdd.pop();
+			if(TinkerRegistry.getMaterial(material.getIdentifier()) == Material.UNKNOWN){
+				TinkerRegistry.addMaterial(material);
+			}
+			else {
+				addExistingMaterial(material);
+			}
+		}
+	}
+
+	private void addExistingMaterial(Material material){
+		for (TinkerTraitLocation stat:TinkerTraitLocation.values()) {
+			for (ITrait trait:material.getAllTraitsForStats(stat.toString())) {
+					Material existingMaterial = TinkerRegistry.getMaterial(material.identifier);
+					if(!existingMaterial.hasTrait(trait.getIdentifier(), stat.toString())){
+						existingMaterial.addTrait(trait, stat.toString());
+					}
+			}
 		}
 	}
 	
