@@ -3,6 +3,7 @@ package com.mcmoddev.lib.integration.plugins.armory.traits;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 
 public class MMDTraitsCA {
+
     /**
      * <h2><u>Icy Armor Modifier</u></h2>
      * <b>Name:</b> icy
@@ -37,6 +38,15 @@ public class MMDTraitsCA {
      * {@link TraitMalleable}
      */
     public static final AbstractTrait malleable = new TraitMalleable();
+
+
+    public static final AbstractTrait toxic = new TraitToxic();
+
+
+    public static final AbstractTrait reactive = new TraitReactive();
+
+
+    public static final AbstractTrait brittle = new TraitBrittle();
 
     private MMDTraitsCA() {
 
