@@ -24,8 +24,6 @@ import javax.annotation.Nonnull;
  * <b>String Reference:<br></b>
  * "brittle"<br>
  * "mmd-brittle"<br>
- *
- * @author Java doc author: Vase of Petunias
  */
 public class TraitBrittle extends AbstractArmorTrait {
 
