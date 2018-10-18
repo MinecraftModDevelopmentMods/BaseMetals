@@ -1,15 +1,7 @@
 package com.mcmoddev.lib.integration.plugins.armory.traits;
 
 import c4.conarm.lib.traits.AbstractArmorTrait;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.event.world.BlockEvent;
-import slimeknights.tconstruct.library.traits.AbstractTrait;
-import slimeknights.tconstruct.library.utils.ToolHelper;
-
-import javax.annotation.Nonnull;
 
 /**
  * <h2><u>Brittle Tool Modifier:</u></h2>
