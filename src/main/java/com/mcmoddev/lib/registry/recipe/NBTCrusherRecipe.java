@@ -24,13 +24,6 @@ public class NBTCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> i
 	public interface InputMunger {
 		public List<ItemStack> run(final ItemStack input);
 	}
-	
-	private final class defaultMunger implements InputMunger {
-		@Override
-		public List<ItemStack> run(final ItemStack input) {
-			return Arrays.asList(input);
-		}
-	}
 
 	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback, final InputMunger inputCallback, final Predicate<ItemStack> validItemCallback) {
 		inputItem = input;
