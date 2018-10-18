@@ -42,21 +42,36 @@ public class NBTCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> i
 	private final ItemStack inputItem;
 	private final ItemStack outputItem;
 	
-	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback, @Nullable final InputMunger inputCallback, @Nullable final Predicate<ItemStack> validItemCallback) {
+	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback, final InputMunger inputCallback, final Predicate<ItemStack> validItemCallback) {
 		inputItem = input;
 		outputCallback = nbtCallback;
 		outputItem = outputCallback.run(inputItem);
-		if (inputCallback == null) {
-			this.inputCallback = new defaultMunger();
-		} else {
-			this.inputCallback = inputCallback;
-		}
-		
-		if (validItemCallback == null) {
-			this.validItemCallback = new defaultValidItem();
-		} else {
-			this.validItemCallback = validItemCallback;
-		}
+		this.inputCallback = inputCallback;
+		this.validItemCallback = validItemCallback;
+	}
+
+	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback, final InputMunger inputCallback) {
+		inputItem = input;
+		outputCallback = nbtCallback;
+		outputItem = outputCallback.run(inputItem);
+		this.inputCallback = inputCallback;
+		this.validItemCallback = new defaultValidItem();
+	}
+
+	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback, final Predicate<ItemStack> validItemCallback) {
+		inputItem = input;
+		outputCallback = nbtCallback;
+		outputItem = outputCallback.run(inputItem);
+		this.inputCallback = new defaultMunger();
+		this.validItemCallback = validItemCallback;
+	}
+	
+	public NBTCrusherRecipe(final ItemStack input, final OutputMunger nbtCallback) {
+		inputItem = input;
+		outputCallback = nbtCallback;
+		outputItem = outputCallback.run(inputItem);
+		this.inputCallback = new defaultMunger();
+		this.validItemCallback = new defaultValidItem();
 	}
 	
 	@Override
