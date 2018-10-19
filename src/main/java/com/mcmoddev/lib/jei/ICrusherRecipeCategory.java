@@ -14,6 +14,7 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -79,8 +80,8 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 		guiItemStacks.init(1, false, 119, 14);
 
 		// load the output and input bits
-		final List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
-		final List<List<ItemStack>> outputs = ingredients.getOutputs(ItemStack.class);
+		final List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
+		final List<List<ItemStack>> outputs = ingredients.getOutputs(VanillaTypes.ITEM);
 
 		// setup the data
 		guiItemStacks.set(0, inputs.get(0));
