@@ -199,6 +199,16 @@ public final class TraitNames {
 
 	public static final String MALLEABLE = "malleable";
 
+	public static final String MAGNETIC = "magnetic";
+
+	public static final String MAGNETIC2 = "magnetic2";
+
+	public static final String REACTIVE = "reactive";
+
+	public static final String SHOCKING = "shocking";
+
+	public static final String BRITTLE = "brittle";
+
 	private TraitNames() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}

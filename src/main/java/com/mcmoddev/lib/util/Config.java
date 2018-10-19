@@ -1,33 +1,63 @@
 package com.mcmoddev.lib.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.text.WordUtils;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Config {
+
+	private static final String FLUIDS_CAT = "Fluids";
+	private static final String MATERIALS_CAT = "Metals";
+	private static final String VANILLA_CAT = "Vanilla";
+	private static final String INTEGRATION_CAT = "Mod Integration";
 
 	private static final List<String> UserCrusherRecipes = new ArrayList<>();
 
 	// shut up SonarLint/SonarQube
 	protected Config() {
 
+	}
+
+	private static void integrationEnabled(String identifier, String modid, Boolean defaultValue, Configuration configuration){
+		String newIdentifier = WordUtils.capitalizeFully(identifier);
+		Options.modEnabled(modid,
+				configuration.getBoolean(modid + "_integration", INTEGRATION_CAT, defaultValue, "If false, then Base Metals will not try and integrate with " + newIdentifier));
+	}
+
+	protected static void configIntegrationOptions(IntegrationConfigOptions[] integrationConfigOptions, Configuration configuration){
+		for (IntegrationConfigOptions integration:integrationConfigOptions) {
+			integrationEnabled(integration.getIdentifier(), integration.getModid(), integration.getEnabled(), configuration);
+		}
+	}
+
+	private static void fluidEnabled(String identifier, Boolean defaultValue, Configuration configuration){
+		String newIdentifier = WordUtils.capitalizeFully(identifier);
+		Options.fluidEnabled(newIdentifier, configuration.getBoolean("Enables " + identifier, FLUIDS_CAT, defaultValue, "Enables the molten fluid of " + identifier));
+	}
+
+	private static void materialEnabled(String identifier, Boolean defaultValue, Boolean isVanilla, Configuration configuration){
+		String newIdentifier = WordUtils.capitalizeFully(identifier);
+		String cat = isVanilla ? VANILLA_CAT : MATERIALS_CAT;
+		Options.materialEnabled(newIdentifier, configuration.getBoolean("Enables " + identifier, cat, defaultValue, "Enables " + newIdentifier + " Items and Materials"));
+	}
+
+	protected static void configMaterialOptions(MaterialConfigOptions[] materials, Configuration configuration){
+		for (MaterialConfigOptions materialConfigOptions:materials) {
+			materialEnabled(materialConfigOptions.getIdentifier(), materialConfigOptions.getMaterialEnabled(), materialConfigOptions.getVanilla(), configuration);
+			if(materialConfigOptions.getHasFluid()){
+				fluidEnabled(materialConfigOptions.getIdentifier(), materialConfigOptions.getFluidEnabled(), configuration);
+			}
+		}
 	}
 
 	protected static void manageUserHammerRecipes(final Collection<Property> values) {
