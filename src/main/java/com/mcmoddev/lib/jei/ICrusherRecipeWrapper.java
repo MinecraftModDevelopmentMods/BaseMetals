@@ -6,8 +6,8 @@ import java.util.List;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.item.ItemStack;
 
 public class ICrusherRecipeWrapper implements IRecipeWrapper {
 
@@ -19,8 +19,8 @@ public class ICrusherRecipeWrapper implements IRecipeWrapper {
 
 	@Override
 	public void getIngredients(final IIngredients ingredients) {
-		ingredients.setInputs(ItemStack.class, this.theRecipe.getInputs());
-		ingredients.setOutput(ItemStack.class, this.theRecipe.getOutput());
+		ingredients.setInputs(VanillaTypes.ITEM, this.theRecipe.getInputs());
+		ingredients.setOutput(VanillaTypes.ITEM, this.theRecipe.getOutput());
 	}
 
 	@Override
