@@ -1,19 +1,20 @@
 package com.mcmoddev.basemetals.util;
 
-import java.io.File;
-
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.integration.plugins.*;
 import com.mcmoddev.lib.util.Config;
-
+import com.mcmoddev.lib.util.MaterialConfigOptions;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.commons.lang3.text.WordUtils;
+
+import java.io.File;
 
 /**
  * @author Jasmine Iwanek
@@ -25,11 +26,49 @@ public final class BMeConfig extends Config {
 	private static final String CONFIG_FILE = "config/BaseMetals.cfg";
 	private static final String GENERAL_CAT = "General";
 	private static final String INTEGRATION_CAT = "Mod Integration";
-	private static final String MATERIALS_CAT = "Metals";
-	private static final String VANILLA_CAT = "Vanilla";
 	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipes";
 	private static final String TOOLS_CAT = "Tools and Items";
-	private static final String FLUIDS_CAT = "Fluids";
+
+	private static final MaterialConfigOptions[] MATERIAL_CONFIG_OPTIONS = new MaterialConfigOptions[]{
+		// Vanilla
+		new MaterialConfigOptions(MaterialNames.CHARCOAL, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.COAL,false, true, true,true),
+		new MaterialConfigOptions(MaterialNames.DIAMOND,true, false, true, false),
+		new MaterialConfigOptions(MaterialNames.EMERALD,true, false, true, false),
+		new MaterialConfigOptions(MaterialNames.GOLD, true,false, true, false),
+		new MaterialConfigOptions(MaterialNames.IRON, true,false, true, false),
+		new MaterialConfigOptions(MaterialNames.STONE, true,true, false, false),
+		new MaterialConfigOptions(MaterialNames.WOOD, true,true, false, false),
+		new MaterialConfigOptions(MaterialNames.ENDER, true,true, false, false),
+		new MaterialConfigOptions(MaterialNames.QUARTZ, true,true, false, false),
+		new MaterialConfigOptions(MaterialNames.OBSIDIAN,true, true, true, false),
+		new MaterialConfigOptions(MaterialNames.LAPIS, true,true, false, false),
+		new MaterialConfigOptions(MaterialNames.PRISMARINE,true, true, true, true),
+		new MaterialConfigOptions(MaterialNames.REDSTONE,true, true, true, false),
+		// Base Metals
+		new MaterialConfigOptions(MaterialNames.ADAMANTINE, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.ANTIMONY, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.AQUARIUM, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.BISMUTH, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.BRASS, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.BRONZE, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.COLDIRON, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.COPPER, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.CUPRONICKEL, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.ELECTRUM, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.INVAR, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.LEAD, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.MERCURY, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.MITHRIL, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.NICKEL, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.PEWTER, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.PLATINUM, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.SILVER, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.STARSTEEL, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.STEEL, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.TIN, false, true, true, true),
+		new MaterialConfigOptions(MaterialNames.ZINC, false, true, true, true),
+	};
 
 	/**
 	 * Fired when the configuration changes.
@@ -127,85 +166,7 @@ public final class BMeConfig extends Config {
 				"thermal_expansion", INTEGRATION_CAT, true,
 				"If Thermal Expansion is available, this wil automatically integrate materials with the various machines"));
 
-		// METALS
-		Options.materialEnabled(MaterialNames.ADAMANTINE, configuration.getBoolean(
-				"EnableAdamantine", MATERIALS_CAT, true, "Enable Adamantine Items and Materials"));
-		Options.materialEnabled(MaterialNames.ANTIMONY, configuration.getBoolean("EnableAntimony",
-				MATERIALS_CAT, true, "Enable Antimony Items and Materials"));
-		Options.materialEnabled(MaterialNames.AQUARIUM, configuration.getBoolean("EnableAquarium",
-				MATERIALS_CAT, true, "Enable Aquarium Items and Materials"));
-		Options.materialEnabled(MaterialNames.BISMUTH, configuration.getBoolean("EnableBismuth",
-				MATERIALS_CAT, true, "Enable Bismuth Items and Materials"));
-		Options.materialEnabled(MaterialNames.BRASS, configuration.getBoolean("EnableBrass",
-				MATERIALS_CAT, true, "Enable Brass Items and Materials"));
-		Options.materialEnabled(MaterialNames.BRONZE, configuration.getBoolean("EnableBronze",
-				MATERIALS_CAT, true, "Enable Bronze Items and Materials"));
-		Options.materialEnabled(MaterialNames.CHARCOAL, configuration.getBoolean("EnableCharcoal",
-				MATERIALS_CAT, true, "Enable Charcoal Items and Materials"));
-		Options.materialEnabled(MaterialNames.COAL, configuration.getBoolean("EnableCoal",
-				MATERIALS_CAT, true, "Enable Coal Items and Materials"));
-		Options.materialEnabled(MaterialNames.COLDIRON, configuration.getBoolean("EnableColdIron",
-				MATERIALS_CAT, true, "Enable ColdIron Items and Materials"));
-		Options.materialEnabled(MaterialNames.COPPER, configuration.getBoolean("EnableCopper",
-				MATERIALS_CAT, true, "Enable Copper Items and Materials"));
-		Options.materialEnabled(MaterialNames.CUPRONICKEL,
-				configuration.getBoolean("EnableCupronickel", MATERIALS_CAT, true,
-						"Enable Cupronickel Items and Materials"));
-		Options.materialEnabled(MaterialNames.ELECTRUM, configuration.getBoolean("EnableElectrum",
-				MATERIALS_CAT, true, "Enable Electrum Items and Materials"));
-		Options.materialEnabled(MaterialNames.INVAR, configuration.getBoolean("EnableInvar",
-				MATERIALS_CAT, true, "Enable Invar Items and Materials"));
-		Options.materialEnabled(MaterialNames.LEAD, configuration.getBoolean("EnableLead",
-				MATERIALS_CAT, true, "Enable Lead Items and Materials"));
-		Options.materialEnabled(MaterialNames.MERCURY, configuration.getBoolean("EnableMercury",
-				MATERIALS_CAT, true, "Enable Mercury Items and Materials"));
-		Options.materialEnabled(MaterialNames.MITHRIL, configuration.getBoolean("EnableMithril",
-				MATERIALS_CAT, true, "Enable Mithril Items and Materials"));
-		Options.materialEnabled(MaterialNames.NICKEL, configuration.getBoolean("EnableNickel",
-				MATERIALS_CAT, true, "Enable Nickel Items and Materials"));
-		Options.materialEnabled(MaterialNames.PEWTER, configuration.getBoolean("EnablePewter",
-				MATERIALS_CAT, true, "Enable Pewter Items and Materials"));
-		Options.materialEnabled(MaterialNames.PLATINUM, configuration.getBoolean("EnablePlatinum",
-				MATERIALS_CAT, true, "Enable Platinum Items and Materials"));
-		Options.materialEnabled(MaterialNames.SILVER, configuration.getBoolean("EnableSilver",
-				MATERIALS_CAT, true, "Enable Silver Items and Materials"));
-		Options.materialEnabled(MaterialNames.STARSTEEL, configuration.getBoolean("EnableStarSteel",
-				MATERIALS_CAT, true, "Enable StarSteel Items and Materials"));
-		Options.materialEnabled(MaterialNames.STEEL, configuration.getBoolean("EnableSteel",
-				MATERIALS_CAT, true, "Enable Steel Items and Materials"));
-		Options.materialEnabled(MaterialNames.TIN, configuration.getBoolean("EnableTin",
-				MATERIALS_CAT, true, "Enable Tin Items and Materials"));
-		Options.materialEnabled(MaterialNames.ZINC, configuration.getBoolean("EnableZinc",
-				MATERIALS_CAT, true, "Enable Zinc Items and Materials"));
-
-		// VANILLA
-		Options.materialEnabled(MaterialNames.DIAMOND, configuration.getBoolean("EnableDiamond",
-				VANILLA_CAT, true, "Enable Diamond Items and Materials"));
-		Options.materialEnabled(MaterialNames.EMERALD, configuration.getBoolean("EnableEmerald",
-				VANILLA_CAT, true, "Enable Emerald Items and Materials"));
-		Options.materialEnabled(MaterialNames.GOLD, configuration.getBoolean("EnableGold",
-				VANILLA_CAT, true, "Enable Gold Items and Materials"));
-		Options.materialEnabled(MaterialNames.IRON, configuration.getBoolean("EnableIron",
-				VANILLA_CAT, true, "Enable Iron Items and Materials"));
-		Options.materialEnabled(MaterialNames.STONE, configuration.getBoolean("EnableStone",
-				VANILLA_CAT, true, "Enable Stone Items and Materials"));
-		Options.materialEnabled(MaterialNames.WOOD, configuration.getBoolean("EnableWood",
-				VANILLA_CAT, true, "Enable Wood Items and Materials"));
-		Options.materialEnabled(MaterialNames.ENDER, configuration.getBoolean("EnableEnder",
-				VANILLA_CAT, true, "Enable Ender Items and Materials (not currently in use)"));
-		Options.materialEnabled(MaterialNames.QUARTZ,
-				configuration.getBoolean("EnableQuartz", VANILLA_CAT, true,
-						"Enable Nether Quartz Items and Materials"));
-		Options.materialEnabled(MaterialNames.OBSIDIAN, configuration.getBoolean("EnableObsidian",
-				VANILLA_CAT, true, "Enable Obsidian Items and Materials"));
-		Options.materialEnabled(MaterialNames.LAPIS,
-				configuration.getBoolean("EnableLapis", VANILLA_CAT, true,
-						"Enable Lapis Lazuli Items and Materials (not currently in use)"));
-		Options.materialEnabled(MaterialNames.PRISMARINE,
-				configuration.getBoolean("EnablePrismarine", VANILLA_CAT, true,
-						"Enable Prismarine Items and Materials (not currently in use)"));
-		Options.materialEnabled(MaterialNames.REDSTONE, configuration.getBoolean("EnableRedstone",
-				VANILLA_CAT, true, "Enable Redstone Items and Materials"));
+		configMaterialOptions(MATERIAL_CONFIG_OPTIONS, configuration);
 
 		// RECIPE AMOUNTS/TOOL&ITEM DISABLING
 		Options.setGearQuantity(configuration.getInt("Gear Quantity", TOOLS_CAT, 4, 1, 64,
@@ -289,70 +250,6 @@ public final class BMeConfig extends Config {
 				Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
 		Options.thingEnabled(ConfigKeys.SCYTHE,
 				configuration.getBoolean("Enable Scythe", TOOLS_CAT, false, "Enable Scythe"));
-
-		// Fluid options
-		Options.fluidEnabled("Charcoal", configuration.getBoolean("Enabled Charcoal", FLUIDS_CAT,
-				true, "Enable the molten fluid of Charcoal"));
-		Options.fluidEnabled("Coal", configuration.getBoolean("Enabled Coal", FLUIDS_CAT, true,
-				"Enable the molten fluid of Coal"));
-		Options.fluidEnabled("Diamond", configuration.getBoolean("Enabled Diamond", FLUIDS_CAT,
-				false, "Enable the molten fluid of Diamond"));
-		Options.fluidEnabled("Emerald", configuration.getBoolean("Enabled Emerald", FLUIDS_CAT,
-				false, "Enable the molten fluid of Emerald"));
-		Options.fluidEnabled("Gold", configuration.getBoolean("Enabled Gold", FLUIDS_CAT, false,
-				"Enable the molten fluid of Gold"));
-		Options.fluidEnabled("Iron", configuration.getBoolean("Enabled Iron", FLUIDS_CAT, false,
-				"Enable the molten fluid of Iron"));
-		Options.fluidEnabled("Obsidian", configuration.getBoolean("Enabled Obsidian", FLUIDS_CAT,
-				false, "Enable the molten fluid of Obsidian"));
-		Options.fluidEnabled("Prismarine", configuration.getBoolean("Enabled Prismarine",
-				FLUIDS_CAT, true, "Enable the molten fluid of Prismarine"));
-		Options.fluidEnabled("Redstone", configuration.getBoolean("Enabled Redstone", FLUIDS_CAT,
-				false, "Enable the molten fluid of Redstone"));
-		Options.fluidEnabled("Adamantine", configuration.getBoolean("Enabled Adamantine",
-				FLUIDS_CAT, true, "Enable the molten fluid of Adamantine"));
-		Options.fluidEnabled("Antimony", configuration.getBoolean("Enabled Antimony", FLUIDS_CAT,
-				true, "Enable the molten fluid of Antimony"));
-		Options.fluidEnabled("Aquarium", configuration.getBoolean("Enabled Aquarium", FLUIDS_CAT,
-				true, "Enable the molten fluid of Aquarium"));
-		Options.fluidEnabled("Bismuth", configuration.getBoolean("Enabled Bismuth", FLUIDS_CAT,
-				true, "Enable the molten fluid of Bismuth"));
-		Options.fluidEnabled("Brass", configuration.getBoolean("Enabled Brass", FLUIDS_CAT, true,
-				"Enable the molten fluid of Brass"));
-		Options.fluidEnabled("Bronze", configuration.getBoolean("Enabled Bronze", FLUIDS_CAT, true,
-				"Enable the molten fluid of Bronze"));
-		Options.fluidEnabled("ColdIron", configuration.getBoolean("Enabled ColdIron", FLUIDS_CAT,
-				true, "Enable the molten fluid of ColdIron"));
-		Options.fluidEnabled("Copper", configuration.getBoolean("Enabled Copper", FLUIDS_CAT, true,
-				"Enable the molten fluid of Copper"));
-		Options.fluidEnabled("Cupronickel", configuration.getBoolean("Enabled Cupronickel",
-				FLUIDS_CAT, true, "Enable the molten fluid of Cupronickel"));
-		Options.fluidEnabled("Electrum", configuration.getBoolean("Enabled Electrum", FLUIDS_CAT,
-				true, "Enable the molten fluid of Electrum"));
-		Options.fluidEnabled("Invar", configuration.getBoolean("Enabled Invar", FLUIDS_CAT, true,
-				"Enable the molten fluid of Invar"));
-		Options.fluidEnabled("Lead", configuration.getBoolean("Enabled Lead", FLUIDS_CAT, true,
-				"Enable the molten fluid of Lead"));
-		Options.fluidEnabled("Mercury", configuration.getBoolean("Enabled Mercury", FLUIDS_CAT, true,
-				"Enable the molten fluid of Mercury"));
-		Options.fluidEnabled("Mithril", configuration.getBoolean("Enabled Mithril", FLUIDS_CAT,
-				true, "Enable the molten fluid of Mithril"));
-		Options.fluidEnabled("Nickel", configuration.getBoolean("Enabled Nickel", FLUIDS_CAT, true,
-				"Enable the molten fluid of Nickel"));
-		Options.fluidEnabled("Pewter", configuration.getBoolean("Enabled Pewter", FLUIDS_CAT, true,
-				"Enable the molten fluid of Pewter"));
-		Options.fluidEnabled("Platinum", configuration.getBoolean("Enabled Platinum", FLUIDS_CAT,
-				true, "Enable the molten fluid of Platinum"));
-		Options.fluidEnabled("Silver", configuration.getBoolean("Enabled Silver", FLUIDS_CAT, true,
-				"Enable the molten fluid of Silver"));
-		Options.fluidEnabled("StarSteel", configuration.getBoolean("Enabled StarSteel", FLUIDS_CAT,
-				true, "Enable the molten fluid of StarSteel"));
-		Options.fluidEnabled("Steel", configuration.getBoolean("Enabled Steel", FLUIDS_CAT, true,
-				"Enable the molten fluid of Steel"));
-		Options.fluidEnabled("Tin", configuration.getBoolean("Enabled Tin", FLUIDS_CAT, true,
-				"Enable the molten fluid of Tin"));
-		Options.fluidEnabled("Zinc", configuration.getBoolean("Enabled Zinc", FLUIDS_CAT, true,
-				"Enable the molten fluid of Zinc"));
 
 		// DISABLE CRACK HAMMER RECIPES
 		Options.setDisabledRecipes(parseDisabledRecipes(configuration.getString(
