@@ -1,21 +1,8 @@
 package com.mcmoddev.lib.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.integration.plugins.EnderIO;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +10,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.text.WordUtils;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Config {
 
@@ -39,9 +29,9 @@ public class Config {
 	}
 
 	private static void integrationEnabled(String identifier, String modid, Boolean defaultValue, Configuration configuration){
-		identifier = WordUtils.capitalizeFully(identifier);
+		String newIdentifier = WordUtils.capitalizeFully(identifier);
 		Options.modEnabled(modid,
-				configuration.getBoolean(modid + "_integration", INTEGRATION_CAT, defaultValue, "If false, then Base Metals will not try and integrate with " + identifier));
+				configuration.getBoolean(modid + "_integration", INTEGRATION_CAT, defaultValue, "If false, then Base Metals will not try and integrate with " + newIdentifier));
 	}
 
 	protected static void configIntegrationOptions(IntegrationConfigOptions[] integrationConfigOptions, Configuration configuration){
@@ -51,14 +41,14 @@ public class Config {
 	}
 
 	private static void fluidEnabled(String identifier, Boolean defaultValue, Configuration configuration){
-		identifier = WordUtils.capitalizeFully(identifier);
-		Options.fluidEnabled(identifier, configuration.getBoolean("Enables " + identifier, FLUIDS_CAT, defaultValue, "Enables the molten fluid of " + identifier));
+		String newIdentifier = WordUtils.capitalizeFully(identifier);
+		Options.fluidEnabled(newIdentifier, configuration.getBoolean("Enables " + identifier, FLUIDS_CAT, defaultValue, "Enables the molten fluid of " + identifier));
 	}
 
 	private static void materialEnabled(String identifier, Boolean defaultValue, Boolean isVanilla, Configuration configuration){
-		identifier = WordUtils.capitalizeFully(identifier);
+		String newIdentifier = WordUtils.capitalizeFully(identifier);
 		String cat = isVanilla ? VANILLA_CAT : MATERIALS_CAT;
-		Options.materialEnabled(identifier, configuration.getBoolean("Enables " + identifier, cat, defaultValue, "Enables " + identifier + " Items and Materials"));
+		Options.materialEnabled(newIdentifier, configuration.getBoolean("Enables " + identifier, cat, defaultValue, "Enables " + newIdentifier + " Items and Materials"));
 	}
 
 	protected static void configMaterialOptions(MaterialConfigOptions[] materials, Configuration configuration){

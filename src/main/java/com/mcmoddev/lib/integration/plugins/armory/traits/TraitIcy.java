@@ -59,9 +59,10 @@ public class TraitIcy extends AbstractArmorTrait {
 
     @Override
     public float onDamaged(ItemStack armor, EntityPlayer player, DamageSource source, float damage, float newDamage, LivingDamageEvent evt) {
+        float newNewDamage = newDamage;
         if(source.isFireDamage()){
-            newDamage = 0f;
+            newNewDamage = 0f;
         }
-        return newDamage;
+        return newNewDamage;
     }
 }

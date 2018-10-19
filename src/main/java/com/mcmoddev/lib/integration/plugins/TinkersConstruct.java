@@ -2,8 +2,6 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
-import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.data.TraitNames;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
