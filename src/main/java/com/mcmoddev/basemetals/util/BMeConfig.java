@@ -5,6 +5,7 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.integration.plugins.*;
 import com.mcmoddev.lib.util.Config;
+import com.mcmoddev.lib.util.IntegrationConfigOptions;
 import com.mcmoddev.lib.util.MaterialConfigOptions;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
@@ -12,7 +13,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.apache.commons.lang3.text.WordUtils;
+import slimeknights.tconstruct.tools.TinkerTraits;
 
 import java.io.File;
 
@@ -25,7 +26,6 @@ public final class BMeConfig extends Config {
 	private static Configuration configuration;
 	private static final String CONFIG_FILE = "config/BaseMetals.cfg";
 	private static final String GENERAL_CAT = "General";
-	private static final String INTEGRATION_CAT = "Mod Integration";
 	private static final String HAMMER_RECIPES_CAT = "Crack Hammer Recipes";
 	private static final String TOOLS_CAT = "Tools and Items";
 
@@ -68,6 +68,19 @@ public final class BMeConfig extends Config {
 		new MaterialConfigOptions(MaterialNames.STEEL, false, true, true, true),
 		new MaterialConfigOptions(MaterialNames.TIN, false, true, true, true),
 		new MaterialConfigOptions(MaterialNames.ZINC, false, true, true, true),
+	};
+
+	private static final IntegrationConfigOptions[] INTEGRATION_CONFIG_OPTIONS = new IntegrationConfigOptions[]{
+		new IntegrationConfigOptions("Ender IO", EnderIO.PLUGIN_MODID, true),
+		new IntegrationConfigOptions("IC2", IC2.PLUGIN_MODID, true),
+			new IntegrationConfigOptions("Mekanism", Mekanism.PLUGIN_MODID, true),
+			new IntegrationConfigOptions("Thaumcraft", Thaumcraft.PLUGIN_MODID, true),
+			new IntegrationConfigOptions("Tinkers Construct", TinkersConstruct.PLUGIN_MODID, true),
+			new IntegrationConfigOptions("Constructs Armory", ConstructsArmory.PLUGIN_MODID, true),
+			new IntegrationConfigOptions("VeinMiner", VeinMiner.PLUGIN_MODID, true),
+			new IntegrationConfigOptions("TAIGA", "taiga", true),
+			new IntegrationConfigOptions("Dense Ores", DenseOres.PLUGIN_MODID, true),
+			new IntegrationConfigOptions("Thermal Expansion", ThermalExpansion.PLUGIN_MODID, true)
 	};
 
 	/**
@@ -133,38 +146,8 @@ public final class BMeConfig extends Config {
 		Options.thingEnabled(ConfigKeys.MEKITEMS_WITHOUT_PLUGIN, 
 				configuration.getBoolean("Enable Mekanism Items", GENERAL_CAT, false, 
 						"Enable the items for Mekanism support even if the Mekanism plugin is disabled"));
-		
-		// INTEGRATION
-		Options.modEnabled(EnderIO.PLUGIN_MODID,
-				configuration.getBoolean("ender_io_integration", INTEGRATION_CAT, true,
-						"If false, then Base Metals will not try and integrate with Ender IO"));
-		Options.modEnabled(IC2.PLUGIN_MODID,
-				configuration.getBoolean("ic2_integration", INTEGRATION_CAT, true,
-						"If false, then Base Metals will not try and integrate with IC2"));
-		Options.modEnabled(Mekanism.PLUGIN_MODID,
-				configuration.getBoolean("mekanism_integration", INTEGRATION_CAT, true,
-						"If false, then Base Metals will not try and integrate with Mekanism"));
-		Options.modEnabled(Thaumcraft.PLUGIN_MODID,
-				configuration.getBoolean("thaumcraft_integration", INTEGRATION_CAT, true,
-						"If false, then Base Metals will not try and integrate with Thaumcraft"));
-		Options.modEnabled(TinkersConstruct.PLUGIN_MODID, configuration.getBoolean(
-				"tinkers_construct_integration", INTEGRATION_CAT, true,
-				"If false, then Base Metals will not try and integrate with Tinkers Construct"));
-		Options.modEnabled(ConstructsArmory.PLUGIN_MODID, configuration.getBoolean(
-				"constructs_armory_integration", INTEGRATION_CAT, true,
-				"If false, then Base Metals will not try and integrate with Construct's Armory"));
-		Options.modEnabled(VeinMiner.PLUGIN_MODID,
-				configuration.getBoolean("veinminer_integration", INTEGRATION_CAT, true,
-						"If false, then Base Metals will not try and integrate with VeinMiner"));
-		Options.modEnabled("taiga", configuration.getBoolean("taiga_integration",
-				INTEGRATION_CAT, true,
-				"Requires that Tinkers' Construct integration also be on. If false, TAIGA provided materials and traits will not be available in Base Metals"));
-		Options.modEnabled(DenseOres.PLUGIN_MODID,
-				configuration.getBoolean("denseores", INTEGRATION_CAT, true,
-						"If DenseOres is available, this will allow automatic integration"));
-		Options.modEnabled(ThermalExpansion.PLUGIN_MODID, configuration.getBoolean(
-				"thermal_expansion", INTEGRATION_CAT, true,
-				"If Thermal Expansion is available, this wil automatically integrate materials with the various machines"));
+
+		Config.configIntegrationOptions(INTEGRATION_CONFIG_OPTIONS, configuration);
 
 		configMaterialOptions(MATERIAL_CONFIG_OPTIONS, configuration);
 

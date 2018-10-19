@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.integration.plugins.EnderIO;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
 import net.minecraft.block.Block;
@@ -28,6 +29,7 @@ public class Config {
 	private static final String FLUIDS_CAT = "Fluids";
 	private static final String MATERIALS_CAT = "Metals";
 	private static final String VANILLA_CAT = "Vanilla";
+	private static final String INTEGRATION_CAT = "Mod Integration";
 
 	private static final List<String> UserCrusherRecipes = new ArrayList<>();
 
@@ -36,12 +38,24 @@ public class Config {
 
 	}
 
-	protected static void fluidEnabled(String identifier, Boolean defaultValue, Configuration configuration){
+	private static void integrationEnabled(String identifier, String modid, Boolean defaultValue, Configuration configuration){
+		identifier = WordUtils.capitalizeFully(identifier);
+		Options.modEnabled(modid,
+				configuration.getBoolean(modid + "_integration", INTEGRATION_CAT, defaultValue, "If false, then Base Metals will not try and integrate with " + identifier));
+	}
+
+	protected static void configIntegrationOptions(IntegrationConfigOptions[] integrationConfigOptions, Configuration configuration){
+		for (IntegrationConfigOptions integration:integrationConfigOptions) {
+			integrationEnabled(integration.getIdentifier(), integration.getModid(), integration.getEnabled(), configuration);
+		}
+	}
+
+	private static void fluidEnabled(String identifier, Boolean defaultValue, Configuration configuration){
 		identifier = WordUtils.capitalizeFully(identifier);
 		Options.fluidEnabled(identifier, configuration.getBoolean("Enables " + identifier, FLUIDS_CAT, defaultValue, "Enables the molten fluid of " + identifier));
 	}
 
-	protected static void materialEnabled(String identifier, Boolean defaultValue, Boolean isVanilla, Configuration configuration){
+	private static void materialEnabled(String identifier, Boolean defaultValue, Boolean isVanilla, Configuration configuration){
 		identifier = WordUtils.capitalizeFully(identifier);
 		String cat = isVanilla ? VANILLA_CAT : MATERIALS_CAT;
 		Options.materialEnabled(identifier, configuration.getBoolean("Enables " + identifier, cat, defaultValue, "Enables " + identifier + " Items and Materials"));
