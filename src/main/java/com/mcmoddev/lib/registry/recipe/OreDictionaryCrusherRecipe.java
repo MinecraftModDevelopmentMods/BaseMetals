@@ -1,6 +1,7 @@
 package com.mcmoddev.lib.registry.recipe;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
@@ -46,7 +47,7 @@ public class OreDictionaryCrusherRecipe extends IForgeRegistryEntry.Impl<ICrushe
 	 */
 	@Override
 	public List<ItemStack> getInputs() {
-		return this.inputs;
+		return Collections.unmodifiableList(OreDictionary.getOres(this.oreDictSource));
 	}
 
 	/**

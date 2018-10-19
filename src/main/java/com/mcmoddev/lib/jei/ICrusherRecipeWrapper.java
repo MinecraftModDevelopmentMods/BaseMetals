@@ -8,26 +8,29 @@ import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.NBTCrusherRecipe;
 import com.mcmoddev.lib.registry.recipe.NBTOreDictRecipe;
 
+import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.recipe.IStackHelper;
 import net.minecraft.item.ItemStack;
 
-public class ICrusherRecipeWrapper implements IRecipeWrapper {
+public class ICrusherRecipeWrapper<T extends ICrusherRecipe> implements IRecipeWrapper {
 
 	private final ICrusherRecipe theRecipe;
-
-	public ICrusherRecipeWrapper(final ICrusherRecipe recipe) {
+	private final IJeiHelpers jeiHelpers;
+	
+	public ICrusherRecipeWrapper(IJeiHelpers jeiHelpers, final T recipe) {
 		this.theRecipe = recipe;
+		this.jeiHelpers = jeiHelpers;
 	}
 
 	@Override
 	public void getIngredients(final IIngredients ingredients) {
-		if (this.theRecipe instanceof NBTCrusherRecipe || this.theRecipe instanceof NBTOreDictRecipe) {
-			ingredients.setInputs(VanillaTypes.ITEM, (List<ItemStack>)this.theRecipe.getValidInputs());
-		} else {
-			ingredients.setInputs(VanillaTypes.ITEM, this.theRecipe.getInputs());
-		}
+		IStackHelper stackHelper = this.jeiHelpers.getStackHelper();
+		
+		List<List<ItemStack>> inputLists = stackHelper.expandRecipeItemStackInputs(this.theRecipe.getInputs());
+		ingredients.setInputLists(VanillaTypes.ITEM, inputLists);
 		
 		if (this.theRecipe instanceof NBTCrusherRecipe) {
 			ingredients.setOutputs(VanillaTypes.ITEM,  this.theRecipe.getValidInputs().stream()
