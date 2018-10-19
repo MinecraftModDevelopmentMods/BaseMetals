@@ -53,6 +53,7 @@ public class NBTOreDictRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe> i
 	public ItemStack getOutput(ItemStack input) {
 		return this.isValidInput(input)?this.outputCallback.run(input):ItemStack.EMPTY;
 	}
+	
 	@Override
 	public boolean isValidInput(ItemStack input) {
 		return this.validItemCallback.test(input);
