@@ -13,7 +13,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import slimeknights.tconstruct.tools.TinkerTraits;
 
 import java.io.File;
 
@@ -147,8 +146,7 @@ public final class BMeConfig extends Config {
 				configuration.getBoolean("Enable Mekanism Items", GENERAL_CAT, false, 
 						"Enable the items for Mekanism support even if the Mekanism plugin is disabled"));
 
-		Config.configIntegrationOptions(INTEGRATION_CONFIG_OPTIONS, configuration);
-
+		configIntegrationOptions(INTEGRATION_CONFIG_OPTIONS, configuration);
 		configMaterialOptions(MATERIAL_CONFIG_OPTIONS, configuration);
 
 		// RECIPE AMOUNTS/TOOL&ITEM DISABLING
@@ -229,10 +227,8 @@ public final class BMeConfig extends Config {
 		Options.thingEnabled(ConfigKeys.BOOKSHELF, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
 		Options.thingEnabled(ConfigKeys.FLOWERPOT, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
 		Options.thingEnabled(ConfigKeys.LADDER, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
-		Options.thingEnabled(ConfigKeys.TRIPWIRE_HOOK,
-				Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
-		Options.thingEnabled(ConfigKeys.SCYTHE,
-				configuration.getBoolean("Enable Scythe", TOOLS_CAT, false, "Enable Scythe"));
+		Options.thingEnabled(ConfigKeys.TRIPWIRE_HOOK, Options.isThingEnabled(ConfigKeys.EXPERIMENTAL));
+		Options.thingEnabled(ConfigKeys.SCYTHE, configuration.getBoolean("Enable Scythe", TOOLS_CAT, false, "Enable Scythe"));
 
 		// DISABLE CRACK HAMMER RECIPES
 		Options.setDisabledRecipes(parseDisabledRecipes(configuration.getString(
