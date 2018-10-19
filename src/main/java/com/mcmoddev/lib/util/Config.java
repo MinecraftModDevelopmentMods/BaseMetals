@@ -20,6 +20,7 @@ public class Config {
 	private static final String MATERIALS_CAT = "Metals";
 	private static final String VANILLA_CAT = "Vanilla";
 	private static final String INTEGRATION_CAT = "Mod Integration";
+	private static final String FORCED_TRAIT_CAT = "Forced Traits";
 
 	private static final List<String> UserCrusherRecipes = new ArrayList<>();
 
@@ -40,6 +41,12 @@ public class Config {
 		}
 	}
 
+	private static void forceTraitRegistration(String identifier, Boolean hasTraits, Boolean defaultValue, Configuration configuration){
+		if(hasTraits){
+			Options.forcedTrait(identifier, configuration.getBoolean("Force " + identifier + " trait registration", FORCED_TRAIT_CAT, defaultValue, "Enables the forced registration of traits for " + identifier));
+		}
+	}
+
 	private static void fluidEnabled(String identifier, Boolean defaultValue, Configuration configuration){
 		String newIdentifier = WordUtils.capitalizeFully(identifier);
 		Options.fluidEnabled(newIdentifier, configuration.getBoolean("Enables " + identifier, FLUIDS_CAT, defaultValue, "Enables the molten fluid of " + identifier));
@@ -57,6 +64,7 @@ public class Config {
 			if(materialConfigOptions.getHasFluid()){
 				fluidEnabled(materialConfigOptions.getIdentifier(), materialConfigOptions.getFluidEnabled(), configuration);
 			}
+			forceTraitRegistration(materialConfigOptions.getIdentifier(), materialConfigOptions.getHasTraits(), materialConfigOptions.getForceTraits(), configuration);
 		}
 	}
 
@@ -486,6 +494,22 @@ public class Config {
 			return false;
 		}
 
+		// FORCED TRAIT REGISTRATIONS
+		private static final Map<String, Boolean> forcedTrait = new HashMap<>();
+
+		/**
+		 *
+		 * @param name
+		 * @return
+		 */
+		public static boolean isForcedTrait(final String name){
+			final String testName = name.toLowerCase(Locale.ROOT);
+			if (forcedTrait.containsKey(testName)) {
+				return forcedTrait.get(testName);
+			}
+			return false;
+		}
+
 		/**
 		 *
 		 * @param name
@@ -494,6 +518,17 @@ public class Config {
 		public static void fluidEnabled(final String name, final Boolean bool) {
 			if (!fluidEnabled.containsKey(name)) {
 				fluidEnabled.put(name.toLowerCase(Locale.ROOT), bool);
+			}
+		}
+
+		/**
+		 *
+		 * @param name
+		 * @param bool
+		 */
+		public static void forcedTrait(final String name, final Boolean bool) {
+			if (!forcedTrait.containsKey(name)) {
+				forcedTrait.put(name.toLowerCase(Locale.ROOT), bool);
 			}
 		}
 

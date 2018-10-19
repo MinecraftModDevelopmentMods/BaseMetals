@@ -174,7 +174,7 @@ public class TinkersConstruct implements IIntegration {
 			if(TinkerRegistry.getMaterial(material.getIdentifier()) == Material.UNKNOWN){
 				TinkerRegistry.addMaterial(material);
 			}
-			else {
+			else if(Options.isForcedTrait(material.getIdentifier())){
 				addExistingMaterial(material);
 			}
 		}
