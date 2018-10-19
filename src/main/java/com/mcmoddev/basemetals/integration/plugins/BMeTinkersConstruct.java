@@ -88,6 +88,8 @@ public class BMeTinkersConstruct implements IIntegration {
 				TraitNames.FREEZING);
 		registerMaterial(MaterialNames.CUPRONICKEL, ev);
 		registerMaterial(MaterialNames.INVAR, ev);
+		registerMaterial(MaterialNames.LEAD, ev,
+				TraitNames.SOFT);
 		registerMaterial(MaterialNames.MITHRIL, ev,
 				TraitNames.HOLY);
 		registerMaterial(MaterialNames.NICKEL, ev,
@@ -103,10 +105,6 @@ public class BMeTinkersConstruct implements IIntegration {
 		registerMaterial(MaterialNames.TIN, ev);
 		registerMaterial(MaterialNames.ZINC, ev,
 				TraitNames.REACTIVE);
-
-		// Materials already in TiC
-		registerMaterial(MaterialNames.LEAD, ev,
-				TraitNames.SOFT);
 	}
 
 	protected void registerMaterial(final String name, MaterialRegistrationEvent ev, final Object... traits){
