@@ -540,24 +540,30 @@ public abstract class Recipes {
 		final float baseXP = Float
 				.parseFloat(String.format(DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
 
-		if ((material.hasItem(Names.INGOT)) && (Options.furnaceCheese())) {
-			final Map<Names, Integer> stuff = new TreeMap<>();
-			stuff.put(Names.BOOTS, 4);
-			stuff.put(Names.HELMET, 5);
-			stuff.put(Names.SWORD, 2);
-			stuff.put(Names.SHOVEL, 1);
-			stuff.put(Names.PICKAXE, 3);
-			stuff.put(Names.HOE, 2);
-			stuff.put(Names.AXE, 3);
-			stuff.put(Names.LEGGINGS, 7);
-			stuff.put(Names.CHESTPLATE, 8);
+		if (material.hasItem(Names.INGOT)){
+				final Map<Names, Integer> stuff = new TreeMap<>();
+				stuff.put(Names.BOOTS, 4);
+				stuff.put(Names.HELMET, 5);
+				stuff.put(Names.SWORD, 2);
+				stuff.put(Names.SHOVEL, 1);
+				stuff.put(Names.PICKAXE, 3);
+				stuff.put(Names.HOE, 2);
+				stuff.put(Names.AXE, 3);
+				stuff.put(Names.LEGGINGS, 7);
+				stuff.put(Names.CHESTPLATE, 8);
 
 			stuff.entrySet().stream().filter(ent -> material.hasItem(ent.getKey())).forEach(ent -> {
 				ItemStack target = material.getItemStack(ent.getKey());
 				target.setItemDamage(OreDictionary.WILDCARD_VALUE);
 				maybeRemoveRecipe(target);
+				Names name = Names.NUGGET;
+				int value = 1;
+				if(Options.furnaceCheese()){
+					name = Names.INGOT;
+					value = ent.getValue().intValue();
+				}
 				addFurnaceRecipe(material.getItemStack(ent.getKey()),
-						material.getItemStack(Names.INGOT, ent.getValue().intValue()), baseXP);
+						material.getItemStack(name, value), baseXP);
 			});
 
 			if (material.hasItem(Names.CRACKHAMMER)) {

@@ -1,7 +1,5 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
-import java.util.Locale;
-
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.data.TraitNames;
@@ -18,7 +16,6 @@ import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersAlloyRecipeEve
 import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersExtraMeltingsEvent;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -28,6 +25,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
+
+import java.util.Locale;
 
 import static com.mcmoddev.lib.integration.plugins.TinkersConstruct.registerBasinCasting;
 import static com.mcmoddev.lib.integration.plugins.TinkersConstruct.registerTableCasting;
@@ -74,26 +73,38 @@ public class BMeTinkersConstruct implements IIntegration {
 	@SubscribeEvent
 	public void materialRegistration(MaterialRegistrationEvent ev) {
 
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ADAMANTINE),
-				MaterialNames.ADAMANTINE, ev, TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.ANTIMONY), MaterialNames.ANTIMONY, ev);
-		registerMaterial(Options.isMaterialEnabled(MaterialNames.AQUARIUM), MaterialNames.AQUARIUM, ev,
+		registerMaterial(MaterialNames.ADAMANTINE, ev,
+				TraitNames.COLDBLOODED, TraitNames.INSATIABLE);
+		registerMaterial(MaterialNames.ANTIMONY, ev,
+				TraitNames.BRITTLE);
+		registerMaterial(MaterialNames.AQUARIUM, ev,
 				TraitNames.AQUADYNAMIC, TinkerTraitLocation.HEAD,
 				TraitNames.JAGGED, TinkerTraitLocation.HEAD,
 				TraitNames.AQUADYNAMIC);
 		registerMaterial(MaterialNames.BISMUTH, ev);
-		registerMaterial(MaterialNames.BRASS, ev, TraitNames.DENSE);
-		registerMaterial(MaterialNames.COLDIRON, ev, TraitNames.FREEZING);
+		registerMaterial(MaterialNames.BRASS, ev,
+				TraitNames.DENSE);
+		registerMaterial(MaterialNames.COLDIRON, ev,
+				TraitNames.FREEZING);
 		registerMaterial(MaterialNames.CUPRONICKEL, ev);
 		registerMaterial(MaterialNames.INVAR, ev);
-		registerMaterial(MaterialNames.MITHRIL, ev, TraitNames.HOLY);
-		registerMaterial(MaterialNames.NICKEL, ev);
-		registerMaterial(MaterialNames.PEWTER, ev, TraitNames.SOFT);
+		registerMaterial(MaterialNames.LEAD, ev,
+				TraitNames.SOFT);
+		registerMaterial(MaterialNames.MITHRIL, ev,
+				TraitNames.HOLY);
+		registerMaterial(MaterialNames.NICKEL, ev,
+				TraitNames.MAGNETIC, TinkerTraitLocation.HEAD,
+				TraitNames.SHOCKING, TinkerTraitLocation.HEAD,
+				TraitNames.MAGNETIC2,
+				TraitNames.SHOCKING);
+		registerMaterial(MaterialNames.PEWTER, ev,
+				TraitNames.SOFT);
 		registerMaterial(MaterialNames.PLATINUM, ev);
-		registerMaterial(MaterialNames.STARSTEEL, ev, TraitNames.ENDERFERENCE,
-				TinkerTraitLocation.HEAD, TraitNames.SPARKLY);
+		registerMaterial(MaterialNames.STARSTEEL, ev,
+				TraitNames.ENDERFERENCE, TinkerTraitLocation.HEAD, TraitNames.SPARKLY);
 		registerMaterial(MaterialNames.TIN, ev);
-		registerMaterial(MaterialNames.ZINC, ev);
+		registerMaterial(MaterialNames.ZINC, ev,
+				TraitNames.REACTIVE);
 	}
 
 	protected void registerMaterial(final String name, MaterialRegistrationEvent ev, final Object... traits){
@@ -128,7 +139,6 @@ public class BMeTinkersConstruct implements IIntegration {
 				}
 				i++;
 			}
-
 			ev.getRegistry().register(mat.create());
 		}
 	}
