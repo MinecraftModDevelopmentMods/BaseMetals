@@ -74,7 +74,7 @@ public class ICrusherRecipeCategory implements IRecipeCategory<ICrusherRecipeWra
 		final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
 		// init the input slot
-		guiItemStacks.init(0, true, 40, 14);
+		guiItemStacks.init(0, true, 42, 14);
 
 		// init the output slot
 		guiItemStacks.init(1, false, 119, 14);
