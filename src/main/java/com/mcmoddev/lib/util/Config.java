@@ -43,19 +43,21 @@ public class Config {
 
 	private static void forceTraitRegistration(String identifier, Boolean hasTraits, Boolean defaultValue, Configuration configuration){
 		if(hasTraits){
-			Options.forcedTrait(identifier, configuration.getBoolean("Force " + identifier + " trait registration", FORCED_TRAIT_CAT, defaultValue, "Enables the forced registration of traits for " + identifier));
+			String newIdentifier = WordUtils.capitalizeFully(identifier);
+			Options.forcedTrait(identifier, configuration.getBoolean("Force" + newIdentifier + "TraitRegistration", FORCED_TRAIT_CAT, defaultValue, "Enable the forced registration of traits for " + identifier));
 		}
 	}
 
 	private static void fluidEnabled(String identifier, Boolean defaultValue, Configuration configuration){
 		String newIdentifier = WordUtils.capitalizeFully(identifier);
-		Options.fluidEnabled(newIdentifier, configuration.getBoolean("Enables " + identifier, FLUIDS_CAT, defaultValue, "Enables the molten fluid of " + identifier));
+		Options.fluidEnabled(identifier, configuration.getBoolean("Enabled " + newIdentifier, FLUIDS_CAT, defaultValue, "Enable the molten fluid of " + identifier));
 	}
 
 	private static void materialEnabled(String identifier, Boolean defaultValue, Boolean isVanilla, Configuration configuration){
 		String newIdentifier = WordUtils.capitalizeFully(identifier);
 		String cat = isVanilla ? VANILLA_CAT : MATERIALS_CAT;
-		Options.materialEnabled(newIdentifier, configuration.getBoolean("Enables " + identifier, cat, defaultValue, "Enables " + newIdentifier + " Items and Materials"));
+		String comment = isVanilla ? " Additions like Walls, Slabs and Pressure-plates" : " Items and Materials";
+		Options.materialEnabled(identifier, configuration.getBoolean("Enable" + newIdentifier, cat, defaultValue, "Enable " + newIdentifier + comment));
 	}
 
 	protected static void configMaterialOptions(MaterialConfigOptions[] materials, Configuration configuration){
