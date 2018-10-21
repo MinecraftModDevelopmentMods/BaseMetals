@@ -1,9 +1,5 @@
 package com.mcmoddev.lib.crafttweaker;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.annotation.Nullable;
 
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
@@ -32,7 +28,6 @@ public class CrusherRecipeRemoveAction implements IAction {
 					OreDictionary.itemMatches(recipe.getOutput(), this.output, false) && 
 					recipe.getOutput().getCount() == this.output.getCount())
 					|| this.output == ItemStack.EMPTY) {
-				CraftTweakerAPI.logInfo(String.format("Removing recipe with registry name %s", recipe.getRegistryName()));
 				CrusherRecipeRegistry.removeByName(recipe.getRegistryName());
 			} else {
 				String mess = String.format("Recipe with input %s(*%d)", this.input.getDisplayName(), this.input.getCount());

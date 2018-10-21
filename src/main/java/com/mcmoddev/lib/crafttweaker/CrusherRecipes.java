@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.mcmoddev.basemetals.BaseMetals;
-
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
@@ -47,15 +45,10 @@ public class CrusherRecipes {
 	
 	@ZenMethod
 	public static void add(final IItemStack output, final IItemStack input) {
-		CraftTweakerAPI.logDefault(String.format("Adding recipe with input %s and output %s", input.getDisplayName(), output.getDisplayName()));
 		actions.add(new CrusherRecipeAddAction(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output)));
 	}
 	
 	public static void loadComplete() {
-		BaseMetals.logger.fatal("BLARGH!!! loadComplete!");
-		actions.stream().forEach( act -> {
-			BaseMetals.logger.fatal("ACTION: %s (%s)", act.describe(), act.toString());
-			CraftTweakerAPI.apply(act);
-		});
+		actions.stream().forEach(CraftTweakerAPI::apply);
 	}
 }

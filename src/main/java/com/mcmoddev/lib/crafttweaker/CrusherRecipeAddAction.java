@@ -4,7 +4,6 @@ import javax.annotation.Nullable;
 
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 
-import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 
 import net.minecraft.item.ItemStack;
@@ -20,9 +19,7 @@ public class CrusherRecipeAddAction implements IAction {
 	
 	@Override
 	public void apply() {
-		CraftTweakerAPI.logInfo(String.format("Adding Recipe for %s*%d to %s*%d",
-            			this.input.getDisplayName(), this.input.getCount(), this.output.getDisplayName(), this.output.getCount()));
-        		CrusherRecipeRegistry.addNewCrusherRecipe(this.input, this.output);
+   		CrusherRecipeRegistry.addNewCrusherRecipe(this.input, this.output);
 	}
 
 	@Override
