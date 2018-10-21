@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -164,6 +165,9 @@ public final class BaseMetals {
 	 */
 	@EventHandler
 	public static void init(final FMLInitializationEvent event) {
+		if(Loader.isModLoaded("crafttweaker")) {
+			com.mcmoddev.lib.crafttweaker.CrusherRecipes.loadComplete();
+		}
 		proxy.init(event);
 	}
 
@@ -181,7 +185,7 @@ public final class BaseMetals {
 		//com.mcmoddev.lib.init.Recipes.dumpFurnaceRecipes();
 		//com.mcmoddev.lib.init.ItemGroups.dumpTabs();
 	}
-
+	
 	/**
 	 * Fired when ever a block in Forged has been remapped. <br>
 	 * Refer to {@link CommonProxy#onRemapBlock(RegistryEvent.MissingMappings)} documentation as to how remapped blocks are handled.
