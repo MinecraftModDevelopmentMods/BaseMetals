@@ -24,9 +24,12 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -538,37 +541,28 @@ public abstract class Recipes {
 
 	protected static void furnaceSpecial(@Nonnull final MMDMaterial material) {
 		final float baseXP = Float
-				.parseFloat(String.format(DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
+				.parseFloat(String.format(Locale.ENGLISH, DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
 
-		if (material.hasItem(Names.INGOT)){
-				final Map<Names, Integer> stuff = new TreeMap<>();
-				stuff.put(Names.BOOTS, 4);
-				stuff.put(Names.HELMET, 5);
-				stuff.put(Names.SWORD, 2);
-				stuff.put(Names.SHOVEL, 1);
-				stuff.put(Names.PICKAXE, 3);
-				stuff.put(Names.HOE, 2);
-				stuff.put(Names.AXE, 3);
-				stuff.put(Names.LEGGINGS, 7);
-				stuff.put(Names.CHESTPLATE, 8);
+		if (Options.furnaceCheese()) {
+			if (material.hasItem(Names.INGOT)) {
+				final List<Names> itemNames = Arrays.asList(
+				Names.BOOTS, Names.HELMET, Names.SWORD,    Names.SHOVEL, Names.PICKAXE,
+				Names.HOE,   Names.AXE,    Names.LEGGINGS, Names.CHESTPLATE);
 
-			stuff.entrySet().stream().filter(ent -> material.hasItem(ent.getKey())).forEach(ent -> {
-				ItemStack target = material.getItemStack(ent.getKey());
-				target.setItemDamage(OreDictionary.WILDCARD_VALUE);
-				maybeRemoveRecipe(target);
-				Names name = Names.NUGGET;
-				int value = 1;
-				if(Options.furnaceCheese()){
-					name = Names.INGOT;
-					value = ent.getValue().intValue();
+				itemNames.stream()
+				.filter(name -> material.hasItem(name))
+				.forEach(name -> {
+					ItemStack target = material.getItemStack(name);
+					target.setItemDamage(OreDictionary.WILDCARD_VALUE);
+					maybeRemoveRecipe(target);
+					int outCount = CheeseMath.getIngotCount(material, target);
+					addFurnaceRecipe(material.getItemStack(name), material.getItemStack(Names.INGOT, outCount), baseXP);
+				});
+
+				if (material.hasItem(Names.CRACKHAMMER)) {
+					addFurnaceRecipe(material.getItemStack(Names.CRACKHAMMER),
+							material.getBlockItemStack(Names.BLOCK, 1), 0);
 				}
-				addFurnaceRecipe(material.getItemStack(ent.getKey()),
-						material.getItemStack(name, value), baseXP);
-			});
-
-			if (material.hasItem(Names.CRACKHAMMER)) {
-				addFurnaceRecipe(material.getItemStack(Names.CRACKHAMMER),
-						material.getBlockItemStack(Names.BLOCK, 1), 0);
 			}
 		}
 	}
