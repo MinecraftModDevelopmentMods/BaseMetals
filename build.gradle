@@ -381,7 +381,7 @@ dependencies {
 //runtime "com.googlecode.efficient-java-matrix-library:ejml:0.23"
 
   deobfProvided "CraftTweaker2:CraftTweaker2-API:${ct_api_version}"
-  //runtime "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
+  deobfProvided "CraftTweaker2:CraftTweaker2-MC1120-Main:${mc_version}-${ct_version}"
 
   // TODO: We don't use this
   /*
