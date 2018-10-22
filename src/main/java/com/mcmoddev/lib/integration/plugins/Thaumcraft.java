@@ -1,5 +1,8 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -30,6 +33,7 @@ public class Thaumcraft implements IIntegration {
 			.disableSaving().setMaxID(65535)
 			.setName(new ResourceLocation("mmdlib", "thaumcraft_registry"))
 			.setType(TCMaterial.class).create();
+	private static final Map<String, ResourceLocation> nameToResource = new TreeMap<>();
 	
 	@Override
 	public void init() {
@@ -39,7 +43,7 @@ public class Thaumcraft implements IIntegration {
 		initDone = true;
 
 		MinecraftForge.EVENT_BUS.register(this);
-		MinecraftForge.EVENT_BUS.post(new TCSyncEvent(registry));
+		MinecraftForge.EVENT_BUS.post(new TCSyncEvent(registry,nameToResource));
 	}
 
 	@SubscribeEvent
