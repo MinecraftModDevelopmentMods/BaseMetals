@@ -35,12 +35,12 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
 				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.MERCURY,
-				MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
+				MaterialNames.NICKEL, MaterialNames.SILVER,
 				MaterialNames.STARSTEEL, MaterialNames.TIN, MaterialNames.ZINC);
 
 		final List<String> alloyMaterials = Arrays.asList(MaterialNames.AQUARIUM,
 				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.CUPRONICKEL,
-				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
+				MaterialNames.ELECTRUM, MaterialNames.INVAR,
 				MaterialNames.PEWTER, MaterialNames.STEEL);
 
 		materials.stream().filter(Options::isMaterialEnabled)
@@ -51,6 +51,16 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 				.forEach(name -> createAlloyMaterial(name, MaterialType.METAL, getHardness(name),
 						getStrength(name), getMagic(name), getColor(name)));
 
+		if (Options.isMaterialEnabled(MaterialNames.PLATINUM)) {
+			createRareMaterial(MaterialNames.PLATINUM, MaterialType.METAL, getHardness(MaterialNames.PLATINUM),
+					getStrength(MaterialNames.PLATINUM), getMagic(MaterialNames.PLATINUM), getColor(MaterialNames.PLATINUM));
+		}
+		
+		if (Options.isMaterialEnabled(MaterialNames.MITHRIL)) {
+			createRareAlloyMaterial(MaterialNames.MITHRIL, MaterialType.METAL, getHardness(MaterialNames.MITHRIL),
+					getStrength(MaterialNames.MITHRIL), getMagic(MaterialNames.MITHRIL), getColor(MaterialNames.MITHRIL));
+		}
+		
 		// Mod Materials
 		if (hasMaterial(MaterialNames.ADAMANTINE)) {
 			getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4)
@@ -61,6 +71,7 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
 					.setDefaultDimension(1).setRegenerates(true);
 		}
+
 	}
 
 	private static int getColor(@Nonnull final String name) {
