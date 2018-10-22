@@ -15,18 +15,29 @@ import com.mcmoddev.lib.integration.plugins.tinkers.events.MaterialRegistrationE
 import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersAlloyRecipeEvent;
 import com.mcmoddev.lib.integration.plugins.tinkers.events.TinkersExtraMeltingsEvent;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.CheeseMath;
 import com.mcmoddev.lib.util.Config.Options;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import static com.mcmoddev.lib.integration.plugins.TinkersConstruct.registerBasinCasting;
 import static com.mcmoddev.lib.integration.plugins.TinkersConstruct.registerTableCasting;
@@ -55,6 +66,21 @@ public class BMeTinkersConstruct implements IIntegration {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	@SubscribeEvent(priority=EventPriority.LOWEST)
+	public void registerMiscShit(RegistryEvent.Register<IRecipe> ev) {
+		List<Names> items = Arrays.asList( Names.CHESTPLATE, Names.LEGGINGS, Names.HELMET, Names.BOOTS);
+		List<MMDMaterial> materials = (List<MMDMaterial>)Materials.getMaterialsByMod(BaseMetals.MODID);
+		materials.stream()
+		.filter( b -> b.getFluid() != null)
+		.forEach( base ->
+			items.stream()
+			.filter( n -> base.hasItem(n))
+			.filter( nv -> base.getItem(nv).getRegistryName().getNamespace().equalsIgnoreCase(BaseMetals.MODID))
+			.map( name -> Pair.<String, Integer>of(name.toString(), Integer.valueOf(CheeseMath.getIngotCount(base, base.getItemStack(name)))))
+			.filter( evx -> evx.getValue() > 1)
+			.forEach( evga -> TinkersConstruct.INSTANCE.addExtraMelting(base.getName(), evga.getRight() * Material.VALUE_Ingot, base.getItemStack(evga.getLeft()))));
+	}
+	
 	@SubscribeEvent
 	public void postInit(final IntegrationPostInitEvent event){
 		registerPrismarineFullCasting();
@@ -140,16 +166,6 @@ public class BMeTinkersConstruct implements IIntegration {
 				i++;
 			}
 			ev.getRegistry().register(mat.create());
-		}
-	}
-
-	private void registerMaterial(final boolean active, final String name, final boolean castable,
-			final boolean craftable, MaterialRegistrationEvent ev) {
-		if (active) {
-			TinkersMaterial mat = new TinkersMaterial(Materials.getMaterialByName(name))
-					.setCastable(castable).setCraftable(craftable).setToolForge(true).create();
-
-			ev.getRegistry().register(mat);
 		}
 	}
 

@@ -2,6 +2,8 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
+import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationInitEvent;
 import com.mcmoddev.lib.integration.IntegrationPostInitEvent;
@@ -18,18 +20,24 @@ import com.mcmoddev.lib.integration.plugins.tinkers.traits.MMDTraits;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
 import com.mcmoddev.lib.util.Oredicts;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
+
 import org.apache.commons.lang3.tuple.Pair;
+
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
@@ -107,6 +115,11 @@ public class TinkersConstruct implements IIntegration {
 		addMaterials();
 	}
 
+	@SubscribeEvent(priority=EventPriority.LOWEST)
+	public void materialSetup(final RegistryEvent.Register<IRecipe> ev) {
+		setupMaterialItems();
+	}
+	
 	/**
 	 * 
 	 * @param event
@@ -118,6 +131,22 @@ public class TinkersConstruct implements IIntegration {
 		modifiersRegistry.get(new ResourceLocation("toxic")).addItem(Oredicts.DUST+"Mercury");
 		setupExtraSmeltingRecipes();
 		registerAlloys();
+	}
+	
+	protected void setupMaterialItems() {
+		materialsRegistry.getEntries().stream()
+		.forEach(ent -> {
+			TinkersMaterial tm = ent.getValue();
+
+			Material m = TinkerRegistry.getMaterial(tm.getName());
+			MMDMaterial base = tm.getMMDMaterial();
+			if (base.hasItem(Names.INGOT)) {
+				m.setRepresentativeItem(base.getItem(Names.INGOT));
+			} else if (base.hasItem(Names.ORE)) {
+				m.setRepresentativeItem(base.getBlockItemStack(Names.ORE));
+			}
+			m.addCommonItems(base.getCapitalizedName());			
+		});
 	}
 	
 	/**
@@ -217,8 +246,9 @@ public class TinkersConstruct implements IIntegration {
 			if(m == Material.UNKNOWN) m = tm.create().getTinkerMaterial();
 
 			m.setCastable(tm.getCastable()).setCraftable(tm.getCraftable());
-
-			m.addItemIngot(Oredicts.INGOT+base.getCapitalizedName());
+			
+			m.addCommonItems(base.getCapitalizedName());
+			
 			m.setVisible();
 			m.setFluid(base.getFluid());
 			
@@ -266,7 +296,10 @@ public class TinkersConstruct implements IIntegration {
 	private void setupExtraSmeltingRecipes() {
 		// loop over our registered Extra Smelting recipes
 		extraMeltings.stream().forEach( emt ->
-			TinkerRegistry.registerMelting(emt.getLeft(), emt.getRight().getFluid(), emt.getRight().amount));
+				TinkerRegistry.registerMelting(
+						emt.getLeft(), 
+						emt.getRight().getFluid(), 
+						emt.getRight().amount));
 	}
 
 	private void registerAlloys() {
