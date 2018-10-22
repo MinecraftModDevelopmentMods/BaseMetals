@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 import com.mcmoddev.lib.util.Config.Options;
 
 /**
