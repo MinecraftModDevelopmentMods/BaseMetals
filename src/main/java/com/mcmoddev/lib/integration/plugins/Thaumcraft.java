@@ -6,10 +6,14 @@ import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 import com.mcmoddev.lib.util.Config;
+import com.mcmoddev.lib.integration.plugins.thaumcraft.TCMaterial;
+import com.mcmoddev.lib.integration.plugins.thaumcraft.TCSyncEvent;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.AspectRegistryEvent;
@@ -22,6 +26,11 @@ public class Thaumcraft implements IIntegration {
 
 	public static final Thaumcraft INSTANCE = new Thaumcraft();
 
+	private static final IForgeRegistry<TCMaterial> registry = new RegistryBuilder<TCMaterial>()
+			.disableSaving().setMaxID(65535)
+			.setName(new ResourceLocation("mmdlib", "thaumcraft_registry"))
+			.setType(TCMaterial.class).create();
+	
 	@Override
 	public void init() {
 		if (!Config.Options.isModEnabled(PLUGIN_MODID) || initDone) {
@@ -30,6 +39,7 @@ public class Thaumcraft implements IIntegration {
 		initDone = true;
 
 		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.post(new TCSyncEvent(registry));
 	}
 
 	@SubscribeEvent
