@@ -32,28 +32,54 @@ public class Thaumcraft implements IIntegration {
 	@SubscribeEvent
 	public void registerAspects(final AspectRegistryEvent ev) {
 		Materials.getAllMaterials().stream()
-				.filter( mat -> mat.hasOre())
-				.forEach( mat -> ev.register.registerComplexObjectTag(mat.getBlockItemStack(Names.ORE), (new AspectList()).add(Aspect.METAL, 33)) );
-		Materials.getAllMaterials().stream()
-				.filter( mat -> mat.hasItem(Names.INGOT))
+				.filter(mat -> mat.hasOre()
+						|| mat.hasItem(Names.INGOT)
+						|| mat.hasItem(Names.CRYSTAL)
+						|| mat.hasItem(Names.GEM))
 				.forEach( mat -> {
 					AspectList aspects = new AspectList();
 					addAspects(aspects, mat);
 					ev.register.registerComplexObjectTag(mat.getItemStack(Names.INGOT), aspects);
+					ev.register.registerComplexObjectTag(mat.getItemStack(Names.CRYSTAL), aspects);
+					ev.register.registerComplexObjectTag(mat.getItemStack(Names.GEM), aspects);
+					ev.register.registerComplexObjectTag(mat.getBlockItemStack(Names.ORE), aspects);
 				});
 	}
 
 	private AspectList addAspects(AspectList aspectList, MMDMaterial material){
-		return addMetalAspect(addMagicAspect(addDesireAspect(aspectList, material), material), material);
+		addMetalAspect(aspectList, material);
+		addCrystalAspect(aspectList, material);
+		addMagicAspect(aspectList, material);
+		addDesireAspect(aspectList, material);
+
+		return aspectList;
 	}
 
 	private AspectList addMetalAspect(AspectList aspectList, MMDMaterial material){
-		return aspectList.add(Aspect.METAL, getMetalAspect(material));
+		if(material.getType() == MMDMaterial.MaterialType.METAL){
+			aspectList.add(Aspect.METAL, getMetalAspect(material));
+		}
+		return aspectList;
 	}
 
 	private int getMetalAspect(MMDMaterial material){
-		float value  = material.getBlockHardness() * material.getEnchantability() / 10;
-		return value >= 10 ? (int)value : 6;
+
+		float harvestLevel = material.getRequiredHarvestLevel();
+		float blockHardness = material.getBlockHardness();
+
+		float value  = harvestLevel * blockHardness  / 2;
+		if(value < 6){
+			value = 6;
+		}
+
+		return (int)value;
+	}
+
+	private AspectList addCrystalAspect(AspectList aspectList, MMDMaterial material){
+		if(material.getType() == MMDMaterial.MaterialType.CRYSTAL || material.getType() == MMDMaterial.MaterialType.GEM){
+			aspectList.add(Aspect.CRYSTAL, getMetalAspect(material));
+		}
+		return aspectList;
 	}
 
 	private AspectList addDesireAspect(AspectList aspectList, MMDMaterial material){
