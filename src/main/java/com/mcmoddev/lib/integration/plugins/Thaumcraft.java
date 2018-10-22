@@ -32,25 +32,68 @@ public class Thaumcraft implements IIntegration {
 	@SubscribeEvent
 	public void registerAspects(final AspectRegistryEvent ev) {
 		Materials.getAllMaterials().stream()
-				.filter( mat -> mat.hasOre())
-				.forEach( mat -> ev.register.registerComplexObjectTag(mat.getBlockItemStack(Names.ORE), (new AspectList()).add(Aspect.METAL, 33)) );
-		Materials.getAllMaterials().stream()
-				.filter( mat -> mat.hasItem(Names.INGOT))
+				.filter(mat -> mat.hasOre()
+						|| mat.hasItem(Names.INGOT)
+						|| mat.hasItem(Names.CRYSTAL)
+						|| mat.hasItem(Names.GEM))
 				.forEach( mat -> {
 					AspectList aspects = new AspectList();
-					addMagicAspect(aspects, mat);
-					addDesireAspect(aspects, mat);
-					aspects.add(Aspect.METAL, 33);
+					addAspects(aspects, mat);
 					ev.register.registerComplexObjectTag(mat.getItemStack(Names.INGOT), aspects);
+					ev.register.registerComplexObjectTag(mat.getItemStack(Names.CRYSTAL), aspects);
+					ev.register.registerComplexObjectTag(mat.getItemStack(Names.GEM), aspects);
+					ev.register.registerComplexObjectTag(mat.getBlockItemStack(Names.ORE), aspects);
 				});
 	}
 
+	private AspectList addAspects(AspectList aspectList, MMDMaterial material){
+		addMetalAspect(aspectList, material);
+		addCrystalAspect(aspectList, material);
+		addMagicAspect(aspectList, material);
+		addDesireAspect(aspectList, material);
+
+		return aspectList;
+	}
+
 	private AspectList addMetalAspect(AspectList aspectList, MMDMaterial material){
-		return aspectList.add(Aspect.METAL, getMetalAspect(material));
+		if(material.getType() == MMDMaterial.MaterialType.METAL){
+			aspectList.add(Aspect.METAL, getMetalAspect(material));
+		}
+		return aspectList;
 	}
 
 	private int getMetalAspect(MMDMaterial material){
-		return 33;
+
+		float harvestLevel = material.getRequiredHarvestLevel();
+		if(harvestLevel < 0.1f){
+			harvestLevel = 0.1f;
+		}
+		float blockHardness = material.getBlockHardness();
+		if(blockHardness < 0.1f){
+			blockHardness = 0.1f;
+		}
+		float enchantability = material.getEnchantability();
+		if(enchantability < 0.1f){
+			enchantability = 0.1f;
+		}
+		float value  = harvestLevel * blockHardness * enchantability;
+		if(value <= 6){
+			value *= 3;
+		}
+		else if(value >= 320){
+			value /= 10;
+		}
+		else if(value >= 160){
+			value /= 4;
+		}
+		return (int)value;
+	}
+
+	private AspectList addCrystalAspect(AspectList aspectList, MMDMaterial material){
+		if(material.getType() == MMDMaterial.MaterialType.CRYSTAL || material.getType() == MMDMaterial.MaterialType.GEM){
+			aspectList.add(Aspect.CRYSTAL, getMetalAspect(material));
+		}
+		return aspectList;
 	}
 
 	private AspectList addDesireAspect(AspectList aspectList, MMDMaterial material){
@@ -62,12 +105,12 @@ public class Thaumcraft implements IIntegration {
 	}
 
 	private int getDesireAspect(MMDMaterial material){
-		return getDesireAspect(material.isRare());
+		return getDesireAspect(material.isRare(), material.getEnchantability());
 	}
 
-	private int getDesireAspect(boolean isRare){
+	private int getDesireAspect(boolean isRare, float enchantability){
 		if(isRare){
-			return 8;
+			return (int)((enchantability * 8) / 20);
 		}
 		return 0;
 	}
