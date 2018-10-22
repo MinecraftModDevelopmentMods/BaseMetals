@@ -2,7 +2,7 @@ package com.mcmoddev.lib.block;
 
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
