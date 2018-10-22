@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
