@@ -38,11 +38,13 @@ public class Thaumcraft implements IIntegration {
 				.filter( mat -> mat.hasItem(Names.INGOT))
 				.forEach( mat -> {
 					AspectList aspects = new AspectList();
-					addMagicAspect(aspects, mat);
-					addDesireAspect(aspects, mat);
-					aspects.add(Aspect.METAL, 33);
+					addAspects(aspects, mat);
 					ev.register.registerComplexObjectTag(mat.getItemStack(Names.INGOT), aspects);
 				});
+	}
+
+	private AspectList addAspects(AspectList aspectList, MMDMaterial material){
+		return addMetalAspect(addMagicAspect(addDesireAspect(aspectList, material), material), material);
 	}
 
 	private AspectList addMetalAspect(AspectList aspectList, MMDMaterial material){
@@ -50,7 +52,8 @@ public class Thaumcraft implements IIntegration {
 	}
 
 	private int getMetalAspect(MMDMaterial material){
-		return 33;
+		float value  = material.getBlockHardness() * material.getEnchantability() / 10;
+		return value >= 10 ? (int)value : 6;
 	}
 
 	private AspectList addDesireAspect(AspectList aspectList, MMDMaterial material){
@@ -62,12 +65,12 @@ public class Thaumcraft implements IIntegration {
 	}
 
 	private int getDesireAspect(MMDMaterial material){
-		return getDesireAspect(material.isRare());
+		return getDesireAspect(material.isRare(), material.getEnchantability());
 	}
 
-	private int getDesireAspect(boolean isRare){
+	private int getDesireAspect(boolean isRare, float enchantability){
 		if(isRare){
-			return 8;
+			return (int)((enchantability * 8) / 20);
 		}
 		return 0;
 	}
