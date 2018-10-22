@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableList;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.recipe.RepairRecipeBase;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -27,9 +28,8 @@ public class CheeseMath {
 	private static IRecipe getRecipeFor(@Nonnull final ItemStack outputItem) {
 		final IRecipe target = GameRegistry.findRegistry(IRecipe.class).getValuesCollection()
 				.stream()
-				.filter(rec -> rec.getRecipeOutput().getItem().equals(outputItem.getItem())
-						&& (rec.getRecipeOutput().getMetadata() == OreDictionary.WILDCARD_VALUE
-								|| rec.getRecipeOutput().getMetadata() == outputItem.getMetadata()))
+				.filter(rec -> OreDictionary.itemMatches(outputItem, rec.getRecipeOutput(), false)
+						&& !(rec instanceof RepairRecipeBase))			
 				.findFirst().orElse(null);
 		return target;
 	}
@@ -49,6 +49,7 @@ public class CheeseMath {
 
 	private static int getOutputCount(@Nonnull final ItemStack outputItem) {
 		IRecipe t = getRecipeFor(outputItem);
+
 		if (t == null) {
 			return 1;
 		} else {
@@ -99,8 +100,9 @@ public class CheeseMath {
 				return itemStack.getCount();
 			} else if (materialHasItem(material, itemStack)) {
 				return getNuggetCount(material, itemStack) * itemStack.getCount();
+			} else {
+				return 0;
 			}
-			return 0;
 		}).sum();
 	}
 
@@ -114,7 +116,8 @@ public class CheeseMath {
 		if (outputItem.isEmpty()) {
 			return 0;
 		}
-		return (rawNuggetCount(material, outputItem) / 9) / getOutputCount(outputItem);
+
+		return ( rawNuggetCount(material, outputItem) / 9) / getOutputCount(outputItem);
 	}
 
 	/**

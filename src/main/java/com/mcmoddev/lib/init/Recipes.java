@@ -271,7 +271,7 @@ public abstract class Recipes {
 
 	private static void makeNuggetRecipes(@Nonnull final MMDMaterial material) {
 		final float baseXP = Float
-				.parseFloat(String.format(DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
+				.parseFloat(String.format(Locale.ENGLISH, DEFAULT_ORESMELT_XP, material.getOreSmeltXP()));
 		final float nuggetXP = Float.parseFloat(String.format(Locale.ENGLISH, DEFAULT_ORESMELT_XP, baseXP / 9.0f));
 		final String oreDictName = material.getCapitalizedName();
 
