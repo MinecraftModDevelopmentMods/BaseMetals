@@ -1,7 +1,7 @@
 package com.mcmoddev.lib.integration.plugins;
 
-import com.mcmoddev.basemetals.init.Materials;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config;

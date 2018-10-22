@@ -32,25 +32,31 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 		// Oreless because our Recipe code can tend to be silly otherwise
 		createVanillaMats();
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
-				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.MERCURY,
-				MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
-				MaterialNames.STARSTEEL, MaterialNames.TIN, MaterialNames.ZINC);
+		final List<String> rareMaterials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.STARSTEEL);
 
-		final List<String> alloyMaterials = Arrays.asList(MaterialNames.AQUARIUM,
-				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.CUPRONICKEL,
-				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
-				MaterialNames.PEWTER, MaterialNames.STEEL);
+		final List<String> materials = Arrays.asList(MaterialNames.ANTIMONY, MaterialNames.BISMUTH,
+				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.MERCURY, MaterialNames.NICKEL,
+				MaterialNames.SILVER, MaterialNames.TIN, MaterialNames.ZINC);
 
-		materials.stream().filter(Options::isMaterialEnabled)
-				.forEach(name -> createMaterial(name, MaterialType.METAL, getHardness(name),
-						getStrength(name), getMagic(name), getColor(name)));
+		final List<String> rareAlloyMaterials = Arrays.asList(MaterialNames.AQUARIUM, MaterialNames.MITHRIL);
 
-		alloyMaterials.stream().filter(Options::isMaterialEnabled)
-				.forEach(name -> createAlloyMaterial(name, MaterialType.METAL, getHardness(name),
-						getStrength(name), getMagic(name), getColor(name)));
+		final List<String> alloyMaterials = Arrays.asList(MaterialNames.BRASS, MaterialNames.BRONZE,
+				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.PEWTER,
+				MaterialNames.STEEL);
 
+		materials.stream().filter(Options::isMaterialEnabled).forEach(name -> createMaterial(name, MaterialType.METAL,
+				getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+
+		alloyMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createAlloyMaterial(name,
+				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+
+		rareMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createRareMaterial(name,
+				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+
+		rareAlloyMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createRareAlloyMaterial(name,
+				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+		
 		// Mod Materials
 		if (hasMaterial(MaterialNames.ADAMANTINE)) {
 			getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4)
@@ -61,6 +67,7 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
 					.setDefaultDimension(1).setRegenerates(true);
 		}
+
 	}
 
 	private static int getColor(@Nonnull final String name) {
