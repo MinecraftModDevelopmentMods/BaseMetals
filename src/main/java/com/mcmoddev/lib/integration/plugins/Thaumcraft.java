@@ -45,10 +45,8 @@ public class Thaumcraft implements IIntegration {
 	@SubscribeEvent
 	public void registerAspects(final AspectRegistryEvent ev) {
 		Materials.getAllMaterials().stream()
-				.filter(mat -> mat.hasOre()
-						|| mat.hasItem(Names.INGOT)
-						|| mat.hasItem(Names.CRYSTAL)
-						|| mat.hasItem(Names.GEM))
+				.filter(mat -> mat.hasOre())
+				.filter( mat -> !mat.isVanilla())
 				.forEach( mat -> {
 					AspectList aspects = new AspectList();
 					addAspects(aspects, mat);
