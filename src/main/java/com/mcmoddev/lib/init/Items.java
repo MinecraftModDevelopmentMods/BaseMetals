@@ -69,7 +69,7 @@ import com.mcmoddev.lib.item.ItemMMDSmallPowder;
 import com.mcmoddev.lib.item.ItemMMDSword;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 import com.mcmoddev.lib.util.Config.Options;
 import com.mcmoddev.lib.util.Oredicts;
 

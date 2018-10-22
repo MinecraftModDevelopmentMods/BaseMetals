@@ -15,6 +15,7 @@ import com.google.common.collect.ImmutableMap;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -69,12 +70,6 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	private boolean regenerates = false;
 
 	/**
-	 * Rare metals, like platinum, are never found in villager trades and unusually uncommon in
-	 * world generation.
-	 */
-	private final boolean isRare;
-
-	/**
 	 * Whether this material's blocks be used as a beacon base.
 	 */
 	private final boolean isBeaconBase;
@@ -109,19 +104,9 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	private int[] cache = null;
 
 	/**
-	 * ENUM of all the types of Materials.
-	 *
-	 * @author Jasmine Iwanek
-	 *
-	 */
-	public enum MaterialType {
-		WOOD, ROCK, METAL, MINERAL, GEM, CRYSTAL
-	}
-
-	/**
 	 * The type of material this is.
 	 */
-	private final MaterialType materialType;
+	private final MMDMaterialType materialType;
 
 	private int spawnSize;
 
@@ -153,8 +138,8 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @param hasBlend
 	 *            If true this material has a blend
 	 */
-	public MMDMaterial(final String name, final MaterialType type, final float hardness,
-			final float strength, final float magic, final int tintColor, final boolean isRare,
+	public MMDMaterial(final String name, final MMDMaterialType type, final float hardness,
+			final float strength, final float magic, final int tintColor,
 			final boolean hasOre, final boolean hasBlend) {
 		// material stats
 		this.stats.put(MaterialStats.HARDNESS, hardness);
@@ -169,7 +154,6 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		this.enumName = (Loader.instance().activeModContainer().getModId() + "_" + name)
 				.toUpperCase(Locale.ENGLISH);
 		this.isBeaconBase = true;
-		this.isRare = isRare;
 		this.materialType = type;
 		this.hasBlend = hasBlend;
 		this.hasOre = hasOre;
@@ -190,7 +174,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return MaterialType The type of material this is.
 	 */
 	public MaterialType getType() {
-		return this.materialType;
+		return this.materialType.getMaterialType();
 	}
 
 	@Override
@@ -682,9 +666,25 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public boolean isRare() {
-		return this.isRare;
+		return this.materialType.hasRare();
 	}
 
+	public boolean isVanilla() {
+		return this.materialType.hasVanilla();
+	}
+	
+	public boolean isAlloy() {
+		return this.materialType.hasAlloy();
+	}
+
+	public boolean isOreless() {
+		return this.materialType.hasOreless();
+	}
+	
+	public boolean isSpecial() {
+		return this.materialType.hasSpecial();
+	}	
+	
 	public boolean regenerates() {
 		return this.regenerates;
 	}
@@ -750,19 +750,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return
 	 */
 	public final Material getVanillaMaterial() {
-		switch (this.getType()) {
-			case METAL:
-				return Material.IRON;
-			case GEM:
-			case ROCK:
-				return Material.ROCK;
-			case MINERAL:
-				return Material.GRASS;
-			case WOOD:
-				return Material.WOOD;
-			default:
-				return Material.GROUND;
-		}
+		return this.materialType.getVanillaType();
 	}
 
 	/**

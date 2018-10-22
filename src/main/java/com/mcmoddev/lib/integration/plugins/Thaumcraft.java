@@ -4,9 +4,12 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 import com.mcmoddev.lib.util.Config;
+
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.AspectRegistryEvent;
@@ -56,7 +59,7 @@ public class Thaumcraft implements IIntegration {
 	}
 
 	private AspectList addMetalAspect(AspectList aspectList, MMDMaterial material){
-		if(material.getType() == MMDMaterial.MaterialType.METAL){
+		if(material.getType() == MaterialType.METAL){
 			aspectList.add(Aspect.METAL, getMetalAspect(material));
 		}
 		return aspectList;
@@ -90,7 +93,7 @@ public class Thaumcraft implements IIntegration {
 	}
 
 	private AspectList addCrystalAspect(AspectList aspectList, MMDMaterial material){
-		if(material.getType() == MMDMaterial.MaterialType.CRYSTAL || material.getType() == MMDMaterial.MaterialType.GEM){
+		if(material.getType() == MaterialType.CRYSTAL || material.getType() == MaterialType.GEM){
 			aspectList.add(Aspect.CRYSTAL, getMetalAspect(material));
 		}
 		return aspectList;
