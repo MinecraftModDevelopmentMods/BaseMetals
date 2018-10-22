@@ -24,6 +24,10 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
         return this.aspectList.add(aspect, amount);
     }
 
+    public AspectList addAspect(AspectList aspectList){
+        return this.aspectList.add(aspectList);
+    }
+
     public String getName(){
         return this.baseMaterial.getName();
     }

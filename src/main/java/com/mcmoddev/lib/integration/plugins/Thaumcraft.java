@@ -65,13 +65,27 @@ public class Thaumcraft implements IIntegration {
 	private int getMetalAspect(MMDMaterial material){
 
 		float harvestLevel = material.getRequiredHarvestLevel();
-		float blockHardness = material.getBlockHardness();
-
-		float value  = harvestLevel * blockHardness  / 2;
-		if(value < 6){
-			value = 6;
+		if(harvestLevel < 0.1f){
+			harvestLevel = 0.1f;
 		}
-
+		float blockHardness = material.getBlockHardness();
+		if(blockHardness < 0.1f){
+			blockHardness = 0.1f;
+		}
+		float enchantability = material.getEnchantability();
+		if(enchantability < 0.1f){
+			enchantability = 0.1f;
+		}
+		float value  = harvestLevel * blockHardness * enchantability;
+		if(value <= 6){
+			value *= 3;
+		}
+		else if(value >= 320){
+			value /= 10;
+		}
+		else if(value >= 160){
+			value /= 4;
+		}
 		return (int)value;
 	}
 
