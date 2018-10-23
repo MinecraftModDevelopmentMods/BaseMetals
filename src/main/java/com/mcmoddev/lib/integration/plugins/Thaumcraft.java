@@ -59,7 +59,6 @@ public class Thaumcraft implements IIntegration {
 		nameToMultiplier.putIfAbsent(Names.GEM, nameToMultiplier.get(Names.INGOT));
 		nameToMultiplier.putIfAbsent(Names.BLEND, nameToMultiplier.get(Names.INGOT) * 0.8f);
 		nameToMultiplier.putIfAbsent(Names.ORE, nameToMultiplier.get(Names.INGOT));
-		nameToMultiplier.putIfAbsent(Names.SHARD, nameToMultiplier.get(Names.NUGGET));
 	}
 
 	@SubscribeEvent
