@@ -14,7 +14,7 @@ public class CrusherRecipeAddAction implements IAction {
 	
 	public CrusherRecipeAddAction(ItemStack input, @Nullable ItemStack output) {
 		this.input = input;
-		this.output = output==null?ItemStack.EMPTY:output;
+		this.output = output;
 	}
 	
 	@Override
