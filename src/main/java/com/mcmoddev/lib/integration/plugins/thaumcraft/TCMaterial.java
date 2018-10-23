@@ -5,8 +5,10 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.data.Names;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
+import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import thaumcraft.api.aspects.Aspect;
@@ -20,6 +22,10 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
         this.baseMaterial = baseMaterial;
         this.aspectMap = new TreeMap<>();
         super.setRegistryName(this.baseMaterial.getRegistryName());
+    }
+
+    public Set<String> getAspectMapKeys(){
+        return aspectMap.keySet();
     }
 
     public TCMaterial addAspect(Names part, Aspect aspect, int amount){
@@ -66,8 +72,16 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     	return this;
     }
 
-    public AspectList getAspectList() {
-        return aspectList;
+    public AspectList getAspectFor(String part) {
+        return aspectMap.get(part);
+    }
+
+    public AspectList getAspectFor(Names part){
+        return getAspectFor(part);
+    }
+
+    public Item getItem(String item){
+        return baseMaterial.getItem(item);
     }
 
     public String getName(){

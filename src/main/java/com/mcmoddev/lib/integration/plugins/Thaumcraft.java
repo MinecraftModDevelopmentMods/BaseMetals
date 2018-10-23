@@ -1,25 +1,21 @@
 package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCSyncEvent;
-import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
-import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.AspectRegistryEvent;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.TreeMap;
-
-import static com.mcmoddev.lib.integration.plugins.thaumcraft.AspectsMath.addAspects;
 
 public class Thaumcraft implements IIntegration {
 
@@ -40,7 +36,7 @@ public class Thaumcraft implements IIntegration {
 		nameToMultiplier.putIfAbsent(name, val);
 	}
 
-	public static float getFromNameToMultiplier(Names name){
+	public static float getFromNameToMultiplier(String name){
 		return nameToMultiplier.get(name);
 	}
 	
@@ -63,25 +59,26 @@ public class Thaumcraft implements IIntegration {
 
 	@SubscribeEvent
 	public void registerAspects(final AspectRegistryEvent ev) {
-//		registry.getValuesCollection().stream()
-//				.forEach( tcMaterial -> ev.register.registerComplexObjectTag(new ItemStack(tcMaterial.getMMDMaterial().getItem(Names.INGOT)), tcMaterial.getAspectList()));
+		registry.getValuesCollection().stream()
+				.forEach( tcMaterial -> tcMaterial.getAspectMapKeys()
+						.forEach( key -> ev.register.registerComplexObjectTag(new ItemStack(tcMaterial.getMMDMaterial().getItem(key)),tcMaterial.getAspectFor(key))));
+	}
+//		Materials.getAllMaterials().stream()
+//				.filter( mat -> !mat.isVanilla())
+//				.forEach( mat -> registerAspects(ev, mat));
+//
+//		Materials.getAllMaterials().stream()
+//				.filter( mat -> mat.isVanilla())
+//				.forEach( mat -> registerAspects(ev, mat, Names.NUGGET));
 //	}
-		Materials.getAllMaterials().stream()
-				.filter( mat -> !mat.isVanilla())
-				.forEach( mat -> registerAspects(ev, mat));
 
-		Materials.getAllMaterials().stream()
-				.filter( mat -> mat.isVanilla())
-				.forEach( mat -> registerAspects(ev, mat, Names.NUGGET));
-	}
-
-	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat){
-		registerAspects(ev, mat, Names.NUGGET);
-		registerAspects(ev, mat, Names.INGOT);
-		registerAspects(ev, mat, Names.ORE);
-	}
-
-	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat, Names name){
-		ev.register.registerComplexObjectTag(mat.getItemStack(name), addAspects(new AspectList(), mat, name));
-	}
+//	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat){
+//		registerAspects(ev, mat, Names.NUGGET.toString());
+//		registerAspects(ev, mat, Names.INGOT.toString());
+//		registerAspects(ev, mat, Names.ORE.toString());
+//	}
+//
+//	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat, String name){
+//		ev.register.registerComplexObjectTag(mat.getItemStack(name), addAspects(new AspectList(), mat, name));
+//	}
 }
