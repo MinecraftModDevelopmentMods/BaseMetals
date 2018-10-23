@@ -30,14 +30,14 @@ public class Thaumcraft implements IIntegration {
 			.setName(new ResourceLocation("mmdlib", "thaumcraft_registry"))
 			.setType(TCMaterial.class).create();
 	private static final Map<String, ResourceLocation> nameToResource = new TreeMap<>();
-	private static final Map<Names, Float> nameToMultiplier = new EnumMap<>(Names.class);
+	private static final Map<Names, Float> partMultiplierMap = new EnumMap<>(Names.class);
 
-	public static void putInNameToMultiplier(Names name, Float val){
-		nameToMultiplier.putIfAbsent(name, val);
+	public static void putPartMultiplier(Names name, Float val){
+		partMultiplierMap.putIfAbsent(name, val);
 	}
 
-	public static float getFromNameToMultiplier(String name){
-		return nameToMultiplier.get(name);
+	public static float getPartMultiplier(String name){
+		return partMultiplierMap.get(name);
 	}
 	
 	@Override
@@ -50,35 +50,17 @@ public class Thaumcraft implements IIntegration {
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.post(new TCSyncEvent(registry,nameToResource));
 
-		nameToMultiplier.putIfAbsent(Names.NUGGET, 1f);
-		nameToMultiplier.putIfAbsent(Names.INGOT, 9f);
-		nameToMultiplier.putIfAbsent(Names.GEM, nameToMultiplier.get(Names.INGOT));
-		nameToMultiplier.putIfAbsent(Names.BLEND, nameToMultiplier.get(Names.INGOT) * 0.8f);
-		nameToMultiplier.putIfAbsent(Names.ORE, nameToMultiplier.get(Names.INGOT));
+		partMultiplierMap.putIfAbsent(Names.NUGGET, 1f);
+		partMultiplierMap.putIfAbsent(Names.INGOT, 9f);
+		partMultiplierMap.putIfAbsent(Names.GEM, partMultiplierMap.get(Names.INGOT));
+		partMultiplierMap.putIfAbsent(Names.BLEND, partMultiplierMap.get(Names.INGOT) * 0.8f);
+		partMultiplierMap.putIfAbsent(Names.ORE, partMultiplierMap.get(Names.INGOT));
 	}
 
 	@SubscribeEvent
 	public void registerAspects(final AspectRegistryEvent ev) {
 		registry.getValuesCollection().stream()
 				.forEach( tcMaterial -> tcMaterial.getAspectMapKeys()
-						.forEach( key -> ev.register.registerComplexObjectTag(new ItemStack(tcMaterial.getMMDMaterial().getItem(key)),tcMaterial.getAspectFor(key))));
+						.forEach( key -> ev.register.registerComplexObjectTag(new ItemStack(tcMaterial.getItem(key)),tcMaterial.getAspectFor(key))));
 	}
-//		Materials.getAllMaterials().stream()
-//				.filter( mat -> !mat.isVanilla())
-//				.forEach( mat -> registerAspects(ev, mat));
-//
-//		Materials.getAllMaterials().stream()
-//				.filter( mat -> mat.isVanilla())
-//				.forEach( mat -> registerAspects(ev, mat, Names.NUGGET));
-//	}
-
-//	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat){
-//		registerAspects(ev, mat, Names.NUGGET.toString());
-//		registerAspects(ev, mat, Names.INGOT.toString());
-//		registerAspects(ev, mat, Names.ORE.toString());
-//	}
-//
-//	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat, String name){
-//		ev.register.registerComplexObjectTag(mat.getItemStack(name), addAspects(new AspectList(), mat, name));
-//	}
 }

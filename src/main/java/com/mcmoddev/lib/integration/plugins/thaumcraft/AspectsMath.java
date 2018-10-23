@@ -12,7 +12,7 @@ public class AspectsMath {
     }
 
     public static AspectList addAspects(AspectList aspectList, MMDMaterial material, Names name){
-        return addAspects(aspectList, material, Thaumcraft.getFromNameToMultiplier(name));
+        return addAspects(aspectList, material, Thaumcraft.getPartMultiplier(name.toString()));
     }
 
     private static AspectList addAspects(AspectList aspectList, MMDMaterial material, float multiplier) {

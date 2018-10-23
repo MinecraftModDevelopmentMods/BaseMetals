@@ -23,4 +23,23 @@ public final class BMeThaumcraft extends com.mcmoddev.lib.integration.plugins.Th
 		}
 		MinecraftForge.EVENT_BUS.register(this);
 	}
+
+//		Materials.getAllMaterials().stream()
+//				.filter( mat -> !mat.isVanilla())
+//				.forEach( mat -> registerAspects(ev, mat));
+//
+//		Materials.getAllMaterials().stream()
+//				.filter( mat -> mat.isVanilla())
+//				.forEach( mat -> registerAspects(ev, mat, Names.NUGGET));
+//	}
+
+//	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat){
+//		registerAspects(ev, mat, Names.NUGGET.toString());
+//		registerAspects(ev, mat, Names.INGOT.toString());
+//		registerAspects(ev, mat, Names.ORE.toString());
+//	}
+//
+//	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat, String name){
+//		ev.register.registerComplexObjectTag(mat.getItemStack(name), addAspects(new AspectList(), mat, name));
+//	}
 }
