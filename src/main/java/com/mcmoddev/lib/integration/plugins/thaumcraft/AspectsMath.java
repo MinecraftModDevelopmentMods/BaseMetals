@@ -8,6 +8,8 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
 public class AspectsMath {
+    private AspectsMath() {
+    }
 
     public static AspectList addAspects(AspectList aspectList, MMDMaterial material, Names name){
         return addAspects(aspectList, material, Thaumcraft.getFromNameToMultiplier(name));

@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.AspectRegistryEvent;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -34,7 +34,7 @@ public class Thaumcraft implements IIntegration {
 			.setName(new ResourceLocation("mmdlib", "thaumcraft_registry"))
 			.setType(TCMaterial.class).create();
 	private static final Map<String, ResourceLocation> nameToResource = new TreeMap<>();
-	private static final Map<Names, Float> nameToMultiplier = new HashMap<>();
+	private static final Map<Names, Float> nameToMultiplier = new EnumMap<>(Names.class);
 
 	public static void putInNameToMultiplier(Names name, Float val){
 		nameToMultiplier.putIfAbsent(name, val);
@@ -76,13 +76,13 @@ public class Thaumcraft implements IIntegration {
 				.forEach( mat -> registerAspects(ev, mat, Names.NUGGET));
 	}
 
-	private void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat){
+	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat){
 		registerAspects(ev, mat, Names.NUGGET);
 		registerAspects(ev, mat, Names.INGOT);
 		registerAspects(ev, mat, Names.ORE);
 	}
 
-	private void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat, Names name){
+	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat, Names name){
 		ev.register.registerComplexObjectTag(mat.getItemStack(name), addAspects(new AspectList(), mat, name));
 	}
 }

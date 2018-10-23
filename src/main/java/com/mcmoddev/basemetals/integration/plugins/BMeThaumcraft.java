@@ -12,7 +12,7 @@ public final class BMeThaumcraft extends com.mcmoddev.lib.integration.plugins.Th
 	public static final String PLUGIN_MODID = Thaumcraft.PLUGIN_MODID;
 
 	public BMeThaumcraft() {
-
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
