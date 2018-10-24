@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import thaumcraft.api.aspects.Aspect;
@@ -82,6 +84,18 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
 
     public Item getItem(String item){
         return baseMaterial.getItem(item);
+    }
+
+    public ItemStack getItemStack(String item){
+        return baseMaterial.getItemStack(item);
+    }
+
+    public Block getBlock(String block){
+        return  baseMaterial.getBlock(block);
+    }
+
+    public ItemStack getBlockItemStack(String block){
+        return baseMaterial.getBlockItemStack(block);
     }
 
     public String getName(){
