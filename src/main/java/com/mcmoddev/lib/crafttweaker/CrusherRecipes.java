@@ -31,11 +31,7 @@ public class CrusherRecipes {
 	
 	@ZenMethod
 	public static void remove(final IItemStack input, @Optional @Nullable final IItemStack output) {
-		if (output != null) {
-			actions.add(new CrusherRecipeRemoveAction(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output)));
-		} else {
-			actions.add(new CrusherRecipeRemoveAction(CraftTweakerMC.getItemStack(input), null));
-		}
+		actions.add(new CrusherRecipeRemoveAction(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output)));
 	}
 
 	@ZenMethod

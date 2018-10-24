@@ -17,7 +17,7 @@ public class CrusherRecipeRemoveAction implements IAction {
 
 	public CrusherRecipeRemoveAction(ItemStack input, @Nullable ItemStack output) {
 		this.input = input;
-		this.output = output==null?ItemStack.EMPTY:output;
+		this.output = output;
 	}
 
 	@Override
