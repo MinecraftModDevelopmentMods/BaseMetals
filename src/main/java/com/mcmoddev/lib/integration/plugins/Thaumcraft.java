@@ -82,7 +82,15 @@ public class Thaumcraft implements IIntegration {
 		return tcMaterial;
 	}
 
+	public static TCMaterial createPartsAspects(MMDMaterial material, Names... names){
+		TCMaterial tcMaterial = new TCMaterial(material);
+		for (Names name:names) {
+			tcMaterial.addAspect(name, AspectsMath.addAspects(material, name.toString()));
+		}
+		return tcMaterial;
+	}
+
 	public static TCMaterial createWithAspects(MMDMaterial material){
-		return createPartsAspects(material, Names.NUGGET.toString(), Names.INGOT.toString(), Names.ORE.toString(), Names.GEM.toString(), Names.BLEND.toString());
+		return createPartsAspects(material, Names.NUGGET, Names.INGOT, Names.ORE, Names.GEM, Names.BLEND);
 	}
 }
