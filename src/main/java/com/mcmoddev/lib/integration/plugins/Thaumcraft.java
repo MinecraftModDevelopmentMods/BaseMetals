@@ -2,8 +2,10 @@ package com.mcmoddev.lib.integration.plugins;
 
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.plugins.thaumcraft.AspectsMath;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCSyncEvent;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -48,7 +50,7 @@ public class Thaumcraft implements IIntegration {
 		initDone = true;
 
 		MinecraftForge.EVENT_BUS.register(this);
-		MinecraftForge.EVENT_BUS.post(new TCSyncEvent(registry,nameToResource));
+		MinecraftForge.EVENT_BUS.post(new TCSyncEvent(registry, nameToResource));
 
 		partMultiplierMap.putIfAbsent(Names.NUGGET, 1f);
 		partMultiplierMap.putIfAbsent(Names.INGOT, 9f);
@@ -62,5 +64,17 @@ public class Thaumcraft implements IIntegration {
 		registry.getValuesCollection().stream()
 				.forEach( tcMaterial -> tcMaterial.getAspectMapKeys()
 						.forEach( key -> ev.register.registerComplexObjectTag(new ItemStack(tcMaterial.getItem(key)),tcMaterial.getAspectFor(key))));
+	}
+
+	protected TCMaterial createWithAspects(MMDMaterial material, String... names){
+		TCMaterial tcMaterial = new TCMaterial(material);
+		for (String name:names) {
+			tcMaterial.addAspect(name, AspectsMath.addAspects(material, name));
+		}
+		return tcMaterial;
+	}
+
+	protected TCMaterial registerPartsAspects(MMDMaterial material){
+		return createWithAspects(material, Names.NUGGET.toString(), Names.INGOT.toString(), Names.ORE.toString(), Names.GEM.toString(), Names.BLEND.toString());
 	}
 }

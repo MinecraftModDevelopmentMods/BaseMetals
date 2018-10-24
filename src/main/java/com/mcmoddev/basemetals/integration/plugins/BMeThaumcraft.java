@@ -1,10 +1,14 @@
 package com.mcmoddev.basemetals.integration.plugins;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.Thaumcraft;
+import com.mcmoddev.lib.integration.plugins.thaumcraft.TCSyncEvent;
 import com.mcmoddev.lib.util.Config;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeThaumcraft.PLUGIN_MODID)
 public final class BMeThaumcraft extends com.mcmoddev.lib.integration.plugins.Thaumcraft {
@@ -24,22 +28,14 @@ public final class BMeThaumcraft extends com.mcmoddev.lib.integration.plugins.Th
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-//		Materials.getAllMaterials().stream()
-//				.filter( mat -> !mat.isVanilla())
-//				.forEach( mat -> registerAspects(ev, mat));
-//
-//		Materials.getAllMaterials().stream()
-//				.filter( mat -> mat.isVanilla())
-//				.forEach( mat -> registerAspects(ev, mat, Names.NUGGET));
-//	}
+	@SubscribeEvent
+	public void registerAspects(final TCSyncEvent ev){
+		Materials.getAllMaterials().stream()
+				.filter( mat -> !mat.isVanilla())
+				.forEach( mat -> ev.register(registerPartsAspects(mat)));
 
-//	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat){
-//		registerAspects(ev, mat, Names.NUGGET.toString());
-//		registerAspects(ev, mat, Names.INGOT.toString());
-//		registerAspects(ev, mat, Names.ORE.toString());
-//	}
-//
-//	protected void registerAspects(final AspectRegistryEvent ev, MMDMaterial mat, String name){
-//		ev.register.registerComplexObjectTag(mat.getItemStack(name), addAspects(new AspectList(), mat, name));
-//	}
+		Materials.getAllMaterials().stream()
+				.filter( mat -> mat.isVanilla())
+				.forEach( mat -> ev.register(createWithAspects(mat, Names.NUGGET.toString())));
+	}
 }

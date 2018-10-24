@@ -11,8 +11,16 @@ public class AspectsMath {
     private AspectsMath() {
     }
 
-    public static AspectList addAspects(AspectList aspectList, MMDMaterial material, Names name){
-        return addAspects(aspectList, material, Thaumcraft.getPartMultiplier(name.toString()));
+    public static AspectList addAspects(MMDMaterial material, String name){
+        return addAspects(new AspectList(), material, name);
+    }
+
+    public static AspectList addAspects(AspectList aspectList, MMDMaterial material, String name){
+        addAspects(aspectList, material, Thaumcraft.getPartMultiplier(name));
+        if(name.equalsIgnoreCase(Names.ORE.toString())){
+            aspectList.add(Aspect.EARTH, 5);
+        }
+        return aspectList;
     }
 
     private static AspectList addAspects(AspectList aspectList, MMDMaterial material, float multiplier) {
