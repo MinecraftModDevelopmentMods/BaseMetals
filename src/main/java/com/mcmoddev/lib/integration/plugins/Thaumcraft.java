@@ -62,9 +62,9 @@ public class Thaumcraft implements IIntegration {
 
 		putPartMultiplier(Names.NUGGET, 1f);
 		putPartMultiplier(Names.INGOT, 9f);
-		putPartMultiplier(Names.GEM, partMultiplierMap.get(Names.INGOT));
-		putPartMultiplier(Names.BLEND, partMultiplierMap.get(Names.INGOT) * 0.8f);
-		putPartMultiplier(Names.ORE, partMultiplierMap.get(Names.INGOT));
+		putPartMultiplier(Names.GEM, getPartMultiplier(Names.INGOT));
+		putPartMultiplier(Names.BLEND, getPartMultiplier(Names.INGOT) * 0.8f);
+		putPartMultiplier(Names.ORE, getPartMultiplier(Names.INGOT));
 	}
 
 	@SubscribeEvent
