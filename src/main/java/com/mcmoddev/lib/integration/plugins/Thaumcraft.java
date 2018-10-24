@@ -15,7 +15,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import thaumcraft.api.aspects.AspectRegistryEvent;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -32,9 +32,13 @@ public class Thaumcraft implements IIntegration {
 			.setName(new ResourceLocation("mmdlib", "thaumcraft_registry"))
 			.setType(TCMaterial.class).create();
 	private static final Map<String, ResourceLocation> nameToResource = new TreeMap<>();
-	private static final Map<Names, Float> partMultiplierMap = new EnumMap<>(Names.class);
+	private static final Map<String, Float> partMultiplierMap = new HashMap<>();
 
 	public static void putPartMultiplier(Names name, Float val){
+		putPartMultiplier(name.toString(), val);
+	}
+
+	public static void putPartMultiplier(String name, Float val){
 		partMultiplierMap.putIfAbsent(name, val);
 	}
 
@@ -52,11 +56,11 @@ public class Thaumcraft implements IIntegration {
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.post(new TCSyncEvent(registry, nameToResource));
 
-		partMultiplierMap.putIfAbsent(Names.NUGGET, 1f);
-		partMultiplierMap.putIfAbsent(Names.INGOT, 9f);
-		partMultiplierMap.putIfAbsent(Names.GEM, partMultiplierMap.get(Names.INGOT));
-		partMultiplierMap.putIfAbsent(Names.BLEND, partMultiplierMap.get(Names.INGOT) * 0.8f);
-		partMultiplierMap.putIfAbsent(Names.ORE, partMultiplierMap.get(Names.INGOT));
+		putPartMultiplier(Names.NUGGET, 1f);
+		putPartMultiplier(Names.INGOT, 9f);
+		putPartMultiplier(Names.GEM, partMultiplierMap.get(Names.INGOT));
+		putPartMultiplier(Names.BLEND, partMultiplierMap.get(Names.INGOT) * 0.8f);
+		putPartMultiplier(Names.ORE, partMultiplierMap.get(Names.INGOT));
 	}
 
 	@SubscribeEvent
