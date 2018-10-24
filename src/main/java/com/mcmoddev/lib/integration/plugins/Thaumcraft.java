@@ -42,6 +42,10 @@ public class Thaumcraft implements IIntegration {
 		partMultiplierMap.putIfAbsent(name, val);
 	}
 
+	public static float getPartMultiplier(Names name){
+		return getPartMultiplier(name.toString());
+	}
+
 	public static float getPartMultiplier(String name){
 		return partMultiplierMap.get(name);
 	}
