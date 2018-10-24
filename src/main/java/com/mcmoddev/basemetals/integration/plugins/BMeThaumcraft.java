@@ -18,7 +18,7 @@ public final class BMeThaumcraft implements IIntegration {
 	public static final String PLUGIN_MODID = Thaumcraft.PLUGIN_MODID;
 
 	public BMeThaumcraft() {
-		throw new UnsupportedOperationException();
+		// do nothing
 	}
 
 	@Override
