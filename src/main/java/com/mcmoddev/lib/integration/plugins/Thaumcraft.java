@@ -1,7 +1,9 @@
 package com.mcmoddev.lib.integration.plugins;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.AspectsMath;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCSyncEvent;
@@ -23,8 +25,6 @@ public class Thaumcraft implements IIntegration {
 
 	public static final String PLUGIN_MODID = "thaumcraft";
 
-	private static boolean initDone = false;
-
 	public static final Thaumcraft INSTANCE = new Thaumcraft();
 
 	private static final IForgeRegistry<TCMaterial> registry = new RegistryBuilder<TCMaterial>()
@@ -34,6 +34,8 @@ public class Thaumcraft implements IIntegration {
 	private static final Map<String, ResourceLocation> nameToResource = new TreeMap<>();
 	private static final Map<String, Float> partMultiplierMap = new HashMap<>();
 
+	private static boolean initDone = false;
+	
 	public static void putPartMultiplier(Names name, Float val){
 		putPartMultiplier(name.toString(), val);
 	}
@@ -56,15 +58,20 @@ public class Thaumcraft implements IIntegration {
 			return;
 		}
 		initDone = true;
-
+		
+		
 		MinecraftForge.EVENT_BUS.register(this);
-		MinecraftForge.EVENT_BUS.post(new TCSyncEvent(registry, nameToResource));
 
 		putPartMultiplier(Names.NUGGET, 1f);
 		putPartMultiplier(Names.INGOT, 9f);
 		putPartMultiplier(Names.GEM, getPartMultiplier(Names.INGOT));
 		putPartMultiplier(Names.BLEND, getPartMultiplier(Names.INGOT) * 0.8f);
 		putPartMultiplier(Names.ORE, getPartMultiplier(Names.INGOT));
+	}
+	
+	@SubscribeEvent
+	public void preInitEvents(IntegrationPreInitEvent ev) {
+		MinecraftForge.EVENT_BUS.post(new TCSyncEvent(registry, nameToResource));
 	}
 
 	@SubscribeEvent

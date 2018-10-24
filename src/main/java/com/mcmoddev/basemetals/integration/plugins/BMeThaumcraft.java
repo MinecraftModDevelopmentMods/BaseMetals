@@ -20,7 +20,11 @@ public final class BMeThaumcraft implements IIntegration {
 	public static final String PLUGIN_MODID = Thaumcraft.PLUGIN_MODID;
 
 	public BMeThaumcraft() {
-		// do nothing
+		if (!Config.Options.isModEnabled(PLUGIN_MODID)) {
+			return;
+		}
+		
+		MinecraftForge.EVENT_BUS.register(this.getClass());
 	}
 
 	@Override
@@ -29,13 +33,14 @@ public final class BMeThaumcraft implements IIntegration {
 		if (!Config.Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
-		MinecraftForge.EVENT_BUS.register(this);
+		
 	}
 
 	@SubscribeEvent
-	public void registerAspects(final TCSyncEvent ev){
+	public static void registerAspects(final TCSyncEvent ev){
 		Materials.getAllMaterials().stream()
 				.filter( mat -> !mat.isVanilla())
+				.filter( mat -> !mat.isEmpty())
 				.forEach( mat -> ev.register(Thaumcraft.createWithAspects(mat)));
 
 		Materials.getAllMaterials().stream()
