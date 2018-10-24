@@ -66,7 +66,7 @@ public class Thaumcraft implements IIntegration {
 						.forEach( key -> ev.register.registerComplexObjectTag(new ItemStack(tcMaterial.getItem(key)),tcMaterial.getAspectFor(key))));
 	}
 
-	protected TCMaterial createWithAspects(MMDMaterial material, String... names){
+	protected TCMaterial createPartsAspects(MMDMaterial material, String... names){
 		TCMaterial tcMaterial = new TCMaterial(material);
 		for (String name:names) {
 			tcMaterial.addAspect(name, AspectsMath.addAspects(material, name));
@@ -74,7 +74,7 @@ public class Thaumcraft implements IIntegration {
 		return tcMaterial;
 	}
 
-	protected TCMaterial registerPartsAspects(MMDMaterial material){
-		return createWithAspects(material, Names.NUGGET.toString(), Names.INGOT.toString(), Names.ORE.toString(), Names.GEM.toString(), Names.BLEND.toString());
+	protected TCMaterial createWithAspects(MMDMaterial material){
+		return createPartsAspects(material, Names.NUGGET.toString(), Names.INGOT.toString(), Names.ORE.toString(), Names.GEM.toString(), Names.BLEND.toString());
 	}
 }

@@ -32,10 +32,10 @@ public final class BMeThaumcraft extends com.mcmoddev.lib.integration.plugins.Th
 	public void registerAspects(final TCSyncEvent ev){
 		Materials.getAllMaterials().stream()
 				.filter( mat -> !mat.isVanilla())
-				.forEach( mat -> ev.register(registerPartsAspects(mat)));
+				.forEach( mat -> ev.register(createWithAspects(mat)));
 
 		Materials.getAllMaterials().stream()
 				.filter( mat -> mat.isVanilla())
-				.forEach( mat -> ev.register(createWithAspects(mat, Names.NUGGET.toString())));
+				.forEach( mat -> ev.register(createPartsAspects(mat, Names.NUGGET.toString())));
 	}
 }
