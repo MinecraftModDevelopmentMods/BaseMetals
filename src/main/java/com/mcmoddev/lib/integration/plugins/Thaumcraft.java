@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Thaumcraft implements IIntegration {
+public class 	Thaumcraft implements IIntegration {
 
 	public static final String PLUGIN_MODID = "thaumcraft";
 
@@ -89,11 +89,10 @@ public class Thaumcraft implements IIntegration {
 		// TODO Rewrite this piece of crap with efficiency in mind
 		registry.getValuesCollection().stream()
 				.forEach( tcMaterial -> tcMaterial.getAspectMapKeys()
-						.forEach( key -> ev.register.registerComplexObjectTag(tcMaterial.getItemStack(key),tcMaterial.getAspectFor(key))));
-
-		registry.getValuesCollection().stream()
-				.forEach( tcMaterial -> tcMaterial.getAspectMapKeys()
-						.forEach( key -> ev.register.registerComplexObjectTag(tcMaterial.getBlockItemStack(key),tcMaterial.getAspectFor(key))));
+						.forEach( key -> {
+							ev.register.registerComplexObjectTag(tcMaterial.getItemStack(key), tcMaterial.getAspectFor(key));
+							ev.register.registerComplexObjectTag(tcMaterial.getBlockItemStack(key),tcMaterial.getAspectFor(key));
+						}));
 	}
 
 	public static TCMaterial createVanillaWithAspects(MMDMaterial material){
