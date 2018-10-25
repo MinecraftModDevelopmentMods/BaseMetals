@@ -95,6 +95,10 @@ public class 	Thaumcraft implements IIntegration {
 						}));
 	}
 
+	public static TCMaterial createVanillaIngotWithAspects(MMDMaterial material){
+		return Thaumcraft.createPartsAspects(material, Names.NUGGET, Names.BLEND, Names.SMALLBLEND, Names.POWDER, Names.SMALLPOWDER, Names.INGOT);
+	}
+
 	public static TCMaterial createVanillaWithAspects(MMDMaterial material){
 		return Thaumcraft.createPartsAspects(material, Names.NUGGET, Names.BLEND, Names.SMALLBLEND, Names.POWDER, Names.SMALLPOWDER);
 	}

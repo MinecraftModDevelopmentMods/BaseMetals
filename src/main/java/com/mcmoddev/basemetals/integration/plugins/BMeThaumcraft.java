@@ -6,6 +6,7 @@ import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.Thaumcraft;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCSyncEvent;
+import com.mcmoddev.lib.material.MMDMaterialType;
 import com.mcmoddev.lib.util.Config;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -42,6 +43,14 @@ public final class 	BMeThaumcraft implements IIntegration {
 
 		Materials.getAllMaterials().stream()
 				.filter( mat -> mat.isVanilla())
+				.filter( mat -> !mat.isEmpty())
 				.forEach( mat -> ev.register(Thaumcraft.createVanillaWithAspects(mat)));
+
+		Materials.getAllMaterials().stream()
+				.filter( mat -> mat.isVanilla())
+				.filter( mat -> !mat.isEmpty())
+				.filter( mat -> mat.getType() == MMDMaterialType.MaterialType.MINERAL)
+				.filter( mat -> !ev.hasMaterial(mat.getName()))
+				.forEach( mat -> ev.register(Thaumcraft.createVanillaIngotWithAspects(mat)));
 	}
 }

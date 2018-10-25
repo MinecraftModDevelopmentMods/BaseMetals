@@ -1,5 +1,6 @@
 package com.mcmoddev.lib.integration.plugins.thaumcraft;
 
+import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.plugins.Thaumcraft;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -20,7 +21,30 @@ public class AspectsMath {
     }
 
     public static AspectList getAspects(AspectList aspectList, MMDMaterial material, String name){
+        // Generic Material and Part handling
         aspectList.add(getPartsAspects(material, Thaumcraft.getPartMultiplier(name)));
+
+        // Specific Material handling
+        if(material.getName().contentEquals(MaterialNames.COPPER)){
+            aspectList.add(Aspect.EXCHANGE, 5);
+        }
+        else if(material.getName().contentEquals(MaterialNames.TIN)){
+            aspectList.add(Aspect.CRYSTAL, 5);
+        }
+        else if(material.getName().contentEquals(MaterialNames.BRASS)
+                || material.getName().contentEquals(MaterialNames.BRONZE)){
+            aspectList.add(Aspect.TOOL, 5);
+        }
+        else if(material.getName().contentEquals(MaterialNames.STEEL)){
+            aspectList.add(Aspect.ORDER, 5);
+        }
+        else if(material.getName().contentEquals(MaterialNames.SILVER)
+                || material.getName().contentEquals(MaterialNames.DIAMOND)
+                || material.getName().contentEquals(MaterialNames.EMERALD)){
+            aspectList.add(getDesireAspect(material, Thaumcraft.getPartMultiplier(name)));
+        }
+
+        // Specific Part handling
         if(name.contentEquals(Names.ORE.toString())){
             aspectList.add(getOreAspect(material));
         }
@@ -30,6 +54,7 @@ public class AspectsMath {
         else if(name.contentEquals(Names.POWDER.toString()) || name.contentEquals(Names.SMALLPOWDER.toString())){
             aspectList.add(Aspect.DARKNESS, 1).add(Aspect.TOOL, 5);
         }
+
         return aspectList;
     }
 
@@ -38,12 +63,15 @@ public class AspectsMath {
     }
 
     private static AspectList getPartsAspects(AspectList aspectList, MMDMaterial material, float multiplier) {
-        getMetalAspect(aspectList, material, multiplier);
-        getCrystalAspect(aspectList, material, multiplier);
-        getMagicAspect(aspectList, material, multiplier);
-        getDesireAspect(aspectList, material, multiplier);
-
+        aspectList.add(getMetalAspect(material, multiplier));
+        aspectList.add(getCrystalAspect(material, multiplier));
+        aspectList.add(getMagicAspect(material, multiplier));
+        aspectList.add(getDesireAspect(material, multiplier));
         return aspectList;
+    }
+
+    private static AspectList getMetalAspect(MMDMaterial material, float multiplier){
+        return getMetalAspect(new AspectList(), material, multiplier);
     }
 
     private static AspectList getMetalAspect(AspectList aspectList, MMDMaterial material, float multiplier){
@@ -98,6 +126,10 @@ public class AspectsMath {
         return (int)(value);
     }
 
+    private static AspectList getCrystalAspect(MMDMaterial material, float multiplier){
+        return getCrystalAspect(new AspectList(), material, multiplier);
+    }
+
     private static AspectList getCrystalAspect(AspectList aspectList, MMDMaterial material, float multiplier){
         int value = getMetalAspectAmount(material, multiplier);
         if(value > 0){
@@ -106,6 +138,10 @@ public class AspectsMath {
             }
         }
         return aspectList;
+    }
+
+    private static AspectList getDesireAspect(MMDMaterial material, float multiplier){
+        return getDesireAspect(new AspectList(), material, multiplier);
     }
 
     private static AspectList getDesireAspect(AspectList aspectList, MMDMaterial material, float multiplier){
@@ -125,6 +161,10 @@ public class AspectsMath {
             return (int)(enchantability * 2 / 45 * multiplier);
         }
         return 0;
+    }
+
+    private static AspectList getMagicAspect(MMDMaterial material, float multiplier){
+        return getMagicAspect(new AspectList(), material, multiplier);
     }
 
     private static AspectList getMagicAspect(AspectList aspectList, MMDMaterial material, float multiplier){

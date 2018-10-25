@@ -28,4 +28,8 @@ public class TCSyncEvent extends Event {
 				this.registry.getValue(this.nameMapping.get(materialName)) :
 					new TCMaterial(Materials.getMaterialByName(materialName));
 	}
+
+	public boolean hasMaterial(String materialName){
+		return this.nameMapping.containsKey(materialName);
+	}
 }
