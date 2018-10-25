@@ -173,13 +173,13 @@ public class CommonProxy {
 
 			material.getBlockRegistry().entrySet().stream().forEach(ent -> {
 				final JsonObject entry = new JsonObject();
-				entry.addProperty("name", ent.getKey().asString());
+				entry.addProperty("name", ent.getKey());
 				entry.addProperty("ref", ent.getValue().toString());
 				blocks.add(entry);
 			});
 			material.getItemRegistry().entrySet().stream().forEach(ent -> {
 				final JsonObject entry = new JsonObject();
-				entry.addProperty("name", ent.getKey().asString());
+				entry.addProperty("name", ent.getKey());
 				entry.addProperty("ref", ent.getValue().toString());
 				items.add(entry);
 			});
