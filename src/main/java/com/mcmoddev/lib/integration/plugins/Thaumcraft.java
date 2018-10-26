@@ -113,7 +113,7 @@ public class 	Thaumcraft implements IIntegration {
 	public static TCMaterial createPartsAspects(MMDMaterial material, Names... names){
 		TCMaterial tcMaterial = new TCMaterial(material);
 		for (Names name:names) {
-			tcMaterial.addAspect(name, AspectsMath.getAspects(material, name));
+			tcMaterial.addAspect(name, AspectsMath.getAspects(tcMaterial, name));
 		}
 		return tcMaterial;
 	}
@@ -121,7 +121,7 @@ public class 	Thaumcraft implements IIntegration {
 	public static TCMaterial createPartsAspects(MMDMaterial material, String... names){
 		TCMaterial tcMaterial = new TCMaterial(material);
 		for (String name:names) {
-			tcMaterial.addAspect(name, AspectsMath.getAspects(material, name));
+			tcMaterial.addAspect(name, AspectsMath.getAspects(tcMaterial, name));
 		}
 		return tcMaterial;
 	}

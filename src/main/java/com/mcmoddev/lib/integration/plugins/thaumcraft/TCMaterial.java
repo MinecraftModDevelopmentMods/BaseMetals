@@ -60,6 +60,10 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     	this.materialAspects.add(Pair.of(aspect, calculateValue));
     }
     
+    public void addMaterialAspect(Aspect aspect, int value) {
+    	this.addMaterialAspect(aspect, (m) -> value );
+    }
+    
     public List<Pair<Aspect, IAspectCalculation>> getMaterialAspects() {
     	return Collections.unmodifiableList(this.materialAspects);
     }

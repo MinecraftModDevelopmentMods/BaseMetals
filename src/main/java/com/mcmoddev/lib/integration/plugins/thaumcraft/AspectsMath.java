@@ -66,20 +66,10 @@ public class AspectsMath {
 	private static AspectList genericAspectCalcs(TCMaterial materialIn, float mult, Aspect aspect, String partName) {
 		List<Aspect> possibles = new LinkedList<>();
 		
-		possibles.add(getBaseAspectFor(materialIn.getMMDMaterial().getType()));
-		
 		switch(partName.toLowerCase(Locale.ENGLISH)) {
+		case "netherore":
+		case "endore":
 		case "ore":
-			switch(materialIn.getMMDMaterial().getDefaultDimension()) {
-			case -1:
-				possibles.add(Aspect.FIRE);
-				break;
-			case 1:
-				possibles.add(Aspect.DARKNESS);
-			case 0:
-			default:
-				possibles.add(Aspect.EARTH);
-			}
 			break;
 		case "blend":
 		case "smallblend":
@@ -95,10 +85,36 @@ public class AspectsMath {
 			possibles.add(Aspect.CRYSTAL);
 			break;
 		}
-		
+
 		AspectList rv = new AspectList();
-		
-		possibles.stream().forEach(pa -> rv.add(genericCalcFor(materialIn, mult, pa, partName)));
+
+		if (partName.equalsIgnoreCase("ore")) {
+			switch(materialIn.getMMDMaterial().getDefaultDimension()) {
+			case -1:
+				rv.add(Aspect.FIRE, 5);
+				break;
+			case 1:
+				rv.add(Aspect.DARKNESS, 5);
+			case 0:
+			default:
+				rv.add(Aspect.EARTH, 5);
+			}
+			rv.add(genericCalcFor(materialIn, mult, aspect, partName));
+			rv.add(genericCalcFor(materialIn, mult, getBaseAspectFor(materialIn.getMMDMaterial().getType()), partName));
+		} else if (partName.equalsIgnoreCase("netherore")) {
+			rv.add(Aspect.FIRE, 5);
+			rv.add(genericCalcFor(materialIn, mult, aspect, partName));
+			rv.add(genericCalcFor(materialIn, mult, getBaseAspectFor(materialIn.getMMDMaterial().getType()), partName));
+		} else if (partName.equalsIgnoreCase("endore")) {
+			rv.add(Aspect.DARKNESS, 5);
+			rv.add(genericCalcFor(materialIn, mult, aspect, partName));
+			rv.add(genericCalcFor(materialIn, mult, getBaseAspectFor(materialIn.getMMDMaterial().getType()), partName));
+		} else {
+			possibles.add(getBaseAspectFor(materialIn.getMMDMaterial().getType()));
+			possibles.add(aspect);
+			
+			possibles.stream().forEach(pa -> rv.add(genericCalcFor(materialIn, mult, pa, partName)));
+		}
 		
 		return rv;
 	}
