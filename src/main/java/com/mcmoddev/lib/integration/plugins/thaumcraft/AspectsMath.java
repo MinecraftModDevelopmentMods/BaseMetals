@@ -24,6 +24,37 @@ public class AspectsMath {
         // Generic Material and Part handling
         aspectList.add(getPartsAspects(material, Thaumcraft.getPartMultiplier(name)));
 
+        aspectList.add(getMaterialSpecificAspects(material, name, Thaumcraft.getPartMultiplier(name)));
+
+        aspectList.add(getPartSpecificAspects(material, name, Thaumcraft.getPartMultiplier(name)));
+
+        return aspectList;
+    }
+
+    private static AspectList getPartSpecificAspects(MMDMaterial material, String part, float multiplier){
+        return getPartSpecificAspects(new AspectList(), material, part, multiplier);
+    }
+
+    private static AspectList getPartSpecificAspects(AspectList aspectList, MMDMaterial material, String part, float multiplier){
+        // Specific Part handling
+        if(part.contentEquals(Names.ORE.toString())){
+            aspectList.add(getOreAspect(material));
+        }
+        else if(part.contentEquals(Names.BLEND.toString()) || part.contentEquals(Names.SMALLBLEND.toString())){
+            aspectList.add(Aspect.EXCHANGE, 2).add(Aspect.CRYSTAL, 1);
+        }
+        else if(part.contentEquals(Names.POWDER.toString()) || part.contentEquals(Names.SMALLPOWDER.toString())){
+            aspectList.add(Aspect.DARKNESS, 1).add(Aspect.TOOL, 5);
+        }
+
+        return aspectList;
+    }
+
+    private static AspectList getMaterialSpecificAspects(MMDMaterial material, String part, float multiplier){
+        return getMaterialSpecificAspects(new AspectList(), material, part, multiplier);
+    }
+
+    private static AspectList getMaterialSpecificAspects(AspectList aspectList, MMDMaterial material, String part, float multiplier){
         // Specific Material handling
         if(material.getName().contentEquals(MaterialNames.COPPER)){
             aspectList.add(Aspect.EXCHANGE, 5);
@@ -41,18 +72,7 @@ public class AspectsMath {
         else if(material.getName().contentEquals(MaterialNames.SILVER)
                 || material.getName().contentEquals(MaterialNames.DIAMOND)
                 || material.getName().contentEquals(MaterialNames.EMERALD)){
-            aspectList.add(getDesireAspect(material, Thaumcraft.getPartMultiplier(name)));
-        }
-
-        // Specific Part handling
-        if(name.contentEquals(Names.ORE.toString())){
-            aspectList.add(getOreAspect(material));
-        }
-        else if(name.contentEquals(Names.BLEND.toString()) || name.contentEquals(Names.SMALLBLEND.toString())){
-            aspectList.add(Aspect.EXCHANGE, 2).add(Aspect.CRYSTAL, 1);
-        }
-        else if(name.contentEquals(Names.POWDER.toString()) || name.contentEquals(Names.SMALLPOWDER.toString())){
-            aspectList.add(Aspect.DARKNESS, 1).add(Aspect.TOOL, 5);
+            aspectList.add(getDesireAspect(material, Thaumcraft.getPartMultiplier(part)));
         }
 
         return aspectList;
