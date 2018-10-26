@@ -8,5 +8,5 @@ package com.mcmoddev.lib.integration.plugins.thaumcraft;
  * @since 26-OCT-2018
  */
 public interface IAspectCalculation {
-	public float apply();
+	public float apply(float mult);
 }

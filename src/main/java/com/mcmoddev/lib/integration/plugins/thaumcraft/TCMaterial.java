@@ -7,9 +7,13 @@ import com.mcmoddev.lib.data.Names;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -23,11 +27,14 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     private MMDMaterial baseMaterial;
     private Map<String, AspectList> aspectMap;
     private final Map<NameToken, Map<Aspect, IAspectCalculation>> aspectCalcs;
+    private final List<Pair<Aspect, IAspectCalculation>> materialAspects;
     
     public TCMaterial(MMDMaterial baseMaterial) {
         this.baseMaterial = baseMaterial;
         this.aspectMap = new TreeMap<>();
         this.aspectCalcs = new HashMap<>();
+        this.materialAspects = new LinkedList<>();
+        
         super.setRegistryName(this.baseMaterial.getRegistryName());
     }
 
@@ -47,6 +54,14 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     	Map<Aspect, IAspectCalculation> vals = this.aspectCalcs.getOrDefault(part, new TreeMap<Aspect, IAspectCalculation>());
     	vals.put(aspect, calculationFunc);
     	this.aspectCalcs.put(part, vals);
+    }
+
+    public void addMaterialAspect(Aspect aspect, IAspectCalculation calculateValue) {
+    	this.materialAspects.add(Pair.of(aspect, calculateValue));
+    }
+    
+    public List<Pair<Aspect, IAspectCalculation>> getMaterialAspects() {
+    	return Collections.unmodifiableList(this.materialAspects);
     }
     
     public boolean hasCalcFor(Names part) {

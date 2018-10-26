@@ -1,10 +1,15 @@
 package com.mcmoddev.lib.integration.plugins.thaumcraft;
 
-import com.mcmoddev.basemetals.data.MaterialNames;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.plugins.Thaumcraft;
-import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.material.MMDMaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
@@ -12,203 +17,170 @@ public class AspectsMath {
     private AspectsMath() {
     }
 
-    public static AspectList getAspects(MMDMaterial material, Names name){
+    public static AspectList getAspects(TCMaterial material, Names name){
         return getAspects(material, name.toString());
     }
 
-    public static AspectList getAspects(MMDMaterial material, String name){
+    public static AspectList getAspects(TCMaterial material, String name){
         return getAspects(new AspectList(), material, name);
     }
 
-    public static AspectList getAspects(AspectList aspectList, MMDMaterial material, String name){
-        // Generic Material and Part handling
-        aspectList.add(getPartsAspects(material, Thaumcraft.getPartMultiplier(name)));
-
-        // Specific Material handling
-        if(material.getName().contentEquals(MaterialNames.COPPER)){
-            aspectList.add(Aspect.EXCHANGE, 5);
-        }
-        else if(material.getName().contentEquals(MaterialNames.TIN)){
-            aspectList.add(Aspect.CRYSTAL, 5);
-        }
-        else if(material.getName().contentEquals(MaterialNames.BRASS)
-                || material.getName().contentEquals(MaterialNames.BRONZE)){
-            aspectList.add(Aspect.TOOL, 5);
-        }
-        else if(material.getName().contentEquals(MaterialNames.STEEL)){
-            aspectList.add(Aspect.ORDER, 5);
-        }
-        else if(material.getName().contentEquals(MaterialNames.SILVER)
-                || material.getName().contentEquals(MaterialNames.DIAMOND)
-                || material.getName().contentEquals(MaterialNames.EMERALD)){
-            aspectList.add(getDesireAspect(material, Thaumcraft.getPartMultiplier(name)));
-        }
-
-        // Specific Part handling
-        if(name.contentEquals(Names.ORE.toString())){
-            aspectList.add(getOreAspect(material));
-        }
-        else if(name.contentEquals(Names.BLEND.toString()) || name.contentEquals(Names.SMALLBLEND.toString())){
-            aspectList.add(Aspect.EXCHANGE, 2).add(Aspect.CRYSTAL, 1);
-        }
-        else if(name.contentEquals(Names.POWDER.toString()) || name.contentEquals(Names.SMALLPOWDER.toString())){
-            aspectList.add(Aspect.DARKNESS, 1).add(Aspect.TOOL, 5);
-        }
-
-        return aspectList;
+    public static AspectList getAspects(AspectList aspectListIn, TCMaterial material, String name) {
+    	AspectList aspectListOut = new AspectList();
+    	aspectListOut.add(aspectListIn);
+    	
+    	aspectListOut.add(getMaterialSpecificAspects(material, name));
+    	aspectListOut.add(getPartsAspects(material, Thaumcraft.getPartMultiplier(name), name));
+    	
+    	return aspectListOut;
+    }
+    
+    public static AspectList getMaterialSpecificAspects(TCMaterial material, String name) {
+    	AspectList aspectListOut = new AspectList();
+    	
+    	material.getMaterialAspects().stream().forEach( aspect -> {
+    		aspectListOut.add(aspect.getKey(), (int)aspect.getValue().apply(1.0f));
+    	});
+    	
+    	return aspectListOut;
+    }
+    
+    public static AspectList getPartsAspects(TCMaterial materialIn, float mult, String partName) {
+    	List<Aspect> aspects = Arrays.asList(Aspect.METAL, Aspect.TOOL, Aspect.CRYSTAL, Aspect.EXCHANGE, Aspect.ORDER, Aspect.DESIRE,
+    			Aspect.DARKNESS, Aspect.MAGIC, Aspect.FIRE, Aspect.EARTH);
+    	AspectList result = new AspectList();
+    	
+    	aspects.stream().forEach( aspect -> result.add(applyAspectCount(materialIn, mult, aspect, partName)));
+    	
+    	return result;
+    }
+    
+    public static AspectList applyAspectCount(TCMaterial materialIn, float mult, Aspect aspect, String partName) {
+    	if (materialIn.hasCalcFor(partName)) {
+    		return runAspectCalcs(materialIn, mult, aspect, partName);
+    	} else {
+    		return genericAspectCalcs(materialIn, mult, aspect, partName);
+    	}
     }
 
-    private static AspectList getPartsAspects(MMDMaterial material, float multiplier){
-        return getPartsAspects(new AspectList(), material, multiplier);
-    }
+	private static AspectList genericAspectCalcs(TCMaterial materialIn, float mult, Aspect aspect, String partName) {
+		List<Aspect> possibles = new LinkedList<>();
+		
+		possibles.add(getBaseAspectFor(materialIn.getMMDMaterial().getType()));
+		
+		switch(partName.toLowerCase(Locale.ENGLISH)) {
+		case "ore":
+			switch(materialIn.getMMDMaterial().getDefaultDimension()) {
+			case -1:
+				possibles.add(Aspect.FIRE);
+				break;
+			case 1:
+				possibles.add(Aspect.DARKNESS);
+			case 0:
+			default:
+				possibles.add(Aspect.EARTH);
+			}
+			break;
+		case "blend":
+		case "smallblend":
+			possibles.add(Aspect.EXCHANGE);
+			possibles.add(Aspect.CRYSTAL);
+			break;
+		case "powder":
+		case "smallpowder":
+			possibles.add(Aspect.TOOL);
+			possibles.add(Aspect.DARKNESS);
+			break;
+		case "gem":
+			possibles.add(Aspect.CRYSTAL);
+			break;
+		}
+		
+		AspectList rv = new AspectList();
+		
+		possibles.stream().forEach(pa -> rv.add(genericCalcFor(materialIn, mult, pa, partName)));
+		
+		return rv;
+	}
 
-    private static AspectList getPartsAspects(AspectList aspectList, MMDMaterial material, float multiplier) {
-        aspectList.add(getMetalAspect(material, multiplier));
-        aspectList.add(getCrystalAspect(material, multiplier));
-        aspectList.add(getMagicAspect(material, multiplier));
-        aspectList.add(getDesireAspect(material, multiplier));
-        return aspectList;
-    }
+	private static Aspect getBaseAspectFor(MaterialType type) {
+		switch(type) {
+		case METAL:
+			return Aspect.METAL;
+		case GEM:
+		case CRYSTAL:
+			return Aspect.CRYSTAL;
+		case ROCK:
+			return Aspect.EARTH;
+		case MINERAL:
+			return Aspect.ENERGY;
+		case WOOD:
+			return Aspect.PLANT;
+		default:
+			return Aspect.METAL;
+		}
+	}
 
-    private static AspectList getMetalAspect(MMDMaterial material, float multiplier){
-        return getMetalAspect(new AspectList(), material, multiplier);
-    }
+	private static AspectList runAspectCalcs(TCMaterial materialIn, float mult, Aspect aspect, String partName) {
+		AspectList rv = new AspectList();
+		Map<Aspect, IAspectCalculation> calcs = materialIn.getCalcsFor(partName);
+		
+		if (calcs.containsKey(aspect)) {
+			rv.add(aspect, (int)(calcs.get(aspect).apply(mult)));
+		} else {
+			rv.add(genericCalcFor(materialIn, mult, aspect, partName));
+		}
+		
+		return rv;
+	}
 
-    private static AspectList getMetalAspect(AspectList aspectList, MMDMaterial material, float multiplier){
-        int value = getMetalAspectAmount(material, multiplier);
-        if(value > 0){
-            if(material.getType() == MMDMaterialType.MaterialType.METAL){
-                aspectList.add(Aspect.METAL, value);
-            }
-        }
-        return aspectList;
-    }
+	private static AspectList genericCalcFor(TCMaterial materialIn, float mult, Aspect aspect, String partName) {
+		int baseVal = getAspectCountForMaterial(materialIn, aspect, mult);
+		float partMult = Thaumcraft.getPartMultiplier(partName);
+		int finalVal = (int)(baseVal * partMult);
+		AspectList rv = new AspectList();
+		
+		if (finalVal != 0) {
+			rv.add(aspect, finalVal);
+		}
+		
+		return rv;
+	}
+	
+	private static int getAspectCountForMaterial(TCMaterial materialIn, Aspect aspect, float multiplier) {
+	        float harvestLevel = materialIn.getMMDMaterial().getRequiredHarvestLevel();
+	        float blockHardness = materialIn.getMMDMaterial().getBlockHardness();
+	        if(blockHardness < 0.1f){
+	            blockHardness = 0.1f;
+	        }
 
-    private static int getMetalAspectAmount(MMDMaterial material, float multiplier){
-        // TODO Seriously rethink this
-        if(multiplier <= 0f){
-            return 0;
-        }
+	        float value;
+	        if(harvestLevel <= 0f){
+	            value = 0.1f * blockHardness * 240;
+	        }
+	        else if(harvestLevel < 1f){
+	            value = harvestLevel * blockHardness * 60;
+	        }
+	        else if(harvestLevel < 2f){
+	            value = harvestLevel * blockHardness  * 2;
+	        }
+	        else if(harvestLevel < 3f){
+	            value = harvestLevel * blockHardness / 1.5f;
+	        }
+	        else{
+	            value = harvestLevel * blockHardness / 1.2f;
+	        }
 
-        float harvestLevel = material.getRequiredHarvestLevel();
-        float blockHardness = material.getBlockHardness();
-        if(blockHardness < 0.1f){
-            blockHardness = 0.1f;
-        }
+	        if(materialIn.getMMDMaterial().isAlloy()){
+	            value *= 3;
+	        }
 
-        float value;
-        if(harvestLevel <= 0f){
-            value = 0.1f * blockHardness * 240;
-        }
-        else if(harvestLevel < 1f){
-            value = harvestLevel * blockHardness * 60;
-        }
-        else if(harvestLevel < 2f){
-            value = harvestLevel * blockHardness  * 2;
-        }
-        else if(harvestLevel < 3f){
-            value = harvestLevel * blockHardness / 1.5f;
-        }
-        else{
-            value = harvestLevel * blockHardness / 1.2f;
-        }
+	        value = value / 27 * multiplier +1;
 
-        if(material.isAlloy()){
-            value *= 3;
-        }
+	        if(value < 2){
+	            value += 1;
+	        }
 
-        value = value / 27 * multiplier +1;
-
-        if(value < 2){
-            value += 1;
-        }
-
-        return (int)(value);
-    }
-
-    private static AspectList getCrystalAspect(MMDMaterial material, float multiplier){
-        return getCrystalAspect(new AspectList(), material, multiplier);
-    }
-
-    private static AspectList getCrystalAspect(AspectList aspectList, MMDMaterial material, float multiplier){
-        int value = getMetalAspectAmount(material, multiplier);
-        if(value > 0){
-            if(material.getType() == MMDMaterialType.MaterialType.CRYSTAL || material.getType() == MMDMaterialType.MaterialType.GEM){
-                aspectList.add(Aspect.CRYSTAL, getMetalAspectAmount(material, multiplier));
-            }
-        }
-        return aspectList;
-    }
-
-    private static AspectList getDesireAspect(MMDMaterial material, float multiplier){
-        return getDesireAspect(new AspectList(), material, multiplier);
-    }
-
-    private static AspectList getDesireAspect(AspectList aspectList, MMDMaterial material, float multiplier){
-        int value = getDesireAspectAmount(material, multiplier);
-        if(value > 0){
-            aspectList.add(Aspect.DESIRE, value);
-        }
-        return aspectList;
-    }
-
-    private static int getDesireAspectAmount(MMDMaterial material, float multiplier){
-        return getDesireAspectAmount(material.isRare(), material.getEnchantability(), multiplier);
-    }
-
-    private static int getDesireAspectAmount(boolean isRare, float enchantability, float multiplier){
-        if(isRare){
-            return (int)(enchantability * 2 / 45 * multiplier);
-        }
-        return 0;
-    }
-
-    private static AspectList getMagicAspect(MMDMaterial material, float multiplier){
-        return getMagicAspect(new AspectList(), material, multiplier);
-    }
-
-    private static AspectList getMagicAspect(AspectList aspectList, MMDMaterial material, float multiplier){
-        int value = getMagicAspectAmount(material, multiplier);
-        if(value > 0){
-            aspectList.add(Aspect.MAGIC, value);
-        }
-        return aspectList;
-    }
-
-    private static int getMagicAspectAmount(MMDMaterial material, float multiplier){
-        return getMagicAspectAmount(material.getEnchantability(), multiplier);
-    }
-
-    private static int getMagicAspectAmount(float enchantability, float multiplier){
-        if(enchantability >= 15){
-            return (int)(enchantability / 18 *  multiplier);
-        }
-        return 0;
-    }
-
-    private static AspectList getOreAspect(MMDMaterial material){
-        return getOreAspect(new AspectList(), material);
-    }
-
-    private static AspectList getOreAspect(AspectList aspectList, MMDMaterial material){
-        switch (material.getDefaultDimension()) {
-            case -1:
-                aspectList.add(Aspect.FIRE, getOreAspectAmount());
-                break;
-            case 0:
-                aspectList.add(Aspect.EARTH, getOreAspectAmount());
-                break;
-            case 1:
-                aspectList.add(Aspect.EARTH, getOreAspectAmount()).add(Aspect.DARKNESS, getOreAspectAmount());
-                break;
-            default:
-                aspectList.add(Aspect.EARTH, getOreAspectAmount());
-                break;
-        }
-        return aspectList;
-    }
-
-    private static int getOreAspectAmount(){
-        return 5;
-    }
+	        return (int)(value);
+	}
 }
