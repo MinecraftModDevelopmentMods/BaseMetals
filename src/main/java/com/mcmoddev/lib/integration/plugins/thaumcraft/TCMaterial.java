@@ -5,6 +5,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.data.NameToken;
 import com.mcmoddev.lib.data.Names;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -69,7 +70,7 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     }
     
     public Map<Aspect, IAspectCalculation> getCalcsFor(NameToken part) {
-    	return this.aspectCalcs.getOrDefault(part, null);
+    	return this.aspectCalcs.getOrDefault(part, Collections.emptyMap());
     }
     
     public TCMaterial addAspect(Names part, Aspect aspect, int amount){
