@@ -14,6 +14,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
+import com.mcmoddev.lib.data.NameToken;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 
@@ -42,12 +43,12 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	/**
 	 * Storage for all "Item" type forms for this material.
 	 */
-	private final Map<String, ItemStack> items = new ConcurrentHashMap<>();
+	private final Map<NameToken, ItemStack> items = new ConcurrentHashMap<>();
 
 	/**
 	 * Storage for all "Block" type forms for this material.
 	 */
-	private final Map<String, Block> blocks = new ConcurrentHashMap<>();
+	private final Map<NameToken, Block> blocks = new ConcurrentHashMap<>();
 
 	/**
 	 * If this material has a fluid, it is stored here.
@@ -474,7 +475,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	public MMDMaterial addNewItemFromItemStack(@Nonnull final String name,
 			@Nonnull final ItemStack itemStack) {
 		if (!(itemStack.isEmpty())) {
-			this.items.put(name, itemStack);
+			this.items.put(new NameToken(name), itemStack);
 		}
 		return this;
 	}
@@ -503,13 +504,14 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewBlock(@Nonnull final String name, @Nonnull final Block block) {
-		if (this.blocks.containsKey(name)) {
+		NameToken lookup = new NameToken(name);
+		if (this.blocks.containsKey(lookup)) {
 			BaseMetals.logger.warn(
 					"Tried adding block %s to a material (%s) that already has it, don't do that!",
 					name, this.getCapitalizedName());
 			return this;
 		}
-		this.blocks.put(name, block);
+		this.blocks.put(lookup, block);
 		return this;
 	}
 
@@ -555,8 +557,9 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 */
 	@Nullable
 	public Item getItem(final String name) {
-		if (this.items.containsKey(name)) {
-			return this.items.get(name).getItem();
+		NameToken lookup = new NameToken(name);
+		if (this.items.containsKey(lookup)) {
+			return this.items.get(lookup).getItem();
 		}
 		return null;
 	}
@@ -580,11 +583,12 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return
 	 */
 	public ItemStack getItemStack(final String name, final int amount) {
-		if ((!this.hasItem(name)) || (this.items.get(name) == null)) {
+		NameToken lookup = new NameToken(name);
+		if ((!this.hasItem(name)) || (this.items.get(lookup) == null)) {
 			return ItemStack.EMPTY;
 		}
 
-		final ItemStack base = this.items.get(name);
+		final ItemStack base = this.items.get(lookup);
 		if (base.getHasSubtypes()) {
 			return new ItemStack(base.getItem(), amount, base.getMetadata());
 		} else {
@@ -613,8 +617,9 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 */
 	@Nullable
 	public Block getBlock(final String name) {
-		if (this.blocks.containsKey(name)) {
-			return this.blocks.get(name);
+		NameToken lookup = new NameToken(name);
+		if (this.blocks.containsKey(lookup)) {
+			return this.blocks.get(lookup);
 		}
 		return null;
 	}
@@ -635,7 +640,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return new ItemStack(this.getBlock(name), amount);
 	}
 
-	public Map<String, Block> getBlockRegistry() {
+	public Map<NameToken, Block> getBlockRegistry() {
 		return ImmutableMap.copyOf(this.blocks);
 	}
 
@@ -698,11 +703,13 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public boolean hasItem(final String name) {
-		return this.items.containsKey(name);
+		NameToken lookup = new NameToken(name);
+		return this.items.containsKey(lookup);
 	}
 
 	public boolean hasBlock(final String name) {
-		return this.blocks.containsKey(name);
+		NameToken lookup = new NameToken(name);
+		return this.blocks.containsKey(lookup);
 	}
 
 	public boolean hasBlock(final Names name) {
@@ -800,7 +807,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return ("default".equalsIgnoreCase(this.getName()));
 	}
 
-	public Map<String, ItemStack> getItemRegistry() {
+	public Map<NameToken, ItemStack> getItemRegistry() {
 		return ImmutableMap.copyOf(this.items);
 	}
 }
