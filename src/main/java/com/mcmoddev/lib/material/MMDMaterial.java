@@ -558,12 +558,17 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	@Nullable
 	public Item getItem(final String name) {
 		NameToken lookup = new NameToken(name);
-		if (this.items.containsKey(lookup)) {
-			return this.items.get(lookup).getItem();
+		return this.getItem(lookup);
+	}
+
+	@Nullable
+	public Item getItem(final NameToken name) {
+		if (this.items.containsKey(name)) {
+			return this.items.get(name).getItem();
 		}
 		return null;
 	}
-
+	
 	public ItemStack getItemStack(final Names name) {
 		return this.getItemStack(name.toString(), 1);
 	}
@@ -576,6 +581,22 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return this.getItemStack(name.toString(), amount);
 	}
 
+	public ItemStack getItemStack(final NameToken name) {
+		return this.getItemStack(name, 1);
+	}
+	
+	public ItemStack getItemStack(final NameToken name, int amount) {
+		if ((!this.hasItem(name.asString())) || (this.items.get(name) == null)) {
+			return ItemStack.EMPTY;
+		}
+
+		final ItemStack base = this.items.get(name);
+		if (base.getHasSubtypes()) {
+			return new ItemStack(base.getItem(), amount, base.getMetadata());
+		} else {
+			return new ItemStack(base.getItem(), amount);
+		}
+	}
 	/**
 	 *
 	 * @param name
@@ -584,16 +605,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 */
 	public ItemStack getItemStack(final String name, final int amount) {
 		NameToken lookup = new NameToken(name);
-		if ((!this.hasItem(name)) || (this.items.get(lookup) == null)) {
-			return ItemStack.EMPTY;
-		}
-
-		final ItemStack base = this.items.get(lookup);
-		if (base.getHasSubtypes()) {
-			return new ItemStack(base.getItem(), amount, base.getMetadata());
-		} else {
-			return new ItemStack(base.getItem(), amount);
-		}
+		return this.getItemStack(lookup, amount);
 	}
 
 	/**
@@ -618,12 +630,17 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	@Nullable
 	public Block getBlock(final String name) {
 		NameToken lookup = new NameToken(name);
-		if (this.blocks.containsKey(lookup)) {
-			return this.blocks.get(lookup);
+		return this.getBlock(lookup);
+	}
+
+	@Nullable
+	public Block getBlock(final NameToken name) {
+		if (this.blocks.containsKey(name)) {
+			return this.blocks.get(name);
 		}
 		return null;
 	}
-
+	
 	public ItemStack getBlockItemStack(final Names name) {
 		return this.getBlockItemStack(name.toString(), 1);
 	}
@@ -632,14 +649,22 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return this.getBlockItemStack(name, 1);
 	}
 
+	public ItemStack getBlockItemStack(final NameToken name) {
+		return this.getBlockItemStack(name, 1);
+	}
+	
 	public ItemStack getBlockItemStack(final Names name, final int amount) {
 		return this.getBlockItemStack(name.toString(), amount);
 	}
 
 	public ItemStack getBlockItemStack(final String name, final int amount) {
-		return new ItemStack(this.getBlock(name), amount);
+		return this.getBlockItemStack(new NameToken(name), amount);
 	}
 
+	public ItemStack getBlockItemStack(final NameToken name, final int amount) {
+		return new ItemStack(this.getBlock(name), amount);
+	}
+	
 	public Map<NameToken, Block> getBlockRegistry() {
 		return ImmutableMap.copyOf(this.blocks);
 	}

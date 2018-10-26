@@ -2,6 +2,7 @@ package com.mcmoddev.lib.integration.plugins.thaumcraft;
 
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.data.NameToken;
 import com.mcmoddev.lib.data.Names;
 
 import java.util.Map;
@@ -98,6 +99,22 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
         return baseMaterial.getBlockItemStack(block);
     }
 
+    public Item getItem(NameToken item){
+        return baseMaterial.getItem(item);
+    }
+
+    public ItemStack getItemStack(NameToken item){
+        return baseMaterial.getItemStack(item);
+    }
+
+    public Block getBlock(NameToken block){
+        return  baseMaterial.getBlock(block);
+    }
+
+    public ItemStack getBlockItemStack(NameToken block){
+        return baseMaterial.getBlockItemStack(block);
+    }
+    
     public String getName(){
         return this.baseMaterial.getName();
     }

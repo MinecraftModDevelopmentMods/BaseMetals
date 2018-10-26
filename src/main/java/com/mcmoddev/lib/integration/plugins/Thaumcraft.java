@@ -8,6 +8,8 @@ import com.mcmoddev.lib.integration.plugins.thaumcraft.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCSyncEvent;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config;
+import com.mcmoddev.lib.data.NameToken;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -90,8 +92,9 @@ public class 	Thaumcraft implements IIntegration {
 		registry.getValuesCollection().stream()
 				.forEach( tcMaterial -> tcMaterial.getAspectMapKeys()
 						.forEach( key -> {
-							ev.register.registerComplexObjectTag(tcMaterial.getItemStack(key), tcMaterial.getAspectFor(key));
-							ev.register.registerComplexObjectTag(tcMaterial.getBlockItemStack(key),tcMaterial.getAspectFor(key));
+							NameToken lookupKey = new NameToken(key);
+							ev.register.registerComplexObjectTag(tcMaterial.getItemStack(lookupKey), tcMaterial.getAspectFor(key));
+							ev.register.registerComplexObjectTag(tcMaterial.getBlockItemStack(lookupKey),tcMaterial.getAspectFor(key));
 						}));
 	}
 
