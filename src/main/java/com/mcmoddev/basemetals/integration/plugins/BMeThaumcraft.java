@@ -44,8 +44,6 @@ public final class 	BMeThaumcraft implements IIntegration {
 		Materials.getAllMaterials().stream()
 				.filter( mat -> mat.isVanilla())
 				.filter( mat -> !mat.isEmpty())
-				.filter( mat -> mat.getType() == MMDMaterialType.MaterialType.MINERAL
-						|| mat.getType() == MMDMaterialType.MaterialType.ROCK)
-				.forEach( mat -> ev.register(Thaumcraft.createVanillaIngotWithAspects(mat)));
+				.forEach( mat -> ev.register(Thaumcraft.createVanillaWithAspects(mat)));
 	}
 }
