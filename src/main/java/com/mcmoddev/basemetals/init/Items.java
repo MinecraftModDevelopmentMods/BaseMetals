@@ -390,22 +390,7 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	public static void registerItems(final RegistryEvent.Register<Item> event) {
 		
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
-				.forEach(mat -> {
-					mat
-					.getItemRegistry()
-					.entrySet()
-					.stream()
-					.forEach(it -> BaseMetals.logger.fatal("%s [%s --> %s] (%s) --> %s", it.getKey(), it.getKey().asString(), Integer.toUnsignedString(it.getKey().hashCode()), it.getValue().getItem().getRegistryName(), it.getValue().getItem()));
-					mat
-					.getBlockRegistry()
-					.entrySet()
-					.stream()
-					.forEach(it -> BaseMetals.logger.fatal("%s [%s --> %s] (%s) --> %s", it.getKey(),
-							it.getKey().asString(), Integer.toUnsignedString(it.getKey().hashCode()), 
-							it.getValue().getRegistryName(), it.getValue()));
-					
-				regItems(event.getRegistry(), mat.getItems());
-				});
+				.forEach(mat ->	regItems(event.getRegistry(), mat.getItems()));
 		// regItems(event.getRegistry(), Materials.DEFAULT.getItems());
 
 		Oredicts.registerItemOreDictionaryEntries();
@@ -415,11 +400,7 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	private static void regItems(final IForgeRegistry<Item> registry,
 			final ImmutableList<ItemStack> items) {
 		items.stream().filter(Items::isThisMod).map(Items::getItem)
-		.forEach( it -> {
-			BaseMetals.logger.fatal("Registering item %s (%s)", it.getRegistryName(), it);
-			registry.register(it);
-			//registry::register);
-		});
+		.forEach(registry::register);
 	}
 
 	private static Item getItem(final ItemStack it) {
