@@ -82,6 +82,8 @@ public class AspectsMath {
 			possibles.add(Aspect.DARKNESS);
 			break;
 		case "gem":
+		case "crystal":
+		case "mek_crystal":
 			possibles.add(Aspect.CRYSTAL);
 			break;
 		}

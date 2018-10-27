@@ -1,9 +1,10 @@
 package com.mcmoddev.lib.material;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
+//import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,12 +44,12 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	/**
 	 * Storage for all "Item" type forms for this material.
 	 */
-	private final Map<NameToken, ItemStack> items = new ConcurrentHashMap<>();
+	private final Map<NameToken, ItemStack> items = new HashMap<>();
 
 	/**
 	 * Storage for all "Block" type forms for this material.
 	 */
-	private final Map<NameToken, Block> blocks = new ConcurrentHashMap<>();
+	private final Map<NameToken, Block> blocks = new HashMap<>();
 
 	/**
 	 * If this material has a fluid, it is stored here.

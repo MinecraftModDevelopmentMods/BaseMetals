@@ -30,4 +30,13 @@ public class NameToken {
 	public String asString() {
 		return this.origData;
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof NameToken)) return false;
+		
+		NameToken ot = (NameToken) other;
+		
+		return (ot.asString().equals(this.origData) && ot.hashCode() == this.hashCode() && ot.toString().equals(this.toString()));
+	}
 }
