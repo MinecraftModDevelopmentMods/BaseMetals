@@ -39,7 +39,7 @@ public class AspectsMath {
     	AspectList aspectListOut = new AspectList();
     	
     	material.getMaterialAspects().stream().forEach( aspect -> {
-    		aspectListOut.add(aspect.getKey(), (int)aspect.getValue().apply(1.0f));
+    		aspectListOut.add(aspect.getKey(), (int)aspect.getValue().apply(Thaumcraft.getPartMultiplier(name)));
     	});
     	
     	return aspectListOut;
