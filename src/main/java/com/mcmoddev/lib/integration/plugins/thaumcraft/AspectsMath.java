@@ -38,9 +38,7 @@ public class AspectsMath {
     public static AspectList getMaterialSpecificAspects(TCMaterial material, String name) {
     	AspectList aspectListOut = new AspectList();
     	
-    	material.getMaterialAspects().stream().forEach( aspect -> {
-    		aspectListOut.add(aspect.getKey(), (int)aspect.getValue().apply(Thaumcraft.getPartMultiplier(name)));
-    	});
+    	material.getMaterialAspects().stream().forEach( aspect -> aspectListOut.add(aspect.getKey(), (int)aspect.getValue().apply(Thaumcraft.getPartMultiplier(name))));
     	
     	return aspectListOut;
     }
@@ -97,6 +95,7 @@ public class AspectsMath {
 				break;
 			case 1:
 				rv.add(Aspect.DARKNESS, 5);
+				break;
 			case 0:
 			default:
 				rv.add(Aspect.EARTH, 5);
@@ -153,9 +152,7 @@ public class AspectsMath {
 	}
 
 	private static AspectList genericCalcFor(TCMaterial materialIn, float mult, Aspect aspect, String partName) {
-		int baseVal = getAspectCountForMaterial(materialIn, aspect, mult);
-		float partMult = Thaumcraft.getPartMultiplier(partName);
-		int finalVal = (int)(baseVal * partMult);
+		int finalVal = getAspectCountForMaterial(materialIn, aspect, mult);
 		AspectList rv = new AspectList();
 		
 		if (finalVal != 0) {
@@ -172,21 +169,25 @@ public class AspectsMath {
 	            blockHardness = 0.1f;
 	        }
 
+	        if(aspect == Aspect.MAGIC){
+	        	return getMagicAspectCountForMaterial(materialIn, multiplier);
+			}
+
 	        float value;
 	        if(harvestLevel <= 0f){
-	            value = 0.1f * blockHardness * 240;
+	            value = 0.1f * blockHardness * 20;
 	        }
 	        else if(harvestLevel < 1f){
-	            value = harvestLevel * blockHardness * 60;
+	            value = harvestLevel * blockHardness * 5;
 	        }
 	        else if(harvestLevel < 2f){
-	            value = harvestLevel * blockHardness  * 2;
+	            value = harvestLevel * blockHardness  * 1.2f;
 	        }
 	        else if(harvestLevel < 3f){
-	            value = harvestLevel * blockHardness / 1.5f;
+	            value = harvestLevel * blockHardness / 4f;
 	        }
 	        else{
-	            value = harvestLevel * blockHardness / 1.2f;
+	            value = harvestLevel * blockHardness / 6f;
 	        }
 
 	        if(materialIn.getMMDMaterial().isAlloy()){
@@ -195,10 +196,17 @@ public class AspectsMath {
 
 	        value = value / 27 * multiplier +1;
 
-	        if(value < 2){
+	        if(value < 2 && value > 0){
 	            value += 1;
 	        }
 
 	        return (int)(value);
+	}
+
+	private static int getMagicAspectCountForMaterial(TCMaterial materialIn, float multiplier){
+    	float enchantability = materialIn.getMMDMaterial().getEnchantability();
+    	float harvestLevel = materialIn.getMMDMaterial().getRequiredHarvestLevel();
+
+    	return (int)(enchantability * harvestLevel * multiplier / 10);
 	}
 }

@@ -1,5 +1,7 @@
 package com.mcmoddev.lib.integration.plugins.thaumcraft;
 
+import thaumcraft.api.aspects.Aspect;
+
 /**
  * Allowance for a Lambda/anon-method for calculating the amount of an aspect
  * per item and/or block.
@@ -9,4 +11,5 @@ package com.mcmoddev.lib.integration.plugins.thaumcraft;
  */
 public interface IAspectCalculation {
 	public float apply(float mult);
+//	public boolean canApply(TCMaterial material, Aspect aspect);
 }
