@@ -3,7 +3,6 @@ package com.mcmoddev.lib.integration.plugins;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
-import com.mcmoddev.lib.integration.plugins.thaumcraft.AspectsMath;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCSyncEvent;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -32,7 +31,7 @@ public class 	Thaumcraft implements IIntegration {
 			.setName(new ResourceLocation("mmdlib", "thaumcraft_registry"))
 			.setType(TCMaterial.class).create();
 	private static final Map<String, ResourceLocation> nameToResource = new TreeMap<>();
-	private static final Map<String, Float> partMultiplierMap = new HashMap<>();
+	private static final Map<NameToken, Float> partMultiplierMap = new HashMap<>();
 
 	private static boolean initDone = false;
 	
@@ -41,6 +40,10 @@ public class 	Thaumcraft implements IIntegration {
 	}
 
 	public static void putPartMultiplier(String name, Float val){
+		putPartMultiplier(new NameToken(name), val);
+	}
+	
+	public static void putPartMultiplier(NameToken name, Float val) {
 		partMultiplierMap.putIfAbsent(name, val);
 	}
 
@@ -49,6 +52,10 @@ public class 	Thaumcraft implements IIntegration {
 	}
 
 	public static float getPartMultiplier(String name){
+		return getPartMultiplier(new NameToken(name));
+	}
+	
+	public static float getPartMultiplier(NameToken name){
 		if(partMultiplierMap.containsKey(name)){
 			return partMultiplierMap.get(name);
 		}
@@ -92,9 +99,8 @@ public class 	Thaumcraft implements IIntegration {
 		registry.getValuesCollection().stream()
 				.forEach( tcMaterial -> tcMaterial.getAspectMapKeys()
 						.forEach( key -> {
-							NameToken lookupKey = new NameToken(key);
-							ev.register.registerComplexObjectTag(tcMaterial.getItemStack(lookupKey), tcMaterial.getAspectFor(key));
-							ev.register.registerComplexObjectTag(tcMaterial.getBlockItemStack(lookupKey),tcMaterial.getAspectFor(key));
+							ev.register.registerComplexObjectTag(tcMaterial.getItemStack(key), tcMaterial.getAspectFor(key));
+							ev.register.registerComplexObjectTag(tcMaterial.getBlockItemStack(key),tcMaterial.getAspectFor(key));
 						}));
 	}
 
@@ -113,7 +119,8 @@ public class 	Thaumcraft implements IIntegration {
 	public static TCMaterial createPartsAspects(MMDMaterial material, Names... names){
 		TCMaterial tcMaterial = new TCMaterial(material);
 		for (Names name:names) {
-			tcMaterial.addAspect(name, AspectsMath.getAspects(tcMaterial, name));
+			tcMaterial.getAspectsFor(name);
+			
 		}
 		return tcMaterial;
 	}
@@ -121,8 +128,9 @@ public class 	Thaumcraft implements IIntegration {
 	public static TCMaterial createPartsAspects(MMDMaterial material, String... names){
 		TCMaterial tcMaterial = new TCMaterial(material);
 		for (String name:names) {
-			tcMaterial.addAspect(name, AspectsMath.getAspects(tcMaterial, name));
+			tcMaterial.getAspectsFor(name);
 		}
+		
 		return tcMaterial;
 	}
 }

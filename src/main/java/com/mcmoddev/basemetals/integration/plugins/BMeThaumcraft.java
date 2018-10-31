@@ -51,19 +51,26 @@ public final class 	BMeThaumcraft implements IIntegration {
 		Materials.getAllMaterials().stream()
 		.filter(mat -> !mat.isVanilla())
 		.filter(mat -> !mat.isEmpty())
-		.forEach(mat -> tcMaterials.put(mat.getName(), Thaumcraft.createWithAspects(mat)));
-
+		.forEach(mat -> {
+			String mn = mat.getName();
+			TCMaterial tcm = Thaumcraft.createWithAspects(mat);
+			tcMaterials.put(mn, tcm);
+		});
 
 		Materials.getAllMaterials().stream()
 		.filter( mat -> mat.isVanilla())
 		.filter( mat -> !mat.isEmpty())
 		.filter( mat -> mat.getType() == MMDMaterialType.MaterialType.MINERAL
 		|| mat.getType() == MMDMaterialType.MaterialType.ROCK)
-		.forEach( mat -> tcMaterials.put(mat.getName(), Thaumcraft.createVanillaIngotWithAspects(mat)));
+		.forEach( mat ->  {
+			String mn = mat.getName();
+			TCMaterial tcm = Thaumcraft.createVanillaIngotWithAspects(mat);
+			tcMaterials.put(mn, tcm);
+		});
 		
 		materials.stream()
 		.filter(Materials::hasMaterial)
-		.map(name -> tcMaterials.getOrDefault(name, new TCMaterial(Materials.getMaterialByName(name))))
+		.map(name -> tcMaterials.getOrDefault(name, Thaumcraft.createWithAspects(Materials.getMaterialByName(name))))
 		.forEach(tcm -> {
 			String myName = tcm.getName();
 			switch(myName) {
@@ -88,13 +95,14 @@ public final class 	BMeThaumcraft implements IIntegration {
 			case "diamond":
 			case "emerald":
 				MMDMaterial mat = tcm.getMMDMaterial();
-				tcm.addMaterialAspect(Aspect.MAGIC, (m) -> mat.isRare()?(int)(mat.getStat(MaterialStats.MAGICAFFINITY) * 2/ 45 * m):0);
+				tcm.addMaterialAspect(Aspect.DESIRE, (m) -> mat.isRare()?(int)(mat.getStat(MaterialStats.MAGICAFFINITY) * 2/ 45 * m):5);
 				break;
 			}
 			tcMaterials.put(myName, tcm);
 		});
+		
 	}
-
+	
 	@SubscribeEvent
 	public static void registerAspects(final TCSyncEvent ev) {
 		tcMaterials.values().stream().forEach(ev::register);

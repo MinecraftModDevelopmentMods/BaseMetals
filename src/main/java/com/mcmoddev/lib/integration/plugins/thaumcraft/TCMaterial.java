@@ -4,14 +4,12 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.data.NameToken;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.integration.plugins.Thaumcraft;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -25,96 +23,91 @@ import thaumcraft.api.aspects.AspectList;
 
 public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements IMMDObject {
     private MMDMaterial baseMaterial;
-    private Map<String, AspectList> aspectMap;
+    private Map<NameToken, AspectList> aspectMap;
     private final Map<NameToken, Map<Aspect, IAspectCalculation>> aspectCalcs;
     private final List<Pair<Aspect, IAspectCalculation>> materialAspects;
+    private final BaseAspectGetter aspectGetter;
+    
+    public TCMaterial(MMDMaterial baseMaterial, BaseAspectGetter aspectGetter) {
+        this.baseMaterial = baseMaterial;
+        this.aspectMap = new HashMap<>();
+        this.aspectCalcs = new HashMap<>();
+        this.aspectGetter = aspectGetter;
+        this.materialAspects = aspectGetter.getAspectForPart(BaseAspectGetter.MATERIAL_WIDE);
+
+        Map<Aspect, IAspectCalculation> tempMA = new HashMap<>();
+        this.materialAspects.stream()
+		.forEach( p -> tempMA.put(p.getKey(), p.getValue()));
+  
+        this.aspectCalcs.put(BaseAspectGetter.MATERIAL_WIDE, tempMA); 
+        this.aspectCalcs.get(BaseAspectGetter.MATERIAL_WIDE).entrySet().stream()
+        .forEach(ent -> this.addMaterialAspect(ent.getKey(), ent.getValue()));
+        super.setRegistryName(this.baseMaterial.getRegistryName());
+    	
+    }
     
     public TCMaterial(MMDMaterial baseMaterial) {
-        this.baseMaterial = baseMaterial;
-        this.aspectMap = new TreeMap<>();
-        this.aspectCalcs = new HashMap<>();
-        this.materialAspects = new LinkedList<>();
-        
-        super.setRegistryName(this.baseMaterial.getRegistryName());
+    	this(baseMaterial, new BaseAspectGetter(baseMaterial));
     }
 
-    public Set<String> getAspectMapKeys(){
-        return aspectMap.keySet();
-    }
-
-    public void addAspectCalculation(Names part, Aspect aspect, IAspectCalculation calculationFunc) {
-    	this.addAspectCalculation(part.toString(), aspect, calculationFunc);
+    public List<NameToken> getAspectMapKeys() {
+    	return this.aspectMap.keySet().stream().collect(Collectors.toList());
     }
     
-    public void addAspectCalculation(String part, Aspect aspect, IAspectCalculation calculationFunc) {
-    	this.addAspectCalculation(new NameToken(part), aspect, calculationFunc);
+    public AspectList getAspectsFor(Names part) {
+    	return getAspectsFor(part.toString());
     }
     
-    public void addAspectCalculation(NameToken part, Aspect aspect, IAspectCalculation calculationFunc) {
-    	Map<Aspect, IAspectCalculation> vals = this.aspectCalcs.getOrDefault(part, new TreeMap<Aspect, IAspectCalculation>());
-    	vals.put(aspect, calculationFunc);
-    	this.aspectCalcs.put(part, vals);
-    }
-
-    public void addMaterialAspect(Aspect aspect, IAspectCalculation calculateValue) {
-    	this.materialAspects.add(Pair.of(aspect, calculateValue));
+    public AspectList getAspectsFor(String part) {
+    	return getAspectsFor(new NameToken(part));
     }
     
-    public void addMaterialAspect(Aspect aspect, int value) {
-    	this.addMaterialAspect(aspect, (m) -> value );
-    }
     
-    public List<Pair<Aspect, IAspectCalculation>> getMaterialAspects() {
-    	return Collections.unmodifiableList(this.materialAspects);
-    }
-    
-    public boolean hasCalcFor(Names part) {
-    	return this.hasCalcFor(part.toString());
-    }
-    
-    public boolean hasCalcFor(String part) {
-    	return this.hasCalcFor(new NameToken(part));
-    }
-    
-    public boolean hasCalcFor(NameToken part) {
-    	return this.aspectCalcs.containsKey(part);
-    }
-    
-    public Map<Aspect, IAspectCalculation> getCalcsFor(Names part) {
-    	return this.getCalcsFor(part.toString());
-    }
-    
-    public Map<Aspect, IAspectCalculation> getCalcsFor(String part) {
-    	return this.getCalcsFor(new NameToken(part));    	
-    }
-    
-    public Map<Aspect, IAspectCalculation> getCalcsFor(NameToken part) {
-    	return this.aspectCalcs.getOrDefault(part, Collections.emptyMap());
-    }
-    
-    public TCMaterial addAspect(Names part, Aspect aspect, int amount){
-    	if (this.aspectMap.containsKey(part.toString())) {
-    		AspectList al = this.aspectMap.get(part.toString());
-    		al.add(aspect, amount);
-    		this.aspectMap.put(part.toString(), al);
-    	}  else {
-    		this.aspectMap.put(part.toString(), new AspectList().add(aspect, amount));
+    public AspectList getAspectsFor(NameToken part) {
+		AspectList rv = new AspectList();
+		Map<Aspect, IAspectCalculation> b = new HashMap<>();
+		
+    	if(this.aspectCalcs.containsKey(part)) {
+    		this.aspectCalcs.get(part).entrySet().stream()
+    		.forEach(kvp -> {
+				Aspect as = kvp.getKey();
+				int val = (int)kvp.getValue().apply(Thaumcraft.getPartMultiplier(part));
+				rv.add(as, val);
+				this.addAspect(part, as, val);
+			});
+    	} else {
+    		List<Pair<Aspect, IAspectCalculation>> maybe = this.aspectGetter.getAspectForPart(part);
+    		if (!maybe.isEmpty()) {
+    			maybe.stream()
+    			.forEach(kvp -> {
+    				Aspect as = kvp.getKey();
+    				int val = (int)kvp.getValue().apply(Thaumcraft.getPartMultiplier(part));
+    				rv.add(as, val);
+    				b.put(as, kvp.getValue());
+    				this.addAspect(part, as, val);
+    			});
+    			
+    			this.aspectCalcs.put(part, b);
+    		}
     	}
+    	
+    	return rv;
+    }
+
+    public TCMaterial addMaterialAspect(Aspect aspect, int amount) {
+    	return this.addMaterialAspect(aspect, (m) -> amount);
+    }
+    
+    public TCMaterial addMaterialAspect(Aspect aspect, IAspectCalculation calc) {
+    	Map<Aspect, IAspectCalculation> matAsp = this.aspectCalcs.get(BaseAspectGetter.MATERIAL_WIDE);
+    	matAsp.put(aspect, calc);
+    	
+    	this.addAspect(BaseAspectGetter.MATERIAL_WIDE, aspect, calc.apply(1.0f));
+    	
     	return this;
     }
-
-    public TCMaterial addAspect(Names part, AspectList aspectList){
-    	if (this.aspectMap.containsKey(part.toString())) {
-    		AspectList al = this.aspectMap.get(part.toString());
-    		al.add(aspectList);
-    		this.aspectMap.put(part.toString(), al);
-    	}  else {
-    		this.aspectMap.put(part.toString(), aspectList);
-    	}
-    	return this;
-    }
-
-    public TCMaterial addAspect(String part, Aspect aspect, int amount){
+    
+    public TCMaterial addAspect(NameToken part, Aspect aspect, int amount) {
     	if (this.aspectMap.containsKey(part)) {
     		AspectList al = this.aspectMap.get(part);
     		al.add(aspect, amount);
@@ -122,10 +115,19 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     	}  else {
     		this.aspectMap.put(part, new AspectList().add(aspect, amount));
     	}
+    	
     	return this;
     }
+    
+    public TCMaterial addAspect(Names part, Aspect aspect, int amount){
+    	return this.addAspect(part.toString(), aspect, amount);
+    }
 
-    public TCMaterial addAspect(String part, AspectList aspectList){
+    public TCMaterial addAspect(String part, Aspect aspect, int amount){
+    	return this.addAspect(new NameToken(part), aspect, amount);
+    }
+
+    public TCMaterial addAspect(NameToken part, AspectList aspectList) {
     	if (this.aspectMap.containsKey(part)) {
     		AspectList al = this.aspectMap.get(part);
     		al.add(aspectList);
@@ -133,15 +135,28 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     	}  else {
     		this.aspectMap.put(part, aspectList);
     	}
+    	
     	return this;
     }
+    
+    public TCMaterial addAspect(Names part, AspectList aspectList){
+    	return this.addAspect(part.toString(), aspectList);
+    }
 
+    public TCMaterial addAspect(String part, AspectList aspectList){
+    	return this.addAspect(new NameToken(part), aspectList);
+    }
+
+    public AspectList getAspectFor(NameToken part) {
+        return aspectMap.get(part);    	
+    }
+    
     public AspectList getAspectFor(String part) {
-        return aspectMap.get(part);
+    	return getAspectFor(new NameToken(part));
     }
 
     public AspectList getAspectFor(Names part){
-        return getAspectFor(part);
+        return getAspectFor(part.toString());
     }
 
     public Item getItem(String item){

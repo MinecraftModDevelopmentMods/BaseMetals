@@ -19,6 +19,7 @@ public class TCSyncEvent extends Event {
 	}
 	
 	public void register(TCMaterial materialIn) {
+		
 		this.nameMapping.putIfAbsent(materialIn.getName(), materialIn.getRegistryName());
 		this.registry.register(materialIn);
 	}
