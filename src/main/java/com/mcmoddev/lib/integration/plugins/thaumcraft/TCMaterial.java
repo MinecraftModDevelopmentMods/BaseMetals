@@ -9,6 +9,8 @@ import com.mcmoddev.lib.integration.plugins.Thaumcraft;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -62,46 +64,71 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     	return getAspectsFor(new NameToken(part));
     }
     
+    private boolean aspectExists(AspectList aspectList, Aspect aspect) {
+    	return aspectList.aspects.containsKey(aspect);
+    }
+    
+    private boolean aspectDoesNotExist(AspectList aspectList, Aspect aspect) {
+    	return !aspectExists(aspectList, aspect);
+    }
+    
+    private int applyCalculation(NameToken part, IAspectCalculation calc) {
+    	return (int) calc.apply(Thaumcraft.getPartMultiplier(part));
+    }
+    
+    private AspectList getAsAspectList(Aspect aspect, IAspectCalculation calc, NameToken part) {
+		AspectList rv = new AspectList();
+		int val = applyCalculation(part, calc);
+		rv.add(aspect, val);
+		this.addAspect(part, aspect, val);
+		
+		return rv;
+	}
+    
+    private AspectList getAspectList(NameToken part) {
+		AspectList rv = new AspectList();
+		
+		this.aspectCalcs.get(part).entrySet().stream()
+		.forEach(kvp -> rv.add(getAsAspectList(kvp.getKey(), kvp.getValue(), part)));
+		
+		return rv;
+    }
+    
+    private AspectList getAspectListFiltered(NameToken part, Predicate<? super Entry<Aspect, IAspectCalculation>> filter) {
+		AspectList rv = new AspectList();
+
+		this.aspectCalcs.get(part).entrySet().stream()
+		.filter(filter)
+		.forEach(ent -> rv.add(getAsAspectList(ent.getKey(), ent.getValue(), part)));
+
+		return rv;
+    }
     
     public AspectList getAspectsFor(NameToken part) {
 		AspectList rv = new AspectList();
-		Map<Aspect, IAspectCalculation> b = new HashMap<>();
 		
     	if(this.aspectCalcs.containsKey(part)) {
-    		this.aspectCalcs.get(part).entrySet().stream()
-    		.forEach(kvp -> {
-				Aspect as = kvp.getKey();
-				int val = (int)kvp.getValue().apply(Thaumcraft.getPartMultiplier(part));
-				rv.add(as, val);
-				this.addAspect(part, as, val);
-			});
-    		this.aspectCalcs.get(BaseAspectGetter.MATERIAL_WIDE).entrySet().stream()
-    		.filter(ent -> !this.aspectMap.get(part).aspects.containsKey(ent.getKey()))
-    		.forEach(ent -> {
-    			Aspect as = ent.getKey();
-    			int val = ent.getValue().apply(Thaumcraft.getPartMultiplier(part));
-				rv.add(as, val);
-				this.addAspect(part, as, val);
-    		});
+    		rv.add(getAspectList(part));
+    		rv.add(getAspectListFiltered(part, ent -> aspectDoesNotExist(this.aspectMap.get(part), ent.getKey())));
     	} else {
     		List<Pair<Aspect, IAspectCalculation>> maybe = this.aspectGetter.getAspectForPart(part);
+    		Map<Aspect, IAspectCalculation> b = new HashMap<>();
+    		
     		if (!maybe.isEmpty()) {
     			maybe.stream()
     			.forEach(kvp -> {
     				Aspect as = kvp.getKey();
-    				int val = (int)kvp.getValue().apply(Thaumcraft.getPartMultiplier(part));
-    				rv.add(as, val);
+    				rv.add(getAsAspectList(as, kvp.getValue(), part));
     				b.put(as, kvp.getValue());
-    				this.addAspect(part, as, val);
     			});
+    			
         		this.aspectCalcs.get(BaseAspectGetter.MATERIAL_WIDE).entrySet().stream()
-        		.filter(ent -> !this.aspectMap.get(part).aspects.containsKey(ent.getKey()))
-        		.forEach(ent -> {
-        			Aspect as = ent.getKey();
-        			int val = ent.getValue().apply(Thaumcraft.getPartMultiplier(part));
-    				rv.add(as, val);
-    				this.addAspect(part, as, val);
-        		});
+        		.filter(ent -> aspectDoesNotExist(this.aspectMap.get(part), ent.getKey()))
+        		.forEach(ent ->  {
+    				Aspect as = ent.getKey();
+    				rv.add(getAsAspectList(as, ent.getValue(), part));
+    				b.put(as, ent.getValue());
+    			});
     			
     			this.aspectCalcs.put(part, b);
     		}
