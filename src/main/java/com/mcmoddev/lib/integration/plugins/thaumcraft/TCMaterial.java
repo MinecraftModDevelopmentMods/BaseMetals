@@ -75,6 +75,14 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
 				rv.add(as, val);
 				this.addAspect(part, as, val);
 			});
+    		this.aspectCalcs.get(BaseAspectGetter.MATERIAL_WIDE).entrySet().stream()
+    		.filter(ent -> !this.aspectMap.get(part).aspects.containsKey(ent.getKey()))
+    		.forEach(ent -> {
+    			Aspect as = ent.getKey();
+    			int val = ent.getValue().apply(Thaumcraft.getPartMultiplier(part));
+				rv.add(as, val);
+				this.addAspect(part, as, val);
+    		});
     	} else {
     		List<Pair<Aspect, IAspectCalculation>> maybe = this.aspectGetter.getAspectForPart(part);
     		if (!maybe.isEmpty()) {
@@ -86,6 +94,14 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     				b.put(as, kvp.getValue());
     				this.addAspect(part, as, val);
     			});
+        		this.aspectCalcs.get(BaseAspectGetter.MATERIAL_WIDE).entrySet().stream()
+        		.filter(ent -> !this.aspectMap.get(part).aspects.containsKey(ent.getKey()))
+        		.forEach(ent -> {
+        			Aspect as = ent.getKey();
+        			int val = ent.getValue().apply(Thaumcraft.getPartMultiplier(part));
+    				rv.add(as, val);
+    				this.addAspect(part, as, val);
+        		});
     			
     			this.aspectCalcs.put(part, b);
     		}
@@ -94,6 +110,15 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     	return rv;
     }
 
+    public void update() {
+    	this.materialAspects.stream()
+    	.forEach(p -> {
+    		this.aspectMap.entrySet().stream()
+    		.filter(ent -> !ent.getKey().equals(BaseAspectGetter.MATERIAL_WIDE))
+    		.forEach( ent -> ent.getValue().add(p.getKey(), p.getValue().apply(Thaumcraft.getPartMultiplier(ent.getKey()))));
+    	});
+    }
+    
     public TCMaterial addMaterialAspect(Aspect aspect, int amount) {
     	return this.addMaterialAspect(aspect, (m) -> amount);
     }

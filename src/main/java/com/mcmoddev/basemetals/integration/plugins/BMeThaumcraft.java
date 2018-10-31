@@ -101,6 +101,7 @@ public final class 	BMeThaumcraft implements IIntegration {
 			tcMaterials.put(myName, tcm);
 		});
 		
+		tcMaterials.entrySet().stream().map(ent -> ent.getValue()).forEach(tc -> tc.update());
 	}
 	
 	@SubscribeEvent
