@@ -6,6 +6,7 @@ import com.mcmoddev.lib.data.NameToken;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.plugins.Thaumcraft;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,6 +145,10 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     		.filter(ent -> !ent.getKey().equals(BaseAspectGetter.MATERIAL_WIDE))
     		.forEach( ent -> ent.getValue().add(p.getKey(), p.getValue().apply(Thaumcraft.getPartMultiplier(ent.getKey()))));
     	});
+    	
+    	Arrays.asList(Names.values()).stream()
+    	.forEach(name -> this.materialAspects.stream()
+    		.forEach(p -> this.addAspect(name, p.getKey(), p.getValue().apply(Thaumcraft.getPartMultiplier(name)))));
     }
     
     public TCMaterial addMaterialAspect(Aspect aspect, int amount) {
