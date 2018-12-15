@@ -10,6 +10,7 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
+import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.integration.plugins.Thaumcraft;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCMaterial;
@@ -40,10 +41,14 @@ public final class 	BMeThaumcraft implements IIntegration {
 	
 	@Override
 	public void init() {
-		Thaumcraft.INSTANCE.init();
 		if (!Config.Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
+		Thaumcraft.INSTANCE.init();
+	}
+	
+	@SubscribeEvent
+	public static void preInit(IntegrationPreInitEvent ev) {
 		List<String> materials = Arrays.asList(MaterialNames.COPPER, MaterialNames.SILVER, MaterialNames.DIAMOND, 
 				MaterialNames.EMERALD, MaterialNames.STEEL, MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.TIN,
 				MaterialNames.MITHRIL, MaterialNames.AQUARIUM);
@@ -70,40 +75,41 @@ public final class 	BMeThaumcraft implements IIntegration {
 		
 		materials.stream()
 		.filter(Materials::hasMaterial)
-		.map(name -> tcMaterials.getOrDefault(name, Thaumcraft.createWithAspects(Materials.getMaterialByName(name))))
-		.forEach(tcm -> {
-			String myName = tcm.getName();
-			switch(myName) {
-			case "mithril":
-			case "aquarium":
-				tcm.addMaterialAspect(Aspect.MAGIC, 5);
-				break;
-			case "copper":
-				tcm.addMaterialAspect(Aspect.EXCHANGE, 5);
-				break;
-			case "tin":
-				tcm.addMaterialAspect(Aspect.CRYSTAL, 5);
-				break;
-			case "steel":
-				tcm.addMaterialAspect(Aspect.ORDER, 5);
-				break;
-			case "brass":
-			case "bronze":
-				tcm.addMaterialAspect(Aspect.TOOL, 5);
-				break;
-			case "silver":
-			case "diamond":
-			case "emerald":
-				MMDMaterial mat = tcm.getMMDMaterial();
-				tcm.addMaterialAspect(Aspect.DESIRE, (m) -> mat.isRare()?(int)(mat.getStat(MaterialStats.MAGICAFFINITY) * 2/ 45 * m):5);
-				break;
-			}
-			tcMaterials.put(myName, tcm);
-		});
+		.forEach(BMeThaumcraft::makeSpecialMaterial);
 		
 		tcMaterials.entrySet().stream().map(ent -> ent.getValue()).forEach(tc -> tc.update());
 	}
 	
+	private static void makeSpecialMaterial(String name) {
+		TCMaterial thisMat = tcMaterials.getOrDefault(name, Thaumcraft.createWithAspects(Materials.getMaterialByName(name)));
+		switch(name) {
+		case "mithril":
+		case "aquarium":
+			thisMat.addMaterialAspect(Aspect.MAGIC, 5);
+			break;
+		case "copper":
+			thisMat.addMaterialAspect(Aspect.EXCHANGE, 5);
+			break;
+		case "tin":
+			thisMat.addMaterialAspect(Aspect.CRYSTAL, 5);
+			break;
+		case "steel":
+			thisMat.addMaterialAspect(Aspect.ORDER, 5);
+			break;
+		case "brass":
+		case "bronze":
+			thisMat.addMaterialAspect(Aspect.TOOL, 5);
+			break;
+		case "silver":
+		case "diamond":
+		case "emerald":
+			MMDMaterial mat = thisMat.getMMDMaterial();
+			thisMat.addMaterialAspect(Aspect.DESIRE, (m) -> mat.isRare()?(int)(mat.getStat(MaterialStats.MAGICAFFINITY) * 2/ 45 * m):5);
+			break;
+		}
+		tcMaterials.put(name, thisMat);
+	}
+
 	@SubscribeEvent
 	public static void registerAspects(final TCSyncEvent ev) {
 		tcMaterials.values().stream().forEach(ev::register);

@@ -29,9 +29,9 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     private Map<NameToken, AspectList> aspectMap;
     private final Map<NameToken, Map<Aspect, IAspectCalculation>> aspectCalcs;
     private final List<Pair<Aspect, IAspectCalculation>> materialAspects;
-    private final BaseAspectGetter aspectGetter;
+    private final IAspectGetter aspectGetter;
     
-    public TCMaterial(MMDMaterial baseMaterial, BaseAspectGetter aspectGetter) {
+    public TCMaterial(MMDMaterial baseMaterial, IAspectGetter aspectGetter) {
         this.baseMaterial = baseMaterial;
         this.aspectMap = new HashMap<>();
         this.aspectCalcs = new HashMap<>();
@@ -49,10 +49,6 @@ public class TCMaterial extends IForgeRegistryEntry.Impl<TCMaterial> implements 
     	
     }
     
-    public TCMaterial(MMDMaterial baseMaterial) {
-    	this(baseMaterial, new BaseAspectGetter(baseMaterial));
-    }
-
     public List<NameToken> getAspectMapKeys() {
     	return this.aspectMap.keySet().stream().collect(Collectors.toList());
     }

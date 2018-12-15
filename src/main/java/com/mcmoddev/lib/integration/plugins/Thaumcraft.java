@@ -3,6 +3,8 @@ package com.mcmoddev.lib.integration.plugins;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.IntegrationPreInitEvent;
+import com.mcmoddev.lib.integration.plugins.thaumcraft.BaseAspectGetter;
+import com.mcmoddev.lib.integration.plugins.thaumcraft.IAspectGetter;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCMaterial;
 import com.mcmoddev.lib.integration.plugins.thaumcraft.TCSyncEvent;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -105,19 +107,19 @@ public class 	Thaumcraft implements IIntegration {
 	}
 
 	public static TCMaterial createVanillaIngotWithAspects(MMDMaterial material){
-		return Thaumcraft.createPartsAspects(material, Names.NUGGET, Names.BLEND, Names.SMALLBLEND, Names.POWDER, Names.SMALLPOWDER, Names.INGOT);
+		return Thaumcraft.createPartsAspects(material, new BaseAspectGetter(material), Names.NUGGET, Names.BLEND, Names.SMALLBLEND, Names.POWDER, Names.SMALLPOWDER, Names.INGOT);
 	}
 
 	public static TCMaterial createVanillaWithAspects(MMDMaterial material){
-		return Thaumcraft.createPartsAspects(material, Names.NUGGET, Names.BLEND, Names.SMALLBLEND, Names.POWDER, Names.SMALLPOWDER);
+		return Thaumcraft.createPartsAspects(material, new BaseAspectGetter(material), Names.NUGGET, Names.BLEND, Names.SMALLBLEND, Names.POWDER, Names.SMALLPOWDER);
 	}
 
 	public static TCMaterial createWithAspects(MMDMaterial material){
-		return createPartsAspects(material, Names.values());
+		return createPartsAspects(material, new BaseAspectGetter(material), Names.values());
 	}
 
-	public static TCMaterial createPartsAspects(MMDMaterial material, Names... names){
-		TCMaterial tcMaterial = new TCMaterial(material);
+	public static TCMaterial createPartsAspects(MMDMaterial material, IAspectGetter aspectGetter, Names... names){
+		TCMaterial tcMaterial = new TCMaterial(material, aspectGetter);
 		for (Names name:names) {
 			tcMaterial.getAspectsFor(name);
 			
@@ -125,8 +127,8 @@ public class 	Thaumcraft implements IIntegration {
 		return tcMaterial;
 	}
 
-	public static TCMaterial createPartsAspects(MMDMaterial material, String... names){
-		TCMaterial tcMaterial = new TCMaterial(material);
+	public static TCMaterial createPartsAspects(MMDMaterial material, IAspectGetter aspectGetter, String... names){
+		TCMaterial tcMaterial = new TCMaterial(material, aspectGetter);
 		for (String name:names) {
 			tcMaterial.getAspectsFor(name);
 		}

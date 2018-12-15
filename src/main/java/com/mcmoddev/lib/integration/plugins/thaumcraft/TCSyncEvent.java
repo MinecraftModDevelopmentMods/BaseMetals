@@ -6,6 +6,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import java.util.Map;
 
 import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -24,10 +25,14 @@ public class TCSyncEvent extends Event {
 		this.registry.register(materialIn);
 	}
 	
+	private TCMaterial getNewMaterial(String materialName) {
+		MMDMaterial base= Materials.getMaterialByName(materialName);
+		return new TCMaterial(base, new BaseAspectGetter(base));
+	}
 	public TCMaterial getMaterial(String materialName) {
 		return this.nameMapping.containsKey(materialName)?
 				this.registry.getValue(this.nameMapping.get(materialName)) :
-					new TCMaterial(Materials.getMaterialByName(materialName));
+					this.getNewMaterial(materialName);
 	}
 
 	public boolean hasMaterial(String materialName){

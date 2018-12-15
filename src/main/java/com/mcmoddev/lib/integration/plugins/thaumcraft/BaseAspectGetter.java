@@ -12,8 +12,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 import thaumcraft.api.aspects.Aspect;
 
-public class BaseAspectGetter {
-	public static final NameToken MATERIAL_WIDE = new NameToken("whole-material");
+public class BaseAspectGetter implements IAspectGetter {
 	private final MMDMaterial wrapped;
 	
 	private final IAspectCalculation genericCalc = (multiplier) -> doGenericCalc(multiplier);
@@ -23,7 +22,8 @@ public class BaseAspectGetter {
 	public BaseAspectGetter(MMDMaterial baseClass) {
 		this.wrapped = baseClass;
 	}
-	
+
+	@Override
 	public IAspectCalculation getCalcFor(Aspect aspect) {
 		if(aspect.equals(Aspect.MAGIC))
 			return genericMagicCalc;
@@ -31,6 +31,7 @@ public class BaseAspectGetter {
 		return genericCalc;
 	}
 	
+	@Override
 	public List<Pair<Aspect, IAspectCalculation>> getAspectForPart(NameToken part) {
 		List<Pair<Aspect, IAspectCalculation>> rv = new ArrayList<>();
 		
