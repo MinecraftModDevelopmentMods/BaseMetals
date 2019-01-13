@@ -51,6 +51,7 @@ public class TraitIcy extends AbstractArmorTrait {
         return pieces;
     }
 
+    @SuppressWarnings("unused")
     private static void applyFireProtection(EntityPlayer player){
         final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE,
                 EFFECT_DURATION, getAmountSuitPieces(player, MaterialNames.COLDIRON)-1, false, false);
