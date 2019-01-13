@@ -19,7 +19,7 @@ import slimeknights.tconstruct.library.traits.ITrait;
 public class ConstructsArmory implements IIntegration {
 
 	public static final String PLUGIN_MODID = "conarm";
-	
+
 	private static boolean initDone = false;
 
 	private static final TinkerTraitRegistry traitsRegistry = TinkersConstruct.getTraitsRegistry(); // technically does nothing

@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 import com.mcmoddev.lib.util.Config.Options;
 
 /**
@@ -32,25 +32,31 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 		// Oreless because our Recipe code can tend to be silly otherwise
 		createVanillaMats();
 
-		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
-				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
-				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.MERCURY,
-				MaterialNames.NICKEL, MaterialNames.PLATINUM, MaterialNames.SILVER,
-				MaterialNames.STARSTEEL, MaterialNames.TIN, MaterialNames.ZINC);
+		final List<String> rareMaterials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.COLDIRON,
+				MaterialNames.PLATINUM, MaterialNames.STARSTEEL);
 
-		final List<String> alloyMaterials = Arrays.asList(MaterialNames.AQUARIUM,
-				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.CUPRONICKEL,
-				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.MITHRIL,
-				MaterialNames.PEWTER, MaterialNames.STEEL);
+		final List<String> materials = Arrays.asList(MaterialNames.ANTIMONY, MaterialNames.BISMUTH,
+				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.MERCURY, MaterialNames.NICKEL,
+				MaterialNames.SILVER, MaterialNames.TIN, MaterialNames.ZINC);
 
-		materials.stream().filter(Options::isMaterialEnabled)
-				.forEach(name -> createMaterial(name, MaterialType.METAL, getHardness(name),
-						getStrength(name), getMagic(name), getColor(name)));
+		final List<String> rareAlloyMaterials = Arrays.asList(MaterialNames.AQUARIUM, MaterialNames.MITHRIL);
 
-		alloyMaterials.stream().filter(Options::isMaterialEnabled)
-				.forEach(name -> createAlloyMaterial(name, MaterialType.METAL, getHardness(name),
-						getStrength(name), getMagic(name), getColor(name)));
+		final List<String> alloyMaterials = Arrays.asList(MaterialNames.BRASS, MaterialNames.BRONZE,
+				MaterialNames.CUPRONICKEL, MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.PEWTER,
+				MaterialNames.STEEL);
 
+		materials.stream().filter(Options::isMaterialEnabled).forEach(name -> createMaterial(name, MaterialType.METAL,
+				getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+
+		alloyMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createAlloyMaterial(name,
+				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+
+		rareMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createRareMaterial(name,
+				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+
+		rareAlloyMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createRareAlloyMaterial(name,
+				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+		
 		// Mod Materials
 		if (hasMaterial(MaterialNames.ADAMANTINE)) {
 			getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4)
@@ -61,6 +67,7 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
 					.setDefaultDimension(1).setRegenerates(true);
 		}
+
 	}
 
 	private static int getColor(@Nonnull final String name) {
@@ -234,19 +241,19 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 	}
 
 	private static void createVanillaMats() {
-		createOrelessMaterial(MaterialNames.WOOD, MaterialType.WOOD, 2, 2, 6, 0xFF695433);
-		createOrelessMaterial(MaterialNames.STONE, MaterialType.ROCK, 5, 4, 2, 0xFF8F8F8F);
-		createOrelessMaterial(MaterialNames.IRON, MaterialType.METAL, 8, 8, 4.5, 0xFFD8D8D8);
-		createOrelessMaterial(MaterialNames.GOLD, MaterialType.METAL, 1, 1, 10, 0xFFFFFF8B);
-		createOrelessMaterial(MaterialNames.DIAMOND, MaterialType.GEM, 10, 15, 4, 0xFF8CF4E1);
-		createOrelessMaterial(MaterialNames.COAL, MaterialType.MINERAL, 4, 4, 2, 0xFF151515);
-		createOrelessMaterial(MaterialNames.CHARCOAL, MaterialType.MINERAL, 4, 4, 2, 0xFF231F18);
-		createOrelessMaterial(MaterialNames.EMERALD, MaterialType.GEM, 10, 15, 4, 0xFF82F6AC);
-		createOrelessMaterial(MaterialNames.ENDER, MaterialType.GEM, 2, 2, 6, 0xFF063931);
-		createOrelessMaterial(MaterialNames.QUARTZ, MaterialType.GEM, 5, 4, 2, 0xFFEAE3DB);
-		createOrelessMaterial(MaterialNames.OBSIDIAN, MaterialType.ROCK, 10, 15, 4, 0xFF101019);
-		createOrelessMaterial(MaterialNames.LAPIS, MaterialType.MINERAL, 1, 1, 1, 0xFF26619c);
-		createOrelessMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7fb8a4);
-		createOrelessMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF720000);
+		createVanillaMaterial(MaterialNames.WOOD, MaterialType.WOOD, 2, 2, 6, 0xFF695433);
+		createVanillaMaterial(MaterialNames.STONE, MaterialType.ROCK, 5, 4, 2, 0xFF8F8F8F);
+		createVanillaMaterial(MaterialNames.IRON, MaterialType.METAL, 8, 8, 4.5, 0xFFD8D8D8);
+		createVanillaMaterial(MaterialNames.GOLD, MaterialType.METAL, 1, 1, 10, 0xFFFFFF8B);
+		createVanillaMaterial(MaterialNames.DIAMOND, MaterialType.GEM, 10, 15, 4, 0xFF8CF4E1);
+		createVanillaMaterial(MaterialNames.COAL, MaterialType.MINERAL, 4, 4, 2, 0xFF151515);
+		createVanillaMaterial(MaterialNames.CHARCOAL, MaterialType.MINERAL, 4, 4, 2, 0xFF231F18);
+		createVanillaMaterial(MaterialNames.EMERALD, MaterialType.GEM, 10, 15, 4, 0xFF82F6AC);
+		createVanillaMaterial(MaterialNames.ENDER, MaterialType.GEM, 2, 2, 6, 0xFF063931);
+		createVanillaMaterial(MaterialNames.QUARTZ, MaterialType.GEM, 5, 4, 2, 0xFFEAE3DB);
+		createVanillaMaterial(MaterialNames.OBSIDIAN, MaterialType.ROCK, 10, 15, 4, 0xFF101019);
+		createVanillaMaterial(MaterialNames.LAPIS, MaterialType.MINERAL, 1, 1, 1, 0xFF26619c);
+		createVanillaMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7fb8a4);
+		createVanillaMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF720000);
 	}
 }

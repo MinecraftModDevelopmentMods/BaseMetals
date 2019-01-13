@@ -7,7 +7,7 @@ import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.integration.plugins.IC2;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.util.CheeseMath;
 import com.mcmoddev.lib.util.Config.Options;

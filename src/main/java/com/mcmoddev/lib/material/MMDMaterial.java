@@ -1,9 +1,10 @@
 package com.mcmoddev.lib.material;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
+//import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,7 +15,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
+import com.mcmoddev.lib.data.NameToken;
 import com.mcmoddev.lib.data.Names;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -41,12 +44,12 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	/**
 	 * Storage for all "Item" type forms for this material.
 	 */
-	private final Map<String, ItemStack> items = new ConcurrentHashMap<>();
+	private final Map<NameToken, ItemStack> items = new HashMap<>();
 
 	/**
 	 * Storage for all "Block" type forms for this material.
 	 */
-	private final Map<String, Block> blocks = new ConcurrentHashMap<>();
+	private final Map<NameToken, Block> blocks = new HashMap<>();
 
 	/**
 	 * If this material has a fluid, it is stored here.
@@ -67,12 +70,6 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * Whether things made from this material can regenerate.
 	 */
 	private boolean regenerates = false;
-
-	/**
-	 * Rare metals, like platinum, are never found in villager trades and unusually uncommon in
-	 * world generation.
-	 */
-	private final boolean isRare;
 
 	/**
 	 * Whether this material's blocks be used as a beacon base.
@@ -109,19 +106,9 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	private int[] cache = null;
 
 	/**
-	 * ENUM of all the types of Materials.
-	 *
-	 * @author Jasmine Iwanek
-	 *
-	 */
-	public enum MaterialType {
-		WOOD, ROCK, METAL, MINERAL, GEM, CRYSTAL
-	}
-
-	/**
 	 * The type of material this is.
 	 */
-	private final MaterialType materialType;
+	private final MMDMaterialType materialType;
 
 	private int spawnSize;
 
@@ -153,8 +140,8 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @param hasBlend
 	 *            If true this material has a blend
 	 */
-	public MMDMaterial(final String name, final MaterialType type, final float hardness,
-			final float strength, final float magic, final int tintColor, final boolean isRare,
+	public MMDMaterial(final String name, final MMDMaterialType type, final float hardness,
+			final float strength, final float magic, final int tintColor,
 			final boolean hasOre, final boolean hasBlend) {
 		// material stats
 		this.stats.put(MaterialStats.HARDNESS, hardness);
@@ -169,7 +156,6 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		this.enumName = (Loader.instance().activeModContainer().getModId() + "_" + name)
 				.toUpperCase(Locale.ENGLISH);
 		this.isBeaconBase = true;
-		this.isRare = isRare;
 		this.materialType = type;
 		this.hasBlend = hasBlend;
 		this.hasOre = hasOre;
@@ -190,7 +176,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return MaterialType The type of material this is.
 	 */
 	public MaterialType getType() {
-		return this.materialType;
+		return this.materialType.getMaterialType();
 	}
 
 	@Override
@@ -490,7 +476,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	public MMDMaterial addNewItemFromItemStack(@Nonnull final String name,
 			@Nonnull final ItemStack itemStack) {
 		if (!(itemStack.isEmpty())) {
-			this.items.put(name, itemStack);
+			this.items.put(new NameToken(name), itemStack);
 		}
 		return this;
 	}
@@ -519,13 +505,14 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return an instance of the material - QOL and call chaining
 	 */
 	public MMDMaterial addNewBlock(@Nonnull final String name, @Nonnull final Block block) {
-		if (this.blocks.containsKey(name)) {
+		NameToken lookup = new NameToken(name);
+		if (this.blocks.containsKey(lookup)) {
 			BaseMetals.logger.warn(
 					"Tried adding block %s to a material (%s) that already has it, don't do that!",
 					name, this.getCapitalizedName());
 			return this;
 		}
-		this.blocks.put(name, block);
+		this.blocks.put(lookup, block);
 		return this;
 	}
 
@@ -571,12 +558,18 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 */
 	@Nullable
 	public Item getItem(final String name) {
+		NameToken lookup = new NameToken(name);
+		return this.getItem(lookup);
+	}
+
+	@Nullable
+	public Item getItem(final NameToken name) {
 		if (this.items.containsKey(name)) {
 			return this.items.get(name).getItem();
 		}
 		return null;
 	}
-
+	
 	public ItemStack getItemStack(final Names name) {
 		return this.getItemStack(name.toString(), 1);
 	}
@@ -589,14 +582,12 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return this.getItemStack(name.toString(), amount);
 	}
 
-	/**
-	 *
-	 * @param name
-	 * @param amount
-	 * @return
-	 */
-	public ItemStack getItemStack(final String name, final int amount) {
-		if ((!this.hasItem(name)) || (this.items.get(name) == null)) {
+	public ItemStack getItemStack(final NameToken name) {
+		return this.getItemStack(name, 1);
+	}
+	
+	public ItemStack getItemStack(final NameToken name, int amount) {
+		if ((!this.hasItem(name.asString())) || (this.items.get(name) == null)) {
 			return ItemStack.EMPTY;
 		}
 
@@ -606,6 +597,16 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		} else {
 			return new ItemStack(base.getItem(), amount);
 		}
+	}
+	/**
+	 *
+	 * @param name
+	 * @param amount
+	 * @return
+	 */
+	public ItemStack getItemStack(final String name, final int amount) {
+		NameToken lookup = new NameToken(name);
+		return this.getItemStack(lookup, amount);
 	}
 
 	/**
@@ -629,12 +630,18 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 */
 	@Nullable
 	public Block getBlock(final String name) {
+		NameToken lookup = new NameToken(name);
+		return this.getBlock(lookup);
+	}
+
+	@Nullable
+	public Block getBlock(final NameToken name) {
 		if (this.blocks.containsKey(name)) {
 			return this.blocks.get(name);
 		}
 		return null;
 	}
-
+	
 	public ItemStack getBlockItemStack(final Names name) {
 		return this.getBlockItemStack(name.toString(), 1);
 	}
@@ -643,15 +650,23 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return this.getBlockItemStack(name, 1);
 	}
 
+	public ItemStack getBlockItemStack(final NameToken name) {
+		return this.getBlockItemStack(name, 1);
+	}
+	
 	public ItemStack getBlockItemStack(final Names name, final int amount) {
 		return this.getBlockItemStack(name.toString(), amount);
 	}
 
 	public ItemStack getBlockItemStack(final String name, final int amount) {
-		return new ItemStack(this.getBlock(name), amount);
+		return this.getBlockItemStack(new NameToken(name), amount);
 	}
 
-	public Map<String, Block> getBlockRegistry() {
+	public ItemStack getBlockItemStack(final NameToken name, final int amount) {
+		return new ItemStack(this.getBlock(name), amount);
+	}
+	
+	public Map<NameToken, Block> getBlockRegistry() {
 		return ImmutableMap.copyOf(this.blocks);
 	}
 
@@ -682,9 +697,25 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public boolean isRare() {
-		return this.isRare;
+		return this.materialType.hasRare();
 	}
 
+	public boolean isVanilla() {
+		return this.materialType.hasVanilla();
+	}
+	
+	public boolean isAlloy() {
+		return this.materialType.hasAlloy();
+	}
+
+	public boolean isOreless() {
+		return this.materialType.hasOreless();
+	}
+	
+	public boolean isSpecial() {
+		return this.materialType.hasSpecial();
+	}	
+	
 	public boolean regenerates() {
 		return this.regenerates;
 	}
@@ -698,11 +729,13 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	}
 
 	public boolean hasItem(final String name) {
-		return this.items.containsKey(name);
+		NameToken lookup = new NameToken(name);
+		return this.items.containsKey(lookup);
 	}
 
 	public boolean hasBlock(final String name) {
-		return this.blocks.containsKey(name);
+		NameToken lookup = new NameToken(name);
+		return this.blocks.containsKey(lookup);
 	}
 
 	public boolean hasBlock(final Names name) {
@@ -750,19 +783,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 	 * @return
 	 */
 	public final Material getVanillaMaterial() {
-		switch (this.getType()) {
-			case METAL:
-				return Material.IRON;
-			case GEM:
-			case ROCK:
-				return Material.ROCK;
-			case MINERAL:
-				return Material.GRASS;
-			case WOOD:
-				return Material.WOOD;
-			default:
-				return Material.GROUND;
-		}
+		return this.materialType.getVanillaType();
 	}
 
 	/**
@@ -812,7 +833,7 @@ public class MMDMaterial extends IForgeRegistryEntry.Impl<MMDMaterial> {
 		return ("default".equalsIgnoreCase(this.getName()));
 	}
 
-	public Map<String, ItemStack> getItemRegistry() {
+	public Map<NameToken, ItemStack> getItemRegistry() {
 		return ImmutableMap.copyOf(this.items);
 	}
 }

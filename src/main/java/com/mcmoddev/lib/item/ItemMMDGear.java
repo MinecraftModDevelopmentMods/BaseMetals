@@ -1,7 +1,7 @@
 package com.mcmoddev.lib.item;
 
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 
 /**
  * Gears.

@@ -430,7 +430,15 @@ dependencies {
     exclude group: 'mezz.jei'
   }
   */
-  // TODO: Dense Ores, EnderCore, EnderIO, ThaumCraft
+
+  deobfProvided ("thaumcraft:Thaumcraft:${mc_version}.2:6.1.BETA26") {
+    exclude group: 'mezz.jei'
+  }
+  deobfProvided ("baubles:Baubles:${mc_version}:1.5.2"){
+    exclude group: 'mezz.jei'
+  }
+  // TODO: Dense Ores, EnderCore, EnderIO
+
 }
 
 processResources {

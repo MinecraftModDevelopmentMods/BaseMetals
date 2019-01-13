@@ -15,7 +15,8 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.ActiveModData;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType;
+import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 import com.mcmoddev.lib.util.Config;
 
 import net.minecraft.init.SoundEvents;
@@ -87,12 +88,42 @@ public class Materials {
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, false, false, false);
+		MMDMaterialType matType = new MMDMaterialType("Oreless", type, MMDMaterialType.VariantType.ORELESS);
+		final MMDMaterial material = new MMDMaterial(name, matType, (float) hardness, (float) strength,
+				(float) magic, tintColor, false, false);
 
 		return registerMaterial(material);
 	}
 
+	/**
+	 * Create a oreless material.
+	 *
+	 * @param name
+	 *            Name of the material
+	 * @param type
+	 *            the type of the material (metal, gem, mineral, etc...)
+	 * @param hardness
+	 *            Scaled hardness of the material, based on the Mohs scale
+	 * @param strength
+	 *            material strength
+	 * @param magic
+	 *            material magic affinity
+	 * @param tintColor
+	 *            material tint color - used in several places, including in the TiC plugin, where
+	 *            it determines tool-part color
+	 * @return the new material
+	 */
+	protected static MMDMaterial createVanillaMaterial(@Nonnull final String name,
+			@Nonnull final MaterialType type, @Nonnull final double hardness,
+			@Nonnull final double strength, @Nonnull final double magic,
+			@Nonnull final int tintColor) {
+		// this should have "ORELESS" removed when we reach the point
+		MMDMaterialType matType = new MMDMaterialType("Vanilla", type, MMDMaterialType.VariantType.ORELESS, MMDMaterialType.VariantType.VANILLA);
+		final MMDMaterial material = new MMDMaterial(name, matType, (float) hardness, (float) strength,
+				(float) magic, tintColor, false, false);
+
+		return registerMaterial(material);
+	}
 	/**
 	 * Create a standard material.
 	 *
@@ -115,8 +146,9 @@ public class Materials {
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, false, true, false);
+		MMDMaterialType matType = new MMDMaterialType("Standard", type, MMDMaterialType.VariantType.NORMAL);
+		final MMDMaterial material = new MMDMaterial(name, matType, (float) hardness, (float) strength,
+				(float) magic, tintColor, true, false);
 
 		return registerMaterial(material);
 	}
@@ -143,8 +175,9 @@ public class Materials {
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, false, false, true);
+		MMDMaterialType matType = new MMDMaterialType("Standard Alloy", type, MMDMaterialType.VariantType.ALLOY);
+		final MMDMaterial material = new MMDMaterial(name, matType, (float) hardness, (float) strength,
+				(float) magic, tintColor, false, true);
 
 		return registerMaterial(material);
 	}
@@ -171,8 +204,9 @@ public class Materials {
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, false, true, true);
+		MMDMaterialType matType = new MMDMaterialType("Special", type, MMDMaterialType.VariantType.SPECIAL);
+		final MMDMaterial material = new MMDMaterial(name, matType, (float) hardness, (float) strength,
+				(float) magic, tintColor, true, true);
 
 		return registerMaterial(material);
 	}
@@ -199,8 +233,9 @@ public class Materials {
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, true, false, false);
+		MMDMaterialType matType = new MMDMaterialType("Rare Oreless", type, MMDMaterialType.VariantType.RARE, MMDMaterialType.VariantType.ORELESS);
+		final MMDMaterial material = new MMDMaterial(name, matType, (float) hardness, (float) strength,
+				(float) magic, tintColor, false, false);
 
 		return registerMaterial(material);
 	}
@@ -227,8 +262,9 @@ public class Materials {
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, true, true, false);
+		MMDMaterialType matType = new MMDMaterialType("Basic Rare", type, MMDMaterialType.VariantType.RARE, MMDMaterialType.VariantType.NORMAL);
+		final MMDMaterial material = new MMDMaterial(name, matType, (float) hardness, (float) strength,
+				(float) magic, tintColor, true, false);
 
 		return registerMaterial(material);
 	}
@@ -254,8 +290,9 @@ public class Materials {
 	protected static MMDMaterial createRareAlloyMaterial(@Nonnull final String name,
 			@Nonnull final MaterialType type, final double hardness, @Nonnull final double strength,
 			@Nonnull final double magic, @Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, true, false, true);
+		MMDMaterialType matType = new MMDMaterialType("Rare Alloy", type, MMDMaterialType.VariantType.RARE, MMDMaterialType.VariantType.ALLOY);
+		final MMDMaterial material = new MMDMaterial(name, matType, (float) hardness, (float) strength,
+				(float) magic, tintColor, false, true);
 
 		return registerMaterial(material);
 	}
@@ -282,12 +319,13 @@ public class Materials {
 			@Nonnull final MaterialType type, @Nonnull final double hardness,
 			@Nonnull final double strength, @Nonnull final double magic,
 			@Nonnull final int tintColor) {
-		final MMDMaterial material = new MMDMaterial(name, type, (float) hardness, (float) strength,
-				(float) magic, tintColor, true, true, true);
+		MMDMaterialType matType = new MMDMaterialType("Special Rare Alloy", type, MMDMaterialType.VariantType.RARE, MMDMaterialType.VariantType.ALLOY, MMDMaterialType.VariantType.SPECIAL);
+		final MMDMaterial material = new MMDMaterial(name, matType, (float) hardness, (float) strength,
+				(float) magic, tintColor, true, true);
 
 		return registerMaterial(material);
 	}
-
+	
 	/**
 	 * Register a material.
 	 *
