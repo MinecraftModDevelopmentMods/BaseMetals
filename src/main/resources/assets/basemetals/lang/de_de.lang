@@ -1027,7 +1027,7 @@ item.bucket.starsteel=Eimer mit geschmolzenem Sternenstahl
 item.bucket.steel=Eimer mit geschmolzenem Stahl
 item.bucket.tin=Eimer mit geschmolzenem Zinn
 item.bucket.zinc=Eimer mit geschmolzenem Zink
-	Material
+	#Material
 material.mercury.name=Quecksilber
 material.adamantine.name=Adamant
 material.antimony.name=Antimon
@@ -1341,7 +1341,7 @@ tile.basemetals.zinc_button.name=Zinkschalter
 tile.basemetals.iron_button.name=Eisenschalter
 tile.basemetals.gold_button.name=Goldschalter
 
-Pressureblech
+#Pressureblech
     #Item
 item.basemetals.adamantine_pressure_plate.name=Adamantdruckplatte
 item.basemetals.aquarium_pressure_plate.name=Aquariumdruckplatte

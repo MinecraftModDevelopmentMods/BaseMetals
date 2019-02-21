@@ -1026,7 +1026,7 @@ item.bucket.starsteel=溶融スタースチールバケツ
 item.bucket.steel=溶融鋼鉄バケツ
 item.bucket.tin=溶融錫バケツ
 item.bucket.zinc=溶融亜鉛バケツ
-	Material
+	#Material
 material.mercury.name=水銀
 material.adamantine.name=アダマント
 material.antimony.name=アンチモン
@@ -1363,7 +1363,7 @@ tile.basemetals.zinc_button.name=亜鉛のボタン
 tile.basemetals.iron_button.name=鉄のボタン
 tile.basemetals.gold_button.name=金のボタン
 
-Pressure Plate
+#Pressure Plate
     #Item
 item.basemetals.adamantine_pressure_plate.name=アダマントの感圧板
 item.basemetals.aquarium_pressure_plate.name=アクアリウムの感圧板

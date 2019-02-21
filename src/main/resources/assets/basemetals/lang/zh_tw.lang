@@ -1066,7 +1066,7 @@ item.bucket.starsteel=桶裝熔融星鋼
 item.bucket.steel=桶裝熔融鋼
 item.bucket.tin=桶裝熔融錫
 item.bucket.zinc=桶裝熔融鋅
-	Material
+	#Material
 material.mercury.name=汞
 material.adamantine.name=精金
 material.antimony.name=銻
@@ -1380,7 +1380,7 @@ tile.basemetals.zinc_button.name=鋅按鈕
 tile.basemetals.iron_button.name=鐵按鈕
 tile.basemetals.gold_button.name=金按鈕
 
-Pressure板
+#Pressure板
     #Item
 item.basemetals.adamantine_pressure_plate.name=精金壓力板
 item.basemetals.aquarium_pressure_plate.name=海洋合金壓力板
