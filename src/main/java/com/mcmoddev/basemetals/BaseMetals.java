@@ -85,7 +85,7 @@ public final class BaseMetals {
 	 * The Minor version number will be increased when ever there is potential for compatibility issues
 	 * with dependant mods.
 	 */
-	protected static final String VERSION = "2.5.0-beta6";
+	protected static final String VERSION = "2.5.0-beta7";
 
 	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL
 			+ "BaseMetals/master/update.json";
