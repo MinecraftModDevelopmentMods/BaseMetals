@@ -125,12 +125,6 @@ public final class BaseMetals {
 	 */
 	@EventHandler
 	public static void constructing(final FMLConstructionEvent event) {
-		try {
-			IntegrationManager.INSTANCE.doSetupTasks(event);
-		} catch (InvalidVersionSpecificationException e) {
-			logger.error("Error loading version information for plugins: %s", e);
-		}
-
 		BMeConfig.init();
 	}
 
@@ -165,9 +159,6 @@ public final class BaseMetals {
 	 */
 	@EventHandler
 	public static void init(final FMLInitializationEvent event) {
-		if(Loader.isModLoaded("crafttweaker")) {
-			com.mcmoddev.lib.crafttweaker.CrusherRecipes.loadComplete();
-		}
 		proxy.init(event);
 	}
 
@@ -181,9 +172,6 @@ public final class BaseMetals {
 	@EventHandler
 	public static void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);
-		//com.mcmoddev.lib.init.Materials.dumpRegistry();
-		//com.mcmoddev.lib.init.Recipes.dumpFurnaceRecipes();
-		//com.mcmoddev.lib.init.ItemGroups.dumpTabs();
 	}
 	
 	/**

@@ -438,7 +438,9 @@ dependencies {
     exclude group: 'mezz.jei'
   }
   // TODO: Dense Ores, EnderCore, EnderIO
-
+    deobfProvided("com.mcmoddev:MMDLib:${mc_version}-${mmdlib_version}:deobf") {
+	exclude group: 'mezz.jei'
+    }
 }
 
 processResources {

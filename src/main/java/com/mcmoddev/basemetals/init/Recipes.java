@@ -31,12 +31,6 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 		MinecraftForge.EVENT_BUS.register(Recipes.class);
 	}
 
-	protected static void initVanillaRecipes() {
-		// all recipes for BaseMetals are currently in JSON - this exists in case there
-		// are some we have to add
-		// programmatically
-	}
-
 	private static void initModSpecificRecipes() {
 		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
 			final MMDMaterial adamantine = Materials.getMaterialByName(MaterialNames.ADAMANTINE);
@@ -68,7 +62,6 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 	 */
 	@SubscribeEvent
 	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
-		initVanillaRecipes();
 		initModSpecificRecipes();
 		register(event);
 	}
