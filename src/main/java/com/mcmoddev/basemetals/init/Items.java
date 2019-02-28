@@ -96,6 +96,11 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 					create(Names.GEAR, material);
 				});
 
+		materials.stream()
+		.filter(Materials::hasMaterial)
+		.map(Materials::getMaterialByName)
+		.forEach(com.mcmoddev.basemetals.init.Items::setBurnTimes);
+		
 		materialsModSupport.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
@@ -145,11 +150,6 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 
 		if (material.hasItem(Names.SMALLPOWDER)) {
 			((IMMDBurnableObject) material.getItem(Names.SMALLPOWDER)).setBurnTime(NUGGET_BURN_TIME);
-		}
-
-		// simple hack to fix this shit - I give up on trying for more
-		if (material.hasBlock(Names.BLOCK) && material.getName().equals(MaterialNames.CHARCOAL)) {
-			((IMMDBurnableObject) material.getItem("ItemBlock_charcoal_block")).setBurnTime(BLOCK_BURN_TIME);
 		}
 	}
 

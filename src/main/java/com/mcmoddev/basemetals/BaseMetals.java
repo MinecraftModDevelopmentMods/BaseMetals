@@ -6,13 +6,11 @@ import org.apache.logging.log4j.Logger;
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 import com.mcmoddev.basemetals.util.BMeConfig;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -23,7 +21,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 
 /**
  * <h2><u>BaseMetals:</u></h2>
