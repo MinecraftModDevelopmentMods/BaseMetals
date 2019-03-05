@@ -56,7 +56,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 	modid = BaseMetals.MODID,
 	name = BaseMetals.NAME,
 	version = BaseMetals.VERSION,
-	dependencies = "required-after:forge@[14.23.1.2592,);after:tconstruct;after:conarm;after:thaumcraft;after:ic2;before:buildingbricks",
+	dependencies = "required-after:forge@[14.23.1.2592,);required-after:mmdlib@[1.0.0-beta1,);after:tconstruct;after:conarm;after:thaumcraft;after:ic2;before:buildingbricks",
 	acceptedMinecraftVersions = "[1.12,)",
 	certificateFingerprint = "@FINGERPRINT@",
 	updateJSON = BaseMetals.UPDATEJSON)

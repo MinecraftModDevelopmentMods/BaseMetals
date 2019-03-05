@@ -6,9 +6,18 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
+import com.mcmoddev.lib.material.IFluidBlockGetter;
 import com.mcmoddev.lib.util.Config.Options;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.BlockFluidClassic;
+import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * This class initializes all of the materials in Base Metals.
@@ -36,7 +45,7 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 				MaterialNames.PLATINUM, MaterialNames.STARSTEEL);
 
 		final List<String> materials = Arrays.asList(MaterialNames.ANTIMONY, MaterialNames.BISMUTH,
-				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.MERCURY, MaterialNames.NICKEL,
+				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.NICKEL,
 				MaterialNames.SILVER, MaterialNames.TIN, MaterialNames.ZINC);
 
 		final List<String> rareAlloyMaterials = Arrays.asList(MaterialNames.AQUARIUM, MaterialNames.MITHRIL);
@@ -56,6 +65,20 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 
 		rareAlloyMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createRareAlloyMaterial(name,
 				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
+		
+		if(Options.isMaterialEnabled(MaterialNames.MERCURY)) {
+			createMaterial(MaterialNames.MERCURY, MaterialType.METAL, 1.0d, 1.0d, 1.0d, 0xFFE2E2E2, true);
+			Materials.getMaterialByName(MaterialNames.MERCURY).setFluidBlockGetter(new IFluidBlockGetter() {
+				public BlockFluidClassic apply(String fluidName) {
+					return new InteractiveFluidBlock(FluidRegistry.getFluid(MaterialNames.MERCURY), false,
+		                    (final World w, final EntityLivingBase e) -> {
+		                        if (w.rand.nextInt(32) == 0) {
+		                            e.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 30 * 20, 2));
+		                        }
+		                    });					
+				}
+			});
+		}
 		
 		// Mod Materials
 		if (hasMaterial(MaterialNames.ADAMANTINE)) {
@@ -96,8 +119,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 				return 0xFFD2CDB8;
 			case MaterialNames.LEAD:
 				return 0xFF7B7B7B;
-			case MaterialNames.MERCURY:
-				return 0xFFE2E2E2;
 			case MaterialNames.MITHRIL:
 				return 0xFFF4FFFF;
 			case MaterialNames.NICKEL:
@@ -151,7 +172,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			case MaterialNames.ANTIMONY:
 			case MaterialNames.BISMUTH:
 			case MaterialNames.LEAD:
-			case MaterialNames.MERCURY:
 			case MaterialNames.PEWTER:
 			case MaterialNames.ZINC:
 				return 1.0d;
@@ -193,7 +213,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			case MaterialNames.ANTIMONY:
 			case MaterialNames.BISMUTH:
 			case MaterialNames.LEAD:
-			case MaterialNames.MERCURY:
 			case MaterialNames.PEWTER:
 			case MaterialNames.ZINC:
 			default:
@@ -232,7 +251,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			case MaterialNames.ANTIMONY:
 			case MaterialNames.BISMUTH:
 			case MaterialNames.LEAD:
-			case MaterialNames.MERCURY:
 			case MaterialNames.PEWTER:
 			case MaterialNames.ZINC:
 			default:
