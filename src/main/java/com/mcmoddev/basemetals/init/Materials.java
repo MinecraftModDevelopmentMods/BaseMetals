@@ -6,7 +6,9 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.properties.BMEPropertiesHelper;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 import com.mcmoddev.lib.material.IFluidBlockGetter;
@@ -90,9 +92,22 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
 					.setDefaultDimension(1).setRegenerates(true);
 		}
-
 	}
 
+	public static void initTooltips() {
+		Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.COLDIRON, MaterialNames.AQUARIUM, MaterialNames.MITHRIL)
+		.stream().filter(Options::isMaterialEnabled)
+		.forEach(mn -> {
+			Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS).stream()
+			.forEach(n -> Materials.getMaterialByName(mn)
+					.addTooltipFor(n, BMEPropertiesHelper.addArmorSpecialPropertiesToolTip(mn)));
+			Arrays.asList(Names.values()).stream()
+			.filter(n -> (n != Names.HELMET && n != Names.CHESTPLATE && n != Names.LEGGINGS && n != Names.BOOTS))
+			.forEach(n -> Materials.getMaterialByName(mn)
+					.addTooltipFor(n, BMEPropertiesHelper.addToolSpecialPropertiesToolTip(mn)));
+		});
+	}
+	
 	private static int getColor(@Nonnull final String name) {
 		switch (name) {
 			case MaterialNames.ADAMANTINE:
