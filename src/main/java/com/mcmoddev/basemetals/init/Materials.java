@@ -6,9 +6,20 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.properties.BMEPropertiesHelper;
+import com.mcmoddev.lib.block.InteractiveFluidBlock;
+import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
+import com.mcmoddev.lib.material.IFluidBlockGetter;
 import com.mcmoddev.lib.util.Config.Options;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.BlockFluidClassic;
+import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * This class initializes all of the materials in Base Metals.
@@ -26,17 +37,12 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 	 *
 	 */
 	public static void init() {
-		// Vanilla Materials
-		// always created and populated with their base item-sets
-		// even if they are not enabled
-		// Oreless because our Recipe code can tend to be silly otherwise
-		createVanillaMats();
 
 		final List<String> rareMaterials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.COLDIRON,
 				MaterialNames.PLATINUM, MaterialNames.STARSTEEL);
 
 		final List<String> materials = Arrays.asList(MaterialNames.ANTIMONY, MaterialNames.BISMUTH,
-				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.MERCURY, MaterialNames.NICKEL,
+				MaterialNames.COPPER, MaterialNames.LEAD, MaterialNames.NICKEL,
 				MaterialNames.SILVER, MaterialNames.TIN, MaterialNames.ZINC);
 
 		final List<String> rareAlloyMaterials = Arrays.asList(MaterialNames.AQUARIUM, MaterialNames.MITHRIL);
@@ -57,6 +63,20 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 		rareAlloyMaterials.stream().filter(Options::isMaterialEnabled).forEach(name -> createRareAlloyMaterial(name,
 				MaterialType.METAL, getHardness(name), getStrength(name), getMagic(name), getColor(name)));
 		
+		if(Options.isMaterialEnabled(MaterialNames.MERCURY)) {
+			createMaterial(MaterialNames.MERCURY, MaterialType.METAL, 1.0d, 1.0d, 1.0d, 0xFFE2E2E2, true);
+			Materials.getMaterialByName(MaterialNames.MERCURY).setFluidBlockGetter(new IFluidBlockGetter() {
+				public BlockFluidClassic apply(String fluidName) {
+					return new InteractiveFluidBlock(FluidRegistry.getFluid(MaterialNames.MERCURY), false,
+		                    (final World w, final EntityLivingBase e) -> {
+		                        if (w.rand.nextInt(32) == 0) {
+		                            e.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 30 * 20, 2));
+		                        }
+		                    });					
+				}
+			});
+		}
+		
 		// Mod Materials
 		if (hasMaterial(MaterialNames.ADAMANTINE)) {
 			getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4)
@@ -67,9 +87,22 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			getMaterialByName(MaterialNames.STARSTEEL).setBlastResistance(2000f).setSpawnSize(6)
 					.setDefaultDimension(1).setRegenerates(true);
 		}
-
 	}
 
+	public static void initTooltips() {
+		Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.COLDIRON, MaterialNames.AQUARIUM, MaterialNames.MITHRIL)
+		.stream().filter(Options::isMaterialEnabled)
+		.forEach(mn -> {
+			Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS).stream()
+			.forEach(n -> Materials.getMaterialByName(mn)
+					.addTooltipFor(n, BMEPropertiesHelper.addArmorSpecialPropertiesToolTip(mn)));
+			Arrays.asList(Names.values()).stream()
+			.filter(n -> (n != Names.HELMET && n != Names.CHESTPLATE && n != Names.LEGGINGS && n != Names.BOOTS))
+			.forEach(n -> Materials.getMaterialByName(mn)
+					.addTooltipFor(n, BMEPropertiesHelper.addToolSpecialPropertiesToolTip(mn)));
+		});
+	}
+	
 	private static int getColor(@Nonnull final String name) {
 		switch (name) {
 			case MaterialNames.ADAMANTINE:
@@ -96,8 +129,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 				return 0xFFD2CDB8;
 			case MaterialNames.LEAD:
 				return 0xFF7B7B7B;
-			case MaterialNames.MERCURY:
-				return 0xFFE2E2E2;
 			case MaterialNames.MITHRIL:
 				return 0xFFF4FFFF;
 			case MaterialNames.NICKEL:
@@ -151,7 +182,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			case MaterialNames.ANTIMONY:
 			case MaterialNames.BISMUTH:
 			case MaterialNames.LEAD:
-			case MaterialNames.MERCURY:
 			case MaterialNames.PEWTER:
 			case MaterialNames.ZINC:
 				return 1.0d;
@@ -193,7 +223,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			case MaterialNames.ANTIMONY:
 			case MaterialNames.BISMUTH:
 			case MaterialNames.LEAD:
-			case MaterialNames.MERCURY:
 			case MaterialNames.PEWTER:
 			case MaterialNames.ZINC:
 			default:
@@ -232,7 +261,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			case MaterialNames.ANTIMONY:
 			case MaterialNames.BISMUTH:
 			case MaterialNames.LEAD:
-			case MaterialNames.MERCURY:
 			case MaterialNames.PEWTER:
 			case MaterialNames.ZINC:
 			default:
@@ -240,20 +268,4 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 		}
 	}
 
-	private static void createVanillaMats() {
-		createVanillaMaterial(MaterialNames.WOOD, MaterialType.WOOD, 2, 2, 6, 0xFF695433);
-		createVanillaMaterial(MaterialNames.STONE, MaterialType.ROCK, 5, 4, 2, 0xFF8F8F8F);
-		createVanillaMaterial(MaterialNames.IRON, MaterialType.METAL, 8, 8, 4.5, 0xFFD8D8D8);
-		createVanillaMaterial(MaterialNames.GOLD, MaterialType.METAL, 1, 1, 10, 0xFFFFFF8B);
-		createVanillaMaterial(MaterialNames.DIAMOND, MaterialType.GEM, 10, 15, 4, 0xFF8CF4E1);
-		createVanillaMaterial(MaterialNames.COAL, MaterialType.MINERAL, 4, 4, 2, 0xFF151515);
-		createVanillaMaterial(MaterialNames.CHARCOAL, MaterialType.MINERAL, 4, 4, 2, 0xFF231F18);
-		createVanillaMaterial(MaterialNames.EMERALD, MaterialType.GEM, 10, 15, 4, 0xFF82F6AC);
-		createVanillaMaterial(MaterialNames.ENDER, MaterialType.GEM, 2, 2, 6, 0xFF063931);
-		createVanillaMaterial(MaterialNames.QUARTZ, MaterialType.GEM, 5, 4, 2, 0xFFEAE3DB);
-		createVanillaMaterial(MaterialNames.OBSIDIAN, MaterialType.ROCK, 10, 15, 4, 0xFF101019);
-		createVanillaMaterial(MaterialNames.LAPIS, MaterialType.MINERAL, 1, 1, 1, 0xFF26619c);
-		createVanillaMaterial(MaterialNames.PRISMARINE, MaterialType.MINERAL, 1, 1, 1, 0xFF7fb8a4);
-		createVanillaMaterial(MaterialNames.REDSTONE, MaterialType.MINERAL, 1, 1, 1, 0xFF720000);
-	}
 }

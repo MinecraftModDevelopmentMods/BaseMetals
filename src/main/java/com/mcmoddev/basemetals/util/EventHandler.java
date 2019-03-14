@@ -6,9 +6,20 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.init.Items;
+import com.mcmoddev.basemetals.properties.AdamantineProperty;
+import com.mcmoddev.basemetals.properties.AdamantineToolProperty;
+import com.mcmoddev.basemetals.properties.AquariumProperty;
+import com.mcmoddev.basemetals.properties.AquariumToolProperty;
+import com.mcmoddev.basemetals.properties.ColdIronProperty;
+import com.mcmoddev.basemetals.properties.ColdIronToolProperty;
+import com.mcmoddev.basemetals.properties.LeadProperty;
+import com.mcmoddev.basemetals.properties.MithrilProperty;
+import com.mcmoddev.basemetals.properties.MithrilToolProperty;
+import com.mcmoddev.basemetals.properties.StarSteelProperty;
 import com.mcmoddev.lib.events.MMDLibRegisterBlocks;
 import com.mcmoddev.lib.events.MMDLibRegisterFluids;
 import com.mcmoddev.lib.events.MMDLibRegisterItems;
+import com.mcmoddev.lib.events.MMDLibRegisterMaterialProperties;
 import com.mcmoddev.lib.events.MMDLibRegisterMaterials;
 import com.mcmoddev.lib.item.ItemMMDShield;
 import com.mcmoddev.lib.recipe.ShieldUpgradeRecipe;
@@ -173,25 +184,40 @@ public final class EventHandler {
 
 	@SubscribeEvent
 	public static void mmdlibRegisterMaterials(final MMDLibRegisterMaterials event) {
-		event.setActive(BaseMetals.MODID);
 		com.mcmoddev.basemetals.init.Materials.init();
+		if(FMLCommonHandler.instance().getEffectiveSide() ==  Side.CLIENT) {
+			com.mcmoddev.basemetals.init.Materials.initTooltips();			
+		}
 	}
 
 	@SubscribeEvent
 	public static void mmdlibRegisterBlocks(final MMDLibRegisterBlocks event) {
-		event.setActive(BaseMetals.MODID);
 		Blocks.init();
 	}
 
 	@SubscribeEvent
 	public static void mmdlibRegisterItems(final MMDLibRegisterItems event) {
-		event.setActive(BaseMetals.MODID);
 		Items.init();
 	}
 
 	@SubscribeEvent
 	public static void mmdlibRegisterFluids(final MMDLibRegisterFluids event) {
-		event.setActive(BaseMetals.MODID);
 		Fluids.init();
+	}
+	
+	@SubscribeEvent
+	public static void mmdlibRegisterMaterialProperies(final MMDLibRegisterMaterialProperties event) {
+		event.getRegistry().registerAll(
+				new StarSteelProperty().setRegistryName("basemetals:moon_jump"),
+				new LeadProperty().setRegistryName("basemetals:slowdown"),
+				new AdamantineProperty().setRegistryName("basemetals:resistance_is_futile"),
+				new ColdIronProperty().setRegistryName("basemetals:swim_in_lava"),
+				new MithrilProperty().setRegistryName("basemetals:clear_effects"),
+				new AquariumProperty().setRegistryName("basemetals:the_abyss_was_better"),
+				new AdamantineToolProperty().setRegistryName("basemetals:heavy_damage"),
+				new ColdIronToolProperty().setRegistryName("basemetals:cold_as_ice"),
+				new MithrilToolProperty().setRegistryName("basemetals:holy_roller"),
+				new AquariumToolProperty().setRegistryName("basemetals:drown_bitca"));
+				
 	}
 }

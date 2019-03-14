@@ -1,7 +1,0 @@
-{
-    "parent": "block/door_bottom_rh",
-    "textures": {
-        "bottom": "basemetals:blocks/emerald_door_lower",
-        "top": "basemetals:blocks/emerald_door_upper"
-    }
-}

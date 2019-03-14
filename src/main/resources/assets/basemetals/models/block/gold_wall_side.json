@@ -1,6 +1,0 @@
-{
-    "parent": "block/wall_side",
-    "textures": {
-        "wall": "minecraft:blocks/gold_block"
-    }
-}

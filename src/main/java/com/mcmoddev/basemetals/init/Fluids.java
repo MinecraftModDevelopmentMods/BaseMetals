@@ -3,10 +3,15 @@ package com.mcmoddev.basemetals.init;
 import java.util.Arrays;
 import java.util.List;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.events.MMDLibRegisterFluids;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.util.Config.Options;
+
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * This class initializes all fluids in Base Metals.
@@ -14,6 +19,7 @@ import com.mcmoddev.lib.util.Config.Options;
  * @author Jasmine Iwanek
  *
  */
+@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
 public final class Fluids extends com.mcmoddev.lib.init.Fluids {
 
 	private Fluids() {
@@ -23,13 +29,8 @@ public final class Fluids extends com.mcmoddev.lib.init.Fluids {
 	/**
 	 *
 	 */
-	public static void init() {
-		// Vanilla Materials need to always have fluids available in case of tie-in mods
-		final List<String> vanillaMaterials = Arrays.asList(MaterialNames.CHARCOAL,
-				MaterialNames.COAL, MaterialNames.DIAMOND, MaterialNames.EMERALD,
-				MaterialNames.GOLD, MaterialNames.IRON, MaterialNames.OBSIDIAN,
-				MaterialNames.PRISMARINE, MaterialNames.REDSTONE);
-
+	@SubscribeEvent
+	public static void registerEvent(MMDLibRegisterFluids event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
 				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
@@ -38,11 +39,6 @@ public final class Fluids extends com.mcmoddev.lib.init.Fluids {
 				MaterialNames.NICKEL, MaterialNames.PEWTER, MaterialNames.PLATINUM,
 				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
 				MaterialNames.TIN, MaterialNames.ZINC);
-
-		vanillaMaterials.stream().filter(Options::isFluidEnabled).forEach(materialName -> {
-			addFluid(materialName, 2000, 10000, 769, 10);
-			addFluidBlock(materialName);
-		});
 
 		materials.stream().filter(Materials::hasMaterial).filter(Options::isFluidEnabled)
 				.forEach(materialName -> {
