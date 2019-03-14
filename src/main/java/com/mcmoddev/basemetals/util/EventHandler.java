@@ -184,7 +184,6 @@ public final class EventHandler {
 
 	@SubscribeEvent
 	public static void mmdlibRegisterMaterials(final MMDLibRegisterMaterials event) {
-		event.setActive(BaseMetals.MODID);
 		com.mcmoddev.basemetals.init.Materials.init();
 		if(FMLCommonHandler.instance().getEffectiveSide() ==  Side.CLIENT) {
 			com.mcmoddev.basemetals.init.Materials.initTooltips();			
@@ -193,19 +192,16 @@ public final class EventHandler {
 
 	@SubscribeEvent
 	public static void mmdlibRegisterBlocks(final MMDLibRegisterBlocks event) {
-		event.setActive(BaseMetals.MODID);
 		Blocks.init();
 	}
 
 	@SubscribeEvent
 	public static void mmdlibRegisterItems(final MMDLibRegisterItems event) {
-		event.setActive(BaseMetals.MODID);
 		Items.init();
 	}
 
 	@SubscribeEvent
 	public static void mmdlibRegisterFluids(final MMDLibRegisterFluids event) {
-		event.setActive(BaseMetals.MODID);
 		Fluids.init();
 	}
 	

@@ -15,7 +15,6 @@ import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDBurnableObject;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -163,10 +162,10 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 		
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
 				.forEach(mat ->	regItems(event.getRegistry(), mat.getItems()));
-		// regItems(event.getRegistry(), Materials.DEFAULT.getItems());
+		regItems(event.getRegistry(), Materials.DEFAULT.getItems());
 
-		Oredicts.registerItemOreDictionaryEntries();
-		Oredicts.registerBlockOreDictionaryEntries();
+/*		Oredicts.registerItemOreDictionaryEntries();
+		Oredicts.registerBlockOreDictionaryEntries();*/
 	}
 
 	private static void regItems(final IForgeRegistry<Item> registry,
