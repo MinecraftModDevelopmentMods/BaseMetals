@@ -1,5 +1,5 @@
 {
-	"type": "basemetals:armor_repair",
+	"type": "mmdlib:armor_repair",
 	"armorType": "chestplate",
 	"material": "Bismuth",
 	"conditions": [
@@ -7,22 +7,22 @@
 			"type": "forge:and",
 			"values": [
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "material",
 					"optionValue": "Bismuth"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "Armor"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "Plate"
 				},
 				{
-					"type": "basemetals:plate"
+					"type": "mmdlib:plate"
 				}
 			]
 		}

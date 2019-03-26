@@ -24,17 +24,17 @@
 			"type": "forge:and",
 			"values": [
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "material",
 					"optionValue": "Aquarium"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "Basics"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "BasicTools"
 				}

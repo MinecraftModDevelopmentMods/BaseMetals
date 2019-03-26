@@ -184,7 +184,8 @@ public final class EventHandler {
 
 	@SubscribeEvent
 	public static void mmdlibRegisterMaterials(final MMDLibRegisterMaterials event) {
-		com.mcmoddev.basemetals.init.Materials.init();
+		BaseMetals.logger.fatal("ActiveModContainer on mmdlibRegisterMaterials: %s", Loader.instance().activeModContainer().getModId());
+		com.mcmoddev.basemetals.init.Materials.init(event);
 		if(FMLCommonHandler.instance().getEffectiveSide() ==  Side.CLIENT) {
 			com.mcmoddev.basemetals.init.Materials.initTooltips();			
 		}
@@ -192,17 +193,20 @@ public final class EventHandler {
 
 	@SubscribeEvent
 	public static void mmdlibRegisterBlocks(final MMDLibRegisterBlocks event) {
-		Blocks.init();
+		BaseMetals.logger.fatal("ActiveModContainer on mmdlibRegisterBlocks: %s", Loader.instance().activeModContainer().getModId());
+		Blocks.init(event);
 	}
 
 	@SubscribeEvent
 	public static void mmdlibRegisterItems(final MMDLibRegisterItems event) {
-		Items.init();
+		BaseMetals.logger.fatal("ActiveModContainer on mmdlibRegisterItems: %s", Loader.instance().activeModContainer().getModId());
+		Items.registerItems(event);
 	}
 
 	@SubscribeEvent
 	public static void mmdlibRegisterFluids(final MMDLibRegisterFluids event) {
-		Fluids.init();
+		BaseMetals.logger.fatal("ActiveModContainer on mmdlibRegisterFluids: %s", Loader.instance().activeModContainer().getModId());
+		Fluids.registerEvent(event);
 	}
 	
 	@SubscribeEvent
@@ -218,6 +222,5 @@ public final class EventHandler {
 				new ColdIronToolProperty().setRegistryName("basemetals:cold_as_ice"),
 				new MithrilToolProperty().setRegistryName("basemetals:holy_roller"),
 				new AquariumToolProperty().setRegistryName("basemetals:drown_bitca"));
-				
 	}
 }

@@ -19,17 +19,17 @@
 			"type": "forge:and",
 			"values": [
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "material",
 					"optionValue": "Bismuth"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "Slab"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "Basics"
 				}

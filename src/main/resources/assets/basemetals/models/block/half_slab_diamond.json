@@ -1,8 +1,0 @@
-{
-    "parent": "block/half_slab",
-    "textures": {
-        "bottom": "minecraft:blocks/diamond_block",
-        "top": "minecraft:blocks/diamond_block",
-        "side": "minecraft:blocks/diamond_block"
-    }
-}

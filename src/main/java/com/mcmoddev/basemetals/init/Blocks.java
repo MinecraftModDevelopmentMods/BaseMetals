@@ -9,6 +9,7 @@ import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.events.MMDLibRegisterBlocks;
 import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -36,7 +37,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	/**
 	 *
 	 */
-	public static void init() {
+	public static void init(final MMDLibRegisterBlocks event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
 				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
