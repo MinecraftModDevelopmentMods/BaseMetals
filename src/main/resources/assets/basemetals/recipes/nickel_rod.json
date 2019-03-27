@@ -5,17 +5,17 @@
             {
                "optionValue" : "Nickel",
                "optionName" : "material",
-               "type" : "basemetals:enabled"
+               "type": "mmdlib:enabled"
             },
             {
-               "type" : "basemetals:enabled",
+               "type": "mmdlib:enabled",
                "optionValue" : "Rod",
                "optionName" : "thing"
             },
             {
                "optionName" : "thing",
                "optionValue" : "Basics",
-               "type" : "basemetals:enabled"
+               "type": "mmdlib:enabled"
             }
          ],
          "type" : "forge:and"
@@ -32,7 +32,7 @@
          "ore" : "ingotNickel"
       }
    },
-   "type" : "basemetals:variableOutputOre",
+   "type": "mmdlib:variableOutputOre",
    "pattern" : [
       "x",
       "x"
