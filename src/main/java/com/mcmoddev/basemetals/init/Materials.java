@@ -10,6 +10,7 @@ import com.mcmoddev.basemetals.properties.BMEPropertiesHelper;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
+import com.mcmoddev.lib.events.MMDLibRegisterMaterials;
 import com.mcmoddev.lib.material.MMDMaterialType.MaterialType;
 import com.mcmoddev.lib.material.IFluidBlockGetter;
 import com.mcmoddev.lib.util.Config.Options;
@@ -36,7 +37,7 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 	/**
 	 *
 	 */
-	public static void init() {
+	public static void init(final MMDLibRegisterMaterials event) {
 
 		final List<String> rareMaterials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.COLDIRON,
 				MaterialNames.PLATINUM, MaterialNames.STARSTEEL);

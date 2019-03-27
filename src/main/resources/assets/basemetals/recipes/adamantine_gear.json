@@ -1,5 +1,5 @@
 {
-	"type": "basemetals:variableOutputOre",
+	"type": "mmdlib:variableOutputOre",
 	"result": {
 		"item": "basemetals:adamantine_gear",
 		"data": 0
@@ -24,17 +24,17 @@
 			"type": "forge:and",
 			"values": [
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "material",
 					"optionValue": "Adamantine"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "Gear"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "Basics"
 				}
