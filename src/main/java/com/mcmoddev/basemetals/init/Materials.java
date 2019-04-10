@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.properties.BMEPropertiesHelper;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
@@ -22,8 +21,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
 
 /**
  * This class initializes all of the materials in Base Metals.
@@ -41,10 +38,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 	 *
 	 */
 	public static void init(final MMDLibRegisterMaterials event) {
-		//event.setModContainer(Loader.instance().getIndexedModList().get(BaseMetals.MODID));
-		ModContainer active = Loader.instance().activeModContainer();
-		ModContainer thisMod = Loader.instance().getIndexedModList().get(BaseMetals.MODID);
-//		event.setModContainer(thisMod);
 		final List<String> rareMaterials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.COLDIRON,
 				MaterialNames.PLATINUM, MaterialNames.STARSTEEL);
 
