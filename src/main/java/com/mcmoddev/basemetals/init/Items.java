@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
@@ -15,8 +16,11 @@ import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDBurnableObject;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -162,16 +166,25 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 		
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
 				.forEach(mat ->	regItems(event.getRegistry(), mat.getItems()));
-		regItems(event.getRegistry(), Materials.DEFAULT.getItems());
+		regItems(event.getRegistry(), ImmutableList.copyOf(Materials.DEFAULT.getItems().stream()
+				.filter(is -> BaseMetals.MODID.equals(is.getItem().getRegistryName().getNamespace()))
+				.collect(Collectors.toList())));
+/*		if(Materials.getMaterialByName("default").hasBlock("human_detector")) {
+			Block hd = Materials.getMaterialByName("default").getBlock("human_detector");
+			final ItemBlock itemBlock = new ItemBlock(hd);
 
-/*		Oredicts.registerItemOreDictionaryEntries();
-		Oredicts.registerBlockOreDictionaryEntries();*/
+			itemBlock.setRegistryName("human_detector");
+			itemBlock.setTranslationKey("tile." + hd.getRegistryName().getNamespace() + ".human_detector");
+			event.getRegistry().register(itemBlock);
+		}*/
+		Oredicts.registerItemOreDictionaryEntries();
+		Oredicts.registerBlockOreDictionaryEntries();
 	}
 
 	private static void regItems(final IForgeRegistry<Item> registry,
 			final ImmutableList<ItemStack> items) {
 		items.stream().filter(Items::isThisMod).map(Items::getItem)
-		.forEach(registry::register);
+				.forEach( registry::register );
 	}
 
 	private static Item getItem(final ItemStack it) {

@@ -1,5 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
@@ -63,6 +64,6 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 	@SubscribeEvent
 	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
 		initModSpecificRecipes();
-		register(event);
+		register(event);		
 	}
 }
