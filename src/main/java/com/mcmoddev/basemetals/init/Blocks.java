@@ -37,6 +37,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	/**
 	 *
 	 */
+	@SubscribeEvent
 	public static void init(final MMDLibRegisterBlocks event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,

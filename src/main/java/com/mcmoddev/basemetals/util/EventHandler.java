@@ -2,10 +2,7 @@ package com.mcmoddev.basemetals.util;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.init.Blocks;
 import com.mcmoddev.basemetals.init.Fluids;
-import com.mcmoddev.basemetals.init.Items;
 import com.mcmoddev.basemetals.properties.AdamantineProperty;
 import com.mcmoddev.basemetals.properties.AdamantineToolProperty;
 import com.mcmoddev.basemetals.properties.AquariumProperty;
@@ -16,9 +13,7 @@ import com.mcmoddev.basemetals.properties.LeadProperty;
 import com.mcmoddev.basemetals.properties.MithrilProperty;
 import com.mcmoddev.basemetals.properties.MithrilToolProperty;
 import com.mcmoddev.basemetals.properties.StarSteelProperty;
-import com.mcmoddev.lib.events.MMDLibRegisterBlocks;
 import com.mcmoddev.lib.events.MMDLibRegisterFluids;
-import com.mcmoddev.lib.events.MMDLibRegisterItems;
 import com.mcmoddev.lib.events.MMDLibRegisterMaterialProperties;
 import com.mcmoddev.lib.events.MMDLibRegisterMaterials;
 import com.mcmoddev.lib.item.ItemMMDShield;
@@ -190,16 +185,13 @@ public final class EventHandler {
 		}
 	}
 
-	@SubscribeEvent
-	public static void mmdlibRegisterBlocks(final MMDLibRegisterBlocks event) {
-		Blocks.init(event);
-	}
-
-	@SubscribeEvent
-	public static void mmdlibRegisterItems(final MMDLibRegisterItems event) {
-		Items.registerItems(event);
-	}
-
+	/*
+	 * @SubscribeEvent public static void mmdlibRegisterBlocks(final
+	 * MMDLibRegisterBlocks event) { Blocks.init(event); }
+	 * 
+	 * @SubscribeEvent public static void mmdlibRegisterItems(final
+	 * MMDLibRegisterItems event) { Items.registerItems(event); }
+	 */
 	@SubscribeEvent
 	public static void mmdlibRegisterFluids(final MMDLibRegisterFluids event) {
 		Fluids.registerEvent(event);
