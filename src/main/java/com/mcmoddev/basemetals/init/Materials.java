@@ -38,7 +38,6 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 	 *
 	 */
 	public static void init(final MMDLibRegisterMaterials event) {
-
 		final List<String> rareMaterials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.COLDIRON,
 				MaterialNames.PLATINUM, MaterialNames.STARSTEEL);
 

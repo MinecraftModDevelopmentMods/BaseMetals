@@ -37,6 +37,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	/**
 	 *
 	 */
+	@SubscribeEvent
 	public static void init(final MMDLibRegisterBlocks event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
@@ -100,12 +101,13 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
 				.forEach(mat -> regBlocks(event.getRegistry(), mat.getBlocks()));
+		event.getRegistry().register(Materials.DEFAULT.getBlock("human_detector"));
 	}
 
 	private static void regBlocks(final IForgeRegistry<Block> registry,
 			final ImmutableList<Block> blocks) {
 		blocks.stream().filter(
 				block -> block.getRegistryName().getNamespace().equals(BaseMetals.MODID))
-				.forEach(registry::register);
+				.forEach( registry::register );
 	}
 }
