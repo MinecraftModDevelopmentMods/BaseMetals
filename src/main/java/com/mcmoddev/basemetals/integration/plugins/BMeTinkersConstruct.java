@@ -58,9 +58,12 @@ public class BMeTinkersConstruct implements IIntegration {
 	}
 
 	@Override
-	public void init() {
+	public void init() {		
 		TinkersConstruct.INSTANCE.init();
-		if (!Options.isModEnabled(PLUGIN_MODID)) {
+        if(!slimeknights.tconstruct.TConstruct.pulseManager.isPulseLoaded("TinkerSmeltery")) {
+            return;
+        }
+        if (!Options.isModEnabled(PLUGIN_MODID)) {
 			return;
 		}
 		MinecraftForge.EVENT_BUS.register(this);
