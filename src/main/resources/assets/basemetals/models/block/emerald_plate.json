@@ -1,8 +1,0 @@
-{
-    "parent": "basemetals:block/plate",
-    "textures": {
-        "top": "minecraft:blocks/emerald_block",
-        "side": "minecraft:blocks/emerald_block",
-        "bottom": "minecraft:blocks/emerald_block"
-    }
-}

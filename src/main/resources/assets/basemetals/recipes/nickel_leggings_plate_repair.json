@@ -1,5 +1,5 @@
 {
-	"type": "basemetals:armor_repair",
+	"type": "mmdlib:armor_repair",
 	"armorType": "leggings",
 	"material": "Nickel",
 	"conditions": [
@@ -7,22 +7,22 @@
 			"type": "forge:and",
 			"values": [
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "material",
 					"optionValue": "Nickel"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "Armor"
 				},
 				{
-					"type": "basemetals:enabled",
+					"type": "mmdlib:enabled",
 					"optionName": "thing",
 					"optionValue": "Plate"
 				},
 				{
-					"type": "basemetals:plate"
+					"type": "mmdlib:plate"
 				}
 			]
 		}

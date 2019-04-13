@@ -1,6 +1,13 @@
 buildscript {
   repositories {
     jcenter()
+//        maven {
+//            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+//        }
+//
+//        maven {
+//            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+//        }
     maven {
       name = 'forge'
       url = 'http://files.minecraftforge.net/maven'
@@ -197,6 +204,8 @@ minecraft {
 }
 
 repositories {
+    mavenLocal()
+    
   maven { // Mantle, TCon, JEI
     name 'DVS1 Maven FS'
     url 'http://dvs1.progwml6.com/files/maven/'
@@ -438,7 +447,11 @@ dependencies {
     exclude group: 'mezz.jei'
   }
   // TODO: Dense Ores, EnderCore, EnderIO
-
+    deobfProvided("com.mcmoddev:MMDLib:${mc_version}-${mmdlib_version}") {
+	exclude group: 'mezz.jei'
+    }
+    //runtime "com.mcmoddev:MMDLib:${mc_version}-${mmdlib_version}"
+    
 }
 
 processResources {

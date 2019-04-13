@@ -1,7 +1,7 @@
 {
     "type": "forge:ore_shapeless",
     "conditions": [ {
-	"type": "basemetals:enabled",
+	"type": "mmdlib:enabled",
 	"optionName": "material",
 	"optionValue": "Steel"
     }],

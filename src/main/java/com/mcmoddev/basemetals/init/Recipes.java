@@ -1,5 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
@@ -29,12 +30,6 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 	 */
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(Recipes.class);
-	}
-
-	protected static void initVanillaRecipes() {
-		// all recipes for BaseMetals are currently in JSON - this exists in case there
-		// are some we have to add
-		// programmatically
 	}
 
 	private static void initModSpecificRecipes() {
@@ -68,8 +63,7 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 	 */
 	@SubscribeEvent
 	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
-		initVanillaRecipes();
 		initModSpecificRecipes();
-		register(event);
+		register(event);		
 	}
 }

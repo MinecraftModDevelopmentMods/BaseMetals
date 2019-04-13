@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "powered=false": { "model": "basemetals:diamond_pressure_plate_up" },
-        "powered=true": { "model": "basemetals:diamond_pressure_plate_down" }
-    }
-}

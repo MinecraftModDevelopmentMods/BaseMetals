@@ -6,13 +6,11 @@ import org.apache.logging.log4j.Logger;
 import com.mcmoddev.basemetals.proxy.CommonProxy;
 import com.mcmoddev.basemetals.util.BMeConfig;
 import com.mcmoddev.lib.data.SharedStrings;
-import com.mcmoddev.lib.integration.IntegrationManager;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -23,7 +21,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationException;
 
 /**
  * <h2><u>BaseMetals:</u></h2>
@@ -59,7 +56,7 @@ import net.minecraftforge.fml.common.versioning.InvalidVersionSpecificationExcep
 	modid = BaseMetals.MODID,
 	name = BaseMetals.NAME,
 	version = BaseMetals.VERSION,
-	dependencies = "required-after:forge@[14.23.1.2592,);after:tconstruct;after:conarm;after:thaumcraft;after:ic2;before:buildingbricks",
+	dependencies = "required-after:forge@[14.23.1.2592,);required-after:mmdlib@[1.0.0-beta1,);after:tconstruct;after:conarm;after:thaumcraft;after:ic2;before:buildingbricks",
 	acceptedMinecraftVersions = "[1.12,)",
 	certificateFingerprint = "@FINGERPRINT@",
 	updateJSON = BaseMetals.UPDATEJSON)
@@ -85,7 +82,7 @@ public final class BaseMetals {
 	 * The Minor version number will be increased when ever there is potential for compatibility issues
 	 * with dependant mods.
 	 */
-	protected static final String VERSION = "2.5.0-beta7";
+	protected static final String VERSION = "2.5.0-beta8";
 
 	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL
 			+ "BaseMetals/master/update.json";
@@ -125,12 +122,6 @@ public final class BaseMetals {
 	 */
 	@EventHandler
 	public static void constructing(final FMLConstructionEvent event) {
-		try {
-			IntegrationManager.INSTANCE.doSetupTasks(event);
-		} catch (InvalidVersionSpecificationException e) {
-			logger.error("Error loading version information for plugins: %s", e);
-		}
-
 		BMeConfig.init();
 	}
 
@@ -165,9 +156,6 @@ public final class BaseMetals {
 	 */
 	@EventHandler
 	public static void init(final FMLInitializationEvent event) {
-		if(Loader.isModLoaded("crafttweaker")) {
-			com.mcmoddev.lib.crafttweaker.CrusherRecipes.loadComplete();
-		}
 		proxy.init(event);
 	}
 
@@ -181,9 +169,6 @@ public final class BaseMetals {
 	@EventHandler
 	public static void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);
-		//com.mcmoddev.lib.init.Materials.dumpRegistry();
-		//com.mcmoddev.lib.init.Recipes.dumpFurnaceRecipes();
-		//com.mcmoddev.lib.init.ItemGroups.dumpTabs();
 	}
 	
 	/**

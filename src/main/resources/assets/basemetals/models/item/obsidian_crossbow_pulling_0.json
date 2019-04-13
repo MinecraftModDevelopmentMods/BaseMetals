@@ -1,6 +1,0 @@
-{
-    "parent": "basemetals:item/obsidian_crossbow",
-    "textures": {
-        "layer0": "basemetals:items/obsidian_crossbow_pulling_0"
-    }
-}

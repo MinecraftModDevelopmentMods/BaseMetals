@@ -1,6 +1,0 @@
-{
-    "parent": "block/trapdoor_open",
-    "textures": {
-        "texture": "basemetals:blocks/gold_trapdoor"
-    }
-}
