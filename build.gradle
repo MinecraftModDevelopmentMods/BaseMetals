@@ -581,7 +581,8 @@ curseforge {
       mainArtifact(jar) {
         displayName = "$project.description $display_version"
         relations {
-          requiredLibrary 'mmd-orespawn'
+	  requiredLibrary 'mmd-orespawn'
+	  requiredLibrary 'mmdlib'
           optionalLibrary 'additional-loot-tables'
           optionalLibrary 'crafttweaker'
           optionalLibrary 'hwyla'
