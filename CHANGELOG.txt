@@ -1,1 +1,4 @@
-2.5.0 for 1.12.x
+1) (@dshadowwolf, @jriwanek, @YaibaToKen, @Face Of Cat) Split MMDLib out as a standalone mod
+2) (@dshadowwolf) Move Vanilla Materials and extensions to vanilla materials to MMDLib
+3) (@YaibaToKen) Add Constructs' Armory integration to the Tinkers' Construct integration
+4) (entire team) Numerous fixes across the entire mod
