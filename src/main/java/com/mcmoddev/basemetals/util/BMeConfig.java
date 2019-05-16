@@ -59,7 +59,7 @@ public final class BMeConfig extends Config {
 		new MaterialConfigOptions(VanillaMaterialNames.OBSIDIAN,true, true, true, true),
 		new MaterialConfigOptions(VanillaMaterialNames.LAPIS, true,true, false, false),
 		new MaterialConfigOptions(VanillaMaterialNames.PRISMARINE,true, true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.REDSTONE,true, true, true, true),
+		new MaterialConfigOptions(VanillaMaterialNames.REDSTONE,true, true, true, true)
 	};
 
 	/**
