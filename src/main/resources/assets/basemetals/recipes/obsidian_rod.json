@@ -1,0 +1,42 @@
+{
+   "conditions" : [
+      {
+         "values" : [
+            {
+               "optionValue" : "Obsidian",
+               "optionName" : "material",
+               "type": "mmdlib:enabled"
+            },
+            {
+               "type": "mmdlib:enabled",
+               "optionValue" : "Rod",
+               "optionName" : "thing"
+            },
+            {
+               "optionName" : "thing",
+               "optionValue" : "Basics",
+               "type": "mmdlib:enabled"
+            }
+         ],
+         "type" : "forge:and"
+      }
+   ],
+   "config_key" : "rod",
+   "result" : {
+      "item" : "basemetals:obsidian_rod",
+      "data" : 0
+   },
+   "key" : {
+      "x" : {
+         "type" : "forge:ore_dict",
+         "ore" : "ingotObsidian"
+      }
+   },
+   "type": "mmdlib:variableOutputOre",
+   "pattern" : [
+      "x",
+      "x"
+   ],
+   "group" : "misc"
+}
+

@@ -1,4 +1,2 @@
-1) (@dshadowwolf, @jriwanek, @YaibaToKen, @Face Of Cat) Split MMDLib out as a standalone mod
-2) (@dshadowwolf) Move Vanilla Materials and extensions to vanilla materials to MMDLib
-3) (@YaibaToKen) Add Constructs' Armory integration to the Tinkers' Construct integration
-4) (entire team) Numerous fixes across the entire mod
+1) (@dshadowwolf) Masses of bug-fixes
+2) (@dshadowwolf) Move vanilla extensions out of MMDLib - the lib should be providing anything but raw materials

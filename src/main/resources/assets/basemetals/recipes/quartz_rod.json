@@ -1,0 +1,42 @@
+{
+   "conditions" : [
+      {
+         "values" : [
+            {
+               "optionValue" : "Quartz",
+               "optionName" : "material",
+               "type": "mmdlib:enabled"
+            },
+            {
+               "type": "mmdlib:enabled",
+               "optionValue" : "Rod",
+               "optionName" : "thing"
+            },
+            {
+               "optionName" : "thing",
+               "optionValue" : "Basics",
+               "type": "mmdlib:enabled"
+            }
+         ],
+         "type" : "forge:and"
+      }
+   ],
+   "config_key" : "rod",
+   "result" : {
+      "item" : "basemetals:quartz_rod",
+      "data" : 0
+   },
+   "key" : {
+      "x" : {
+         "type" : "forge:ore_dict",
+         "ore" : "gemQuartz"
+      }
+   },
+   "type": "mmdlib:variableOutputOre",
+   "pattern" : [
+      "x",
+      "x"
+   ],
+   "group" : "misc"
+}
+

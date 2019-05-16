@@ -1,0 +1,36 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "minecraft:coal",
+		"data": 1
+	},
+	"pattern": [
+		"xxx",
+		"xxx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetCharcoal"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Charcoal"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

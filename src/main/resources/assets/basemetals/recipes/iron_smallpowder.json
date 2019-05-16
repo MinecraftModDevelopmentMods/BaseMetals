@@ -1,0 +1,32 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "basemetals:iron_smallpowder",
+		"data": 0,
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustIron"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Iron"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "SmallDust"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

@@ -1,0 +1,49 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:emerald_lever",
+		"data": 0
+	},
+	"pattern": [
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:emerald_rod",
+			"data": 0
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "gemEmerald"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Emerald"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Lever"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

@@ -1,0 +1,41 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:emerald_chestplate",
+		"data": 0
+	},
+	"pattern": [
+		"x x",
+		"xxx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "gemEmerald"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Emerald"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Armor"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

@@ -47,10 +47,10 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
 				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,
-				MaterialNames.COPPER, MaterialNames.CUPRONICKEL, MaterialNames.EMERALD,
+				MaterialNames.COPPER, MaterialNames.CUPRONICKEL,
 				MaterialNames.ELECTRUM, MaterialNames.INVAR, MaterialNames.LEAD,
-				MaterialNames.OBSIDIAN, MaterialNames.MITHRIL, MaterialNames.NICKEL,
-				MaterialNames.PEWTER, MaterialNames.PLATINUM, MaterialNames.QUARTZ,
+				MaterialNames.MITHRIL, MaterialNames.NICKEL,
+				MaterialNames.PEWTER, MaterialNames.PLATINUM,
 				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
 				MaterialNames.TIN, MaterialNames.ZINC);
 

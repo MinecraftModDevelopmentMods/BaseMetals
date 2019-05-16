@@ -1,0 +1,37 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:stone_crackhammer"
+	},
+	"pattern": [
+		"x",
+		"y",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:stonebrick",
+			"data": 0
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "mmdlib:hammer"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

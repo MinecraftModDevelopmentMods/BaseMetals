@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/emerald_crossbow",
+    "textures": {
+        "layer0": "basemetals:items/emerald_crossbow_pulling_0"
+    }
+}

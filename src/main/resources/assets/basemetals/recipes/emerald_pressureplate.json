@@ -1,0 +1,39 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:emerald_pressure_plate",
+		"data": 0
+	},
+	"pattern": [
+		"xx"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "gemEmerald"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Emerald"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "PressurePlate"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

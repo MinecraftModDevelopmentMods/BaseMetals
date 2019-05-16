@@ -1,0 +1,30 @@
+{
+	"type": "mmdlib:armor_repair",
+	"armorType": "chestplate",
+	"material": "Emerald",
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Emerald"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Armor"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Plate"
+				},
+				{
+					"type": "mmdlib:plate"
+				}
+			]
+		}
+	]
+}

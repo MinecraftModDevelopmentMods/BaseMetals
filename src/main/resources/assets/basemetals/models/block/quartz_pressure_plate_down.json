@@ -1,0 +1,6 @@
+{
+    "parent": "block/pressure_plate_down",
+    "textures": {
+        "texture": "minecraft:blocks/quartz_block_side"
+    }
+}

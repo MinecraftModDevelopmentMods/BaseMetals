@@ -1,0 +1,45 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:obsidian_shovel",
+		"data": 0
+	},
+	"pattern": [
+		"x",
+		"s",
+		"s"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotObsidian"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Obsidian"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "BasicTools"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

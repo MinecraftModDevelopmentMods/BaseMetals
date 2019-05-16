@@ -1,0 +1,11 @@
+{
+	"conditions": {
+		"enabled": "com.mcmoddev.lib.recipe.conditions.ConditionEnabled",
+		"hammer": "com.mcmoddev.lib.recipe.conditions.HammerEnabled",
+		"plate": "com.mcmoddev.lib.recipe.conditions.PlateRepairEnabled"
+	},
+	"recipes": {
+		"variableOutputOre": "com.mcmoddev.lib.recipe.factories.ConfigVariedOutput",
+		"armor_repair": "com.mcmoddev.lib.recipe.factories.ArmorRepair"
+	}
+}

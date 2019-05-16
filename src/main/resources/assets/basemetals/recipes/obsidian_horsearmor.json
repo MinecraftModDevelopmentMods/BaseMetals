@@ -1,0 +1,45 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:obsidian_horse_armor",
+		"data": 0
+	},
+	"pattern": [
+		"  x",
+		"xyx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotObsidian"
+		},
+		"y": {
+			"item": "minecraft:wool",
+			"data": 32767
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Obsidian"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "HorseArmor"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "armor"
+}

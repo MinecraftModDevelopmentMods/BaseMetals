@@ -1,0 +1,45 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:iron_shield",
+		"data": 0
+	},
+	"pattern": [
+		"xyx",
+		"xxx",
+		" x "
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		},
+		"y": {
+			"type": "forge:ore_dict",
+			"ore": "plankWood"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Iron"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Shield"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

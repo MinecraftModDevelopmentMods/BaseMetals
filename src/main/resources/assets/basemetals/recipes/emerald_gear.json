@@ -1,0 +1,46 @@
+{
+	"type": "mmdlib:variableOutputOre",
+	"result": {
+		"item": "basemetals:emerald_gear",
+		"data": 0
+	},
+	"pattern": [
+		" x ",
+		"xrx",
+		" x "
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "gemEmerald"
+		},
+		"r": {
+		    "type": "forge:ore_dict",
+		    "ore": "rodIron"
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Emerald"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Gear"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"config_key": "gear",
+	"group": "vanilla"
+}

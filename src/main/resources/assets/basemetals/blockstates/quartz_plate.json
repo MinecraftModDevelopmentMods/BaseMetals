@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "basemetals:quartz_plate", "x": 90  },
+        "facing=up":    { "model": "basemetals:quartz_plate", "x": 270 },
+        "facing=north": { "model": "basemetals:quartz_plate"           },
+        "facing=south": { "model": "basemetals:quartz_plate", "y": 180 },
+        "facing=west":  { "model": "basemetals:quartz_plate", "y": 270 },
+        "facing=east":  { "model": "basemetals:quartz_plate", "y": 90  }
+    }
+}
