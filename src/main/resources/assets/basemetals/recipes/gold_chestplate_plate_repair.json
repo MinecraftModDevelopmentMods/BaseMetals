@@ -1,0 +1,30 @@
+{
+	"type": "mmdlib:armor_repair",
+	"armorType": "chestplate",
+	"material": "Gold",
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Gold"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Armor"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Plate"
+				},
+				{
+					"type": "mmdlib:plate"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,32 @@
+{
+	"type": "forge:ore_shapeless",
+	"result": {
+		"item": "basemetals:emerald_smallpowder",
+		"data": 0,
+		"count": 9
+	},
+	"ingredients": [
+		{
+			"type": "forge:ore_dict",
+			"ore": "dustEmerald"
+		}
+	],
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Emerald"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "SmallDust"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

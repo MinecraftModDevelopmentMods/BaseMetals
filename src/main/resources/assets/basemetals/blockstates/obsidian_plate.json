@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "basemetals:obsidian_plate", "x": 90  },
+        "facing=up":    { "model": "basemetals:obsidian_plate", "x": 270 },
+        "facing=north": { "model": "basemetals:obsidian_plate"           },
+        "facing=south": { "model": "basemetals:obsidian_plate", "y": 180 },
+        "facing=west":  { "model": "basemetals:obsidian_plate", "y": 270 },
+        "facing=east":  { "model": "basemetals:obsidian_plate", "y": 90  }
+    }
+}

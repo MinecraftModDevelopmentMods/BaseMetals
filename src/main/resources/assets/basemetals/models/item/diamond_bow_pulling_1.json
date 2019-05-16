@@ -1,0 +1,6 @@
+{
+    "parent": "basemetals:item/diamond_bow",
+    "textures": {
+        "layer0": "basemetals:items/diamond_bow_pulling_1"
+    }
+}

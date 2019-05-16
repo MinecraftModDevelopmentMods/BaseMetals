@@ -1,0 +1,8 @@
+{
+    "parent": "block/outer_stairs",
+    "textures": {
+        "bottom": "minecraft:blocks/emerald_block",
+        "top": "minecraft:blocks/emerald_block",
+        "side": "minecraft:blocks/emerald_block"
+    }
+}

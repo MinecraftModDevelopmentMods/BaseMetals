@@ -1,0 +1,46 @@
+{
+	"type": "mmdlib:variableOutputOre",
+	"result": {
+		"item": "basemetals:obsidian_gear",
+		"data": 0
+	},
+	"pattern": [
+		" x ",
+		"xrx",
+		" x "
+	],
+	"key": {
+		"x": {
+			"type": "forge:ore_dict",
+			"ore": "ingotObsidian"
+		},
+		"r": {
+			"item": "basemetals:obsidian_rod",
+			"data": 0
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Obsidian"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Gear"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Basics"
+				}
+			]
+		}
+	],
+	"config_key": "gear",
+	"group": "vanilla"
+}

@@ -1,0 +1,45 @@
+{
+	"type": "forge:ore_shaped",
+	"result": {
+		"item": "basemetals:quartz_bow",
+		"data": 0
+	},
+	"pattern": [
+		" xs",
+		"x s",
+		" xs"
+	],
+	"key": {
+		"x": {
+			"item": "basemetals:quartz_rod",
+			"data": 0
+		},
+		"s": {
+			"item": "minecraft:string",
+			"data": 0
+		}
+	},
+	"conditions": [
+		{
+			"type": "forge:and",
+			"values": [
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "material",
+					"optionValue": "Quartz"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "BowAndArrow"
+				},
+				{
+					"type": "mmdlib:enabled",
+					"optionName": "thing",
+					"optionValue": "Rod"
+				}
+			]
+		}
+	],
+	"group": "vanilla"
+}

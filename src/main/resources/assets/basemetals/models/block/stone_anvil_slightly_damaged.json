@@ -1,0 +1,8 @@
+{
+    "parent": "block/anvil",
+    "textures": {
+        "particle": "basemetals:blocks/stone_anvil_base",
+        "body": "basemetals:blocks/stone_anvil_base",
+        "top": "basemetals:blocks/stone_anvil_top_damaged_1"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "block/button",
+    "textures": {
+        "texture": "minecraft:blocks/emerald_block"
+    }
+}
