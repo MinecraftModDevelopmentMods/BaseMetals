@@ -29,7 +29,6 @@ public class CommonProxy {
 	 * @param event The Event.
 	 */
 	public void preInit(final FMLPreInitializationEvent event) {
-		com.mcmoddev.basemetals.init.Recipes.init();
 		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
 	}
 
