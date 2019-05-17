@@ -2,7 +2,6 @@ package com.mcmoddev.basemetals.init;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
@@ -162,19 +161,11 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	@SubscribeEvent
 	public static void registerItems(final RegistryEvent.Register<Item> event) {
 		
-		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
+		Materials.getAllMaterials()
+				.stream()
+				.filter(mat -> !mat.isVanilla())
 				.forEach(mat ->	regItems(event.getRegistry(), mat.getItems()));
-		regItems(event.getRegistry(), ImmutableList.copyOf(Materials.DEFAULT.getItems().stream()
-				.filter(is -> BaseMetals.MODID.equals(is.getItem().getRegistryName().getNamespace()))
-				.collect(Collectors.toList())));
-/*		if(Materials.getMaterialByName("default").hasBlock("human_detector")) {
-			Block hd = Materials.getMaterialByName("default").getBlock("human_detector");
-			final ItemBlock itemBlock = new ItemBlock(hd);
 
-			itemBlock.setRegistryName("human_detector");
-			itemBlock.setTranslationKey("tile." + hd.getRegistryName().getNamespace() + ".human_detector");
-			event.getRegistry().register(itemBlock);
-		}*/
 		Oredicts.registerItemOreDictionaryEntries();
 		Oredicts.registerBlockOreDictionaryEntries();
 	}
