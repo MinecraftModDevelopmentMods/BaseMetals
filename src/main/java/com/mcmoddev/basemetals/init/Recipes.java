@@ -1,5 +1,6 @@
 package com.mcmoddev.basemetals.init;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
@@ -8,8 +9,8 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -19,6 +20,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Jasmine Iwanek
  *
  */
+@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
 public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 	private Recipes() {
@@ -29,7 +31,6 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 	 *
 	 */
 	public static void init() {
-		MinecraftForge.EVENT_BUS.register(Recipes.class);
 	}
 
 	private static void initModSpecificOredicts() {
