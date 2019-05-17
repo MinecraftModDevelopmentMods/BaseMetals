@@ -168,6 +168,7 @@ public final class BaseMetals {
 	 */
 	@EventHandler
 	public static void postInit(final FMLPostInitializationEvent event) {
+		com.mcmoddev.lib.init.Recipes.dumpFurnaceRecipes();
 		proxy.postInit(event);
 	}
 	

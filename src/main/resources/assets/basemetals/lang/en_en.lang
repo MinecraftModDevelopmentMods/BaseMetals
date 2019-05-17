@@ -1,387 +1,575 @@
-#NEI/JEI
-basemetals.crackhammer=Crushed Blocks/Items
+itemGroup.basemetals.blocks=Base Metals Blocks
+itemGroup.basemetals.combat=Base Metals Combat
+itemGroup.basemetals.items=Base Metals Items
+itemGroup.basemetals.tools=Base Metals Tools
+nei.basemetals.recipehandler.crusher.name=Crushed Blocks/Items
 
-#Axes
-item.basemetals.emerald_axe.name=Emerald Axe
-item.basemetals.obsidian_axe.name=Obsdidian Axe
-item.basemetals.quartz_axe.name=Quartz Axe
-
-#Swords
-item.basemetals.emerald_sword.name=Emerald Sword
-item.basemetals.obsidian_sword.name=Obsidian Sword
-item.basemetals.quartz_sword.name=Quartz Sword
-
-#Pickaxes
-item.basemetals.emerald_pickaxe.name=Emerald Pickaxe
-item.basemetals.obsidian_pickaxe.name=Obsidian Pickaxe
-item.basemetals.quartz_pickaxe.name=Quartz Pickaxe
-
-#Shovels
-item.basemetals.emerald_shovel.name=Emerald Shovel
-item.basemetals.obsidian_shovel.name=Obsidian Shovel
-item.basemetals.quartz_shovel.name=Quartz Shovel
-
-#Hoes
-item.basemetals.emerald_hoe.name=Emerald Hoe
-item.basemetals.obsidian_hoe.name=Obsidian Hoe
-item.basemetals.quartz_hoe.name=Quartz Hoe
-
-#Crackhammers
-item.basemetals.diamond_crackhammer.name=Diamond Crack Hammer
-item.basemetals.emerald_crackhammer.name=Emerald Crack Hammer
-item.basemetals.gold_crackhammer.name=Golden Crack Hammer
-item.basemetals.iron_crackhammer.name=Iron Crack Hammer
-item.basemetals.obsidian_crackhammer.name=Obsidian Crack Hammer
-item.basemetals.quartz_crackhammer.name=Quartz Crack Hammer
-item.basemetals.stone_crackhammer.name=Stone Crack Hammer
-item.basemetals.wood_crackhammer.name=Wooden Crack Hammer
-
-#Shears
-item.basemetals.diamond_shears.name=Diamond Shears
-item.basemetals.emerald_shears.name=Emerald Shears
-item.basemetals.gold_shears.name=Gold Shears
-item.basemetals.obsidian_shears.name=Obsidian Shears
-item.basemetals.quartz_shears.name=Quartz Shears
-
-#Bow
-item.basemetals.diamond_bow.name=Diamond Bow
-item.basemetals.emerald_bow.name=Emerald Bow
-item.basemetals.gold_bow.name=Gold Bow
-item.basemetals.iron_bow.name=Iron Bow
-item.basemetals.obsidian_bow.name=Obsidian Bow
-item.basemetals.quartz_bow.name=Quartz Bow
-
-#Crossbow
-item.basemetals.diamond_crossbow.name=Diamond Crossbow
-item.basemetals.emerald_crossbow.name=Emerald Crossbow
-item.basemetals.gold_crossbow.name=Gold Crossbow
-item.basemetals.iron_crossbow.name=Iron Crossbow
-item.basemetals.obsidian_crossbow.name=Obsidian Crossbow
-item.basemetals.quartz_crossbow.name=Quartz Crossbow
-
-#Fishing Rods
-item.basemetals.diamond_fishing_rod.name=Diamond Fishing Rod
-item.basemetals.emerald_fishing_rod.name=Emerald Fishing Rod
-item.basemetals.gold_fishing_rod.name=Gold Fishing Rod
-item.basemetals.iron_fishing_rod.name=Iron Fishing Rod
-item.basemetals.obsidian_fishing_rod.name=Obsidian Fishing Rod
-item.basemetals.quartz_fishing_rod.name=Quartz Fishing Rod
-
-#Sickles
-item.basemetals.diamond_scythe.name=Diamond Sickle
-item.basemetals.emerald_scythe.name=Emerald Sickle
-item.basemetals.gold_scythe.name=Gold Sickle
-item.basemetals.iron_scythe.name=Iron Sickle
-item.basemetals.obsidian_scythe.name=Obsidian Sickle
-item.basemetals.quartz_scythe.name=Quartz Sickle
-item.basemetals.stone_scythe.name=Stone Sickle
-item.basemetals.wood_scythe.name=Wood Sickle
-
-#Shields
-item.basemetals.diamond_shield.name=Diamond Shield
-item.basemetals.emerald_shield.name=Emerald Shield
-item.basemetals.gold_shield.name=Gold Shield
-item.basemetals.iron_shield.name=Iron Shield
-item.basemetals.obsidian_shield.name=Obsidian Shield
-item.basemetals.quartz_shield.name=Quartz Shield
-
-#Arrow
-item.basemetals.diamond_arrow.name=Diamond Arrow
-item.basemetals.emerald_arrow.name=Emerald Arrow
-item.basemetals.gold_arrow.name=Gold Arrow
-item.basemetals.iron_arrow.name=Iron Arrow
-item.basemetals.obsidian_arrow.name=Obsidian Arrow
-item.basemetals.quartz_arrow.name=Quartz Arrow
-
-#Bolt
-item.basemetals.diamond_bolt.name=Diamond Bolt
-item.basemetals.emerald_bolt.name=Emerald Bolt
-item.basemetals.gold_bolt.name=Gold Bolt
-item.basemetals.iron_bolt.name=Iron Bolt
-item.basemetals.obsidian_bolt.name=Obsidian Bolt
-item.basemetals.quartz_bolt.name=Quartz Bolt
-
-#Armor Sets
-    #Emerald
-item.basemetals.emerald_boots.name=Emerald Boots
-item.basemetals.emerald_chestplate.name=Emerald Chestplate
-item.basemetals.emerald_helmet.name=Emerald Helmet
-item.basemetals.emerald_leggings.name=Emerald Leg Armor
-    #Obsidian
-item.basemetals.obsidian_boots.name=Obsidian Boots
-item.basemetals.obsidian_chestplate.name=Obsidian Chestplate
-item.basemetals.obsidian_helmet.name=Obsidian Helmet
-item.basemetals.obsidian_leggings.name=Obsidian Leg Armor
-    #Quartz
-item.basemetals.quartz_boots.name=Quartz Boots
-item.basemetals.quartz_chestplate.name=Quartz Chestplate
-item.basemetals.quartz_helmet.name=Quartz Helmet
-item.basemetals.quartz_leggings.name=Quartz Leg Armor
-
-#Horse Armor
-item.basemetals.emerald_horse_armor.name=Emerald Horse Armor
-item.basemetals.obsidian_horse_armor.name=Obsidian Horse Armor
-item.basemetals.quartz_horse_armor.name=Quartz Horse Armor
-
-#Ingot
-item.basemetals.redstone_ingot.name=Redstone Ingot
-
-#Bars
-    #Item
-item.basemetals.diamond_bars.name=Diamond Bars
-item.basemetals.emerald_bars.name=Emerald Bars
-item.basemetals.gold_bars.name=Gold Bars
-item.basemetals.obsidian_bars.name=Obsidian Bars
-item.basemetals.quartz_bars.name=Quartz Bars
-    #Tile
-tile.basemetals.diamond_bars.name=Diamond Bars
-tile.basemetals.emerald_bars.name=Emerald Bars
-tile.basemetals.gold_bars.name=Gold Bars
-tile.basemetals.obsidian_bars.name=Obsidian Bars
-tile.basemetals.quartz_bars.name=Quartz Bars
-
-#Nugget
-item.basemetals.charcoal_nugget.name=Charcoal Nugget
-item.basemetals.coal_nugget.name=Coal Nugget
-item.basemetals.diamond_nugget.name=Diamond Fragment
-item.basemetals.emerald_nugget.name=Emerald Fragment
-item.basemetals.iron_nugget.name=Iron Nugget
-item.basemetals.obsidian_nugget.name=Obsidian Fragment
-item.basemetals.quartz_nugget.name=Quartz Fragment
-
-#Dusts
+item.basemetals.adamantine_axe.name=Adamantine Axe
+item.basemetals.adamantine_bars.name=Adamantine Bars
+item.basemetals.adamantine_block.name=Adamantine Block
+item.basemetals.adamantine_boots.name=Adamantine Boots
+item.basemetals.adamantine_chestplate.name=Adamantine Chestplate
+item.basemetals.adamantine_crackhammer.name=Adamantine Crack Hammer
+item.basemetals.adamantine_door.name=Adamantine Door
+item.basemetals.adamantine_helmet.name=Adamantine Helmet
+item.basemetals.adamantine_hoe.name=Adamantine Hoe
+item.basemetals.adamantine_ingot.name=Adamantine Ingot
+item.basemetals.adamantine_leggings.name=Adamantine Leg Armor
+item.basemetals.adamantine_nugget.name=Adamantine Nugget
+item.basemetals.adamantine_ore.name=Adamantine Ore
+item.basemetals.adamantine_pickaxe.name=Adamantine Pickaxe
+item.basemetals.adamantine_powder.name=Powdered Adamantine
+item.basemetals.adamantine_shovel.name=Adamantine Shovel
+item.basemetals.adamantine_sword.name=Adamantine Sword
+item.basemetals.adamantine_trapdoor.name=Adamantine Trapdoor
+item.basemetals.aquarium_axe.name=Aquarium Axe
+item.basemetals.aquarium_bars.name=Aquarium Bars
+item.basemetals.aquarium_blend.name=Aquarium Blend
+item.basemetals.aquarium_block.name=Aquarium Block
+item.basemetals.aquarium_boots.name=Aquarium Boots
+item.basemetals.aquarium_chestplate.name=Aquarium Chestplate
+item.basemetals.aquarium_crackhammer.name=Aquarium Crack Hammer
+item.basemetals.aquarium_door.name=Aquarium Door
+item.basemetals.aquarium_helmet.name=Aquarium Helmet
+item.basemetals.aquarium_hoe.name=Aquarium Hoe
+item.basemetals.aquarium_ingot.name=Aquarium Ingot
+item.basemetals.aquarium_leggings.name=Aquarium Leg Armor
+item.basemetals.aquarium_nugget.name=Aquarium Nugget
+item.basemetals.aquarium_ore.name=Aquarium Ore
+item.basemetals.aquarium_pickaxe.name=Aquarium Pickaxe
+item.basemetals.aquarium_powder.name=Powdered Aquarium
+item.basemetals.aquarium_shovel.name=Aquarium Shovel
+item.basemetals.aquarium_sword.name=Aquarium Sword
+item.basemetals.aquarium_trapdoor.name=Aquarium Trapdoor
+item.basemetals.brass_axe.name=Brass Axe
+item.basemetals.brass_bars.name=Brass Bars
+item.basemetals.brass_blend.name=Brass Blend
+item.basemetals.brass_block.name=Brass Block
+item.basemetals.brass_boots.name=Brass Boots
+item.basemetals.brass_chestplate.name=Brass Chestplate
+item.basemetals.brass_crackhammer.name=Brass Crack Hammer
+item.basemetals.brass_door.name=Brass Door
+item.basemetals.brass_helmet.name=Brass Helmet
+item.basemetals.brass_hoe.name=Brass Hoe
+item.basemetals.brass_ingot.name=Brass Ingot
+item.basemetals.brass_leggings.name=Brass Leg Armor
+item.basemetals.brass_nugget.name=Brass Nugget
+item.basemetals.brass_pickaxe.name=Brass Pickaxe
+item.basemetals.brass_powder.name=Powdered Brass
+item.basemetals.brass_shovel.name=Brass Shovel
+item.basemetals.brass_sword.name=Brass Sword
+item.basemetals.brass_trapdoor.name=Brass Trapdoor
+item.basemetals.bronze_axe.name=Bronze Axe
+item.basemetals.bronze_bars.name=Bronze Bars
+item.basemetals.bronze_blend.name=Bronze Blend
+item.basemetals.bronze_block.name=Bronze Block
+item.basemetals.bronze_boots.name=Bronze Boots
+item.basemetals.bronze_chestplate.name=Bronze Chestplate
+item.basemetals.bronze_crackhammer.name=Bronze Crack Hammer
+item.basemetals.bronze_door.name=Bronze Door
+item.basemetals.bronze_helmet.name=Bronze Helmet
+item.basemetals.bronze_hoe.name=Bronze Hoe
+item.basemetals.bronze_ingot.name=Bronze Ingot
+item.basemetals.bronze_leggings.name=Bronze Leg Armor
+item.basemetals.bronze_nugget.name=Bronze Nugget
+item.basemetals.bronze_pickaxe.name=Bronze Pickaxe
+item.basemetals.bronze_powder.name=Powdered Bronze
+item.basemetals.bronze_shovel.name=Bronze Shovel
+item.basemetals.bronze_sword.name=Bronze Sword
+item.basemetals.bronze_trapdoor.name=Bronze Trapdoor
 item.basemetals.carbon_powder.name=Carbon Dust
-item.basemetals.coal_powder.name=Coal Dust
-item.basemetals.charcoal_powder.name=Charcoal Dust
-item.basemetals.diamond_powder.name=Diamond Dust
-item.basemetals.emerald_powder.name=Emerald Dust
-item.basemetals.gold_powder.name=Gold Dust
-item.basemetals.iron_powder.name=Iron Dust
-item.basemetals.obsidian_powder.name=Obsidian Dust
-item.basemetals.quartz_powder.name=Quartz Dust
-item.basemetals.wood_powder.name=Sawdust
+item.basemetals.coldiron_axe.name=Cold-Iron Axe
+item.basemetals.coldiron_bars.name=Cold-Iron Bars
+item.basemetals.coldiron_block.name=Cold-Iron Block
+item.basemetals.coldiron_boots.name=Cold-Iron Boots
+item.basemetals.coldiron_chestplate.name=Cold-Iron Chestplate
+item.basemetals.coldiron_crackhammer.name=Cold-Iron Crack Hammer
+item.basemetals.coldiron_door.name=Cold-Iron Door
+item.basemetals.coldiron_helmet.name=Cold-Iron Helmet
+item.basemetals.coldiron_hoe.name=Cold-Iron Hoe
+item.basemetals.coldiron_ingot.name=Cold-Iron Ingot
+item.basemetals.coldiron_leggings.name=Cold-Iron Leg Armor
+item.basemetals.coldiron_nugget.name=Cold-Iron Nugget
+item.basemetals.coldiron_ore.name=Cold-Iron Ore
+item.basemetals.coldiron_pickaxe.name=Cold-Iron Pickaxe
+item.basemetals.coldiron_powder.name=Powdered Cold-Iron
+item.basemetals.coldiron_shovel.name=Cold-Iron Shovel
+item.basemetals.coldiron_sword.name=Cold-Iron Sword
+item.basemetals.coldiron_trapdoor.name=Cold-Iron Trapdoor
+item.basemetals.copper_axe.name=Copper Axe
+item.basemetals.copper_bars.name=Copper Bars
+item.basemetals.copper_block.name=Copper Block
+item.basemetals.copper_boots.name=Copper Boots
+item.basemetals.copper_chestplate.name=Copper Chestplate
+item.basemetals.copper_crackhammer.name=Copper Crack Hammer
+item.basemetals.copper_door.name=Copper Door
+item.basemetals.copper_helmet.name=Copper Helmet
+item.basemetals.copper_hoe.name=Copper Hoe
+item.basemetals.copper_ingot.name=Copper Ingot
+item.basemetals.copper_leggings.name=Copper Leg Armor
+item.basemetals.copper_nugget.name=Copper Nugget
+item.basemetals.copper_ore.name=Copper Ore
+item.basemetals.copper_pickaxe.name=Copper Pickaxe
+item.basemetals.copper_powder.name=Powdered Copper
+item.basemetals.copper_shovel.name=Copper Shovel
+item.basemetals.copper_sword.name=Copper Sword
+item.basemetals.copper_trapdoor.name=Copper Trapdoor
+item.basemetals.electrum_axe.name=Electrum Axe
+item.basemetals.electrum_bars.name=Electrum Bars
+item.basemetals.electrum_blend.name=Electrum Blend
+item.basemetals.electrum_block.name=Electrum Block
+item.basemetals.electrum_boots.name=Electrum Boots
+item.basemetals.electrum_chestplate.name=Electrum Chestplate
+item.basemetals.electrum_crackhammer.name=Electrum Crack Hammer
+item.basemetals.electrum_door.name=Electrum Door
+item.basemetals.electrum_helmet.name=Electrum Helmet
+item.basemetals.electrum_hoe.name=Electrum Hoe
+item.basemetals.electrum_ingot.name=Electrum Ingot
+item.basemetals.electrum_leggings.name=Electrum Leg Armor
+item.basemetals.electrum_nugget.name=Electrum Nugget
+item.basemetals.electrum_pickaxe.name=Electrum Pickaxe
+item.basemetals.electrum_powder.name=Powdered Electrum
+item.basemetals.electrum_shovel.name=Electrum Shovel
+item.basemetals.electrum_sword.name=Electrum Sword
+item.basemetals.electrum_trapdoor.name=Electrum Trapdoor
+item.basemetals.invar_axe.name=Invar Axe
+item.basemetals.invar_bars.name=Invar Bars
+item.basemetals.invar_blend.name=Invar Blend
+item.basemetals.invar_block.name=Invar Block
+item.basemetals.invar_boots.name=Invar Boots
+item.basemetals.invar_chestplate.name=Invar Chestplate
+item.basemetals.invar_crackhammer.name=Invar Crack Hammer
+item.basemetals.invar_door.name=Invar Door
+item.basemetals.invar_helmet.name=Invar Helmet
+item.basemetals.invar_hoe.name=Invar Hoe
+item.basemetals.invar_ingot.name=Invar Ingot
+item.basemetals.invar_leggings.name=Invar Leg Armor
+item.basemetals.invar_nugget.name=Invar Nugget
+item.basemetals.invar_pickaxe.name=Invar Pickaxe
+item.basemetals.invar_powder.name=Powdered Invar
+item.basemetals.invar_shovel.name=Invar Shovel
+item.basemetals.invar_sword.name=Invar Sword
+item.basemetals.invar_trapdoor.name=Invar Trapdoor
+item.basemetals.iron_crackhammer.name=Iron Crack Hammer
+item.basemetals.iron_powder.name=Powdered Iron
+item.basemetals.iron_nugget.name=Iron Nugget
+item.basemetals.gold_powder.name=Powdered Gold
+item.basemetals.lead_axe.name=Lead Axe
+item.basemetals.lead_bars.name=Lead Bars
+item.basemetals.lead_block.name=Lead Block
+item.basemetals.lead_boots.name=Lead Boots
+item.basemetals.lead_chestplate.name=Lead Chestplate
+item.basemetals.lead_crackhammer.name=Lead Crack Hammer
+item.basemetals.lead_door.name=Lead Door
+item.basemetals.lead_helmet.name=Lead Helmet
+item.basemetals.lead_hoe.name=Lead Hoe
+item.basemetals.lead_ingot.name=Lead Ingot
+item.basemetals.lead_leggings.name=Lead Leg Armor
+item.basemetals.lead_nugget.name=Lead Nugget
+item.basemetals.lead_ore.name=Lead Ore
+item.basemetals.lead_pickaxe.name=Lead Pickaxe
+item.basemetals.lead_powder.name=Powdered Lead
+item.basemetals.lead_shovel.name=Lead Shovel
+item.basemetals.lead_sword.name=Lead Sword
+item.basemetals.lead_trapdoor.name=Lead Trapdoor
+item.basemetals.mercury_ingot.name=Liquid Mercury
+item.basemetals.mercury_ore.name=Mercury Ore
+item.basemetals.mercury_powder.name=Powdered Mercury Ore
+item.basemetals.mithril_axe.name=Mithril Axe
+item.basemetals.mithril_bars.name=Mithril Bars
+item.basemetals.mithril_blend.name=Mithril Blend
+item.basemetals.mithril_block.name=Mithril Block
+item.basemetals.mithril_boots.name=Mithril Boots
+item.basemetals.mithril_chestplate.name=Mithril Chestplate
+item.basemetals.mithril_crackhammer.name=Mithril Crack Hammer
+item.basemetals.mithril_door.name=Mithril Door
+item.basemetals.mithril_helmet.name=Mithril Helmet
+item.basemetals.mithril_hoe.name=Mithril Hoe
+item.basemetals.mithril_ingot.name=Mithril Ingot
+item.basemetals.mithril_leggings.name=Mithril Leg Armor
+item.basemetals.mithril_nugget.name=Mithril Nugget
+item.basemetals.mithril_pickaxe.name=Mithril Pickaxe
+item.basemetals.mithril_powder.name=Powdered Mithril
+item.basemetals.mithril_shovel.name=Mithril Shovel
+item.basemetals.mithril_sword.name=Mithril Sword
+item.basemetals.mithril_trapdoor.name=Mithril Trapdoor
+item.basemetals.nickel_axe.name=Nickel Axe
+item.basemetals.nickel_bars.name=Nickel Bars
+item.basemetals.nickel_block.name=Nickel Block
+item.basemetals.nickel_boots.name=Nickel Boots
+item.basemetals.nickel_chestplate.name=Nickel Chestplate
+item.basemetals.nickel_crackhammer.name=Nickel Crack Hammer
+item.basemetals.nickel_door.name=Nickel Door
+item.basemetals.nickel_helmet.name=Nickel Helmet
+item.basemetals.nickel_hoe.name=Nickel Hoe
+item.basemetals.nickel_ingot.name=Nickel Ingot
+item.basemetals.nickel_leggings.name=Nickel Leg Armor
+item.basemetals.nickel_nugget.name=Nickel Nugget
+item.basemetals.nickel_ore.name=Nickel Ore
+item.basemetals.nickel_pickaxe.name=Nickel Pickaxe
+item.basemetals.nickel_powder.name=Powdered Nickel
+item.basemetals.nickel_shovel.name=Nickel Shovel
+item.basemetals.nickel_sword.name=Nickel Sword
+item.basemetals.nickel_trapdoor.name=Nickel Trapdoor
+item.basemetals.silver_axe.name=Silver Axe
+item.basemetals.silver_bars.name=Silver Bars
+item.basemetals.silver_block.name=Silver Block
+item.basemetals.silver_boots.name=Silver Boots
+item.basemetals.silver_chestplate.name=Silver Chestplate
+item.basemetals.silver_crackhammer.name=Silver Crack Hammer
+item.basemetals.silver_door.name=Silver Door
+item.basemetals.silver_helmet.name=Silver Helmet
+item.basemetals.silver_hoe.name=Silver Hoe
+item.basemetals.silver_ingot.name=Silver Ingot
+item.basemetals.silver_leggings.name=Silver Leg Armor
+item.basemetals.silver_nugget.name=Silver Nugget
+item.basemetals.silver_ore.name=Silver Ore
+item.basemetals.silver_pickaxe.name=Silver Pickaxe
+item.basemetals.silver_powder.name=Powdered Silver
+item.basemetals.silver_shovel.name=Silver Shovel
+item.basemetals.silver_sword.name=Silver Sword
+item.basemetals.silver_trapdoor.name=Silver Trapdoor
+item.basemetals.starsteel_axe.name=Star-Steel Axe
+item.basemetals.starsteel_bars.name=Star-Steel Bars
+item.basemetals.starsteel_block.name=Star-Steel Block
+item.basemetals.starsteel_boots.name=Star-Steel Boots
+item.basemetals.starsteel_chestplate.name=Star-Steel Chestplate
+item.basemetals.starsteel_crackhammer.name=Star-Steel Crack Hammer
+item.basemetals.starsteel_door.name=Star-Steel Door
+item.basemetals.starsteel_helmet.name=Star-Steel Helmet
+item.basemetals.starsteel_hoe.name=Star-Steel Hoe
+item.basemetals.starsteel_ingot.name=Star-Steel Ingot
+item.basemetals.starsteel_leggings.name=Star-Steel Leg Armor
+item.basemetals.starsteel_nugget.name=Star-Steel Nugget
+item.basemetals.starsteel_ore.name=Star-Steel Ore
+item.basemetals.starsteel_pickaxe.name=Star-Steel Pickaxe
+item.basemetals.starsteel_powder.name=Powdered Star-Steel
+item.basemetals.starsteel_shovel.name=Star-Steel Shovel
+item.basemetals.starsteel_sword.name=Star-Steel Sword
+item.basemetals.starsteel_trapdoor.name=Star-Steel Trapdoor
+item.basemetals.steel_axe.name=Steel Axe
+item.basemetals.steel_bars.name=Steel Bars
+item.basemetals.steel_blend.name=Steel Blend
+item.basemetals.steel_block.name=Steel Block
+item.basemetals.steel_boots.name=Steel Boots
+item.basemetals.steel_chestplate.name=Steel Chestplate
+item.basemetals.steel_crackhammer.name=Steel Crack Hammer
+item.basemetals.steel_door.name=Steel Door
+item.basemetals.steel_helmet.name=Steel Helmet
+item.basemetals.steel_hoe.name=Steel Hoe
+item.basemetals.steel_ingot.name=Steel Ingot
+item.basemetals.steel_leggings.name=Steel Leg Armor
+item.basemetals.steel_nugget.name=Steel Nugget
+item.basemetals.steel_pickaxe.name=Steel Pickaxe
+item.basemetals.steel_powder.name=Powdered Steel
+item.basemetals.steel_shovel.name=Steel Shovel
+item.basemetals.steel_sword.name=Steel Sword
+item.basemetals.steel_trapdoor.name=Steel Trapdoor
+item.basemetals.stone_crackhammer.name=Steel Crack Hammer
+item.basemetals.tin_axe.name=Tin Axe
+item.basemetals.tin_bars.name=Tin Bars
+item.basemetals.tin_block.name=Tin Block
+item.basemetals.tin_boots.name=Tin Boots
+item.basemetals.tin_chestplate.name=Tin Chestplate
+item.basemetals.tin_crackhammer.name=Tin Crack Hammer
+item.basemetals.tin_door.name=Tin Door
+item.basemetals.tin_helmet.name=Tin Helmet
+item.basemetals.tin_hoe.name=Tin Hoe
+item.basemetals.tin_ingot.name=Tin Ingot
+item.basemetals.tin_leggings.name=Tin Leg Armor
+item.basemetals.tin_nugget.name=Tin Nugget
+item.basemetals.tin_ore.name=Tin Ore
+item.basemetals.tin_pickaxe.name=Tin Pickaxe
+item.basemetals.tin_powder.name=Powdered Tin
+item.basemetals.tin_shovel.name=Tin Shovel
+item.basemetals.tin_sword.name=Tin Sword
+item.basemetals.tin_trapdoor.name=Tin Trapdoor
+item.basemetals.zinc_block.name=Zinc Block
+item.basemetals.zinc_ingot.name=Zinc Ingot
+item.basemetals.zinc_nugget.name=Zinc Nugget
+item.basemetals.zinc_ore.name=Zinc Ore
+item.basemetals.zinc_powder.name=Powdered Zinc
 
-#Small Dusts
-item.basemetals.carbon_smallpowder.name=Tiny Pile of Carbon Dust
-item.basemetals.coal_smallpowder.name=Tiny Pile of Coal Dust
-item.basemetals.charcoal_smallpowder.name=Tiny Pile of Charcoal Dust
-item.basemetals.diamond_smallpowder.name=Tiny Pile of Diamond Dust
-item.basemetals.emerald_smallpowder.name=Tiny Pile of Emerald Dust
-item.basemetals.gold_smallpowder.name=Tiny Pile of Gold Dust
-item.basemetals.iron_smallpowder.name=Tiny Pile of Iron Dust
-item.basemetals.lapis_smallpowder.name=Tiny Pile of Lapis Dust
-item.basemetals.lead_smallpowder.name=Tiny Pile of Lead Dust
-item.basemetals.obsidian_smallpowder.name=Tiny Pile of Obsidian Dust
-item.basemetals.quartz_smallpowder.name=Tiny Pile of Quartz Dust
-item.basemetals.redstone_smallpowder.name=Tiny Pile of Redstone Dust
-item.basemetals.wood_powder.name=Tiny Pile of Sawdust
+tile.basemetals.adamantine_bars.name=Adamantine Bars
+tile.basemetals.adamantine_block.name=Adamantine Block
+tile.basemetals.adamantine_door.name=Adamantine Door
+tile.basemetals.adamantine_ore.name=Adamantine Ore
+tile.basemetals.adamantine_trapdoor.name=Adamantine Trapdoor
+tile.basemetals.aquarium_bars.name=Aquarium Bars
+tile.basemetals.aquarium_block.name=Aquarium Block
+tile.basemetals.aquarium_door.name=Aquarium Door
+tile.basemetals.aquarium_trapdoor.name=Aquarium Trapdoor
+tile.basemetals.brass_bars.name=Brass Bars
+tile.basemetals.brass_block.name=Brass Block
+tile.basemetals.brass_door.name=Brass Door
+tile.basemetals.brass_trapdoor.name=Brass Trapdoor
+tile.basemetals.bronze_bars.name=Bronze Bars
+tile.basemetals.bronze_block.name=Bronze Block
+tile.basemetals.bronze_door.name=Bronze Door
+tile.basemetals.bronze_trapdoor.name=Bronze Trapdoor
+tile.basemetals.coldiron_bars.name=Cold-Iron Bars
+tile.basemetals.coldiron_block.name=Cold-Iron Block
+tile.basemetals.coldiron_door.name=Cold-Iron Door
+tile.basemetals.coldiron_ore.name=Cold-Iron Ore
+tile.basemetals.coldiron_trapdoor.name=Cold-Iron Trapdoor
+tile.basemetals.copper_bars.name=Copper Bars
+tile.basemetals.copper_block.name=Copper Block
+tile.basemetals.copper_door.name=Copper Door
+tile.basemetals.copper_ore.name=Copper Ore
+tile.basemetals.copper_trapdoor.name=Copper Trapdoor
+tile.basemetals.electrum_bars.name=Electrum Bars
+tile.basemetals.electrum_block.name=Electrum Block
+tile.basemetals.electrum_door.name=Electrum Door
+tile.basemetals.electrum_trapdoor.name=Electrum Trapdoor
+tile.basemetals.invar_bars.name=Invar Bars
+tile.basemetals.invar_block.name=Invar Block
+tile.basemetals.invar_door.name=Invar Door
+tile.basemetals.invar_trapdoor.name=Invar Trapdoor
+tile.basemetals.lead_bars.name=Lead Bars
+tile.basemetals.lead_block.name=Lead Block
+tile.basemetals.lead_door.name=Lead Door
+tile.basemetals.lead_ore.name=Lead Ore
+tile.basemetals.lead_trapdoor.name=Lead Trapdoor
+tile.basemetals.mercury_ore.name=Mercury Ore
+tile.basemetals.mithril_bars.name=Mithril Bars
+tile.basemetals.mithril_block.name=Mithril Block
+tile.basemetals.mithril_door.name=Mithril Door
+tile.basemetals.mithril_trapdoor.name=Mithril Trapdoor
+tile.basemetals.nickel_bars.name=Nickel Bars
+tile.basemetals.nickel_block.name=Nickel Block
+tile.basemetals.nickel_door.name=Nickel Door
+tile.basemetals.nickel_ore.name=Nickel Ore
+tile.basemetals.nickel_trapdoor.name=Nickel Trapdoor
+tile.basemetals.silver_bars.name=Silver Bars
+tile.basemetals.silver_block.name=Silver Block
+tile.basemetals.silver_door.name=Silver Door
+tile.basemetals.silver_ore.name=Silver Ore
+tile.basemetals.silver_trapdoor.name=Silver Trapdoor
+tile.basemetals.starsteel_bars.name=Star-Steel Bars
+tile.basemetals.starsteel_block.name=Star-Steel Block
+tile.basemetals.starsteel_door.name=Star-Steel Door
+tile.basemetals.starsteel_ore.name=Star-Steel Ore
+tile.basemetals.starsteel_trapdoor.name=Star-Steel Trapdoor
+tile.basemetals.steel_bars.name=Steel Bars
+tile.basemetals.steel_block.name=Steel Block
+tile.basemetals.steel_door.name=Steel Door
+tile.basemetals.steel_trapdoor.name=Steel Trapdoor
+tile.basemetals.tin_bars.name=Tin Bars
+tile.basemetals.tin_block.name=Tin Block
+tile.basemetals.tin_door.name=Tin Door
+tile.basemetals.tin_ore.name=Tin Ore
+tile.basemetals.tin_trapdoor.name=Tin Trapdoor
+tile.basemetals.zinc_block.name=Zinc Block
+tile.basemetals.zinc_ore.name=Zinc Ore
 
-#Crushed
-item.basemetals.gold_crushed.name=Crushed Gold Ore
-item.basemetals.iron_crushed.name=Crushed Iron Ore
 
-#Crushed Purified
-item.basemetals.gold_crushed_purified.name=Purified Crushed Gold Ore
-item.basemetals.iron_crushed_purified.name=Purified Crushed Iron Ore
-
-#Block Of...
-    #Item
-item.basemetals.charcoal_block.name=Block of Charcoal
-    #Tile
-tile.basemetals.charcoal_block.name=Block of Charcoal
-    
-#Fluids
-	#Fluid.name
-fluid.basemetals.charcoal.name=Liquifacted Charcoal
-fluid.basemetals.coal.name=Liquifacted Coal
-fluid.basemetals.diamond.name=Molten Diamond
-fluid.basemetals.prismarine.name=Molten Prismarine
-fluid.basemetals.redstone.name=Molten Redstone
-fluid.basemetals.emerald.name=Molten Emerald
-fluid.basemetals.iron.name=Molten Iron
-fluid.basemetals.ender.name=Molten Ender
-fluid.basemetals.obsidian.name=Molten Obsidian
-fluid.basemetals.quartz.name=Molten Quartz
-fluid.basemetals.gold.name=Molten Gold
-
-    #Tile
-tile.basemetals.charcoal.name=Liquifacted Charcoal
-tile.basemetals.coal.name=Liquifacted Coal
-tile.basemetals.diamond.name=Molten Diamond
-tile.basemetals.emerald.name=Molten Emerald
-tile.basemetals.ender.name=Molten Ender
-tile.basemetals.gold.name=Molten Gold
-tile.basemetals.iron.name=Molten Iron
-tile.basemetals.obsidian.name=Molten Obsidian
-tile.basemetals.prismarine.name=Molten Prismarine
-tile.basemetals.redstone.name=Molten Redstone
-    #Bucket
-item.bucket.charcoal=Bucket of Liquifacted Charcoal
-item.bucket.coal=Bucket of Liquifacted Coal
-item.bucket.diamond=Bucket of Molten Diamond
-item.bucket.emerald=Bucket of Molten Emerald
-item.bucket.ender=Bucket of Molten Ender
-item.bucket.prismarine=Bucket of Molten Prismarine
-item.bucket.redstone=Bucket of Molten Redstone
-item.basemetals.iron.name=Bucket of Molten Iron
-item.basemetals.obsidian.name=Bucket of Molten Obsidian
-item.basemetals.quartz.name=Bucket of Molten Quartz
-item.basemetals.gold.name=Bucket of Molten Gold
-
-#Doors
-    #Item
-item.basemetals.diamond_door.name=Diamond Door
-item.basemetals.emerald_door.name=Emerald Door
-item.basemetals.gold_door.name=Gold Door
-item.basemetals.obsidian_door.name=Obsidian Door
-item.basemetals.quartz_door.name=Quartz Door
-    #Tile
-tile.basemetals.diamond_door.name=Diamond Door
-tile.basemetals.emerald_door.name=Emerald Door
-tile.basemetals.gold_door.name=Gold Door
-tile.basemetals.obsidian_door.name=Obsidian Door
-tile.basemetals.quartz_door.name=Quartz Door
-    
-#Trapdoors
-    #Tiles
-tile.basemetals.diamond_trapdoor.name=Diamond Trapdoor
-tile.basemetals.emerald_trapdoor.name=Emerald Trapdoor
-tile.basemetals.gold_trapdoor.name=Gold Trapdoor
-tile.basemetals.obsidian_trapdoor.name=Obsidian Trapdoor
-tile.basemetals.quartz_trapdoor.name=Quartz Trapdoor
-    #Items
-item.basemetals.diamond_trapdoor.name=Diamond Trapdoor
-item.basemetals.emerald_trapdoor.name=Emerald Trapdoor
-item.basemetals.gold_trapdoor.name=Gold Trapdoor
-item.basemetals.obsidian_trapdoor.name=Obsidian Trapdoor
-item.basemetals.quartz_trapdoor.name=Quartz Trapdoor
-
-#Gears
-item.basemetals.diamond_gear.name=Diamond Gear
-item.basemetals.emerald_gear.name=Emerald Gear
-item.basemetals.gold_gear.name=Gold Gear
-item.basemetals.iron_gear.name=Iron Gear
-item.basemetals.obsidian_gear.name=Obsidian Gear
-item.basemetals.quartz_gear.name=Quartz Gear
-item.basemetals.stone_gear.name=Stone Gear
-item.basemetals.wood_gear.name=Wooden Gear
-
-#Rods
-item.basemetals.diamond_rod.name=Diamond Rod
-item.basemetals.emerald_rod.name=Emerald Rod
-item.basemetals.gold_rod.name=Gold Rod
-item.basemetals.iron_rod.name=Iron Rod
-item.basemetals.obsidian_rod.name=Obsidian Rod
-item.basemetals.quartz_rod.name=Quartz Rod
-item.basemetals.stone_rod.name=Stone Rod
-
-#Plates
-    #Item
-item.basemetals.iron_plate.name=Iron Plate
-item.basemetals.gold_plate.name=Gold Plate
-    #Tile
+tile.basemetals.adamantine_plate.name=Adamantine Plate
+tile.basemetals.aquarium_plate.name=Aquarium Plate
+tile.basemetals.brass_plate.name=Brass Plate
+tile.basemetals.bronze_plate.name=Bronze Plate
+tile.basemetals.coldiron_plate.name=Cold-Iron Plate
+tile.basemetals.copper_plate.name=Copper Plate
+tile.basemetals.electrum_plate.name=Electrum Plate
+tile.basemetals.invar_plate.name=Invar Plate
+tile.basemetals.lead_plate.name=Lead Plate
+tile.basemetals.mithril_plate.name=Mithril Plate
+tile.basemetals.nickel_plate.name=Nickel Plate
+tile.basemetals.silver_plate.name=Silver Plate
+tile.basemetals.starsteel_plate.name=Star-Steel Plate
+tile.basemetals.steel_plate.name=Steel Plate
+tile.basemetals.tin_plate.name=Tin Plate
+tile.basemetals.zinc_plate.name=Zinc Plate
 tile.basemetals.iron_plate.name=Iron Plate
 tile.basemetals.gold_plate.name=Gold Plate
 
-#Button
-    #Item
-item.basemetals.diamond_button.name=Diamond Button
-item.basemetals.emerald_button.name=Emerald Button
-item.basemetals.gold_button.name=Gold Button
-item.basemetals.obsidian_button.name=Obsidian Button
-item.basemetals.quartz_button.name=Quartz Button
-item.basemetals.iron_button.name=Iron Button
-    #Tile
-tile.basemetals.diamond_button.name=Diamond Button
-tile.basemetals.emerald_button.name=Emerald Button
-tile.basemetals.gold_button.name=Gold Button
-tile.basemetals.obsidian_button.name=Obsidian Button
-tile.basemetals.quartz_button.name=Quartz Button
-tile.basemetals.iron_button.name=Iron Button
 
-#Pressure Plate
-    #Item
-item.basemetals.diamond_pressure_plate.name=Diamond Pressure Plate
-item.basemetals.emerald_pressure_plate.name=Emerald Pressure Plate
-item.basemetals.obsidian_pressure_plate.name=Obsidian Pressure Plate
-item.basemetals.quartz_pressure_plate.name=Quartz Pressure Plate
-item.basemetals.iron_pressure_plate.name=Iron Pressure Plate
-item.basemetals.gold_pressure_plate.name=Gold Pressure Plate
-    #Tile
-tile.basemetals.diamond_pressure_plate.name=Diamond Pressure Plate
-tile.basemetals.emerald_pressure_plate.name=Emerald Pressure Plate
-tile.basemetals.obsidian_pressure_plate.name=Obsidian Pressure Plate
-tile.basemetals.quartz_pressure_plate.name=Quartz Pressure Plate
-tile.basemetals.iron_pressure_plate.name=Iron Pressure Plate
-tile.basemetals.gold_pressure_plate.name=Gold Pressure Plate
+tooltip.adamantine.tool=+%x damage against tough enemies
+tooltip.aquarium.tool=+%x damage against aquatic enemies
+tooltip.coldiron.tool=+%x damage against firey enemies
+tooltip.mithril.tool=Blinds and withers undead
+tooltip.starsteel.tool=Repairs 1 damage every %x seconds
 
-#Dirty
-item.basemetals.gold_powder_dirty.name=Dirty Gold Dust
-item.basemetals.iron_powder_dirty.name=Dirty Iron Dust
+tooltip.adamantine.armor=Reduces damage taken
+tooltip.aquarium.armor=Full suit: breathe underwater
+tooltip.coldiron.armor=Full suit: fire immunity
+tooltip.mithril.armor=Full suit: protection from poison & wither
+tooltip.starsteel.armor=Reduces your weight
 
-#Dense Plate
-    #Item
-item.basemetals.iron_dense_plate.name=Dense Iron Plate
-item.basemetals.gold_dense_plate.name=Dense Gold Plate
-    #Tile
-tile.basemetals.iron_dense_plate.name=Dense Iron Plate
-tile.basemetals.gold_dense_plate.name=Dense Gold Plate
 
-#Slab  
-    #Item
-item.basemetals.diamond_slab.name=Diamond Slab
-item.basemetals.emerald_slab.name=Emerald Slab
-item.basemetals.gold_slab.name=Gold Slab
-item.basemetals.iron_slab.name=Iron Slab
-item.basemetals.obsidian_slab.name=Obsidian Slab
-    #Tile
-tile.basemetals.diamond_slab.name=Diamond Slab
-tile.basemetals.emerald_slab.name=Emerald Slab
-tile.basemetals.gold_slab.name=Gold Slab
-tile.basemetals.iron_slab.name=Iron Slab
-tile.basemetals.obsidian_slab.name=Obsidian Slab
+achievement.this_is_new=This is new...
+achievement.blocktastic=Blocktastic!
+achievement.geologist=Geologist
+achievement.brass_maker=Brass
+achievement.bronze_maker=Bronze
+achievement.electrum_maker=Electrum
+achievement.steel_maker=Steel
+achievement.invar_maker=Invar
+achievement.mithril_maker=Mithril
+achievement.aquarium_maker=Aquarium
+achievement.metallurgy=Metallurgy
+achievement.demon_slayer=Demon Slayer
+achievement.angel_of_death=Angel of Death
+achievement.scuba_diver=SCUBA Diver 
+achievement.juggernaut=Juggernaut
+achievement.moon_boots=Moon Walker
+achievement.this_is_new.desc=Smelt a new metal from the Base Metals mod
+achievement.blocktastic.desc=Place a metal block that is neither iron nor gold
+achievement.geologist.desc=Make a hammer from a metal block
+achievement.brass_maker.desc=Combine powdered copper and zinc to make brass
+achievement.bronze_maker.desc=Combine powdered copper and tin to make bronze
+achievement.electrum_maker.desc=Combine powdered silver and gold to make electrum
+achievement.steel_maker.desc=Combine powdered iron and powdered charcoal to make steel
+achievement.invar_maker.desc=Combine powdered iron and nickel to make invar
+achievement.mithril_maker.desc=Combine powdered silver, cold-iron and mercury to make mithril
+achievement.aquarium_maker.desc=Combine powdered copper and zinc with prismarine crystals to make aquarium
+achievement.metallurgy.desc=Craft any alloy blend
+achievement.demon_slayer.desc=Wear a full suit of cold-iron armor and wield a cold-iron sword
+achievement.angel_of_death.desc=Wear a full suit of mithril armor and wield a mithril sword
+achievement.scuba_diver.desc=Wear a full suit of aquarium armor and swim under water
+achievement.juggernaut.desc=Wear a full suit of adamantine armor
+achievement.moon_boots.desc=Wear a pair of star-steel boots
 
-#Lever
-    #Item
-item.basemetals.diamond_lever.name=Diamond Lever
-item.basemetals.emerald_lever.name=Emerald Lever
-item.basemetals.gold_lever.name=Gold Lever
-item.basemetals.iron_lever.name=Iron Lever
-item.basemetals.obsidian_lever.name=Obsidian Lever
-item.basemetals.quartz_lever.name=Quartz Lever
-    #Tile
-tile.basemetals.diamond_lever.name=Diamond Lever
-tile.basemetals.emerald_lever.name=Emerald Lever
-tile.basemetals.gold_lever.name=Gold Lever
-tile.basemetals.iron_lever.name=Iron Lever
-tile.basemetals.obsidian_lever.name=Obsidian Lever
-tile.basemetals.quartz_lever.name=Quartz Lever
 
-#Stair
-    #Item
-item.basemetals.diamond_stairs.name=Diamond Stairs
-item.basemetals.emerald_stairs.name=Emerald Stairs
-item.basemetals.gold_stairs.name=Gold Stairs
-item.basemetals.iron_stairs.name=Iron Stairs
-item.basemetals.obsidian_stairs.name=Obsidian Stairs
-    #Tile
-tile.basemetals.diamond_stairs.name=Diamond Stairs
-tile.basemetals.emerald_stairs.name=Emerald Stairs
-tile.basemetals.gold_stairs.name=Gold Stairs
-tile.basemetals.iron_stairs.name=Iron Stairs
+item.basemetals.diamond_crackhammer.name=Diamond Crack Hammer
+item.basemetals.wood_crackhammer.name=Wooden Crack Hammer
+item.basemetals.stone_crackhammer.name=Stone Crack Hammer
 
-#Wall
-    #Item
-item.basemetals.diamond_wall.name=Diamond Wall
-item.basemetals.emerald_wall.name=Emerald Wall
-item.basemetals.gold_wall.name=Gold Wall
-item.basemetals.iron_wall.name=Iron Wall
-item.basemetals.obsidian_wall.name=Obsidian Wall
-item.basemetals.quartz_wall.name=Quartz Wall
-    #Tile
-tile.basemetals.diamond_wall.name=Diamond Wall
-tile.basemetals.emerald_wall.name=Emerald Wall
-tile.basemetals.gold_wall.name=Gold Wall
-tile.basemetals.iron_wall.name=Iron Wall
-tile.basemetals.obsidian_wall.name=Obsidian Wall
-tile.basemetals.quartz_wall.name=Quartz Wall
+item.bucket.mercury=Bucket of Mercury
+fluid.basemetals.mercury=Mercury
+
+item.basemetals.human_detector.name=Security Pressure Plate
+
+achievement.cupronickel_maker.desc=Combine powdered copper and nickel to make cupronickel
+
+item.basemetals.cupronickel_axe.name=Cupronickel Axe
+item.basemetals.cupronickel_bars.name=Cupronickel Bars
+item.basemetals.cupronickel_blend.name=Cupronickel Blend
+item.basemetals.cupronickel_block.name=Cupronickel Block
+item.basemetals.cupronickel_boots.name=Cupronickel Boots
+item.basemetals.cupronickel_chestplate.name=Cupronickel Chestplate
+item.basemetals.cupronickel_crackhammer.name=Cupronickel Crack Hammer
+item.basemetals.cupronickel_door.name=Cupronickel Door
+item.basemetals.cupronickel_helmet.name=Cupronickel Helmet
+item.basemetals.cupronickel_hoe.name=Cupronickel Hoe
+item.basemetals.cupronickel_ingot.name=Cupronickel Ingot
+item.basemetals.cupronickel_leggings.name=Cupronickel Leg Armor
+item.basemetals.cupronickel_nugget.name=Cupronickel Nugget
+item.basemetals.cupronickel_pickaxe.name=Cupronickel Pickaxe
+item.basemetals.cupronickel_powder.name=Powdered Cupronickel
+item.basemetals.cupronickel_shovel.name=Cupronickel Shovel
+item.basemetals.cupronickel_sword.name=Cupronickel Sword
+item.basemetals.cupronickel_trapdoor.name=Cupronickel Trapdoor
+tile.basemetals.cupronickel_bars.name=Cupronickel Bars
+tile.basemetals.cupronickel_block.name=Cupronickel Block
+tile.basemetals.cupronickel_door.name=Cupronickel Door
+tile.basemetals.cupronickel_trapdoor.name=Cupronickel Trapdoor
+
+item.basemetals.platinum_axe.name=Platinum Axe
+item.basemetals.platinum_bars.name=Platinum Bars
+item.basemetals.platinum_block.name=Platinum Block
+item.basemetals.platinum_boots.name=Platinum Boots
+item.basemetals.platinum_chestplate.name=Platinum Chestplate
+item.basemetals.platinum_crackhammer.name=Platinum Crack Hammer
+item.basemetals.platinum_door.name=Platinum Door
+item.basemetals.platinum_helmet.name=Platinum Helmet
+item.basemetals.platinum_hoe.name=Platinum Hoe
+item.basemetals.platinum_ingot.name=Platinum Ingot
+item.basemetals.platinum_leggings.name=Platinum Leg Armor
+item.basemetals.platinum_nugget.name=Platinum Nugget
+item.basemetals.platinum_ore.name=Platinum Ore
+item.basemetals.platinum_pickaxe.name=Platinum Pickaxe
+item.basemetals.platinum_powder.name=Powdered Platinum
+item.basemetals.platinum_shovel.name=Platinum Shovel
+item.basemetals.platinum_sword.name=Platinum Sword
+item.basemetals.platinum_trapdoor.name=Platinum Trapdoor
+tile.basemetals.platinum_bars.name=Platinum Bars
+tile.basemetals.platinum_block.name=Platinum Block
+tile.basemetals.platinum_door.name=Platinum Door
+tile.basemetals.platinum_ore.name=Platinum Ore
+tile.basemetals.platinum_trapdoor.name=Platinum Trapdoor
+
+item.basemetals.adamantine_rod.name=Adamantine Rod
+item.basemetals.aquarium_rod.name=Aquarium Rod
+item.basemetals.brass_rod.name=Brass Rod
+item.basemetals.bronze_rod.name=Bronze Rod
+item.basemetals.coldiron_rod.name=Cold-Iron Rod
+item.basemetals.copper_rod.name=Copper Rod
+item.basemetals.cupronickel_rod.name=Cupronickel Rod
+item.basemetals.electrum_rod.name=Electrum Rod
+item.basemetals.gold_rod.name=Gold Rod
+item.basemetals.invar_rod.name=Invar Rod
+item.basemetals.iron_rod.name=Iron Rod
+item.basemetals.lead_rod.name=Lead Rod
+item.basemetals.mithril_rod.name=Mithril Rod
+item.basemetals.nickel_rod.name=Nickel Rod
+item.basemetals.platinum_rod.name=Platinum Rod
+item.basemetals.silver_rod.name=Silver Rod
+item.basemetals.starsteel_rod.name=Star-Steel Rod
+item.basemetals.steel_rod.name=Steel Rod
+item.basemetals.tin_rod.name=Tin Rod
+item.basemetals.zinc_rod.name=Zinc Rod
+
+item.basemetals.adamantine_gear.name=Adamantine Gear
+item.basemetals.aquarium_gear.name=Aquarium Gear
+item.basemetals.brass_gear.name=Brass Gear
+item.basemetals.bronze_gear.name=Bronze Gear
+item.basemetals.coldiron_gear.name=Cold-Iron Gear
+item.basemetals.copper_gear.name=Copper Gear
+item.basemetals.cupronickel_gear.name=Cupronickel Gear
+item.basemetals.electrum_gear.name=Electrum Gear
+item.basemetals.gold_gear.name=Gold Gear
+item.basemetals.invar_gear.name=Invar Gear
+item.basemetals.iron_gear.name=Iron Gear
+item.basemetals.lead_gear.name=Lead Gear
+item.basemetals.mithril_gear.name=Mithril Gear
+item.basemetals.nickel_gear.name=Nickel Gear
+item.basemetals.platinum_gear.name=Platinum Gear
+item.basemetals.silver_gear.name=Silver Gear
+item.basemetals.starsteel_gear.name=Star-Steel Gear
+item.basemetals.steel_gear.name=Steel Gear
+item.basemetals.tin_gear.name=Tin Gear
+item.basemetals.zinc_gear.name=Zinc Gear
+
+item.basemetals.gold_crackhammer.name=Golden Crack Hammer
+
+# Anvils
+tile.basemetals.steel_anvil.intact.name=Steel Anvil
+tile.basemetals.steel_anvil.slightlyDamaged.name=Slightly Damaged Steel Anvil
+tile.basemetals.steel_anvil.veryDamaged.name=Badly Damaged Steel Anvil
+tile.basemetals.stone_anvil.intact.name=Stone Anvil
+tile.basemetals.stone_anvil.slightlyDamaged.name=Slightly Damaged Stone Anvil
+tile.basemetals.stone_anvil.veryDamaged.name=Badly Damaged Stone Anvil
+tile.basemetals.adamantine_anvil.intact.name=Adamantine Anvil
+tile.basemetals.adamantine_anvil.slightlyDamaged.name=Slightly Damaged Adamantine Anvil
+tile.basemetals.adamantine_anvil.veryDamaged.name=Badly Damaged Adamantine Anvil
+
+#Sickles
+item.basemetals.adamantine_scythe.name=Adamantine Sickle
+item.basemetals.antimony_scythe.name=Antimony Sickle
+item.basemetals.aquarium_scythe.name=Aquarium Sickle
+item.basemetals.bismuth_scythe.name=Bismuth Sickle
+item.basemetals.brass_scythe.name=Brass Sickle
+item.basemetals.bronze_scythe.name=Bronze Sickle
+item.basemetals.coldiron_scythe.name=Coldiron Sickle
+item.basemetals.copper_scythe.name=Copper Sickle
+item.basemetals.cupronickel_scythe.name=Cupronickel Sickle
+item.basemetals.diamond_scythe.name=Diamond Sickle
+item.basemetals.electrum_scythe.name=Electrum Sickle
+item.basemetals.emerald_scythe.name=Emerald Sickle
+item.basemetals.gold_scythe.name=Gold Sickle
+item.basemetals.invar_scythe.name=Invar Sickle
+item.basemetals.iron_scythe.name=Iron Sickle
+item.basemetals.lead_scythe.name=Lead Sickle
+item.basemetals.mithril_scythe.name=Mithril Sickle
+item.basemetals.nickel_scythe.name=Nickel Sickle
+item.basemetals.obsidian_scythe.name=Obsidian Sickle
+item.basemetals.pewter_scythe.name=Pewter Sickle
+item.basemetals.platinum_scythe.name=Platinum Sickle
+item.basemetals.quartz_scythe.name=Quartz Sickle
+item.basemetals.silver_scythe.name=Silver Sickle
+item.basemetals.starsteel_scythe.name=Starsteel Sickle
+item.basemetals.steel_scythe.name=Steel Sickle
+item.basemetals.stone_scythe.name=Stone Sickle
+item.basemetals.tin_scythe.name=Tin Sickle
+item.basemetals.wood_scythe.name=Wood Sickle
+item.basemetals.zinc_scythe.name=Zinc Sickle
