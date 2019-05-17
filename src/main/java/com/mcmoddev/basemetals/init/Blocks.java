@@ -100,6 +100,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
+				.filter(mat -> !mat.isVanilla())
 				.forEach(mat -> regBlocks(event.getRegistry(), mat.getBlocks()));
 		event.getRegistry().register(Materials.DEFAULT.getBlock("human_detector"));
 	}

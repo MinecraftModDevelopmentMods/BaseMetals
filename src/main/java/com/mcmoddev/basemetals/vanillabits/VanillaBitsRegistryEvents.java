@@ -9,7 +9,6 @@ import com.mcmoddev.lib.data.VanillaMaterialNames;
 import com.mcmoddev.lib.init.Fluids;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
-import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -21,6 +20,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -37,42 +37,14 @@ public class VanillaBitsRegistryEvents {
 				.forEach(bl -> ev.getRegistry().register(bl)));
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public static void registerItems(RegistryEvent.Register<Item> ev) {
-		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
+		Materials.getAllMaterials().stream()
 		.filter(mat -> mat.isVanilla())
 		.forEach(mat -> mat.getItems().stream()
 				.map(it -> it.getItem())
-				.filter(it -> {
-					BaseMetals.logger.fatal("(1) item %s (%s) of material %s is for %s ? %s", it, it.getRegistryName(), mat.getCapitalizedName(), BaseMetals.MODID, BaseMetals.MODID.contentEquals(it.getRegistryName().getNamespace()));
-					return BaseMetals.MODID.equals(it.getRegistryName().getNamespace());
-				}).forEach(it -> {
-					BaseMetals.logger.fatal("registering item %s (%s)", it, it.getRegistryName());
-				    ev.getRegistry().register(it);
-				}));
-		Materials.getMaterialsByMod(MMDLib.MODID).stream()
-		.filter(mat -> mat.isVanilla())
-		.forEach(mat -> mat.getItems().stream()
-				.map(it -> it.getItem())
-				.filter(it -> {
-					BaseMetals.logger.fatal("(2) item %s (%s) of material %s is for %s ? %s", it, it.getRegistryName(), mat.getCapitalizedName(), BaseMetals.MODID, BaseMetals.MODID.contentEquals(it.getRegistryName().getNamespace()));
-					return BaseMetals.MODID.equals(it.getRegistryName().getNamespace());
-				}).forEach(it -> {
-					BaseMetals.logger.fatal("registering item %s (%s)", it, it.getRegistryName());
-				    ev.getRegistry().register(it);
-				}));
-		Materials.DEFAULT.getItems().stream()
-		.map(it -> it.getItem())
-		.filter(it -> {
-			BaseMetals.logger.fatal("item %s (%s) is for %s ? %s", it, it.getRegistryName(), BaseMetals.MODID, BaseMetals.MODID.contentEquals(it.getRegistryName().getNamespace()));
-			return BaseMetals.MODID.equals(it.getRegistryName().getNamespace());
-		}).forEach(it -> {
-			BaseMetals.logger.fatal("registering item %s (%s)", it, it.getRegistryName());
-		    ev.getRegistry().register(it);
-		});
-		
-		Oredicts.registerBlockOreDictionaryEntries();
-		Oredicts.registerItemOreDictionaryEntries();
+				.filter(it -> BaseMetals.MODID.equals(it.getRegistryName().getNamespace()))
+				.forEach(it -> ev.getRegistry().register(it)));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -90,7 +62,6 @@ public class VanillaBitsRegistryEvents {
 				.filter(item -> MMDLib.MODID.equalsIgnoreCase(item.getItem().getRegistryName().getNamespace()))
 				.filter(item -> !item.getItem().getRegistryName().getPath().equalsIgnoreCase(name))
 				.forEach(item -> {
-					BaseMetals.logger.fatal("Registering render for {}", name);
 					ModelLoader.setCustomModelResourceLocation(item.getItem(), 0,
 						new ModelResourceLocation(item.getItem().getRegistryName(), "inventory"));
 				});
