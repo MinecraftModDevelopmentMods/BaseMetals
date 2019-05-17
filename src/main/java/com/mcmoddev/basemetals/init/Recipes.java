@@ -32,7 +32,7 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 		MinecraftForge.EVENT_BUS.register(Recipes.class);
 	}
 
-	private static void initModSpecificRecipes() {
+	private static void initModSpecificOredicts() {
 		if (Materials.hasMaterial(MaterialNames.ADAMANTINE)) {
 			final MMDMaterial adamantine = Materials.getMaterialByName(MaterialNames.ADAMANTINE);
 
@@ -63,7 +63,7 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 	 */
 	@SubscribeEvent(priority=EventPriority.LOWEST)
 	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
-		//initModSpecificRecipes();
+		initModSpecificOredicts();
 		register(event);		
 	}
 }
