@@ -32,7 +32,7 @@
          "ore" : "gemDiamond"
       }
    },
-   "type" : "mmdlib:variableOutputOre",
+   "type" : "basemetals:variableOutputOre",
    "pattern" : [
       "x",
       "x"
