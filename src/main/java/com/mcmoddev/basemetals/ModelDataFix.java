@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.mcmoddev.lib.MMDLib;
 import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.data.VanillaMaterialNames;
+import com.mcmoddev.lib.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
@@ -21,12 +21,12 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 @Mod.EventBusSubscriber//(modid=BaseMetals.MODID)
 public class ModelDataFix {
-	private static List<String> vanilla_names = Arrays.asList(VanillaMaterialNames.CHARCOAL, VanillaMaterialNames.COAL,
-			VanillaMaterialNames.DIAMOND, VanillaMaterialNames.EMERALD, VanillaMaterialNames.ENDER, 
-			VanillaMaterialNames.GOLD, VanillaMaterialNames.IRON, VanillaMaterialNames.LAPIS,
-			VanillaMaterialNames.OBSIDIAN, VanillaMaterialNames.PRISMARINE, VanillaMaterialNames.QUARTZ,
-			VanillaMaterialNames.WOOD, VanillaMaterialNames.REDSTONE, VanillaMaterialNames.STONE, 
-			VanillaMaterialNames.REDSTONE);
+	private static List<String> vanilla_names = Arrays.asList(MaterialNames.CHARCOAL, MaterialNames.COAL,
+			MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.ENDER, 
+			MaterialNames.GOLD, MaterialNames.IRON, MaterialNames.LAPIS,
+			MaterialNames.OBSIDIAN, MaterialNames.PRISMARINE, MaterialNames.QUARTZ,
+			MaterialNames.WOOD, MaterialNames.REDSTONE, MaterialNames.STONE, 
+			MaterialNames.REDSTONE);
 	
 	@SubscribeEvent
 	public static void blockRegistryFix(RegistryEvent.MissingMappings<Block> ev) {
