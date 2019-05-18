@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.Names;
-import com.mcmoddev.lib.data.VanillaMaterialNames;
+import com.mcmoddev.lib.data.MaterialNames;
 import com.mcmoddev.lib.events.MMDLibRegisterItems;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDBurnableObject;
@@ -29,18 +29,18 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 	
 	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public static void registerItemsEvent(MMDLibRegisterItems ev) {
-		Materials.getMaterialByName(VanillaMaterialNames.CHARCOAL).addNewItemFromItemStack(Names.INGOT,
+		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItemFromItemStack(Names.INGOT,
 				new ItemStack(net.minecraft.init.Items.COAL, 1, 1));
-		Materials.getMaterialByName(VanillaMaterialNames.COAL).addNewItemFromItemStack(Names.INGOT,
+		Materials.getMaterialByName(MaterialNames.COAL).addNewItemFromItemStack(Names.INGOT,
 				new ItemStack(net.minecraft.init.Items.COAL, 1, 0));
 
-		Materials.getMaterialByName(VanillaMaterialNames.EMERALD).addNewItem(Names.INGOT,
+		Materials.getMaterialByName(MaterialNames.EMERALD).addNewItem(Names.INGOT,
 				net.minecraft.init.Items.EMERALD);
-		Materials.getMaterialByName(VanillaMaterialNames.LAPIS).addNewItemFromItemStack(Names.INGOT,
+		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItemFromItemStack(Names.INGOT,
 				new ItemStack(net.minecraft.init.Items.DYE, 1, 4));
-		Materials.getMaterialByName(VanillaMaterialNames.QUARTZ).addNewItem(Names.INGOT,
+		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT,
 				net.minecraft.init.Items.QUARTZ);
-		Materials.getMaterialByName(VanillaMaterialNames.REDSTONE).addNewItem(Names.POWDER,
+		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER,
 				net.minecraft.init.Items.REDSTONE);
 		addDiamondBits();
 		addGoldBits();
@@ -50,7 +50,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		doSpecialMats();
 		
 		// these three are the only ones that need tools and armor
-		Arrays.asList(VanillaMaterialNames.EMERALD, VanillaMaterialNames.OBSIDIAN, VanillaMaterialNames.QUARTZ)
+		Arrays.asList(MaterialNames.EMERALD, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ)
 		.stream().map(Materials::getMaterialByName)
 		.filter(mat -> Options.isMaterialEnabled(mat.toString()))
 		.forEach(material -> Arrays.asList(Names.AXE, Names.BOOTS, 
@@ -59,8 +59,8 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 				.filter(n -> !material.hasItem(n)).forEach(n -> create(n, material)));
 		
 		// shields
-		Arrays.asList(VanillaMaterialNames.DIAMOND, VanillaMaterialNames.EMERALD, VanillaMaterialNames.GOLD, 
-				VanillaMaterialNames.IRON, VanillaMaterialNames.OBSIDIAN, VanillaMaterialNames.QUARTZ)
+		Arrays.asList(MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD, 
+				MaterialNames.IRON, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ)
 		.stream().map(Materials::getMaterialByName)
 		.filter(n -> Options.isMaterialEnabled(n.toString()))
 		.forEach(material -> Arrays.asList(Names.BOLT, Names.ARROW, Names.BOW, 
@@ -70,9 +70,9 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 				.filter(n -> !material.hasItem(n)).forEach(n -> create(n, material)));
 		
 		// bits that everything should have
-		Arrays.asList(VanillaMaterialNames.DIAMOND, VanillaMaterialNames.EMERALD, VanillaMaterialNames.GOLD, 
-				VanillaMaterialNames.IRON, VanillaMaterialNames.OBSIDIAN, VanillaMaterialNames.QUARTZ, 
-				VanillaMaterialNames.STONE, VanillaMaterialNames.WOOD)
+		Arrays.asList(MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD, 
+				MaterialNames.IRON, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ, 
+				MaterialNames.STONE, MaterialNames.WOOD)
 		.stream().map(Materials::getMaterialByName)
 		.filter(n -> Options.isMaterialEnabled(n.toString()))
 		.forEach(material -> Arrays.asList(Names.CRACKHAMMER, Names.GEAR, 
@@ -80,35 +80,35 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 				.filter(n -> !material.hasItem(n)).forEach(n -> create(n, material)));
 		
 		// last few bits
-		Arrays.asList(VanillaMaterialNames.COAL, VanillaMaterialNames.CHARCOAL, VanillaMaterialNames.DIAMOND,
-				VanillaMaterialNames.EMERALD, VanillaMaterialNames.GOLD, VanillaMaterialNames.IRON, 
-				VanillaMaterialNames.OBSIDIAN, VanillaMaterialNames.REDSTONE, 
-				VanillaMaterialNames.QUARTZ).stream()
+		Arrays.asList(MaterialNames.COAL, MaterialNames.CHARCOAL, MaterialNames.DIAMOND,
+				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON, 
+				MaterialNames.OBSIDIAN, MaterialNames.REDSTONE, 
+				MaterialNames.QUARTZ).stream()
 		.map(Materials::getMaterialByName)
 		.filter(n -> Options.isMaterialEnabled(n.toString()))
 		.forEach(material -> 
 		Arrays.asList(Names.SMALLPOWDER, Names.POWDER).stream()
 		.filter(n -> !material.hasItem(n))
 		.forEach(n -> create(n, material)));
-		Arrays.asList(VanillaMaterialNames.COAL, VanillaMaterialNames.CHARCOAL, VanillaMaterialNames.DIAMOND,
-				VanillaMaterialNames.EMERALD, VanillaMaterialNames.GOLD, VanillaMaterialNames.IRON, 
-				VanillaMaterialNames.OBSIDIAN, VanillaMaterialNames.QUARTZ).stream()
+		Arrays.asList(MaterialNames.COAL, MaterialNames.CHARCOAL, MaterialNames.DIAMOND,
+				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON, 
+				MaterialNames.OBSIDIAN, MaterialNames.QUARTZ).stream()
 		.filter(Options::isMaterialEnabled)
 		.map(Materials::getMaterialByName)
 		.filter(m -> !m.hasItem(Names.NUGGET)).forEach(material -> create(Names.NUGGET, material));
 		
 		//these bits just are too... specialized to fit the iteration above
-		if(Options.isMaterialEnabled(VanillaMaterialNames.STONE)) {
-			create(Names.ROD, Materials.getMaterialByName(VanillaMaterialNames.STONE));
+		if(Options.isMaterialEnabled(MaterialNames.STONE)) {
+			create(Names.ROD, Materials.getMaterialByName(MaterialNames.STONE));
 		}
-		if(Options.isMaterialEnabled(VanillaMaterialNames.LAPIS)) {
-			create(Names.SMALLPOWDER, Materials.getMaterialByName(VanillaMaterialNames.LAPIS));
+		if(Options.isMaterialEnabled(MaterialNames.LAPIS)) {
+			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.LAPIS));
 		}
-		if(Options.isMaterialEnabled(VanillaMaterialNames.OBSIDIAN)) {
-			create(Names.INGOT, Materials.getMaterialByName(VanillaMaterialNames.OBSIDIAN));
+		if(Options.isMaterialEnabled(MaterialNames.OBSIDIAN)) {
+			create(Names.INGOT, Materials.getMaterialByName(MaterialNames.OBSIDIAN));
 		}
-		if(Options.isMaterialEnabled(VanillaMaterialNames.REDSTONE)) {
-			create(Names.INGOT, Materials.getMaterialByName(VanillaMaterialNames.REDSTONE));
+		if(Options.isMaterialEnabled(MaterialNames.REDSTONE)) {
+			create(Names.INGOT, Materials.getMaterialByName(MaterialNames.REDSTONE));
 		}
 	}
 	
@@ -126,15 +126,15 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		}
 
 		// simple hack to fix this shit - I give up on trying for more
-		if (material.hasBlock(Names.BLOCK) && material.getName().equals(VanillaMaterialNames.CHARCOAL)) {
+		if (material.hasBlock(Names.BLOCK) && material.getName().equals(MaterialNames.CHARCOAL)) {
 			((IMMDBurnableObject) material.getItem("ItemBlock_charcoal_block")).setBurnTime(BLOCK_BURN_TIME);
 		}
 	}
 	
 	private static void doSpecialMats() {
-		if (Materials.hasMaterial(VanillaMaterialNames.CHARCOAL) && 
-				Options.isMaterialEnabled(VanillaMaterialNames.CHARCOAL)) {
-			final MMDMaterial charcoal = Materials.getMaterialByName(VanillaMaterialNames.CHARCOAL);
+		if (Materials.hasMaterial(MaterialNames.CHARCOAL) && 
+				Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
+			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 
 			create(Names.NUGGET, charcoal);
 			create(Names.POWDER, charcoal);
@@ -143,9 +143,9 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 			setBurnTimes(charcoal);
 		}
 
-		if (Materials.hasMaterial(VanillaMaterialNames.COAL) && 
-				Options.isMaterialEnabled(VanillaMaterialNames.COAL)) {
-			final MMDMaterial coal = Materials.getMaterialByName(VanillaMaterialNames.COAL);
+		if (Materials.hasMaterial(MaterialNames.COAL) && 
+				Options.isMaterialEnabled(MaterialNames.COAL)) {
+			final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
 
 			create(Names.NUGGET, coal);
 			create(Names.POWDER, coal);
@@ -154,23 +154,23 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 			setBurnTimes(coal);
 		}
 
-		if (Materials.hasMaterial(VanillaMaterialNames.REDSTONE) && 
-				Options.isMaterialEnabled(VanillaMaterialNames.REDSTONE)) {
-			final MMDMaterial redstone = Materials.getMaterialByName(VanillaMaterialNames.REDSTONE);
+		if (Materials.hasMaterial(MaterialNames.REDSTONE) && 
+				Options.isMaterialEnabled(MaterialNames.REDSTONE)) {
+			final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
 
 			create(Names.INGOT, redstone);
 			create(Names.SMALLPOWDER, redstone);
 		}
 
-		if (Materials.hasMaterial(VanillaMaterialNames.LAPIS) && 
-				Options.isMaterialEnabled(VanillaMaterialNames.LAPIS)) {
-			create(Names.SMALLPOWDER, Materials.getMaterialByName(VanillaMaterialNames.LAPIS));
+		if (Materials.hasMaterial(MaterialNames.LAPIS) && 
+				Options.isMaterialEnabled(MaterialNames.LAPIS)) {
+			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.LAPIS));
 		}
 	}
 
 
 	private static void addDiamondBits() {
-		final MMDMaterial diamond = Materials.getMaterialByName(VanillaMaterialNames.DIAMOND);
+		final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
 
 		diamond.addNewItem(Names.AXE, net.minecraft.init.Items.DIAMOND_AXE);
 		diamond.addNewItem(Names.HOE, net.minecraft.init.Items.DIAMOND_HOE);
@@ -184,7 +184,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		diamond.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.DIAMOND_LEGGINGS);
 		diamond.addNewItem(Names.INGOT, net.minecraft.init.Items.DIAMOND);
 
-		if (Materials.hasMaterial(VanillaMaterialNames.DIAMOND)) {
+		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			create(Names.BLEND, diamond);
 			create(Names.NUGGET, diamond);
 			create(Names.POWDER, diamond);
@@ -208,7 +208,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 	}
 
 	private static void addGoldBits() {
-		final MMDMaterial gold = Materials.getMaterialByName(VanillaMaterialNames.GOLD);
+		final MMDMaterial gold = Materials.getMaterialByName(MaterialNames.GOLD);
 
 		gold.addNewItem(Names.AXE, net.minecraft.init.Items.GOLDEN_AXE);
 		gold.addNewItem(Names.HOE, net.minecraft.init.Items.GOLDEN_HOE);
@@ -223,7 +223,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		gold.addNewItem(Names.INGOT, net.minecraft.init.Items.GOLD_INGOT);
 		gold.addNewItem(Names.NUGGET, net.minecraft.init.Items.GOLD_NUGGET);
 
-		if (Materials.hasMaterial(VanillaMaterialNames.GOLD)) {
+		if (Materials.hasMaterial(MaterialNames.GOLD)) {
 			create(Names.BLEND, gold);
 			create(Names.POWDER, gold);
 			create(Names.SMALLBLEND, gold);
@@ -246,7 +246,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 	}
 
 	private static void addIronBits() {
-		final MMDMaterial iron = Materials.getMaterialByName(VanillaMaterialNames.IRON);
+		final MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
 
 		iron.addNewItem(Names.AXE, net.minecraft.init.Items.IRON_AXE);
 		iron.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
@@ -263,7 +263,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
-		if (Materials.hasMaterial(VanillaMaterialNames.IRON)) {
+		if (Materials.hasMaterial(MaterialNames.IRON)) {
 			create(Names.BLEND, iron);
 			create(Names.INGOT, iron);
 			create(Names.NUGGET, iron);
@@ -297,7 +297,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 	}
 
 	private static void addStoneBits() {
-		final MMDMaterial stone = Materials.getMaterialByName(VanillaMaterialNames.STONE);
+		final MMDMaterial stone = Materials.getMaterialByName(MaterialNames.STONE);
 
 		stone.addNewItem(Names.AXE, net.minecraft.init.Items.STONE_AXE);
 		stone.addNewItem(Names.HOE, net.minecraft.init.Items.STONE_HOE);
@@ -309,7 +309,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		stone.addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.DOUBLE_STONE_SLAB);
 		stone.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.STONE_STAIRS);
 
-		if (Materials.hasMaterial(VanillaMaterialNames.STONE)) {
+		if (Materials.hasMaterial(MaterialNames.STONE)) {
 			create(Names.CRACKHAMMER, stone);
 			create(Names.ROD, stone);
 			create(Names.GEAR, stone);
@@ -318,7 +318,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 	}
 
 	private static void addWoodBits() {
-		final MMDMaterial wood = Materials.getMaterialByName(VanillaMaterialNames.WOOD);
+		final MMDMaterial wood = Materials.getMaterialByName(MaterialNames.WOOD);
 
 		wood.addNewItem(Names.AXE, net.minecraft.init.Items.WOODEN_AXE);
 		wood.addNewItem(Names.DOOR, net.minecraft.init.Items.OAK_DOOR);
@@ -335,7 +335,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		wood.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.OAK_STAIRS);
 		wood.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 		
-		if (Materials.hasMaterial(VanillaMaterialNames.WOOD)) {
+		if (Materials.hasMaterial(MaterialNames.WOOD)) {
 			create(Names.CRACKHAMMER, wood);
 			create(Names.GEAR, wood);
 			create(Names.SCYTHE, wood);

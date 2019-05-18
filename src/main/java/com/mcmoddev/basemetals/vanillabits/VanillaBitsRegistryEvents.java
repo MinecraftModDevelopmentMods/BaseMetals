@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.MMDLib;
 import com.mcmoddev.lib.client.renderer.FluidStateMapper;
-import com.mcmoddev.lib.data.VanillaMaterialNames;
+import com.mcmoddev.lib.data.MaterialNames;
 import com.mcmoddev.lib.init.Fluids;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
@@ -50,14 +50,14 @@ public class VanillaBitsRegistryEvents {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void modelRegistryBits(ModelRegistryEvent ev) {
-		Arrays.asList(VanillaMaterialNames.CHARCOAL, VanillaMaterialNames.COAL,
-				VanillaMaterialNames.DIAMOND, VanillaMaterialNames.EMERALD, VanillaMaterialNames.ENDER, 
-				VanillaMaterialNames.GOLD, VanillaMaterialNames.IRON, VanillaMaterialNames.LAPIS,
-				VanillaMaterialNames.OBSIDIAN, VanillaMaterialNames.PRISMARINE, VanillaMaterialNames.QUARTZ,
-				VanillaMaterialNames.WOOD, VanillaMaterialNames.REDSTONE, VanillaMaterialNames.STONE, 
-				VanillaMaterialNames.REDSTONE).stream()
+		Arrays.asList(MaterialNames.CHARCOAL, MaterialNames.COAL,
+				MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.ENDER, 
+				MaterialNames.GOLD, MaterialNames.IRON, MaterialNames.LAPIS,
+				MaterialNames.OBSIDIAN, MaterialNames.PRISMARINE, MaterialNames.QUARTZ,
+				MaterialNames.WOOD, MaterialNames.REDSTONE, MaterialNames.STONE, 
+				MaterialNames.REDSTONE).stream()
 		.forEach(name -> {
-			if(!VanillaMaterialNames.PRISMARINE.equalsIgnoreCase(name)) {
+			if(!MaterialNames.PRISMARINE.equalsIgnoreCase(name)) {
 				Materials.getMaterialByName(name).getItems().stream()
 				.filter(item -> MMDLib.MODID.equalsIgnoreCase(item.getItem().getRegistryName().getNamespace()))
 				.filter(item -> !item.getItem().getRegistryName().getPath().equalsIgnoreCase(name))
