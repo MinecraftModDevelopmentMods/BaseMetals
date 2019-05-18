@@ -2,7 +2,6 @@ package com.mcmoddev.basemetals.util;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
-import com.mcmoddev.lib.data.VanillaMaterialNames;
 import com.mcmoddev.lib.util.Config;
 import com.mcmoddev.lib.util.MaterialConfigOptions;
 import net.minecraftforge.common.MinecraftForge;
@@ -46,20 +45,20 @@ public final class BMeConfig extends Config {
 		new MaterialConfigOptions(MaterialNames.STEEL, false, true, true, true, true),
 		new MaterialConfigOptions(MaterialNames.TIN, false, true, true, true, true),
 		new MaterialConfigOptions(MaterialNames.ZINC, false, true, true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.CHARCOAL, true, true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.COAL, true, true, true,true),
-		new MaterialConfigOptions(VanillaMaterialNames.DIAMOND,true, true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.EMERALD,true, true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.GOLD, true,true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.IRON, true,true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.STONE, true,true, false, false),
-		new MaterialConfigOptions(VanillaMaterialNames.WOOD, true,true, false, false),
-		new MaterialConfigOptions(VanillaMaterialNames.ENDER, true,true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.QUARTZ, true,true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.OBSIDIAN,true, true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.LAPIS, true,true, false, false),
-		new MaterialConfigOptions(VanillaMaterialNames.PRISMARINE,true, true, true, true),
-		new MaterialConfigOptions(VanillaMaterialNames.REDSTONE,true, true, true, true)
+		new MaterialConfigOptions(MaterialNames.CHARCOAL, true, true, true, true),
+		new MaterialConfigOptions(MaterialNames.COAL, true, true, true,true),
+		new MaterialConfigOptions(MaterialNames.DIAMOND,true, true, true, true),
+		new MaterialConfigOptions(MaterialNames.EMERALD,true, true, true, true),
+		new MaterialConfigOptions(MaterialNames.GOLD, true,true, true, true),
+		new MaterialConfigOptions(MaterialNames.IRON, true,true, true, true),
+		new MaterialConfigOptions(MaterialNames.STONE, true,true, false, false),
+		new MaterialConfigOptions(MaterialNames.WOOD, true,true, false, false),
+		new MaterialConfigOptions(MaterialNames.ENDER, true,true, true, true),
+		new MaterialConfigOptions(MaterialNames.QUARTZ, true,true, true, true),
+		new MaterialConfigOptions(MaterialNames.OBSIDIAN,true, true, true, true),
+		new MaterialConfigOptions(MaterialNames.LAPIS, true,true, false, false),
+		new MaterialConfigOptions(MaterialNames.PRISMARINE,true, true, true, true),
+		new MaterialConfigOptions(MaterialNames.REDSTONE,true, true, true, true)
 	};
 
 	/**
