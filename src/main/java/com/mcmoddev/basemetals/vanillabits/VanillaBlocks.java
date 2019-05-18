@@ -1,6 +1,6 @@
 package com.mcmoddev.basemetals.vanillabits;
 
-import com.mcmoddev.lib.data.VanillaMaterialNames;
+import com.mcmoddev.lib.data.MaterialNames;
 import com.mcmoddev.lib.events.MMDLibRegisterBlocks;
 import com.mcmoddev.lib.init.Blocks;
 import com.mcmoddev.lib.init.Materials;
@@ -26,16 +26,16 @@ public class VanillaBlocks extends Blocks {
 	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public static void registerVanilla(MMDLibRegisterBlocks ev) {
 		// Vanilla Materials get their Ore and Block always
-		final MMDMaterial charcoal = Materials.getMaterialByName(VanillaMaterialNames.CHARCOAL);
-		final MMDMaterial coal = Materials.getMaterialByName(VanillaMaterialNames.COAL);
-		final MMDMaterial diamond = Materials.getMaterialByName(VanillaMaterialNames.DIAMOND);
-		final MMDMaterial emerald = Materials.getMaterialByName(VanillaMaterialNames.EMERALD);
-		final MMDMaterial gold = Materials.getMaterialByName(VanillaMaterialNames.GOLD);
-		final MMDMaterial iron = Materials.getMaterialByName(VanillaMaterialNames.IRON);
-		final MMDMaterial lapis = Materials.getMaterialByName(VanillaMaterialNames.LAPIS);
-		final MMDMaterial obsidian = Materials.getMaterialByName(VanillaMaterialNames.OBSIDIAN);
-		final MMDMaterial quartz = Materials.getMaterialByName(VanillaMaterialNames.QUARTZ);
-		final MMDMaterial redstone = Materials.getMaterialByName(VanillaMaterialNames.REDSTONE);
+		final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
+		final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
+		final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
+		final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
+		final MMDMaterial gold = Materials.getMaterialByName(MaterialNames.GOLD);
+		final MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
+		final MMDMaterial lapis = Materials.getMaterialByName(MaterialNames.LAPIS);
+		final MMDMaterial obsidian = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
+		final MMDMaterial quartz = Materials.getMaterialByName(MaterialNames.QUARTZ);
+		final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
 
 		coal.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
 		coal.addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
@@ -71,12 +71,12 @@ public class VanillaBlocks extends Blocks {
 		redstone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
 		redstone.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
 
-		if (Materials.hasMaterial(VanillaMaterialNames.CHARCOAL)) {
+		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
 			create(Names.BLOCK, charcoal);
 		}
 
-		Arrays.stream(new String[] {VanillaMaterialNames.DIAMOND, VanillaMaterialNames.EMERALD, VanillaMaterialNames.GOLD,
-				VanillaMaterialNames.OBSIDIAN })
+		Arrays.stream(new String[] {MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD,
+				MaterialNames.OBSIDIAN })
 		.filter(n -> Options.isMaterialEnabled(n.toString()))
 		.filter(Materials::hasMaterial)
 		.map(Materials::getMaterialByName)
@@ -85,11 +85,11 @@ public class VanillaBlocks extends Blocks {
 					Names.LEVER, Names.PRESSURE_PLATE, Names.STAIRS, Names.WALL }).forEach(n -> create(n, mat));
 		});
 
-		if (Materials.hasMaterial(VanillaMaterialNames.GOLD) && Options.isMaterialEnabled(VanillaMaterialNames.GOLD)) {
+		if (Materials.hasMaterial(MaterialNames.GOLD) && Options.isMaterialEnabled(MaterialNames.GOLD)) {
 			create(Names.PLATE, gold);
 		}
 		
- 		if (Materials.hasMaterial(VanillaMaterialNames.IRON) && Options.isMaterialEnabled(VanillaMaterialNames.IRON)) {
+ 		if (Materials.hasMaterial(MaterialNames.IRON) && Options.isMaterialEnabled(MaterialNames.IRON)) {
 			create(Names.PLATE, iron);
 
 			create(Names.BUTTON, iron);
@@ -101,7 +101,7 @@ public class VanillaBlocks extends Blocks {
 			create(Names.WALL, iron);
 		}
 
-		if (Materials.hasMaterial(VanillaMaterialNames.QUARTZ) && Options.isMaterialEnabled(VanillaMaterialNames.QUARTZ)) {
+		if (Materials.hasMaterial(MaterialNames.QUARTZ) && Options.isMaterialEnabled(MaterialNames.QUARTZ)) {
 			create(Names.BARS, quartz);
 			create(Names.DOOR, quartz);
 			create(Names.TRAPDOOR, quartz);
