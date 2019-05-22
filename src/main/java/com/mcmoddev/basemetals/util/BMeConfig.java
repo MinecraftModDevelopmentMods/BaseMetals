@@ -45,20 +45,6 @@ public final class BMeConfig extends Config {
 		new MaterialConfigOptions(MaterialNames.STEEL, false, true, true, true, true),
 		new MaterialConfigOptions(MaterialNames.TIN, false, true, true, true, true),
 		new MaterialConfigOptions(MaterialNames.ZINC, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.CHARCOAL, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.COAL, true, true, true,true),
-		new MaterialConfigOptions(MaterialNames.DIAMOND,true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.EMERALD,true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.GOLD, true,true, true, true),
-		new MaterialConfigOptions(MaterialNames.IRON, true,true, true, true),
-		new MaterialConfigOptions(MaterialNames.STONE, true,true, false, false),
-		new MaterialConfigOptions(MaterialNames.WOOD, true,true, false, false),
-		new MaterialConfigOptions(MaterialNames.ENDER, true,true, true, true),
-		new MaterialConfigOptions(MaterialNames.QUARTZ, true,true, true, true),
-		new MaterialConfigOptions(MaterialNames.OBSIDIAN,true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.LAPIS, true,true, false, false),
-		new MaterialConfigOptions(MaterialNames.PRISMARINE,true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.REDSTONE,true, true, true, true)
 	};
 
 	/**

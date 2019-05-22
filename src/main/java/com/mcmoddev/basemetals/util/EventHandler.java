@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.util;
 
 import javax.annotation.Nonnull;
 
+import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.init.Fluids;
 import com.mcmoddev.basemetals.properties.AdamantineProperty;
 import com.mcmoddev.basemetals.properties.AdamantineToolProperty;
@@ -46,7 +47,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid=BaseMetals.MODID)
 public final class EventHandler {
 
 	public EventHandler() {
@@ -183,18 +184,6 @@ public final class EventHandler {
 		if(FMLCommonHandler.instance().getEffectiveSide() ==  Side.CLIENT) {
 			com.mcmoddev.basemetals.init.Materials.initTooltips();			
 		}
-	}
-
-	/*
-	 * @SubscribeEvent public static void mmdlibRegisterBlocks(final
-	 * MMDLibRegisterBlocks event) { Blocks.init(event); }
-	 * 
-	 * @SubscribeEvent public static void mmdlibRegisterItems(final
-	 * MMDLibRegisterItems event) { Items.registerItems(event); }
-	 */
-	@SubscribeEvent
-	public static void mmdlibRegisterFluids(final MMDLibRegisterFluids event) {
-		Fluids.registerEvent(event);
 	}
 	
 	@SubscribeEvent

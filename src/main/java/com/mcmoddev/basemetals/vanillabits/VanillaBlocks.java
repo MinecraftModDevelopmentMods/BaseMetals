@@ -13,7 +13,6 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
 
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber(modid=BaseMetals.MODID)
@@ -23,53 +22,13 @@ public class VanillaBlocks extends Blocks {
 		throw new IllegalAccessError("Class cannot be instantiated!");
 	}
 
-	@SubscribeEvent(priority=EventPriority.HIGHEST)
+	@SubscribeEvent
 	public static void registerVanilla(MMDLibRegisterBlocks ev) {
 		// Vanilla Materials get their Ore and Block always
 		final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
-		final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
-		final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
-		final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
 		final MMDMaterial gold = Materials.getMaterialByName(MaterialNames.GOLD);
 		final MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
-		final MMDMaterial lapis = Materials.getMaterialByName(MaterialNames.LAPIS);
-		final MMDMaterial obsidian = Materials.getMaterialByName(MaterialNames.OBSIDIAN);
 		final MMDMaterial quartz = Materials.getMaterialByName(MaterialNames.QUARTZ);
-		final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
-
-		coal.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.COAL_BLOCK);
-		coal.addNewBlock(Names.ORE, net.minecraft.init.Blocks.COAL_ORE);
-
-		diamond.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.DIAMOND_BLOCK);
-		diamond.addNewBlock(Names.ORE, net.minecraft.init.Blocks.DIAMOND_ORE);
-
-		emerald.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.EMERALD_BLOCK);
-		emerald.addNewBlock(Names.ORE, net.minecraft.init.Blocks.EMERALD_ORE);
-
-		gold.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.GOLD_BLOCK);
-		gold.addNewBlock(Names.ORE, net.minecraft.init.Blocks.GOLD_ORE);
-		gold.addNewBlock(Names.PRESSURE_PLATE,
-				net.minecraft.init.Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE);
-
-		iron.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.IRON_BLOCK);
-		iron.addNewBlock(Names.ORE, net.minecraft.init.Blocks.IRON_ORE);
-		iron.addNewBlock(Names.BARS, net.minecraft.init.Blocks.IRON_BARS);
-		iron.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.IRON_DOOR);
-		iron.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.IRON_TRAPDOOR);
-		iron.addNewBlock(Names.PRESSURE_PLATE,
-				net.minecraft.init.Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-
-		lapis.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.LAPIS_BLOCK);
-		lapis.addNewBlock(Names.ORE, net.minecraft.init.Blocks.LAPIS_ORE);
-
-		obsidian.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.OBSIDIAN);
-
-		quartz.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.QUARTZ_BLOCK);
-		quartz.addNewBlock(Names.ORE, net.minecraft.init.Blocks.QUARTZ_ORE);
-		quartz.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.QUARTZ_STAIRS);
-
-		redstone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.REDSTONE_BLOCK);
-		redstone.addNewBlock(Names.ORE, net.minecraft.init.Blocks.REDSTONE_ORE);
 
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
 			create(Names.BLOCK, charcoal);
