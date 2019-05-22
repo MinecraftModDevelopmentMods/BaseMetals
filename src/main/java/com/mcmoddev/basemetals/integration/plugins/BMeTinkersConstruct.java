@@ -86,7 +86,9 @@ public class BMeTinkersConstruct implements IIntegration {
 	
 	@SubscribeEvent
 	public void postInit(final IntegrationPostInitEvent event){
-		registerPrismarineFullCasting();
+		if(Options.isMaterialEnabled(MaterialNames.PRISMARINE) && Options.isFluidEnabled(MaterialNames.PRISMARINE)) {
+			registerPrismarineFullCasting();
+		}
 	}
 
 	public static void registerPrismarineFullCasting(){
