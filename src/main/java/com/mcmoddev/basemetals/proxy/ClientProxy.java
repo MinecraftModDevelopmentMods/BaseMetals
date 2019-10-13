@@ -1,5 +1,7 @@
 package com.mcmoddev.basemetals.proxy;
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.lib.client.registrations.RegistrationHelper;
 import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
@@ -12,9 +14,11 @@ import com.mcmoddev.lib.init.Fluids;
 import com.mcmoddev.lib.init.Items;
 import com.mcmoddev.lib.material.MMDMaterial;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,6 +29,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Base Metals Client Proxy.
@@ -92,5 +98,11 @@ public final class ClientProxy extends CommonProxy {
 		if (Loader.isModLoaded("waila")) {
 			com.mcmoddev.lib.waila.Waila.init();
 		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public World getWorld(@Nullable final int dimension) {
+		return Minecraft.getMinecraft().world;
 	}
 }

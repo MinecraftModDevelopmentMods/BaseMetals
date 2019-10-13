@@ -1,6 +1,8 @@
 package com.mcmoddev.basemetals.proxy;
 
 
+import javax.annotation.Nullable;
+
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.ItemGroups;
@@ -10,6 +12,7 @@ import com.mcmoddev.lib.data.Names;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -80,5 +83,9 @@ public class CommonProxy {
 	 * @param event The Event.
 	 */
 	public void postInit(final FMLPostInitializationEvent event) {
+	}
+	
+	public World getWorld(@Nullable final int dimension) {
+		return null;
 	}
 }

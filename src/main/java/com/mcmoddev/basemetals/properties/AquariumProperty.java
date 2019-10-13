@@ -6,7 +6,6 @@ import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -14,6 +13,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class AquariumProperty extends BMEPropertyBase {
 	@Override
@@ -29,11 +29,11 @@ public class AquariumProperty extends BMEPropertyBase {
 		if(hasEffect(stack, player)) {
 			if ((hasFullSuit(player, MaterialNames.AQUARIUM)) && (player.posY > 0)
 					&& (player.posY < 255)) {
-				
-				final Block b1 = Minecraft.getMinecraft().world.getBlockState(new BlockPos(player.posX, player.posY, player.posZ))
+				World w = com.mcmoddev.basemetals.BaseMetals.proxy.getWorld(player.dimension);
+				if(w == null) return;
+				final Block b1 = w.getBlockState(new BlockPos(player.posX, player.posY, player.posZ))
 						.getBlock();
-				final Block b2 = Minecraft.getMinecraft().world
-						.getBlockState(new BlockPos(player.posX, player.posY + 1, player.posZ))
+				final Block b2 = w.getBlockState(new BlockPos(player.posX, player.posY + 1, player.posZ))
 						.getBlock();
 				if ((b1 == Blocks.WATER) && (b2 == Blocks.WATER)) {
 					final PotionEffect waterBreathing = new PotionEffect(MobEffects.WATER_BREATHING,
