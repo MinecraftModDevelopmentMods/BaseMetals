@@ -58,7 +58,7 @@ public class BMeTinkersConstruct implements IIntegration {
 	}
 
 	@Override
-	public void init() {		
+	public void init() {
 		TinkersConstruct.INSTANCE.init();
         if(!slimeknights.tconstruct.TConstruct.pulseManager.isPulseLoaded("TinkerSmeltery")) {
             return;
@@ -83,21 +83,33 @@ public class BMeTinkersConstruct implements IIntegration {
 			.filter( evx -> evx.getValue() > 1)
 			.forEach( evga -> TinkersConstruct.INSTANCE.addExtraMelting(base.getName(), evga.getRight() * Material.VALUE_Ingot, base.getItemStack(evga.getLeft()))));
 	}
-	
+
 	@SubscribeEvent
 	public void postInit(final IntegrationPostInitEvent event){
 		if(Options.isMaterialEnabled(MaterialNames.PRISMARINE) && Options.isFluidEnabled(MaterialNames.PRISMARINE)) {
 			registerPrismarineFullCasting();
 		}
+		// TODO Add a config option to enable/disable this
+		if(Options.isMaterialEnabled(MaterialNames.ENDER) && Options.isFluidEnabled(MaterialNames.ENDER)) {
+			registerEnderFullCasting();
+		}
 	}
 
-	public static void registerPrismarineFullCasting(){
+	private static void registerPrismarineFullCasting(){
 		int gemAmount = 144;
 		int blockAmount = 4 * gemAmount;
 
 		Fluid fluid = FluidRegistry.getFluid(MaterialNames.PRISMARINE);
 		registerTableCasting(new ItemStack(Items.PRISMARINE_SHARD, 1), TinkerSmeltery.castGem, fluid, gemAmount);
 		registerBasinCasting(new ItemStack(Blocks.PRISMARINE, 1),fluid, blockAmount);
+
+	}
+
+	private static void registerEnderFullCasting(){
+		int gemAmount = 144;
+
+		Fluid fluid = FluidRegistry.getFluid(MaterialNames.ENDER);
+		registerTableCasting(new ItemStack(Items.ENDER_PEARL, 1), TinkerSmeltery.castGem, fluid, gemAmount);
 
 	}
 
@@ -152,7 +164,7 @@ public class BMeTinkersConstruct implements IIntegration {
 		if (active) {
 			TinkersMaterial mat = new TinkersMaterial(Materials.getMaterialByName(name))
 					.setCastable(castable).setCraftable(craftable).setToolForge(true);
-			
+
 			int i = 0;
 
 			while(i < traits.length) {
@@ -162,7 +174,7 @@ public class BMeTinkersConstruct implements IIntegration {
 				if(item instanceof TinkerTraitLocation) {
 					loc = (TinkerTraitLocation)item;
 					trait = ((String)traits[++i]).toLowerCase(Locale.US);
-					
+
 					mat.addTrait(trait, loc);
 				} else {
 					trait = ((String)item).toLowerCase(Locale.US);
@@ -179,6 +191,12 @@ public class BMeTinkersConstruct implements IIntegration {
 		if (isMaterialFluidEnabled(MaterialNames.COAL)) {
 			TinkersConstruct.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(MaterialNames.COAL, 144),
 					new ItemStack(net.minecraft.init.Items.COAL));
+		}
+
+		if (isMaterialFluidEnabled(MaterialNames.ENDER)) {
+			final MMDMaterial ender = Materials.getMaterialByName(MaterialNames.ENDER);
+			TinkersConstruct.INSTANCE.addExtraMelting(FluidRegistry.getFluidStack(ender.getName(), 144),
+				new ItemStack(Items.ENDER_PEARL));
 		}
 
 		if (isMaterialFluidEnabled(MaterialNames.MERCURY)) {

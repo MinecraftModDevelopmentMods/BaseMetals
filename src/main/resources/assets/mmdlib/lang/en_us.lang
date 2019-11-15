@@ -1,0 +1,31 @@
+# Fix this directly in MMDLib
+# We should be offloading the fluid's registry name to the depending mod id instead
+fluid.mmdlib.mercury.name=Liquid Mercury
+fluid.mmdlib.adamantine.name=Molten Adamantine
+fluid.mmdlib.antimony.name=Molten Antimony
+fluid.mmdlib.aquarium.name=Molten Aquarium
+fluid.mmdlib.bismuth.name=Molten Bismuth
+fluid.mmdlib.brass.name=Molten Brass
+fluid.mmdlib.bronze.name=Molten Bronze
+fluid.mmdlib.charcoal.name=Liquifacted Charcoal
+fluid.mmdlib.coal.name=Liquifacted Coal
+fluid.mmdlib.coldiron.name=Molten Cold-Iron
+fluid.mmdlib.copper.name=Molten Copper
+fluid.mmdlib.cupronickel.name=Molten Cupronickel
+fluid.mmdlib.diamond.name=Molten Diamond
+fluid.mmdlib.electrum.name=Molten Electrum
+fluid.mmdlib.emerald.name=Molten Emerald
+fluid.mmdlib.ender.name=Molten Ender
+fluid.mmdlib.invar.name=Molten Invar
+fluid.mmdlib.lead.name=Molten Lead
+fluid.mmdlib.mithril.name=Molten Mithril
+fluid.mmdlib.nickel.name=Molten Nickel
+fluid.mmdlib.pewter.name=Molten Pewter
+fluid.mmdlib.platinum.name=Molten Platinum
+fluid.mmdlib.prismarine.name=Molten Prismarine
+fluid.mmdlib.redstone.name=Molten Redstone
+fluid.mmdlib.silver.name=Molten Silver
+fluid.mmdlib.starsteel.name=Molten Star-Steel
+fluid.mmdlib.steel.name=Molten Steel
+fluid.mmdlib.tin.name=Molten Tin
+fluid.mmdlib.zinc.name=Molten Zinc
