@@ -1,6 +1,6 @@
 [![](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.mcmoddev.com)
-[![CurseForge](http://cf.way2muchnoise.eu/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals)
-[![Versions](http://cf.way2muchnoise.eu/versions/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals)
+[![CurseForge](http://cf.way2muchnoise.eu/base-metals.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
+[![Versions](http://cf.way2muchnoise.eu/versions/base-metals.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Build Status](https://ci.mcmoddev.com/job/Base%20Metals/job/Base%20Metals%201.12/badge/icon)](https://ci.mcmoddev.com/job/Base%20Metals/job/Base%20Metals%201.12/)
 
 ## Base Metals Mod
