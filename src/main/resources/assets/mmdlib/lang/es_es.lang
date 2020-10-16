@@ -1,0 +1,31 @@
+# Fix this directly in MMDLib
+# We should be offloading the fluid's registry name to the depending mod id instead
+fluid.mmdlib.mercury.name=Mercurio líquido
+fluid.mmdlib.adamantine.name=Adamantina fundida
+fluid.mmdlib.antimony.name=Antimony fundida
+fluid.mmdlib.aquarium.name=Aquarium fundida
+fluid.mmdlib.bismuth.name=Bismuth fundida
+fluid.mmdlib.brass.name=Latón fundido
+fluid.mmdlib.bronze.name=Bronce fundido
+fluid.mmdlib.charcoal.name=Carbono licuefacción
+fluid.mmdlib.coal.name=Carbon licuefacción
+fluid.mmdlib.coldiron.name=Hierro frío fundido
+fluid.mmdlib.copper.name=Cobre fundido
+fluid.mmdlib.cupronickel.name=Cuproníquel fundido
+fluid.mmdlib.diamond.name=Diamente fundida
+fluid.mmdlib.electrum.name=Electrum fundida
+fluid.mmdlib.emerald.name=Esmeralda fundida
+fluid.mmdlib.ender.name=Ender fudida
+fluid.mmdlib.invar.name=Invar fudida
+fluid.mmdlib.lead.name=Plomo fudida
+fluid.mmdlib.mithril.name=Mithril fudida
+fluid.mmdlib.nickel.name=Níquel fundido
+fluid.mmdlib.pewter.name=Pewter fundido
+fluid.mmdlib.platinum.name=Platino fundido
+fluid.mmdlib.prismarine.name=Prismarine fundido
+fluid.mmdlib.redstone.name=Redstone fundido
+fluid.mmdlib.silver.name=Plata fundida
+fluid.mmdlib.starsteel.name=Acero-Estrella fundido
+fluid.mmdlib.steel.name=Estrella fundido
+fluid.mmdlib.tin.name=Estano fundido
+fluid.mmdlib.zinc.name=Cinc fundido
