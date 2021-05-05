@@ -264,7 +264,7 @@ repositories {
   }
   maven { // Applied Energistics
     name 'forge'
-    url 'https://files.minecraftforge.net/maven/'
+    url 'https://maven.minecraftforge.net/'
   }
   /*
   ivy {
