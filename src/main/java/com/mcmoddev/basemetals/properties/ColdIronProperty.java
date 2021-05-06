@@ -33,7 +33,7 @@ public class ColdIronProperty extends BMEPropertyBase {
 
 	@Override
 	public void apply(ItemStack stack, EntityLivingBase ent) {
-		if(hasEffect(stack, ent) && ent instanceof EntityPlayer) {
+		if (ent instanceof EntityPlayer) { // Checks for full suit should be done in the second "apply" call
 			apply(stack, (EntityPlayer)ent);
 		}
 	}
