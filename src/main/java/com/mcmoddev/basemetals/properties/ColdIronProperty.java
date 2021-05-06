@@ -46,12 +46,13 @@ public class ColdIronProperty extends BMEPropertyBase {
 	@Override
 	public boolean hasEffect(ItemStack stack, EntityPlayer player) {
 		MMDMaterial mat = Materials.getMaterialByName(MaterialNames.COLDIRON);
+/*
 		boolean rv = (stackIsArmorMaterial(stack, mat) 
 				&& ((stack.getItem() instanceof IMMDObject) && 
 						(((IMMDObject)stack.getItem()).getMMDMaterial() == mat))) && 
 				(countArmorPieces(Materials.getMaterialByName(MaterialNames.COLDIRON),player) > 0);
- 
-		return rv;
+ */
+		return true;
 	}
 
 	@Override
