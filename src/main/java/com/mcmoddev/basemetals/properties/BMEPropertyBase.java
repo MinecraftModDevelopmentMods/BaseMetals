@@ -10,17 +10,16 @@ import com.mcmoddev.lib.properties.MMDMaterialPropertyBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item;
 
 public abstract class BMEPropertyBase extends MMDMaterialPropertyBase {
 	protected static final int EFFECT_DURATION = 45;
 
-	private static boolean playerHasArmorItem(ItemStack itemStackPiece, EntityPlayer player) {
-		final Item piece = itemStackPiece.getItem();
-		return  ((player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == piece)
-		|| (player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == piece)
-		|| (player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == piece)
-		|| (player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == piece));
+	// Changing this to use getItem breaks the test.
+	private static boolean playerHasArmorItem(ItemStack piece, EntityPlayer player) {
+		return  ((player.getItemStackFromSlot(EntityEquipmentSlot.HEAD) == piece)
+		|| (player.getItemStackFromSlot(EntityEquipmentSlot.CHEST) == piece)
+		|| (player.getItemStackFromSlot(EntityEquipmentSlot.LEGS) == piece)
+		|| (player.getItemStackFromSlot(EntityEquipmentSlot.FEET) == piece));
 	}
 	
 	protected static int countArmorPieces(final MMDMaterial mat, final EntityPlayer player) {
