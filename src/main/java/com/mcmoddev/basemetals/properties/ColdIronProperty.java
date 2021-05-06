@@ -22,13 +22,13 @@ public class ColdIronProperty extends BMEPropertyBase {
 
 	@Override
 	public void apply(ItemStack stack, EntityPlayer player) {
-		if(hasEffect(stack, player)) {
-			if (hasFullSuit(player, MaterialNames.COLDIRON)) {
+		//if(hasEffect(stack, player)) {                        
+			if (hasFullSuit(player, MaterialNames.COLDIRON)) { 
 				final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE,
 						EFFECT_DURATION, 0, false, false);
 				player.addPotionEffect(fireProtection);
 			}
-		}
+      	//}
 	}
 
 	@Override
