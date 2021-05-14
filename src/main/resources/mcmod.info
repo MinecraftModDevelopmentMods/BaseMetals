@@ -7,7 +7,7 @@
   "mcversion": "${mcversion}",
   "url": "https://github.com/MineCraftModDevelopmentMods/BaseMetals",
   "updateUrl": "",
-  "authorList": ["jriwanek", "dshadowwolf"],
+  "authorList": ["jriwanek", "dshadowwolf", "GetDizzy611 'Dizzy OM'"],
   "credits": "Cyanobacterium (aka DrCyano) For starting the project & geologists everywhere. SeqSEE for helping with shields. Vase of Petunias (aka TheUnknownFew) for creating Javadocs, YaibaToKen for Construct's Armory integration",
   "logoFile": "",
   "screenshots": [],
