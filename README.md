@@ -33,7 +33,7 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 
 **Tin**: Tin is an extremely soft metal that is not useful by itself, but can be combined with copper to make bronze, a metal alloy nearly as strong as iron.
 
-**Zinc**: Like tin, zinc is worthless on its own, but can be used to make the metal ally brass.
+**Zinc**: Like tin, zinc is worthless on its own, but can be used to make the metal alloy brass.
 
 
 
