@@ -7,7 +7,7 @@ Base Metals 2.5.1.112021
   release delivery.
 - Isolated ordinary Eclipse launches from compile-only integration APIs, so
   optional mods such as CoFH Core are not accidentally loaded without their
-  dependencies.
+  dependencies, while preserving Forge's order-sensitive runtime classpath.
 - Updated the development target to Forge 14.23.5.2859 while preserving Java 8
   game compatibility, registry IDs, OreSpawn 3 behavior and integrations.
 - This modernization contains no gameplay or recipe-loop fixes; those changes

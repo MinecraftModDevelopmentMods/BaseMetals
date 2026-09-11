@@ -1152,7 +1152,6 @@ def replaceBuildshipLaunchClasspath = { String contents, Collection<File> archiv
     }
     List<File> uniqueArchives = archives.collect { it.canonicalFile }
             .unique { File archive -> archive.path.toLowerCase(Locale.ROOT) }
-            .sort { File left, File right -> left.path.compareToIgnoreCase(right.path) }
     List<File> missingArchives = uniqueArchives.findAll { !it.isFile() }
     if (!missingArchives.isEmpty()) {
         throw new GradleException("Eclipse launch archives are missing: ${missingArchives}")
@@ -1308,9 +1307,9 @@ tasks.register('verifyEclipseProductionClasspath') {
                 || eclipseClasspath ==~ /(?s).*<classpathentry[^>]+path="[A-Za-z]:[\\\/].*/) {
             throw new GradleException('Eclipse must expose dependencies through the Buildship container only')
         }
-        Set<File> runtimeArchives = configurations.runtimeClasspath.files.collect {
+        List<File> runtimeArchives = configurations.runtimeClasspath.files.collect {
             it.canonicalFile
-        } as Set<File>
+        }
         Set<File> compileOnlyArchives = configurations.compileClasspath.files.collect {
             it.canonicalFile
         } as Set<File>
@@ -1343,6 +1342,14 @@ tasks.register('verifyEclipseProductionClasspath') {
             if (!missingRuntime.isEmpty() || !leakedCompileOnly.isEmpty()) {
                 throw new GradleException("${name} runtime isolation failed; missing=${missingRuntime}, "
                         + "compileOnly=${leakedCompileOnly}")
+            }
+            List<Integer> runtimePositions = runtimeArchives.collect {
+                contents.indexOf(it.canonicalPath.replace('\\', '/'))
+            }
+            List<Integer> sortedRuntimePositions = new ArrayList<>(runtimePositions)
+            sortedRuntimePositions.sort()
+            if (runtimePositions != sortedRuntimePositions) {
+                throw new GradleException("${name} does not preserve Gradle's order-sensitive runtime classpath")
             }
             if (!contents.contains("development-dependencies/OreSpawn-${project.orespawn3_version}-development.jar")
                     || contents.contains('renamer/renamed/mmd-orespawn-')) {
