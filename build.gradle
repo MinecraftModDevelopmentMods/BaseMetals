@@ -1128,6 +1128,39 @@ idea {
     }
 }
 
+def eclipseXmlEscape = { String value ->
+    value.replace('&', '&amp;')
+            .replace('"', '&quot;')
+            .replace('<', '&lt;')
+            .replace('>', '&gt;')
+}
+
+def eclipseArchiveLaunchEntry = { File archive ->
+    String memento = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' \
+            + '<runtimeClasspathEntry externalArchive="' + archive.canonicalPath \
+            + '" type="2" path="5" />'
+    '    <listEntry value="' + eclipseXmlEscape(memento) + '"/>'
+}
+
+def replaceBuildshipLaunchClasspath = { String contents, Collection<File> archives ->
+    List<String> lines = contents.replace('\r\n', '\n').split('\n', -1) as List<String>
+    List<Integer> buildshipLines = (0..<lines.size()).findAll {
+        lines[it].contains('org.eclipse.buildship.core.gradleclasspathcontainer')
+    }
+    if (buildshipLines.size() != 1) {
+        throw new GradleException("Expected one Buildship launch classpath entry, found ${buildshipLines.size()}")
+    }
+    List<File> uniqueArchives = archives.collect { it.canonicalFile }
+            .unique { File archive -> archive.path.toLowerCase(Locale.ROOT) }
+            .sort { File left, File right -> left.path.compareToIgnoreCase(right.path) }
+    List<File> missingArchives = uniqueArchives.findAll { !it.isFile() }
+    if (!missingArchives.isEmpty()) {
+        throw new GradleException("Eclipse launch archives are missing: ${missingArchives}")
+    }
+    lines[buildshipLines[0]] = uniqueArchives.collect(eclipseArchiveLaunchEntry).join('\n')
+    lines.join('\n')
+}
+
 eclipse {
     project {
         buildCommand 'org.eclipse.buildship.core.gradleprojectbuilder'
@@ -1136,6 +1169,19 @@ eclipse {
     classpath {
         downloadSources = true
         downloadJavadoc = true
+        file.withXml { provider ->
+            Node classpath = provider.asNode()
+            classpath.classpathentry.findAll { it.@kind == 'lib' }.each {
+                classpath.remove(it)
+            }
+            if (!classpath.classpathentry.any {
+                    it.@kind == 'con' && it.@path == 'org.eclipse.buildship.core.gradleclasspathcontainer'
+            }) {
+                classpath.appendNode('classpathentry', [
+                        kind: 'con', path: 'org.eclipse.buildship.core.gradleclasspathcontainer'
+                ])
+            }
+        }
     }
     synchronizationTasks 'genEclipseRuns'
 }
@@ -1175,8 +1221,10 @@ tasks.named('eclipse') {
 
 tasks.register('isolateEclipseProductionRuns') {
     group = 'ide'
-    description = 'Repairs Forge 1.12 launches for spaces and keeps them production-only.'
+    description = 'Repairs Forge 1.12 launches and replaces compile-only Buildship entries with runtime jars.'
+    dependsOn sanitizedOrespawn3DevelopmentJar
     doLast {
+        List<File> runtimeArchives = configurations.runtimeClasspath.files as List<File>
         ['BaseMetals_Client.launch', 'BaseMetals_Server.launch'].each { name ->
             File legacy = file(name)
             if (legacy.isFile() && legacy.getText('UTF-8').contains('MAIN_TYPE" value="GradleStart')) {
@@ -1227,7 +1275,8 @@ tasks.register('isolateEclipseProductionRuns') {
             }
             contents = contents.replaceAll(/<mapEntry key="MC_VERSION" value="[^"]*"\/>/,
                     '<mapEntry key="MC_VERSION" value="1.12.2"/>')
-            launch.setText(contents, 'UTF-8')
+            contents = replaceBuildshipLaunchClasspath(contents, runtimeArchives)
+            launch.setText(contents.replace('\r\n', '\n'), 'UTF-8')
         }
     }
 }
@@ -1254,10 +1303,18 @@ tasks.register('verifyEclipseProductionClasspath') {
             throw new GradleException('Eclipse project metadata is missing Buildship integration')
         }
         String eclipseClasspath = file('.classpath').getText('UTF-8').replace('\\', '/')
-        if (!eclipseClasspath.contains("development-dependencies/OreSpawn-${project.orespawn3_version}-development.jar")
-                || eclipseClasspath.contains('renamer/renamed/mmd-orespawn-')) {
-            throw new GradleException('Eclipse does not use the signature-free remapped OreSpawn 3 dependency')
+        if (!eclipseClasspath.contains('org.eclipse.buildship.core.gradleclasspathcontainer')
+                || eclipseClasspath.contains('<classpathentry kind="lib"')
+                || eclipseClasspath ==~ /(?s).*<classpathentry[^>]+path="[A-Za-z]:[\\\/].*/) {
+            throw new GradleException('Eclipse must expose dependencies through the Buildship container only')
         }
+        Set<File> runtimeArchives = configurations.runtimeClasspath.files.collect {
+            it.canonicalFile
+        } as Set<File>
+        Set<File> compileOnlyArchives = configurations.compileClasspath.files.collect {
+            it.canonicalFile
+        } as Set<File>
+        compileOnlyArchives.removeAll(runtimeArchives)
         ['runClient.launch', 'runServer.launch'].each { name ->
             File launch = file(name)
             String contents = launch.getText('UTF-8').replace('\\', '/')
@@ -1271,10 +1328,25 @@ tasks.register('verifyEclipseProductionClasspath') {
             if (!contents.contains('MAIN_TYPE" value="net.minecraftforge.launcher.Main"')
                     || !contents.contains('JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-8')
                     || !contents.contains('ATTR_EXCLUDE_TEST_CODE')
+                    || contents.contains('org.eclipse.buildship.core.gradleclasspathcontainer')
                     || !contents.contains('PROJECT_ATTR" value="BaseMetals"')
                     || contents.contains('${MC_VERSION}')
                     || !contents.contains('MC_VERSION" value="1.12.2"')) {
-                throw new GradleException("${name} has the wrong launcher, JRE, project, or Minecraft version")
+                throw new GradleException("${name} has the wrong launcher, JRE, classpath, project, or Minecraft version")
+            }
+            Set<File> missingRuntime = runtimeArchives.findAll {
+                !contents.contains(it.canonicalPath.replace('\\', '/'))
+            }
+            Set<File> leakedCompileOnly = compileOnlyArchives.findAll {
+                contents.contains(it.canonicalPath.replace('\\', '/'))
+            }
+            if (!missingRuntime.isEmpty() || !leakedCompileOnly.isEmpty()) {
+                throw new GradleException("${name} runtime isolation failed; missing=${missingRuntime}, "
+                        + "compileOnly=${leakedCompileOnly}")
+            }
+            if (!contents.contains("development-dependencies/OreSpawn-${project.orespawn3_version}-development.jar")
+                    || contents.contains('renamer/renamed/mmd-orespawn-')) {
+                throw new GradleException("${name} does not use the signature-free remapped OreSpawn 3 dependency")
             }
             String expectedModClasses = file('bin/main').absolutePath.replace('\\', '/')
             if (!contents.contains('MOD_CLASSES" value="' + expectedModClasses)) {

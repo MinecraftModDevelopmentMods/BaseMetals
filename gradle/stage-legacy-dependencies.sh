@@ -7,6 +7,9 @@ if [[ $# -ne 1 ]]; then
 fi
 
 destination="$1"
+if command -v cygpath >/dev/null 2>&1; then
+  destination="$(cygpath -u "$destination")"
+fi
 properties="gradle.properties"
 if [[ ! -f "$properties" ]]; then
   echo "Run this script from the Base Metals project root" >&2
@@ -14,7 +17,7 @@ if [[ ! -f "$properties" ]]; then
 fi
 
 value() {
-  sed -n "s/^$1=//p" "$properties"
+  sed -n "s/^$1=//p" "$properties" | tr -d '\r'
 }
 
 stage() {
