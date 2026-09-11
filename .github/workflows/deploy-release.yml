@@ -51,6 +51,7 @@ jobs:
       gradle_java_version: ${{ steps.validate.outputs.gradle_java_version }}
       install_gradle_java: ${{ steps.validate.outputs.install_gradle_java }}
       curseforge_project_id: ${{ steps.validate.outputs.curseforge_project_id }}
+      curseforge_dependencies: ${{ steps.validate.outputs.curseforge_dependencies }}
       main_jar: ${{ steps.validate.outputs.main_jar }}
       sources_jar: ${{ steps.validate.outputs.sources_jar }}
       javadoc_jar: ${{ steps.validate.outputs.javadoc_jar }}
@@ -142,6 +143,7 @@ jobs:
           java_setup_version="$(value java_setup_version)"
           gradle_java_version="$(value gradle_java_version)"
           curseforge_project_id="$(value curseforge_project_id)"
+          cf_requirements="$(value cf_requirements)"
 
           for required in release_version minecraft_version loader_name loader_code \
               java_version gradle_java_version curseforge_project_id; do
@@ -234,8 +236,39 @@ jobs:
             echo "Requested version $REQUESTED_VERSION does not match ${{ steps.route.outputs.target_branch }} mod_version $release_version" >&2
             exit 1
           fi
-          if [[ "${{ steps.route.outputs.target_branch }}" != "master-1.18" ]]; then
-            echo "This dispatcher supports Base Metals 1.18.2 releases from master-1.18" >&2
+          case "${{ steps.route.outputs.target_branch }}" in
+            master-1.12)
+              if [[ "$minecraft_version" != '1.12.2' || "$java_toolchain_version" != '8.0.502+7' \
+                  || "$gradle_java_version" != '17' ]]; then
+                echo "master-1.12 has an unexpected target/toolchain contract" >&2
+                exit 1
+              fi
+              ;;
+            master-1.18)
+              if [[ "$minecraft_version" != '1.18.2' || "$java_toolchain_version" != '17.0.1+12' \
+                  || "$gradle_java_version" != '17' ]]; then
+                echo "master-1.18 has an unexpected target/toolchain contract" >&2
+                exit 1
+              fi
+              ;;
+            *)
+              echo "This dispatcher supports Base Metals master-1.12 and master-1.18" >&2
+              exit 1
+              ;;
+          esac
+
+          curseforge_dependencies=()
+          IFS=',' read -ra requirement_slugs <<<"$cf_requirements"
+          for slug in "${requirement_slugs[@]}"; do
+            case "$slug" in
+              mmd-orespawn) curseforge_dependencies+=('245586(required)') ;;
+              mmdlib) curseforge_dependencies+=('261744(required)') ;;
+              '') ;;
+              *) echo "Unsupported required CurseForge relation $slug" >&2; exit 1 ;;
+            esac
+          done
+          if (( ${#curseforge_dependencies[@]} == 0 )); then
+            echo "No required CurseForge relations were declared" >&2
             exit 1
           fi
 
@@ -253,6 +286,11 @@ jobs:
           echo "gradle_java_version=$gradle_java_version" >> "$GITHUB_OUTPUT"
           echo "install_gradle_java=$install_gradle_java" >> "$GITHUB_OUTPUT"
           echo "curseforge_project_id=$curseforge_project_id" >> "$GITHUB_OUTPUT"
+          {
+            echo 'curseforge_dependencies<<EOF'
+            printf '%s\n' "${curseforge_dependencies[@]}"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
           echo "main_jar=BaseMetals-$release_version.jar" >> "$GITHUB_OUTPUT"
           echo "sources_jar=BaseMetals-$release_version-sources.jar" >> "$GITHUB_OUTPUT"
           echo "javadoc_jar=BaseMetals-$release_version-javadoc.jar" >> "$GITHUB_OUTPUT"
@@ -344,12 +382,23 @@ jobs:
           done
           echo "paths=$paths" >> "$GITHUB_OUTPUT"
 
-      - name: Stage exact OreSpawn release dependency
-        id: orespawn
+      - name: Stage exact target dependencies
+        id: dependencies
         run: |
-          mirror="$RUNNER_TEMP/orespawn-mirror"
-          bash gradle/stage-orespawn-release.sh "$mirror"
+          set -euo pipefail
+          mirror="$RUNNER_TEMP/dependency-mirror"
+          if [[ -f gradle/stage-legacy-dependencies.sh ]]; then
+            bash gradle/stage-legacy-dependencies.sh "$mirror"
+            property=legacyDependencyVerificationRepository
+          elif [[ -f gradle/stage-orespawn-release.sh ]]; then
+            bash gradle/stage-orespawn-release.sh "$mirror"
+            property=orespawnVerificationRepository
+          else
+            echo "Selected target has no checksum-sealed dependency staging script" >&2
+            exit 1
+          fi
           echo "repository=$mirror" >> "$GITHUB_OUTPUT"
+          echo "property=$property" >> "$GITHUB_OUTPUT"
 
       - name: Build, test, and audit once
         run: |
@@ -360,8 +409,9 @@ jobs:
             -Dorg.gradle.java.installations.auto-detect=false
             -Dorg.gradle.java.installations.auto-download=false
           )
+          dependency_argument="-P${{ steps.dependencies.outputs.property }}=${{ steps.dependencies.outputs.repository }}"
           ./gradlew clean check build javadoc verifyReleaseArtifacts writeReleaseChecksums \
-            -PorespawnVerificationRepository="${{ steps.orespawn.outputs.repository }}" \
+            "$dependency_argument" \
             --no-daemon --stacktrace "${java_args[@]}"
 
       - name: Stage the immutable release artifact
@@ -557,6 +607,25 @@ jobs:
           name: ${{ needs.build.outputs.artifact_name }}
           path: ${{ runner.temp }}/release-input
 
+      - name: Stage exact target dependencies
+        id: dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mirror="$RUNNER_TEMP/dependency-mirror"
+          if [[ -f gradle/stage-legacy-dependencies.sh ]]; then
+            bash gradle/stage-legacy-dependencies.sh "$mirror"
+            property=legacyDependencyVerificationRepository
+          elif [[ -f gradle/stage-orespawn-release.sh ]]; then
+            bash gradle/stage-orespawn-release.sh "$mirror"
+            property=orespawnVerificationRepository
+          else
+            echo "Selected target has no checksum-sealed dependency staging script" >&2
+            exit 1
+          fi
+          echo "repository=$mirror" >> "$GITHUB_OUTPUT"
+          echo "property=$property" >> "$GITHUB_OUTPUT"
+
       - name: Verify artifact and Maven credentials
         env:
           MAVEN_UPLOAD_URL: ${{ secrets.MAVEN_UPLOAD_URL }}
@@ -581,8 +650,10 @@ jobs:
           MAVEN_UPLOAD_PASSWORD: ${{ secrets.MAVEN_UPLOAD_PASSWORD }}
         run: |
           chmod +x ./gradlew
+          dependency_argument="-P${{ steps.dependencies.outputs.property }}=${{ steps.dependencies.outputs.repository }}"
           ./gradlew publishMavenJavaPublicationToReleaseRepository \
             -PpreparedReleaseDir="$RUNNER_TEMP/release-input" \
+            "$dependency_argument" \
             --no-daemon --stacktrace \
             -Dorg.gradle.java.installations.paths="${{ steps.java-paths.outputs.paths }}" \
             -Dorg.gradle.java.installations.auto-detect=false \
@@ -629,7 +700,7 @@ jobs:
           game-version-filter: none
           environment: client | server
           java: Java ${{ needs.preflight.outputs.java_version }}
-          curseforge-dependencies: 245586(required)
+          curseforge-dependencies: ${{ needs.preflight.outputs.curseforge_dependencies }}
           fail-mode: fail
           files: |
             ${{ runner.temp }}/release-input/${{ needs.preflight.outputs.main_jar }}

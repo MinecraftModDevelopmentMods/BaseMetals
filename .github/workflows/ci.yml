@@ -1,0 +1,199 @@
+name: Base Metals 1.12 CI
+
+on:
+  push:
+    branches:
+      - master-1.12
+      - 'feature/**'
+  pull_request:
+    branches:
+      - master-1.12
+
+permissions:
+  contents: read
+
+concurrency:
+  group: basemetals-1.12-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cold-forge-bootstrap:
+    name: Cold Forge bootstrap
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Install pinned Java 25 ForgeGradle Mavenizer runtime
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '25.0.3+9.0.LTS'
+
+      - name: Install pinned Java 8 compilation toolchain
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '8.0.502+7'
+
+      - name: Install pinned Java 17 Gradle runtime
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '17.0.1+12'
+
+      - name: Stage checksum-verified legacy dependencies
+        id: dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mirror="$RUNNER_TEMP/legacy-dependency-mirror"
+          bash gradle/stage-legacy-dependencies.sh "$mirror"
+          echo "repository=$mirror" >> "$GITHUB_OUTPUT"
+
+      - name: Bootstrap Forge from an empty cache
+        shell: bash
+        env:
+          GRADLE_USER_HOME: ${{ runner.temp }}/basemetals-cold-gradle
+        run: |
+          set -euo pipefail
+          test ! -e .gradle
+          test ! -e "$GRADLE_USER_HOME"
+          mkdir -p "$GRADLE_USER_HOME"
+          chmod +x ./gradlew
+          gradle_args=(
+            classes verifyReleaseDependencies
+            -PlegacyDependencyVerificationRepository="${{ steps.dependencies.outputs.repository }}"
+            --no-daemon --no-build-cache --stacktrace --max-workers=2
+            -Dorg.gradle.java.installations.paths="$JAVA_HOME,$JAVA_HOME_8_X64,$JAVA_HOME_25_X64"
+            -Dorg.gradle.java.installations.auto-detect=false
+            -Dorg.gradle.java.installations.auto-download=false
+          )
+          ./gradlew "${gradle_args[@]}"
+
+      - name: Verify same-cache bootstrap offline
+        shell: bash
+        env:
+          GRADLE_USER_HOME: ${{ runner.temp }}/basemetals-cold-gradle
+        run: |
+          set -euo pipefail
+          gradle_args=(
+            classes verifyReleaseDependencies
+            -PlegacyDependencyVerificationRepository="${{ steps.dependencies.outputs.repository }}"
+            --rerun-tasks --offline --no-daemon --no-build-cache --stacktrace --max-workers=2
+            -Dorg.gradle.java.installations.paths="$JAVA_HOME,$JAVA_HOME_8_X64,$JAVA_HOME_25_X64"
+            -Dorg.gradle.java.installations.auto-detect=false
+            -Dorg.gradle.java.installations.auto-download=false
+          )
+          ./gradlew "${gradle_args[@]}"
+
+  build:
+    name: Build, test, and audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Install pinned Java 25 ForgeGradle Mavenizer runtime
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '25.0.3+9.0.LTS'
+
+      - name: Install pinned Java 8 compilation and runtime toolchain
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '8.0.502+7'
+
+      - name: Install pinned Java 17 Gradle runtime
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '17.0.1+12'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6
+
+      - name: Stage checksum-verified dependencies
+        id: dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mirror="$RUNNER_TEMP/legacy-dependency-mirror"
+          bash gradle/stage-legacy-dependencies.sh "$mirror"
+          echo "repository=$mirror" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare clean packaged Forge runtime
+        id: forge
+        shell: bash
+        run: |
+          set -euo pipefail
+          runtime="$RUNNER_TEMP/forge-1.12.2-2859-runtime"
+          bash gradle/prepare-packaged-forge-runtime.sh "$runtime" "$JAVA_HOME_8_X64/bin/java"
+          echo "runtime=$runtime" >> "$GITHUB_OUTPUT"
+
+      - name: Build, test, audit, qualify runtimes, and generate Eclipse launches
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x ./gradlew
+          gradle_args=(
+            clean check build javadoc verifyReleaseDependencies verifyReleaseArtifacts
+            writeReleaseChecksums prepareEclipse packagedForgeRuntimeTest
+            -PlegacyDependencyVerificationRepository="${{ steps.dependencies.outputs.repository }}"
+            -PpackagedForgeRuntimeRoot="${{ steps.forge.outputs.runtime }}"
+            --no-daemon --stacktrace --max-workers=2
+            -Dorg.gradle.java.installations.paths="$JAVA_HOME,$JAVA_HOME_8_X64,$JAVA_HOME_25_X64"
+            -Dorg.gradle.java.installations.auto-detect=false
+            -Dorg.gradle.java.installations.auto-download=false
+          )
+          ./gradlew "${gradle_args[@]}"
+          cp build/release/SHA256SUMS "$RUNNER_TEMP/first-SHA256SUMS"
+
+      - name: Verify reproducible release archives
+        shell: bash
+        run: |
+          set -euo pipefail
+          gradle_args=(
+            clean build javadoc verifyReleaseArtifacts writeReleaseChecksums
+            -PlegacyDependencyVerificationRepository="${{ steps.dependencies.outputs.repository }}"
+            --offline --no-daemon --no-build-cache --stacktrace --max-workers=2
+            -Dorg.gradle.java.installations.paths="$JAVA_HOME,$JAVA_HOME_8_X64,$JAVA_HOME_25_X64"
+            -Dorg.gradle.java.installations.auto-detect=false
+            -Dorg.gradle.java.installations.auto-download=false
+          )
+          ./gradlew "${gradle_args[@]}"
+          cmp "$RUNNER_TEMP/first-SHA256SUMS" build/release/SHA256SUMS
+
+      - name: Upload audited release candidate
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: BaseMetals-1.12.2-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            build/libs/BaseMetals-2.5.1.112021.jar
+            build/libs/BaseMetals-2.5.1.112021-sources.jar
+            build/libs/BaseMetals-2.5.1.112021-javadoc.jar
+            build/release/SHA256SUMS
+            CHANGELOG.txt
+
+      - name: Upload bounded diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: BaseMetals-1.12.2-diagnostics-${{ github.sha }}
+          if-no-files-found: ignore
+          retention-days: 14
+          path: |
+            build/test-results/**
+            build/reports/**
+            build/packaged-forge-*-run/logs/**
+            build/packaged-forge-*-run/*-console.txt
+            build/packaged-forge-*-run/crash-reports/**
+            build/problems/**

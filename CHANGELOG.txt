@@ -1,2 +1,16 @@
+Base Metals 2.5.1.112021
+
+- Modernized the Minecraft 1.12.2 build on ForgeGradle 7, Gradle 9.6.1 and
+  checksum-pinned Java and mod dependencies.
+- Added deterministic release archives, artifact auditing, Eclipse launch
+  generation, packaged Forge runtime qualification and guarded GitHub Actions
+  release delivery.
+- Updated the development target to Forge 14.23.5.2859 while preserving Java 8
+  game compatibility, registry IDs, OreSpawn 3 behavior and integrations.
+- This modernization contains no gameplay or recipe-loop fixes; those changes
+  will follow separately.
+
+Base Metals 2.5.0-rc2.332
+
 1) (@dshadowwolf) Masses of bug-fixes
 2) (@dshadowwolf) Move vanilla extensions out of MMDLib - the lib should be providing anything but raw materials

@@ -1,0 +1,27 @@
+*            text=auto eol=lf
+
+*.bat        text eol=crlf
+*.gradle     text diff=java
+mcmod.info   text
+*.java       text
+*.json       text
+*.lang       text
+*.mcmeta     text
+*.md         text
+*.properties text
+gradlew      text eol=lf
+*.sh         text eol=lf
+*.txt        text
+*.xml        text
+*.yml        text
+*.yaml       text
+
+*.gif        binary
+*.ico        binary
+*.jpg        binary
+*.jpeg       binary
+*.png        binary
+*.psd        binary
+*.svg        binary
+*.jar        binary
+*.zip        binary
