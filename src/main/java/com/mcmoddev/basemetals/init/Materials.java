@@ -22,21 +22,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.FluidRegistry;
 
-/**
- * This class initializes all of the materials in Base Metals.
- *
- * @author Jasmine Iwanek
- *
- */
+/** Defines Base Metals materials and their gameplay statistics. */
 public final class Materials extends com.mcmoddev.lib.init.Materials {
 
 	private Materials() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
-	/**
-	 *
-	 */
+	/** Creates enabled materials when MMDLib opens its material registry. */
 	public static void init(final MMDLibRegisterMaterials event) {
 		final List<String> rareMaterials = Arrays.asList(MaterialNames.ADAMANTINE, MaterialNames.COLDIRON,
 				MaterialNames.PLATINUM, MaterialNames.STARSTEEL);
@@ -77,7 +70,7 @@ public final class Materials extends com.mcmoddev.lib.init.Materials {
 			});
 		}
 		
-		// Mod Materials
+		// Rare metals retain their historical blast resistance and dimension hints.
 		if (hasMaterial(MaterialNames.ADAMANTINE)) {
 			getMaterialByName(MaterialNames.ADAMANTINE).setBlastResistance(2000f).setSpawnSize(4)
 					.setDefaultDimension(-1);

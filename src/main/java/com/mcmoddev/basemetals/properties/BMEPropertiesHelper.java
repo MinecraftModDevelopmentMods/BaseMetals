@@ -9,19 +9,14 @@ import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BMEPropertiesHelper {
+/** Builds localized tooltips for material-specific armor and tool effects. */
+public final class BMEPropertiesHelper {
 	private static final String TOOLTIP = "tooltip.";
 	private static final String ARMOR = ".armor";
 	private static final String TOOL = ".tool";
 
 
-	/**
-	 *
-	 * @param materialName
-	 *            The materialName
-	 * @param tooltipList
-	 *            The tooltip list
-	 */
+	/** Returns the special tool-effect tooltip for a material, when it has one. */
 	@SideOnly(Side.CLIENT)
 	public static List<String> addToolSpecialPropertiesToolTip(final String materialName) {
 		List<String> rv = new ArrayList<>();
@@ -46,13 +41,7 @@ public class BMEPropertiesHelper {
 		return rv;
 	}
 
-	/**
-	 *
-	 * @param materialName
-	 *            The materialName
-	 * @param tooltipList
-	 *            The tooltip list
-	 */
+	/** Returns the special armor-effect tooltip for a material, when it has one. */
 	@SideOnly(Side.CLIENT)
 	public static List<String> addArmorSpecialPropertiesToolTip(final String materialName) {
 		List<String> rv = new ArrayList<>();

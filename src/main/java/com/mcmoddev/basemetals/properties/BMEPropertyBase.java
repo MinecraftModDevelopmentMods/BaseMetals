@@ -14,18 +14,15 @@ import net.minecraft.item.ItemStack;
 public abstract class BMEPropertyBase extends MMDMaterialPropertyBase {
 	protected static final int EFFECT_DURATION = 45;
 
-	// Changing this to use getItem breaks the test.
-	private static boolean playerHasArmorItem(ItemStack piece, EntityPlayer player) {
-		return  ((player.getItemStackFromSlot(EntityEquipmentSlot.HEAD) == piece)
-		|| (player.getItemStackFromSlot(EntityEquipmentSlot.CHEST) == piece)
-		|| (player.getItemStackFromSlot(EntityEquipmentSlot.LEGS) == piece)
-		|| (player.getItemStackFromSlot(EntityEquipmentSlot.FEET) == piece));
-	}
-	
 	protected static int countArmorPieces(final MMDMaterial mat, final EntityPlayer player) {
-		return (int) Arrays.stream(new Names[]{Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS})
-				.map(n -> mat.getItemStack(n))
-				.filter(m -> !playerHasArmorItem(m, player))
+		return (int) Arrays.stream(new EntityEquipmentSlot[] {
+				EntityEquipmentSlot.HEAD,
+				EntityEquipmentSlot.CHEST,
+				EntityEquipmentSlot.LEGS,
+				EntityEquipmentSlot.FEET
+		})
+				.map(player::getItemStackFromSlot)
+				.filter(stack -> stackIsArmorMaterial(stack, mat))
 				.count();
 	}
 
@@ -41,10 +38,9 @@ public abstract class BMEPropertyBase extends MMDMaterialPropertyBase {
 				&& (player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == material
 						.getItem(Names.BOOTS)));
 	}
-	
+
 	protected static boolean stackIsArmorMaterial(ItemStack stack, MMDMaterial material) {
 		return Arrays.stream(new Names[]{Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS, Names.BOOTS})
-				.map(n -> material.getItemStack(n))
-				.anyMatch(it -> it.isItemEqual(stack));
+				.anyMatch(n -> stack.getItem() == material.getItem(n));
 	}
 }

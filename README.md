@@ -75,7 +75,19 @@ Also known as a sledgehammer, this tool is designed for pulverizing rocks. Using
 
 ## Requirements
 
-This mod requires that you install Minecraft Forge version 1.12-14.21.1.2387 or later (earlier versions of Forge for Minecraft 1.12 may work, but no guarantees).
+Base Metals 2.6.0 requires Minecraft 1.12.2, Forge 14.23.5.2859, MMDLib,
+and OreSpawn 4.1.0.112021 or newer in the 4.x line.
+
+OreSpawn 4.1's Mods directory includes a Base Metals cog for editing the
+existing `BaseMetals.cfg`. See [configuration](docs/configuration.md) for the
+restart and ore-rule safety behavior, including the upgrade-safe High Fantasy,
+Low Fantasy, and Realism content modes. Existing configurations without a mode
+remain in High Fantasy and keep the historical recipes and acquisition paths.
+
+OreSpawn is the sole Base Metals ore generator. To disable Base Metals' rules
+for a CoFH World or other custom-worldgen setup, follow the
+[world-generation guide](docs/world-generation.md). The old MMDLib
+`using_orespawn` and `fallback_orespawn` options do not control these rules.
 
 
 

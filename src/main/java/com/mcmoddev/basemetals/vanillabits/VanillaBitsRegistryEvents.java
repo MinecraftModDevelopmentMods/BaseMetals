@@ -14,7 +14,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -85,8 +84,4 @@ public class VanillaBitsRegistryEvents {
 		});
 	}
     
-	@SubscribeEvent
-	public static void registerRecipes(RegistryEvent.Register<IRecipe> ev) {
-		// do nothing, as we have nothing to do
-	}
 }

@@ -3,9 +3,11 @@ package com.mcmoddev.basemetals.proxy;
 import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.client.config.BaseMetalsConfigScreen;
+import com.mcmoddev.basemetals.network.ClientContentModeConnectionHandler;
+import com.mcmoddev.basemetals.client.renderer.RenderBaseMetalsBolt;
 import com.mcmoddev.lib.client.registrations.RegistrationHelper;
 import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
-import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.entity.EntityCustomArrow;
 import com.mcmoddev.lib.entity.EntityCustomBolt;
@@ -22,6 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Loader;
@@ -31,32 +34,25 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry;
 
-/**
- * Base Metals Client Proxy.
- *
- * @author Jasmine Iwanek
- *
- */
+/** Client-only rendering, configuration-screen, and world access setup. */
 @EventBusSubscriber
 public final class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInit(final FMLPreInitializationEvent event) {
 		super.preInit(event);
+		FMLCommonHandler.instance().bus().register(new ClientContentModeConnectionHandler());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomArrow.class,
 				RenderCustomArrow::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomBolt.class,
-				RenderCustomBolt::new);
+				RenderBaseMetalsBolt::new);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	/**
-	 * Registers Block and Item models for this mod.
-	 *
-	 * @param event The Event.
-	 */
+	/** Registers item and block models, including the three anvil damage states. */
 	@SubscribeEvent
 	public static void registerModels(final ModelRegistryEvent event) {
 		for (final String name : Items.getItemRegistry().keySet()) {
@@ -80,11 +76,7 @@ public final class ClientProxy extends CommonProxy {
 		}
 	}
 
-	/**
-	 * Registers Fluid models for this mod.
-	 *
-	 * @param event The Event.
-	 */
+	/** Registers models for every Base Metals fluid block. */
 	@SubscribeEvent
 	public void fluidRendering(final RegistryEvent.Register<MMDMaterial> event) {
 		for (final String name : Fluids.getFluidBlockRegistry().keySet()) {
@@ -95,6 +87,8 @@ public final class ClientProxy extends CommonProxy {
 	@Override
 	public void init(final FMLInitializationEvent event) {
 		super.init(event);
+		WorldSettingsExtensionRegistry.registerConfigScreen(BaseMetals.MODID,
+				BaseMetalsConfigScreen::new);
 		if (Loader.isModLoaded("waila")) {
 			com.mcmoddev.lib.waila.Waila.init();
 		}

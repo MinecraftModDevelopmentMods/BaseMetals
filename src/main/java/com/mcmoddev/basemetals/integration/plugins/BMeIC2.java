@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.content.ContentPolicy;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -37,15 +38,13 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	/**
-	 *
-	 * @param event The Event.
-	 */
+	/** Registers IC2 processing recipes after Forge has created the recipe registry. */
 	@SubscribeEvent
 	public void mainInteraction(final RegistryEvent.Register<IRecipe> event) {
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+				.filter(ContentPolicy.active()::allowsMaterial)
 				.forEach(materialName -> {
 					this.registerVanillaRecipes(materialName);
 					this.addMaceratorRecipes(materialName);
@@ -76,13 +75,12 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	/**
-	 *
-	 */
+	/** Adds the Forge Hammer conversions during integration initialization. */
 	@SubscribeEvent
 	public void doHammerRecipes(final IntegrationInitEvent event) {
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+				.filter(ContentPolicy.active()::allowsMaterial)
 				.forEach(this::addForgeHammerRecipe);
 	}
 }

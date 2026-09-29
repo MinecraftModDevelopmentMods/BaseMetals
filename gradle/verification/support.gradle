@@ -1,0 +1,269 @@
+import groovy.json.JsonSlurper
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
+import java.util.zip.ZipFile
+
+def buildContract = project.ext.baseMetalsBuild
+def dependencySpecs = project.ext.baseMetalsDependencies.specs
+def expectedMavenGroup = buildContract.mavenGroup
+def expectedMavenArtifact = buildContract.mavenArtifact
+def expectedMavenCoordinate = buildContract.mavenCoordinate
+
+// Shared release checks belong here so every release-facing task uses one contract.
+def java8Launcher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(8)
+    vendor = JvmVendorSpec.ADOPTIUM
+}
+
+def java25Launcher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(25)
+    vendor = JvmVendorSpec.ADOPTIUM
+}
+
+tasks.register('verifyReleaseToolchains') {
+    group = 'verification'
+    description = 'Requires the pinned Gradle, Mavenizer, compilation, and runtime JDKs.'
+    doLast {
+        String gradleVendor = System.getProperty('java.vendor')
+        String gradleRuntime = System.getProperty('java.runtime.version')
+        if (project.gradle_java_version != '17'
+                || gradleVendor != 'Eclipse Adoptium'
+                || gradleRuntime != '17.0.1+12') {
+            throw new GradleException("Expected Gradle on Temurin 17.0.1+12, found "
+                    + "${gradleVendor} ${gradleRuntime} at ${System.getProperty('java.home')}")
+        }
+
+        def metadata = java8Launcher.get().metadata
+        if (project.java_toolchain_version != '8.0.502+7'
+                || metadata.vendor.toString() != 'Eclipse Temurin'
+                || metadata.javaRuntimeVersion != '1.8.0_502-b07') {
+            throw new GradleException("Expected Temurin ${project.java_toolchain_version}, found "
+                    + "${metadata.vendor} ${metadata.javaRuntimeVersion} at ${metadata.installationPath}")
+        }
+
+        def mavenizerMetadata = java25Launcher.get().metadata
+        if (project.mavenizer_java_version != '25.0.3+9'
+                || mavenizerMetadata.vendor.toString() != 'Eclipse Temurin'
+                || mavenizerMetadata.javaRuntimeVersion != '25.0.3+9-LTS') {
+            throw new GradleException("Expected Mavenizer on Temurin ${project.mavenizer_java_version}, found "
+                    + "${mavenizerMetadata.vendor} ${mavenizerMetadata.javaRuntimeVersion} "
+                    + "at ${mavenizerMetadata.installationPath}")
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyReleaseToolchains')
+}
+
+def expectedReleaseFiles = providers.provider {
+    def prefix = "${base.archivesName.get()}-${project.version}"
+    [
+            "${prefix}.jar",
+            "${prefix}-sources.jar",
+            "${prefix}-javadoc.jar"
+    ]
+}
+def preparedReleaseDir = providers.gradleProperty('preparedReleaseDir')
+
+def sha256 = { File candidate ->
+    MessageDigest digest = MessageDigest.getInstance('SHA-256')
+    candidate.withInputStream { input ->
+        byte[] buffer = new byte[8192]
+        for (int read = input.read(buffer); read >= 0; read = input.read(buffer)) {
+            if (read > 0) digest.update(buffer, 0, read)
+        }
+    }
+    digest.digest().encodeHex().toString().toUpperCase()
+}
+
+tasks.register('verifyReleaseConfiguration') {
+    group = 'verification'
+    description = 'Validates the complete Base Metals 1.12 release identity and dependency contract.'
+    dependsOn tasks.named('verifyReleaseToolchains')
+    doLast {
+        if (project.mod_version != '2.6.0.112021'
+                || project.minecraft_version != '1.12.2'
+                || project.forge_version != '14.23.5.2859'
+                || project.mappings_channel != 'stable'
+                || project.mappings_version != '39-1.12') {
+            throw new GradleException('Unexpected Base Metals version, Minecraft, Forge, or mappings target')
+        }
+        String buildScript = file('build.gradle').getText('UTF-8')
+        String settingsScript = file('settings.gradle').getText('UTF-8')
+        Properties wrapper = new Properties()
+        file('gradle/wrapper/gradle-wrapper.properties').withInputStream { wrapper.load(it) }
+        if (!buildScript.contains("id 'net.minecraftforge.gradle' version '7.0.34'")
+                || !buildScript.contains("id 'net.minecraftforge.renamer' version '1.1.5'")
+                || !settingsScript.contains("version '1.0.0'")
+                || wrapper.getProperty('distributionUrl')
+                        != 'https://services.gradle.org/distributions/gradle-9.6.1-bin.zip'
+                || wrapper.getProperty('distributionSha256Sum')
+                        != '9c0f7faeeb306cb14e4279a3e084ca6b596894089a0638e68a07c945a32c9e14') {
+            throw new GradleException('ForgeGradle, Renamer, Foojay, or Gradle wrapper identity drifted')
+        }
+        if (project.loader_name != 'forge' || project.loader_code != '1'
+                || project.java_version != '8'
+                || project.java_toolchain_version != '8.0.502+7'
+                || project.gradle_java_version != '17'
+                || project.mavenizer_java_version != '25.0.3+9') {
+            throw new GradleException('Unexpected loader or Java release metadata')
+        }
+        if (project.mod_group != expectedMavenGroup
+                || base.archivesName.get() != expectedMavenArtifact
+                || "${project.group}:${base.archivesName.get()}:${project.version}" != expectedMavenCoordinate) {
+            throw new GradleException("Unexpected Maven coordinate; expected ${expectedMavenCoordinate}")
+        }
+        if (project.cf_project_id != '240967'
+                || project.cf_requirements != 'mmd-orespawn,mmdlib'
+                || project.cf_versions != '1.12.2') {
+            throw new GradleException('Unexpected CurseForge publication contract')
+        }
+        if (dependencySpecs.mmdlib.version != '1.0.0-rc2.36'
+                || dependencySpecs.orespawn4.version != '4.1.0.112021'
+                || dependencySpecs.orespawn3.version != '3.3.1.179') {
+            throw new GradleException('Unexpected MMDLib, OreSpawn 4, or OreSpawn 3 fixture version')
+        }
+        if (project.orespawn4_curse_project_id != '245586'
+                || project.orespawn4_curse_file_id != '9008120'
+                || project.orespawn4_sha256 != 'B3018214BD1A612309A78DF02C552C0948A8FCD3CF314F25D40071E8B4605670') {
+            throw new GradleException('Unexpected published OreSpawn 4.1 CurseForge artifact identity')
+        }
+        String source = file('src/main/java/com/mcmoddev/basemetals/BaseMetals.java').getText('UTF-8')
+        if (!source.contains('VERSION = "2.6.0.112021"')
+                || !source.contains('certificateFingerprint = ""')
+                || !source.contains('required-after:orespawn@[4.1.0.112021,5.0.0)')) {
+            throw new GradleException('Base Metals source version or unsigned fingerprint contract drifted')
+        }
+    }
+}
+
+tasks.register('verifyReleaseDependencies') {
+    group = 'verification'
+    description = 'Resolves and checksum-verifies all exact legacy mod dependencies.'
+    dependsOn tasks.named('verifyReleaseConfiguration')
+    doLast {
+        def resolved = configurations.legacyDependencyArtifacts.resolvedConfiguration.resolvedArtifacts
+        def supportedSpecs = dependencySpecs.findAll { name, spec -> name != 'orespawn3' }
+        if (resolved.size() != supportedSpecs.size()) {
+            throw new GradleException("Expected ${supportedSpecs.size()} exact supported/test artifacts, found ${resolved.size()}")
+        }
+        supportedSpecs.each { name, spec ->
+            def bits = spec.coordinate.split(':')
+            def matches = resolved.findAll {
+                it.moduleVersion.id.group == bits[0]
+                        && it.moduleVersion.id.name == bits[1]
+                        && it.moduleVersion.id.version == bits[2]
+            }
+            if (matches.size() != 1) {
+                throw new GradleException("Expected exactly ${spec.coordinate}, found ${matches*.moduleVersion*.id}")
+            }
+            String actual = sha256(matches.first().file)
+            if (actual != spec.sha256) {
+                throw new GradleException("${name} SHA-256 is ${actual}, expected ${spec.sha256}")
+            }
+        }
+        def os3Resolved = configurations.orespawn3FixtureArtifact.resolvedConfiguration.resolvedArtifacts
+        if (os3Resolved.size() != 1) {
+            throw new GradleException("Expected one isolated OreSpawn 3 fixture, found ${os3Resolved*.moduleVersion*.id}")
+        }
+        String os3Actual = sha256(os3Resolved.first().file)
+        if (os3Actual != dependencySpecs.orespawn3.sha256) {
+            throw new GradleException("orespawn3 SHA-256 is ${os3Actual}, expected ${dependencySpecs.orespawn3.sha256}")
+        }
+        def orespawn4Bits = dependencySpecs.orespawn4.coordinate.split(':')
+        File orespawn4 = resolved.find {
+            it.moduleVersion.id.group == orespawn4Bits[0]
+                    && it.moduleVersion.id.name == orespawn4Bits[1]
+                    && it.moduleVersion.id.version == orespawn4Bits[2]
+        }.file
+        ZipFile compatibilityJar = new ZipFile(orespawn4)
+        try {
+            def entry = compatibilityJar.getEntry('mcmod.info')
+            def metadata = entry == null ? null : new JsonSlurper().parseText(
+                    compatibilityJar.getInputStream(entry).getText(StandardCharsets.UTF_8.name()))
+            def mod = metadata instanceof List ? metadata.find { it.modid == 'orespawn' } : metadata
+            if (mod == null || mod.version != project.orespawn4_version) {
+                throw new GradleException("OreSpawn 4 compatibility artifact is not ${project.orespawn4_version}")
+            }
+            [
+                    'zone/moddev/mc/orespawn/api/client/WorldSettingsExtensionRegistry.class',
+                    'zone/moddev/mc/orespawn/api/client/WorldSettingsScreenFactory.class'
+            ].each { apiClass ->
+                if (compatibilityJar.getEntry(apiClass) == null) {
+                    throw new GradleException("OreSpawn 4 release is missing client API ${apiClass}")
+                }
+            }
+        } finally {
+            compatibilityJar.close()
+        }
+    }
+}
+
+tasks.register('verifyJsonResources') {
+    group = 'verification'
+    description = 'Parses every production JSON resource.'
+    inputs.files(fileTree('src/main/resources') { include '**/*.json' })
+    doLast {
+        fileTree('src/main/resources') { include '**/*.json' }.files.sort().each { candidate ->
+            try {
+                new JsonSlurper().parse(candidate)
+            } catch (Exception failure) {
+                throw new GradleException("Invalid JSON resource ${project.relativePath(candidate)}", failure)
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyReleaseConfiguration')
+    dependsOn tasks.named('verifyReleaseDependencies')
+    dependsOn tasks.named('verifyJsonResources')
+}
+
+tasks.register('verifyOreSpawnProviderConfiguration') {
+    group = 'verification'
+    description = 'Locks the schema-5 API provider and complete disabled override contract.'
+    inputs.file('src/main/java/com/mcmoddev/basemetals/worldgen/BaseMetalsWorldgenProvider.java')
+    inputs.file('docs/examples/basemetals-orespawn-disabled.json')
+    doLast {
+        def disabled = new JsonSlurper().parse(
+                file('docs/examples/basemetals-orespawn-disabled.json'))
+        List<String> expectedRules = [
+                'basemetals:legacy/coldiron_ore', 'basemetals:legacy/adamantine_ore',
+                'basemetals:legacy/starsteel_ore', 'basemetals:legacy/copper_ore',
+                'basemetals:legacy/silver_ore', 'basemetals:legacy/tin_ore',
+                'basemetals:legacy/lead_ore', 'basemetals:legacy/zinc_ore',
+                'basemetals:legacy/mercury_ore', 'basemetals:legacy/nickel_ore',
+                'basemetals:legacy/platinum_ore'
+        ].sort()
+        String source = file('src/main/java/com/mcmoddev/basemetals/worldgen/BaseMetalsWorldgenProvider.java')
+                .getText('UTF-8')
+        if (!source.contains('PROVIDER_REVISION = 2')
+                || !source.contains('mergeNewEntriesIntoExistingWorlds(true)')
+                || disabled.schema_version != 5 || disabled.provider_modid != 'basemetals'
+                || disabled.provider_revision != 2
+                || disabled.merge_new_entries_into_existing_worlds != true
+                || disabled.ores.keySet().sort() != expectedRules) {
+            throw new GradleException('The API-built or disabled OreSpawn provider has the wrong identity')
+        }
+        if (!disabled.ores.every { id, rule -> !rule.enabled }
+                || file('src/main/resources/assets/basemetals/orespawn/provider.json').exists()
+                || file('src/main/resources/assets/basemetals/orespawn/basemetals.json').exists()
+                || file('src/main/java/com/mcmoddev/basemetals/integration/orespawn/BaseMetalsOreSpawn.java').exists()) {
+            throw new GradleException('The disabled provider is incomplete or a static/OS3 provider remains')
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyOreSpawnProviderConfiguration')
+}
+
+ext.baseMetalsVerification = [
+        java8Launcher      : java8Launcher,
+        java25Launcher     : java25Launcher,
+        expectedReleaseFiles: expectedReleaseFiles,
+        preparedReleaseDir : preparedReleaseDir,
+        sha256             : sha256
+].asImmutable()

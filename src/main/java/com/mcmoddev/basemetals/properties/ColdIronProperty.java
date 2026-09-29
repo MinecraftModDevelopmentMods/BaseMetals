@@ -14,26 +14,22 @@ import net.minecraft.potion.PotionEffect;
 public class ColdIronProperty extends BMEPropertyBase {
 	@Override
 	public void apply(ItemStack stack) {
-		if(hasEffect(stack)) {
-			// only apply if there is an effect
-			// we should always double check here :)
-		}
 	}
 
 	@Override
 	public void apply(ItemStack stack, EntityPlayer player) {
-		//if(hasEffect(stack, player)) {                        
-			if (hasFullSuit(player, MaterialNames.COLDIRON)) { 
+		if(hasEffect(stack, player)) {
+			if (hasFullSuit(player, MaterialNames.COLDIRON)) {
 				final PotionEffect fireProtection = new PotionEffect(MobEffects.FIRE_RESISTANCE,
 						EFFECT_DURATION, 0, false, false);
 				player.addPotionEffect(fireProtection);
 			}
-      	//}
+		}
 	}
 
 	@Override
 	public void apply(ItemStack stack, EntityLivingBase ent) {
-		if (ent instanceof EntityPlayer) { // Checks for full suit should be done in the second "apply" call
+		if(hasEffect(stack, ent) && ent instanceof EntityPlayer) {
 			apply(stack, (EntityPlayer)ent);
 		}
 	}
@@ -46,13 +42,12 @@ public class ColdIronProperty extends BMEPropertyBase {
 	@Override
 	public boolean hasEffect(ItemStack stack, EntityPlayer player) {
 		MMDMaterial mat = Materials.getMaterialByName(MaterialNames.COLDIRON);
-/*
-		boolean rv = (stackIsArmorMaterial(stack, mat) 
-				&& ((stack.getItem() instanceof IMMDObject) && 
-						(((IMMDObject)stack.getItem()).getMMDMaterial() == mat))) && 
+		boolean rv = (stackIsArmorMaterial(stack, mat)
+				&& ((stack.getItem() instanceof IMMDObject) &&
+						(((IMMDObject)stack.getItem()).getMMDMaterial() == mat))) &&
 				(countArmorPieces(Materials.getMaterialByName(MaterialNames.COLDIRON),player) > 0);
- */
-		return true;
+
+		return rv;
 	}
 
 	@Override

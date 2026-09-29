@@ -13,12 +13,7 @@ import com.mcmoddev.lib.util.Config.Options;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/**
- * This class initializes all fluids in Base Metals.
- *
- * @author Jasmine Iwanek
- *
- */
+/** Creates Base Metals fluids and their blocks. */
 @Mod.EventBusSubscriber(modid=BaseMetals.MODID)
 public final class Fluids extends com.mcmoddev.lib.init.Fluids {
 
@@ -26,9 +21,7 @@ public final class Fluids extends com.mcmoddev.lib.init.Fluids {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
-	/**
-	 *
-	 */
+	/** Creates enabled molten-metal fluids during MMDLib registration. */
 	@SubscribeEvent
 	public static void registerEvent(MMDLibRegisterFluids event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,

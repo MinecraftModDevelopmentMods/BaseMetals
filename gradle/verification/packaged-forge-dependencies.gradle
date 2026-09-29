@@ -1,0 +1,206 @@
+import groovy.json.JsonSlurper
+
+def packagedForge = project.ext.baseMetalsPackagedForge
+def dependencySpecs = packagedForge.dependencySpecs
+def releaseJar = packagedForge.releaseJar
+def java8Launcher = packagedForge.java8Launcher
+def packagedRuntimeProbeJar = packagedForge.packagedRuntimeProbeJar
+def originalArtifact = packagedForge.originalArtifact
+def runtimeLogFailures = packagedForge.runtimeLogFailures
+def stagePackagedForgeBase = packagedForge.stagePackagedForgeBase
+
+// These profiles prove that OreSpawn is required and that an existing explicit profile remains authoritative.
+File existingOverrideRun = file("${buildDir}/packaged-forge-existing-override-run")
+File existingOverrideMarker = new File(existingOverrideRun, 'basemetals-runtime-probe.properties')
+def prepareExistingOverride = tasks.register('preparePackagedForgeExistingOverrideRuntime') {
+    group = 'verification'
+    dependsOn releaseJar
+    dependsOn packagedRuntimeProbeJar
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doLast {
+        stagePackagedForgeBase(existingOverrideRun)
+        File mods = new File(existingOverrideRun, 'mods')
+        mods.mkdirs()
+        copy { from layout.buildDirectory.file("libs/BaseMetals-${project.version}.jar"); into mods }
+        copy { from layout.buildDirectory.file('runtime-probes/basemetals-runtime-probe.jar'); into mods }
+        [dependencySpecs.mmdlib, dependencySpecs.orespawn4].each { spec ->
+            copy {
+                from originalArtifact(configurations.legacyDependencyArtifacts, spec.coordinate)
+                into mods
+            }
+        }
+        File config = new File(existingOverrideRun, 'config')
+        config.mkdirs()
+        def explicitOverride = new JsonSlurper().parse(
+                file('docs/examples/basemetals-orespawn-disabled.json'))
+        explicitOverride.ores.each { id, rule -> rule.enabled = true }
+        new File(config, 'basemetals-orespawn.json').setText(
+                groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(explicitOverride))
+                        + System.lineSeparator(), 'UTF-8')
+    }
+}
+
+def previousExistingOverride = prepareExistingOverride
+['Fresh', 'Reload'].each { phase ->
+    def dependencyTask = previousExistingOverride
+    def processTask = tasks.register("packagedForgeExistingOverride${phase}Process", Exec) {
+        group = 'verification'
+        dependsOn dependencyTask
+        workingDir existingOverrideRun
+        ByteArrayOutputStream console = new ByteArrayOutputStream()
+        doFirst {
+            console.reset()
+            existingOverrideMarker.delete()
+            File javaExecutable = java8Launcher.get().executablePath.asFile
+            File forge = new File(existingOverrideRun,
+                    "forge-${project.minecraft_version}-${project.forge_version}-universal.jar")
+            commandLine javaExecutable,
+                    '-Dforge.logging.console.level=info',
+                    "-Dbasemetals.probe.phase=${phase.toLowerCase()}",
+                    "-Dbasemetals.probe.expectedOrespawn=${project.orespawn4_version}",
+                    "-Dbasemetals.probe.marker=${existingOverrideMarker.absolutePath}",
+                    '-jar', forge, 'nogui'
+            standardOutput = console
+            errorOutput = console
+        }
+        doLast {
+            new File(existingOverrideRun, "existing-override-${phase.toLowerCase()}-console.txt")
+                    .setText(console.toString('UTF-8'), 'UTF-8')
+            if (!existingOverrideMarker.isFile()) {
+                throw new GradleException("Existing OreSpawn 4 override ${phase} probe failed")
+            }
+            File override = new File(existingOverrideRun, 'config/basemetals-orespawn.json')
+            File worldProfile = new File(existingOverrideRun,
+                    'world/serverconfig/orespawn-worldgen.json')
+            if (!override.isFile() || !worldProfile.isFile()) {
+                throw new GradleException('Existing OreSpawn 4 override or world snapshot is missing')
+            }
+            def overrideJson = new JsonSlurper().parse(override)
+            def profile = new JsonSlurper().parse(worldProfile)
+            def overrideRules = overrideJson.ores.findAll { id, rule ->
+                id.startsWith('basemetals:legacy/')
+            }
+            def snapshotRules = profile.ores.findAll { id, rule ->
+                id.startsWith('basemetals:legacy/')
+            }
+            if (overrideRules.size() != 11 || snapshotRules.size() != 11
+                    || !snapshotRules.every { id, rule ->
+                        rule.enabled && rule.source_provider == 'basemetals'
+                    }) {
+                throw new GradleException('Existing OreSpawn 4 override did not retain eleven stable rules')
+            }
+            List<String> failures = runtimeLogFailures(existingOverrideRun)
+            if (!failures.isEmpty()) {
+                throw new GradleException("Existing OreSpawn 4 override ${phase} logged runtime failures:\n"
+                        + failures.take(20).join('\n'))
+            }
+        }
+    }
+    previousExistingOverride = processTask
+}
+
+tasks.register('packagedForgeExistingOverrideRuntimeTest') {
+    group = 'verification'
+    description = 'Loads an existing translated OreSpawn 4 override and reloads its world snapshot.'
+    dependsOn previousExistingOverride
+}
+
+tasks.named('packagedForgeRuntimeTest') {
+    dependsOn tasks.named('packagedForgeExistingOverrideRuntimeTest')
+}
+
+File missingOreSpawnRun = file("${buildDir}/packaged-forge-missing-orespawn-run")
+tasks.register('preparePackagedForgeMissingOreSpawnRuntime') {
+    group = 'verification'
+    dependsOn releaseJar
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doLast {
+        stagePackagedForgeBase(missingOreSpawnRun)
+        File mods = new File(missingOreSpawnRun, 'mods')
+        mods.mkdirs()
+        copy { from layout.buildDirectory.file("libs/BaseMetals-${project.version}.jar"); into mods }
+        copy {
+            from originalArtifact(configurations.legacyDependencyArtifacts,
+                    dependencySpecs.mmdlib.coordinate)
+            into mods
+        }
+    }
+}
+tasks.register('packagedForgeMissingOreSpawnTest', Exec) {
+    group = 'verification'
+    description = 'Proves Base Metals refuses to load when OreSpawn 4 is absent.'
+    dependsOn tasks.named('preparePackagedForgeMissingOreSpawnRuntime')
+    workingDir missingOreSpawnRun
+    ignoreExitValue = true
+    ByteArrayOutputStream console = new ByteArrayOutputStream()
+    doFirst {
+        console.reset()
+        File javaExecutable = java8Launcher.get().executablePath.asFile
+        File forge = new File(missingOreSpawnRun,
+                "forge-${project.minecraft_version}-${project.forge_version}-universal.jar")
+        commandLine javaExecutable, '-Dforge.logging.console.level=info', '-jar', forge, 'nogui'
+        standardOutput = console
+        errorOutput = console
+    }
+    doLast {
+        String output = console.toString('UTF-8')
+        new File(missingOreSpawnRun, 'missing-orespawn-console.txt').setText(output, 'UTF-8')
+        if (!output.contains('MissingModsException')
+                || !output.contains('basemetals')
+                || !output.contains('orespawn')
+                || !output.contains('4.1.0.112021')) {
+            throw new GradleException('Missing OreSpawn 4 was not rejected by the Base Metals version contract')
+        }
+    }
+}
+
+File os3RejectionRun = file("${buildDir}/packaged-forge-os3-rejection-run")
+tasks.register('preparePackagedForgeOs3RejectionRuntime') {
+    group = 'verification'
+    dependsOn releaseJar
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doLast {
+        stagePackagedForgeBase(os3RejectionRun)
+        File mods = new File(os3RejectionRun, 'mods')
+        mods.mkdirs()
+        copy { from layout.buildDirectory.file("libs/BaseMetals-${project.version}.jar"); into mods }
+        copy {
+            from originalArtifact(configurations.legacyDependencyArtifacts,
+                    dependencySpecs.mmdlib.coordinate)
+            into mods
+        }
+        copy {
+            from originalArtifact(configurations.orespawn3FixtureArtifact,
+                    dependencySpecs.orespawn3.coordinate)
+            into mods
+        }
+    }
+}
+
+tasks.register('packagedForgeOs3RejectionTest', Exec) {
+    group = 'verification'
+    description = 'Proves OreSpawn 3 no longer satisfies Base Metals runtime dependencies.'
+    dependsOn tasks.named('preparePackagedForgeOs3RejectionRuntime')
+    workingDir os3RejectionRun
+    ignoreExitValue = true
+    ByteArrayOutputStream console = new ByteArrayOutputStream()
+    doFirst {
+        console.reset()
+        File javaExecutable = java8Launcher.get().executablePath.asFile
+        File forge = new File(os3RejectionRun,
+                "forge-${project.minecraft_version}-${project.forge_version}-universal.jar")
+        commandLine javaExecutable, '-Dforge.logging.console.level=info', '-jar', forge, 'nogui'
+        standardOutput = console
+        errorOutput = console
+    }
+    doLast {
+        String output = console.toString('UTF-8')
+        new File(os3RejectionRun, 'os3-rejection-console.txt').setText(output, 'UTF-8')
+        if (!output.contains('MissingModsException')
+                || !output.contains('basemetals')
+                || !output.contains('orespawn')
+                || !output.contains('4.1.0.112021')) {
+            throw new GradleException('OreSpawn 3 was not rejected by the Base Metals version contract')
+        }
+    }
+}

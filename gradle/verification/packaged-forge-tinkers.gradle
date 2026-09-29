@@ -1,0 +1,266 @@
+import groovy.json.JsonSlurper
+
+def packagedForge = project.ext.baseMetalsPackagedForge
+def dependencySpecs = packagedForge.dependencySpecs
+def releaseJar = packagedForge.releaseJar
+def java8Launcher = packagedForge.java8Launcher
+def packagedTinkersRuntimeProbeJar = packagedForge.packagedTinkersRuntimeProbeJar
+def validatePackagedForgeRoot = packagedForge.validatePackagedForgeRoot
+def originalArtifact = packagedForge.originalArtifact
+def runtimeLogFailures = packagedForge.runtimeLogFailures
+
+// Tinkers profiles exercise optional combinations and every content mode.
+def tinkersCompatibilityProfiles = [
+        WithoutTaiga: [display: 'Tinkers Construct without TAIGA', taiga: false, prismarine: true,
+                mode: 'high_fantasy'],
+        WithTaiga: [display: 'Tinkers Construct with TAIGA', taiga: true, prismarine: true,
+                mode: 'high_fantasy'],
+        WithConArm: [display: "Tinkers Construct with Construct's Armory", taiga: false,
+                conarm: true, prismarine: true, mode: 'high_fantasy'],
+        PrismarineDisabled: [display: 'Tinkers Construct with Prismarine disabled', taiga: false,
+                prismarine: false, mode: 'high_fantasy'],
+        LowFantasy: [display: 'Tinkers Construct in Low Fantasy mode', taiga: false,
+                prismarine: true, mode: 'low_fantasy'],
+        LowFantasyConArm: [display: "Tinkers Construct and Construct's Armory in Low Fantasy mode",
+                taiga: false, conarm: true, prismarine: true, mode: 'low_fantasy'],
+        Realism: [display: 'Tinkers Construct in Realism mode', taiga: false,
+                prismarine: true, mode: 'realism'],
+        RealismConArm: [display: "Tinkers Construct and Construct's Armory in Realism mode",
+                taiga: false, conarm: true, prismarine: true, mode: 'realism'],
+        RealismExplicitOverride: [display: 'Realism with an explicit enabled OreSpawn override',
+                taiga: false, prismarine: true, mode: 'realism', preserveEnabledOres: true,
+                explicitOverride: true],
+        RealismExistingWorld: [display: 'a High Fantasy world restarted in Realism mode',
+                taiga: false, prismarine: true, mode: 'high_fantasy', reloadMode: 'realism',
+                preserveEnabledOres: true]
+]
+
+tinkersCompatibilityProfiles.each { profileName, profile ->
+    File runDirectory = file("${buildDir}/packaged-forge-tinkers-${profileName.toLowerCase()}-run")
+    File marker = new File(runDirectory, 'basemetals-tinkers-runtime-probe.properties')
+    def prepareTask = tasks.register("preparePackagedForgeTinkers${profileName}Runtime") {
+        group = 'verification'
+        dependsOn releaseJar
+        dependsOn packagedTinkersRuntimeProbeJar
+        dependsOn tasks.named('verifyReleaseDependencies')
+        doLast {
+            delete runDirectory
+            File sourceRuntime = validatePackagedForgeRoot()
+            File forge = new File(sourceRuntime,
+                    "forge-${project.minecraft_version}-${project.forge_version}-universal.jar")
+            java.util.jar.JarFile forgeJar = new java.util.jar.JarFile(forge)
+            String declaredClasspath
+            try {
+                declaredClasspath = forgeJar.manifest.mainAttributes.getValue('Class-Path')
+            } finally {
+                forgeJar.close()
+            }
+            if (declaredClasspath == null || declaredClasspath.trim().isEmpty()) {
+                throw new GradleException("Forge runtime has no Class-Path manifest entry: ${forge}")
+            }
+            copy { from forge; into runDirectory }
+            copy {
+                from new File(sourceRuntime, "minecraft_server.${project.minecraft_version}.jar")
+                into runDirectory
+            }
+            declaredClasspath.trim().split(/\s+/).findAll {
+                it != "minecraft_server.${project.minecraft_version}.jar"
+            }.each { String entry ->
+                String relative = entry.startsWith('libraries/')
+                        ? entry.substring('libraries/'.length()) : entry
+                File dependency = new File(sourceRuntime, "libraries/${relative}")
+                if (!dependency.isFile()) {
+                    throw new GradleException("Forge runtime dependency is missing: ${dependency}")
+                }
+                copy { from dependency; into new File(runDirectory, "libraries/${relative}").parentFile }
+            }
+            File mods = new File(runDirectory, 'mods')
+            mods.mkdirs()
+            copy { from layout.buildDirectory.file("libs/BaseMetals-${project.version}.jar"); into mods }
+            copy {
+                from layout.buildDirectory.file('runtime-probes/basemetals-tinkers-runtime-probe.jar')
+                into mods
+            }
+            [dependencySpecs.mmdlib, dependencySpecs.orespawn4,
+                    dependencySpecs.mantle, dependencySpecs.tconstruct].each { spec ->
+                copy { from originalArtifact(configurations.legacyDependencyArtifacts, spec.coordinate); into mods }
+            }
+            if (profile.taiga) {
+                copy {
+                    from originalArtifact(configurations.legacyDependencyArtifacts,
+                            dependencySpecs.taiga.coordinate)
+                    into mods
+                }
+            }
+            if (profile.conarm) {
+                copy {
+                    from originalArtifact(configurations.legacyDependencyArtifacts,
+                            dependencySpecs.conarm.coordinate)
+                    into mods
+                }
+            }
+            if (!profile.prismarine || profile.mode != 'high_fantasy') {
+                File configDirectory = new File(runDirectory, 'config')
+                configDirectory.mkdirs()
+                StringBuilder config = new StringBuilder()
+                if (profile.mode != 'high_fantasy') {
+                    config.append('general {\n')
+                            .append('    S:contentMode=')
+                            .append(profile.mode)
+                            .append('\n}\n\n')
+                }
+                if (!profile.prismarine) {
+                    config.append('fluids {\n')
+                            .append('    B:"Enabled Prismarine"=true\n')
+                            .append('}\n\n')
+                            .append('vanilla {\n')
+                            .append('    B:EnablePrismarine=false\n')
+                            .append('}\n')
+                }
+                new File(configDirectory, 'BaseMetals.cfg').setText(config.toString(), 'UTF-8')
+            }
+            if (profile.explicitOverride) {
+                File configDirectory = new File(runDirectory, 'config')
+                configDirectory.mkdirs()
+                def explicitOverride = new JsonSlurper().parse(
+                        file('docs/examples/basemetals-orespawn-disabled.json'))
+                explicitOverride.ores.each { id, rule -> rule.enabled = true }
+                new File(configDirectory, 'basemetals-orespawn.json').setText(
+                        groovy.json.JsonOutput.prettyPrint(
+                                groovy.json.JsonOutput.toJson(explicitOverride))
+                                + System.lineSeparator(), 'UTF-8')
+            }
+            new File(runDirectory, 'server.properties').setText('''\
+level-name=world
+level-seed=basemetals-tinkers-compatibility
+level-type=default
+online-mode=false
+server-port=0
+allow-nether=false
+generate-structures=false
+spawn-protection=0
+max-tick-time=-1
+''', 'UTF-8')
+            new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
+        }
+    }
+
+    def previous = prepareTask
+    ['Fresh', 'Reload'].each { phase ->
+        def dependencyTask = previous
+        def processTask = tasks.register("packagedForgeTinkers${profileName}${phase}Process", Exec) {
+            group = 'verification'
+            dependsOn dependencyTask
+            workingDir runDirectory
+            ByteArrayOutputStream console = new ByteArrayOutputStream()
+            doFirst {
+                console.reset()
+                marker.delete()
+                String effectiveMode = phase == 'Reload' && profile.reloadMode
+                        ? profile.reloadMode : profile.mode
+                if (phase == 'Reload' && profile.reloadMode) {
+                    File configFile = new File(runDirectory, 'config/BaseMetals.cfg')
+                    String configText = configFile.getText('UTF-8')
+                    String changed = configText.replace(
+                            'S:contentMode=high_fantasy',
+                            "S:contentMode=${profile.reloadMode}")
+                    if (changed == configText) {
+                        throw new GradleException("Could not change the existing-world content mode in ${configFile}")
+                    }
+                    configFile.setText(changed, 'UTF-8')
+                }
+                File javaExecutable = java8Launcher.get().executablePath.asFile
+                File forge = new File(runDirectory,
+                        "forge-${project.minecraft_version}-${project.forge_version}-universal.jar")
+                commandLine javaExecutable,
+                        '-Dforge.logging.console.level=info',
+                        "-Dbasemetals.probe.phase=${phase.toLowerCase()}",
+                        "-Dbasemetals.probe.expectedTaiga=${profile.taiga}",
+                        "-Dbasemetals.probe.expectedConArm=${profile.conarm == true}",
+                        "-Dbasemetals.probe.expectedPrismarine=${profile.prismarine}",
+                        "-Dbasemetals.probe.expectedContentMode=${effectiveMode}",
+                        "-Dbasemetals.probe.marker=${marker.absolutePath}",
+                        '-jar', forge, 'nogui'
+                standardOutput = console
+                errorOutput = console
+            }
+            doLast {
+                new File(runDirectory,
+                        "tinkers-${profileName.toLowerCase()}-${phase.toLowerCase()}-console.txt")
+                        .setText(console.toString('UTF-8'), 'UTF-8')
+                if (!marker.isFile()) {
+                    throw new GradleException("${profile.display} ${phase} probe marker is missing")
+                }
+                Properties result = new Properties()
+                marker.withInputStream { result.load(it) }
+                String effectiveMode = phase == 'Reload' && profile.reloadMode
+                        ? profile.reloadMode : profile.mode
+                if (result.getProperty('phase') != phase.toLowerCase()
+                        || result.getProperty('registered') != 'true'
+                        || result.getProperty('taiga') != profile.taiga.toString()
+                        || result.getProperty('conarm') != (profile.conarm == true).toString()
+                        || result.getProperty('prismarine') != profile.prismarine.toString()
+                        || result.getProperty('contentMode') != effectiveMode) {
+                    throw new GradleException("${profile.display} ${phase} probe result is invalid: ${result}")
+                }
+                File worldProfile = new File(runDirectory,
+                        'world/serverconfig/orespawn-worldgen.json')
+                if (!worldProfile.isFile()) {
+                    throw new GradleException("${profile.display} did not snapshot the world profile")
+                }
+                def generated = new JsonSlurper().parse(worldProfile)
+                def generatedRules = generated.ores.findAll { id, rule ->
+                    id.startsWith('basemetals:legacy/')
+                }
+                Set<String> disabledRules = generatedRules.findAll { id, rule -> !rule.enabled }
+                        .keySet() as Set<String>
+                Set<String> expectedDisabledRules = !profile.preserveEnabledOres
+                        && effectiveMode == 'realism'
+                        ? ['basemetals:legacy/adamantine_ore',
+                                'basemetals:legacy/coldiron_ore',
+                                'basemetals:legacy/starsteel_ore'] as Set<String>
+                        : [] as Set<String>
+                if (generatedRules.size() != 11 || disabledRules != expectedDisabledRules) {
+                    throw new GradleException("${profile.display} loaded unexpected Base Metals rule defaults: "
+                            + "disabled=${disabledRules}, expected=${expectedDisabledRules}")
+                }
+                String latestLog = new File(runDirectory, 'logs/latest.log').getText('UTF-8')
+                if (latestLog.contains('Fallback Ore Spawn Generator Enabled!')
+                        || latestLog.contains('Loading Integration For basemetals')
+                        || !latestLog.contains("worldgen provider 'basemetals' revision 2 is active")) {
+                    throw new GradleException("${profile.display} did not retain OreSpawn ownership")
+                }
+                List<String> failures = runtimeLogFailures(runDirectory)
+                if (!failures.isEmpty()) {
+                    throw new GradleException("${profile.display} ${phase} logged runtime failures:\n"
+                            + failures.take(20).join('\n'))
+                }
+            }
+        }
+        previous = processTask
+    }
+    tasks.register("packagedForgeTinkers${profileName}RuntimeTest") {
+        group = 'verification'
+        description = "Creates and reloads a packaged Forge world with ${profile.display}."
+        dependsOn previous
+    }
+}
+
+tasks.register('packagedForgeTinkersCompatibilityTest') {
+    group = 'verification'
+    description = 'Qualifies Tinkers behavior across optional-mod and content-mode profiles.'
+    dependsOn tasks.named('packagedForgeTinkersWithoutTaigaRuntimeTest')
+    dependsOn tasks.named('packagedForgeTinkersWithTaigaRuntimeTest')
+    dependsOn tasks.named('packagedForgeTinkersWithConArmRuntimeTest')
+    dependsOn tasks.named('packagedForgeTinkersPrismarineDisabledRuntimeTest')
+    dependsOn tasks.named('packagedForgeTinkersLowFantasyRuntimeTest')
+    dependsOn tasks.named('packagedForgeTinkersLowFantasyConArmRuntimeTest')
+    dependsOn tasks.named('packagedForgeTinkersRealismRuntimeTest')
+    dependsOn tasks.named('packagedForgeTinkersRealismConArmRuntimeTest')
+    dependsOn tasks.named('packagedForgeTinkersRealismExplicitOverrideRuntimeTest')
+    dependsOn tasks.named('packagedForgeTinkersRealismExistingWorldRuntimeTest')
+}
+
+tasks.named('packagedForgeRuntimeTest') {
+    dependsOn tasks.named('packagedForgeTinkersCompatibilityTest')
+}

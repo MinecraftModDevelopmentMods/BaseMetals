@@ -2,6 +2,7 @@ package com.mcmoddev.basemetals.init;
 
 import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
+import com.mcmoddev.basemetals.recipe.ContentAcquisitionFilters;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.init.Materials;
@@ -10,16 +11,13 @@ import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
-/**
- *
- * @author Jasmine Iwanek
- *
- */
+/** Registers Base Metals crafting, furnace, and crusher recipes. */
 @Mod.EventBusSubscriber(modid=BaseMetals.MODID)
 public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
@@ -27,9 +25,7 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
-	/**
-	 *
-	 */
+	/** Registers the recipe handler on Forge's event bus. */
 	public static void init() {
 	}
 
@@ -39,7 +35,9 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 			addAdditionalOredicts(adamantine, "Adamantite");
 			addAdditionalOredicts(adamantine, "Adamantium");
-			addAdditionalOredicts(adamantine, "Adamant");
+			if (!Loader.isModLoaded("taiga")) {
+				addAdditionalOredicts(adamantine, "Adamant");
+			}
 		}
 
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
@@ -57,14 +55,11 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 		}
 	}
 
-	/**
-	 *
-	 * @param event
-	 *            The Event.
-	 */
+	/** Adds programmatic recipes and wraps restricted recipes with the content policy. */
 	@SubscribeEvent(priority=EventPriority.LOWEST)
 	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
 		initModSpecificOredicts();
-		register(event);		
+		register(event);
+		ContentAcquisitionFilters.apply(event);
 	}
 }

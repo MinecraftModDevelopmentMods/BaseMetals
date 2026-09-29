@@ -7,6 +7,8 @@ import com.mcmoddev.basemetals.BaseMetals;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.init.ItemGroups;
 import com.mcmoddev.basemetals.init.Materials;
+import com.mcmoddev.basemetals.loot.ContentModeLootCondition;
+import com.mcmoddev.basemetals.network.ContentModeNetwork;
 import com.mcmoddev.basemetals.util.EventHandler;
 import com.mcmoddev.lib.data.Names;
 
@@ -18,28 +20,17 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-/**
- * Base Metals Common Proxy.
- *
- * @author Jasmine Iwanek
- *
- */
+/** Common setup shared by the client and dedicated server. */
 public class CommonProxy {
 
-	/**
-	 * Pre Initialization for this mod.
-	 *
-	 * @param event The Event.
-	 */
+	/** Registers networking, loot conditions, and common event handlers. */
 	public void preInit(final FMLPreInitializationEvent event) {
+		ContentModeNetwork.init();
+		ContentModeLootCondition.register();
 		MinecraftForge.EVENT_BUS.register(com.mcmoddev.basemetals.BaseMetals.class);
 	}
 
-	/**
-	 * Fired when Blocks get Remapped.
-	 *
-	 * @param event The Event.
-	 */
+	/** Maps the old liquid-mercury block ID to the current fluid block. */
 	public void onRemapBlock(final RegistryEvent.MissingMappings<Block> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings()) {
 			if (mapping.key.getNamespace().equals(BaseMetals.MODID)
@@ -51,11 +42,7 @@ public class CommonProxy {
 		}
 	}
 
-	/**
-	 * Fired when Items Get Remapped.
-	 *
-	 * @param event The Event.
-	 */
+	/** Maps the old carbon-powder item ID to coal powder. */
 	public void onRemapItem(final RegistryEvent.MissingMappings<Item> event) {
 		for (final RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
 			if (mapping.key.getNamespace().equals(BaseMetals.MODID)
@@ -67,21 +54,12 @@ public class CommonProxy {
 		}
 	}
 
-	/**
-	 * Initialization for this mod.
-	 *
-	 * @param event The Event.
-	 */
+	/** Registers gameplay handlers and chooses the creative-tab icons. */
 	public void init(final FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 
 		ItemGroups.setupIcons(MaterialNames.STARSTEEL);
 	}
-	/**
-	 * Post Initialization for this mod.
-	 *
-	 * @param event The Event.
-	 */
 	public void postInit(final FMLPostInitializationEvent event) {
 	}
 	

@@ -7,6 +7,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.content.ContentPolicy;
+import com.mcmoddev.basemetals.content.MaterialForm;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -16,17 +18,10 @@ import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
 import com.mcmoddev.lib.util.Oredicts;
 
-/**
- *
- * @author Jasmine Iwanek
- *
- */
+/** Registers Base Metals processing and alloy recipes with Ender IO. */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeEnderIO.PLUGIN_MODID)
 public final class BMeEnderIO extends EnderIO implements IIntegration {
 
-	/**
-	 *
-	 */
 	@Override
 	public void init() {
 		if (!Options.isModEnabled(PLUGIN_MODID)) {
@@ -43,13 +38,14 @@ public final class BMeEnderIO extends EnderIO implements IIntegration {
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+				.filter(materialName -> ContentPolicy.active().allows(materialName, MaterialForm.POWDER))
 				.forEach(materialName -> addSagMillRecipe(materialName, 3600));
 
-		addSagMillRecipe(MaterialNames.COPPER, 2, MaterialNames.GOLD, 1, 3600);
-		addSagMillRecipe(MaterialNames.LEAD, 2, MaterialNames.SILVER, 1, 3600);
-		addSagMillRecipe(MaterialNames.NICKEL, 2, MaterialNames.PLATINUM, 1, 3600);
-		addSagMillRecipe(MaterialNames.SILVER, 2, MaterialNames.LEAD, 1, 3600);
-		addSagMillRecipe(MaterialNames.IRON, 2, MaterialNames.NICKEL, 1, 3600);
+		addSagMillRecipeIfAllowed(MaterialNames.COPPER, 2, MaterialNames.GOLD, 1, 3600);
+		addSagMillRecipeIfAllowed(MaterialNames.LEAD, 2, MaterialNames.SILVER, 1, 3600);
+		addSagMillRecipeIfAllowed(MaterialNames.NICKEL, 2, MaterialNames.PLATINUM, 1, 3600);
+		addSagMillRecipeIfAllowed(MaterialNames.SILVER, 2, MaterialNames.LEAD, 1, 3600);
+		addSagMillRecipeIfAllowed(MaterialNames.IRON, 2, MaterialNames.NICKEL, 1, 3600);
 
 		final String COPPER = "Copper";
 		final String IRON = "Iron";
@@ -78,6 +74,7 @@ public final class BMeEnderIO extends EnderIO implements IIntegration {
 						new Object[] { Oredicts.INGOT + IRON, 8, "itemCoal", 1 })));
 		alloys.stream()
 		.filter(p -> Materials.hasMaterial(p.getRight().getLeft()))
+		.filter(p -> ContentPolicy.active().allows(p.getRight().getLeft(), MaterialForm.INGOT))
 		.forEach(p -> {
 			final String name = p.getRight().getLeft();
 			final int count = p.getLeft();
@@ -88,5 +85,14 @@ public final class BMeEnderIO extends EnderIO implements IIntegration {
 			addAlloySmelterAlloy(material, cost, Oredicts.INGOT + material.getCapitalizedName(), count, recipe);
 		});
 
+	}
+
+	private static void addSagMillRecipeIfAllowed(final String primary, final int primaryCount,
+			final String secondary, final int secondaryCount, final int energy) {
+		final ContentPolicy policy = ContentPolicy.active();
+		if (policy.allows(primary, MaterialForm.POWDER)
+				&& policy.allows(secondary, MaterialForm.POWDER)) {
+			addSagMillRecipe(primary, primaryCount, secondary, secondaryCount, energy);
+		}
 	}
 }

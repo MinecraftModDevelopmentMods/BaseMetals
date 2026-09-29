@@ -6,11 +6,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
-/**
- * Helper for Villager Trades.
- *
- * @author Chris on 3/30/2016.
- */
+/** Adds trades to Forge's registered vanilla villager careers. */
 public final class VillagerTradeHelper {
 
 	private static final ResourceLocation[] professionList = {
@@ -23,8 +19,8 @@ public final class VillagerTradeHelper {
 	}
 
 	/**
-	 * Inserts one or more trades to the default villager trade table using dark magic (aka java
-	 * reflection).
+	 * Inserts trades by resolving the vanilla profession ID, then delegates to the
+	 * resource-location overload.
 	 *
 	 * @param professionID
 	 *            Villager profession ID (0-4)

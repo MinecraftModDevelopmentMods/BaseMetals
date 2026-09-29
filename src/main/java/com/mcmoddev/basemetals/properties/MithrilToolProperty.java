@@ -19,10 +19,10 @@ public class MithrilToolProperty extends MMDMaterialPropertyBase {
 		return;
 	}
 
-    @Override
-    public void apply(ItemStack stack, EntityPlayer player) {
-    	apply(stack, (EntityLivingBase)player);
-    }
+	@Override
+	public void apply(ItemStack stack, EntityPlayer player) {
+		apply(stack, (EntityLivingBase)player);
+	}
 
 	@Override
 	public void apply(ItemStack stack, EntityLivingBase ent) {
@@ -42,7 +42,7 @@ public class MithrilToolProperty extends MMDMaterialPropertyBase {
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack, EntityPlayer player) { 
+	public boolean hasEffect(ItemStack stack, EntityPlayer player) {
 		return hasEffect(stack, (EntityLivingBase)player);
 	}
 

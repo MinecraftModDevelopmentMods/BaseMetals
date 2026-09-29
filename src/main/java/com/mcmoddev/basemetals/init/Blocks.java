@@ -21,12 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-/**
- * This class initializes all blocks in Base Metals.
- *
- * @author Jasmine Iwanek
- *
- */
+/** Creates and registers Base Metals blocks. */
 @Mod.EventBusSubscriber(modid=BaseMetals.MODID)
 public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
@@ -34,9 +29,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
-	/**
-	 *
-	 */
+	/** Creates each material's block forms during MMDLib registration. */
 	@SubscribeEvent
 	public static void init(final MMDLibRegisterBlocks event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
@@ -92,11 +85,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 		}
 	}
 
-	/**
-	 * Registers Blocks for this mod.
-	 *
-	 * @param event The Event.
-	 */
+	/** Adds the previously created blocks to Forge's block registry. */
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()

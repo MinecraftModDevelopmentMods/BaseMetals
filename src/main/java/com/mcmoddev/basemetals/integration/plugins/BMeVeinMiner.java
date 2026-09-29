@@ -12,12 +12,7 @@ import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.integration.MMDPlugin;
 import com.mcmoddev.lib.util.Config.Options;
 
-/**
- * VeinMiner Integration Plugin.
- *
- * @author Jasmine Iwanek
- *
- */
+/** Registers Base Metals tools with VeinMiner when that integration is enabled. */
 @MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeVeinMiner.PLUGIN_MODID)
 public final class BMeVeinMiner extends com.mcmoddev.lib.integration.plugins.VeinMiner
 		implements IIntegration {

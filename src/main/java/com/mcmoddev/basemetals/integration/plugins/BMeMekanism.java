@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.content.ContentPolicy;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -37,6 +38,7 @@ public final class BMeMekanism extends Mekanism implements IIntegration {
 		MinecraftForge.EVENT_BUS.register(this);
 
 		materials.stream().filter(Materials::hasMaterial).filter(BMeMekanism::isMaterialNotEmpty)
+				.filter(ContentPolicy.active()::allowsMaterial)
 				.forEach(Mekanism::addGassesForMaterial);
 	}
 
@@ -44,14 +46,12 @@ public final class BMeMekanism extends Mekanism implements IIntegration {
 		return !Materials.getMaterialByName(materialName).isEmpty();
 	}
 
-	/**
-	 *
-	 * @param event The Event.
-	 */
+	/** Registers Mekanism's ore-multiplication recipes. */
 	@SubscribeEvent
 	public void regCallback(final RegistryEvent.Register<IRecipe> event) {
 
 		materials.stream().filter(Materials::hasMaterial).filter(BMeMekanism::isMaterialNotEmpty)
+				.filter(ContentPolicy.active()::allowsMaterial)
 				.forEach(Mekanism::addOreMultiplicationRecipes);
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {

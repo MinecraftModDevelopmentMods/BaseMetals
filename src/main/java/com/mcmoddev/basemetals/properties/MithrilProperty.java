@@ -18,18 +18,14 @@ import net.minecraft.potion.PotionEffect;
 public class MithrilProperty extends BMEPropertyBase {
 	@Override
 	public void apply(ItemStack stack) {
-		if(hasEffect(stack)) {
-			// only apply if there is an effect
-			// we should always double check here :)
-		}
 	}
 
     @Override
     public void apply(ItemStack stack, EntityPlayer player) {
 	if(hasEffect(stack, player)) {
 	    if (hasFullSuit(player, MaterialNames.MITHRIL)) {
-		final List<Potion> removeList = new LinkedList<>(); // needed to avoid concurrent
-		// modification error
+		// Collect first because removing effects while iterating would modify the source collection.
+		final List<Potion> removeList = new LinkedList<>();
 		final Iterator<PotionEffect> effectIterator = player.getActivePotionEffects()
 		    .iterator();
 		while (effectIterator.hasNext()) {
@@ -61,11 +57,11 @@ public class MithrilProperty extends BMEPropertyBase {
 	@Override
 	public boolean hasEffect(ItemStack stack, EntityPlayer player) {
 		MMDMaterial mat = Materials.getMaterialByName(MaterialNames.MITHRIL);
-		boolean rv = (stackIsArmorMaterial(stack, mat) 
-				&& ((stack.getItem() instanceof IMMDObject) && 
-						(((IMMDObject)stack.getItem()).getMMDMaterial() == mat))) && 
+		boolean rv = (stackIsArmorMaterial(stack, mat)
+				&& ((stack.getItem() instanceof IMMDObject) &&
+						(((IMMDObject)stack.getItem()).getMMDMaterial() == mat))) &&
 				(countArmorPieces(Materials.getMaterialByName(MaterialNames.MITHRIL),player) > 0);
- 
+
 		return rv;
 	}
 

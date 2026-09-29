@@ -5,6 +5,7 @@ import java.util.Arrays;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.init.Items;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.MaterialNames;
 import com.mcmoddev.lib.events.MMDLibRegisterItems;
@@ -13,18 +14,33 @@ import com.mcmoddev.lib.material.IMMDBurnableObject;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber(modid=BaseMetals.MODID)
 public class VanillaItems extends com.mcmoddev.lib.init.Items {
 
 	private VanillaItems() {
-		// TODO Auto-generated constructor stub
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public static void registerItemsEvent(MMDLibRegisterItems ev) {
+		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 1));
+		Materials.getMaterialByName(MaterialNames.COAL).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.COAL, 1, 0));
+
+		Materials.getMaterialByName(MaterialNames.EMERALD).addNewItem(Names.INGOT,
+				net.minecraft.init.Items.EMERALD);
+		Materials.getMaterialByName(MaterialNames.LAPIS).addNewItemFromItemStack(Names.INGOT,
+				new ItemStack(net.minecraft.init.Items.DYE, 1, 4));
+		Materials.getMaterialByName(MaterialNames.QUARTZ).addNewItem(Names.INGOT,
+				net.minecraft.init.Items.QUARTZ);
+		Materials.getMaterialByName(MaterialNames.REDSTONE).addNewItem(Names.POWDER,
+				net.minecraft.init.Items.REDSTONE);
+
 		addDiamondBits();
 		addGoldBits();
 		addIronBits();
@@ -32,16 +48,22 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		addWoodBits();
 		doSpecialMats();
 		
-		// these three are the only ones that need tools and armor
+		// Emerald, obsidian, and quartz receive the vanilla-style tool and armor set.
 		Arrays.asList(MaterialNames.EMERALD, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ)
 		.stream().map(Materials::getMaterialByName)
 		.filter(mat -> Options.isMaterialEnabled(mat.toString()))
 		.forEach(material -> Arrays.asList(Names.AXE, Names.BOOTS, 
 				Names.CHESTPLATE, Names.HELMET, Names.HOE, Names.LEGGINGS, Names.PICKAXE, Names.SHOVEL, Names.HORSE_ARMOR)
 				.stream()
-				.filter(n -> !material.hasItem(n)).forEach(n -> create(n, material)));
+				.filter(n -> !material.hasItem(n)).forEach(n -> {
+					if (n == Names.HOE) {
+						Items.createHoe(material);
+					} else {
+						create(n, material);
+					}
+				}));
 		
-		// shields
+		// These solid vanilla materials support the shared equipment and building forms.
 		Arrays.asList(MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD, 
 				MaterialNames.IRON, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ)
 		.stream().map(Materials::getMaterialByName)
@@ -50,9 +72,21 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 				Names.CROSSBOW, Names.FISHING_ROD, Names.ROD, Names.BARS, Names.SHEARS, Names.BUTTON, Names.SWORD,
 				Names.SHIELD, Names.DOOR, Names.SLAB)
 				.stream()
-				.filter(n -> !material.hasItem(n)).forEach(n -> create(n, material)));
+				.filter(n -> !material.hasItem(n)).forEach(n -> {
+					if (n == Names.ARROW) {
+						Items.createArrow(material);
+					} else if (n == Names.BOLT) {
+						Items.createBolt(material);
+					} else if (n == Names.BOW) {
+						Items.createBow(material);
+					} else if (n == Names.CROSSBOW) {
+						Items.createCrossbow(material);
+					} else {
+						create(n, material);
+					}
+				}));
 		
-		// bits that everything should have
+		// Crackhammers, gears, and scythes also make sense for stone and wood.
 		Arrays.asList(MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD, 
 				MaterialNames.IRON, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ, 
 				MaterialNames.STONE, MaterialNames.WOOD)
@@ -62,7 +96,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 				Names.SCYTHE).stream()
 				.filter(n -> !material.hasItem(n)).forEach(n -> create(n, material)));
 		
-		// last few bits
+		// Powders and nuggets are available only where a meaningful source item exists.
 		Arrays.asList(MaterialNames.COAL, MaterialNames.CHARCOAL, MaterialNames.DIAMOND,
 				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON, 
 				MaterialNames.OBSIDIAN, MaterialNames.REDSTONE, 
@@ -80,7 +114,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		.map(Materials::getMaterialByName)
 		.filter(m -> !m.hasItem(Names.NUGGET)).forEach(material -> create(Names.NUGGET, material));
 		
-		//these bits just are too... specialized to fit the iteration above
+		// These one-off forms do not share a useful material group.
 		if(Options.isMaterialEnabled(MaterialNames.STONE)) {
 			create(Names.ROD, Materials.getMaterialByName(MaterialNames.STONE));
 		}
@@ -108,7 +142,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 			((IMMDBurnableObject) material.getItem(Names.SMALLPOWDER)).setBurnTime(NUGGET_BURN_TIME);
 		}
 
-		// simple hack to fix this shit - I give up on trying for more
+		// MMDLib stores a block's fuel value on its ItemBlock rather than the block.
 		if (material.hasBlock(Names.BLOCK) && material.getName().equals(MaterialNames.CHARCOAL)) {
 			((IMMDBurnableObject) material.getItem("ItemBlock_charcoal_block")).setBurnTime(BLOCK_BURN_TIME);
 		}
@@ -155,6 +189,18 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 	private static void addDiamondBits() {
 		final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
 
+		diamond.addNewItem(Names.AXE, net.minecraft.init.Items.DIAMOND_AXE);
+		diamond.addNewItem(Names.HOE, net.minecraft.init.Items.DIAMOND_HOE);
+		diamond.addNewItem(Names.HORSE_ARMOR, net.minecraft.init.Items.DIAMOND_HORSE_ARMOR);
+		diamond.addNewItem(Names.PICKAXE, net.minecraft.init.Items.DIAMOND_PICKAXE);
+		diamond.addNewItem(Names.SHOVEL, net.minecraft.init.Items.DIAMOND_SHOVEL);
+		diamond.addNewItem(Names.SWORD, net.minecraft.init.Items.DIAMOND_SWORD);
+		diamond.addNewItem(Names.BOOTS, net.minecraft.init.Items.DIAMOND_BOOTS);
+		diamond.addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.DIAMOND_CHESTPLATE);
+		diamond.addNewItem(Names.HELMET, net.minecraft.init.Items.DIAMOND_HELMET);
+		diamond.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.DIAMOND_LEGGINGS);
+		diamond.addNewItem(Names.INGOT, net.minecraft.init.Items.DIAMOND);
+
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			create(Names.BLEND, diamond);
 			create(Names.NUGGET, diamond);
@@ -162,11 +208,11 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 			create(Names.SMALLBLEND, diamond);
 			create(Names.SMALLPOWDER, diamond);
 
-			create(Names.ARROW, diamond);
-			create(Names.BOLT, diamond);
-			create(Names.BOW, diamond);
+			Items.createArrow(diamond);
+			Items.createBolt(diamond);
+			Items.createBow(diamond);
 			create(Names.CRACKHAMMER, diamond);
-			create(Names.CROSSBOW, diamond);
+			Items.createCrossbow(diamond);
 			create(Names.DOOR, diamond);
 			create(Names.FISHING_ROD, diamond);
 			create(Names.SHEARS, diamond);
@@ -181,17 +227,30 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 	private static void addGoldBits() {
 		final MMDMaterial gold = Materials.getMaterialByName(MaterialNames.GOLD);
 
+		gold.addNewItem(Names.AXE, net.minecraft.init.Items.GOLDEN_AXE);
+		gold.addNewItem(Names.HOE, net.minecraft.init.Items.GOLDEN_HOE);
+		gold.addNewItem(Names.HORSE_ARMOR, net.minecraft.init.Items.GOLDEN_HORSE_ARMOR);
+		gold.addNewItem(Names.PICKAXE, net.minecraft.init.Items.GOLDEN_PICKAXE);
+		gold.addNewItem(Names.SHOVEL, net.minecraft.init.Items.GOLDEN_SHOVEL);
+		gold.addNewItem(Names.SWORD, net.minecraft.init.Items.GOLDEN_SWORD);
+		gold.addNewItem(Names.BOOTS, net.minecraft.init.Items.GOLDEN_BOOTS);
+		gold.addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.GOLDEN_CHESTPLATE);
+		gold.addNewItem(Names.HELMET, net.minecraft.init.Items.GOLDEN_HELMET);
+		gold.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.GOLDEN_LEGGINGS);
+		gold.addNewItem(Names.INGOT, net.minecraft.init.Items.GOLD_INGOT);
+		gold.addNewItem(Names.NUGGET, net.minecraft.init.Items.GOLD_NUGGET);
+
 		if (Materials.hasMaterial(MaterialNames.GOLD)) {
 			create(Names.BLEND, gold);
 			create(Names.POWDER, gold);
 			create(Names.SMALLBLEND, gold);
 			create(Names.SMALLPOWDER, gold);
 
-			create(Names.ARROW, gold);
-			create(Names.BOLT, gold);
-			create(Names.BOW, gold);
+			Items.createArrow(gold);
+			Items.createBolt(gold);
+			Items.createBow(gold);
 			create(Names.CRACKHAMMER, gold);
-			create(Names.CROSSBOW, gold);
+			Items.createCrossbow(gold);
 			create(Names.DOOR, gold);
 			create(Names.FISHING_ROD, gold);
 			create(Names.SHEARS, gold);
@@ -206,6 +265,21 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 	private static void addIronBits() {
 		final MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
 
+		iron.addNewItem(Names.AXE, net.minecraft.init.Items.IRON_AXE);
+		iron.addNewItem(Names.DOOR, net.minecraft.init.Items.IRON_DOOR);
+		iron.addNewItem(Names.HOE, net.minecraft.init.Items.IRON_HOE);
+		iron.addNewItem(Names.HORSE_ARMOR, net.minecraft.init.Items.IRON_HORSE_ARMOR);
+		iron.addNewItem(Names.PICKAXE, net.minecraft.init.Items.IRON_PICKAXE);
+		iron.addNewItem(Names.SHOVEL, net.minecraft.init.Items.IRON_SHOVEL);
+		iron.addNewItem(Names.SWORD, net.minecraft.init.Items.IRON_SWORD);
+		iron.addNewItem(Names.BOOTS, net.minecraft.init.Items.IRON_BOOTS);
+		iron.addNewItem(Names.CHESTPLATE, net.minecraft.init.Items.IRON_CHESTPLATE);
+		iron.addNewItem(Names.HELMET, net.minecraft.init.Items.IRON_HELMET);
+		iron.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
+		iron.addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
+		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.IRON_NUGGET);
+		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
+
 		if (Materials.hasMaterial(MaterialNames.IRON)) {
 			create(Names.BLEND, iron);
 			create(Names.INGOT, iron);
@@ -214,14 +288,14 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 			create(Names.SMALLBLEND, iron);
 			create(Names.SMALLPOWDER, iron);
 
-			create(Names.ARROW, iron);
+			Items.createArrow(iron);
 			create(Names.AXE, iron);
-			create(Names.BOLT, iron);
+			Items.createBolt(iron);
 			create(Names.BOOTS, iron);
-			create(Names.BOW, iron);
+			Items.createBow(iron);
 			create(Names.CHESTPLATE, iron);
 			create(Names.CRACKHAMMER, iron);
-			create(Names.CROSSBOW, iron);
+			Items.createCrossbow(iron);
 			create(Names.FISHING_ROD, iron);
 			create(Names.HELMET, iron);
 			create(Names.HOE, iron);
@@ -242,6 +316,16 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 	private static void addStoneBits() {
 		final MMDMaterial stone = Materials.getMaterialByName(MaterialNames.STONE);
 
+		stone.addNewItem(Names.AXE, net.minecraft.init.Items.STONE_AXE);
+		stone.addNewItem(Names.HOE, net.minecraft.init.Items.STONE_HOE);
+		stone.addNewItem(Names.PICKAXE, net.minecraft.init.Items.STONE_PICKAXE);
+		stone.addNewItem(Names.SHOVEL, net.minecraft.init.Items.STONE_SHOVEL);
+		stone.addNewItem(Names.SWORD, net.minecraft.init.Items.STONE_SWORD);
+		stone.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.STONE);
+		stone.addNewBlock(Names.SLAB, net.minecraft.init.Blocks.STONE_SLAB);
+		stone.addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.DOUBLE_STONE_SLAB);
+		stone.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.STONE_STAIRS);
+
 		if (Materials.hasMaterial(MaterialNames.STONE)) {
 			create(Names.CRACKHAMMER, stone);
 			create(Names.ROD, stone);
@@ -252,6 +336,21 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 
 	private static void addWoodBits() {
 		final MMDMaterial wood = Materials.getMaterialByName(MaterialNames.WOOD);
+
+		wood.addNewItem(Names.AXE, net.minecraft.init.Items.WOODEN_AXE);
+		wood.addNewItem(Names.DOOR, net.minecraft.init.Items.OAK_DOOR);
+		wood.addNewItem(Names.HOE, net.minecraft.init.Items.WOODEN_HOE);
+		wood.addNewItem(Names.PICKAXE, net.minecraft.init.Items.WOODEN_PICKAXE);
+		wood.addNewItem(Names.SHOVEL, net.minecraft.init.Items.WOODEN_SHOVEL);
+		wood.addNewItem(Names.SWORD, net.minecraft.init.Items.WOODEN_SWORD);
+		wood.addNewBlock(Names.DOOR, net.minecraft.init.Blocks.OAK_DOOR);
+		wood.addNewBlock(Names.ORE, net.minecraft.init.Blocks.LOG);
+		wood.addNewBlock(Names.TRAPDOOR, net.minecraft.init.Blocks.TRAPDOOR);
+		wood.addNewBlock(Names.BLOCK, net.minecraft.init.Blocks.PLANKS);
+		wood.addNewBlock(Names.SLAB, net.minecraft.init.Blocks.WOODEN_SLAB);
+		wood.addNewBlock(Names.DOUBLE_SLAB, net.minecraft.init.Blocks.DOUBLE_WOODEN_SLAB);
+		wood.addNewBlock(Names.STAIRS, net.minecraft.init.Blocks.OAK_STAIRS);
+		wood.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		if (Materials.hasMaterial(MaterialNames.WOOD)) {
 			create(Names.CRACKHAMMER, wood);

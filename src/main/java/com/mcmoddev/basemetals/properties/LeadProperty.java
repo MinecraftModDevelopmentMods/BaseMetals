@@ -14,10 +14,6 @@ import net.minecraft.potion.PotionEffect;
 public class LeadProperty extends BMEPropertyBase {
 	@Override
 	public void apply(ItemStack stack) {
-		if(hasEffect(stack)) {
-			// only apply if there is an effect
-			// we should always double check here :)
-		}
 	}
 
 	@Override
@@ -50,11 +46,11 @@ public class LeadProperty extends BMEPropertyBase {
 	@Override
 	public boolean hasEffect(ItemStack stack, EntityPlayer player) {
 		MMDMaterial mat = Materials.getMaterialByName(MaterialNames.LEAD);
-		boolean rv = (stackIsArmorMaterial(stack, mat) 
-				&& ((stack.getItem() instanceof IMMDObject) && 
-						(((IMMDObject)stack.getItem()).getMMDMaterial() == mat))) && 
+		boolean rv = (stackIsArmorMaterial(stack, mat)
+				&& ((stack.getItem() instanceof IMMDObject) &&
+						(((IMMDObject)stack.getItem()).getMMDMaterial() == mat))) &&
 				(countArmorPieces(Materials.getMaterialByName(MaterialNames.LEAD),player) > 0);
- 
+
 		return rv;
 	}
 
