@@ -1,0 +1,133 @@
+// Shared validation gates that do not require an installed packaged runtime.
+tasks.named('test', Test).configure {
+    useJUnitPlatform()
+}
+
+def prepareCustomDimensionSmoke = tasks.register('prepareCustomDimensionSmoke', Sync) {
+    group = 'verification'
+    description = 'Installs the runtime-only custom-dimension datapack into the disposable smoke world.'
+    from layout.projectDirectory.dir('src/smoke/datapack')
+    into layout.projectDirectory.dir('run/smoke-custom-dimension/datapacks/basemetals-smoke')
+}
+
+tasks.matching { it.name == 'runServer' }.configureEach {
+    if (providers.gradleProperty('smokeCustomDimension').isPresent()) {
+        dependsOn prepareCustomDimensionSmoke
+    }
+}
+
+def upgradeWorldSmokeRequested = providers.gradleProperty('upgradeWorldSmoke').isPresent()
+def legacyWorldSmokeRequested = providers.gradleProperty('legacyWorldSmoke').isPresent()
+def configuredUpgradeWorldName = upgradeWorldSmokeRequested
+        ? providers.gradleProperty('upgradeWorldName').orNull
+        : providers.gradleProperty('legacyWorldName').orNull
+def upgradeSmokeResultFile = configuredUpgradeWorldName == null
+        ? null
+        : layout.projectDirectory.file("run-upgrade/${configuredUpgradeWorldName}/BASEMETALS_UPGRADE_SMOKE_RESULT.txt")
+
+def verifyUpgradeWorldSmokeResult = tasks.register('verifyUpgradeWorldSmokeResult') {
+    group = 'verification'
+    description = 'Fails unless the selected upgraded-world smoke writes its expected success marker.'
+    onlyIf { upgradeWorldSmokeRequested || legacyWorldSmokeRequested }
+    doLast {
+        if (configuredUpgradeWorldName == null || configuredUpgradeWorldName.isBlank()) {
+            throw new GradleException('An upgraded-world smoke requires -PupgradeWorldName or -PlegacyWorldName')
+        }
+        if (configuredUpgradeWorldName.contains('/') || configuredUpgradeWorldName.contains('\\')
+                || configuredUpgradeWorldName == '.' || configuredUpgradeWorldName == '..') {
+            throw new GradleException("Invalid upgraded-world smoke name: ${configuredUpgradeWorldName}")
+        }
+        File result = upgradeSmokeResultFile.asFile
+        if (!result.isFile()) {
+            throw new GradleException("Upgraded-world smoke did not write ${result}")
+        }
+        String expected = upgradeWorldSmokeRequested
+                ? 'BASEMETALS_UPGRADE_SMOKE PASS'
+                : 'BASEMETALS_LEGACY_WORLD_SMOKE PASS'
+        String actual = result.getText('UTF-8').trim()
+        if (!actual.startsWith(expected)) {
+            throw new GradleException("Upgraded-world smoke failed: ${actual}")
+        }
+    }
+}
+
+tasks.matching { it.name == 'runServer' }.configureEach {
+    if (upgradeWorldSmokeRequested || legacyWorldSmokeRequested) {
+        finalizedBy verifyUpgradeWorldSmokeResult
+        doFirst {
+            if (configuredUpgradeWorldName == null || configuredUpgradeWorldName.isBlank()) {
+                throw new GradleException('An upgraded-world smoke requires -PupgradeWorldName or -PlegacyWorldName')
+            }
+            if (configuredUpgradeWorldName.contains('/') || configuredUpgradeWorldName.contains('\\')
+                    || configuredUpgradeWorldName == '.' || configuredUpgradeWorldName == '..') {
+                throw new GradleException("Invalid upgraded-world smoke name: ${configuredUpgradeWorldName}")
+            }
+            delete upgradeSmokeResultFile
+        }
+    }
+}
+
+def generatedResourcesDir = layout.projectDirectory.dir('src/generated/resources')
+def generatedSnapshotFile = layout.buildDirectory.file('tmp/generated-data-before.json')
+def generatedFingerprint = {
+    fileTree(generatedResourcesDir).matching { exclude '.cache/**' }.files
+            .findAll { it.isFile() }
+            .sort { a, b -> a.absolutePath <=> b.absolutePath }
+            .collectEntries { File resource ->
+                String relative = generatedResourcesDir.asFile.toPath().relativize(resource.toPath())
+                        .toString().replace('\\', '/')
+                byte[] digest = java.security.MessageDigest.getInstance('SHA-256').digest(resource.bytes)
+                [(relative): digest.encodeHex().toString()]
+            }
+}
+
+def snapshotGeneratedData = tasks.register('snapshotGeneratedData') {
+    group = 'verification'
+    description = 'Snapshots generated resources before data generation.'
+    doLast {
+        File snapshot = generatedSnapshotFile.get().asFile
+        snapshot.parentFile.mkdirs()
+        snapshot.setText(groovy.json.JsonOutput.toJson(generatedFingerprint()), 'UTF-8')
+    }
+}
+
+tasks.matching { it.name == 'runData' }.configureEach {
+    mustRunAfter snapshotGeneratedData
+}
+
+def verifyGeneratedData = tasks.register('verifyGeneratedData') {
+    group = 'verification'
+    description = 'Fails when runData changes checked-in generated resources.'
+    dependsOn snapshotGeneratedData, 'runData'
+    doLast {
+        Map before = new groovy.json.JsonSlurper().parse(generatedSnapshotFile.get().asFile) as Map
+        Map after = generatedFingerprint()
+        if (before != after) {
+            Set<String> changed = new TreeSet<>(before.keySet() + after.keySet())
+            changed.removeIf { before[it] == after[it] }
+            throw new GradleException("Generated-resource drift detected after runData: ${changed.join(', ')}")
+        }
+    }
+}
+
+tasks.named('check').configure {
+    dependsOn verifyGeneratedData
+    dependsOn tasks.named('verifyReleaseDependencies')
+    dependsOn tasks.named('verifyMavenCoordinates')
+    dependsOn tasks.named('verifyReleaseConfiguration')
+}
+
+def prepareGameTestStructures = tasks.register('prepareGameTestStructures', Copy) {
+    group = 'verification'
+    description = 'Copies the tracked SNBT fixtures into the GameTest working directory.'
+    from layout.projectDirectory.dir('src/gametest/resources/gameteststructures')
+    into layout.projectDirectory.dir('run/gameteststructures')
+}
+
+tasks.matching { it.name == 'prepareRunGameTestServer' }.configureEach {
+    dependsOn prepareGameTestStructures
+}
+
+tasks.matching { it.name == 'runGameTestServer' }.configureEach {
+    dependsOn prepareGameTestStructures
+}

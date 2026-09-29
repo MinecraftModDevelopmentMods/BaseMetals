@@ -1,0 +1,377 @@
+import groovy.json.JsonSlurper
+import groovy.xml.XmlSlurper
+import java.security.MessageDigest
+import java.util.zip.ZipFile
+
+// Expand the release identity into Forge metadata and package public documentation.
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
+            forge_version: forge_version, forge_version_range: forge_version_range,
+            loader_version_range: loader_version_range,
+            mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+            mod_authors: mod_authors, mod_description: mod_description,
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+
+    from('docs') {
+        into 'META-INF/basemetals/docs'
+    }
+}
+
+// Eclipse launches use this processed directory as a stable metadata/resource
+// root. This prevents a transient Gradle resolution failure immediately before
+// launch from starting Forge with Java classes but no Base Metals data pack.
+tasks.matching { it.name in ['genEclipseRuns', 'eclipse'] }.configureEach {
+    dependsOn tasks.named('processResources')
+}
+
+def expectedMavenGroup = 'zone.moddev.mc.basemetals'
+def expectedMavenArtifact = 'BaseMetals'
+def expectedMavenCoordinate = "${expectedMavenGroup}:${expectedMavenArtifact}:${project.version}"
+
+tasks.named('jar', Jar) {
+    archiveClassifier = 'deobf'
+    destinationDirectory = layout.buildDirectory.dir('libs-dev')
+    manifest {
+        attributes([
+                'Maven-Artifact'        : expectedMavenCoordinate,
+                'Specification-Title'   : 'Base Metals',
+                'Specification-Vendor'  : project.mod_authors,
+                'Specification-Version' : '1',
+                'Implementation-Title'  : 'Base Metals',
+                'Implementation-Version': project.version,
+                'Implementation-Vendor' : project.mod_authors,
+                'Built-On-Java'         : '17',
+                'Built-On'              : "${project.minecraft_version}-${project.forge_version}",
+                'Build-Target'          : "minecraft-${project.minecraft_version}-${project.loader_name}-${project.forge_version}-java-${project.java_version}"
+        ])
+    }
+}
+
+def releaseJar = renamer.classes(tasks.named('jar', Jar)) {
+    map.from minecraft.dependency.toSrgFile
+    archiveClassifier = null
+    output = layout.buildDirectory.file(
+            "libs/${base.archivesName.get()}-${project.version}.jar")
+}
+
+['apiElements', 'runtimeElements'].each { configurationName ->
+    configurations.named(configurationName) { artifacts.clear() }
+    artifacts { add(configurationName, releaseJar) }
+}
+
+tasks.named('assemble') {
+    dependsOn releaseJar
+    dependsOn tasks.named('sourcesJar')
+    dependsOn tasks.named('javadocJar')
+}
+
+def mainReleaseName = "BaseMetals-${project.version}.jar"
+def sourcesReleaseName = "BaseMetals-${project.version}-sources.jar"
+def javadocReleaseName = "BaseMetals-${project.version}-javadoc.jar"
+def expectedReleaseNames = [mainReleaseName, sourcesReleaseName, javadocReleaseName]
+
+def packagedServerSmokeJar = tasks.register('packagedServerSmokeJar', Jar) {
+    dependsOn tasks.named(sourceSets.packagedServerSmoke.classesTaskName)
+    archiveFileName = 'basemetals-server-smoke-dev.jar'
+    destinationDirectory = layout.buildDirectory.dir('packaged-smoke-probes')
+    from sourceSets.packagedServerSmoke.output.classesDirs
+    from 'src/packagedServerSmoke/packaged-resources'
+}
+def packagedServerSmokeProbe = renamer.classes(packagedServerSmokeJar) {
+    map.from minecraft.dependency.toSrgFile
+    output = layout.buildDirectory.file('packaged-smoke-probes/basemetals-server-smoke.jar')
+}
+
+def packagedClientSmokeJar = tasks.register('packagedClientSmokeJar', Jar) {
+    dependsOn tasks.named(sourceSets.integratedSmoke.classesTaskName)
+    dependsOn tasks.named(sourceSets.packagedClientSmoke.classesTaskName)
+    archiveFileName = 'basemetals-client-smoke-dev.jar'
+    destinationDirectory = layout.buildDirectory.dir('packaged-smoke-probes')
+    from sourceSets.integratedSmoke.output.classesDirs
+    from sourceSets.packagedClientSmoke.output.classesDirs
+    from 'src/packagedClientSmoke/packaged-resources'
+}
+def packagedClientSmokeProbe = renamer.classes(packagedClientSmokeJar) {
+    map.from minecraft.dependency.toSrgFile
+    output = layout.buildDirectory.file('packaged-smoke-probes/basemetals-client-smoke.jar')
+}
+
+def preparedReleaseDir = project.findProperty('preparedReleaseDir')
+project.ext.baseMetalsRelease = [
+        expectedMavenGroup: expectedMavenGroup,
+        expectedMavenArtifact: expectedMavenArtifact,
+        expectedMavenCoordinate: expectedMavenCoordinate,
+        releaseJar: releaseJar,
+        mainReleaseName: mainReleaseName,
+        sourcesReleaseName: sourcesReleaseName,
+        javadocReleaseName: javadocReleaseName,
+        expectedReleaseNames: expectedReleaseNames.asImmutable(),
+        packagedServerSmokeProbe: packagedServerSmokeProbe,
+        packagedClientSmokeProbe: packagedClientSmokeProbe,
+        preparedReleaseDir: preparedReleaseDir
+].asImmutable()
+
+def sha256 = { File artifact ->
+    MessageDigest.getInstance('SHA-256').digest(artifact.bytes).encodeHex().toString().toUpperCase()
+}
+
+def configuredReleaseVersion = project.version.toString()
+def configuredReleaseGroup = project.group.toString()
+def configuredJavaToolchainVersion = project.java_toolchain_version.toString()
+def configuredReleaseIdentity = [
+        modVersion: project.mod_version.toString(),
+        modGroup: project.mod_group.toString(),
+        minecraftVersion: project.minecraft_version.toString(),
+        forgeVersion: project.forge_version.toString(),
+        forgeInstallerSha256: project.forge_installer_sha256.toString(),
+        mappingChannel: project.mapping_channel.toString(),
+        mappingVersion: project.mapping_version.toString(),
+        loaderName: project.loader_name.toString(),
+        loaderCode: project.loader_code.toString(),
+        javaVersion: project.java_version.toString(),
+        gradleJavaVersion: project.gradle_java_version.toString(),
+        curseForgeProjectId: project.curseforge_project_id.toString()
+]
+def configuredOreSpawnIdentity = [
+        version: project.orespawn_version.toString(),
+        curseProjectId: project.orespawn_curse_project_id.toString(),
+        curseFileId: project.orespawn_curse_file_id.toString(),
+        sha256: project.orespawn_sha256.toString()
+]
+
+tasks.register('verifyJava17Toolchain') {
+    group = 'verification'
+    description = 'Verifies the exact Java product toolchain used for Base Metals compilation.'
+    dependsOn tasks.named('compileJava')
+    doLast {
+        def metadata = tasks.named('compileJava', JavaCompile).get().javaCompiler.get().metadata
+        if (configuredJavaToolchainVersion != '17.0.1+12'
+                || metadata.languageVersion.asInt() != 17
+                || metadata.jvmVersion != configuredJavaToolchainVersion
+                || !metadata.vendor.toString().toLowerCase(Locale.ROOT).contains('temurin')) {
+            throw new GradleException("Expected Eclipse Temurin ${configuredJavaToolchainVersion}, found " +
+                    "${metadata.vendor} ${metadata.jvmVersion} at ${metadata.installationPath}")
+        }
+    }
+}
+
+tasks.register('verifyMavenCoordinates') {
+    group = 'verification'
+    description = 'Verifies the generated POM uses the Base Metals release namespace.'
+    dependsOn 'generatePomFileForMavenJavaPublication'
+    doLast {
+        File pomFile = file("${buildDir}/publications/mavenJava/pom-default.xml")
+        if (!pomFile.isFile()) throw new GradleException("Generated Maven POM does not exist: ${pomFile}")
+        def pom = new XmlSlurper(false, false).parse(pomFile)
+        def actual = [pom.groupId.text(), pom.artifactId.text(), pom.version.text()]
+        def expected = [expectedMavenGroup, expectedMavenArtifact, configuredReleaseVersion]
+        if (configuredReleaseGroup != expectedMavenGroup || actual != expected) {
+            throw new GradleException("Expected Maven coordinate ${expected.join(':')}, found ${actual.join(':')}")
+        }
+    }
+}
+
+tasks.register('verifyMavenizerCompatibilityFixture') {
+    group = 'verification'
+    description = 'Verifies the checksum-sealed Forge 1.18.2 Mavenizer compatibility fixture.'
+    inputs.file project.ext.mavenizerCompatibilityJar
+    doLast {
+        File fixture = project.ext.mavenizerCompatibilityJar.asFile
+        if (!fixture.isFile()) throw new GradleException("Missing Mavenizer compatibility fixture: ${fixture}")
+        String actual = sha256(fixture)
+        if (actual != project.ext.mavenizerCompatibilitySha256) {
+            throw new GradleException("Mavenizer compatibility fixture checksum mismatch: ${actual}")
+        }
+    }
+}
+
+tasks.register('verifyReleaseConfiguration') {
+    group = 'verification'
+    description = 'Verifies the exact Base Metals 1.18.2 release identity.'
+    dependsOn tasks.named('verifyMavenizerCompatibilityFixture')
+    dependsOn tasks.named('verifyJava17Toolchain')
+    doLast {
+        if (configuredReleaseIdentity.modVersion != '3.0.1.118021'
+                || configuredReleaseIdentity.modGroup != expectedMavenGroup
+                || configuredReleaseIdentity.minecraftVersion != '1.18.2'
+                || configuredReleaseIdentity.forgeVersion != '40.3.0'
+                || configuredReleaseIdentity.forgeInstallerSha256 != '9434C29790504DCD11CE97CB30DD8891B4B18848982357BC1B5ABFA79FB95103'
+                || configuredReleaseIdentity.mappingChannel != 'official'
+                || configuredReleaseIdentity.mappingVersion != '1.18.2'
+                || configuredReleaseIdentity.loaderName != 'forge'
+                || configuredReleaseIdentity.loaderCode != '1'
+                || configuredReleaseIdentity.javaVersion != '17'
+                || configuredReleaseIdentity.gradleJavaVersion != '17'
+                || configuredReleaseIdentity.curseForgeProjectId != '240967') {
+            throw new GradleException('Unexpected Base Metals 1.18.2 release identity')
+        }
+    }
+}
+
+tasks.register('verifyReleaseDependencies') {
+    group = 'verification'
+    description = 'Resolves and verifies the exact released OreSpawn qualification dependency.'
+    doLast {
+        if (configuredOreSpawnIdentity.version != '4.0.16.118021'
+                || configuredOreSpawnIdentity.curseProjectId != '245586'
+                || configuredOreSpawnIdentity.curseFileId != '8780769'
+                || configuredOreSpawnIdentity.sha256 != '76FD6140FE85C3D9EEA0321A0441D352A0B2643390A1090BBB1F70FE104C5717') {
+            throw new GradleException('Unexpected OreSpawn release coordinates')
+        }
+        File artifact = configurations.orespawnRelease.resolvedConfiguration.resolvedArtifacts
+                .find { it.moduleVersion.id.group == 'curse.maven' && it.file.name.endsWith('.jar') }?.file
+        if (artifact == null || !artifact.isFile()) {
+            throw new GradleException('Released OreSpawn artifact did not resolve')
+        }
+        String actual = sha256(artifact)
+        if (actual != configuredOreSpawnIdentity.sha256) {
+            throw new GradleException("OreSpawn SHA-256 mismatch: ${actual}")
+        }
+    }
+}
+
+def forbiddenReleasePath = { String entryName ->
+    String name = entryName.replace('\\', '/').toLowerCase(Locale.ROOT)
+    name.startsWith('com/mcmoddev/')
+            || name.startsWith('ci-fixtures/')
+            || name.startsWith('reference/')
+            || name.startsWith('agent-notes/')
+            || name.contains('/agent-notes/')
+            || name.startsWith('src/gametest/')
+            || name.startsWith('src/integratedsmoke/')
+            || name.startsWith('src/packagedclientsmoke/')
+            || name.startsWith('src/upgradesmoke/')
+            || name.startsWith('src/packagedserversmoke/')
+            || name.contains('minecraft-mavenizer')
+            || name.contains('gametests.class')
+            || name.contains('/smoke/')
+            || name.endsWith('/oregenerator.class')
+            || name.endsWith('/worldgenerator.class')
+}
+
+tasks.register('verifyReleaseArtifacts') {
+    group = 'verification'
+    description = 'Audits the deterministic release jars and their production-only contents.'
+    dependsOn tasks.named('verifyReleaseConfiguration')
+    dependsOn tasks.named('verifyReleaseDependencies')
+    dependsOn tasks.named('verifyMavenCoordinates')
+    dependsOn tasks.named('assemble')
+    doLast {
+        File libs = file("${buildDir}/libs")
+        def actual = fileTree(libs) { include 'BaseMetals-*.jar' }.files.collect { it.name }.sort()
+        def expected = expectedReleaseNames.sort()
+        if (actual != expected) {
+            throw new GradleException("Expected exactly ${expected}, found ${actual}")
+        }
+        expectedReleaseNames.each { artifactName ->
+            new ZipFile(new File(libs, artifactName)).withCloseable { zip ->
+                def leaked = zip.entries().toList().find { forbiddenReleasePath(it.name) }
+                if (leaked != null) {
+                    throw new GradleException("${artifactName} contains validation, fixture, legacy, or agent-only path ${leaked.name}")
+                }
+            }
+        }
+
+        File main = new File(libs, mainReleaseName)
+        new ZipFile(main).withCloseable { zip ->
+            def names = zip.entries().toList().collect { it.name } as Set
+            [
+                    'META-INF/mods.toml',
+                    'META-INF/MANIFEST.MF',
+                    'pack.mcmeta',
+                    'data/basemetals/orespawn/provider.json',
+                    'data/basemetals/recipes/stone_crackhammer.json',
+                    'data/forge/loot_modifiers/global_loot_modifiers.json',
+                    'assets/basemetals/lang/en_us.json',
+                    'META-INF/basemetals/docs/VERSIONS.md',
+                    'META-INF/basemetals/docs/schemas/orespawn-4.0.16/orespawn-provider.schema.json'
+            ].each { required ->
+                if (!names.contains(required)) throw new GradleException("Release jar is missing ${required}")
+            }
+            def manifest = new java.util.jar.Manifest(zip.getInputStream(zip.getEntry('META-INF/MANIFEST.MF')))
+            if (manifest.mainAttributes.getValue('Maven-Artifact') != expectedMavenCoordinate) {
+                throw new GradleException('Release manifest contains the wrong Maven coordinate')
+            }
+            String expectedBuildTarget = 'minecraft-1.18.2-forge-40.3.0-java-17'
+            if (manifest.mainAttributes.getValue('Build-Target') != expectedBuildTarget) {
+                throw new GradleException('Release manifest contains the wrong stable build target')
+            }
+            String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
+            if (modsToml.contains('${')
+                    || !modsToml.contains('version="3.0.1.118021"')
+                    || !modsToml.contains('versionRange="[4.0.1,5.0.0)"')) {
+                throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
+            }
+            def provider = new JsonSlurper().parse(zip.getInputStream(
+                    zip.getEntry('data/basemetals/orespawn/provider.json')))
+            if (provider.schema_version != 3 || provider.provider_revision != 1
+                    || provider.provider_modid != 'basemetals') {
+                throw new GradleException('OreSpawn provider schema/revision identity changed')
+            }
+            def locales = names.findAll { it ==~ /assets\/basemetals\/lang\/.+\.json/ }
+            if (locales.size() != 18) {
+                throw new GradleException("Release jar must contain all 18 language files, found ${locales.size()}")
+            }
+            if (names.any { it.endsWith('.class') && (it.contains('/gametest/')
+                    || it.contains('/smoke/') || it.startsWith('com/mcmoddev/')) }) {
+                throw new GradleException('Release jar contains validation or legacy implementation classes')
+            }
+        }
+    }
+}
+
+tasks.register('writeReleaseChecksums') {
+    group = 'verification'
+    description = 'Writes SHA-256 checksums for exactly the three release jars.'
+    dependsOn tasks.named('verifyReleaseArtifacts')
+    doLast {
+        File output = file("${buildDir}/release/SHA256SUMS")
+        output.parentFile.mkdirs()
+        output.setText(expectedReleaseNames.sort().collect { name ->
+            "${sha256(file("${buildDir}/libs/${name}")).toLowerCase(Locale.ROOT)}  ${name}"
+        }.join('\n') + '\n', 'UTF-8')
+    }
+}
+
+tasks.register('verifyPreparedReleaseArtifacts') {
+    group = 'verification'
+    description = 'Verifies the immutable artifact bundle supplied to Maven publication.'
+    inputs.files {
+        preparedReleaseDir == null ? [] :
+                (expectedReleaseNames + ['SHA256SUMS', 'CHANGELOG.txt']).collect {
+                    new File(preparedReleaseDir.toString(), it)
+                }
+    }
+    doLast {
+        if (preparedReleaseDir == null) {
+            throw new GradleException('preparedReleaseDir is required for prepared artifact publication')
+        }
+        File prepared = file(preparedReleaseDir.toString())
+        if (!prepared.isDirectory()) throw new GradleException("Prepared release directory does not exist: ${prepared}")
+        def expectedBundle = (expectedReleaseNames + ['SHA256SUMS', 'CHANGELOG.txt']).sort()
+        def actualBundle = prepared.listFiles().findAll { it.isFile() }.collect { it.name }.sort()
+        if (actualBundle != expectedBundle) {
+            throw new GradleException("Expected prepared bundle ${expectedBundle}, found ${actualBundle}")
+        }
+        def declared = [:]
+        new File(prepared, 'SHA256SUMS').readLines('UTF-8').findAll { !it.trim().isEmpty() }.each { line ->
+            def match = line =~ /^([0-9a-fA-F]{64})  (.+)$/
+            if (!match.matches()) throw new GradleException("Invalid prepared checksum line: ${line}")
+            declared[match[0][2]] = match[0][1].toUpperCase(Locale.ROOT)
+        }
+        if (declared.keySet().sort() != expectedReleaseNames.sort()) {
+            throw new GradleException('Prepared checksums do not declare exactly the three release jars')
+        }
+        declared.each { name, expectedHash ->
+            if (sha256(new File(prepared, name)) != expectedHash) {
+                throw new GradleException("Prepared checksum mismatch for ${name}")
+            }
+        }
+    }
+}

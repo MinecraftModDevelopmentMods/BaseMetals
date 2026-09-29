@@ -1,0 +1,243 @@
+import groovy.json.JsonSlurper
+import org.gradle.api.provider.Provider
+
+def release = project.ext.baseMetalsRelease
+def releaseJar = release.releaseJar
+def packagedServerSmokeProbe = release.packagedServerSmokeProbe
+def packagedClientSmokeProbe = release.packagedClientSmokeProbe
+
+def java17Launcher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(17)
+    vendor = JvmVendorSpec.ADOPTIUM
+}
+
+def packagedForgeServerRuntime = providers.gradleProperty('packagedForgeServerRuntime')
+def packagedForgeClientRuntime = providers.gradleProperty('packagedForgeClientRuntime')
+def packagedClientJavaExecutable = providers.gradleProperty('packagedClientJavaExecutable')
+def packagedServerRunDirectory = layout.buildDirectory.dir('packaged-server-run')
+def packagedClientRunDirectory = layout.buildDirectory.dir('packaged-client-run')
+
+def requireRuntimeDirectory = { Provider<String> configuredPath, String propertyName ->
+    if (!configuredPath.isPresent()) {
+        throw new GradleException("Pass -P${propertyName}=<official Forge 40 runtime directory>")
+    }
+    File runtime = file(configuredPath.get())
+    if (!runtime.isDirectory()) throw new GradleException("${propertyName} does not name a directory: ${runtime}")
+    runtime
+}
+
+def verifyPackagedLog = { File runDirectory, String passMarker, String label ->
+    File log = new File(runDirectory, 'logs/latest.log')
+    if (!log.isFile()) throw new GradleException("${label} did not create logs/latest.log")
+    String text = log.getText('UTF-8')
+    if (!text.contains(passMarker)) throw new GradleException("${label} completion marker is absent from latest.log")
+    ['Failed to load correctly', 'Exception stopping the server', 'This crash report has been saved to'].each { failure ->
+        if (text.contains(failure)) throw new GradleException("${label} log contains fatal marker: ${failure}")
+    }
+}
+
+def preparePackagedServerSmoke = tasks.register('preparePackagedServerSmoke') {
+    group = 'verification'
+    description = 'Stages the public Base Metals and OreSpawn jars with an isolated dedicated-server probe.'
+    dependsOn releaseJar
+    dependsOn packagedServerSmokeProbe
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doLast {
+        File runDirectory = packagedServerRunDirectory.get().asFile
+        delete runDirectory
+        runDirectory.mkdirs()
+        copy {
+            from releaseJar
+            from packagedServerSmokeProbe
+            from configurations.orespawnRelease
+            into new File(runDirectory, 'mods')
+        }
+        new File(runDirectory, 'server.properties').setText('''\
+level-name=packaged-server-smoke-world
+level-seed=basemetals-release-smoke
+online-mode=false
+server-port=0
+allow-nether=true
+generate-structures=false
+spawn-protection=0
+max-tick-time=-1
+''', 'UTF-8')
+        new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
+    }
+}
+
+def packagedServerStartupSmoke = tasks.register('packagedServerStartupSmoke', Exec) {
+    group = 'verification'
+    description = 'Starts an official Forge dedicated server with the exact packaged release jars.'
+    dependsOn preparePackagedServerSmoke
+    doFirst {
+        File runtime = requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime')
+        File libraries = new File(runtime, 'libraries')
+        File forgeDirectory = new File(libraries, 'net/minecraftforge/forge/1.18.2-40.3.0')
+        File launcher = new File(forgeDirectory, 'forge-1.18.2-40.3.0-server.jar')
+        File sourceArguments = new File(forgeDirectory,
+                System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')
+                        ? 'win_args.txt' : 'unix_args.txt')
+        [launcher, sourceArguments, libraries].each {
+            if (!it.exists()) throw new GradleException("Incomplete official server runtime: ${it}")
+        }
+        File runDirectory = packagedServerRunDirectory.get().asFile
+        File absoluteArguments = new File(runDirectory, 'forge-server-args.txt')
+        String libraryPath = libraries.canonicalPath.replace('\\', '/') + '/'
+        absoluteArguments.setText(sourceArguments.getText('UTF-8')
+                .replace('libraries/', libraryPath)
+                .replace('-DlibraryDirectory=libraries',
+                        "-DlibraryDirectory=${libraries.canonicalPath}"), 'UTF-8')
+        workingDir runDirectory
+        commandLine java17Launcher.get().executablePath.asFile.absolutePath,
+                '-Xms512m', '-Xmx2g', "@${absoluteArguments.absolutePath}", 'nogui'
+    }
+    doLast {
+        File runDirectory = packagedServerRunDirectory.get().asFile
+        File marker = new File(runDirectory, 'packaged-server-smoke-pass.properties')
+        if (!marker.isFile()) throw new GradleException('Packaged dedicated-server completion marker is missing')
+        Properties values = new Properties()
+        marker.withInputStream { values.load(it) }
+        if (values.getProperty('basemetals') != '3.0.1.118021'
+                || values.getProperty('orespawn') != '4.0.16.118021'
+                || values.getProperty('forge') != '40.3.0') {
+            throw new GradleException("Packaged dedicated-server versions are wrong: ${values}")
+        }
+        verifyPackagedLog(runDirectory, 'BASEMETALS_PACKAGED_SERVER_SMOKE PASS',
+                'Packaged dedicated-server smoke')
+    }
+}
+
+def preparePackagedClientSmoke = tasks.register('preparePackagedClientSmoke') {
+    group = 'verification'
+    description = 'Stages the public Base Metals and OreSpawn jars with the isolated integrated-client probe.'
+    dependsOn releaseJar
+    dependsOn packagedClientSmokeProbe
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doLast {
+        File runDirectory = packagedClientRunDirectory.get().asFile
+        delete runDirectory
+        runDirectory.mkdirs()
+        copy {
+            from releaseJar
+            from packagedClientSmokeProbe
+            from configurations.orespawnRelease
+            into new File(runDirectory, 'mods')
+        }
+        File probeJar = new File(runDirectory, 'mods/basemetals-client-smoke.jar')
+        new java.util.zip.ZipFile(probeJar).withCloseable { zip ->
+            ['META-INF/mods.toml', 'pack.mcmeta'].each { requiredEntry ->
+                if (zip.getEntry(requiredEntry) == null) {
+                    throw new GradleException("Packaged client smoke probe is missing ${requiredEntry}")
+                }
+            }
+        }
+        new File(runDirectory, 'options.txt').setText('fullscreen:false\nlang:en_us\n', 'UTF-8')
+    }
+}
+
+def packagedClientStartupSmoke = tasks.register('packagedClientStartupSmoke', Exec) {
+    group = 'verification'
+    description = 'Starts an official Forge client with the exact packaged release jars and integrated-world probe.'
+    dependsOn preparePackagedClientSmoke
+    doFirst {
+        File runtime = requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime')
+        String forgeVersionId = ['1.18.2-forge-40.3.0', 'forge-40.3.0'].find { candidate ->
+            new File(runtime, "versions/${candidate}/${candidate}.json").isFile()
+        }
+        if (forgeVersionId == null) throw new GradleException('Official client runtime has no Forge 40.3.0 profile')
+        File forgeJsonFile = new File(runtime, "versions/${forgeVersionId}/${forgeVersionId}.json")
+        File baseJsonFile = new File(runtime, 'versions/1.18.2/1.18.2.json')
+        File baseJar = new File(runtime, 'versions/1.18.2/1.18.2.jar')
+        File nativesDirectory = new File(runtime, "natives/${forgeVersionId}")
+        [forgeJsonFile, baseJsonFile, baseJar, new File(runtime, 'libraries'),
+                new File(runtime, 'assets'), nativesDirectory].each {
+            if (!it.exists()) throw new GradleException("Incomplete official client runtime: ${it}")
+        }
+        def slurper = new JsonSlurper()
+        Map forgeJson = (Map) slurper.parse(forgeJsonFile)
+        Map baseJson = (Map) slurper.parse(baseJsonFile)
+        String currentOsName = System.getProperty('os.name').toLowerCase(Locale.ROOT).with { name ->
+            name.contains('windows') ? 'windows' : (name.contains('mac') ? 'osx' : 'linux')
+        }
+        String currentOsArch = System.getProperty('os.arch')
+        Map<String, File> classpathByModule = new LinkedHashMap<>()
+        [baseJson, forgeJson].each { Map metadata ->
+            ((List) metadata.libraries).each { Map library ->
+                List<Map> rules = (List<Map>) library.rules
+                boolean allowed = rules == null || rules.isEmpty()
+                if (rules != null) {
+                    rules.each { Map rule ->
+                        Map os = (Map) rule.os
+                        boolean matches = os == null || (os.name == currentOsName
+                                && (os.arch == null || os.arch == currentOsArch))
+                        if (matches) allowed = rule.action == 'allow'
+                    }
+                }
+                if (!allowed) return
+                String relative = (String) ((Map) ((Map) library.downloads).artifact).path
+                File artifact = new File(runtime, "libraries/${relative}")
+                if (!artifact.isFile()) throw new GradleException("Missing official client library: ${artifact}")
+                List<String> coordinates = ((String) library.name).split(':') as List<String>
+                String module = coordinates.size() >= 2
+                        ? "${coordinates[0]}:${coordinates[1]}" : (String) library.name
+                classpathByModule.put(module, artifact)
+            }
+        }
+        List<File> classpathFiles = new ArrayList<>(classpathByModule.values())
+        classpathFiles.add(baseJar)
+        String libraryDirectory = new File(runtime, 'libraries').absolutePath
+        List<String> forgeJvmArguments = ((List<String>) ((Map) forgeJson.arguments).jvm)
+                .collect { String argument ->
+                    argument.replace('${library_directory}', libraryDirectory)
+                            .replace('${classpath_separator}', File.pathSeparator)
+                            .replace('${version_name}', (String) forgeJson.inheritsFrom)
+                }
+        List<String> gameArguments = []
+        gameArguments.addAll((List<String>) ((Map) forgeJson.arguments).game)
+        gameArguments.addAll([
+                '--username', 'BaseMetalsValidation',
+                '--version', (String) forgeJson.id,
+                '--gameDir', packagedClientRunDirectory.get().asFile.absolutePath,
+                '--assetsDir', new File(runtime, 'assets').absolutePath,
+                '--assetIndex', (String) ((Map) baseJson.assetIndex).id,
+                '--uuid', '00000000-0000-0000-0000-000000000001',
+                '--accessToken', 'validation-token',
+                '--userType', 'legacy',
+                '--versionType', 'release',
+                '--width', '854', '--height', '480'
+        ])
+        File runDirectory = packagedClientRunDirectory.get().asFile
+        workingDir runDirectory
+        File clientJava = packagedClientJavaExecutable.isPresent()
+                ? file(packagedClientJavaExecutable.get()) : java17Launcher.get().executablePath.asFile
+        if (!clientJava.isFile()) {
+            throw new GradleException("packagedClientJavaExecutable does not name a Java executable: ${clientJava}")
+        }
+        List<String> command = [
+                clientJava.absolutePath,
+                '-Xms512m', '-Xmx2g',
+                '-Dbasemetals.integratedWorldSmoke=true',
+                '-Dbasemetals.integratedWorldSmokeName=basemetals-packaged-client-smoke',
+                "-Djava.library.path=${nativesDirectory.absolutePath}",
+                '-Dminecraft.launcher.brand=basemetals-validation',
+                '-Dminecraft.launcher.version=1'
+        ]
+        command.addAll(forgeJvmArguments)
+        command.addAll(['-cp', classpathFiles.collect { it.absolutePath }.join(File.pathSeparator),
+                        (String) forgeJson.mainClass])
+        command.addAll(gameArguments)
+        commandLine(command)
+    }
+    doLast {
+        verifyPackagedLog(packagedClientRunDirectory.get().asFile,
+                'BASEMETALS_INTEGRATED_SMOKE PASS', 'Packaged client smoke')
+    }
+}
+
+tasks.register('packagedRuntimeSmoke') {
+    group = 'verification'
+    description = 'Runs both official packaged client and dedicated-server startup gates.'
+    dependsOn packagedServerStartupSmoke
+    dependsOn packagedClientStartupSmoke
+}
