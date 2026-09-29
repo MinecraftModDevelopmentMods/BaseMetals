@@ -1,0 +1,81 @@
+ext.orespawnModule = "mmd-orespawn-${project.orespawn_curse_project_id}"
+def orespawnVerificationRepository = project.findProperty('orespawnVerificationRepository')
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    mavenCentral()
+
+    // CI stages and hashes the exact public OreSpawn jar in a temporary Maven
+    // mirror. Normal development resolves the same coordinates from CurseMaven.
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = orespawnVerificationRepository == null
+                        ? 'CurseMaven'
+                        : 'OreSpawnReleaseVerificationMirror'
+                url = orespawnVerificationRepository == null
+                        ? uri('https://www.cursemaven.com')
+                        : uri(orespawnVerificationRepository)
+                metadataSources { artifact() }
+            }
+        }
+        filter {
+            includeModule('curse.maven', orespawnModule)
+        }
+    }
+
+    flatDir {
+        dir rootProject.file('../../benchmarks/external/EnderIO-1.18.2/build/libs')
+    }
+    maven { url = uri('https://modmaven.dev/') }
+    maven { url = uri('https://dvs1.progwml6.com/files/maven/') }
+    maven { url = uri('https://maven.covers1624.net/') }
+}
+
+dependencies {
+    // ForgeGradle supplies the patched Minecraft development environment.
+    implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+
+    // OreSpawn remains an ordinary hard mod dependency in metadata and is
+    // never shaded into Base Metals. Use the published 1.18.2 release in
+    // development so clean checkouts exercise the same artifact as players.
+    runtimeOnly renamer.dependency("curse.maven:mmd-orespawn-${orespawn_curse_project_id}:${orespawn_curse_file_id}")
+    orespawnRelease "curse.maven:mmd-orespawn-${orespawn_curse_project_id}:${orespawn_curse_file_id}"
+
+    // API only: Mekanism remains optional at runtime. Its public slurry
+    // registry is required to provide the eight historical processing chains.
+    compileOnly 'mekanism:Mekanism:1.18.2-10.2.5.465:api'
+
+    // Opt-in runtime distributions for compatibility smoke tests. These are
+    // never packaged, required, or resolved by ordinary Base Metals builds.
+    def compatibilitySmokes = providers.gradleProperty('compatSmoke').getOrElse('')
+            .split(',').collect { it.trim().toLowerCase(Locale.ROOT) }.findAll { !it.isEmpty() }
+    if (compatibilitySmokes.contains('mekanism') || compatibilitySmokes.contains('all')) {
+        runtimeOnly renamer.dependency('mekanism:Mekanism:1.18.2-10.2.5.465')
+    }
+    if (compatibilitySmokes.contains('tconstruct') || compatibilitySmokes.contains('all')) {
+        runtimeOnly renamer.dependency('slimeknights.mantle:Mantle:1.18.2-1.9.55')
+        runtimeOnly renamer.dependency('slimeknights.tconstruct:TConstruct:1.18.2-3.7.2.169')
+    }
+    if (compatibilitySmokes.contains('thermal') || compatibilitySmokes.contains('all')) {
+        runtimeOnly renamer.dependency('com.teamcofh:cofh_core:1.18.2-9.2.3.47')
+        runtimeOnly renamer.dependency('com.teamcofh:thermal_foundation:1.18.2-9.2.2.59')
+        runtimeOnly renamer.dependency('com.teamcofh:thermal_expansion:1.18.2-9.2.2.24')
+    }
+    if (compatibilitySmokes.contains('enderio') || compatibilitySmokes.contains('all')) {
+        runtimeOnly renamer.dependency('validation:EnderIO-base-1.18.2:6.0.0-alpha-a94a2cb')
+        runtimeOnly renamer.dependency('validation:EnderIO-machines-1.18.2:6.0.0-alpha-a94a2cb')
+    }
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+
+}
+
+renamer.mappings.from minecraft.dependency.toSrgFile
+
+configurations.named('testRuntimeClasspath') {
+    exclude group: 'curse.maven', module: orespawnModule
+}

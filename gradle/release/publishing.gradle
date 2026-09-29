@@ -1,0 +1,74 @@
+import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
+
+def release = project.ext.baseMetalsRelease
+def preparedReleaseDir = release.preparedReleaseDir
+def mavenUploadUrl = System.getenv('MAVEN_UPLOAD_URL') ?: 'https://invalid.invalid/missing-maven-upload-url'
+def mavenUploadUsername = System.getenv('MAVEN_UPLOAD_USERNAME') ?: ''
+def mavenUploadPassword = System.getenv('MAVEN_UPLOAD_PASSWORD') ?: ''
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = release.expectedMavenArtifact
+            version = project.version
+            if (preparedReleaseDir != null) {
+                artifact new File(preparedReleaseDir.toString(), release.mainReleaseName)
+                artifact(new File(preparedReleaseDir.toString(), release.sourcesReleaseName)) {
+                    classifier = 'sources'
+                }
+                artifact(new File(preparedReleaseDir.toString(), release.javadocReleaseName)) {
+                    classifier = 'javadoc'
+                }
+            } else {
+                artifact release.releaseJar
+                artifact tasks.named('sourcesJar')
+                artifact tasks.named('javadocJar')
+            }
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('name', 'Base Metals')
+                root.appendNode('description',
+                        'Historically inspired and fantasy metals, equipment, processing, and OreSpawn provider data.')
+                root.appendNode('url', 'https://github.com/MinecraftModDevelopmentMods/BaseMetals')
+                def license = root.appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'GNU Lesser General Public License, Version 2.1')
+                license.appendNode('url', 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt')
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'release'
+            url = uri(mavenUploadUrl)
+            credentials {
+                username = mavenUploadUsername
+                password = mavenUploadPassword
+            }
+        }
+    }
+}
+
+tasks.register('validateMavenReleaseCredentials') {
+    group = 'publishing'
+    description = 'Prevents Maven publication from targeting an incomplete or local repository.'
+    doLast {
+        if (!System.getenv('MAVEN_UPLOAD_URL')
+                || !System.getenv('MAVEN_UPLOAD_USERNAME')
+                || !System.getenv('MAVEN_UPLOAD_PASSWORD')) {
+            throw new GradleException('MAVEN_UPLOAD_URL, MAVEN_UPLOAD_USERNAME, and MAVEN_UPLOAD_PASSWORD are required')
+        }
+        if (System.getenv('MAVEN_UPLOAD_URL').startsWith('file:')) {
+            throw new GradleException('Maven release publication must use a remote repository')
+        }
+    }
+}
+
+tasks.withType(PublishToMavenRepository).configureEach {
+    dependsOn tasks.named('validateMavenReleaseCredentials')
+    dependsOn tasks.named('verifyMavenCoordinates')
+    dependsOn(preparedReleaseDir == null
+            ? tasks.named('verifyReleaseArtifacts')
+            : tasks.named('verifyPreparedReleaseArtifacts'))
+}
