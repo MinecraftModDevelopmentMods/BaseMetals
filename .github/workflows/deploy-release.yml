@@ -49,6 +49,7 @@ jobs:
       java_toolchain_version: ${{ steps.validate.outputs.java_toolchain_version }}
       java_setup_version: ${{ steps.validate.outputs.java_setup_version }}
       gradle_java_version: ${{ steps.validate.outputs.gradle_java_version }}
+      gradle_java_setup_version: ${{ steps.validate.outputs.gradle_java_setup_version }}
       install_gradle_java: ${{ steps.validate.outputs.install_gradle_java }}
       curseforge_project_id: ${{ steps.validate.outputs.curseforge_project_id }}
       curseforge_dependencies: ${{ steps.validate.outputs.curseforge_dependencies }}
@@ -238,6 +239,7 @@ jobs:
           fi
           case "${{ steps.route.outputs.target_branch }}" in
             master-1.12)
+              gradle_java_setup_version=17.0.1+12
               if [[ "$minecraft_version" != '1.12.2' || "$java_toolchain_version" != '8.0.502+7' \
                   || "$gradle_java_version" != '17' ]]; then
                 echo "master-1.12 has an unexpected target/toolchain contract" >&2
@@ -245,6 +247,7 @@ jobs:
               fi
               ;;
             master-1.18)
+              gradle_java_setup_version="$java_setup_version"
               if [[ "$minecraft_version" != '1.18.2' || "$java_toolchain_version" != '17.0.1+12' \
                   || "$gradle_java_version" != '17' ]]; then
                 echo "master-1.18 has an unexpected target/toolchain contract" >&2
@@ -284,6 +287,7 @@ jobs:
           echo "java_toolchain_version=$java_toolchain_version" >> "$GITHUB_OUTPUT"
           echo "java_setup_version=$java_setup_version" >> "$GITHUB_OUTPUT"
           echo "gradle_java_version=$gradle_java_version" >> "$GITHUB_OUTPUT"
+          echo "gradle_java_setup_version=$gradle_java_setup_version" >> "$GITHUB_OUTPUT"
           echo "install_gradle_java=$install_gradle_java" >> "$GITHUB_OUTPUT"
           echo "curseforge_project_id=$curseforge_project_id" >> "$GITHUB_OUTPUT"
           {
@@ -356,7 +360,7 @@ jobs:
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
         with:
           distribution: temurin
-          java-version: ${{ needs.preflight.outputs.gradle_java_version }}
+          java-version: ${{ needs.preflight.outputs.gradle_java_setup_version }}
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6
@@ -575,7 +579,7 @@ jobs:
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
         with:
           distribution: temurin
-          java-version: ${{ needs.preflight.outputs.gradle_java_version }}
+          java-version: ${{ needs.preflight.outputs.gradle_java_setup_version }}
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6
