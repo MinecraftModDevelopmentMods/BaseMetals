@@ -33,13 +33,17 @@ def prepareCoFH = tasks.register('preparePackagedForgeCoFHWorldRuntime') {
         File config = new File(cofhRunDirectory, 'config')
         File cofhWorld = new File(config, 'cofh/world')
         cofhWorld.mkdirs()
+        File cofhFixture = file('src/test/resources/cofh/world/99_basemetals_issue_448.json')
+        if (!cofhFixture.isFile()) {
+            throw new GradleException("Missing CoFH World test fixture: ${cofhFixture}")
+        }
         copy {
             from file('docs/examples/basemetals-orespawn-disabled.json')
             into config
             rename { 'basemetals-orespawn.json' }
         }
         copy {
-            from file('src/test/resources/cofh/world/99_basemetals_issue_448.json')
+            from cofhFixture
             into cofhWorld
         }
     }

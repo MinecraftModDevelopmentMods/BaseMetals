@@ -28,6 +28,7 @@
 **/run-data/
 **/saves/
 **/world/
+!/src/test/resources/cofh/world/
 **/logs/
 **/crash-reports/
 **/*.log

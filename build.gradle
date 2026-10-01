@@ -163,13 +163,18 @@ repositories {
     maven fg.forgeMaven
     maven fg.minecraftLibsMaven
 
-    if (providers.gradleProperty('legacyDependencyVerificationRepository').isPresent()) {
-        maven {
-            name = 'LegacyDependencyVerificationMirror'
-            url = uri(providers.gradleProperty('legacyDependencyVerificationRepository').get())
-            metadataSources { artifact() }
-            content { includeGroup('curse.maven') }
+    // CurseForge files belong only in the verified CI mirror or CurseMaven.
+    exclusiveContent {
+        forRepository {
+            maven {
+                def verificationRepository = providers.gradleProperty('legacyDependencyVerificationRepository')
+                name = verificationRepository.isPresent() ? 'LegacyDependencyVerificationMirror' : 'CurseMaven'
+                url = verificationRepository.isPresent()
+                        ? uri(verificationRepository.get()) : uri('https://www.cursemaven.com')
+                metadataSources { artifact() }
+            }
         }
+        filter { includeGroup('curse.maven') }
     }
 
     exclusiveContent {
@@ -186,14 +191,6 @@ repositories {
     maven {
         name = 'MinecraftLibraries'
         url = 'https://libraries.minecraft.net/'
-    }
-    if (!providers.gradleProperty('legacyDependencyVerificationRepository').isPresent()) {
-        maven {
-            name = 'CurseMaven'
-            url = 'https://www.cursemaven.com'
-            metadataSources { artifact() }
-            content { includeGroup('curse.maven') }
-        }
     }
 }
 
