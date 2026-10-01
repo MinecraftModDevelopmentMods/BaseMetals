@@ -1,0 +1,8 @@
+{
+	"conditions": {
+		"achievement": "com.mcmoddev.basemetals.advancement.AchievementCondition",
+		"enabled": "com.mcmoddev.lib.recipe.conditions.ConditionEnabled",
+		"hammer": "com.mcmoddev.lib.recipe.conditions.HammerEnabled",
+		"plate": "com.mcmoddev.lib.recipe.conditions.PlateRepairEnabled"
+	}
+}

@@ -1,0 +1,160 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+def recipeDirectory = file('src/main/resources/assets/basemetals/recipes')
+def generatedResourceDirectory = layout.buildDirectory.dir(
+        'generated-resources/recipe-advancements')
+
+// Ingots from other mods should unlock the same recipes. Match ore-dictionary
+// names rather than a particular mod's items.
+def materialOres = [
+        adamantine : 'ingotAdamantine',
+        antimony   : 'ingotAntimony',
+        aquarium   : 'ingotAquarium',
+        bismuth    : 'ingotBismuth',
+        brass      : 'ingotBrass',
+        bronze     : 'ingotBronze',
+        charcoal   : 'charcoal',
+        coal       : 'coal',
+        coldiron   : 'ingotColdiron',
+        copper     : 'ingotCopper',
+        cupronickel: 'ingotCupronickel',
+        diamond    : 'gemDiamond',
+        electrum   : 'ingotElectrum',
+        emerald    : 'gemEmerald',
+        gold       : 'ingotGold',
+        invar      : 'ingotInvar',
+        iron       : 'ingotIron',
+        lead       : 'ingotLead',
+        mithril    : 'ingotMithril',
+        nickel     : 'ingotNickel',
+        obsidian   : 'ingotObsidian',
+        pewter     : 'ingotPewter',
+        platinum   : 'ingotPlatinum',
+        quartz     : 'gemQuartz',
+        redstone   : 'dustRedstone',
+        silver     : 'ingotSilver',
+        starsteel  : 'ingotStarsteel',
+        steel      : 'ingotSteel',
+        stone      : 'stone',
+        tin        : 'ingotTin',
+        wood       : 'logWood',
+        zinc       : 'ingotZinc'
+].asImmutable()
+
+def genericSteelRecipes = [
+        'activator_rail', 'detector_rail', 'flint_and_steel', 'human_detector',
+        'minecart', 'piston', 'rail', 'tripwire_hook'
+] as Set
+
+def materialForRecipe = { String recipeName ->
+    if (genericSteelRecipes.contains(recipeName)) {
+        return 'steel'
+    }
+    materialOres.keySet().find { String material ->
+        recipeName == material || recipeName.startsWith("${material}_")
+    }
+}
+
+Closure advancementConditions
+advancementConditions = { Object value ->
+    if (value instanceof Map) {
+        return value.collectEntries { Object key, Object child ->
+            Object translated = child
+            if (key == 'type' && child instanceof String
+                    && child.startsWith('mmdlib:')) {
+                translated = "basemetals:${child.substring('mmdlib:'.length())}"
+            } else {
+                translated = advancementConditions(child)
+            }
+            [(key): translated]
+        }
+    }
+    if (value instanceof List) {
+        return value.collect { Object child -> advancementConditions(child) }
+    }
+    value
+}
+
+def generateRecipeBookAdvancements = tasks.register('generateRecipeBookAdvancements') {
+    group = 'build'
+    description = 'Generates condition-aware recipe-book advancements for every Base Metals recipe.'
+    inputs.files(fileTree(recipeDirectory) {
+        include '*.json'
+        exclude '_factories.json'
+    })
+    inputs.property('materialOres', materialOres)
+    inputs.property('genericSteelRecipes', genericSteelRecipes.toList().sort())
+    outputs.dir(generatedResourceDirectory)
+
+    doLast {
+        File outputRoot = generatedResourceDirectory.get().asFile
+        project.delete(outputRoot)
+        File advancementRoot = new File(outputRoot,
+                'assets/basemetals/advancements/recipes/materials')
+        JsonSlurper parser = new JsonSlurper()
+
+        fileTree(recipeDirectory) {
+            include '*.json'
+            exclude '_factories.json'
+        }.files.sort { left, right -> left.name <=> right.name }.each { File recipeFile ->
+            String recipeName = recipeFile.name.substring(0,
+                    recipeFile.name.length() - '.json'.length())
+            // The recipe book cannot show the damaged item needed for a repair.
+            if (recipeName.endsWith('_plate_repair')) {
+                return
+            }
+            String material = materialForRecipe(recipeName)
+            if (material == null) {
+                throw new GradleException(
+                        "No recipe-book discovery material is defined for ${recipeName}")
+            }
+
+            Map recipe = parser.parse(recipeFile) as Map
+            Map advancement = [
+                    parent      : 'minecraft:recipes/root',
+                    rewards     : [recipes: ["basemetals:${recipeName}"]],
+                    criteria    : [
+                            has_material  : [
+                                    trigger   : 'minecraft:inventory_changed',
+                                    conditions: [items: [[
+                                            type: 'forge:ore_dict',
+                                            ore : materialOres[material]
+                                    ]]]
+                            ],
+                            has_the_recipe: [
+                                    trigger   : 'minecraft:recipe_unlocked',
+                                    conditions: [recipe: "basemetals:${recipeName}"]
+                            ]
+                    ],
+                    requirements: [['has_material', 'has_the_recipe']]
+            ]
+            if (recipe.containsKey('conditions')) {
+                // Omit unlocks for disabled recipes too. Forge uses separate factory
+                // registries for recipes and advancements, so these aliases are needed.
+                advancement.conditions = advancementConditions(recipe.conditions)
+            }
+
+            File output = new File(advancementRoot,
+                    "${material}/${recipeName}.json")
+            output.parentFile.mkdirs()
+            output.setText(JsonOutput.prettyPrint(JsonOutput.toJson(advancement))
+                    + '\n', 'UTF-8')
+        }
+    }
+}
+
+sourceSets.main.resources.srcDir(generatedResourceDirectory)
+
+tasks.named('processResources') {
+    dependsOn generateRecipeBookAdvancements
+}
+
+tasks.named('sourcesJar') {
+    dependsOn generateRecipeBookAdvancements
+}
+
+ext.baseMetalsRecipeAdvancements = [
+        outputDirectory: generatedResourceDirectory,
+        generateTask   : generateRecipeBookAdvancements
+].asImmutable()

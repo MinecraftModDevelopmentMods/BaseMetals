@@ -25,5 +25,5 @@
 	"item": "minecraft:activator_rail",
 	"count": 6
     },
-    "group": "vanilla"
+    "group": "minecraft:activator_rail"
 }

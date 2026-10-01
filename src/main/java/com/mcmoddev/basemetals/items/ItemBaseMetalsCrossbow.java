@@ -23,12 +23,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
 /**
- * Base Metals' 1.12 crossbow implementation.
- *
- * <p>MMDLib 1.0.0-rc2 creates bolts on the client, leaving the server with no
- * projectile to resolve impacts or damage. This retains the MMDLib item and
- * ammunition contracts while restoring the server-authoritative firing path
- * used by Base Metals 1.10 and later ports.</p>
+ * Fires bolts on the server so their hits deal damage.
+ * MMDLib's crossbow spawns them only on the client.
  */
 public final class ItemBaseMetalsCrossbow extends ItemMMDCrossbow {
 
@@ -48,20 +44,24 @@ public final class ItemBaseMetalsCrossbow extends ItemMMDCrossbow {
 				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, crossbow) > 0;
 		ItemStack ammunition = findBolt(player);
 		int charge = this.getMaxItemUseDuration(crossbow) - timeLeft;
+
 		charge = ForgeEventFactory.onArrowLoose(crossbow, world, player, charge,
 				!ammunition.isEmpty() || hasInfiniteAmmo);
+
 		if (charge < 0 || ammunition.isEmpty() && !hasInfiniteAmmo) {
 			return;
 		}
 
 		if (ammunition.isEmpty()) {
 			ammunition = defaultBolt();
+
 			if (ammunition.isEmpty()) {
 				return;
 			}
 		}
 
 		final float velocity = getArrowVelocity(charge);
+
 		if (velocity < 0.1F) {
 			return;
 		}
@@ -69,68 +69,88 @@ public final class ItemBaseMetalsCrossbow extends ItemMMDCrossbow {
 		final ItemBolt boltItem = (ItemBolt) ammunition.getItem();
 		final boolean infiniteShot = player.capabilities.isCreativeMode
 				|| boltItem.isInfinite(ammunition, crossbow, player);
+
 		if (!world.isRemote) {
 			final ItemStack projectileAmmunition = ammunition.copy();
+
 			projectileAmmunition.setCount(1);
+
 			final EntityCustomBolt projectile = boltItem.createBolt(
 					world, projectileAmmunition, player);
+
 			MaterialRangedDamage.applyComponent(projectile, getMMDMaterial());
 			projectile.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F,
 					velocity * 3.0F, 1.0F);
+
 			if (velocity == 1.0F) {
 				projectile.setIsCritical(true);
 			}
 
 			final int power = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, crossbow);
+
 			if (power > 0) {
 				projectile.setDamage(projectile.getDamage() + power * 0.5D + 0.5D);
 			}
+
 			final int punch = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, crossbow);
+
 			if (punch > 0) {
 				projectile.setKnockbackStrength(punch);
 			}
+
 			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, crossbow) > 0) {
 				projectile.setFire(100);
 			}
 
 			crossbow.damageItem(1, player);
+
 			if (infiniteShot) {
 				projectile.pickupStatus = EntityCustomBolt.PickupStatus.CREATIVE_ONLY;
 			}
+
 			world.spawnEntity(projectile);
 		}
 
 		world.playSound(null, player.posX, player.posY, player.posZ,
 				SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
 				1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
+
 		if (!infiniteShot) {
 			ammunition.shrink(1);
+
 			if (ammunition.isEmpty()) {
 				player.inventory.deleteStack(ammunition);
 			}
 		}
+
 		player.addStat(StatList.getObjectUseStats(this));
 	}
 
 	private static ItemStack defaultBolt() {
 		final MMDMaterial iron = Materials.getMaterialByName(MaterialNames.IRON);
+
 		return iron.isEmpty() || !iron.hasItem(Names.BOLT)
-				? ItemStack.EMPTY : new ItemStack(iron.getItem(Names.BOLT));
+				? ItemStack.EMPTY
+				: new ItemStack(iron.getItem(Names.BOLT));
 	}
 
 	private static ItemStack findBolt(final EntityPlayer player) {
 		if (isBoltStack(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
 		}
+
 		if (isBoltStack(player.getHeldItem(EnumHand.MAIN_HAND))) {
 			return player.getHeldItem(EnumHand.MAIN_HAND);
 		}
+
 		for (int slot = 0; slot < player.inventory.getSizeInventory(); slot++) {
 			final ItemStack stack = player.inventory.getStackInSlot(slot);
+
 			if (isBoltStack(stack)) {
 				return stack;
 			}
 		}
+
 		return ItemStack.EMPTY;
 	}
 

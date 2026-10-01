@@ -39,8 +39,10 @@ public final class ItemBaseMetalsBow extends ItemMMDBow {
 				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bow) > 0;
 		ItemStack ammunition = findArrow(player);
 		int charge = this.getMaxItemUseDuration(bow) - timeLeft;
+
 		charge = ForgeEventFactory.onArrowLoose(bow, world, player, charge,
 				!ammunition.isEmpty() || hasInfiniteAmmo);
+
 		if (charge < 0 || ammunition.isEmpty() && !hasInfiniteAmmo) {
 			return;
 		}
@@ -50,51 +52,65 @@ public final class ItemBaseMetalsBow extends ItemMMDBow {
 		}
 
 		final float velocity = getArrowVelocity(charge);
+
 		if (velocity < 0.1F) {
 			return;
 		}
 
 		final ItemArrow arrowItem = ammunition.getItem() instanceof ItemArrow
-				? (ItemArrow) ammunition.getItem() : (ItemArrow) Items.ARROW;
+				? (ItemArrow) ammunition.getItem()
+				: (ItemArrow) Items.ARROW;
 		final boolean infiniteShot = player.capabilities.isCreativeMode
 				|| arrowItem.isInfinite(ammunition, bow, player);
+
 		if (!world.isRemote) {
 			final EntityArrow projectile = arrowItem.createArrow(world, ammunition, player);
+
 			MaterialRangedDamage.applyComponent(projectile, getMMDMaterial());
 			projectile.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F,
 					velocity * 3.0F, 1.0F);
+
 			if (velocity == 1.0F) {
 				projectile.setIsCritical(true);
 			}
 
 			final int power = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, bow);
+
 			if (power > 0) {
 				projectile.setDamage(projectile.getDamage() + power * 0.5D + 0.5D);
 			}
+
 			final int punch = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, bow);
+
 			if (punch > 0) {
 				projectile.setKnockbackStrength(punch);
 			}
+
 			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, bow) > 0) {
 				projectile.setFire(100);
 			}
 
 			bow.damageItem(1, player);
+
 			if (infiniteShot) {
 				projectile.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
 			}
+
 			world.spawnEntity(projectile);
 		}
 
 		world.playSound(null, player.posX, player.posY, player.posZ,
 				SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
 				1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
+
 		if (!infiniteShot) {
 			ammunition.shrink(1);
+
 			if (ammunition.isEmpty()) {
 				player.inventory.deleteStack(ammunition);
 			}
 		}
+
 		player.addStat(StatList.getObjectUseStats(this));
 	}
 
@@ -102,15 +118,19 @@ public final class ItemBaseMetalsBow extends ItemMMDBow {
 		if (isArrowStack(player.getHeldItem(EnumHand.OFF_HAND))) {
 			return player.getHeldItem(EnumHand.OFF_HAND);
 		}
+
 		if (isArrowStack(player.getHeldItem(EnumHand.MAIN_HAND))) {
 			return player.getHeldItem(EnumHand.MAIN_HAND);
 		}
+
 		for (int slot = 0; slot < player.inventory.getSizeInventory(); slot++) {
 			final ItemStack stack = player.inventory.getStackInSlot(slot);
+
 			if (isArrowStack(stack)) {
 				return stack;
 			}
 		}
+
 		return ItemStack.EMPTY;
 	}
 

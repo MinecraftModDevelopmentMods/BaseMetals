@@ -4,16 +4,15 @@ Base Metals 2.6.0 requires OreSpawn 4.1.0.112021 or newer in the 4.x line.
 OreSpawn is the only Base Metals ore generator. Base Metals does not register a
 fallback generator.
 
-Base Metals submits a schema-5 API provider at revision 2 containing eleven
-stable rules. Cold iron and Adamantine generate
-in the Nether, Star-Steel generates in the End, and copper, silver, tin, lead,
+Base Metals supplies eleven ore rules through OreSpawn's API (schema 5,
+provider revision 2). Cold Iron and Adamantine generate
+in the Nether, Starsteel generates in the End, and copper, silver, tin, lead,
 zinc, mercury, nickel and platinum generate in ordinary dimensions. Existing
 registry names and the historical distribution values are preserved.
 
-High Fantasy and Low Fantasy enable all eleven rules by default. A fresh
-Realism profile defaults Adamantine, Cold Iron, and Star-Steel off. Existing
-global overrides and saved-world profiles remain authoritative when the mode
-changes and are never rewritten silently.
+High Fantasy and Low Fantasy both enable all eleven rules by default. Content
+mode does not change OreSpawn world generation. Existing global overrides and
+saved-world profiles remain authoritative and are never rewritten silently.
 
 ## Letting another mod generate the ores
 

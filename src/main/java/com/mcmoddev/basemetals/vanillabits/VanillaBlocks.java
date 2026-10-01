@@ -16,16 +16,16 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
+@Mod.EventBusSubscriber(modid = BaseMetals.MODID)
 public class VanillaBlocks extends Blocks {
 
 	private VanillaBlocks() {
 		throw new IllegalAccessError("Class cannot be instantiated!");
 	}
 
-	@SubscribeEvent(priority=EventPriority.HIGHEST)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void registerVanilla(MMDLibRegisterBlocks ev) {
-		// Reuse vanilla ore and storage blocks so integrations resolve one canonical form.
+		// Reuse vanilla blocks rather than register a second copy of each one.
 		final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 		final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
 		final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
@@ -75,21 +75,22 @@ public class VanillaBlocks extends Blocks {
 			create(Names.BLOCK, charcoal);
 		}
 
-		Arrays.stream(new String[] {MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD,
-				MaterialNames.OBSIDIAN })
-		.filter(n -> Options.isMaterialEnabled(n.toString()))
-		.filter(Materials::hasMaterial)
-		.map(Materials::getMaterialByName)
-		.forEach(mat -> {
-			Arrays.stream(new Names[] { Names.BARS, Names.DOOR, Names.TRAPDOOR, Names.BUTTON, Names.SLAB, Names.DOUBLE_SLAB,
-					Names.LEVER, Names.PRESSURE_PLATE, Names.STAIRS, Names.WALL }).forEach(n -> create(n, mat));
-		});
+		Arrays.stream(new String[]{MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD,
+				MaterialNames.OBSIDIAN})
+				.filter(n -> Options.isMaterialEnabled(n.toString()))
+				.filter(Materials::hasMaterial)
+				.map(Materials::getMaterialByName)
+				.forEach(mat -> {
+					Arrays.stream(new Names[]{Names.BARS, Names.DOOR, Names.TRAPDOOR, Names.BUTTON, Names.SLAB,
+							Names.DOUBLE_SLAB,
+							Names.LEVER, Names.PRESSURE_PLATE, Names.STAIRS, Names.WALL}).forEach(n -> create(n, mat));
+				});
 
 		if (Materials.hasMaterial(MaterialNames.GOLD) && Options.isMaterialEnabled(MaterialNames.GOLD)) {
 			create(Names.PLATE, gold);
 		}
-		
- 		if (Materials.hasMaterial(MaterialNames.IRON) && Options.isMaterialEnabled(MaterialNames.IRON)) {
+
+		if (Materials.hasMaterial(MaterialNames.IRON) && Options.isMaterialEnabled(MaterialNames.IRON)) {
 			create(Names.PLATE, iron);
 
 			create(Names.BUTTON, iron);

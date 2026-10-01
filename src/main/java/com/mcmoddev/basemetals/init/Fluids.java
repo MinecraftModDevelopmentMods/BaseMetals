@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /** Creates Base Metals fluids and their blocks. */
-@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
+@Mod.EventBusSubscriber(modid = BaseMetals.MODID)
 public final class Fluids extends com.mcmoddev.lib.init.Fluids {
 
 	private Fluids() {

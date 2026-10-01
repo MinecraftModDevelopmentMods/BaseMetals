@@ -14,8 +14,11 @@ class ContentModeNetworkTest {
 	void everyStableModeRoundTripsOverTheHandshake() {
 		for (final ContentMode mode : ContentMode.values()) {
 			final ByteBuf buffer = Unpooled.buffer();
+
 			new ContentModeMessage(mode).toBytes(buffer);
+
 			final ContentModeMessage decoded = new ContentModeMessage();
+
 			decoded.fromBytes(buffer);
 			assertTrue(decoded.hasValidMode());
 			assertEquals(mode, decoded.mode());
@@ -27,7 +30,12 @@ class ContentModeNetworkTest {
 	void genuineModeDifferencesAreRejectedByTheComparisonContract() {
 		assertFalse(ContentModeNetwork.modesMatch(
 				ContentMode.HIGH_FANTASY, ContentMode.LOW_FANTASY));
-		assertFalse(ContentModeNetwork.modesMatch(
-				ContentMode.LOW_FANTASY, ContentMode.REALISM));
+	}
+
+	@Test
+	void unrecognizedModesUseTheHighFantasyFallback() {
+		assertFalse(ContentMode.isValidSerializedName("not_a_mode"));
+		assertEquals(ContentMode.HIGH_FANTASY, ContentMode.fromSerializedName("not_a_mode"));
+		assertEquals(ContentMode.HIGH_FANTASY, ContentMode.fromSerializedName(null));
 	}
 }

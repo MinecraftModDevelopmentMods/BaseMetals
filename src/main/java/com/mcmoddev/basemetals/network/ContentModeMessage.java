@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
-/** Client declaration of its effective, startup-latched content mode. */
+/** Sends the client's startup content mode to the server. */
 public final class ContentModeMessage implements IMessage {
 	private String serializedMode;
 

@@ -15,8 +15,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import com.mcmoddev.basemetals.content.ContentMode;
-import com.mcmoddev.basemetals.content.ContentPolicy;
 import com.mcmoddev.basemetals.worldgen.BaseMetalsWorldgenProvider;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -30,28 +28,25 @@ class OreSpawnProviderContractTest {
 
 	@Test
 	void nativeProviderMatchesTheStableTranslatedContract() {
-		final JsonObject provider = BaseMetalsWorldgenProvider
-				.build(ContentPolicy.forMode(ContentMode.HIGH_FANTASY)).toJson();
+		final JsonObject provider = BaseMetalsWorldgenProvider.build().toJson();
+
 		assertProviderIdentity(provider);
 
 		final JsonObject ores = provider.getAsJsonObject("ores");
+
 		assertEquals(expectedRules().keySet(), keys(ores));
+
 		for (final Map.Entry<String, Rule> expected : expectedRules().entrySet()) {
 			assertRule(ores.getAsJsonObject(expected.getKey()), expected.getKey(), expected.getValue(), true);
 		}
 	}
 
 	@Test
-	void contentModesOnlyChangeTheThreeFreshWorldFantasyDefaults() {
-		final JsonObject high = provider(ContentMode.HIGH_FANTASY);
-		final JsonObject low = provider(ContentMode.LOW_FANTASY);
-		final JsonObject realism = provider(ContentMode.REALISM);
+	void allElevenOresAreEnabledIndependentOfContentMode() {
+		final JsonObject provider = BaseMetalsWorldgenProvider.build().toJson();
+
 		for (final String id : expectedRules().keySet()) {
-			assertTrue(high.getAsJsonObject("ores").getAsJsonObject(id).get("enabled").getAsBoolean(), id);
-			assertTrue(low.getAsJsonObject("ores").getAsJsonObject(id).get("enabled").getAsBoolean(), id);
-			final boolean mythical = id.contains("adamantine") || id.contains("coldiron")
-					|| id.contains("starsteel");
-			assertEquals(!mythical, realism.getAsJsonObject("ores").getAsJsonObject(id)
+			assertTrue(provider.getAsJsonObject("ores").getAsJsonObject(id)
 					.get("enabled").getAsBoolean(), id);
 		}
 	}
@@ -59,10 +54,13 @@ class OreSpawnProviderContractTest {
 	@Test
 	void disabledExampleRetainsEveryRuleButDisablesAllOfThem() throws IOException {
 		final JsonObject example = read(DISABLED_EXAMPLE);
+
 		assertProviderIdentity(example);
 
 		final JsonObject ores = example.getAsJsonObject("ores");
+
 		assertEquals(expectedRules().keySet(), keys(ores));
+
 		for (final Map.Entry<String, Rule> expected : expectedRules().entrySet()) {
 			assertRule(ores.getAsJsonObject(expected.getKey()), expected.getKey(), expected.getValue(), false);
 		}
@@ -74,6 +72,7 @@ class OreSpawnProviderContractTest {
 		assertEquals(2, provider.get("provider_revision").getAsInt());
 		assertTrue(provider.get("merge_new_entries_into_existing_worlds").getAsBoolean());
 		assertTrue(provider.getAsJsonObject("rocks").entrySet().isEmpty());
+
 		for (final String section : Arrays.asList("fluid_deposits", "geomes", "biome_rules",
 				"terrain_dimensions", "biome_palettes", "dimension_materials", "templates")) {
 			assertTrue(provider.getAsJsonObject(section).entrySet().isEmpty(), section + " must remain empty");
@@ -88,6 +87,7 @@ class OreSpawnProviderContractTest {
 		assertFalse(rule.get("retrogen").getAsBoolean(), id);
 
 		final JsonArray outputs = rule.getAsJsonArray("outputs");
+
 		assertEquals(1, outputs.size(), id);
 		assertEquals("basemetals:" + expected.ore,
 				outputs.get(0).getAsJsonObject().get("block").getAsString(), id);
@@ -96,9 +96,11 @@ class OreSpawnProviderContractTest {
 		assertEquals(2048, outputs.get(0).getAsJsonObject().get("max_y").getAsInt(), id);
 
 		final String containerName = expected.dimension.startsWith("minecraft:")
-				? "dimensions" : "dimension_selectors";
+				? "dimensions"
+				: "dimension_selectors";
 		final JsonObject settings = rule.getAsJsonObject(containerName)
 				.getAsJsonObject(expected.dimension);
+
 		assertTrue(settings.get("enabled").getAsBoolean(), id);
 		assertEquals(expected.minY, settings.get("min_y").getAsInt(), id);
 		assertEquals(expected.maxY, settings.get("max_y").getAsInt(), id);
@@ -114,19 +116,18 @@ class OreSpawnProviderContractTest {
 		assertEquals(8, settings.get("node_size").getAsInt(), id);
 		assertEquals(Arrays.asList("minecraft:stone", "minecraft:netherrack", "minecraft:end_stone"),
 				weightedIds(settings.getAsJsonArray("host_blocks"), "block"), id);
+
 		for (final String empty : Arrays.asList("host_tags", "host_families", "biome_ids",
 				"excluded_biome_ids", "biome_dictionary", "excluded_biome_dictionary")) {
 			assertTrue(settings.getAsJsonArray(empty).size() == 0, id + " " + empty);
 		}
-		assertTrue(settings.getAsJsonObject("geomes").entrySet().isEmpty(), id);
-	}
 
-	private static JsonObject provider(final ContentMode mode) {
-		return BaseMetalsWorldgenProvider.build(ContentPolicy.forMode(mode)).toJson();
+		assertTrue(settings.getAsJsonObject("geomes").entrySet().isEmpty(), id);
 	}
 
 	private static Map<String, Rule> expectedRules() {
 		final Map<String, Rule> result = new LinkedHashMap<>();
+
 		result.put("basemetals:legacy/coldiron_ore",
 				new Rule("coldiron_ore", "minecraft:the_nether", 0, 127, 5.0D));
 		result.put("basemetals:legacy/adamantine_ore",
@@ -149,36 +150,45 @@ class OreSpawnProviderContractTest {
 				new Rule("nickel_ore", "orespawn:all_except_nether_end", 32, 95, 1.0D));
 		result.put("basemetals:legacy/platinum_ore",
 				new Rule("platinum_ore", "orespawn:all_except_nether_end", 1, 31, 0.125D));
+
 		return Collections.unmodifiableMap(result);
 	}
 
 	private static java.util.List<String> strings(final JsonArray values) {
 		final java.util.List<String> result = new java.util.ArrayList<>();
+
 		for (final JsonElement value : values) {
 			result.add(value.getAsString());
 		}
+
 		return result;
 	}
 
 	private static java.util.List<String> weightedIds(final JsonArray values, final String key) {
 		final java.util.List<String> result = new java.util.ArrayList<>();
+
 		for (final JsonElement value : values) {
-			result.add(value.isJsonPrimitive() ? value.getAsString()
+			result.add(value.isJsonPrimitive()
+					? value.getAsString()
 					: value.getAsJsonObject().get(key).getAsString());
 		}
+
 		return result;
 	}
 
 	private static java.util.Set<String> keys(final JsonObject object) {
 		final java.util.Set<String> result = new java.util.LinkedHashSet<>();
+
 		for (final Map.Entry<String, JsonElement> entry : object.entrySet()) {
 			result.add(entry.getKey());
 		}
+
 		return result;
 	}
 
 	private static JsonObject read(final Path path) throws IOException {
 		assertTrue(Files.isRegularFile(path), "Missing JSON contract " + path);
+
 		try (Reader reader = Files.newBufferedReader(path)) {
 			return new JsonParser().parse(reader).getAsJsonObject();
 		}

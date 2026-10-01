@@ -1,120 +1,135 @@
-[![](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.mcmoddev.com)
-[![CurseForge](http://cf.way2muchnoise.eu/base-metals.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
-[![Versions](http://cf.way2muchnoise.eu/versions/base-metals.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
-[![Build Status](https://ci.mcmoddev.com/job/Base%20Metals/job/Base%20Metals%201.12/badge/icon)](https://ci.mcmoddev.com/job/Base%20Metals/job/Base%20Metals%201.12/)
+[![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
+[![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
+[![Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
+[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.12)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.12)
+[![CodeQL](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/codeql-analysis.yml/badge.svg?branch=master-1.12)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/codeql-analysis.yml?query=branch%3Amaster-1.12)
 
-## Base Metals Mod
+# Base Metals for Minecraft 1.12.2
 
-This mod adds historically commonly used metals to Minecraft, specifically Silver, Copper, Tin, Lead, Zinc, Mercury, and Nickel. You will also find a number of metal alloys in this mod and a new tool: the Crack Hammer.
+Base Metals adds metals, alloys, equipment, building blocks, and the crackhammer.
+Crush ores into powder, smelt the powder into ingots, or combine it into alloy
+blends. The metals also work with supported processing and tool-building mods.
 
-Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Adamantine, and Star Steel
+This branch builds **2.6.0.112021** for Minecraft 1.12.2 and Forge. It keeps the
+existing block and item names for saved worlds, fixes long-standing gameplay
+issues, and adds an optional Low Fantasy content mode. See the
+[changelog](CHANGELOG.txt) for the release changes.
 
+## Installation
 
+Install these mods on both the client and server:
 
-## Metals and Alloys
+- [Minecraft Forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.12.2.html)
+  14.23.5.2859 or newer for Minecraft 1.12.2.
+- [MMDLib](https://www.curseforge.com/minecraft/mc-mods/mmdlib), tested with
+  `1.0.0-rc2.36`.
+- [MMD OreSpawn](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn)
+  `4.1.0.112021` or newer in the 4.x line.
+- [Base Metals](https://www.curseforge.com/minecraft/mc-mods/base-metals).
 
-###Natural Metals
+Put the jars in the instance's `mods` folder. Minecraft 1.12.2 runs on Java 8.
+Back up your worlds and configuration before upgrading. MMD OreSpawn is the
+world-generation library, not the unrelated creature mod with a similar name.
 
-**Antimony**: 
+## Metals and alloys
 
-**Bismuth**: 
+The natural materials are Antimony, Bismuth, Copper, Lead, Mercury, Nickel,
+Platinum, Silver, Tin, and Zinc. The alloys are Brass, Bronze, Cupronickel,
+Electrum, Invar, Pewter, and Steel. Adamantine, Aquarium, Cold Iron, Mithril,
+and Starsteel provide the fantasy materials.
 
-**Copper**: Copper is soft, easy to work, and fairly abundant. It is needed to make bronze and brass metal alloys.
+OreSpawn places Cold Iron and Adamantine in the Nether and Starsteel in the
+End. Copper, Silver, Tin, Lead, Zinc, Mercury, Nickel, and Platinum generate
+in ordinary dimensions. Antimony and Bismuth ore blocks are available, but
+they do not generate by default. Aquarium and Mithril are alloys, not ores.
 
-**Lead**: Lead is a very soft metal that is best known for being very heavy and somewhat toxic. Lead tools are fragile, but can dish out a lot of damage when used as weapons.
+Make alloys by combining powders in a crafting grid and smelting the resulting
+blend. For example, Bronze uses Copper and Tin; Steel uses Iron and carbon.
+Vanilla Bits adds useful forms for vanilla materials, such as Iron powder,
+Stone crackhammers, and Obsidian tools.
 
-**Mercury**: This toxic liquid metal has many alchemical uses. The Mithril metal alloys requires mercury.
+## Crackhammers and equipment
 
-**Nickel**: This metal is as soft as copper, but it has alchemical properties and forms the invar metal alloy when mixed with iron.
+Mine a crushable block with a crackhammer to get its powdered ingredients.
+Many metal ores yield two powders, which can be smelted into ingots. You can
+also drop items on the ground and use the hammer on the block beneath them.
+The exact output depends on the crusher recipe.
 
-**Platinum**: 
+Material choice affects the damage of Base Metals bows, arrows, crossbows,
+and bolts. Crossbows use the mod's original draw-and-release behaviour; they
+do not store a charged shot. Ordinary vanilla bow-and-arrow damage is unchanged.
 
-**Silver**: Silver is a soft, shiny metal that is valued for both is beauty and its alchemical uses.
+Some materials have additional effects:
 
-**Tin**: Tin is an extremely soft metal that is not useful by itself, but can be combined with copper to make bronze, a metal alloy nearly as strong as iron.
+- Adamantine armor grants Resistance, and its melee tools are stronger against
+  creatures with more than 20 maximum health.
+- A complete Aquarium suit grants Water Breathing and Resistance while in
+  water and removes Mining Fatigue.
+- A complete Cold Iron suit grants Fire Resistance.
+- A complete Mithril suit removes harmful effects.
+- Lead armor slows its wearer.
+- Starsteel armor grants Jump Boost and, from two pieces onward, Speed.
+  Held Starsteel equipment slowly repairs itself.
 
-**Zinc**: Like tin, zinc is worthless on its own, but can be used to make the metal alloy brass.
+One matching plate fully repairs a damaged armor piece or shield in a crafting
+grid, preserving its enchantments and name. This uses MMDLib's
+`repair_using_plates` setting.
 
+## Configuration
 
+Open **Mods → Base Metals → Config** from the main menu, or use the Base Metals
+cog under **Create World → OreSpawn → Mods**. Both open the same configuration
+screen. Changes require a Minecraft restart.
 
-###Metal Alloys
-*Metal alloys are made by crafting together the powdered forms of the required metals, and then smelting the resulting alloy blend in a furnace.*
+- **High Fantasy** is the default and keeps the historical content available.
+- **Low Fantasy** limits equipment and building recipes to suitable materials.
+  It does not remove existing items or change ore generation.
 
-**Brass**: This alloy of copper and zinc (2:1 ratio) is soft, but has a beautiful golden color.
+An old configuration without `contentMode` still uses High Fantasy. The mode
+applies to the whole Minecraft instance or server, not to one world. Clients
+and servers must use the same mode.
 
-**Bronze**: This alloy of copper and tin (3:1 ratio) is as hard as iron, but not quite as durable.
+OreSpawn is the only Base Metals ore generator. Edit ore rules in OreSpawn,
+not through MMDLib's old `using_orespawn` or `fallback_orespawn` switches.
+Existing OreSpawn world settings and explicit overrides are preserved.
 
-**Electrum**: This alloy of silver and gold (1:1 ratio) can be enchanted like gold, but is slightly more durable.
+See the [configuration guide](docs/configuration.md) and
+[world-generation guide](docs/world-generation.md), including the example
+for letting CoFH World place the ores instead.
 
-**Invar**: This alloy of iron and nickel (2:1 ratio) is harder than steel, but less durable.
+## Mod compatibility
 
-**Pewter**: 
+Base Metals includes optional integrations for Tinkers' Construct, Construct's
+Armory, Thermal Expansion, Mekanism, Ender IO, IC2, Thaumcraft, Dense Ores,
+VeinMiner, and Additional Loot Tables. Ore Dictionary entries let other mods
+use the materials without a dedicated integration. These mods are not required
+for an ordinary Base Metals installation.
 
-**Steel**: This alloy of iron and carbon (8:1 ratio) is as hard as iron and much more durable.
+The Tinkers integration keeps Base Metals Adamantine separate from TAIGA's
+Adamant. Low Fantasy also restricts the equipment routes exposed by supported
+integrations.
 
+The [Brittle modifier crash at one durability](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues/485)
+belongs to MMDLib and is not fixed by this Base Metals release.
 
-###Fantasy Metals
+## Building and contributing
 
-**Adamantine**: (found in the Nether): Adamantine is a rare magical metal that is as strong as diamond, maybe even stronger. Armor made from Adamantine grants resistance to damage and tools made from adamantine are extra effective against monsters that have more than 10 hearts of health.
+Use the Gradle wrapper. Gradle runs on Java 17; the build uses Java 25 for
+ForgeGradle's Mavenizer and Java 8 to compile and run Minecraft. The exact
+toolchain and dependency versions are recorded in `gradle.properties`.
 
-**Aquarium**: 
+```text
+./gradlew check build javadoc verifyReleaseArtifacts
+./gradlew prepareEclipse
+```
 
-**Cold-Iron**: (found in the Nether): Cold-Iron is a magical metal that is as strong as iron. Tools made from Cold Iron are extra effective against denizens of the Nether and any creature that is immune to fire.
+`prepareEclipse` creates client and server launches with processed resources
+and keeps optional compile-only mods and test code out of normal launches.
+The [build-script guide](gradle/README.md) explains the supporting scripts.
 
-**Mithril**: Mithril is an alloy of alloy of silver, mercury, and cold-iron (2:1:1 ratio). It is as strong as steel and Mithril weapons are extra effective against undead.
+Release artifacts use the Maven coordinates
+`zone.moddev.mc.basemetals:BaseMetals:2.6.0.112021`. Java packages remain under
+`com.mcmoddev.basemetals`; this release does not move saved registry names.
 
-**Star-Steel**: (found in the End): Armor made from Star Steel reduces the weight of the wearer, allowing the wearer to jump higher and fall slower. Star-Steel tools slowly repair themselves while held.
-
-
-
-## Crack Hammer
-
-Also known as a sledgehammer, this tool is designed for pulverizing rocks. Using this tool on ores will cause them to drop powdered metal instead of the standard ore block. Use can then use the powdered metals to make metal alloy mixes or just smelt the powder into ingots. You can crush items by dropping them on the ground and then right-clicking on the ground beneath the items.
-
-
-
-## Requirements
-
-Base Metals 2.6.0 requires Minecraft 1.12.2, Forge 14.23.5.2859, MMDLib,
-and OreSpawn 4.1.0.112021 or newer in the 4.x line.
-
-OreSpawn 4.1's Mods directory includes a Base Metals cog for editing the
-existing `BaseMetals.cfg`. See [configuration](docs/configuration.md) for the
-restart and ore-rule safety behavior, including the upgrade-safe High Fantasy,
-Low Fantasy, and Realism content modes. Existing configurations without a mode
-remain in High Fantasy and keep the historical recipes and acquisition paths.
-
-OreSpawn is the sole Base Metals ore generator. To disable Base Metals' rules
-for a CoFH World or other custom-worldgen setup, follow the
-[world-generation guide](docs/world-generation.md). The old MMDLib
-`using_orespawn` and `fallback_orespawn` options do not control these rules.
-
-
-
-## Installing
-
-After you have successfully installed Forge, simply place the file *basemetals-#.#.#.jar* in your *mods* folder. You can get the basemetals-#.#.jar file from the Releases tab of this repository page.
-
-##NEI
-
-The Crack Hammer recipes from this mod will appear in NEI if you have NEI installed. Hooray!
-
-
-## Mod API
-
-Check the developer releases to download the files *basemetals-#.#.#-deobf.jar*, *basemetals-#.#.#-sources.jar*, *basemetals-#.#.#-javadoc.jar*. In your Eclipse project (and *build.gradle* file), add *basemetals-#.#.#-deobf.jar* as a library dependency. All items and blocks can be conveniently accessed via classes in the *com.mcmoddev.basemetals.init* package. New recipes for the Crack Hammer can be added via the *com.mcmoddev.lib.registry.CrusherRecipeRegistry* class.
-
-
-## Q&A
-
-Q: Why make this mod?
-
-A: Minecraft appears to have a pre-industrial fantasy setting, but the fantasy literature (and pre-industrial history) is full of references to silver and copper as well as gold.
-
-
-
-Q: What does the Crack Hammer do?
-
-A: When you break ores with the Crack Hammer, you get two piles of metal powders instead of a single block of ore. This is necessary to make metal alloys, which is done by combining the powders of the various components and then smelting the alloy mix.
-
-
+Report bugs through the [issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
+Include your mod versions, relevant configuration, and a log or crash report.

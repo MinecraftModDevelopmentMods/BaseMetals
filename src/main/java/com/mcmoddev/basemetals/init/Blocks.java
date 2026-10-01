@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 /** Creates and registers Base Metals blocks. */
-@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
+@Mod.EventBusSubscriber(modid = BaseMetals.MODID)
 public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	private Blocks() {
@@ -78,7 +78,9 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	private static void createMercury() {
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
+
 			create(Names.ORE, mercury);
+
 			if (mercury.hasBlock(Names.ORE)) {
 				mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
 			}
@@ -98,6 +100,6 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 			final ImmutableList<Block> blocks) {
 		blocks.stream().filter(
 				block -> block.getRegistryName().getNamespace().equals(BaseMetals.MODID))
-				.forEach( registry::register );
+				.forEach(registry::register);
 	}
 }

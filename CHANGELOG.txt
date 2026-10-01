@@ -1,4 +1,59 @@
-Base Metals 2.5.1.112021
+Base Metals 2.6.0.112021 — Minecraft 1.12.2
+
+Before upgrading
+
+- Back up worlds and configuration. Install MMDLib and OreSpawn
+  4.1.0.112021 or newer in the 4.x line on both client and server.
+- Old configurations without a content mode stay in High Fantasy. Existing
+  items and block IDs are retained.
+- OreSpawn is now the only Base Metals ore generator. Use OreSpawn overrides
+  or world settings to disable its rules when another mod generates the ores.
+  The old MMDLib world-generation switches no longer control Base Metals.
+
+Gameplay fixes
+
+- Metal nuggets and powders no longer burn as furnace fuel. Coal and charcoal
+  forms keep their intended fuel values (#473).
+- Doors and trapdoors have distinct recipes. Vanilla-material additions such
+  as Diamond and Gold doors are registered and available as intended (#474).
+- Base Metals Adamantine no longer shares the Adamant alias with TAIGA (#467).
+- Fishing rods use their material's durability and retain vanilla fishing wear
+  rules (#467).
+- The Steel rail recipe produces 16 rails, matching the vanilla recipe (#467).
+- Crossbows fire bolts on the server, so hits damage their targets. Launcher
+  and ammunition materials both contribute to ranged damage. Bolts use a valid
+  projectile texture, and picked-up Base Metals arrows keep their identity (#467).
+- Armor effects count equipped pieces correctly and no longer depend on an
+  undamaged stack. Aquarium's underwater effects and Starsteel's movement
+  bonuses now apply as intended (#470, #450).
+- Tinkers casting and alloy registration skip disabled or missing materials
+  and fluids instead of crashing, including disabled Prismarine additions (#455).
+- Hoes report the tool-material name expected by Ancient Warfare 2 (#449).
+- The native OreSpawn provider replaces the old plugin and fallback generator.
+  Its eleven rules retain their defaults and customized migration values, and
+  can be disabled without duplicate fallback generation (#448, #428).
+- Recipe-book unlocks recognize matching Ore Dictionary ingredients. Recipes
+  are grouped by their result instead of merging whole weapon and tool families.
+- Plate repair requires exactly one damaged armor piece or shield and one
+  matching plate. It preserves NBT, rejects extra ingredients, and no longer
+  appears as a misleading plate-only recipe in the recipe book.
+- Restored the 18 historical gameplay achievements, including Juggernaut,
+  SCUBA Diver, and Moon Walker, with saved advancement progress.
+
+Configuration
+
+- Added High Fantasy and Low Fantasy content modes. High Fantasy keeps the
+  historical content; Low Fantasy limits acquisition to suitable material forms.
+  Items remain registered and available in creative mode in both modes.
+- Crafting, processing, trades, chest loot, and supported integrations respect
+  the selected mode. Clients and servers must use the same effective mode.
+- Added the configuration screen to Forge's Mods list and OreSpawn's cog.
+  It has localized labels and help in all 18 language files, cancellation,
+  reset controls, restart guidance, and warnings before disabling generated ores.
+- Content modes are installation-wide settings. They do not change OreSpawn
+  distributions or overwrite existing world profiles.
+
+Build and delivery
 
 - Modernized the Minecraft 1.12.2 build on ForgeGradle 7, Gradle 9.6.1 and
   checksum-pinned Java and mod dependencies.
@@ -8,10 +63,11 @@ Base Metals 2.5.1.112021
 - Isolated ordinary Eclipse launches from compile-only integration APIs, so
   optional mods such as CoFH Core are not accidentally loaded without their
   dependencies, while preserving Forge's order-sensitive runtime classpath.
-- Updated the development target to Forge 14.23.5.2859 while preserving Java 8
-  game compatibility, registry IDs, OreSpawn 3 behavior and integrations.
-- This modernization contains no gameplay or recipe-loop fixes; those changes
-  will follow separately.
+- Updated the development target to Forge 14.23.5.2859 and OreSpawn
+  4.1.0.112021 while retaining Java 8 game compatibility.
+- Replaced the retired build services with pinned GitHub Actions checks and
+  a guarded Maven, CurseForge, and GitHub release workflow (#468).
+- Split the build scripts by purpose and cleaned up source layout and comments.
 
 Base Metals 2.5.0-rc2.332
 

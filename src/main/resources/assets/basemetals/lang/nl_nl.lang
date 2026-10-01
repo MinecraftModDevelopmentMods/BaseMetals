@@ -1,3 +1,7 @@
+achievement.cupronickel_maker=Kopernikkel
+achievement.pewter_maker=Tinlegering
+achievement.pewter_maker.desc=Meng tin-, koper- en loodpoeder om een tinlegering te maken.
+
 itemGroup.basemetals.blocks=Base Metals Blocks
 itemGroup.basemetals.combat=Base Metals Combat
 itemGroup.basemetals.items=Base Metals Items
@@ -545,13 +549,11 @@ config.basemetals.category.forced_traits=Geforceerde eigenschappen
 config.basemetals.category.forced_traits.tooltip=Forceer registratie van MMDLib-eigenschappen voor Base Metals-materialen.
 config.basemetals.option.achievements=Prestaties
 config.basemetals.option.content_mode=Inhoudsmodus
-config.basemetals.option.content_mode.tooltip=Kies Hoge fantasie, Lage fantasie of Realisme. Het gekozen beleid wordt actief nadat Minecraft opnieuw is gestart.
+config.basemetals.option.content_mode.tooltip=Kies Hoge fantasie of Lage fantasie. Het gekozen beleid wordt actief nadat Minecraft opnieuw is gestart.
 config.basemetals.content_mode.high_fantasy=Hoge fantasie
 config.basemetals.content_mode.low_fantasy=Lage fantasie
-config.basemetals.content_mode.realism=Realisme
 config.basemetals.warning.content_mode.title=De inhoudsmodus van Base Metals wijzigen?
 config.basemetals.warning.content_mode.message=Wijzigen van %s naar %s? Recepten, handel, buit en integraties veranderen na het opnieuw opstarten.
-config.basemetals.warning.content_mode.realism=Wijzigen van %s naar %s? Bestaande OreSpawn-wereldprofielen blijven behouden; schakel waar nodig de regels voor adamant, koudijzer en sterrenstaal handmatig uit.
 config.basemetals.warning.confirm=Opslaan en later opnieuw opstarten
 config.basemetals.warning.disable_ores.title=Actie voor OreSpawn-regels vereist
 config.basemetals.warning.disable_ores.message=Schakel vóór het opnieuw opstarten deze regels in OreSpawn uit, anders maken ontbrekende uitvoerblokken de provider ongeldig: %s
@@ -594,4 +596,3 @@ config.basemetals.material.prismarine=Prismarien
 config.basemetals.material.redstone=Redstone
 config.basemetals.content_mode.high_fantasy.description=Alle historische Base Metals-inhoud en verkrijgingsroutes blijven beschikbaar.
 config.basemetals.content_mode.low_fantasy.description=Fantasiematerialen blijven bestaan, maar onwaarschijnlijke uitrustings- en bouwrecepten worden verborgen.
-config.basemetals.content_mode.realism.description=De beperkingen van Lage fantasie gelden en normale verkrijging van mythische materialen is uitgeschakeld.

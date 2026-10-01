@@ -19,7 +19,7 @@
 			"ore": "dustNickel"
 		}
 	],
-	"group": "alloys",
+	"group": "basemetals:invar_blend",
 	"conditions": [
 		{
 			"type": "forge:and",

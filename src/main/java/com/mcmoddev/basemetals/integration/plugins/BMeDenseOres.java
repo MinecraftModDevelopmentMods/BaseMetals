@@ -26,7 +26,7 @@ public final class BMeDenseOres extends com.mcmoddev.lib.integration.plugins.Den
 		registerOres();
 	}
 
-	/** Registers every policy-permitted Base Metals ore with Dense Ores. */
+	/** Adds Dense Ores variants for ores allowed by the content mode. */
 	private static void registerOres() {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
@@ -39,14 +39,16 @@ public final class BMeDenseOres extends com.mcmoddev.lib.integration.plugins.Den
 				.filter(materialName -> ContentPolicy.active().allows(materialName, MaterialForm.ORE))
 				.forEach(materialName -> {
 					String baseMaterial;
+
 					switch (materialName) {
-						case MaterialNames.ADAMANTINE:
-						case MaterialNames.COLDIRON:
+						case MaterialNames.ADAMANTINE :
+						case MaterialNames.COLDIRON :
 							baseMaterial = Oredicts.NETHERRACK;
 							break;
-						default:
+						default :
 							baseMaterial = Oredicts.STONE;
 					}
+
 					registerOre(String.format("%s_%s", materialName, Oredicts.ORE), baseMaterial,
 							0);
 				});

@@ -9,7 +9,7 @@ def expectedMavenGroup = buildContract.mavenGroup
 def expectedMavenArtifact = buildContract.mavenArtifact
 def expectedMavenCoordinate = buildContract.mavenCoordinate
 
-// Shared release checks belong here so every release-facing task uses one contract.
+// Shared checks for release versions, toolchains, dependencies, and resources.
 def java8Launcher = javaToolchains.launcherFor {
     languageVersion = JavaLanguageVersion.of(8)
     vendor = JvmVendorSpec.ADOPTIUM
@@ -203,9 +203,11 @@ tasks.register('verifyReleaseDependencies') {
 tasks.register('verifyJsonResources') {
     group = 'verification'
     description = 'Parses every production JSON resource.'
-    inputs.files(fileTree('src/main/resources') { include '**/*.json' })
+    dependsOn tasks.named('generateRecipeBookAdvancements'), tasks.named('generateGameplayAdvancements')
+    def productionJson = sourceSets.main.resources.matching { include '**/*.json' }
+    inputs.files(productionJson)
     doLast {
-        fileTree('src/main/resources') { include '**/*.json' }.files.sort().each { candidate ->
+        productionJson.files.toList().sort().each { candidate ->
             try {
                 new JsonSlurper().parse(candidate)
             } catch (Exception failure) {

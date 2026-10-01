@@ -15,7 +15,7 @@ public abstract class BMEPropertyBase extends MMDMaterialPropertyBase {
 	protected static final int EFFECT_DURATION = 45;
 
 	protected static int countArmorPieces(final MMDMaterial mat, final EntityPlayer player) {
-		return (int) Arrays.stream(new EntityEquipmentSlot[] {
+		return (int) Arrays.stream(new EntityEquipmentSlot[]{
 				EntityEquipmentSlot.HEAD,
 				EntityEquipmentSlot.CHEST,
 				EntityEquipmentSlot.LEGS,
@@ -30,7 +30,7 @@ public abstract class BMEPropertyBase extends MMDMaterialPropertyBase {
 		final MMDMaterial material = Materials.getMaterialByName(materialName);
 
 		return ((player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == material
-						.getItem(Names.HELMET))
+				.getItem(Names.HELMET))
 				&& (player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == material
 						.getItem(Names.CHESTPLATE))
 				&& (player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == material

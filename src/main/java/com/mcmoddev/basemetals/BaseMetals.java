@@ -25,15 +25,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /** Forge entry point for Base Metals. */
 @Mod(
-	modid = BaseMetals.MODID,
-	name = BaseMetals.NAME,
-	version = BaseMetals.VERSION,
-	dependencies = "required-after:forge@[14.23.5.2859,);required-after:mmdlib;required-after:orespawn@[4.1.0.112021,5.0.0);after:tconstruct;after:conarm;after:thaumcraft;after:ic2;before:buildingbricks",
-	acceptedMinecraftVersions = "[1.12,1.12.2]",
-	certificateFingerprint = "",
-	updateJSON = BaseMetals.UPDATEJSON)
+		modid = BaseMetals.MODID,
+		name = BaseMetals.NAME,
+		version = BaseMetals.VERSION,
+		dependencies = "required-after:forge@[14.23.5.2859,);required-after:mmdlib;required-after:orespawn@[4.1.0.112021,5.0.0);after:tconstruct;after:conarm;after:thaumcraft;after:ic2;before:buildingbricks",
+		acceptedMinecraftVersions = "[1.12,1.12.2]",
+		guiFactory = "com.mcmoddev.basemetals.client.config.BaseMetalsGuiFactory",
+		certificateFingerprint = "",
+		updateJSON = BaseMetals.UPDATEJSON)
 public final class BaseMetals {
-	
+
 	@Instance
 	public static BaseMetals instance;
 
@@ -52,9 +53,8 @@ public final class BaseMetals {
 	private static final String PROXY_BASE = SharedStrings.MMD_PROXY_GROUP + MODID
 			+ SharedStrings.DOT_PROXY_DOT;
 
-	@SidedProxy(
-				clientSide = PROXY_BASE + SharedStrings.CLIENTPROXY,
-				serverSide = PROXY_BASE + SharedStrings.SERVERPROXY)
+	@SidedProxy(clientSide = PROXY_BASE + SharedStrings.CLIENTPROXY, serverSide = PROXY_BASE
+			+ SharedStrings.SERVERPROXY)
 	public static CommonProxy proxy;
 
 	public static final Logger logger = LogManager.getFormatterLogger(BaseMetals.MODID);
@@ -93,6 +93,7 @@ public final class BaseMetals {
 		if (!BaseMetalsWorldgenProvider.enqueue()) {
 			throw new IllegalStateException("OreSpawn rejected the Base Metals provider");
 		}
+
 		proxy.init(event);
 	}
 
@@ -100,7 +101,7 @@ public final class BaseMetals {
 	public static void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);
 	}
-	
+
 	/** Restores historical block IDs when Forge loads an older save. */
 	@SubscribeEvent
 	public void onRemapBlock(final RegistryEvent.MissingMappings<Block> event) {

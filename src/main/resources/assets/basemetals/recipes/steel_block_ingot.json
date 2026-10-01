@@ -10,7 +10,7 @@
 		"item": "basemetals:steel_ingot",
 		"count": 9
 	},
-	"group": "basics",
+	"group": "basemetals:steel_ingot",
 	"conditions": [
 		{
 			"type": "forge:and",

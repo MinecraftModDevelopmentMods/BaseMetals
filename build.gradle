@@ -198,10 +198,11 @@ repositories {
 }
 
 apply from: 'gradle/dependencies.gradle'
+apply from: 'gradle/data/recipe-advancements.gradle'
+apply from: 'gradle/data/gameplay-advancements.gradle'
 
-// Renamer Gradle replaces ForgeGradle's retired deobfProvided configuration.
-// Dependencies are mapped from their production SRG names to stable_39 for the
-// development compile/runtime classpaths; the public jar is mapped back below.
+// Use readable stable_39 names in development. Reobfuscate the release jar
+// back to SRG names so it works in a normal Forge installation.
 renamer.mappings.from minecraft.dependency.toSrgFile
 
 tasks.named('processResources', ProcessResources) {
@@ -289,8 +290,7 @@ ext.baseMetalsBuild = [
         releaseJar         : releaseJar
 ].asImmutable()
 
-// Keep the root build focused on compiling the mod. The applied scripts group
-// release qualification, packaged runtime checks, publishing, and IDE support.
+// Build details are split by purpose: data, release checks, runtime tests, and Eclipse.
 apply from: 'gradle/verification/support.gradle'
 apply from: 'gradle/release/artifacts.gradle'
 apply from: 'gradle/verification/packaged-forge.gradle'

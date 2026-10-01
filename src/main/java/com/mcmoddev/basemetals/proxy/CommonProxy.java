@@ -1,6 +1,5 @@
 package com.mcmoddev.basemetals.proxy;
 
-
 import javax.annotation.Nullable;
 
 import com.mcmoddev.basemetals.BaseMetals;
@@ -20,6 +19,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
 /** Common setup shared by the client and dedicated server. */
 public class CommonProxy {
 
@@ -60,9 +60,10 @@ public class CommonProxy {
 
 		ItemGroups.setupIcons(MaterialNames.STARSTEEL);
 	}
+
 	public void postInit(final FMLPostInitializationEvent event) {
 	}
-	
+
 	public World getWorld(@Nullable final int dimension) {
 		return null;
 	}

@@ -47,6 +47,9 @@
 **/registry_audit.md
 **/registry-audit.md
 **/bugreport.md
+**/validation-*.md
+**/*-validation.md
+**/test-report*.md
 
 # Machine-specific agent context
 **/AGENTS.md
@@ -57,6 +60,12 @@
 **/.codex/
 **/.claude/
 **/.gemini/
+**/.cursor/
+**/.windsurf/
+**/.opencode/
+**/.copilot/
+**/.aider*
+**/copilot-instructions.md
 **/CLAUDE.md
 **/GEMINI.md
 **/agent-*.md

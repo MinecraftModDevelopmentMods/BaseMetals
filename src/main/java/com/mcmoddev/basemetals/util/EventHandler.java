@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber(modid=BaseMetals.MODID)
+@EventBusSubscriber(modid = BaseMetals.MODID)
 public final class EventHandler {
 
 	public EventHandler() {
@@ -47,25 +47,34 @@ public final class EventHandler {
 	@SubscribeEvent
 	public static void attackEvent(final LivingAttackEvent event) {
 		final float damage = event.getAmount();
+
 		if (!(event.getEntityLiving() instanceof EntityPlayer)) {
 			return;
 		}
+
 		final EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 		final ItemStack activeItemStack = player.getActiveItemStack();
+
 		if (activeItemStack.isEmpty()) {
 			return;
 		}
+
 		if ((damage > 0.0F) && (activeItemStack.getItem() instanceof ItemMMDShield)) {
 			final int i = 1 + MathHelper.floor(damage);
+
 			activeItemStack.damageItem(i, player);
+
 			if (activeItemStack.getCount() <= 0) {
 				final EnumHand enumhand = player.getActiveHand();
+
 				ForgeEventFactory.onPlayerDestroyItem(player, activeItemStack, enumhand);
+
 				if (enumhand == EnumHand.MAIN_HAND) {
 					player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 				} else {
 					player.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, ItemStack.EMPTY);
 				}
+
 				if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 					player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, 0.8F,
 							0.8F + (player.world.rand.nextFloat() * 0.4F));
@@ -75,7 +84,8 @@ public final class EventHandler {
 	}
 
 	/** Creates the two-slot crafting view used to evaluate shield upgrades at an anvil. */
-	@Nonnull public static InventoryCrafting getDummyCraftingInv() {
+	@Nonnull
+	public static InventoryCrafting getDummyCraftingInv() {
 		final Container tempContainer = new Container() {
 
 			@Override
@@ -99,9 +109,12 @@ public final class EventHandler {
 		}
 
 		final InventoryCrafting recipeInput = getDummyCraftingInv();
+
 		recipeInput.setInventorySlotContents(0, left);
 		recipeInput.setInventorySlotContents(1, right);
+
 		final IRecipe recipe = CraftingManager.findMatchingRecipe(recipeInput, null);
+
 		if ((recipe instanceof ShieldUpgradeRecipe)
 				&& (((ShieldUpgradeRecipe) recipe).matches(recipeInput, null))) {
 			event.setOutput(recipe.getCraftingResult(recipeInput));
@@ -112,11 +125,12 @@ public final class EventHandler {
 	@SubscribeEvent
 	public static void mmdlibRegisterMaterials(final MMDLibRegisterMaterials event) {
 		com.mcmoddev.basemetals.init.Materials.init(event);
-		if(FMLCommonHandler.instance().getEffectiveSide() ==  Side.CLIENT) {
-			com.mcmoddev.basemetals.init.Materials.initTooltips();			
+
+		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+			com.mcmoddev.basemetals.init.Materials.initTooltips();
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void mmdlibRegisterMaterialProperies(final MMDLibRegisterMaterialProperties event) {
 		event.getRegistry().registerAll(
@@ -130,5 +144,5 @@ public final class EventHandler {
 				new ColdIronToolProperty().setRegistryName("basemetals:cold_as_ice"),
 				new MithrilToolProperty().setRegistryName("basemetals:holy_roller"),
 				new AquariumToolProperty().setRegistryName("basemetals:drown_bitca"));
-	}	
+	}
 }

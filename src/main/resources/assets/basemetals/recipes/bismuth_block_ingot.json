@@ -10,7 +10,7 @@
 		"item": "basemetals:bismuth_ingot",
 		"count": 9
 	},
-	"group": "basics",
+	"group": "basemetals:bismuth_ingot",
 	"conditions": [
 		{
 			"type": "forge:and",

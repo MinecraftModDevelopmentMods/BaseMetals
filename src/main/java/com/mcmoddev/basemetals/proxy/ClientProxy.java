@@ -59,12 +59,14 @@ public final class ClientProxy extends CommonProxy {
 			if (!name.endsWith(Names.ANVIL.toString())) {
 				RegistrationHelper.registerItemRender(name);
 			} else {
-				final String[] names = new String[] { "intact", "slightly_damaged",
-						"very_damaged" };
+				final String[] names = new String[]{"intact", "slightly_damaged",
+						"very_damaged"};
 				final Item item = Items.getItemByName(name);
+
 				for (int i = 0; i < 3; i++) {
 					final ResourceLocation rl = new ResourceLocation(BaseMetals.MODID,
 							String.format("%s_%s", name, names[i]));
+
 					ModelLoader.setCustomModelResourceLocation(item, i,
 							new ModelResourceLocation(rl, "inventory"));
 				}
@@ -89,11 +91,12 @@ public final class ClientProxy extends CommonProxy {
 		super.init(event);
 		WorldSettingsExtensionRegistry.registerConfigScreen(BaseMetals.MODID,
 				BaseMetalsConfigScreen::new);
+
 		if (Loader.isModLoaded("waila")) {
 			com.mcmoddev.lib.waila.Waila.init();
 		}
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public World getWorld(@Nullable final int dimension) {

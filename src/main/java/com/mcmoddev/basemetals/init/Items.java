@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 /** Creates and registers Base Metals items. */
-@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
+@Mod.EventBusSubscriber(modid = BaseMetals.MODID)
 public final class Items extends com.mcmoddev.lib.init.Items {
 
 	private Items() {
@@ -48,7 +48,7 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 				MaterialNames.SILVER, MaterialNames.STARSTEEL, MaterialNames.STEEL,
 				MaterialNames.TIN, MaterialNames.ZINC);
 
-		// These materials expose the extended processing forms used by integration mods.
+		// These materials need extra forms for other mods' ore-processing chains.
 		final List<String> materialsModSupport = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
 				MaterialNames.PLATINUM, MaterialNames.NICKEL, MaterialNames.STARSTEEL,
@@ -137,7 +137,7 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 		Materials.getAllMaterials()
 				.stream()
 				.filter(mat -> !mat.isVanilla())
-				.forEach(mat ->	regItems(event.getRegistry(), mat.getItems()));
+				.forEach(mat -> regItems(event.getRegistry(), mat.getItems()));
 
 		Oredicts.registerItemOreDictionaryEntries();
 		Oredicts.registerBlockOreDictionaryEntries();
@@ -148,6 +148,7 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 				.filter(material -> material.hasItem(Names.FISHING_ROD))
 				.forEach(material -> {
 					final Item fishingRod = material.getItem(Names.FISHING_ROD);
+
 					if (fishingRod.getRegistryName() != null
 							&& BaseMetals.MODID.equals(fishingRod.getRegistryName().getNamespace())) {
 						fishingRod.setMaxDamage(material.getToolDurability());
@@ -156,88 +157,93 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	}
 
 	/**
-	 * Creates a Base Metals-owned arrow whose material contributes to damage.
+	 * Gets or creates a material arrow.
 	 *
-	 * @param material material used to construct the arrow
 	 * @return the existing or newly created arrow, or {@code null} when disabled
 	 */
 	public static Item createArrow(final MMDMaterial material) {
 		if (material.hasItem(Names.ARROW)) {
 			return material.getItem(Names.ARROW);
 		}
+
 		if (!isNameEnabled(Names.ARROW)) {
 			return null;
 		}
+
 		return registerRangedItem(Names.ARROW, material, new ItemBaseMetalsArrow(material));
 	}
 
 	/**
-	 * Creates a Base Metals-owned bolt whose material contributes to damage.
+	 * Gets or creates a material bolt.
 	 *
-	 * @param material material used to construct the bolt
 	 * @return the existing or newly created bolt, or {@code null} when disabled
 	 */
 	public static Item createBolt(final MMDMaterial material) {
 		if (material.hasItem(Names.BOLT)) {
 			return material.getItem(Names.BOLT);
 		}
+
 		if (!isNameEnabled(Names.BOLT)) {
 			return null;
 		}
+
 		return registerRangedItem(Names.BOLT, material, new ItemBaseMetalsBolt(material));
 	}
 
 	/**
-	 * Creates a Base Metals-owned bow whose material contributes to damage.
+	 * Gets or creates a material bow.
 	 *
-	 * @param material material used to construct the bow
 	 * @return the existing or newly created bow, or {@code null} when disabled
 	 */
 	public static Item createBow(final MMDMaterial material) {
 		if (material.hasItem(Names.BOW)) {
 			return material.getItem(Names.BOW);
 		}
+
 		if (!isNameEnabled(Names.BOW)) {
 			return null;
 		}
+
 		return registerRangedItem(Names.BOW, material, new ItemBaseMetalsBow(material));
 	}
 
 	/**
-	 * Creates a Base Metals-owned crossbow with the corrected server-side bolt
-	 * firing behavior while preserving MMDLib's material and registry contracts.
+	 * Gets or creates a crossbow that fires bolts on the server.
 	 *
-	 * @param material material used to construct the crossbow
 	 * @return the existing or newly created crossbow, or {@code null} when disabled
 	 */
 	public static Item createCrossbow(final MMDMaterial material) {
 		if (material.hasItem(Names.CROSSBOW)) {
 			return material.getItem(Names.CROSSBOW);
 		}
+
 		if (!isNameEnabled(Names.CROSSBOW)) {
 			return null;
 		}
+
 		return registerRangedItem(Names.CROSSBOW, material,
 				new ItemBaseMetalsCrossbow(material));
 	}
 
 	/**
-	 * Creates a Base Metals-owned hoe which preserves ItemHoe's material-name
-	 * contract for compatibility with other mods.
+	 * Gets or creates a hoe with a vanilla-compatible tool-material name.
 	 *
-	 * @param material material used to construct the hoe
 	 * @return the existing or newly created hoe, or {@code null} when disabled
 	 */
 	public static Item createHoe(final MMDMaterial material) {
 		if (material.hasItem(Names.HOE)) {
 			return material.getItem(Names.HOE);
 		}
+
 		if (!isNameEnabled(Names.HOE)) {
 			return null;
 		}
+
 		final Item registered = addItem(new ItemBaseMetalsHoe(material),
 				Names.HOE.toString(), material, ItemGroups.getTab(SharedStrings.TAB_TOOLS));
+
 		material.addNewItem(Names.HOE, registered);
+
 		return registered;
 	}
 
@@ -245,14 +251,16 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 			final Item item) {
 		final Item registered = addItem(item, name.toString(), material,
 				ItemGroups.getTab(SharedStrings.TAB_COMBAT));
+
 		material.addNewItem(name, registered);
+
 		return registered;
 	}
 
 	private static void regItems(final IForgeRegistry<Item> registry,
 			final ImmutableList<ItemStack> items) {
 		items.stream().filter(Items::isThisMod).map(Items::getItem)
-				.forEach( registry::register );
+				.forEach(registry::register);
 	}
 
 	private static Item getItem(final ItemStack it) {

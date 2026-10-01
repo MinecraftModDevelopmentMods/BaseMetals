@@ -21,8 +21,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeThermalExpansion.PLUGIN_MODID,
-           versions = BMeThermalExpansion.PLUGIN_MODID + "@(,5.3.12.17];")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeThermalExpansion.PLUGIN_MODID, versions = BMeThermalExpansion.PLUGIN_MODID
+		+ "@(,5.3.12.17];")
 public final class BMeThermalExpansion extends ThermalExpansion implements IIntegration {
 
 	@Override
@@ -47,11 +47,26 @@ public final class BMeThermalExpansion extends ThermalExpansion implements IInte
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
 					final ContentPolicy policy = ContentPolicy.active();
-					if (policy.allows(materialName, MaterialForm.INGOT)) addFurnace(materialName);
-					if (policy.allows(materialName, MaterialForm.FLUID)) addCrucible(materialName);
-					if (policy.allows(materialName, MaterialForm.PLATE)) addPlatePress(materialName);
-					if (policy.allows(materialName, MaterialForm.BLOCK)) addPressStorage(materialName);
-					if (policy.allows(materialName, MaterialForm.POWDER)) addPulverizer(materialName);
+
+					if (policy.allows(materialName, MaterialForm.INGOT)) {
+						addFurnace(materialName);
+					}
+
+					if (policy.allows(materialName, MaterialForm.FLUID)) {
+						addCrucible(materialName);
+					}
+
+					if (policy.allows(materialName, MaterialForm.PLATE)) {
+						addPlatePress(materialName);
+					}
+
+					if (policy.allows(materialName, MaterialForm.BLOCK)) {
+						addPressStorage(materialName);
+					}
+
+					if (policy.allows(materialName, MaterialForm.POWDER)) {
+						addPulverizer(materialName);
+					}
 				});
 
 		final MMDMaterial brass = Materials.getMaterialByName(MaterialNames.BRASS);
@@ -97,6 +112,7 @@ public final class BMeThermalExpansion extends ThermalExpansion implements IInte
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -106,6 +122,7 @@ public final class BMeThermalExpansion extends ThermalExpansion implements IInte
 				return false;
 			}
 		}
+
 		return true;
 	}
 }

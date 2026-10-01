@@ -19,8 +19,6 @@ class ContentPolicyTest {
 			"lead", "mercury", "mithril", "nickel", "obsidian", "pewter",
 			"platinum", "prismarine", "quartz", "redstone", "silver",
 			"starsteel", "steel", "stone", "tin", "wood", "zinc");
-	private static final Set<String> MYTHICAL = set("adamantine", "aquarium", "coldiron",
-			"mithril", "starsteel");
 	private static final Set<String> FULL_TOOLS = set("adamantine", "aquarium", "bronze",
 			"coldiron", "copper", "cupronickel", "invar", "mithril", "nickel",
 			"starsteel", "steel", "iron");
@@ -44,6 +42,7 @@ class ContentPolicyTest {
 	@Test
 	void highFantasyAllowsEveryMaterialAndForm() {
 		final ContentPolicy policy = ContentPolicy.forMode(ContentMode.HIGH_FANTASY);
+
 		for (final String material : ALL_MATERIALS) {
 			for (final MaterialForm form : MaterialForm.values()) {
 				assertTrue(policy.allows(material, form), material + "/" + form);
@@ -52,14 +51,13 @@ class ContentPolicyTest {
 	}
 
 	@Test
-	void everyRestrictedModeMaterialAndFormDecisionMatchesTheReviewedMatrix() {
-		for (final ContentMode mode : Arrays.asList(ContentMode.LOW_FANTASY, ContentMode.REALISM)) {
-			final ContentPolicy policy = ContentPolicy.forMode(mode);
-			for (final String material : ALL_MATERIALS) {
-				for (final MaterialForm form : MaterialForm.values()) {
-					assertTrue(policy.allows(material, form) == expected(mode, material, form),
-							mode + " " + material + "/" + form);
-				}
+	void lowFantasyMaterialAndFormDecisionsMatchTheReviewedMatrix() {
+		final ContentPolicy policy = ContentPolicy.forMode(ContentMode.LOW_FANTASY);
+
+		for (final String material : ALL_MATERIALS) {
+			for (final MaterialForm form : MaterialForm.values()) {
+				assertTrue(policy.allows(material, form) == expected(material, form),
+						material + "/" + form);
 			}
 		}
 	}
@@ -67,6 +65,7 @@ class ContentPolicyTest {
 	@Test
 	void restrictedModesApplyTheReviewedEquipmentMatrix() {
 		final ContentPolicy low = ContentPolicy.forMode(ContentMode.LOW_FANTASY);
+
 		assertFalse(low.allows(MaterialNames.ADAMANTINE, MaterialForm.BOW));
 		assertTrue(low.allows(MaterialNames.ADAMANTINE, MaterialForm.PICKAXE));
 		assertFalse(low.allows(MaterialNames.PEWTER, MaterialForm.CHESTPLATE));
@@ -81,30 +80,15 @@ class ContentPolicyTest {
 	}
 
 	@Test
-	void realismRemovesAllNormalAcquisitionForTheFiveMythicalMaterials() {
-		final ContentPolicy realism = ContentPolicy.forMode(ContentMode.REALISM);
-		for (final String material : Arrays.asList(MaterialNames.ADAMANTINE,
-				MaterialNames.AQUARIUM, MaterialNames.COLDIRON, MaterialNames.MITHRIL,
-				MaterialNames.STARSTEEL)) {
-			for (final MaterialForm form : MaterialForm.values()) {
-				assertFalse(realism.allows(material, form), material + "/" + form);
-			}
-			assertFalse(realism.defaultsOreEnabled(material));
-		}
-		assertTrue(realism.defaultsOreEnabled(MaterialNames.COPPER));
-	}
-
-	@Test
 	void mercuryRetainsOnlyTheExplicitProcessingForms() {
 		final ContentPolicy low = ContentPolicy.forMode(ContentMode.LOW_FANTASY);
-		final ContentPolicy realism = ContentPolicy.forMode(ContentMode.REALISM);
+
 		assertTrue(low.allows(MaterialNames.MERCURY, MaterialForm.INGOT));
-		assertFalse(realism.allows(MaterialNames.MERCURY, MaterialForm.INGOT));
-		assertTrue(realism.allows(MaterialNames.MERCURY, MaterialForm.ORE));
-		assertTrue(realism.allows(MaterialNames.MERCURY, MaterialForm.POWDER));
-		assertTrue(realism.allows(MaterialNames.MERCURY, MaterialForm.FLUID));
 		assertFalse(low.allows(MaterialNames.MERCURY, MaterialForm.BLOCK));
-		assertFalse(realism.allows(MaterialNames.MERCURY, MaterialForm.SWORD));
+		assertTrue(low.allows(MaterialNames.MERCURY, MaterialForm.ORE));
+		assertTrue(low.allows(MaterialNames.MERCURY, MaterialForm.POWDER));
+		assertTrue(low.allows(MaterialNames.MERCURY, MaterialForm.FLUID));
+		assertFalse(low.allows(MaterialNames.MERCURY, MaterialForm.SWORD));
 	}
 
 	@Test
@@ -115,33 +99,66 @@ class ContentPolicyTest {
 		assertTrue(MaterialForm.fromRegistryPath("nickel_pressure_plate") == MaterialForm.PRESSURE_PLATE);
 	}
 
-	private static boolean expected(final ContentMode mode, final String material,
-			final MaterialForm form) {
-		if (mode == ContentMode.REALISM && MYTHICAL.contains(material)) return false;
-		if (form == MaterialForm.OTHER) return !"mercury".equals(material);
+	private static boolean expected(final String material, final MaterialForm form) {
+		if (form == MaterialForm.OTHER) {
+			return !"mercury".equals(material);
+		}
+
 		if (form == MaterialForm.BOW || form == MaterialForm.CROSSBOW
-				|| form == MaterialForm.FISHING_ROD) return false;
+				|| form == MaterialForm.FISHING_ROD) {
+			return false;
+		}
+
 		if (TOOL_FORMS.contains(form)) {
-			if (FULL_TOOLS.contains(material)) return true;
-			if ("silver".equals(material)) return form == MaterialForm.SWORD;
-			if ("obsidian".equals(material)) return form == MaterialForm.AXE
-					|| form == MaterialForm.SWORD || form == MaterialForm.SCYTHE;
-			if ("diamond".equals(material)) return form == MaterialForm.CRACKHAMMER
-					|| form == MaterialForm.SCYTHE || form == MaterialForm.SHEARS;
-			if ("stone".equals(material)) return form == MaterialForm.CRACKHAMMER
-					|| form == MaterialForm.SCYTHE;
+			if (FULL_TOOLS.contains(material)) {
+				return true;
+			}
+
+			if ("silver".equals(material)) {
+				return form == MaterialForm.SWORD;
+			}
+
+			if ("obsidian".equals(material)) {
+				return form == MaterialForm.AXE
+						|| form == MaterialForm.SWORD || form == MaterialForm.SCYTHE;
+			}
+
+			if ("diamond".equals(material)) {
+				return form == MaterialForm.CRACKHAMMER
+						|| form == MaterialForm.SCYTHE || form == MaterialForm.SHEARS;
+			}
+
+			if ("stone".equals(material)) {
+				return form == MaterialForm.CRACKHAMMER
+						|| form == MaterialForm.SCYTHE;
+			}
+
 			return "wood".equals(material) && form == MaterialForm.CRACKHAMMER;
 		}
-		if (ARMOR_FORMS.contains(form)) return ARMOR.contains(material);
-		if (form == MaterialForm.ARROW || form == MaterialForm.BOLT) return AMMO.contains(material);
-		if (form == MaterialForm.GEAR) return GEARS.contains(material);
-		if (form == MaterialForm.ANVIL) return "stone".equals(material)
-				|| "steel".equals(material)
-				|| (mode == ContentMode.LOW_FANTASY && "adamantine".equals(material));
-		if ("mercury".equals(material)) return form == MaterialForm.ORE
-				|| form == MaterialForm.POWDER || form == MaterialForm.SMALLPOWDER
-				|| form == MaterialForm.FLUID
-				|| (mode == ContentMode.LOW_FANTASY && form == MaterialForm.INGOT);
+
+		if (ARMOR_FORMS.contains(form)) {
+			return ARMOR.contains(material);
+		}
+
+		if (form == MaterialForm.ARROW || form == MaterialForm.BOLT) {
+			return AMMO.contains(material);
+		}
+
+		if (form == MaterialForm.GEAR) {
+			return GEARS.contains(material);
+		}
+
+		if (form == MaterialForm.ANVIL) {
+			return "stone".equals(material)
+					|| "steel".equals(material) || "adamantine".equals(material);
+		}
+
+		if ("mercury".equals(material)) {
+			return form == MaterialForm.ORE
+					|| form == MaterialForm.POWDER || form == MaterialForm.SMALLPOWDER
+					|| form == MaterialForm.FLUID || form == MaterialForm.INGOT;
+		}
+
 		return true;
 	}
 
@@ -151,7 +168,9 @@ class ContentPolicyTest {
 
 	private static Set<String> union(final Set<String> first, final Set<String> second) {
 		final Set<String> result = new HashSet<>(first);
+
 		result.addAll(second);
+
 		return result;
 	}
 }

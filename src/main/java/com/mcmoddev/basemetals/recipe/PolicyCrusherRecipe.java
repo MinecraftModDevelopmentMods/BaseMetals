@@ -8,10 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Retains a crusher recipe's persistent registry identity while making a
- * policy-restricted acquisition route non-matching and invisible.
- */
+/** Disables a crusher recipe without removing its saved registry name. */
 final class PolicyCrusherRecipe extends IForgeRegistryEntry.Impl<ICrusherRecipe>
 		implements ICrusherRecipe {
 

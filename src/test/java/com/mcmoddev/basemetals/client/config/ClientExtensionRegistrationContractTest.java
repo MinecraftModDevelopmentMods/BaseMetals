@@ -17,6 +17,7 @@ class ClientExtensionRegistrationContractTest {
 		final Path clientProxy = Paths.get("src", "main", "java", "com", "mcmoddev",
 				"basemetals", "proxy", "ClientProxy.java");
 		final String source = new String(Files.readAllBytes(clientProxy), StandardCharsets.UTF_8);
+
 		assertEquals(1, occurrences(source,
 				"WorldSettingsExtensionRegistry.registerConfigScreen"));
 		assertTrue(source.contains("BaseMetals.MODID"));
@@ -24,16 +25,18 @@ class ClientExtensionRegistrationContractTest {
 
 		final Path commonProxy = clientProxy.resolveSibling("CommonProxy.java");
 		final String commonSource = new String(Files.readAllBytes(commonProxy), StandardCharsets.UTF_8);
+
 		assertFalse(commonSource.contains("WorldSettingsExtensionRegistry"));
 		assertFalse(commonSource.contains("BaseMetalsConfigScreen"));
 	}
 
 	private static int occurrences(final String source, final String value) {
 		int count = 0;
-		for (int index = 0; (index = source.indexOf(value, index)) >= 0;
-				index += value.length()) {
+
+		for (int index = 0; (index = source.indexOf(value, index)) >= 0; index += value.length()) {
 			count++;
 		}
+
 		return count;
 	}
 }

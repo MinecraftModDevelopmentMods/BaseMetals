@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.content.ContentPolicy;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -21,7 +20,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeIC2.PLUGIN_MODID, versions = BMeIC2.PLUGIN_MODID + "@[2.8.57-ex112,)")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeIC2.PLUGIN_MODID, versions = BMeIC2.PLUGIN_MODID
+		+ "@[2.8.57-ex112,)")
 public final class BMeIC2 extends IC2 implements IIntegration {
 
 	private static final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
@@ -44,7 +44,6 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
-				.filter(ContentPolicy.active()::allowsMaterial)
 				.forEach(materialName -> {
 					this.registerVanillaRecipes(materialName);
 					this.addMaceratorRecipes(materialName);
@@ -57,6 +56,7 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
 			final String oreDictName = diamond.getCapitalizedName();
+
 			if (diamond.hasItem(Names.POWDER)) {
 				this.addMaceratorRecipe(Oredicts.ORE + oreDictName,
 						diamond.getItemStack(Names.POWDER, 2));
@@ -66,6 +66,7 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 		if (Materials.hasMaterial(MaterialNames.EMERALD)) {
 			final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
 			final String oreDictName = emerald.getCapitalizedName();
+
 			if (emerald.hasItem(Names.POWDER)) {
 				this.addMaceratorRecipe(Oredicts.ORE + oreDictName,
 						emerald.getItemStack(Names.POWDER, 2));
@@ -80,7 +81,6 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 	public void doHammerRecipes(final IntegrationInitEvent event) {
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
-				.filter(ContentPolicy.active()::allowsMaterial)
 				.forEach(this::addForgeHammerRecipe);
 	}
 }

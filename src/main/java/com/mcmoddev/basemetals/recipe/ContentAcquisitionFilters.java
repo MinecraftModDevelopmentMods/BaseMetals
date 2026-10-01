@@ -15,16 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/** Applies the latched mode to Base Metals-owned acquisition registries. */
+/** Filters crafting, smelting, and crushing recipes for the selected content mode. */
 public final class ContentAcquisitionFilters {
 	private ContentAcquisitionFilters() {
 	}
 
 	public static void apply(final RegistryEvent.Register<IRecipe> event) {
 		final ContentPolicy policy = ContentPolicy.active();
+
 		if (policy.mode() == ContentMode.HIGH_FANTASY) {
 			return;
 		}
+
 		wrapCraftingRecipes(event, policy);
 		filterFurnaceRecipes(policy);
 		filterCrusherRecipes(policy);
@@ -33,14 +35,17 @@ public final class ContentAcquisitionFilters {
 	private static void wrapCraftingRecipes(final RegistryEvent.Register<IRecipe> event,
 			final ContentPolicy policy) {
 		final List<IRecipe> recipes = new ArrayList<>();
+
 		for (final IRecipe recipe : event.getRegistry()) {
 			if (recipe.getRegistryName() != null
 					&& BaseMetals.MODID.equals(recipe.getRegistryName().getNamespace())) {
 				recipes.add(recipe);
 			}
 		}
+
 		for (final IRecipe recipe : recipes) {
 			final PolicyRecipe wrapped = new PolicyRecipe(recipe, policy);
+
 			if (!wrapped.isAllowed()) {
 				event.getRegistry().register(wrapped);
 			}
@@ -49,8 +54,8 @@ public final class ContentAcquisitionFilters {
 
 	private static void filterFurnaceRecipes(final ContentPolicy policy) {
 		final Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
-		final List<Map.Entry<ItemStack, ItemStack>> snapshot =
-				new ArrayList<>(recipes.entrySet());
+		final List<Map.Entry<ItemStack, ItemStack>> snapshot = new ArrayList<>(recipes.entrySet());
+
 		for (final Map.Entry<ItemStack, ItemStack> recipe : snapshot) {
 			if (!policy.allows(recipe.getValue())) {
 				recipes.remove(recipe.getKey());
@@ -60,9 +65,11 @@ public final class ContentAcquisitionFilters {
 
 	private static void filterCrusherRecipes(final ContentPolicy policy) {
 		final List<ICrusherRecipe> recipes = CrusherRecipeRegistry.getAll();
+
 		for (final ICrusherRecipe recipe : recipes) {
 			if (!policy.allows(recipe.getOutput())) {
 				final ResourceLocation id = recipe.getRegistryName();
+
 				if (id != null) {
 					CrusherRecipeRegistry.removeByName(id);
 					CrusherRecipeRegistry.getInstance().register(

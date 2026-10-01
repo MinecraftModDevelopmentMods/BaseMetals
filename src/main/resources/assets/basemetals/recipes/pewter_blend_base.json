@@ -19,7 +19,7 @@
 			"ore": "dustLead"
 		}
 	],
-	"group": "alloys",
+	"group": "basemetals:pewter_blend",
 	"conditions": [
 		{
 			"type": "forge:and",

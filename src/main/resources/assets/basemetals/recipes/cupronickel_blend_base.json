@@ -23,7 +23,7 @@
 			"ore": "dustNickel"
 		}
 	],
-	"group": "alloys",
+	"group": "basemetals:cupronickel_blend",
 	"conditions": [
 		{
 			"type": "forge:and",

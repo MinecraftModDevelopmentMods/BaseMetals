@@ -2,7 +2,7 @@ def releaseJar = project.ext.baseMetalsBuild.releaseJar
 def expectedReleaseFiles = project.ext.baseMetalsVerification.expectedReleaseFiles
 def preparedReleaseDir = project.ext.baseMetalsVerification.preparedReleaseDir
 
-// Publishing is deliberately separate from building and remains guarded by explicit credentials.
+// A normal build does not publish anything; publishing needs credentials.
 def mavenUploadUrl = providers.environmentVariable('MAVEN_UPLOAD_URL')
         .orElse('https://invalid.invalid/missing-maven-upload-url')
 def mavenUploadUsername = providers.environmentVariable('MAVEN_UPLOAD_USERNAME')

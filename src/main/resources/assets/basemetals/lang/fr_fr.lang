@@ -1,3 +1,7 @@
+achievement.cupronickel_maker=Cuivre-nickel
+achievement.pewter_maker=Étain
+achievement.pewter_maker.desc=Combinez des poudres d'étain, de cuivre et de plomb pour fabriquer de l'étain allié.
+
 nei.basemetals.recipehandler.crusher.name=Blocs/éléments broyés
 
 itemGroup.basemetals.blocks=Base Metals Blocks
@@ -547,13 +551,11 @@ config.basemetals.category.forced_traits=Traits forcés
 config.basemetals.category.forced_traits.tooltip=Force l’enregistrement des traits MMDLib pour les matériaux de Base Metals.
 config.basemetals.option.achievements=Succès
 config.basemetals.option.content_mode=Mode de contenu
-config.basemetals.option.content_mode.tooltip=Choisissez Fantaisie élevée, Fantaisie modérée ou Réalisme. La politique choisie prend effet après le redémarrage de Minecraft.
+config.basemetals.option.content_mode.tooltip=Choisissez Fantaisie élevée ou Fantaisie modérée. La politique choisie prend effet après le redémarrage de Minecraft.
 config.basemetals.content_mode.high_fantasy=Fantaisie élevée
 config.basemetals.content_mode.low_fantasy=Fantaisie modérée
-config.basemetals.content_mode.realism=Réalisme
 config.basemetals.warning.content_mode.title=Modifier le mode de contenu de Base Metals ?
 config.basemetals.warning.content_mode.message=Passer de %s à %s ? Les recettes, échanges, butins et intégrations changeront après le redémarrage.
-config.basemetals.warning.content_mode.realism=Passer de %s à %s ? Les profils de monde OreSpawn existants sont conservés ; désactivez manuellement les règles de l’adamantin, du fer-froid et de l’acier stellaire si nécessaire.
 config.basemetals.warning.confirm=Enregistrer et redémarrer plus tard
 config.basemetals.warning.disable_ores.title=Action requise pour les règles OreSpawn
 config.basemetals.warning.disable_ores.message=Avant de redémarrer, désactivez ces règles dans OreSpawn, sinon l’absence de leurs blocs de sortie invalidera le fournisseur : %s
@@ -596,4 +598,3 @@ config.basemetals.material.prismarine=Prismarine
 config.basemetals.material.redstone=Redstone
 config.basemetals.content_mode.high_fantasy.description=Tout le contenu historique et tous les moyens d’obtention de Base Metals restent disponibles.
 config.basemetals.content_mode.low_fantasy.description=Les matériaux fantastiques restent présents, mais les recettes d’équipement et de construction peu plausibles sont masquées.
-config.basemetals.content_mode.realism.description=Les restrictions de Fantaisie modérée s’appliquent et l’obtention normale des matériaux mythiques est désactivée.

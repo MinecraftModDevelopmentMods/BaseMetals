@@ -13,7 +13,7 @@ import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 
 import java.util.Random;
 
-/** Hides Base Metals-owned auxiliary loot entries disallowed by the startup policy. */
+/** Removes restricted items from Base Metals' chest loot. */
 public final class ContentModeLootCondition implements LootCondition {
 	public static final ResourceLocation ID = new ResourceLocation(BaseMetals.MODID, "content_policy");
 	private static boolean registered;

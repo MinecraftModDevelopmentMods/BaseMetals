@@ -44,6 +44,7 @@ class BaseMetalsConfigContractTest {
 		final Set<String> expectedCategories = BMeConfig.GUI_CATEGORIES.stream()
 				.map(name -> name.toLowerCase(java.util.Locale.ROOT))
 				.collect(java.util.stream.Collectors.toCollection(LinkedHashSet::new));
+
 		assertEquals(expectedCategories, new LinkedHashSet<>(configuration.getCategoryNames()));
 		assertEquals(2, configuration.getCategory(BMeConfig.GENERAL_CAT).size());
 		assertEquals(22, configuration.getCategory(BMeConfig.MATERIALS_CAT).size());
@@ -57,14 +58,17 @@ class BaseMetalsConfigContractTest {
 	@Test
 	void preservesEveryKeyDefaultCommentAndMarksEveryOptionForRestart() {
 		final Configuration configuration = create();
+
 		assertProperty(configuration, BMeConfig.GENERAL_CAT, "achievements", true,
-				"If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals",
+				"If false, Base Metals gameplay achievements will be disabled. Recipe-book unlocks are unaffected.",
 				"config.basemetals.option.achievements");
+
 		final Property contentMode = configuration.getCategory(BMeConfig.GENERAL_CAT)
 				.get(BMeConfig.CONTENT_MODE_PROPERTY);
+
 		assertEquals(Property.Type.STRING, contentMode.getType());
 		assertEquals(ContentMode.HIGH_FANTASY.serializedName(), contentMode.getString());
-		assertEquals(Arrays.asList(ContentMode.serializedNames()),
+		assertEquals(Arrays.asList("high_fantasy", "low_fantasy"),
 				Arrays.asList(contentMode.getValidValues()));
 		assertEquals(Arrays.asList(ContentMode.translationKeys()),
 				Arrays.asList(contentMode.getValidValuesDisplay()));
@@ -72,6 +76,7 @@ class BaseMetalsConfigContractTest {
 
 		for (final String material : METALS) {
 			final String display = WordUtils.capitalizeFully(material);
+
 			assertProperty(configuration, BMeConfig.MATERIALS_CAT, "Enable" + display, true,
 					"Enable " + display + " Items and Materials", materialKey(material));
 			assertProperty(configuration, BMeConfig.FLUIDS_CAT, "Enabled " + display, true,
@@ -84,9 +89,11 @@ class BaseMetalsConfigContractTest {
 
 		for (final String material : VANILLA) {
 			final String display = WordUtils.capitalizeFully(material);
+
 			assertProperty(configuration, BMeConfig.VANILLA_CAT, "Enable" + display, true,
 					"Enable " + display + " Additions like Walls, Slabs and Pressure-plates",
 					materialKey(material));
+
 			if (VANILLA_FLUIDS.contains(material)) {
 				assertProperty(configuration, BMeConfig.FLUIDS_CAT, "Enabled " + display, true,
 						"Enable the molten fluid of " + material, materialKey(material));
@@ -95,9 +102,11 @@ class BaseMetalsConfigContractTest {
 
 		for (final String categoryName : BMeConfig.GUI_CATEGORIES) {
 			final ConfigCategory category = configuration.getCategory(categoryName);
+
 			assertTrue(category.requiresMcRestart(), categoryName);
 			assertTrue(category.requiresWorldRestart(), categoryName);
 			assertNotNull(category.getLanguagekey(), categoryName);
+
 			for (final Property property : category.getValues().values()) {
 				if (!BMeConfig.CONTENT_MODE_PROPERTY.equals(property.getName())) {
 					assertEquals(Property.Type.BOOLEAN, property.getType(), property.getName());
@@ -110,6 +119,7 @@ class BaseMetalsConfigContractTest {
 	void missingLegacyModeAndExplicitHighFantasyHaveTheSameEffectiveValue() {
 		final Configuration legacy = new Configuration(
 				tempDirectory.resolve("LegacyBaseMetals.cfg").toFile());
+
 		legacy.get(BMeConfig.GENERAL_CAT, "achievements", false);
 		assertEquals(ContentMode.HIGH_FANTASY, BMeConfig.configuredContentMode(legacy));
 		assertFalse(legacy.getCategory(BMeConfig.GENERAL_CAT).containsKey(
@@ -123,10 +133,12 @@ class BaseMetalsConfigContractTest {
 	@Test
 	void missingPropertyDefaultsToHighFantasyAndInvalidValuesAreCorrectedOnPopulate() {
 		final Configuration absent = create();
+
 		absent.getCategory(BMeConfig.GENERAL_CAT).remove(BMeConfig.CONTENT_MODE_PROPERTY);
 		assertEquals(ContentMode.HIGH_FANTASY, BMeConfig.configuredContentMode(absent));
 
 		final Configuration invalid = create();
+
 		invalid.getCategory(BMeConfig.GENERAL_CAT).get(BMeConfig.CONTENT_MODE_PROPERTY)
 				.set("not_a_mode");
 		BMeConfig.populateConfiguration(invalid);
@@ -137,26 +149,50 @@ class BaseMetalsConfigContractTest {
 	}
 
 	@Test
+	void invalidModeDefaultsToHighFantasyWithoutChangingOtherSettings() {
+		final Configuration configuration = create();
+
+		configuration.getCategory(BMeConfig.GENERAL_CAT)
+				.get(BMeConfig.CONTENT_MODE_PROPERTY).set("not_a_mode");
+		configuration.getCategory(BMeConfig.MATERIALS_CAT).get("EnableTin").set(false);
+		configuration.save();
+
+		final Configuration reloaded = create();
+
+		assertEquals(ContentMode.HIGH_FANTASY, BMeConfig.configuredContentMode(reloaded));
+		assertEquals("high_fantasy", reloaded.getCategory(BMeConfig.GENERAL_CAT)
+				.get(BMeConfig.CONTENT_MODE_PROPERTY).getString());
+		assertFalse(reloaded.getCategory(BMeConfig.MATERIALS_CAT)
+				.get("EnableTin").getBoolean());
+	}
+
+	@Test
 	void legacyUpgradePreservesEveryExistingBooleanValue() {
 		final Configuration legacy = create();
 		final Map<String, Boolean> expected = new LinkedHashMap<>();
 		int index = 0;
+
 		for (final String categoryName : BMeConfig.GUI_CATEGORIES) {
 			for (final Property property : legacy.getCategory(categoryName).getValues().values()) {
 				if (property.getType() == Property.Type.BOOLEAN) {
 					final boolean value = (index++ & 1) == 0;
+
 					property.set(value);
 					expected.put(categoryName + "\u0000" + property.getName(), value);
 				}
 			}
 		}
+
 		legacy.getCategory(BMeConfig.GENERAL_CAT).remove(BMeConfig.CONTENT_MODE_PROPERTY);
 		legacy.save();
 
 		final Configuration upgraded = create();
+
 		assertEquals(ContentMode.HIGH_FANTASY, BMeConfig.configuredContentMode(upgraded));
+
 		for (final Map.Entry<String, Boolean> entry : expected.entrySet()) {
 			final String[] key = entry.getKey().split("\u0000", 2);
+
 			assertEquals(entry.getValue().booleanValue(),
 					upgraded.getCategory(key[0]).get(key[1]).getBoolean(), entry.getKey());
 		}
@@ -181,6 +217,7 @@ class BaseMetalsConfigContractTest {
 			final String name, final boolean expectedDefault, final String expectedComment,
 			final String expectedLanguageKey) {
 		final Property property = configuration.getCategory(category).get(name);
+
 		assertNotNull(property, category + "/" + name);
 		assertEquals(expectedDefault, Boolean.parseBoolean(property.getDefault()), name);
 		assertEquals(expectedComment + " [default: " + expectedDefault + "]",

@@ -9,7 +9,7 @@ def originalArtifact = packagedForge.originalArtifact
 def runtimeLogFailures = packagedForge.runtimeLogFailures
 def stagePackagedForgeBase = packagedForge.stagePackagedForgeBase
 
-// These profiles prove that OreSpawn is required and that an existing explicit profile remains authoritative.
+// Check that OreSpawn is required and saved worldgen overrides are preserved.
 File existingOverrideRun = file("${buildDir}/packaged-forge-existing-override-run")
 File existingOverrideMarker = new File(existingOverrideRun, 'basemetals-runtime-probe.properties')
 def prepareExistingOverride = tasks.register('preparePackagedForgeExistingOverrideRuntime') {

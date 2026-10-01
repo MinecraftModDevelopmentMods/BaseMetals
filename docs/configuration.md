@@ -4,6 +4,9 @@ With OreSpawn 4.1 or newer installed, Base Metals contributes one configuration
 screen to OreSpawn's world-creation interface. Open **Create World → OreSpawn →
 Mods**, then use the cog beside Base Metals.
 
+You can also open the same screen from the main menu through **Mods → Base
+Metals → Config**.
+
 The screen edits the existing `config/BaseMetals.cfg` file. It does not create a
 second configuration file. It exposes the existing 92 boolean settings plus
 the restart-required `General/contentMode` selector under the five historical
@@ -28,6 +31,13 @@ Done saves through Forge's normal Base Metals configuration event. Escape
 discards edits on both category and root pages. Forge supplies the standard
 Undo, Defaults, and restart-confirmation behavior.
 
+The **Achievements** setting controls the 18 historical gameplay achievements,
+including Juggernaut for a complete equipped Adamantine suit, SCUBA Diver for
+a submerged Aquarium suit, and Moon Walker for equipped Starsteel boots.
+They appear as advancements with the usual notification. Disabling a material
+also omits achievements that require its items; it is safe to leave achievements
+enabled. Recipe-book unlocks operate independently of this setting.
+
 ## Content modes
 
 - **High Fantasy** (`high_fantasy`) is the default and preserves the complete
@@ -35,23 +45,21 @@ Undo, Defaults, and restart-confirmation behavior.
 - **Low Fantasy** (`low_fantasy`) keeps fantasy materials but removes equipment
   and construction forms that do not fit the reviewed material policy. Base
   Metals bows, crossbows, and fishing rods are unavailable in this mode.
-- **Realism** (`realism`) applies the Low Fantasy restrictions and also removes
-  normal acquisition of Adamantine, Aquarium, Cold Iron, Mithril, and
-  Star-Steel. Their registered items and blocks remain available to load old
-  saves and can still be obtained deliberately through commands, creative mode,
-  or third-party data supplied by a pack.
 
 An older `BaseMetals.cfg` without `contentMode` is treated exactly like an
-explicit `high_fantasy` configuration. Invalid values are corrected to High
-Fantasy. The effective value is latched during startup, and a client whose
-effective mode differs from the server is disconnected with an explanatory
+explicit `high_fantasy` configuration. Unrecognized values are corrected to High
+Fantasy. The mode is chosen when Minecraft starts. A client using a different
+mode from the server is disconnected with an explanatory
 Base Metals message before gameplay.
 
-Changing mode never rewrites an existing OreSpawn global override or saved
-world profile. In particular, switching to Realism does not silently disable
-fantasy rules in an existing world; review those rules in OreSpawn and disable
-them manually when desired. Fresh Realism profiles default Adamantine, Cold
-Iron, and Star-Steel generation off.
+The mode belongs to the Minecraft instance or dedicated server, not to an
+individual save. After a restart, the selected mode applies to every world
+opened with that installation, including existing worlds. Base Metals does
+not prompt or block a world whose previous session used a different mode.
+
+Content modes do not change OreSpawn's eleven ore rules. To disable ore
+generation, edit the rules in OreSpawn separately. Existing global overrides
+and saved-world profiles are not rewritten when the mode changes.
 
 ## OreSpawn dependency
 

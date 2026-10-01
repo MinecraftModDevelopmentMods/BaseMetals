@@ -13,14 +13,18 @@ public final class TestConfigFactory {
 
 	public static Configuration create(final File file) {
 		prepareForgeConfigurationHome(file.getParentFile());
+
 		final Configuration configuration = new Configuration(file);
+
 		BMeConfig.populateConfiguration(configuration);
+
 		return configuration;
 	}
 
 	private static void prepareForgeConfigurationHome(final File home) {
 		try {
 			final Field minecraftHome = FMLInjectionData.class.getDeclaredField("minecraftHome");
+
 			minecraftHome.setAccessible(true);
 			minecraftHome.set(null, home);
 		} catch (ReflectiveOperationException failure) {

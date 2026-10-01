@@ -4,7 +4,7 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.entity.projectile.EntityArrow;
 
-/** Shared material contribution used by Base Metals ranged weapons. */
+/** Combines the launcher and ammunition materials to calculate shot damage. */
 final class MaterialRangedDamage {
 
 	private static final double NEUTRAL_COMPONENT_DAMAGE = 1.0D;
@@ -15,15 +15,13 @@ final class MaterialRangedDamage {
 	}
 
 	/**
-	 * Replaces one vanilla-neutral launcher or ammunition contribution with the
-	 * supplied material's established base attack damage.
-	 *
-	 * @param projectile projectile whose base damage is being composed
-	 * @param material launcher or ammunition material
+	 * Replaces the vanilla contribution of 1.0 with the material's attack damage.
+	 * Called once for ammunition and once for the launcher, before Power bonuses.
 	 */
 	static void applyComponent(final EntityArrow projectile, final MMDMaterial material) {
 		final double adjustedDamage = projectile.getDamage()
 				- NEUTRAL_COMPONENT_DAMAGE + material.getBaseAttackDamage();
+
 		projectile.setDamage(Math.max(MINIMUM_PROJECTILE_DAMAGE, adjustedDamage));
 	}
 }

@@ -1,0 +1,104 @@
+def runtime = project.ext.baseMetalsPackagedForge
+
+def probeJar = tasks.register('advancementRuntimeProbeJar', Jar) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    archiveBaseName = 'basemetals-advancement-runtime-probe'
+    archiveVersion = ''
+    archiveClassifier = 'deobf'
+    destinationDirectory = layout.buildDirectory.dir('runtime-probes-dev')
+    from(sourceSets.test.output) {
+        include 'com/mcmoddev/basemetals/test/BaseMetalsAdvancementRuntimeProbe*.class'
+    }
+}
+
+def packagedProbe = renamer.classes(probeJar) {
+    map.from minecraft.dependency.toSrgFile
+    archiveClassifier = null
+    output = layout.buildDirectory.file('runtime-probes/basemetals-advancement-runtime-probe.jar')
+}
+
+// Each profile gets its own disposable world and configuration.
+def profiles = [
+        Enabled    : '',
+        Disabled   : 'general {\n    B:achievements=false\n}\n',
+        MaterialOff: 'metals {\n    B:EnableMithril=false\n}\n',
+        LowFantasy : 'general {\n    S:contentMode=low_fantasy\n}\n'
+]
+
+def qualification = tasks.register('packagedAdvancementsRuntimeTest') {
+    group = 'verification'
+    description = 'Checks gameplay achievements, save persistence, and configuration filtering.'
+}
+
+profiles.each { profile, config ->
+    File runDirectory = layout.buildDirectory.dir("packaged-advancements-${profile.toLowerCase()}").get().asFile
+    File marker = new File(runDirectory, 'advancement-probe.properties')
+    def prepare = tasks.register("preparePackagedAdvancements${profile}") {
+        dependsOn runtime.releaseJar, packagedProbe, tasks.named('verifyReleaseDependencies')
+        doLast {
+            runtime.stagePackagedForgeBase(runDirectory)
+            File mods = new File(runDirectory, 'mods')
+            copy {
+                from layout.buildDirectory.file("libs/BaseMetals-${project.version}.jar")
+                from layout.buildDirectory.file('runtime-probes/basemetals-advancement-runtime-probe.jar')
+                from runtime.originalArtifact(configurations.legacyDependencyArtifacts,
+                        runtime.dependencySpecs.mmdlib.coordinate)
+                from runtime.originalArtifact(configurations.legacyDependencyArtifacts,
+                        runtime.dependencySpecs.orespawn4.coordinate)
+                into mods
+            }
+            if (config) {
+                File configFile = new File(runDirectory, 'config/BaseMetals.cfg')
+                configFile.parentFile.mkdirs()
+                configFile.setText(config, 'UTF-8')
+            }
+        }
+    }
+    def previous = prepare
+    ['Fresh', 'Reload'].each { phase ->
+        def dependency = previous
+        def process = tasks.register("packagedAdvancements${profile}${phase}", Exec) {
+            dependsOn dependency
+            workingDir runDirectory
+            ByteArrayOutputStream console = new ByteArrayOutputStream()
+            standardOutput = console
+            errorOutput = console
+            ignoreExitValue = true
+            doFirst {
+                console.reset()
+                marker.delete()
+                commandLine runtime.java8Launcher.get().executablePath.asFile,
+                        '-Xmx2G', '-Dforge.logging.console.level=info',
+                        "-Dbasemetals.advancementProbe.profile=${profile}",
+                        "-Dbasemetals.advancementProbe.phase=${phase}",
+                        "-Dbasemetals.advancementProbe.marker=${marker.absolutePath}",
+                        '-jar', new File(runDirectory,
+                                "forge-${project.minecraft_version}-${project.forge_version}-universal.jar"),
+                        'nogui'
+            }
+            doLast {
+                new File(runDirectory, "${phase.toLowerCase()}-console.txt")
+                        .setText(console.toString('UTF-8'), 'UTF-8')
+                if (executionResult.get().exitValue != 0 || !marker.isFile()) {
+                    throw new GradleException("${profile} ${phase} advancement probe failed; see ${runDirectory}")
+                }
+                Properties result = new Properties()
+                marker.withInputStream { result.load(it) }
+                if (result.getProperty('profile') != profile
+                        || result.getProperty('phase') != phase
+                        || result.getProperty('passed') != 'true') {
+                    throw new GradleException("Invalid advancement probe result: ${result}")
+                }
+                def failures = runtime.runtimeLogFailures(runDirectory)
+                if (!failures.isEmpty()) {
+                    throw new GradleException("${profile} ${phase} logged runtime errors: ${failures.take(10)}")
+                }
+            }
+        }
+        previous = process
+    }
+    qualification.configure { dependsOn previous }
+}
+
+tasks.named('packagedForgeRuntimeTest') { dependsOn qualification }

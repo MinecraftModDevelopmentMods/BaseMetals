@@ -40,17 +40,20 @@ public final class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 			} else {
 				registerRestrictedTrades(ContentPolicy.active());
 			}
+
 			registerModSpecificTrades();
 		}
 	}
 
 	private static void registerRestrictedTrades(final ContentPolicy policy) {
 		final Map<Integer, List<ITradeList>> enchanted = new HashMap<>();
+
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
 				.filter(material -> !material.isEmpty() && !material.isRare())
 				.filter(VillagerTrades::hasAffordableTradeValue)
 				.forEach(material -> {
 					registerIngotTrades(material, policy);
+
 					if (material.getStat(MaterialStats.MAGICAFFINITY) > 5.0F) {
 						registerEnchantedTrades(material, policy, enchanted);
 					}
@@ -60,6 +63,7 @@ public final class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 
 	private static boolean hasAffordableTradeValue(final MMDMaterial material) {
 		final float value = tradeValue(material);
+
 		return emeraldPurchaseValue(value) < 65 && emeraldSaleValue(value) < 65;
 	}
 
@@ -76,14 +80,18 @@ public final class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 				|| !policy.allows(material.getName(), MaterialForm.INGOT)) {
 			return;
 		}
+
 		final net.minecraft.item.ItemStack stack = material.getItemStack(Names.INGOT, 12);
+
 		if (stack.getItem() == net.minecraft.init.Items.EMERALD
 				|| stack.getItem() == net.minecraft.init.Items.DIAMOND) {
 			return;
 		}
+
 		final int price = emeraldPurchaseValue(tradeValue(material));
 		final int level = tradeLevel(tradeValue(material));
 		final ITradeList[] trades = makePurchasePalette(price, stack);
+
 		VillagerTradeHelper.insertTrades(SMITH_RL, ARMOR_SMITH_ID, level, trades);
 		VillagerTradeHelper.insertTrades(SMITH_RL, WEAPON_SMITH_ID, level, trades);
 		VillagerTradeHelper.insertTrades(SMITH_RL, TOOL_SMITH_ID, level, trades);
@@ -93,6 +101,7 @@ public final class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 			final ContentPolicy policy, final Map<Integer, List<ITradeList>> table) {
 		final int level = tradeLevel(tradeValue(material));
 		final int basePrice = emeraldPurchaseValue(tradeValue(material));
+
 		addEnchanted(table, WEAPON_SMITH | (level + 1), material, policy,
 				basePrice, (int) (material.getBaseAttackDamage() / 2) - 1,
 				Names.SWORD, Names.CROSSBOW, Names.BOW);
@@ -113,6 +122,7 @@ public final class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 					|| !policy.allows(material.getName(), toForm(name))) {
 				continue;
 			}
+
 			table.computeIfAbsent(key, ignored -> new ArrayList<>())
 					.addAll(Collections.singletonList(new ListEnchantedItemForEmeralds(
 							material.getItem(name), new PriceInfo(basePrice + 7 + priceModifier,
@@ -132,6 +142,7 @@ public final class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 
 		if (Materials.hasMaterial(MaterialNames.CHARCOAL)) {
 			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
+
 			if (charcoal.hasItem(Names.POWDER)) {
 				final Item charcoalPowder = charcoal.getItem(Names.POWDER);
 				final ITradeList[] charcoalTrades = makePurchasePalette(1, 10, charcoalPowder);
@@ -144,6 +155,7 @@ public final class VillagerTrades extends com.mcmoddev.lib.init.VillagerTrades {
 
 		if (Materials.hasMaterial(MaterialNames.COAL)) {
 			final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
+
 			if (coal.hasItem(Names.POWDER)) {
 				final Item coalPowder = coal.getItem(Names.POWDER);
 				final ITradeList[] coalTrades = makePurchasePalette(1, 10, coalPowder);

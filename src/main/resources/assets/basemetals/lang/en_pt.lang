@@ -1,3 +1,7 @@
+achievement.cupronickel_maker=Cupronickel
+achievement.pewter_maker=Pewter
+achievement.pewter_maker.desc=Combine powdered tin, copper and lead to make pewter
+
 itemGroup.basemetals.blocks=Base Metals Blocks
 itemGroup.basemetals.combat=Base Metals Combat
 itemGroup.basemetals.items=Base Metals Items
@@ -545,13 +549,11 @@ config.basemetals.category.forced_traits=Forced Traits
 config.basemetals.category.forced_traits.tooltip=Make MMDLib register traits for Base Metals materials, no questions asked.
 config.basemetals.option.achievements=Feats
 config.basemetals.option.content_mode=Content Course
-config.basemetals.option.content_mode.tooltip=Choose High Fantasy, Low Fantasy, or Realism. Yer chosen course takes hold after restarting Minecraft.
+config.basemetals.option.content_mode.tooltip=Choose High Fantasy or Low Fantasy. Yer chosen course takes hold after restarting Minecraft.
 config.basemetals.content_mode.high_fantasy=High Fantasy
 config.basemetals.content_mode.low_fantasy=Low Fantasy
-config.basemetals.content_mode.realism=Realism
 config.basemetals.warning.content_mode.title=Change Base Metals' content course?
 config.basemetals.warning.content_mode.message=Sail from %s to %s? Recipes, trades, loot, and integrations change after restart.
-config.basemetals.warning.content_mode.realism=Sail from %s to %s? Existing OreSpawn world charts stay untouched; disable Unbreakable, Devil-Iron, and Star-Steel rules by hand where needed.
 config.basemetals.warning.confirm=Save and restart later
 config.basemetals.warning.disable_ores.title=OreSpawn orders required
 config.basemetals.warning.disable_ores.message=Before restarting, disable these OreSpawn rules or missing output blocks will scuttle the provider: %s
@@ -594,4 +596,3 @@ config.basemetals.material.prismarine=Prismarine
 config.basemetals.material.redstone=Redstone
 config.basemetals.content_mode.high_fantasy.description=All the old Base Metals cargo and ways to claim it remain aboard.
 config.basemetals.content_mode.low_fantasy.description=Fantasy materials remain, but daft equipment and building recipes walk the plank.
-config.basemetals.content_mode.realism.description=Low Fantasy limits apply, and mythical materials cannot be gained by ordinary means.

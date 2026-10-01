@@ -10,7 +10,7 @@
 		"item": "basemetals:pewter_ingot",
 		"count": 9
 	},
-	"group": "basics",
+	"group": "basemetals:pewter_ingot",
 	"conditions": [
 		{
 			"type": "forge:and",

@@ -18,14 +18,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
 /** Registers Base Metals crafting, furnace, and crusher recipes. */
-@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
+@Mod.EventBusSubscriber(modid = BaseMetals.MODID)
 public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 	private Recipes() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
-	/** Registers the recipe handler on Forge's event bus. */
 	public static void init() {
 	}
 
@@ -35,6 +34,7 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 
 			addAdditionalOredicts(adamantine, "Adamantite");
 			addAdditionalOredicts(adamantine, "Adamantium");
+
 			if (!Loader.isModLoaded("taiga")) {
 				addAdditionalOredicts(adamantine, "Adamant");
 			}
@@ -56,7 +56,7 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 	}
 
 	/** Adds programmatic recipes and wraps restricted recipes with the content policy. */
-	@SubscribeEvent(priority=EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void registerRecipes(final RegistryEvent.Register<IRecipe> event) {
 		initModSpecificOredicts();
 		register(event);

@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Owns the legacy configuration file and the startup-latched content policy. */
+/** Loads BaseMetals.cfg and keeps the content mode fixed until restart. */
 public final class BMeConfig extends Config {
 
 	private static final Logger LOGGER = LogManager.getFormatterLogger("basemetals");
@@ -42,6 +42,7 @@ public final class BMeConfig extends Config {
 	private static final Map<String, String> GENERATED_ORE_RULES;
 	static {
 		final Map<String, String> rules = new LinkedHashMap<>();
+
 		rules.put(MaterialNames.COLDIRON, "basemetals:legacy/coldiron_ore");
 		rules.put(MaterialNames.ADAMANTINE, "basemetals:legacy/adamantine_ore");
 		rules.put(MaterialNames.STARSTEEL, "basemetals:legacy/starsteel_ore");
@@ -57,46 +58,45 @@ public final class BMeConfig extends Config {
 	}
 
 	private static final MaterialConfigOptions[] MATERIAL_CONFIG_OPTIONS = new MaterialConfigOptions[]{
-		// Base Metals material switches.
-		new MaterialConfigOptions(MaterialNames.ADAMANTINE, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.ANTIMONY, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.AQUARIUM, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.BISMUTH, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.BRASS, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.BRONZE, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.COLDIRON, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.COPPER, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.CUPRONICKEL, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.ELECTRUM, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.INVAR, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.LEAD, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.MERCURY, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.MITHRIL, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.NICKEL, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.PEWTER, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.PLATINUM, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.SILVER, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.STARSTEEL, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.STEEL, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.TIN, false, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.ZINC, false, true, true, true, true),
+			// Base Metals material switches.
+			new MaterialConfigOptions(MaterialNames.ADAMANTINE, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.ANTIMONY, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.AQUARIUM, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.BISMUTH, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.BRASS, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.BRONZE, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.COLDIRON, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.COPPER, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.CUPRONICKEL, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.ELECTRUM, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.INVAR, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.LEAD, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.MERCURY, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.MITHRIL, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.NICKEL, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.PEWTER, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.PLATINUM, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.SILVER, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.STARSTEEL, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.STEEL, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.TIN, false, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.ZINC, false, true, true, true, true),
 
-		// Vanilla Bits. These entries were present in the 2.5.0 release and are
-		// required before MMDLib fires the material item/block registration events.
-		new MaterialConfigOptions(MaterialNames.CHARCOAL, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.COAL, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.DIAMOND, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.EMERALD, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.GOLD, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.IRON, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.STONE, true, true, false, false),
-		new MaterialConfigOptions(MaterialNames.WOOD, true, true, false, false),
-		new MaterialConfigOptions(MaterialNames.ENDER, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.QUARTZ, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.OBSIDIAN, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.LAPIS, true, true, false, false),
-		new MaterialConfigOptions(MaterialNames.PRISMARINE, true, true, true, true),
-		new MaterialConfigOptions(MaterialNames.REDSTONE, true, true, true, true),
+			// Load Vanilla Bits settings before MMDLib registers their items and blocks.
+			new MaterialConfigOptions(MaterialNames.CHARCOAL, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.COAL, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.DIAMOND, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.EMERALD, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.GOLD, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.IRON, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.STONE, true, true, false, false),
+			new MaterialConfigOptions(MaterialNames.WOOD, true, true, false, false),
+			new MaterialConfigOptions(MaterialNames.ENDER, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.QUARTZ, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.OBSIDIAN, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.LAPIS, true, true, false, false),
+			new MaterialConfigOptions(MaterialNames.PRISMARINE, true, true, true, true),
+			new MaterialConfigOptions(MaterialNames.REDSTONE, true, true, true, true),
 	};
 
 	/** Reloads values saved through Forge's configuration screen. */
@@ -107,33 +107,37 @@ public final class BMeConfig extends Config {
 		}
 	}
 
-	/** Loads defaults, preserves legacy files, and latches the content mode once per launch. */
+	/** Loads settings without changing the content mode of a running game. */
 	public static void init() {
 		if (configuration == null) {
 			configuration = new Configuration(new File(CONFIG_FILE));
 			MinecraftForge.EVENT_BUS.register(new BMeConfig());
 		}
+
 		populateConfiguration(configuration);
+
 		if (!contentModeLatched) {
 			activeContentMode = configuredContentMode(configuration);
 			contentModeLatched = true;
 		}
+
 		if (configuration.hasChanged()) {
 			configuration.save();
 		}
 	}
 
 	static void populateConfiguration(final Configuration target) {
-		// General settings are registered before the material-specific categories.
 		Options.setEnableAchievements(target.getBoolean("achievements", GENERAL_CAT, true,
-				"If false, then Base Metals Achievements will be disabled (This is currently required if you disable any metals"));
+				"If false, Base Metals gameplay achievements will be disabled. Recipe-book unlocks are unaffected."));
+
 		final Property achievements = target.getCategory(GENERAL_CAT).get("achievements");
 		final Property contentMode = target.get(GENERAL_CAT, CONTENT_MODE_PROPERTY,
 				ContentMode.HIGH_FANTASY.serializedName(),
 				"Controls Base Metals acquisition: high_fantasy keeps every historical recipe; "
-						+ "low_fantasy restricts implausible forms; realism also removes mythical materials.",
+						+ "low_fantasy restricts implausible forms.",
 				ContentMode.serializedNames());
 		final String configuredValue = contentMode.getString();
+
 		if (!ContentMode.isValidSerializedName(configuredValue)) {
 			LOGGER.warn("Invalid Base Metals content mode '{}'; using '{}'.",
 					configuredValue, ContentMode.HIGH_FANTASY.serializedName());
@@ -156,6 +160,7 @@ public final class BMeConfig extends Config {
 		for (final String categoryName : GUI_CATEGORIES) {
 			final String languageSuffix = categoryName.toLowerCase(java.util.Locale.ROOT)
 					.replace(' ', '_');
+
 			target.getCategory(categoryName)
 					.setLanguageKey("config.basemetals.category." + languageSuffix)
 					.setRequiresMcRestart(true);
@@ -166,10 +171,13 @@ public final class BMeConfig extends Config {
 			final String propertySuffix = WordUtils.capitalizeFully(identifier);
 			final String materialLanguageKey = "config.basemetals.material." + identifier;
 			final String category = options.getVanilla() ? VANILLA_CAT : MATERIALS_CAT;
+
 			decorate(target, category, "Enable" + propertySuffix, materialLanguageKey);
+
 			if (options.getHasFluid()) {
 				decorate(target, FLUIDS_CAT, "Enabled " + propertySuffix, materialLanguageKey);
 			}
+
 			if (options.getHasTraits()) {
 				decorate(target, FORCED_TRAITS_CAT,
 						"Force" + propertySuffix + "TraitRegistration", materialLanguageKey);
@@ -180,10 +188,12 @@ public final class BMeConfig extends Config {
 	private static void decorate(final Configuration target, final String category,
 			final String propertyName, final String languageKey) {
 		final Property property = target.getCategory(category).get(propertyName);
+
 		if (property == null) {
 			throw new IllegalStateException("Missing Base Metals configuration property "
 					+ category + "/" + propertyName);
 		}
+
 		property.setLanguageKey(languageKey).setRequiresMcRestart(true);
 	}
 
@@ -191,21 +201,25 @@ public final class BMeConfig extends Config {
 		if (configuration == null) {
 			throw new IllegalStateException("Base Metals configuration has not been initialized");
 		}
+
 		return configuration;
 	}
 
-	/** Returns the mode latched during mod construction. */
+	/** The mode chosen at startup, not a pending change in the config screen. */
 	public static ContentMode getActiveContentMode() {
 		return activeContentMode;
 	}
 
-	/** Reads the effective value of a configuration, treating an absent key as High Fantasy. */
+	/** Old config files without a mode keep the High Fantasy default. */
 	public static ContentMode configuredContentMode(final Configuration target) {
 		if (target == null || !target.hasCategory(GENERAL_CAT)) {
 			return ContentMode.HIGH_FANTASY;
 		}
+
 		final Property property = target.getCategory(GENERAL_CAT).get(CONTENT_MODE_PROPERTY);
-		return property == null ? ContentMode.HIGH_FANTASY
+
+		return property == null
+				? ContentMode.HIGH_FANTASY
 				: ContentMode.fromSerializedName(property.getString());
 	}
 

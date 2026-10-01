@@ -23,7 +23,9 @@ class BaseMetalsConfigScreenTest {
 	void rootContainsOnlyTheFiveHistoricalCategoriesInStableOrder() {
 		final Configuration configuration = create();
 		final List<IConfigElement> elements = BaseMetalsConfigScreen.categoryElements(configuration);
+
 		assertEquals(BMeConfig.GUI_CATEGORIES.size(), elements.size());
+
 		for (int index = 0; index < elements.size(); index++) {
 			assertEquals(BMeConfig.GUI_CATEGORIES.get(index).toLowerCase(java.util.Locale.ROOT),
 					elements.get(index).getName());
@@ -38,6 +40,7 @@ class BaseMetalsConfigScreenTest {
 	void warningReportsOnlyNewlyDisabledGeneratedMaterials() {
 		final Configuration configuration = create();
 		final Map<String, String> before = BaseMetalsConfigScreen.snapshot(configuration);
+
 		configuration.getCategory(BMeConfig.MATERIALS_CAT).get("EnableColdiron").set(false);
 		configuration.getCategory(BMeConfig.MATERIALS_CAT).get("EnableTin").set(false);
 		configuration.getCategory(BMeConfig.MATERIALS_CAT).get("EnableAntimony").set(false);
@@ -56,14 +59,16 @@ class BaseMetalsConfigScreenTest {
 	void disposableConfigurationPersistsDoneValuesWhileRestoreModelsEscape() {
 		final Configuration configuration = create();
 		final Map<String, String> before = BaseMetalsConfigScreen.snapshot(configuration);
+
 		configuration.getCategory(BMeConfig.VANILLA_CAT).get("EnableGold").set(false);
 		configuration.getCategory(BMeConfig.GENERAL_CAT)
-				.get(BMeConfig.CONTENT_MODE_PROPERTY).set("realism");
+				.get(BMeConfig.CONTENT_MODE_PROPERTY).set("low_fantasy");
 		configuration.save();
 
 		final Configuration reloaded = create();
+
 		assertFalse(reloaded.getCategory(BMeConfig.VANILLA_CAT).get("EnableGold").getBoolean());
-		assertEquals("realism", reloaded.getCategory(BMeConfig.GENERAL_CAT)
+		assertEquals("low_fantasy", reloaded.getCategory(BMeConfig.GENERAL_CAT)
 				.get(BMeConfig.CONTENT_MODE_PROPERTY).getString());
 
 		BaseMetalsConfigScreen.restore(before, configuration);

@@ -21,10 +21,14 @@ public final class ItemBaseMetalsArrow extends ItemMMDArrow {
 	public EntityCustomArrow createArrow(final World world, final ItemStack ammunition,
 			final EntityPlayer shooter) {
 		final ItemStack projectileAmmunition = ammunition.copy();
+
 		projectileAmmunition.setCount(1);
+
 		final EntityCustomArrow projectile = super.createArrow(
 				world, projectileAmmunition, shooter);
+
 		MaterialRangedDamage.applyComponent(projectile, getMMDMaterial());
+
 		return projectile;
 	}
 
@@ -34,8 +38,11 @@ public final class ItemBaseMetalsArrow extends ItemMMDArrow {
 		if (shooter instanceof EntityPlayer) {
 			return createArrow(world, ammunition, (EntityPlayer) shooter);
 		}
+
 		final EntityArrow projectile = super.createArrow(world, ammunition, shooter);
+
 		MaterialRangedDamage.applyComponent(projectile, getMMDMaterial());
+
 		return projectile;
 	}
 }

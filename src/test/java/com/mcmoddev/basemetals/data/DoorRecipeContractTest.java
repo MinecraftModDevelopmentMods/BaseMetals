@@ -40,6 +40,7 @@ class DoorRecipeContractTest {
 				final String fileName = doorPath.getFileName().toString();
 				final String material = fileName.substring(0, fileName.length() - "_door.json".length());
 				final Path trapdoorPath = RECIPES.resolve(material + "_trapdoor.json");
+
 				assertTrue(Files.isRegularFile(trapdoorPath),
 						"Missing trapdoor recipe for " + material);
 
@@ -52,23 +53,32 @@ class DoorRecipeContractTest {
 						&& ingredient(door).equals(ingredient(trapdoor))) {
 					collisions.add(material);
 				}
+
 				if (!doorPattern.equals(Arrays.asList("xx", "xx", "xx"))) {
 					invalidDoorShapes.add(material + "=" + String.join("/", doorPattern));
 				}
+
 				final List<String> expectedTrapdoorPattern = "quartz".equals(material)
-						? Collections.singletonList("x") : Arrays.asList("xx", "xx");
+						? Collections.singletonList("x")
+						: Arrays.asList("xx", "xx");
+
 				if (!trapdoorPattern.equals(expectedTrapdoorPattern)) {
 					invalidTrapdoorShapes.add(material + "=" + String.join("/", trapdoorPattern));
 				}
+
 				final String expectedTrapdoorOre = "quartz".equals(material)
-						? "blockQuartz" : ingredient(door).get("ore").getAsString();
+						? "blockQuartz"
+						: ingredient(door).get("ore").getAsString();
+
 				if (!expectedTrapdoorOre.equals(ingredient(trapdoor).get("ore").getAsString())) {
 					invalidTrapdoorIngredients.add(material + "=" + ingredient(trapdoor));
 				}
+
 				if (resultCount(door) != 3 || resultCount(trapdoor) != 1) {
 					invalidYields.add(material + "=door:" + resultCount(door)
 							+ ",trapdoor:" + resultCount(trapdoor));
 				}
+
 				pairs++;
 			}
 		}
@@ -95,9 +105,11 @@ class DoorRecipeContractTest {
 	private static List<String> pattern(final JsonObject recipe) {
 		final List<String> result = new ArrayList<>();
 		final JsonArray pattern = recipe.getAsJsonArray("pattern");
+
 		for (final JsonElement row : pattern) {
 			result.add(row.getAsString());
 		}
+
 		return result;
 	}
 
@@ -107,6 +119,7 @@ class DoorRecipeContractTest {
 
 	private static int resultCount(final JsonObject recipe) {
 		final JsonObject result = recipe.getAsJsonObject("result");
+
 		return result.has("count") ? result.get("count").getAsInt() : 1;
 	}
 }

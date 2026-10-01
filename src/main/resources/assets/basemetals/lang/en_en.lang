@@ -1,3 +1,7 @@
+achievement.cupronickel_maker=Cupronickel
+achievement.pewter_maker=Pewter
+achievement.pewter_maker.desc=Combine powdered tin, copper and lead to make pewter
+
 itemGroup.basemetals.blocks=Base Metals Blocks
 itemGroup.basemetals.combat=Base Metals Combat
 itemGroup.basemetals.items=Base Metals Items
@@ -588,13 +592,11 @@ config.basemetals.category.forced_traits=Forced Traits
 config.basemetals.category.forced_traits.tooltip=Force MMDLib trait registration for Base Metals materials.
 config.basemetals.option.achievements=Achievements
 config.basemetals.option.content_mode=Content Mode
-config.basemetals.option.content_mode.tooltip=Choose High Fantasy, Low Fantasy, or Realism. The selected policy takes effect after restarting Minecraft.
+config.basemetals.option.content_mode.tooltip=Choose High Fantasy or Low Fantasy. The selected policy takes effect after restarting Minecraft.
 config.basemetals.content_mode.high_fantasy=High Fantasy
 config.basemetals.content_mode.low_fantasy=Low Fantasy
-config.basemetals.content_mode.realism=Realism
 config.basemetals.warning.content_mode.title=Change Base Metals content mode?
 config.basemetals.warning.content_mode.message=Change from %s to %s? Recipes, trades, loot and integrations will change after restart.
-config.basemetals.warning.content_mode.realism=Change from %s to %s? Existing OreSpawn world profiles are preserved; disable Adamantine, Cold Iron and Starsteel rules manually where required.
 config.basemetals.warning.confirm=Save and restart later
 config.basemetals.warning.disable_ores.title=OreSpawn rule action required
 config.basemetals.warning.disable_ores.message=Before restarting, disable these rules in OreSpawn or their missing output blocks will invalidate the provider: %s
@@ -637,4 +639,3 @@ config.basemetals.material.prismarine=Prismarine
 config.basemetals.material.redstone=Redstone
 config.basemetals.content_mode.high_fantasy.description=All historical Base Metals content and acquisition routes remain available.
 config.basemetals.content_mode.low_fantasy.description=Fantasy materials remain, but implausible equipment and construction recipes are hidden.
-config.basemetals.content_mode.realism.description=Low Fantasy restrictions apply and normal acquisition of mythical materials is disabled.

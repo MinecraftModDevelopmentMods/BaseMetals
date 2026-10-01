@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.content.ContentPolicy;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -38,7 +37,6 @@ public final class BMeMekanism extends Mekanism implements IIntegration {
 		MinecraftForge.EVENT_BUS.register(this);
 
 		materials.stream().filter(Materials::hasMaterial).filter(BMeMekanism::isMaterialNotEmpty)
-				.filter(ContentPolicy.active()::allowsMaterial)
 				.forEach(Mekanism::addGassesForMaterial);
 	}
 
@@ -51,12 +49,12 @@ public final class BMeMekanism extends Mekanism implements IIntegration {
 	public void regCallback(final RegistryEvent.Register<IRecipe> event) {
 
 		materials.stream().filter(Materials::hasMaterial).filter(BMeMekanism::isMaterialNotEmpty)
-				.filter(ContentPolicy.active()::allowsMaterial)
 				.forEach(Mekanism::addOreMultiplicationRecipes);
 
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			this.addVanillaOreMultiplicationRecipes(MaterialNames.DIAMOND);
 		}
+
 		if (Materials.hasMaterial(MaterialNames.EMERALD)) {
 			this.addVanillaOreMultiplicationRecipes(MaterialNames.EMERALD);
 		}
@@ -70,10 +68,12 @@ public final class BMeMekanism extends Mekanism implements IIntegration {
 				addCrusherRecipe(material.getBlockItemStack(Names.ORE),
 						material.getItemStack(Names.INGOT, 2));
 			}
+
 			if (material.hasItem(Names.INGOT) && (material.hasItem(Names.POWDER))) {
 				addCrusherRecipe(material.getItemStack(Names.INGOT),
 						material.getItemStack(Names.POWDER));
 			}
+
 			if (material.hasBlock(Names.ORE) && (material.hasItem(Names.POWDER))) {
 				addPurificationChamberRecipe(material.getBlockItemStack(Names.ORE),
 						material.getItemStack(Names.POWDER, 2));

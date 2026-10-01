@@ -22,17 +22,7 @@ def tinkersCompatibilityProfiles = [
         LowFantasy: [display: 'Tinkers Construct in Low Fantasy mode', taiga: false,
                 prismarine: true, mode: 'low_fantasy'],
         LowFantasyConArm: [display: "Tinkers Construct and Construct's Armory in Low Fantasy mode",
-                taiga: false, conarm: true, prismarine: true, mode: 'low_fantasy'],
-        Realism: [display: 'Tinkers Construct in Realism mode', taiga: false,
-                prismarine: true, mode: 'realism'],
-        RealismConArm: [display: "Tinkers Construct and Construct's Armory in Realism mode",
-                taiga: false, conarm: true, prismarine: true, mode: 'realism'],
-        RealismExplicitOverride: [display: 'Realism with an explicit enabled OreSpawn override',
-                taiga: false, prismarine: true, mode: 'realism', preserveEnabledOres: true,
-                explicitOverride: true],
-        RealismExistingWorld: [display: 'a High Fantasy world restarted in Realism mode',
-                taiga: false, prismarine: true, mode: 'high_fantasy', reloadMode: 'realism',
-                preserveEnabledOres: true]
+                taiga: false, conarm: true, prismarine: true, mode: 'low_fantasy']
 ]
 
 tinkersCompatibilityProfiles.each { profileName, profile ->
@@ -119,17 +109,6 @@ tinkersCompatibilityProfiles.each { profileName, profile ->
                 }
                 new File(configDirectory, 'BaseMetals.cfg').setText(config.toString(), 'UTF-8')
             }
-            if (profile.explicitOverride) {
-                File configDirectory = new File(runDirectory, 'config')
-                configDirectory.mkdirs()
-                def explicitOverride = new JsonSlurper().parse(
-                        file('docs/examples/basemetals-orespawn-disabled.json'))
-                explicitOverride.ores.each { id, rule -> rule.enabled = true }
-                new File(configDirectory, 'basemetals-orespawn.json').setText(
-                        groovy.json.JsonOutput.prettyPrint(
-                                groovy.json.JsonOutput.toJson(explicitOverride))
-                                + System.lineSeparator(), 'UTF-8')
-            }
             new File(runDirectory, 'server.properties').setText('''\
 level-name=world
 level-seed=basemetals-tinkers-compatibility
@@ -156,19 +135,6 @@ max-tick-time=-1
             doFirst {
                 console.reset()
                 marker.delete()
-                String effectiveMode = phase == 'Reload' && profile.reloadMode
-                        ? profile.reloadMode : profile.mode
-                if (phase == 'Reload' && profile.reloadMode) {
-                    File configFile = new File(runDirectory, 'config/BaseMetals.cfg')
-                    String configText = configFile.getText('UTF-8')
-                    String changed = configText.replace(
-                            'S:contentMode=high_fantasy',
-                            "S:contentMode=${profile.reloadMode}")
-                    if (changed == configText) {
-                        throw new GradleException("Could not change the existing-world content mode in ${configFile}")
-                    }
-                    configFile.setText(changed, 'UTF-8')
-                }
                 File javaExecutable = java8Launcher.get().executablePath.asFile
                 File forge = new File(runDirectory,
                         "forge-${project.minecraft_version}-${project.forge_version}-universal.jar")
@@ -178,7 +144,7 @@ max-tick-time=-1
                         "-Dbasemetals.probe.expectedTaiga=${profile.taiga}",
                         "-Dbasemetals.probe.expectedConArm=${profile.conarm == true}",
                         "-Dbasemetals.probe.expectedPrismarine=${profile.prismarine}",
-                        "-Dbasemetals.probe.expectedContentMode=${effectiveMode}",
+                        "-Dbasemetals.probe.expectedContentMode=${profile.mode}",
                         "-Dbasemetals.probe.marker=${marker.absolutePath}",
                         '-jar', forge, 'nogui'
                 standardOutput = console
@@ -193,14 +159,12 @@ max-tick-time=-1
                 }
                 Properties result = new Properties()
                 marker.withInputStream { result.load(it) }
-                String effectiveMode = phase == 'Reload' && profile.reloadMode
-                        ? profile.reloadMode : profile.mode
                 if (result.getProperty('phase') != phase.toLowerCase()
                         || result.getProperty('registered') != 'true'
                         || result.getProperty('taiga') != profile.taiga.toString()
                         || result.getProperty('conarm') != (profile.conarm == true).toString()
                         || result.getProperty('prismarine') != profile.prismarine.toString()
-                        || result.getProperty('contentMode') != effectiveMode) {
+                        || result.getProperty('contentMode') != profile.mode) {
                     throw new GradleException("${profile.display} ${phase} probe result is invalid: ${result}")
                 }
                 File worldProfile = new File(runDirectory,
@@ -214,15 +178,9 @@ max-tick-time=-1
                 }
                 Set<String> disabledRules = generatedRules.findAll { id, rule -> !rule.enabled }
                         .keySet() as Set<String>
-                Set<String> expectedDisabledRules = !profile.preserveEnabledOres
-                        && effectiveMode == 'realism'
-                        ? ['basemetals:legacy/adamantine_ore',
-                                'basemetals:legacy/coldiron_ore',
-                                'basemetals:legacy/starsteel_ore'] as Set<String>
-                        : [] as Set<String>
-                if (generatedRules.size() != 11 || disabledRules != expectedDisabledRules) {
+                if (generatedRules.size() != 11 || !disabledRules.isEmpty()) {
                     throw new GradleException("${profile.display} loaded unexpected Base Metals rule defaults: "
-                            + "disabled=${disabledRules}, expected=${expectedDisabledRules}")
+                            + "disabled=${disabledRules}, expected=[]")
                 }
                 String latestLog = new File(runDirectory, 'logs/latest.log').getText('UTF-8')
                 if (latestLog.contains('Fallback Ore Spawn Generator Enabled!')
@@ -255,10 +213,6 @@ tasks.register('packagedForgeTinkersCompatibilityTest') {
     dependsOn tasks.named('packagedForgeTinkersPrismarineDisabledRuntimeTest')
     dependsOn tasks.named('packagedForgeTinkersLowFantasyRuntimeTest')
     dependsOn tasks.named('packagedForgeTinkersLowFantasyConArmRuntimeTest')
-    dependsOn tasks.named('packagedForgeTinkersRealismRuntimeTest')
-    dependsOn tasks.named('packagedForgeTinkersRealismConArmRuntimeTest')
-    dependsOn tasks.named('packagedForgeTinkersRealismExplicitOverrideRuntimeTest')
-    dependsOn tasks.named('packagedForgeTinkersRealismExistingWorldRuntimeTest')
 }
 
 tasks.named('packagedForgeRuntimeTest') {

@@ -1,3 +1,6 @@
+achievement.pewter_maker=Пьютер
+achievement.pewter_maker.desc=Смешайте порошки олова, меди и свинца, чтобы получить пьютер.
+
 #   Base Metals 1.12-2.5.0-beta3.51
 #   Translated by Grey Mamon (grey.mamon@gmail.com) 11.28.2017
     #   Примечание: все категории сортируются по релевантности.
@@ -1859,13 +1862,11 @@ config.basemetals.category.forced_traits=Принудительные свойс
 config.basemetals.category.forced_traits.tooltip=Принудительно регистрировать свойства MMDLib для материалов Base Metals.
 config.basemetals.option.achievements=Достижения
 config.basemetals.option.content_mode=Режим содержимого
-config.basemetals.option.content_mode.tooltip=Выберите «Высокое фэнтези», «Низкое фэнтези» или «Реализм». Выбранная политика вступит в силу после перезапуска Minecraft.
+config.basemetals.option.content_mode.tooltip=Выберите «Высокое фэнтези» или «Низкое фэнтези». Выбранная политика вступит в силу после перезапуска Minecraft.
 config.basemetals.content_mode.high_fantasy=Высокое фэнтези
 config.basemetals.content_mode.low_fantasy=Низкое фэнтези
-config.basemetals.content_mode.realism=Реализм
 config.basemetals.warning.content_mode.title=Изменить режим содержимого Base Metals?
 config.basemetals.warning.content_mode.message=Переключиться с %s на %s? Рецепты, торговля, добыча и интеграции изменятся после перезапуска.
-config.basemetals.warning.content_mode.realism=Переключиться с %s на %s? Существующие профили миров OreSpawn сохранятся; при необходимости вручную отключите правила адамантина, хладожелеза и звёздной стали.
 config.basemetals.warning.confirm=Сохранить и перезапустить позже
 config.basemetals.warning.disable_ores.title=Требуется действие с правилами OreSpawn
 config.basemetals.warning.disable_ores.message=Перед перезапуском отключите эти правила в OreSpawn, иначе отсутствие выходных блоков сделает поставщика недействительным: %s
@@ -1908,4 +1909,3 @@ config.basemetals.material.prismarine=Призмарин
 config.basemetals.material.redstone=Редстоун
 config.basemetals.content_mode.high_fantasy.description=Всё историческое содержимое Base Metals и способы его получения остаются доступными.
 config.basemetals.content_mode.low_fantasy.description=Фэнтезийные материалы остаются, но неправдоподобные рецепты снаряжения и строительства скрываются.
-config.basemetals.content_mode.realism.description=Применяются ограничения Низкого фэнтези, а обычное получение мифических материалов отключается.

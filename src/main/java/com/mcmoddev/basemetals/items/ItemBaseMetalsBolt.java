@@ -19,7 +19,9 @@ public final class ItemBaseMetalsBolt extends ItemMMDBolt {
 	public EntityCustomBolt createBolt(final World world, final ItemStack ammunition,
 			final EntityPlayer shooter) {
 		final EntityCustomBolt projectile = super.createBolt(world, ammunition, shooter);
+
 		MaterialRangedDamage.applyComponent(projectile, getMMDMaterial());
+
 		return projectile;
 	}
 }

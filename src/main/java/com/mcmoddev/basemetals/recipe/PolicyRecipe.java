@@ -8,15 +8,18 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-/** Keeps recipe registry identity stable while disabling acquisition in restricted modes. */
+/** Disables restricted recipes without removing their saved registry names. */
 final class PolicyRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 	private final IRecipe delegate;
 	private final boolean allowed;
 
 	PolicyRecipe(final IRecipe delegate, final ContentPolicy policy) {
 		this.delegate = delegate;
+
 		final ItemStack output = delegate.getRecipeOutput();
-		this.allowed = !output.isEmpty() ? policy.allows(output)
+
+		this.allowed = !output.isEmpty()
+				? policy.allows(output)
 				: policy.allowsRecipeId(delegate.getRegistryName());
 		setRegistryName(delegate.getRegistryName());
 	}

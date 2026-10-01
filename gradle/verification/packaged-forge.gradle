@@ -137,6 +137,14 @@ def packagedStacks = [
                 extraMods: [],
                 coordinate: dependencySpecs.orespawn4.coordinate
         ],
+        Os4NoPlateRepair: [
+                display: 'OreSpawn 4 with plate repairs disabled',
+                modVersion: project.orespawn4_version,
+                expectedAncientWarfare: false,
+                disablePlateRepairs: true,
+                extraMods: [],
+                coordinate: dependencySpecs.orespawn4.coordinate
+        ],
         AncientWarfare: [
                 display: 'OreSpawn 4 plus Ancient Warfare 2',
                 modVersion: project.orespawn4_version,
@@ -216,6 +224,12 @@ spawn-protection=0
 max-tick-time=-1
 ''', 'UTF-8')
             new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
+            if (stack.disablePlateRepairs) {
+                File configDirectory = new File(runDirectory, 'config')
+                configDirectory.mkdirs()
+                new File(configDirectory, 'MMDLib.cfg').setText(
+                        'general {\n    B:repair_using_plates=false\n}\n', 'UTF-8')
+            }
         }
     }
 
@@ -238,6 +252,7 @@ max-tick-time=-1
                         "-Dbasemetals.probe.phase=${phase.toLowerCase()}",
                         "-Dbasemetals.probe.expectedOrespawn=${stack.modVersion}",
                         "-Dbasemetals.probe.expectedAncientWarfare=${stack.expectedAncientWarfare}",
+                        "-Dbasemetals.probe.expectPlateRepairs=${!stack.disablePlateRepairs}",
                         "-Dbasemetals.probe.marker=${marker.absolutePath}",
                         '-jar', forge, 'nogui'
                 standardOutput = console
@@ -300,6 +315,7 @@ tasks.register('packagedForgeRuntimeTest') {
     group = 'verification'
     description = 'Runs supported OreSpawn 4 fresh/reload packaged-server qualification.'
     dependsOn tasks.named('packagedForgeOs4RuntimeTest')
+    dependsOn tasks.named('packagedForgeOs4NoPlateRepairRuntimeTest')
     dependsOn tasks.named('packagedForgeAncientWarfareRuntimeTest')
 }
 
@@ -370,3 +386,4 @@ apply from: 'gradle/verification/packaged-forge-dependencies.gradle'
 apply from: 'gradle/verification/packaged-forge-migration.gradle'
 apply from: 'gradle/verification/packaged-forge-cofh.gradle'
 apply from: 'gradle/verification/packaged-forge-tinkers.gradle'
+apply from: 'gradle/verification/packaged-advancements.gradle'

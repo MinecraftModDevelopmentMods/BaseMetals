@@ -19,13 +19,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
+@Mod.EventBusSubscriber(modid = BaseMetals.MODID)
 public class VanillaItems extends com.mcmoddev.lib.init.Items {
 
 	private VanillaItems() {
 	}
-	
-	@SubscribeEvent(priority=EventPriority.HIGHEST)
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void registerItemsEvent(MMDLibRegisterItems ev) {
 		Materials.getMaterialByName(MaterialNames.CHARCOAL).addNewItemFromItemStack(Names.INGOT,
 				new ItemStack(net.minecraft.init.Items.COAL, 1, 1));
@@ -47,88 +47,91 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 		addStoneBits();
 		addWoodBits();
 		doSpecialMats();
-		
+
 		// Emerald, obsidian, and quartz receive the vanilla-style tool and armor set.
 		Arrays.asList(MaterialNames.EMERALD, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ)
-		.stream().map(Materials::getMaterialByName)
-		.filter(mat -> Options.isMaterialEnabled(mat.toString()))
-		.forEach(material -> Arrays.asList(Names.AXE, Names.BOOTS, 
-				Names.CHESTPLATE, Names.HELMET, Names.HOE, Names.LEGGINGS, Names.PICKAXE, Names.SHOVEL, Names.HORSE_ARMOR)
-				.stream()
-				.filter(n -> !material.hasItem(n)).forEach(n -> {
-					if (n == Names.HOE) {
-						Items.createHoe(material);
-					} else {
-						create(n, material);
-					}
-				}));
-		
-		// These solid vanilla materials support the shared equipment and building forms.
-		Arrays.asList(MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD, 
+				.stream().map(Materials::getMaterialByName)
+				.filter(mat -> Options.isMaterialEnabled(mat.toString()))
+				.forEach(material -> Arrays.asList(Names.AXE, Names.BOOTS,
+						Names.CHESTPLATE, Names.HELMET, Names.HOE, Names.LEGGINGS, Names.PICKAXE, Names.SHOVEL,
+						Names.HORSE_ARMOR)
+						.stream()
+						.filter(n -> !material.hasItem(n)).forEach(n -> {
+							if (n == Names.HOE) {
+								Items.createHoe(material);
+							} else {
+								create(n, material);
+							}
+						}));
+
+		// Add the equipment and building forms that vanilla does not provide.
+		Arrays.asList(MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD,
 				MaterialNames.IRON, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ)
-		.stream().map(Materials::getMaterialByName)
-		.filter(n -> Options.isMaterialEnabled(n.toString()))
-		.forEach(material -> Arrays.asList(Names.BOLT, Names.ARROW, Names.BOW, 
-				Names.CROSSBOW, Names.FISHING_ROD, Names.ROD, Names.BARS, Names.SHEARS, Names.BUTTON, Names.SWORD,
-				Names.SHIELD, Names.DOOR, Names.SLAB)
-				.stream()
-				.filter(n -> !material.hasItem(n)).forEach(n -> {
-					if (n == Names.ARROW) {
-						Items.createArrow(material);
-					} else if (n == Names.BOLT) {
-						Items.createBolt(material);
-					} else if (n == Names.BOW) {
-						Items.createBow(material);
-					} else if (n == Names.CROSSBOW) {
-						Items.createCrossbow(material);
-					} else {
-						create(n, material);
-					}
-				}));
-		
-		// Crackhammers, gears, and scythes also make sense for stone and wood.
-		Arrays.asList(MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD, 
-				MaterialNames.IRON, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ, 
+				.stream().map(Materials::getMaterialByName)
+				.filter(n -> Options.isMaterialEnabled(n.toString()))
+				.forEach(material -> Arrays.asList(Names.BOLT, Names.ARROW, Names.BOW,
+						Names.CROSSBOW, Names.FISHING_ROD, Names.ROD, Names.BARS, Names.SHEARS, Names.BUTTON,
+						Names.SWORD,
+						Names.SHIELD, Names.DOOR, Names.SLAB)
+						.stream()
+						.filter(n -> !material.hasItem(n)).forEach(n -> {
+							if (n == Names.ARROW) {
+								Items.createArrow(material);
+							} else if (n == Names.BOLT) {
+								Items.createBolt(material);
+							} else if (n == Names.BOW) {
+								Items.createBow(material);
+							} else if (n == Names.CROSSBOW) {
+								Items.createCrossbow(material);
+							} else {
+								create(n, material);
+							}
+						}));
+
+		// Stone and wood also get crackhammers, gears, and scythes.
+		Arrays.asList(MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.GOLD,
+				MaterialNames.IRON, MaterialNames.OBSIDIAN, MaterialNames.QUARTZ,
 				MaterialNames.STONE, MaterialNames.WOOD)
-		.stream().map(Materials::getMaterialByName)
-		.filter(n -> Options.isMaterialEnabled(n.toString()))
-		.forEach(material -> Arrays.asList(Names.CRACKHAMMER, Names.GEAR, 
-				Names.SCYTHE).stream()
-				.filter(n -> !material.hasItem(n)).forEach(n -> create(n, material)));
-		
-		// Powders and nuggets are available only where a meaningful source item exists.
+				.stream().map(Materials::getMaterialByName)
+				.filter(n -> Options.isMaterialEnabled(n.toString()))
+				.forEach(material -> Arrays.asList(Names.CRACKHAMMER, Names.GEAR,
+						Names.SCYTHE).stream()
+						.filter(n -> !material.hasItem(n)).forEach(n -> create(n, material)));
+
+		// Add powders and nuggets for materials with a source item to crush.
 		Arrays.asList(MaterialNames.COAL, MaterialNames.CHARCOAL, MaterialNames.DIAMOND,
-				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON, 
-				MaterialNames.OBSIDIAN, MaterialNames.REDSTONE, 
+				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON,
+				MaterialNames.OBSIDIAN, MaterialNames.REDSTONE,
 				MaterialNames.QUARTZ).stream()
-		.map(Materials::getMaterialByName)
-		.filter(n -> Options.isMaterialEnabled(n.toString()))
-		.forEach(material -> 
-		Arrays.asList(Names.SMALLPOWDER, Names.POWDER).stream()
-		.filter(n -> !material.hasItem(n))
-		.forEach(n -> create(n, material)));
+				.map(Materials::getMaterialByName)
+				.filter(n -> Options.isMaterialEnabled(n.toString()))
+				.forEach(material -> Arrays.asList(Names.SMALLPOWDER, Names.POWDER).stream()
+						.filter(n -> !material.hasItem(n))
+						.forEach(n -> create(n, material)));
 		Arrays.asList(MaterialNames.COAL, MaterialNames.CHARCOAL, MaterialNames.DIAMOND,
-				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON, 
+				MaterialNames.EMERALD, MaterialNames.GOLD, MaterialNames.IRON,
 				MaterialNames.OBSIDIAN, MaterialNames.QUARTZ).stream()
-		.filter(Options::isMaterialEnabled)
-		.map(Materials::getMaterialByName)
-		.filter(m -> !m.hasItem(Names.NUGGET)).forEach(material -> create(Names.NUGGET, material));
-		
-		// These one-off forms do not share a useful material group.
-		if(Options.isMaterialEnabled(MaterialNames.STONE)) {
+				.filter(Options::isMaterialEnabled)
+				.map(Materials::getMaterialByName)
+				.filter(m -> !m.hasItem(Names.NUGGET)).forEach(material -> create(Names.NUGGET, material));
+
+		if (Options.isMaterialEnabled(MaterialNames.STONE)) {
 			create(Names.ROD, Materials.getMaterialByName(MaterialNames.STONE));
 		}
-		if(Options.isMaterialEnabled(MaterialNames.LAPIS)) {
+
+		if (Options.isMaterialEnabled(MaterialNames.LAPIS)) {
 			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.LAPIS));
 		}
-		if(Options.isMaterialEnabled(MaterialNames.OBSIDIAN)) {
+
+		if (Options.isMaterialEnabled(MaterialNames.OBSIDIAN)) {
 			create(Names.INGOT, Materials.getMaterialByName(MaterialNames.OBSIDIAN));
 		}
-		if(Options.isMaterialEnabled(MaterialNames.REDSTONE)) {
+
+		if (Options.isMaterialEnabled(MaterialNames.REDSTONE)) {
 			create(Names.INGOT, Materials.getMaterialByName(MaterialNames.REDSTONE));
 		}
 	}
-	
+
 	private static void setBurnTimes(@Nonnull final MMDMaterial material) {
 		if (material.hasItem(Names.NUGGET)) {
 			((IMMDBurnableObject) material.getItem(Names.NUGGET)).setBurnTime(NUGGET_BURN_TIME);
@@ -147,9 +150,9 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 			((IMMDBurnableObject) material.getItem("ItemBlock_charcoal_block")).setBurnTime(BLOCK_BURN_TIME);
 		}
 	}
-	
+
 	private static void doSpecialMats() {
-		if (Materials.hasMaterial(MaterialNames.CHARCOAL) && 
+		if (Materials.hasMaterial(MaterialNames.CHARCOAL) &&
 				Options.isMaterialEnabled(MaterialNames.CHARCOAL)) {
 			final MMDMaterial charcoal = Materials.getMaterialByName(MaterialNames.CHARCOAL);
 
@@ -160,7 +163,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 			setBurnTimes(charcoal);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.COAL) && 
+		if (Materials.hasMaterial(MaterialNames.COAL) &&
 				Options.isMaterialEnabled(MaterialNames.COAL)) {
 			final MMDMaterial coal = Materials.getMaterialByName(MaterialNames.COAL);
 
@@ -171,7 +174,7 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 			setBurnTimes(coal);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.REDSTONE) && 
+		if (Materials.hasMaterial(MaterialNames.REDSTONE) &&
 				Options.isMaterialEnabled(MaterialNames.REDSTONE)) {
 			final MMDMaterial redstone = Materials.getMaterialByName(MaterialNames.REDSTONE);
 
@@ -179,12 +182,11 @@ public class VanillaItems extends com.mcmoddev.lib.init.Items {
 			create(Names.SMALLPOWDER, redstone);
 		}
 
-		if (Materials.hasMaterial(MaterialNames.LAPIS) && 
+		if (Materials.hasMaterial(MaterialNames.LAPIS) &&
 				Options.isMaterialEnabled(MaterialNames.LAPIS)) {
 			create(Names.SMALLPOWDER, Materials.getMaterialByName(MaterialNames.LAPIS));
 		}
 	}
-
 
 	private static void addDiamondBits() {
 		final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);

@@ -2,7 +2,7 @@ package com.mcmoddev.basemetals.content;
 
 import java.util.Locale;
 
-/** Form families used by the content policy. Registry identities are never removed. */
+/** Item and block forms used to decide which recipes a content mode permits. */
 public enum MaterialForm {
 	ARROW,
 	AXE,
@@ -62,24 +62,29 @@ public enum MaterialForm {
 	FLUID,
 	OTHER;
 
-	/** Resolves the conventional suffix used by Base Metals and MMDLib registry IDs. */
+	/** Finds the form from the suffix of a Base Metals or MMDLib registry name. */
 	public static MaterialForm fromRegistryPath(final String registryPath) {
 		if (registryPath == null) {
 			return OTHER;
 		}
+
 		final String path = registryPath.toLowerCase(Locale.ROOT);
 		MaterialForm match = OTHER;
 		int longestMatch = -1;
+
 		for (final MaterialForm form : values()) {
 			if (form == OTHER || form == FLUID) {
 				continue;
 			}
+
 			final String suffix = registrySuffix(form);
+
 			if (path.endsWith("_" + suffix) && suffix.length() > longestMatch) {
 				match = form;
 				longestMatch = suffix.length();
 			}
 		}
+
 		return match;
 	}
 
@@ -87,6 +92,7 @@ public enum MaterialForm {
 		if (form == DIRTY_POWDER) {
 			return "powder_dirty";
 		}
+
 		return form.name().toLowerCase(Locale.ROOT);
 	}
 }

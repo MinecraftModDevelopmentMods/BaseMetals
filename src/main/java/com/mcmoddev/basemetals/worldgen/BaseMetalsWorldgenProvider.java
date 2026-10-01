@@ -1,7 +1,6 @@
 package com.mcmoddev.basemetals.worldgen;
 
 import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.content.ContentPolicy;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import net.minecraft.util.ResourceLocation;
 import zone.moddev.mc.orespawn.api.OreDimensionSelector;
@@ -10,7 +9,7 @@ import zone.moddev.mc.orespawn.api.OrePattern;
 import zone.moddev.mc.orespawn.api.OreSpawnApi;
 import zone.moddev.mc.orespawn.api.WorldgenProvider;
 
-/** Builds Base Metals' OreSpawn defaults from the startup-latched content mode. */
+/** Supplies Base Metals' eleven ore rules; content modes do not change worldgen. */
 public final class BaseMetalsWorldgenProvider {
 	public static final int PROVIDER_REVISION = 2;
 	private static final ResourceLocation NETHER = id("minecraft", "the_nether");
@@ -23,34 +22,36 @@ public final class BaseMetalsWorldgenProvider {
 	}
 
 	public static boolean enqueue() {
-		return OreSpawnApi.enqueue(build(ContentPolicy.active()));
+		return OreSpawnApi.enqueue(build());
 	}
 
-	public static WorldgenProvider build(final ContentPolicy policy) {
+	public static WorldgenProvider build() {
 		final WorldgenProvider.Builder provider = WorldgenProvider
 				.builder(BaseMetals.MODID, PROVIDER_REVISION)
 				.mergeNewEntriesIntoExistingWorlds(true);
 
-		addDimensionOre(provider, policy, MaterialNames.COLDIRON, NETHER, 0, 127, 5.0D);
-		addDimensionOre(provider, policy, MaterialNames.ADAMANTINE, NETHER, 0, 127, 2.0D);
-		addDimensionOre(provider, policy, MaterialNames.STARSTEEL, END, 0, 254, 5.0D);
-		addOrdinaryOre(provider, policy, MaterialNames.COPPER, 0, 95, 10.0D);
-		addOrdinaryOre(provider, policy, MaterialNames.SILVER, 0, 31, 4.0D);
-		addOrdinaryOre(provider, policy, MaterialNames.TIN, 0, 127, 10.0D);
-		addOrdinaryOre(provider, policy, MaterialNames.LEAD, 0, 63, 5.0D);
-		addOrdinaryOre(provider, policy, MaterialNames.ZINC, 0, 95, 5.0D);
-		addOrdinaryOre(provider, policy, MaterialNames.MERCURY, 0, 31, 3.0D);
-		addOrdinaryOre(provider, policy, MaterialNames.NICKEL, 32, 95, 1.0D);
-		addOrdinaryOre(provider, policy, MaterialNames.PLATINUM, 1, 31, 0.125D);
+		addDimensionOre(provider, MaterialNames.COLDIRON, NETHER, 0, 127, 5.0D);
+		addDimensionOre(provider, MaterialNames.ADAMANTINE, NETHER, 0, 127, 2.0D);
+		addDimensionOre(provider, MaterialNames.STARSTEEL, END, 0, 254, 5.0D);
+		addOrdinaryOre(provider, MaterialNames.COPPER, 0, 95, 10.0D);
+		addOrdinaryOre(provider, MaterialNames.SILVER, 0, 31, 4.0D);
+		addOrdinaryOre(provider, MaterialNames.TIN, 0, 127, 10.0D);
+		addOrdinaryOre(provider, MaterialNames.LEAD, 0, 63, 5.0D);
+		addOrdinaryOre(provider, MaterialNames.ZINC, 0, 95, 5.0D);
+		addOrdinaryOre(provider, MaterialNames.MERCURY, 0, 31, 3.0D);
+		addOrdinaryOre(provider, MaterialNames.NICKEL, 32, 95, 1.0D);
+		addOrdinaryOre(provider, MaterialNames.PLATINUM, 1, 31, 0.125D);
+
 		return provider.build();
 	}
 
 	private static void addDimensionOre(final WorldgenProvider.Builder provider,
-			final ContentPolicy policy, final String material, final ResourceLocation dimension,
+			final String material, final ResourceLocation dimension,
 			final int minY, final int maxY, final double attempts) {
 		final ResourceLocation block = id(BaseMetals.MODID, material + "_ore");
+
 		provider.ore(id(BaseMetals.MODID, "legacy/" + material + "_ore"), block, ore -> ore
-				.enabled(policy.defaultsOreEnabled(material))
+				.enabled(true)
 				.nativeGeneration(false)
 				.retrogen(false)
 				.output(block, 100.0D)
@@ -58,11 +59,12 @@ public final class BaseMetalsWorldgenProvider {
 	}
 
 	private static void addOrdinaryOre(final WorldgenProvider.Builder provider,
-			final ContentPolicy policy, final String material, final int minY,
+			final String material, final int minY,
 			final int maxY, final double attempts) {
 		final ResourceLocation block = id(BaseMetals.MODID, material + "_ore");
+
 		provider.ore(id(BaseMetals.MODID, "legacy/" + material + "_ore"), block, ore -> ore
-				.enabled(policy.defaultsOreEnabled(material))
+				.enabled(true)
 				.nativeGeneration(false)
 				.retrogen(false)
 				.output(block, 100.0D)

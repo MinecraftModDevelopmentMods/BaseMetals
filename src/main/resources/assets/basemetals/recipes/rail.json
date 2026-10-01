@@ -22,5 +22,5 @@
 	"item": "minecraft:rail",
 	"count": 16
     },
-    "group": "vanilla"
+    "group": "minecraft:rail"
 }

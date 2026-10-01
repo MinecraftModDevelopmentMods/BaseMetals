@@ -125,26 +125,31 @@ tasks.register('verifyReleaseArtifacts') {
                 // Base Metals' steel rail alternative previously had no
                 // recipe-book discovery advancement.
                 'assets/basemetals/advancements/recipes/transportation/rail.json',
+                // Forge loads this factory before evaluating the copied recipe
+                // conditions on generated recipe-book advancements.
+                'assets/basemetals/advancements/_factories.json',
+                // Restores the historical gameplay achievements on Forge 1.12.
+                'com/mcmoddev/basemetals/advancement/AchievementCondition.class',
+                'com/mcmoddev/basemetals/advancement/GameplayAdvancements.class',
                 // Replaces MMDLib's client-only 1.12 crossbow firing path.
                 'com/mcmoddev/basemetals/items/ItemBaseMetalsCrossbow.class',
-                // Applies the established material attack statistic to both
-                // components of Base Metals ranged attacks.
+                // Includes both launcher and ammunition materials in shot damage.
                 'com/mcmoddev/basemetals/items/ItemBaseMetalsArrow.class',
                 'com/mcmoddev/basemetals/items/ItemBaseMetalsBolt.class',
                 'com/mcmoddev/basemetals/items/ItemBaseMetalsBow.class',
-                // Restores ItemHoe's vanilla material-name contract for
-                // compatibility consumers such as Ancient Warfare 2.
+                // Returns the tool-material name expected by Ancient Warfare 2.
                 'com/mcmoddev/basemetals/items/ItemBaseMetalsHoe.class',
                 'com/mcmoddev/basemetals/items/MaterialRangedDamage.class',
                 // Replaces MMDLib's reference to a nonexistent bolt texture.
                 'com/mcmoddev/basemetals/client/renderer/RenderBaseMetalsBolt.class',
-                // Exposes the existing BaseMetals.cfg through OreSpawn 4.1's
-                // client-only world-settings extension point.
+                // Adds Base Metals config screens to OreSpawn's cog button.
                 'com/mcmoddev/basemetals/client/config/BaseMetalsConfigScreen.class',
                 'com/mcmoddev/basemetals/client/config/BaseMetalsConfigScreen$CategoryElement.class',
                 'com/mcmoddev/basemetals/client/config/BaseMetalsConfigScreen$CategoryEntry.class',
                 'com/mcmoddev/basemetals/client/config/BaseMetalsConfigScreen$CategoryScreen.class',
-                // Upgrade-safe content policy, filtering, loot and handshake.
+                // Connects the same screen to Forge's Mods-list Config button.
+                'com/mcmoddev/basemetals/client/config/BaseMetalsGuiFactory.class',
+                // Content modes, recipe and loot filtering, and the connection check.
                 'com/mcmoddev/basemetals/content/ContentMode.class',
                 'com/mcmoddev/basemetals/content/ContentPolicy.class',
                 'com/mcmoddev/basemetals/content/MaterialForm.class',
@@ -155,6 +160,8 @@ tasks.register('verifyReleaseArtifacts') {
                 'com/mcmoddev/basemetals/network/ContentModeNetwork.class',
                 'com/mcmoddev/basemetals/network/ContentModeNetwork$ServerHandler.class',
                 'com/mcmoddev/basemetals/recipe/ContentAcquisitionFilters.class',
+				'com/mcmoddev/basemetals/recipe/PlateRepairFactory.class',
+				'com/mcmoddev/basemetals/recipe/PlateRepairRecipe.class',
 				'com/mcmoddev/basemetals/recipe/PolicyCrusherRecipe.class',
                 'com/mcmoddev/basemetals/recipe/PolicyRecipe.class',
                 'com/mcmoddev/basemetals/worldgen/BaseMetalsWorldgenProvider.class',
@@ -171,12 +178,21 @@ tasks.register('verifyReleaseArtifacts') {
                 'com/mcmoddev/orespawn/BaseMetalsOreSpawn.class',
                 'com/mcmoddev/orespawn/package-info.class',
                 'assets/basemetals/orespawn/basemetals.json',
-                // These source files were deliberately removed on master-1.12
-                // after 2.5.0-rc2.332; the modernization does not resurrect them.
+                // These classes were removed after 2.5.0-rc2.332.
                 'com/mcmoddev/basemetals/items/MMDToolEffects.class',
                 'com/mcmoddev/basemetals/items/package-info.class'
         ]
-        List<String> unexpectedAdded = (currentInventory - legacyInventory) - allowedAddedEntries
+        List<String> generatedRecipeAdvancements = currentInventory.findAll { String entry ->
+            entry ==~ /assets\/basemetals\/advancements\/recipes\/materials\/[^\/]+\/[^\/]+\.json/
+        }
+        allowedAddedEntries.addAll([
+                'this_is_new', 'blocktastic', 'geologist', 'metallurgy',
+                'aquarium_maker', 'brass_maker', 'bronze_maker', 'cupronickel_maker',
+                'electrum_maker', 'invar_maker', 'mithril_maker', 'pewter_maker', 'steel_maker',
+                'angel_of_death', 'scuba_diver', 'demon_slayer', 'juggernaut', 'moon_boots'
+        ].collect { "assets/basemetals/advancements/${it}.json".toString() })
+        List<String> unexpectedAdded = (currentInventory - legacyInventory) \
+                - allowedAddedEntries - generatedRecipeAdvancements
         List<String> unexpectedRemoved = (legacyInventory - currentInventory) - allowedRemovedEntries
         if (!unexpectedAdded.isEmpty() || !unexpectedRemoved.isEmpty()
                 || !allowedAddedEntries.every { currentInventory.contains(it) }

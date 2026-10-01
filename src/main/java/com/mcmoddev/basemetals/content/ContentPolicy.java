@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
 
-/** Immutable, reviewed material-by-form acquisition policy. */
+/** Defines which material forms can be made in each content mode. */
 public final class ContentPolicy {
 	private static final Set<String> MATERIALS = set(
 			MaterialNames.ADAMANTINE, MaterialNames.ANTIMONY, MaterialNames.AQUARIUM,
@@ -26,10 +26,6 @@ public final class ContentPolicy {
 			MaterialNames.QUARTZ, MaterialNames.REDSTONE, MaterialNames.SILVER,
 			MaterialNames.STARSTEEL, MaterialNames.STEEL, MaterialNames.STONE,
 			MaterialNames.TIN, MaterialNames.WOOD, MaterialNames.ZINC);
-
-	private static final Set<String> MYTHICAL = set(MaterialNames.ADAMANTINE,
-			MaterialNames.AQUARIUM, MaterialNames.COLDIRON, MaterialNames.MITHRIL,
-			MaterialNames.STARSTEEL);
 
 	private static final Set<String> FULL_TOOLS = set(MaterialNames.ADAMANTINE,
 			MaterialNames.AQUARIUM, MaterialNames.BRONZE, MaterialNames.COLDIRON,
@@ -91,49 +87,53 @@ public final class ContentPolicy {
 		return mode;
 	}
 
-	public boolean allowsMaterial(final String material) {
-		return mode != ContentMode.REALISM || !MYTHICAL.contains(normalize(material));
-	}
-
 	public boolean allows(final String material, final MaterialForm form) {
 		final String name = normalize(material);
+
 		if (mode == ContentMode.HIGH_FANTASY || material == null || form == null) {
 			return true;
 		}
-		if (!allowsMaterial(name)) {
-			return false;
-		}
+
 		if (form == MaterialForm.OTHER) {
 			return !MaterialNames.MERCURY.equals(name);
 		}
+
 		if (form == MaterialForm.BOW || form == MaterialForm.CROSSBOW
 				|| form == MaterialForm.FISHING_ROD) {
 			return false;
 		}
+
 		if (TOOLS.contains(form)) {
 			return allowsTool(name, form);
 		}
+
 		if (ARMOR_FORMS.contains(form)) {
 			return PROTECTIVE.contains(name);
 		}
+
 		if (form == MaterialForm.ARROW || form == MaterialForm.BOLT) {
 			return AMMUNITION.contains(name);
 		}
+
 		if (form == MaterialForm.GEAR) {
 			return GEARS.contains(name);
 		}
+
 		if (form == MaterialForm.ANVIL) {
 			return MaterialNames.STONE.equals(name) || MaterialNames.STEEL.equals(name)
-					|| (mode == ContentMode.LOW_FANTASY && MaterialNames.ADAMANTINE.equals(name));
+					|| MaterialNames.ADAMANTINE.equals(name);
 		}
+
 		if (MaterialNames.MERCURY.equals(name)) {
 			return form == MaterialForm.ORE || form == MaterialForm.POWDER
 					|| form == MaterialForm.SMALLPOWDER || form == MaterialForm.FLUID
-					|| (mode == ContentMode.LOW_FANTASY && form == MaterialForm.INGOT);
+					|| form == MaterialForm.INGOT;
 		}
+
 		if (BUILDING_FORMS.contains(form)) {
 			return true;
 		}
+
 		return true;
 	}
 
@@ -141,6 +141,7 @@ public final class ContentPolicy {
 		if (stack == null || stack.isEmpty() || stack.getItem().getRegistryName() == null) {
 			return true;
 		}
+
 		return allows(stack.getItem().getRegistryName());
 	}
 
@@ -148,62 +149,68 @@ public final class ContentPolicy {
 		if (id == null || !BaseMetals.MODID.equals(id.getNamespace())) {
 			return true;
 		}
+
 		final String material = materialFromPath(id.getPath());
+
 		if (material == null) {
 			return true;
 		}
+
 		MaterialForm form = MaterialForm.fromRegistryPath(id.getPath());
+
 		if (form == MaterialForm.OTHER && id.getPath().equals(material)) {
 			form = MaterialForm.FLUID;
 		}
+
 		return allows(material, form);
 	}
 
-	/** Resolves a recipe ID when a dynamic recipe has no representative output stack. */
+	/** Checks the recipe name when a dynamic recipe has no fixed output. */
 	public boolean allowsRecipeId(final ResourceLocation recipeId) {
 		if (recipeId == null || !BaseMetals.MODID.equals(recipeId.getNamespace())) {
 			return true;
 		}
+
 		final String material = materialFromPath(recipeId.getPath());
+
 		if (material == null) {
 			return true;
 		}
+
 		final String path = recipeId.getPath();
 		String remainder = path.startsWith("double_" + material + "_")
 				? path.substring(("double_" + material + "_").length())
 				: path.equals(material) ? "" : path.substring((material + "_").length());
 		MaterialForm form = MaterialForm.fromRegistryPath(path);
+
 		if (form == MaterialForm.OTHER) {
 			for (final MaterialForm candidate : MaterialForm.values()) {
 				final String token = candidate.name().toLowerCase(Locale.ROOT);
+
 				if (remainder.equals(token) || remainder.startsWith(token + "_")) {
 					form = candidate;
 					break;
 				}
 			}
 		}
+
 		return allows(material, form);
-	}
-
-	public boolean defaultsOreEnabled(final String material) {
-		return mode != ContentMode.REALISM || !MYTHICAL.contains(normalize(material));
-	}
-
-	public static boolean isMythical(final String material) {
-		return MYTHICAL.contains(normalize(material));
 	}
 
 	public static String materialFromPath(final String registryPath) {
 		if (registryPath == null) {
 			return null;
 		}
+
 		final String path = registryPath.toLowerCase(Locale.ROOT);
+
 		for (final String material : MATERIALS) {
 			if (path.equals(material) || path.startsWith(material + "_")
 					|| path.startsWith("double_" + material + "_")) {
 				return material;
 			}
 		}
+
 		return null;
 	}
 
@@ -211,20 +218,25 @@ public final class ContentPolicy {
 		if (FULL_TOOLS.contains(material)) {
 			return true;
 		}
+
 		if (MaterialNames.SILVER.equals(material)) {
 			return form == MaterialForm.SWORD;
 		}
+
 		if (MaterialNames.OBSIDIAN.equals(material)) {
 			return form == MaterialForm.AXE || form == MaterialForm.SWORD
 					|| form == MaterialForm.SCYTHE;
 		}
+
 		if (MaterialNames.DIAMOND.equals(material)) {
 			return form == MaterialForm.CRACKHAMMER || form == MaterialForm.SCYTHE
 					|| form == MaterialForm.SHEARS;
 		}
+
 		if (MaterialNames.STONE.equals(material)) {
 			return form == MaterialForm.CRACKHAMMER || form == MaterialForm.SCYTHE;
 		}
+
 		return MaterialNames.WOOD.equals(material) && form == MaterialForm.CRACKHAMMER;
 	}
 
@@ -238,7 +250,9 @@ public final class ContentPolicy {
 
 	private static Set<String> union(final Set<String> first, final Set<String> second) {
 		final Set<String> values = new LinkedHashSet<>(first);
+
 		values.addAll(second);
+
 		return Collections.unmodifiableSet(values);
 	}
 }

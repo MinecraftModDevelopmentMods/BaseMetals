@@ -1,3 +1,6 @@
+achievement.pewter_maker=Hartzinn
+achievement.pewter_maker.desc=Kombiniere Zinn-, Kupfer- und Bleipulver, um Hartzinn herzustellen.
+
 basemetals.crackhammer=Zerkleinerte Blöcke / Gegenstände
 
 #Creative Tabs
@@ -1831,13 +1834,11 @@ config.basemetals.category.forced_traits=Erzwungene Eigenschaften
 config.basemetals.category.forced_traits.tooltip=Die Registrierung von MMDLib-Eigenschaften für Base-Metals-Materialien erzwingen.
 config.basemetals.option.achievements=Erfolge
 config.basemetals.option.content_mode=Inhaltsmodus
-config.basemetals.option.content_mode.tooltip=High Fantasy, Low Fantasy oder Realismus wählen. Die ausgewählte Richtlinie wird nach einem Neustart von Minecraft wirksam.
+config.basemetals.option.content_mode.tooltip=High Fantasy oder Low Fantasy wählen. Die ausgewählte Richtlinie wird nach einem Neustart von Minecraft wirksam.
 config.basemetals.content_mode.high_fantasy=High Fantasy
 config.basemetals.content_mode.low_fantasy=Low Fantasy
-config.basemetals.content_mode.realism=Realismus
 config.basemetals.warning.content_mode.title=Inhaltsmodus von Base Metals ändern?
 config.basemetals.warning.content_mode.message=Von %s zu %s wechseln? Rezepte, Handel, Beute und Integrationen ändern sich nach dem Neustart.
-config.basemetals.warning.content_mode.realism=Von %s zu %s wechseln? Bestehende OreSpawn-Weltprofile bleiben erhalten; Regeln für Adamant, Kalteisen und Sternenstahl müssen bei Bedarf manuell deaktiviert werden.
 config.basemetals.warning.confirm=Speichern und später neu starten
 config.basemetals.warning.disable_ores.title=Aktion für OreSpawn-Regeln erforderlich
 config.basemetals.warning.disable_ores.message=Vor dem Neustart müssen diese Regeln in OreSpawn deaktiviert werden, da fehlende Ausgabeblöcke sonst den Anbieter ungültig machen: %s
@@ -1880,4 +1881,3 @@ config.basemetals.material.prismarine=Prismarin
 config.basemetals.material.redstone=Redstone
 config.basemetals.content_mode.high_fantasy.description=Alle historischen Inhalte und Beschaffungswege von Base Metals bleiben verfügbar.
 config.basemetals.content_mode.low_fantasy.description=Fantasymaterialien bleiben erhalten, aber unplausible Ausrüstungs- und Baurezepte werden ausgeblendet.
-config.basemetals.content_mode.realism.description=Die Low-Fantasy-Beschränkungen gelten, und der normale Erwerb mythischer Materialien ist deaktiviert.

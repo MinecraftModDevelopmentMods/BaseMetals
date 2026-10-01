@@ -1,4 +1,4 @@
-// Keep workflow validation close to the workflow contracts it protects.
+// Check that the GitHub workflows still run the required build and release checks.
 tasks.register('verifyWorkflowContracts') {
     group = 'verification'
     description = 'Validates pinned CI, tag, and multi-target release-dispatcher contracts.'
