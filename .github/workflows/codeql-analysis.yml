@@ -69,7 +69,7 @@ jobs:
           gradle_args=(
             clean classes
             -PlegacyDependencyVerificationRepository="${{ steps.dependencies.outputs.repository }}"
-            --no-daemon --stacktrace --max-workers=2
+            --no-daemon --no-build-cache --stacktrace --max-workers=2
             -Dorg.gradle.java.installations.paths="$JAVA_HOME,$JAVA_HOME_8_X64,$JAVA_HOME_25_X64"
             -Dorg.gradle.java.installations.auto-detect=false
             -Dorg.gradle.java.installations.auto-download=false

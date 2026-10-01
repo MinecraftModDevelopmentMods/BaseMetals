@@ -13,7 +13,8 @@ tasks.register('verifyWorkflowContracts') {
                 ],
                 'codeql-analysis.yml': [
                         'master-1.12', 'feature/**', 'github/codeql-action/init@',
-                        'stage-legacy-dependencies.sh', 'clean classes'
+                        'stage-legacy-dependencies.sh', 'clean classes',
+                        '--no-daemon --no-build-cache --stacktrace --max-workers=2'
                 ],
                 'validate-gradle-build.yml': [
                         'master-1.12', 'feature/**', 'gradle/actions/wrapper-validation@'
