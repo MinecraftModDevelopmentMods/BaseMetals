@@ -10,7 +10,7 @@
 		"item": "basemetals:antimony_ingot",
 		"count": 9
 	},
-	"group": "basics",
+	"group": "basemetals:antimony_ingot",
 	"conditions": [
 		{
 			"type": "forge:and",

@@ -1,0 +1,54 @@
+// Check that the GitHub workflows still run the required build and release checks.
+tasks.register('verifyWorkflowContracts') {
+    group = 'verification'
+    description = 'Validates pinned CI, tag, and multi-target release-dispatcher contracts.'
+    inputs.files(fileTree('.github/workflows') { include '*.yml' })
+    doLast {
+        Map<String, List<String>> required = [
+                'ci.yml': [
+                        'master-1.12', 'feature/**', 'Cold Forge bootstrap',
+                        'Build, test, and audit', 'stage-legacy-dependencies.sh',
+                        'packagedForgeRuntimeTest', 'prepareEclipse',
+                        'Verify reproducible release archives'
+                ],
+                'codeql-analysis.yml': [
+                        'master-1.12', 'feature/**', 'github/codeql-action/init@',
+                        'stage-legacy-dependencies.sh', 'clean classes'
+                ],
+                'validate-gradle-build.yml': [
+                        'master-1.12', 'feature/**', 'gradle/actions/wrapper-validation@'
+                ],
+                'release-on-tag.yml': [
+                        "tags:\n      - '*.*.*.*'", 'Build, test, and audit',
+                        'deploy-release.yml', '**Nothing has been published.**'
+                ],
+                'deploy-release.yml': [
+                        'master-1.12)', 'master-1.18)',
+                        'stage-legacy-dependencies.sh', 'stage-orespawn-release.sh',
+                        "mmdlib) curseforge_dependencies+=('261744(required)')",
+                        'confirm_live_publication'
+                ]
+        ]
+        required.each { name, fragments ->
+            File workflow = file(".github/workflows/${name}")
+            if (!workflow.isFile()) {
+                throw new GradleException("Missing workflow ${name}")
+            }
+            String text = workflow.getText('UTF-8').replace('\r\n', '\n')
+            List<String> missing = fragments.findAll { !text.contains(it) }
+            if (!missing.isEmpty()) {
+                throw new GradleException("${name} is missing contract fragments ${missing}")
+            }
+            text.eachLine { line ->
+                def match = line =~ /^\s*uses:\s*([^\s#]+)(?:\s+#.*)?$/
+                if (match.matches() && !(match.group(1) ==~ /[^@]+@[0-9a-f]{40}/)) {
+                    throw new GradleException("${name} has an unpinned action: ${line.trim()}")
+                }
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyWorkflowContracts')
+}

@@ -10,7 +10,7 @@
 		"item": "basemetals:aquarium_ingot",
 		"count": 9
 	},
-	"group": "basics",
+	"group": "basemetals:aquarium_ingot",
 	"conditions": [
 		{
 			"type": "forge:and",

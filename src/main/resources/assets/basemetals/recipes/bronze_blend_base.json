@@ -23,7 +23,7 @@
 			"ore": "dustTin"
 		}
 	],
-	"group": "alloys",
+	"group": "basemetals:bronze_blend",
 	"conditions": [
 		{
 			"type": "forge:and",

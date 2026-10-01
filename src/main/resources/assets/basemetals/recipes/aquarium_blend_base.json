@@ -23,7 +23,7 @@
 			"ore": "dustPrismarine"
 		}
 	],
-	"group": "alloys",
+	"group": "basemetals:aquarium_blend",
 	"conditions": [
 		{
 			"type": "forge:and",

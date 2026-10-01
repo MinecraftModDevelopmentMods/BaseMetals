@@ -1,0 +1,489 @@
+{
+  "schema_version": 5,
+  "provider_modid": "basemetals",
+  "provider_revision": 2,
+  "rocks": {},
+  "ores": {
+    "basemetals:legacy/coldiron_ore": {
+      "enabled": false,
+      "block": "basemetals:coldiron_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:coldiron_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimensions": {
+        "minecraft:the_nether": {
+          "enabled": true,
+          "min_y": 0,
+          "max_y": 127,
+          "frequency": 5.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/adamantine_ore": {
+      "enabled": false,
+      "block": "basemetals:adamantine_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:adamantine_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimensions": {
+        "minecraft:the_nether": {
+          "enabled": true,
+          "min_y": 0,
+          "max_y": 127,
+          "frequency": 2.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/starsteel_ore": {
+      "enabled": false,
+      "block": "basemetals:starsteel_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:starsteel_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimensions": {
+        "minecraft:the_end": {
+          "enabled": true,
+          "min_y": 0,
+          "max_y": 254,
+          "frequency": 5.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/copper_ore": {
+      "enabled": false,
+      "block": "basemetals:copper_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:copper_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimension_selectors": {
+        "orespawn:all_except_nether_end": {
+          "enabled": true,
+          "min_y": 0,
+          "max_y": 95,
+          "frequency": 10.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/silver_ore": {
+      "enabled": false,
+      "block": "basemetals:silver_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:silver_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimension_selectors": {
+        "orespawn:all_except_nether_end": {
+          "enabled": true,
+          "min_y": 0,
+          "max_y": 31,
+          "frequency": 4.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/tin_ore": {
+      "enabled": false,
+      "block": "basemetals:tin_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:tin_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimension_selectors": {
+        "orespawn:all_except_nether_end": {
+          "enabled": true,
+          "min_y": 0,
+          "max_y": 127,
+          "frequency": 10.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/lead_ore": {
+      "enabled": false,
+      "block": "basemetals:lead_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:lead_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimension_selectors": {
+        "orespawn:all_except_nether_end": {
+          "enabled": true,
+          "min_y": 0,
+          "max_y": 63,
+          "frequency": 5.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/zinc_ore": {
+      "enabled": false,
+      "block": "basemetals:zinc_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:zinc_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimension_selectors": {
+        "orespawn:all_except_nether_end": {
+          "enabled": true,
+          "min_y": 0,
+          "max_y": 95,
+          "frequency": 5.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/mercury_ore": {
+      "enabled": false,
+      "block": "basemetals:mercury_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:mercury_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimension_selectors": {
+        "orespawn:all_except_nether_end": {
+          "enabled": true,
+          "min_y": 0,
+          "max_y": 31,
+          "frequency": 3.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/nickel_ore": {
+      "enabled": false,
+      "block": "basemetals:nickel_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:nickel_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimension_selectors": {
+        "orespawn:all_except_nether_end": {
+          "enabled": true,
+          "min_y": 32,
+          "max_y": 95,
+          "frequency": 1.0,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    },
+    "basemetals:legacy/platinum_ore": {
+      "enabled": false,
+      "block": "basemetals:platinum_ore",
+      "native_generation": false,
+      "retrogen": false,
+      "outputs": [
+        {
+          "block": "basemetals:platinum_ore",
+          "weight": 100,
+          "min_y": -2048,
+          "max_y": 2048
+        }
+      ],
+      "dimension_selectors": {
+        "orespawn:all_except_nether_end": {
+          "enabled": true,
+          "min_y": 1,
+          "max_y": 31,
+          "frequency": 0.125,
+          "min_quantity": 4,
+          "max_quantity": 11,
+          "pattern": "default",
+          "height_distribution": "uniform",
+          "spread": 8,
+          "vertical_spread": 4,
+          "node_size": 8,
+          "host_blocks": [
+            "minecraft:stone",
+            "minecraft:netherrack",
+            "minecraft:end_stone"
+          ],
+          "host_tags": [],
+          "host_families": [],
+          "biome_ids": [],
+          "excluded_biome_ids": [],
+          "biome_dictionary": [],
+          "excluded_biome_dictionary": [],
+          "geomes": {},
+          "placement_channel": "orespawn:standard",
+          "discard_chance_on_air_exposure": 0.0
+        }
+      }
+    }
+  },
+  "fluid_deposits": {},
+  "geomes": {},
+  "biome_rules": {},
+  "terrain_dimensions": {},
+  "biome_palettes": {},
+  "dimension_materials": {},
+  "templates": {},
+  "merge_new_entries_into_existing_worlds": true
+}

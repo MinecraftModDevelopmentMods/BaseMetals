@@ -23,7 +23,7 @@
 			"ore": "dustZinc"
 		}
 	],
-	"group": "alloys",
+	"group": "basemetals:brass_blend",
 	"conditions": [
 		{
 			"type": "forge:and",

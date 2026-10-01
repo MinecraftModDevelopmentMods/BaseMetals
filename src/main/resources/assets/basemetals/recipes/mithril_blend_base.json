@@ -23,7 +23,7 @@
 			"ore": "ingotMercury"
 		}
 	],
-	"group": "alloys",
+	"group": "basemetals:mithril_blend",
 	"conditions": [
 		{
 			"type": "forge:and",

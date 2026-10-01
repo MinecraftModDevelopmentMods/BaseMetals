@@ -1,34 +1,82 @@
-# eclipse
-bin
-*.launch
-.settings
-.settings/*
-.metadata
-.classpath
-.project
+# Eclipse and Buildship
+**/bin/
+**/*.launch
+**/.settings/
+**/.metadata/
+**/.classpath
+**/.project
+**/.eclipse/
 
-# idea
-out
-*.ipr
-*.iws
-*.iml
-.idea
+# IntelliJ IDEA
+**/out/
+**/*.ipr
+**/*.iws
+**/*.iml
+**/.idea/
 
-# gradle
-build
-.gradle
+# Gradle and generated build output
+**/build/
+**/.gradle/
+**/classes/
+**/eclipse/
+**/mcmodsrepo/
 
-# other
-eclipse
-run
-classes
+# Minecraft runs, generated worlds, logs, crashes and profiles
+**/run/
+**/run-*/
+**/run.*/
+**/run-data/
+**/saves/
+**/world/
+!/src/test/resources/cofh/world/
+**/logs/
+**/crash-reports/
+**/*.log
+**/*.jfr
+**/*.hprof
+**/hs_err_pid*.log
+**/replay_pid*.log
+
+# Generated validation and test evidence
+**/benchmark-*/
+**/regression-*/
+**/evidence/
+**/evidence-*/
+**/*-evidence/
+**/validation.md
+**/development.md
+**/registry_audit.md
+**/registry-audit.md
+**/bugreport.md
+**/validation-*.md
+**/*-validation.md
+**/test-report*.md
+
+# Machine-specific agent context
+**/AGENTS.md
+**/AGENT.md
+**/agent-notes/
+**/.agent/
+**/.agents/
+**/.codex/
+**/.claude/
+**/.gemini/
+**/.cursor/
+**/.windsurf/
+**/.opencode/
+**/.copilot/
+**/.aider*
+**/copilot-instructions.md
+**/CLAUDE.md
+**/GEMINI.md
+**/agent-*.md
+**/codex-*.md
+
+# Local secrets and scratch dependencies
+**/secret.json
+**/libs/*
+!**/libs/README.txt
 
 /README.txt
 /forge-*-changelog.txt
-
-secret.json
-libs/*
-!/libs/README.txt
-
 .DS_Store
-bugreport.md

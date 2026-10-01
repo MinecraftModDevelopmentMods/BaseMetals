@@ -1,0 +1,122 @@
+import groovy.json.JsonSlurper
+
+def packagedForge = project.ext.baseMetalsPackagedForge
+def dependencySpecs = packagedForge.dependencySpecs
+def releaseJar = packagedForge.releaseJar
+def java8Launcher = packagedForge.java8Launcher
+def packagedRuntimeProbeJar = packagedForge.packagedRuntimeProbeJar
+def originalArtifact = packagedForge.originalArtifact
+def runtimeLogFailures = packagedForge.runtimeLogFailures
+def stagePackagedForgeBase = packagedForge.stagePackagedForgeBase
+
+// Migration profiles cover stock and customized OreSpawn 3 configurations.
+def migrationProfiles = [
+        Stock: [fixture: 'basemetals-stock.json', copper: true, nickelFrequency: 1.0D],
+        Custom: [fixture: 'basemetals-custom.json', copper: false, nickelFrequency: 2.5D]
+]
+
+migrationProfiles.each { profileName, migration ->
+    File runDirectory = file("${buildDir}/packaged-forge-migration-${profileName.toLowerCase()}-run")
+    File marker = new File(runDirectory, 'basemetals-runtime-probe.properties')
+    def prepareTask = tasks.register("preparePackagedForgeMigration${profileName}Runtime") {
+        group = 'verification'
+        dependsOn releaseJar
+        dependsOn packagedRuntimeProbeJar
+        dependsOn tasks.named('verifyReleaseDependencies')
+        doLast {
+            stagePackagedForgeBase(runDirectory)
+            File mods = new File(runDirectory, 'mods')
+            mods.mkdirs()
+            copy { from layout.buildDirectory.file("libs/BaseMetals-${project.version}.jar"); into mods }
+            copy { from layout.buildDirectory.file('runtime-probes/basemetals-runtime-probe.jar'); into mods }
+            [dependencySpecs.mmdlib, dependencySpecs.orespawn4].each { spec ->
+                copy {
+                    from originalArtifact(configurations.legacyDependencyArtifacts, spec.coordinate)
+                    into mods
+                }
+            }
+            File legacyDirectory = new File(runDirectory, 'config/orespawn3')
+            legacyDirectory.mkdirs()
+            copy {
+                from file("src/test/resources/orespawn3/${migration.fixture}")
+                into legacyDirectory
+                rename { 'basemetals.json' }
+            }
+        }
+    }
+
+    def previous = prepareTask
+    ['Fresh', 'Reload'].each { phase ->
+        def dependencyTask = previous
+        def processTask = tasks.register(
+                "packagedForgeMigration${profileName}${phase}Process", Exec) {
+            group = 'verification'
+            dependsOn dependencyTask
+            workingDir runDirectory
+            ByteArrayOutputStream console = new ByteArrayOutputStream()
+            doFirst {
+                console.reset()
+                marker.delete()
+                File javaExecutable = java8Launcher.get().executablePath.asFile
+                File forge = new File(runDirectory,
+                        "forge-${project.minecraft_version}-${project.forge_version}-universal.jar")
+                commandLine javaExecutable,
+                        '-Dforge.logging.console.level=info',
+                        "-Dbasemetals.probe.phase=${phase.toLowerCase()}",
+                        "-Dbasemetals.probe.expectedOrespawn=${project.orespawn4_version}",
+                        "-Dbasemetals.probe.marker=${marker.absolutePath}",
+                        '-jar', forge, 'nogui'
+                standardOutput = console
+                errorOutput = console
+            }
+            doLast {
+                new File(runDirectory,
+                        "migration-${profileName.toLowerCase()}-${phase.toLowerCase()}-console.txt")
+                        .setText(console.toString('UTF-8'), 'UTF-8')
+                if (!marker.isFile()) {
+                    throw new GradleException("${profileName} OS3 migration ${phase} probe failed")
+                }
+                File worldProfile = new File(runDirectory,
+                        'world/serverconfig/orespawn-worldgen.json')
+                File report = new File(runDirectory, 'config/orespawn-os3-migration-report.json')
+                if (!worldProfile.isFile() || !report.isFile()) {
+                    throw new GradleException("${profileName} OS3 migration did not write its profile/report")
+                }
+                def profile = new JsonSlurper().parse(worldProfile)
+                def rules = profile.ores.findAll { id, rule ->
+                    id.startsWith('basemetals:legacy/')
+                }
+                def copper = rules['basemetals:legacy/copper_ore']
+                def nickel = rules['basemetals:legacy/nickel_ore']
+                def nickelSettings = nickel.dimension_selectors['orespawn:all_except_nether_end']
+                if (rules.size() != 11 || copper.enabled != migration.copper
+                        || nickelSettings.frequency != migration.nickelFrequency) {
+                    throw new GradleException("${profileName} OS3 values were not preserved without duplicates")
+                }
+                String latestLog = new File(runDirectory, 'logs/latest.log').getText('UTF-8')
+                if (!(latestLog =~ /worldgen provider 'basemetals' revision [12] is active/)
+                        || !new File(runDirectory, 'config/orespawn3/basemetals.json').isFile()) {
+                    throw new GradleException("${profileName} OS3 migration was destructive or inactive")
+                }
+                List<String> failures = runtimeLogFailures(runDirectory)
+                if (!failures.isEmpty()) {
+                    throw new GradleException("${profileName} OS3 migration logged runtime failures:\n"
+                            + failures.take(20).join('\n'))
+                }
+            }
+        }
+        previous = processTask
+    }
+    tasks.register("packagedForgeMigration${profileName}RuntimeTest") {
+        group = 'verification'
+        description = "Migrates and reloads the ${profileName.toLowerCase()} OreSpawn 3 fixture."
+        dependsOn previous
+    }
+}
+
+tasks.register('packagedForgeMigrationRuntimeTest') {
+    group = 'verification'
+    description = 'Qualifies stock, customized, disabled, and reloaded OreSpawn 3 migrations.'
+    dependsOn tasks.named('packagedForgeMigrationStockRuntimeTest')
+    dependsOn tasks.named('packagedForgeMigrationCustomRuntimeTest')
+}

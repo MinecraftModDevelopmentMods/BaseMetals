@@ -19,17 +19,18 @@ public class MithrilToolProperty extends MMDMaterialPropertyBase {
 		return;
 	}
 
-    @Override
-    public void apply(ItemStack stack, EntityPlayer player) {
-    	apply(stack, (EntityLivingBase)player);
-    }
+	@Override
+	public void apply(ItemStack stack, EntityPlayer player) {
+		apply(stack, (EntityLivingBase) player);
+	}
 
 	@Override
 	public void apply(ItemStack stack, EntityLivingBase ent) {
-		if(hasEffect(stack, ent)) {
+		if (hasEffect(stack, ent)) {
 			if (ent.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD) {
 				final PotionEffect wither = new PotionEffect(MobEffects.WITHER, 60, 3);
 				final PotionEffect blind = new PotionEffect(MobEffects.BLINDNESS, 60, 1);
+
 				ent.addPotionEffect(wither);
 				ent.addPotionEffect(blind);
 			}
@@ -38,22 +39,23 @@ public class MithrilToolProperty extends MMDMaterialPropertyBase {
 
 	@Override
 	public boolean hasEffect(ItemStack stack) {
-		return false; // no effect for just the stack
+		return false;
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack, EntityPlayer player) { 
-		return hasEffect(stack, (EntityLivingBase)player);
+	public boolean hasEffect(ItemStack stack, EntityPlayer player) {
+		return hasEffect(stack, (EntityLivingBase) player);
 	}
 
 	@Override
 	public boolean hasEffect(ItemStack stack, EntityLivingBase ent) {
-		if(stack.getItem() instanceof IMMDObject) {
-			MMDMaterial mat = ((IMMDObject)stack.getItem()).getMMDMaterial();
-			return MaterialNames.MITHRIL.equals(mat.getName()) && (ent.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD);
+		if (stack.getItem() instanceof IMMDObject) {
+			MMDMaterial mat = ((IMMDObject) stack.getItem()).getMMDMaterial();
+
+			return MaterialNames.MITHRIL.equals(mat.getName())
+					&& (ent.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD);
 		} else {
 			return false;
 		}
 	}
-
 }

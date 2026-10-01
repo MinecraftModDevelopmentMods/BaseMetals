@@ -12,21 +12,21 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
+@Mod.EventBusSubscriber(modid = BaseMetals.MODID)
 public class VanillaFluids extends Fluids {
-	@SubscribeEvent(priority=EventPriority.HIGHEST)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void registerFluids(MMDLibRegisterFluids ev) {
-		// Vanilla Materials need to always have fluids available in case of tie-in mods
+		// Integration mods may need these fluids even when Base Metals adds no matching equipment.
 		Arrays.asList(MaterialNames.CHARCOAL, MaterialNames.COAL,
-				MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.ENDER, 
+				MaterialNames.DIAMOND, MaterialNames.EMERALD, MaterialNames.ENDER,
 				MaterialNames.GOLD, MaterialNames.IRON, MaterialNames.LAPIS,
 				MaterialNames.OBSIDIAN, MaterialNames.PRISMARINE, MaterialNames.QUARTZ,
-				MaterialNames.WOOD, MaterialNames.REDSTONE, MaterialNames.STONE, 
+				MaterialNames.WOOD, MaterialNames.REDSTONE, MaterialNames.STONE,
 				MaterialNames.REDSTONE).stream()
-		.filter(Options::isMaterialEnabled)
-		.filter(Options::isFluidEnabled).forEach(materialName -> {
-			addFluid(materialName, 2000, 10000, 769, 10);
-			addFluidBlock(materialName);
-		});
+				.filter(Options::isMaterialEnabled)
+				.filter(Options::isFluidEnabled).forEach(materialName -> {
+					addFluid(materialName, 2000, 10000, 769, 10);
+					addFluidBlock(materialName);
+				});
 	}
 }

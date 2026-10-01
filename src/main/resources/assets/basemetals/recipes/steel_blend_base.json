@@ -43,7 +43,7 @@
 			"ore": "dustCoal"
 		}
 	],
-	"group": "alloys",
+	"group": "basemetals:steel_blend",
 	"conditions": [
 		{
 			"type": "forge:and",

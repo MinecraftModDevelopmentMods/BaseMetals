@@ -5,7 +5,7 @@
   "description": "This mod adds historically common metals to Minecraft",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/MineCraftModDevelopmentMods/BaseMetals",
+  "url": "https://github.com/MinecraftModDevelopmentMods/BaseMetals",
   "updateUrl": "",
   "authorList": ["jriwanek", "dshadowwolf", "GetDizzy611 'Dizzy OM'"],
   "credits": "Cyanobacterium (aka DrCyano) For starting the project & geologists everywhere. SeqSEE for helping with shields. Vase of Petunias (aka TheUnknownFew) for creating Javadocs, YaibaToKen for Construct's Armory integration",

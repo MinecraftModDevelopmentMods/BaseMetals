@@ -1,0 +1,117 @@
+import groovy.json.JsonSlurper
+
+def packagedForge = project.ext.baseMetalsPackagedForge
+def dependencySpecs = packagedForge.dependencySpecs
+def releaseJar = packagedForge.releaseJar
+def java8Launcher = packagedForge.java8Launcher
+def packagedRuntimeProbeJar = packagedForge.packagedRuntimeProbeJar
+def originalArtifact = packagedForge.originalArtifact
+def runtimeLogFailures = packagedForge.runtimeLogFailures
+def stagePackagedForgeBase = packagedForge.stagePackagedForgeBase
+
+// The CoFH profile verifies coexistence with Base Metals OreSpawn rules disabled.
+File cofhRunDirectory = file("${buildDir}/packaged-forge-cofh-world-run")
+File cofhMarker = new File(cofhRunDirectory, 'basemetals-runtime-probe.properties')
+def prepareCoFH = tasks.register('preparePackagedForgeCoFHWorldRuntime') {
+    group = 'verification'
+    dependsOn releaseJar
+    dependsOn packagedRuntimeProbeJar
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doLast {
+        stagePackagedForgeBase(cofhRunDirectory)
+        File mods = new File(cofhRunDirectory, 'mods')
+        mods.mkdirs()
+        copy { from layout.buildDirectory.file("libs/BaseMetals-${project.version}.jar"); into mods }
+        copy { from layout.buildDirectory.file('runtime-probes/basemetals-runtime-probe.jar'); into mods }
+        [dependencySpecs.mmdlib, dependencySpecs.orespawn4, dependencySpecs.cofhcore,
+                dependencySpecs.cofhworld, dependencySpecs.redstoneflux].each { spec ->
+            copy {
+                from originalArtifact(configurations.legacyDependencyArtifacts, spec.coordinate)
+                into mods
+            }
+        }
+        File config = new File(cofhRunDirectory, 'config')
+        File cofhWorld = new File(config, 'cofh/world')
+        cofhWorld.mkdirs()
+        File cofhFixture = file('src/test/resources/cofh/world/99_basemetals_issue_448.json')
+        if (!cofhFixture.isFile()) {
+            throw new GradleException("Missing CoFH World test fixture: ${cofhFixture}")
+        }
+        copy {
+            from file('docs/examples/basemetals-orespawn-disabled.json')
+            into config
+            rename { 'basemetals-orespawn.json' }
+        }
+        copy {
+            from cofhFixture
+            into cofhWorld
+        }
+    }
+}
+
+def previousCoFH = prepareCoFH
+['Fresh', 'Reload'].each { phase ->
+    def dependencyTask = previousCoFH
+    def processTask = tasks.register("packagedForgeCoFHWorld${phase}Process", Exec) {
+        group = 'verification'
+        dependsOn dependencyTask
+        workingDir cofhRunDirectory
+        ByteArrayOutputStream console = new ByteArrayOutputStream()
+        doFirst {
+            console.reset()
+            cofhMarker.delete()
+            File javaExecutable = java8Launcher.get().executablePath.asFile
+            File forge = new File(cofhRunDirectory,
+                    "forge-${project.minecraft_version}-${project.forge_version}-universal.jar")
+            commandLine javaExecutable,
+                    '-Dforge.logging.console.level=info',
+                    "-Dbasemetals.probe.phase=${phase.toLowerCase()}",
+                    "-Dbasemetals.probe.expectedOrespawn=${project.orespawn4_version}",
+                    '-Dbasemetals.probe.expectedCoFHWorld=true',
+                    "-Dbasemetals.probe.marker=${cofhMarker.absolutePath}",
+                    '-jar', forge, 'nogui'
+            standardOutput = console
+            errorOutput = console
+        }
+        doLast {
+            new File(cofhRunDirectory, "cofh-${phase.toLowerCase()}-console.txt")
+                    .setText(console.toString('UTF-8'), 'UTF-8')
+            if (!cofhMarker.isFile()) {
+                throw new GradleException("CoFH World ${phase} probe marker is missing")
+            }
+            Properties result = new Properties()
+            cofhMarker.withInputStream { result.load(it) }
+            if (result.getProperty('cofhWorld') != 'true'
+                    || result.getProperty('managedOres') != '0'
+                    || Integer.parseInt(result.getProperty('cofhAntimony', '0')) <= 0) {
+                throw new GradleException("CoFH World ${phase} result is invalid: ${result}")
+            }
+            File worldProfile = new File(cofhRunDirectory,
+                    'world/serverconfig/orespawn-worldgen.json')
+            def profile = new JsonSlurper().parse(worldProfile)
+            def rules = profile.ores.findAll { id, rule -> id.startsWith('basemetals:legacy/') }
+            if (rules.size() != 11 || !rules.every { id, rule -> !rule.enabled }) {
+                throw new GradleException('The CoFH World profile did not keep every Base Metals rule disabled')
+            }
+            List<String> failures = runtimeLogFailures(cofhRunDirectory)
+            if (!failures.isEmpty()) {
+                throw new GradleException("CoFH World ${phase} logged runtime failures:\n"
+                        + failures.take(20).join('\n'))
+            }
+        }
+    }
+    previousCoFH = processTask
+}
+
+tasks.register('packagedForgeCoFHWorldRuntimeTest') {
+    group = 'verification'
+    description = 'Proves CoFH World can generate Base Metals ore while every OreSpawn rule is disabled.'
+    dependsOn previousCoFH
+}
+
+tasks.named('packagedForgeRuntimeTest') {
+    dependsOn tasks.named('packagedForgeMissingOreSpawnTest')
+    dependsOn tasks.named('packagedForgeOs3RejectionTest')
+    dependsOn tasks.named('packagedForgeMigrationRuntimeTest')
+    dependsOn tasks.named('packagedForgeCoFHWorldRuntimeTest')
+}

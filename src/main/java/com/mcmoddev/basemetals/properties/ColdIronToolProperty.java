@@ -17,37 +17,38 @@ public class ColdIronToolProperty extends MMDMaterialPropertyBase {
 		return;
 	}
 
-    @Override
-    public void apply(ItemStack stack, EntityPlayer player) {
-    	apply(stack, (EntityLivingBase)player);
-    }
+	@Override
+	public void apply(ItemStack stack, EntityPlayer player) {
+		apply(stack, (EntityLivingBase) player);
+	}
 
 	@Override
 	public void apply(ItemStack stack, EntityLivingBase ent) {
-		if(hasEffect(stack, ent)) {
+		if (hasEffect(stack, ent)) {
 			final DamageSource extraDamage = DamageSource.GENERIC;
+
 			ent.attackEntityFrom(extraDamage, 3f);
 		}
 	}
 
 	@Override
 	public boolean hasEffect(ItemStack stack) {
-		return false; // no effect for just the stack
+		return false;
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack, EntityPlayer player) { 
-		return hasEffect(stack, (EntityLivingBase)player);
+	public boolean hasEffect(ItemStack stack, EntityPlayer player) {
+		return hasEffect(stack, (EntityLivingBase) player);
 	}
 
 	@Override
 	public boolean hasEffect(ItemStack stack, EntityLivingBase ent) {
-		if(stack.getItem() instanceof IMMDObject) {
-			MMDMaterial mat = ((IMMDObject)stack.getItem()).getMMDMaterial();
+		if (stack.getItem() instanceof IMMDObject) {
+			MMDMaterial mat = ((IMMDObject) stack.getItem()).getMMDMaterial();
+
 			return MaterialNames.COLDIRON.equals(mat.getName()) && ent.isImmuneToFire();
 		} else {
 			return false;
 		}
 	}
-
 }

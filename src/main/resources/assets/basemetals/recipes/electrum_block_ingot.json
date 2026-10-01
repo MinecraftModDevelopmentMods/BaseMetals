@@ -10,7 +10,7 @@
 		"item": "basemetals:electrum_ingot",
 		"count": 9
 	},
-	"group": "basics",
+	"group": "basemetals:electrum_ingot",
 	"conditions": [
 		{
 			"type": "forge:and",

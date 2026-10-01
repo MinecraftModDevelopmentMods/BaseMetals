@@ -1,10 +1,7 @@
 package com.mcmoddev.lib.util;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.mcmoddev.lib.util.Config.Options;
@@ -13,21 +10,8 @@ class ConfigTests {
 
 	private static final String name = "TestMod";
 
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-		// MODID = BaseMetals.MODID
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
 	@AfterEach
-	void tearDown() throws Exception {
+	void clearOptions() {
 		Options.clearOptions();
 	}
 

@@ -1,0 +1,30 @@
+{
+  "dependencies": [
+    "basemetals",
+    "cofhworld"
+  ],
+  "namespace": "basemetals_issue_448",
+  "populate": {
+    "antimony": {
+      "enabled": true,
+      "distribution": "uniform",
+      "generator": {
+        "type": "cluster",
+        "block": "basemetals:antimony_ore",
+        "material": "minecraft:stone",
+        "cluster-size": 8
+      },
+      "cluster-count": 20,
+      "min-height": 5,
+      "max-height": 60,
+      "retrogen": false,
+      "biome": "all",
+      "dimension": {
+        "restriction": "whitelist",
+        "value": [
+          0
+        ]
+      }
+    }
+  }
+}

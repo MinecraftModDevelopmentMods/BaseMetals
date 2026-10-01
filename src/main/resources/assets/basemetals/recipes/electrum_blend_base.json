@@ -15,7 +15,7 @@
 			"ore": "dustSilver"
 		}
 	],
-	"group": "alloys",
+	"group": "basemetals:electrum_blend",
 	"conditions": [
 		{
 			"type": "forge:and",

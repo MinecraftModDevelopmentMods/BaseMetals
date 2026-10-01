@@ -1,0 +1,138 @@
+// Dependency coordinates live together so development and release checks use the same files.
+def curseCoordinate = { String slug, String projectId, String fileId ->
+    "curse.maven:${slug}-${projectId}:${fileId}".toString()
+}
+
+def dependencySpecs = [
+        mmdlib: [
+                coordinate: curseCoordinate('mmdlib', project.mmdlib_curse_project_id, project.mmdlib_curse_file_id),
+                version: project.mmdlib_version, sha256: project.mmdlib_sha256, required: true
+        ],
+        orespawn4: [
+                coordinate: curseCoordinate('mmd-orespawn', project.orespawn4_curse_project_id,
+                        project.orespawn4_curse_file_id),
+                version: project.orespawn4_version, sha256: project.orespawn4_sha256, required: true
+        ],
+        orespawn3: [
+                coordinate: curseCoordinate('mmd-orespawn', project.orespawn3_curse_project_id, project.orespawn3_curse_file_id),
+                version: project.orespawn3_version, sha256: project.orespawn3_sha256, required: false
+        ],
+        alt: [
+                coordinate: curseCoordinate('additional-loot-tables', project.alt_curse_project_id, project.alt_curse_file_id),
+                version: project.alt_version, sha256: project.alt_sha256, required: false
+        ],
+        mantle: [
+                coordinate: curseCoordinate('mantle', project.mantle_curse_project_id, project.mantle_curse_file_id),
+                version: project.mantle_version, sha256: project.mantle_sha256, required: false
+        ],
+        tconstruct: [
+                coordinate: curseCoordinate('tinkers-construct', project.tconstruct_curse_project_id, project.tconstruct_curse_file_id),
+                version: project.tconstruct_version, sha256: project.tconstruct_sha256, required: false
+        ],
+        taiga: [
+                coordinate: curseCoordinate('taiga-tinkers-alloying-addon', project.taiga_curse_project_id,
+                        project.taiga_curse_file_id),
+                version: project.taiga_version, sha256: project.taiga_sha256, required: false
+        ],
+        conarm: [
+                coordinate: curseCoordinate('constructs-armory', project.conarm_curse_project_id, project.conarm_curse_file_id),
+                version: project.conarm_version, sha256: project.conarm_sha256, required: false
+        ],
+        thaumcraft: [
+                coordinate: curseCoordinate('thaumcraft', project.thaumcraft_curse_project_id, project.thaumcraft_curse_file_id),
+                version: project.thaumcraft_version, sha256: project.thaumcraft_sha256, required: false
+        ],
+        baubles: [
+                coordinate: curseCoordinate('baubles', project.baubles_curse_project_id, project.baubles_curse_file_id),
+                version: project.baubles_version, sha256: project.baubles_sha256, required: false
+        ],
+        cofhcore: [
+                coordinate: curseCoordinate('cofh-core', project.cofhcore_curse_project_id, project.cofhcore_curse_file_id),
+                version: project.cofhcore_version, sha256: project.cofhcore_sha256, required: false
+        ],
+        cofhworld: [
+                coordinate: curseCoordinate('cofh-world', project.cofhworld_curse_project_id,
+                        project.cofhworld_curse_file_id),
+                version: project.cofhworld_version, sha256: project.cofhworld_sha256, required: false
+        ],
+        redstoneflux: [
+                coordinate: curseCoordinate('redstone-flux', project.redstoneflux_curse_project_id,
+                        project.redstoneflux_curse_file_id),
+                version: project.redstoneflux_version, sha256: project.redstoneflux_sha256, required: false
+        ],
+        ancientwarfare: [
+                coordinate: curseCoordinate('ancient-warfare-2', project.ancientwarfare_curse_project_id,
+                        project.ancientwarfare_curse_file_id),
+                version: project.ancientwarfare_version, sha256: project.ancientwarfare_sha256, required: false
+        ],
+        codechickenlib: [
+                coordinate: curseCoordinate('codechicken-lib-1-8', project.codechickenlib_curse_project_id,
+                        project.codechickenlib_curse_file_id),
+                version: project.codechickenlib_version, sha256: project.codechickenlib_sha256, required: false
+        ]
+]
+
+configurations {
+    legacyDependencyArtifacts {
+        canBeConsumed = false
+        canBeResolved = true
+        transitive = false
+    }
+    orespawn3FixtureArtifact {
+        canBeConsumed = false
+        canBeResolved = true
+        transitive = false
+    }
+    legacyBaselineArtifact {
+        canBeConsumed = false
+        canBeResolved = true
+        transitive = false
+    }
+}
+
+def mmdlibDevelopmentDependency = renamer.dependency(dependencySpecs.mmdlib.coordinate)
+def orespawn4DevelopmentDependency = renamer.dependency(dependencySpecs.orespawn4.coordinate)
+def mantleDevelopmentDependency = renamer.dependency(dependencySpecs.mantle.coordinate)
+def tconstructDevelopmentDependency = renamer.dependency(dependencySpecs.tconstruct.coordinate)
+
+dependencies {
+    implementation minecraft.dependency(
+            "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}")
+    compileOnly 'org.lwjgl.lwjgl:lwjgl_util:2.9.4-nightly-20150209'
+
+    implementation mmdlibDevelopmentDependency
+    compileOnly orespawn4DevelopmentDependency
+    runtimeOnly orespawn4DevelopmentDependency
+
+    compileOnly renamer.dependency(dependencySpecs.alt.coordinate)
+    compileOnly mantleDevelopmentDependency
+    compileOnly tconstructDevelopmentDependency
+    compileOnly renamer.dependency(dependencySpecs.conarm.coordinate)
+    compileOnly renamer.dependency(dependencySpecs.thaumcraft.coordinate)
+    compileOnly renamer.dependency(dependencySpecs.baubles.coordinate)
+    compileOnly renamer.dependency(dependencySpecs.cofhcore.coordinate)
+
+    testCompileOnly mantleDevelopmentDependency
+    testCompileOnly tconstructDevelopmentDependency
+    testCompileOnly orespawn4DevelopmentDependency
+
+    dependencySpecs.each { name, spec ->
+        if (name != 'orespawn3') {
+            legacyDependencyArtifacts spec.coordinate
+        }
+    }
+    orespawn3FixtureArtifact dependencySpecs.orespawn3.coordinate
+    legacyBaselineArtifact curseCoordinate('base-metals',
+            project.legacy_basemetals_curse_project_id,
+            project.legacy_basemetals_curse_file_id)
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+    testImplementation 'org.mockito:mockito-core:2.28.2'
+}
+
+ext.baseMetalsDependencies = [
+        specs          : dependencySpecs,
+        curseCoordinate: curseCoordinate
+].asImmutable()

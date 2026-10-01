@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.content.ContentPolicy;
+import com.mcmoddev.basemetals.content.MaterialForm;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.integration.IIntegration;
@@ -24,11 +26,7 @@ public final class BMeDenseOres extends com.mcmoddev.lib.integration.plugins.Den
 		registerOres();
 	}
 
-	/**
-	 * Register all ores that are currently known by the materials registry.
-	 *
-	 * @author Daniel Hazelton &lt;dshadowwolf@gmail.com&gt;
-	 */
+	/** Adds Dense Ores variants for ores allowed by the content mode. */
 	private static void registerOres() {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.BISMUTH, MaterialNames.COLDIRON,
@@ -38,16 +36,19 @@ public final class BMeDenseOres extends com.mcmoddev.lib.integration.plugins.Den
 
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
+				.filter(materialName -> ContentPolicy.active().allows(materialName, MaterialForm.ORE))
 				.forEach(materialName -> {
 					String baseMaterial;
+
 					switch (materialName) {
-						case MaterialNames.ADAMANTINE:
-						case MaterialNames.COLDIRON:
+						case MaterialNames.ADAMANTINE :
+						case MaterialNames.COLDIRON :
 							baseMaterial = Oredicts.NETHERRACK;
 							break;
-						default:
+						default :
 							baseMaterial = Oredicts.STONE;
 					}
+
 					registerOre(String.format("%s_%s", materialName, Oredicts.ORE), baseMaterial,
 							0);
 				});

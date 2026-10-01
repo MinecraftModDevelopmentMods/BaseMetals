@@ -6,6 +6,6 @@
 	},
 	"recipes": {
 		"variableOutputOre": "com.mcmoddev.lib.recipe.factories.ConfigVariedOutput",
-		"armor_repair": "com.mcmoddev.lib.recipe.factories.ArmorRepair"
+		"armor_repair": "com.mcmoddev.basemetals.recipe.PlateRepairFactory"
 	}
 }

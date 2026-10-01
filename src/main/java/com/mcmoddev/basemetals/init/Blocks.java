@@ -21,22 +21,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-/**
- * This class initializes all blocks in Base Metals.
- *
- * @author Jasmine Iwanek
- *
- */
-@Mod.EventBusSubscriber(modid=BaseMetals.MODID)
+/** Creates and registers Base Metals blocks. */
+@Mod.EventBusSubscriber(modid = BaseMetals.MODID)
 public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 	private Blocks() {
 		throw new IllegalAccessError(SharedStrings.NOT_INSTANTIABLE);
 	}
 
-	/**
-	 *
-	 */
+	/** Creates each material's block forms during MMDLib registration. */
 	@SubscribeEvent
 	public static void init(final MMDLibRegisterBlocks event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
@@ -85,18 +78,16 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 	private static void createMercury() {
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
+
 			create(Names.ORE, mercury);
+
 			if (mercury.hasBlock(Names.ORE)) {
 				mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
 			}
 		}
 	}
 
-	/**
-	 * Registers Blocks for this mod.
-	 *
-	 * @param event The Event.
-	 */
+	/** Adds the previously created blocks to Forge's block registry. */
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		Materials.getMaterialsByMod(BaseMetals.MODID).stream()
@@ -109,6 +100,6 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 			final ImmutableList<Block> blocks) {
 		blocks.stream().filter(
 				block -> block.getRegistryName().getNamespace().equals(BaseMetals.MODID))
-				.forEach( registry::register );
+				.forEach(registry::register);
 	}
 }

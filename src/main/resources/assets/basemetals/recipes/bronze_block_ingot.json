@@ -10,7 +10,7 @@
 		"item": "basemetals:bronze_ingot",
 		"count": 9
 	},
-	"group": "basics",
+	"group": "basemetals:bronze_ingot",
 	"conditions": [
 		{
 			"type": "forge:and",

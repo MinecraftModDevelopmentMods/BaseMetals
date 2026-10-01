@@ -20,7 +20,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeIC2.PLUGIN_MODID, versions = BMeIC2.PLUGIN_MODID + "@[2.8.57-ex112,)")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeIC2.PLUGIN_MODID, versions = BMeIC2.PLUGIN_MODID
+		+ "@[2.8.57-ex112,)")
 public final class BMeIC2 extends IC2 implements IIntegration {
 
 	private static final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
@@ -37,10 +38,7 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	/**
-	 *
-	 * @param event The Event.
-	 */
+	/** Registers IC2 processing recipes after Forge has created the recipe registry. */
 	@SubscribeEvent
 	public void mainInteraction(final RegistryEvent.Register<IRecipe> event) {
 
@@ -58,6 +56,7 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			final MMDMaterial diamond = Materials.getMaterialByName(MaterialNames.DIAMOND);
 			final String oreDictName = diamond.getCapitalizedName();
+
 			if (diamond.hasItem(Names.POWDER)) {
 				this.addMaceratorRecipe(Oredicts.ORE + oreDictName,
 						diamond.getItemStack(Names.POWDER, 2));
@@ -67,6 +66,7 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 		if (Materials.hasMaterial(MaterialNames.EMERALD)) {
 			final MMDMaterial emerald = Materials.getMaterialByName(MaterialNames.EMERALD);
 			final String oreDictName = emerald.getCapitalizedName();
+
 			if (emerald.hasItem(Names.POWDER)) {
 				this.addMaceratorRecipe(Oredicts.ORE + oreDictName,
 						emerald.getItemStack(Names.POWDER, 2));
@@ -76,9 +76,7 @@ public final class BMeIC2 extends IC2 implements IIntegration {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	/**
-	 *
-	 */
+	/** Adds the Forge Hammer conversions during integration initialization. */
 	@SubscribeEvent
 	public void doHammerRecipes(final IntegrationInitEvent event) {
 		materials.stream().filter(Materials::hasMaterial)

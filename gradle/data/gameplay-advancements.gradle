@@ -1,0 +1,73 @@
+import groovy.json.JsonOutput
+
+// Keep the historical names and IDs so these achievements carry forward to newer ports.
+def definitions = [
+        this_is_new      : ['minecraft:story/smelt_iron', 'minecraft:iron_ingot', 'task'],
+        blocktastic      : ['basemetals:this_is_new', 'minecraft:iron_block', 'task'],
+        geologist        : ['basemetals:this_is_new', 'minecraft:iron_pickaxe', 'task'],
+        metallurgy       : ['basemetals:geologist', 'minecraft:cauldron', 'task'],
+        aquarium_maker   : ['basemetals:metallurgy', 'basemetals:aquarium_ingot', 'goal'],
+        brass_maker      : ['basemetals:metallurgy', 'basemetals:brass_ingot', 'goal'],
+        bronze_maker     : ['basemetals:metallurgy', 'basemetals:bronze_ingot', 'goal'],
+        cupronickel_maker: ['basemetals:metallurgy', 'basemetals:cupronickel_ingot', 'goal'],
+        electrum_maker   : ['basemetals:metallurgy', 'basemetals:electrum_ingot', 'goal'],
+        invar_maker      : ['basemetals:metallurgy', 'basemetals:invar_ingot', 'goal'],
+        mithril_maker    : ['basemetals:metallurgy', 'basemetals:mithril_ingot', 'goal'],
+        pewter_maker     : ['basemetals:metallurgy', 'basemetals:pewter_ingot', 'goal'],
+        steel_maker      : ['basemetals:metallurgy', 'basemetals:steel_ingot', 'goal'],
+        angel_of_death   : ['basemetals:mithril_maker', 'basemetals:mithril_sword', 'challenge'],
+        scuba_diver      : ['basemetals:aquarium_maker', 'basemetals:aquarium_helmet', 'challenge'],
+        demon_slayer     : ['minecraft:story/enter_the_nether', 'basemetals:coldiron_sword', 'challenge'],
+        juggernaut       : ['minecraft:story/enter_the_nether', 'basemetals:adamantine_chestplate', 'challenge'],
+        moon_boots       : ['minecraft:end/root', 'basemetals:starsteel_boots', 'challenge']
+].asImmutable()
+
+def equipmentMaterials = [
+        angel_of_death: 'mithril', scuba_diver: 'aquarium',
+        demon_slayer: 'coldiron', juggernaut: 'adamantine'
+]
+def outputDirectory = layout.buildDirectory.dir('generated-resources/gameplay-advancements')
+
+def generate = tasks.register('generateGameplayAdvancements') {
+    group = 'build'
+    description = 'Restores the 18 historical achievements as configuration-aware advancements.'
+    inputs.property('definitions', definitions)
+    inputs.property('equipmentMaterials', equipmentMaterials)
+    outputs.dir(outputDirectory)
+    doLast {
+        File root = outputDirectory.get().asFile
+        project.delete(root)
+        definitions.each { id, definition ->
+            String parent = definition[0]
+            String icon = definition[1]
+            List<String> requiredItems = [icon]
+            if (equipmentMaterials.containsKey(id)) {
+                String material = equipmentMaterials[id]
+                requiredItems.addAll(['helmet', 'chestplate', 'leggings', 'boots'].collect {
+                    "basemetals:${material}_${it}".toString()
+                })
+            }
+            if (parent.startsWith('basemetals:')) {
+                requiredItems.add(definitions[parent.substring('basemetals:'.length())][1])
+            }
+            Map advancement = [
+                    parent: parent,
+                    display: [
+                            icon: [item: icon],
+                            title: [translate: "achievement.${id}"],
+                            description: [translate: "achievement.${id}.desc"],
+                            frame: definition[2], show_toast: true, announce_to_chat: true
+                    ],
+                    criteria: [event: [trigger: 'minecraft:impossible']],
+                    conditions: [[type: 'basemetals:achievement', items: requiredItems.unique()]]
+            ]
+            File output = new File(root, "assets/basemetals/advancements/${id}.json")
+            output.parentFile.mkdirs()
+            output.setText(JsonOutput.prettyPrint(JsonOutput.toJson(advancement)) + '\n', 'UTF-8')
+        }
+    }
+}
+
+sourceSets.main.resources.srcDir(outputDirectory)
+tasks.named('processResources') { dependsOn generate }
+tasks.named('sourcesJar') { dependsOn generate }

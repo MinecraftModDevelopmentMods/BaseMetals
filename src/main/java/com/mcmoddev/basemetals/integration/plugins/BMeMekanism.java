@@ -44,10 +44,7 @@ public final class BMeMekanism extends Mekanism implements IIntegration {
 		return !Materials.getMaterialByName(materialName).isEmpty();
 	}
 
-	/**
-	 *
-	 * @param event The Event.
-	 */
+	/** Registers Mekanism's ore-multiplication recipes. */
 	@SubscribeEvent
 	public void regCallback(final RegistryEvent.Register<IRecipe> event) {
 
@@ -57,6 +54,7 @@ public final class BMeMekanism extends Mekanism implements IIntegration {
 		if (Materials.hasMaterial(MaterialNames.DIAMOND)) {
 			this.addVanillaOreMultiplicationRecipes(MaterialNames.DIAMOND);
 		}
+
 		if (Materials.hasMaterial(MaterialNames.EMERALD)) {
 			this.addVanillaOreMultiplicationRecipes(MaterialNames.EMERALD);
 		}
@@ -70,10 +68,12 @@ public final class BMeMekanism extends Mekanism implements IIntegration {
 				addCrusherRecipe(material.getBlockItemStack(Names.ORE),
 						material.getItemStack(Names.INGOT, 2));
 			}
+
 			if (material.hasItem(Names.INGOT) && (material.hasItem(Names.POWDER))) {
 				addCrusherRecipe(material.getItemStack(Names.INGOT),
 						material.getItemStack(Names.POWDER));
 			}
+
 			if (material.hasBlock(Names.ORE) && (material.hasItem(Names.POWDER))) {
 				addPurificationChamberRecipe(material.getBlockItemStack(Names.ORE),
 						material.getItemStack(Names.POWDER, 2));

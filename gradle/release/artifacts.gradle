@@ -1,0 +1,252 @@
+import groovy.json.JsonSlurper
+import java.nio.charset.StandardCharsets
+import java.util.jar.Manifest
+import java.util.zip.ZipFile
+
+def buildContract = project.ext.baseMetalsBuild
+def verification = project.ext.baseMetalsVerification
+def expectedMavenCoordinate = buildContract.mavenCoordinate
+def archiveTextSuffixes = buildContract.archiveTextSuffixes
+def expectedReleaseFiles = verification.expectedReleaseFiles
+def preparedReleaseDir = verification.preparedReleaseDir
+def sha256 = verification.sha256
+
+// These tasks inspect the files that would actually be published.
+tasks.register('verifyReleaseArtifacts') {
+    group = 'verification'
+    description = 'Audits deterministic jars, legacy inventory, bytecode, metadata, and package isolation.'
+    dependsOn tasks.named('assemble')
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doLast {
+        File libs = layout.buildDirectory.dir('libs').get().asFile
+        List<String> expected = expectedReleaseFiles.get().sort()
+        List<File> jars = (libs.listFiles() ?: [] as File[])
+                .findAll { it.name.endsWith('.jar') }
+                .sort { it.name }
+        if (jars.collect { it.name } != expected || jars.any { it.length() == 0L }) {
+            throw new GradleException("Release directory must contain exactly ${expected}; found ${jars*.name}")
+        }
+
+        File mainJar = new File(libs, "BaseMetals-${project.version}.jar")
+        ZipFile zip = new ZipFile(mainJar)
+        try {
+            List<String> names = zip.entries().collect { it.name }
+            List<String> forbiddenNames = names.findAll { name ->
+                name.startsWith('com/mcmoddev/lib/')
+                        || name.startsWith('net/minecraft/')
+                        || name.startsWith('net/minecraftforge/')
+                        || name.startsWith('org/junit/')
+                        || name.contains('/test/')
+                        || name.toLowerCase().contains('fixture')
+                        || name.toLowerCase().contains('agent')
+                        || name.toLowerCase().contains('runtimeprobe')
+            }
+            if (!forbiddenNames.isEmpty()) {
+                throw new GradleException("Release jar contains forbidden entries: ${forbiddenNames.take(20)}")
+            }
+
+            zip.entries().findAll { it.name.endsWith('.class') }.each { entry ->
+                byte[] header = new byte[8]
+                zip.getInputStream(entry).withCloseable { input ->
+                    if (input.read(header) != header.length) {
+                        throw new GradleException("Cannot inspect bytecode header for ${entry.name}")
+                    }
+                }
+                int major = ((header[6] & 0xff) << 8) | (header[7] & 0xff)
+                if (major != 52) {
+                    throw new GradleException("${entry.name} uses Java class major ${major}, expected 52")
+                }
+            }
+
+            def manifestEntry = zip.getEntry('META-INF/MANIFEST.MF')
+            def manifest = manifestEntry == null ? null
+                    : new Manifest(zip.getInputStream(manifestEntry)).mainAttributes
+            if (manifest == null
+                    || manifest.getValue('Maven-Artifact') != expectedMavenCoordinate
+                    || manifest.getValue('Implementation-Version') != project.mod_version
+                    || manifest.getValue('Timestamp') != null
+                    || manifest.getValue('Built-On') != '1.12.2-14.23.5.2859') {
+                throw new GradleException('Release manifest identity is incomplete or volatile')
+            }
+
+            def metadataEntry = zip.getEntry('mcmod.info')
+            if (metadataEntry == null) {
+                throw new GradleException('Release jar is missing mcmod.info')
+            }
+            def metadata = new JsonSlurper().parseText(
+                    zip.getInputStream(metadataEntry).getText(StandardCharsets.UTF_8.name()))
+            def mod = metadata instanceof List ? metadata.find { it.modid == 'basemetals' } : metadata
+            if (mod == null || mod.version != project.mod_version || mod.mcversion != project.minecraft_version) {
+                throw new GradleException('Packaged mcmod.info has the wrong mod or target version')
+            }
+            if (zip.getEntry('com/mcmoddev/basemetals/worldgen/BaseMetalsWorldgenProvider.class') == null
+                    || zip.getEntry('assets/basemetals/orespawn/provider.json') != null
+                    || zip.getEntry('assets/basemetals/orespawn/basemetals.json') != null
+                    || names.any { it.contains('/integration/orespawn/')
+                        || it.startsWith('com/mcmoddev/orespawn/') }) {
+                throw new GradleException('Release jar does not contain only the API-built OreSpawn 4.1 provider')
+            }
+
+            List<String> leakedPaths = []
+            zip.entries().findAll { entry -> archiveTextSuffixes.any { entry.name.endsWith(it) } }.each { entry ->
+                String text = zip.getInputStream(entry).getText(StandardCharsets.UTF_8.name())
+                if (text =~ /(?i)([A-Z]:\\Users\\|[A-Z]:\\BaseMetals|\/home\/runner\/|\/Users\/)/) {
+                    leakedPaths.add(entry.name)
+                }
+            }
+            if (!leakedPaths.isEmpty()) {
+                throw new GradleException("Release jar leaks local paths in ${leakedPaths}")
+            }
+        } finally {
+            zip.close()
+        }
+
+        def baselineArtifacts = configurations.legacyBaselineArtifact.resolvedConfiguration.resolvedArtifacts
+        if (baselineArtifacts.size() != 1) {
+            throw new GradleException("Expected one released Base Metals baseline, found ${baselineArtifacts.size()}")
+        }
+        File baseline = baselineArtifacts.first().file
+        String baselineHash = sha256(baseline)
+        if (baselineHash != project.legacy_basemetals_sha256) {
+            throw new GradleException("Released baseline SHA-256 is ${baselineHash}, expected "
+                    + project.legacy_basemetals_sha256)
+        }
+        def entryInventory = { File jarFile ->
+            ZipFile candidate = new ZipFile(jarFile)
+            try {
+                candidate.entries().findAll { !it.isDirectory() }.collect { it.name }.sort()
+            } finally {
+                candidate.close()
+            }
+        }
+        List<String> currentInventory = entryInventory(mainJar)
+        List<String> legacyInventory = entryInventory(baseline)
+        List<String> allowedAddedEntries = [
+                // Base Metals' steel rail alternative previously had no
+                // recipe-book discovery advancement.
+                'assets/basemetals/advancements/recipes/transportation/rail.json',
+                // Forge loads this factory before evaluating the copied recipe
+                // conditions on generated recipe-book advancements.
+                'assets/basemetals/advancements/_factories.json',
+                // Restores the historical gameplay achievements on Forge 1.12.
+                'com/mcmoddev/basemetals/advancement/AchievementCondition.class',
+                'com/mcmoddev/basemetals/advancement/GameplayAdvancements.class',
+                // Replaces MMDLib's client-only 1.12 crossbow firing path.
+                'com/mcmoddev/basemetals/items/ItemBaseMetalsCrossbow.class',
+                // Includes both launcher and ammunition materials in shot damage.
+                'com/mcmoddev/basemetals/items/ItemBaseMetalsArrow.class',
+                'com/mcmoddev/basemetals/items/ItemBaseMetalsBolt.class',
+                'com/mcmoddev/basemetals/items/ItemBaseMetalsBow.class',
+                // Returns the tool-material name expected by Ancient Warfare 2.
+                'com/mcmoddev/basemetals/items/ItemBaseMetalsHoe.class',
+                'com/mcmoddev/basemetals/items/MaterialRangedDamage.class',
+                // Replaces MMDLib's reference to a nonexistent bolt texture.
+                'com/mcmoddev/basemetals/client/renderer/RenderBaseMetalsBolt.class',
+                // Adds Base Metals config screens to OreSpawn's cog button.
+                'com/mcmoddev/basemetals/client/config/BaseMetalsConfigScreen.class',
+                'com/mcmoddev/basemetals/client/config/BaseMetalsConfigScreen$CategoryElement.class',
+                'com/mcmoddev/basemetals/client/config/BaseMetalsConfigScreen$CategoryEntry.class',
+                'com/mcmoddev/basemetals/client/config/BaseMetalsConfigScreen$CategoryScreen.class',
+                // Connects the same screen to Forge's Mods-list Config button.
+                'com/mcmoddev/basemetals/client/config/BaseMetalsGuiFactory.class',
+                // Content modes, recipe and loot filtering, and the connection check.
+                'com/mcmoddev/basemetals/content/ContentMode.class',
+                'com/mcmoddev/basemetals/content/ContentPolicy.class',
+                'com/mcmoddev/basemetals/content/MaterialForm.class',
+                'com/mcmoddev/basemetals/loot/ContentModeLootCondition.class',
+                'com/mcmoddev/basemetals/loot/ContentModeLootCondition$Serializer.class',
+                'com/mcmoddev/basemetals/network/ClientContentModeConnectionHandler.class',
+                'com/mcmoddev/basemetals/network/ContentModeMessage.class',
+                'com/mcmoddev/basemetals/network/ContentModeNetwork.class',
+                'com/mcmoddev/basemetals/network/ContentModeNetwork$ServerHandler.class',
+                'com/mcmoddev/basemetals/recipe/ContentAcquisitionFilters.class',
+				'com/mcmoddev/basemetals/recipe/PlateRepairFactory.class',
+				'com/mcmoddev/basemetals/recipe/PlateRepairRecipe.class',
+				'com/mcmoddev/basemetals/recipe/PolicyCrusherRecipe.class',
+                'com/mcmoddev/basemetals/recipe/PolicyRecipe.class',
+                'com/mcmoddev/basemetals/worldgen/BaseMetalsWorldgenProvider.class',
+                'assets/mmdlib/lang/en_us.lang',
+                'assets/mmdlib/lang/es_es.lang'
+        ]
+        List<String> allowedRemovedEntries = [
+                // The historical CurseForge jar was signed and carried FML's
+                // generated cache. Neither belongs in a reproducible rebuild.
+                'META-INF/MINECRAF.RSA',
+                'META-INF/MINECRAF.SF',
+                'META-INF/fml_cache_annotation.json',
+                'META-INF/fml_cache_class_versions.json',
+                'com/mcmoddev/orespawn/BaseMetalsOreSpawn.class',
+                'com/mcmoddev/orespawn/package-info.class',
+                'assets/basemetals/orespawn/basemetals.json',
+                // These classes were removed after 2.5.0-rc2.332.
+                'com/mcmoddev/basemetals/items/MMDToolEffects.class',
+                'com/mcmoddev/basemetals/items/package-info.class'
+        ]
+        List<String> generatedRecipeAdvancements = currentInventory.findAll { String entry ->
+            entry ==~ /assets\/basemetals\/advancements\/recipes\/materials\/[^\/]+\/[^\/]+\.json/
+        }
+        allowedAddedEntries.addAll([
+                'this_is_new', 'blocktastic', 'geologist', 'metallurgy',
+                'aquarium_maker', 'brass_maker', 'bronze_maker', 'cupronickel_maker',
+                'electrum_maker', 'invar_maker', 'mithril_maker', 'pewter_maker', 'steel_maker',
+                'angel_of_death', 'scuba_diver', 'demon_slayer', 'juggernaut', 'moon_boots'
+        ].collect { "assets/basemetals/advancements/${it}.json".toString() })
+        List<String> unexpectedAdded = (currentInventory - legacyInventory) \
+                - allowedAddedEntries - generatedRecipeAdvancements
+        List<String> unexpectedRemoved = (legacyInventory - currentInventory) - allowedRemovedEntries
+        if (!unexpectedAdded.isEmpty() || !unexpectedRemoved.isEmpty()
+                || !allowedAddedEntries.every { currentInventory.contains(it) }
+                || !allowedRemovedEntries.every { legacyInventory.contains(it) }) {
+            throw new GradleException("Release inventory drifted from ${project.legacy_basemetals_version}; "
+                    + "added=${unexpectedAdded.take(20)}, removed=${unexpectedRemoved.take(20)}")
+        }
+    }
+}
+tasks.register('writeReleaseChecksums') {
+    group = 'verification'
+    description = 'Writes SHA-256 checksums for the audited release jars.'
+    dependsOn tasks.named('verifyReleaseArtifacts')
+    def outputFile = layout.buildDirectory.file('release/SHA256SUMS')
+    inputs.files(providers.provider {
+        expectedReleaseFiles.get().collect { name ->
+            layout.buildDirectory.file("libs/${name}").get().asFile
+        }
+    })
+    outputs.file(outputFile)
+    doLast {
+        File output = outputFile.get().asFile
+        output.parentFile.mkdirs()
+        File libs = layout.buildDirectory.dir('libs').get().asFile
+        String contents = expectedReleaseFiles.get().sort().collect { name ->
+            "${sha256(new File(libs, name))}  ${name}"
+        }.join(System.lineSeparator()) + System.lineSeparator()
+        output.setText(contents, 'UTF-8')
+    }
+}
+
+tasks.register('verifyPreparedReleaseArtifacts') {
+    group = 'verification'
+    description = 'Audits a previously built immutable release bundle before publication.'
+    doLast {
+        if (!preparedReleaseDir.isPresent()) {
+            throw new GradleException('preparedReleaseDir is required for prepared artifact publication')
+        }
+        File prepared = file(preparedReleaseDir.get())
+        List<String> expected = expectedReleaseFiles.get().sort()
+        List<File> jars = (prepared.listFiles() ?: [] as File[])
+                .findAll { it.name.endsWith('.jar') }.sort { it.name }
+        if (jars.collect { it.name } != expected || jars.any { it.length() == 0L }) {
+            throw new GradleException("Prepared release must contain exactly ${expected}")
+        }
+        File checksums = new File(prepared, 'SHA256SUMS')
+        File changelog = new File(prepared, 'CHANGELOG.txt')
+        if (!checksums.isFile() || !changelog.isFile()) {
+            throw new GradleException('Prepared release is missing SHA256SUMS or CHANGELOG.txt')
+        }
+        List<String> actual = jars.collect { "${sha256(it)}  ${it.name}" }.sort()
+        List<String> declared = checksums.readLines('UTF-8').findAll { !it.trim().isEmpty() }.sort()
+        if (actual != declared) {
+            throw new GradleException('Prepared release checksums do not match the immutable jars')
+        }
+    }
+}

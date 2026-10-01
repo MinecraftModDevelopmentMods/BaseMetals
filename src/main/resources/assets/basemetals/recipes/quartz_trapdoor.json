@@ -5,13 +5,12 @@
 		"data": 0
 	},
 	"pattern": [
-		"xx",
-		"xx"
+		"x"
 	],
 	"key": {
 		"x": {
 			"type": "forge:ore_dict",
-			"ore": "gemQuartz"
+			"ore": "blockQuartz"
 		}
 	},
 	"conditions": [
@@ -36,5 +35,5 @@
 			]
 		}
 	],
-	"group": "vanilla"
+	"group": "basemetals:quartz_trapdoor"
 }

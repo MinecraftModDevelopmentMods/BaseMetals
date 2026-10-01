@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.content.ContentPolicy;
+import com.mcmoddev.basemetals.content.MaterialForm;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -19,8 +21,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeThermalExpansion.PLUGIN_MODID,
-           versions = BMeThermalExpansion.PLUGIN_MODID + "@(,5.3.12.17];")
+@MMDPlugin(addonId = BaseMetals.MODID, pluginId = BMeThermalExpansion.PLUGIN_MODID, versions = BMeThermalExpansion.PLUGIN_MODID
+		+ "@(,5.3.12.17];")
 public final class BMeThermalExpansion extends ThermalExpansion implements IIntegration {
 
 	@Override
@@ -32,10 +34,7 @@ public final class BMeThermalExpansion extends ThermalExpansion implements IInte
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	/**
-	 *
-	 * @param event The Event.
-	 */
+	/** Registers Thermal processing and alloy recipes allowed by the content policy. */
 	@SubscribeEvent
 	public void regShit(final RegistryEvent.Register<IRecipe> event) {
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
@@ -47,11 +46,27 @@ public final class BMeThermalExpansion extends ThermalExpansion implements IInte
 		materials.stream().filter(Materials::hasMaterial)
 				.filter(materialName -> !Materials.getMaterialByName(materialName).isEmpty())
 				.forEach(materialName -> {
-					addFurnace(materialName);
-					addCrucible(materialName);
-					addPlatePress(materialName);
-					addPressStorage(materialName);
-					addPulverizer(materialName);
+					final ContentPolicy policy = ContentPolicy.active();
+
+					if (policy.allows(materialName, MaterialForm.INGOT)) {
+						addFurnace(materialName);
+					}
+
+					if (policy.allows(materialName, MaterialForm.FLUID)) {
+						addCrucible(materialName);
+					}
+
+					if (policy.allows(materialName, MaterialForm.PLATE)) {
+						addPlatePress(materialName);
+					}
+
+					if (policy.allows(materialName, MaterialForm.BLOCK)) {
+						addPressStorage(materialName);
+					}
+
+					if (policy.allows(materialName, MaterialForm.POWDER)) {
+						addPulverizer(materialName);
+					}
 				});
 
 		final MMDMaterial brass = Materials.getMaterialByName(MaterialNames.BRASS);
@@ -62,21 +77,24 @@ public final class BMeThermalExpansion extends ThermalExpansion implements IInte
 		final MMDMaterial tin = Materials.getMaterialByName(MaterialNames.TIN);
 		final MMDMaterial bronze = Materials.getMaterialByName(MaterialNames.BRONZE);
 
-		if (hasMaterials(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS)
+		if (ContentPolicy.active().allows(MaterialNames.BRASS, MaterialForm.INGOT)
+				&& hasMaterials(MaterialNames.COPPER, MaterialNames.ZINC, MaterialNames.BRASS)
 				&& materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.ZINC,
 						MaterialNames.BRASS), Names.INGOT.toString())) {
 			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 2),
 					zinc.getItemStack(Names.INGOT, 1), brass.getItemStack(Names.INGOT, 3));
 		}
 
-		if (hasMaterials(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL)
+		if (ContentPolicy.active().allows(MaterialNames.CUPRONICKEL, MaterialForm.INGOT)
+				&& hasMaterials(MaterialNames.COPPER, MaterialNames.NICKEL, MaterialNames.CUPRONICKEL)
 				&& materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.NICKEL,
 						MaterialNames.CUPRONICKEL), Names.INGOT.toString())) {
 			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3),
 					nickel.getItemStack(Names.INGOT, 1), cupronickel.getItemStack(Names.INGOT, 4));
 		}
 
-		if (hasMaterials(MaterialNames.COPPER, MaterialNames.TIN, MaterialNames.BRONZE)
+		if (ContentPolicy.active().allows(MaterialNames.BRONZE, MaterialForm.INGOT)
+				&& hasMaterials(MaterialNames.COPPER, MaterialNames.TIN, MaterialNames.BRONZE)
 				&& materialsHaveItems(Arrays.asList(MaterialNames.COPPER, MaterialNames.TIN,
 						MaterialNames.BRONZE), Names.INGOT.toString())) {
 			ThermalExpansionHelper.addSmelterRecipe(4000, copper.getItemStack(Names.INGOT, 3),
@@ -94,6 +112,7 @@ public final class BMeThermalExpansion extends ThermalExpansion implements IInte
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -103,6 +122,7 @@ public final class BMeThermalExpansion extends ThermalExpansion implements IInte
 				return false;
 			}
 		}
+
 		return true;
 	}
 }

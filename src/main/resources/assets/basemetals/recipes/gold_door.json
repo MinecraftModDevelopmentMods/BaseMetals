@@ -7,6 +7,7 @@
 	},
 	"pattern": [
 		"xx",
+		"xx",
 		"xx"
 	],
 	"key": {
@@ -37,5 +38,5 @@
 			]
 		}
 	],
-	"group": "vanilla"
+	"group": "basemetals:gold_door"
 }
