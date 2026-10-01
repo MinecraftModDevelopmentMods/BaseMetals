@@ -13,7 +13,8 @@ tasks.register('verifyWorkflowContracts') {
                 ],
                 'codeql-analysis.yml': [
                         'master-1.12', 'feature/**', 'github/codeql-action/init@',
-                        'stage-legacy-dependencies.sh', 'clean classes'
+                        'stage-legacy-dependencies.sh', 'clean classes',
+                        '--no-daemon --no-build-cache --stacktrace --max-workers=2'
                 ],
                 'validate-gradle-build.yml': [
                         'master-1.12', 'feature/**', 'gradle/actions/wrapper-validation@'
@@ -26,6 +27,8 @@ tasks.register('verifyWorkflowContracts') {
                         'master-1.12)', 'master-1.18)',
                         'stage-legacy-dependencies.sh', 'stage-orespawn-release.sh',
                         "mmdlib) curseforge_dependencies+=('261744(required)')",
+                        'gradle_java_setup_version=17.0.1+12',
+                        'java-version: ${{ needs.preflight.outputs.gradle_java_setup_version }}',
                         'confirm_live_publication'
                 ]
         ]
