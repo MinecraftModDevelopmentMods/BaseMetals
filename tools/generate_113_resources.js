@@ -1,8 +1,7 @@
 /*
- * Deterministic compatibility pass over the catalogue-generated 1.18 data.
- * Minecraft 1.13 predates blast furnaces, block loot tables, global loot
- * modifiers, tall wall sides, and the optional integrations shipped by the
- * 1.18 branch. Keep this conversion mechanical and idempotent.
+ * Converts the catalogue-generated resources to Minecraft 1.13 formats.
+ * Removes unsupported recipes and integrations, and converts block states,
+ * item models and tags to the names and formats used by Forge 25.
  */
 'use strict';
 

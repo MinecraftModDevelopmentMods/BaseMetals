@@ -75,12 +75,20 @@ tasks.withType(AbstractArchiveTask).configureEach {
 }
 
 sourceSets {
+    // Build-only model generator; not part of the mod jar.
+    modelGenerator {
+        compileClasspath += files(tasks.named('compileJava').flatMap { it.destinationDirectory }) + sourceSets.main.compileClasspath
+        runtimeClasspath += files(tasks.named('compileJava').flatMap { it.destinationDirectory }) + sourceSets.main.compileClasspath
+    }
     integrationTest {
         java.setSrcDirs(['src/integrationTest/java'])
         resources.setSrcDirs(['src/integrationTest/resources'])
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }
+}
+dependencies {
+    testImplementation sourceSets.modelGenerator.output
 }
 configurations {
     orespawnRelease
@@ -360,7 +368,10 @@ tasks.named('processResources', ProcessResources) {
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]
     }
-    from('docs') { into 'META-INF/basemetals/docs' }
+    from('docs') {
+        exclude { it.file.name.equalsIgnoreCase('ore_textures.md') }
+        into 'META-INF/basemetals/docs'
+    }
 }
 
 tasks.named('jar', Jar) {
@@ -527,8 +538,10 @@ def forbiddenReleasePath = { String entryName ->
     String name = entryName.replace('\\', '/').toLowerCase(Locale.ROOT)
     name.startsWith('com/mcmoddev/') || name.startsWith('ci-fixtures/') || name.startsWith('reference/')
             || name.startsWith('agent-notes/') || name.contains('/agent-notes/')
+            || name.endsWith('/ore_textures.md')
             || name.startsWith('src/integrationtest/') || name.startsWith('src/clientintegrationtest/')
             || name.startsWith('src/gametest/')
+            || name.startsWith('src/modelgenerator/') || name.endsWith('/bmblockstateprovider.class')
             || name.startsWith('src/integratedsmoke/') || name.startsWith('src/packagedclientsmoke/')
             || name.startsWith('src/upgradesmoke/') || name.startsWith('src/packagedserversmoke/')
             || name.contains('minecraft-mavenizer') || name.contains('/smoke/')
@@ -686,8 +699,34 @@ def verifyGeneratedData = tasks.register('verifyGeneratedData', Exec) {
         }
     }
 }
+def oreModelsDirectory = file('src/main/resources/assets/basemetals/models/block')
+def oreModelSnapshot = {
+    fileTree(oreModelsDirectory) { include '*_ore.json' }.files.collectEntries {
+        [(it.name): sha256(it)]
+    }
+}
+def generateOreModels = tasks.register('generateOreModels', JavaExec) {
+    group = 'data generation'
+    description = 'Uses vanilla host textures when an ore overlay is present, otherwise keeps the legacy model.'
+    dependsOn tasks.named('modelGeneratorClasses')
+    classpath = sourceSets.modelGenerator.runtimeClasspath
+    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
+    args file('src/main/resources').absolutePath
+}
+tasks.named('processResources') { dependsOn generateOreModels }
+def verifyGeneratedOreModels = tasks.register('verifyGeneratedOreModels') {
+    group = 'verification'
+    dependsOn generateOreModels
+    doLast {
+        if (generateOreModels.get().beforeGeneration != oreModelSnapshot()) {
+            throw new GradleException('Ore models were stale. Review and commit the generateOreModels output.')
+        }
+    }
+}
+generateOreModels.configure { doFirst { ext.beforeGeneration = oreModelSnapshot() } }
 tasks.named('check') {
     dependsOn verifyGeneratedData
+    dependsOn verifyGeneratedOreModels
     dependsOn tasks.named('verifyReleaseConfiguration')
     dependsOn tasks.named('verifyReleaseDependencies')
     dependsOn tasks.named('verifyMavenCoordinates')
@@ -702,6 +741,7 @@ eclipse {
             classpath.entries.findAll { entry ->
                 String path = entry.path?.replace('\\', '/') ?: ''
                 path.startsWith('src/test/') || path.startsWith('src/integrationTest/')
+                        || path.startsWith('src/modelGenerator/') || path.endsWith('/modelGenerator')
             }.each { entry -> entry.entryAttributes['test'] = 'true' }
         }
     }
@@ -868,7 +908,7 @@ tasks.register('verifyEclipseProductionClasspath') {
             File launch = file(name)
             if (!launch.isFile()) throw new GradleException("Missing ${name}")
             String contents = launch.getText('UTF-8')
-            List<String> forbidden = ['src/test', 'src/integrationTest', 'junit-', 'opentest4j-',
+            List<String> forbidden = ['src/test', 'src/integrationTest', 'src/modelGenerator', 'junit-', 'opentest4j-',
                                       'basemetalsprobe', 'C:\\Users\\John']
             List<String> leaked = forbidden.findAll { contents.contains(it) }
             if (!leaked.isEmpty() || !contents.contains('ATTR_EXCLUDE_TEST_CODE')
@@ -947,6 +987,13 @@ def clientIntegrationTestModJar = tasks.register('clientIntegrationTestModJar', 
     destinationDirectory = layout.buildDirectory.dir('client-integration-fixture')
     from clientIntegrationClasses
     from 'src/clientIntegrationTest/resources'
+}
+def oreOverlayClientFixtures = layout.buildDirectory.dir('ore-overlay-client-fixtures')
+def generateOreOverlayClientFixtures = tasks.register('generateOreOverlayClientFixtures', JavaExec) {
+    dependsOn tasks.named('modelGeneratorClasses')
+    classpath = sourceSets.modelGenerator.runtimeClasspath
+    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
+    args file('src/main/resources').absolutePath, '--client-fixtures', oreOverlayClientFixtures.get().asFile.absolutePath
 }
 def packagedClientProbeJar = renamer.classes(clientIntegrationTestModJar) {
     map.from minecraft.dependency.toSrgFile
@@ -1057,6 +1104,7 @@ def preparePackagedClientIntegration = tasks.register('preparePackagedClientInte
     dependsOn releaseJar
     dependsOn packagedClientProbeJar
     dependsOn tasks.named('verifyReleaseDependencies')
+    dependsOn generateOreOverlayClientFixtures
     doLast {
         File runDirectory = prepareBuildOwnedRunDirectory(
                 packagedClientRunDirectory.get().asFile, 'packaged-client-run')
@@ -1066,7 +1114,12 @@ def preparePackagedClientIntegration = tasks.register('preparePackagedClientInte
             from releasedOreSpawnJar()
             into new File(runDirectory, 'mods')
         }
-        new File(runDirectory, 'options.txt').setText('fullscreen:false\nlang:en_us\n', 'UTF-8')
+        File overlayPack = new File(runDirectory, 'resourcepacks/basemetals-ore-overlay-fixture')
+        copy { from oreOverlayClientFixtures; into overlayPack }
+        new File(overlayPack, 'pack.mcmeta').setText(
+                '{"pack":{"pack_format":4,"description":"Base Metals ore overlay test fixture"}}\n', 'UTF-8')
+        new File(runDirectory, 'options.txt').setText(
+                'fullscreen:false\nlang:en_us\nresourcePacks:["file/basemetals-ore-overlay-fixture"]\n', 'UTF-8')
     }
 }
 def packagedClientProcess = tasks.register('packagedClientProcess', Exec) {

@@ -1,7 +1,7 @@
 # Compatibility
 
-Base Metals' permanent public compatibility contract is data-driven. Recipes
-consume Forge tags for ingots, nuggets, ores, storage blocks, dusts, small
+Base Metals uses Forge item, block and fluid tags for compatibility. Recipes
+accept tagged ingots, nuggets, ores, storage blocks, dusts, small
 dusts, blends, plates, rods, gears, casings, dense plates, crushed and purified
 ores, crystals, shards, clumps, dirty dusts, and molten fluids.
 
@@ -12,9 +12,9 @@ the Base Metals item. On Minecraft 1.13.2 the copper ore, ingot, and storage
 tags contain Base Metals entries; other mods can add their equivalents through
 normal tag merging.
 
-This target deliberately has no direct Mekanism, Thermal Expansion, Tinkers'
+This version has no mod-specific plugins for Mekanism, Thermal Expansion, Tinkers'
 Construct, Ender IO, IC2, Thaumcraft, Dense Ores, VeinMiner, or Constructs
-Armory plugin. Their version-specific 1.18 data and APIs are not valid on Forge
+Armory. Their version-specific 1.18 data and APIs are not valid on Forge
 25. Generic processors and tools can interoperate through Forge tags.
 
 Mineralogy is entirely optional. Base Metals does not link to Mineralogy Java

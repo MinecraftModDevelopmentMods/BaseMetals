@@ -41,7 +41,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-/** Target-native gameplay handlers with no proxy or MMDLib dependency. */
+/** Handles crushing, shield upgrades and material equipment effects. */
 public final class BaseMetalsEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onBreak(BlockEvent.BreakEvent event) {

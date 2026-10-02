@@ -3,7 +3,7 @@ package zone.moddev.mc.basemetals.content;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-/** Small target-native replacement for the later Forge RegistryObject API. */
+/** Holds an entry until its Forge registration event supplies the instance. */
 public final class RegistryHandle<T> implements Supplier<T> {
     private final String id;
     private T value;
