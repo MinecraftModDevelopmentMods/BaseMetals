@@ -490,18 +490,10 @@ public final class ModContent {
         int separator = id.lastIndexOf('_');
         if (separator < 0) return -1;
         String material = id.substring(0, separator);
-        if (!isLegacyFuelMaterial(material)) return -1;
+        if (!"coal".equals(material) && !"charcoal".equals(material)) return -1;
         if (id.endsWith("_powder")) return 1600;
         if (id.endsWith("_nugget") || id.endsWith("_smallpowder")) return 200;
         return -1;
-    }
-
-    private static boolean isLegacyFuelMaterial(String name) {
-        if ("coal".equals(name) || "charcoal".equals(name)) return true;
-        for (MaterialDefinition material : MaterialCatalogue.ALL) {
-            if (material.name().equals(name) && material.hasEquipment()) return true;
-        }
-        return false;
     }
 
     private static RegistryHandle<Item> registerItem(String id, Supplier<? extends Item> factory) {

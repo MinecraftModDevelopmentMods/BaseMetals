@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.FileOutputStream;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,6 +46,44 @@ class LegacyWorldSourceTest {
                 "src/main/resources/coremods/basemetals_113_compatibility.js")), "UTF-8");
         assertTrue(coremod.contains("basemetals_forge25_leaves_fixer"));
         assertTrue(coremod.contains("Ljava/lang/Object;)Lcom/mojang/datafixers/Typed;"));
+    }
+
+    @Test
+    void preservesAChunkWhoseOnlyLegacyBaseMetalsContentIsInAContainer() throws Exception {
+        Field active = LegacyWorldDataHook.class.getDeclaredField("legacyWorldActive");
+        active.setAccessible(true);
+        boolean previous = active.getBoolean(null);
+        try {
+            active.setBoolean(null, true);
+            NBTTagCompound stack = new NBTTagCompound();
+            stack.setString("id", "basemetals:carbon_powder");
+            stack.setByte("Count", (byte) 1);
+            NBTTagList items = new NBTTagList();
+            items.add(stack);
+            NBTTagCompound chest = new NBTTagCompound();
+            chest.setString("id", "Chest");
+            chest.setTag("Items", items);
+            NBTTagList tileEntities = new NBTTagList();
+            tileEntities.add(chest);
+            NBTTagCompound level = new NBTTagCompound();
+            level.setInt("xPos", 12);
+            level.setInt("zPos", -7);
+            level.setTag("TileEntities", tileEntities);
+            NBTTagCompound root = new NBTTagCompound();
+            root.setTag("Level", level);
+
+            LegacyWorldDataHook.prepareLegacyChunk(root);
+            NBTTagCompound finalized = LegacyWorldDataHook.finalizeLegacyChunk(root);
+
+            assertEquals("postprocessed", finalized.getCompound("Level").getString("Status"));
+            NBTTagCompound migratedChest = finalized.getCompound("Level")
+                    .getList("TileEntities", 10).getCompound(0);
+            assertEquals("minecraft:chest", migratedChest.getString("id"));
+            assertEquals("basemetals:coal_powder",
+                    migratedChest.getList("Items", 10).getCompound(0).getString("id"));
+        } finally {
+            active.setBoolean(null, previous);
+        }
     }
 
     private void writeLevel(String name, int dataVersion, int blockId, String blockName) throws IOException {

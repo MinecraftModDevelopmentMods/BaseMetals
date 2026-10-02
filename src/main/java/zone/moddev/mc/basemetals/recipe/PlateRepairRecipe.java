@@ -5,7 +5,6 @@ import com.google.gson.JsonSyntaxException;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -30,38 +29,73 @@ public final class PlateRepairRecipe extends IRecipeHidden {
         this.plate = plate;
     }
 
-    @Override public boolean matches(IInventory inventory, World world) {
+    @Override
+    public boolean matches(IInventory inventory, World world) {
         ItemStack foundTarget = ItemStack.EMPTY;
         boolean foundPlate = false;
+
         for (int slot = 0; slot < inventory.getSizeInventory(); slot++) {
             ItemStack stack = inventory.getStackInSlot(slot);
-            if (stack.isEmpty()) continue;
-            if (stack.getItem() == target && stack.isDamaged() && foundTarget.isEmpty()) foundTarget = stack;
-            else if (plate.test(stack) && !foundPlate) foundPlate = true;
-            else return false;
+
+            if (stack.isEmpty()) {
+                continue;
+            }
+
+            if (stack.getItem() == target && stack.isDamaged() && foundTarget.isEmpty()) {
+                foundTarget = stack;
+            } else if (plate.test(stack) && !foundPlate) {
+                foundPlate = true;
+            } else {
+                return false;
+            }
         }
+
         return !foundTarget.isEmpty() && foundPlate;
     }
-    @Override public ItemStack getCraftingResult(IInventory inventory) {
+
+    @Override
+    public ItemStack getCraftingResult(IInventory inventory) {
+        if (!matches(inventory, null)) {
+            return ItemStack.EMPTY;
+        }
+
         for (int slot = 0; slot < inventory.getSizeInventory(); slot++) {
             ItemStack stack = inventory.getStackInSlot(slot);
+
             if (stack.getItem() == target && stack.isDamaged()) {
-                ItemStack repaired = new ItemStack(target);
-                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), repaired);
+                ItemStack repaired = stack.copy();
+                repaired.setCount(1);
+                repaired.setDamage(0);
+
                 return repaired;
             }
         }
+
         return ItemStack.EMPTY;
     }
-    @Override public boolean canFit(int width, int height) { return width * height >= 2; }
-    @Override public ItemStack getRecipeOutput() { return new ItemStack(target); }
-    @Override public NonNullList<Ingredient> getIngredients() {
+    @Override
+    public boolean canFit(int width, int height) {
+        return width * height >= 2;
+    }
+
+    @Override
+    public ItemStack getRecipeOutput() {
+        return new ItemStack(target);
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> ingredients = NonNullList.create();
         ingredients.add(Ingredient.fromItems(target));
         ingredients.add(plate);
+
         return ingredients;
     }
-    @Override public IRecipeSerializer<?> getSerializer() { return CrushingRecipe.PLATE_REPAIR_SERIALIZER; }
+
+    @Override
+    public IRecipeSerializer<?> getSerializer() {
+        return CrushingRecipe.PLATE_REPAIR_SERIALIZER;
+    }
 
     public static final class Serializer implements IRecipeSerializer<PlateRepairRecipe> {
         private final ResourceLocation name = new ResourceLocation(BaseMetals.MOD_ID, "plate_repair");

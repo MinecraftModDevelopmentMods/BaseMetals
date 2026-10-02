@@ -15,5 +15,6 @@
   },
   "result": {
     "item": "basemetals:copper_shield"
-  }
+  },
+  "group": "basemetals:copper_shield"
 }

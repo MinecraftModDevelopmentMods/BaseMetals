@@ -11,5 +11,6 @@
   "result": {
     "item": "basemetals:iron_plate",
     "count": 3
-  }
+  },
+  "group": "basemetals:iron_plate"
 }

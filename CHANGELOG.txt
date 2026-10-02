@@ -1,8 +1,30 @@
 Base Metals 3.0.1.113021
 
-- Backport the complete native Base Metals implementation to Minecraft 1.13.2 and Forge 25.0.223.
-- Preserve the established registry catalogue, mechanics, recipes, fluids, loot, trades, advancements, and Forge-tag contracts without MMDLib.
-- Use OreSpawn 4.0.16.113021 as the sole ore-placement engine, with all eleven historical rules and Base Metals copper enabled.
-- Add direct pre-flattening migration support for Cyano and MMD Base Metals worlds from Minecraft 1.10.2 and 1.12.2.
-- Render all 36 molten-fluid buckets through target-native layered models and catalogue-driven item colours, avoiding Forge 25's unfinished dynamic bucket loader.
-- Retain ForgeGradle 7.0.34, Gradle 9.6.1, exact Java toolchains, deterministic release artifacts, checksums, CI audits, and isolated Eclipse launches.
+- Bring the 1.18.2 port to Minecraft 1.13.2 and Forge 25.0.223, running on Java 8.
+- Keep the historical blocks, items, recipes, fluids, loot, trades and
+  advancements without requiring MMDLib or Additional Loot Tables.
+- Use the published OreSpawn 4.1.0.113021 release for all ore placement.
+  All eleven historical rules remain enabled, including Base Metals copper.
+- Support upgrades from Cyano and MMD Base Metals worlds made in Minecraft
+  1.10.2 and 1.12.2. Preserve old block states, equipment and fluid buckets,
+  including chunks whose only Base Metals content is inside containers.
+- Give all 36 molten-fluid buckets working models and material colours.
+- Use ForgeGradle 7.0.34 and Gradle 9.6.1, with checked dependency downloads,
+  reproducible release jars and separate test and Eclipse launch classpaths.
+
+Fixes carried forward from the 1.12 release
+
+- Metal nuggets and powders no longer burn as furnace fuel. Coal and charcoal
+  keep their normal fuel values (#473).
+- Diamond, Emerald, Gold and Quartz doors use six ingredients, so their recipes
+  no longer collide with trapdoors (#474).
+- Steel rail crafting produces 16 rails. Bows and crossbows now combine their
+  material's attack damage with the ammunition material before adding Power (#467).
+- Plate repairs preserve the original item's name, enchantments and other NBT,
+  and reject incomplete recipes and extra ingredients. They stay out of the
+  recipe book.
+- Crafting recipes unlock from matching ingredients, including Forge tags.
+  Recipe-book groups are specific to the resulting item.
+- Nine Obsidian nuggets produce an ingot, not a block. Obsidian blocks use nine
+  ingots, with a pattern distinct from bars and doors. Vanilla Bits swords and
+  bolts no longer cost less material than their recycling recipes return.

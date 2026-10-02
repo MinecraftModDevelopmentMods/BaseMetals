@@ -12,12 +12,10 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-The Minecraft 1.13.2 line is a native Forge/Java 8 backport of the completed
-1.18.2 implementation. Its current version is `3.0.1.113021`: functional
-version `3.0.1`, built for the `113021` target (Minecraft 1.13.2, Forge). It
-preserves the historical `basemetals` registry IDs while replacing MMDLib,
-Additional Loot Tables, and the old Base Metals world generator with native
-Forge registries, tags, recipes, loot tables, and advancements.
+This is the Minecraft 1.13.2 version, `3.0.1.113021`, adapted from the 1.18.2
+port. It keeps the historical `basemetals` block and item IDs, but no longer
+needs MMDLib or Additional Loot Tables. Forge handles registration, recipes,
+loot and advancements, and OreSpawn handles ore placement.
 
 ## Requirements
 
@@ -26,7 +24,7 @@ Forge registries, tags, recipes, loot tables, and advancements.
 - Java 8
 - OreSpawn `[4.0.16.113021,5.0.0)` on both client and server
 
-Put `BaseMetals-3.0.1.113021.jar` and OreSpawn `4.0.16.113021` (or a later
+Put `BaseMetals-3.0.1.113021.jar` and OreSpawn `4.1.0.113021` (or a later
 compatible OreSpawn 4 build for 1.13.2) in the `mods` directory. MMDLib and
 Additional Loot Tables are not dependencies. Mineralogy is optional.
 
@@ -39,10 +37,9 @@ Base Metals provides 22 materials:
 - Alloys: Brass, Bronze, Cupronickel, Electrum, Invar, Pewter, and Steel.
 - Fantasy materials: Adamantine, Aquarium, Cold Iron, Mithril, and Starsteel.
 
-The available forms intentionally vary by material to preserve the established
-Base Metals content. Forge tags are used throughout recipes, so compatible
-ores, ingots, powders, plates, rods, gears, and other components from different
-mods can interoperate without a Java API dependency.
+Not every material has every form. Recipes use Forge tags, so compatible ores,
+ingots, powders, plates, rods, gears and other components from different mods
+can be used together.
 
 Notable mechanics include:
 
@@ -56,8 +53,12 @@ Notable mechanics include:
   protection events, drops, enchantments, and durability.
 - Material shields can be upgraded at an anvil with one strictly harder tagged
   plate while retaining their enchantments.
+- One damaged armour piece or shield and a matching plate fully repair the
+  item without losing its name, enchantments or other saved data. These repair
+  recipes stay out of the recipe book.
 - Base Metals bows fire material arrows. Its legacy-style crossbows are
-  draw-and-release weapons which fire material bolts.
+  draw-and-release weapons which fire material bolts. Both the launcher and
+  ammunition materials contribute to damage; Power is added afterward.
 - Configurable armour and melee effects give Adamantine, Aquarium, Cold Iron,
   Lead, Mithril, and Starsteel their distinctive behaviour. Held Starsteel
   equipment repairs by one durability every 200 server ticks; its armour does
@@ -68,8 +69,9 @@ Notable mechanics include:
 
 The common configuration has four default-enabled switches: special equipment
 effects, Starsteel regeneration, mercury immersion effects, and villager
-trades. Registries, materials, recipes, and world generation remain stable data
-contracts and are not individually configuration-gated.
+trades. These switches do not remove registered items or blocks. Individual
+materials and recipes cannot be disabled through this configuration; edit ore
+placement through OreSpawn.
 
 ## Ore generation
 
@@ -90,12 +92,12 @@ contract.
 
 ## Updating an old world
 
-This release is the first Minecraft version after the flattening and supports
+Minecraft 1.13 changed how worlds store blocks and items. This port supports
 direct upgrades from Base Metals 1.10 and 1.12, including the original Cyano
-2.4 line and later MMD releases. Its pre-flattening migration hook restores
-legacy Base Metals and MMDLib block identities before Mojang converts numeric
-chunk data, and also migrates historical item aliases, durability, and universal
-fluid buckets.
+2.4 line and later MMD releases. It restores old Base Metals and MMDLib block
+IDs before Minecraft converts the chunks, and also converts old item names,
+durability and universal fluid buckets. Chunks containing only Base Metals
+items in containers are protected too.
 
 Always perform the first upgrade on a copy of the world and keep the untouched
 original. Read [Migration](docs/MIGRATION.md) before opening an old save. A
@@ -138,6 +140,11 @@ drift checks, an exact-OreSpawn dedicated-server probe, release-JAR auditing,
 checksums, reproducibility checks, CodeQL, wrapper validation, and Eclipse
 classpath isolation. Test probes and historical fixtures are excluded from the
 published JAR.
+
+Development and CI use the published
+[OreSpawn 4.1.0.113021 release](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9035885)
+from CurseMaven. The build checks its exact file ID and SHA-256 before release
+auditing and packaged tests; no local OreSpawn build is needed.
 
 Release artifacts use Maven coordinate
 `zone.moddev.mc.basemetals:BaseMetals:3.0.1.113021`.

@@ -12,5 +12,6 @@
   "result": {
     "item": "basemetals:gold_bars",
     "count": 16
-  }
+  },
+  "group": "basemetals:gold_bars"
 }

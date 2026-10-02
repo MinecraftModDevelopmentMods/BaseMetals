@@ -15,5 +15,6 @@
   },
   "result": {
     "item": "basemetals:gold_shield"
-  }
+  },
+  "group": "basemetals:gold_shield"
 }

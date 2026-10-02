@@ -12,5 +12,6 @@
   },
   "result": {
     "item": "minecraft:coal_block"
-  }
+  },
+  "group": "minecraft:coal_block"
 }

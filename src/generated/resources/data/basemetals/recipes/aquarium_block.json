@@ -12,5 +12,6 @@
   },
   "result": {
     "item": "basemetals:aquarium_block"
-  }
+  },
+  "group": "basemetals:aquarium_block"
 }

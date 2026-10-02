@@ -272,4 +272,66 @@ writeJson(path.join(main, 'data', 'basemetals', 'orespawn', 'provider.json'), {
   fluid_deposits: {}
 });
 
+const recipesDirectory = path.join(generated, 'data', 'basemetals', 'recipes');
+const unlockDirectory = path.join(generated, 'data', 'basemetals', 'advancements', 'recipes');
+
+// Vanilla Bits used several shortened patterns that collided or returned too much when recycled.
+for (const file of filesUnder(recipesDirectory, '.json')) {
+  const name = path.basename(file, '.json');
+  const recipe = JSON.parse(fs.readFileSync(file, 'utf8'));
+
+  if (name.endsWith('_door') && recipe.type === 'minecraft:crafting_shaped') {
+    recipe.pattern = ['XX', 'XX', 'XX'];
+  }
+  if (name.endsWith('_bolt') && recipe.type === 'minecraft:crafting_shaped') {
+    recipe.pattern = ['R', 'R', 'F'];
+  }
+  if (name.endsWith('_sword') && recipe.type === 'minecraft:crafting_shaped'
+      && recipe.pattern.length === 2) {
+    recipe.pattern = ['X', 'X', 'S'];
+  }
+  if (name === 'rail') recipe.result.count = 16;
+  if (name === 'obsidian_ingot') recipe.result.item = 'basemetals:obsidian_ingot';
+  if (name === 'obsidian_block') recipe.pattern = ['XXX', 'XXX', 'XXX'];
+
+  if (!recipe.type.startsWith('minecraft:crafting_')) {
+    const oldUnlock = path.join(unlockDirectory, `${name}.json`);
+    if (fs.existsSync(oldUnlock)) fs.rmSync(oldUnlock);
+    continue;
+  }
+
+  // Variants of one result share a cell; different tools and weapons do not.
+  recipe.group = recipe.result.item;
+  writeJson(file, recipe);
+
+  const ingredients = recipe.key ? Object.values(recipe.key) : recipe.ingredients;
+  const choices = ingredients.flat().filter(value => value.item || value.tag);
+  const materialChoices = choices.filter(value =>
+    value.tag !== 'forge:rods/wooden' && value.item !== 'minecraft:stick'
+      && value.item !== 'minecraft:string' && value.item !== 'minecraft:feather');
+  const criteria = {
+    has_recipe: {
+      trigger: 'minecraft:recipe_unlocked',
+      conditions: { recipe: `basemetals:${name}` }
+    }
+  };
+  const seen = new Set();
+  for (const ingredient of materialChoices.length ? materialChoices : choices) {
+    const key = JSON.stringify(ingredient);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const predicate = ingredient.tag ? { tag: ingredient.tag } : { item: ingredient.item };
+    criteria[`has_ingredient_${seen.size}`] = {
+      trigger: 'minecraft:inventory_changed',
+      conditions: { items: [predicate] }
+    };
+  }
+  writeJson(path.join(unlockDirectory, `${name}.json`), {
+    parent: 'minecraft:recipes/root',
+    criteria,
+    requirements: [Object.keys(criteria)],
+    rewards: { recipes: [`basemetals:${name}`] }
+  });
+}
+
 console.log('Generated Minecraft 1.13.2-compatible Base Metals resources.');

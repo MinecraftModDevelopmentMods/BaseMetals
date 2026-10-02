@@ -2,6 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "X",
+    "X",
     "S"
   ],
   "key": {
@@ -14,5 +15,6 @@
   },
   "result": {
     "item": "basemetals:emerald_sword"
-  }
+  },
+  "group": "basemetals:emerald_sword"
 }

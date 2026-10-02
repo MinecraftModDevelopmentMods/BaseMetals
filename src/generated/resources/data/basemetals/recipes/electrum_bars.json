@@ -12,5 +12,6 @@
   "result": {
     "item": "basemetals:electrum_bars",
     "count": 16
-  }
+  },
+  "group": "basemetals:electrum_bars"
 }

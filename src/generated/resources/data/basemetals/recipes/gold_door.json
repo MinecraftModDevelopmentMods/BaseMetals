@@ -2,6 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "XX",
+    "XX",
     "XX"
   ],
   "key": {
@@ -12,5 +13,6 @@
   "result": {
     "item": "basemetals:gold_door",
     "count": 3
-  }
+  },
+  "group": "basemetals:gold_door"
 }

@@ -175,11 +175,22 @@ public final class MaterialItems {
 
     public static class Bow extends ItemBow implements MaterialBacked {
         private final MaterialDefinition material;
+
         public Bow(MaterialDefinition material, Properties properties) {
             super(properties.defaultMaxDamage(material.toolDurability()));
             this.material = material;
         }
+
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
+
+        @Override
+        public EntityArrow customizeArrow(EntityArrow arrow) {
+            // Forge calls this before applying Power, so enchantment bonuses stay unchanged.
+            arrow.setDamage(arrow.getDamage() + material.baseAttackDamage() - 1.0D);
+
+            return arrow;
+        }
+
         @Override protected boolean isArrow(ItemStack stack) {
             if (stack.getItem() instanceof BaseMetalAmmoItem) {
                 return ((BaseMetalAmmoItem) stack.getItem()).kind() == BaseMetalAmmoItem.Kind.ARROW;
@@ -193,13 +204,11 @@ public final class MaterialItems {
                 List<ITextComponent> tooltip, ITooltipFlag flag) { addToolTooltip(material, tooltip); }
     }
 
-    public static final class Crossbow extends ItemBow implements MaterialBacked {
-        private final MaterialDefinition material;
+    public static final class Crossbow extends Bow {
         public Crossbow(MaterialDefinition material, Properties properties) {
-            super(properties.defaultMaxDamage(material.toolDurability()));
-            this.material = material;
+            super(material, properties);
         }
-        @Override public MaterialDefinition baseMetalsMaterial() { return material; }
+
         @Override protected boolean isArrow(ItemStack stack) {
             return stack.getItem() instanceof BaseMetalAmmoItem
                     && ((BaseMetalAmmoItem) stack.getItem()).kind() == BaseMetalAmmoItem.Kind.BOLT;
@@ -224,7 +233,7 @@ public final class MaterialItems {
             boolean infiniteShot = player.abilities.isCreativeMode
                     || bolt.isInfinite(ammunition, bow, player);
             if (!world.isRemote) {
-                EntityArrow projectile = bolt.createArrow(world, ammunition, player);
+                EntityArrow projectile = customizeArrow(bolt.createArrow(world, ammunition, player));
                 projectile.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F,
                         power * 3.0F, 1.0F);
                 if (power == 1.0F) projectile.setIsCritical(true);
@@ -250,11 +259,6 @@ public final class MaterialItems {
             }
             player.addStat(StatList.ITEM_USED.get(this));
         }
-        @Override public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-            return new MaterialTier(material).getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
-        }
-        @Override public void addInformation(ItemStack stack, @Nullable World world,
-                List<ITextComponent> tooltip, ITooltipFlag flag) { addToolTooltip(material, tooltip); }
     }
 
     public static final class FishingRod extends ItemFishingRod implements MaterialBacked {

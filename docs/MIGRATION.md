@@ -6,7 +6,7 @@ blocks cannot be reconstructed by Mojang's vanilla fixer alone, so Base Metals
 installs a narrowly scoped migration hook before Forge reads an old world.
 
 Always upgrade a copy and retain the original 1.10/1.12 world. Install Base
-Metals `3.0.1.113021`, OreSpawn `4.0.16.113021`, and any other 1.13.2 mods needed
+Metals `3.0.1.113021`, OreSpawn `4.1.0.113021`, and any other 1.13.2 mods needed
 by that world. Do not carry MMDLib, Additional Loot Tables, the OreSpawn 3
 plugin, or Base Metals' old fallback generator into the new instance.
 

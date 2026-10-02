@@ -6,9 +6,14 @@ Java 8. The Gradle build itself runs on Java `17.0.1+12` and uses ForgeGradle
 8 requirement of the released mod.
 
 Development, CI, and release qualification use the exact public OreSpawn
-`4.0.16.113021` release (CurseForge project `245586`, file `8836169`, SHA-256
-`38C091390486AFCEF8F43404071AF595E53FF5750DB99E0F8F851858C85BA11C`).
+`4.1.0.113021` release (CurseForge project `245586`, file `9035885`, SHA-256
+`66C9CC5F8BE8F08F3DD5FA26EBEA79B52972B2FB86CB4DADBEEBC29AC01D3435`).
 The runtime contract is OreSpawn `[4.0.16.113021,5.0.0)` for Minecraft 1.13.2.
+
+The published dependency is resolved through CurseMaven. CI stages the same
+checksum-verified file in a temporary Maven mirror. Local candidate repositories
+are no longer used. The schema-3 provider remains compatible with the supported
+OreSpawn 4 versions, so the runtime dependency range is unchanged.
 
 Release artifacts use Maven coordinate
 `zone.moddev.mc.basemetals:BaseMetals:3.0.1.113021`.

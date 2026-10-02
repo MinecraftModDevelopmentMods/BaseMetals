@@ -11,5 +11,6 @@
   "result": {
     "item": "basemetals:copper_plate",
     "count": 3
-  }
+  },
+  "group": "basemetals:copper_plate"
 }

@@ -346,8 +346,10 @@ class ResourceIntegrityTest {
         parents.put("juggernaut", "minecraft:story/enter_the_nether");
         parents.put("moon_boots", "minecraft:end/root");
         Path advancements = GENERATED.resolve("data/basemetals/advancements");
-        assertEquals(18, files(advancements, ".json").size());
-        for (Path file : files(advancements, ".json")) {
+        List<Path> gameplayAdvancements = files(advancements, ".json").stream()
+                .filter(file -> file.getParent().equals(advancements)).collect(Collectors.toList());
+        assertEquals(18, gameplayAdvancements.size());
+        for (Path file : gameplayAdvancements) {
             JsonObject advancement = read(file).getAsJsonObject();
             assertEquals("minecraft:impossible", advancement.getAsJsonObject("criteria")
                     .getAsJsonObject("event").get("trigger").getAsString(), file.toString());

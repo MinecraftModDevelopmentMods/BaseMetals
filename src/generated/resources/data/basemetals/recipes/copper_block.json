@@ -12,5 +12,6 @@
   },
   "result": {
     "item": "basemetals:copper_block"
-  }
+  },
+  "group": "basemetals:copper_block"
 }
