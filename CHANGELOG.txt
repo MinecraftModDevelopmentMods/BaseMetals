@@ -3,6 +3,8 @@ Base Metals 3.0.1.113021
 - Add support for Kiri's ore overlays on vanilla host textures, including
   resource pack replacements. Ores keep their original texture when no overlay
   is available.
+- Fix Gradle game launches so Forge prepares the assets and native libraries.
+  Allow newer Java 8 updates for development while keeping release builds pinned.
 - Bring the 1.18.2 port to Minecraft 1.13.2 and Forge 25.0.223, running on Java 8.
 - Keep the historical blocks, items, recipes, fluids, loot, trades and
   advancements without requiring MMDLib or Additional Loot Tables.

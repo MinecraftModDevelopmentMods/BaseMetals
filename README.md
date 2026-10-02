@@ -116,7 +116,22 @@ can consume the common tags without linking to Base Metals internals. See
 
 Base Metals uses ForgeGradle `7.0.34` and Gradle `9.6.1`. Gradle runs on Java
 17, ForgeGradle's legacy Minecraft transformation utility runs on Java 25, and
-all production code compiles and runs on the exact Java 8 toolchain.
+the mod compiles and runs on Java 8. Development builds accept newer Java 8
+updates; release auditing requires Temurin `8.0.502+7` for reproducibility.
+Node.js is also needed to generate and check the resource files.
+
+For a normal development build and client launch, use:
+
+```text
+./gradlew build
+./gradlew runClient
+```
+
+Run these tasks from IntelliJ's Gradle window or a terminal. ForgeGradle's
+launcher prepares the assets and native libraries; no manual asset paths are
+needed. The Gradle JVM should be Java 17, not the Java 8 game runtime.
+
+With the pinned release toolchain, run the full release checks:
 
 ```text
 ./gradlew clean check build javadoc verifyReleaseArtifacts writeReleaseChecksums

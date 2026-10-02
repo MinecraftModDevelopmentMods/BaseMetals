@@ -42,7 +42,6 @@ ext.release_tag = project.mod_version
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
-        vendor = JvmVendorSpec.ADOPTIUM
     }
     withSourcesJar()
     withJavadocJar()
@@ -51,7 +50,6 @@ java {
 tasks.withType(JavaCompile).configureEach {
     javaCompiler = javaToolchains.compilerFor {
         languageVersion = JavaLanguageVersion.of(8)
-        vendor = JvmVendorSpec.ADOPTIUM
     }
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -100,15 +98,33 @@ configurations {
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} " +
         "(${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
+def forgeRunModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/main')
+def integrationTestModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/integration-test')
+def forgeMainOutputPath = forgeRunModClassesDirectory.get().asFile.absolutePath
+def mainModClasses = "${mod_id}%%${forgeMainOutputPath}${File.pathSeparator}${mod_id}%%${forgeMainOutputPath}"
+def forgeProbeOutputPath = integrationTestModClassesDirectory.get().asFile.absolutePath
+def probeModClasses = mainModClasses + "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}" +
+        "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}"
+def forge25RunTargets = [client: 'fmluserdevclient', server: 'fmluserdevserver',
+        data: 'fmluserdevdata', runtimeProbeServer: 'fmluserdevserver', legacyUpgradeServer: 'fmluserdevserver']
+
 minecraft {
     mappings channel: project.mapping_channel, version: project.mapping_version
     runs {
         configureEach {
+            // Slime Launcher calls this entry point after preparing assets and natives.
             mainClass = 'net.minecraftforge.userdev.LaunchTesting'
             workingDir.convention layout.projectDirectory.dir('run')
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             systemProperty 'forge.logging.console.level', 'info'
             mods { basemetals { source sourceSets.main } }
+            environment 'target', forge25RunTargets[name]
+            environment 'MCP_MAPPINGS', "${mapping_channel}_${mapping_version}"
+            environment 'MCP_VERSION', mcp_version
+            environment 'FORGE_VERSION', forge_version
+            environment 'FORGE_GROUP', 'net.minecraftforge'
+            environment 'MC_VERSION', minecraft_version
+            environment 'MOD_CLASSES', mainModClasses
         }
         register('client')
         register('server') { args '--nogui' }
@@ -119,10 +135,12 @@ minecraft {
         }
         register('runtimeProbeServer') {
             workingDir.convention layout.buildDirectory.dir('integration-test-run')
+            environment 'MOD_CLASSES', probeModClasses
             args '--nogui'
         }
         register('legacyUpgradeServer') {
             workingDir.convention layout.buildDirectory.dir('legacy-upgrade-run')
+            environment 'MOD_CLASSES', probeModClasses
             systemProperty 'basemetalsprobe.mode', 'legacy-upgrade'
             args '--nogui'
         }
@@ -134,8 +152,6 @@ sourceSets.main.resources {
     exclude '.cache/**'
 }
 
-def forgeRunModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/main')
-def integrationTestModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/integration-test')
 def prepareForgeRunModClasses = tasks.register('prepareForgeRunModClasses', Sync) {
     dependsOn tasks.named('classes')
     from sourceSets.main.output
@@ -147,36 +163,21 @@ def prepareIntegrationTestModClasses = tasks.register('prepareIntegrationTestMod
     into integrationTestModClassesDirectory
 }
 
-def configureForge25Run = { JavaExec runTask, String launchTarget ->
-    runTask.dependsOn prepareForgeRunModClasses
-    runTask.mainClass.set('net.minecraftforge.userdev.LaunchTesting')
-    runTask.environment 'target', launchTarget
-    runTask.environment 'MCP_MAPPINGS', "${mapping_channel}_${mapping_version}"
-    runTask.environment 'MCP_VERSION', mcp_version
-    runTask.environment 'FORGE_VERSION', forge_version
-    runTask.environment 'FORGE_GROUP', 'net.minecraftforge'
-    runTask.environment 'MC_VERSION', minecraft_version
-    String mainOutput = forgeRunModClassesDirectory.get().asFile.absolutePath
-    String modClasses = "${mod_id}%%${mainOutput}${File.pathSeparator}${mod_id}%%${mainOutput}"
-    if (runTask.name == 'runRuntimeProbeServer' || runTask.name == 'runLegacyUpgradeServer') {
-        runTask.dependsOn prepareIntegrationTestModClasses
-        String probeOutput = integrationTestModClassesDirectory.get().asFile.absolutePath
-        modClasses += "${File.pathSeparator}basemetalsprobe%%${probeOutput}" +
-                "${File.pathSeparator}basemetalsprobe%%${probeOutput}"
-    }
-    runTask.environment 'MOD_CLASSES', modClasses
-    runTask.doFirst {
-        File modsDirectory = new File(runTask.workingDir, 'mods')
-        if (!modsDirectory.isDirectory() && !modsDirectory.mkdirs()) {
-            throw new GradleException("Could not create development mods directory: ${modsDirectory}")
+tasks.withType(JavaExec).configureEach { JavaExec runTask ->
+    def runName = forge25RunTargets.keySet().find { runTask.name == 'run' + it.capitalize() }
+    if (runName != null) {
+        runTask.dependsOn prepareForgeRunModClasses
+        if (runTask.name in ['runRuntimeProbeServer', 'runLegacyUpgradeServer']) {
+            runTask.dependsOn prepareIntegrationTestModClasses
+        }
+        runTask.doFirst {
+            File runDirectory = minecraft.runs.named(runName).get().workingDir.get().asFile
+            File modsDirectory = new File(runDirectory, 'mods')
+            if (!modsDirectory.isDirectory() && !modsDirectory.mkdirs()) {
+                throw new GradleException("Could not create development mods directory: ${modsDirectory}")
+            }
         }
     }
-}
-tasks.withType(JavaExec).configureEach { JavaExec runTask ->
-    String launchTarget = [runClient: 'fmluserdevclient', runServer: 'fmluserdevserver',
-                           runData: 'fmluserdevdata', runRuntimeProbeServer: 'fmluserdevserver',
-                           runLegacyUpgradeServer: 'fmluserdevserver'][runTask.name]
-    if (launchTarget != null) configureForge25Run(runTask, launchTarget)
 }
 
 def integrationTestRunDirectory = layout.buildDirectory.dir('integration-test-run')
@@ -461,11 +462,39 @@ tasks.register('verifyJava8Toolchain') {
     dependsOn tasks.named('compileJava')
     doLast {
         def metadata = tasks.named('compileJava', JavaCompile).get().javaCompiler.get().metadata
-        if (configuredJavaToolchainVersion != '8.0.502+7' || metadata.languageVersion.asInt() != 8
+        if (metadata.languageVersion.asInt() != 8) {
+            throw new GradleException("Minecraft 1.13.2 requires a Java 8 JDK, found " +
+                    "${metadata.vendor} ${metadata.javaRuntimeVersion} at ${metadata.installationPath}")
+        }
+        logger.lifecycle("Java 8 development toolchain: ${metadata.vendor} ${metadata.javaRuntimeVersion}")
+    }
+}
+
+tasks.register('verifyReleaseJava8Toolchain') {
+    group = 'verification'
+    description = 'Requires the pinned compiler for reproducible release artifacts.'
+    dependsOn tasks.named('verifyJava8Toolchain')
+    doLast {
+        def metadata = tasks.named('compileJava', JavaCompile).get().javaCompiler.get().metadata
+        if (configuredJavaToolchainVersion != '8.0.502+7'
                 || metadata.javaRuntimeVersion != '1.8.0_502-b07'
                 || !metadata.vendor.toString().toLowerCase(Locale.ROOT).contains('temurin')) {
-            throw new GradleException("Expected Eclipse Temurin ${configuredJavaToolchainVersion}, found " +
+            throw new GradleException("Release auditing requires Eclipse Temurin ${configuredJavaToolchainVersion}; " +
+                    "ordinary build and runClient tasks accept other Java 8 updates. Found " +
                     "${metadata.vendor} ${metadata.javaRuntimeVersion} at ${metadata.installationPath}")
+        }
+    }
+}
+
+tasks.register('verifyDevelopmentLaunches') {
+    group = 'verification'
+    description = 'Checks that development runs use the ForgeGradle launcher.'
+    doLast {
+        ['runClient', 'runServer', 'runData', 'runRuntimeProbeServer', 'runLegacyUpgradeServer'].each { name ->
+            def run = tasks.named(name, JavaExec).get()
+            if (run.mainClass.get() != 'net.minecraftforge.launcher.Main') {
+                throw new GradleException("${name} bypasses Slime Launcher: ${run.mainClass.get()}")
+            }
         }
     }
 }
@@ -551,6 +580,7 @@ def forbiddenReleasePath = { String entryName ->
 
 tasks.register('verifyReleaseArtifacts') {
     group = 'verification'
+    dependsOn tasks.named('verifyReleaseJava8Toolchain')
     dependsOn tasks.named('verifyReleaseConfiguration')
     dependsOn tasks.named('verifyReleaseDependencies')
     dependsOn tasks.named('verifyMavenCoordinates')
@@ -725,6 +755,7 @@ def verifyGeneratedOreModels = tasks.register('verifyGeneratedOreModels') {
 }
 generateOreModels.configure { doFirst { ext.beforeGeneration = oreModelSnapshot() } }
 tasks.named('check') {
+    dependsOn tasks.named('verifyDevelopmentLaunches')
     dependsOn verifyGeneratedData
     dependsOn verifyGeneratedOreModels
     dependsOn tasks.named('verifyReleaseConfiguration')
