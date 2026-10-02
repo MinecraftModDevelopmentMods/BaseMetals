@@ -12,5 +12,6 @@
   },
   "result": {
     "item": "basemetals:copper_ingot"
-  }
+  },
+  "group": "basemetals:copper_ingot"
 }

@@ -1,11 +1,26 @@
 package zone.moddev.mc.basemetals.testmod;
 
-import java.util.UUID;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.MissingMappings;
 import zone.moddev.mc.basemetals.ModTabs;
 import zone.moddev.mc.basemetals.content.BaseMetalAnvilBlock;
 import zone.moddev.mc.basemetals.content.BaseMetalAmmoItem;
@@ -21,19 +36,30 @@ import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 
 import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockButton;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockFlowingFluid;
+import net.minecraft.block.BlockPressurePlate;
 import net.minecraft.block.BlockSlab;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -73,7 +99,7 @@ public final class BaseMetalsRuntimeProbe {
         boolean legacyUpgrade = "legacy-upgrade".equals(System.getProperty("basemetalsprobe.mode"));
         try {
             runChecks(server);
-            if (legacyUpgrade) verifyLegacyBlocks(server);
+            if (legacyUpgrade) verifyLegacyWorld(server);
             if (checks < 32) throw new IllegalStateException("Only ran " + checks + " runtime checks");
             LOGGER.info(legacyUpgrade ? "BASEMETALS_LEGACY_UPGRADE_PROBE PASS checks={}"
                     : "BASEMETALS_RUNTIME_PROBE PASS checks={}", Integer.valueOf(checks));
@@ -84,6 +110,283 @@ public final class BaseMetalsRuntimeProbe {
                     : new IllegalStateException(failure);
         } finally {
             server.initiateShutdown();
+        }
+    }
+
+    private void verifyLegacyWorld(MinecraftServer server) throws IOException {
+        WorldServer overworld = require(server.getWorld(DimensionType.OVERWORLD), "legacy overworld missing");
+        Path root = overworld.getSaveHandler().getWorldDirectory().toPath();
+        if (Files.isRegularFile(root.resolve("legacy_registry_manifest_runtime.json"))) {
+            verifyLegacyFixture(server, root);
+        } else {
+            verifyLegacyBlocks(server);
+        }
+    }
+
+    private void verifyLegacyFixture(MinecraftServer server, Path root) throws IOException {
+        List<String> failures = new ArrayList<String>();
+        int blockMismatches = 0;
+        int itemMismatches = 0;
+        int checkedStates = 0;
+        int checkedItems = 0;
+        int checkedArmor = 0;
+        int checkedBuckets = 0;
+        int checkedPlayerItems = 0;
+
+        if (!Files.isRegularFile(root.resolve("BASEMETALS_1_12_FIXTURE_COMPLETE.txt"))) {
+            failures.add("missing legacy fixture completion marker");
+        }
+        JsonObject manifest;
+        try (Reader reader = Files.newBufferedReader(root.resolve("legacy_registry_manifest_runtime.json"),
+                StandardCharsets.UTF_8)) {
+            manifest = new JsonParser().parse(reader).getAsJsonObject();
+        }
+        int format = manifest.has("fixture_format") ? manifest.get("fixture_format").getAsInt() : 1;
+        if (format < 2) failures.add("fixture format " + format + " does not cover the complete contract");
+
+        for (JsonElement blockElement : manifest.getAsJsonArray("blocks")) {
+            JsonObject block = blockElement.getAsJsonObject();
+            String expected = currentBlockId(block.get("id").getAsString());
+            for (JsonElement stateElement : block.getAsJsonArray("states")) {
+                JsonObject oldState = stateElement.getAsJsonObject();
+                int dimension = oldState.has("dimension") ? oldState.get("dimension").getAsInt() : 0;
+                WorldServer world = fixtureWorld(server, dimension);
+                BlockPos pos = new BlockPos(oldState.get("x").getAsInt(), oldState.get("y").getAsInt(),
+                        oldState.get("z").getAsInt());
+                IBlockState actualState = world.getBlockState(pos);
+                ResourceLocation actualId = ForgeRegistries.BLOCKS.getKey(actualState.getBlock());
+                boolean stateMatches = matchesLegacyMetadata(actualState,
+                        oldState.get("metadata").getAsInt());
+                if (!expected.equals(String.valueOf(actualId)) || !stateMatches) {
+                    if (failures.size() < 20) {
+                        failures.add("block dim=" + dimension + " " + pos + " expected " + expected
+                                + " metadata=" + oldState.get("metadata").getAsInt()
+                                + " but found " + actualState);
+                    }
+                    blockMismatches++;
+                }
+                checkedStates++;
+            }
+        }
+
+        WorldServer overworld = fixtureWorld(server, 0);
+        for (JsonElement itemElement : manifest.getAsJsonArray("items")) {
+            JsonObject oldItem = itemElement.getAsJsonObject();
+            int chestIndex = oldItem.get("chest").getAsInt();
+            int slot = oldItem.get("slot").getAsInt();
+            BlockPos pos = new BlockPos(oldItem.get("chest_x").getAsInt(),
+                    oldItem.get("chest_y").getAsInt(), oldItem.get("chest_z").getAsInt());
+            overworld.getBlockState(pos); // Force the legacy container chunk through datafixing before lookup.
+            TileEntity blockEntity = overworld.getTileEntity(pos);
+            if (!(blockEntity instanceof TileEntityChest)) {
+                if (failures.size() < 20) failures.add("missing inventory chest " + chestIndex + " at " + pos
+                        + " state=" + overworld.getBlockState(pos) + " tile="
+                        + (blockEntity == null ? "null" : blockEntity.getClass().getName()));
+                itemMismatches++;
+                continue;
+            }
+            ItemStack stack = ((TileEntityChest) blockEntity).getStackInSlot(slot);
+            String expected = currentItemId(oldItem.get("id").getAsString());
+            String actual = String.valueOf(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+            int expectedCount = oldItem.has("count") ? oldItem.get("count").getAsInt() : 1;
+            int expectedDamage = oldItem.has("damage") ? oldItem.get("damage").getAsInt() : 0;
+            NBTTagCompound tag = stack.getTag();
+            boolean proofMatches = format < 2 || tag != null
+                    && tag.getCompound("basemetals_fixture").getString("proof")
+                            .equals(oldItem.get("id").getAsString());
+            boolean enchantmentMatches = !oldItem.has("enchanted") || !oldItem.get("enchanted").getAsBoolean()
+                    || EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack) == 2;
+            if (!expected.equals(actual) || stack.getCount() != expectedCount
+                    || stack.getDamage() != expectedDamage || !proofMatches || !enchantmentMatches) {
+                if (failures.size() < 20) {
+                    failures.add("chest " + chestIndex + " slot " + slot + " expected " + expected
+                            + " x" + expectedCount + " damage=" + expectedDamage + " with fixture NBT but found "
+                            + stack + " damage=" + stack.getDamage() + " proof=" + proofMatches
+                            + " unbreaking="
+                            + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
+                }
+                itemMismatches++;
+            }
+            if (oldItem.has("armor_stand")) {
+                BlockPos armorPos = new BlockPos((int) Math.floor(oldItem.get("armor_x").getAsDouble()),
+                        (int) Math.floor(oldItem.get("armor_y").getAsDouble()),
+                        (int) Math.floor(oldItem.get("armor_z").getAsDouble()));
+                List<EntityArmorStand> stands = overworld.getEntitiesWithinAABB(EntityArmorStand.class,
+                        new AxisAlignedBB(armorPos).grow(0.75D));
+                EntityEquipmentSlot equipmentSlot = equipmentSlot(oldItem.get("armor_slot").getAsString());
+                boolean equipped = false;
+                for (EntityArmorStand stand : stands) {
+                    ItemStack worn = stand.getItemStackFromSlot(equipmentSlot);
+                    if (expected.equals(String.valueOf(ForgeRegistries.ITEMS.getKey(worn.getItem())))
+                            && worn.getDamage() == expectedDamage) {
+                        equipped = true;
+                        break;
+                    }
+                }
+                if (!equipped) {
+                    if (failures.size() < 20) failures.add("missing armor-stand equipment " + expected);
+                    itemMismatches++;
+                }
+                checkedArmor++;
+            }
+            checkedItems++;
+        }
+
+        for (JsonElement fluidElement : manifest.getAsJsonArray("fluids")) {
+            JsonObject fluid = fluidElement.getAsJsonObject();
+            if (!fluid.has("bucket_chest")) continue;
+            int chestIndex = fluid.get("bucket_chest").getAsInt();
+            int slot = fluid.get("bucket_slot").getAsInt();
+            BlockPos pos = new BlockPos(fluid.get("bucket_chest_x").getAsInt(),
+                    fluid.get("bucket_chest_y").getAsInt(), fluid.get("bucket_chest_z").getAsInt());
+            overworld.getBlockState(pos); // Tile-entity lookup alone does not load a distant chunk in 1.13.
+            TileEntity blockEntity = overworld.getTileEntity(pos);
+            String expected = BaseMetals.MOD_ID + ":"
+                    + MissingMappings.fluidTargetPath(fluid.get("name").getAsString()) + "_bucket";
+            if (!(blockEntity instanceof TileEntityChest)
+                    || !expected.equals(String.valueOf(ForgeRegistries.ITEMS.getKey(
+                            ((TileEntityChest) blockEntity).getStackInSlot(slot).getItem())))) {
+                if (failures.size() < 20) {
+                    failures.add("legacy filled bucket " + chestIndex + ":" + slot
+                            + " did not become " + expected);
+                }
+                itemMismatches++;
+            }
+            checkedBuckets++;
+        }
+
+        if (manifest.has("players")) {
+            for (JsonElement playerElement : manifest.getAsJsonArray("players")) {
+                JsonObject savedPlayer = playerElement.getAsJsonObject();
+                File playerFile = root.resolve("playerdata")
+                        .resolve(savedPlayer.get("uuid").getAsString() + ".dat").toFile();
+                if (!playerFile.isFile()) {
+                    failures.add("fixture playerdata did not load: " + playerFile.getName());
+                    continue;
+                }
+                NBTTagCompound playerData;
+                try (FileInputStream input = new FileInputStream(playerFile)) {
+                    playerData = CompressedStreamTools.readCompressed(input);
+                }
+                NBTTagList inventory = playerData.getList("Inventory", 10);
+                for (JsonElement inventoryElement : savedPlayer.getAsJsonArray("inventory")) {
+                    JsonObject expectedItem = inventoryElement.getAsJsonObject();
+                    int slot = expectedItem.get("slot").getAsInt();
+                    NBTTagCompound actualItem = inventoryItem(inventory, slot);
+                    String expected = currentItemId(expectedItem.get("id").getAsString());
+                    boolean proof = actualItem != null && actualItem.getCompound("tag")
+                            .getCompound("basemetals_fixture").getString("player_proof")
+                            .equals(expectedItem.get("id").getAsString());
+                    if (actualItem == null || !expected.equals(actualItem.getString("id")) || !proof) {
+                        if (failures.size() < 20) failures.add("player slot " + slot + " lost " + expected);
+                        itemMismatches++;
+                    }
+                    checkedPlayerItems++;
+                }
+            }
+        }
+
+        if (!Files.isRegularFile(root.resolve("legacy_orespawn3_basemetals.json"))) {
+            failures.add("missing packaged Base Metals OS3 rule fixture");
+        }
+        if (!Files.isRegularFile(root.resolve("legacy_orespawn3_orespawn.json"))) {
+            failures.add("missing configured OS3 rule fixture");
+        }
+
+        String summary = "states=" + checkedStates + " block_mismatches=" + blockMismatches
+                + " items=" + checkedItems + " armor=" + checkedArmor + " buckets=" + checkedBuckets
+                + " player_items=" + checkedPlayerItems + " item_mismatches=" + itemMismatches;
+        checks += checkedStates + checkedItems + checkedArmor + checkedBuckets + checkedPlayerItems;
+        if (blockMismatches != 0 || itemMismatches != 0 || !failures.isEmpty()) {
+            writeFixtureResult(root, "BASEMETALS_1_12_TO_1_13_UPGRADE FAIL " + summary
+                    + " samples=" + failures);
+            throw new IllegalStateException("1.12 fixture upgrade mismatch: " + summary + " samples=" + failures);
+        }
+        writeFixtureResult(root, "BASEMETALS_1_12_TO_1_13_UPGRADE PASS " + summary);
+        LOGGER.info("BASEMETALS_1_12_TO_1_13_UPGRADE PASS {}", summary);
+    }
+
+    private static NBTTagCompound inventoryItem(NBTTagList inventory, int slot) {
+        for (int index = 0; index < inventory.size(); index++) {
+            NBTTagCompound item = inventory.getCompound(index);
+            if ((item.getByte("Slot") & 255) == slot) return item;
+        }
+        return null;
+    }
+
+    private static EntityEquipmentSlot equipmentSlot(String name) {
+        if ("feet".equals(name)) return EntityEquipmentSlot.FEET;
+        if ("legs".equals(name)) return EntityEquipmentSlot.LEGS;
+        if ("chest".equals(name)) return EntityEquipmentSlot.CHEST;
+        if ("head".equals(name)) return EntityEquipmentSlot.HEAD;
+        if ("offhand".equals(name)) return EntityEquipmentSlot.OFFHAND;
+        return EntityEquipmentSlot.MAINHAND;
+    }
+
+    private static boolean matchesLegacyMetadata(IBlockState actual, int meta) {
+        Block block = actual.getBlock();
+        IBlockState expected;
+
+        try {
+            Method converter = LegacyWorldDataHook.class.getDeclaredMethod(
+                    "legacyState", Block.class, String.class, int.class);
+            converter.setAccessible(true);
+            expected = (IBlockState) converter.invoke(null, block, "", Integer.valueOf(meta));
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Could not compare the legacy block state", exception);
+        }
+
+        // Door metadata saved different properties in the upper and lower halves.
+        if (block instanceof BlockDoor) {
+            if ((meta & 8) != 0) {
+                return actual.get(BlockDoor.HALF) == expected.get(BlockDoor.HALF)
+                        && actual.get(BlockDoor.HINGE) == expected.get(BlockDoor.HINGE)
+                        && actual.get(BlockDoor.POWERED).equals(expected.get(BlockDoor.POWERED));
+            }
+
+            return actual.get(BlockDoor.HALF) == expected.get(BlockDoor.HALF)
+                    && actual.get(BlockDoor.FACING) == expected.get(BlockDoor.FACING)
+                    && actual.get(BlockDoor.OPEN).equals(expected.get(BlockDoor.OPEN));
+        }
+
+        // Buttons, pressure plates and fluids can change while the chunk prepares.
+        if (block instanceof BlockButton || block instanceof BlockPressurePlate
+                || block instanceof BlockFlowingFluid) {
+            return true;
+        }
+
+        return actual.equals(expected);
+    }
+
+    private static WorldServer fixtureWorld(MinecraftServer server, int dimension) {
+        DimensionType type = dimension == -1 ? DimensionType.NETHER
+                : dimension == 1 ? DimensionType.THE_END : DimensionType.OVERWORLD;
+        return require(server.getWorld(type), "missing fixture dimension " + dimension);
+    }
+
+    private static String currentBlockId(String legacy) {
+        ResourceLocation id = new ResourceLocation(legacy);
+        if (BaseMetals.MOD_ID.equals(id.getNamespace()) || "mmdlib".equals(id.getNamespace())) {
+            return BaseMetals.MOD_ID + ":" + MissingMappings.blockTargetPath(id.getPath());
+        }
+        return legacy;
+    }
+
+    private static String currentItemId(String legacy) {
+        ResourceLocation id = new ResourceLocation(legacy);
+        if (BaseMetals.MOD_ID.equals(id.getNamespace()) || "mmdlib".equals(id.getNamespace())) {
+            return MissingMappings.itemTargetId(id.getPath()).toString();
+        }
+        return legacy;
+    }
+
+    private static void writeFixtureResult(Path root, String result) {
+        try {
+            Files.write(root.resolve("BASEMETALS_1_12_TO_1_13_UPGRADE_RESULT.txt"),
+                    (result + System.lineSeparator()).getBytes(StandardCharsets.UTF_8),
+                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException exception) {
+            LOGGER.error("Could not write 1.12 to 1.13 fixture result", exception);
         }
     }
 
@@ -206,7 +509,8 @@ public final class BaseMetalsRuntimeProbe {
         check(server.getAdvancementManager().getAdvancement(id("steel_maker")) != null,
                 "steel advancement loaded");
         check(server.getAdvancementManager().getAllAdvancements().stream()
-                .filter(value -> BaseMetals.MOD_ID.equals(value.getId().getNamespace())).count() == 18,
+                .filter(value -> BaseMetals.MOD_ID.equals(value.getId().getNamespace())
+                        && !value.getId().getPath().startsWith("recipes/")).count() == 18,
                 "eighteen advancements loaded");
 
         testProjectilePersistence(world);
@@ -214,6 +518,7 @@ public final class BaseMetalsRuntimeProbe {
         testAdamantineArmor(world);
         testShieldUpgrade();
         testCrossbowContract();
+        checks += GameplayRegressionChecks.run(server);
     }
 
     private void testProjectilePersistence(WorldServer world) {

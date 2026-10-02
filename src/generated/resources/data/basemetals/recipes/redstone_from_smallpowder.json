@@ -12,5 +12,6 @@
   },
   "result": {
     "item": "minecraft:redstone"
-  }
+  },
+  "group": "minecraft:redstone"
 }

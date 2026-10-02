@@ -293,6 +293,10 @@ def verifyLegacyUpgradeRun = tasks.register('verifyLegacyUpgradeRun') {
         if (!text.contains('BASEMETALS_LEGACY_UPGRADE_PROBE PASS')) {
             throw new GradleException('Legacy-world runtime probe did not report PASS')
         }
+        File fixtureManifest = new File(runDirectory, 'world/legacy_registry_manifest_runtime.json')
+        if (fixtureManifest.isFile() && !text.contains('BASEMETALS_1_12_TO_1_13_UPGRADE PASS')) {
+            throw new GradleException('Complete 1.12 fixture verification did not report PASS')
+        }
         if (!text.contains('legacy Base Metals states') || !text.contains('protected')) {
             throw new GradleException('Legacy Base Metals registry/chunk preparation was not observed')
         }
@@ -309,6 +313,7 @@ tasks.matching { it.name == 'runLegacyUpgradeServer' }.configureEach {
 
 def orespawnModule = "mmd-orespawn-${project.orespawn_curse_project_id}"
 def orespawnVerificationRepository = project.findProperty('orespawnVerificationRepository')
+def orespawnCoordinate = "curse.maven:${orespawnModule}:${orespawn_curse_file_id}"
 repositories {
     minecraft.mavenizer(it)
     maven fg.forgeMaven
@@ -334,8 +339,8 @@ repositories {
 
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
-    runtimeOnly renamer.dependency("curse.maven:${orespawnModule}:${orespawn_curse_file_id}")
-    orespawnRelease "curse.maven:${orespawnModule}:${orespawn_curse_file_id}"
+    runtimeOnly renamer.dependency(orespawnCoordinate)
+    orespawnRelease orespawnCoordinate
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
@@ -493,17 +498,27 @@ tasks.register('verifyReleaseConfiguration') {
 tasks.register('verifyReleaseDependencies') {
     group = 'verification'
     doLast {
-        def expected = [version: '4.0.16.113021', curseProjectId: '245586', curseFileId: '8836169',
-                sha256: '38C091390486AFCEF8F43404071AF595E53FF5750DB99E0F8F851858C85BA11C']
+        def expected = [version: '4.1.0.113021', curseProjectId: '245586', curseFileId: '9035885',
+                sha256: '66C9CC5F8BE8F08F3DD5FA26EBEA79B52972B2FB86CB4DADBEEBC29AC01D3435']
         if (configuredOreSpawnIdentity != expected) {
             throw new GradleException("Unexpected OreSpawn identity: ${configuredOreSpawnIdentity}")
         }
-        File artifact = configurations.orespawnRelease.resolvedConfiguration.resolvedArtifacts
-                .find { it.moduleVersion.id.group == 'curse.maven' && it.file.name.endsWith('.jar') }?.file
+        File artifact = configurations.orespawnRelease.singleFile
         if (artifact == null || !artifact.isFile()) throw new GradleException('Released OreSpawn did not resolve')
         String actual = sha256(artifact)
         if (actual != configuredOreSpawnIdentity.sha256) {
             throw new GradleException("OreSpawn SHA-256 mismatch: ${actual}")
+        }
+        new ZipFile(artifact).withCloseable { zip ->
+            def metadataEntry = zip.getEntry('META-INF/mods.toml')
+            if (metadataEntry == null) throw new GradleException('OreSpawn mod metadata is missing')
+            String metadata = zip.getInputStream(metadataEntry).getText('UTF-8')
+            if (!metadata.contains('modId="orespawn"')
+                    || !metadata.contains('version="4.1.0.113021"')
+                    || !metadata.contains('versionRange="[1.13.2]"')
+                    || zip.getEntry('zone/moddev/mc/orespawn/api/OreSpawnApi.class') == null) {
+                throw new GradleException('Expected the published Minecraft 1.13.2 OreSpawn 4.1 release and public API')
+            }
         }
     }
 }
@@ -961,8 +976,7 @@ def prepareBuildOwnedRunDirectory = { File candidate, String expectedName ->
     runDirectory
 }
 def releasedOreSpawnJar = {
-    File artifact = configurations.orespawnRelease.resolvedConfiguration.resolvedArtifacts
-            .find { it.moduleVersion.id.group == 'curse.maven' && it.file.name.endsWith('.jar') }?.file
+    File artifact = configurations.orespawnRelease.singleFile
     if (artifact == null || !artifact.isFile() || sha256(artifact) != configuredOreSpawnIdentity.sha256) {
         throw new GradleException('Exact released OreSpawn artifact is unavailable for packaged testing')
     }

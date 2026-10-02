@@ -12,5 +12,6 @@
   },
   "result": {
     "item": "minecraft:coal"
-  }
+  },
+  "group": "minecraft:coal"
 }

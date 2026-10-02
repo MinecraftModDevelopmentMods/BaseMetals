@@ -12,5 +12,6 @@
   },
   "result": {
     "item": "minecraft:quartz"
-  }
+  },
+  "group": "minecraft:quartz"
 }

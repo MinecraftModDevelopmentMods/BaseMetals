@@ -18,5 +18,6 @@
   },
   "result": {
     "item": "minecraft:detector_rail"
-  }
+  },
+  "group": "minecraft:detector_rail"
 }

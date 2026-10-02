@@ -18,5 +18,6 @@
   },
   "result": {
     "item": "minecraft:tripwire_hook"
-  }
+  },
+  "group": "minecraft:tripwire_hook"
 }

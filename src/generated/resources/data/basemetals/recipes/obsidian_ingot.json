@@ -11,6 +11,7 @@
     }
   },
   "result": {
-    "item": "minecraft:obsidian"
-  }
+    "item": "basemetals:obsidian_ingot"
+  },
+  "group": "basemetals:obsidian_ingot"
 }

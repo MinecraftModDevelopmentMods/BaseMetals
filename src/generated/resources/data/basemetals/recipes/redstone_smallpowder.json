@@ -8,5 +8,6 @@
   "result": {
     "item": "basemetals:redstone_smallpowder",
     "count": 9
-  }
+  },
+  "group": "basemetals:redstone_smallpowder"
 }

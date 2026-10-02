@@ -12,5 +12,6 @@
   },
   "result": {
     "item": "basemetals:electrum_block"
-  }
+  },
+  "group": "basemetals:electrum_block"
 }

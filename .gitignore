@@ -38,6 +38,18 @@ classes
 /hs_err_pid*.log
 /replay_pid*.log
 
+# generated test results and runtime diagnostics, including nested runs
+**/test-results/
+**/test-reports/
+**/test-output/
+**/smoke-output/
+**/crash-reports/
+*.log
+*.jfr
+*.hprof
+hs_err_pid*.log
+replay_pid*.log
+
 # local regression, benchmark, and profiling evidence
 /benchmark-*/
 /preferred-seed-*/
@@ -82,6 +94,10 @@ __pycache__/
 [Cc][Oo][Pp][Ii][Ll][Oo][Tt]-[Ii][Nn][Ss][Tt][Rr][Uu][Cc][Tt][Ii][Oo][Nn][Ss].md
 [Aa][Gg][Ee][Nn][Tt]-*.md
 [Cc][Oo][Dd][Ee][Xx]-*.md
+.aider*
+.continue/
+.windsurf/
+.opencode/
 
 # local validation/audit reports
 **/VALIDATION.md

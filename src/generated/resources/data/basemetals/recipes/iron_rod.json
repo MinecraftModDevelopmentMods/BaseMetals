@@ -12,5 +12,6 @@
   "result": {
     "item": "basemetals:iron_rod",
     "count": 4
-  }
+  },
+  "group": "basemetals:iron_rod"
 }

@@ -120,9 +120,12 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         if (!legacyWorldActive || !root.contains("Level", 10)) return;
         NBTTagCompound level = root.getCompound("Level");
         int legacyBlocks = countLegacyBaseMetalsBlocks(level);
-        if (legacyBlocks == 0) return;
-        LEGACY_BASE_METALS_BLOCK_COUNTS.put(Long.valueOf(chunkKey(level.getInt("xPos"), level.getInt("zPos"))),
-                Integer.valueOf(legacyBlocks));
+        if (legacyBlocks > 0) {
+            LEGACY_BASE_METALS_BLOCK_COUNTS.put(Long.valueOf(chunkKey(level.getInt("xPos"), level.getInt("zPos"))),
+                    Integer.valueOf(legacyBlocks));
+        }
+        // A legacy chunk can contain Base Metals only in inventories or entities. It must still be
+        // treated as completed terrain or 1.13 regenerates the chunk and discards that content.
         level.setBoolean("TerrainPopulated", true);
         level.setBoolean("LightPopulated", true);
         level.setBoolean(PRESERVE_CHUNK_MARKER, true);

@@ -2,6 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "R",
+    "R",
     "F"
   ],
   "key": {
@@ -15,5 +16,6 @@
   "result": {
     "item": "basemetals:iron_bolt",
     "count": 4
-  }
+  },
+  "group": "basemetals:iron_bolt"
 }

@@ -12,5 +12,6 @@
   "result": {
     "item": "basemetals:steel_bars",
     "count": 16
-  }
+  },
+  "group": "basemetals:steel_bars"
 }

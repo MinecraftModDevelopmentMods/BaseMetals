@@ -10,5 +10,6 @@
   ],
   "result": {
     "item": "minecraft:flint_and_steel"
-  }
+  },
+  "group": "minecraft:flint_and_steel"
 }
