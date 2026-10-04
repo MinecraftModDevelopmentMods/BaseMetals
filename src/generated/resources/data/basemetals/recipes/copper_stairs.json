@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X  ",
-    "XX ",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/copper"
-    }
-  },
-  "result": {
-    "item": "basemetals:copper_stairs",
-    "count": 4
-  },
-  "group": "basemetals:copper_stairs"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/copper"
+      }
+    },
+    "result": {
+      "item": "basemetals:copper_stairs",
+      "count": 4
+    },
+    "group": "basemetals:copper_stairs"
+  }
 }

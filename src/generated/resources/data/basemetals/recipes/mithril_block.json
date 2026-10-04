@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/mithril"
-    }
-  },
-  "result": {
-    "item": "basemetals:mithril_block"
-  },
-  "group": "basemetals:mithril_block"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/mithril"
+      }
+    },
+    "result": {
+      "item": "basemetals:mithril_block"
+    },
+    "group": "basemetals:mithril_block"
+  }
 }

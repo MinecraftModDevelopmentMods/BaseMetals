@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:ingots/obsidian"
-    }
-  ],
-  "result": {
-    "item": "basemetals:obsidian_nugget",
-    "count": 9
-  },
-  "group": "basemetals:obsidian_nugget"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:ingots/obsidian"
+      }
+    ],
+    "result": {
+      "item": "basemetals:obsidian_nugget",
+      "count": 9
+    },
+    "group": "basemetals:obsidian_nugget"
+  }
 }

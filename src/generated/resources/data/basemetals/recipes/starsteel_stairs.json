@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X  ",
-    "XX ",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/starsteel"
-    }
-  },
-  "result": {
-    "item": "basemetals:starsteel_stairs",
-    "count": 4
-  },
-  "group": "basemetals:starsteel_stairs"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/starsteel"
+      }
+    },
+    "result": {
+      "item": "basemetals:starsteel_stairs",
+      "count": 4
+    },
+    "group": "basemetals:starsteel_stairs"
+  }
 }

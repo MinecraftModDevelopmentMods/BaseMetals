@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/adamantine"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/adamantine"
+      },
+      "X": {
+        "tag": "forge:ingots/adamantine"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/adamantine"
-    }
-  },
-  "result": {
-    "item": "basemetals:adamantine_lever"
-  },
-  "group": "basemetals:adamantine_lever"
+    "result": {
+      "item": "basemetals:adamantine_lever"
+    },
+    "group": "basemetals:adamantine_lever"
+  }
 }

@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/bismuth"
-    }
-  ],
-  "result": {
-    "item": "basemetals:bismuth_smallpowder",
-    "count": 9
-  },
-  "group": "basemetals:bismuth_smallpowder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/bismuth"
+      }
+    ],
+    "result": {
+      "item": "basemetals:bismuth_smallpowder",
+      "count": 9
+    },
+    "group": "basemetals:bismuth_smallpowder"
+  }
 }

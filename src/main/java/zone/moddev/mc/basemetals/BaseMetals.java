@@ -9,6 +9,9 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.entity.ModEntities;
 import zone.moddev.mc.basemetals.migration.LegacyWorldDataHook;
 import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
+import zone.moddev.mc.basemetals.loot.ContentModeLootCondition;
+import zone.moddev.mc.basemetals.network.ContentModeNetwork;
+import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,6 +19,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(BaseMetals.MOD_ID)
 public final class BaseMetals {
@@ -24,10 +28,13 @@ public final class BaseMetals {
 
     public BaseMetals() {
         LegacyWorldDataHook.register();
+        ContentModeNetwork.register();
         ModContent.initializeFluids();
         CrushingRecipe.register();
+        LootConditionManager.registerCondition(new ContentModeLootCondition.Serializer());
         ModEntities.initialize();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BaseMetalsConfig.SPEC);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(BaseMetalsConfig::onConfigLoading);
         MinecraftForge.EVENT_BUS.register(new BaseMetalsEvents());
         DistExecutor.runWhenOn(Dist.CLIENT, () -> ClientSetup::register);
     }

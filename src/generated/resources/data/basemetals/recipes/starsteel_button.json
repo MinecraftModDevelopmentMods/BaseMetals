@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/starsteel"
-    }
-  },
-  "result": {
-    "item": "basemetals:starsteel_button"
-  },
-  "group": "basemetals:starsteel_button"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/starsteel"
+      }
+    },
+    "result": {
+      "item": "basemetals:starsteel_button"
+    },
+    "group": "basemetals:starsteel_button"
+  }
 }

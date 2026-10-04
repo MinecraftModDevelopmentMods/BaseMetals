@@ -1,15 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/platinum"
-    }
-  },
-  "result": {
-    "item": "basemetals:platinum_pressure_plate"
-  },
-  "group": "basemetals:platinum_pressure_plate"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/platinum"
+      }
+    },
+    "result": {
+      "item": "basemetals:platinum_pressure_plate"
+    },
+    "group": "basemetals:platinum_pressure_plate"
+  }
 }

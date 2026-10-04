@@ -92,10 +92,55 @@ public final class BaseMetalsRuntimeProbe {
 
     public BaseMetalsRuntimeProbe() {
         MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
+        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, this::login);
+    }
+
+    private void login(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
+        if (!"login".equals(System.getProperty("basemetalsprobe.mode"))) return;
+        event.getPlayer().inventory.setInventorySlotContents(0,
+                new ItemStack(ModContent.item("tin_bow").get()));
+        if (Boolean.getBoolean("basemetalsprobe.modeSwitch")) {
+            net.minecraft.entity.player.EntityPlayerMP player = (net.minecraft.entity.player.EntityPlayerMP) event.getPlayer();
+            if (zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode()
+                    == zone.moddev.mc.basemetals.config.ContentMode.LOW_FANTASY) {
+                player.inventory.setInventorySlotContents(1, new ItemStack(ModContent.item("tin_ingot").get()));
+                player.inventory.setInventorySlotContents(2, new ItemStack(ModContent.item("adamantine_ingot").get()));
+                // Also save progress earned through the original 1.13 rod criterion.
+                player.inventory.setInventorySlotContents(3, new ItemStack(ModContent.item("steel_rod").get()));
+                net.minecraft.advancements.CriteriaTriggers.INVENTORY_CHANGED.trigger(player, player.inventory);
+            }
+
+            for (String name : new String[] {"tin_bow", "steel_bow", "adamantine_bow", "adamantine_crossbow", "adamantine_gear",
+                    "adamantine_arrow", "adamantine_rod", "adamantine_pickaxe"}) {
+                net.minecraft.advancements.Advancement advancement = player.getServer().getAdvancementManager()
+                        .getAdvancement(new ResourceLocation("basemetals", "recipes/" + name));
+                if (!player.getAdvancements().getProgress(advancement).isDone()) {
+                    throw new IllegalStateException("Material discovery did not earn the recipe advancement: " + name);
+                }
+                IRecipe recipe = player.getServer().getRecipeManager().getRecipe(new ResourceLocation("basemetals", name));
+                if (player.getRecipeBook().isUnlocked(recipe) == recipe.isDynamic()) {
+                    throw new IllegalStateException("Wrong recipe-book visibility after mode change: " + name);
+                }
+            }
+            LOGGER.info("BASEMETALS_MODE_SWITCH_RECIPE PASS mode={}",
+                    zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode());
+        }
+        LOGGER.info("BASEMETALS_MODE_LOGIN_SERVER PASS mode={}",
+                zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode().serializedName());
     }
 
     private void serverStarted(FMLServerStartedEvent event) {
         MinecraftServer server = event.getServer();
+        if ("login".equals(System.getProperty("basemetalsprobe.mode"))) {
+            try {
+                int count = ContentModeChecks.run(server);
+                LOGGER.info("BASEMETALS_CONTENT_MODE_PROBE PASS mode={} checks={}",
+                        zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode().serializedName(), count);
+            } catch (Exception failure) {
+                throw new IllegalStateException(failure);
+            }
+            return;
+        }
         boolean legacyUpgrade = "legacy-upgrade".equals(System.getProperty("basemetalsprobe.mode"));
         try {
             runChecks(server);
@@ -133,8 +178,13 @@ public final class BaseMetalsRuntimeProbe {
         int checkedBuckets = 0;
         int checkedPlayerItems = 0;
 
-        if (!Files.isRegularFile(root.resolve("BASEMETALS_1_12_FIXTURE_COMPLETE.txt"))) {
+        boolean source110 = Files.isRegularFile(root.resolve("BASEMETALS_1_10_FIXTURE_COMPLETE.txt"));
+        String upgradeMarker = source110 ? "BASEMETALS_1_10_TO_1_13_UPGRADE" : "BASEMETALS_1_12_TO_1_13_UPGRADE";
+        if (!source110 && !Files.isRegularFile(root.resolve("BASEMETALS_1_12_FIXTURE_COMPLETE.txt"))) {
             failures.add("missing legacy fixture completion marker");
+        }
+        if (source110 && !Files.isRegularFile(root.resolve("BASEMETALS_1_10_FIXTURE_RELOADED.txt"))) {
+            failures.add("1.10 fixture was not reopened in its source runtime");
         }
         JsonObject manifest;
         try (Reader reader = Files.newBufferedReader(root.resolve("legacy_registry_manifest_runtime.json"),
@@ -155,12 +205,14 @@ public final class BaseMetalsRuntimeProbe {
                         oldState.get("z").getAsInt());
                 IBlockState actualState = world.getBlockState(pos);
                 ResourceLocation actualId = ForgeRegistries.BLOCKS.getKey(actualState.getBlock());
-                boolean stateMatches = matchesLegacyMetadata(actualState,
-                        oldState.get("metadata").getAsInt());
+                int metadata = oldState.has("saved_metadata") ? oldState.get("saved_metadata").getAsInt()
+                        : oldState.get("metadata").getAsInt();
+                boolean stateMatches = matchesLegacyMetadata(actualState, metadata)
+                        && matchesSavedProperties(actualState, oldState);
                 if (!expected.equals(String.valueOf(actualId)) || !stateMatches) {
                     if (failures.size() < 20) {
                         failures.add("block dim=" + dimension + " " + pos + " expected " + expected
-                                + " metadata=" + oldState.get("metadata").getAsInt()
+                            + " metadata=" + metadata
                                 + " but found " + actualState);
                     }
                     blockMismatches++;
@@ -196,8 +248,10 @@ public final class BaseMetalsRuntimeProbe {
                             .equals(oldItem.get("id").getAsString());
             boolean enchantmentMatches = !oldItem.has("enchanted") || !oldItem.get("enchanted").getAsBoolean()
                     || EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack) == 2;
+            boolean nameMatches = !oldItem.has("custom_name")
+                    || oldItem.get("custom_name").getAsString().equals(stack.getDisplayName().getString());
             if (!expected.equals(actual) || stack.getCount() != expectedCount
-                    || stack.getDamage() != expectedDamage || !proofMatches || !enchantmentMatches) {
+                    || stack.getDamage() != expectedDamage || !proofMatches || !enchantmentMatches || !nameMatches) {
                 if (failures.size() < 20) {
                     failures.add("chest " + chestIndex + " slot " + slot + " expected " + expected
                             + " x" + expectedCount + " damage=" + expectedDamage + " with fixture NBT but found "
@@ -211,6 +265,7 @@ public final class BaseMetalsRuntimeProbe {
                 BlockPos armorPos = new BlockPos((int) Math.floor(oldItem.get("armor_x").getAsDouble()),
                         (int) Math.floor(oldItem.get("armor_y").getAsDouble()),
                         (int) Math.floor(oldItem.get("armor_z").getAsDouble()));
+                overworld.getBlockState(armorPos);
                 List<EntityArmorStand> stands = overworld.getEntitiesWithinAABB(EntityArmorStand.class,
                         new AxisAlignedBB(armorPos).grow(0.75D));
                 EntityEquipmentSlot equipmentSlot = equipmentSlot(oldItem.get("armor_slot").getAsString());
@@ -224,7 +279,8 @@ public final class BaseMetalsRuntimeProbe {
                     }
                 }
                 if (!equipped) {
-                    if (failures.size() < 20) failures.add("missing armor-stand equipment " + expected);
+                    if (failures.size() < 20) failures.add("missing armor-stand equipment " + expected
+                            + " stands=" + stands.size() + " pos=" + armorPos);
                     itemMismatches++;
                 }
                 checkedArmor++;
@@ -286,10 +342,10 @@ public final class BaseMetalsRuntimeProbe {
             }
         }
 
-        if (!Files.isRegularFile(root.resolve("legacy_orespawn3_basemetals.json"))) {
+        if (!source110 && !Files.isRegularFile(root.resolve("legacy_orespawn3_basemetals.json"))) {
             failures.add("missing packaged Base Metals OS3 rule fixture");
         }
-        if (!Files.isRegularFile(root.resolve("legacy_orespawn3_orespawn.json"))) {
+        if (!source110 && !Files.isRegularFile(root.resolve("legacy_orespawn3_orespawn.json"))) {
             failures.add("missing configured OS3 rule fixture");
         }
 
@@ -298,12 +354,42 @@ public final class BaseMetalsRuntimeProbe {
                 + " player_items=" + checkedPlayerItems + " item_mismatches=" + itemMismatches;
         checks += checkedStates + checkedItems + checkedArmor + checkedBuckets + checkedPlayerItems;
         if (blockMismatches != 0 || itemMismatches != 0 || !failures.isEmpty()) {
-            writeFixtureResult(root, "BASEMETALS_1_12_TO_1_13_UPGRADE FAIL " + summary
+            writeFixtureResult(root, upgradeMarker + " FAIL " + summary
                     + " samples=" + failures);
-            throw new IllegalStateException("1.12 fixture upgrade mismatch: " + summary + " samples=" + failures);
+            throw new IllegalStateException("Legacy fixture upgrade mismatch: " + summary + " samples=" + failures);
         }
-        writeFixtureResult(root, "BASEMETALS_1_12_TO_1_13_UPGRADE PASS " + summary);
-        LOGGER.info("BASEMETALS_1_12_TO_1_13_UPGRADE PASS {}", summary);
+        writeFixtureResult(root, upgradeMarker + " PASS " + summary);
+        LOGGER.info("{} PASS {}", upgradeMarker, summary);
+    }
+
+    private static boolean matchesSavedProperties(IBlockState actual, JsonObject saved) {
+        if (!saved.has("saved_properties")) return true;
+        JsonObject properties = saved.getAsJsonObject("saved_properties");
+        Map<String, String> current = new java.util.LinkedHashMap<String, String>();
+        for (Map.Entry<net.minecraft.state.IProperty<?>, Comparable<?>> entry : actual.getValues().entrySet()) {
+            current.put(entry.getKey().getName(), entry.getValue().toString().toLowerCase(java.util.Locale.ROOT));
+        }
+
+        for (Map.Entry<String, JsonElement> entry : properties.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue().getAsString();
+            if (actual.getBlock() instanceof BlockSlab && "half".equals(key)) key = "type";
+            if (actual.getBlock() instanceof BlockDoor) {
+                boolean upper = "upper".equals(current.get("half"));
+                if (upper && ("facing".equals(key) || "open".equals(key))) continue;
+                if (!upper && ("hinge".equals(key) || "powered".equals(key))) continue;
+            }
+
+            // Connected shapes are derived from neighbours; powered states and fluid levels can tick.
+            if ("variant".equals(key) || "shape".equals(key) || "powered".equals(key) || "level".equals(key)
+                    || "north".equals(key) || "south".equals(key) || "east".equals(key)
+                    || "west".equals(key) || "up".equals(key) || "down".equals(key)) continue;
+            if (actual.getBlock() instanceof BlockButton || actual.getBlock() instanceof net.minecraft.block.BlockLever) {
+                continue; // These changed from a single attachment property to face plus horizontal facing.
+            }
+            if (!value.equals(current.get(key))) return false;
+        }
+        return true;
     }
 
     private static NBTTagCompound inventoryItem(NBTTagList inventory, int slot) {
@@ -365,7 +451,7 @@ public final class BaseMetalsRuntimeProbe {
     }
 
     private static String currentBlockId(String legacy) {
-        ResourceLocation id = new ResourceLocation(legacy);
+        ResourceLocation id = new ResourceLocation(legacy.toLowerCase(java.util.Locale.ROOT));
         if (BaseMetals.MOD_ID.equals(id.getNamespace()) || "mmdlib".equals(id.getNamespace())) {
             return BaseMetals.MOD_ID + ":" + MissingMappings.blockTargetPath(id.getPath());
         }
@@ -373,7 +459,7 @@ public final class BaseMetalsRuntimeProbe {
     }
 
     private static String currentItemId(String legacy) {
-        ResourceLocation id = new ResourceLocation(legacy);
+        ResourceLocation id = new ResourceLocation(legacy.toLowerCase(java.util.Locale.ROOT));
         if (BaseMetals.MOD_ID.equals(id.getNamespace()) || "mmdlib".equals(id.getNamespace())) {
             return MissingMappings.itemTargetId(id.getPath()).toString();
         }
@@ -382,11 +468,11 @@ public final class BaseMetalsRuntimeProbe {
 
     private static void writeFixtureResult(Path root, String result) {
         try {
-            Files.write(root.resolve("BASEMETALS_1_12_TO_1_13_UPGRADE_RESULT.txt"),
+            Files.write(root.resolve("BASEMETALS_LEGACY_TO_1_13_UPGRADE_RESULT.txt"),
                     (result + System.lineSeparator()).getBytes(StandardCharsets.UTF_8),
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException exception) {
-            LOGGER.error("Could not write 1.12 to 1.13 fixture result", exception);
+            LOGGER.error("Could not write legacy fixture result", exception);
         }
     }
 
@@ -519,6 +605,7 @@ public final class BaseMetalsRuntimeProbe {
         testShieldUpgrade();
         testCrossbowContract();
         checks += GameplayRegressionChecks.run(server);
+        checks += ContentModeChecks.run(server);
     }
 
     private void testProjectilePersistence(WorldServer world) {

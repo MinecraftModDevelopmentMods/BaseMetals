@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:storage_blocks/pewter"
-    }
-  ],
-  "result": {
-    "item": "basemetals:pewter_ingot",
-    "count": 9
-  },
-  "group": "basemetals:pewter_ingot"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:storage_blocks/pewter"
+      }
+    ],
+    "result": {
+      "item": "basemetals:pewter_ingot",
+      "count": 9
+    },
+    "group": "basemetals:pewter_ingot"
+  }
 }

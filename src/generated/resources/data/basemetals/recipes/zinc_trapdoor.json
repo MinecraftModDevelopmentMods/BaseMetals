@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/zinc"
-    }
-  },
-  "result": {
-    "item": "basemetals:zinc_trapdoor"
-  },
-  "group": "basemetals:zinc_trapdoor"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/zinc"
+      }
+    },
+    "result": {
+      "item": "basemetals:zinc_trapdoor"
+    },
+    "group": "basemetals:zinc_trapdoor"
+  }
 }

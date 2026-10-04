@@ -1,24 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "N",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "forge:nuggets/zinc"
+      },
+      "R": {
+        "tag": "forge:rods/zinc"
+      }
     },
-    "N": {
-      "tag": "forge:nuggets/zinc"
+    "result": {
+      "item": "basemetals:zinc_arrow",
+      "count": 4
     },
-    "R": {
-      "tag": "forge:rods/zinc"
-    }
-  },
-  "result": {
-    "item": "basemetals:zinc_arrow",
-    "count": 4
-  },
-  "group": "basemetals:zinc_arrow"
+    "group": "basemetals:zinc_arrow"
+  }
 }

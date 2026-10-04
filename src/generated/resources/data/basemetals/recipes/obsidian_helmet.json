@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "X X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/obsidian"
-    }
-  },
-  "result": {
-    "item": "basemetals:obsidian_helmet"
-  },
-  "group": "basemetals:obsidian_helmet"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/obsidian"
+      }
+    },
+    "result": {
+      "item": "basemetals:obsidian_helmet"
+    },
+    "group": "basemetals:obsidian_helmet"
+  }
 }

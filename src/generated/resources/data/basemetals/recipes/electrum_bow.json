@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " RS",
-    "R S",
-    " RS"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/electrum"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " RS",
+      "R S",
+      " RS"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/electrum"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:electrum_bow"
-  },
-  "group": "basemetals:electrum_bow"
+    "result": {
+      "item": "basemetals:electrum_bow"
+    },
+    "group": "basemetals:electrum_bow"
+  }
 }

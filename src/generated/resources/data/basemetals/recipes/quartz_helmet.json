@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "X X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/quartz"
-    }
-  },
-  "result": {
-    "item": "basemetals:quartz_helmet"
-  },
-  "group": "basemetals:quartz_helmet"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:gems/quartz"
+      }
+    },
+    "result": {
+      "item": "basemetals:quartz_helmet"
+    },
+    "group": "basemetals:quartz_helmet"
+  }
 }

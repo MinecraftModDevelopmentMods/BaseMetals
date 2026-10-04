@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX ",
-    "  X",
-    " S "
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX ",
+      "  X",
+      " S "
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/steel"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/steel"
-    }
-  },
-  "result": {
-    "item": "basemetals:steel_scythe"
-  },
-  "group": "basemetals:steel_scythe"
+    "result": {
+      "item": "basemetals:steel_scythe"
+    },
+    "group": "basemetals:steel_scythe"
+  }
 }

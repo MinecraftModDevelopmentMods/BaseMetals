@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/zinc"
-    }
-  },
-  "result": {
-    "item": "basemetals:zinc_door",
-    "count": 3
-  },
-  "group": "basemetals:zinc_door"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/zinc"
+      }
+    },
+    "result": {
+      "item": "basemetals:zinc_door",
+      "count": 3
+    },
+    "group": "basemetals:zinc_door"
+  }
 }

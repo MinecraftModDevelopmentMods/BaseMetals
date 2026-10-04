@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X",
-    "X "
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/electrum"
-    }
-  },
-  "result": {
-    "item": "basemetals:electrum_shears"
-  },
-  "group": "basemetals:electrum_shears"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/electrum"
+      }
+    },
+    "result": {
+      "item": "basemetals:electrum_shears"
+    },
+    "group": "basemetals:electrum_shears"
+  }
 }

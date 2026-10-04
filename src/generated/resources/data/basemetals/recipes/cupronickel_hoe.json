@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    " S",
-    " S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      " S",
+      " S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/cupronickel"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/cupronickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:cupronickel_hoe"
-  },
-  "group": "basemetals:cupronickel_hoe"
+    "result": {
+      "item": "basemetals:cupronickel_hoe"
+    },
+    "group": "basemetals:cupronickel_hoe"
+  }
 }

@@ -1,37 +1,40 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/iron"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/iron"
+      },
+      {
+        "tag": "forge:dusts/iron"
+      },
+      {
+        "tag": "forge:dusts/iron"
+      },
+      {
+        "tag": "forge:dusts/iron"
+      },
+      {
+        "tag": "forge:dusts/iron"
+      },
+      {
+        "tag": "forge:dusts/iron"
+      },
+      {
+        "tag": "forge:dusts/iron"
+      },
+      {
+        "tag": "forge:dusts/iron"
+      },
+      {
+        "tag": "forge:dusts/coal"
+      }
+    ],
+    "result": {
+      "item": "basemetals:steel_blend",
+      "count": 8
     },
-    {
-      "tag": "forge:dusts/iron"
-    },
-    {
-      "tag": "forge:dusts/iron"
-    },
-    {
-      "tag": "forge:dusts/iron"
-    },
-    {
-      "tag": "forge:dusts/iron"
-    },
-    {
-      "tag": "forge:dusts/iron"
-    },
-    {
-      "tag": "forge:dusts/iron"
-    },
-    {
-      "tag": "forge:dusts/iron"
-    },
-    {
-      "tag": "forge:dusts/coal"
-    }
-  ],
-  "result": {
-    "item": "basemetals:steel_blend",
-    "count": 8
-  },
-  "group": "basemetals:steel_blend"
+    "group": "basemetals:steel_blend"
+  }
 }

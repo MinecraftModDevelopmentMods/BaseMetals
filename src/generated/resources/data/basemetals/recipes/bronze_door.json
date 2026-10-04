@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/bronze"
-    }
-  },
-  "result": {
-    "item": "basemetals:bronze_door",
-    "count": 3
-  },
-  "group": "basemetals:bronze_door"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/bronze"
+      }
+    },
+    "result": {
+      "item": "basemetals:bronze_door",
+      "count": 3
+    },
+    "group": "basemetals:bronze_door"
+  }
 }

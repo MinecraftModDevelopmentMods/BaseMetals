@@ -9,12 +9,12 @@ version="3.0.1.113021"
 displayName="Base Metals"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/base-metals"
 authors="Cyanobacterium, jriwanek, dshadowwolf, GetDizzy611, SkyBlade1978, the MMD Team"
-description='''Adds historically common metals, fantasy metals, alloys, tools, armour, and OreSpawn-powered deposits.'''
+description='''Adds real and fantasy metals, alloys, tools and armour. Crush ores with Crack Hammers, blend new metals and discover ores placed by OreSpawn.'''
 
 [[dependencies.basemetals]]
 modId="orespawn"
 mandatory=true
-versionRange="[4.0.16.113021,5.0.0)"
+versionRange="[4.1.0.113021,5.0.0)"
 ordering="AFTER"
 side="BOTH"
 

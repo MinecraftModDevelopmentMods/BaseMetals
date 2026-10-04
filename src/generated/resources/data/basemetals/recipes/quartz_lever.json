@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/quartz"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/quartz"
+      },
+      "X": {
+        "tag": "forge:gems/quartz"
+      }
     },
-    "X": {
-      "tag": "forge:gems/quartz"
-    }
-  },
-  "result": {
-    "item": "basemetals:quartz_lever"
-  },
-  "group": "basemetals:quartz_lever"
+    "result": {
+      "item": "basemetals:quartz_lever"
+    },
+    "group": "basemetals:quartz_lever"
+  }
 }

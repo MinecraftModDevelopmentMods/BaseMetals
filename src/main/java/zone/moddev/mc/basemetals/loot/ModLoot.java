@@ -16,7 +16,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-/** Forge 25 replacement for the later global-loot-modifier API. */
+/** Adds Base Metals loot to vanilla chest tables. */
 @Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class ModLoot {
     private static final Map<ResourceLocation, ResourceLocation> INJECTIONS;

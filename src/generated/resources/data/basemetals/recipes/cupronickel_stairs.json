@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X  ",
-    "XX ",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/cupronickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:cupronickel_stairs",
-    "count": 4
-  },
-  "group": "basemetals:cupronickel_stairs"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/cupronickel"
+      }
+    },
+    "result": {
+      "item": "basemetals:cupronickel_stairs",
+      "count": 4
+    },
+    "group": "basemetals:cupronickel_stairs"
+  }
 }

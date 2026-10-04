@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    " S ",
-    " S "
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      " S ",
+      " S "
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/platinum"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/platinum"
-    }
-  },
-  "result": {
-    "item": "basemetals:platinum_pickaxe"
-  },
-  "group": "basemetals:platinum_pickaxe"
+    "result": {
+      "item": "basemetals:platinum_pickaxe"
+    },
+    "group": "basemetals:platinum_pickaxe"
+  }
 }

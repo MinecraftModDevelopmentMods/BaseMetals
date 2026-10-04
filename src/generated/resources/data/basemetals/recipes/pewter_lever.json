@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/pewter"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/pewter"
+      },
+      "X": {
+        "tag": "forge:ingots/pewter"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/pewter"
-    }
-  },
-  "result": {
-    "item": "basemetals:pewter_lever"
-  },
-  "group": "basemetals:pewter_lever"
+    "result": {
+      "item": "basemetals:pewter_lever"
+    },
+    "group": "basemetals:pewter_lever"
+  }
 }

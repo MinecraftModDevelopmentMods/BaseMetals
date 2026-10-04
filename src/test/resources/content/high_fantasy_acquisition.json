@@ -1,0 +1,11 @@
+{
+  "source_commit": "dc50b364267f5437f6910adee9658752cb626658",
+  "recipes": {
+    "count": 2025,
+    "sha256": "075413bda3c31046462391729bc2def37f8ce88d49cbe8a2ecb10af4a61acc84"
+  },
+  "chests": {
+    "count": 10,
+    "sha256": "7058ea6524c5b873dee2d0410b1027219ba348cb0d347035b6a3f3bfc160b57d"
+  }
+}

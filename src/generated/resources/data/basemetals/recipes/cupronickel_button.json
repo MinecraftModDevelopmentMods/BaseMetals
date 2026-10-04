@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/cupronickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:cupronickel_button"
-  },
-  "group": "basemetals:cupronickel_button"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/cupronickel"
+      }
+    },
+    "result": {
+      "item": "basemetals:cupronickel_button"
+    },
+    "group": "basemetals:cupronickel_button"
+  }
 }

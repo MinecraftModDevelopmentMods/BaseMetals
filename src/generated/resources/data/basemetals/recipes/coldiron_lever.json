@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/coldiron"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/coldiron"
+      },
+      "X": {
+        "tag": "forge:ingots/coldiron"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/coldiron"
-    }
-  },
-  "result": {
-    "item": "basemetals:coldiron_lever"
-  },
-  "group": "basemetals:coldiron_lever"
+    "result": {
+      "item": "basemetals:coldiron_lever"
+    },
+    "group": "basemetals:coldiron_lever"
+  }
 }

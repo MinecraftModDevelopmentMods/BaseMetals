@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/aquarium"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/aquarium"
+      },
+      "X": {
+        "tag": "forge:ingots/aquarium"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/aquarium"
-    }
-  },
-  "result": {
-    "item": "basemetals:aquarium_lever"
-  },
-  "group": "basemetals:aquarium_lever"
+    "result": {
+      "item": "basemetals:aquarium_lever"
+    },
+    "group": "basemetals:aquarium_lever"
+  }
 }

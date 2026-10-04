@@ -1,24 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "N",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "forge:nuggets/lead"
+      },
+      "R": {
+        "tag": "forge:rods/lead"
+      }
     },
-    "N": {
-      "tag": "forge:nuggets/lead"
+    "result": {
+      "item": "basemetals:lead_arrow",
+      "count": 4
     },
-    "R": {
-      "tag": "forge:rods/lead"
-    }
-  },
-  "result": {
-    "item": "basemetals:lead_arrow",
-    "count": 4
-  },
-  "group": "basemetals:lead_arrow"
+    "group": "basemetals:lead_arrow"
+  }
 }

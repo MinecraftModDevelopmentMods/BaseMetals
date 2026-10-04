@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/tin"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/tin"
+      },
+      {
+        "tag": "forge:dusts/copper"
+      },
+      {
+        "tag": "forge:dusts/lead"
+      }
+    ],
+    "result": {
+      "item": "basemetals:pewter_blend",
+      "count": 3
     },
-    {
-      "tag": "forge:dusts/copper"
-    },
-    {
-      "tag": "forge:dusts/lead"
-    }
-  ],
-  "result": {
-    "item": "basemetals:pewter_blend",
-    "count": 3
-  },
-  "group": "basemetals:pewter_blend"
+    "group": "basemetals:pewter_blend"
+  }
 }

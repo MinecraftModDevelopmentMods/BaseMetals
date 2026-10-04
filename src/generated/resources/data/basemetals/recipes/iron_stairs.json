@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X  ",
-    "XX ",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/iron"
-    }
-  },
-  "result": {
-    "item": "basemetals:iron_stairs",
-    "count": 4
-  },
-  "group": "basemetals:iron_stairs"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/iron"
+      }
+    },
+    "result": {
+      "item": "basemetals:iron_stairs",
+      "count": 4
+    },
+    "group": "basemetals:iron_stairs"
+  }
 }

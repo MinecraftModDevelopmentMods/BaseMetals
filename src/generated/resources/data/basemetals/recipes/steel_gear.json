@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X ",
-    "XRX",
-    " X "
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/steel"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/steel"
+      },
+      "X": {
+        "tag": "forge:ingots/steel"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/steel"
-    }
-  },
-  "result": {
-    "item": "basemetals:steel_gear",
-    "count": 4
-  },
-  "group": "basemetals:steel_gear"
+    "result": {
+      "item": "basemetals:steel_gear",
+      "count": 4
+    },
+    "group": "basemetals:steel_gear"
+  }
 }

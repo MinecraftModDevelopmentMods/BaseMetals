@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:ingots/mercury"
-    }
-  ],
-  "result": {
-    "item": "basemetals:mercury_nugget",
-    "count": 9
-  },
-  "group": "basemetals:mercury_nugget"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:ingots/mercury"
+      }
+    ],
+    "result": {
+      "item": "basemetals:mercury_nugget",
+      "count": 9
+    },
+    "group": "basemetals:mercury_nugget"
+  }
 }

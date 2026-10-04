@@ -1,22 +1,25 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/silver"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/silver"
+      },
+      {
+        "tag": "forge:dusts/silver"
+      },
+      {
+        "tag": "forge:dusts/coldiron"
+      },
+      {
+        "tag": "forge:ingots/mercury"
+      }
+    ],
+    "result": {
+      "item": "basemetals:mithril_blend",
+      "count": 3
     },
-    {
-      "tag": "forge:dusts/silver"
-    },
-    {
-      "tag": "forge:dusts/coldiron"
-    },
-    {
-      "tag": "forge:ingots/mercury"
-    }
-  ],
-  "result": {
-    "item": "basemetals:mithril_blend",
-    "count": 3
-  },
-  "group": "basemetals:mithril_blend"
+    "group": "basemetals:mithril_blend"
+  }
 }

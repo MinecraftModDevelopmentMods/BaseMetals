@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " RS",
-    "R S",
-    " RS"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/aquarium"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " RS",
+      "R S",
+      " RS"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/aquarium"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:aquarium_bow"
-  },
-  "group": "basemetals:aquarium_bow"
+    "result": {
+      "item": "basemetals:aquarium_bow"
+    },
+    "group": "basemetals:aquarium_bow"
+  }
 }

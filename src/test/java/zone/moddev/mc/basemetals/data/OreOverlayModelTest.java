@@ -64,6 +64,33 @@ class OreOverlayModelTest {
     }
 
     @Test
+    void shippedOreModelsUseKirisOverlays() throws Exception {
+        Path mainResources = Paths.get("src/main/resources");
+        int ores = 0;
+
+        for (MaterialDefinition material : MaterialCatalogue.ALL) {
+            if (!material.hasOre()) continue;
+            ores++;
+
+            String name = material.name() + "_ore";
+            Path texture = mainResources.resolve("assets/basemetals/textures/block/ore_overlays/" + name + ".png");
+            assertTrue(Files.isRegularFile(texture), name + " overlay is in the wrong directory or missing");
+
+            Path modelPath = mainResources.resolve("assets/basemetals/models/block/" + name + ".json");
+            JsonObject model = new JsonParser().parse(new String(Files.readAllBytes(modelPath),
+                    StandardCharsets.UTF_8)).getAsJsonObject();
+
+            assertEquals(BMBlockStateProvider.baseTexture(material.name()),
+                    model.getAsJsonObject("textures").get("base").getAsString(), name);
+            assertEquals("basemetals:block/ore_overlays/" + name,
+                    model.getAsJsonObject("textures").get("overlay").getAsString(), name);
+            assertEquals(2, model.getAsJsonArray("elements").size(), name);
+        }
+
+        assertEquals(13, ores);
+    }
+
+    @Test
     void missingOverlaysKeepTheCurrentArtworkWithoutMissingTextureReferences() {
         JsonObject model = BMBlockStateProvider.modelFor("tin_ore", "minecraft:block/stone",
                 "basemetals:block/ore_overlays/tin_ore", false);
@@ -90,6 +117,41 @@ class OreOverlayModelTest {
         Files.delete(overlay);
         BMBlockStateProvider.main(new String[] {resources.toString()});
         assertFalse(readModel("tin_ore").has("elements"));
+    }
+
+    @Test
+    void generationRepairsInvalidJsonAndKeepsLineEndingsStable() throws Exception {
+        BMBlockStateProvider.main(new String[] {resources.toString()});
+        byte[] expected = Files.readAllBytes(modelPath("tin_ore"));
+
+        Files.write(modelPath("tin_ore"), "{unfinished model".getBytes(StandardCharsets.UTF_8));
+        BMBlockStateProvider.main(new String[] {resources.toString()});
+        org.junit.jupiter.api.Assertions.assertArrayEquals(expected, Files.readAllBytes(modelPath("tin_ore")));
+
+        String windowsModel = new String(expected, StandardCharsets.UTF_8).replace("\n", "\r\n");
+        Files.write(modelPath("tin_ore"), windowsModel.getBytes(StandardCharsets.UTF_8));
+        BMBlockStateProvider.main(new String[] {resources.toString()});
+        org.junit.jupiter.api.Assertions.assertArrayEquals(expected, Files.readAllBytes(modelPath("tin_ore")));
+    }
+
+    @Test
+    void verificationOutputDoesNotRewriteTheSourceModels() throws Exception {
+        BMBlockStateProvider.main(new String[] {resources.toString()});
+        byte[] original = Files.readAllBytes(modelPath("tin_ore"));
+
+        Path overlay = resources.resolve("assets/basemetals/textures/block/ore_overlays/tin_ore.png");
+        Files.createDirectories(overlay.getParent());
+        Files.copy(Paths.get("src/main/resources/assets/basemetals/textures/block/ore_overlays/tin_ore.png"), overlay);
+
+        Path output = resources.resolve("verification-output");
+        BMBlockStateProvider.main(new String[] {resources.toString(), "--output", output.toString()});
+
+        org.junit.jupiter.api.Assertions.assertArrayEquals(original, Files.readAllBytes(modelPath("tin_ore")));
+        JsonObject generated = new JsonParser().parse(new String(Files.readAllBytes(output.resolve(
+                "assets/basemetals/models/block/tin_ore.json")), StandardCharsets.UTF_8)).getAsJsonObject();
+        assertEquals("basemetals:block/ore_overlays/tin_ore",
+                generated.getAsJsonObject("textures").get("overlay").getAsString());
+        assertFalse(Files.exists(output.resolve("assets/minecraft")), "Verification must not add client fixtures");
     }
 
     private static void assertElement(JsonObject element, double from, double to, String texture) {

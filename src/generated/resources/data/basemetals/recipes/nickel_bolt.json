@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "R": {
+        "tag": "forge:rods/nickel"
+      }
     },
-    "R": {
-      "tag": "forge:rods/nickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:nickel_bolt",
-    "count": 4
-  },
-  "group": "basemetals:nickel_bolt"
+    "result": {
+      "item": "basemetals:nickel_bolt",
+      "count": 4
+    },
+    "group": "basemetals:nickel_bolt"
+  }
 }

@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X",
-    "S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X",
+      "S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/silver"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/silver"
-    }
-  },
-  "result": {
-    "item": "basemetals:silver_sword"
-  },
-  "group": "basemetals:silver_sword"
+    "result": {
+      "item": "basemetals:silver_sword"
+    },
+    "group": "basemetals:silver_sword"
+  }
 }

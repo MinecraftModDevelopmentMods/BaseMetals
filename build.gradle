@@ -303,8 +303,14 @@ def verifyLegacyUpgradeRun = tasks.register('verifyLegacyUpgradeRun') {
             throw new GradleException('Legacy-world runtime probe did not report PASS')
         }
         File fixtureManifest = new File(runDirectory, 'world/legacy_registry_manifest_runtime.json')
-        if (fixtureManifest.isFile() && !text.contains('BASEMETALS_1_12_TO_1_13_UPGRADE PASS')) {
-            throw new GradleException('Complete 1.12 fixture verification did not report PASS')
+        if (fixtureManifest.isFile()) {
+            boolean from110 = new File(runDirectory,
+                    'world/BASEMETALS_1_10_FIXTURE_COMPLETE.txt').isFile()
+            String marker = from110 ? 'BASEMETALS_1_10_TO_1_13_UPGRADE PASS'
+                    : 'BASEMETALS_1_12_TO_1_13_UPGRADE PASS'
+            if (!text.contains(marker)) {
+                throw new GradleException("Complete ${from110 ? '1.10' : '1.12'} fixture verification did not report PASS")
+            }
         }
         if (!text.contains('legacy Base Metals states') || !text.contains('protected')) {
             throw new GradleException('Legacy Base Metals registry/chunk preparation was not observed')
@@ -348,7 +354,7 @@ repositories {
 
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
-    runtimeOnly renamer.dependency(orespawnCoordinate)
+    implementation renamer.dependency(orespawnCoordinate)
     orespawnRelease orespawnCoordinate
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -615,7 +621,7 @@ tasks.register('verifyReleaseArtifacts') {
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
             if (modsToml.contains('${') || !modsToml.contains('version="3.0.1.113021"')
-                    || !modsToml.contains('versionRange="[4.0.16.113021,5.0.0)"')) {
+                    || !modsToml.contains('versionRange="[4.1.0.113021,5.0.0)"')) {
                 throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
             }
             def provider = new JsonSlurper().parse(zip.getInputStream(
@@ -730,8 +736,8 @@ def verifyGeneratedData = tasks.register('verifyGeneratedData', Exec) {
     }
 }
 def oreModelsDirectory = file('src/main/resources/assets/basemetals/models/block')
-def oreModelSnapshot = {
-    fileTree(oreModelsDirectory) { include '*_ore.json' }.files.collectEntries {
+def oreModelSnapshot = { File directory ->
+    fileTree(directory) { include '*_ore.json' }.files.collectEntries {
         [(it.name): sha256(it)]
     }
 }
@@ -744,20 +750,36 @@ def generateOreModels = tasks.register('generateOreModels', JavaExec) {
     args file('src/main/resources').absolutePath
 }
 tasks.named('processResources') { dependsOn generateOreModels }
-def verifyGeneratedOreModels = tasks.register('verifyGeneratedOreModels') {
+def oreModelVerificationDirectory = layout.buildDirectory.dir('ore-model-verification')
+def verifyGeneratedOreModels = tasks.register('verifyGeneratedOreModels', JavaExec) {
     group = 'verification'
-    dependsOn generateOreModels
+    description = 'Checks the saved ore models without rewriting them.'
+    dependsOn tasks.named('modelGeneratorClasses')
+    classpath = sourceSets.modelGenerator.runtimeClasspath
+    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
+    args file('src/main/resources').absolutePath, '--output', oreModelVerificationDirectory.get().asFile.absolutePath
+
+    doFirst {
+        File output = oreModelVerificationDirectory.get().asFile.canonicalFile
+        File buildDirectory = layout.buildDirectory.get().asFile.canonicalFile
+        if (!output.toPath().startsWith(buildDirectory.toPath()) || output.name != 'ore-model-verification') {
+            throw new GradleException("Unsafe ore-model verification directory: ${output}")
+        }
+        delete output
+    }
     doLast {
-        if (generateOreModels.get().beforeGeneration != oreModelSnapshot()) {
-            throw new GradleException('Ore models were stale. Review and commit the generateOreModels output.')
+        File expectedModels = new File(oreModelVerificationDirectory.get().asFile, 'assets/basemetals/models/block')
+        if (oreModelSnapshot(oreModelsDirectory) != oreModelSnapshot(expectedModels)) {
+            throw new GradleException('Ore models are stale. Build the project and commit the updated JSON files.')
         }
     }
 }
-generateOreModels.configure { doFirst { ext.beforeGeneration = oreModelSnapshot() } }
+// Release checks must see stale models before the normal build updates them.
+generateOreModels.configure { mustRunAfter verifyGeneratedOreModels }
+tasks.named('verifyReleaseArtifacts') { dependsOn verifyGeneratedOreModels }
 tasks.named('check') {
     dependsOn tasks.named('verifyDevelopmentLaunches')
     dependsOn verifyGeneratedData
-    dependsOn verifyGeneratedOreModels
     dependsOn tasks.named('verifyReleaseConfiguration')
     dependsOn tasks.named('verifyReleaseDependencies')
     dependsOn tasks.named('verifyMavenCoordinates')
@@ -776,7 +798,7 @@ eclipse {
             }.each { entry -> entry.entryAttributes['test'] = 'true' }
         }
     }
-    synchronizationTasks 'isolateEclipseProductionRuns'
+    synchronizationTasks generateOreModels, 'isolateEclipseProductionRuns'
 }
 idea {
     module {
@@ -897,6 +919,13 @@ tasks.register('verifyEclipseProductionClasspath') {
     dependsOn tasks.named('eclipseClasspath')
     dependsOn tasks.named('isolateEclipseProductionRuns')
     doLast {
+        Set<String> synchronizationTasks = eclipse.synchronizationTasks.getDependencies(delegate).collect {
+            it.name
+        } as Set
+        if (!synchronizationTasks.contains('generateOreModels')) {
+            throw new GradleException('Eclipse Gradle refresh must regenerate ore models')
+        }
+
         File prefs = file('.settings/org.eclipse.buildship.core.prefs')
         Properties buildshipPreferences = new Properties()
         prefs.withInputStream { buildshipPreferences.load(it) }
@@ -1247,4 +1276,28 @@ tasks.register('packagedRuntimeIntegrationTest') {
     description = 'Runs the exact Base Metals and OreSpawn jars in official Forge 25 server and client runtimes.'
     dependsOn tasks.named('packagedServerIntegrationTest')
     dependsOn tasks.named('packagedClientIntegrationTest')
+}
+
+tasks.register('contentModeIntegrationTest', Exec) {
+    group = 'verification'
+    description = 'Tests packaged content policies and client/server mode matching with disposable profiles.'
+    dependsOn releaseJar, packagedServerProbeJar, packagedClientProbeJar
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doFirst {
+        File root = prepareBuildOwnedRunDirectory(file("${buildDir}/content-mode-tests"), 'content-mode-tests')
+        File fixture = new File(root, 'fixture')
+        copy {
+            from releaseJar, packagedServerProbeJar, packagedClientProbeJar, releasedOreSpawnJar()
+            into fixture
+        }
+        File java = javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(8)
+            vendor = JvmVendorSpec.ADOPTIUM
+        }.get().executablePath.asFile
+        commandLine 'node', file('tools/test_content_modes.js').absolutePath, java.absolutePath,
+                requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime').absolutePath,
+                requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime').absolutePath,
+                fixture.absolutePath, root.absolutePath
+        if (providers.gradleProperty('contentModeCycleOnly').isPresent()) args '--cycle-only'
+    }
 }

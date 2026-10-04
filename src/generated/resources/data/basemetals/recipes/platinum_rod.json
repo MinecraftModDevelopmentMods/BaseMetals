@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/platinum"
-    }
-  },
-  "result": {
-    "item": "basemetals:platinum_rod",
-    "count": 4
-  },
-  "group": "basemetals:platinum_rod"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/platinum"
+      }
+    },
+    "result": {
+      "item": "basemetals:platinum_rod",
+      "count": 4
+    },
+    "group": "basemetals:platinum_rod"
+  }
 }

@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/gold"
-    }
-  },
-  "result": {
-    "item": "basemetals:gold_button"
-  },
-  "group": "basemetals:gold_button"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/gold"
+      }
+    },
+    "result": {
+      "item": "basemetals:gold_button"
+    },
+    "group": "basemetals:gold_button"
+  }
 }

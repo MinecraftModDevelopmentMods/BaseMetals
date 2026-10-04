@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX ",
-    "  X",
-    " S "
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX ",
+      "  X",
+      " S "
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "minecraft:planks"
+      }
     },
-    "X": {
-      "tag": "minecraft:planks"
-    }
-  },
-  "result": {
-    "item": "basemetals:wood_scythe"
-  },
-  "group": "basemetals:wood_scythe"
+    "result": {
+      "item": "basemetals:wood_scythe"
+    },
+    "group": "basemetals:wood_scythe"
+  }
 }

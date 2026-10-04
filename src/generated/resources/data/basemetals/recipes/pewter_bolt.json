@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "R": {
+        "tag": "forge:rods/pewter"
+      }
     },
-    "R": {
-      "tag": "forge:rods/pewter"
-    }
-  },
-  "result": {
-    "item": "basemetals:pewter_bolt",
-    "count": 4
-  },
-  "group": "basemetals:pewter_bolt"
+    "result": {
+      "item": "basemetals:pewter_bolt",
+      "count": 4
+    },
+    "group": "basemetals:pewter_bolt"
+  }
 }

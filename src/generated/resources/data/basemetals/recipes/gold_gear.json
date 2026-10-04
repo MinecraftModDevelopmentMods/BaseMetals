@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X ",
-    "XRX",
-    " X "
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/gold"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/gold"
+      },
+      "X": {
+        "tag": "forge:ingots/gold"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/gold"
-    }
-  },
-  "result": {
-    "item": "basemetals:gold_gear",
-    "count": 4
-  },
-  "group": "basemetals:gold_gear"
+    "result": {
+      "item": "basemetals:gold_gear",
+      "count": 4
+    },
+    "group": "basemetals:gold_gear"
+  }
 }

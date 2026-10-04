@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "  X",
-    "XWX",
-    "XXX"
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:wool"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "  X",
+      "XWX",
+      "XXX"
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:wool"
+      },
+      "X": {
+        "tag": "forge:ingots/lead"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/lead"
-    }
-  },
-  "result": {
-    "item": "basemetals:lead_horse_armor"
-  },
-  "group": "basemetals:lead_horse_armor"
+    "result": {
+      "item": "basemetals:lead_horse_armor"
+    },
+    "group": "basemetals:lead_horse_armor"
+  }
 }

@@ -1559,6 +1559,7 @@
     "basemetals:custom_bolt"
   ],
   "recipe_serializers": [
+    "basemetals:content_crafting",
     "basemetals:crushing",
     "basemetals:legacy_smelting",
     "basemetals:plate_repair"
@@ -1701,6 +1702,7 @@
     "basemetals:custom_bolt"
   ],
   "new_recipe_serializers": [
+    "basemetals:content_crafting",
     "basemetals:crushing",
     "basemetals:legacy_smelting",
     "basemetals:plate_repair"

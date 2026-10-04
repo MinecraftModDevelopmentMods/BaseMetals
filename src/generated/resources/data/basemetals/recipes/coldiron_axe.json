@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XS",
-    " S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XS",
+      " S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/coldiron"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/coldiron"
-    }
-  },
-  "result": {
-    "item": "basemetals:coldiron_axe"
-  },
-  "group": "basemetals:coldiron_axe"
+    "result": {
+      "item": "basemetals:coldiron_axe"
+    },
+    "group": "basemetals:coldiron_axe"
+  }
 }

@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:tiny_dusts/zinc"
-    }
-  },
-  "result": {
-    "item": "basemetals:zinc_powder"
-  },
-  "group": "basemetals:zinc_powder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:tiny_dusts/zinc"
+      }
+    },
+    "result": {
+      "item": "basemetals:zinc_powder"
+    },
+    "group": "basemetals:zinc_powder"
+  }
 }

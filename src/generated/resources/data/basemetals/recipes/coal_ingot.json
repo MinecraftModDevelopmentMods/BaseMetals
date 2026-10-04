@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/coal"
-    }
-  },
-  "result": {
-    "item": "minecraft:coal"
-  },
-  "group": "minecraft:coal"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/coal"
+      }
+    },
+    "result": {
+      "item": "minecraft:coal"
+    },
+    "group": "minecraft:coal"
+  }
 }

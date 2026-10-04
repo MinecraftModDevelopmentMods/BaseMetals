@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/electrum"
-    }
-  },
-  "result": {
-    "item": "basemetals:electrum_button"
-  },
-  "group": "basemetals:electrum_button"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/electrum"
+      }
+    },
+    "result": {
+      "item": "basemetals:electrum_button"
+    },
+    "group": "basemetals:electrum_button"
+  }
 }

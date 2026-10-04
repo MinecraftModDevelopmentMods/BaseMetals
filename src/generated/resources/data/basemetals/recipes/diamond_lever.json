@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/diamond"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/diamond"
+      },
+      "X": {
+        "tag": "forge:gems/diamond"
+      }
     },
-    "X": {
-      "tag": "forge:gems/diamond"
-    }
-  },
-  "result": {
-    "item": "basemetals:diamond_lever"
-  },
-  "group": "basemetals:diamond_lever"
+    "result": {
+      "item": "basemetals:diamond_lever"
+    },
+    "group": "basemetals:diamond_lever"
+  }
 }

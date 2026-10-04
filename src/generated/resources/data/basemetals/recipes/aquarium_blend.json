@@ -1,22 +1,25 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/copper"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/copper"
+      },
+      {
+        "tag": "forge:dusts/copper"
+      },
+      {
+        "tag": "forge:dusts/zinc"
+      },
+      {
+        "tag": "forge:dusts/prismarine"
+      }
+    ],
+    "result": {
+      "item": "basemetals:aquarium_blend",
+      "count": 3
     },
-    {
-      "tag": "forge:dusts/copper"
-    },
-    {
-      "tag": "forge:dusts/zinc"
-    },
-    {
-      "tag": "forge:dusts/prismarine"
-    }
-  ],
-  "result": {
-    "item": "basemetals:aquarium_blend",
-    "count": 3
-  },
-  "group": "basemetals:aquarium_blend"
+    "group": "basemetals:aquarium_blend"
+  }
 }

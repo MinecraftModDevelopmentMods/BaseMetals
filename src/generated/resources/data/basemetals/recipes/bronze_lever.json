@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/bronze"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/bronze"
+      },
+      "X": {
+        "tag": "forge:ingots/bronze"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/bronze"
-    }
-  },
-  "result": {
-    "item": "basemetals:bronze_lever"
-  },
-  "group": "basemetals:bronze_lever"
+    "result": {
+      "item": "basemetals:bronze_lever"
+    },
+    "group": "basemetals:bronze_lever"
+  }
 }

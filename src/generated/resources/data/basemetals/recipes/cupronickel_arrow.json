@@ -1,24 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "N",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "forge:nuggets/cupronickel"
+      },
+      "R": {
+        "tag": "forge:rods/cupronickel"
+      }
     },
-    "N": {
-      "tag": "forge:nuggets/cupronickel"
+    "result": {
+      "item": "basemetals:cupronickel_arrow",
+      "count": 4
     },
-    "R": {
-      "tag": "forge:rods/cupronickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:cupronickel_arrow",
-    "count": 4
-  },
-  "group": "basemetals:cupronickel_arrow"
+    "group": "basemetals:cupronickel_arrow"
+  }
 }

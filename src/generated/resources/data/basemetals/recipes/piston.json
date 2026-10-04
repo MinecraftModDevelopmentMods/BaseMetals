@@ -1,26 +1,29 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "WWW",
-    "CXC",
-    "CRC"
-  ],
-  "key": {
-    "C": {
-      "tag": "forge:cobblestone"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "WWW",
+      "CXC",
+      "CRC"
+    ],
+    "key": {
+      "C": {
+        "tag": "forge:cobblestone"
+      },
+      "R": {
+        "tag": "forge:dusts/redstone"
+      },
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "X": {
+        "tag": "forge:ingots/steel"
+      }
     },
-    "R": {
-      "tag": "forge:dusts/redstone"
+    "result": {
+      "item": "minecraft:piston"
     },
-    "W": {
-      "tag": "minecraft:planks"
-    },
-    "X": {
-      "tag": "forge:ingots/steel"
-    }
-  },
-  "result": {
-    "item": "minecraft:piston"
-  },
-  "group": "minecraft:piston"
+    "group": "minecraft:piston"
+  }
 }

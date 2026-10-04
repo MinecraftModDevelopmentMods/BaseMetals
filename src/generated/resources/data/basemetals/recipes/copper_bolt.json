@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "R": {
+        "tag": "forge:rods/copper"
+      }
     },
-    "R": {
-      "tag": "forge:rods/copper"
-    }
-  },
-  "result": {
-    "item": "basemetals:copper_bolt",
-    "count": 4
-  },
-  "group": "basemetals:copper_bolt"
+    "result": {
+      "item": "basemetals:copper_bolt",
+      "count": 4
+    },
+    "group": "basemetals:copper_bolt"
+  }
 }

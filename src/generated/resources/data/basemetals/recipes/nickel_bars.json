@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/nickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:nickel_bars",
-    "count": 16
-  },
-  "group": "basemetals:nickel_bars"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/nickel"
+      }
+    },
+    "result": {
+      "item": "basemetals:nickel_bars",
+      "count": 16
+    },
+    "group": "basemetals:nickel_bars"
+  }
 }

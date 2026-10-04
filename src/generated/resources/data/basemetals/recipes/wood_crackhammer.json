@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "S",
-    "S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "minecraft:logs"
+      }
     },
-    "X": {
-      "tag": "minecraft:logs"
-    }
-  },
-  "result": {
-    "item": "basemetals:wood_crackhammer"
-  },
-  "group": "basemetals:wood_crackhammer"
+    "result": {
+      "item": "basemetals:wood_crackhammer"
+    },
+    "group": "basemetals:wood_crackhammer"
+  }
 }

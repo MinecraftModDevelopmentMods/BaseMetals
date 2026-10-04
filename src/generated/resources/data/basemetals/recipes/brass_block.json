@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/brass"
-    }
-  },
-  "result": {
-    "item": "basemetals:brass_block"
-  },
-  "group": "basemetals:brass_block"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/brass"
+      }
+    },
+    "result": {
+      "item": "basemetals:brass_block"
+    },
+    "group": "basemetals:brass_block"
+  }
 }

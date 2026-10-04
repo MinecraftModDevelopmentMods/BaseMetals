@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XS",
-    " S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XS",
+      " S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/brass"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/brass"
-    }
-  },
-  "result": {
-    "item": "basemetals:brass_axe"
-  },
-  "group": "basemetals:brass_axe"
+    "result": {
+      "item": "basemetals:brass_axe"
+    },
+    "group": "basemetals:brass_axe"
+  }
 }

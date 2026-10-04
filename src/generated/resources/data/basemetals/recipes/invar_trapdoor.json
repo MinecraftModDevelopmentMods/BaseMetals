@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/invar"
-    }
-  },
-  "result": {
-    "item": "basemetals:invar_trapdoor"
-  },
-  "group": "basemetals:invar_trapdoor"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/invar"
+      }
+    },
+    "result": {
+      "item": "basemetals:invar_trapdoor"
+    },
+    "group": "basemetals:invar_trapdoor"
+  }
 }

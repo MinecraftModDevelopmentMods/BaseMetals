@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "  X",
-    "XWX",
-    "XXX"
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:wool"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "  X",
+      "XWX",
+      "XXX"
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:wool"
+      },
+      "X": {
+        "tag": "forge:ingots/brass"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/brass"
-    }
-  },
-  "result": {
-    "item": "basemetals:brass_horse_armor"
-  },
-  "group": "basemetals:brass_horse_armor"
+    "result": {
+      "item": "basemetals:brass_horse_armor"
+    },
+    "group": "basemetals:brass_horse_armor"
+  }
 }

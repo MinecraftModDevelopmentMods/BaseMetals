@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/tin"
-    }
-  },
-  "result": {
-    "item": "basemetals:tin_slab",
-    "count": 6
-  },
-  "group": "basemetals:tin_slab"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/tin"
+      }
+    },
+    "result": {
+      "item": "basemetals:tin_slab",
+      "count": 6
+    },
+    "group": "basemetals:tin_slab"
+  }
 }

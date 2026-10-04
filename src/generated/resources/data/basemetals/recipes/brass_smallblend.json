@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:blends/brass"
-    }
-  ],
-  "result": {
-    "item": "basemetals:brass_smallblend",
-    "count": 9
-  },
-  "group": "basemetals:brass_smallblend"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:blends/brass"
+      }
+    ],
+    "result": {
+      "item": "basemetals:brass_smallblend",
+      "count": 9
+    },
+    "group": "basemetals:brass_smallblend"
+  }
 }

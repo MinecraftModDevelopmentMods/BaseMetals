@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/emerald"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/emerald"
+      },
+      "X": {
+        "tag": "forge:gems/emerald"
+      }
     },
-    "X": {
-      "tag": "forge:gems/emerald"
-    }
-  },
-  "result": {
-    "item": "basemetals:emerald_lever"
-  },
-  "group": "basemetals:emerald_lever"
+    "result": {
+      "item": "basemetals:emerald_lever"
+    },
+    "group": "basemetals:emerald_lever"
+  }
 }

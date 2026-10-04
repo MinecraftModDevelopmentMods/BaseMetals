@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "R": {
+        "tag": "forge:rods/antimony"
+      }
     },
-    "R": {
-      "tag": "forge:rods/antimony"
-    }
-  },
-  "result": {
-    "item": "basemetals:antimony_bolt",
-    "count": 4
-  },
-  "group": "basemetals:antimony_bolt"
+    "result": {
+      "item": "basemetals:antimony_bolt",
+      "count": 4
+    },
+    "group": "basemetals:antimony_bolt"
+  }
 }

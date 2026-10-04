@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X",
-    "X "
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/aquarium"
-    }
-  },
-  "result": {
-    "item": "basemetals:aquarium_shears"
-  },
-  "group": "basemetals:aquarium_shears"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/aquarium"
+      }
+    },
+    "result": {
+      "item": "basemetals:aquarium_shears"
+    },
+    "group": "basemetals:aquarium_shears"
+  }
 }

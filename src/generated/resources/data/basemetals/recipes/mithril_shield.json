@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XWX",
-    "XXX",
-    " X "
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:planks"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "X": {
+        "tag": "forge:ingots/mithril"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/mithril"
-    }
-  },
-  "result": {
-    "item": "basemetals:mithril_shield"
-  },
-  "group": "basemetals:mithril_shield"
+    "result": {
+      "item": "basemetals:mithril_shield"
+    },
+    "group": "basemetals:mithril_shield"
+  }
 }

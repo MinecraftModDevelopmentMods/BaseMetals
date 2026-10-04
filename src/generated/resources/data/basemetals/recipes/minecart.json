@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X X",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/steel"
-    }
-  },
-  "result": {
-    "item": "minecraft:minecart"
-  },
-  "group": "minecraft:minecart"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X X",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/steel"
+      }
+    },
+    "result": {
+      "item": "minecraft:minecart"
+    },
+    "group": "minecraft:minecart"
+  }
 }

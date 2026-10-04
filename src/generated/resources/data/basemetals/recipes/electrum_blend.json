@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/gold"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/gold"
+      },
+      {
+        "tag": "forge:dusts/silver"
+      }
+    ],
+    "result": {
+      "item": "basemetals:electrum_blend",
+      "count": 2
     },
-    {
-      "tag": "forge:dusts/silver"
-    }
-  ],
-  "result": {
-    "item": "basemetals:electrum_blend",
-    "count": 2
-  },
-  "group": "basemetals:electrum_blend"
+    "group": "basemetals:electrum_blend"
+  }
 }

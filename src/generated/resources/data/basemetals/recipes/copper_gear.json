@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X ",
-    "XRX",
-    " X "
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/copper"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/copper"
+      },
+      "X": {
+        "tag": "forge:ingots/copper"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/copper"
-    }
-  },
-  "result": {
-    "item": "basemetals:copper_gear",
-    "count": 4
-  },
-  "group": "basemetals:copper_gear"
+    "result": {
+      "item": "basemetals:copper_gear",
+      "count": 4
+    },
+    "group": "basemetals:copper_gear"
+  }
 }

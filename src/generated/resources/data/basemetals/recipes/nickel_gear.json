@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X ",
-    "XRX",
-    " X "
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/nickel"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/nickel"
+      },
+      "X": {
+        "tag": "forge:ingots/nickel"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/nickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:nickel_gear",
-    "count": 4
-  },
-  "group": "basemetals:nickel_gear"
+    "result": {
+      "item": "basemetals:nickel_gear",
+      "count": 4
+    },
+    "group": "basemetals:nickel_gear"
+  }
 }

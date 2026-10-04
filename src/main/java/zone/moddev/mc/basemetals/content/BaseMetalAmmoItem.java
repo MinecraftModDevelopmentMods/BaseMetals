@@ -34,7 +34,7 @@ public final class BaseMetalAmmoItem extends ItemArrow implements MaterialBacked
     public EntityArrow createArrow(World world, ItemStack stack, EntityLivingBase shooter) {
         MaterialProjectile projectile = new MaterialProjectile(entityType.get(), world, shooter, stack);
 
-        // Leave one point for the launcher; a vanilla bow keeps that neutral contribution.
+        // A vanilla bow adds one damage. Material bows replace that with their own damage.
         projectile.setDamage(1.0D + material.baseAttackDamage());
 
         return projectile;

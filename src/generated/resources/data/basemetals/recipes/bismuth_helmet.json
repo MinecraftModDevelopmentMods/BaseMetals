@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "X X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/bismuth"
-    }
-  },
-  "result": {
-    "item": "basemetals:bismuth_helmet"
-  },
-  "group": "basemetals:bismuth_helmet"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/bismuth"
+      }
+    },
+    "result": {
+      "item": "basemetals:bismuth_helmet"
+    },
+    "group": "basemetals:bismuth_helmet"
+  }
 }

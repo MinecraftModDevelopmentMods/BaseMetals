@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X  ",
-    "XX ",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/platinum"
-    }
-  },
-  "result": {
-    "item": "basemetals:platinum_stairs",
-    "count": 4
-  },
-  "group": "basemetals:platinum_stairs"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/platinum"
+      }
+    },
+    "result": {
+      "item": "basemetals:platinum_stairs",
+      "count": 4
+    },
+    "group": "basemetals:platinum_stairs"
+  }
 }

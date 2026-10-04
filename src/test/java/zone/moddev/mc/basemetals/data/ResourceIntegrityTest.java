@@ -525,7 +525,11 @@ class ResourceIntegrityTest {
 
     private static JsonElement read(Path path) throws IOException {
         try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-            return new JsonParser().parse(reader);
+            JsonElement value = new JsonParser().parse(reader);
+            if (value.isJsonObject() && value.getAsJsonObject().has("recipe")) {
+                return value.getAsJsonObject().get("recipe");
+            }
+            return value;
         }
     }
 

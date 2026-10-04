@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:blends/mithril"
-    }
-  ],
-  "result": {
-    "item": "basemetals:mithril_smallblend",
-    "count": 9
-  },
-  "group": "basemetals:mithril_smallblend"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:blends/mithril"
+      }
+    ],
+    "result": {
+      "item": "basemetals:mithril_smallblend",
+      "count": 9
+    },
+    "group": "basemetals:mithril_smallblend"
+  }
 }

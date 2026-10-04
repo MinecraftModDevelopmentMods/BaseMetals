@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/coldiron"
-    }
-  ],
-  "result": {
-    "item": "basemetals:coldiron_smallpowder",
-    "count": 9
-  },
-  "group": "basemetals:coldiron_smallpowder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/coldiron"
+      }
+    ],
+    "result": {
+      "item": "basemetals:coldiron_smallpowder",
+      "count": 9
+    },
+    "group": "basemetals:coldiron_smallpowder"
+  }
 }

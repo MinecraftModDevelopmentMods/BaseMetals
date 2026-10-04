@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/zinc"
-    }
-  ],
-  "result": {
-    "item": "basemetals:zinc_smallpowder",
-    "count": 9
-  },
-  "group": "basemetals:zinc_smallpowder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/zinc"
+      }
+    ],
+    "result": {
+      "item": "basemetals:zinc_smallpowder",
+      "count": 9
+    },
+    "group": "basemetals:zinc_smallpowder"
+  }
 }

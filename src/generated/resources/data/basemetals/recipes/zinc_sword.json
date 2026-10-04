@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X",
-    "S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X",
+      "S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/zinc"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/zinc"
-    }
-  },
-  "result": {
-    "item": "basemetals:zinc_sword"
-  },
-  "group": "basemetals:zinc_sword"
+    "result": {
+      "item": "basemetals:zinc_sword"
+    },
+    "group": "basemetals:zinc_sword"
+  }
 }

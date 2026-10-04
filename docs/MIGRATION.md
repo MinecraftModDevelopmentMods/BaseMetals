@@ -27,7 +27,7 @@ snapshot, Base Metals:
 Before changing `level.dat`, `level.dat_old`, or a playerdata file, the hook
 creates a sibling `*.basemetals-legacy-backup` copy. Minecraft converts region
 chunks normally as they are loaded and saved, so the untouched source world is
-the authoritative rollback. Never test an upgrade against the only copy.
+your backup if you need to go back. Never test an upgrade against the only copy.
 
 Historical IDs retained or forwarded include hidden
 `double_<material>_slab` blocks, legacy molten-fluid block IDs such as
@@ -39,6 +39,18 @@ The migration supports the original Cyano Base Metals 2.4 line and the later
 MMD Base Metals releases for Minecraft 1.10.2 and 1.12.2. It is not a downgrade
 path: do not open a world already saved by Minecraft 1.14 or newer, including
 the Base Metals 1.18.2 port, in Minecraft 1.13.2.
+
+## Mod settings
+
+This port uses `config/basemetals-common.toml`. It does not read the old
+`BaseMetals.cfg` or `MMDLib.cfg` files. Configure the four gameplay switches
+and content mode through Forge's Mods list or the Base Metals cog in OreSpawn.
+High Fantasy is the default; if you used Low Fantasy in 1.12, select it again
+in the new screen and restart Minecraft.
+
+The old switches for disabling individual materials are not carried forward.
+Blocks and items remain available so old saves still load. Use Low Fantasy to
+limit what you can make instead. See [Content modes and configuration](CONTENT_MODES.md).
 
 ## OreSpawn configuration
 

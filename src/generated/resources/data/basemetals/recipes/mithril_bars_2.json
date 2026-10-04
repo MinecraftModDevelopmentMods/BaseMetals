@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:rods/mithril"
-    }
-  },
-  "result": {
-    "item": "basemetals:mithril_bars",
-    "count": 4
-  },
-  "group": "basemetals:mithril_bars"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:rods/mithril"
+      }
+    },
+    "result": {
+      "item": "basemetals:mithril_bars",
+      "count": 4
+    },
+    "group": "basemetals:mithril_bars"
+  }
 }

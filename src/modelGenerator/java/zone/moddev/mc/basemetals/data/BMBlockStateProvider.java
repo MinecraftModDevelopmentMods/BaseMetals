@@ -1,18 +1,17 @@
 package zone.moddev.mc.basemetals.data;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
@@ -30,13 +29,15 @@ public final class BMBlockStateProvider {
     private BMBlockStateProvider() {}
 
     public static void main(String[] args) throws IOException {
-        if (args.length != 1 && (args.length != 3 || !"--client-fixtures".equals(args[1]))) {
-            throw new IllegalArgumentException("Expected a resource directory, optionally followed by --client-fixtures <output>");
+        if (args.length != 1 && (args.length != 3
+                || !("--output".equals(args[1]) || "--client-fixtures".equals(args[1])))) {
+            throw new IllegalArgumentException("Expected a resource directory, optionally followed by "
+                    + "--output <directory> or --client-fixtures <directory>");
         }
 
         Path resources = Paths.get(args[0]);
-        boolean clientFixture = args.length == 3;
-        Path output = clientFixture ? Paths.get(args[2]) : resources;
+        boolean clientFixture = args.length == 3 && "--client-fixtures".equals(args[1]);
+        Path output = args.length == 3 ? Paths.get(args[2]) : resources;
 
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             if (!material.hasOre()) continue;
@@ -47,9 +48,10 @@ public final class BMBlockStateProvider {
             Path overlay = resources.resolve("assets/basemetals/textures/block/ore_overlays/"
                     + blockName + ".png");
 
-            JsonObject model = clientFixture
+            boolean hasOverlay = Files.isRegularFile(overlay);
+            JsonObject model = clientFixture && !hasOverlay
                     ? createOverlayOre(baseTexture, "minecraft:block/glass")
-                    : modelFor(blockName, baseTexture, overlayTexture, Files.isRegularFile(overlay));
+                    : modelFor(blockName, baseTexture, overlayTexture, hasOverlay);
 
             write(output.resolve("assets/basemetals/models/block/" + blockName + ".json"), model);
         }
@@ -75,7 +77,7 @@ public final class BMBlockStateProvider {
             String overlayTexture, boolean hasOverlay) {
         if (hasOverlay) return createOverlayOre(baseTexture, overlayTexture);
 
-        // Keep the shipped artwork until Kiri supplies this ore's transparent overlay.
+        // Use the original texture when an overlay is absent.
         JsonObject model = new JsonObject();
         model.addProperty("parent", "block/cube_all");
         JsonObject textures = new JsonObject();
@@ -130,14 +132,11 @@ public final class BMBlockStateProvider {
     }
 
     private static void write(Path file, JsonObject model) throws IOException {
-        if (Files.isRegularFile(file)) {
-            try (Reader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
-                if (model.equals(new JsonParser().parse(reader))) return;
-            }
-        }
+        byte[] contents = (GSON.toJson(model) + "\n").getBytes(StandardCharsets.UTF_8);
+        if (Files.isRegularFile(file) && Arrays.equals(contents, Files.readAllBytes(file))) return;
 
         Files.createDirectories(file.getParent());
-        Files.write(file, (GSON.toJson(model) + "\n").getBytes(StandardCharsets.UTF_8));
+        Files.write(file, contents);
     }
 
     private static void copyHostFixture(Path resources, Path output, String ore, String host)

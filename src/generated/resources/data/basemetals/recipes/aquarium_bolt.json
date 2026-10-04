@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "R": {
+        "tag": "forge:rods/aquarium"
+      }
     },
-    "R": {
-      "tag": "forge:rods/aquarium"
-    }
-  },
-  "result": {
-    "item": "basemetals:aquarium_bolt",
-    "count": 4
-  },
-  "group": "basemetals:aquarium_bolt"
+    "result": {
+      "item": "basemetals:aquarium_bolt",
+      "count": 4
+    },
+    "group": "basemetals:aquarium_bolt"
+  }
 }
