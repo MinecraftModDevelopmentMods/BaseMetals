@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/brass"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/brass"
+      },
+      "X": {
+        "tag": "forge:ingots/brass"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/brass"
-    }
-  },
-  "result": {
-    "item": "basemetals:brass_lever"
-  },
-  "group": "basemetals:brass_lever"
+    "result": {
+      "item": "basemetals:brass_lever"
+    },
+    "group": "basemetals:brass_lever"
+  }
 }

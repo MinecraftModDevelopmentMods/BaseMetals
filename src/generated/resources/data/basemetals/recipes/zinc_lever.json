@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/zinc"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/zinc"
+      },
+      "X": {
+        "tag": "forge:ingots/zinc"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/zinc"
-    }
-  },
-  "result": {
-    "item": "basemetals:zinc_lever"
-  },
-  "group": "basemetals:zinc_lever"
+    "result": {
+      "item": "basemetals:zinc_lever"
+    },
+    "group": "basemetals:zinc_lever"
+  }
 }

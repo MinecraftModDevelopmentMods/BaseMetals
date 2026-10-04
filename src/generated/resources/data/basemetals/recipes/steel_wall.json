@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/steel"
-    }
-  },
-  "result": {
-    "item": "basemetals:steel_wall",
-    "count": 6
-  },
-  "group": "basemetals:steel_wall"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/steel"
+      }
+    },
+    "result": {
+      "item": "basemetals:steel_wall",
+      "count": 6
+    },
+    "group": "basemetals:steel_wall"
+  }
 }

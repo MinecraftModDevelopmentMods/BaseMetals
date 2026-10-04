@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/copper"
-    }
-  },
-  "result": {
-    "item": "basemetals:copper_wall",
-    "count": 6
-  },
-  "group": "basemetals:copper_wall"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/copper"
+      }
+    },
+    "result": {
+      "item": "basemetals:copper_wall",
+      "count": 6
+    },
+    "group": "basemetals:copper_wall"
+  }
 }

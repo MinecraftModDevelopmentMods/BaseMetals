@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/diamond"
-    }
-  },
-  "result": {
-    "item": "basemetals:diamond_trapdoor"
-  },
-  "group": "basemetals:diamond_trapdoor"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:gems/diamond"
+      }
+    },
+    "result": {
+      "item": "basemetals:diamond_trapdoor"
+    },
+    "group": "basemetals:diamond_trapdoor"
+  }
 }

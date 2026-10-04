@@ -1,11 +1,14 @@
 package zone.moddev.mc.basemetals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
+import zone.moddev.mc.basemetals.config.ContentPolicy;
+import zone.moddev.mc.basemetals.config.MaterialForm;
 import zone.moddev.mc.basemetals.content.CrackhammerItem;
 import zone.moddev.mc.basemetals.content.MaterialBacked;
 import zone.moddev.mc.basemetals.content.MaterialItems;
@@ -14,6 +17,8 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
@@ -41,8 +46,27 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-/** Target-native gameplay handlers with no proxy or MMDLib dependency. */
+/** Handles crushing, shield upgrades and material equipment effects. */
 public final class BaseMetalsEvents {
+    @SubscribeEvent
+    public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getPlayer() instanceof EntityPlayerMP)) return;
+        EntityPlayerMP player = (EntityPlayerMP) event.getPlayer();
+
+        // An advancement can be earned while its recipe is disabled. Restore the
+        // unlock after a mode change without resetting the player's progress.
+        for (IRecipe recipe : player.getServer().getRecipeManager().getRecipes()) {
+            if (!BaseMetals.MOD_ID.equals(recipe.getId().getNamespace()) || recipe.isDynamic()
+                    || player.getRecipeBook().isUnlocked(recipe)) continue;
+
+            Advancement advancement = player.getServer().getAdvancementManager().getAdvancement(
+                    new ResourceLocation(BaseMetals.MOD_ID, "recipes/" + recipe.getId().getPath()));
+            if (advancement != null && player.getAdvancements().getProgress(advancement).isDone()) {
+                player.unlockRecipes(Collections.singletonList(recipe));
+            }
+        }
+    }
+
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onBreak(BlockEvent.BreakEvent event) {
         EntityPlayer player = event.getPlayer();
@@ -171,6 +195,7 @@ public final class BaseMetalsEvents {
         MaterialDefinition current = ((MaterialItems.Shield) event.getLeft().getItem()).baseMetalsMaterial();
         MaterialDefinition upgrade = null;
         for (MaterialDefinition candidate : shieldMaterials().values()) {
+            if (!ContentPolicy.active().allows(candidate.name(), MaterialForm.SHIELD)) continue;
             if (candidate.hardness() <= current.hardness()) continue;
             ItemTags.Wrapper plate = new ItemTags.Wrapper(
                     new ResourceLocation("forge", "plates/" + candidate.name()));

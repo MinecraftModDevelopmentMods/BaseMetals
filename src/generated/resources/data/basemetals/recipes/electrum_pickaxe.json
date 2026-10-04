@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    " S ",
-    " S "
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      " S ",
+      " S "
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/electrum"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/electrum"
-    }
-  },
-  "result": {
-    "item": "basemetals:electrum_pickaxe"
-  },
-  "group": "basemetals:electrum_pickaxe"
+    "result": {
+      "item": "basemetals:electrum_pickaxe"
+    },
+    "group": "basemetals:electrum_pickaxe"
+  }
 }

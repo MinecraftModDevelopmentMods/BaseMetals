@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X",
-    "X "
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/gold"
-    }
-  },
-  "result": {
-    "item": "basemetals:gold_shears"
-  },
-  "group": "basemetals:gold_shears"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/gold"
+      }
+    },
+    "result": {
+      "item": "basemetals:gold_shears"
+    },
+    "group": "basemetals:gold_shears"
+  }
 }

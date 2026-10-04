@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    " S",
-    " S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      " S",
+      " S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/pewter"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/pewter"
-    }
-  },
-  "result": {
-    "item": "basemetals:pewter_hoe"
-  },
-  "group": "basemetals:pewter_hoe"
+    "result": {
+      "item": "basemetals:pewter_hoe"
+    },
+    "group": "basemetals:pewter_hoe"
+  }
 }

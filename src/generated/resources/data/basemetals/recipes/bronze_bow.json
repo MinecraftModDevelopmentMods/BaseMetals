@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " RS",
-    "R S",
-    " RS"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/bronze"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " RS",
+      "R S",
+      " RS"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/bronze"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:bronze_bow"
-  },
-  "group": "basemetals:bronze_bow"
+    "result": {
+      "item": "basemetals:bronze_bow"
+    },
+    "group": "basemetals:bronze_bow"
+  }
 }

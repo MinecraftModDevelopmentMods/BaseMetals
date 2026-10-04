@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "R": {
+        "tag": "forge:rods/silver"
+      }
     },
-    "R": {
-      "tag": "forge:rods/silver"
-    }
-  },
-  "result": {
-    "item": "basemetals:silver_bolt",
-    "count": 4
-  },
-  "group": "basemetals:silver_bolt"
+    "result": {
+      "item": "basemetals:silver_bolt",
+      "count": 4
+    },
+    "group": "basemetals:silver_bolt"
+  }
 }

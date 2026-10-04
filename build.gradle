@@ -42,7 +42,6 @@ ext.release_tag = project.mod_version
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
-        vendor = JvmVendorSpec.ADOPTIUM
     }
     withSourcesJar()
     withJavadocJar()
@@ -51,7 +50,6 @@ java {
 tasks.withType(JavaCompile).configureEach {
     javaCompiler = javaToolchains.compilerFor {
         languageVersion = JavaLanguageVersion.of(8)
-        vendor = JvmVendorSpec.ADOPTIUM
     }
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -75,12 +73,20 @@ tasks.withType(AbstractArchiveTask).configureEach {
 }
 
 sourceSets {
+    // Build-only model generator; not part of the mod jar.
+    modelGenerator {
+        compileClasspath += files(tasks.named('compileJava').flatMap { it.destinationDirectory }) + sourceSets.main.compileClasspath
+        runtimeClasspath += files(tasks.named('compileJava').flatMap { it.destinationDirectory }) + sourceSets.main.compileClasspath
+    }
     integrationTest {
         java.setSrcDirs(['src/integrationTest/java'])
         resources.setSrcDirs(['src/integrationTest/resources'])
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }
+}
+dependencies {
+    testImplementation sourceSets.modelGenerator.output
 }
 configurations {
     orespawnRelease
@@ -92,15 +98,33 @@ configurations {
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} " +
         "(${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
+def forgeRunModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/main')
+def integrationTestModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/integration-test')
+def forgeMainOutputPath = forgeRunModClassesDirectory.get().asFile.absolutePath
+def mainModClasses = "${mod_id}%%${forgeMainOutputPath}${File.pathSeparator}${mod_id}%%${forgeMainOutputPath}"
+def forgeProbeOutputPath = integrationTestModClassesDirectory.get().asFile.absolutePath
+def probeModClasses = mainModClasses + "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}" +
+        "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}"
+def forge25RunTargets = [client: 'fmluserdevclient', server: 'fmluserdevserver',
+        data: 'fmluserdevdata', runtimeProbeServer: 'fmluserdevserver', legacyUpgradeServer: 'fmluserdevserver']
+
 minecraft {
     mappings channel: project.mapping_channel, version: project.mapping_version
     runs {
         configureEach {
+            // Slime Launcher calls this entry point after preparing assets and natives.
             mainClass = 'net.minecraftforge.userdev.LaunchTesting'
             workingDir.convention layout.projectDirectory.dir('run')
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             systemProperty 'forge.logging.console.level', 'info'
             mods { basemetals { source sourceSets.main } }
+            environment 'target', forge25RunTargets[name]
+            environment 'MCP_MAPPINGS', "${mapping_channel}_${mapping_version}"
+            environment 'MCP_VERSION', mcp_version
+            environment 'FORGE_VERSION', forge_version
+            environment 'FORGE_GROUP', 'net.minecraftforge'
+            environment 'MC_VERSION', minecraft_version
+            environment 'MOD_CLASSES', mainModClasses
         }
         register('client')
         register('server') { args '--nogui' }
@@ -111,10 +135,12 @@ minecraft {
         }
         register('runtimeProbeServer') {
             workingDir.convention layout.buildDirectory.dir('integration-test-run')
+            environment 'MOD_CLASSES', probeModClasses
             args '--nogui'
         }
         register('legacyUpgradeServer') {
             workingDir.convention layout.buildDirectory.dir('legacy-upgrade-run')
+            environment 'MOD_CLASSES', probeModClasses
             systemProperty 'basemetalsprobe.mode', 'legacy-upgrade'
             args '--nogui'
         }
@@ -126,8 +152,6 @@ sourceSets.main.resources {
     exclude '.cache/**'
 }
 
-def forgeRunModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/main')
-def integrationTestModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/integration-test')
 def prepareForgeRunModClasses = tasks.register('prepareForgeRunModClasses', Sync) {
     dependsOn tasks.named('classes')
     from sourceSets.main.output
@@ -139,36 +163,21 @@ def prepareIntegrationTestModClasses = tasks.register('prepareIntegrationTestMod
     into integrationTestModClassesDirectory
 }
 
-def configureForge25Run = { JavaExec runTask, String launchTarget ->
-    runTask.dependsOn prepareForgeRunModClasses
-    runTask.mainClass.set('net.minecraftforge.userdev.LaunchTesting')
-    runTask.environment 'target', launchTarget
-    runTask.environment 'MCP_MAPPINGS', "${mapping_channel}_${mapping_version}"
-    runTask.environment 'MCP_VERSION', mcp_version
-    runTask.environment 'FORGE_VERSION', forge_version
-    runTask.environment 'FORGE_GROUP', 'net.minecraftforge'
-    runTask.environment 'MC_VERSION', minecraft_version
-    String mainOutput = forgeRunModClassesDirectory.get().asFile.absolutePath
-    String modClasses = "${mod_id}%%${mainOutput}${File.pathSeparator}${mod_id}%%${mainOutput}"
-    if (runTask.name == 'runRuntimeProbeServer' || runTask.name == 'runLegacyUpgradeServer') {
-        runTask.dependsOn prepareIntegrationTestModClasses
-        String probeOutput = integrationTestModClassesDirectory.get().asFile.absolutePath
-        modClasses += "${File.pathSeparator}basemetalsprobe%%${probeOutput}" +
-                "${File.pathSeparator}basemetalsprobe%%${probeOutput}"
-    }
-    runTask.environment 'MOD_CLASSES', modClasses
-    runTask.doFirst {
-        File modsDirectory = new File(runTask.workingDir, 'mods')
-        if (!modsDirectory.isDirectory() && !modsDirectory.mkdirs()) {
-            throw new GradleException("Could not create development mods directory: ${modsDirectory}")
+tasks.withType(JavaExec).configureEach { JavaExec runTask ->
+    def runName = forge25RunTargets.keySet().find { runTask.name == 'run' + it.capitalize() }
+    if (runName != null) {
+        runTask.dependsOn prepareForgeRunModClasses
+        if (runTask.name in ['runRuntimeProbeServer', 'runLegacyUpgradeServer']) {
+            runTask.dependsOn prepareIntegrationTestModClasses
+        }
+        runTask.doFirst {
+            File runDirectory = minecraft.runs.named(runName).get().workingDir.get().asFile
+            File modsDirectory = new File(runDirectory, 'mods')
+            if (!modsDirectory.isDirectory() && !modsDirectory.mkdirs()) {
+                throw new GradleException("Could not create development mods directory: ${modsDirectory}")
+            }
         }
     }
-}
-tasks.withType(JavaExec).configureEach { JavaExec runTask ->
-    String launchTarget = [runClient: 'fmluserdevclient', runServer: 'fmluserdevserver',
-                           runData: 'fmluserdevdata', runRuntimeProbeServer: 'fmluserdevserver',
-                           runLegacyUpgradeServer: 'fmluserdevserver'][runTask.name]
-    if (launchTarget != null) configureForge25Run(runTask, launchTarget)
 }
 
 def integrationTestRunDirectory = layout.buildDirectory.dir('integration-test-run')
@@ -294,8 +303,14 @@ def verifyLegacyUpgradeRun = tasks.register('verifyLegacyUpgradeRun') {
             throw new GradleException('Legacy-world runtime probe did not report PASS')
         }
         File fixtureManifest = new File(runDirectory, 'world/legacy_registry_manifest_runtime.json')
-        if (fixtureManifest.isFile() && !text.contains('BASEMETALS_1_12_TO_1_13_UPGRADE PASS')) {
-            throw new GradleException('Complete 1.12 fixture verification did not report PASS')
+        if (fixtureManifest.isFile()) {
+            boolean from110 = new File(runDirectory,
+                    'world/BASEMETALS_1_10_FIXTURE_COMPLETE.txt').isFile()
+            String marker = from110 ? 'BASEMETALS_1_10_TO_1_13_UPGRADE PASS'
+                    : 'BASEMETALS_1_12_TO_1_13_UPGRADE PASS'
+            if (!text.contains(marker)) {
+                throw new GradleException("Complete ${from110 ? '1.10' : '1.12'} fixture verification did not report PASS")
+            }
         }
         if (!text.contains('legacy Base Metals states') || !text.contains('protected')) {
             throw new GradleException('Legacy Base Metals registry/chunk preparation was not observed')
@@ -339,7 +354,7 @@ repositories {
 
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
-    runtimeOnly renamer.dependency(orespawnCoordinate)
+    implementation renamer.dependency(orespawnCoordinate)
     orespawnRelease orespawnCoordinate
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -360,7 +375,10 @@ tasks.named('processResources', ProcessResources) {
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]
     }
-    from('docs') { into 'META-INF/basemetals/docs' }
+    from('docs') {
+        exclude { it.file.name.equalsIgnoreCase('ore_textures.md') }
+        into 'META-INF/basemetals/docs'
+    }
 }
 
 tasks.named('jar', Jar) {
@@ -450,11 +468,39 @@ tasks.register('verifyJava8Toolchain') {
     dependsOn tasks.named('compileJava')
     doLast {
         def metadata = tasks.named('compileJava', JavaCompile).get().javaCompiler.get().metadata
-        if (configuredJavaToolchainVersion != '8.0.502+7' || metadata.languageVersion.asInt() != 8
+        if (metadata.languageVersion.asInt() != 8) {
+            throw new GradleException("Minecraft 1.13.2 requires a Java 8 JDK, found " +
+                    "${metadata.vendor} ${metadata.javaRuntimeVersion} at ${metadata.installationPath}")
+        }
+        logger.lifecycle("Java 8 development toolchain: ${metadata.vendor} ${metadata.javaRuntimeVersion}")
+    }
+}
+
+tasks.register('verifyReleaseJava8Toolchain') {
+    group = 'verification'
+    description = 'Requires the pinned compiler for reproducible release artifacts.'
+    dependsOn tasks.named('verifyJava8Toolchain')
+    doLast {
+        def metadata = tasks.named('compileJava', JavaCompile).get().javaCompiler.get().metadata
+        if (configuredJavaToolchainVersion != '8.0.502+7'
                 || metadata.javaRuntimeVersion != '1.8.0_502-b07'
                 || !metadata.vendor.toString().toLowerCase(Locale.ROOT).contains('temurin')) {
-            throw new GradleException("Expected Eclipse Temurin ${configuredJavaToolchainVersion}, found " +
+            throw new GradleException("Release auditing requires Eclipse Temurin ${configuredJavaToolchainVersion}; " +
+                    "ordinary build and runClient tasks accept other Java 8 updates. Found " +
                     "${metadata.vendor} ${metadata.javaRuntimeVersion} at ${metadata.installationPath}")
+        }
+    }
+}
+
+tasks.register('verifyDevelopmentLaunches') {
+    group = 'verification'
+    description = 'Checks that development runs use the ForgeGradle launcher.'
+    doLast {
+        ['runClient', 'runServer', 'runData', 'runRuntimeProbeServer', 'runLegacyUpgradeServer'].each { name ->
+            def run = tasks.named(name, JavaExec).get()
+            if (run.mainClass.get() != 'net.minecraftforge.launcher.Main') {
+                throw new GradleException("${name} bypasses Slime Launcher: ${run.mainClass.get()}")
+            }
         }
     }
 }
@@ -527,8 +573,10 @@ def forbiddenReleasePath = { String entryName ->
     String name = entryName.replace('\\', '/').toLowerCase(Locale.ROOT)
     name.startsWith('com/mcmoddev/') || name.startsWith('ci-fixtures/') || name.startsWith('reference/')
             || name.startsWith('agent-notes/') || name.contains('/agent-notes/')
+            || name.endsWith('/ore_textures.md')
             || name.startsWith('src/integrationtest/') || name.startsWith('src/clientintegrationtest/')
             || name.startsWith('src/gametest/')
+            || name.startsWith('src/modelgenerator/') || name.endsWith('/bmblockstateprovider.class')
             || name.startsWith('src/integratedsmoke/') || name.startsWith('src/packagedclientsmoke/')
             || name.startsWith('src/upgradesmoke/') || name.startsWith('src/packagedserversmoke/')
             || name.contains('minecraft-mavenizer') || name.contains('/smoke/')
@@ -538,6 +586,7 @@ def forbiddenReleasePath = { String entryName ->
 
 tasks.register('verifyReleaseArtifacts') {
     group = 'verification'
+    dependsOn tasks.named('verifyReleaseJava8Toolchain')
     dependsOn tasks.named('verifyReleaseConfiguration')
     dependsOn tasks.named('verifyReleaseDependencies')
     dependsOn tasks.named('verifyMavenCoordinates')
@@ -572,7 +621,7 @@ tasks.register('verifyReleaseArtifacts') {
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
             if (modsToml.contains('${') || !modsToml.contains('version="3.0.1.113021"')
-                    || !modsToml.contains('versionRange="[4.0.16.113021,5.0.0)"')) {
+                    || !modsToml.contains('versionRange="[4.1.0.113021,5.0.0)"')) {
                 throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
             }
             def provider = new JsonSlurper().parse(zip.getInputStream(
@@ -686,7 +735,50 @@ def verifyGeneratedData = tasks.register('verifyGeneratedData', Exec) {
         }
     }
 }
+def oreModelsDirectory = file('src/main/resources/assets/basemetals/models/block')
+def oreModelSnapshot = { File directory ->
+    fileTree(directory) { include '*_ore.json' }.files.collectEntries {
+        [(it.name): sha256(it)]
+    }
+}
+def generateOreModels = tasks.register('generateOreModels', JavaExec) {
+    group = 'data generation'
+    description = 'Uses vanilla host textures when an ore overlay is present, otherwise keeps the legacy model.'
+    dependsOn tasks.named('modelGeneratorClasses')
+    classpath = sourceSets.modelGenerator.runtimeClasspath
+    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
+    args file('src/main/resources').absolutePath
+}
+tasks.named('processResources') { dependsOn generateOreModels }
+def oreModelVerificationDirectory = layout.buildDirectory.dir('ore-model-verification')
+def verifyGeneratedOreModels = tasks.register('verifyGeneratedOreModels', JavaExec) {
+    group = 'verification'
+    description = 'Checks the saved ore models without rewriting them.'
+    dependsOn tasks.named('modelGeneratorClasses')
+    classpath = sourceSets.modelGenerator.runtimeClasspath
+    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
+    args file('src/main/resources').absolutePath, '--output', oreModelVerificationDirectory.get().asFile.absolutePath
+
+    doFirst {
+        File output = oreModelVerificationDirectory.get().asFile.canonicalFile
+        File buildDirectory = layout.buildDirectory.get().asFile.canonicalFile
+        if (!output.toPath().startsWith(buildDirectory.toPath()) || output.name != 'ore-model-verification') {
+            throw new GradleException("Unsafe ore-model verification directory: ${output}")
+        }
+        delete output
+    }
+    doLast {
+        File expectedModels = new File(oreModelVerificationDirectory.get().asFile, 'assets/basemetals/models/block')
+        if (oreModelSnapshot(oreModelsDirectory) != oreModelSnapshot(expectedModels)) {
+            throw new GradleException('Ore models are stale. Build the project and commit the updated JSON files.')
+        }
+    }
+}
+// Release checks must see stale models before the normal build updates them.
+generateOreModels.configure { mustRunAfter verifyGeneratedOreModels }
+tasks.named('verifyReleaseArtifacts') { dependsOn verifyGeneratedOreModels }
 tasks.named('check') {
+    dependsOn tasks.named('verifyDevelopmentLaunches')
     dependsOn verifyGeneratedData
     dependsOn tasks.named('verifyReleaseConfiguration')
     dependsOn tasks.named('verifyReleaseDependencies')
@@ -702,10 +794,11 @@ eclipse {
             classpath.entries.findAll { entry ->
                 String path = entry.path?.replace('\\', '/') ?: ''
                 path.startsWith('src/test/') || path.startsWith('src/integrationTest/')
+                        || path.startsWith('src/modelGenerator/') || path.endsWith('/modelGenerator')
             }.each { entry -> entry.entryAttributes['test'] = 'true' }
         }
     }
-    synchronizationTasks 'isolateEclipseProductionRuns'
+    synchronizationTasks generateOreModels, 'isolateEclipseProductionRuns'
 }
 idea {
     module {
@@ -826,6 +919,13 @@ tasks.register('verifyEclipseProductionClasspath') {
     dependsOn tasks.named('eclipseClasspath')
     dependsOn tasks.named('isolateEclipseProductionRuns')
     doLast {
+        Set<String> synchronizationTasks = eclipse.synchronizationTasks.getDependencies(delegate).collect {
+            it.name
+        } as Set
+        if (!synchronizationTasks.contains('generateOreModels')) {
+            throw new GradleException('Eclipse Gradle refresh must regenerate ore models')
+        }
+
         File prefs = file('.settings/org.eclipse.buildship.core.prefs')
         Properties buildshipPreferences = new Properties()
         prefs.withInputStream { buildshipPreferences.load(it) }
@@ -868,7 +968,7 @@ tasks.register('verifyEclipseProductionClasspath') {
             File launch = file(name)
             if (!launch.isFile()) throw new GradleException("Missing ${name}")
             String contents = launch.getText('UTF-8')
-            List<String> forbidden = ['src/test', 'src/integrationTest', 'junit-', 'opentest4j-',
+            List<String> forbidden = ['src/test', 'src/integrationTest', 'src/modelGenerator', 'junit-', 'opentest4j-',
                                       'basemetalsprobe', 'C:\\Users\\John']
             List<String> leaked = forbidden.findAll { contents.contains(it) }
             if (!leaked.isEmpty() || !contents.contains('ATTR_EXCLUDE_TEST_CODE')
@@ -947,6 +1047,13 @@ def clientIntegrationTestModJar = tasks.register('clientIntegrationTestModJar', 
     destinationDirectory = layout.buildDirectory.dir('client-integration-fixture')
     from clientIntegrationClasses
     from 'src/clientIntegrationTest/resources'
+}
+def oreOverlayClientFixtures = layout.buildDirectory.dir('ore-overlay-client-fixtures')
+def generateOreOverlayClientFixtures = tasks.register('generateOreOverlayClientFixtures', JavaExec) {
+    dependsOn tasks.named('modelGeneratorClasses')
+    classpath = sourceSets.modelGenerator.runtimeClasspath
+    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
+    args file('src/main/resources').absolutePath, '--client-fixtures', oreOverlayClientFixtures.get().asFile.absolutePath
 }
 def packagedClientProbeJar = renamer.classes(clientIntegrationTestModJar) {
     map.from minecraft.dependency.toSrgFile
@@ -1057,6 +1164,7 @@ def preparePackagedClientIntegration = tasks.register('preparePackagedClientInte
     dependsOn releaseJar
     dependsOn packagedClientProbeJar
     dependsOn tasks.named('verifyReleaseDependencies')
+    dependsOn generateOreOverlayClientFixtures
     doLast {
         File runDirectory = prepareBuildOwnedRunDirectory(
                 packagedClientRunDirectory.get().asFile, 'packaged-client-run')
@@ -1066,7 +1174,12 @@ def preparePackagedClientIntegration = tasks.register('preparePackagedClientInte
             from releasedOreSpawnJar()
             into new File(runDirectory, 'mods')
         }
-        new File(runDirectory, 'options.txt').setText('fullscreen:false\nlang:en_us\n', 'UTF-8')
+        File overlayPack = new File(runDirectory, 'resourcepacks/basemetals-ore-overlay-fixture')
+        copy { from oreOverlayClientFixtures; into overlayPack }
+        new File(overlayPack, 'pack.mcmeta').setText(
+                '{"pack":{"pack_format":4,"description":"Base Metals ore overlay test fixture"}}\n', 'UTF-8')
+        new File(runDirectory, 'options.txt').setText(
+                'fullscreen:false\nlang:en_us\nresourcePacks:["file/basemetals-ore-overlay-fixture"]\n', 'UTF-8')
     }
 }
 def packagedClientProcess = tasks.register('packagedClientProcess', Exec) {
@@ -1163,4 +1276,28 @@ tasks.register('packagedRuntimeIntegrationTest') {
     description = 'Runs the exact Base Metals and OreSpawn jars in official Forge 25 server and client runtimes.'
     dependsOn tasks.named('packagedServerIntegrationTest')
     dependsOn tasks.named('packagedClientIntegrationTest')
+}
+
+tasks.register('contentModeIntegrationTest', Exec) {
+    group = 'verification'
+    description = 'Tests packaged content policies and client/server mode matching with disposable profiles.'
+    dependsOn releaseJar, packagedServerProbeJar, packagedClientProbeJar
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doFirst {
+        File root = prepareBuildOwnedRunDirectory(file("${buildDir}/content-mode-tests"), 'content-mode-tests')
+        File fixture = new File(root, 'fixture')
+        copy {
+            from releaseJar, packagedServerProbeJar, packagedClientProbeJar, releasedOreSpawnJar()
+            into fixture
+        }
+        File java = javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(8)
+            vendor = JvmVendorSpec.ADOPTIUM
+        }.get().executablePath.asFile
+        commandLine 'node', file('tools/test_content_modes.js').absolutePath, java.absolutePath,
+                requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime').absolutePath,
+                requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime').absolutePath,
+                fixture.absolutePath, root.absolutePath
+        if (providers.gradleProperty('contentModeCycleOnly').isPresent()) args '--cycle-only'
+    }
 }

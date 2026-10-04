@@ -1,15 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/quartz"
-    }
-  },
-  "result": {
-    "item": "basemetals:quartz_pressure_plate"
-  },
-  "group": "basemetals:quartz_pressure_plate"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:gems/quartz"
+      }
+    },
+    "result": {
+      "item": "basemetals:quartz_pressure_plate"
+    },
+    "group": "basemetals:quartz_pressure_plate"
+  }
 }

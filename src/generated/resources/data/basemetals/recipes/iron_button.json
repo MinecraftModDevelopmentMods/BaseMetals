@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/iron"
-    }
-  },
-  "result": {
-    "item": "basemetals:iron_button"
-  },
-  "group": "basemetals:iron_button"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/iron"
+      }
+    },
+    "result": {
+      "item": "basemetals:iron_button"
+    },
+    "group": "basemetals:iron_button"
+  }
 }

@@ -10,19 +10,19 @@ to Minecraft. Depending on the material, these are available as ores, storage
 and decorative blocks, molten fluids, crafting components, tools, armour,
 shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
-advancements, and structure loot.
+advancements, and extra loot to find in chests.
 
 This is the Minecraft 1.13.2 version, `3.0.1.113021`, adapted from the 1.18.2
 port. It keeps the historical `basemetals` block and item IDs, but no longer
-needs MMDLib or Additional Loot Tables. Forge handles registration, recipes,
-loot and advancements, and OreSpawn handles ore placement.
+needs MMDLib or Additional Loot Tables. OreSpawn places the ores, and Base
+Metals supplies the metals and their recipes.
 
 ## Requirements
 
 - Minecraft `1.13.2`
 - Forge `25.0.223`
 - Java 8
-- OreSpawn `[4.0.16.113021,5.0.0)` on both client and server
+- OreSpawn `[4.1.0.113021,5.0.0)` on both client and server
 
 Put `BaseMetals-3.0.1.113021.jar` and OreSpawn `4.1.0.113021` (or a later
 compatible OreSpawn 4 build for 1.13.2) in the `mods` directory. MMDLib and
@@ -43,16 +43,16 @@ can be used together.
 
 Notable mechanics include:
 
-- Crack Hammers crush supported mined blocks through the data-driven
-  `basemetals:crushing` recipe type. They can also crush dropped items by using
-  the hammer on the block beneath them; sneaking processes as much of a stack
-  as the hammer's remaining durability allows.
+- Crack Hammers crush ores and other supported blocks as you mine them. They
+  can also crush dropped items by using the hammer on the block beneath them;
+  sneaking processes as much of a stack as the hammer's remaining durability
+  allows.
 - Supported ore powders can be smelted into ingots, and alloy blends provide
   the historical furnace-based alloying route.
-- Scythes harvest a horizontal 3x3 area while respecting Forge block-break and
-  protection events, drops, enchantments, and durability.
-- Material shields can be upgraded at an anvil with one strictly harder tagged
-  plate while retaining their enchantments.
+- Scythes harvest plants in a horizontal 3x3 area. They work with enchantments
+  and land-protection mods, and wear out as you use them.
+- Upgrade a shield at an anvil with one plate of a harder metal. The shield
+  keeps its enchantments.
 - One damaged armour piece or shield and a matching plate fully repair the
   item without losing its name, enchantments or other saved data. These repair
   recipes stay out of the recipe book.
@@ -61,17 +61,31 @@ Notable mechanics include:
   ammunition materials contribute to damage; Power is added afterward.
 - Configurable armour and melee effects give Adamantine, Aquarium, Cold Iron,
   Lead, Mithril, and Starsteel their distinctive behaviour. Held Starsteel
-  equipment repairs by one durability every 200 server ticks; its armour does
+  equipment repairs by one durability every 10 seconds; its armour does
   not regenerate.
-- Dedicated molten-metal buckets place and collect the corresponding fluid
-  blocks. They are compatibility resources rather than a second processing
-  system.
+- Molten-metal buckets let you place and collect fluids. Base Metals does not
+  include a smeltery; other mods may provide ways to produce these fluids.
 
-The common configuration has four default-enabled switches: special equipment
-effects, Starsteel regeneration, mercury immersion effects, and villager
-trades. These switches do not remove registered items or blocks. Individual
-materials and recipes cannot be disabled through this configuration; edit ore
-placement through OreSpawn.
+Open the configuration from the main menu's **Mods → Base Metals → Config**
+button, or from the Base Metals cog in OreSpawn's world-creation settings.
+Both open the same screen, with Cancel, Undo and Defaults controls.
+
+Collecting a metal ingot reveals that material's crafting recipes in the recipe
+book, as in 1.12. Vanilla-material recipes are discovered through their usual
+base materials, such as diamonds, stone or logs. Low Fantasy shows only the
+recipes allowed by that mode.
+
+The four switches, enabled by default, control special equipment effects,
+Starsteel self-repair, mercury poisoning and villager trades. The content-mode
+selector offers **High Fantasy** (craft freely with every metal) and
+**Low Fantasy** (keep fantasy metals, but limit what each material can make).
+Mode changes require a restart, and clients and servers must use the same mode.
+Old configs without this setting remain in High Fantasy.
+
+Everything you already own stays usable in either mode, and ore generation
+stays the same. Your choice applies to all your worlds; servers choose their
+own mode. See [Content modes and configuration](docs/CONTENT_MODES.md) for the
+full list of restrictions. Use OreSpawn to change where ores generate.
 
 ## Ore generation
 
@@ -88,7 +102,7 @@ generate by default.
 Base Metals does not add rock strata. If Mineralogy is installed, OreSpawn uses
 the same rules inside its rock families without generating a second copy of
 each ore. See [World generation](docs/WORLDGEN.md) for the complete provider
-contract.
+settings.
 
 ## Updating an old world
 
@@ -116,7 +130,28 @@ can consume the common tags without linking to Base Metals internals. See
 
 Base Metals uses ForgeGradle `7.0.34` and Gradle `9.6.1`. Gradle runs on Java
 17, ForgeGradle's legacy Minecraft transformation utility runs on Java 25, and
-all production code compiles and runs on the exact Java 8 toolchain.
+the mod compiles and runs on Java 8. Development builds accept newer Java 8
+updates; release auditing requires Temurin `8.0.502+7` for reproducibility.
+Node.js is also needed to generate and check the resource files.
+
+For a normal development build and client launch, use:
+
+```text
+./gradlew build
+./gradlew runClient
+```
+
+Run these tasks from IntelliJ's Gradle window or a terminal. ForgeGradle's
+launcher prepares the assets and native libraries; no manual asset paths are
+needed. The Gradle JVM should be Java 17, not the Java 8 game runtime.
+
+Ore model JSONs update automatically when you build, launch with `runClient`,
+or refresh the Gradle project in Eclipse. Put transparent ore textures under
+`src/main/resources/assets/basemetals/textures/block/ore_overlays`; no separate
+generation command is needed. Review and commit the updated models with the
+textures. CI and release auditing still reject stale models.
+
+With the pinned release toolchain, run the full release checks:
 
 ```text
 ./gradlew clean check build javadoc verifyReleaseArtifacts writeReleaseChecksums
@@ -135,11 +170,14 @@ their directories through the `packagedForgeClientRuntime` and
 release JAR and OreSpawn dependency, create real worlds, validate client models
 and colours, and remain outside the published artifact.
 
-CI performs an empty-cache Forge bootstrap, contract unit tests, deterministic-data
-drift checks, an exact-OreSpawn dedicated-server probe, release-JAR auditing,
-checksums, reproducibility checks, CodeQL, wrapper validation, and Eclipse
-classpath isolation. Test probes and historical fixtures are excluded from the
-published JAR.
+`contentModeIntegrationTest` uses the same runtime properties to check both
+content modes, old configuration files, client/server matching and mismatch
+messages in disposable multiplayer profiles.
+
+CI checks a fresh Forge setup, unit tests, generated files, a dedicated server
+with the pinned OreSpawn release, release-JAR contents, checksums, reproducible
+builds, CodeQL, wrapper validation, and Eclipse classpath isolation. Test probes
+and historical fixtures are excluded from the published JAR.
 
 Development and CI use the published
 [OreSpawn 4.1.0.113021 release](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9035885)

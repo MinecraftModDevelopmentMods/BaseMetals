@@ -1,23 +1,26 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "GRR",
-    " SR",
-    "R G"
-  ],
-  "key": {
-    "G": {
-      "tag": "forge:gears/starsteel"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "key": {
+      "G": {
+        "tag": "forge:gears/starsteel"
+      },
+      "R": {
+        "tag": "forge:rods/starsteel"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "R": {
-      "tag": "forge:rods/starsteel"
+    "result": {
+      "item": "basemetals:starsteel_crossbow"
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:starsteel_crossbow"
-  },
-  "group": "basemetals:starsteel_crossbow"
+    "group": "basemetals:starsteel_crossbow"
+  }
 }

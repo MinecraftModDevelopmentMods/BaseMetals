@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "S",
-    "S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:storage_blocks/starsteel"
+      }
     },
-    "X": {
-      "tag": "forge:storage_blocks/starsteel"
-    }
-  },
-  "result": {
-    "item": "basemetals:starsteel_crackhammer"
-  },
-  "group": "basemetals:starsteel_crackhammer"
+    "result": {
+      "item": "basemetals:starsteel_crackhammer"
+    },
+    "group": "basemetals:starsteel_crackhammer"
+  }
 }

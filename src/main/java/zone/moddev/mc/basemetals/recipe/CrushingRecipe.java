@@ -3,6 +3,7 @@ package zone.moddev.mc.basemetals.recipe;
 import com.google.gson.JsonObject;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.config.ContentPolicy;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -42,11 +43,13 @@ public final class CrushingRecipe implements IRecipe {
         RecipeSerializers.register(SERIALIZER);
         RecipeSerializers.register(LEGACY_SMELTING_SERIALIZER);
         RecipeSerializers.register(PLATE_REPAIR_SERIALIZER);
+        RecipeSerializers.register(ContentCraftingRecipe.SERIALIZER);
         registered = true;
     }
 
     @Override public boolean matches(IInventory inventory, World world) {
-        return inventory.getSizeInventory() > 0 && ingredient.test(inventory.getStackInSlot(0));
+        return ContentPolicy.active().allows(result.getItem().getRegistryName().toString())
+                && inventory.getSizeInventory() > 0 && ingredient.test(inventory.getStackInSlot(0));
     }
     @Override public ItemStack getCraftingResult(IInventory inventory) { return result.copy(); }
     @Override public boolean canFit(int width, int height) { return width * height >= 1; }

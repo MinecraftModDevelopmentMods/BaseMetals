@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "minecraft:coal"
-    }
-  ],
-  "result": {
-    "item": "basemetals:coal_nugget",
-    "count": 9
-  },
-  "group": "basemetals:coal_nugget"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "item": "minecraft:coal"
+      }
+    ],
+    "result": {
+      "item": "basemetals:coal_nugget",
+      "count": 9
+    },
+    "group": "basemetals:coal_nugget"
+  }
 }

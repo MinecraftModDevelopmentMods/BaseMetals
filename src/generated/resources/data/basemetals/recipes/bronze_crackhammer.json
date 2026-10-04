@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "S",
-    "S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:storage_blocks/bronze"
+      }
     },
-    "X": {
-      "tag": "forge:storage_blocks/bronze"
-    }
-  },
-  "result": {
-    "item": "basemetals:bronze_crackhammer"
-  },
-  "group": "basemetals:bronze_crackhammer"
+    "result": {
+      "item": "basemetals:bronze_crackhammer"
+    },
+    "group": "basemetals:bronze_crackhammer"
+  }
 }

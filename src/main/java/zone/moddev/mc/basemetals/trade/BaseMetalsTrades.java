@@ -1,6 +1,7 @@
 package zone.moddev.mc.basemetals.trade;
 
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
+import zone.moddev.mc.basemetals.config.ContentPolicy;
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
@@ -64,7 +65,8 @@ public final class BaseMetalsTrades {
 
     private static EntityVillager.ITradeList selling(final Item item, final int count, final int emeralds) {
         return (merchant, recipes, random) -> {
-            if (BaseMetalsConfig.VILLAGER_TRADES.get()) {
+            if (BaseMetalsConfig.VILLAGER_TRADES.get()
+                    && ContentPolicy.active().allows(item.getRegistryName().toString())) {
                 recipes.add(new MerchantRecipe(
                         new ItemStack(Items.EMERALD, Math.max(1, emeralds)),
                         new ItemStack(item, count)));

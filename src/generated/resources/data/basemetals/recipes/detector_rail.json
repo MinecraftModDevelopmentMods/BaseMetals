@@ -1,23 +1,26 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X X",
-    "XSX",
-    "XRX"
-  ],
-  "key": {
-    "R": {
-      "item": "minecraft:redstone_torch"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X X",
+      "XSX",
+      "XRX"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone_torch"
+      },
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/steel"
+      }
     },
-    "S": {
-      "tag": "forge:rods/wooden"
+    "result": {
+      "item": "minecraft:detector_rail"
     },
-    "X": {
-      "tag": "forge:ingots/steel"
-    }
-  },
-  "result": {
-    "item": "minecraft:detector_rail"
-  },
-  "group": "minecraft:detector_rail"
+    "group": "minecraft:detector_rail"
+  }
 }

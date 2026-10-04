@@ -1,23 +1,26 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "GRR",
-    " SR",
-    "R G"
-  ],
-  "key": {
-    "G": {
-      "tag": "forge:gears/obsidian"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "key": {
+      "G": {
+        "tag": "forge:gears/obsidian"
+      },
+      "R": {
+        "tag": "forge:rods/obsidian"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "R": {
-      "tag": "forge:rods/obsidian"
+    "result": {
+      "item": "basemetals:obsidian_crossbow"
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:obsidian_crossbow"
-  },
-  "group": "basemetals:obsidian_crossbow"
+    "group": "basemetals:obsidian_crossbow"
+  }
 }

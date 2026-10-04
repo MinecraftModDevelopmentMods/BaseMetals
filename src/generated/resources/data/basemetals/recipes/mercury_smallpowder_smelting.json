@@ -1,9 +1,11 @@
 {
-  "type": "minecraft:smelting",
+  "type": "basemetals:legacy_smelting",
   "ingredient": {
     "tag": "forge:tiny_dusts/mercury"
   },
-  "result": "basemetals:mercury_nugget",
+  "result": {
+    "item": "basemetals:mercury_nugget"
+  },
   "experience": 0.01,
   "cookingtime": 200
 }

@@ -17,7 +17,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 
-/** Base Metals anvil with the vanilla repair UI and a stable custom block ID. */
+/** Uses the vanilla repair screen and keeps the same block ID as the anvil wears out. */
 public final class BaseMetalAnvilBlock extends BlockAnvil {
     public static final IntegerProperty DAMAGE = IntegerProperty.create("damage", 0, 2);
 

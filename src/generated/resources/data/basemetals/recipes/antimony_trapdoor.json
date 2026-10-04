@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/antimony"
-    }
-  },
-  "result": {
-    "item": "basemetals:antimony_trapdoor"
-  },
-  "group": "basemetals:antimony_trapdoor"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/antimony"
+      }
+    },
+    "result": {
+      "item": "basemetals:antimony_trapdoor"
+    },
+    "group": "basemetals:antimony_trapdoor"
+  }
 }

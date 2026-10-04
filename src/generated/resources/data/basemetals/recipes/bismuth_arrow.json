@@ -1,24 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "N",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "forge:nuggets/bismuth"
+      },
+      "R": {
+        "tag": "forge:rods/bismuth"
+      }
     },
-    "N": {
-      "tag": "forge:nuggets/bismuth"
+    "result": {
+      "item": "basemetals:bismuth_arrow",
+      "count": 4
     },
-    "R": {
-      "tag": "forge:rods/bismuth"
-    }
-  },
-  "result": {
-    "item": "basemetals:bismuth_arrow",
-    "count": 4
-  },
-  "group": "basemetals:bismuth_arrow"
+    "group": "basemetals:bismuth_arrow"
+  }
 }

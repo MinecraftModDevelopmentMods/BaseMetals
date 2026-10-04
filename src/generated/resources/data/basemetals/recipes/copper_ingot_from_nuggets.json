@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "item": "basemetals:copper_nugget"
-    }
-  },
-  "result": {
-    "item": "basemetals:copper_ingot"
-  },
-  "group": "basemetals:copper_ingot"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "item": "basemetals:copper_nugget"
+      }
+    },
+    "result": {
+      "item": "basemetals:copper_ingot"
+    },
+    "group": "basemetals:copper_ingot"
+  }
 }

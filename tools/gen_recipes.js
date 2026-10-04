@@ -302,7 +302,7 @@ function processIngredient( input, mat ) {
 
 function processRecipe( mat, rec ) {
     var this_recipe = rec;
-    let res = {}; // zero out the result on each loop
+    let res = {};
     res.type = this_recipe.type;
     switch( this_recipe.type ) {
     case 'forge:ore_shaped':
@@ -313,7 +313,6 @@ function processRecipe( mat, rec ) {
 	break;
     case 'forge:ore_shapeless':
 	res.result = processOutputs( this_recipe.result, mat );
-	// this isn't the right thing here, but...
 	res.ingredients = [ processIngredient( this_recipe.input, mat ) ];
 	res.conditions = processConditions( this_recipe.config.enabled, mat );	    
 	break;
@@ -389,13 +388,13 @@ function processAlloy( mat ) {
     return res;
 }
 
-// Basic Materials that get just about everything
+// Standard recipes for the base metals.
 for( let i = 0; i < base_mats.length; i++ ) {
     let mat = base_mats[i];
     processMat( mat );
 }
 
-// alloys get all the same recipes as the rest, just more - which follows this
+// Alloys use the same standard recipes; their blends are added below.
 for( let i = 0; i < alloy_names.length; i++ ) {
     let mat = alloy_names[i];
     processMat( mat );

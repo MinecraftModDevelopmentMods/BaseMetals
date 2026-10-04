@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:storage_blocks/bismuth"
-    }
-  ],
-  "result": {
-    "item": "basemetals:bismuth_ingot",
-    "count": 9
-  },
-  "group": "basemetals:bismuth_ingot"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:storage_blocks/bismuth"
+      }
+    ],
+    "result": {
+      "item": "basemetals:bismuth_ingot",
+      "count": 9
+    },
+    "group": "basemetals:bismuth_ingot"
+  }
 }

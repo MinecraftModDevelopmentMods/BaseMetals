@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/diamond"
-    }
-  },
-  "result": {
-    "item": "basemetals:diamond_button"
-  },
-  "group": "basemetals:diamond_button"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/diamond"
+      }
+    },
+    "result": {
+      "item": "basemetals:diamond_button"
+    },
+    "group": "basemetals:diamond_button"
+  }
 }

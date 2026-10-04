@@ -5,7 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.state.properties.SlabType;
 import net.minecraftforge.common.ToolType;
 
-/** Hidden compatibility target for flattened 1.10/1.12 double-slab states. */
+/** Keeps old double slabs intact when a 1.10 or 1.12 world is upgraded. */
 public final class CompatibilityDoubleSlabBlock extends BlockSlab {
     private final int harvestLevel;
 

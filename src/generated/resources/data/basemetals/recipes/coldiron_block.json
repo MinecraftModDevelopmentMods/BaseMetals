@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/coldiron"
-    }
-  },
-  "result": {
-    "item": "basemetals:coldiron_block"
-  },
-  "group": "basemetals:coldiron_block"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/coldiron"
+      }
+    },
+    "result": {
+      "item": "basemetals:coldiron_block"
+    },
+    "group": "basemetals:coldiron_block"
+  }
 }

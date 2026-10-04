@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/zinc"
-    }
-  },
-  "result": {
-    "item": "basemetals:zinc_ingot"
-  },
-  "group": "basemetals:zinc_ingot"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/zinc"
+      }
+    },
+    "result": {
+      "item": "basemetals:zinc_ingot"
+    },
+    "group": "basemetals:zinc_ingot"
+  }
 }

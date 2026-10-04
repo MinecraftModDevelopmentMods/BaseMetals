@@ -1,24 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "N",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "forge:nuggets/diamond"
+      },
+      "R": {
+        "tag": "forge:rods/diamond"
+      }
     },
-    "N": {
-      "tag": "forge:nuggets/diamond"
+    "result": {
+      "item": "basemetals:diamond_arrow",
+      "count": 4
     },
-    "R": {
-      "tag": "forge:rods/diamond"
-    }
-  },
-  "result": {
-    "item": "basemetals:diamond_arrow",
-    "count": 4
-  },
-  "group": "basemetals:diamond_arrow"
+    "group": "basemetals:diamond_arrow"
+  }
 }

@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X",
-    "X "
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/bismuth"
-    }
-  },
-  "result": {
-    "item": "basemetals:bismuth_shears"
-  },
-  "group": "basemetals:bismuth_shears"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/bismuth"
+      }
+    },
+    "result": {
+      "item": "basemetals:bismuth_shears"
+    },
+    "group": "basemetals:bismuth_shears"
+  }
 }

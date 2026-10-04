@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/lead"
-    }
-  },
-  "result": {
-    "item": "basemetals:lead_bars",
-    "count": 16
-  },
-  "group": "basemetals:lead_bars"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/lead"
+      }
+    },
+    "result": {
+      "item": "basemetals:lead_bars",
+      "count": 16
+    },
+    "group": "basemetals:lead_bars"
+  }
 }

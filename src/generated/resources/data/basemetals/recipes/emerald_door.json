@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/emerald"
-    }
-  },
-  "result": {
-    "item": "basemetals:emerald_door",
-    "count": 3
-  },
-  "group": "basemetals:emerald_door"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:gems/emerald"
+      }
+    },
+    "result": {
+      "item": "basemetals:emerald_door",
+      "count": 3
+    },
+    "group": "basemetals:emerald_door"
+  }
 }

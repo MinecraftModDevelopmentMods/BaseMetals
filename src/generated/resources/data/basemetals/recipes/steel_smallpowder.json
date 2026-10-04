@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/steel"
-    }
-  ],
-  "result": {
-    "item": "basemetals:steel_smallpowder",
-    "count": 9
-  },
-  "group": "basemetals:steel_smallpowder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/steel"
+      }
+    ],
+    "result": {
+      "item": "basemetals:steel_smallpowder",
+      "count": 9
+    },
+    "group": "basemetals:steel_smallpowder"
+  }
 }

@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/obsidian"
-    }
-  },
-  "result": {
-    "item": "basemetals:obsidian_slab",
-    "count": 6
-  },
-  "group": "basemetals:obsidian_slab"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/obsidian"
+      }
+    },
+    "result": {
+      "item": "basemetals:obsidian_slab",
+      "count": 6
+    },
+    "group": "basemetals:obsidian_slab"
+  }
 }

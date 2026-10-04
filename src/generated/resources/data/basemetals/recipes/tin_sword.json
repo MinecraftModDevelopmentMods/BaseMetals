@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X",
-    "S"
-  ],
-  "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X",
+      "S"
+    ],
+    "key": {
+      "S": {
+        "tag": "forge:rods/wooden"
+      },
+      "X": {
+        "tag": "forge:ingots/tin"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/tin"
-    }
-  },
-  "result": {
-    "item": "basemetals:tin_sword"
-  },
-  "group": "basemetals:tin_sword"
+    "result": {
+      "item": "basemetals:tin_sword"
+    },
+    "group": "basemetals:tin_sword"
+  }
 }

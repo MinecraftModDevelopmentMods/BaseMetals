@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "R": {
+        "tag": "forge:rods/iron"
+      }
     },
-    "R": {
-      "tag": "forge:rods/iron"
-    }
-  },
-  "result": {
-    "item": "basemetals:iron_bolt",
-    "count": 4
-  },
-  "group": "basemetals:iron_bolt"
+    "result": {
+      "item": "basemetals:iron_bolt",
+      "count": 4
+    },
+    "group": "basemetals:iron_bolt"
+  }
 }

@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "  X",
-    "XWX",
-    "XXX"
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:wool"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "  X",
+      "XWX",
+      "XXX"
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:wool"
+      },
+      "X": {
+        "tag": "forge:ingots/obsidian"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/obsidian"
-    }
-  },
-  "result": {
-    "item": "basemetals:obsidian_horse_armor"
-  },
-  "group": "basemetals:obsidian_horse_armor"
+    "result": {
+      "item": "basemetals:obsidian_horse_armor"
+    },
+    "group": "basemetals:obsidian_horse_armor"
+  }
 }

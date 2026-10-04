@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/obsidian"
-    }
-  ],
-  "result": {
-    "item": "basemetals:obsidian_smallpowder",
-    "count": 9
-  },
-  "group": "basemetals:obsidian_smallpowder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/obsidian"
+      }
+    ],
+    "result": {
+      "item": "basemetals:obsidian_smallpowder",
+      "count": 9
+    },
+    "group": "basemetals:obsidian_smallpowder"
+  }
 }

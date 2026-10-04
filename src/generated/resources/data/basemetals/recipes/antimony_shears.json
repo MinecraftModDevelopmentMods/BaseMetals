@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X",
-    "X "
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/antimony"
-    }
-  },
-  "result": {
-    "item": "basemetals:antimony_shears"
-  },
-  "group": "basemetals:antimony_shears"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/antimony"
+      }
+    },
+    "result": {
+      "item": "basemetals:antimony_shears"
+    },
+    "group": "basemetals:antimony_shears"
+  }
 }

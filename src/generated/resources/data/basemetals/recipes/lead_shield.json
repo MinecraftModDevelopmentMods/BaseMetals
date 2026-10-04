@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XWX",
-    "XXX",
-    " X "
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:planks"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "X": {
+        "tag": "forge:ingots/lead"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/lead"
-    }
-  },
-  "result": {
-    "item": "basemetals:lead_shield"
-  },
-  "group": "basemetals:lead_shield"
+    "result": {
+      "item": "basemetals:lead_shield"
+    },
+    "group": "basemetals:lead_shield"
+  }
 }

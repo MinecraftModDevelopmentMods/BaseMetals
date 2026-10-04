@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/antimony"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/antimony"
+      },
+      "X": {
+        "tag": "forge:ingots/antimony"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/antimony"
-    }
-  },
-  "result": {
-    "item": "basemetals:antimony_lever"
-  },
-  "group": "basemetals:antimony_lever"
+    "result": {
+      "item": "basemetals:antimony_lever"
+    },
+    "group": "basemetals:antimony_lever"
+  }
 }

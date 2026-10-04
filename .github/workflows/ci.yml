@@ -130,7 +130,7 @@ jobs:
           set -euo pipefail
           chmod +x ./gradlew
           gradle_args=(
-            clean check build javadoc verifyReleaseArtifacts writeReleaseChecksums
+            clean verifyGeneratedOreModels check build javadoc verifyReleaseArtifacts writeReleaseChecksums
             verifyEclipseProductionClasspath
             -PorespawnVerificationRepository="${{ steps.orespawn.outputs.repository }}"
             --no-daemon --stacktrace --max-workers=2

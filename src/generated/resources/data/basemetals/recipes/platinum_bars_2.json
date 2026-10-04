@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:rods/platinum"
-    }
-  },
-  "result": {
-    "item": "basemetals:platinum_bars",
-    "count": 4
-  },
-  "group": "basemetals:platinum_bars"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:rods/platinum"
+      }
+    },
+    "result": {
+      "item": "basemetals:platinum_bars",
+      "count": 4
+    },
+    "group": "basemetals:platinum_bars"
+  }
 }

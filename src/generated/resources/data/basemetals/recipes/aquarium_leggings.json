@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "X X",
-    "X X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/aquarium"
-    }
-  },
-  "result": {
-    "item": "basemetals:aquarium_leggings"
-  },
-  "group": "basemetals:aquarium_leggings"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "X X",
+      "X X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/aquarium"
+      }
+    },
+    "result": {
+      "item": "basemetals:aquarium_leggings"
+    },
+    "group": "basemetals:aquarium_leggings"
+  }
 }

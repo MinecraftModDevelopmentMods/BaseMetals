@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/emerald"
-    }
-  },
-  "result": {
-    "item": "basemetals:emerald_bars",
-    "count": 16
-  },
-  "group": "basemetals:emerald_bars"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:gems/emerald"
+      }
+    },
+    "result": {
+      "item": "basemetals:emerald_bars",
+      "count": 16
+    },
+    "group": "basemetals:emerald_bars"
+  }
 }

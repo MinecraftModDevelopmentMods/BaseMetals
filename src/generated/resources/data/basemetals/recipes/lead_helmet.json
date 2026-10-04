@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "X X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/lead"
-    }
-  },
-  "result": {
-    "item": "basemetals:lead_helmet"
-  },
-  "group": "basemetals:lead_helmet"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/lead"
+      }
+    },
+    "result": {
+      "item": "basemetals:lead_helmet"
+    },
+    "group": "basemetals:lead_helmet"
+  }
 }

@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/cupronickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:cupronickel_trapdoor"
-  },
-  "group": "basemetals:cupronickel_trapdoor"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/cupronickel"
+      }
+    },
+    "result": {
+      "item": "basemetals:cupronickel_trapdoor"
+    },
+    "group": "basemetals:cupronickel_trapdoor"
+  }
 }

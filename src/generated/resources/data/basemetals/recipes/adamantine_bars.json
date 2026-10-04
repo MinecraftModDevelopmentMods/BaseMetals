@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/adamantine"
-    }
-  },
-  "result": {
-    "item": "basemetals:adamantine_bars",
-    "count": 16
-  },
-  "group": "basemetals:adamantine_bars"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/adamantine"
+      }
+    },
+    "result": {
+      "item": "basemetals:adamantine_bars",
+      "count": 16
+    },
+    "group": "basemetals:adamantine_bars"
+  }
 }

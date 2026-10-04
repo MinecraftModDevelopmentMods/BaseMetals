@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X X",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/lead"
-    }
-  },
-  "result": {
-    "item": "basemetals:lead_chestplate"
-  },
-  "group": "basemetals:lead_chestplate"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X X",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/lead"
+      }
+    },
+    "result": {
+      "item": "basemetals:lead_chestplate"
+    },
+    "group": "basemetals:lead_chestplate"
+  }
 }

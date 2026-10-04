@@ -3,6 +3,9 @@ package zone.moddev.mc.basemetals.recipe;
 import com.google.gson.JsonObject;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.config.ContentPolicy;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.world.World;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
@@ -13,7 +16,7 @@ import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
-/** Counted-output smelting retained from the pre-flattening recipe registry. */
+/** Smelting recipes that can produce more than one item. */
 public final class LegacySmeltingRecipe extends FurnaceRecipe {
     public LegacySmeltingRecipe(ResourceLocation id, String group, Ingredient ingredient,
             ItemStack result, float experience, int cookingTime) {
@@ -22,6 +25,20 @@ public final class LegacySmeltingRecipe extends FurnaceRecipe {
 
     @Override public IRecipeSerializer<?> getSerializer() {
         return CrushingRecipe.LEGACY_SMELTING_SERIALIZER;
+    }
+
+    @Override public boolean matches(IInventory inventory, World world) {
+        return allowed() && super.matches(inventory, world);
+    }
+
+    @Override public ItemStack getCraftingResult(IInventory inventory) {
+        return allowed() ? super.getCraftingResult(inventory) : ItemStack.EMPTY;
+    }
+
+    @Override public boolean isDynamic() { return !allowed(); }
+
+    private boolean allowed() {
+        return ContentPolicy.active().allows(getRecipeOutput().getItem().getRegistryName().toString());
     }
 
     public static final class Serializer implements IRecipeSerializer<LegacySmeltingRecipe> {

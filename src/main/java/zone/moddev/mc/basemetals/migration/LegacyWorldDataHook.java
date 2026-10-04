@@ -68,10 +68,9 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
- * Installs the registry-backed block states from 1.10/1.12 before Mojang's
- * vanilla-only flattening pass can replace them with air. The hook also updates
- * old universal buckets, item aliases, and pre-flattening durability in the NBT
- * that is about to be decoded.
+ * Restores old modded block IDs before Minecraft's 1.13 world conversion can
+ * replace them with air. Also converts old item names, universal buckets and
+ * durability data before Minecraft reads the items.
  */
 public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPersistenceHook {
     private static final LegacyWorldDataHook INSTANCE = new LegacyWorldDataHook();
@@ -124,8 +123,8 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
             LEGACY_BASE_METALS_BLOCK_COUNTS.put(Long.valueOf(chunkKey(level.getInt("xPos"), level.getInt("zPos"))),
                     Integer.valueOf(legacyBlocks));
         }
-        // A legacy chunk can contain Base Metals only in inventories or entities. It must still be
-        // treated as completed terrain or 1.13 regenerates the chunk and discards that content.
+        // Chests or entities may contain the only Base Metals items in this chunk.
+        // Mark it as finished terrain too, or 1.13 can regenerate it and lose those items.
         level.setBoolean("TerrainPopulated", true);
         level.setBoolean("LightPopulated", true);
         level.setBoolean(PRESERVE_CHUNK_MARKER, true);

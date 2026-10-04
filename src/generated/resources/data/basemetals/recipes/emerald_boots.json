@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X X",
-    "X X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/emerald"
-    }
-  },
-  "result": {
-    "item": "basemetals:emerald_boots"
-  },
-  "group": "basemetals:emerald_boots"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X X",
+      "X X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:gems/emerald"
+      }
+    },
+    "result": {
+      "item": "basemetals:emerald_boots"
+    },
+    "group": "basemetals:emerald_boots"
+  }
 }

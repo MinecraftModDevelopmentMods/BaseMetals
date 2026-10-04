@@ -1,22 +1,25 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/copper"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/copper"
+      },
+      {
+        "tag": "forge:dusts/copper"
+      },
+      {
+        "tag": "forge:dusts/copper"
+      },
+      {
+        "tag": "forge:dusts/zinc"
+      }
+    ],
+    "result": {
+      "item": "basemetals:brass_blend",
+      "count": 4
     },
-    {
-      "tag": "forge:dusts/copper"
-    },
-    {
-      "tag": "forge:dusts/copper"
-    },
-    {
-      "tag": "forge:dusts/zinc"
-    }
-  ],
-  "result": {
-    "item": "basemetals:brass_blend",
-    "count": 4
-  },
-  "group": "basemetals:brass_blend"
+    "group": "basemetals:brass_blend"
+  }
 }

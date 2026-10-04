@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "R": {
+        "tag": "forge:rods/coldiron"
+      }
     },
-    "R": {
-      "tag": "forge:rods/coldiron"
-    }
-  },
-  "result": {
-    "item": "basemetals:coldiron_bolt",
-    "count": 4
-  },
-  "group": "basemetals:coldiron_bolt"
+    "result": {
+      "item": "basemetals:coldiron_bolt",
+      "count": 4
+    },
+    "group": "basemetals:coldiron_bolt"
+  }
 }

@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/silver"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/silver"
+      },
+      "X": {
+        "tag": "forge:ingots/silver"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/silver"
-    }
-  },
-  "result": {
-    "item": "basemetals:silver_lever"
-  },
-  "group": "basemetals:silver_lever"
+    "result": {
+      "item": "basemetals:silver_lever"
+    },
+    "group": "basemetals:silver_lever"
+  }
 }

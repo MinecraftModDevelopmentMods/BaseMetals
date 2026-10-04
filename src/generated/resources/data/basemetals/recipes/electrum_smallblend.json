@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:blends/electrum"
-    }
-  ],
-  "result": {
-    "item": "basemetals:electrum_smallblend",
-    "count": 9
-  },
-  "group": "basemetals:electrum_smallblend"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:blends/electrum"
+      }
+    ],
+    "result": {
+      "item": "basemetals:electrum_smallblend",
+      "count": 9
+    },
+    "group": "basemetals:electrum_smallblend"
+  }
 }

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.config.ContentPolicy;
 
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -31,6 +32,7 @@ public final class PlateRepairRecipe extends IRecipeHidden {
 
     @Override
     public boolean matches(IInventory inventory, World world) {
+        if (!ContentPolicy.active().allows(target.getRegistryName().toString())) return false;
         ItemStack foundTarget = ItemStack.EMPTY;
         boolean foundPlate = false;
 

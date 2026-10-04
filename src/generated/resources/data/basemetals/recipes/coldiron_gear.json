@@ -1,21 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X ",
-    "XRX",
-    " X "
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/coldiron"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/coldiron"
+      },
+      "X": {
+        "tag": "forge:ingots/coldiron"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/coldiron"
-    }
-  },
-  "result": {
-    "item": "basemetals:coldiron_gear",
-    "count": 4
-  },
-  "group": "basemetals:coldiron_gear"
+    "result": {
+      "item": "basemetals:coldiron_gear",
+      "count": 4
+    },
+    "group": "basemetals:coldiron_gear"
+  }
 }

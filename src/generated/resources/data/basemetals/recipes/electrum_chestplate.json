@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X X",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/electrum"
-    }
-  },
-  "result": {
-    "item": "basemetals:electrum_chestplate"
-  },
-  "group": "basemetals:electrum_chestplate"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X X",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/electrum"
+      }
+    },
+    "result": {
+      "item": "basemetals:electrum_chestplate"
+    },
+    "group": "basemetals:electrum_chestplate"
+  }
 }

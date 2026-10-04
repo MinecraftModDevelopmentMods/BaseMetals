@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 
-/** Supplies the sprites and catalogue tint omitted by Forge 25's transitional renderer. */
+/** Adds the fluid textures and colours that Forge 25 doesn't render on its own. */
 @OnlyIn(Dist.CLIENT)
 public final class ClientMoltenMetalRenderer {
     private static final ResourceLocation STILL = new ResourceLocation(BaseMetals.MOD_ID, "block/molten_metal_still");

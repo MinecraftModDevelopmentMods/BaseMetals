@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/invar"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/invar"
+      },
+      "X": {
+        "tag": "forge:ingots/invar"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/invar"
-    }
-  },
-  "result": {
-    "item": "basemetals:invar_lever"
-  },
-  "group": "basemetals:invar_lever"
+    "result": {
+      "item": "basemetals:invar_lever"
+    },
+    "group": "basemetals:invar_lever"
+  }
 }

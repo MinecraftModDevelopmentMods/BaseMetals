@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "item": "minecraft:charcoal"
-    }
-  },
-  "result": {
-    "item": "basemetals:charcoal_block"
-  },
-  "group": "basemetals:charcoal_block"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "item": "minecraft:charcoal"
+      }
+    },
+    "result": {
+      "item": "basemetals:charcoal_block"
+    },
+    "group": "basemetals:charcoal_block"
+  }
 }

@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/lead"
-    }
-  },
-  "result": {
-    "item": "basemetals:lead_trapdoor"
-  },
-  "group": "basemetals:lead_trapdoor"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/lead"
+      }
+    },
+    "result": {
+      "item": "basemetals:lead_trapdoor"
+    },
+    "group": "basemetals:lead_trapdoor"
+  }
 }

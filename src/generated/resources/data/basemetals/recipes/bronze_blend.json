@@ -1,22 +1,25 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/copper"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/copper"
+      },
+      {
+        "tag": "forge:dusts/copper"
+      },
+      {
+        "tag": "forge:dusts/copper"
+      },
+      {
+        "tag": "forge:dusts/tin"
+      }
+    ],
+    "result": {
+      "item": "basemetals:bronze_blend",
+      "count": 4
     },
-    {
-      "tag": "forge:dusts/copper"
-    },
-    {
-      "tag": "forge:dusts/copper"
-    },
-    {
-      "tag": "forge:dusts/tin"
-    }
-  ],
-  "result": {
-    "item": "basemetals:bronze_blend",
-    "count": 4
-  },
-  "group": "basemetals:bronze_blend"
+    "group": "basemetals:bronze_blend"
+  }
 }

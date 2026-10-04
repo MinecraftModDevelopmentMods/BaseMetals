@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X X",
-    "X X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/tin"
-    }
-  },
-  "result": {
-    "item": "basemetals:tin_boots"
-  },
-  "group": "basemetals:tin_boots"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X X",
+      "X X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/tin"
+      }
+    },
+    "result": {
+      "item": "basemetals:tin_boots"
+    },
+    "group": "basemetals:tin_boots"
+  }
 }

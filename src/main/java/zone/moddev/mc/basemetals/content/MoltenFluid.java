@@ -15,7 +15,7 @@ import net.minecraft.world.IWorldReaderBase;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-/** Shared Forge-25 implementation for each catalogue-defined molten fluid. */
+/** Common flow behaviour for the molten metals. */
 public abstract class MoltenFluid extends FlowingFluid {
     private final String name;
 

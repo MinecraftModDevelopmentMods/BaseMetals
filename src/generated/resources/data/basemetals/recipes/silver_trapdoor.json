@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/silver"
-    }
-  },
-  "result": {
-    "item": "basemetals:silver_trapdoor"
-  },
-  "group": "basemetals:silver_trapdoor"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/silver"
+      }
+    },
+    "result": {
+      "item": "basemetals:silver_trapdoor"
+    },
+    "group": "basemetals:silver_trapdoor"
+  }
 }

@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/quartz"
-    }
-  },
-  "result": {
-    "item": "basemetals:quartz_rod",
-    "count": 4
-  },
-  "group": "basemetals:quartz_rod"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:gems/quartz"
+      }
+    },
+    "result": {
+      "item": "basemetals:quartz_rod",
+      "count": 4
+    },
+    "group": "basemetals:quartz_rod"
+  }
 }

@@ -1,5 +1,31 @@
 Base Metals 3.0.1.113021
 
+- Add the configuration screen to Forge's Mods list and OreSpawn's cog, with
+  translated labels and help in all 18 language files.
+- Enable the Mods-list Config button when Base Metals is selected. Forge 1.13
+  leaves it disabled even when a configuration screen is registered.
+- Rewrite settings help and equipment tooltips in plain language. Clarify
+  armour bonuses and Starsteel self-repair, and correct the Pewter, Aquarium
+  and Steel advancement hints.
+- Bring High Fantasy and Low Fantasy modes forward from 1.12. Old configs
+  default to High Fantasy; existing items, saved equipment and ore generation
+  stay unchanged. Low Fantasy restricts crafting, plate repairs, shield
+  upgrades, new villager trades and chest loot to the allowed items.
+- Check the client and server's content modes during login, with a clear
+  message when they differ. Mode changes take effect after a restart and
+  apply to the installation, not individual worlds.
+- Restore earned recipe-book unlocks when returning from Low Fantasy to High
+  Fantasy, without resetting advancement progress.
+- Restore 1.12 recipe discovery: one ingot reveals a metal's crafting recipes,
+  without first making rods or plates. Vanilla materials use their usual
+  gems, coal, charcoal, redstone, stone or logs. Low Fantasy still hides
+  restricted recipes, and existing recipe-book progress is kept.
+- Add support for Kiri's ore overlays on vanilla host textures, including
+  resource pack replacements. Ores keep their original texture when no overlay
+  is available.
+- Update ore model JSONs automatically during builds and Eclipse Gradle refreshes.
+- Fix Gradle game launches so Forge prepares the assets and native libraries.
+  Allow newer Java 8 updates for development while keeping release builds pinned.
 - Bring the 1.18.2 port to Minecraft 1.13.2 and Forge 25.0.223, running on Java 8.
 - Keep the historical blocks, items, recipes, fluids, loot, trades and
   advancements without requiring MMDLib or Additional Loot Tables.
@@ -23,8 +49,9 @@ Fixes carried forward from the 1.12 release
 - Plate repairs preserve the original item's name, enchantments and other NBT,
   and reject incomplete recipes and extra ingredients. They stay out of the
   recipe book.
-- Crafting recipes unlock from matching ingredients, including Forge tags.
-  Recipe-book groups are specific to the resulting item.
+- Crafting recipes unlock when you find the material or matching ingredients,
+  including ingredients from Forge tags. Recipe-book groups are specific to
+  the resulting item.
 - Nine Obsidian nuggets produce an ingot, not a block. Obsidian blocks use nine
   ingots, with a pattern distinct from bars and doors. Vanilla Bits swords and
   bolts no longer cost less material than their recycling recipes return.

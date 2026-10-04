@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X",
-    "X "
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/quartz"
-    }
-  },
-  "result": {
-    "item": "basemetals:quartz_shears"
-  },
-  "group": "basemetals:quartz_shears"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:gems/quartz"
+      }
+    },
+    "result": {
+      "item": "basemetals:quartz_shears"
+    },
+    "group": "basemetals:quartz_shears"
+  }
 }

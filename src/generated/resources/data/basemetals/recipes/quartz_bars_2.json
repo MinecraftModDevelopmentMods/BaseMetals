@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:rods/quartz"
-    }
-  },
-  "result": {
-    "item": "basemetals:quartz_bars",
-    "count": 4
-  },
-  "group": "basemetals:quartz_bars"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:rods/quartz"
+      }
+    },
+    "result": {
+      "item": "basemetals:quartz_bars",
+      "count": 4
+    },
+    "group": "basemetals:quartz_bars"
+  }
 }

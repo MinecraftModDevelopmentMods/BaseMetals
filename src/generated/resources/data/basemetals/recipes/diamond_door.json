@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:gems/diamond"
-    }
-  },
-  "result": {
-    "item": "basemetals:diamond_door",
-    "count": 3
-  },
-  "group": "basemetals:diamond_door"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:gems/diamond"
+      }
+    },
+    "result": {
+      "item": "basemetals:diamond_door",
+      "count": 3
+    },
+    "group": "basemetals:diamond_door"
+  }
 }

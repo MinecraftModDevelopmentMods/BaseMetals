@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/gold"
-    }
-  },
-  "result": {
-    "item": "basemetals:gold_wall",
-    "count": 6
-  },
-  "group": "basemetals:gold_wall"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/gold"
+      }
+    },
+    "result": {
+      "item": "basemetals:gold_wall",
+      "count": 6
+    },
+    "group": "basemetals:gold_wall"
+  }
 }

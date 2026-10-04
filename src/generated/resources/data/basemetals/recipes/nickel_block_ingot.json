@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:storage_blocks/nickel"
-    }
-  ],
-  "result": {
-    "item": "basemetals:nickel_ingot",
-    "count": 9
-  },
-  "group": "basemetals:nickel_ingot"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:storage_blocks/nickel"
+      }
+    ],
+    "result": {
+      "item": "basemetals:nickel_ingot",
+      "count": 9
+    },
+    "group": "basemetals:nickel_ingot"
+  }
 }

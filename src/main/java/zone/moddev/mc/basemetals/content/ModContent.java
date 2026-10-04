@@ -36,6 +36,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.IRegistry;
 import net.minecraftforge.common.ToolType;
@@ -43,7 +44,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-/** All content registration, generated from the immutable catalogues. */
+/** Registers material blocks, items and fluids from the catalogue. */
 @Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class ModContent {
     private static final Map<String, RegistryHandle<Block>> BLOCKS_BY_ID =
@@ -202,7 +203,7 @@ public final class ModContent {
             String id = material.name() + "_ore";
             blocks.put("ore", registerBlock(id,
                     new Supplier<Block>() {
-                        @Override public Block get() { return new HarvestBlock(oreProperties(material), material.requiredHarvestLevel()); }
+                        @Override public Block get() { return new HarvestOre(oreProperties(material), material.requiredHarvestLevel()); }
                     }, true));
             items.put("ore", ITEMS_BY_ID.get(id));
         }
@@ -524,6 +525,13 @@ public final class ModContent {
         HarvestBlock(Properties properties, int level) { super(properties); this.level = level; }
         @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
         @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+    }
+
+    private static class HarvestOre extends HarvestBlock {
+        HarvestOre(Properties properties, int level) { super(properties, level); }
+
+        // Cutout rendering leaves the transparent parts of the ore overlay clear.
+        @Override public BlockRenderLayer getRenderLayer() { return BlockRenderLayer.CUTOUT_MIPPED; }
     }
     private static class HarvestPane extends BlockPane {
         private final int level;

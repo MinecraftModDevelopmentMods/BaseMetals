@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/platinum"
-    }
-  },
-  "result": {
-    "item": "basemetals:platinum_block"
-  },
-  "group": "basemetals:platinum_block"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/platinum"
+      }
+    },
+    "result": {
+      "item": "basemetals:platinum_block"
+    },
+    "group": "basemetals:platinum_block"
+  }
 }

@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/invar"
-    }
-  },
-  "result": {
-    "item": "basemetals:invar_block"
-  },
-  "group": "basemetals:invar_block"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/invar"
+      }
+    },
+    "result": {
+      "item": "basemetals:invar_block"
+    },
+    "group": "basemetals:invar_block"
+  }
 }

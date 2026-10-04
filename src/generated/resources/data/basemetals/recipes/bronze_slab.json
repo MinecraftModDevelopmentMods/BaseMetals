@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/bronze"
-    }
-  },
-  "result": {
-    "item": "basemetals:bronze_slab",
-    "count": 6
-  },
-  "group": "basemetals:bronze_slab"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/bronze"
+      }
+    },
+    "result": {
+      "item": "basemetals:bronze_slab",
+      "count": 6
+    },
+    "group": "basemetals:bronze_slab"
+  }
 }

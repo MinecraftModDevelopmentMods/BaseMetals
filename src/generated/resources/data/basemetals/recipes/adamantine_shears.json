@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " X",
-    "X "
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/adamantine"
-    }
-  },
-  "result": {
-    "item": "basemetals:adamantine_shears"
-  },
-  "group": "basemetals:adamantine_shears"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/adamantine"
+      }
+    },
+    "result": {
+      "item": "basemetals:adamantine_shears"
+    },
+    "group": "basemetals:adamantine_shears"
+  }
 }

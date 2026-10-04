@@ -1,23 +1,26 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "BBB",
-    " C ",
-    "SSS"
-  ],
-  "key": {
-    "B": {
-      "item": "minecraft:stone_bricks"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "BBB",
+      " C ",
+      "SSS"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:stone_bricks"
+      },
+      "C": {
+        "tag": "forge:stone"
+      },
+      "S": {
+        "item": "minecraft:stone_slab"
+      }
     },
-    "C": {
-      "tag": "forge:stone"
+    "result": {
+      "item": "basemetals:stone_anvil"
     },
-    "S": {
-      "item": "minecraft:stone_slab"
-    }
-  },
-  "result": {
-    "item": "basemetals:stone_anvil"
-  },
-  "group": "basemetals:stone_anvil"
+    "group": "basemetals:stone_anvil"
+  }
 }

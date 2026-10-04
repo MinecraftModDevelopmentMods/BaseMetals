@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:tiny_dusts/cupronickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:cupronickel_powder"
-  },
-  "group": "basemetals:cupronickel_powder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:tiny_dusts/cupronickel"
+      }
+    },
+    "result": {
+      "item": "basemetals:cupronickel_powder"
+    },
+    "group": "basemetals:cupronickel_powder"
+  }
 }

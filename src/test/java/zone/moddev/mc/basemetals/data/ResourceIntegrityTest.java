@@ -190,6 +190,13 @@ class ResourceIntegrityTest {
             else if (id.endsWith("_trapdoor")) expected.add(id + ".png");
         }
         assertEquals(78, expected.size());
+        for (String block : strings(manifest().getAsJsonArray("blocks"))) {
+            String id = path(block);
+            if (id.endsWith("_ore") && Files.isRegularFile(MAIN.resolve(
+                    "assets/basemetals/textures/block/ore_overlays/" + id + ".png"))) {
+                expected.add(id + ".png");
+            }
+        }
         Set<String> transparent = new LinkedHashSet<String>();
         for (Path texture : files(MAIN.resolve("assets/basemetals/textures/block"), ".png")) {
             if (hasTransparentPixel(texture)) transparent.add(texture.getFileName().toString());
@@ -518,7 +525,11 @@ class ResourceIntegrityTest {
 
     private static JsonElement read(Path path) throws IOException {
         try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-            return new JsonParser().parse(reader);
+            JsonElement value = new JsonParser().parse(reader);
+            if (value.isJsonObject() && value.getAsJsonObject().has("recipe")) {
+                return value.getAsJsonObject().get("recipe");
+            }
+            return value;
         }
     }
 

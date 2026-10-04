@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XWX",
-    "XXX",
-    " X "
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:planks"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "X": {
+        "tag": "forge:ingots/adamantine"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/adamantine"
-    }
-  },
-  "result": {
-    "item": "basemetals:adamantine_shield"
-  },
-  "group": "basemetals:adamantine_shield"
+    "result": {
+      "item": "basemetals:adamantine_shield"
+    },
+    "group": "basemetals:adamantine_shield"
+  }
 }

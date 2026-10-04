@@ -1,24 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "N",
-    "R",
-    "F"
-  ],
-  "key": {
-    "F": {
-      "item": "minecraft:feather"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "forge:nuggets/tin"
+      },
+      "R": {
+        "tag": "forge:rods/tin"
+      }
     },
-    "N": {
-      "tag": "forge:nuggets/tin"
+    "result": {
+      "item": "basemetals:tin_arrow",
+      "count": 4
     },
-    "R": {
-      "tag": "forge:rods/tin"
-    }
-  },
-  "result": {
-    "item": "basemetals:tin_arrow",
-    "count": 4
-  },
-  "group": "basemetals:tin_arrow"
+    "group": "basemetals:tin_arrow"
+  }
 }

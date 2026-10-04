@@ -1,8 +1,7 @@
 /*
- * Deterministic compatibility pass over the catalogue-generated 1.18 data.
- * Minecraft 1.13 predates blast furnaces, block loot tables, global loot
- * modifiers, tall wall sides, and the optional integrations shipped by the
- * 1.18 branch. Keep this conversion mechanical and idempotent.
+ * Converts the catalogue-generated resources to Minecraft 1.13 formats.
+ * Removes unsupported recipes and integrations, and converts block states,
+ * item models and tags to the names and formats used by Forge 25.
  */
 'use strict';
 
@@ -67,9 +66,8 @@ for (const relative of [
   'src/generated/resources/data/minecraft/tags/blocks/beacon_base_blocks.json'
 ]) remove(relative);
 
-// ContainerRepair only applies anvil wear to blocks in minecraft:anvil. The
-// compatibility coremod teaches BlockAnvil.damage how to advance these three
-// retained single-ID damage-state anvils.
+// Anvils need this tag to wear out during repairs. The coremod updates their
+// damage state without replacing the block, as vanilla anvils do.
 writeJson(path.join(generated, 'data', 'minecraft', 'tags', 'blocks', 'anvil.json'), {
   replace: false,
   values: [
@@ -91,12 +89,14 @@ const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
 manifest.source = 'Base Metals 1.13.2 catalogue';
 manifest.loot_modifier_serializers = [];
 manifest.new_loot_modifier_serializers = [];
+for (const key of ['recipe_serializers', 'new_recipe_serializers']) {
+  if (!manifest[key].includes('basemetals:content_crafting')) manifest[key].push('basemetals:content_crafting');
+  manifest[key].sort();
+}
 writeJson(manifestFile, manifest);
 
-// Forge 25's transitional forge:bucket model loader never completed fluid
-// lookup or resource injection, so it renders these buckets with missing
-// textures. Use the vanilla generated-item pipeline with a tintable fluid
-// mask instead. ClientSetup supplies the catalogue colour for layer 1.
+// Forge 25's bucket loader leaves our fluids with missing textures. Use a
+// normal item model instead; ClientSetup colours the fluid layer.
 for (const bucket of manifest.new_items) {
   const id = bucket.substring(bucket.indexOf(':') + 1);
   writeJson(path.join(generated, 'assets', 'basemetals', 'models', 'item', `${id}.json`), {
@@ -189,6 +189,13 @@ for (const file of filesUnder(legacyChests, '.json')) {
   // Forge 25 requires every loot pool to have a stable, unique name.
   table.pools.forEach((pool, index) => {
     pool.name = `basemetals_${tableName}_${index}`;
+    for (const entry of pool.entries) {
+      if (entry.type === 'item' && entry.name.startsWith('basemetals:')) {
+        entry.conditions = [...(entry.conditions || []), {
+          condition: 'basemetals:content_mode', item: entry.name
+        }];
+      }
+    }
   });
   writeJson(target, table);
 }
@@ -275,10 +282,36 @@ writeJson(path.join(main, 'data', 'basemetals', 'orespawn', 'provider.json'), {
 const recipesDirectory = path.join(generated, 'data', 'basemetals', 'recipes');
 const unlockDirectory = path.join(generated, 'data', 'basemetals', 'advancements', 'recipes');
 
+// As in 1.12, finding the base material reveals its crafting recipes.
+const discoveryIngredients = {};
+for (const metal of [
+  'adamantine', 'antimony', 'aquarium', 'bismuth', 'brass', 'bronze', 'coldiron',
+  'copper', 'cupronickel', 'electrum', 'gold', 'invar', 'iron', 'lead', 'mercury',
+  'mithril', 'nickel', 'obsidian', 'pewter', 'platinum', 'silver', 'starsteel',
+  'steel', 'tin', 'zinc'
+]) {
+  discoveryIngredients[metal] = { tag: `forge:ingots/${metal}` };
+}
+for (const gem of ['diamond', 'emerald', 'quartz']) {
+  discoveryIngredients[gem] = { tag: `forge:gems/${gem}` };
+}
+Object.assign(discoveryIngredients, {
+  coal: { item: 'minecraft:coal' },
+  charcoal: { item: 'minecraft:charcoal' },
+  redstone: { tag: 'forge:dusts/redstone' },
+  stone: { tag: 'forge:stone' },
+  wood: { tag: 'minecraft:logs' }
+});
+const genericSteelRecipes = new Set([
+  'activator_rail', 'detector_rail', 'flint_and_steel', 'human_detector',
+  'minecart', 'piston', 'rail', 'tripwire_hook'
+]);
+
 // Vanilla Bits used several shortened patterns that collided or returned too much when recycled.
 for (const file of filesUnder(recipesDirectory, '.json')) {
   const name = path.basename(file, '.json');
-  const recipe = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const saved = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const recipe = saved.type === 'basemetals:content_crafting' ? saved.recipe : saved;
 
   if (name.endsWith('_door') && recipe.type === 'minecraft:crafting_shaped') {
     recipe.pattern = ['XX', 'XX', 'XX'];
@@ -294,6 +327,14 @@ for (const file of filesUnder(recipesDirectory, '.json')) {
   if (name === 'obsidian_ingot') recipe.result.item = 'basemetals:obsidian_ingot';
   if (name === 'obsidian_block') recipe.pattern = ['XXX', 'XXX', 'XXX'];
 
+  // Low Fantasy keeps mercury powder and the ingot needed for Mithril,
+  // but doesn't allow mercury nuggets or building blocks.
+  if (recipe.type === 'minecraft:smelting' && recipe.result === 'basemetals:mercury_nugget') {
+    recipe.type = 'basemetals:legacy_smelting';
+    recipe.result = { item: recipe.result };
+    writeJson(file, recipe);
+  }
+
   if (!recipe.type.startsWith('minecraft:crafting_')) {
     const oldUnlock = path.join(unlockDirectory, `${name}.json`);
     if (fs.existsSync(oldUnlock)) fs.rmSync(oldUnlock);
@@ -302,19 +343,28 @@ for (const file of filesUnder(recipesDirectory, '.json')) {
 
   // Variants of one result share a cell; different tools and weapons do not.
   recipe.group = recipe.result.item;
-  writeJson(file, recipe);
+  writeJson(file, { type: 'basemetals:content_crafting', recipe });
 
   const ingredients = recipe.key ? Object.values(recipe.key) : recipe.ingredients;
   const choices = ingredients.flat().filter(value => value.item || value.tag);
   const materialChoices = choices.filter(value =>
     value.tag !== 'forge:rods/wooden' && value.item !== 'minecraft:stick'
       && value.item !== 'minecraft:string' && value.item !== 'minecraft:feather');
+  const material = genericSteelRecipes.has(name) ? 'steel' : name.split('_')[0];
+  const discovery = discoveryIngredients[material];
+  if (!discovery) throw new Error(`Missing recipe discovery material: ${name}`);
+
   const criteria = {
+    has_material: {
+      trigger: 'minecraft:inventory_changed',
+      conditions: { items: [discovery] }
+    },
     has_recipe: {
       trigger: 'minecraft:recipe_unlocked',
       conditions: { recipe: `basemetals:${name}` }
     }
   };
+  // Keep the old ingredient criteria so earned progress survives this update.
   const seen = new Set();
   for (const ingredient of materialChoices.length ? materialChoices : choices) {
     const key = JSON.stringify(ingredient);
@@ -332,6 +382,20 @@ for (const file of filesUnder(recipesDirectory, '.json')) {
     requirements: [Object.keys(criteria)],
     rewards: { recipes: [`basemetals:${name}`] }
   });
+}
+
+const configTranslations = require('./config_translations.json');
+const playerTranslations = require('./player_translations.json');
+for (const file of filesUnder(path.join(generated, 'assets', 'basemetals', 'lang'), '.json')) {
+  const locale = path.basename(file, '.json');
+  const source = configTranslations.aliases[locale] || locale;
+  const text = configTranslations.locales[source];
+  if (!text) throw new Error(`Missing configuration translation: ${locale}`);
+  const playerText = playerTranslations.locales[source];
+  if (!playerText) throw new Error(`Missing player translation: ${locale}`);
+  const language = JSON.parse(fs.readFileSync(file, 'utf8'));
+  Object.assign(language, text, playerText);
+  writeJson(file, language);
 }
 
 console.log('Generated Minecraft 1.13.2-compatible Base Metals resources.');

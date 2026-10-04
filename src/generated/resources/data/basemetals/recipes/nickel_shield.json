@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XWX",
-    "XXX",
-    " X "
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:planks"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "X": {
+        "tag": "forge:ingots/nickel"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/nickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:nickel_shield"
-  },
-  "group": "basemetals:nickel_shield"
+    "result": {
+      "item": "basemetals:nickel_shield"
+    },
+    "group": "basemetals:nickel_shield"
+  }
 }

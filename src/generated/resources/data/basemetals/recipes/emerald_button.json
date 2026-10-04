@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/emerald"
-    }
-  },
-  "result": {
-    "item": "basemetals:emerald_button"
-  },
-  "group": "basemetals:emerald_button"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/emerald"
+      }
+    },
+    "result": {
+      "item": "basemetals:emerald_button"
+    },
+    "group": "basemetals:emerald_button"
+  }
 }

@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:tiny_dusts/gold"
-    }
-  },
-  "result": {
-    "item": "basemetals:gold_powder"
-  },
-  "group": "basemetals:gold_powder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:tiny_dusts/gold"
+      }
+    },
+    "result": {
+      "item": "basemetals:gold_powder"
+    },
+    "group": "basemetals:gold_powder"
+  }
 }

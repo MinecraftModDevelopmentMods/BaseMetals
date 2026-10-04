@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " RS",
-    "R S",
-    " RS"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/starsteel"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " RS",
+      "R S",
+      " RS"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/starsteel"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:starsteel_bow"
-  },
-  "group": "basemetals:starsteel_bow"
+    "result": {
+      "item": "basemetals:starsteel_bow"
+    },
+    "group": "basemetals:starsteel_bow"
+  }
 }

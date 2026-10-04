@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "  X",
-    "XWX",
-    "XXX"
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:wool"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "  X",
+      "XWX",
+      "XXX"
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:wool"
+      },
+      "X": {
+        "tag": "forge:ingots/coldiron"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/coldiron"
-    }
-  },
-  "result": {
-    "item": "basemetals:coldiron_horse_armor"
-  },
-  "group": "basemetals:coldiron_horse_armor"
+    "result": {
+      "item": "basemetals:coldiron_horse_armor"
+    },
+    "group": "basemetals:coldiron_horse_armor"
+  }
 }

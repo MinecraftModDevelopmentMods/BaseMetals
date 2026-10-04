@@ -1,15 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/aquarium"
-    }
-  },
-  "result": {
-    "item": "basemetals:aquarium_pressure_plate"
-  },
-  "group": "basemetals:aquarium_pressure_plate"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/aquarium"
+      }
+    },
+    "result": {
+      "item": "basemetals:aquarium_pressure_plate"
+    },
+    "group": "basemetals:aquarium_pressure_plate"
+  }
 }

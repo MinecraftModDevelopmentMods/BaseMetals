@@ -18,7 +18,7 @@ public final class ModEntities {
     private ModEntities() {}
 
     public static void initialize() {
-        // Forces this event subscriber to initialize before item factories capture the handles.
+        // Register the event subscriber before item factories ask for these entities.
     }
 
     @SubscribeEvent

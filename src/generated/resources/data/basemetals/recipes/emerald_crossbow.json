@@ -1,23 +1,26 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "GRR",
-    " SR",
-    "R G"
-  ],
-  "key": {
-    "G": {
-      "tag": "forge:gears/emerald"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "key": {
+      "G": {
+        "tag": "forge:gears/emerald"
+      },
+      "R": {
+        "tag": "forge:rods/emerald"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "R": {
-      "tag": "forge:rods/emerald"
+    "result": {
+      "item": "basemetals:emerald_crossbow"
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:emerald_crossbow"
-  },
-  "group": "basemetals:emerald_crossbow"
+    "group": "basemetals:emerald_crossbow"
+  }
 }

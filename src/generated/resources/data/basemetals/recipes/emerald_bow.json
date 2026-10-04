@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " RS",
-    "R S",
-    " RS"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/emerald"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      " RS",
+      "R S",
+      " RS"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/emerald"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:emerald_bow"
-  },
-  "group": "basemetals:emerald_bow"
+    "result": {
+      "item": "basemetals:emerald_bow"
+    },
+    "group": "basemetals:emerald_bow"
+  }
 }

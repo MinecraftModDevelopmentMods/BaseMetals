@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import net.minecraft.inventory.EntityEquipmentSlot;
 
-/** Immutable source of truth for every Base Metals material. */
+/** Material statistics and form availability used by registration and recipes. */
 public final class MaterialDefinition {
     public enum Kind {
         ORE, RARE_ORE, ALLOY, RARE_ALLOY, MERCURY;

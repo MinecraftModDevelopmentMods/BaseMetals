@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.renamer' version '1.1.5'
+    id 'net.minecraftforge.gradle' version '7.0.34'
+}
+
+group = 'zone.moddev.mc.basemetals.test'
+version = '1.0'
+base.archivesName = 'basemetals-legacy-capture'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+minecraft {
+    mappings channel: 'stable', version: '29-1.10.2'
+}
+
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    mavenCentral()
+}
+
+dependencies {
+    implementation minecraft.dependency('net.minecraftforge:forge:1.10.2-12.18.3.2511')
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+def captureJar = renamer.classes(tasks.named('jar', Jar)) {
+    map.from minecraft.dependency.toSrgFile
+    output = layout.buildDirectory.file('fixture/basemetals-legacy-capture.jar')
+}
+tasks.named('assemble') { dependsOn captureJar }

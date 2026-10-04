@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:ingots/zinc"
-    }
-  ],
-  "result": {
-    "item": "basemetals:zinc_nugget",
-    "count": 9
-  },
-  "group": "basemetals:zinc_nugget"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:ingots/zinc"
+      }
+    ],
+    "result": {
+      "item": "basemetals:zinc_nugget",
+      "count": 9
+    },
+    "group": "basemetals:zinc_nugget"
+  }
 }

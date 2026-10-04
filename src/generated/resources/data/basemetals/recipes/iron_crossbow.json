@@ -1,23 +1,26 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "GRR",
-    " SR",
-    "R G"
-  ],
-  "key": {
-    "G": {
-      "tag": "forge:gears/iron"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "key": {
+      "G": {
+        "tag": "forge:gears/iron"
+      },
+      "R": {
+        "tag": "forge:rods/iron"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "R": {
-      "tag": "forge:rods/iron"
+    "result": {
+      "item": "basemetals:iron_crossbow"
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:iron_crossbow"
-  },
-  "group": "basemetals:iron_crossbow"
+    "group": "basemetals:iron_crossbow"
+  }
 }

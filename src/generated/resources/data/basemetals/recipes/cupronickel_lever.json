@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/cupronickel"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/cupronickel"
+      },
+      "X": {
+        "tag": "forge:ingots/cupronickel"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/cupronickel"
-    }
-  },
-  "result": {
-    "item": "basemetals:cupronickel_lever"
-  },
-  "group": "basemetals:cupronickel_lever"
+    "result": {
+      "item": "basemetals:cupronickel_lever"
+    },
+    "group": "basemetals:cupronickel_lever"
+  }
 }

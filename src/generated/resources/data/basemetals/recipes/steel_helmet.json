@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "X X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/steel"
-    }
-  },
-  "result": {
-    "item": "basemetals:steel_helmet"
-  },
-  "group": "basemetals:steel_helmet"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/steel"
+      }
+    },
+    "result": {
+      "item": "basemetals:steel_helmet"
+    },
+    "group": "basemetals:steel_helmet"
+  }
 }

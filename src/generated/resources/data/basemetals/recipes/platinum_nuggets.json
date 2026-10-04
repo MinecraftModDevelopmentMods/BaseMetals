@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:ingots/platinum"
-    }
-  ],
-  "result": {
-    "item": "basemetals:platinum_nugget",
-    "count": 9
-  },
-  "group": "basemetals:platinum_nugget"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:ingots/platinum"
+      }
+    ],
+    "result": {
+      "item": "basemetals:platinum_nugget",
+      "count": 9
+    },
+    "group": "basemetals:platinum_nugget"
+  }
 }

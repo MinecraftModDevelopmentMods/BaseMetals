@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/steel"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/steel"
+      },
+      "X": {
+        "tag": "forge:ingots/steel"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/steel"
-    }
-  },
-  "result": {
-    "item": "basemetals:steel_lever"
-  },
-  "group": "basemetals:steel_lever"
+    "result": {
+      "item": "basemetals:steel_lever"
+    },
+    "group": "basemetals:steel_lever"
+  }
 }

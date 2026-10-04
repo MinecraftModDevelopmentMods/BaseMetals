@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XWX",
-    "XXX",
-    " X "
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:planks"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "X": {
+        "tag": "forge:ingots/pewter"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/pewter"
-    }
-  },
-  "result": {
-    "item": "basemetals:pewter_shield"
-  },
-  "group": "basemetals:pewter_shield"
+    "result": {
+      "item": "basemetals:pewter_shield"
+    },
+    "group": "basemetals:pewter_shield"
+  }
 }

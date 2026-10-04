@@ -56,207 +56,453 @@
         {
           "type": "item",
           "name": "basemetals:iron_crackhammer",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:iron_crackhammer"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_axe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_axe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_boots",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_boots"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_chestplate",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_chestplate"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_helmet",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_helmet"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_hoe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_hoe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_leggings",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_leggings"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_pickaxe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_pickaxe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_shovel",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_shovel"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_sword",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_sword"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:tin_crackhammer",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:tin_crackhammer"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_axe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_axe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_boots",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_boots"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_chestplate",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_chestplate"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_helmet",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_helmet"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_hoe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_hoe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_leggings",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_leggings"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_pickaxe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_pickaxe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_shovel",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_shovel"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_sword",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_sword"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:copper_crackhammer",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:copper_crackhammer"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_axe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_axe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_boots",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_boots"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_chestplate",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_chestplate"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_helmet",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_helmet"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_hoe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_hoe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_leggings",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_leggings"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_pickaxe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_pickaxe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_shovel",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_shovel"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_sword",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_sword"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:bronze_crackhammer",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:bronze_crackhammer"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_axe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_axe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_boots",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_boots"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_chestplate",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_chestplate"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_helmet",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_helmet"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_hoe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_hoe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_leggings",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_leggings"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_pickaxe",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_pickaxe"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_shovel",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_shovel"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_sword",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_sword"
+            }
+          ]
         },
         {
           "type": "item",
           "name": "basemetals:steel_crackhammer",
-          "weight": 3
+          "weight": 3,
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_crackhammer"
+            }
+          ]
         }
       ],
       "name": "basemetals_stronghold_crossing_0"
@@ -299,6 +545,12 @@
                 "max": 6
               }
             }
+          ],
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:silver_ingot"
+            }
           ]
         },
         {
@@ -312,6 +564,12 @@
                 "min": 1,
                 "max": 4
               }
+            }
+          ],
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:nickel_ingot"
             }
           ]
         },
@@ -327,6 +585,12 @@
                 "max": 4
               }
             }
+          ],
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:electrum_ingot"
+            }
           ]
         },
         {
@@ -341,6 +605,12 @@
                 "max": 12
               }
             }
+          ],
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:steel_ingot"
+            }
           ]
         },
         {
@@ -354,6 +624,12 @@
                 "min": 1,
                 "max": 4
               }
+            }
+          ],
+          "conditions": [
+            {
+              "condition": "basemetals:content_mode",
+              "item": "basemetals:invar_ingot"
             }
           ]
         }

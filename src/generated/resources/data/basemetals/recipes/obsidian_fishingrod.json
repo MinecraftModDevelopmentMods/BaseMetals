@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "  R",
-    " RS",
-    "R S"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/obsidian"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "  R",
+      " RS",
+      "R S"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/obsidian"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:obsidian_fishing_rod"
-  },
-  "group": "basemetals:obsidian_fishing_rod"
+    "result": {
+      "item": "basemetals:obsidian_fishing_rod"
+    },
+    "group": "basemetals:obsidian_fishing_rod"
+  }
 }

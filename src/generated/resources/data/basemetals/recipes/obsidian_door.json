@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/obsidian"
-    }
-  },
-  "result": {
-    "item": "basemetals:obsidian_door",
-    "count": 3
-  },
-  "group": "basemetals:obsidian_door"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/obsidian"
+      }
+    },
+    "result": {
+      "item": "basemetals:obsidian_door",
+      "count": 3
+    },
+    "group": "basemetals:obsidian_door"
+  }
 }

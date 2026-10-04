@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "basemetals:copper_ingot"
-    }
-  ],
-  "result": {
-    "item": "basemetals:copper_nugget",
-    "count": 9
-  },
-  "group": "basemetals:copper_nugget"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "item": "basemetals:copper_ingot"
+      }
+    ],
+    "result": {
+      "item": "basemetals:copper_nugget",
+      "count": 9
+    },
+    "group": "basemetals:copper_nugget"
+  }
 }

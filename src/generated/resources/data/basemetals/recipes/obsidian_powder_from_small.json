@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:tiny_dusts/obsidian"
-    }
-  },
-  "result": {
-    "item": "basemetals:obsidian_powder"
-  },
-  "group": "basemetals:obsidian_powder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:tiny_dusts/obsidian"
+      }
+    },
+    "result": {
+      "item": "basemetals:obsidian_powder"
+    },
+    "group": "basemetals:obsidian_powder"
+  }
 }

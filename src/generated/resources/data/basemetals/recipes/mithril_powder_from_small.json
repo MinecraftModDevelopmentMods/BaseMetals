@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:tiny_dusts/mithril"
-    }
-  },
-  "result": {
-    "item": "basemetals:mithril_powder"
-  },
-  "group": "basemetals:mithril_powder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:tiny_dusts/mithril"
+      }
+    },
+    "result": {
+      "item": "basemetals:mithril_powder"
+    },
+    "group": "basemetals:mithril_powder"
+  }
 }

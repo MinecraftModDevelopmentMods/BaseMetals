@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XWX",
-    "XXX",
-    " X "
-  ],
-  "key": {
-    "W": {
-      "tag": "minecraft:planks"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "X": {
+        "tag": "forge:ingots/bronze"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/bronze"
-    }
-  },
-  "result": {
-    "item": "basemetals:bronze_shield"
-  },
-  "group": "basemetals:bronze_shield"
+    "result": {
+      "item": "basemetals:bronze_shield"
+    },
+    "group": "basemetals:bronze_shield"
+  }
 }

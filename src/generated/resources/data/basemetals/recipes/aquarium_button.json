@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X",
-    "X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:nuggets/aquarium"
-    }
-  },
-  "result": {
-    "item": "basemetals:aquarium_button"
-  },
-  "group": "basemetals:aquarium_button"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:nuggets/aquarium"
+      }
+    },
+    "result": {
+      "item": "basemetals:aquarium_button"
+    },
+    "group": "basemetals:aquarium_button"
+  }
 }

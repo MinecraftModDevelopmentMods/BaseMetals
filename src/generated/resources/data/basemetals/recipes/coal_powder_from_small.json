@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:tiny_dusts/coal"
-    }
-  },
-  "result": {
-    "item": "basemetals:coal_powder"
-  },
-  "group": "basemetals:coal_powder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:tiny_dusts/coal"
+      }
+    },
+    "result": {
+      "item": "basemetals:coal_powder"
+    },
+    "group": "basemetals:coal_powder"
+  }
 }

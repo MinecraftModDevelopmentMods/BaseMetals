@@ -1,17 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:tiny_dusts/silver"
-    }
-  },
-  "result": {
-    "item": "basemetals:silver_powder"
-  },
-  "group": "basemetals:silver_powder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:tiny_dusts/silver"
+      }
+    },
+    "result": {
+      "item": "basemetals:silver_powder"
+    },
+    "group": "basemetals:silver_powder"
+  }
 }

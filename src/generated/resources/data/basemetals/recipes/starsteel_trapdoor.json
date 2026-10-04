@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/starsteel"
-    }
-  },
-  "result": {
-    "item": "basemetals:starsteel_trapdoor"
-  },
-  "group": "basemetals:starsteel_trapdoor"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/starsteel"
+      }
+    },
+    "result": {
+      "item": "basemetals:starsteel_trapdoor"
+    },
+    "group": "basemetals:starsteel_trapdoor"
+  }
 }

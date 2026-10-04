@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:dusts/gold"
-    }
-  ],
-  "result": {
-    "item": "basemetals:gold_smallpowder",
-    "count": 9
-  },
-  "group": "basemetals:gold_smallpowder"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "tag": "forge:dusts/gold"
+      }
+    ],
+    "result": {
+      "item": "basemetals:gold_smallpowder",
+      "count": 9
+    },
+    "group": "basemetals:gold_smallpowder"
+  }
 }

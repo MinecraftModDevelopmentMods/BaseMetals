@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X X",
-    "X X"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/silver"
-    }
-  },
-  "result": {
-    "item": "basemetals:silver_boots"
-  },
-  "group": "basemetals:silver_boots"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X X",
+      "X X"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/silver"
+      }
+    },
+    "result": {
+      "item": "basemetals:silver_boots"
+    },
+    "group": "basemetals:silver_boots"
+  }
 }

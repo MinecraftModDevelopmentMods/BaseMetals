@@ -1,19 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "R",
-    "X"
-  ],
-  "key": {
-    "R": {
-      "tag": "forge:rods/gold"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "key": {
+      "R": {
+        "tag": "forge:rods/gold"
+      },
+      "X": {
+        "tag": "forge:ingots/gold"
+      }
     },
-    "X": {
-      "tag": "forge:ingots/gold"
-    }
-  },
-  "result": {
-    "item": "basemetals:gold_lever"
-  },
-  "group": "basemetals:gold_lever"
+    "result": {
+      "item": "basemetals:gold_lever"
+    },
+    "group": "basemetals:gold_lever"
+  }
 }

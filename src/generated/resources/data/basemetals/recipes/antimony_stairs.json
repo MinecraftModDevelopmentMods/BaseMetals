@@ -1,18 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "X  ",
-    "XX ",
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:storage_blocks/antimony"
-    }
-  },
-  "result": {
-    "item": "basemetals:antimony_stairs",
-    "count": 4
-  },
-  "group": "basemetals:antimony_stairs"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:storage_blocks/antimony"
+      }
+    },
+    "result": {
+      "item": "basemetals:antimony_stairs",
+      "count": 4
+    },
+    "group": "basemetals:antimony_stairs"
+  }
 }

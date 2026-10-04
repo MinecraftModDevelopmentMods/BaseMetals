@@ -1,23 +1,26 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "GRR",
-    " SR",
-    "R G"
-  ],
-  "key": {
-    "G": {
-      "tag": "forge:gears/brass"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "key": {
+      "G": {
+        "tag": "forge:gears/brass"
+      },
+      "R": {
+        "tag": "forge:rods/brass"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
     },
-    "R": {
-      "tag": "forge:rods/brass"
+    "result": {
+      "item": "basemetals:brass_crossbow"
     },
-    "S": {
-      "item": "minecraft:string"
-    }
-  },
-  "result": {
-    "item": "basemetals:brass_crossbow"
-  },
-  "group": "basemetals:brass_crossbow"
+    "group": "basemetals:brass_crossbow"
+  }
 }

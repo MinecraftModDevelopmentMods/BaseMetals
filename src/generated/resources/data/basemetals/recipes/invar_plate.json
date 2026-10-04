@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX"
-  ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/invar"
-    }
-  },
-  "result": {
-    "item": "basemetals:invar_plate",
-    "count": 3
-  },
-  "group": "basemetals:invar_plate"
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "tag": "forge:ingots/invar"
+      }
+    },
+    "result": {
+      "item": "basemetals:invar_plate",
+      "count": 3
+    },
+    "group": "basemetals:invar_plate"
+  }
 }
