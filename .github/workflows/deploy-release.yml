@@ -143,8 +143,10 @@ jobs:
           java_toolchain_version="$(value java_toolchain_version)"
           java_setup_version="$(value java_setup_version)"
           gradle_java_version="$(value gradle_java_version)"
+          gradle_java_setup_version="$(value gradle_java_setup_version)"
           curseforge_project_id="$(value curseforge_project_id)"
           cf_requirements="$(value cf_requirements)"
+          orespawn_project_id="$(value orespawn_curse_project_id)"
 
           for required in release_version minecraft_version loader_name loader_code \
               java_version gradle_java_version curseforge_project_id; do
@@ -237,28 +239,30 @@ jobs:
             echo "Requested version $REQUESTED_VERSION does not match ${{ steps.route.outputs.target_branch }} mod_version $release_version" >&2
             exit 1
           fi
-          case "${{ steps.route.outputs.target_branch }}" in
-            master-1.12)
-              gradle_java_setup_version=17.0.1+12
-              if [[ "$minecraft_version" != '1.12.2' || "$java_toolchain_version" != '8.0.502+7' \
-                  || "$gradle_java_version" != '17' ]]; then
-                echo "master-1.12 has an unexpected target/toolchain contract" >&2
-                exit 1
-              fi
-              ;;
-            master-1.18)
+          if [[ -z "$gradle_java_setup_version" ]]; then
+            if [[ "$install_gradle_java" == false ]]; then
               gradle_java_setup_version="$java_setup_version"
-              if [[ "$minecraft_version" != '1.18.2' || "$java_toolchain_version" != '17.0.1+12' \
-                  || "$gradle_java_version" != '17' ]]; then
-                echo "master-1.18 has an unexpected target/toolchain contract" >&2
-                exit 1
-              fi
-              ;;
-            *)
-              echo "This dispatcher supports Base Metals master-1.12 and master-1.18" >&2
-              exit 1
-              ;;
-          esac
+            elif [[ "$gradle_java_version" == 17 ]]; then
+              # Legacy targets keep the same pinned Gradle JDK as their CI builds.
+              gradle_java_setup_version=17.0.1+12
+            else
+              gradle_java_setup_version="$gradle_java_version"
+            fi
+          fi
+          if [[ "$(java_major "$java_toolchain_version")" != "$java_version" \
+              || "$(java_major "$gradle_java_setup_version")" != "$gradle_java_version" ]]; then
+            echo "Java setup selectors do not match the declared game and Gradle Java versions" >&2
+            exit 1
+          fi
+
+          if [[ -n "$orespawn_project_id" && "$orespawn_project_id" != 245586 ]]; then
+            echo "Unexpected OreSpawn CurseForge project $orespawn_project_id" >&2
+            exit 1
+          fi
+          if [[ -z "$cf_requirements" && "$orespawn_project_id" == 245586 ]]; then
+            # MMDLib-free ports declare their required OreSpawn dependency directly.
+            cf_requirements=mmd-orespawn
+          fi
 
           curseforge_dependencies=()
           IFS=',' read -ra requirement_slugs <<<"$cf_requirements"
@@ -270,8 +274,8 @@ jobs:
               *) echo "Unsupported required CurseForge relation $slug" >&2; exit 1 ;;
             esac
           done
-          if (( ${#curseforge_dependencies[@]} == 0 )); then
-            echo "No required CurseForge relations were declared" >&2
+          if [[ " ${curseforge_dependencies[*]} " != *' 245586(required) '* ]]; then
+            echo "The required OreSpawn CurseForge relation was not declared" >&2
             exit 1
           fi
 
@@ -405,6 +409,8 @@ jobs:
           echo "property=$property" >> "$GITHUB_OUTPUT"
 
       - name: Build, test, and audit once
+        env:
+          LOADER_NAME: ${{ needs.preflight.outputs.loader_name }}
         run: |
           set -euo pipefail
           chmod +x ./gradlew
@@ -414,9 +420,18 @@ jobs:
             -Dorg.gradle.java.installations.auto-download=false
           )
           dependency_argument="-P${{ steps.dependencies.outputs.property }}=${{ steps.dependencies.outputs.repository }}"
-          ./gradlew clean check build javadoc verifyReleaseArtifacts writeReleaseChecksums \
-            "$dependency_argument" \
-            --no-daemon --stacktrace "${java_args[@]}"
+          if [[ "$LOADER_NAME" == neoforge ]]; then
+            # NeoGradle prepares inputs in build/tmp during configuration. Clean first.
+            ./gradlew clean "$dependency_argument" \
+              --no-daemon --stacktrace --max-workers=2 "${java_args[@]}"
+            ./gradlew check build javadoc verifyReleaseArtifacts writeReleaseChecksums \
+              "$dependency_argument" \
+              --no-daemon --stacktrace --max-workers=2 "${java_args[@]}"
+          else
+            ./gradlew clean check build javadoc verifyReleaseArtifacts writeReleaseChecksums \
+              "$dependency_argument" \
+              --no-daemon --stacktrace "${java_args[@]}"
+          fi
 
       - name: Stage the immutable release artifact
         id: artifact
