@@ -126,6 +126,7 @@ toolchain and dependency versions are recorded in `gradle.properties`.
 `prepareEclipse` creates client and server launches with processed resources
 and keeps optional compile-only mods and test code out of normal launches.
 The [build-script guide](gradle/README.md) explains the supporting scripts.
+The [release guide](docs/releasing.md) covers publication from the MMD Actions tab.
 
 Release artifacts use the Maven coordinates
 `zone.moddev.mc.basemetals:BaseMetals:2.6.0.112021`. Java packages remain under

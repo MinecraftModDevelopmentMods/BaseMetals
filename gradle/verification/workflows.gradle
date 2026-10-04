@@ -24,11 +24,14 @@ tasks.register('verifyWorkflowContracts') {
                         'deploy-release.yml', '**Nothing has been published.**'
                 ],
                 'deploy-release.yml': [
-                        'master-1.12)', 'master-1.18)',
+                        'master-$mc_major.$mc_minor.$mc_patch$loader_suffix',
+                        'master-$mc_major.$mc_minor$loader_suffix',
                         'stage-legacy-dependencies.sh', 'stage-orespawn-release.sh',
                         "mmdlib) curseforge_dependencies+=('261744(required)')",
+                        'cf_requirements=mmd-orespawn',
                         'gradle_java_setup_version=17.0.1+12',
                         'java-version: ${{ needs.preflight.outputs.gradle_java_setup_version }}',
+                        'if [[ "$LOADER_NAME" == neoforge ]]',
                         'confirm_live_publication'
                 ]
         ]
@@ -38,6 +41,10 @@ tasks.register('verifyWorkflowContracts') {
                 throw new GradleException("Missing workflow ${name}")
             }
             String text = workflow.getText('UTF-8').replace('\r\n', '\n')
+            if (name == 'deploy-release.yml'
+                    && text.contains('This dispatcher supports Base Metals master-1.12 and master-1.18')) {
+                throw new GradleException('The release dispatcher must not limit releases to two branches')
+            }
             List<String> missing = fragments.findAll { !text.contains(it) }
             if (!missing.isEmpty()) {
                 throw new GradleException("${name} is missing contract fragments ${missing}")
@@ -54,4 +61,8 @@ tasks.register('verifyWorkflowContracts') {
 
 tasks.named('check') {
     dependsOn tasks.named('verifyWorkflowContracts')
+}
+
+tasks.named('test') {
+    inputs.file('.github/workflows/deploy-release.yml')
 }

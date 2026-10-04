@@ -30,6 +30,9 @@ of that main path:
 - `ide/eclipse.gradle` generates and verifies isolated Eclipse launches.
 - `verification/workflows.gradle` checks the pinned GitHub Actions contracts.
 
+The [release guide](../docs/releasing.md) explains how the default-branch
+dispatcher selects and publishes a Minecraft target.
+
 Scripts share settings through small immutable maps rather than relying on
 variables from another script's scope.
 
