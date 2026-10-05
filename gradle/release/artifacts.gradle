@@ -270,6 +270,17 @@ tasks.register('verifyReleaseArtifacts') {
             if (locales.size() != 18) {
                 throw new GradleException("Release jar must contain all 18 language files, found ${locales.size()}")
             }
+            locales.each { locale ->
+                File source = sourceSets.main.resources.srcDirs.collect { new File(it, locale) }
+                        .find { it.isFile() }
+                if (source == null) throw new GradleException("Language source is missing: ${locale}")
+                def expectedText = new JsonSlurper().parse(source, 'UTF-8')
+                def packagedText = new JsonSlurper().parseText(
+                        zip.getInputStream(zip.getEntry(locale)).getText('UTF-8'))
+                if (packagedText != expectedText) {
+                    throw new GradleException("Release jar changed the translations in ${locale}")
+                }
+            }
         }
     }
 }

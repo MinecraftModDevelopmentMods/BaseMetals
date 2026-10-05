@@ -22,6 +22,7 @@ Base Metals 3.0.1.114041
   rules and their defaults are unchanged.
 - Split the longer build checks into focused scripts and retain ForgeGradle 7,
   reproducible archives, checked dependencies and isolated test launches.
+- Keep translated text intact when building jars on Windows as well as Linux.
 
 Base Metals 3.0.1.113021
 
