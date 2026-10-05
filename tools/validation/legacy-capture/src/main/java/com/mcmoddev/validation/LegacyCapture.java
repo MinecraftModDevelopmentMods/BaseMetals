@@ -52,6 +52,14 @@ public final class LegacyCapture {
     public static final String MOD_ID = "legacycapture";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+    private static String sourceVersion() {
+        return System.getProperty("legacycapture.minecraft", "1.10.2");
+    }
+
+    private static String markerPrefix() {
+        return sourceVersion().startsWith("1.12.") ? "BASEMETALS_1_12" : "BASEMETALS_1_10";
+    }
+
     @EventHandler
     public void serverStarted(FMLServerStartedEvent event) throws IOException {
         net.minecraft.server.MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -71,10 +79,10 @@ public final class LegacyCapture {
         worlds.add(server.worldServerForDimension(1));
         WorldServer world = worlds.get(0);
         JsonObject manifest = new JsonObject();
-        manifest.addProperty("source", "live Forge 1.10.2 registries");
-        manifest.addProperty("forge", "12.18.3.2511");
+        manifest.addProperty("source", "live Forge " + sourceVersion() + " registries");
+        manifest.addProperty("forge", net.minecraftforge.common.ForgeVersion.getVersion());
         manifest.addProperty("fixture_format", 2);
-        manifest.addProperty("source_minecraft", "1.10.2");
+        manifest.addProperty("source_minecraft", sourceVersion());
         net.minecraftforge.fml.common.ModContainer mod = net.minecraftforge.fml.common.Loader.instance()
                 .getIndexedModList().get("basemetals");
         manifest.addProperty("source_basemetals", mod.getVersion());
@@ -104,8 +112,8 @@ public final class LegacyCapture {
                         java.nio.file.StandardCopyOption.REPLACE_EXISTING);
             }
         }
-        Files.write(worldDir.resolve("BASEMETALS_1_10_FIXTURE_COMPLETE.txt"),
-                ("Base Metals 1.10 fixture format 2 captured with " + blockIds.size()
+        Files.write(worldDir.resolve(markerPrefix() + "_FIXTURE_COMPLETE.txt"),
+                ("Base Metals " + sourceVersion() + " fixture format 2 captured with " + blockIds.size()
                         + " blocks in all three dimensions, " + itemIds.size()
                         + " exact item stacks, filled fluid buckets, armor stands, and player data.\n")
                         .getBytes(StandardCharsets.UTF_8));
@@ -190,7 +198,7 @@ public final class LegacyCapture {
         }
 
         write(root.resolve("legacy_registry_manifest_runtime.json"), manifest);
-        Files.write(root.resolve("BASEMETALS_1_10_FIXTURE_RELOADED.txt"),
+        Files.write(root.resolve(markerPrefix() + "_FIXTURE_RELOADED.txt"),
                 ("states=" + states + " items=" + stacks + "\\n").getBytes(StandardCharsets.UTF_8));
         org.apache.logging.log4j.LogManager.getLogger(MOD_ID).info(
                 "BASEMETALS_LEGACY_CAPTURE_RELOAD PASS states={} items={}", states, stacks);

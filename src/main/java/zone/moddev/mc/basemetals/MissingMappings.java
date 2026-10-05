@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
-/** Registry-name aliases used when loading 1.12, 1.10, and Cyano-era saves. */
+/** Registry-name aliases used when loading older Minecraft and Base Metals saves. */
 @Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class MissingMappings {
     private MissingMappings() {}
@@ -19,6 +19,11 @@ public final class MissingMappings {
     @SubscribeEvent
     public static void blocks(RegistryEvent.MissingMappings<Block> event) {
         for (RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings()) {
+            ResourceLocation vanillaTarget = vanilla114Target(mapping.key);
+            if (vanillaTarget != null) {
+                mapping.remap(ForgeRegistries.BLOCKS.getValue(vanillaTarget));
+                continue;
+            }
             if (!isLegacyNamespace(mapping.key.getNamespace())) continue;
             RegistryHandle<Block> target = ModContent.blocksById().get(blockTargetPath(mapping.key.getPath()));
             if (target != null) mapping.remap(target.get());
@@ -28,6 +33,11 @@ public final class MissingMappings {
     @SubscribeEvent
     public static void items(RegistryEvent.MissingMappings<Item> event) {
         for (RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
+            ResourceLocation vanillaTarget = vanilla114Target(mapping.key);
+            if (vanillaTarget != null) {
+                mapping.remap(ForgeRegistries.ITEMS.getValue(vanillaTarget));
+                continue;
+            }
             if (!isLegacyNamespace(mapping.key.getNamespace())) continue;
             Item target = ForgeRegistries.ITEMS.getValue(itemTargetId(mapping.key.getPath()));
             if (target != null) mapping.remap(target);
@@ -36,6 +46,21 @@ public final class MissingMappings {
 
     private static boolean isLegacyNamespace(String namespace) {
         return BaseMetals.MOD_ID.equals(namespace) || "mmdlib".equals(namespace);
+    }
+
+    public static ResourceLocation vanilla114Target(ResourceLocation oldName) {
+        if (!"minecraft".equals(oldName.getNamespace())) return null;
+
+        // Vanilla converts the saved blocks and items, but Forge's registry
+        // snapshot still needs aliases for names retired in 1.14.
+        switch (oldName.getPath()) {
+            case "sign": return new ResourceLocation("minecraft", "oak_sign");
+            case "wall_sign": return new ResourceLocation("minecraft", "oak_wall_sign");
+            case "rose_red": return new ResourceLocation("minecraft", "red_dye");
+            case "cactus_green": return new ResourceLocation("minecraft", "green_dye");
+            case "dandelion_yellow": return new ResourceLocation("minecraft", "yellow_dye");
+            default: return null;
+        }
     }
 
     public static String blockTargetPath(String path) {

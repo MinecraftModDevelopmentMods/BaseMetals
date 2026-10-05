@@ -15,30 +15,30 @@ import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockButtonStone;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockLever;
-import net.minecraft.block.BlockPane;
-import net.minecraft.block.BlockPressurePlate;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.BlockWall;
-import net.minecraft.block.BlockFlowingFluid;
+import net.minecraft.block.StoneButtonBlock;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.LeverBlock;
+import net.minecraft.block.PaneBlock;
+import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.TrapDoorBlock;
+import net.minecraft.block.WallBlock;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.IRegistry;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -99,7 +99,7 @@ public final class ModContent {
 
     private ModContent() {}
 
-    /** Forge 25 still owns fluids in Minecraft's vanilla registry. */
+    /** Create the paired fluids before blocks and buckets ask for them. */
     public static synchronized void initializeFluids() {
         for (Map.Entry<String, FluidContent> entry : FLUID_CONTENT.entrySet()) {
             FluidContent content = entry.getValue();
@@ -108,13 +108,15 @@ public final class ModContent {
             MoltenFluid source = new MoltenFluid.Source(entry.getKey());
             content.flowing().bind(flowing);
             content.source().bind(source);
-            IRegistry.field_212619_h.put(id("flowing_" + entry.getKey()), flowing);
-            IRegistry.field_212619_h.put(id(entry.getKey()), source);
-            for (Fluid fluid : new Fluid[] { flowing, source }) {
-                for (IFluidState state : fluid.getStateContainer().getValidStates()) {
-                    Fluid.STATE_REGISTRY.add(state);
-                }
-            }
+            flowing.setRegistryName(id("flowing_" + entry.getKey()));
+            source.setRegistryName(id(entry.getKey()));
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerFluids(RegistryEvent.Register<Fluid> event) {
+        for (FluidContent content : FLUID_CONTENT.values()) {
+            event.getRegistry().registerAll(content.source().get(), content.flowing().get());
         }
     }
 
@@ -140,7 +142,6 @@ public final class ModContent {
             ITEMS_BY_ID.get(entry.getKey()).bind(value);
             event.getRegistry().register(value);
         }
-        zone.moddev.mc.basemetals.trade.BaseMetalsTrades.register();
     }
 
     public static Map<String, MaterialContent> materials() { return Collections.unmodifiableMap(MATERIALS); }
@@ -275,10 +276,10 @@ public final class ModContent {
         items.put("rod", registerSimpleMaterialItem(material.name() + "_rod", material));
         items.put("gear", registerSimpleMaterialItem(material.name() + "_gear", material));
         items.put("horse_armor", registerItem(material.name() + "_horse_armor", new Supplier<Item>() { @Override public Item get() { return new MaterialItems.HorseArmor(material, combatProperties()); } }));
-        items.put("helmet", registerArmor(material, EntityEquipmentSlot.HEAD));
-        items.put("chestplate", registerArmor(material, EntityEquipmentSlot.CHEST));
-        items.put("leggings", registerArmor(material, EntityEquipmentSlot.LEGS));
-        items.put("boots", registerArmor(material, EntityEquipmentSlot.FEET));
+        items.put("helmet", registerArmor(material, EquipmentSlotType.HEAD));
+        items.put("chestplate", registerArmor(material, EquipmentSlotType.CHEST));
+        items.put("leggings", registerArmor(material, EquipmentSlotType.LEGS));
+        items.put("boots", registerArmor(material, EquipmentSlotType.FEET));
     }
 
     private static RegistryHandle<Item> registerAmmo(final MaterialDefinition material, final BaseMetalAmmoItem.Kind kind) {
@@ -293,7 +294,7 @@ public final class ModContent {
     }
 
     private static RegistryHandle<Item> registerArmor(final MaterialDefinition material,
-            final EntityEquipmentSlot slot) {
+            final EquipmentSlotType slot) {
         String suffix;
         switch (slot) {
             case HEAD: suffix = "helmet"; break;
@@ -406,10 +407,10 @@ public final class ModContent {
             registerItem(name + "_pickaxe", new Supplier<Item>() { @Override public Item get() { return new MaterialItems.Pickaxe(material, toolProperties()); } });
             registerItem(name + "_shovel", new Supplier<Item>() { @Override public Item get() { return new MaterialItems.Shovel(material, toolProperties()); } });
             registerItem(name + "_hoe", new Supplier<Item>() { @Override public Item get() { return new MaterialItems.Hoe(material, toolProperties()); } });
-            registerArmor(material, EntityEquipmentSlot.HEAD);
-            registerArmor(material, EntityEquipmentSlot.CHEST);
-            registerArmor(material, EntityEquipmentSlot.LEGS);
-            registerArmor(material, EntityEquipmentSlot.FEET);
+            registerArmor(material, EquipmentSlotType.HEAD);
+            registerArmor(material, EquipmentSlotType.CHEST);
+            registerArmor(material, EquipmentSlotType.LEGS);
+            registerArmor(material, EquipmentSlotType.FEET);
             registerItem(name + "_horse_armor", new Supplier<Item>() { @Override public Item get() { return new MaterialItems.HorseArmor(material, combatProperties()); } });
             registerItem(name + "_sword", new Supplier<Item>() { @Override public Item get() { return new MaterialItems.Sword(material, combatProperties()); } });
         }
@@ -441,7 +442,7 @@ public final class ModContent {
     private static void registerFluid(final String name, int colour, final boolean mercury) {
         final RegistryHandle<FlowingFluid> source = new RegistryHandle<FlowingFluid>(name);
         final RegistryHandle<FlowingFluid> flowing = new RegistryHandle<FlowingFluid>("flowing_" + name);
-        final RegistryHandle<BlockFlowingFluid> block = new RegistryHandle<BlockFlowingFluid>(name);
+        final RegistryHandle<FlowingFluidBlock> block = new RegistryHandle<FlowingFluidBlock>(name);
         final RegistryHandle<Item> bucket = new RegistryHandle<Item>(name + "_bucket");
         FLUID_CONTENT.put(name, new FluidContent(source, flowing, block, bucket));
         FLUID_COLOURS.put(name, Integer.valueOf(colour));
@@ -453,7 +454,7 @@ public final class ModContent {
             return value;
         } }, false);
         registerItem(name, new Supplier<Item>() { @Override public Item get() {
-            return new ItemBlock(blockHandle.get(), new Item.Properties());
+            return new BlockItem(blockHandle.get(), new Item.Properties());
         } });
         registerItem(name + "_bucket", new Supplier<Item>() { @Override public Item get() {
             BaseMetalBucketItem value = new BaseMetalBucketItem(source.get(),
@@ -473,7 +474,7 @@ public final class ModContent {
         BLOCKS_BY_ID.put(id, handle);
         BLOCK_FACTORIES.put(id, factory);
         if (hasItem) registerItem(id, new Supplier<Item>() { @Override public Item get() {
-            return new ItemBlock(handle.get(), new Item.Properties().group(ModTabs.BLOCKS));
+            return new BlockItem(handle.get(), new Item.Properties().group(ModTabs.BLOCKS));
         } });
         return handle;
     }
@@ -523,8 +524,8 @@ public final class ModContent {
     private static class HarvestBlock extends Block {
         private final int level;
         HarvestBlock(Properties properties, int level) { super(properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
 
     private static class HarvestOre extends HarvestBlock {
@@ -533,58 +534,58 @@ public final class ModContent {
         // Cutout rendering leaves the transparent parts of the ore overlay clear.
         @Override public BlockRenderLayer getRenderLayer() { return BlockRenderLayer.CUTOUT_MIPPED; }
     }
-    private static class HarvestPane extends BlockPane {
+    private static class HarvestPane extends PaneBlock {
         private final int level;
         HarvestPane(Properties properties, int level) { super(properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
-    private static class HarvestDoor extends BlockDoor {
+    private static class HarvestDoor extends DoorBlock {
         private final int level;
         HarvestDoor(Properties properties, int level) { super(properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
-    private static class HarvestTrapDoor extends BlockTrapDoor {
+    private static class HarvestTrapDoor extends TrapDoorBlock {
         private final int level;
         HarvestTrapDoor(Properties properties, int level) { super(properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
-    private static class HarvestButton extends BlockButtonStone {
+    private static class HarvestButton extends StoneButtonBlock {
         private final int level;
         HarvestButton(Properties properties, int level) { super(properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
-    private static class HarvestSlab extends BlockSlab {
+    private static class HarvestSlab extends SlabBlock {
         private final int level;
         HarvestSlab(Properties properties, int level) { super(properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
-    private static class HarvestLever extends BlockLever {
+    private static class HarvestLever extends LeverBlock {
         private final int level;
         HarvestLever(Properties properties, int level) { super(properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
-    private static class HarvestPressurePlate extends BlockPressurePlate {
+    private static class HarvestPressurePlate extends PressurePlateBlock {
         private final int level;
         HarvestPressurePlate(Properties properties, int level) { super(Sensitivity.MOBS, properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
-    private static class HarvestStairs extends BlockStairs {
+    private static class HarvestStairs extends StairsBlock {
         private final int level;
-        HarvestStairs(net.minecraft.block.state.IBlockState base, Properties properties, int level) { super(base, properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        HarvestStairs(net.minecraft.block.BlockState base, Properties properties, int level) { super(base, properties); this.level = level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
-    private static class HarvestWall extends BlockWall {
+    private static class HarvestWall extends WallBlock {
         private final int level;
         HarvestWall(Properties properties, int level) { super(properties); this.level = level; }
-        @Override public ToolType getHarvestTool(net.minecraft.block.state.IBlockState state) { return ToolType.PICKAXE; }
-        @Override public int getHarvestLevel(net.minecraft.block.state.IBlockState state) { return level; }
+        @Override public ToolType getHarvestTool(net.minecraft.block.BlockState state) { return ToolType.PICKAXE; }
+        @Override public int getHarvestLevel(net.minecraft.block.BlockState state) { return level; }
     }
 }

@@ -10,6 +10,7 @@ if (!['capture', 'upgrade'].includes(phase)) {
     throw new Error('Expected capture or upgrade as the test phase.');
 }
 const root = path.resolve(spec.output);
+const captureVersion = spec.captureVersion || '1.10.2';
 if (fs.existsSync(root) && fs.readdirSync(root).length && phase === 'capture') {
     throw new Error('Choose a new, empty capture output directory.');
 }
@@ -36,7 +37,7 @@ function treeDigest(directory) {
 function prepare(directory, runtime, launcher, mods) {
     if (fs.existsSync(directory)) throw new Error('Refusing to overwrite ' + directory);
     fs.mkdirSync(path.join(directory, 'mods'), { recursive: true });
-    for (const file of [launcher, 'minecraft_server.' + (phase === 'capture' ? '1.10.2' : '1.13.2') + '.jar']) {
+    for (const file of [launcher, 'minecraft_server.' + (phase === 'capture' ? captureVersion : '1.14.4') + '.jar']) {
         fs.copyFileSync(path.join(runtime, file), path.join(directory, file));
     }
     fs.cpSync(path.join(runtime, 'libraries'), path.join(directory, 'libraries'), { recursive: true });
@@ -88,17 +89,28 @@ async function run(directory, launcher, label, marker, properties = []) {
         const directory = path.join(root, phase, profile.id);
         results.push('Profile: ' + profile.id);
         if (phase === 'capture') {
-            if (!profile.mods110) continue;
-            const launcher = 'forge-1.10.2-12.18.3.2511-universal.jar';
-            prepare(directory, spec.runtime110, launcher, [...profile.mods110, spec.captureJar]);
-            results.push(...await run(directory, launcher, 'source-first', 'BASEMETALS_LEGACY_CAPTURE PASS'));
-            results.push(...await run(directory, launcher, 'source-reload', 'BASEMETALS_LEGACY_CAPTURE_RELOAD PASS'));
+            const mods = profile.mods || profile.mods110;
+            if (!mods) continue;
+            const launcher = spec.captureLauncher || 'forge-1.10.2-12.18.3.2511-universal.jar';
+            prepare(directory, spec.captureRuntime || spec.runtime110, launcher, [...mods, spec.captureJar]);
+            const properties = ['-Dlegacycapture.minecraft=' + captureVersion];
+            results.push(...await run(directory, launcher, 'source-first', 'BASEMETALS_LEGACY_CAPTURE PASS', properties));
+            results.push(...await run(directory, launcher, 'source-reload', 'BASEMETALS_LEGACY_CAPTURE_RELOAD PASS', properties));
         } else {
             const source = profile.world || path.join(root, 'capture', profile.id, 'world');
             const before = treeDigest(source);
-            const launcher = 'forge-1.13.2-25.0.223.jar';
-            prepare(directory, spec.runtime113, launcher, [spec.modJar, spec.probeJar, spec.oreSpawn]);
+            const launcher = 'forge-1.14.4-28.2.26.jar';
+            prepare(directory, spec.runtime114, launcher, [spec.modJar, spec.probeJar, spec.oreSpawn]);
             fs.cpSync(source, path.join(directory, 'world'), { recursive: true });
+            if (profile.advancementFixture) {
+                const fixture = JSON.parse(fs.readFileSync(profile.advancementFixture, 'utf8'));
+                const world = path.join(directory, 'world');
+                fs.mkdirSync(path.join(world, 'advancements'), { recursive: true });
+                fs.writeFileSync(path.join(world, 'advancements', fixture.uuid + '.json'),
+                    JSON.stringify(fixture.progress, null, 2) + '\n');
+                fs.copyFileSync(profile.advancementFixture,
+                    path.join(world, 'basemetals_advancement_upgrade_fixture.json'));
+            }
             results.push(...await run(directory, launcher, 'upgrade-first', profile.marker,
                 ['-Dbasemetalsprobe.mode=legacy-upgrade']));
             results.push(...await run(directory, launcher, 'upgrade-reload', profile.marker,

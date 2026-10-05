@@ -2,15 +2,15 @@ package zone.moddev.mc.basemetals.client;
 
 import zone.moddev.mc.basemetals.entity.MaterialProjectile;
 
-import net.minecraft.client.renderer.entity.RenderArrow;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.ArrowRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 
-public final class MaterialProjectileRenderer extends RenderArrow<MaterialProjectile> {
+public final class MaterialProjectileRenderer extends ArrowRenderer<MaterialProjectile> {
     private static final ResourceLocation ARROW_TEXTURE =
             new ResourceLocation("textures/entity/projectiles/arrow.png");
 
-    public MaterialProjectileRenderer(RenderManager manager) {
+    public MaterialProjectileRenderer(EntityRendererManager manager) {
         super(manager);
     }
 

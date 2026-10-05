@@ -1,0 +1,153 @@
+import groovy.json.JsonSlurper
+import groovy.xml.XmlSlurper
+import java.security.MessageDigest
+import java.util.jar.Manifest
+import java.util.zip.ZipFile
+
+def prepareIntegrationTestModClasses = project.ext.baseMetalsBuild.prepareIntegrationTestModClasses
+
+def integrationTestRunDirectory = layout.buildDirectory.dir('integration-test-run')
+def prepareIntegrationTestRun = tasks.register('prepareIntegrationTestRun') {
+    group = 'verification'
+    doLast {
+        File runDirectory = integrationTestRunDirectory.get().asFile.canonicalFile
+        File buildDirectory = layout.buildDirectory.get().asFile.canonicalFile
+        if (runDirectory == projectDir.canonicalFile
+                || !runDirectory.toPath().startsWith(buildDirectory.toPath())
+                || runDirectory.name != 'integration-test-run') {
+            throw new GradleException("Unsafe integration-test run directory: ${runDirectory}")
+        }
+        delete runDirectory
+        if (!runDirectory.mkdirs()) throw new GradleException("Could not create ${runDirectory}")
+        new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
+        new File(runDirectory, 'server.properties').setText('''\
+level-name=basemetals-runtime-probe
+online-mode=false
+spawn-protection=0
+server-port=0
+view-distance=4
+''', 'UTF-8')
+        if (!new File(runDirectory, 'mods').mkdirs()) {
+            throw new GradleException("Could not create integration-test mods directory")
+        }
+    }
+}
+def verifyIntegrationTestRun = tasks.register('verifyIntegrationTestRun') {
+    group = 'verification'
+    doLast {
+        File log = new File(integrationTestRunDirectory.get().asFile, 'logs/latest.log')
+        if (!log.isFile()) throw new GradleException("Runtime-probe log is missing: ${log}")
+        String text = log.getText('UTF-8')
+        if (!text.contains('BASEMETALS_RUNTIME_PROBE PASS')) {
+            throw new GradleException('Base Metals runtime probe did not report PASS')
+        }
+        List<String> failures = ['BASEMETALS_RUNTIME_PROBE FAIL', 'Failed to load correctly',
+                                 'This crash report has been saved to',
+                                 'Encountered an unexpected exception'].findAll { text.contains(it) }
+        if (!failures.isEmpty()) throw new GradleException("Runtime-probe failures: ${failures}")
+    }
+}
+tasks.matching { it.name == 'runRuntimeProbeServer' }.configureEach {
+    dependsOn prepareIntegrationTestRun
+    finalizedBy verifyIntegrationTestRun
+}
+
+def legacyWorldFixture = providers.gradleProperty('legacyWorldFixture')
+def legacyWorldRegions = providers.gradleProperty('legacyWorldRegions')
+def legacyUpgradeRunDirectory = layout.buildDirectory.dir('legacy-upgrade-run')
+def resolveLegacyWorldFixture = {
+    if (!legacyWorldFixture.isPresent()) {
+        throw new GradleException('Pass -PlegacyWorldFixture=<legacy world or server directory>')
+    }
+    File candidate = file(legacyWorldFixture.get()).canonicalFile
+    File world = new File(candidate, 'level.dat').isFile() ? candidate
+            : new File(new File(candidate, 'world'), 'level.dat').isFile()
+            ? new File(candidate, 'world').canonicalFile : null
+    if (world == null) {
+        throw new GradleException("legacyWorldFixture has no level.dat: ${candidate}")
+    }
+    world
+}
+def prepareLegacyUpgradeRun = tasks.register('prepareLegacyUpgradeRun') {
+    group = 'verification'
+    dependsOn prepareIntegrationTestModClasses
+    doLast {
+        File sourceWorld = resolveLegacyWorldFixture()
+        File runDirectory = legacyUpgradeRunDirectory.get().asFile.canonicalFile
+        File buildDirectory = layout.buildDirectory.get().asFile.canonicalFile
+        if (runDirectory == projectDir.canonicalFile
+                || !runDirectory.toPath().startsWith(buildDirectory.toPath())
+                || runDirectory.name != 'legacy-upgrade-run') {
+            throw new GradleException("Unsafe legacy-upgrade run directory: ${runDirectory}")
+        }
+        if (sourceWorld.toPath().startsWith(buildDirectory.toPath())) {
+            throw new GradleException("Legacy source must be outside disposable build output: ${sourceWorld}")
+        }
+        delete runDirectory
+        if (!runDirectory.mkdirs()) throw new GradleException("Could not create ${runDirectory}")
+        Set<String> includedRegions = legacyWorldRegions.isPresent()
+                ? legacyWorldRegions.get().split(',').collect { it.trim() }.findAll { !it.isEmpty() }.toSet()
+                : Collections.emptySet()
+        copy {
+            from sourceWorld
+            into new File(runDirectory, 'world')
+            if (!includedRegions.isEmpty()) {
+                eachFile { details ->
+                    String relative = details.relativePath.pathString.replace('\\', '/')
+                    if ((relative.startsWith('region/') || relative.contains('/region/'))
+                            && details.name ==~ /r\.-?\d+\.-?\d+\.mc[ar]/
+                            && !includedRegions.contains(details.name)) {
+                        details.exclude()
+                    }
+                }
+            }
+        }
+        new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
+        new File(runDirectory, 'server.properties').setText('''\
+level-name=world
+online-mode=false
+spawn-protection=0
+server-port=0
+view-distance=4
+max-tick-time=-1
+''', 'UTF-8')
+        if (!new File(runDirectory, 'mods').mkdirs()) {
+            throw new GradleException('Could not create legacy-upgrade mods directory')
+        }
+        logger.lifecycle('Copied legacy fixture {} to disposable {}{}', sourceWorld, runDirectory,
+                includedRegions.isEmpty() ? '' : " using regions ${includedRegions.sort()}")
+    }
+}
+def verifyLegacyUpgradeRun = tasks.register('verifyLegacyUpgradeRun') {
+    group = 'verification'
+    doLast {
+        File runDirectory = legacyUpgradeRunDirectory.get().asFile
+        File log = new File(runDirectory, 'logs/latest.log')
+        if (!log.isFile()) throw new GradleException("Legacy-upgrade log is missing: ${log}")
+        String text = log.getText('UTF-8')
+        if (!text.contains('BASEMETALS_LEGACY_UPGRADE_PROBE PASS')) {
+            throw new GradleException('Legacy-world runtime probe did not report PASS')
+        }
+        File fixtureManifest = new File(runDirectory, 'world/legacy_registry_manifest_runtime.json')
+        if (fixtureManifest.isFile()) {
+            boolean from110 = new File(runDirectory,
+                    'world/BASEMETALS_1_10_FIXTURE_COMPLETE.txt').isFile()
+            String marker = from110 ? 'BASEMETALS_1_10_TO_1_14_UPGRADE PASS'
+                    : 'BASEMETALS_1_12_TO_1_14_UPGRADE PASS'
+            if (!text.contains(marker)) {
+                throw new GradleException("Complete ${from110 ? '1.10' : '1.12'} fixture verification did not report PASS")
+            }
+        }
+        if (!text.contains('legacy Base Metals states') || !text.contains('protected')) {
+            throw new GradleException('Legacy Base Metals registry/chunk preparation was not observed')
+        }
+        List<String> failures = ['BASEMETALS_RUNTIME_PROBE FAIL', 'BASEMETALS_LEGACY_UPGRADE_PROBE FAIL',
+                                 'Failed to load correctly', 'This crash report has been saved to',
+                                 'Encountered an unexpected exception'].findAll { text.contains(it) }
+        if (!failures.isEmpty()) throw new GradleException("Legacy-upgrade failures: ${failures}")
+    }
+}
+tasks.matching { it.name == 'runLegacyUpgradeServer' }.configureEach {
+    dependsOn prepareLegacyUpgradeRun
+    finalizedBy verifyLegacyUpgradeRun
+}

@@ -6,21 +6,21 @@ import com.google.gson.JsonSyntaxException;
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.config.ContentPolicy;
 
-import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Items;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeHidden;
+import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public final class PlateRepairRecipe extends IRecipeHidden {
+public final class PlateRepairRecipe extends SpecialRecipe {
     private final Item target;
     private final Ingredient plate;
 
@@ -31,7 +31,7 @@ public final class PlateRepairRecipe extends IRecipeHidden {
     }
 
     @Override
-    public boolean matches(IInventory inventory, World world) {
+    public boolean matches(CraftingInventory inventory, World world) {
         if (!ContentPolicy.active().allows(target.getRegistryName().toString())) return false;
         ItemStack foundTarget = ItemStack.EMPTY;
         boolean foundPlate = false;
@@ -56,7 +56,7 @@ public final class PlateRepairRecipe extends IRecipeHidden {
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inventory) {
+    public ItemStack getCraftingResult(CraftingInventory inventory) {
         if (!matches(inventory, null)) {
             return ItemStack.EMPTY;
         }
@@ -99,23 +99,23 @@ public final class PlateRepairRecipe extends IRecipeHidden {
         return CrushingRecipe.PLATE_REPAIR_SERIALIZER;
     }
 
-    public static final class Serializer implements IRecipeSerializer<PlateRepairRecipe> {
-        private final ResourceLocation name = new ResourceLocation(BaseMetals.MOD_ID, "plate_repair");
+    public static final class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>
+            implements IRecipeSerializer<PlateRepairRecipe> {
+        public Serializer() { setRegistryName(BaseMetals.MOD_ID, "plate_repair"); }
         @Override public PlateRepairRecipe read(ResourceLocation id, JsonObject json) {
-            ResourceLocation targetId = new ResourceLocation(JsonUtils.getString(json, "target"));
+            ResourceLocation targetId = new ResourceLocation(JSONUtils.getString(json, "target"));
             Item target = ForgeRegistries.ITEMS.getValue(targetId);
             if (target == null || target == Items.AIR) throw new JsonSyntaxException("Unknown target " + targetId);
-            return new PlateRepairRecipe(id, target, Ingredient.fromJson(JsonUtils.getJsonObject(json, "plate")));
+            return new PlateRepairRecipe(id, target, Ingredient.deserialize(JSONUtils.getJsonObject(json, "plate")));
         }
         @Override public PlateRepairRecipe read(ResourceLocation id, PacketBuffer buffer) {
             Item target = ForgeRegistries.ITEMS.getValue(buffer.readResourceLocation());
             if (target == null || target == Items.AIR) throw new IllegalStateException("Missing target");
-            return new PlateRepairRecipe(id, target, Ingredient.fromBuffer(buffer));
+            return new PlateRepairRecipe(id, target, Ingredient.read(buffer));
         }
         @Override public void write(PacketBuffer buffer, PlateRepairRecipe recipe) {
             buffer.writeResourceLocation(recipe.target.getRegistryName());
-            recipe.plate.writeToBuffer(buffer);
+            recipe.plate.write(buffer);
         }
-        @Override public ResourceLocation getName() { return name; }
     }
 }

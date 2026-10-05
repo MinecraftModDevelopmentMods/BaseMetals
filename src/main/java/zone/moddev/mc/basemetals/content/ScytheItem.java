@@ -9,18 +9,18 @@ import zone.moddev.mc.basemetals.ModTags;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
+import net.minecraft.item.ToolItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
-public final class ScytheItem extends ItemTool implements MaterialBacked {
+public final class ScytheItem extends ToolItem implements MaterialBacked {
     private static final ThreadLocal<Boolean> HARVESTING = new ThreadLocal<Boolean>() {
         @Override protected Boolean initialValue() { return Boolean.FALSE; }
     };
@@ -32,17 +32,17 @@ public final class ScytheItem extends ItemTool implements MaterialBacked {
     }
 
     @Override public MaterialDefinition baseMetalsMaterial() { return material; }
-    @Override public float getDestroySpeed(ItemStack stack, IBlockState state) {
+    @Override public float getDestroySpeed(ItemStack stack, BlockState state) {
         return state.isIn(ModTags.SCYTHE_HARVESTABLE) ? material.toolEfficiency() : 1.0F;
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, BlockPos position, EntityPlayer player) {
-        if (player.world.isRemote || !(player instanceof EntityPlayerMP) || HARVESTING.get()) return false;
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos position, PlayerEntity player) {
+        if (player.world.isRemote || !(player instanceof ServerPlayerEntity) || HARVESTING.get()) return false;
         if (!player.world.getBlockState(position).isIn(ModTags.SCYTHE_HARVESTABLE)) return false;
         HARVESTING.set(Boolean.TRUE);
         try {
-            EntityPlayerMP serverPlayer = (EntityPlayerMP) player;
+            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dz = -1; dz <= 1; dz++) {
                     BlockPos target = position.add(dx, 0, dz);

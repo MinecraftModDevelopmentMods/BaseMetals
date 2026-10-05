@@ -19,13 +19,16 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.BowItem;
+import net.minecraft.item.Items;
 import net.minecraft.resources.IResource;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GameType;
 import net.minecraft.world.WorldSettings;
@@ -37,7 +40,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.client.gui.GuiModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -47,9 +50,9 @@ import zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry;
 import zone.moddev.mc.basemetals.client.BaseMetalsConfigScreen;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ContentMode;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiYesNo;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.resources.I18n;
 
 /** Checks models and renders a disposable world in the packaged Forge client. */
@@ -67,6 +70,7 @@ public final class BaseMetalsClientProbe {
 
     public BaseMetalsClientProbe() {
         instance = this;
+        LOGGER.info("Client probe loaded; enabled={}", Boolean.getBoolean("basemetalsclientprobe.enabled"));
     }
 
     @SubscribeEvent
@@ -87,13 +91,15 @@ public final class BaseMetalsClientProbe {
 
     private void tick() {
         Minecraft minecraft = Minecraft.getInstance();
+        if (stateTicks == 0) LOGGER.info("Client probe state={} screen={}", state,
+                minecraft.currentScreen == null ? "none" : minecraft.currentScreen.getClass().getName());
         if (++stateTicks > 3600) fail(minecraft, "Timed out in client probe state " + state);
         try {
-            if (state == 0 && minecraft.currentScreen instanceof GuiMainMenu) {
+            if (state == 0 && minecraft.currentScreen instanceof MainMenuScreen) {
                 if (Boolean.getBoolean("basemetalsclientprobe.login")) {
                     require(BaseMetalsConfig.activeMode().serializedName().equals(
                             System.getProperty("basemetalsclientprobe.expectedMode")), "startup mode differs from profile");
-                    minecraft.displayGuiScreen(new net.minecraft.client.gui.GuiConnecting(
+                    minecraft.displayGuiScreen(new net.minecraft.client.gui.screen.ConnectingScreen(
                             minecraft.currentScreen, minecraft, "127.0.0.1",
                             Integer.getInteger("basemetalsclientprobe.port", 25565)));
                     nextState(3);
@@ -105,6 +111,7 @@ public final class BaseMetalsClientProbe {
                 nextState(1);
             } else if (state == 1 && minecraft.world != null && minecraft.player != null
                     && renderedFrames >= 8 && stateTicks >= 100) {
+                validateCreativeCrossbows(minecraft);
                 writeMarker();
                 LOGGER.info("BASEMETALS_CLIENT_PROBE PASS frames={}", Integer.valueOf(renderedFrames));
                 minecraft.shutdown();
@@ -117,12 +124,46 @@ public final class BaseMetalsClientProbe {
         }
     }
 
+    private static void validateCreativeCrossbows(Minecraft minecraft) {
+        require(minecraft.world.isRemote, "crossbow probe must run on the client");
+        require(minecraft.player.abilities.isCreativeMode, "crossbow probe needs a Creative player");
+        int shots = 0;
+
+        for (String name : ModContent.itemsById().keySet()) {
+            if (!name.endsWith("_crossbow")) continue;
+            String boltName = name.substring(0, name.length() - "_crossbow".length()) + "_bolt";
+            ItemStack[] ammunition = {ItemStack.EMPTY, new ItemStack(Items.ARROW),
+                    new ItemStack(ModContent.item("adamantine_arrow").get()),
+                    new ItemStack(ModContent.item(boltName).get())};
+
+            for (ItemStack supply : ammunition) {
+                minecraft.player.inventory.clear();
+                ItemStack launcher = new ItemStack(ModContent.item(name).get());
+                ItemStack original = supply.copy();
+                minecraft.player.setHeldItem(Hand.MAIN_HAND, launcher);
+                minecraft.player.setHeldItem(Hand.OFF_HAND, supply);
+                BowItem crossbow = (BowItem) launcher.getItem();
+
+                crossbow.onPlayerStoppedUsing(launcher, minecraft.world, minecraft.player,
+                        crossbow.getUseDuration(launcher) - 20);
+
+                require(ItemStack.areItemStacksEqual(original, supply),
+                        "Creative crossbow consumed client ammunition: " + name);
+                require(launcher.getDamage() == 0, "Creative crossbow wore out on the client: " + name);
+                shots++;
+            }
+        }
+
+        minecraft.player.inventory.clear();
+        require(shots == 108, "all 27 crossbows need four client ammunition cases");
+        LOGGER.info("BASEMETALS_CLIENT_CROSSBOWS PASS shots={}", Integer.valueOf(shots));
+    }
+
     private void checkLogin(Minecraft minecraft) throws IOException {
         boolean rejected = Boolean.getBoolean("basemetalsclientprobe.expectReject");
         if (minecraft.world != null && minecraft.player != null && stateTicks > 60) {
             require(!rejected, "mismatched modes entered gameplay");
-            net.minecraft.item.crafting.IRecipe bow = minecraft.world.getRecipeManager().getRecipe(
-                    new ResourceLocation("basemetals", "tin_bow"));
+            net.minecraft.item.crafting.IRecipe bow = minecraft.world.getRecipeManager().getRecipe(new ResourceLocation("basemetals", "tin_bow")).orElse(null);
             require(bow != null, "recipe IDs changed during mode synchronization");
             require(bow.isDynamic() == (BaseMetalsConfig.activeMode() == ContentMode.LOW_FANTASY),
                     "client recipe policy did not match the server");
@@ -133,18 +174,18 @@ public final class BaseMetalsClientProbe {
                 for (String name : new String[] {"steel_bow", "adamantine_bow", "adamantine_crossbow", "adamantine_gear",
                         "adamantine_arrow", "adamantine_rod", "adamantine_pickaxe"}) {
                     net.minecraft.item.crafting.IRecipe recipe = minecraft.world.getRecipeManager()
-                            .getRecipe(new ResourceLocation("basemetals", name));
+                            .getRecipe(new ResourceLocation("basemetals", name)).orElse(null);
                     require(minecraft.player.getRecipeBook().isUnlocked(recipe) != recipe.isDynamic(),
                             "material discovery did not synchronize to the client: " + name);
                 }
                 require(!minecraft.player.getRecipeBook().isUnlocked(minecraft.world.getRecipeManager()
-                        .getRecipe(new ResourceLocation("basemetals", "gold_bow"))),
+                        .getRecipe(new ResourceLocation("basemetals", "gold_bow")).orElse(null)),
                         "mode change unlocked an unearned recipe");
             }
             require(minecraft.player.inventory.getStackInSlot(0).getItem() == ModContent.item("tin_bow").get(),
                     "existing restricted item did not synchronize");
             finishLogin(minecraft, "connected");
-        } else if (minecraft.currentScreen instanceof net.minecraft.client.gui.GuiDisconnected) {
+        } else if (minecraft.currentScreen instanceof net.minecraft.client.gui.screen.DisconnectedScreen) {
             StringBuilder message = new StringBuilder();
             try {
                 for (java.lang.reflect.Field field : minecraft.currentScreen.getClass().getDeclaredFields()) {
@@ -206,7 +247,7 @@ public final class BaseMetalsClientProbe {
     }
 
     private static void validateConfigScreen(Minecraft minecraft) {
-        GuiScreen parent = minecraft.currentScreen;
+        Screen parent = minecraft.currentScreen;
         boolean originalEffects = BaseMetalsConfig.SPECIAL_EFFECTS.get();
         String originalMode = BaseMetalsConfig.CONTENT_MODE.get();
         ContentMode activeMode = BaseMetalsConfig.activeMode();
@@ -218,15 +259,15 @@ public final class BaseMetalsClientProbe {
             if ("basemetals".equals(ModList.get().getMods().get(index).getModId())) baseMetalsIndex = index;
         }
         require(baseMetalsIndex >= 0, "Base Metals is missing from the Mods list");
-        modsScreen.selectModIndex(baseMetalsIndex);
+        selectMod(modsScreen, "basemetals");
         ForgeHooksClient.drawScreen(modsScreen, 0, 0, 0.0F);
-        GuiButton configButton = button(modsScreen, 20);
-        require(configButton.enabled, "Base Metals Config button is disabled in the Mods list");
+        Button configButton = button(modsScreen, 20);
+        require(configButton.active, "Base Metals Config button is disabled in the Mods list");
         require(modsScreen.mouseClicked(configButton.x + 1, configButton.y + 1, 0),
                 "Mods-list Config button did not accept a mouse click");
-        GuiScreen forgeScreen = minecraft.currentScreen;
+        Screen forgeScreen = minecraft.currentScreen;
         require(forgeScreen instanceof BaseMetalsConfigScreen, "Mods-list button opened the wrong screen");
-        require(forgeScreen.getChildren().size() == 9, "config screen must expose five settings and four actions");
+        require(forgeScreen.children().size() == 9, "config screen must expose five settings and four actions");
         click(forgeScreen, 20);
         click(forgeScreen, 10);
         click(forgeScreen, 1);
@@ -235,22 +276,22 @@ public final class BaseMetalsClientProbe {
                 && originalEffects == BaseMetalsConfig.SPECIAL_EFFECTS.get(), "Cancel changed the loaded config");
 
         ForgeHooksClient.drawScreen(modsScreen, 0, 0, 0.0F);
-        require(button(modsScreen, 20).enabled, "Config button was disabled on returning from the settings");
-        modsScreen.selectModIndex(baseMetalsIndex);
+        require(button(modsScreen, 20).active, "Config button was disabled on returning from the settings");
+        modsScreen.setSelected(null);
         ForgeHooksClient.drawScreen(modsScreen, 0, 0, 0.0F);
-        require(!button(modsScreen, 20).enabled, "Config button stayed enabled with no mod selected");
+        require(!button(modsScreen, 20).active, "Config button stayed enabled with no mod selected");
         int forgeIndex = -1;
         for (int index = 0; index < ModList.get().getMods().size(); index++) {
             if ("forge".equals(ModList.get().getMods().get(index).getModId())) forgeIndex = index;
         }
         require(forgeIndex >= 0, "Forge is missing from the Mods list");
-        modsScreen.selectModIndex(forgeIndex);
+        selectMod(modsScreen, "forge");
         ForgeHooksClient.drawScreen(modsScreen, 0, 0, 0.0F);
-        require(!button(modsScreen, 20).enabled, "Base Metals enabled the Config button for Forge");
+        require(!button(modsScreen, 20).active, "Base Metals enabled the Config button for Forge");
         click(modsScreen, 6);
         require(minecraft.currentScreen == parent, "Mods-list Done did not return to the main menu");
 
-        GuiScreen oreSpawnScreen = WorldSettingsExtensionRegistry.extensions().stream()
+        Screen oreSpawnScreen = WorldSettingsExtensionRegistry.extensions().stream()
                 .filter(extension -> "basemetals:configuration".equals(extension.id().toString()))
                 .findFirst().get().createScreen(parent);
         require(oreSpawnScreen instanceof BaseMetalsConfigScreen, "OreSpawn factory uses the wrong screen");
@@ -258,19 +299,19 @@ public final class BaseMetalsClientProbe {
         click(oreSpawnScreen, 10);
         click(oreSpawnScreen, 20);
         click(oreSpawnScreen, 2);
-        require(button(oreSpawnScreen, 20).displayString.contains(I18n.format(ContentMode.HIGH_FANTASY.translationKey())),
+        require(button(oreSpawnScreen, 20).getMessage().contains(I18n.format(ContentMode.HIGH_FANTASY.translationKey())),
                 "Defaults did not restore High Fantasy");
         click(oreSpawnScreen, 3);
-        require(button(oreSpawnScreen, 10).displayString.endsWith(I18n.format(originalEffects ? "options.on" : "options.off")),
+        require(button(oreSpawnScreen, 10).getMessage().endsWith(I18n.format(originalEffects ? "options.on" : "options.off")),
                 "Undo did not restore the original boolean");
         click(oreSpawnScreen, 20);
         click(oreSpawnScreen, 0);
-        require(minecraft.currentScreen instanceof GuiYesNo, "Mode change has no restart confirmation");
-        oreSpawnScreen.confirmResult(false, 0);
+        require(minecraft.currentScreen instanceof ConfirmScreen, "Mode change has no restart confirmation");
+        confirmation(minecraft, false);
         require(minecraft.currentScreen == oreSpawnScreen, "Declining confirmation lost pending edits");
         require(BaseMetalsConfig.CONTENT_MODE.get().equals(originalMode), "Declining confirmation saved the mode");
         click(oreSpawnScreen, 0);
-        oreSpawnScreen.confirmResult(true, 0);
+        confirmation(minecraft, true);
         require(minecraft.currentScreen == parent, "Done did not return to the OreSpawn parent");
         require(!BaseMetalsConfig.CONTENT_MODE.get().equals(originalMode), "Done did not save the string property");
         require(BaseMetalsConfig.activeMode() == activeMode, "GUI changes altered the startup-latched mode");
@@ -283,14 +324,34 @@ public final class BaseMetalsClientProbe {
         LOGGER.info("BASEMETALS_CONFIG_GUI_PROBE PASS entries=5 factories=2 mods_button=true cancel=true undo=true defaults=true save=true");
     }
 
-    private static GuiButton button(GuiScreen screen, int id) {
-        return screen.getChildren().stream().filter(child -> child instanceof GuiButton)
-                .map(child -> (GuiButton) child).filter(button -> button.id == id).findFirst()
+    private static void selectMod(GuiModList screen, String modId) {
+        net.minecraftforge.fml.client.gui.ModSelection.select(screen, modId);
+    }
+
+    private static void confirmation(Minecraft minecraft, boolean accepted) {
+        List<Button> choices = new ArrayList<>();
+        for (Object child : minecraft.currentScreen.children()) {
+            if (child instanceof Button) choices.add((Button) child);
+        }
+        choices.get(accepted ? 0 : 1).onPress();
+    }
+
+    private static Button button(Screen screen, int id) {
+        List<Button> buttons = new ArrayList<>();
+        for (Object child : screen.children()) {
+            if (child instanceof Button) buttons.add((Button) child);
+        }
+        if (screen instanceof BaseMetalsConfigScreen) {
+            int index = id == 20 ? 0 : id >= 10 ? id - 9 : id == 2 ? 5 : id == 3 ? 6 : id == 0 ? 7 : 8;
+            return buttons.get(index);
+        }
+        String label = id == 20 ? "Config" : I18n.format("gui.done");
+        return buttons.stream().filter(button -> button.getMessage().equals(label)).findFirst()
                 .orElseThrow(() -> new IllegalStateException("Missing config button " + id));
     }
 
-    private static void click(GuiScreen screen, int id) {
-        button(screen, id).onClick(0, 0);
+    private static void click(Screen screen, int id) {
+        button(screen, id).onPress();
     }
 
     private static void validateOreModels(Minecraft minecraft) throws IOException {
@@ -331,7 +392,7 @@ public final class BaseMetalsClientProbe {
         require(model.getQuads(block == null ? null : block.getDefaultState(), null, random).isEmpty(),
                 name + " has unexpected unculled faces");
 
-        for (EnumFacing side : EnumFacing.values()) {
+        for (Direction side : Direction.values()) {
             List<BakedQuad> quads = model.getQuads(block == null ? null : block.getDefaultState(), side, random);
             require(quads.size() == 2, name + " should have base and overlay on " + side);
             boolean hasBase = false;
@@ -399,7 +460,7 @@ public final class BaseMetalsClientProbe {
         IBakedModel model = minecraft.getItemRenderer().getItemModelWithOverrides(stack, null, null);
         Random random = new Random(42L);
         List<BakedQuad> quads = new ArrayList<BakedQuad>(model.getQuads(null, null, random));
-        for (net.minecraft.util.EnumFacing side : net.minecraft.util.EnumFacing.values()) {
+        for (net.minecraft.util.Direction side : net.minecraft.util.Direction.values()) {
             quads.addAll(model.getQuads(null, side, random));
         }
         require(!quads.isEmpty(), name + " has no rendered quads");
@@ -427,7 +488,7 @@ public final class BaseMetalsClientProbe {
         values.setProperty("integrated_world_rendered", Boolean.toString(renderedFrames >= 8));
         values.setProperty("rendered_frames", Integer.toString(renderedFrames));
         try (FileOutputStream output = new FileOutputStream(new File("client-smoke-pass.properties"))) {
-            values.store(output, "Base Metals Forge 1.13.2 packaged-client gate");
+            values.store(output, "Base Metals Forge 1.14.4 packaged-client gate");
         }
     }
 

@@ -1,11 +1,11 @@
 modLoader="javafml"
-loaderVersion="[25,)"
+loaderVersion="[28,)"
 license="LGPL-2.1"
 issueTrackerURL="https://github.com/SkyBlade1978/BaseMetals/issues"
 
 [[mods]]
 modId="basemetals"
-version="3.0.1.113021"
+version="3.0.1.114041"
 displayName="Base Metals"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/base-metals"
 authors="Cyanobacterium, jriwanek, dshadowwolf, GetDizzy611, SkyBlade1978, the MMD Team"
@@ -14,20 +14,20 @@ description='''Adds real and fantasy metals, alloys, tools and armour. Crush ore
 [[dependencies.basemetals]]
 modId="orespawn"
 mandatory=true
-versionRange="[4.1.0.113021,5.0.0)"
+versionRange="[4.1.0.114041,5.0.0)"
 ordering="AFTER"
 side="BOTH"
 
 [[dependencies.basemetals]]
 modId="forge"
 mandatory=true
-versionRange="[25,)"
+versionRange="[28,)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.basemetals]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.13.2]"
+versionRange="[1.14.4]"
 ordering="NONE"
 side="BOTH"

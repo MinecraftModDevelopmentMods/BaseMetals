@@ -1,19 +1,19 @@
-name: Base Metals 1.13.2 CI
+name: Base Metals 1.14.4 CI
 
 on:
   push:
     branches:
-      - master-1.13.2
+      - master-1.14.4
       - 'feature/**'
   pull_request:
     branches:
-      - master-1.13.2
+      - master-1.14.4
 
 permissions:
   contents: read
 
 concurrency:
-  group: basemetals-1.13-${{ github.workflow }}-${{ github.ref }}
+  group: basemetals-1.14-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -133,7 +133,7 @@ jobs:
             clean verifyGeneratedOreModels check build javadoc verifyReleaseArtifacts writeReleaseChecksums
             verifyEclipseProductionClasspath
             -PorespawnVerificationRepository="${{ steps.orespawn.outputs.repository }}"
-            --no-daemon --stacktrace --max-workers=2
+            --no-daemon --no-build-cache --stacktrace --max-workers=2
             -Dorg.gradle.java.installations.paths="$JAVA_HOME,$JAVA_HOME_8_X64,$JAVA_HOME_25_X64"
             -Dorg.gradle.java.installations.auto-detect=false
             -Dorg.gradle.java.installations.auto-download=false
@@ -141,9 +141,9 @@ jobs:
           ./gradlew "${gradle_args[@]}"
           first="$RUNNER_TEMP/basemetals-first"
           mkdir -p "$first"
-          cp build/libs/BaseMetals-3.0.1.113021.jar "$first/"
-          cp build/libs/BaseMetals-3.0.1.113021-sources.jar "$first/"
-          cp build/libs/BaseMetals-3.0.1.113021-javadoc.jar "$first/"
+          cp build/libs/BaseMetals-3.0.1.114041.jar "$first/"
+          cp build/libs/BaseMetals-3.0.1.114041-sources.jar "$first/"
+          cp build/libs/BaseMetals-3.0.1.114041-javadoc.jar "$first/"
           cp build/release/SHA256SUMS "$first/"
 
       - name: Rebuild and prove byte-identical archives
@@ -153,15 +153,15 @@ jobs:
           gradle_args=(
             clean assemble verifyReleaseArtifacts writeReleaseChecksums
             -PorespawnVerificationRepository="${{ steps.orespawn.outputs.repository }}"
-            --no-daemon --stacktrace --max-workers=2
+            --no-daemon --no-build-cache --stacktrace --max-workers=2
             -Dorg.gradle.java.installations.paths="$JAVA_HOME,$JAVA_HOME_8_X64,$JAVA_HOME_25_X64"
             -Dorg.gradle.java.installations.auto-detect=false
             -Dorg.gradle.java.installations.auto-download=false
           )
           ./gradlew "${gradle_args[@]}"
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.1.113021.jar" build/libs/BaseMetals-3.0.1.113021.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.1.113021-sources.jar" build/libs/BaseMetals-3.0.1.113021-sources.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.1.113021-javadoc.jar" build/libs/BaseMetals-3.0.1.113021-javadoc.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.1.114041.jar" build/libs/BaseMetals-3.0.1.114041.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.1.114041-sources.jar" build/libs/BaseMetals-3.0.1.114041-sources.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.1.114041-javadoc.jar" build/libs/BaseMetals-3.0.1.114041-javadoc.jar
           cmp "$RUNNER_TEMP/basemetals-first/SHA256SUMS" build/release/SHA256SUMS
 
       - name: Run exact-OreSpawn dedicated-server probe
@@ -181,13 +181,13 @@ jobs:
       - name: Upload audited release candidate
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: BaseMetals-1.13.2-${{ github.sha }}
+          name: BaseMetals-1.14.4-${{ github.sha }}
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-3.0.1.113021.jar
-            build/libs/BaseMetals-3.0.1.113021-sources.jar
-            build/libs/BaseMetals-3.0.1.113021-javadoc.jar
+            build/libs/BaseMetals-3.0.1.114041.jar
+            build/libs/BaseMetals-3.0.1.114041-sources.jar
+            build/libs/BaseMetals-3.0.1.114041-javadoc.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 
@@ -195,7 +195,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: BaseMetals-1.13.2-diagnostics-${{ github.sha }}
+          name: BaseMetals-1.14.4-diagnostics-${{ github.sha }}
           if-no-files-found: ignore
           retention-days: 14
           path: |

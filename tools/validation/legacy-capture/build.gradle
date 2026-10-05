@@ -9,6 +9,28 @@ version = '1.0'
 base.archivesName = 'basemetals-legacy-capture'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+def legacyMinecraft = providers.gradleProperty('legacyMinecraft').getOrElse('1.10.2')
+if (!(legacyMinecraft in ['1.10.2', '1.12.2'])) {
+    throw new GradleException("The capture fixture supports Minecraft 1.10.2 or 1.12.2, not '${legacyMinecraft}'")
+}
+
+// The fixture is the same; these mapped method names changed in 1.12.
+if (legacyMinecraft == '1.12.2') {
+    def captureSource = layout.buildDirectory.dir('capture-source')
+    def prepareCaptureSource = tasks.register('prepareCaptureSource', Sync) {
+        from 'src/main/java'
+        into captureSource
+        filter { line ->
+            line.replace('.worldServerForDimension(', '.getWorld(')
+                    .replace('.getResourceDomain()', '.getNamespace()')
+                    .replace('stack.stackSize', 'stack.getCount()')
+                    .replace('.getSubCompound("basemetals_fixture", true)',
+                            '.getOrCreateSubCompound("basemetals_fixture")')
+        }
+    }
+    sourceSets.main.java.setSrcDirs([captureSource])
+    tasks.named('compileJava') { dependsOn prepareCaptureSource }
+}
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     sourceCompatibility = '1.8'
@@ -16,7 +38,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 minecraft {
-    mappings channel: 'stable', version: '29-1.10.2'
+    mappings channel: 'stable', version: legacyMinecraft == '1.12.2' ? '39-1.12' : '29-1.10.2'
 }
 
 repositories {
@@ -27,12 +49,19 @@ repositories {
 }
 
 dependencies {
-    implementation minecraft.dependency('net.minecraftforge:forge:1.10.2-12.18.3.2511')
+    implementation minecraft.dependency(legacyMinecraft == '1.12.2'
+            ? 'net.minecraftforge:forge:1.12.2-14.23.5.2847'
+            : 'net.minecraftforge:forge:1.10.2-12.18.3.2511')
 }
 
 tasks.withType(AbstractArchiveTask).configureEach {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+}
+
+tasks.named('processResources') {
+    inputs.property('legacyMinecraft', legacyMinecraft)
+    filesMatching('mcmod.info') { filter { it.replace('1.10.2', legacyMinecraft) } }
 }
 
 def captureJar = renamer.classes(tasks.named('jar', Jar)) {

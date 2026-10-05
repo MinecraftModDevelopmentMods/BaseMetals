@@ -1,6 +1,9 @@
-# Disable autocrlf on generated files, they always generate with LF
-# Add any extra files or paths here to make git stop saying they
-# are changed when only line endings change.
+# Keep source, scripts and generated text portable between Windows and Linux.
+* text=auto eol=lf
+*.png binary
+*.jar binary
+*.zip binary
+*.nbt binary
 src/generated/**/.cache/cache text eol=lf
 src/generated/**/*.json text eol=lf
 src/main/resources/assets/basemetals/models/block/*_ore.json text eol=lf
