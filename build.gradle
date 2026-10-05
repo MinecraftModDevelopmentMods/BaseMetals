@@ -71,6 +71,7 @@ tasks.withType(Javadoc).configureEach {
 tasks.withType(AbstractArchiveTask).configureEach {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+    filteringCharset = 'UTF-8'
     filesMatching(['**/*.java', '**/*.js', '**/*.json', '**/*.toml', '**/*.mcmeta',
                    '**/*.md', '**/*.txt', '**/*.html', '**/*.css', '**/*.properties',
                    '**/element-list', '**/package-list']) {
@@ -227,6 +228,7 @@ configurations.named('testRuntimeClasspath') {
 }
 
 tasks.named('processResources', ProcessResources) {
+    filteringCharset = 'UTF-8'
     def replaceProperties = [minecraft_version: minecraft_version,
             minecraft_version_range: minecraft_version_range, forge_version: forge_version,
             forge_version_range: forge_version_range, loader_version_range: loader_version_range,
