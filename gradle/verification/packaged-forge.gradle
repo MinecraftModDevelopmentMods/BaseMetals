@@ -1,0 +1,316 @@
+import groovy.json.JsonSlurper
+import groovy.xml.XmlSlurper
+import java.security.MessageDigest
+import java.util.jar.Manifest
+import java.util.zip.ZipFile
+
+def releaseJar = project.ext.baseMetalsBuild.releaseJar
+def sha256 = project.ext.baseMetalsBuild.sha256
+def configuredOreSpawnIdentity = project.ext.baseMetalsBuild.configuredOreSpawnIdentity
+
+def packagedServerProbeDeobfJar = tasks.register('packagedServerProbeDeobfJar', Jar) {
+    dependsOn tasks.named(sourceSets.integrationTest.classesTaskName)
+    archiveFileName = 'basemetalsprobe-deobf.jar'
+    destinationDirectory = layout.buildDirectory.dir('packaged-probes')
+    from sourceSets.integrationTest.output
+}
+def packagedServerProbeJar = renamer.classes(packagedServerProbeDeobfJar) {
+    map.from minecraft.dependency.toSrgFile
+    output = layout.buildDirectory.file('packaged-probes/basemetalsprobe.jar')
+}
+
+def clientIntegrationClasses = layout.buildDirectory.dir('client-integration-fixture/classes')
+def compileClientIntegrationTestMod = tasks.register('compileClientIntegrationTestMod', JavaCompile) {
+    dependsOn tasks.named('classes')
+    source fileTree('src/clientIntegrationTest/java')
+    classpath = files(sourceSets.main.output, sourceSets.main.compileClasspath)
+    destinationDirectory = clientIntegrationClasses
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    options.encoding = 'UTF-8'
+}
+def clientIntegrationTestModJar = tasks.register('clientIntegrationTestModJar', Jar) {
+    dependsOn compileClientIntegrationTestMod
+    archiveFileName = 'basemetalsclientprobe-deobf.jar'
+    destinationDirectory = layout.buildDirectory.dir('client-integration-fixture')
+    from clientIntegrationClasses
+    from 'src/clientIntegrationTest/resources'
+}
+def oreOverlayClientFixtures = layout.buildDirectory.dir('ore-overlay-client-fixtures')
+def generateOreOverlayClientFixtures = tasks.register('generateOreOverlayClientFixtures', JavaExec) {
+    dependsOn tasks.named('modelGeneratorClasses')
+    classpath = sourceSets.modelGenerator.runtimeClasspath
+    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
+    args file('src/main/resources').absolutePath, '--client-fixtures', oreOverlayClientFixtures.get().asFile.absolutePath
+}
+def packagedClientProbeJar = renamer.classes(clientIntegrationTestModJar) {
+    map.from minecraft.dependency.toSrgFile
+    output = layout.buildDirectory.file('client-integration-fixture/basemetalsclientprobe.jar')
+}
+
+def packagedForgeServerRuntime = providers.gradleProperty('packagedForgeServerRuntime')
+def packagedForgeClientRuntime = providers.gradleProperty('packagedForgeClientRuntime')
+def requireRuntimeDirectory = { Provider<String> configuredPath, String propertyName ->
+    if (!configuredPath.isPresent()) {
+        throw new GradleException("Pass -P${propertyName}=<official Forge 28 runtime directory>")
+    }
+    File runtime = file(configuredPath.get()).canonicalFile
+    if (!runtime.isDirectory()) {
+        throw new GradleException("${propertyName} does not name a directory: ${runtime}")
+    }
+    runtime
+}
+def prepareBuildOwnedRunDirectory = { File candidate, String expectedName ->
+    File runDirectory = candidate.canonicalFile
+    File buildDirectory = layout.buildDirectory.get().asFile.canonicalFile
+    if (!runDirectory.toPath().startsWith(buildDirectory.toPath()) || runDirectory.name != expectedName) {
+        throw new GradleException("Unsafe packaged-runtime directory: ${runDirectory}")
+    }
+    delete runDirectory
+    if (!runDirectory.mkdirs()) throw new GradleException("Could not create ${runDirectory}")
+    runDirectory
+}
+def releasedOreSpawnJar = {
+    File artifact = configurations.orespawnRelease.singleFile
+    if (artifact == null || !artifact.isFile() || sha256(artifact) != configuredOreSpawnIdentity.sha256) {
+        throw new GradleException('Exact released OreSpawn artifact is unavailable for packaged testing')
+    }
+    artifact
+}
+def assertPackagedRuntimePassed = { File runDirectory, String marker, String label ->
+    File log = new File(runDirectory, 'logs/latest.log')
+    if (!log.isFile()) throw new GradleException("${label} log is missing: ${log}")
+    String contents = log.getText('UTF-8')
+    if (!contents.contains(marker)) throw new GradleException("${label} did not report ${marker}")
+    List<String> failures = ['Failed to load correctly', 'This crash report has been saved to',
+                             'Encountered an unexpected exception', 'BASEMETALS_RUNTIME_PROBE FAIL',
+                             'BASEMETALS_CLIENT_PROBE FAIL']
+            .findAll { contents.contains(it) }
+    if (!failures.isEmpty()) throw new GradleException("${label} failures: ${failures}")
+    File crashReports = new File(runDirectory, 'crash-reports')
+    if (crashReports.isDirectory() && !fileTree(crashReports).files.isEmpty()) {
+        throw new GradleException("${label} created crash reports in ${crashReports}")
+    }
+}
+
+def packagedServerRunDirectory = layout.buildDirectory.dir('packaged-server-run')
+def preparePackagedServerIntegration = tasks.register('preparePackagedServerIntegration') {
+    dependsOn releaseJar
+    dependsOn packagedServerProbeJar
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doLast {
+        File runDirectory = prepareBuildOwnedRunDirectory(
+                packagedServerRunDirectory.get().asFile, 'packaged-server-run')
+        copy {
+            from releaseJar
+            from packagedServerProbeJar
+            from releasedOreSpawnJar()
+            into new File(runDirectory, 'mods')
+        }
+        new File(runDirectory, 'server.properties').setText('''\
+level-name=basemetals-packaged-server-smoke
+online-mode=false
+spawn-protection=0
+server-port=0
+view-distance=4
+max-tick-time=-1
+''', 'UTF-8')
+        new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
+    }
+}
+def packagedServerProcess = tasks.register('packagedServerProcess', Exec) {
+    group = 'verification'
+    timeout = java.time.Duration.ofMinutes(5)
+    dependsOn preparePackagedServerIntegration
+    doFirst {
+        File runtime = requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime')
+        File launcher = new File(runtime, "forge-${minecraft_version}-${forge_version}.jar")
+        File vanillaServer = new File(runtime, "minecraft_server.${minecraft_version}.jar")
+        File libraries = new File(runtime, 'libraries')
+        [launcher, vanillaServer, libraries].each {
+            if (!it.exists()) throw new GradleException("Incomplete official server runtime: ${it}")
+        }
+        workingDir packagedServerRunDirectory.get().asFile
+        commandLine javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(8)
+            vendor = JvmVendorSpec.ADOPTIUM
+        }.get().executablePath.asFile.absolutePath,
+                '-Xms512m', '-Xmx2g', '-Dbasemetalsprobe.sampleOres=true', '-jar', launcher.absolutePath, 'nogui'
+    }
+}
+tasks.register('packagedServerIntegrationTest') {
+    group = 'verification'
+    description = 'Runs the exact release jars in an official Forge 28 dedicated-server runtime.'
+    dependsOn packagedServerProcess
+    doLast {
+        assertPackagedRuntimePassed(packagedServerRunDirectory.get().asFile,
+                'BASEMETALS_RUNTIME_PROBE PASS', 'packaged dedicated server')
+    }
+}
+
+def packagedServerReloadProcess = tasks.register('packagedServerReloadProcess', Exec) {
+    group = 'verification'
+    timeout = java.time.Duration.ofMinutes(5)
+    dependsOn tasks.named('packagedServerIntegrationTest')
+    doFirst {
+        workingDir packagedServerRunDirectory.get().asFile
+        commandLine packagedServerProcess.get().commandLine
+    }
+}
+
+tasks.register('packagedServerReloadTest') {
+    group = 'verification'
+    description = 'Reopens the packaged server world without resetting its config or save.'
+    dependsOn packagedServerReloadProcess
+    doLast {
+        assertPackagedRuntimePassed(packagedServerRunDirectory.get().asFile,
+                'BASEMETALS_RUNTIME_PROBE PASS', 'reloaded packaged server')
+    }
+}
+
+def packagedClientRunDirectory = layout.buildDirectory.dir('packaged-client-run')
+def preparePackagedClientIntegration = tasks.register('preparePackagedClientIntegration') {
+    dependsOn releaseJar
+    dependsOn packagedClientProbeJar
+    dependsOn tasks.named('verifyReleaseDependencies')
+    dependsOn generateOreOverlayClientFixtures
+    doLast {
+        File runDirectory = prepareBuildOwnedRunDirectory(
+                packagedClientRunDirectory.get().asFile, 'packaged-client-run')
+        copy {
+            from releaseJar
+            from packagedClientProbeJar
+            from releasedOreSpawnJar()
+            into new File(runDirectory, 'mods')
+        }
+        File overlayPack = new File(runDirectory, 'resourcepacks/basemetals-ore-overlay-fixture')
+        copy { from oreOverlayClientFixtures; into overlayPack }
+        new File(overlayPack, 'pack.mcmeta').setText(
+                '{"pack":{"pack_format":4,"description":"Base Metals ore overlay test fixture"}}\n', 'UTF-8')
+        new File(runDirectory, 'options.txt').setText(
+                'fullscreen:false\nlang:en_us\nresourcePacks:["file/basemetals-ore-overlay-fixture"]\n', 'UTF-8')
+    }
+}
+def packagedClientProcess = tasks.register('packagedClientProcess', Exec) {
+    group = 'verification'
+    timeout = java.time.Duration.ofMinutes(3)
+    dependsOn preparePackagedClientIntegration
+    doFirst {
+        File runtime = requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime')
+        File forgeJsonFile = new File(runtime,
+                "versions/${minecraft_version}-forge-${forge_version}/${minecraft_version}-forge-${forge_version}.json")
+        File baseJsonFile = new File(runtime, "versions/${minecraft_version}/${minecraft_version}.json")
+        File baseJar = new File(runtime, "versions/${minecraft_version}/${minecraft_version}.jar")
+        File libraries = new File(runtime, 'libraries')
+        File assets = new File(runtime, 'assets-local')
+        if (!assets.isDirectory()) assets = new File(runtime, 'assets')
+        File natives = new File(runtime, 'natives')
+        File versionNatives = new File(natives, "forge-${forge_version}")
+        if (versionNatives.isDirectory()) natives = versionNatives
+        [forgeJsonFile, baseJsonFile, baseJar, libraries, assets, natives].each {
+            if (!it.exists()) throw new GradleException("Incomplete official client runtime: ${it}")
+        }
+
+        Map forgeJson = (Map) new JsonSlurper().parse(forgeJsonFile)
+        Map baseJson = (Map) new JsonSlurper().parse(baseJsonFile)
+        Map<String, File> classpathByModule = new LinkedHashMap<>()
+        [baseJson, forgeJson].each { Map metadata ->
+            ((List) metadata.libraries).each { Map library ->
+                List<Map> rules = (List<Map>) library.rules
+                boolean allowed = rules == null || rules.isEmpty()
+                if (rules != null) {
+                    rules.each { Map rule ->
+                        Map os = (Map) rule.os
+                        boolean matches = os == null || (os.name == 'windows'
+                                && (os.arch == null || os.arch == System.getProperty('os.arch')))
+                        if (matches) allowed = rule.action == 'allow'
+                    }
+                }
+                if (!allowed) return
+                String relative = (String) ((Map) ((Map) library.downloads).artifact).path
+                File artifact = new File(runtime, "libraries/${relative}")
+                if (!artifact.isFile()) throw new GradleException("Missing official client library: ${artifact}")
+                List<String> coordinates = ((String) library.name).split(':') as List<String>
+                String module = coordinates.size() >= 2
+                        ? "${coordinates[0]}:${coordinates[1]}" : (String) library.name
+                classpathByModule.put(module, artifact)
+            }
+        }
+        List<File> classpathFiles = new ArrayList<>(classpathByModule.values())
+        classpathFiles.add(baseJar)
+        List<String> gameArguments = []
+        gameArguments.addAll((List<String>) ((Map) forgeJson.arguments).game)
+        gameArguments.addAll([
+                '--username', 'BaseMetalsValidation',
+                '--version', "${minecraft_version}-forge-${forge_version}",
+                '--gameDir', packagedClientRunDirectory.get().asFile.absolutePath,
+                '--assetsDir', assets.absolutePath,
+                '--assetIndex', baseJson.assetIndex.id,
+                '--uuid', '00000000-0000-0000-0000-000000000001',
+                '--accessToken', 'validation-token',
+                '--userType', 'legacy',
+                '--versionType', 'release',
+                '--width', '854', '--height', '480'
+        ])
+        workingDir packagedClientRunDirectory.get().asFile
+        commandLine javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(8)
+            vendor = JvmVendorSpec.ADOPTIUM
+        }.get().executablePath.asFile.absolutePath,
+                '-Xms512m', '-Xmx2g', '-Dbasemetalsclientprobe.enabled=true',
+                "-Djava.library.path=${natives.absolutePath}",
+                '-Dminecraft.launcher.brand=basemetals-validation',
+                '-Dminecraft.launcher.version=1',
+                '-cp', classpathFiles.collect { it.absolutePath }.join(File.pathSeparator),
+                (String) forgeJson.mainClass
+        args gameArguments
+    }
+}
+tasks.register('packagedClientIntegrationTest') {
+    group = 'verification'
+    description = 'Loads and renders the exact release jars in an official Forge 28 client runtime.'
+    dependsOn packagedClientProcess
+    doLast {
+        File runDirectory = packagedClientRunDirectory.get().asFile
+        File marker = new File(runDirectory, 'client-smoke-pass.properties')
+        if (!marker.isFile()) throw new GradleException('Packaged client completion marker is missing')
+        Properties values = new Properties()
+        marker.withInputStream { values.load(it) }
+        if (values.getProperty('content_verified') != 'true'
+                || values.getProperty('integrated_world_rendered') != 'true') {
+            throw new GradleException("Packaged client probe failed: ${values}")
+        }
+        assertPackagedRuntimePassed(runDirectory, 'BASEMETALS_CLIENT_PROBE PASS', 'packaged client')
+    }
+}
+
+tasks.register('packagedRuntimeIntegrationTest') {
+    group = 'verification'
+    description = 'Runs the exact Base Metals and OreSpawn jars in official Forge 28 server and client runtimes.'
+    dependsOn tasks.named('packagedServerReloadTest')
+    dependsOn tasks.named('packagedClientIntegrationTest')
+}
+
+tasks.register('contentModeIntegrationTest', Exec) {
+    group = 'verification'
+    description = 'Tests packaged content policies and client/server mode matching with disposable profiles.'
+    dependsOn releaseJar, packagedServerProbeJar, packagedClientProbeJar
+    dependsOn tasks.named('verifyReleaseDependencies')
+    doFirst {
+        File root = prepareBuildOwnedRunDirectory(file("${buildDir}/content-mode-tests"), 'content-mode-tests')
+        File fixture = new File(root, 'fixture')
+        copy {
+            from releaseJar, packagedServerProbeJar, packagedClientProbeJar, releasedOreSpawnJar()
+            into fixture
+        }
+        File java = javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(8)
+            vendor = JvmVendorSpec.ADOPTIUM
+        }.get().executablePath.asFile
+        commandLine 'node', file('tools/test_content_modes.js').absolutePath, java.absolutePath,
+                requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime').absolutePath,
+                requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime').absolutePath,
+                fixture.absolutePath, root.absolutePath
+        if (providers.gradleProperty('contentModeCycleOnly').isPresent()) args '--cycle-only'
+    }
+}

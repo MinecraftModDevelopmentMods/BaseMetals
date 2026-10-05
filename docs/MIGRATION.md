@@ -1,4 +1,4 @@
-# Migrating from Base Metals 1.10 or 1.12
+# Migrating from earlier Base Metals versions
 
 Minecraft 1.13 introduced the flattening, which replaced numeric block and item
 identifiers with names and palette-based block states. Third-party numeric
@@ -6,7 +6,7 @@ blocks cannot be reconstructed by Mojang's vanilla fixer alone, so Base Metals
 installs a narrowly scoped migration hook before Forge reads an old world.
 
 Always upgrade a copy and retain the original 1.10/1.12 world. Install Base
-Metals `3.0.1.113021`, OreSpawn `4.1.0.113021`, and any other 1.13.2 mods needed
+Metals `3.0.1.114041`, OreSpawn `4.1.0.114041`, and any other 1.14.4 mods needed
 by that world. Do not carry MMDLib, Additional Loot Tables, the OreSpawn 3
 plugin, or Base Metals' old fallback generator into the new instance.
 
@@ -37,8 +37,8 @@ nugget, and the MMDLib Vanilla Bits block/item/fluid names.
 
 The migration supports the original Cyano Base Metals 2.4 line and the later
 MMD Base Metals releases for Minecraft 1.10.2 and 1.12.2. It is not a downgrade
-path: do not open a world already saved by Minecraft 1.14 or newer, including
-the Base Metals 1.18.2 port, in Minecraft 1.13.2.
+path: do not open a world already saved by Minecraft 1.15 or newer, including
+the Base Metals 1.18.2 port, in Minecraft 1.14.4.
 
 ## Mod settings
 
@@ -54,11 +54,30 @@ limit what you can make instead. See [Content modes and configuration](CONTENT_M
 
 ## OreSpawn configuration
 
-The Base Metals provider uses the historical 1.13.2 defaults documented in
+The Base Metals provider uses the historical 1.14.4 defaults documented in
 [WORLDGEN.md](WORLDGEN.md), including enabled copper. OreSpawn configuration
 migration remains OreSpawn's responsibility. Keep a copy of the old OreSpawn
 configuration alongside the untouched source world when validating an upgrade.
 
 The generated manifests at `data/basemetals/registry_manifest_1_12.json` and
 `data/basemetals/registry_manifest.json` document the historical registry
-baseline and its 1.13.2 projection.
+baseline and its 1.14.4 projection.
+
+## Moving from Minecraft 1.13.2
+
+Use a copy of your 1.13.2 world, with the 1.14.4 releases of Base Metals and
+OreSpawn. Keep `basemetals-common.toml` and your OreSpawn settings: this port
+uses the same configuration keys, registered names and ore-rule IDs. Existing
+items, recipe-book progress and terrain should remain unchanged. Once Minecraft
+has saved the copy in 1.14.4, do not reopen it in the older game.
+
+Forge 1.13 saved a profession registry that no longer exists in 1.14. Base
+Metals removes that obsolete index when it contains only vanilla professions;
+Minecraft still converts the villagers and their saved trades normally. If
+another mod added professions to that index, Forge keeps its warning so you
+can check that mod's migration support. The original `level.dat` is backed up
+before Base Metals changes it.
+
+The old vanilla sign and dye names are mapped to oak signs and the matching
+1.14 dyes. Other missing registry entries still need the relevant mod's
+migration support; Base Metals does not silently discard them.

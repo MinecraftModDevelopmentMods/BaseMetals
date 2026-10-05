@@ -1,6 +1,7 @@
 package zone.moddev.mc.basemetals;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import org.junit.jupiter.api.Test;
@@ -37,5 +38,18 @@ class MechanicsContractTest {
         assertEquals(7, BaseMetalsEvents.shieldUpgradeCost(
                 MaterialCatalogue.get("brass"), copper, 1),
                 "The 1.12 recipe truncated fractional level costs");
+    }
+
+    @Test
+    void mapsOnlyKnownVanillaNamesRetiredIn114() {
+        String[][] aliases = {{"sign", "oak_sign"}, {"wall_sign", "oak_wall_sign"},
+                {"rose_red", "red_dye"}, {"cactus_green", "green_dye"},
+                {"dandelion_yellow", "yellow_dye"}};
+        for (String[] alias : aliases) {
+            assertEquals("minecraft:" + alias[1], MissingMappings.vanilla114Target(
+                    new net.minecraft.util.ResourceLocation("minecraft", alias[0])).toString());
+        }
+        assertNull(MissingMappings.vanilla114Target(new net.minecraft.util.ResourceLocation("anothermod", "sign")));
+        assertNull(MissingMappings.vanilla114Target(new net.minecraft.util.ResourceLocation("minecraft", "unknown")));
     }
 }

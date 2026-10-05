@@ -35,22 +35,22 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.content.PlateBlock;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAnvil;
-import net.minecraft.block.BlockButton;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.BlockHorizontalFace;
-import net.minecraft.block.BlockLever;
-import net.minecraft.block.BlockPressurePlate;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.BlockFlowingFluid;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.AnvilBlock;
+import net.minecraft.block.AbstractButtonBlock;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.HorizontalFaceBlock;
+import net.minecraft.block.LeverBlock;
+import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.TrapDoorBlock;
+import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.INBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.state.properties.AttachFace;
 import net.minecraft.state.properties.DoorHingeSide;
@@ -58,7 +58,7 @@ import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.state.properties.Half;
 import net.minecraft.state.properties.SlabType;
 import net.minecraft.state.properties.StairsShape;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.datafix.fixes.BlockStateFlatteningMap;
 import net.minecraft.world.storage.SaveHandler;
@@ -75,7 +75,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPersistenceHook {
     private static final LegacyWorldDataHook INSTANCE = new LegacyWorldDataHook();
     private static final ResourceLocation BLOCK_REGISTRY = new ResourceLocation("minecraft", "blocks");
-    private static final Map<String, NBTTagCompound> LEGACY_WORLD_DATA = new ConcurrentHashMap<String, NBTTagCompound>();
+    private static final Map<String, CompoundNBT> LEGACY_WORLD_DATA = new ConcurrentHashMap<String, CompoundNBT>();
     private static final BitSet LEGACY_BASE_METALS_BLOCK_IDS = new BitSet();
     private static final Set<Long> LEGACY_BASE_METALS_CHUNKS = Collections.newSetFromMap(
             new ConcurrentHashMap<Long, Boolean>());
@@ -100,10 +100,11 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         legacyWorldActive = false;
         LEGACY_BASE_METALS_CHUNKS.clear();
         LEGACY_BASE_METALS_BLOCK_COUNTS.clear();
+        removeRetiredProfessionSnapshot(levelDat);
         File source = legacyRegistrySource(levelDat);
         if (source == null) return;
         try (FileInputStream input = new FileInputStream(source)) {
-            NBTTagCompound root = CompressedStreamTools.readCompressed(input);
+            CompoundNBT root = CompressedStreamTools.readCompressed(input);
             if (!root.contains("FML", 10)) return;
             prepareLegacyData(levelDat.getParentFile(), root.getCompound("FML"));
             migrateLoosePlayerData(levelDat, root);
@@ -112,31 +113,78 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         }
     }
 
+    private static void removeRetiredProfessionSnapshot(File levelDat) {
+        if (!levelDat.isFile()) return;
+        try {
+            CompoundNBT root;
+            try (FileInputStream input = new FileInputStream(levelDat)) {
+                root = CompressedStreamTools.readCompressed(input);
+            }
+            if (removeRetiredVanillaProfessionRegistry(root)) writeWithBackup(levelDat, root);
+        } catch (IOException exception) {
+            throw new IllegalStateException("Could not prepare the old villager registry in " + levelDat, exception);
+        }
+    }
+
+    static boolean removeRetiredVanillaProfessionRegistry(CompoundNBT root) {
+        boolean changed = false;
+        for (String namespace : new String[] {"fml", "FML"}) {
+            CompoundNBT registries = root.getCompound(namespace).getCompound("Registries");
+            String key = "minecraft:villagerprofessions";
+            if (!registries.contains(key, 10)) continue;
+            CompoundNBT snapshot = registries.getCompound(key);
+            if (!snapshot.contains("ids", 9)) continue;
+            boolean vanillaOnly = true;
+            for (INBT entry : (ListNBT) snapshot.get("ids")) {
+                if (!(entry instanceof CompoundNBT)) {
+                    vanillaOnly = false;
+                    continue;
+                }
+                String name = ((CompoundNBT) entry).getString("K");
+                if (!Arrays.asList("minecraft:farmer", "minecraft:librarian", "minecraft:priest",
+                        "minecraft:smith", "minecraft:butcher", "minecraft:nitwit").contains(name)) {
+                    vanillaOnly = false;
+                }
+            }
+            for (String list : new String[] {"aliases", "overrides", "dummied"}) {
+                if (snapshot.contains(list, 9) && !((ListNBT) snapshot.get(list)).isEmpty()) vanillaOnly = false;
+            }
+            if (snapshot.getIntArray("blocked").length > 0) vanillaOnly = false;
+            if (!vanillaOnly) continue;
+
+            // Vanilla converts the villagers themselves. This retired Forge registry
+            // is only a saved ID index, not the villagers or their trade offers.
+            registries.remove(key);
+            changed = true;
+        }
+        return changed;
+    }
+
     /** Called by the coremod immediately after a legacy chunk NBT is read. */
-    public static synchronized void prepareLegacyChunk(NBTTagCompound root) {
+    public static synchronized void prepareLegacyChunk(CompoundNBT root) {
         if (root == null) return;
         migrateLegacyItems(root);
         if (!legacyWorldActive || !root.contains("Level", 10)) return;
-        NBTTagCompound level = root.getCompound("Level");
+        CompoundNBT level = root.getCompound("Level");
         int legacyBlocks = countLegacyBaseMetalsBlocks(level);
         if (legacyBlocks > 0) {
             LEGACY_BASE_METALS_BLOCK_COUNTS.put(Long.valueOf(chunkKey(level.getInt("xPos"), level.getInt("zPos"))),
                     Integer.valueOf(legacyBlocks));
         }
         // Chests or entities may contain the only Base Metals items in this chunk.
-        // Mark it as finished terrain too, or 1.13 can regenerate it and lose those items.
-        level.setBoolean("TerrainPopulated", true);
-        level.setBoolean("LightPopulated", true);
-        level.setBoolean(PRESERVE_CHUNK_MARKER, true);
+        // Mark it as finished terrain too, so conversion cannot regenerate it and lose those items.
+        level.putBoolean("TerrainPopulated", true);
+        level.putBoolean("LightPopulated", true);
+        level.putBoolean(PRESERVE_CHUNK_MARKER, true);
     }
 
     /** Called after vanilla datafixing, before a legacy chunk is returned. */
-    public static NBTTagCompound finalizeLegacyChunk(NBTTagCompound root) {
+    public static CompoundNBT finalizeLegacyChunk(CompoundNBT root) {
         if (root != null && root.contains("Level", 10)) {
-            NBTTagCompound level = root.getCompound("Level");
+            CompoundNBT level = root.getCompound("Level");
             if (level.getBoolean(PRESERVE_CHUNK_MARKER)) {
-                level.setString("Status", "postprocessed");
-                level.removeTag(PRESERVE_CHUNK_MARKER);
+                level.putString("Status", "full");
+                level.remove(PRESERVE_CHUNK_MARKER);
             }
         }
         return root;
@@ -150,19 +198,19 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
     @Override public String getModId() { return "FML"; }
 
     @Override
-    public NBTTagCompound getDataForWriting(SaveHandler handler, WorldInfo info) {
-        NBTTagCompound legacy = LEGACY_WORLD_DATA.get(worldKey(handler.getWorldDirectory()));
-        return legacy == null ? new NBTTagCompound() : legacy.copy();
+    public CompoundNBT getDataForWriting(SaveHandler handler, WorldInfo info) {
+        CompoundNBT legacy = LEGACY_WORLD_DATA.get(worldKey(handler.getWorldDirectory()));
+        return legacy == null ? new CompoundNBT() : legacy.copy();
     }
 
     @Override
-    public void readData(SaveHandler handler, WorldInfo info, NBTTagCompound tag) {
+    public void readData(SaveHandler handler, WorldInfo info, CompoundNBT tag) {
         prepareLegacyData(handler.getWorldDirectory(), tag);
     }
 
-    private static synchronized void prepareLegacyData(File worldDirectory, NBTTagCompound tag) {
+    private static synchronized void prepareLegacyData(File worldDirectory, CompoundNBT tag) {
         if (!tag.contains("Registries", 10)) return;
-        NBTTagCompound registries = tag.getCompound("Registries");
+        CompoundNBT registries = tag.getCompound("Registries");
         if (!registries.contains(BLOCK_REGISTRY.toString(), 10)) return;
         String key = worldKey(worldDirectory);
         boolean first = !LEGACY_WORLD_DATA.containsKey(key);
@@ -176,13 +224,13 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         }
     }
 
-    private static int installLegacyBlockStates(NBTTagCompound snapshot) {
+    private static int installLegacyBlockStates(CompoundNBT snapshot) {
         LEGACY_BASE_METALS_BLOCK_IDS.clear();
         Map<ResourceLocation, Integer> ids = new LinkedHashMap<ResourceLocation, Integer>();
-        NBTTagList savedIds = snapshot.getList("ids", 10);
+        ListNBT savedIds = snapshot.getList("ids", 10);
         int highestState = 0;
         for (int index = 0; index < savedIds.size(); index++) {
-            NBTTagCompound entry = savedIds.getCompound(index);
+            CompoundNBT entry = savedIds.getCompound(index);
             String normalized = normalizeLegacyRegistryName(entry.getString("K"));
             int separator = normalized.indexOf(':');
             if (separator < 0) continue;
@@ -200,7 +248,7 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         for (Map.Entry<ResourceLocation, Integer> entry : ids.entrySet()) {
             Block block = resolveCurrentBlock(entry.getKey());
             for (int meta = 0; meta < 16; meta++) {
-                IBlockState state = legacyState(block, entry.getKey().getPath(), meta);
+                BlockState state = legacyState(block, entry.getKey().getPath(), meta);
                 table[(entry.getValue().intValue() << 4) | meta] =
                         BlockStateFlatteningMap.makeDynamic(NBTUtil.writeBlockState(state).toString());
                 mapped++;
@@ -216,87 +264,87 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         return block;
     }
 
-    static IBlockState legacyState(Block block, String path, int meta) {
-        IBlockState state = block.getDefaultState();
-        if (block instanceof PlateBlock) return state.with(PlateBlock.FACING, EnumFacing.byIndex(meta));
-        if (block instanceof CompatibilityDoubleSlabBlock) return state.with(BlockSlab.TYPE, SlabType.DOUBLE);
-        if (block instanceof BlockSlab) return state.with(BlockSlab.TYPE,
+    static BlockState legacyState(Block block, String path, int meta) {
+        BlockState state = block.getDefaultState();
+        if (block instanceof PlateBlock) return state.with(PlateBlock.FACING, Direction.byIndex(meta));
+        if (block instanceof CompatibilityDoubleSlabBlock) return state.with(SlabBlock.TYPE, SlabType.DOUBLE);
+        if (block instanceof SlabBlock) return state.with(SlabBlock.TYPE,
                 (meta & 8) == 0 ? SlabType.BOTTOM : SlabType.TOP);
-        if (block instanceof BlockStairs) {
-            EnumFacing facing = EnumFacing.byIndex(5 - (meta & 3));
-            return state.with(BlockStairs.FACING, facing)
-                    .with(BlockStairs.HALF, (meta & 4) == 0 ? Half.BOTTOM : Half.TOP)
-                    .with(BlockStairs.SHAPE, StairsShape.STRAIGHT)
-                    .with(BlockStairs.WATERLOGGED, Boolean.FALSE);
+        if (block instanceof StairsBlock) {
+            Direction facing = Direction.byIndex(5 - (meta & 3));
+            return state.with(StairsBlock.FACING, facing)
+                    .with(StairsBlock.HALF, (meta & 4) == 0 ? Half.BOTTOM : Half.TOP)
+                    .with(StairsBlock.SHAPE, StairsShape.STRAIGHT)
+                    .with(StairsBlock.WATERLOGGED, Boolean.FALSE);
         }
-        if (block instanceof BlockDoor) {
+        if (block instanceof DoorBlock) {
             if ((meta & 8) != 0) {
-                return state.with(BlockDoor.HALF, DoubleBlockHalf.UPPER)
-                        .with(BlockDoor.HINGE, (meta & 1) != 0 ? DoorHingeSide.RIGHT : DoorHingeSide.LEFT)
-                        .with(BlockDoor.POWERED, Boolean.valueOf((meta & 2) != 0));
+                return state.with(DoorBlock.HALF, DoubleBlockHalf.UPPER)
+                        .with(DoorBlock.HINGE, (meta & 1) != 0 ? DoorHingeSide.RIGHT : DoorHingeSide.LEFT)
+                        .with(DoorBlock.POWERED, Boolean.valueOf((meta & 2) != 0));
             }
-            return state.with(BlockDoor.HALF, DoubleBlockHalf.LOWER)
-                    .with(BlockDoor.FACING, EnumFacing.byHorizontalIndex(meta & 3).rotateYCCW())
-                    .with(BlockDoor.OPEN, Boolean.valueOf((meta & 4) != 0));
+            return state.with(DoorBlock.HALF, DoubleBlockHalf.LOWER)
+                    .with(DoorBlock.FACING, Direction.byHorizontalIndex(meta & 3).rotateYCCW())
+                    .with(DoorBlock.OPEN, Boolean.valueOf((meta & 4) != 0));
         }
-        if (block instanceof BlockTrapDoor) {
-            EnumFacing[] facing = { EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST };
-            return state.with(BlockHorizontal.HORIZONTAL_FACING, facing[meta & 3])
-                    .with(BlockTrapDoor.OPEN, Boolean.valueOf((meta & 4) != 0))
-                    .with(BlockTrapDoor.HALF, (meta & 8) == 0 ? Half.BOTTOM : Half.TOP)
-                    .with(BlockTrapDoor.POWERED, Boolean.FALSE)
-                    .with(BlockTrapDoor.WATERLOGGED, Boolean.FALSE);
+        if (block instanceof TrapDoorBlock) {
+            Direction[] facing = { Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST };
+            return state.with(HorizontalBlock.HORIZONTAL_FACING, facing[meta & 3])
+                    .with(TrapDoorBlock.OPEN, Boolean.valueOf((meta & 4) != 0))
+                    .with(TrapDoorBlock.HALF, (meta & 8) == 0 ? Half.BOTTOM : Half.TOP)
+                    .with(TrapDoorBlock.POWERED, Boolean.FALSE)
+                    .with(TrapDoorBlock.WATERLOGGED, Boolean.FALSE);
         }
         if (block instanceof BaseMetalAnvilBlock) {
-            return state.with(BlockAnvil.FACING, EnumFacing.byHorizontalIndex(meta & 3))
+            return state.with(AnvilBlock.FACING, Direction.byHorizontalIndex(meta & 3))
                     .with(BaseMetalAnvilBlock.DAMAGE, Integer.valueOf(Math.min(2, (meta & 15) >> 2)));
         }
-        if (block instanceof BlockButton) return attachedState(state, meta, BlockButton.POWERED);
-        if (block instanceof BlockLever) return legacyLeverState(state, meta);
-        if (block instanceof BlockPressurePlate) return state.with(BlockPressurePlate.POWERED,
+        if (block instanceof AbstractButtonBlock) return attachedState(state, meta, AbstractButtonBlock.POWERED);
+        if (block instanceof LeverBlock) return legacyLeverState(state, meta);
+        if (block instanceof PressurePlateBlock) return state.with(PressurePlateBlock.POWERED,
                 Boolean.valueOf(meta > 0));
-        if (block instanceof BlockFlowingFluid) return state.with(BlockFlowingFluid.LEVEL,
+        if (block instanceof FlowingFluidBlock) return state.with(FlowingFluidBlock.LEVEL,
                 Integer.valueOf(Math.min(15, meta)));
         return state;
     }
 
-    private static IBlockState attachedState(IBlockState state, int meta,
+    private static BlockState attachedState(BlockState state, int meta,
             net.minecraft.state.BooleanProperty powered) {
-        EnumFacing oldFacing;
+        Direction oldFacing;
         switch (meta & 7) {
-            case 0: oldFacing = EnumFacing.DOWN; break;
-            case 1: oldFacing = EnumFacing.EAST; break;
-            case 2: oldFacing = EnumFacing.WEST; break;
-            case 3: oldFacing = EnumFacing.SOUTH; break;
-            case 4: oldFacing = EnumFacing.NORTH; break;
-            default: oldFacing = EnumFacing.UP;
+            case 0: oldFacing = Direction.DOWN; break;
+            case 1: oldFacing = Direction.EAST; break;
+            case 2: oldFacing = Direction.WEST; break;
+            case 3: oldFacing = Direction.SOUTH; break;
+            case 4: oldFacing = Direction.NORTH; break;
+            default: oldFacing = Direction.UP;
         }
-        AttachFace face = oldFacing == EnumFacing.DOWN ? AttachFace.CEILING
-                : oldFacing == EnumFacing.UP ? AttachFace.FLOOR : AttachFace.WALL;
-        EnumFacing horizontal = oldFacing.getAxis().isHorizontal() ? oldFacing : EnumFacing.NORTH;
-        return state.with(BlockHorizontalFace.FACE, face)
-                .with(BlockHorizontal.HORIZONTAL_FACING, horizontal)
+        AttachFace face = oldFacing == Direction.DOWN ? AttachFace.CEILING
+                : oldFacing == Direction.UP ? AttachFace.FLOOR : AttachFace.WALL;
+        Direction horizontal = oldFacing.getAxis().isHorizontal() ? oldFacing : Direction.NORTH;
+        return state.with(HorizontalFaceBlock.FACE, face)
+                .with(HorizontalBlock.HORIZONTAL_FACING, horizontal)
                 .with(powered, Boolean.valueOf((meta & 8) != 0));
     }
 
-    private static IBlockState legacyLeverState(IBlockState state, int meta) {
+    private static BlockState legacyLeverState(BlockState state, int meta) {
         int orientation = meta & 7;
         AttachFace face;
-        EnumFacing horizontal;
+        Direction horizontal;
         if (orientation == 0 || orientation == 7) {
             face = AttachFace.CEILING;
-            horizontal = orientation == 0 ? EnumFacing.EAST : EnumFacing.NORTH;
+            horizontal = orientation == 0 ? Direction.EAST : Direction.NORTH;
         } else if (orientation == 5 || orientation == 6) {
             face = AttachFace.FLOOR;
-            horizontal = orientation == 6 ? EnumFacing.EAST : EnumFacing.NORTH;
+            horizontal = orientation == 6 ? Direction.EAST : Direction.NORTH;
         } else {
             face = AttachFace.WALL;
-            horizontal = new EnumFacing[] { EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.WEST,
-                    EnumFacing.SOUTH, EnumFacing.NORTH }[orientation];
+            horizontal = new Direction[] { Direction.NORTH, Direction.EAST, Direction.WEST,
+                    Direction.SOUTH, Direction.NORTH }[orientation];
         }
-        return state.with(BlockHorizontalFace.FACE, face)
-                .with(BlockHorizontal.HORIZONTAL_FACING, horizontal)
-                .with(BlockLever.POWERED, Boolean.valueOf((meta & 8) != 0));
+        return state.with(HorizontalFaceBlock.FACE, face)
+                .with(HorizontalBlock.HORIZONTAL_FACING, horizontal)
+                .with(LeverBlock.POWERED, Boolean.valueOf((meta & 8) != 0));
     }
 
     static Map<Integer, String> legacyBlockIdsForTest(java.nio.file.Path root) throws IOException {
@@ -310,12 +358,12 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         return embeddedBlockIds();
     }
 
-    private static Map<Integer, String> idsFromRoot(NBTTagCompound root) {
+    private static Map<Integer, String> idsFromRoot(CompoundNBT root) {
         Map<Integer, String> result = new LinkedHashMap<Integer, String>();
-        NBTTagList ids = root.getCompound("FML").getCompound("Registries")
+        ListNBT ids = root.getCompound("FML").getCompound("Registries")
                 .getCompound(BLOCK_REGISTRY.toString()).getList("ids", 10);
         for (int index = 0; index < ids.size(); index++) {
-            NBTTagCompound entry = ids.getCompound(index);
+            CompoundNBT entry = ids.getCompound(index);
             result.put(Integer.valueOf(entry.getInt("V")), normalizeLegacyRegistryName(entry.getString("K")));
         }
         return result;
@@ -342,7 +390,7 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         return value.indexOf(':') < 0 ? BaseMetals.MOD_ID + ":" + value : value;
     }
 
-    private static void migrateLoosePlayerData(File levelDat, NBTTagCompound root) throws IOException {
+    private static void migrateLoosePlayerData(File levelDat, CompoundNBT root) throws IOException {
         boolean changed = migrateLegacyItems(root) > 0;
         if (changed && levelDat.isFile()) writeWithBackup(levelDat, root);
         File playerData = new File(levelDat.getParentFile(), "playerdata");
@@ -351,31 +399,31 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         Arrays.sort(files);
         for (File file : files) {
             try (FileInputStream input = new FileInputStream(file)) {
-                NBTTagCompound player = CompressedStreamTools.readCompressed(input);
+                CompoundNBT player = CompressedStreamTools.readCompressed(input);
                 if (migrateLegacyItems(player) > 0) writeWithBackup(file, player);
             }
         }
     }
 
-    private static int migrateLegacyItems(INBTBase value) {
+    private static int migrateLegacyItems(INBT value) {
         int changed = 0;
-        if (value instanceof NBTTagCompound) {
-            NBTTagCompound compound = (NBTTagCompound) value;
+        if (value instanceof CompoundNBT) {
+            CompoundNBT compound = (CompoundNBT) value;
             String id = compound.getString("id");
             String vanillaBlockEntity = VANILLA_BLOCK_ENTITY_IDS.get(id);
             if (vanillaBlockEntity != null) {
-                compound.setString("id", vanillaBlockEntity);
+                compound.putString("id", vanillaBlockEntity);
                 id = vanillaBlockEntity;
                 changed++;
             }
             if ("forge:bucketfilled".equalsIgnoreCase(id) && compound.contains("tag", 10)) {
-                NBTTagCompound tag = compound.getCompound("tag");
+                CompoundNBT tag = compound.getCompound("tag");
                 String target = MissingMappings.fluidTargetPath(tag.getString("FluidName"));
                 if (ModContent.fluids().containsKey(target)) {
-                    compound.setString("id", BaseMetals.MOD_ID + ":" + target + "_bucket");
-                    tag.removeTag("FluidName");
-                    tag.removeTag("Amount");
-                    if (tag.isEmpty()) compound.removeTag("tag");
+                    compound.putString("id", BaseMetals.MOD_ID + ":" + target + "_bucket");
+                    tag.remove("FluidName");
+                    tag.remove("Amount");
+                    if (tag.isEmpty()) compound.remove("tag");
                     changed++;
                 }
             } else if (compound.contains("Count", 99)) {
@@ -384,26 +432,26 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
                         || "mmdlib".equals(oldId.getNamespace()))) {
                     ResourceLocation target = MissingMappings.itemTargetId(oldId.getPath());
                     if (!target.equals(oldId)) {
-                        compound.setString("id", target.toString());
+                        compound.putString("id", target.toString());
                         changed++;
                     }
                     if (compound.contains("Damage", 99) && compound.getInt("Damage") > 0) {
-                        NBTTagCompound tag = compound.contains("tag", 10)
-                                ? compound.getCompound("tag") : new NBTTagCompound();
+                        CompoundNBT tag = compound.contains("tag", 10)
+                                ? compound.getCompound("tag") : new CompoundNBT();
                         if (!tag.contains("Damage", 99)) {
-                            tag.setInt("Damage", compound.getInt("Damage"));
-                            compound.setTag("tag", tag);
+                            tag.putInt("Damage", compound.getInt("Damage"));
+                            compound.put("tag", tag);
                             changed++;
                         }
                     }
                 }
             }
             for (String key : new ArrayList<String>(compound.keySet())) {
-                INBTBase child = compound.getTag(key);
+                INBT child = compound.get(key);
                 if (child != null) changed += migrateLegacyItems(child);
             }
-        } else if (value instanceof NBTTagList) {
-            NBTTagList list = (NBTTagList) value;
+        } else if (value instanceof ListNBT) {
+            ListNBT list = (ListNBT) value;
             for (int index = 0; index < list.size(); index++) changed += migrateLegacyItems(list.get(index));
         }
         return changed;
@@ -442,7 +490,7 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         catch (RuntimeException ignored) { return null; }
     }
 
-    private static void writeWithBackup(File file, NBTTagCompound data) throws IOException {
+    private static void writeWithBackup(File file, CompoundNBT data) throws IOException {
         File backup = new File(file.getParentFile(), file.getName() + ".basemetals-legacy-backup");
         if (!backup.exists()) Files.copy(file.toPath(), backup.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
         File temporary = new File(file.getParentFile(), file.getName() + ".basemetals.tmp");
@@ -461,14 +509,14 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         for (File candidate : new File[] { levelDat, new File(levelDat.getParentFile(), "level.dat_old") }) {
             if (!candidate.isFile()) continue;
             try (FileInputStream input = new FileInputStream(candidate)) {
-                NBTTagCompound root = CompressedStreamTools.readCompressed(input);
+                CompoundNBT root = CompressedStreamTools.readCompressed(input);
                 if (root.contains("FML", 10) && containsLegacyBaseMetalsRegistryEntry(root)) return candidate;
             } catch (IOException ignored) {}
         }
         return null;
     }
 
-    private static boolean containsLegacyBaseMetalsRegistryEntry(NBTTagCompound root) {
+    private static boolean containsLegacyBaseMetalsRegistryEntry(CompoundNBT root) {
         for (String id : idsFromRoot(root).values()) {
             int separator = id.indexOf(':');
             String namespace = separator < 0 ? BaseMetals.MOD_ID : id.substring(0, separator);
@@ -477,11 +525,11 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         return false;
     }
 
-    private static int countLegacyBaseMetalsBlocks(NBTTagCompound level) {
+    private static int countLegacyBaseMetalsBlocks(CompoundNBT level) {
         int found = 0;
-        NBTTagList sections = level.getList("Sections", 10);
+        ListNBT sections = level.getList("Sections", 10);
         for (int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++) {
-            NBTTagCompound section = sections.getCompound(sectionIndex);
+            CompoundNBT section = sections.getCompound(sectionIndex);
             byte[] blocks = section.getByteArray("Blocks");
             if (blocks.length != 4096) continue;
             byte[] add = section.getByteArray("Add");

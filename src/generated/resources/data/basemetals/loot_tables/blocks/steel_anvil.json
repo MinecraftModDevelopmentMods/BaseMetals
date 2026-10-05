@@ -1,0 +1,48 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "basemetals_steel_anvil",
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_anvil",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BlockStateTag:{damage:\"1\"}}",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "basemetals:steel_anvil",
+                  "properties": {
+                    "damage": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BlockStateTag:{damage:\"2\"}}",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "basemetals:steel_anvil",
+                  "properties": {
+                    "damage": "2"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

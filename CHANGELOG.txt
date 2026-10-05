@@ -1,3 +1,28 @@
+Base Metals 3.0.1.114041
+
+- Bring the finished 1.13.2 port to Minecraft 1.14.4 and Forge 28.2.26.
+- Keep existing blocks, items, recipes, save identities, High/Low Fantasy
+  settings and material-based recipe discovery.
+- Fix a crossbow crash when firing without bolts in Creative mode. Crossbows
+  use an iron bolt for the free shot instead of Minecraft's arrow fallback.
+- Use native 1.14 configuration widgets and Forge's Mods-list Config button.
+  OreSpawn's cog opens the same screen.
+- Use Forge's fluid textures and colours without the old renderer patch.
+- Move smith trades to Armorer, Toolsmith and Weaponsmith, with normal
+  restocking and profession experience. Add the old blacksmith loot to each
+  profession's village chest.
+- Generate block loot tables for 1.14, including doors, slabs and worn anvils.
+- Keep legacy-world migration and custom-anvil handling, while removing the
+  obsolete Forge 1.13 leaves patch.
+- Let 1.13 saves load without Forge stopping on the retired vanilla villager
+  registry. Villagers and their existing trades remain for Minecraft to convert.
+- Preserve the old vanilla sign and dye registry names when upgrading a world.
+- Keep Kiri's ore overlays, vanilla host textures and automatic model updates.
+- Build against the published OreSpawn 4.1.0.114041 release. The eleven ore
+  rules and their defaults are unchanged.
+- Split the longer build checks into focused scripts and retain ForgeGradle 7,
+  reproducible archives, checked dependencies and isolated test launches.
+
 Base Metals 3.0.1.113021
 
 - Add the configuration screen to Forge's Mods list and OreSpawn's cog, with

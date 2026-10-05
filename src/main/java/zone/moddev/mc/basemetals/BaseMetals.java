@@ -30,7 +30,6 @@ public final class BaseMetals {
         LegacyWorldDataHook.register();
         ContentModeNetwork.register();
         ModContent.initializeFluids();
-        CrushingRecipe.register();
         LootConditionManager.registerCondition(new ContentModeLootCondition.Serializer());
         ModEntities.initialize();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BaseMetalsConfig.SPEC);

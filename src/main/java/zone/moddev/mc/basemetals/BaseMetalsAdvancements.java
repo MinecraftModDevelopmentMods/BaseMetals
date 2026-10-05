@@ -11,10 +11,10 @@ import zone.moddev.mc.basemetals.content.MaterialItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
@@ -42,7 +42,7 @@ final class BaseMetalsAdvancements {
 
     private BaseMetalsAdvancements() {}
 
-    static void onCrafted(EntityPlayerMP player, ItemStack result) {
+    static void onCrafted(ServerPlayerEntity player, ItemStack result) {
         if (result.getItem() instanceof CrackhammerItem) award(player, "geologist");
         ResourceLocation id = result.getItem().getRegistryName();
         if (baseMetals(id) && (id.getPath().endsWith("_blend") || id.getPath().endsWith("_smallblend"))) {
@@ -50,7 +50,7 @@ final class BaseMetalsAdvancements {
         }
     }
 
-    static void onSmelted(EntityPlayerMP player, ItemStack result) {
+    static void onSmelted(ServerPlayerEntity player, ItemStack result) {
         ResourceLocation id = result.getItem().getRegistryName();
         if (!baseMetals(id) || !id.getPath().endsWith("_ingot")) return;
         award(player, "this_is_new");
@@ -59,30 +59,30 @@ final class BaseMetalsAdvancements {
         if (advancement != null) award(player, advancement);
     }
 
-    static void onPlaced(EntityPlayerMP player, IBlockState state) {
+    static void onPlaced(ServerPlayerEntity player, BlockState state) {
         ResourceLocation id = state.getBlock().getRegistryName();
         if (baseMetals(id) && state.isIn(STORAGE_BLOCKS)) award(player, "blocktastic");
     }
 
-    static void onEquipment(EntityPlayerMP player) {
+    static void onEquipment(ServerPlayerEntity player) {
         if (fullArmor(player, "coldiron") && mainHandSword(player, "coldiron")) award(player, "demon_slayer");
         if (fullArmor(player, "mithril") && mainHandSword(player, "mithril")) award(player, "angel_of_death");
         if (fullArmor(player, "aquarium") && player.isInWater()) award(player, "scuba_diver");
         if (fullArmor(player, "adamantine")) award(player, "juggernaut");
-        if (material(player.getItemStackFromSlot(EntityEquipmentSlot.FEET), "starsteel")) award(player, "moon_boots");
+        if (material(player.getItemStackFromSlot(EquipmentSlotType.FEET), "starsteel")) award(player, "moon_boots");
     }
 
-    private static boolean fullArmor(EntityPlayerMP player, String material) {
-        EntityEquipmentSlot[] slots = { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST,
-                EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
-        for (EntityEquipmentSlot slot : slots) {
+    private static boolean fullArmor(ServerPlayerEntity player, String material) {
+        EquipmentSlotType[] slots = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST,
+                EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
+        for (EquipmentSlotType slot : slots) {
             ItemStack stack = player.getItemStackFromSlot(slot);
-            if (!(stack.getItem() instanceof ItemArmor) || !material(stack, material)) return false;
+            if (!(stack.getItem() instanceof ArmorItem) || !material(stack, material)) return false;
         }
         return true;
     }
 
-    private static boolean mainHandSword(EntityPlayerMP player, String material) {
+    private static boolean mainHandSword(ServerPlayerEntity player, String material) {
         ItemStack stack = player.getHeldItemMainhand();
         return stack.getItem() instanceof MaterialItems.Sword && material(stack, material);
     }
@@ -96,7 +96,7 @@ final class BaseMetalsAdvancements {
         return id != null && BaseMetals.MOD_ID.equals(id.getNamespace());
     }
 
-    static boolean award(EntityPlayerMP player, String id) {
+    static boolean award(ServerPlayerEntity player, String id) {
         Advancement advancement = player.getServer().getAdvancementManager().getAdvancement(
                 new ResourceLocation(BaseMetals.MOD_ID, id));
         if (advancement == null) return false;

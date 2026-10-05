@@ -1,0 +1,24 @@
+{
+  "uuid": "7a7c65ec-8ac2-4b2d-b90d-f1be25c15413",
+  "progress": {
+    "basemetals:juggernaut": {
+      "criteria": {
+        "event": "2026-10-03 12:00:00 +0000"
+      },
+      "done": true
+    },
+    "basemetals:recipes/adamantine_bow": {
+      "criteria": {
+        "has_material": "2026-10-03 12:00:00 +0000"
+      },
+      "done": true
+    },
+    "basemetals:recipes/steel_bow": {
+      "criteria": {
+        "has_ingredient_1": "2026-10-03 12:00:00 +0000"
+      },
+      "done": true
+    },
+    "DataVersion": 1631
+  }
+}

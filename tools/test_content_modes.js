@@ -11,8 +11,8 @@ if (path.dirname(root) !== build || path.basename(root) !== 'content-mode-tests'
   throw new Error(`Content-mode profiles must be inside the build directory: ${root}`);
 }
 
-const version = '1.13.2';
-const forge = '25.0.223';
+const version = '1.14.4';
+const forge = '28.2.26';
 const forgeMetadata = JSON.parse(fs.readFileSync(path.join(clientRuntime, 'versions', `${version}-forge-${forge}`, `${version}-forge-${forge}.json`)));
 const vanillaMetadata = JSON.parse(fs.readFileSync(path.join(clientRuntime, 'versions', version, `${version}.json`)));
 const libraries = new Map();
@@ -29,6 +29,8 @@ for (const metadata of [vanillaMetadata, forgeMetadata]) {
   }
 }
 const classpath = [...libraries.values(), path.join(clientRuntime, 'versions', version, `${version}.jar`)].join(path.delimiter);
+const versionNatives = path.join(clientRuntime, 'natives', `forge-${forge}`);
+const natives = fs.existsSync(versionNatives) ? versionNatives : path.join(clientRuntime, 'natives');
 const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 function profile(directory, client, mode, oldConfig) {
@@ -109,14 +111,18 @@ async function scenario(test, reload = false) {
     '-jar', path.join(serverRuntime, `forge-${version}-${forge}.jar`), 'nogui'], server, reload ? 'server-reload' : 'server-console');
   let clientProcess;
   try {
-    await waitFor(serverProcess, path.join(server, 'logs', 'latest.log'), 'BASEMETALS_CONTENT_MODE_PROBE PASS', 120000);
+    // A reload can leave the previous latest.log in place until Forge starts.
+    await waitFor(serverProcess, path.join(server, reload ? 'server-reload.log' : 'server-console.log'),
+      'BASEMETALS_CONTENT_MODE_PROBE PASS', 120000);
     clientProcess = launch(['-Xms256m', '-Xmx2g', '-Dbasemetalsclientprobe.enabled=true',
       '-Dbasemetalsclientprobe.login=true', `-Dbasemetalsclientprobe.expectedMode=${test.client === 'low_fantasy' ? 'low_fantasy' : 'high_fantasy'}`,
       `-Dbasemetalsclientprobe.modeSwitch=${!!test.cycle}`,
       `-Dbasemetalsclientprobe.expectReject=${!!test.reject}`, `-Dbasemetalsclientprobe.port=${port}`,
-      `-Djava.library.path=${path.join(clientRuntime, 'natives')}`, '-cp', classpath, forgeMetadata.mainClass,
+      `-Djava.library.path=${natives}`, '-cp', classpath, forgeMetadata.mainClass,
       ...forgeMetadata.arguments.game, '--username', 'ModeValidation', '--version', `${version}-forge-${forge}`,
-      '--gameDir', client, '--assetsDir', path.join(clientRuntime, 'assets-local'), '--assetIndex', vanillaMetadata.assetIndex.id,
+      '--gameDir', client, '--assetsDir', path.join(clientRuntime,
+        fs.existsSync(path.join(clientRuntime, 'assets-local')) ? 'assets-local' : 'assets'),
+      '--assetIndex', vanillaMetadata.assetIndex.id,
       '--uuid', '00000000-0000-0000-0000-000000000002', '--accessToken', 'validation-token', '--userType', 'legacy',
       '--versionType', 'release', '--width', '854', '--height', '480'], client, reload ? 'client-reload' : 'client-console');
     await finish(clientProcess, 120000);

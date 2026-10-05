@@ -1,0 +1,95 @@
+import groovy.json.JsonSlurper
+import groovy.xml.XmlSlurper
+import java.security.MessageDigest
+import java.util.jar.Manifest
+import java.util.zip.ZipFile
+
+def sha256 = project.ext.baseMetalsBuild.sha256
+
+def verifyGeneratedData = tasks.register('verifyGeneratedData', Exec) {
+    group = 'verification'
+    description = 'Regenerates and proves that the committed Minecraft 1.14.4 resource projection is current.'
+    commandLine 'node', 'tools/generate_114_resources.js'
+    def snapshot = {
+        Map<String, String> result = new TreeMap<>()
+        [file('src/generated/resources'),
+         file('src/main/resources/data/basemetals/orespawn/provider.json')].each { File root ->
+            if (root.isFile()) {
+                result[project.relativePath(root).replace('\\', '/')] = sha256(root)
+            } else if (root.isDirectory()) {
+                fileTree(root) { exclude '.cache/**' }.files.findAll { it.isFile() }.each { File generated ->
+                    result[project.relativePath(generated).replace('\\', '/')] = sha256(generated)
+                }
+            }
+        }
+        result
+    }
+    doFirst { ext.beforeGeneration = snapshot() }
+    doLast {
+        Map<String, String> afterGeneration = snapshot()
+        if (ext.beforeGeneration != afterGeneration) {
+            Set<String> beforePaths = ext.beforeGeneration.keySet()
+            Set<String> afterPaths = afterGeneration.keySet()
+            List<String> added = (afterPaths - beforePaths).toList().sort()
+            List<String> removed = (beforePaths - afterPaths).toList().sort()
+            List<String> changed = (beforePaths.intersect(afterPaths)).findAll {
+                ext.beforeGeneration[it] != afterGeneration[it]
+            }.toList().sort()
+            throw new GradleException('Generated resources were stale. Commit the generator output. ' +
+                    "Added=${added.take(20)}, removed=${removed.take(20)}, changed=${changed.take(20)}")
+        }
+    }
+}
+def oreModelsDirectory = file('src/main/resources/assets/basemetals/models/block')
+def oreModelSnapshot = { File directory ->
+    fileTree(directory) { include '*_ore.json' }.files.collectEntries {
+        [(it.name): sha256(it)]
+    }
+}
+def generateOreModels = tasks.register('generateOreModels', JavaExec) {
+    group = 'data generation'
+    description = 'Uses vanilla host textures when an ore overlay is present, otherwise keeps the legacy model.'
+    dependsOn tasks.named('modelGeneratorClasses')
+    classpath = sourceSets.modelGenerator.runtimeClasspath
+    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
+    args file('src/main/resources').absolutePath
+}
+tasks.named('processResources') { dependsOn generateOreModels }
+def oreModelVerificationDirectory = layout.buildDirectory.dir('ore-model-verification')
+def verifyGeneratedOreModels = tasks.register('verifyGeneratedOreModels', JavaExec) {
+    group = 'verification'
+    description = 'Checks the saved ore models without rewriting them.'
+    dependsOn tasks.named('modelGeneratorClasses')
+    classpath = sourceSets.modelGenerator.runtimeClasspath
+    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
+    args file('src/main/resources').absolutePath, '--output', oreModelVerificationDirectory.get().asFile.absolutePath
+
+    doFirst {
+        File output = oreModelVerificationDirectory.get().asFile.canonicalFile
+        File buildDirectory = layout.buildDirectory.get().asFile.canonicalFile
+        if (!output.toPath().startsWith(buildDirectory.toPath()) || output.name != 'ore-model-verification') {
+            throw new GradleException("Unsafe ore-model verification directory: ${output}")
+        }
+        delete output
+    }
+    doLast {
+        File expectedModels = new File(oreModelVerificationDirectory.get().asFile, 'assets/basemetals/models/block')
+        if (oreModelSnapshot(oreModelsDirectory) != oreModelSnapshot(expectedModels)) {
+            throw new GradleException('Ore models are stale. Build the project and commit the updated JSON files.')
+        }
+    }
+}
+// Release checks must see stale models before the normal build updates them.
+generateOreModels.configure { mustRunAfter verifyGeneratedOreModels }
+tasks.named('verifyReleaseArtifacts') { dependsOn verifyGeneratedOreModels }
+tasks.named('check') {
+    dependsOn tasks.named('verifyDevelopmentLaunches')
+    dependsOn verifyGeneratedData
+    dependsOn tasks.named('verifyReleaseConfiguration')
+    dependsOn tasks.named('verifyReleaseDependencies')
+    dependsOn tasks.named('verifyMavenCoordinates')
+}
+
+project.ext.baseMetalsBuild.putAll([
+        generateOreModels: generateOreModels
+])

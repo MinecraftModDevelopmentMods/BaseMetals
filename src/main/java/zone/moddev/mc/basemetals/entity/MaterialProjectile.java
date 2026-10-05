@@ -2,23 +2,23 @@ package zone.moddev.mc.basemetals.entity;
 
 import zone.moddev.mc.basemetals.content.ModContent;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-public final class MaterialProjectile extends EntityArrow implements IEntityAdditionalSpawnData {
+public final class MaterialProjectile extends AbstractArrowEntity implements IEntityAdditionalSpawnData {
     private ItemStack ammunition = ItemStack.EMPTY;
 
-    public MaterialProjectile(EntityType<?> type, World world) {
+    public MaterialProjectile(EntityType<? extends AbstractArrowEntity> type, World world) {
         super(type, world);
     }
 
-    public MaterialProjectile(EntityType<?> type, World world, EntityLivingBase shooter, ItemStack ammunition) {
+    public MaterialProjectile(EntityType<? extends AbstractArrowEntity> type, World world, LivingEntity shooter, ItemStack ammunition) {
         super(type, shooter, world);
         this.ammunition = single(ammunition);
     }
@@ -39,13 +39,18 @@ public final class MaterialProjectile extends EntityArrow implements IEntityAddi
     }
 
     @Override
-    public void writeAdditional(NBTTagCompound tag) {
-        super.writeAdditional(tag);
-        if (!ammunition.isEmpty()) tag.setTag("Ammunition", ammunition.write(new NBTTagCompound()));
+    public net.minecraft.network.IPacket<?> createSpawnPacket() {
+        return net.minecraftforge.fml.network.NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    public void readAdditional(NBTTagCompound tag) {
+    public void writeAdditional(CompoundNBT tag) {
+        super.writeAdditional(tag);
+        if (!ammunition.isEmpty()) tag.put("Ammunition", ammunition.write(new CompoundNBT()));
+    }
+
+    @Override
+    public void readAdditional(CompoundNBT tag) {
         super.readAdditional(tag);
         ammunition = tag.contains("Ammunition", 10)
                 ? ItemStack.read(tag.getCompound("Ammunition")) : ItemStack.EMPTY;

@@ -1,0 +1,46 @@
+import groovy.xml.MarkupBuilder
+
+// Use Gradle launches so Forge prepares the assets, natives and game classpath.
+def genIntellijRuns = tasks.register('genIntellijRuns') {
+    group = 'ide'
+    description = 'Adds client and server launches to IntelliJ using the Gradle wrapper.'
+    doLast {
+        ['Client': 'runClient', 'Server': 'runServer'].each { label, taskName ->
+            File configurationFile = file(".idea/runConfigurations/BaseMetals_${label}.xml")
+            configurationFile.parentFile.mkdirs()
+            StringWriter text = new StringWriter()
+            def xml = new MarkupBuilder(text)
+            xml.component(name: 'ProjectRunConfigurationManager') {
+                configuration(default: 'false', name: "Base Metals ${label}",
+                        type: 'GradleRunConfiguration', factoryName: 'Gradle') {
+                    ExternalSystemSettings {
+                        option(name: 'executionName', value: "Base Metals ${label}")
+                        option(name: 'externalProjectPath', value: '$PROJECT_DIR$')
+                        option(name: 'externalSystemIdString', value: 'GRADLE')
+                        option(name: 'scriptParameters', value: '--console=plain')
+                        option(name: 'taskNames') {
+                            list { option(value: taskName) }
+                        }
+                        option(name: 'vmOptions', value: '')
+                    }
+                    method(v: '2')
+                }
+            }
+            configurationFile.setText(text.toString() + '\n', 'UTF-8')
+        }
+    }
+}
+
+tasks.register('verifyIntellijProductionRuns') {
+    group = 'verification'
+    dependsOn genIntellijRuns
+    doLast {
+        ['Client': 'runClient', 'Server': 'runServer'].each { label, taskName ->
+            String xml = file(".idea/runConfigurations/BaseMetals_${label}.xml").getText('UTF-8')
+            if (!xml.contains('GradleRunConfiguration') || !xml.contains(taskName)
+                    || xml.contains('probe') || xml.contains('integrationTest')) {
+                throw new GradleException("IntelliJ ${label} launch is not production-only")
+            }
+        }
+    }
+}

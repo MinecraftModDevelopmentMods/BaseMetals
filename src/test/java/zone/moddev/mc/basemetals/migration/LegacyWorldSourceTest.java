@@ -15,12 +15,66 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
 
 class LegacyWorldSourceTest {
     @TempDir
     Path temporaryWorld;
+
+    @Test
+    void removesOnlyTheRetiredVanillaProfessionIndex() {
+        CompoundNBT root = professionSnapshot("minecraft:smith");
+        CompoundNBT entity = new CompoundNBT();
+        entity.putInt("Profession", 3);
+        root.put("VillagerProof", entity);
+
+        assertTrue(LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(root));
+        assertTrue(!root.getCompound("fml").getCompound("Registries")
+                .contains("minecraft:villagerprofessions"));
+        assertEquals(3, root.getCompound("VillagerProof").getInt("Profession"));
+        assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(root));
+
+        CompoundNBT custom = professionSnapshot("anothermod:smith");
+        assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(custom));
+        assertTrue(custom.getCompound("fml").getCompound("Registries")
+                .contains("minecraft:villagerprofessions"));
+
+        CompoundNBT blocked = professionSnapshot("minecraft:smith");
+        blocked.getCompound("fml").getCompound("Registries")
+                .getCompound("minecraft:villagerprofessions").putIntArray("blocked", new int[] {7});
+        assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(blocked));
+
+        CompoundNBT aliased = professionSnapshot("minecraft:smith");
+        ListNBT aliases = new ListNBT();
+        aliases.add(new StringNBT("anothermod:smith"));
+        aliased.getCompound("fml").getCompound("Registries")
+                .getCompound("minecraft:villagerprofessions").put("aliases", aliases);
+        assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(aliased));
+
+        CompoundNBT malformed = professionSnapshot("minecraft:smith");
+        malformed.getCompound("fml").getCompound("Registries")
+                .getCompound("minecraft:villagerprofessions").put("ids", aliases);
+        assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(malformed));
+    }
+
+    private static CompoundNBT professionSnapshot(String name) {
+        CompoundNBT entry = new CompoundNBT();
+        entry.putString("K", name);
+        entry.putInt("V", 3);
+        ListNBT ids = new ListNBT();
+        ids.add(entry);
+        CompoundNBT snapshot = new CompoundNBT();
+        snapshot.put("ids", ids);
+        CompoundNBT registries = new CompoundNBT();
+        registries.put("minecraft:villagerprofessions", snapshot);
+        CompoundNBT fml = new CompoundNBT();
+        fml.put("Registries", registries);
+        CompoundNBT root = new CompoundNBT();
+        root.put("fml", fml);
+        return root;
+    }
 
     @Test
     void usesTheUntouchedLegacyRegistryAfterForgeRewritesLevelDat() throws IOException {
@@ -41,11 +95,13 @@ class LegacyWorldSourceTest {
     }
 
     @Test
-    void repairsTheBrokenForge25LeavesFixGenericCallBeforeLegacyChunksLoad() throws IOException {
+    void targetsNative114ChunkLoadingWithoutTheOldLeavesPatch() throws IOException {
         String coremod = new String(Files.readAllBytes(Paths.get(
-                "src/main/resources/coremods/basemetals_113_compatibility.js")), "UTF-8");
-        assertTrue(coremod.contains("basemetals_forge25_leaves_fixer"));
-        assertTrue(coremod.contains("Ljava/lang/Object;)Lcom/mojang/datafixers/Typed;"));
+                "src/main/resources/coremods/basemetals_114_compatibility.js")), "UTF-8");
+        assertTrue(coremod.contains("net.minecraft.world.chunk.storage.ChunkLoader"));
+        assertTrue(coremod.contains("Ljava/util/function/Supplier;"));
+        assertTrue(!coremod.contains("leaves_fixer"));
+        assertTrue(!coremod.contains("fluid_renderer"));
     }
 
     @Test
@@ -55,28 +111,28 @@ class LegacyWorldSourceTest {
         boolean previous = active.getBoolean(null);
         try {
             active.setBoolean(null, true);
-            NBTTagCompound stack = new NBTTagCompound();
-            stack.setString("id", "basemetals:carbon_powder");
-            stack.setByte("Count", (byte) 1);
-            NBTTagList items = new NBTTagList();
+            CompoundNBT stack = new CompoundNBT();
+            stack.putString("id", "basemetals:carbon_powder");
+            stack.putByte("Count", (byte) 1);
+            ListNBT items = new ListNBT();
             items.add(stack);
-            NBTTagCompound chest = new NBTTagCompound();
-            chest.setString("id", "Chest");
-            chest.setTag("Items", items);
-            NBTTagList tileEntities = new NBTTagList();
+            CompoundNBT chest = new CompoundNBT();
+            chest.putString("id", "Chest");
+            chest.put("Items", items);
+            ListNBT tileEntities = new ListNBT();
             tileEntities.add(chest);
-            NBTTagCompound level = new NBTTagCompound();
-            level.setInt("xPos", 12);
-            level.setInt("zPos", -7);
-            level.setTag("TileEntities", tileEntities);
-            NBTTagCompound root = new NBTTagCompound();
-            root.setTag("Level", level);
+            CompoundNBT level = new CompoundNBT();
+            level.putInt("xPos", 12);
+            level.putInt("zPos", -7);
+            level.put("TileEntities", tileEntities);
+            CompoundNBT root = new CompoundNBT();
+            root.put("Level", level);
 
             LegacyWorldDataHook.prepareLegacyChunk(root);
-            NBTTagCompound finalized = LegacyWorldDataHook.finalizeLegacyChunk(root);
+            CompoundNBT finalized = LegacyWorldDataHook.finalizeLegacyChunk(root);
 
-            assertEquals("postprocessed", finalized.getCompound("Level").getString("Status"));
-            NBTTagCompound migratedChest = finalized.getCompound("Level")
+            assertEquals("full", finalized.getCompound("Level").getString("Status"));
+            CompoundNBT migratedChest = finalized.getCompound("Level")
                     .getList("TileEntities", 10).getCompound(0);
             assertEquals("minecraft:chest", migratedChest.getString("id"));
             assertEquals("basemetals:coal_powder",
@@ -87,23 +143,23 @@ class LegacyWorldSourceTest {
     }
 
     private void writeLevel(String name, int dataVersion, int blockId, String blockName) throws IOException {
-        NBTTagCompound entry = new NBTTagCompound();
-        entry.setInt("V", blockId);
-        entry.setString("K", blockName);
-        NBTTagList ids = new NBTTagList();
+        CompoundNBT entry = new CompoundNBT();
+        entry.putInt("V", blockId);
+        entry.putString("K", blockName);
+        ListNBT ids = new ListNBT();
         ids.add(entry);
 
-        NBTTagCompound blocks = new NBTTagCompound();
-        blocks.setTag("ids", ids);
-        NBTTagCompound registries = new NBTTagCompound();
-        registries.setTag("minecraft:blocks", blocks);
-        NBTTagCompound fml = new NBTTagCompound();
-        fml.setTag("Registries", registries);
-        NBTTagCompound data = new NBTTagCompound();
-        data.setInt("DataVersion", dataVersion);
-        NBTTagCompound level = new NBTTagCompound();
-        level.setTag("FML", fml);
-        level.setTag("Data", data);
+        CompoundNBT blocks = new CompoundNBT();
+        blocks.put("ids", ids);
+        CompoundNBT registries = new CompoundNBT();
+        registries.put("minecraft:blocks", blocks);
+        CompoundNBT fml = new CompoundNBT();
+        fml.put("Registries", registries);
+        CompoundNBT data = new CompoundNBT();
+        data.putInt("DataVersion", dataVersion);
+        CompoundNBT level = new CompoundNBT();
+        level.put("FML", fml);
+        level.put("Data", data);
 
         try (FileOutputStream output = new FileOutputStream(temporaryWorld.resolve(name).toFile())) {
             CompressedStreamTools.writeCompressed(level, output);

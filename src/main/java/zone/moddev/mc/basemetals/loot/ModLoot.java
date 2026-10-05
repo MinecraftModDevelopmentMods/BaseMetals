@@ -8,10 +8,9 @@ import zone.moddev.mc.basemetals.BaseMetals;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
-import net.minecraft.world.storage.loot.LootEntryTable;
+import net.minecraft.world.storage.loot.TableLootEntry;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,8 +31,9 @@ public final class ModLoot {
         inject(injections, "spawn_bonus_chest", "spawn_bonus_chest");
         inject(injections, "stronghold_corridor", "stronghold_corridor");
         inject(injections, "stronghold_crossing", "stronghold_crossing");
-        // Minecraft 1.13 still has the single village blacksmith chest.
-        inject(injections, "village_blacksmith", "village_blacksmith");
+        inject(injections, "village/village_armorer", "village_blacksmith");
+        inject(injections, "village/village_toolsmith", "village_blacksmith");
+        inject(injections, "village/village_weaponsmith", "village_blacksmith");
         INJECTIONS = Collections.unmodifiableMap(injections);
     }
 
@@ -43,9 +43,8 @@ public final class ModLoot {
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation auxiliary = INJECTIONS.get(event.getName());
         if (auxiliary == null || event.getTable().getPool("basemetals_injection") != null) return;
-        LootEntry entry = new LootEntryTable(auxiliary, 1, 0, new LootCondition[0], "basemetals_table");
-        event.getTable().addPool(new LootPool(new LootEntry[] { entry }, new LootCondition[0],
-                new RandomValueRange(1.0F), new RandomValueRange(0.0F), "basemetals_injection"));
+        event.getTable().addPool(LootPool.builder().name("basemetals_injection")
+                .rolls(new RandomValueRange(1.0F)).addEntry(TableLootEntry.builder(auxiliary)).build());
     }
 
     private static void inject(Map<ResourceLocation, ResourceLocation> injections, String vanilla, String auxiliary) {
