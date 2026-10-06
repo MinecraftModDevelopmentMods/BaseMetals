@@ -75,7 +75,7 @@ def quoteEclipseLaunchPathArguments = { String contents ->
     contents
 }
 
-def syncForge28EclipseLaunches = tasks.register('syncForge28EclipseLaunches') {
+def syncForge31EclipseLaunches = tasks.register('syncForge31EclipseLaunches') {
     group = 'ide'
     dependsOn tasks.named('processResources')
     doLast {
@@ -126,13 +126,13 @@ def syncForge28EclipseLaunches = tasks.register('syncForge28EclipseLaunches') {
         }
     }
 }
-tasks.matching { it.name == 'genEclipseRuns' }.configureEach { finalizedBy syncForge28EclipseLaunches }
-tasks.matching { it.name == 'eclipse' }.configureEach { finalizedBy syncForge28EclipseLaunches }
+tasks.matching { it.name == 'genEclipseRuns' }.configureEach { finalizedBy syncForge31EclipseLaunches }
+tasks.matching { it.name == 'eclipse' }.configureEach { finalizedBy syncForge31EclipseLaunches }
 
 tasks.register('isolateEclipseProductionRuns') {
     group = 'ide'
     dependsOn tasks.named('genEclipseRuns')
-    dependsOn syncForge28EclipseLaunches
+    dependsOn syncForge31EclipseLaunches
     dependsOn configureEclipseBuildship
 }
 
@@ -198,7 +198,7 @@ tasks.register('verifyEclipseProductionClasspath') {
                     || !contents.contains("MOD_CLASSES\" value=\"${expectedModClasses}\"")
                     || !contents.contains('MAIN_TYPE" value="net.minecraftforge.launcher.Main"')
                     || !contents.contains('--main net.minecraftforge.userdev.LaunchTesting')) {
-                throw new GradleException("${name} is not an isolated Forge 28 launch: ${leaked}")
+                throw new GradleException("${name} is not an isolated Forge 31 launch: ${leaked}")
             }
         }
         List<File> allLaunches = fileTree(projectDir) { include '*.launch' }.files.sort { it.name }

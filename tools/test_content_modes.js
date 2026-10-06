@@ -11,8 +11,8 @@ if (path.dirname(root) !== build || path.basename(root) !== 'content-mode-tests'
   throw new Error(`Content-mode profiles must be inside the build directory: ${root}`);
 }
 
-const version = '1.14.4';
-const forge = '28.2.26';
+const version = '1.15.2';
+const forge = '31.2.57';
 const forgeMetadata = JSON.parse(fs.readFileSync(path.join(clientRuntime, 'versions', `${version}-forge-${forge}`, `${version}-forge-${forge}.json`)));
 const vanillaMetadata = JSON.parse(fs.readFileSync(path.join(clientRuntime, 'versions', version, `${version}.json`)));
 const libraries = new Map();
@@ -29,8 +29,9 @@ for (const metadata of [vanillaMetadata, forgeMetadata]) {
   }
 }
 const classpath = [...libraries.values(), path.join(clientRuntime, 'versions', version, `${version}.jar`)].join(path.delimiter);
-const versionNatives = path.join(clientRuntime, 'natives', `forge-${forge}`);
-const natives = fs.existsSync(versionNatives) ? versionNatives : path.join(clientRuntime, 'natives');
+const versionNatives = [path.join(clientRuntime, 'natives', `${version}-forge-${forge}`),
+  path.join(clientRuntime, 'natives', `forge-${forge}`)].find(directory => fs.existsSync(directory));
+const natives = versionNatives || path.join(clientRuntime, 'natives');
 const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 function profile(directory, client, mode, oldConfig) {

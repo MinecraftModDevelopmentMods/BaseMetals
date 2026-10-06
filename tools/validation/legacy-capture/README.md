@@ -12,7 +12,7 @@ equipment and playerdata checks.
 
 The first run saves a registry manifest and stops the server. A second run
 checks that the original Minecraft version can reload the fixture. Only then
-should a copy be opened in Minecraft 1.14.4.
+should a copy be opened in Minecraft 1.15.2.
 
 ## Build
 
@@ -41,7 +41,7 @@ Keep that specification under ignored build output. It supplies these paths:
 
 - `output`: a new, empty directory for disposable test servers and results;
 - `java8`: the Java 8 executable;
-- `runtime110` and `runtime114`: installed Forge server directories, including
+- `runtime110` and `runtime115`: installed Forge server directories, including
   their launcher, Minecraft server JAR and `libraries` directory;
 - `captureJar`, `modJar` and `probeJar`: the fixture generator, packaged Base
   Metals candidate and packaged runtime probe;
@@ -68,7 +68,7 @@ Minecraft's player-advancement manager before checking it again on reload.
 `src/integrationTest/resources/upgrade/advancement_progress_113.json` covers
 an armour achievement and both ingot- and rod-based recipe discovery.
 
-The 1.14 probe checks block identities and saved orientation/state, item
+The 1.15 probe checks block identities and saved orientation/state, item
 identity and count, durability, names, enchantments, proof NBT, worn armour,
 playerdata and converted fluid buckets. Connected faces, powered states and
 flowing-fluid levels can change normally when Minecraft ticks the world;

@@ -15,7 +15,7 @@ public final class MaterialProjectileRenderer extends ArrowRenderer<MaterialProj
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(MaterialProjectile projectile) {
+    public ResourceLocation getEntityTexture(MaterialProjectile projectile) {
         return ARROW_TEXTURE;
     }
 }

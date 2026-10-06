@@ -37,7 +37,7 @@ function treeDigest(directory) {
 function prepare(directory, runtime, launcher, mods) {
     if (fs.existsSync(directory)) throw new Error('Refusing to overwrite ' + directory);
     fs.mkdirSync(path.join(directory, 'mods'), { recursive: true });
-    for (const file of [launcher, 'minecraft_server.' + (phase === 'capture' ? captureVersion : '1.14.4') + '.jar']) {
+    for (const file of [launcher, 'minecraft_server.' + (phase === 'capture' ? captureVersion : '1.15.2') + '.jar']) {
         fs.copyFileSync(path.join(runtime, file), path.join(directory, file));
     }
     fs.cpSync(path.join(runtime, 'libraries'), path.join(directory, 'libraries'), { recursive: true });
@@ -99,8 +99,8 @@ async function run(directory, launcher, label, marker, properties = []) {
         } else {
             const source = profile.world || path.join(root, 'capture', profile.id, 'world');
             const before = treeDigest(source);
-            const launcher = 'forge-1.14.4-28.2.26.jar';
-            prepare(directory, spec.runtime114, launcher, [spec.modJar, spec.probeJar, spec.oreSpawn]);
+            const launcher = 'forge-1.15.2-31.2.57.jar';
+            prepare(directory, spec.runtime115, launcher, [spec.modJar, spec.probeJar, spec.oreSpawn]);
             fs.cpSync(source, path.join(directory, 'world'), { recursive: true });
             if (profile.advancementFixture) {
                 const fixture = JSON.parse(fs.readFileSync(profile.advancementFixture, 'utf8'));

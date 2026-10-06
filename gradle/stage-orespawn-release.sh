@@ -4,6 +4,11 @@ set -euo pipefail
 repository="${1:?Usage: stage-orespawn-release.sh <repository-directory>}"
 value() { sed -n "s/^$1=//p" gradle.properties; }
 
+if [[ "$(value orespawn_dependency_mode)" == "candidate" ]]; then
+  echo 'Publication is blocked: pin the public OreSpawn 1.15.2 release first.' >&2
+  exit 1
+fi
+
 project_id="$(value orespawn_curse_project_id)"
 file_id="$(value orespawn_curse_file_id)"
 expected_sha="$(value orespawn_sha256)"

@@ -252,7 +252,7 @@ public final class MaterialItems {
                 if (infiniteShot) projectile.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                 world.addEntity(projectile);
             }
-            world.playSound(null, player.posX, player.posY, player.posZ,
+            world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(),
                     SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
                     1.0F / (random.nextFloat() * 0.4F + 1.2F) + power * 0.5F);
             if (!infiniteShot && !player.abilities.isCreativeMode) {

@@ -132,8 +132,8 @@ def verifyLegacyUpgradeRun = tasks.register('verifyLegacyUpgradeRun') {
         if (fixtureManifest.isFile()) {
             boolean from110 = new File(runDirectory,
                     'world/BASEMETALS_1_10_FIXTURE_COMPLETE.txt').isFile()
-            String marker = from110 ? 'BASEMETALS_1_10_TO_1_14_UPGRADE PASS'
-                    : 'BASEMETALS_1_12_TO_1_14_UPGRADE PASS'
+            String marker = from110 ? 'BASEMETALS_1_10_TO_1_15_UPGRADE PASS'
+                    : 'BASEMETALS_1_12_TO_1_15_UPGRADE PASS'
             if (!text.contains(marker)) {
                 throw new GradleException("Complete ${from110 ? '1.10' : '1.12'} fixture verification did not report PASS")
             }

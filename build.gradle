@@ -18,6 +18,16 @@ group = project.mod_group
 version = project.mod_version
 base.archivesName = 'BaseMetals'
 
+// Keep local candidate paths out of version control and Eclipse's public setup.
+File localPropertiesFile = file('.local-gradle.properties')
+if (localPropertiesFile.isFile()) {
+    Properties localProperties = new Properties()
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+    localProperties.each { key, value ->
+        if (!project.hasProperty(key.toString())) project.ext.set(key.toString(), value)
+    }
+}
+
 def eclipseWorkspaceProjectName = projectDir.name
 def expectedMavenGroup = 'zone.moddev.mc.basemetals'
 def expectedMavenArtifact = 'BaseMetals'
@@ -113,7 +123,7 @@ def mainModClasses = "${mod_id}%%${forgeMainOutputPath}${File.pathSeparator}${mo
 def forgeProbeOutputPath = integrationTestModClassesDirectory.get().asFile.absolutePath
 def probeModClasses = mainModClasses + "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}" +
         "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}"
-def forge28RunTargets = [client: 'fmluserdevclient', server: 'fmluserdevserver',
+def forge31RunTargets = [client: 'fmluserdevclient', server: 'fmluserdevserver',
         data: 'fmluserdevdata', runtimeProbeServer: 'fmluserdevserver', legacyUpgradeServer: 'fmluserdevserver']
 
 minecraft {
@@ -126,7 +136,7 @@ minecraft {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             systemProperty 'forge.logging.console.level', 'info'
             mods { basemetals { source sourceSets.main } }
-            environment 'target', forge28RunTargets[name]
+            environment 'target', forge31RunTargets[name]
             environment 'MCP_MAPPINGS', "${mapping_channel}_${mapping_version}"
             environment 'MCP_VERSION', mcp_version
             environment 'FORGE_VERSION', forge_version
@@ -172,7 +182,7 @@ def prepareIntegrationTestModClasses = tasks.register('prepareIntegrationTestMod
 }
 
 tasks.withType(JavaExec).configureEach { JavaExec runTask ->
-    def runName = forge28RunTargets.keySet().find { runTask.name == 'run' + it.capitalize() }
+    def runName = forge31RunTargets.keySet().find { runTask.name == 'run' + it.capitalize() }
     if (runName != null) {
         runTask.dependsOn prepareForgeRunModClasses
         if (runTask.name in ['runRuntimeProbeServer', 'runLegacyUpgradeServer']) {
@@ -190,7 +200,15 @@ tasks.withType(JavaExec).configureEach { JavaExec runTask ->
 
 def orespawnModule = "mmd-orespawn-${project.orespawn_curse_project_id}"
 def orespawnVerificationRepository = project.findProperty('orespawnVerificationRepository')
-def orespawnCoordinate = "curse.maven:${orespawnModule}:${orespawn_curse_file_id}"
+def orespawnCandidate = project.orespawn_dependency_mode == 'candidate'
+def orespawnCandidateRepository = project.findProperty('orespawnCandidateRepository')
+if (orespawnCandidate && orespawnCandidateRepository == null) {
+    throw new GradleException('Local qualification needs -PorespawnCandidateRepository=<staged Maven repository>. ' +
+            'You may also set it in the ignored .local-gradle.properties file.')
+}
+def orespawnCoordinate = orespawnCandidate
+        ? "zone.moddev.mc.orespawn:OreSpawn:${orespawn_version}"
+        : "curse.maven:${orespawnModule}:${orespawn_curse_file_id}"
 repositories {
     minecraft.mavenizer(it)
     maven fg.forgeMaven
@@ -204,13 +222,17 @@ repositories {
     exclusiveContent {
         forRepository {
             maven {
-                name = orespawnVerificationRepository == null ? 'CurseMaven' : 'OreSpawnReleaseVerificationMirror'
-                url = orespawnVerificationRepository == null
+                name = orespawnCandidate ? 'OreSpawnLocalCandidate' : 'OreSpawnReleaseVerificationMirror'
+                url = orespawnCandidate ? uri(orespawnCandidateRepository)
+                        : orespawnVerificationRepository == null
                         ? uri('https://www.cursemaven.com') : uri(orespawnVerificationRepository)
                 metadataSources { artifact() }
             }
         }
-        filter { includeModule('curse.maven', orespawnModule) }
+        filter {
+            if (orespawnCandidate) includeModule('zone.moddev.mc.orespawn', 'OreSpawn')
+            else includeModule('curse.maven', orespawnModule)
+        }
     }
 }
 
@@ -225,6 +247,7 @@ dependencies {
 renamer.mappings.from minecraft.dependency.toSrgFile
 configurations.named('testRuntimeClasspath') {
     exclude group: 'curse.maven', module: orespawnModule
+    exclude group: 'zone.moddev.mc.orespawn', module: 'OreSpawn'
 }
 
 tasks.named('processResources', ProcessResources) {
@@ -253,6 +276,7 @@ tasks.named('jar', Jar) {
                 'Specification-Version': '1', 'Implementation-Title': 'Base Metals',
                 'Implementation-Version': project.version, 'Implementation-Vendor': project.mod_authors,
                 'Built-On-Java': '8', 'Built-On': "${project.minecraft_version}-${project.forge_version}",
+                'OreSpawn-Dependency-Mode': project.orespawn_dependency_mode,
                 'Build-Target': "minecraft-${project.minecraft_version}-${project.loader_name}-" +
                         "${project.forge_version}-java-${project.java_version}"])
     }
@@ -279,6 +303,7 @@ ext.baseMetalsBuild = [
         expectedMavenArtifact: expectedMavenArtifact,
         expectedMavenCoordinate: expectedMavenCoordinate,
         eclipseWorkspaceProjectName: eclipseWorkspaceProjectName,
+        orespawnCandidate: orespawnCandidate,
         prepareIntegrationTestModClasses: prepareIntegrationTestModClasses,
         releaseJar: releaseJar
 ]

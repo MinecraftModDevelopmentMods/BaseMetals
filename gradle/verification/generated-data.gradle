@@ -8,8 +8,8 @@ def sha256 = project.ext.baseMetalsBuild.sha256
 
 def verifyGeneratedData = tasks.register('verifyGeneratedData', Exec) {
     group = 'verification'
-    description = 'Regenerates and proves that the committed Minecraft 1.14.4 resource projection is current.'
-    commandLine 'node', 'tools/generate_114_resources.js'
+    description = 'Regenerates and proves that the committed Minecraft 1.15.2 resource projection is current.'
+    commandLine 'node', 'tools/generate_115_resources.js'
     def snapshot = {
         Map<String, String> result = new TreeMap<>()
         [file('src/generated/resources'),

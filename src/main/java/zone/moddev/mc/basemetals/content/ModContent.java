@@ -36,7 +36,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.ToolType;
@@ -531,8 +530,6 @@ public final class ModContent {
     private static class HarvestOre extends HarvestBlock {
         HarvestOre(Properties properties, int level) { super(properties, level); }
 
-        // Cutout rendering leaves the transparent parts of the ore overlay clear.
-        @Override public BlockRenderLayer getRenderLayer() { return BlockRenderLayer.CUTOUT_MIPPED; }
     }
     private static class HarvestPane extends PaneBlock {
         private final int level;

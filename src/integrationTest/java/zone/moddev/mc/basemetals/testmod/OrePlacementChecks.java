@@ -40,6 +40,7 @@ final class OrePlacementChecks {
             ServerWorld world = server.getWorld(dimension);
             String dimensionId = DimensionType.getKey(dimension).toString();
             Map<String, Integer> counts = new LinkedHashMap<>();
+            int rockCount = 0;
             int centerX = dimension == DimensionType.OVERWORLD ? world.getSpawnPoint().getX() >> 4 : 0;
             int centerZ = dimension == DimensionType.OVERWORLD ? world.getSpawnPoint().getZ() >> 4 : 0;
 
@@ -50,6 +51,8 @@ final class OrePlacementChecks {
                         if (section == null || section.isEmpty()) continue;
                         for (int x = 0; x < 16; x++) for (int y = 0; y < 16; y++) for (int z = 0; z < 16; z++) {
                             Block block = section.getBlockState(x, y, z).getBlock();
+                            if ("mineralogy".equals(block.getRegistryName().getNamespace())
+                                    && !block.getRegistryName().getPath().endsWith("_ore")) rockCount++;
                             if (!rules.containsKey(block)) {
                                 if (block == ModContent.blocksById().get("antimony_ore").get()
                                         || block == ModContent.blocksById().get("bismuth_ore").get()) {
@@ -77,6 +80,10 @@ final class OrePlacementChecks {
             }
 
             if (counts.isEmpty()) throw new IllegalStateException("No Base Metals ore in " + dimensionId + " sample");
+            if (dimension == DimensionType.OVERWORLD && net.minecraftforge.fml.ModList.get().isLoaded("mineralogy")) {
+                if (rockCount == 0) throw new IllegalStateException("Mineralogy strata are absent from the ore sample");
+                LogManager.getLogger("basemetalsprobe").info("BASEMETALS_MINERALOGY_COEXISTENCE PASS rocks={}", rockCount);
+            }
             LogManager.getLogger("basemetalsprobe").info("BASEMETALS_ORE_SAMPLE PASS dimension={} chunks=25 counts={}",
                     dimensionId, counts);
         }
