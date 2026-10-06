@@ -1,8 +1,8 @@
 {
   "pack": {
     "description": "Base Metals packaged-client qualification fixture",
-    "forge:resource_pack_format": 4,
-    "forge:data_pack_format": 4,
-    "pack_format": 4
+    "forge:resource_pack_format": 5,
+    "forge:data_pack_format": 5,
+    "pack_format": 5
   }
 }

@@ -52,7 +52,7 @@ def packagedForgeServerRuntime = providers.gradleProperty('packagedForgeServerRu
 def packagedForgeClientRuntime = providers.gradleProperty('packagedForgeClientRuntime')
 def requireRuntimeDirectory = { Provider<String> configuredPath, String propertyName ->
     if (!configuredPath.isPresent()) {
-        throw new GradleException("Pass -P${propertyName}=<official Forge 28 runtime directory>")
+        throw new GradleException("Pass -P${propertyName}=<official Forge 31 runtime directory>")
     }
     File runtime = file(configuredPath.get()).canonicalFile
     if (!runtime.isDirectory()) {
@@ -109,6 +109,7 @@ def preparePackagedServerIntegration = tasks.register('preparePackagedServerInte
         }
         new File(runDirectory, 'server.properties').setText('''\
 level-name=basemetals-packaged-server-smoke
+level-seed=0
 online-mode=false
 spawn-protection=0
 server-port=0
@@ -140,7 +141,7 @@ def packagedServerProcess = tasks.register('packagedServerProcess', Exec) {
 }
 tasks.register('packagedServerIntegrationTest') {
     group = 'verification'
-    description = 'Runs the exact release jars in an official Forge 28 dedicated-server runtime.'
+    description = 'Runs the exact release jars in an official Forge 31 dedicated-server runtime.'
     dependsOn packagedServerProcess
     doLast {
         assertPackagedRuntimePassed(packagedServerRunDirectory.get().asFile,
@@ -186,7 +187,7 @@ def preparePackagedClientIntegration = tasks.register('preparePackagedClientInte
         File overlayPack = new File(runDirectory, 'resourcepacks/basemetals-ore-overlay-fixture')
         copy { from oreOverlayClientFixtures; into overlayPack }
         new File(overlayPack, 'pack.mcmeta').setText(
-                '{"pack":{"pack_format":4,"description":"Base Metals ore overlay test fixture"}}\n', 'UTF-8')
+                '{"pack":{"pack_format":5,"description":"Base Metals ore overlay test fixture"}}\n', 'UTF-8')
         new File(runDirectory, 'options.txt').setText(
                 'fullscreen:false\nlang:en_us\nresourcePacks:["file/basemetals-ore-overlay-fixture"]\n', 'UTF-8')
     }
@@ -205,7 +206,8 @@ def packagedClientProcess = tasks.register('packagedClientProcess', Exec) {
         File assets = new File(runtime, 'assets-local')
         if (!assets.isDirectory()) assets = new File(runtime, 'assets')
         File natives = new File(runtime, 'natives')
-        File versionNatives = new File(natives, "forge-${forge_version}")
+        File versionNatives = new File(natives, "${minecraft_version}-forge-${forge_version}")
+        if (!versionNatives.isDirectory()) versionNatives = new File(natives, "forge-${forge_version}")
         if (versionNatives.isDirectory()) natives = versionNatives
         [forgeJsonFile, baseJsonFile, baseJar, libraries, assets, natives].each {
             if (!it.exists()) throw new GradleException("Incomplete official client runtime: ${it}")
@@ -268,7 +270,7 @@ def packagedClientProcess = tasks.register('packagedClientProcess', Exec) {
 }
 tasks.register('packagedClientIntegrationTest') {
     group = 'verification'
-    description = 'Loads and renders the exact release jars in an official Forge 28 client runtime.'
+    description = 'Loads and renders the exact release jars in an official Forge 31 client runtime.'
     dependsOn packagedClientProcess
     doLast {
         File runDirectory = packagedClientRunDirectory.get().asFile
@@ -286,9 +288,48 @@ tasks.register('packagedClientIntegrationTest') {
 
 tasks.register('packagedRuntimeIntegrationTest') {
     group = 'verification'
-    description = 'Runs the exact Base Metals and OreSpawn jars in official Forge 28 server and client runtimes.'
+    description = 'Runs the exact Base Metals and OreSpawn jars in official Forge 31 server and client runtimes.'
     dependsOn tasks.named('packagedServerReloadTest')
     dependsOn tasks.named('packagedClientIntegrationTest')
+}
+
+tasks.register('packagedMineralogyIntegrationTest', Exec) {
+    group = 'verification'
+    description = 'Checks the same ore rules inside real Mineralogy strata, without adding a second provider.'
+    dependsOn releaseJar, packagedServerProbeJar, tasks.named('verifyReleaseDependencies')
+    timeout = java.time.Duration.ofMinutes(5)
+    doFirst {
+        String configuredJar = providers.gradleProperty('mineralogyTestJar').orNull
+        if (configuredJar == null) throw new GradleException('Pass -PmineralogyTestJar=<Mineralogy 1.15.2 jar>')
+        File mineralogy = file(configuredJar)
+        if (!mineralogy.isFile() || sha256(mineralogy) !=
+                'ADACF365CCAFF7091980AA92ED1FCC14892AA6CD4B10E82336C8512525341DFA') {
+            throw new GradleException('Expected the qualified Mineralogy 6.0.1.115021 artifact')
+        }
+
+        File runDirectory = prepareBuildOwnedRunDirectory(
+                file("${buildDir}/packaged-mineralogy-run"), 'packaged-mineralogy-run')
+        copy {
+            from releaseJar, packagedServerProbeJar, releasedOreSpawnJar(), mineralogy
+            into new File(runDirectory, 'mods')
+        }
+        new File(runDirectory, 'server.properties').setText(
+                'level-name=world\nlevel-seed=0\nonline-mode=false\nserver-port=0\nview-distance=4\nmax-tick-time=-1\n', 'UTF-8')
+        new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
+        File runtime = requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime')
+        workingDir runDirectory
+        commandLine javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(8)
+            vendor = JvmVendorSpec.ADOPTIUM
+        }.get().executablePath.asFile.absolutePath,
+                '-Xms512m', '-Xmx2g', '-Dbasemetalsprobe.sampleOres=true', '-jar',
+                new File(runtime, "forge-${minecraft_version}-${forge_version}.jar").absolutePath, 'nogui'
+    }
+    doLast {
+        File runDirectory = file("${buildDir}/packaged-mineralogy-run")
+        assertPackagedRuntimePassed(runDirectory, 'BASEMETALS_RUNTIME_PROBE PASS', 'Mineralogy coexistence')
+        assertPackagedRuntimePassed(runDirectory, 'BASEMETALS_MINERALOGY_COEXISTENCE PASS', 'Mineralogy strata')
+    }
 }
 
 tasks.register('contentModeIntegrationTest', Exec) {

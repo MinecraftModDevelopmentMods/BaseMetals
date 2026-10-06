@@ -1,3 +1,20 @@
+Base Metals 3.0.1.115021
+
+- Bring Base Metals to Minecraft 1.15.2 and Forge 31.2.57.
+- Update ore overlays, metal bars, doors, trapdoors and molten fluids for
+  Minecraft 1.15's rendering changes.
+- Keep bows firing arrows and crossbows firing bolts, including the free iron
+  bolt used when firing without ammunition in Creative mode.
+- Keep material arrows and bolts visible in flight and when stuck in a target.
+- Keep the 1.14 recipes, equipment effects, configuration screens, smith trades and village loot.
+- Preserve Kiri's ore overlays and their resource-pack-aware vanilla backgrounds.
+- Support upgrades from Cyano and MMD 1.10, MMD 1.12, and the 1.13 and 1.14
+  ports, keeping existing blocks, items, equipment and saved data.
+- Keep ForgeGradle 7 and Java 8 game compatibility. Builds and IDE launches
+  keep test code separate from the mod.
+- Use the published OreSpawn 4.1.0.115021 release for ore placement. The eleven
+  ore rules and their defaults are unchanged.
+
 Base Metals 3.0.1.114041
 
 - Bring the finished 1.13.2 port to Minecraft 1.14.4 and Forge 28.2.26.

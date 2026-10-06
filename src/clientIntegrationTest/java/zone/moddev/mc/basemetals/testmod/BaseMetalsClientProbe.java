@@ -26,7 +26,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.Items;
 import net.minecraft.resources.IResource;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -41,7 +42,8 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.fml.client.gui.GuiModList;
+import net.minecraftforge.fml.client.gui.screen.ModListScreen;
+import net.minecraftforge.fml.client.gui.widget.ModListWidget;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import org.apache.logging.log4j.LogManager;
@@ -67,6 +69,7 @@ public final class BaseMetalsClientProbe {
     private int state;
     private int stateTicks;
     private int renderedFrames;
+    private final java.util.Set<Integer> renderedProjectiles = new java.util.HashSet<>();
 
     public BaseMetalsClientProbe() {
         instance = this;
@@ -76,8 +79,18 @@ public final class BaseMetalsClientProbe {
     @SubscribeEvent
     public static void onWorldRendered(RenderWorldLastEvent event) {
         BaseMetalsClientProbe probe = instance;
-        if (probe != null && Boolean.getBoolean("basemetalsclientprobe.enabled") && probe.state == 1) {
+        if (probe != null && Boolean.getBoolean("basemetalsclientprobe.enabled")
+                && (probe.state == 1 || probe.state == 4)) {
             probe.renderedFrames++;
+        }
+    }
+
+    @SubscribeEvent
+    public static void onProjectileRendered(net.minecraftforge.client.event.RenderNameplateEvent event) {
+        BaseMetalsClientProbe probe = instance;
+        if (probe != null && probe.state == 4
+                && event.getEntity() instanceof zone.moddev.mc.basemetals.entity.MaterialProjectile) {
+            probe.renderedProjectiles.add(event.getEntity().getEntityId());
         }
     }
 
@@ -112,6 +125,10 @@ public final class BaseMetalsClientProbe {
             } else if (state == 1 && minecraft.world != null && minecraft.player != null
                     && renderedFrames >= 8 && stateTicks >= 100) {
                 validateCreativeCrossbows(minecraft);
+                spawnProjectileRenderChecks(minecraft);
+                nextState(4);
+            } else if (state == 4 && renderedProjectiles.size() == 6 && stateTicks >= 40) {
+                LOGGER.info("BASEMETALS_PROJECTILE_RENDER_PROBE PASS rendered={}", renderedProjectiles.size());
                 writeMarker();
                 LOGGER.info("BASEMETALS_CLIENT_PROBE PASS frames={}", Integer.valueOf(renderedFrames));
                 minecraft.shutdown();
@@ -122,6 +139,33 @@ public final class BaseMetalsClientProbe {
         } catch (RuntimeException | IOException failure) {
             fail(minecraft, failure.toString());
         }
+    }
+
+    private static void spawnProjectileRenderChecks(Minecraft minecraft) {
+        java.util.UUID playerId = minecraft.player.getUniqueID();
+        minecraft.getIntegratedServer().execute(() -> {
+            net.minecraft.entity.player.ServerPlayerEntity player = minecraft.getIntegratedServer()
+                    .getPlayerList().getPlayerByUUID(playerId);
+            net.minecraft.world.server.ServerWorld world = player.getServerWorld();
+            net.minecraft.util.math.Vec3d look = player.getLookVec();
+            int index = 0;
+
+            for (String material : new String[] {"gold", "steel", "adamantine"}) {
+                for (boolean bolt : new boolean[] {false, true}) {
+                    String name = material + (bolt ? "_bolt" : "_arrow");
+                    zone.moddev.mc.basemetals.entity.MaterialProjectile projectile =
+                            new zone.moddev.mc.basemetals.entity.MaterialProjectile(
+                                    bolt ? zone.moddev.mc.basemetals.entity.ModEntities.CUSTOM_BOLT.get()
+                                            : zone.moddev.mc.basemetals.entity.ModEntities.CUSTOM_ARROW.get(),
+                                    world, player, new ItemStack(ModContent.item(name).get()));
+                    net.minecraft.entity.Entity entity = projectile;
+                    entity.setPosition(player.getPosX() + look.x * 3 + (index++ - 2.5) * 0.25,
+                            player.getPosY() + player.getEyeHeight(), player.getPosZ() + look.z * 3);
+                    entity.setNoGravity(true);
+                    world.addEntity(projectile);
+                }
+            }
+        });
     }
 
     private static void validateCreativeCrossbows(Minecraft minecraft) {
@@ -236,9 +280,23 @@ public final class BaseMetalsClientProbe {
                 "mercury bucket registration");
         for (FluidContent fluid : ModContent.fluids().values()) {
             require(fluid.bucket().get().getGroup() == ModTabs.ITEMS, "bucket creative group");
+            require(RenderTypeLookup.canRenderInLayer(fluid.block().get().getDefaultState(),
+                    RenderType.getTranslucent()), "molten block render layer");
+            require(RenderTypeLookup.canRenderInLayer(fluid.source().get().getDefaultState(),
+                    RenderType.getTranslucent()), "molten source render layer");
+            require(RenderTypeLookup.canRenderInLayer(fluid.flowing().get().getDefaultState(),
+                    RenderType.getTranslucent()), "molten flowing render layer");
+            validateBucketModel(minecraft, fluid.bucket().get().getRegistryName().getPath());
         }
-        validateBucketModel(minecraft, "mercury_bucket");
-        validateBucketModel(minecraft, "tin_bucket");
+        for (net.minecraft.block.Block block : ForgeRegistries.BLOCKS) {
+            if (!"basemetals".equals(block.getRegistryName().getNamespace())) continue;
+            if (block instanceof net.minecraft.block.DoorBlock
+                    || block instanceof net.minecraft.block.TrapDoorBlock
+                    || block instanceof net.minecraft.block.PaneBlock) {
+                require(RenderTypeLookup.canRenderInLayer(block.getDefaultState(),
+                        RenderType.getCutoutMipped()), "transparent block render layer: " + block);
+            }
+        }
         validateOreModels(minecraft);
         minecraft.getResourceManager().getResource(
                 new ResourceLocation("basemetals", "textures/item/adamantine_sword.png"));
@@ -252,7 +310,7 @@ public final class BaseMetalsClientProbe {
         String originalMode = BaseMetalsConfig.CONTENT_MODE.get();
         ContentMode activeMode = BaseMetalsConfig.activeMode();
 
-        GuiModList modsScreen = new GuiModList(parent);
+        ModListScreen modsScreen = new ModListScreen(parent);
         minecraft.displayGuiScreen(modsScreen);
         int baseMetalsIndex = -1;
         for (int index = 0; index < ModList.get().getMods().size(); index++) {
@@ -324,8 +382,18 @@ public final class BaseMetalsClientProbe {
         LOGGER.info("BASEMETALS_CONFIG_GUI_PROBE PASS entries=5 factories=2 mods_button=true cancel=true undo=true defaults=true save=true");
     }
 
-    private static void selectMod(GuiModList screen, String modId) {
-        net.minecraftforge.fml.client.gui.ModSelection.select(screen, modId);
+    private static void selectMod(ModListScreen screen, String modId) {
+        ModListWidget list = (ModListWidget) screen.children().stream()
+                .filter(child -> child instanceof ModListWidget).findFirst().get();
+
+        for (ModListWidget.ModEntry entry : list.children()) {
+            if (entry.getInfo().getModId().equals(modId)) {
+                entry.mouseClicked(0, 0, 0);
+                return;
+            }
+        }
+
+        throw new IllegalStateException("Missing mod " + modId);
     }
 
     private static void confirmation(Minecraft minecraft, boolean accepted) {
@@ -369,7 +437,8 @@ public final class BaseMetalsClientProbe {
             }
 
             Block block = ModContent.blocksById().get(name).get();
-            require(block.getRenderLayer() == BlockRenderLayer.CUTOUT_MIPPED, name + " is not cutout-mipped");
+            require(RenderTypeLookup.canRenderInLayer(block.getDefaultState(), RenderType.getCutoutMipped()),
+                    name + " is not cutout-mipped");
             String overlay = "basemetals:block/ore_overlays/" + name;
 
             IBakedModel blockModel = minecraft.getBlockRendererDispatcher().getModelForState(block.getDefaultState());
@@ -398,18 +467,18 @@ public final class BaseMetalsClientProbe {
             boolean hasBase = false;
             boolean hasOverlay = false;
             for (BakedQuad quad : quads) {
-                String texture = quad.getSprite().getName().toString();
+                String texture = quad.func_187508_a().getName().toString();
                 hasBase |= host.equals(texture);
                 hasOverlay |= overlay.equals(texture);
-                require(!"missingno".equals(quad.getSprite().getName().getPath()), name + " missing texture");
+                require(!"missingno".equals(quad.func_187508_a().getName().getPath()), name + " missing texture");
                 validateOreVertices(quad, overlay.equals(texture), name);
                 if (overlay.equals(texture)) {
                     boolean transparent = false;
                     boolean visible = false;
 
-                    for (int y = 0; y < quad.getSprite().getHeight(); y++) {
-                        for (int x = 0; x < quad.getSprite().getWidth(); x++) {
-                            if (quad.getSprite().isPixelTransparent(0, x, y)) transparent = true;
+                    for (int y = 0; y < quad.func_187508_a().getHeight(); y++) {
+                        for (int x = 0; x < quad.func_187508_a().getWidth(); x++) {
+                            if (quad.func_187508_a().isPixelTransparent(0, x, y)) transparent = true;
                             else visible = true;
                         }
                     }
@@ -466,7 +535,7 @@ public final class BaseMetalsClientProbe {
         require(!quads.isEmpty(), name + " has no rendered quads");
         boolean hasTintedFluidLayer = false;
         for (BakedQuad quad : quads) {
-            require(!"missingno".equals(quad.getSprite().getName().getPath()),
+            require(!"missingno".equals(quad.func_187508_a().getName().getPath()),
                     name + " uses the missing-texture sprite");
             if (quad.hasTintIndex() && quad.getTintIndex() == 1) hasTintedFluidLayer = true;
         }
@@ -488,7 +557,7 @@ public final class BaseMetalsClientProbe {
         values.setProperty("integrated_world_rendered", Boolean.toString(renderedFrames >= 8));
         values.setProperty("rendered_frames", Integer.toString(renderedFrames));
         try (FileOutputStream output = new FileOutputStream(new File("client-smoke-pass.properties"))) {
-            values.store(output, "Base Metals Forge 1.14.4 packaged-client gate");
+            values.store(output, "Base Metals Forge 1.15.2 packaged-client gate");
         }
     }
 

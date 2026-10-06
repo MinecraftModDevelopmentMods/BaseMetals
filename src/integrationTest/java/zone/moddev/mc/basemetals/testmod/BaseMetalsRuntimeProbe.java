@@ -133,7 +133,7 @@ public final class BaseMetalsRuntimeProbe {
         MinecraftServer server = event.getServer();
         if ("login".equals(System.getProperty("basemetalsprobe.mode"))) {
             try {
-                int count = ContentModeChecks.run(server) + Native114Checks.run(server);
+                int count = ContentModeChecks.run(server) + Native115Checks.run(server);
                 LOGGER.info("BASEMETALS_CONTENT_MODE_PROBE PASS mode={} checks={}",
                         zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode().serializedName(), count);
             } catch (Exception failure) {
@@ -214,7 +214,7 @@ public final class BaseMetalsRuntimeProbe {
         int checkedPlayerItems = 0;
 
         boolean source110 = Files.isRegularFile(root.resolve("BASEMETALS_1_10_FIXTURE_COMPLETE.txt"));
-        String upgradeMarker = source110 ? "BASEMETALS_1_10_TO_1_14_UPGRADE" : "BASEMETALS_1_12_TO_1_14_UPGRADE";
+        String upgradeMarker = source110 ? "BASEMETALS_1_10_TO_1_15_UPGRADE" : "BASEMETALS_1_12_TO_1_15_UPGRADE";
         if (!source110 && !Files.isRegularFile(root.resolve("BASEMETALS_1_12_FIXTURE_COMPLETE.txt"))) {
             failures.add("missing legacy fixture completion marker");
         }
@@ -503,7 +503,7 @@ public final class BaseMetalsRuntimeProbe {
 
     private static void writeFixtureResult(Path root, String result) {
         try {
-            Files.write(root.resolve("BASEMETALS_LEGACY_TO_1_14_UPGRADE_RESULT.txt"),
+            Files.write(root.resolve("BASEMETALS_LEGACY_TO_1_15_UPGRADE_RESULT.txt"),
                     (result + System.lineSeparator()).getBytes(StandardCharsets.UTF_8),
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException exception) {
@@ -617,6 +617,20 @@ public final class BaseMetalsRuntimeProbe {
         Object providerStatus = Class.forName("zone.moddev.mc.orespawn.api.OreSpawnApi")
                 .getMethod("getProviderStatus", String.class).invoke(null, BaseMetals.MOD_ID);
         check("ACTIVE".equals(String.valueOf(providerStatus)), "OreSpawn provider active");
+        Class<?> oreSpawnApi = Class.forName("zone.moddev.mc.orespawn.api.OreSpawnApi");
+        check(Boolean.TRUE.equals(oreSpawnApi.getMethod("isOreTakeoverActive", String.class)
+                .invoke(null, BaseMetals.MOD_ID)), "OreSpawn owns Base Metals ore placement");
+        java.util.Optional<?> activeProfile = (java.util.Optional<?>) oreSpawnApi
+                .getMethod("getActiveProfile", MinecraftServer.class).invoke(null, server);
+        check(activeProfile.isPresent(), "OreSpawn active profile is available");
+        java.util.Set<?> oreIds = (java.util.Set<?>) activeProfile.get().getClass()
+                .getMethod("oreIds").invoke(activeProfile.get());
+        check(oreIds.stream().filter(value -> value.toString().startsWith("basemetals:"))
+                .count() == 11, "exactly eleven Base Metals rules, including with Mineralogy");
+        if (net.minecraftforge.fml.ModList.get().isLoaded("mineralogy")) {
+            check("ACTIVE".equals(String.valueOf(oreSpawnApi.getMethod("getProviderStatus", String.class)
+                    .invoke(null, "mineralogy"))), "Mineralogy provider active");
+        }
         check(classMissing("zone.moddev.mc.basemetals.worldgen.BaseMetalsOreGenerator"),
                 "native world generator absent");
 
@@ -642,7 +656,7 @@ public final class BaseMetalsRuntimeProbe {
         testCrossbowContract();
         checks += GameplayRegressionChecks.run(server);
         checks += ContentModeChecks.run(server);
-        checks += Native114Checks.run(server);
+        checks += Native115Checks.run(server);
     }
 
     private void testProjectilePersistence(ServerWorld world) {

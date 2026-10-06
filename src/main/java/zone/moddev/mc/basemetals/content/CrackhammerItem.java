@@ -113,7 +113,7 @@ public final class CrackhammerItem extends ToolItem implements MaterialBacked {
             ItemStack output = result.copy();
             output.setCount(Math.min(output.getMaxStackSize(), remaining));
             remaining -= output.getCount();
-            ItemEntity crushed = new ItemEntity(world, source.posX, source.posY, source.posZ, output);
+            ItemEntity crushed = new ItemEntity(world, source.getPosX(), source.getPosY(), source.getPosZ(), output);
             crushed.setDefaultPickupDelay();
             world.addEntity(crushed);
         }

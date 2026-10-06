@@ -48,7 +48,7 @@ class LegacyWorldSourceTest {
 
         CompoundNBT aliased = professionSnapshot("minecraft:smith");
         ListNBT aliases = new ListNBT();
-        aliases.add(new StringNBT("anothermod:smith"));
+        aliases.add(StringNBT.valueOf("anothermod:smith"));
         aliased.getCompound("fml").getCompound("Registries")
                 .getCompound("minecraft:villagerprofessions").put("aliases", aliases);
         assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(aliased));
@@ -97,7 +97,7 @@ class LegacyWorldSourceTest {
     @Test
     void targetsNative114ChunkLoadingWithoutTheOldLeavesPatch() throws IOException {
         String coremod = new String(Files.readAllBytes(Paths.get(
-                "src/main/resources/coremods/basemetals_114_compatibility.js")), "UTF-8");
+                "src/main/resources/coremods/basemetals_115_compatibility.js")), "UTF-8");
         assertTrue(coremod.contains("net.minecraft.world.chunk.storage.ChunkLoader"));
         assertTrue(coremod.contains("Ljava/util/function/Supplier;"));
         assertTrue(!coremod.contains("leaves_fixer"));

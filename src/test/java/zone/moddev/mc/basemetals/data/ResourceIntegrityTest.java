@@ -34,7 +34,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.junit.jupiter.api.Test;
 
-/** Resource contract for the flattened Minecraft 1.14.4 data pack. */
+/** Resource contract for the flattened Minecraft 1.15.2 data pack. */
 class ResourceIntegrityTest {
     private static final Path MAIN = Paths.get("src", "main", "resources");
     private static final Path GENERATED = Paths.get("src", "generated", "resources");
@@ -60,7 +60,7 @@ class ResourceIntegrityTest {
         Set<String> blocks = strings(manifest.getAsJsonArray("blocks"));
         Set<String> items = strings(manifest.getAsJsonArray("items"));
         Set<String> fluids = strings(manifest.getAsJsonArray("fluids"));
-        assertEquals("Base Metals 1.14.4 catalogue", manifest.get("source").getAsString());
+        assertEquals("Base Metals 1.15.2 catalogue", manifest.get("source").getAsString());
         assertEquals(360, blocks.size());
         assertEquals(1115, items.size());
         assertEquals(72, fluids.size());

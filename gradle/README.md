@@ -17,6 +17,15 @@ Use Java 17 to run Gradle. ForgeGradle uses Java 25 for its Mavenizer; Minecraft
 and the mod run on Java 8. Development accepts newer Java 8 updates, while
 release auditing requires the pinned compiler in `gradle.properties`.
 
+Development resolves OreSpawn `4.1.0.115021` from Curse Maven, using file
+`9073591`. `verifyReleaseDependencies` checks its checksum, mod metadata and
+configuration-screen API. No local candidate setup is needed.
+
+CI runs `stage-orespawn-release.sh <repository>` to download and checksum that
+same file, then passes `-PorespawnVerificationRepository=<repository>` to
+Gradle. The mirror does not change the dependency's coordinates or checksum.
+The optional local-candidate path still blocks publication.
+
 Run `check build` for the normal build, then `verifyReleaseArtifacts` and
 `writeReleaseChecksums` when preparing a release candidate. Packaged checks
 also need `packagedForgeServerRuntime` and `packagedForgeClientRuntime`, pointing

@@ -1,7 +1,7 @@
 /*
- * Converts the catalogue-generated resources to Minecraft 1.14 formats.
+ * Converts the catalogue-generated resources to Minecraft 1.15 formats.
  * Removes unsupported recipes and integrations, and converts block states,
- * item models and tags to the names and formats used by Forge 28.
+ * item models and tags to the names and formats used by Forge 31.
  */
 'use strict';
 
@@ -85,7 +85,7 @@ for (const file of filesUnder(path.join(generated, 'data', 'basemetals', 'recipe
 
 const manifestFile = path.join(generated, 'data', 'basemetals', 'registry_manifest.json');
 const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
-manifest.source = 'Base Metals 1.14.4 catalogue';
+manifest.source = 'Base Metals 1.15.2 catalogue';
 manifest.loot_modifier_serializers = [];
 manifest.new_loot_modifier_serializers = [];
 for (const key of ['recipe_serializers', 'new_recipe_serializers']) {
@@ -144,7 +144,7 @@ writeBase64(path.join(generated, 'assets', 'basemetals', 'textures', 'item', 'bu
   'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA4SURBVDhPY2AYnuA/DoCuDgOga8AF0PWhAHTF6ABdPU5AtkZcgGSD0BWj80kGFBtAMRh4FwxeAAB9Pod56G8eMAAAAABJRU5ErkJggg==');
 
 // Vanilla copper and the modern Nether/Caves & Cliffs plants do not exist in
-// 1.14.4. Keep Base Metals copper in the common tags and retain only plants
+// 1.15.2. Keep Base Metals copper in the common tags and retain only plants
 // present in the target registry.
 for (const relative of [
   'data/forge/tags/blocks/ores/copper.json',
@@ -200,7 +200,7 @@ if (!crushable.values.includes('minecraft:gravel')) {
 }
 writeJson(crushableFile, crushable);
 
-// Forge 28 did not provide a forge:gravel item tag. Keep the historical
+// Forge 31 did not provide a forge:gravel item tag. Keep the historical
 // gravel-to-sand crushing recipe, but name the vanilla item directly.
 const gravelCrushingFile = path.join(generated, 'data', 'basemetals', 'recipes',
   'gravel_crushing.json');
@@ -218,7 +218,7 @@ for (const file of filesUnder(legacyChests, '.json')) {
   const target = path.join(targetChests, path.basename(file));
   const table = JSON.parse(fs.readFileSync(file, 'utf8'));
   const tableName = path.basename(file, '.json');
-  // Forge 28 requires every loot pool to have a stable, unique name.
+  // Forge 31 requires every loot pool to have a stable, unique name.
   table.pools.forEach((pool, index) => {
     pool.name = `basemetals_${tableName}_${index}`;
     for (const entry of pool.entries) {
@@ -430,4 +430,4 @@ for (const file of filesUnder(path.join(generated, 'assets', 'basemetals', 'lang
   writeJson(file, language);
 }
 
-console.log('Generated Minecraft 1.14.4-compatible Base Metals resources.');
+console.log('Generated Minecraft 1.15.2-compatible Base Metals resources.');
