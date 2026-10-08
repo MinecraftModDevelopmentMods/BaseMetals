@@ -31,37 +31,37 @@ public final class LegacySmeltingRecipe extends FurnaceRecipe {
         return allowed() && super.matches(inventory, world);
     }
 
-    @Override public ItemStack getCraftingResult(IInventory inventory) {
-        return allowed() ? super.getCraftingResult(inventory) : ItemStack.EMPTY;
+    @Override public ItemStack assemble(IInventory inventory) {
+        return allowed() ? super.assemble(inventory) : ItemStack.EMPTY;
     }
 
-    @Override public boolean isDynamic() { return !allowed(); }
+    @Override public boolean isSpecial() { return !allowed(); }
 
     private boolean allowed() {
-        return ContentPolicy.active().allows(getRecipeOutput().getItem().getRegistryName().toString());
+        return ContentPolicy.active().allows(getResultItem().getItem().getRegistryName().toString());
     }
 
     public static final class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>
             implements IRecipeSerializer<LegacySmeltingRecipe> {
         public Serializer() { setRegistryName(BaseMetals.MOD_ID, "legacy_smelting"); }
-        @Override public LegacySmeltingRecipe read(ResourceLocation id, JsonObject json) {
-            String group = JSONUtils.getString(json, "group", "");
-            Ingredient ingredient = Ingredient.deserialize(json.get("ingredient"));
-            ItemStack result = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "result"), true);
+        @Override public LegacySmeltingRecipe fromJson(ResourceLocation id, JsonObject json) {
+            String group = JSONUtils.getAsString(json, "group", "");
+            Ingredient ingredient = Ingredient.fromJson(json.get("ingredient"));
+            ItemStack result = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "result"), true);
             return new LegacySmeltingRecipe(id, group, ingredient, result,
-                    JSONUtils.getFloat(json, "experience", 0.0F),
-                    JSONUtils.getInt(json, "cookingtime", 200));
+                    JSONUtils.getAsFloat(json, "experience", 0.0F),
+                    JSONUtils.getAsInt(json, "cookingtime", 200));
         }
-        @Override public LegacySmeltingRecipe read(ResourceLocation id, PacketBuffer buffer) {
-            return new LegacySmeltingRecipe(id, buffer.readString(32767), Ingredient.read(buffer),
-                    buffer.readItemStack(), buffer.readFloat(), buffer.readVarInt());
+        @Override public LegacySmeltingRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
+            return new LegacySmeltingRecipe(id, buffer.readUtf(32767), Ingredient.fromNetwork(buffer),
+                    buffer.readItem(), buffer.readFloat(), buffer.readVarInt());
         }
-        @Override public void write(PacketBuffer buffer, LegacySmeltingRecipe recipe) {
-            buffer.writeString(recipe.getGroup());
-            recipe.getIngredients().get(0).write(buffer);
-            buffer.writeItemStack(recipe.getRecipeOutput());
+        @Override public void toNetwork(PacketBuffer buffer, LegacySmeltingRecipe recipe) {
+            buffer.writeUtf(recipe.getGroup());
+            recipe.getIngredients().get(0).toNetwork(buffer);
+            buffer.writeItem(recipe.getResultItem());
             buffer.writeFloat(recipe.getExperience());
-            buffer.writeVarInt(recipe.getCookTime());
+            buffer.writeVarInt(recipe.getCookingTime());
         }
     }
 }

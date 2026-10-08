@@ -26,7 +26,7 @@ public final class ContentModeNetwork {
                 () -> "1", "1"::equals, "1"::equals);
 
         channel.messageBuilder(ModeMessage.class, 0)
-                .encoder((message, buffer) -> buffer.writeString(message.mode.serializedName()))
+                .encoder((message, buffer) -> buffer.writeUtf(message.mode.serializedName()))
                 .decoder(ModeMessage::read)
                 .loginIndex(message -> message.loginIndex, (message, index) -> message.loginIndex = index)
                 .buildLoginPacketList(local -> Collections.singletonList(
@@ -56,7 +56,7 @@ public final class ContentModeNetwork {
 
         ContentMode clientMode = BaseMetalsConfig.activeMode();
         if (message.mode != clientMode) {
-            context.getNetworkManager().closeChannel(new TranslationTextComponent(
+            context.getNetworkManager().disconnect(new TranslationTextComponent(
                     "config.basemetals.connection.mismatch",
                     new TranslationTextComponent(message.mode.translationKey()),
                     new TranslationTextComponent(clientMode.translationKey())));
@@ -73,7 +73,7 @@ public final class ContentModeNetwork {
         private ModeMessage(ContentMode mode) { this.mode = mode; }
 
         private static ModeMessage read(PacketBuffer buffer) {
-            String value = buffer.readString(32);
+            String value = buffer.readUtf(32);
             if (!ContentMode.isValid(value)) throw new IllegalArgumentException("Unknown server content mode " + value);
             return new ModeMessage(ContentMode.parse(value));
         }

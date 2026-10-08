@@ -1,3 +1,27 @@
+Base Metals 3.1.0.116051
+
+- Bring the 1.15.2 release to Minecraft 1.16.5 and Forge 36.2.34.
+- Keep the same materials, equipment, recipes, High/Low Fantasy settings and
+  material-based recipe discovery.
+- Use the native 1.16 configuration screen, with the same Mods-list button
+  and OreSpawn cog. Keep the content-mode check when joining a server.
+- Keep Kiri's ore overlays, vanilla host textures and automatic model updates.
+- Increase the ore-overlay gap to reduce flickering when viewed from a distance.
+- Use Forge's fluid-bucket models so filled buckets show the fluid's texture
+  and colour. Give all 36 buckets clear names in all 18 language files, such as
+  "Bucket of Molten Nickel" instead of "Nickel Bucket".
+- Move to version 3.1 to distinguish these rendering improvements from the
+  3.0.1 releases for Minecraft 1.13–1.15.
+- Generate the new low and tall wall sides, and convert older connected walls.
+- Crush Nether gold ore into two gold powders and Ancient Debris into two
+  vanilla Netherite scraps. Gilded Blackstone is not included.
+- Keep old-world upgrades and custom anvils working on Forge 36, without losing
+  saved item data, migration backups or protection for existing terrain.
+- Keep ForgeGradle 7, Java 8 game compatibility, reproducible archives and
+  isolated test launches.
+- Use the published OreSpawn 4.1.0.116051 release from Curse Maven, with its
+  download and checksum pinned. The eleven ore rules are unchanged.
+
 Base Metals 3.0.1.115021
 
 - Bring Base Metals to Minecraft 1.15.2 and Forge 31.2.57.

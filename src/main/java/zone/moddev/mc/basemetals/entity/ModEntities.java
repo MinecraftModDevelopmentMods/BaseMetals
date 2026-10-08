@@ -30,8 +30,8 @@ public final class ModEntities {
     private static EntityType<MaterialProjectile> register(RegistryEvent.Register<EntityType<?>> event,
             String name, final RegistryHandle<EntityType<MaterialProjectile>> self) {
         EntityType<MaterialProjectile> type = EntityType.Builder
-                .<MaterialProjectile>create(MaterialProjectile::new, net.minecraft.entity.EntityClassification.MISC)
-                .size(0.5F, 0.5F).setTrackingRange(64).setUpdateInterval(20)
+                .<MaterialProjectile>of(MaterialProjectile::new, net.minecraft.entity.EntityClassification.MISC)
+                .sized(0.5F, 0.5F).setTrackingRange(64).setUpdateInterval(20)
                 .setShouldReceiveVelocityUpdates(true)
                 .build(BaseMetals.MOD_ID + ":" + name);
         type.setRegistryName(BaseMetals.MOD_ID, name);

@@ -11,7 +11,6 @@ import zone.moddev.mc.basemetals.migration.LegacyWorldDataHook;
 import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 import zone.moddev.mc.basemetals.loot.ContentModeLootCondition;
 import zone.moddev.mc.basemetals.network.ContentModeNetwork;
-import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,10 +26,11 @@ public final class BaseMetals {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public BaseMetals() {
+        ModTags.initialize();
         LegacyWorldDataHook.register();
         ContentModeNetwork.register();
         ModContent.initializeFluids();
-        LootConditionManager.registerCondition(new ContentModeLootCondition.Serializer());
+        ContentModeLootCondition.register();
         ModEntities.initialize();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BaseMetalsConfig.SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(BaseMetalsConfig::onConfigLoading);

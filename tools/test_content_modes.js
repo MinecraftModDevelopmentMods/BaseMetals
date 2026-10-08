@@ -11,8 +11,8 @@ if (path.dirname(root) !== build || path.basename(root) !== 'content-mode-tests'
   throw new Error(`Content-mode profiles must be inside the build directory: ${root}`);
 }
 
-const version = '1.15.2';
-const forge = '31.2.57';
+const version = '1.16.5';
+const forge = '36.2.34';
 const forgeMetadata = JSON.parse(fs.readFileSync(path.join(clientRuntime, 'versions', `${version}-forge-${forge}`, `${version}-forge-${forge}.json`)));
 const vanillaMetadata = JSON.parse(fs.readFileSync(path.join(clientRuntime, 'versions', version, `${version}.json`)));
 const libraries = new Map();

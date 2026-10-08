@@ -25,9 +25,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.item.MerchantOffer;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.World;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootTable;
 import io.netty.buffer.Unpooled;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ContentPolicy;
@@ -44,7 +45,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 /** Exercises the policy against loaded Forge recipes, trades and loot tables. */
 final class ContentModeChecks {
     static int run(MinecraftServer server) throws Exception {
-        ServerWorld world = server.getWorld(DimensionType.OVERWORLD);
+        ServerWorld world = server.getLevel(World.OVERWORLD);
         ContentPolicy policy = ContentPolicy.active();
         int checks = 0;
         int recipes = 0;
@@ -53,11 +54,11 @@ final class ContentModeChecks {
         for (IRecipe recipe : server.getRecipeManager().getRecipes()) {
             if (recipe.getSerializer() != ContentCraftingRecipe.SERIALIZER) continue;
             recipes++;
-            boolean allowed = policy.allows(recipe.getRecipeOutput().getItem().getRegistryName().toString());
+            boolean allowed = policy.allows(recipe.getResultItem().getItem().getRegistryName().toString());
             if (!allowed) restricted++;
-            require(recipe.isDynamic() == !allowed, "recipe-book visibility " + recipe.getId());
+            require(recipe.isSpecial() == !allowed, "recipe-book visibility " + recipe.getId());
             CraftingInventory grid = new CraftingInventory(new Container(null, 0) {
-                @Override public boolean canInteractWith(net.minecraft.entity.player.PlayerEntity player) { return true; }
+                @Override public boolean stillValid(net.minecraft.entity.player.PlayerEntity player) { return true; }
             }, 3, 3);
             boolean available = true;
             int slot = 0;
@@ -67,17 +68,17 @@ final class ContentModeChecks {
                 int gridSlot = (slot / width) * 3 + slot % width;
                 slot++;
                 if (ingredient == Ingredient.EMPTY) continue;
-                ItemStack[] choices = ingredient.getMatchingStacks();
+                ItemStack[] choices = ingredient.getItems();
                 if (choices.length == 0) { available = false; continue; }
-                grid.setInventorySlotContents(gridSlot, choices[0].copy());
+                grid.setItem(gridSlot, choices[0].copy());
             }
             require(recipe.matches(grid, world) == (allowed && available), "crafting policy " + recipe.getId());
-            if (!allowed) require(recipe.getCraftingResult(grid).isEmpty(), "restricted crafting result " + recipe.getId());
+            if (!allowed) require(recipe.assemble(grid).isEmpty(), "restricted crafting result " + recipe.getId());
 
             PacketBuffer packet = new PacketBuffer(Unpooled.buffer());
-            recipe.getSerializer().write(packet, recipe);
-            IRecipe restored = recipe.getSerializer().read(recipe.getId(), packet);
-            require(restored.getId().equals(recipe.getId()) && restored.isDynamic() == recipe.isDynamic(),
+            recipe.getSerializer().toNetwork(packet, recipe);
+            IRecipe restored = recipe.getSerializer().fromNetwork(recipe.getId(), packet);
+            require(restored.getId().equals(recipe.getId()) && restored.isSpecial() == recipe.isSpecial(),
                     "recipe packet identity " + recipe.getId());
             require((restored instanceof ShapedRecipe) == (recipe instanceof ShapedRecipe),
                     "recipe-book shape survives network sync " + recipe.getId());
@@ -93,28 +94,28 @@ final class ContentModeChecks {
         require(restricted > 0 == (BaseMetalsConfig.activeMode() == zone.moddev.mc.basemetals.config.ContentMode.LOW_FANTASY),
                 "expected restricted recipe count");
 
-        IRecipe mercury = server.getRecipeManager().getRecipe(new ResourceLocation("basemetals", "mercury_smallpowder_smelting")).orElse(null);
+        IRecipe mercury = server.getRecipeManager().byKey(new ResourceLocation("basemetals", "mercury_smallpowder_smelting")).orElse(null);
         Inventory furnace = new Inventory(3);
-        furnace.setInventorySlotContents(0, new ItemStack(ModContent.item("mercury_smallpowder").get()));
+        furnace.setItem(0, new ItemStack(ModContent.item("mercury_smallpowder").get()));
         require(mercury.matches(furnace, world) == policy.allows("basemetals:mercury_nugget"), "mercury furnace policy");
 
         for (IRecipe<?> recipe : server.getRecipeManager().getRecipes()) {
             if (!(recipe instanceof PlateRepairRecipe)) continue;
             IRecipe<CraftingInventory> repair = (IRecipe<CraftingInventory>) recipe;
-            ItemStack[] plates = repair.getIngredients().get(1).getMatchingStacks();
+            ItemStack[] plates = repair.getIngredients().get(1).getItems();
             if (plates.length == 0) continue;
 
             CraftingInventory grid = new CraftingInventory(new Container(null, 0) {
-                @Override public boolean canInteractWith(net.minecraft.entity.player.PlayerEntity player) { return true; }
+                @Override public boolean stillValid(net.minecraft.entity.player.PlayerEntity player) { return true; }
             }, 3, 3);
-            ItemStack damaged = repair.getRecipeOutput().copy();
-            damaged.setDamage(7);
-            grid.setInventorySlotContents(0, damaged);
-            grid.setInventorySlotContents(8, plates[0].copy());
+            ItemStack damaged = repair.getResultItem().copy();
+            damaged.setDamageValue(7);
+            grid.setItem(0, damaged);
+            grid.setItem(8, plates[0].copy());
             boolean allowed = policy.allows(damaged.getItem().getRegistryName().toString());
             require(repair.matches(grid, world) == allowed, "plate repair policy " + repair.getId());
-            require(repair.getCraftingResult(grid).isEmpty() == !allowed, "plate repair output " + repair.getId());
-            require(damaged.getDamage() == 7, "repair preserves input " + repair.getId());
+            require(repair.assemble(grid).isEmpty() == !allowed, "plate repair output " + repair.getId());
+            require(damaged.getDamageValue() == 7, "repair preserves input " + repair.getId());
             checks += 3;
         }
 
@@ -135,19 +136,19 @@ final class ContentModeChecks {
             VillagerTrades.ITrade factory = (VillagerTrades.ITrade) sales.invoke(null, item, 1, 1, 1);
             MerchantOffer offer = factory.getOffer(null, new Random(0));
             require((offer != null) == (BaseMetalsConfig.VILLAGER_TRADES.get() && policy.allows(id)), "trade policy " + id);
-            net.minecraft.world.storage.loot.conditions.ILootCondition condition = new ContentModeLootCondition(id);
+            net.minecraft.loot.conditions.ILootCondition condition = new ContentModeLootCondition(id);
             require(condition.test(null) == policy.allows(id), "loot condition " + id);
             checks += 2;
         }
 
         for (String name : new String[] {"abandoned_mineshaft", "desert_pyramid", "end_city_treasure", "jungle_temple",
                 "nether_bridge", "simple_dungeon", "spawn_bonus_chest", "stronghold_corridor", "stronghold_crossing", "village_blacksmith"}) {
-            LootTable table = server.getLootTableManager().getLootTableFromLocation(
+            LootTable table = server.getLootTables().get(
                     new ResourceLocation("basemetals", "chests/inject/" + name));
             for (int seed = 0; seed < 100; seed++) {
-                LootContext context = new LootContext.Builder(world).withSeed(seed)
-                        .build(net.minecraft.world.storage.loot.LootParameterSets.EMPTY);
-                for (ItemStack stack : table.generate(context)) {
+                LootContext context = new LootContext.Builder(world).withOptionalRandomSeed(seed)
+                        .create(net.minecraft.loot.LootParameterSets.EMPTY);
+                for (ItemStack stack : table.getRandomItems(context)) {
                     require(policy.allows(stack.getItem().getRegistryName().toString()), "chest policy " + name + " " + stack);
                     checks++;
                 }
@@ -184,18 +185,18 @@ final class ContentModeChecks {
             String material = name.matches("activator_rail|detector_rail|flint_and_steel|human_detector|minecart|piston|rail|tripwire_hook")
                     ? "steel" : name.substring(0, name.indexOf('_'));
             require(materials.containsKey(material), "discovery material for " + name);
-            Advancement advancement = server.getAdvancementManager().getAdvancement(
+            Advancement advancement = server.getAdvancements().getAdvancement(
                     new ResourceLocation("basemetals", "recipes/" + name));
             require(advancement != null && advancement.getCriteria().containsKey("has_material"),
                     "material discovery advancement " + name);
             InventoryChangeTrigger.Instance condition = (InventoryChangeTrigger.Instance)
-                    advancement.getCriteria().get("has_material").getCriterionInstance();
+                    advancement.getCriteria().get("has_material").getTrigger();
 
-            player.inventory.clear();
-            player.inventory.setInventorySlotContents(0, new ItemStack(materials.get(material)));
-            require(condition.test(player.inventory), "base material does not discover " + name);
-            player.inventory.setInventorySlotContents(0, new ItemStack(Items.STICK));
-            require(!condition.test(player.inventory), "unrelated item discovers " + name);
+            player.inventory.clearContent();
+            player.inventory.setItem(0, new ItemStack(materials.get(material)));
+            require(condition.matches(player.inventory, player.inventory.getItem(0), 1, 0, 35), "base material does not discover " + name);
+            player.inventory.setItem(0, new ItemStack(Items.STICK));
+            require(!condition.matches(player.inventory, player.inventory.getItem(0), 1, 0, 35), "unrelated item discovers " + name);
             recipes++;
         }
         require(recipes == 1024, "full material discovery catalogue tested");

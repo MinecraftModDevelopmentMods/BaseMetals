@@ -1,7 +1,5 @@
 package zone.moddev.mc.basemetals.content;
 
-import java.util.function.Supplier;
-
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
 import net.minecraft.util.SoundEvents;
@@ -15,22 +13,23 @@ import net.minecraft.util.SoundEvent;
 public final class MaterialArmor implements IArmorMaterial {
     private static final int[] DURABILITY = {13, 15, 16, 11};
     private final MaterialDefinition material;
-    private final Supplier<Ingredient> repair;
 
     public MaterialArmor(MaterialDefinition material) {
         this.material = material;
-        final ItemTags.Wrapper tag = new ItemTags.Wrapper(new ResourceLocation(material.repairIngredientTag()));
-        this.repair = () -> Ingredient.fromTag(tag);
     }
 
     public MaterialDefinition material() { return material; }
-    @Override public int getDurability(EquipmentSlotType slot) {
+    @Override public int getDurabilityForSlot(EquipmentSlotType slot) {
         return DURABILITY[slot.getIndex()] * material.armorDurabilityFactor();
     }
-    @Override public int getDamageReductionAmount(EquipmentSlotType slot) { return material.armorProtection(slot); }
-    @Override public int getEnchantability() { return material.enchantability(); }
-    @Override public SoundEvent getSoundEvent() { return SoundEvents.ITEM_ARMOR_EQUIP_IRON; }
-    @Override public Ingredient getRepairMaterial() { return repair.get(); }
+    @Override public int getDefenseForSlot(EquipmentSlotType slot) { return material.armorProtection(slot); }
+    @Override public int getEnchantmentValue() { return material.enchantability(); }
+    @Override public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_IRON; }
+    @Override public Ingredient getRepairIngredient() {
+        return Ingredient.of(ItemTags.getAllTags().getTagOrEmpty(
+                new ResourceLocation(material.repairIngredientTag())));
+    }
     @Override public String getName() { return "basemetals:" + material.name(); }
     @Override public float getToughness() { return material.armorToughness(); }
+    @Override public float getKnockbackResistance() { return 0.0F; }
 }

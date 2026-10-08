@@ -75,6 +75,7 @@
     "minecraft:dark_prismarine",
     "minecraft:sea_lantern",
     "minecraft:slime_block",
-    "minecraft:gravel"
+    "minecraft:gravel",
+    "#forge:ores/netherite_scrap"
   ]
 }

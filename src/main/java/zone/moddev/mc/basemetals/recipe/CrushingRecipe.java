@@ -45,11 +45,11 @@ public final class CrushingRecipe implements IRecipe<IInventory> {
 
     @Override public boolean matches(IInventory inventory, World world) {
         return ContentPolicy.active().allows(result.getItem().getRegistryName().toString())
-                && inventory.getSizeInventory() > 0 && ingredient.test(inventory.getStackInSlot(0));
+                && inventory.getContainerSize() > 0 && ingredient.test(inventory.getItem(0));
     }
-    @Override public ItemStack getCraftingResult(IInventory inventory) { return result.copy(); }
-    @Override public boolean canFit(int width, int height) { return width * height >= 1; }
-    @Override public ItemStack getRecipeOutput() { return result.copy(); }
+    @Override public ItemStack assemble(IInventory inventory) { return result.copy(); }
+    @Override public boolean canCraftInDimensions(int width, int height) { return width * height >= 1; }
+    @Override public ItemStack getResultItem() { return result.copy(); }
     @Override public ResourceLocation getId() { return id; }
     @Override public IRecipeSerializer<?> getSerializer() { return SERIALIZER; }
     @Override public IRecipeType<CrushingRecipe> getType() { return TYPE; }
@@ -58,22 +58,22 @@ public final class CrushingRecipe implements IRecipe<IInventory> {
         ingredients.add(ingredient);
         return ingredients;
     }
-    @Override public boolean isDynamic() { return true; }
+    @Override public boolean isSpecial() { return true; }
 
     public static final class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>
             implements IRecipeSerializer<CrushingRecipe> {
         private Serializer(String name) { setRegistryName(BaseMetals.MOD_ID, name); }
-        @Override public CrushingRecipe read(ResourceLocation id, JsonObject json) {
-            Ingredient ingredient = Ingredient.deserialize(json.get("ingredient"));
+        @Override public CrushingRecipe fromJson(ResourceLocation id, JsonObject json) {
+            Ingredient ingredient = Ingredient.fromJson(json.get("ingredient"));
             ItemStack result = CraftingHelper.getItemStack(json.getAsJsonObject("result"), true);
             return new CrushingRecipe(id, ingredient, result);
         }
-        @Override public CrushingRecipe read(ResourceLocation id, PacketBuffer buffer) {
-            return new CrushingRecipe(id, Ingredient.read(buffer), buffer.readItemStack());
+        @Override public CrushingRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
+            return new CrushingRecipe(id, Ingredient.fromNetwork(buffer), buffer.readItem());
         }
-        @Override public void write(PacketBuffer buffer, CrushingRecipe recipe) {
-            recipe.ingredient.write(buffer);
-            buffer.writeItemStack(recipe.result);
+        @Override public void toNetwork(PacketBuffer buffer, CrushingRecipe recipe) {
+            recipe.ingredient.toNetwork(buffer);
+            buffer.writeItem(recipe.result);
         }
     }
 }

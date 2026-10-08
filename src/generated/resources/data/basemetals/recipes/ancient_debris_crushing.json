@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "forge:ores/netherite_scrap"
+  },
+  "result": {
+    "item": "minecraft:netherite_scrap",
+    "count": 2
+  }
+}

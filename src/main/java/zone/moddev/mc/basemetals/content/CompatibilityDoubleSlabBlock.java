@@ -12,7 +12,7 @@ public final class CompatibilityDoubleSlabBlock extends SlabBlock {
     public CompatibilityDoubleSlabBlock(Properties properties, int harvestLevel) {
         super(properties);
         this.harvestLevel = harvestLevel;
-        setDefaultState(getDefaultState().with(TYPE, SlabType.DOUBLE).with(WATERLOGGED, Boolean.FALSE));
+        registerDefaultState(defaultBlockState().setValue(TYPE, SlabType.DOUBLE).setValue(WATERLOGGED, Boolean.FALSE));
     }
 
     @Override public ToolType getHarvestTool(BlockState state) { return ToolType.PICKAXE; }

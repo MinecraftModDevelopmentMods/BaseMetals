@@ -7,10 +7,10 @@ import java.util.Map;
 import zone.moddev.mc.basemetals.BaseMetals;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootEntry;
-import net.minecraft.world.storage.loot.TableLootEntry;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.RandomValueRange;
+import net.minecraft.loot.LootEntry;
+import net.minecraft.loot.TableLootEntry;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.RandomValueRange;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -43,8 +43,8 @@ public final class ModLoot {
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation auxiliary = INJECTIONS.get(event.getName());
         if (auxiliary == null || event.getTable().getPool("basemetals_injection") != null) return;
-        event.getTable().addPool(LootPool.builder().name("basemetals_injection")
-                .rolls(new RandomValueRange(1.0F)).addEntry(TableLootEntry.builder(auxiliary)).build());
+        event.getTable().addPool(LootPool.lootPool().name("basemetals_injection")
+                .setRolls(new RandomValueRange(1.0F)).add(TableLootEntry.lootTableReference(auxiliary)).build());
     }
 
     private static void inject(Map<ResourceLocation, ResourceLocation> injections, String vanilla, String auxiliary) {

@@ -15,11 +15,11 @@ public final class HumanDetectorBlock extends PressurePlateBlock {
     }
 
     @Override
-    public int computeRedstoneStrength(World world, BlockPos pos) {
-        AxisAlignedBB box = PRESSURE_AABB.offset(pos);
-        List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, box);
+    public int getSignalStrength(World world, BlockPos pos) {
+        AxisAlignedBB box = TOUCH_AABB.move(pos);
+        List<PlayerEntity> players = world.getEntitiesOfClass(PlayerEntity.class, box);
         for (PlayerEntity player : players) {
-            if (!player.isSpectator() && !player.doesEntityNotTriggerPressurePlate()) return 15;
+            if (!player.isSpectator() && !player.isIgnoringBlockTriggers()) return 15;
         }
         return 0;
     }

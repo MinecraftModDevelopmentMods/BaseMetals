@@ -4,7 +4,7 @@ import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
@@ -30,43 +30,43 @@ public abstract class MoltenFluid extends FlowingFluid {
                 new ResourceLocation("basemetals", "block/molten_metal_flow"))
                 .color(0xFF000000 | ModContent.fluidColour(this)).build(this);
     }
-    @Override public Fluid getFlowingFluid() { return content().flowing().get(); }
-    @Override public Fluid getStillFluid() { return content().source().get(); }
-    @Override public Item getFilledBucket() { return content().bucket().get(); }
+    @Override public Fluid getFlowing() { return content().flowing().get(); }
+    @Override public Fluid getSource() { return content().source().get(); }
+    @Override public Item getBucket() { return content().bucket().get(); }
 
-    @Override protected boolean canSourcesMultiply() { return false; }
-    @Override protected void beforeReplacingBlock(IWorld world, BlockPos pos, BlockState state) {
-        net.minecraft.block.Block.spawnDrops(state, world.getWorld(), pos);
+    @Override protected boolean canConvertToSource() { return false; }
+    @Override protected void beforeDestroyingBlock(IWorld world, BlockPos pos, BlockState state) {
+        net.minecraft.block.Block.dropResources(state, world, pos, world.getBlockEntity(pos));
     }
     @Override public int getSlopeFindDistance(IWorldReader world) { return 2; }
-    @Override public int getLevelDecreasePerBlock(IWorldReader world) { return 2; }
-    @Override public int getTickRate(IWorldReader world) { return 30; }
+    @Override public int getDropOff(IWorldReader world) { return 2; }
+    @Override public int getTickDelay(IWorldReader world) { return 30; }
     @Override protected float getExplosionResistance() { return 100.0F; }
-    @Override public boolean isEquivalentTo(Fluid fluid) {
+    @Override public boolean isSame(Fluid fluid) {
         return fluid == content().source().get() || fluid == content().flowing().get();
     }
-    @Override protected boolean canDisplace(IFluidState state, net.minecraft.world.IBlockReader world,
+    @Override protected boolean canBeReplacedWith(FluidState state, net.minecraft.world.IBlockReader world,
             BlockPos pos, Fluid fluid, Direction direction) {
-        return direction == Direction.DOWN && !fluid.isEquivalentTo(this);
+        return direction == Direction.DOWN && !fluid.isSame(this);
     }
-    @Override public BlockState getBlockState(IFluidState state) {
-        return content().block().get().getDefaultState()
-                .with(FlowingFluidBlock.LEVEL, Integer.valueOf(getLevelFromState(state)));
+    @Override public BlockState createLegacyBlock(FluidState state) {
+        return content().block().get().defaultBlockState()
+                .setValue(FlowingFluidBlock.LEVEL, Integer.valueOf(getLegacyLevel(state)));
     }
 
     public static final class Flowing extends MoltenFluid {
         public Flowing(String name) { super(name); }
-        @Override protected void fillStateContainer(StateContainer.Builder<Fluid, IFluidState> builder) {
-            super.fillStateContainer(builder);
-            builder.add(LEVEL_1_8);
+        @Override protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> builder) {
+            super.createFluidStateDefinition(builder);
+            builder.add(LEVEL);
         }
-        @Override public int getLevel(IFluidState state) { return state.get(LEVEL_1_8); }
-        @Override public boolean isSource(IFluidState state) { return false; }
+        @Override public int getAmount(FluidState state) { return state.getValue(LEVEL); }
+        @Override public boolean isSource(FluidState state) { return false; }
     }
 
     public static final class Source extends MoltenFluid {
         public Source(String name) { super(name); }
-        @Override public int getLevel(IFluidState state) { return 8; }
-        @Override public boolean isSource(IFluidState state) { return true; }
+        @Override public int getAmount(FluidState state) { return 8; }
+        @Override public boolean isSource(FluidState state) { return true; }
     }
 }

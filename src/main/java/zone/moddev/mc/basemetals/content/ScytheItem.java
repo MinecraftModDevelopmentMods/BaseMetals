@@ -33,21 +33,21 @@ public final class ScytheItem extends ToolItem implements MaterialBacked {
 
     @Override public MaterialDefinition baseMetalsMaterial() { return material; }
     @Override public float getDestroySpeed(ItemStack stack, BlockState state) {
-        return state.isIn(ModTags.SCYTHE_HARVESTABLE) ? material.toolEfficiency() : 1.0F;
+        return state.is(ModTags.SCYTHE_HARVESTABLE) ? material.toolEfficiency() : 1.0F;
     }
 
     @Override
     public boolean onBlockStartBreak(ItemStack stack, BlockPos position, PlayerEntity player) {
-        if (player.world.isRemote || !(player instanceof ServerPlayerEntity) || HARVESTING.get()) return false;
-        if (!player.world.getBlockState(position).isIn(ModTags.SCYTHE_HARVESTABLE)) return false;
+        if (player.level.isClientSide || !(player instanceof ServerPlayerEntity) || HARVESTING.get()) return false;
+        if (!player.level.getBlockState(position).is(ModTags.SCYTHE_HARVESTABLE)) return false;
         HARVESTING.set(Boolean.TRUE);
         try {
             ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dz = -1; dz <= 1; dz++) {
-                    BlockPos target = position.add(dx, 0, dz);
-                    if (player.world.getBlockState(target).isIn(ModTags.SCYTHE_HARVESTABLE)) {
-                        serverPlayer.interactionManager.tryHarvestBlock(target);
+                    BlockPos target = position.offset(dx, 0, dz);
+                    if (player.level.getBlockState(target).is(ModTags.SCYTHE_HARVESTABLE)) {
+                        serverPlayer.gameMode.destroyBlock(target);
                     }
                 }
             }
@@ -57,6 +57,6 @@ public final class ScytheItem extends ToolItem implements MaterialBacked {
         return true;
     }
 
-    @Override public void addInformation(ItemStack stack, @Nullable World world,
+    @Override public void appendHoverText(ItemStack stack, @Nullable World world,
             List<ITextComponent> tooltip, ITooltipFlag flag) { MaterialItems.addToolTooltip(material, tooltip); }
 }

@@ -38,7 +38,7 @@ public final class CrackhammerItem extends ToolItem implements MaterialBacked {
     public CrackhammerItem(MaterialDefinition material, Item.Properties properties) {
         super(material.crackhammerAttackDamage() - material.baseAttackDamage(), -3.5F,
                 new MaterialTier(material), Collections.<Block>emptySet(),
-                properties.defaultMaxDamage(material.crackhammerDurability())
+                properties.defaultDurability(material.crackhammerDurability())
                         .addToolType(ToolType.PICKAXE, material.toolLevel()));
         this.material = material;
     }
@@ -46,45 +46,45 @@ public final class CrackhammerItem extends ToolItem implements MaterialBacked {
     @Override public MaterialDefinition baseMetalsMaterial() { return material; }
 
     @Override public float getDestroySpeed(ItemStack stack, BlockState state) {
-        return state.isIn(ModTags.CRACKHAMMER_CRUSHABLE) && canHarvestBlock(state)
+        return state.is(ModTags.CRACKHAMMER_CRUSHABLE) && isCorrectToolForDrops(state)
                 ? material.crackhammerDestroySpeed() : 1.0F;
     }
 
-    @Override public boolean canHarvestBlock(BlockState state) {
+    @Override public boolean isCorrectToolForDrops(BlockState state) {
         if (state.getHarvestTool() == ToolType.PICKAXE) return material.toolLevel() >= state.getHarvestLevel();
         Material blockMaterial = state.getMaterial();
-        return blockMaterial == Material.ROCK || blockMaterial == Material.IRON
-                || blockMaterial == Material.ANVIL;
+        return blockMaterial == Material.STONE || blockMaterial == Material.METAL
+                || blockMaterial == Material.HEAVY_METAL;
     }
 
-    @Override public void addInformation(ItemStack stack, @Nullable World world,
+    @Override public void appendHoverText(ItemStack stack, @Nullable World world,
             List<ITextComponent> tooltip, ITooltipFlag flag) { MaterialItems.addToolTooltip(material, tooltip); }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        World world = context.getWorld();
+    public ActionResultType useOn(ItemUseContext context) {
+        World world = context.getLevel();
         PlayerEntity player = context.getPlayer();
-        if (context.getFace() != Direction.UP || world.isRemote || player == null) return ActionResultType.PASS;
+        if (context.getClickedFace() != Direction.UP || world.isClientSide || player == null) return ActionResultType.PASS;
 
-        AxisAlignedBB area = new AxisAlignedBB(context.getPos().up());
-        List<ItemEntity> entities = world.getEntitiesWithinAABB(ItemEntity.class, area);
+        AxisAlignedBB area = new AxisAlignedBB(context.getClickedPos().above());
+        List<ItemEntity> entities = world.getEntitiesOfClass(ItemEntity.class, area);
         for (ItemEntity entity : entities) {
             ItemStack input = entity.getItem();
             CrushingRecipe recipe = findRecipe(world, input);
             if (recipe == null || !canCrushDroppedBlock(input)) continue;
-            int requested = player.isSneaking() ? input.getCount() : 1;
-            ItemStack hammer = context.getItem();
-            int durability = hammer.isDamageable()
-                    ? Math.max(0, hammer.getMaxDamage() - hammer.getDamage()) : requested;
+            int requested = player.isShiftKeyDown() ? input.getCount() : 1;
+            ItemStack hammer = context.getItemInHand();
+            int durability = hammer.isDamageableItem()
+                    ? Math.max(0, hammer.getMaxDamage() - hammer.getDamageValue()) : requested;
             int operations = Math.min(requested, durability);
             if (operations <= 0) break;
-            ItemStack output = recipe.getRecipeOutput().copy();
+            ItemStack output = recipe.getResultItem().copy();
             input.shrink(operations);
             if (input.isEmpty()) entity.remove(); else entity.setItem(input);
             spawnOutputs(world, entity, output, operations);
-            hammer.damageItem(operations, player, holder -> holder.sendBreakAnimation(context.getHand()));
-            world.playSound(null, context.getPos(), net.minecraft.util.SoundEvents.BLOCK_GRAVEL_BREAK,
-                    SoundCategory.BLOCKS, 0.5F, 0.5F + world.rand.nextFloat() * 0.3F);
+            hammer.hurtAndBreak(operations, player, holder -> holder.broadcastBreakEvent(context.getHand()));
+            world.playSound(null, context.getClickedPos(), net.minecraft.util.SoundEvents.GRAVEL_BREAK,
+                    SoundCategory.BLOCKS, 0.5F, 0.5F + world.random.nextFloat() * 0.3F);
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.PASS;
@@ -93,7 +93,7 @@ public final class CrackhammerItem extends ToolItem implements MaterialBacked {
     @Nullable
     private static CrushingRecipe findRecipe(World world, ItemStack input) {
         Inventory inventory = new Inventory(1);
-        inventory.setInventorySlotContents(0, input);
+        inventory.setItem(0, input);
         for (net.minecraft.item.crafting.IRecipe candidate : world.getRecipeManager().getRecipes()) {
             if (candidate instanceof CrushingRecipe && candidate.matches(inventory, world)) {
                 return (CrushingRecipe) candidate;
@@ -104,7 +104,7 @@ public final class CrackhammerItem extends ToolItem implements MaterialBacked {
 
     private boolean canCrushDroppedBlock(ItemStack input) {
         if (!(input.getItem() instanceof BlockItem)) return true;
-        return canHarvestBlock(((BlockItem) input.getItem()).getBlock().getDefaultState());
+        return isCorrectToolForDrops(((BlockItem) input.getItem()).getBlock().defaultBlockState());
     }
 
     private static void spawnOutputs(World world, ItemEntity source, ItemStack result, int operations) {
@@ -113,9 +113,9 @@ public final class CrackhammerItem extends ToolItem implements MaterialBacked {
             ItemStack output = result.copy();
             output.setCount(Math.min(output.getMaxStackSize(), remaining));
             remaining -= output.getCount();
-            ItemEntity crushed = new ItemEntity(world, source.getPosX(), source.getPosY(), source.getPosZ(), output);
-            crushed.setDefaultPickupDelay();
-            world.addEntity(crushed);
+            ItemEntity crushed = new ItemEntity(world, source.getX(), source.getY(), source.getZ(), output);
+            crushed.setDefaultPickUpDelay();
+            world.addFreshEntity(crushed);
         }
     }
 }

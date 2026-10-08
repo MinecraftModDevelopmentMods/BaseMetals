@@ -29,7 +29,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -73,15 +73,15 @@ public final class ModContent {
 
     static {
         for (MaterialDefinition material : MaterialCatalogue.ALL) registerMaterial(material);
-        registerAnvil("stone_anvil", Block.Properties.create(Material.ROCK)
-                .sound(SoundType.STONE).hardnessAndResistance(5.0F, 10.0F));
+        registerAnvil("stone_anvil", Block.Properties.of(Material.STONE)
+                .sound(SoundType.STONE).strength(5.0F, 10.0F));
         registerAnvil("steel_anvil", metalProperties(MaterialCatalogue.get("steel")));
         registerAnvil("adamantine_anvil", metalProperties(MaterialCatalogue.get("adamantine")));
         HUMAN_DETECTOR = registerBlock("human_detector",
                 new Supplier<Block>() {
                     @Override public Block get() {
-                        return new HumanDetectorBlock(Block.Properties.create(Material.IRON)
-                                .sound(SoundType.METAL).hardnessAndResistance(5.0F).doesNotBlockMovement());
+                        return new HumanDetectorBlock(Block.Properties.of(Material.METAL)
+                                .sound(SoundType.METAL).strength(5.0F).noCollission());
                     }
                 }, true);
         registerVanillaBits();
@@ -230,23 +230,23 @@ public final class ModContent {
         if ("plate".equals(form)) {
             factory = new Supplier<Block>() { @Override public Block get() { return new PlateBlock(properties.get(), material.requiredHarvestLevel()); } };
         } else if ("bars".equals(form)) {
-            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestPane(properties.get().variableOpacity(), material.requiredHarvestLevel()); } };
+            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestPane(properties.get().dynamicShape(), material.requiredHarvestLevel()); } };
         } else if ("door".equals(form)) {
-            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestDoor(properties.get().variableOpacity(), material.requiredHarvestLevel()); } };
+            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestDoor(properties.get().dynamicShape(), material.requiredHarvestLevel()); } };
         } else if ("trapdoor".equals(form)) {
-            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestTrapDoor(properties.get().variableOpacity(), material.requiredHarvestLevel()); } };
+            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestTrapDoor(properties.get().dynamicShape(), material.requiredHarvestLevel()); } };
         } else if ("button".equals(form)) {
-            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestButton(properties.get().doesNotBlockMovement(), material.requiredHarvestLevel()); } };
+            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestButton(properties.get().noCollission(), material.requiredHarvestLevel()); } };
         } else if ("slab".equals(form)) {
             factory = new Supplier<Block>() { @Override public Block get() { return new HarvestSlab(properties.get(), material.requiredHarvestLevel()); } };
         } else if ("lever".equals(form)) {
-            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestLever(properties.get().doesNotBlockMovement(), material.requiredHarvestLevel()); } };
+            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestLever(properties.get().noCollission(), material.requiredHarvestLevel()); } };
         } else if ("pressure_plate".equals(form)) {
             factory = new Supplier<Block>() { @Override public Block get() { return new HarvestPressurePlate(properties.get(), material.requiredHarvestLevel()); } };
         } else if ("stairs".equals(form)) {
             factory = new Supplier<Block>() { @Override public Block get() {
                 Block base = stairBase == null ? Blocks.IRON_BLOCK : stairBase.get();
-                return new HarvestStairs(base.getDefaultState(), properties.get(), material.requiredHarvestLevel());
+                return new HarvestStairs(base.defaultBlockState(), properties.get(), material.requiredHarvestLevel());
             } };
         } else if ("wall".equals(form)) {
             factory = new Supplier<Block>() { @Override public Block get() { return new HarvestWall(properties.get(), material.requiredHarvestLevel()); } };
@@ -310,12 +310,12 @@ public final class ModContent {
     private static void registerVanillaBits() {
         final Map<String, MaterialDefinition> vanilla = vanillaDefinitions();
         final RegistryHandle<Block> charcoalBlock = registerBlock("charcoal_block", new Supplier<Block>() {
-            @Override public Block get() { return new HarvestBlock(Block.Properties.create(Material.ROCK)
-                    .sound(SoundType.SAND).hardnessAndResistance(5.0F), 0); }
+            @Override public Block get() { return new HarvestBlock(Block.Properties.of(Material.STONE)
+                    .sound(SoundType.SAND).strength(5.0F), 0); }
         }, false);
         registerItem("charcoal_block", new Supplier<Item>() { @Override public Item get() {
             return new MaterialItems.BurnableBlock(charcoalBlock.get(), 16000,
-                    new Item.Properties().group(ModTabs.BLOCKS));
+                    new Item.Properties().tab(ModTabs.BLOCKS));
         } });
         registerVanillaDecorative("diamond", vanilla.get("diamond"), list("bars", "door", "trapdoor", "button", "slab", "lever", "pressure_plate", "stairs", "wall"));
         registerVanillaDecorative("emerald", vanilla.get("emerald"), list("bars", "door", "trapdoor", "button", "slab", "lever", "pressure_plate", "stairs", "wall"));
@@ -351,7 +351,7 @@ public final class ModContent {
 
     private static void registerPlate(String id, final Block base, final MaterialDefinition material) {
         registerBlock(id, new Supplier<Block>() { @Override public Block get() {
-            return new PlateBlock(Block.Properties.from(base).variableOpacity(), material.requiredHarvestLevel());
+            return new PlateBlock(Block.Properties.copy(base).dynamicShape(), material.requiredHarvestLevel());
         } }, true);
     }
 
@@ -376,9 +376,9 @@ public final class ModContent {
             MaterialDefinition material) {
         boolean gem = "diamond".equals(name) || "emerald".equals(name) || "obsidian".equals(name) || "quartz".equals(name);
         boolean lockedGemDoor = gem && !"quartz".equals(name) && ("door".equals(form) || "trapdoor".equals(form));
-        Material blockMaterial = "gold".equals(name) || "iron".equals(name) || lockedGemDoor ? Material.IRON : Material.ROCK;
-        return Block.Properties.create(blockMaterial).sound(gem ? SoundType.GLASS : SoundType.METAL)
-                .hardnessAndResistance(material.blockHardness(), material.blastResistance());
+        Material blockMaterial = "gold".equals(name) || "iron".equals(name) || lockedGemDoor ? Material.METAL : Material.STONE;
+        return Block.Properties.of(blockMaterial).sound(gem ? SoundType.GLASS : SoundType.METAL)
+                .strength(material.blockHardness(), material.blastResistance());
     }
 
     private static Block vanillaStorageBlock(String name) {
@@ -447,8 +447,8 @@ public final class ModContent {
         FLUID_COLOURS.put(name, Integer.valueOf(colour));
         RegistryHandle<Block> blockHandle = registerBlock(name, new Supplier<Block>() { @Override public Block get() {
             MoltenMetalBlock value = new MoltenMetalBlock(source.get(),
-                    Block.Properties.create(Material.LAVA).doesNotBlockMovement()
-                            .hardnessAndResistance(100.0F).variableOpacity(), mercury);
+                    Block.Properties.of(Material.LAVA).noCollission()
+                            .strength(100.0F).dynamicShape(), mercury);
             block.bind(value);
             return value;
         } }, false);
@@ -457,7 +457,7 @@ public final class ModContent {
         } });
         registerItem(name + "_bucket", new Supplier<Item>() { @Override public Item get() {
             BaseMetalBucketItem value = new BaseMetalBucketItem(source.get(),
-                    new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModTabs.ITEMS));
+                    new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ModTabs.ITEMS));
             bucket.bind(value);
             return value;
         } });
@@ -473,7 +473,7 @@ public final class ModContent {
         BLOCKS_BY_ID.put(id, handle);
         BLOCK_FACTORIES.put(id, factory);
         if (hasItem) registerItem(id, new Supplier<Item>() { @Override public Item get() {
-            return new BlockItem(handle.get(), new Item.Properties().group(ModTabs.BLOCKS));
+            return new BlockItem(handle.get(), new Item.Properties().tab(ModTabs.BLOCKS));
         } });
         return handle;
     }
@@ -481,7 +481,7 @@ public final class ModContent {
     private static RegistryHandle<Item> registerSimpleMaterialItem(final String id,
             final MaterialDefinition material) {
         return registerItem(id, new Supplier<Item>() { @Override public Item get() {
-            return new MaterialItems.Basic(material, burnTime(id), new Item.Properties().group(ModTabs.ITEMS));
+            return new MaterialItems.Basic(material, burnTime(id), new Item.Properties().tab(ModTabs.ITEMS));
         } });
     }
 
@@ -505,15 +505,15 @@ public final class ModContent {
         return handle;
     }
 
-    private static Item.Properties toolProperties() { return new Item.Properties().group(ModTabs.TOOLS); }
-    private static Item.Properties combatProperties() { return new Item.Properties().group(ModTabs.COMBAT); }
+    private static Item.Properties toolProperties() { return new Item.Properties().tab(ModTabs.TOOLS); }
+    private static Item.Properties combatProperties() { return new Item.Properties().tab(ModTabs.COMBAT); }
     private static Block.Properties metalProperties(MaterialDefinition material) {
-        return Block.Properties.create(Material.IRON).sound(SoundType.METAL)
-                .hardnessAndResistance(material.blockHardness(), material.blastResistance());
+        return Block.Properties.of(Material.METAL).sound(SoundType.METAL)
+                .strength(material.blockHardness(), material.blastResistance());
     }
     private static Block.Properties oreProperties(MaterialDefinition material) {
-        return Block.Properties.create(Material.ROCK).sound(SoundType.STONE)
-                .hardnessAndResistance(material.oreHardness(), material.blastResistance());
+        return Block.Properties.of(Material.STONE).sound(SoundType.STONE)
+                .strength(material.oreHardness(), material.blastResistance());
     }
     private static ResourceLocation id(String path) { return new ResourceLocation(BaseMetals.MOD_ID, path); }
     private static List<String> list(String... values) {

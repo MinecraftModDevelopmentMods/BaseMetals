@@ -10,7 +10,7 @@ public interface MaterialBacked {
     MaterialDefinition baseMetalsMaterial();
 
     default boolean isMaterialRepairIngredient(ItemStack repair) {
-        return new ItemTags.Wrapper(new ResourceLocation(
+        return ItemTags.getAllTags().getTagOrEmpty(new ResourceLocation(
                 baseMetalsMaterial().repairIngredientTag())).contains(repair.getItem());
     }
 }

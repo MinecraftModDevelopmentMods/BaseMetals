@@ -2,6 +2,9 @@ package zone.moddev.mc.basemetals.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.util.IReorderingProcessor;
+import net.minecraft.util.text.StringTextComponent;
 
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.screen.Screen;
@@ -58,38 +61,38 @@ public final class BaseMetalsConfigScreen extends Screen {
             addButton(button);
         }
 
-        addButton(new OptionButton(left, top + 138, 145, I18n.format(PREFIX + "defaults"), () -> {
+        addButton(new OptionButton(left, top + 138, 145, I18n.get(PREFIX + "defaults"), () -> {
             edits.defaults();
             initLabels();
         }, null));
-        addButton(new OptionButton(left + 155, top + 138, 145, I18n.format(PREFIX + "undo"), () -> {
+        addButton(new OptionButton(left + 155, top + 138, 145, I18n.get(PREFIX + "undo"), () -> {
             edits.undo();
             initLabels();
         }, null));
-        addButton(new OptionButton(left, height - 28, 145, I18n.format("gui.done"), this::done, null));
-        addButton(new OptionButton(left + 155, height - 28, 145, I18n.format("gui.cancel"), this::onClose, null));
+        addButton(new OptionButton(left, height - 28, 145, I18n.get("gui.done"), this::done, null));
+        addButton(new OptionButton(left + 155, height - 28, 145, I18n.get("gui.cancel"), this::onClose, null));
     }
 
     private String modeLabel() {
-        return I18n.format(PREFIX + "contentMode") + ": " + I18n.format(edits.mode().translationKey());
+        return I18n.get(PREFIX + "contentMode") + ": " + I18n.get(edits.mode().translationKey());
     }
 
     private String optionLabel(int index) {
-        return I18n.format(PREFIX + OPTIONS[index]) + ": "
-                + I18n.format(edits.option(index) ? "options.on" : "options.off");
+        return I18n.get(PREFIX + OPTIONS[index]) + ": "
+                + I18n.get(edits.option(index) ? "options.on" : "options.off");
     }
 
     private void initLabels() {
-        modeButton.setMessage(modeLabel());
+        modeButton.setMessage(new StringTextComponent(modeLabel()));
 
         for (int index = 0; index < optionButtons.size(); index++) {
-            optionButtons.get(index).setMessage(optionLabel(index));
+            optionButtons.get(index).setMessage(new StringTextComponent(optionLabel(index)));
         }
     }
 
     private void done() {
         if (edits.modeChanged()) {
-            minecraft.displayGuiScreen(new ConfirmScreen(this::confirmResult,
+            minecraft.setScreen(new ConfirmScreen(this::confirmResult,
                     new TranslationTextComponent(PREFIX + "confirm.title"),
                     new TranslationTextComponent(PREFIX + "confirm.message")));
         } else {
@@ -99,7 +102,7 @@ public final class BaseMetalsConfigScreen extends Screen {
 
     private void confirmResult(boolean accepted) {
         if (accepted) saveAndClose();
-        else minecraft.displayGuiScreen(this);
+        else minecraft.setScreen(this);
     }
 
     private void saveAndClose() {
@@ -114,28 +117,26 @@ public final class BaseMetalsConfigScreen extends Screen {
 
     @Override
     public void onClose() {
-        minecraft.displayGuiScreen(parent);
+        minecraft.setScreen(parent);
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        renderBackground();
-        drawCenteredString(font, I18n.format(PREFIX + "title"), width / 2, 12, 0xFFFFFF);
-        super.render(mouseX, mouseY, partialTicks);
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+        renderBackground(matrices);
+        drawCenteredString(matrices, font, title, width / 2, 12, 0xFFFFFF);
+        super.render(matrices, mouseX, mouseY, partialTicks);
 
         for (Widget button : buttons) {
             if (button instanceof OptionButton && button.isHovered()) {
                 String key = ((OptionButton) button).option;
                 if (key != null) {
-                    List<String> help = new ArrayList<>(font.listFormattedStringToWidth(
-                            I18n.format(PREFIX + key + ".tooltip"), 280));
+                    List<IReorderingProcessor> help = new ArrayList<>(font.split(
+                            new TranslationTextComponent(PREFIX + key + ".tooltip"), 280));
                     if ("contentMode".equals(key)) {
-                        help.addAll(font.listFormattedStringToWidth(
-                                I18n.format(edits.mode().translationKey() + ".description"), 280));
-                        help.addAll(font.listFormattedStringToWidth(
-                                I18n.format(PREFIX + "restart"), 280));
+                        help.addAll(font.split(new TranslationTextComponent(edits.mode().translationKey() + ".description"), 280));
+                        help.addAll(font.split(new TranslationTextComponent(PREFIX + "restart"), 280));
                     }
-                    renderTooltip(help, mouseX, mouseY);
+                    renderTooltip(matrices, help, mouseX, mouseY);
                 }
             }
         }
@@ -145,7 +146,7 @@ public final class BaseMetalsConfigScreen extends Screen {
         private final String option;
 
         private OptionButton(int x, int y, int width, String label, Runnable click, String option) {
-            super(x, y, width, 20, label, button -> click.run());
+            super(x, y, width, 20, new StringTextComponent(label), button -> click.run());
             this.option = option;
         }
 

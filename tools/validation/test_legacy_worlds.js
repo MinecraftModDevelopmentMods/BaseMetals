@@ -37,7 +37,7 @@ function treeDigest(directory) {
 function prepare(directory, runtime, launcher, mods) {
     if (fs.existsSync(directory)) throw new Error('Refusing to overwrite ' + directory);
     fs.mkdirSync(path.join(directory, 'mods'), { recursive: true });
-    for (const file of [launcher, 'minecraft_server.' + (phase === 'capture' ? captureVersion : '1.15.2') + '.jar']) {
+    for (const file of [launcher, 'minecraft_server.' + (phase === 'capture' ? captureVersion : '1.16.5') + '.jar']) {
         fs.copyFileSync(path.join(runtime, file), path.join(directory, file));
     }
     fs.cpSync(path.join(runtime, 'libraries'), path.join(directory, 'libraries'), { recursive: true });
@@ -53,9 +53,54 @@ function prepare(directory, runtime, launcher, mods) {
         fs.writeFileSync(path.join(directory, file), '[]\n');
     }
     fs.writeFileSync(path.join(directory, 'server.properties'),
-        'level-name=world\nlevel-seed=8675309\nlevel-type=FLAT\ngenerator-settings=3;minecraft:bedrock,2*minecraft:dirt,minecraft:grass;1;\n'
+        'level-name=world\nlevel-seed=8675309\n'
+        + (phase === 'capture'
+            ? 'level-type=FLAT\ngenerator-settings=3;minecraft:bedrock,2*minecraft:dirt,minecraft:grass;1;\n'
+            : 'level-type=default\ngenerator-settings=\n')
         + 'online-mode=false\nserver-port=0\nview-distance=4\nspawn-protection=0\nmax-tick-time=-1\n'
         + 'generate-structures=false\n');
+}
+
+function checkUpgradeLog(log) {
+    // Forge reports these removed vanilla names when it reads an older registry snapshot.
+    const retiredVanillaEntries = new Set([
+        'minecraft:zombie_pigman', 'minecraft:zombie_pigman_spawn_egg',
+        'minecraft:golem_last_seen_time', 'minecraft:opened_doors',
+        'minecraft:entity.zombie_pigman.ambient', 'minecraft:entity.zombie_pigman.angry',
+        'minecraft:entity.zombie_pigman.death', 'minecraft:entity.zombie_pigman.hurt',
+        'minecraft:music.nether'
+    ]);
+    const acceptedEntries = new Set();
+    const lines = log.split(/\r?\n/);
+
+    for (let index = 0; index < lines.length; index++) {
+        const line = lines[index];
+        if (!/\/(?:ERROR|FATAL)\]/.test(line)) continue;
+
+        if (phase === 'upgrade' && line.includes('GameData/REGISTRIES')
+                && line.includes('Unidentified mapping from registry minecraft:')) {
+            const entries = [];
+            for (let next = index + 1; next < lines.length && lines[next].trim(); next++) {
+                const entry = /^\s+(minecraft:[\w.]+): \d+$/.exec(lines[next]);
+                if (!entry) break;
+                entries.push(entry[1]);
+            }
+
+            if (entries.length && entries.every(entry => retiredVanillaEntries.has(entry))) {
+                entries.forEach(entry => acceptedEntries.add(entry));
+                continue;
+            }
+        }
+
+        if (acceptedEntries.size && line.includes('GameData/REGISTRIES')
+                && line.endsWith('There are unidentified mappings in this world - we are going to attempt to process anyway')) {
+            continue;
+        }
+
+        throw new Error('Unexpected runtime error: ' + line);
+    }
+
+    return [...acceptedEntries].sort();
 }
 
 async function run(directory, launcher, label, marker, properties = []) {
@@ -78,6 +123,14 @@ async function run(directory, launcher, label, marker, properties = []) {
     if (code !== 0 || !log.includes(marker) || /BASEMETALS_.* FAIL|Encountered an unexpected exception/.test(log)) {
         throw new Error(label + ' failed (exit ' + code + '); see ' + directory);
     }
+    const crashDirectory = path.join(directory, 'crash-reports');
+    if (fs.existsSync(crashDirectory) && fs.readdirSync(crashDirectory).length) {
+        throw new Error(label + ' created a crash report; see ' + crashDirectory);
+    }
+    const vanillaChanges = checkUpgradeLog(log);
+    if (vanillaChanges.length) {
+        console.log(label + ' accepted removed vanilla registry names: ' + vanillaChanges.join(', '));
+    }
     console.log(label + ' PASS');
     return [...new Set(log.split(/\r?\n/)
         .filter(line => line.includes('BASEMETALS_') && /PASS|VERIFIED/.test(line)))];
@@ -99,8 +152,8 @@ async function run(directory, launcher, label, marker, properties = []) {
         } else {
             const source = profile.world || path.join(root, 'capture', profile.id, 'world');
             const before = treeDigest(source);
-            const launcher = 'forge-1.15.2-31.2.57.jar';
-            prepare(directory, spec.runtime115, launcher, [spec.modJar, spec.probeJar, spec.oreSpawn]);
+            const launcher = 'forge-1.16.5-36.2.34.jar';
+            prepare(directory, spec.runtime116, launcher, [spec.modJar, spec.probeJar, spec.oreSpawn]);
             fs.cpSync(source, path.join(directory, 'world'), { recursive: true });
             if (profile.advancementFixture) {
                 const fixture = JSON.parse(fs.readFileSync(profile.advancementFixture, 'utf8'));

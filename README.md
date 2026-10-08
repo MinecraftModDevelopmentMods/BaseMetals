@@ -1,7 +1,7 @@
 [![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
 [![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
-[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.15.2)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.15.2)
+[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.16.5)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.16.5)
 
 # Base Metals
 
@@ -12,7 +12,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and extra loot to find in chests.
 
-This is Base Metals `3.0.1.115021` for Minecraft 1.15.2. It brings the 1.14.4
+This is Base Metals `3.1.0.116051` for Minecraft 1.16.5. It brings the 1.15.2
 release forward while keeping the same blocks, items and recipes. MMDLib and
 Additional Loot Tables are no longer needed. OreSpawn places the ores, and
 Base Metals supplies the metals and their recipes.
@@ -22,15 +22,19 @@ overlays, so resource packs can change their surroundings without making the
 ores look out of place. Smith trades and village chest loot use the
 Armorer, Weaponsmith and Toolsmith professions introduced in Minecraft 1.14.
 
+The 3.1 release reduces ore-overlay flickering and uses Forge's fluid-bucket
+icons, with names that clearly describe their contents. These improvements
+are not yet included in the 3.0.1 builds for Minecraft 1.13–1.15.
+
 ## Requirements
 
-- Minecraft `1.15.2`
-- Forge `31.2.57`
+- Minecraft `1.16.5`
+- Forge `36.2.34`
 - Java 8
-- OreSpawn `[4.1.0.115021,5.0.0)` on both client and server
+- OreSpawn `[4.1.0.116051,5.0.0)` on both client and server
 
-Put `BaseMetals-3.0.1.115021.jar` and OreSpawn `4.1.0.115021` (or a later
-compatible OreSpawn 4 build for 1.15.2) in the `mods` directory. MMDLib and
+Put `BaseMetals-3.1.0.116051.jar` and OreSpawn `4.1.0.116051` (or a later
+compatible OreSpawn 4 build for 1.16.5) in the `mods` directory. MMDLib and
 Additional Loot Tables are not dependencies. Mineralogy is optional.
 
 ## Materials and gameplay
@@ -72,6 +76,8 @@ Notable mechanics include:
   not regenerate.
 - Molten-metal buckets let you place and collect fluids. Base Metals does not
   include a smeltery; other mods may provide ways to produce these fluids.
+- Crack Hammers turn Nether gold ore into two gold powders, and Ancient Debris
+  into two Netherite scraps. Gilded Blackstone is not a crushing ingredient.
 
 Open the configuration from the main menu's **Mods → Base Metals → Config**
 button, or from the Base Metals cog in OreSpawn's world-creation settings.
@@ -122,14 +128,14 @@ items in containers are protected too.
 
 Always perform the first upgrade on a copy of the world and keep the untouched
 original. Read [Migration](docs/MIGRATION.md) before opening an old save. A
-world already upgraded to Minecraft 1.16 or later must not be opened in this
-older version. Worlds from the Base Metals 1.13.2 and 1.14.4 ports can be
+world already upgraded to Minecraft 1.17 or later must not be opened in this
+older version. Worlds from the Base Metals 1.13.2, 1.14.4 and 1.15.2 ports can be
 upgraded normally.
 
 ## Compatibility
 
 Forge item, block, and fluid tags are Base Metals' public compatibility API.
-The 1.15.2 line deliberately contains no version-specific Mekanism, Thermal,
+The 1.16.5 line deliberately contains no version-specific Mekanism, Thermal,
 Tinkers' Construct, Ender IO, IC2, or Thaumcraft plugin code. Compatible mods
 can consume the common tags without linking to Base Metals internals. See
 [Compatibility](docs/COMPATIBILITY.md) and [Supported versions](docs/VERSIONS.md).
@@ -175,7 +181,7 @@ Generate and verify Eclipse launches with:
 ```
 
 Release candidates can also be exercised as packaged mods in prepared official
-Forge 31 client and server runtimes with `packagedRuntimeIntegrationTest`; pass
+Forge 36 client and server runtimes with `packagedRuntimeIntegrationTest`; pass
 their directories through the `packagedForgeClientRuntime` and
 `packagedForgeServerRuntime` Gradle properties. These probes load the exact
 release JAR and OreSpawn dependency, create real worlds, validate client models
@@ -187,24 +193,24 @@ messages in disposable multiplayer profiles.
 
 `packagedMineralogyIntegrationTest` checks ore placement alongside Mineralogy.
 It uses the server runtime above and a `mineralogyTestJar` property pointing to
-the qualified Mineralogy 1.15.2 JAR. Mineralogy remains optional for players.
+the qualified Mineralogy 1.16.5 JAR. Mineralogy remains optional for players.
 
 CI checks a fresh Forge setup, unit tests, generated files, a dedicated server
 with the pinned OreSpawn release, release-JAR contents, checksums, reproducible
 builds, CodeQL, wrapper validation, and Eclipse classpath isolation. Test probes
 and historical fixtures are excluded from the published JAR.
 
-Builds use the published [OreSpawn `4.1.0.115021` release](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9073591)
-through Curse Maven. No sibling checkout or local candidate repository is
-needed. The build verifies the download's checksum, Minecraft version and
-configuration-screen API.
+Development and packaged tests use the published
+[OreSpawn `4.1.0.116051` release](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9080646)
+through Curse Maven: `curse.maven:mmd-orespawn-245586:9080646`. The build checks
+its checksum, Minecraft version and configuration-screen API.
 
-CI stages that same download with `gradle/stage-orespawn-release.sh` and passes
-the temporary repository through `orespawnVerificationRepository`. Local
-candidate builds remain guarded against publication.
+CI stages the same verified download with `gradle/stage-orespawn-release.sh`
+and passes its temporary repository through `orespawnVerificationRepository`.
+Normal development does not need a local OreSpawn checkout or repository.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.0.1.115021`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.0.116051`.
 
 Report defects through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

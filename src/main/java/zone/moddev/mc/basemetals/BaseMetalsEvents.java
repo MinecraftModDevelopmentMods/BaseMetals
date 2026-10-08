@@ -56,13 +56,13 @@ public final class BaseMetalsEvents {
         // An advancement can be earned while its recipe is disabled. Restore the
         // unlock after a mode change without resetting the player's progress.
         for (IRecipe recipe : player.getServer().getRecipeManager().getRecipes()) {
-            if (!BaseMetals.MOD_ID.equals(recipe.getId().getNamespace()) || recipe.isDynamic()
-                    || player.getRecipeBook().isUnlocked(recipe)) continue;
+            if (!BaseMetals.MOD_ID.equals(recipe.getId().getNamespace()) || recipe.isSpecial()
+                    || player.getRecipeBook().contains(recipe)) continue;
 
-            Advancement advancement = player.getServer().getAdvancementManager().getAdvancement(
+            Advancement advancement = player.getServer().getAdvancements().getAdvancement(
                     new ResourceLocation(BaseMetals.MOD_ID, "recipes/" + recipe.getId().getPath()));
-            if (advancement != null && player.getAdvancements().getProgress(advancement).isDone()) {
-                player.unlockRecipes(Collections.singletonList(recipe));
+            if (advancement != null && player.getAdvancements().getOrStartProgress(advancement).isDone()) {
+                player.awardRecipes(Collections.singletonList(recipe));
             }
         }
     }
@@ -70,31 +70,31 @@ public final class BaseMetalsEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onBreak(BlockEvent.BreakEvent event) {
         PlayerEntity player = event.getPlayer();
-        World world = player.world;
-        ItemStack held = player.getHeldItemMainhand();
-        if (world.isRemote || player.isCreative() || !(held.getItem() instanceof CrackhammerItem)
+        World world = player.level;
+        ItemStack held = player.getMainHandItem();
+        if (world.isClientSide || player.isCreative() || !(held.getItem() instanceof CrackhammerItem)
                 || !event.getState().canHarvestBlock(world, event.getPos(), player)) return;
 
         CrushingRecipe recipe = crushing(world, new ItemStack(event.getState().getBlock()));
         if (recipe == null) return;
         event.setCanceled(true);
         BlockState state = event.getState();
-        state.getBlock().onBlockHarvested(world, event.getPos(), state, player);
+        state.getBlock().playerWillDestroy(world, event.getPos(), state, player);
         if (!world.removeBlock(event.getPos(), false)) return;
-        state.getBlock().onPlayerDestroy(world, event.getPos(), state);
-        ItemStack result = recipe.getRecipeOutput().copy();
+        state.getBlock().destroy(world, event.getPos(), state);
+        ItemStack result = recipe.getResultItem().copy();
         ItemEntity drop = new ItemEntity(world, event.getPos().getX() + 0.5D,
                 event.getPos().getY() + 0.5D, event.getPos().getZ() + 0.5D, result);
-        drop.setDefaultPickupDelay();
-        world.addEntity(drop);
-        player.addStat(net.minecraft.stats.Stats.BLOCK_MINED.get(state.getBlock()));
-        player.addExhaustion(0.005F);
-        held.damageItem(1, player, entity -> entity.sendBreakAnimation(net.minecraft.util.Hand.MAIN_HAND));
+        drop.setDefaultPickUpDelay();
+        world.addFreshEntity(drop);
+        player.awardStat(net.minecraft.stats.Stats.BLOCK_MINED.get(state.getBlock()));
+        player.causeFoodExhaustion(0.005F);
+        held.hurtAndBreak(1, player, entity -> entity.broadcastBreakEvent(net.minecraft.util.Hand.MAIN_HAND));
     }
 
     private static CrushingRecipe crushing(World world, ItemStack input) {
         Inventory inventory = new Inventory(1);
-        inventory.setInventorySlotContents(0, input);
+        inventory.setItem(0, input);
         for (net.minecraft.item.crafting.IRecipe candidate : world.getRecipeManager().getRecipes()) {
             if (candidate instanceof CrushingRecipe && candidate.matches(inventory, world)) {
                 return (CrushingRecipe) candidate;
@@ -106,12 +106,12 @@ public final class BaseMetalsEvents {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         PlayerEntity player = event.player;
-        if (event.phase != TickEvent.Phase.END || player.world.isRemote) return;
-        if (BaseMetalsConfig.STARSTEEL_REGENERATION.get() && player.ticksExisted % 200 == 0) {
-            repairStarsteel(player.getHeldItemMainhand());
-            repairStarsteel(player.getHeldItemOffhand());
+        if (event.phase != TickEvent.Phase.END || player.level.isClientSide) return;
+        if (BaseMetalsConfig.STARSTEEL_REGENERATION.get() && player.tickCount % 200 == 0) {
+            repairStarsteel(player.getMainHandItem());
+            repairStarsteel(player.getOffhandItem());
         }
-        if (player.ticksExisted % 20 != 0) return;
+        if (player.tickCount % 20 != 0) return;
         if (player instanceof ServerPlayerEntity) BaseMetalsAdvancements.onEquipment((ServerPlayerEntity) player);
         if (BaseMetalsConfig.SPECIAL_EFFECTS.get()) applyArmorEffects(player, armorMaterials(player));
     }
@@ -119,7 +119,7 @@ public final class BaseMetalsEvents {
     private static void repairStarsteel(ItemStack stack) {
         if (stack.getItem() instanceof MaterialBacked && !(stack.getItem() instanceof ArmorItem)
                 && "starsteel".equals(((MaterialBacked) stack.getItem()).baseMetalsMaterial().name())
-                && stack.isDamaged()) stack.setDamage(Math.max(0, stack.getDamage() - 1));
+                && stack.isDamaged()) stack.setDamageValue(Math.max(0, stack.getDamageValue() - 1));
     }
 
     private static Map<EquipmentSlotType, String> armorMaterials(PlayerEntity player) {
@@ -127,7 +127,7 @@ public final class BaseMetalsEvents {
         EquipmentSlotType[] slots = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST,
                 EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
         for (EquipmentSlotType slot : slots) {
-            ItemStack stack = player.getItemStackFromSlot(slot);
+            ItemStack stack = player.getItemBySlot(slot);
             if (stack.getItem() instanceof ArmorItem && stack.getItem() instanceof MaterialBacked) {
                 result.put(slot, ((MaterialBacked) stack.getItem()).baseMetalsMaterial().name());
             }
@@ -143,36 +143,36 @@ public final class BaseMetalsEvents {
 
     private static void applyArmorEffects(PlayerEntity player, Map<EquipmentSlotType, String> armor) {
         int adamantine = count(armor, "adamantine");
-        if (adamantine >= 2) add(player, Effects.RESISTANCE, adamantine == 4 ? 1 : 0);
+        if (adamantine >= 2) add(player, Effects.DAMAGE_RESISTANCE, adamantine == 4 ? 1 : 0);
         int lead = count(armor, "lead");
-        if (lead >= 2) add(player, Effects.SLOWNESS, lead == 4 ? 1 : 0);
+        if (lead >= 2) add(player, Effects.MOVEMENT_SLOWDOWN, lead == 4 ? 1 : 0);
         if (count(armor, "coldiron") == 4) add(player, Effects.FIRE_RESISTANCE, 0);
         if (count(armor, "aquarium") == 4 && player.isInWater()) {
             add(player, Effects.WATER_BREATHING, 0);
-            add(player, Effects.RESISTANCE, 0);
-            player.removePotionEffect(Effects.MINING_FATIGUE);
+            add(player, Effects.DAMAGE_RESISTANCE, 0);
+            player.removeEffect(Effects.DIG_SLOWDOWN);
         }
         if (count(armor, "mithril") == 4) {
-            for (EffectInstance effect : new ArrayList<EffectInstance>(player.getActivePotionEffects())) {
-                if (effect.getPotion().getEffectType() == net.minecraft.potion.EffectType.HARMFUL) player.removePotionEffect(effect.getPotion());
+            for (EffectInstance effect : new ArrayList<EffectInstance>(player.getActiveEffects())) {
+                if (effect.getEffect().getCategory() == net.minecraft.potion.EffectType.HARMFUL) player.removeEffect(effect.getEffect());
             }
         }
         int starsteel = count(armor, "starsteel");
-        if (starsteel > 0) add(player, Effects.JUMP_BOOST, starsteel - 1);
-        if (starsteel >= 2) add(player, Effects.SPEED, Math.min(2, starsteel - 2));
+        if (starsteel > 0) add(player, Effects.JUMP, starsteel - 1);
+        if (starsteel >= 2) add(player, Effects.MOVEMENT_SPEED, Math.min(2, starsteel - 2));
     }
 
     private static void add(PlayerEntity player, Effect potion, int amplifier) {
-        player.addPotionEffect(new EffectInstance(potion, 45, amplifier, false, false, true));
+        player.addEffect(new EffectInstance(potion, 45, amplifier, false, false, true));
     }
 
     @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
-        if (!BaseMetalsConfig.SPECIAL_EFFECTS.get() || event.getEntityLiving().world.isRemote) return;
-        Entity source = event.getSource().getTrueSource();
+        if (!BaseMetalsConfig.SPECIAL_EFFECTS.get() || event.getEntityLiving().level.isClientSide) return;
+        Entity source = event.getSource().getEntity();
         if (!(source instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity) source;
-        ItemStack held = attacker.getHeldItemMainhand();
+        ItemStack held = attacker.getMainHandItem();
         if (!(held.getItem() instanceof MaterialBacked) || !(held.getItem() instanceof TieredItem)) return;
         String material = ((MaterialBacked) held.getItem()).baseMetalsMaterial().name();
         LivingEntity target = event.getEntityLiving();
@@ -180,11 +180,11 @@ public final class BaseMetalsEvents {
             event.setAmount(event.getAmount() + 4.0F);
         } else if ("aquarium".equals(material) && target.canBreatheUnderwater()) {
             event.setAmount(event.getAmount() + 4.0F);
-        } else if ("coldiron".equals(material) && target.isImmuneToFire()) {
+        } else if ("coldiron".equals(material) && target.fireImmune()) {
             event.setAmount(event.getAmount() + 3.0F);
-        } else if ("mithril".equals(material) && target.getCreatureAttribute() == CreatureAttribute.UNDEAD) {
-            target.addPotionEffect(new EffectInstance(Effects.WITHER, 60, 3));
-            target.addPotionEffect(new EffectInstance(Effects.BLINDNESS, 60, 1));
+        } else if ("mithril".equals(material) && target.getMobType() == CreatureAttribute.UNDEAD) {
+            target.addEffect(new EffectInstance(Effects.WITHER, 60, 3));
+            target.addEffect(new EffectInstance(Effects.BLINDNESS, 60, 1));
         }
     }
 
@@ -197,7 +197,7 @@ public final class BaseMetalsEvents {
         for (MaterialDefinition candidate : shieldMaterials().values()) {
             if (!ContentPolicy.active().allows(candidate.name(), MaterialForm.SHIELD)) continue;
             if (candidate.hardness() <= current.hardness()) continue;
-            ItemTags.Wrapper plate = new ItemTags.Wrapper(
+            net.minecraft.tags.ITag<net.minecraft.item.Item> plate = ItemTags.getAllTags().getTagOrEmpty(
                     new ResourceLocation("forge", "plates/" + candidate.name()));
             if (!plate.contains(event.getRight().getItem())) continue;
             if (upgrade == null || candidate.hardness() < upgrade.hardness()

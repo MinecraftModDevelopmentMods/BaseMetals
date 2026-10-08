@@ -16,7 +16,7 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import zone.moddev.mc.basemetals.recipe.PlateRepairRecipe;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
@@ -39,7 +39,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.World;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraftforge.common.MinecraftForge;
@@ -59,7 +60,7 @@ final class GameplayRegressionChecks {
 
     static int run(MinecraftServer server) {
         GameplayRegressionChecks probe = new GameplayRegressionChecks();
-        ServerWorld world = server.getWorld(DimensionType.OVERWORLD);
+        ServerWorld world = server.getLevel(World.OVERWORLD);
 
         probe.begin("fuels");
         probe.fuels();
@@ -108,19 +109,19 @@ final class GameplayRegressionChecks {
         for (IRecipe recipe : server.getRecipeManager().getRecipes()) {
             if (!(recipe instanceof PlateRepairRecipe)) continue;
             repairs++;
-            ItemStack original = recipe.getRecipeOutput().copy();
-            original.setDamage(7);
-            original.setDisplayName(new StringTextComponent("Keep my name"));
-            original.addEnchantment(Enchantments.UNBREAKING, 2);
+            ItemStack original = recipe.getResultItem().copy();
+            original.setDamageValue(7);
+            original.setHoverName(new StringTextComponent("Keep my name"));
+            original.enchant(Enchantments.UNBREAKING, 2);
             original.getOrCreateTag().putString("custom_proof", "keep my data");
-            String targetName = recipe.getRecipeOutput().getItem().getRegistryName().getPath();
+            String targetName = recipe.getResultItem().getItem().getRegistryName().getPath();
             String plateName = targetName.substring(0, targetName.indexOf('_')) + "_plate";
             if (!ModContent.itemsById().containsKey(plateName)) {
                 // Empty compatibility tags may be filled by another mod; they cannot repair anything alone.
                 CraftingInventory grid = grid();
-                grid.setInventorySlotContents(0, original.copy());
+                grid.setItem(0, original.copy());
                 check(!recipe.matches(grid, world), "unavailable repair plate " + recipe.getId());
-                check(recipe.isDynamic(), "unavailable repair stays hidden " + recipe.getId());
+                check(recipe.isSpecial(), "unavailable repair stays hidden " + recipe.getId());
                 continue;
             }
             ItemStack plate = stack(plateName);
@@ -129,28 +130,28 @@ final class GameplayRegressionChecks {
                 for (int plateSlot = 0; plateSlot < 9; plateSlot++) {
                     if (targetSlot == plateSlot) continue;
                     CraftingInventory grid = grid();
-                    grid.setInventorySlotContents(targetSlot, original.copy());
-                    grid.setInventorySlotContents(plateSlot, plate.copy());
+                    grid.setItem(targetSlot, original.copy());
+                    grid.setItem(plateSlot, plate.copy());
                     check(recipe.matches(grid, world), "repair slots " + recipe.getId());
-                    ItemStack repaired = recipe.getCraftingResult(grid);
+                    ItemStack repaired = recipe.assemble(grid);
                     ItemStack expected = original.copy();
-                    expected.setDamage(0);
-                    check(ItemStack.areItemStacksEqual(expected, repaired), "repair NBT " + recipe.getId());
+                    expected.setDamageValue(0);
+                    check(ItemStack.matches(expected, repaired), "repair NBT " + recipe.getId());
                 }
             }
 
             CraftingInventory grid = grid();
-            grid.setInventorySlotContents(4, plate.copy());
+            grid.setItem(4, plate.copy());
             check(!recipe.matches(grid, world), "plate alone " + recipe.getId());
-            grid.setInventorySlotContents(0, original.copy());
-            grid.setInventorySlotContents(8, new ItemStack(Items.STICK));
+            grid.setItem(0, original.copy());
+            grid.setItem(8, new ItemStack(Items.STICK));
             check(!recipe.matches(grid, world), "repair extra ingredient " + recipe.getId());
-            check(recipe.getCraftingResult(grid).isEmpty(), "invalid repair result " + recipe.getId());
-            grid.setInventorySlotContents(8, ItemStack.EMPTY);
-            grid.getStackInSlot(0).setDamage(0);
+            check(recipe.assemble(grid).isEmpty(), "invalid repair result " + recipe.getId());
+            grid.setItem(8, ItemStack.EMPTY);
+            grid.getItem(0).setDamageValue(0);
             check(!recipe.matches(grid, world), "undamaged repair " + recipe.getId());
-            check(recipe.isDynamic(), "repair hidden from recipe book " + recipe.getId());
-            check(original.getDamage() == 7, "repair does not mutate input " + recipe.getId());
+            check(recipe.isSpecial(), "repair hidden from recipe book " + recipe.getId());
+            check(original.getDamageValue() == 7, "repair does not mutate input " + recipe.getId());
         }
         check(repairs == 110, "all 110 plate repairs tested");
     }
@@ -159,42 +160,42 @@ final class GameplayRegressionChecks {
         String[] materials = {"diamond", "emerald", "gold", "quartz"};
         Item[] ingredients = {Items.DIAMOND, Items.EMERALD, Items.GOLD_INGOT, Items.QUARTZ};
         for (int i = 0; i < materials.length; i++) {
-            IRecipe door = server.getRecipeManager().getRecipe(id(materials[i] + "_door")).orElse(null);
-            IRecipe trapdoor = server.getRecipeManager().getRecipe(id(materials[i] + "_trapdoor")).orElse(null);
+            IRecipe door = server.getRecipeManager().byKey(id(materials[i] + "_door")).orElse(null);
+            IRecipe trapdoor = server.getRecipeManager().byKey(id(materials[i] + "_trapdoor")).orElse(null);
             CraftingInventory grid = craftingGrid();
             for (int slot : new int[] {0, 1, 3, 4, 6, 7}) {
-                grid.setInventorySlotContents(slot, new ItemStack(ingredients[i]));
+                grid.setItem(slot, new ItemStack(ingredients[i]));
             }
             check(door.matches(grid, world), materials[i] + " door pattern");
             check(!trapdoor.matches(grid, world), materials[i] + " door is not a trapdoor");
-            check(door.getCraftingResult(grid).getCount() == 3, materials[i] + " three doors");
-            grid.setInventorySlotContents(6, ItemStack.EMPTY);
-            grid.setInventorySlotContents(7, ItemStack.EMPTY);
+            check(door.assemble(grid).getCount() == 3, materials[i] + " three doors");
+            grid.setItem(6, ItemStack.EMPTY);
+            grid.setItem(7, ItemStack.EMPTY);
             check(!door.matches(grid, world) && trapdoor.matches(grid, world),
                     materials[i] + " trapdoor pattern");
         }
 
         QuietPlayer player = new QuietPlayer(world);
-        player.inventory.clear();
-        player.inventory.setInventorySlotContents(0, stack("coldiron_ingot"));
-        Advancement unlock = server.getAdvancementManager().getAdvancement(id("recipes/coldiron_sword"));
+        player.inventory.clearContent();
+        player.inventory.setItem(0, stack("coldiron_ingot"));
+        Advancement unlock = server.getAdvancements().getAdvancement(id("recipes/coldiron_sword"));
         check(unlock != null, "Cold Iron recipe unlock loaded");
         if (unlock != null) {
             InventoryChangeTrigger.Instance condition = (InventoryChangeTrigger.Instance)
-                    unlock.getCriteria().get("has_ingredient_1").getCriterionInstance();
-            check(condition.test(player.inventory), "Cold Iron ingot matches recipe unlock");
-            player.inventory.setInventorySlotContents(0, stack("copper_ingot"));
-            check(!condition.test(player.inventory), "unrelated ingot cannot unlock Cold Iron sword");
+                    unlock.getCriteria().get("has_ingredient_1").getTrigger();
+            check(condition.matches(player.inventory, player.inventory.getItem(0), 1, 0, 35), "Cold Iron ingot matches recipe unlock");
+            player.inventory.setItem(0, stack("copper_ingot"));
+            check(!condition.matches(player.inventory, player.inventory.getItem(0), 1, 0, 35), "unrelated ingot cannot unlock Cold Iron sword");
         }
-        check(server.getAdvancementManager().getAdvancement(id("recipes/coldiron_chestplate_plate_repair"))
+        check(server.getAdvancements().getAdvancement(id("recipes/coldiron_chestplate_plate_repair"))
                 == null, "repair has no recipe-book unlock");
     }
 
     private void rangedWeapons(ServerWorld world) {
         QuietPlayer player = new QuietPlayer(world);
-        net.minecraft.util.math.BlockPos origin = world.getSpawnPoint().up(5);
+        net.minecraft.util.math.BlockPos origin = world.getSharedSpawnPos().above(5);
         world.getChunk(origin);
-        player.setPosition(origin.getX() + 0.5D, origin.getY(), origin.getZ() + 0.5D);
+        player.setPos(origin.getX() + 0.5D, origin.getY(), origin.getZ() + 0.5D);
         int families = 0;
         for (Map.Entry<String, RegistryHandle<Item>> entry : ModContent.itemsById().entrySet()) {
             if (!entry.getKey().endsWith("_bow")) continue;
@@ -204,7 +205,7 @@ final class GameplayRegressionChecks {
             ItemStack arrow = stack(materialName + "_arrow");
             ArrowItem arrowItem = (ArrowItem) arrow.getItem();
             AbstractArrowEntity projectile = arrowItem.createArrow(world, arrow, player);
-            check(close(projectile.getDamage(), 1.0D + material.baseAttackDamage()),
+            check(close(projectile.getBaseDamage(), 1.0D + material.baseAttackDamage()),
                     "vanilla bow + " + materialName + " arrow");
             check(stack(materialName + "_fishing_rod").getMaxDamage() == material.toolDurability(),
                     "material fishing rod durability " + materialName);
@@ -223,27 +224,27 @@ final class GameplayRegressionChecks {
         fire(world, player, stack("adamantine_bow"), stack("gold_arrow"),
                 damage("gold_bow") + damage("adamantine_arrow"), "swapped bow materials");
         ItemStack enchanted = stack("steel_bow");
-        enchanted.addEnchantment(Enchantments.POWER, 3);
+        enchanted.enchant(Enchantments.POWER_ARROWS, 3);
         fire(world, player, enchanted, stack("gold_arrow"),
                 damage("steel_bow") + damage("gold_arrow") + 2.0D, "Power after material damage");
 
         ItemStack named = stack("adamantine_arrow");
-        named.setDisplayName(new StringTextComponent("Recovered arrow"));
+        named.setHoverName(new StringTextComponent("Recovered arrow"));
         named.getOrCreateTag().putString("ammo_proof", "preserved");
         MaterialProjectile original = (MaterialProjectile) ((ArrowItem) named.getItem())
                 .createArrow(world, named, player);
         CompoundNBT saved = new CompoundNBT();
-        ((Entity) original).writeWithoutTypeId(saved);
+        ((Entity) original).saveWithoutId(saved);
         MaterialProjectile restored = new MaterialProjectile(ModEntities.CUSTOM_ARROW.get(), world);
-        ((Entity) restored).read(saved);
-        check(ItemStack.areItemStacksEqual(named, restored.getAmmunition()), "arrow pickup NBT after reload");
-        check(close(((AbstractArrowEntity) original).getDamage(), ((AbstractArrowEntity) restored).getDamage()),
+        ((Entity) restored).load(saved);
+        check(ItemStack.matches(named, restored.getAmmunition()), "arrow pickup NBT after reload");
+        check(close(((AbstractArrowEntity) original).getBaseDamage(), ((AbstractArrowEntity) restored).getBaseDamage()),
                 "arrow damage after reload");
         PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
         try {
             original.writeSpawnData(buffer);
             restored.readSpawnData(buffer);
-            check(ItemStack.areItemStacksEqual(named, restored.getAmmunition()), "arrow spawn NBT");
+            check(ItemStack.matches(named, restored.getAmmunition()), "arrow spawn NBT");
         } finally {
             buffer.release();
         }
@@ -251,59 +252,59 @@ final class GameplayRegressionChecks {
 
     private void fire(ServerWorld world, QuietPlayer player, ItemStack launcher,
             ItemStack ammunition, double expected, String label) {
-        player.inventory.clear();
+        player.inventory.clearContent();
         ItemStack supply = ammunition.copy();
         supply.setCount(8);
-        player.setHeldItem(Hand.MAIN_HAND, launcher);
-        player.setHeldItem(Hand.OFF_HAND, supply);
+        player.setItemInHand(Hand.MAIN_HAND, launcher);
+        player.setItemInHand(Hand.OFF_HAND, supply);
         firedArrow = null;
 
         BowItem bow = (BowItem) launcher.getItem();
-        bow.onPlayerStoppedUsing(launcher, world, player, bow.getUseDuration(launcher) - 20);
+        bow.releaseUsing(launcher, world, player, bow.getUseDuration(launcher) - 20);
         check(firedArrow != null, label + " spawned on server");
         if (firedArrow != null) {
-            check(close(firedArrow.getDamage(), expected), label + " damage expected=" + expected
-                    + " actual=" + firedArrow.getDamage());
-            check(firedArrow.getIsCritical(), label + " fully drawn critical");
+            check(close(firedArrow.getBaseDamage(), expected), label + " damage expected=" + expected
+                    + " actual=" + firedArrow.getBaseDamage());
+            check(firedArrow.isCritArrow(), label + " fully drawn critical");
         }
         check(supply.getCount() == 7, label + " consumes one round");
-        check(launcher.getDamage() == 1, label + " uses one durability");
+        check(launcher.getDamageValue() == 1, label + " uses one durability");
     }
 
     private void crossbowAmmunition(ServerWorld world) {
         QuietPlayer player = new QuietPlayer(world);
-        net.minecraft.util.math.BlockPos origin = world.getSpawnPoint().up(5);
+        net.minecraft.util.math.BlockPos origin = world.getSharedSpawnPos().above(5);
         world.getChunk(origin);
-        player.setPosition(origin.getX() + 0.5D, origin.getY(), origin.getZ() + 0.5D);
+        player.setPos(origin.getX() + 0.5D, origin.getY(), origin.getZ() + 0.5D);
 
         for (Map.Entry<String, RegistryHandle<Item>> entry : ModContent.itemsById().entrySet()) {
             if (!entry.getKey().endsWith("_crossbow")) continue;
 
             String name = entry.getKey();
             String boltName = name.substring(0, name.length() - "_crossbow".length()) + "_bolt";
-            player.abilities.isCreativeMode = true;
-            player.inventory.clear();
+            player.abilities.instabuild = true;
+            player.inventory.clearContent();
             ItemStack launcher = stack(name);
-            player.setHeldItem(Hand.MAIN_HAND, launcher);
+            player.setItemInHand(Hand.MAIN_HAND, launcher);
 
             release(world, player, launcher);
             checkBolt("iron_bolt", damage(name) + damage("iron_bolt"),
                     name + " Creative without ammunition");
             check(firedArrow != null
-                    && firedArrow.pickupStatus == AbstractArrowEntity.PickupStatus.CREATIVE_ONLY,
+                    && firedArrow.pickup == AbstractArrowEntity.PickupStatus.CREATIVE_ONLY,
                     name + " virtual bolt cannot be collected in Survival");
-            check(launcher.getDamage() == 0, name + " Creative preserves durability");
+            check(launcher.getDamageValue() == 0, name + " Creative preserves durability");
 
             for (boolean creative : new boolean[] {false, true}) {
-                player.abilities.isCreativeMode = creative;
-                player.inventory.clear();
+                player.abilities.instabuild = creative;
+                player.inventory.clearContent();
                 launcher = stack(name);
-                player.setHeldItem(Hand.MAIN_HAND, launcher);
+                player.setItemInHand(Hand.MAIN_HAND, launcher);
                 ItemStack supply = stack(boltName);
                 supply.setCount(8);
-                supply.setDisplayName(new StringTextComponent("Inventory bolt"));
+                supply.setHoverName(new StringTextComponent("Inventory bolt"));
                 supply.getOrCreateTag().putString("ammo_proof", "inventory");
-                player.inventory.setInventorySlotContents(9, supply);
+                player.inventory.setItem(9, supply);
 
                 release(world, player, launcher);
                 String label = name + " inventory bolt " + (creative ? "Creative" : "Survival");
@@ -314,7 +315,7 @@ final class GameplayRegressionChecks {
                             label + " preserves ammunition NBT");
                 }
                 check(supply.getCount() == (creative ? 8 : 7), label + " ammunition use");
-                check(launcher.getDamage() == (creative ? 0 : 1), label + " durability use");
+                check(launcher.getDamageValue() == (creative ? 0 : 1), label + " durability use");
             }
         }
 
@@ -322,14 +323,14 @@ final class GameplayRegressionChecks {
                 new ItemStack(Items.SPECTRAL_ARROW), stack("adamantine_arrow"), ItemStack.EMPTY};
         for (boolean creative : new boolean[] {false, true}) {
             for (ItemStack wrong : wrongAmmunition) {
-                player.abilities.isCreativeMode = creative;
-                player.inventory.clear();
+                player.abilities.instabuild = creative;
+                player.inventory.clearContent();
                 ItemStack launcher = stack("adamantine_crossbow");
                 ItemStack supply = wrong.copy();
                 if (!supply.isEmpty()) supply.setCount(8);
                 ItemStack original = supply.copy();
-                player.setHeldItem(Hand.MAIN_HAND, launcher);
-                player.setHeldItem(Hand.OFF_HAND, supply);
+                player.setItemInHand(Hand.MAIN_HAND, launcher);
+                player.setItemInHand(Hand.OFF_HAND, supply);
 
                 release(world, player, launcher);
                 String label = "wrong crossbow ammunition " + wrong + " "
@@ -337,32 +338,32 @@ final class GameplayRegressionChecks {
                 if (creative) {
                     checkBolt("iron_bolt", damage("adamantine_crossbow") + damage("iron_bolt"), label);
                     check(firedArrow != null
-                            && firedArrow.pickupStatus == AbstractArrowEntity.PickupStatus.CREATIVE_ONLY,
+                            && firedArrow.pickup == AbstractArrowEntity.PickupStatus.CREATIVE_ONLY,
                             label + " virtual bolt pickup");
                 } else {
                     check(firedArrow == null, label + " does not fire");
                 }
-                check(ItemStack.areItemStacksEqual(original, supply), label + " is not consumed");
-                check(launcher.getDamage() == 0, label + " does not wear the launcher");
+                check(ItemStack.matches(original, supply), label + " is not consumed");
+                check(launcher.getDamageValue() == 0, label + " does not wear the launcher");
             }
         }
 
         // Bows still use Minecraft's virtual arrow when Creative players carry no ammunition.
-        player.abilities.isCreativeMode = true;
-        player.inventory.clear();
+        player.abilities.instabuild = true;
+        player.inventory.clearContent();
         ItemStack bow = stack("adamantine_bow");
-        player.setHeldItem(Hand.MAIN_HAND, bow);
+        player.setItemInHand(Hand.MAIN_HAND, bow);
         release(world, player, bow);
         check(firedArrow != null && !(firedArrow instanceof MaterialProjectile),
                 "Creative bow keeps the vanilla arrow fallback");
-        check(firedArrow != null && close(firedArrow.getDamage(), damage("adamantine_bow") + 1.0D),
+        check(firedArrow != null && close(firedArrow.getBaseDamage(), damage("adamantine_bow") + 1.0D),
                 "Creative bow fallback retains launcher damage");
     }
 
     private void release(ServerWorld world, QuietPlayer player, ItemStack launcher) {
         firedArrow = null;
         BowItem bow = (BowItem) launcher.getItem();
-        bow.onPlayerStoppedUsing(launcher, world, player, bow.getUseDuration(launcher) - 20);
+        bow.releaseUsing(launcher, world, player, bow.getUseDuration(launcher) - 20);
     }
 
     private void checkBolt(String ammunition, double expected, String label) {
@@ -372,8 +373,8 @@ final class GameplayRegressionChecks {
         check(firedArrow.getType() == ModEntities.CUSTOM_BOLT.get(), label + " creates a bolt");
         check(((MaterialProjectile) firedArrow).getAmmunition().getItem() == stack(ammunition).getItem(),
                 label + " keeps the correct ammunition");
-        check(close(firedArrow.getDamage(), expected), label + " material damage");
-        check(firedArrow.getIsCritical(), label + " fully drawn critical");
+        check(close(firedArrow.getBaseDamage(), expected), label + " material damage");
+        check(firedArrow.isCritArrow(), label + " fully drawn critical");
     }
 
     @SubscribeEvent
@@ -383,33 +384,33 @@ final class GameplayRegressionChecks {
 
     private void armor(ServerWorld world) {
         QuietPlayer player = new QuietPlayer(world);
-        player.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
+        player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(40.0D);
         player.setHealth(40.0F);
         equip(player, "adamantine");
         tick(player);
         check(player.getHealth() == 40.0F, "Adamantine armor cannot hurt high-health wearer");
-        check(player.isPotionActive(Effects.RESISTANCE)
-                && player.getActivePotionEffect(Effects.RESISTANCE).getAmplifier() == 1,
+        check(player.hasEffect(Effects.DAMAGE_RESISTANCE)
+                && player.getEffect(Effects.DAMAGE_RESISTANCE).getAmplifier() == 1,
                 "damaged Adamantine armor gives Resistance II");
 
-        player.getActivePotionMap().clear();
+        player.getActiveEffectsMap().clear();
         equip(player, "starsteel");
         tick(player);
-        check(player.isPotionActive(Effects.JUMP_BOOST)
-                && player.getActivePotionEffect(Effects.JUMP_BOOST).getAmplifier() == 3,
+        check(player.hasEffect(Effects.JUMP)
+                && player.getEffect(Effects.JUMP).getAmplifier() == 3,
                 "damaged Starsteel armor gives Jump Boost IV");
-        check(player.isPotionActive(Effects.SPEED)
-                && player.getActivePotionEffect(Effects.SPEED).getAmplifier() == 2,
+        check(player.hasEffect(Effects.MOVEMENT_SPEED)
+                && player.getEffect(Effects.MOVEMENT_SPEED).getAmplifier() == 2,
                 "damaged Starsteel armor gives Speed III");
 
-        player.getActivePotionMap().clear();
+        player.getActiveEffectsMap().clear();
         equip(player, "aquarium");
         player.submerge();
-        player.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 200));
+        player.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, 200));
         tick(player);
-        check(player.isPotionActive(Effects.WATER_BREATHING)
-                && player.isPotionActive(Effects.RESISTANCE)
-                && !player.isPotionActive(Effects.MINING_FATIGUE), "damaged submerged Aquarium armor");
+        check(player.hasEffect(Effects.WATER_BREATHING)
+                && player.hasEffect(Effects.DAMAGE_RESISTANCE)
+                && !player.hasEffect(Effects.DIG_SLOWDOWN), "damaged submerged Aquarium armor");
     }
 
     private static void equip(QuietPlayer player, String material) {
@@ -418,13 +419,13 @@ final class GameplayRegressionChecks {
         String[] forms = {"helmet", "chestplate", "leggings", "boots"};
         for (int i = 0; i < slots.length; i++) {
             ItemStack piece = stack(material + "_" + forms[i]);
-            piece.setDamage(7);
-            player.setItemStackToSlot(slots[i], piece);
+            piece.setDamageValue(7);
+            player.setItemSlot(slots[i], piece);
         }
     }
 
     private static void tick(QuietPlayer player) {
-        player.ticksExisted = 20;
+        player.tickCount = 20;
         MinecraftForge.EVENT_BUS.post(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, player));
     }
 
@@ -448,7 +449,7 @@ final class GameplayRegressionChecks {
 
     private static int furnaceBurnTime(ItemStack stack) {
         int burnTime = stack.getBurnTime();
-        int fallback = AbstractFurnaceTileEntity.getBurnTimes().getOrDefault(stack.getItem(), 0);
+        int fallback = AbstractFurnaceTileEntity.getFuel().getOrDefault(stack.getItem(), 0);
         return net.minecraftforge.event.ForgeEventFactory.getItemBurnTime(stack,
                 burnTime == -1 ? fallback : burnTime);
     }
@@ -463,7 +464,7 @@ final class GameplayRegressionChecks {
 
     private static CraftingInventory craftingGrid() {
         return new CraftingInventory(new Container(null, 0) {
-            @Override public boolean canInteractWith(net.minecraft.entity.player.PlayerEntity player) {
+            @Override public boolean stillValid(net.minecraft.entity.player.PlayerEntity player) {
                 return true;
             }
         }, 3, 3);
@@ -478,9 +479,9 @@ final class GameplayRegressionChecks {
             super(world, new GameProfile(UUID.fromString("00000000-0000-0000-0000-000000000131"),
                     "GameplayProbe"));
         }
-        @Override protected void onNewPotionEffect(EffectInstance effect) {}
-        @Override protected void onChangedPotionEffect(EffectInstance effect, boolean reapply) {}
-        @Override protected void onFinishedPotionEffect(EffectInstance effect) {}
-        private void submerge() { inWater = true; }
+        @Override protected void onEffectAdded(EffectInstance effect) {}
+        @Override protected void onEffectUpdated(EffectInstance effect, boolean reapply) {}
+        @Override protected void onEffectRemoved(EffectInstance effect) {}
+        private void submerge() { wasTouchingWater = true; }
     }
 }

@@ -69,8 +69,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.World;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.loot.LootTable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -97,28 +98,31 @@ public final class BaseMetalsRuntimeProbe {
 
     private void login(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent event) {
         if (!"login".equals(System.getProperty("basemetalsprobe.mode"))) return;
-        event.getPlayer().inventory.setInventorySlotContents(0,
+        event.getPlayer().inventory.setItem(0,
                 new ItemStack(ModContent.item("tin_bow").get()));
         if (Boolean.getBoolean("basemetalsprobe.modeSwitch")) {
             net.minecraft.entity.player.ServerPlayerEntity player = (net.minecraft.entity.player.ServerPlayerEntity) event.getPlayer();
             if (zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode()
                     == zone.moddev.mc.basemetals.config.ContentMode.LOW_FANTASY) {
-                player.inventory.setInventorySlotContents(1, new ItemStack(ModContent.item("tin_ingot").get()));
-                player.inventory.setInventorySlotContents(2, new ItemStack(ModContent.item("adamantine_ingot").get()));
+                player.inventory.setItem(1, new ItemStack(ModContent.item("tin_ingot").get()));
+                player.inventory.setItem(2, new ItemStack(ModContent.item("adamantine_ingot").get()));
                 // Also save progress earned through the original 1.13 rod criterion.
-                player.inventory.setInventorySlotContents(3, new ItemStack(ModContent.item("steel_rod").get()));
-                net.minecraft.advancements.CriteriaTriggers.INVENTORY_CHANGED.trigger(player, player.inventory);
+                player.inventory.setItem(3, new ItemStack(ModContent.item("steel_rod").get()));
+                for (int slot = 1; slot <= 3; slot++) {
+                    net.minecraft.advancements.CriteriaTriggers.INVENTORY_CHANGED.trigger(
+                            player, player.inventory, player.inventory.getItem(slot));
+                }
             }
 
             for (String name : new String[] {"tin_bow", "steel_bow", "adamantine_bow", "adamantine_crossbow", "adamantine_gear",
                     "adamantine_arrow", "adamantine_rod", "adamantine_pickaxe"}) {
-                net.minecraft.advancements.Advancement advancement = player.getServer().getAdvancementManager()
+                net.minecraft.advancements.Advancement advancement = player.getServer().getAdvancements()
                         .getAdvancement(new ResourceLocation("basemetals", "recipes/" + name));
-                if (!player.getAdvancements().getProgress(advancement).isDone()) {
+                if (!player.getAdvancements().getOrStartProgress(advancement).isDone()) {
                     throw new IllegalStateException("Material discovery did not earn the recipe advancement: " + name);
                 }
-                IRecipe recipe = player.getServer().getRecipeManager().getRecipe(new ResourceLocation("basemetals", name)).orElse(null);
-                if (player.getRecipeBook().isUnlocked(recipe) == recipe.isDynamic()) {
+                IRecipe recipe = player.getServer().getRecipeManager().byKey(new ResourceLocation("basemetals", name)).orElse(null);
+                if (player.getRecipeBook().contains(recipe) == recipe.isSpecial()) {
                     throw new IllegalStateException("Wrong recipe-book visibility after mode change: " + name);
                 }
             }
@@ -133,7 +137,7 @@ public final class BaseMetalsRuntimeProbe {
         MinecraftServer server = event.getServer();
         if ("login".equals(System.getProperty("basemetalsprobe.mode"))) {
             try {
-                int count = ContentModeChecks.run(server) + Native115Checks.run(server);
+                int count = ContentModeChecks.run(server) + Native116Checks.run(server);
                 LOGGER.info("BASEMETALS_CONTENT_MODE_PROBE PASS mode={} checks={}",
                         zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode().serializedName(), count);
             } catch (Exception failure) {
@@ -155,13 +159,13 @@ public final class BaseMetalsRuntimeProbe {
             throw failure instanceof RuntimeException ? (RuntimeException) failure
                     : new IllegalStateException(failure);
         } finally {
-            server.initiateShutdown(false);
+            server.halt(false);
         }
     }
 
     private void verifyLegacyWorld(MinecraftServer server) throws IOException {
-        ServerWorld overworld = require(server.getWorld(DimensionType.OVERWORLD), "legacy overworld missing");
-        Path root = overworld.getSaveHandler().getWorldDirectory().toPath();
+        ServerWorld overworld = require(server.getLevel(World.OVERWORLD), "legacy overworld missing");
+        Path root = server.getWorldPath(net.minecraft.world.storage.FolderName.ROOT);
         if (Files.isRegularFile(root.resolve("legacy_registry_manifest_runtime.json"))) {
             verifyLegacyFixture(server, root);
         } else {
@@ -184,16 +188,16 @@ public final class BaseMetalsRuntimeProbe {
 
         for (Map.Entry<String, JsonElement> entry : fixture.getAsJsonObject("progress").entrySet()) {
             if ("DataVersion".equals(entry.getKey())) continue;
-            net.minecraft.advancements.Advancement advancement = require(server.getAdvancementManager()
+            net.minecraft.advancements.Advancement advancement = require(server.getAdvancements()
                     .getAdvancement(new ResourceLocation(entry.getKey())), "saved advancement missing: " + entry.getKey());
-            net.minecraft.advancements.AdvancementProgress progress = player.getAdvancements().getProgress(advancement);
+            net.minecraft.advancements.AdvancementProgress progress = player.getAdvancements().getOrStartProgress(advancement);
             check(progress.isDone(), "saved advancement completion: " + entry.getKey());
 
             for (Map.Entry<String, JsonElement> savedCriterion : entry.getValue().getAsJsonObject()
                     .getAsJsonObject("criteria").entrySet()) {
                 String criterion = savedCriterion.getKey();
-                check(progress.getCriterionProgress(criterion) != null
-                        && progress.getCriterionProgress(criterion).isObtained(),
+                check(progress.getCriterion(criterion) != null
+                        && progress.getCriterion(criterion).isDone(),
                         "saved criterion: " + entry.getKey() + "/" + criterion);
                 retained++;
             }
@@ -214,7 +218,7 @@ public final class BaseMetalsRuntimeProbe {
         int checkedPlayerItems = 0;
 
         boolean source110 = Files.isRegularFile(root.resolve("BASEMETALS_1_10_FIXTURE_COMPLETE.txt"));
-        String upgradeMarker = source110 ? "BASEMETALS_1_10_TO_1_15_UPGRADE" : "BASEMETALS_1_12_TO_1_15_UPGRADE";
+        String upgradeMarker = source110 ? "BASEMETALS_1_10_TO_1_16_UPGRADE" : "BASEMETALS_1_12_TO_1_16_UPGRADE";
         if (!source110 && !Files.isRegularFile(root.resolve("BASEMETALS_1_12_FIXTURE_COMPLETE.txt"))) {
             failures.add("missing legacy fixture completion marker");
         }
@@ -264,7 +268,7 @@ public final class BaseMetalsRuntimeProbe {
             BlockPos pos = new BlockPos(oldItem.get("chest_x").getAsInt(),
                     oldItem.get("chest_y").getAsInt(), oldItem.get("chest_z").getAsInt());
             overworld.getBlockState(pos); // Force the legacy container chunk through datafixing before lookup.
-            TileEntity blockEntity = overworld.getTileEntity(pos);
+            TileEntity blockEntity = overworld.getBlockEntity(pos);
             if (!(blockEntity instanceof ChestTileEntity)) {
                 if (failures.size() < 20) failures.add("missing inventory chest " + chestIndex + " at " + pos
                         + " state=" + overworld.getBlockState(pos) + " tile="
@@ -272,7 +276,7 @@ public final class BaseMetalsRuntimeProbe {
                 itemMismatches++;
                 continue;
             }
-            ItemStack stack = ((ChestTileEntity) blockEntity).getStackInSlot(slot);
+            ItemStack stack = ((ChestTileEntity) blockEntity).getItem(slot);
             String expected = currentItemId(oldItem.get("id").getAsString());
             String actual = String.valueOf(ForgeRegistries.ITEMS.getKey(stack.getItem()));
             int expectedCount = oldItem.has("count") ? oldItem.get("count").getAsInt() : 1;
@@ -282,17 +286,17 @@ public final class BaseMetalsRuntimeProbe {
                     && tag.getCompound("basemetals_fixture").getString("proof")
                             .equals(oldItem.get("id").getAsString());
             boolean enchantmentMatches = !oldItem.has("enchanted") || !oldItem.get("enchanted").getAsBoolean()
-                    || EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack) == 2;
+                    || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, stack) == 2;
             boolean nameMatches = !oldItem.has("custom_name")
-                    || oldItem.get("custom_name").getAsString().equals(stack.getDisplayName().getString());
+                    || oldItem.get("custom_name").getAsString().equals(stack.getHoverName().getString());
             if (!expected.equals(actual) || stack.getCount() != expectedCount
-                    || stack.getDamage() != expectedDamage || !proofMatches || !enchantmentMatches || !nameMatches) {
+                    || stack.getDamageValue() != expectedDamage || !proofMatches || !enchantmentMatches || !nameMatches) {
                 if (failures.size() < 20) {
                     failures.add("chest " + chestIndex + " slot " + slot + " expected " + expected
                             + " x" + expectedCount + " damage=" + expectedDamage + " with fixture NBT but found "
-                            + stack + " damage=" + stack.getDamage() + " proof=" + proofMatches
+                            + stack + " damage=" + stack.getDamageValue() + " proof=" + proofMatches
                             + " unbreaking="
-                            + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
+                            + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, stack));
                 }
                 itemMismatches++;
             }
@@ -301,14 +305,14 @@ public final class BaseMetalsRuntimeProbe {
                         (int) Math.floor(oldItem.get("armor_y").getAsDouble()),
                         (int) Math.floor(oldItem.get("armor_z").getAsDouble()));
                 overworld.getBlockState(armorPos);
-                List<ArmorStandEntity> stands = overworld.getEntitiesWithinAABB(ArmorStandEntity.class,
-                        new AxisAlignedBB(armorPos).grow(0.75D));
+                List<ArmorStandEntity> stands = overworld.getEntitiesOfClass(ArmorStandEntity.class,
+                        new AxisAlignedBB(armorPos).inflate(0.75D));
                 EquipmentSlotType equipmentSlot = equipmentSlot(oldItem.get("armor_slot").getAsString());
                 boolean equipped = false;
                 for (ArmorStandEntity stand : stands) {
-                    ItemStack worn = stand.getItemStackFromSlot(equipmentSlot);
+                    ItemStack worn = stand.getItemBySlot(equipmentSlot);
                     if (expected.equals(String.valueOf(ForgeRegistries.ITEMS.getKey(worn.getItem())))
-                            && worn.getDamage() == expectedDamage) {
+                            && worn.getDamageValue() == expectedDamage) {
                         equipped = true;
                         break;
                     }
@@ -331,12 +335,12 @@ public final class BaseMetalsRuntimeProbe {
             BlockPos pos = new BlockPos(fluid.get("bucket_chest_x").getAsInt(),
                     fluid.get("bucket_chest_y").getAsInt(), fluid.get("bucket_chest_z").getAsInt());
             overworld.getBlockState(pos); // Load the chunk before looking up its tile entity.
-            TileEntity blockEntity = overworld.getTileEntity(pos);
+            TileEntity blockEntity = overworld.getBlockEntity(pos);
             String expected = BaseMetals.MOD_ID + ":"
                     + MissingMappings.fluidTargetPath(fluid.get("name").getAsString()) + "_bucket";
             if (!(blockEntity instanceof ChestTileEntity)
                     || !expected.equals(String.valueOf(ForgeRegistries.ITEMS.getKey(
-                            ((ChestTileEntity) blockEntity).getStackInSlot(slot).getItem())))) {
+                            ((ChestTileEntity) blockEntity).getItem(slot).getItem())))) {
                 if (failures.size() < 20) {
                     failures.add("legacy filled bucket " + chestIndex + ":" + slot
                             + " did not become " + expected);
@@ -401,7 +405,7 @@ public final class BaseMetalsRuntimeProbe {
         if (!saved.has("saved_properties")) return true;
         JsonObject properties = saved.getAsJsonObject("saved_properties");
         Map<String, String> current = new java.util.LinkedHashMap<String, String>();
-        for (Map.Entry<net.minecraft.state.IProperty<?>, Comparable<?>> entry : actual.getValues().entrySet()) {
+        for (Map.Entry<net.minecraft.state.Property<?>, Comparable<?>> entry : actual.getValues().entrySet()) {
             current.put(entry.getKey().getName(), entry.getValue().toString().toLowerCase(java.util.Locale.ROOT));
         }
 
@@ -460,14 +464,14 @@ public final class BaseMetalsRuntimeProbe {
         // Door metadata saved different properties in the upper and lower halves.
         if (block instanceof DoorBlock) {
             if ((meta & 8) != 0) {
-                return actual.get(DoorBlock.HALF) == expected.get(DoorBlock.HALF)
-                        && actual.get(DoorBlock.HINGE) == expected.get(DoorBlock.HINGE)
-                        && actual.get(DoorBlock.POWERED).equals(expected.get(DoorBlock.POWERED));
+                return actual.getValue(DoorBlock.HALF) == expected.getValue(DoorBlock.HALF)
+                        && actual.getValue(DoorBlock.HINGE) == expected.getValue(DoorBlock.HINGE)
+                        && actual.getValue(DoorBlock.POWERED).equals(expected.getValue(DoorBlock.POWERED));
             }
 
-            return actual.get(DoorBlock.HALF) == expected.get(DoorBlock.HALF)
-                    && actual.get(DoorBlock.FACING) == expected.get(DoorBlock.FACING)
-                    && actual.get(DoorBlock.OPEN).equals(expected.get(DoorBlock.OPEN));
+            return actual.getValue(DoorBlock.HALF) == expected.getValue(DoorBlock.HALF)
+                    && actual.getValue(DoorBlock.FACING) == expected.getValue(DoorBlock.FACING)
+                    && actual.getValue(DoorBlock.OPEN).equals(expected.getValue(DoorBlock.OPEN));
         }
 
         // Buttons, pressure plates and fluids can change while the chunk prepares.
@@ -480,9 +484,9 @@ public final class BaseMetalsRuntimeProbe {
     }
 
     private static ServerWorld fixtureWorld(MinecraftServer server, int dimension) {
-        DimensionType type = dimension == -1 ? DimensionType.THE_NETHER
-                : dimension == 1 ? DimensionType.THE_END : DimensionType.OVERWORLD;
-        return require(server.getWorld(type), "missing fixture dimension " + dimension);
+        RegistryKey<World> type = dimension == -1 ? World.NETHER
+                : dimension == 1 ? World.END : World.OVERWORLD;
+        return require(server.getLevel(type), "missing fixture dimension " + dimension);
     }
 
     private static String currentBlockId(String legacy) {
@@ -503,7 +507,7 @@ public final class BaseMetalsRuntimeProbe {
 
     private static void writeFixtureResult(Path root, String result) {
         try {
-            Files.write(root.resolve("BASEMETALS_LEGACY_TO_1_15_UPGRADE_RESULT.txt"),
+            Files.write(root.resolve("BASEMETALS_LEGACY_TO_1_16_UPGRADE_RESULT.txt"),
                     (result + System.lineSeparator()).getBytes(StandardCharsets.UTF_8),
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException exception) {
@@ -512,7 +516,7 @@ public final class BaseMetalsRuntimeProbe {
     }
 
     private void verifyLegacyBlocks(MinecraftServer server) {
-        ServerWorld world = require(server.getWorld(DimensionType.OVERWORLD), "legacy overworld missing");
+        ServerWorld world = require(server.getLevel(World.OVERWORLD), "legacy overworld missing");
         Map<Long, Integer> expected = LegacyWorldDataHook.legacyPreparedBlockCounts();
         int expectedBlocks = 0;
         int convertedBlocks = 0;
@@ -543,7 +547,7 @@ public final class BaseMetalsRuntimeProbe {
     }
 
     private void runChecks(MinecraftServer server) throws Exception {
-        ServerWorld world = require(server.getWorld(DimensionType.OVERWORLD), "overworld missing");
+        ServerWorld world = require(server.getLevel(World.OVERWORLD), "overworld missing");
         check(MaterialCatalogue.ALL.size() == 22, "material catalogue size");
         check(ModContent.blocksById().size() == 360, "registered block catalogue size");
         check(ModContent.itemsById().size() == 1115, "registered item catalogue size");
@@ -566,8 +570,8 @@ public final class BaseMetalsRuntimeProbe {
 
         check(ModContent.hiddenBlocks().size() == 26, "hidden double slab count");
         for (String name : ModContent.hiddenBlocks()) {
-            check(ModContent.blocksById().get(name).get().getDefaultState()
-                    .get(SlabBlock.TYPE).getName().equals("double"),
+            check(ModContent.blocksById().get(name).get().defaultBlockState()
+                    .getValue(SlabBlock.TYPE).getSerializedName().equals("double"),
                     "hidden double slab state " + name);
             check(!ForgeRegistries.ITEMS.containsKey(id(name)), "hidden block item " + name);
         }
@@ -582,7 +586,7 @@ public final class BaseMetalsRuntimeProbe {
             check(ForgeRegistries.BLOCKS.getKey(fluid.block().get()).equals(id(name)), "fluid block " + name);
             check(ForgeRegistries.ITEMS.getKey(fluid.bucket().get()).equals(id(name + "_bucket")),
                     "fluid bucket " + name);
-            check(fluid.bucket().get().getGroup() == ModTabs.ITEMS, "bucket creative tab " + name);
+            check(fluid.bucket().get().getItemCategory() == ModTabs.ITEMS, "bucket creative tab " + name);
         }
 
         checkRecipe(server, "iron_ore_crushing", "iron_powder", 2);
@@ -593,24 +597,24 @@ public final class BaseMetalsRuntimeProbe {
         check(server.getRecipeManager().getRecipes().size() >= 2000, "recipe catalogue loaded");
 
         Block plate = ModContent.blocksById().get("copper_plate").get();
-        BlockState up = plate.getDefaultState().with(PlateBlock.FACING, Direction.UP);
+        BlockState up = plate.defaultBlockState().setValue(PlateBlock.FACING, Direction.UP);
         BlockPos origin = new BlockPos(0, 0, 0);
-        AxisAlignedBB plateBounds = plate.getShape(up, world, origin, net.minecraft.util.math.shapes.ISelectionContext.dummy()).getBoundingBox();
+        AxisAlignedBB plateBounds = plate.getShape(up, world, origin, net.minecraft.util.math.shapes.ISelectionContext.empty()).bounds();
         check(plateBounds.equals(new AxisAlignedBB(0, 0, 0, 1, 1.0D / 16.0D, 1)),
                 "plate placement bounds");
 
         Block detector = ModContent.HUMAN_DETECTOR.get();
-        BlockState detectorState = detector.getDefaultState();
-        check(detector.getWeakPower(detectorState, world, origin, Direction.UP) == 0,
+        BlockState detectorState = detector.defaultBlockState();
+        check(detector.getSignal(detectorState, world, origin, Direction.UP) == 0,
                 "detector has no signal without players");
 
         AnvilBlock anvil = (AnvilBlock) ModContent.blocksById().get("steel_anvil").get();
-        BlockState intact = anvil.getDefaultState();
+        BlockState intact = anvil.defaultBlockState();
         BlockState chipped = AnvilBlock.damage(intact);
-        check(chipped != null && chipped.get(BaseMetalAnvilBlock.DAMAGE).intValue() == 1,
+        check(chipped != null && chipped.getValue(BaseMetalAnvilBlock.DAMAGE).intValue() == 1,
                 "custom anvil first damage");
         BlockState damaged = AnvilBlock.damage(chipped);
-        check(damaged != null && damaged.get(BaseMetalAnvilBlock.DAMAGE).intValue() == 2,
+        check(damaged != null && damaged.getValue(BaseMetalAnvilBlock.DAMAGE).intValue() == 2,
                 "custom anvil second damage");
         check(AnvilBlock.damage(damaged) == null, "custom anvil final damage");
 
@@ -634,17 +638,17 @@ public final class BaseMetalsRuntimeProbe {
         check(classMissing("zone.moddev.mc.basemetals.worldgen.BaseMetalsOreGenerator"),
                 "native world generator absent");
 
-        check(new ItemTags.Wrapper(new ResourceLocation("forge", "ingots/copper"))
+        check(ItemTags.getAllTags().getTagOrEmpty(new ResourceLocation("forge", "ingots/copper"))
                 .contains(ModContent.item("copper_ingot").get()), "copper ingot tag");
-        check(new ItemTags.Wrapper(new ResourceLocation("forge", "ingots/adamant"))
+        check(ItemTags.getAllTags().getTagOrEmpty(new ResourceLocation("forge", "ingots/adamant"))
                 .contains(ModContent.item("adamantine_ingot").get()), "adamant alias tag");
 
-        LootTable chest = server.getLootTableManager().getLootTableFromLocation(
+        LootTable chest = server.getLootTables().get(
                 id("chests/inject/simple_dungeon"));
-        check(chest != LootTable.EMPTY_LOOT_TABLE, "auxiliary chest loot table");
-        check(server.getAdvancementManager().getAdvancement(id("steel_maker")) != null,
+        check(chest != LootTable.EMPTY, "auxiliary chest loot table");
+        check(server.getAdvancements().getAdvancement(id("steel_maker")) != null,
                 "steel advancement loaded");
-        check(server.getAdvancementManager().getAllAdvancements().stream()
+        check(server.getAdvancements().getAllAdvancements().stream()
                 .filter(value -> BaseMetals.MOD_ID.equals(value.getId().getNamespace())
                         && !value.getId().getPath().startsWith("recipes/")).count() == 18,
                 "eighteen advancements loaded");
@@ -656,7 +660,7 @@ public final class BaseMetalsRuntimeProbe {
         testCrossbowContract();
         checks += GameplayRegressionChecks.run(server);
         checks += ContentModeChecks.run(server);
-        checks += Native115Checks.run(server);
+        checks += Native116Checks.run(server);
     }
 
     private void testProjectilePersistence(ServerWorld world) {
@@ -666,9 +670,9 @@ public final class BaseMetalsRuntimeProbe {
         MaterialProjectile original = new MaterialProjectile(ModEntities.CUSTOM_ARROW.get(), world, player,
                 ammunition);
         CompoundNBT tag = new CompoundNBT();
-        ((Entity) original).writeWithoutTypeId(tag);
+        ((Entity) original).saveWithoutId(tag);
         MaterialProjectile restored = new MaterialProjectile(ModEntities.CUSTOM_ARROW.get(), world);
-        ((Entity) restored).read(tag);
+        ((Entity) restored).load(tag);
         check(restored.getAmmunition().getItem() == ModContent.item("copper_arrow").get()
                 && restored.getAmmunition().getCount() == 1, "projectile ammunition persistence");
     }
@@ -676,28 +680,28 @@ public final class BaseMetalsRuntimeProbe {
     private void testStarsteelRepair(ServerWorld world) {
         PlayerEntity player = FakePlayerFactory.getMinecraft(world);
         ItemStack tool = new ItemStack(ModContent.item("starsteel_pickaxe").get());
-        tool.setDamage(5);
-        player.setHeldItem(Hand.MAIN_HAND, tool);
-        player.ticksExisted = 200;
+        tool.setDamageValue(5);
+        player.setItemInHand(Hand.MAIN_HAND, tool);
+        player.tickCount = 200;
         MinecraftForge.EVENT_BUS.post(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, player));
-        check(tool.getDamage() == 4, "starsteel held repair");
+        check(tool.getDamageValue() == 4, "starsteel held repair");
     }
 
     private void testAdamantineArmor(ServerWorld world) {
         PlayerEntity player = new QuietFakePlayer(world,
                 new GameProfile(UUID.fromString("00000000-0000-0000-0000-000000000114"), "ArmorProbe"));
-        player.setItemStackToSlot(EquipmentSlotType.HEAD,
+        player.setItemSlot(EquipmentSlotType.HEAD,
                 new ItemStack(ModContent.item("adamantine_helmet").get()));
-        player.setItemStackToSlot(EquipmentSlotType.CHEST,
+        player.setItemSlot(EquipmentSlotType.CHEST,
                 new ItemStack(ModContent.item("adamantine_chestplate").get()));
-        player.setItemStackToSlot(EquipmentSlotType.LEGS,
+        player.setItemSlot(EquipmentSlotType.LEGS,
                 new ItemStack(ModContent.item("adamantine_leggings").get()));
-        player.setItemStackToSlot(EquipmentSlotType.FEET,
+        player.setItemSlot(EquipmentSlotType.FEET,
                 new ItemStack(ModContent.item("adamantine_boots").get()));
-        player.ticksExisted = 20;
+        player.tickCount = 20;
         MinecraftForge.EVENT_BUS.post(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, player));
-        check(player.isPotionActive(Effects.RESISTANCE)
-                && player.getActivePotionEffect(Effects.RESISTANCE).getAmplifier() == 1,
+        check(player.hasEffect(Effects.DAMAGE_RESISTANCE)
+                && player.getEffect(Effects.DAMAGE_RESISTANCE).getAmplifier() == 1,
                 "adamantine full-set resistance II");
     }
 
@@ -718,12 +722,12 @@ public final class BaseMetalsRuntimeProbe {
     }
 
     private void checkRecipe(MinecraftServer server, String recipeName, String resultName, int count) {
-        IRecipe recipe = require(server.getRecipeManager().getRecipe(id(recipeName)).orElse(null),
+        IRecipe recipe = require(server.getRecipeManager().byKey(id(recipeName)).orElse(null),
                 "missing recipe " + recipeName);
         ResourceLocation expected = resultName.indexOf(':') >= 0
                 ? new ResourceLocation(resultName) : id(resultName);
-        check(ForgeRegistries.ITEMS.getKey(recipe.getRecipeOutput().getItem()).equals(expected)
-                && recipe.getRecipeOutput().getCount() == count, "recipe " + recipeName);
+        check(ForgeRegistries.ITEMS.getKey(recipe.getResultItem().getItem()).equals(expected)
+                && recipe.getResultItem().getCount() == count, "recipe " + recipeName);
         if (recipeName.endsWith("_crushing")) check(recipe instanceof CrushingRecipe,
                 "crushing serializer " + recipeName);
     }
@@ -754,8 +758,8 @@ public final class BaseMetalsRuntimeProbe {
     /** FakePlayer has no network connection, so potion callbacks must not send packets. */
     private static final class QuietFakePlayer extends FakePlayer {
         private QuietFakePlayer(ServerWorld world, GameProfile profile) { super(world, profile); }
-        @Override protected void onNewPotionEffect(EffectInstance effect) {}
-        @Override protected void onChangedPotionEffect(EffectInstance effect, boolean reapply) {}
-        @Override protected void onFinishedPotionEffect(EffectInstance effect) {}
+        @Override protected void onEffectAdded(EffectInstance effect) {}
+        @Override protected void onEffectUpdated(EffectInstance effect, boolean reapply) {}
+        @Override protected void onEffectRemoved(EffectInstance effect) {}
     }
 }

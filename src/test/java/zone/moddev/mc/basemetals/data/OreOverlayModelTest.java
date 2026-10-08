@@ -37,7 +37,7 @@ class OreOverlayModelTest {
         JsonArray elements = model.getAsJsonArray("elements");
         assertEquals(2, elements.size());
         assertElement(elements.get(0).getAsJsonObject(), 0, 16, "#base");
-        assertElement(elements.get(1).getAsJsonObject(), -0.001, 16.001, "#overlay");
+        assertElement(elements.get(1).getAsJsonObject(), -0.05, 16.05, "#overlay");
     }
 
     @Test
@@ -85,6 +85,8 @@ class OreOverlayModelTest {
             assertEquals("basemetals:block/ore_overlays/" + name,
                     model.getAsJsonObject("textures").get("overlay").getAsString(), name);
             assertEquals(2, model.getAsJsonArray("elements").size(), name);
+            assertElement(model.getAsJsonArray("elements").get(0).getAsJsonObject(), 0, 16, "#base");
+            assertElement(model.getAsJsonArray("elements").get(1).getAsJsonObject(), -0.05, 16.05, "#overlay");
         }
 
         assertEquals(13, ores);
