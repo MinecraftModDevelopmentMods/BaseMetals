@@ -123,7 +123,7 @@ def mainModClasses = "${mod_id}%%${forgeMainOutputPath}${File.pathSeparator}${mo
 def forgeProbeOutputPath = integrationTestModClassesDirectory.get().asFile.absolutePath
 def probeModClasses = mainModClasses + "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}" +
         "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}"
-def forge31RunTargets = [client: 'fmluserdevclient', server: 'fmluserdevserver',
+def forge36RunTargets = [client: 'fmluserdevclient', server: 'fmluserdevserver',
         data: 'fmluserdevdata', runtimeProbeServer: 'fmluserdevserver', legacyUpgradeServer: 'fmluserdevserver']
 
 minecraft {
@@ -136,7 +136,7 @@ minecraft {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             systemProperty 'forge.logging.console.level', 'info'
             mods { basemetals { source sourceSets.main } }
-            environment 'target', forge31RunTargets[name]
+            environment 'target', forge36RunTargets[name]
             environment 'MCP_MAPPINGS', "${mapping_channel}_${mapping_version}"
             environment 'MCP_VERSION', mcp_version
             environment 'FORGE_VERSION', forge_version
@@ -182,7 +182,7 @@ def prepareIntegrationTestModClasses = tasks.register('prepareIntegrationTestMod
 }
 
 tasks.withType(JavaExec).configureEach { JavaExec runTask ->
-    def runName = forge31RunTargets.keySet().find { runTask.name == 'run' + it.capitalize() }
+    def runName = forge36RunTargets.keySet().find { runTask.name == 'run' + it.capitalize() }
     if (runName != null) {
         runTask.dependsOn prepareForgeRunModClasses
         if (runTask.name in ['runRuntimeProbeServer', 'runLegacyUpgradeServer']) {

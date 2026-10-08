@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public final class ModTabs {
-    public static final ItemGroup BLOCKS = tab("blocks", "starsteel_block", Item.getItemFromBlock(Blocks.IRON_BLOCK));
+    public static final ItemGroup BLOCKS = tab("blocks", "starsteel_block", Item.byBlock(Blocks.IRON_BLOCK));
     public static final ItemGroup ITEMS = tab("items", "starsteel_gear", Items.IRON_INGOT);
     public static final ItemGroup TOOLS = tab("tools", "starsteel_pickaxe", Items.IRON_PICKAXE);
     public static final ItemGroup COMBAT = tab("combat", "starsteel_sword", Items.IRON_SWORD);
@@ -22,7 +22,7 @@ public final class ModTabs {
         return new ItemGroup(BaseMetals.MOD_ID + "." + suffix) {
             @Override
             @OnlyIn(Dist.CLIENT)
-            public ItemStack createIcon() {
+            public ItemStack makeIcon() {
                 Item registered = ForgeRegistries.ITEMS.getValue(new ResourceLocation(BaseMetals.MOD_ID, iconId));
                 return new ItemStack(registered == null ? fallback : registered);
             }

@@ -22,6 +22,7 @@ def prepareIntegrationTestRun = tasks.register('prepareIntegrationTestRun') {
         new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
         new File(runDirectory, 'server.properties').setText('''\
 level-name=basemetals-runtime-probe
+level-seed=8675309
 online-mode=false
 spawn-protection=0
 server-port=0
@@ -132,8 +133,8 @@ def verifyLegacyUpgradeRun = tasks.register('verifyLegacyUpgradeRun') {
         if (fixtureManifest.isFile()) {
             boolean from110 = new File(runDirectory,
                     'world/BASEMETALS_1_10_FIXTURE_COMPLETE.txt').isFile()
-            String marker = from110 ? 'BASEMETALS_1_10_TO_1_15_UPGRADE PASS'
-                    : 'BASEMETALS_1_12_TO_1_15_UPGRADE PASS'
+            String marker = from110 ? 'BASEMETALS_1_10_TO_1_16_UPGRADE PASS'
+                    : 'BASEMETALS_1_12_TO_1_16_UPGRADE PASS'
             if (!text.contains(marker)) {
                 throw new GradleException("Complete ${from110 ? '1.10' : '1.12'} fixture verification did not report PASS")
             }

@@ -30,32 +30,32 @@ public final class MaterialProjectile extends AbstractArrowEntity implements IEn
     }
 
     @Override
-    protected ItemStack getArrowStack() {
+    protected ItemStack getPickupItem() {
         return ammunition.isEmpty() ? new ItemStack(ModContent.item("copper_arrow").get()) : ammunition.copy();
     }
 
     public ItemStack getAmmunition() {
-        return getArrowStack();
+        return getPickupItem();
     }
 
     @Override
-    public net.minecraft.network.IPacket<?> createSpawnPacket() {
+    public net.minecraft.network.IPacket<?> getAddEntityPacket() {
         return net.minecraftforge.fml.network.NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    public void writeAdditional(CompoundNBT tag) {
-        super.writeAdditional(tag);
-        if (!ammunition.isEmpty()) tag.put("Ammunition", ammunition.write(new CompoundNBT()));
+    public void addAdditionalSaveData(CompoundNBT tag) {
+        super.addAdditionalSaveData(tag);
+        if (!ammunition.isEmpty()) tag.put("Ammunition", ammunition.save(new CompoundNBT()));
     }
 
     @Override
-    public void readAdditional(CompoundNBT tag) {
-        super.readAdditional(tag);
+    public void readAdditionalSaveData(CompoundNBT tag) {
+        super.readAdditionalSaveData(tag);
         ammunition = tag.contains("Ammunition", 10)
-                ? ItemStack.read(tag.getCompound("Ammunition")) : ItemStack.EMPTY;
+                ? ItemStack.of(tag.getCompound("Ammunition")) : ItemStack.EMPTY;
     }
 
-    @Override public void writeSpawnData(PacketBuffer buffer) { buffer.writeItemStack(ammunition); }
-    @Override public void readSpawnData(PacketBuffer buffer) { ammunition = buffer.readItemStack(); }
+    @Override public void writeSpawnData(PacketBuffer buffer) { buffer.writeItem(ammunition); }
+    @Override public void readSpawnData(PacketBuffer buffer) { ammunition = buffer.readItem(); }
 }

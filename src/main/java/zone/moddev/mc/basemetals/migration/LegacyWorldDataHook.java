@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.datafixers.Dynamic;
+import com.mojang.serialization.Dynamic;
 
 import cpw.mods.modlauncher.api.INameMappingService;
 import zone.moddev.mc.basemetals.BaseMetals;
@@ -61,8 +61,8 @@ import net.minecraft.state.properties.StairsShape;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.datafix.fixes.BlockStateFlatteningMap;
-import net.minecraft.world.storage.SaveHandler;
-import net.minecraft.world.storage.WorldInfo;
+import net.minecraft.world.storage.SaveFormat.LevelSave;
+import net.minecraft.world.storage.IServerConfiguration;
 import net.minecraftforge.fml.WorldPersistenceHooks;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -164,6 +164,7 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
     public static synchronized void prepareLegacyChunk(CompoundNBT root) {
         if (root == null) return;
         migrateLegacyItems(root);
+        migrateWallStates(root);
         if (!legacyWorldActive || !root.contains("Level", 10)) return;
         CompoundNBT level = root.getCompound("Level");
         int legacyBlocks = countLegacyBaseMetalsBlocks(level);
@@ -176,6 +177,29 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         level.putBoolean("TerrainPopulated", true);
         level.putBoolean("LightPopulated", true);
         level.putBoolean(PRESERVE_CHUNK_MARKER, true);
+    }
+
+    /** Old wall connections were booleans; 1.16 expects none, low or tall. */
+    static int migrateWallStates(INBT value) {
+        int changed = 0;
+        if (value instanceof CompoundNBT) {
+            CompoundNBT compound = (CompoundNBT) value;
+            String name = compound.getString("Name");
+            if (name.startsWith("basemetals:") && name.endsWith("_wall")) {
+                CompoundNBT properties = compound.getCompound("Properties");
+                for (String direction : new String[] {"north", "east", "south", "west"}) {
+                    String connection = properties.getString(direction);
+                    if ("true".equals(connection) || "false".equals(connection)) {
+                        properties.putString(direction, "true".equals(connection) ? "low" : "none");
+                        changed++;
+                    }
+                }
+            }
+            for (String key : compound.getAllKeys()) changed += migrateWallStates(compound.get(key));
+        } else if (value instanceof ListNBT) {
+            for (INBT entry : (ListNBT) value) changed += migrateWallStates(entry);
+        }
+        return changed;
     }
 
     /** Called after vanilla datafixing, before a legacy chunk is returned. */
@@ -198,14 +222,14 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
     @Override public String getModId() { return "FML"; }
 
     @Override
-    public CompoundNBT getDataForWriting(SaveHandler handler, WorldInfo info) {
-        CompoundNBT legacy = LEGACY_WORLD_DATA.get(worldKey(handler.getWorldDirectory()));
+    public CompoundNBT getDataForWriting(LevelSave handler, IServerConfiguration info) {
+        CompoundNBT legacy = LEGACY_WORLD_DATA.get(worldKey(handler.getWorldDir().toFile()));
         return legacy == null ? new CompoundNBT() : legacy.copy();
     }
 
     @Override
-    public void readData(SaveHandler handler, WorldInfo info, CompoundNBT tag) {
-        prepareLegacyData(handler.getWorldDirectory(), tag);
+    public void readData(LevelSave handler, IServerConfiguration info, CompoundNBT tag) {
+        prepareLegacyData(handler.getWorldDir().toFile(), tag);
     }
 
     private static synchronized void prepareLegacyData(File worldDirectory, CompoundNBT tag) {
@@ -250,7 +274,7 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
             for (int meta = 0; meta < 16; meta++) {
                 BlockState state = legacyState(block, entry.getKey().getPath(), meta);
                 table[(entry.getValue().intValue() << 4) | meta] =
-                        BlockStateFlatteningMap.makeDynamic(NBTUtil.writeBlockState(state).toString());
+                        BlockStateFlatteningMap.parse(NBTUtil.writeBlockState(state).toString());
                 mapped++;
             }
         }
@@ -265,45 +289,45 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
     }
 
     static BlockState legacyState(Block block, String path, int meta) {
-        BlockState state = block.getDefaultState();
-        if (block instanceof PlateBlock) return state.with(PlateBlock.FACING, Direction.byIndex(meta));
-        if (block instanceof CompatibilityDoubleSlabBlock) return state.with(SlabBlock.TYPE, SlabType.DOUBLE);
-        if (block instanceof SlabBlock) return state.with(SlabBlock.TYPE,
+        BlockState state = block.defaultBlockState();
+        if (block instanceof PlateBlock) return state.setValue(PlateBlock.FACING, Direction.from3DDataValue(meta));
+        if (block instanceof CompatibilityDoubleSlabBlock) return state.setValue(SlabBlock.TYPE, SlabType.DOUBLE);
+        if (block instanceof SlabBlock) return state.setValue(SlabBlock.TYPE,
                 (meta & 8) == 0 ? SlabType.BOTTOM : SlabType.TOP);
         if (block instanceof StairsBlock) {
-            Direction facing = Direction.byIndex(5 - (meta & 3));
-            return state.with(StairsBlock.FACING, facing)
-                    .with(StairsBlock.HALF, (meta & 4) == 0 ? Half.BOTTOM : Half.TOP)
-                    .with(StairsBlock.SHAPE, StairsShape.STRAIGHT)
-                    .with(StairsBlock.WATERLOGGED, Boolean.FALSE);
+            Direction facing = Direction.from3DDataValue(5 - (meta & 3));
+            return state.setValue(StairsBlock.FACING, facing)
+                    .setValue(StairsBlock.HALF, (meta & 4) == 0 ? Half.BOTTOM : Half.TOP)
+                    .setValue(StairsBlock.SHAPE, StairsShape.STRAIGHT)
+                    .setValue(StairsBlock.WATERLOGGED, Boolean.FALSE);
         }
         if (block instanceof DoorBlock) {
             if ((meta & 8) != 0) {
-                return state.with(DoorBlock.HALF, DoubleBlockHalf.UPPER)
-                        .with(DoorBlock.HINGE, (meta & 1) != 0 ? DoorHingeSide.RIGHT : DoorHingeSide.LEFT)
-                        .with(DoorBlock.POWERED, Boolean.valueOf((meta & 2) != 0));
+                return state.setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER)
+                        .setValue(DoorBlock.HINGE, (meta & 1) != 0 ? DoorHingeSide.RIGHT : DoorHingeSide.LEFT)
+                        .setValue(DoorBlock.POWERED, Boolean.valueOf((meta & 2) != 0));
             }
-            return state.with(DoorBlock.HALF, DoubleBlockHalf.LOWER)
-                    .with(DoorBlock.FACING, Direction.byHorizontalIndex(meta & 3).rotateYCCW())
-                    .with(DoorBlock.OPEN, Boolean.valueOf((meta & 4) != 0));
+            return state.setValue(DoorBlock.HALF, DoubleBlockHalf.LOWER)
+                    .setValue(DoorBlock.FACING, Direction.from2DDataValue(meta & 3).getCounterClockWise())
+                    .setValue(DoorBlock.OPEN, Boolean.valueOf((meta & 4) != 0));
         }
         if (block instanceof TrapDoorBlock) {
             Direction[] facing = { Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST };
-            return state.with(HorizontalBlock.HORIZONTAL_FACING, facing[meta & 3])
-                    .with(TrapDoorBlock.OPEN, Boolean.valueOf((meta & 4) != 0))
-                    .with(TrapDoorBlock.HALF, (meta & 8) == 0 ? Half.BOTTOM : Half.TOP)
-                    .with(TrapDoorBlock.POWERED, Boolean.FALSE)
-                    .with(TrapDoorBlock.WATERLOGGED, Boolean.FALSE);
+            return state.setValue(HorizontalBlock.FACING, facing[meta & 3])
+                    .setValue(TrapDoorBlock.OPEN, Boolean.valueOf((meta & 4) != 0))
+                    .setValue(TrapDoorBlock.HALF, (meta & 8) == 0 ? Half.BOTTOM : Half.TOP)
+                    .setValue(TrapDoorBlock.POWERED, Boolean.FALSE)
+                    .setValue(TrapDoorBlock.WATERLOGGED, Boolean.FALSE);
         }
         if (block instanceof BaseMetalAnvilBlock) {
-            return state.with(AnvilBlock.FACING, Direction.byHorizontalIndex(meta & 3))
-                    .with(BaseMetalAnvilBlock.DAMAGE, Integer.valueOf(Math.min(2, (meta & 15) >> 2)));
+            return state.setValue(AnvilBlock.FACING, Direction.from2DDataValue(meta & 3))
+                    .setValue(BaseMetalAnvilBlock.DAMAGE, Integer.valueOf(Math.min(2, (meta & 15) >> 2)));
         }
         if (block instanceof AbstractButtonBlock) return attachedState(state, meta, AbstractButtonBlock.POWERED);
         if (block instanceof LeverBlock) return legacyLeverState(state, meta);
-        if (block instanceof PressurePlateBlock) return state.with(PressurePlateBlock.POWERED,
+        if (block instanceof PressurePlateBlock) return state.setValue(PressurePlateBlock.POWERED,
                 Boolean.valueOf(meta > 0));
-        if (block instanceof FlowingFluidBlock) return state.with(FlowingFluidBlock.LEVEL,
+        if (block instanceof FlowingFluidBlock) return state.setValue(FlowingFluidBlock.LEVEL,
                 Integer.valueOf(Math.min(15, meta)));
         return state;
     }
@@ -322,9 +346,9 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
         AttachFace face = oldFacing == Direction.DOWN ? AttachFace.CEILING
                 : oldFacing == Direction.UP ? AttachFace.FLOOR : AttachFace.WALL;
         Direction horizontal = oldFacing.getAxis().isHorizontal() ? oldFacing : Direction.NORTH;
-        return state.with(HorizontalFaceBlock.FACE, face)
-                .with(HorizontalBlock.HORIZONTAL_FACING, horizontal)
-                .with(powered, Boolean.valueOf((meta & 8) != 0));
+        return state.setValue(HorizontalFaceBlock.FACE, face)
+                .setValue(HorizontalBlock.FACING, horizontal)
+                .setValue(powered, Boolean.valueOf((meta & 8) != 0));
     }
 
     private static BlockState legacyLeverState(BlockState state, int meta) {
@@ -342,9 +366,9 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
             horizontal = new Direction[] { Direction.NORTH, Direction.EAST, Direction.WEST,
                     Direction.SOUTH, Direction.NORTH }[orientation];
         }
-        return state.with(HorizontalFaceBlock.FACE, face)
-                .with(HorizontalBlock.HORIZONTAL_FACING, horizontal)
-                .with(LeverBlock.POWERED, Boolean.valueOf((meta & 8) != 0));
+        return state.setValue(HorizontalFaceBlock.FACE, face)
+                .setValue(HorizontalBlock.FACING, horizontal)
+                .setValue(LeverBlock.POWERED, Boolean.valueOf((meta & 8) != 0));
     }
 
     static Map<Integer, String> legacyBlockIdsForTest(java.nio.file.Path root) throws IOException {
@@ -446,7 +470,7 @@ public final class LegacyWorldDataHook implements WorldPersistenceHooks.WorldPer
                     }
                 }
             }
-            for (String key : new ArrayList<String>(compound.keySet())) {
+            for (String key : new ArrayList<String>(compound.getAllKeys())) {
                 INBT child = compound.get(key);
                 if (child != null) changed += migrateLegacyItems(child);
             }

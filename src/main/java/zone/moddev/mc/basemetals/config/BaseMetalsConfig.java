@@ -60,6 +60,6 @@ public final class BaseMetalsConfig {
 
     public static <T> void set(ForgeConfigSpec.ConfigValue<T> property, T value) {
         if (loadedConfig == null) throw new IllegalStateException("Base Metals configuration has not loaded");
-        loadedConfig.getConfigData().set(property.getPath(), value);
+        property.set(value);
     }
 }

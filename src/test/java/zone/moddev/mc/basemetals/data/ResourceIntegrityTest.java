@@ -34,7 +34,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.junit.jupiter.api.Test;
 
-/** Resource contract for the flattened Minecraft 1.15.2 data pack. */
+/** Resource contract for the flattened Minecraft 1.16.5 data pack. */
 class ResourceIntegrityTest {
     private static final Path MAIN = Paths.get("src", "main", "resources");
     private static final Path GENERATED = Paths.get("src", "generated", "resources");
@@ -60,7 +60,7 @@ class ResourceIntegrityTest {
         Set<String> blocks = strings(manifest.getAsJsonArray("blocks"));
         Set<String> items = strings(manifest.getAsJsonArray("items"));
         Set<String> fluids = strings(manifest.getAsJsonArray("fluids"));
-        assertEquals("Base Metals 1.15.2 catalogue", manifest.get("source").getAsString());
+        assertEquals("Base Metals 1.16.5 catalogue", manifest.get("source").getAsString());
         assertEquals(360, blocks.size());
         assertEquals(1115, items.size());
         assertEquals(72, fluids.size());
@@ -147,7 +147,7 @@ class ResourceIntegrityTest {
     }
 
     @Test
-    void modelsUseFlattened113NamesAndWallStatesUseBooleanSides() throws Exception {
+    void modelsUseFlattenedNamesAndWallsHaveLowAndTallSides() throws Exception {
         Path modelRoot = MAIN.resolve("assets/basemetals/models");
         try (Stream<Path> paths = Files.walk(modelRoot)) {
             for (Path model : iterable(paths.filter(Files::isRegularFile)
@@ -159,28 +159,48 @@ class ResourceIntegrityTest {
         }
         for (Path wall : files(GENERATED.resolve("assets/basemetals/blockstates"), "_wall.json")) {
             String json = new String(Files.readAllBytes(wall), StandardCharsets.UTF_8);
-            assertTrue(json.contains("\"north\": \"true\""), wall.toString());
-            assertFalse(json.contains("low") || json.contains("tall"), wall.toString());
+            assertTrue(json.contains("\"north\": \"low\""), wall.toString());
+            assertTrue(json.contains("\"north\": \"tall\""), wall.toString());
+            assertFalse(json.contains("\"north\": \"true\""), wall.toString());
         }
         assertFalse(Files.exists(MAIN.resolve("assets/minecraft/models/item/oak_door.json")));
     }
 
     @Test
-    void fluidBucketModelsUseTheTargetNativeTintedLayers() throws Exception {
+    void fluidBucketModelsUseTheForgeFluidRenderer() throws Exception {
         Set<String> buckets = strings(manifest().getAsJsonArray("new_items"));
         assertEquals(36, buckets.size(), "Unexpected fluid bucket count");
         for (String bucket : buckets) {
             String id = path(bucket);
             JsonObject model = read(resource("assets/basemetals/models/item/" + id + ".json")).getAsJsonObject();
-            assertEquals("item/generated", model.get("parent").getAsString(), bucket);
-            JsonObject textures = model.getAsJsonObject("textures");
-            assertEquals("minecraft:item/bucket", textures.get("layer0").getAsString(), bucket);
-            assertEquals("basemetals:item/bucket_fluid", textures.get("layer1").getAsString(), bucket);
-            assertEquals("basemetals:item/bucket_overlay", textures.get("layer2").getAsString(), bucket);
-            assertFalse(model.has("loader"), bucket);
-            assertFalse(model.has("fluid"), bucket);
+            assertEquals("forge:item/bucket", model.get("parent").getAsString(), bucket);
+            assertEquals("forge:bucket", model.get("loader").getAsString(), bucket);
+            assertEquals("basemetals:" + id.replace("_bucket", ""),
+                    model.get("fluid").getAsString(), bucket);
+            assertFalse(model.has("textures"), bucket);
         }
-        assertTrue(Files.isRegularFile(resource("assets/basemetals/textures/item/bucket_fluid.png")));
+    }
+
+    @Test
+    void filledBucketNamesDescribeTheirContentsInEveryLocale() throws Exception {
+        Set<String> buckets = strings(manifest().getAsJsonArray("new_items"));
+        List<Path> languages = files(GENERATED.resolve("assets/basemetals/lang"), ".json");
+        assertEquals(18, languages.size());
+
+        for (Path file : languages) {
+            JsonObject language = read(file).getAsJsonObject();
+            for (String bucket : buckets) {
+                String material = path(bucket).replace("_bucket", "");
+                String key = "item.basemetals." + path(bucket);
+                assertEquals(language.get("item.bucket." + material).getAsString(),
+                        language.get(key).getAsString(), file + ": " + bucket);
+            }
+        }
+
+        JsonObject english = read(resource("assets/basemetals/lang/en_us.json")).getAsJsonObject();
+        assertEquals("Bucket of Molten Nickel", english.get("item.basemetals.nickel_bucket").getAsString());
+        assertEquals("Bucket of Molten Iron", english.get("item.basemetals.iron_bucket").getAsString());
+        assertEquals("Bucket of Mercury", english.get("item.basemetals.mercury_bucket").getAsString());
     }
 
     @Test
@@ -268,7 +288,11 @@ class ResourceIntegrityTest {
         assertFalse(Files.exists(GENERATED.resolve("data/thermal")));
         assertFalse(Files.exists(GENERATED.resolve("data/tconstruct")));
         assertFalse(Files.exists(GENERATED.resolve("data/enderio")));
-        assertFalse(Files.exists(resource("data/basemetals/recipes/ancient_debris_crushing.json")));
+        assertCrushingRecipe("ancient_debris_crushing", "tag", "forge:ores/netherite_scrap",
+                "minecraft:netherite_scrap", 2);
+        JsonObject goldTag = read(resource("data/forge/tags/items/ores/gold.json")).getAsJsonObject();
+        assertTrue(strings(goldTag.getAsJsonArray("values")).contains("minecraft:nether_gold_ore"));
+        assertCrushingRecipe("gold_ore_crushing", "tag", "forge:ores/gold", "basemetals:gold_powder", 2);
         assertFalse(Files.exists(GENERATED.resolve("data/forge/loot_modifiers")));
 
         assertCrushingRecipe("iron_ore_crushing", "tag", "forge:ores/iron", "basemetals:iron_powder", 2);

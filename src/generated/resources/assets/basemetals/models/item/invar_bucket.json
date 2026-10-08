@@ -1,8 +1,5 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "minecraft:item/bucket",
-    "layer1": "basemetals:item/bucket_fluid",
-    "layer2": "basemetals:item/bucket_overlay"
-  }
+  "parent": "forge:item/bucket",
+  "loader": "forge:bucket",
+  "fluid": "basemetals:invar"
 }

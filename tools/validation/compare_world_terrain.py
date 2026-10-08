@@ -69,10 +69,18 @@ def block_names(section):
         return
     bits = max(4, (len(palette) - 1).bit_length())
     mask = (1 << bits) - 1
+    entries_per_word = 64 // bits
+    padded = len(states) == (4096 + entries_per_word - 1) // entries_per_word
+
     for index in range(4096):
-        word, shift = divmod(index * bits, 64)
+        if padded:
+            word, entry = divmod(index, entries_per_word)
+            shift = entry * bits
+        else:
+            word, shift = divmod(index * bits, 64)
+
         value = states[word] >> shift
-        if shift + bits > 64:
+        if not padded and shift + bits > 64:
             value |= states[word + 1] << (64 - shift)
         yield palette[value & mask]
 

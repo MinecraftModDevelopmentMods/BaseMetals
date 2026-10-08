@@ -16,6 +16,7 @@ def packagedServerProbeDeobfJar = tasks.register('packagedServerProbeDeobfJar', 
 }
 def packagedServerProbeJar = renamer.classes(packagedServerProbeDeobfJar) {
     map.from minecraft.dependency.toSrgFile
+    libraries.from sourceSets.main.output, sourceSets.main.compileClasspath
     output = layout.buildDirectory.file('packaged-probes/basemetalsprobe.jar')
 }
 
@@ -45,6 +46,7 @@ def generateOreOverlayClientFixtures = tasks.register('generateOreOverlayClientF
 }
 def packagedClientProbeJar = renamer.classes(clientIntegrationTestModJar) {
     map.from minecraft.dependency.toSrgFile
+    libraries.from sourceSets.main.output, sourceSets.main.compileClasspath
     output = layout.buildDirectory.file('client-integration-fixture/basemetalsclientprobe.jar')
 }
 
@@ -52,7 +54,7 @@ def packagedForgeServerRuntime = providers.gradleProperty('packagedForgeServerRu
 def packagedForgeClientRuntime = providers.gradleProperty('packagedForgeClientRuntime')
 def requireRuntimeDirectory = { Provider<String> configuredPath, String propertyName ->
     if (!configuredPath.isPresent()) {
-        throw new GradleException("Pass -P${propertyName}=<official Forge 31 runtime directory>")
+        throw new GradleException("Pass -P${propertyName}=<official Forge 36 runtime directory>")
     }
     File runtime = file(configuredPath.get()).canonicalFile
     if (!runtime.isDirectory()) {
@@ -109,7 +111,7 @@ def preparePackagedServerIntegration = tasks.register('preparePackagedServerInte
         }
         new File(runDirectory, 'server.properties').setText('''\
 level-name=basemetals-packaged-server-smoke
-level-seed=0
+level-seed=8675309
 online-mode=false
 spawn-protection=0
 server-port=0
@@ -141,7 +143,7 @@ def packagedServerProcess = tasks.register('packagedServerProcess', Exec) {
 }
 tasks.register('packagedServerIntegrationTest') {
     group = 'verification'
-    description = 'Runs the exact release jars in an official Forge 31 dedicated-server runtime.'
+    description = 'Runs the exact release jars in an official Forge 36 dedicated-server runtime.'
     dependsOn packagedServerProcess
     doLast {
         assertPackagedRuntimePassed(packagedServerRunDirectory.get().asFile,
@@ -187,7 +189,7 @@ def preparePackagedClientIntegration = tasks.register('preparePackagedClientInte
         File overlayPack = new File(runDirectory, 'resourcepacks/basemetals-ore-overlay-fixture')
         copy { from oreOverlayClientFixtures; into overlayPack }
         new File(overlayPack, 'pack.mcmeta').setText(
-                '{"pack":{"pack_format":5,"description":"Base Metals ore overlay test fixture"}}\n', 'UTF-8')
+                '{"pack":{"pack_format":6,"description":"Base Metals ore overlay test fixture"}}\n', 'UTF-8')
         new File(runDirectory, 'options.txt').setText(
                 'fullscreen:false\nlang:en_us\nresourcePacks:["file/basemetals-ore-overlay-fixture"]\n', 'UTF-8')
     }
@@ -270,7 +272,7 @@ def packagedClientProcess = tasks.register('packagedClientProcess', Exec) {
 }
 tasks.register('packagedClientIntegrationTest') {
     group = 'verification'
-    description = 'Loads and renders the exact release jars in an official Forge 31 client runtime.'
+    description = 'Loads and renders the exact release jars in an official Forge 36 client runtime.'
     dependsOn packagedClientProcess
     doLast {
         File runDirectory = packagedClientRunDirectory.get().asFile
@@ -286,11 +288,44 @@ tasks.register('packagedClientIntegrationTest') {
     }
 }
 
+def packagedClientReloadProcess = tasks.register('packagedClientReloadProcess', Exec) {
+    group = 'verification'
+    timeout = java.time.Duration.ofMinutes(3)
+    dependsOn tasks.named('packagedClientIntegrationTest')
+    doFirst {
+        File runDirectory = packagedClientRunDirectory.get().asFile
+        if (!new File(runDirectory, 'saves/basemetals-client-smoke-world/level.dat').isFile()) {
+            throw new GradleException('Packaged client did not save its disposable world')
+        }
+        delete new File(runDirectory, 'client-smoke-pass.properties')
+        List<String> arguments = new ArrayList<>(packagedClientProcess.get().commandLine)
+        arguments.add(1, '-Dbasemetalsclientprobe.reload=true')
+        workingDir runDirectory
+        commandLine arguments
+    }
+}
+
+tasks.register('packagedClientReloadTest') {
+    group = 'verification'
+    description = 'Reopens the packaged-client world and checks saved arrow and bolt identities.'
+    dependsOn packagedClientReloadProcess
+    doLast {
+        File runDirectory = packagedClientRunDirectory.get().asFile
+        Properties values = new Properties()
+        new File(runDirectory, 'client-smoke-pass.properties').withInputStream { values.load(it) }
+        if (values.getProperty('integrated_world_reloaded') != 'true') {
+            throw new GradleException('Packaged client did not complete its reload')
+        }
+        assertPackagedRuntimePassed(runDirectory, 'BASEMETALS_CLIENT_RELOAD_PROBE PASS', 'packaged client reload')
+        assertPackagedRuntimePassed(runDirectory, 'BASEMETALS_CLIENT_PROBE PASS', 'packaged client reload')
+    }
+}
+
 tasks.register('packagedRuntimeIntegrationTest') {
     group = 'verification'
-    description = 'Runs the exact Base Metals and OreSpawn jars in official Forge 31 server and client runtimes.'
+    description = 'Runs the exact Base Metals and OreSpawn jars in official Forge 36 server and client runtimes.'
     dependsOn tasks.named('packagedServerReloadTest')
-    dependsOn tasks.named('packagedClientIntegrationTest')
+    dependsOn tasks.named('packagedClientReloadTest')
 }
 
 tasks.register('packagedMineralogyIntegrationTest', Exec) {
@@ -300,11 +335,11 @@ tasks.register('packagedMineralogyIntegrationTest', Exec) {
     timeout = java.time.Duration.ofMinutes(5)
     doFirst {
         String configuredJar = providers.gradleProperty('mineralogyTestJar').orNull
-        if (configuredJar == null) throw new GradleException('Pass -PmineralogyTestJar=<Mineralogy 1.15.2 jar>')
+        if (configuredJar == null) throw new GradleException('Pass -PmineralogyTestJar=<Mineralogy 1.16.5 jar>')
         File mineralogy = file(configuredJar)
         if (!mineralogy.isFile() || sha256(mineralogy) !=
-                'ADACF365CCAFF7091980AA92ED1FCC14892AA6CD4B10E82336C8512525341DFA') {
-            throw new GradleException('Expected the qualified Mineralogy 6.0.1.115021 artifact')
+                '6A22C97BC74338327C62B7A9DF42499BBCB6E6DF5C06BE33EECF2662E007BE1C') {
+            throw new GradleException('Expected the qualified Mineralogy 6.1.0.116051 artifact')
         }
 
         File runDirectory = prepareBuildOwnedRunDirectory(
@@ -314,7 +349,7 @@ tasks.register('packagedMineralogyIntegrationTest', Exec) {
             into new File(runDirectory, 'mods')
         }
         new File(runDirectory, 'server.properties').setText(
-                'level-name=world\nlevel-seed=0\nonline-mode=false\nserver-port=0\nview-distance=4\nmax-tick-time=-1\n', 'UTF-8')
+                'level-name=world\nlevel-seed=8675309\nonline-mode=false\nserver-port=0\nview-distance=4\nmax-tick-time=-1\n', 'UTF-8')
         new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
         File runtime = requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime')
         workingDir runDirectory

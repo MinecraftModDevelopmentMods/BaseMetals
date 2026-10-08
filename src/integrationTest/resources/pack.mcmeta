@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "Base Metals 1.15.2 build-only runtime probe",
-    "pack_format": 5
+    "description": "Base Metals 1.16.5 build-only runtime probe",
+    "pack_format": 6
   }
 }

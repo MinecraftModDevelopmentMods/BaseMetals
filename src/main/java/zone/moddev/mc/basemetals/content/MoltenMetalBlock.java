@@ -21,11 +21,11 @@ public final class MoltenMetalBlock extends FlowingFluidBlock {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        super.onEntityCollision(state, world, pos, entity);
-        if (mercury && !world.isRemote && BaseMetalsConfig.MERCURY_EFFECTS.get()
-                && entity instanceof LivingEntity && world.rand.nextInt(32) == 0) {
-            ((LivingEntity) entity).addPotionEffect(new EffectInstance(Effects.NAUSEA, 30 * 20, 2));
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+        super.entityInside(state, world, pos, entity);
+        if (mercury && !world.isClientSide && BaseMetalsConfig.MERCURY_EFFECTS.get()
+                && entity instanceof LivingEntity && world.random.nextInt(32) == 0) {
+            ((LivingEntity) entity).addEffect(new EffectInstance(Effects.CONFUSION, 30 * 20, 2));
         }
     }
 }

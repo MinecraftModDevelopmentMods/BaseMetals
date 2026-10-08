@@ -25,6 +25,7 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
 public final class BMBlockStateProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String[] FACES = {"down", "up", "north", "south", "west", "east"};
+    private static final float OVERLAY_OFFSET = 0.05F;
 
     private BMBlockStateProvider() {}
 
@@ -101,8 +102,8 @@ public final class BMBlockStateProvider {
         // Element 1: base block (Stone, Netherrack or End Stone).
         elements.add(element(0, 16, "#base"));
 
-        // Element 2: Kiri's 0.001 offset keeps the overlay from z-fighting with the base.
-        elements.add(element(-0.001F, 16.001F, "#overlay"));
+        // Element 2: a small gap reduces depth fighting when viewed from a distance.
+        elements.add(element(-OVERLAY_OFFSET, 16 + OVERLAY_OFFSET, "#overlay"));
 
         model.add("elements", elements);
         return model;

@@ -6,7 +6,7 @@ blocks cannot be reconstructed by Mojang's vanilla fixer alone, so Base Metals
 installs a narrowly scoped migration hook before Forge reads an old world.
 
 Always upgrade a copy and retain the original 1.10/1.12 world. Install Base
-Metals `3.0.1.115021`, OreSpawn `4.1.0.115021`, and any other 1.15.2 mods needed
+Metals `3.1.0.116051`, OreSpawn `4.1.0.116051`, and any other 1.16.5 mods needed
 by that world. Do not carry MMDLib, Additional Loot Tables, the OreSpawn 3
 plugin, or Base Metals' old fallback generator into the new instance.
 
@@ -37,8 +37,8 @@ nugget, and the MMDLib Vanilla Bits block/item/fluid names.
 
 The migration supports the original Cyano Base Metals 2.4 line and the later
 MMD Base Metals releases for Minecraft 1.10.2 and 1.12.2. It is not a downgrade
-path: do not open a world already saved by Minecraft 1.16 or newer, including
-the Base Metals 1.18.2 port, in Minecraft 1.15.2.
+path: do not open a world already saved by Minecraft 1.17 or newer, including
+the Base Metals 1.18.2 port, in Minecraft 1.16.5.
 
 ## Mod settings
 
@@ -60,16 +60,19 @@ migration remains OreSpawn's responsibility. Keep a copy of the old OreSpawn
 configuration alongside the untouched source world when validating an upgrade.
 
 The generated manifests at `data/basemetals/registry_manifest_1_12.json` and
-`data/basemetals/registry_manifest.json` document the historical registry
-baseline and its 1.15.2 projection.
+`data/basemetals/registry_manifest.json` list the old registered names and their
+1.16.5 counterparts.
 
-## Moving from Minecraft 1.13.2 or 1.14.4
+## Moving from Minecraft 1.13.2, 1.14.4 or 1.15.2
 
-Use a copy of your 1.13.2 or 1.14.4 world, with the 1.15.2 builds of Base Metals and
+Use a copy of your 1.13.2, 1.14.4 or 1.15.2 world, with the 1.16.5 builds of Base Metals and
 OreSpawn. Keep `basemetals-common.toml` and your OreSpawn settings: this port
 uses the same configuration keys, registered names and ore-rule IDs. Existing
 items, recipe-book progress and terrain should remain unchanged. Once Minecraft
-has saved the copy in 1.15.2, do not reopen it in the older game.
+has saved the copy in 1.16.5, do not reopen it in the older game.
+
+Base Metals converts the old boolean wall connections to 1.16's low and absent
+connections. Existing tall connections and wall posts are left as they are.
 
 Forge 1.13 saved a profession registry that no longer exists in 1.14. Base
 Metals removes that obsolete index when it contains only vanilla professions;
@@ -81,3 +84,8 @@ before Base Metals changes it.
 The old vanilla sign and dye names are mapped to oak signs and the matching
 1.14 dyes. Other missing registry entries still need the relevant mod's
 migration support; Base Metals does not silently discard them.
+
+On the first upgrade, Forge may also warn about vanilla registry entries that
+Minecraft 1.16 removed or renamed, such as zombie pigmen, their spawn egg and
+sounds. These warnings are separate from Base Metals' migration. Keep the
+backup and check any missing entries from other mods before continuing.

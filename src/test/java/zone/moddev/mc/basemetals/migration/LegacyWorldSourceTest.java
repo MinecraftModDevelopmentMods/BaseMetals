@@ -95,13 +95,42 @@ class LegacyWorldSourceTest {
     }
 
     @Test
-    void targetsNative114ChunkLoadingWithoutTheOldLeavesPatch() throws IOException {
+    void targetsNative116ChunkLoadingWithoutTheOldLeavesPatch() throws IOException {
         String coremod = new String(Files.readAllBytes(Paths.get(
-                "src/main/resources/coremods/basemetals_115_compatibility.js")), "UTF-8");
+                "src/main/resources/coremods/basemetals_116_compatibility.js")), "UTF-8");
         assertTrue(coremod.contains("net.minecraft.world.chunk.storage.ChunkLoader"));
         assertTrue(coremod.contains("Ljava/util/function/Supplier;"));
+        assertTrue(coremod.contains("Lcom/mojang/serialization/DynamicOps;"));
+        assertTrue(coremod.contains("Lnet/minecraft/util/RegistryKey;"));
+        assertTrue(coremod.contains("STATE + 'II)Z'"));
         assertTrue(!coremod.contains("leaves_fixer"));
         assertTrue(!coremod.contains("fluid_renderer"));
+    }
+
+    @Test
+    void convertsOnlyOldBaseMetalsWallConnections() {
+        CompoundNBT state = new CompoundNBT();
+        state.putString("Name", "basemetals:steel_wall");
+        CompoundNBT properties = new CompoundNBT();
+        properties.putString("north", "true");
+        properties.putString("east", "false");
+        properties.putString("south", "tall");
+        properties.putString("west", "low");
+        properties.putString("up", "true");
+        state.put("Properties", properties);
+
+        assertEquals(2, LegacyWorldDataHook.migrateWallStates(state));
+        assertEquals("low", properties.getString("north"));
+        assertEquals("none", properties.getString("east"));
+        assertEquals("tall", properties.getString("south"));
+        assertEquals("low", properties.getString("west"));
+        assertEquals("true", properties.getString("up"));
+        assertEquals(0, LegacyWorldDataHook.migrateWallStates(state));
+
+        state.putString("Name", "anothermod:steel_wall");
+        properties.putString("north", "true");
+        assertEquals(0, LegacyWorldDataHook.migrateWallStates(state));
+        assertEquals("true", properties.getString("north"));
     }
 
     @Test

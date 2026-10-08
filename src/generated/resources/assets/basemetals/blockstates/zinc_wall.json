@@ -10,16 +10,27 @@
     },
     {
       "when": {
-        "north": "true"
+        "north": "low"
       },
       "apply": {
         "model": "basemetals:block/zinc_wall_side",
+        "y": 0,
         "uvlock": true
       }
     },
     {
       "when": {
-        "east": "true"
+        "north": "tall"
+      },
+      "apply": {
+        "model": "basemetals:block/zinc_wall_side_tall",
+        "y": 0,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "low"
       },
       "apply": {
         "model": "basemetals:block/zinc_wall_side",
@@ -29,7 +40,17 @@
     },
     {
       "when": {
-        "south": "true"
+        "east": "tall"
+      },
+      "apply": {
+        "model": "basemetals:block/zinc_wall_side_tall",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "low"
       },
       "apply": {
         "model": "basemetals:block/zinc_wall_side",
@@ -39,10 +60,30 @@
     },
     {
       "when": {
-        "west": "true"
+        "south": "tall"
+      },
+      "apply": {
+        "model": "basemetals:block/zinc_wall_side_tall",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "low"
       },
       "apply": {
         "model": "basemetals:block/zinc_wall_side",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "tall"
+      },
+      "apply": {
+        "model": "basemetals:block/zinc_wall_side_tall",
         "y": 270,
         "uvlock": true
       }

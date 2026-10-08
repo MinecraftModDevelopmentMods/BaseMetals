@@ -4,8 +4,8 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$candidateVersion = '4.1.0.115021'
-$candidateSha256 = 'F7C9A110E834EC3F73D55C20E8F52EEA1CF48C4E3ACCFBE8FCEFB60E78ABE387'
+$candidateVersion = '4.1.0.116051'
+$candidateSha256 = 'CDF59D83F191C5FBCD8921228DB577066A63A8FEB25CA79DB4EAEEA32D32DB04'
 
 if ((Get-FileHash -LiteralPath $CandidateJar -Algorithm SHA256).Hash -ne $candidateSha256) {
     throw 'The OreSpawn candidate differs from the qualified build.'
@@ -18,9 +18,9 @@ try {
     if ($null -eq $metadata) { throw 'OreSpawn mod metadata is missing.' }
     $reader = [IO.StreamReader]::new($metadata.Open())
     try { $text = $reader.ReadToEnd() } finally { $reader.Dispose() }
-    if (!$text.Contains('version="4.1.0.115021"') -or !$text.Contains('versionRange="[1.15.2]"') -or
+    if (!$text.Contains('version="4.1.0.116051"') -or !$text.Contains('versionRange="[1.16.5,1.17)"') -or
             $null -eq $archive.GetEntry('zone/moddev/mc/orespawn/api/client/WorldSettingsExtensionRegistry.class')) {
-        throw 'Expected the OreSpawn 1.15.2 candidate with its configuration-screen API.'
+        throw 'Expected the OreSpawn 1.16.5 candidate with its configuration-screen API.'
     }
 } finally { $archive.Dispose() }
 

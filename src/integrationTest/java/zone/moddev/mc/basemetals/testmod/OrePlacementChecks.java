@@ -12,17 +12,26 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.World;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import zone.moddev.mc.basemetals.content.ModContent;
 
-/** Samples fixed chunks in each vanilla dimension and checks the provider's bounds. */
+/** Samples fixed chunks in vanilla dimensions and an ordinary custom Overworld. */
 final class OrePlacementChecks {
+    private static final long SAMPLE_WORLD_SEED = 8675309L;
+
     private OrePlacementChecks() {}
 
     static int run(MinecraftServer server) throws Exception {
+        long worldSeed = server.overworld().getSeed();
+        if (worldSeed != SAMPLE_WORLD_SEED) {
+            throw new IllegalStateException("Ore sample world has seed " + worldSeed
+                    + "; expected " + SAMPLE_WORLD_SEED);
+        }
+
         JsonObject ores;
         try (InputStreamReader reader = new InputStreamReader(OrePlacementChecks.class.getResourceAsStream(
                 "/data/basemetals/orespawn/provider.json"), StandardCharsets.UTF_8)) {
@@ -35,14 +44,13 @@ final class OrePlacementChecks {
             rules.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(rule.get("block").getAsString())), rule);
         });
         int checks = 0;
-        for (DimensionType dimension : new DimensionType[] {
-                DimensionType.OVERWORLD, DimensionType.THE_NETHER, DimensionType.THE_END}) {
-            ServerWorld world = server.getWorld(dimension);
-            String dimensionId = DimensionType.getKey(dimension).toString();
+        for (ServerWorld world : server.getAllLevels()) {
+            RegistryKey<World> dimension = world.dimension();
+            String dimensionId = dimension.location().toString();
             Map<String, Integer> counts = new LinkedHashMap<>();
             int rockCount = 0;
-            int centerX = dimension == DimensionType.OVERWORLD ? world.getSpawnPoint().getX() >> 4 : 0;
-            int centerZ = dimension == DimensionType.OVERWORLD ? world.getSpawnPoint().getZ() >> 4 : 0;
+            int centerX = dimension == World.OVERWORLD ? world.getSharedSpawnPos().getX() >> 4 : 0;
+            int centerZ = dimension == World.OVERWORLD ? world.getSharedSpawnPos().getZ() >> 4 : 0;
 
             for (int cx = centerX - 2; cx <= centerX + 2; cx++) {
                 for (int cz = centerZ - 2; cz <= centerZ + 2; cz++) {
@@ -64,9 +72,10 @@ final class OrePlacementChecks {
                             JsonObject rule = rules.get(block);
                             JsonObject placement = rule.has("dimensions")
                                     ? rule.getAsJsonObject("dimensions").getAsJsonObject(dimensionId)
-                                    : dimension == DimensionType.OVERWORLD ? rule.getAsJsonObject("dimension_selectors")
+                                    : dimension != World.NETHER && dimension != World.END
+                                            ? rule.getAsJsonObject("dimension_selectors")
                                             .getAsJsonObject("orespawn:all_except_nether_end") : null;
-                            int height = section.getYLocation() + y;
+                            int height = section.bottomBlockY() + y;
                             if (placement == null || height < placement.get("min_y").getAsInt()
                                     || height > placement.get("max_y").getAsInt()) {
                                 throw new IllegalStateException("Ore outside its dimension/height range: " + block
@@ -80,12 +89,17 @@ final class OrePlacementChecks {
             }
 
             if (counts.isEmpty()) throw new IllegalStateException("No Base Metals ore in " + dimensionId + " sample");
-            if (dimension == DimensionType.OVERWORLD && net.minecraftforge.fml.ModList.get().isLoaded("mineralogy")) {
+            if (dimension == World.OVERWORLD && net.minecraftforge.fml.ModList.get().isLoaded("mineralogy")) {
                 if (rockCount == 0) throw new IllegalStateException("Mineralogy strata are absent from the ore sample");
                 LogManager.getLogger("basemetalsprobe").info("BASEMETALS_MINERALOGY_COEXISTENCE PASS rocks={}", rockCount);
             }
             LogManager.getLogger("basemetalsprobe").info("BASEMETALS_ORE_SAMPLE PASS dimension={} chunks=25 counts={}",
                     dimensionId, counts);
+        }
+
+        if (server.getLevel(RegistryKey.create(net.minecraft.util.registry.Registry.DIMENSION_REGISTRY,
+                new ResourceLocation("basemetalsprobe", "test_overworld"))) == null) {
+            throw new IllegalStateException("Custom-dimension ore sample was not loaded");
         }
 
         return checks;

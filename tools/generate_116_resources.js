@@ -1,7 +1,7 @@
 /*
- * Converts the catalogue-generated resources to Minecraft 1.15 formats.
+ * Converts the catalogue-generated resources to Minecraft 1.16 formats.
  * Removes unsupported recipes and integrations, and converts block states,
- * item models and tags to the names and formats used by Forge 31.
+ * item models and tags to the names and formats used by Forge 36.
  */
 'use strict';
 
@@ -28,11 +28,6 @@ function remove(relative) {
 function writeJson(file, value) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(value, null, 2) + '\n', 'utf8');
-}
-
-function writeBase64(file, value) {
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(file, Buffer.from(value, 'base64'));
 }
 
 function filesUnder(directory, suffix) {
@@ -78,14 +73,14 @@ writeJson(path.join(generated, 'data', 'minecraft', 'tags', 'blocks', 'anvil.jso
 
 for (const file of filesUnder(path.join(generated, 'data', 'basemetals', 'recipes'), '.json')) {
   const recipe = JSON.parse(fs.readFileSync(file, 'utf8'));
-  if (recipe.type === 'minecraft:blasting' || path.basename(file) === 'ancient_debris_crushing.json') {
+  if (recipe.type === 'minecraft:blasting') {
     fs.rmSync(file);
   }
 }
 
 const manifestFile = path.join(generated, 'data', 'basemetals', 'registry_manifest.json');
 const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
-manifest.source = 'Base Metals 1.15.2 catalogue';
+manifest.source = 'Base Metals 1.16.5 catalogue';
 manifest.loot_modifier_serializers = [];
 manifest.new_loot_modifier_serializers = [];
 for (const key of ['recipe_serializers', 'new_recipe_serializers']) {
@@ -128,23 +123,19 @@ for (const block of manifest.blocks) {
   });
 }
 
-// Keep the bucket outline separate from the coloured fluid layer.
+// Forge draws the actual fluid texture inside the bucket, as it does in 1.18.
 for (const bucket of manifest.new_items) {
   const id = bucket.substring(bucket.indexOf(':') + 1);
   writeJson(path.join(generated, 'assets', 'basemetals', 'models', 'item', `${id}.json`), {
-    parent: 'item/generated',
-    textures: {
-      layer0: 'minecraft:item/bucket',
-      layer1: 'basemetals:item/bucket_fluid',
-      layer2: 'basemetals:item/bucket_overlay'
-    }
+    parent: 'forge:item/bucket',
+    loader: 'forge:bucket',
+    fluid: `basemetals:${id.replace(/_bucket$/, '')}`
   });
 }
-writeBase64(path.join(generated, 'assets', 'basemetals', 'textures', 'item', 'bucket_fluid.png'),
-  'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA4SURBVDhPY2AYnuA/DoCuDgOga8AF0PWhAHTF6ABdPU5AtkZcgGSD0BWj80kGFBtAMRh4FwxeAAB9Pod56G8eMAAAAABJRU5ErkJggg==');
+remove('src/generated/resources/assets/basemetals/textures/item/bucket_fluid.png');
 
 // Vanilla copper and the modern Nether/Caves & Cliffs plants do not exist in
-// 1.15.2. Keep Base Metals copper in the common tags and retain only plants
+// 1.16.5. Keep Base Metals copper in the common tags and retain only plants
 // present in the target registry.
 for (const relative of [
   'data/forge/tags/blocks/ores/copper.json',
@@ -193,14 +184,16 @@ writeJson(path.join(generated, 'data', 'basemetals', 'tags', 'blocks', 'scythe_h
 const crushableFile = path.join(generated, 'data', 'basemetals', 'tags', 'blocks',
   'crackhammer_crushable.json');
 const crushable = JSON.parse(fs.readFileSync(crushableFile, 'utf8'));
-crushable.values = crushable.values.filter(value =>
-  value !== '#forge:ores/netherite_scrap' && value !== '#forge:gravel');
+crushable.values = crushable.values.filter(value => value !== '#forge:gravel');
+if (!crushable.values.includes('#forge:ores/netherite_scrap')) {
+  crushable.values.push('#forge:ores/netherite_scrap');
+}
 if (!crushable.values.includes('minecraft:gravel')) {
   crushable.values.push('minecraft:gravel');
 }
 writeJson(crushableFile, crushable);
 
-// Forge 31 did not provide a forge:gravel item tag. Keep the historical
+// Forge 36 did not provide a forge:gravel item tag. Keep the historical
 // gravel-to-sand crushing recipe, but name the vanilla item directly.
 const gravelCrushingFile = path.join(generated, 'data', 'basemetals', 'recipes',
   'gravel_crushing.json');
@@ -218,7 +211,7 @@ for (const file of filesUnder(legacyChests, '.json')) {
   const target = path.join(targetChests, path.basename(file));
   const table = JSON.parse(fs.readFileSync(file, 'utf8'));
   const tableName = path.basename(file, '.json');
-  // Forge 31 requires every loot pool to have a stable, unique name.
+  // Forge 36 requires every loot pool to have a stable, unique name.
   table.pools.forEach((pool, index) => {
     pool.name = `basemetals_${tableName}_${index}`;
     for (const entry of pool.entries) {
@@ -232,19 +225,40 @@ for (const file of filesUnder(legacyChests, '.json')) {
   writeJson(target, table);
 }
 
-// Walls used booleans in 1.13; low/tall wall-height enums arrived later.
+// Each wall connection can now be absent, low or tall.
 for (const file of filesUnder(path.join(generated, 'assets', 'basemetals', 'blockstates'), '_wall.json')) {
   const name = path.basename(file, '.json');
   writeJson(file, {
     multipart: [
       { when: { up: 'true' }, apply: { model: `basemetals:block/${name}_post` } },
-      { when: { north: 'true' }, apply: { model: `basemetals:block/${name}_side`, uvlock: true } },
-      { when: { east: 'true' }, apply: { model: `basemetals:block/${name}_side`, y: 90, uvlock: true } },
-      { when: { south: 'true' }, apply: { model: `basemetals:block/${name}_side`, y: 180, uvlock: true } },
-      { when: { west: 'true' }, apply: { model: `basemetals:block/${name}_side`, y: 270, uvlock: true } }
+      ...['north', 'east', 'south', 'west'].flatMap((side, index) => [
+        { when: { [side]: 'low' }, apply: { model: `basemetals:block/${name}_side`, y: index * 90, uvlock: true } },
+        { when: { [side]: 'tall' }, apply: { model: `basemetals:block/${name}_side_tall`, y: index * 90, uvlock: true } }
+      ])
     ]
   });
+  const sideModel = JSON.parse(fs.readFileSync(path.join(main, 'assets', 'basemetals', 'models', 'block', `${name}_side.json`), 'utf8'));
+  writeJson(path.join(generated, 'assets', 'basemetals', 'models', 'block', `${name}_side_tall.json`), {
+    ...sideModel, parent: 'minecraft:block/template_wall_side_tall'
+  });
 }
+
+writeJson(path.join(generated, 'data', 'forge', 'tags', 'items', 'ores', 'gold.json'), {
+  replace: false, values: ['minecraft:gold_ore', 'minecraft:nether_gold_ore']
+});
+writeJson(path.join(generated, 'data', 'forge', 'tags', 'items', 'ores', 'netherite_scrap.json'), {
+  replace: false, values: ['minecraft:ancient_debris']
+});
+writeJson(path.join(generated, 'data', 'forge', 'tags', 'blocks', 'ores', 'gold.json'), {
+  replace: false, values: ['minecraft:gold_ore', 'minecraft:nether_gold_ore']
+});
+writeJson(path.join(generated, 'data', 'forge', 'tags', 'blocks', 'ores', 'netherite_scrap.json'), {
+  replace: false, values: ['minecraft:ancient_debris']
+});
+writeJson(path.join(generated, 'data', 'basemetals', 'recipes', 'ancient_debris_crushing.json'), {
+  type: 'basemetals:crushing', ingredient: { tag: 'forge:ores/netherite_scrap' },
+  result: { item: 'minecraft:netherite_scrap', count: 2 }
+});
 
 const common = {
   enabled: true,
@@ -418,6 +432,7 @@ for (const file of filesUnder(recipesDirectory, '.json')) {
 
 const configTranslations = require('./config_translations.json');
 const playerTranslations = require('./player_translations.json');
+const bucketTranslations = require('./bucket_translations.json');
 for (const file of filesUnder(path.join(generated, 'assets', 'basemetals', 'lang'), '.json')) {
   const locale = path.basename(file, '.json');
   const source = configTranslations.aliases[locale] || locale;
@@ -427,7 +442,19 @@ for (const file of filesUnder(path.join(generated, 'assets', 'basemetals', 'lang
   if (!playerText) throw new Error(`Missing player translation: ${locale}`);
   const language = JSON.parse(fs.readFileSync(file, 'utf8'));
   Object.assign(language, text, playerText);
+
+  const buckets = bucketTranslations.locales[source];
+  if (!buckets) throw new Error(`Missing bucket translations: ${locale}`);
+  for (const bucket of manifest.new_items) {
+    const id = bucket.substring(bucket.indexOf(':') + 1);
+    const material = id.replace(/_bucket$/, '');
+    const name = buckets[material];
+    if (!name) throw new Error(`Missing bucket translation: ${locale}/${material}`);
+    language[`item.bucket.${material}`] = name;
+    language[`item.basemetals.${id}`] = name;
+  }
+
   writeJson(file, language);
 }
 
-console.log('Generated Minecraft 1.15.2-compatible Base Metals resources.');
+console.log('Generated Minecraft 1.16.5-compatible Base Metals resources.');

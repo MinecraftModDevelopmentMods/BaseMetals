@@ -35,7 +35,7 @@ public final class BaseMetalAmmoItem extends ArrowItem implements MaterialBacked
         MaterialProjectile projectile = new MaterialProjectile(entityType.get(), world, shooter, stack);
 
         // A vanilla bow adds one damage. Material bows replace that with their own damage.
-        projectile.setDamage(1.0D + material.baseAttackDamage());
+        projectile.setBaseDamage(1.0D + material.baseAttackDamage());
 
         return projectile;
     }

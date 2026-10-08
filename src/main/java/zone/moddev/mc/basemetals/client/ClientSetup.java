@@ -4,8 +4,6 @@ import zone.moddev.mc.basemetals.content.FluidContent;
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.entity.ModEntities;
 
-import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -26,8 +24,6 @@ public final class ClientSetup {
                 () -> (minecraft, parent) -> new BaseMetalsConfigScreen(parent));
         WorldSettingsExtensionRegistry.registerConfigScreen("basemetals", BaseMetalsConfigScreen::new);
         net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus()
-                .addListener(ClientSetup::registerBucketColours);
-        net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus()
                 .addListener(ClientSetup::setupRendering);
     }
 
@@ -35,7 +31,7 @@ public final class ClientSetup {
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.CUSTOM_ARROW.get(), MaterialProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.CUSTOM_BOLT.get(), MaterialProjectileRenderer::new);
 
-        DeferredWorkQueue.runLater(ClientSetup::registerRenderLayers);
+        event.enqueueWork(ClientSetup::registerRenderLayers);
     }
 
     private static void registerRenderLayers() {
@@ -43,22 +39,15 @@ public final class ClientSetup {
             Block block = handle.get();
             if (name.endsWith("_ore") || block instanceof DoorBlock
                     || block instanceof TrapDoorBlock || block instanceof PaneBlock) {
-                RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
+                RenderTypeLookup.setRenderLayer(block, RenderType.cutoutMipped());
             }
         });
 
         for (FluidContent fluid : ModContent.fluids().values()) {
-            RenderTypeLookup.setRenderLayer(fluid.source().get(), RenderType.getTranslucent());
-            RenderTypeLookup.setRenderLayer(fluid.flowing().get(), RenderType.getTranslucent());
-            RenderTypeLookup.setRenderLayer(fluid.block().get(), RenderType.getTranslucent());
+            RenderTypeLookup.setRenderLayer(fluid.source().get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(fluid.flowing().get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(fluid.block().get(), RenderType.translucent());
         }
     }
 
-    private static void registerBucketColours(ColorHandlerEvent.Item event) {
-        for (final FluidContent content : ModContent.fluids().values()) {
-            event.getItemColors().register((stack, tintIndex) -> tintIndex == 1
-                    ? ModContent.fluidColour(content.source().get()) : 0xFFFFFF,
-                    content.bucket().get());
-        }
-    }
 }

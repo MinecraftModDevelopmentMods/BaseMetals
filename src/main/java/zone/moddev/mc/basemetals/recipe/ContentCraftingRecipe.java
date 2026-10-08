@@ -22,7 +22,7 @@ public final class ContentCraftingRecipe {
     private ContentCraftingRecipe() {}
 
     private static boolean allowed(IRecipe recipe) {
-        return ContentPolicy.active().allows(recipe.getRecipeOutput().getItem().getRegistryName().toString());
+        return ContentPolicy.active().allows(recipe.getResultItem().getItem().getRegistryName().toString());
     }
 
     private static IRecipe wrap(IRecipe recipe) {
@@ -37,7 +37,7 @@ public final class ContentCraftingRecipe {
 
         private Shaped(ShapedRecipe plain) {
             super(plain.getId(), plain.getGroup(), plain.getWidth(), plain.getHeight(),
-                    plain.getIngredients(), plain.getRecipeOutput());
+                    plain.getIngredients(), plain.getResultItem());
             this.plain = plain;
         }
 
@@ -47,12 +47,12 @@ public final class ContentCraftingRecipe {
         }
 
         @Override
-        public ItemStack getCraftingResult(CraftingInventory inventory) {
-            return allowed(this) ? super.getCraftingResult(inventory) : ItemStack.EMPTY;
+        public ItemStack assemble(CraftingInventory inventory) {
+            return allowed(this) ? super.assemble(inventory) : ItemStack.EMPTY;
         }
 
         @Override
-        public boolean isDynamic() {
+        public boolean isSpecial() {
             return !allowed(this);
         }
 
@@ -66,7 +66,7 @@ public final class ContentCraftingRecipe {
         private final ShapelessRecipe plain;
 
         private Shapeless(ShapelessRecipe plain) {
-            super(plain.getId(), plain.getGroup(), plain.getRecipeOutput(), plain.getIngredients());
+            super(plain.getId(), plain.getGroup(), plain.getResultItem(), plain.getIngredients());
             this.plain = plain;
         }
 
@@ -76,12 +76,12 @@ public final class ContentCraftingRecipe {
         }
 
         @Override
-        public ItemStack getCraftingResult(CraftingInventory inventory) {
-            return allowed(this) ? super.getCraftingResult(inventory) : ItemStack.EMPTY;
+        public ItemStack assemble(CraftingInventory inventory) {
+            return allowed(this) ? super.assemble(inventory) : ItemStack.EMPTY;
         }
 
         @Override
-        public boolean isDynamic() {
+        public boolean isSpecial() {
             return !allowed(this);
         }
 
@@ -96,25 +96,25 @@ public final class ContentCraftingRecipe {
         private Serializer() { setRegistryName("basemetals", "content_crafting"); }
 
         @Override
-        public IRecipe read(ResourceLocation id, JsonObject json) {
-            JsonObject nested = JSONUtils.getJsonObject(json, "recipe");
-            String type = JSONUtils.getString(nested, "type");
+        public IRecipe fromJson(ResourceLocation id, JsonObject json) {
+            JsonObject nested = JSONUtils.getAsJsonObject(json, "recipe");
+            String type = JSONUtils.getAsString(nested, "type");
             if (!"minecraft:crafting_shaped".equals(type) && !"minecraft:crafting_shapeless".equals(type)) {
                 throw new JsonSyntaxException("Content-mode crafting requires an ordinary shaped or shapeless recipe");
             }
 
-            return wrap(RecipeManager.deserializeRecipe(id, nested));
+            return wrap(RecipeManager.fromJson(id, nested));
         }
 
         @Override
-        public IRecipe read(ResourceLocation id, PacketBuffer buffer) {
+        public IRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
             ResourceLocation serializerId = buffer.readResourceLocation();
             ResourceLocation recipeId = buffer.readResourceLocation();
             IRecipeSerializer<?> serializer = ForgeRegistries.RECIPE_SERIALIZERS.getValue(serializerId);
             if (serializer == null || serializer == SERIALIZER) {
                 throw new IllegalArgumentException("Invalid nested recipe serializer " + serializerId);
             }
-            IRecipe<?> nested = serializer.read(recipeId, buffer);
+            IRecipe<?> nested = serializer.fromNetwork(recipeId, buffer);
             if (!nested.getId().equals(id) || nested.getSerializer() == SERIALIZER) {
                 throw new IllegalArgumentException("Invalid nested content-mode recipe " + id);
             }
@@ -122,7 +122,7 @@ public final class ContentCraftingRecipe {
         }
 
         @Override
-        public void write(PacketBuffer buffer, IRecipe value) {
+        public void toNetwork(PacketBuffer buffer, IRecipe value) {
             IRecipe plain = value instanceof Shaped ? ((Shaped) value).plain : ((Shapeless) value).plain;
             buffer.writeResourceLocation(plain.getSerializer().getRegistryName());
             buffer.writeResourceLocation(plain.getId());
@@ -131,7 +131,7 @@ public final class ContentCraftingRecipe {
 
         @SuppressWarnings({"rawtypes", "unchecked"})
         private static void writePlain(PacketBuffer buffer, IRecipe plain) {
-            ((IRecipeSerializer) plain.getSerializer()).write(buffer, plain);
+            ((IRecipeSerializer) plain.getSerializer()).toNetwork(buffer, plain);
         }
     }
 }

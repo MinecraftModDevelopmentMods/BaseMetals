@@ -17,10 +17,13 @@ function initializeCoreMod() {
                 var patched = false;
                 for (var i = 0; i < node.methods.size(); ++i) {
                     var method = node.methods.get(i);
-                    if (method.desc !== '(Ljava/io/File;Lcom/mojang/datafixers/DataFixer;' +
-                            'Lnet/minecraft/world/storage/SaveHandler;)Lnet/minecraft/world/storage/WorldInfo;') continue;
+                    if (method.desc !== '(Lcom/mojang/serialization/DynamicOps;' +
+                            'Lnet/minecraft/util/datafix/codec/DatapackCodec;' +
+                            'Lnet/minecraft/world/storage/SaveFormat$LevelSave;' +
+                            'Ljava/io/File;Lcom/mojang/datafixers/DataFixer;)' +
+                            'Lnet/minecraft/world/storage/ServerWorldInfo;') continue;
                     var prefix = new InsnList();
-                    prefix.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                    prefix.add(new VarInsnNode(Opcodes.ALOAD, 3));
                     prefix.add(new MethodInsnNode(Opcodes.INVOKESTATIC, HOOK,
                             'prepareLegacyWorld', '(Ljava/io/File;)V', false));
                     method.instructions.insert(prefix);
@@ -36,7 +39,7 @@ function initializeCoreMod() {
                 var patched = false;
                 for (var i = 0; i < node.methods.size(); ++i) {
                     var method = node.methods.get(i);
-                    if (method.desc !== '(Lnet/minecraft/world/dimension/DimensionType;' +
+                    if (method.desc !== '(Lnet/minecraft/util/RegistryKey;' +
                             'Ljava/util/function/Supplier;' + NBT + ')' + NBT) continue;
 
                     // Restore mod IDs before vanilla flattens the numeric block palette.
@@ -65,7 +68,7 @@ function initializeCoreMod() {
                 var patched = false;
                 for (var i = 0; i < node.methods.size(); ++i) {
                     var method = node.methods.get(i);
-                    if (method.desc !== '(Lnet/minecraft/util/math/BlockPos;' + STATE + 'I)Z') continue;
+                    if (method.desc !== '(Lnet/minecraft/util/math/BlockPos;' + STATE + 'II)Z') continue;
                     var allowed = new LabelNode();
                     var prefix = new InsnList();
                     prefix.add(new VarInsnNode(Opcodes.ALOAD, 1));
