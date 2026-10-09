@@ -1625,5 +1625,17 @@
   "item.bucket.quartz": "Emmer gesmolten kwarts",
   "item.bucket.wood": "Emmer vloeibaar hout",
   "item.bucket.redstone": "Emmer gesmolten redstone",
-  "item.bucket.stone": "Emmer gesmolten steen"
+  "item.bucket.stone": "Emmer gesmolten steen",
+  "item.basemetals.adamantine_raw": "Ruw undefined",
+  "item.basemetals.antimony_raw": "Ruw undefined",
+  "item.basemetals.bismuth_raw": "Ruw undefined",
+  "item.basemetals.coldiron_raw": "Ruw undefined",
+  "item.basemetals.lead_raw": "Ruw undefined",
+  "item.basemetals.mercury_raw": "Ruw undefined",
+  "item.basemetals.nickel_raw": "Ruw undefined",
+  "item.basemetals.platinum_raw": "Ruw undefined",
+  "item.basemetals.silver_raw": "Ruw undefined",
+  "item.basemetals.starsteel_raw": "Ruw undefined",
+  "item.basemetals.tin_raw": "Ruw undefined",
+  "item.basemetals.zinc_raw": "Ruw undefined"
 }

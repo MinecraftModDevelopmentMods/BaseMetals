@@ -4,14 +4,14 @@ import java.util.Collections;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 import org.apache.commons.lang3.tuple.Pair;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.network.FMLHandshakeHandler;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.fmllegacy.network.FMLHandshakeHandler;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkRegistry;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ContentMode;
 
@@ -56,10 +56,10 @@ public final class ContentModeNetwork {
 
         ContentMode clientMode = BaseMetalsConfig.activeMode();
         if (message.mode != clientMode) {
-            context.getNetworkManager().disconnect(new TranslationTextComponent(
+            context.getNetworkManager().disconnect(new TranslatableComponent(
                     "config.basemetals.connection.mismatch",
-                    new TranslationTextComponent(message.mode.translationKey()),
-                    new TranslationTextComponent(clientMode.translationKey())));
+                    new TranslatableComponent(message.mode.translationKey()),
+                    new TranslatableComponent(clientMode.translationKey())));
             return;
         }
 
@@ -72,7 +72,7 @@ public final class ContentModeNetwork {
 
         private ModeMessage(ContentMode mode) { this.mode = mode; }
 
-        private static ModeMessage read(PacketBuffer buffer) {
+        private static ModeMessage read(FriendlyByteBuf buffer) {
             String value = buffer.readUtf(32);
             if (!ContentMode.isValid(value)) throw new IllegalArgumentException("Unknown server content mode " + value);
             return new ModeMessage(ContentMode.parse(value));

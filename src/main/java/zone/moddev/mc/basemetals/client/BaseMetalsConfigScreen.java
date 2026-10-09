@@ -2,16 +2,16 @@ package zone.moddev.mc.basemetals.client;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.util.IReorderingProcessor;
-import net.minecraft.util.text.StringTextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.network.chat.TextComponent;
 
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ConfirmScreen;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.ConfirmScreen;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ConfigEdits;
@@ -34,7 +34,7 @@ public final class BaseMetalsConfigScreen extends Screen {
     private OptionButton modeButton;
 
     public BaseMetalsConfigScreen(Screen parent) {
-        super(new TranslationTextComponent(PREFIX + "title"));
+        super(new TranslatableComponent(PREFIX + "title"));
         this.parent = parent;
         this.edits = new ConfigEdits(ContentMode.parse(BaseMetalsConfig.CONTENT_MODE.get()),
                 VALUES[0].get(), VALUES[1].get(), VALUES[2].get(), VALUES[3].get());
@@ -45,7 +45,7 @@ public final class BaseMetalsConfigScreen extends Screen {
         optionButtons.clear();
         int left = width / 2 - 150;
         int top = Math.max(38, height / 2 - 90);
-        modeButton = addButton(new OptionButton(left, top, 300, modeLabel(), () -> {
+        modeButton = addRenderableWidget(new OptionButton(left, top, 300, modeLabel(), () -> {
             edits.cycleMode();
             initLabels();
         }, "contentMode"));
@@ -58,19 +58,19 @@ public final class BaseMetalsConfigScreen extends Screen {
                         initLabels();
                     }, OPTIONS[index]);
             optionButtons.add(button);
-            addButton(button);
+            addRenderableWidget(button);
         }
 
-        addButton(new OptionButton(left, top + 138, 145, I18n.get(PREFIX + "defaults"), () -> {
+        addRenderableWidget(new OptionButton(left, top + 138, 145, I18n.get(PREFIX + "defaults"), () -> {
             edits.defaults();
             initLabels();
         }, null));
-        addButton(new OptionButton(left + 155, top + 138, 145, I18n.get(PREFIX + "undo"), () -> {
+        addRenderableWidget(new OptionButton(left + 155, top + 138, 145, I18n.get(PREFIX + "undo"), () -> {
             edits.undo();
             initLabels();
         }, null));
-        addButton(new OptionButton(left, height - 28, 145, I18n.get("gui.done"), this::done, null));
-        addButton(new OptionButton(left + 155, height - 28, 145, I18n.get("gui.cancel"), this::onClose, null));
+        addRenderableWidget(new OptionButton(left, height - 28, 145, I18n.get("gui.done"), this::done, null));
+        addRenderableWidget(new OptionButton(left + 155, height - 28, 145, I18n.get("gui.cancel"), this::onClose, null));
     }
 
     private String modeLabel() {
@@ -83,18 +83,18 @@ public final class BaseMetalsConfigScreen extends Screen {
     }
 
     private void initLabels() {
-        modeButton.setMessage(new StringTextComponent(modeLabel()));
+        modeButton.setMessage(new TextComponent(modeLabel()));
 
         for (int index = 0; index < optionButtons.size(); index++) {
-            optionButtons.get(index).setMessage(new StringTextComponent(optionLabel(index)));
+            optionButtons.get(index).setMessage(new TextComponent(optionLabel(index)));
         }
     }
 
     private void done() {
         if (edits.modeChanged()) {
             minecraft.setScreen(new ConfirmScreen(this::confirmResult,
-                    new TranslationTextComponent(PREFIX + "confirm.title"),
-                    new TranslationTextComponent(PREFIX + "confirm.message")));
+                    new TranslatableComponent(PREFIX + "confirm.title"),
+                    new TranslatableComponent(PREFIX + "confirm.message")));
         } else {
             saveAndClose();
         }
@@ -121,20 +121,20 @@ public final class BaseMetalsConfigScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrices, int mouseX, int mouseY, float partialTicks) {
         renderBackground(matrices);
         drawCenteredString(matrices, font, title, width / 2, 12, 0xFFFFFF);
         super.render(matrices, mouseX, mouseY, partialTicks);
 
-        for (Widget button : buttons) {
-            if (button instanceof OptionButton && button.isHovered()) {
-                String key = ((OptionButton) button).option;
+        for (net.minecraft.client.gui.components.events.GuiEventListener child : children()) {
+            if (child instanceof OptionButton && ((OptionButton) child).isHovered()) {
+                String key = ((OptionButton) child).option;
                 if (key != null) {
-                    List<IReorderingProcessor> help = new ArrayList<>(font.split(
-                            new TranslationTextComponent(PREFIX + key + ".tooltip"), 280));
+                    List<FormattedCharSequence> help = new ArrayList<>(font.split(
+                            new TranslatableComponent(PREFIX + key + ".tooltip"), 280));
                     if ("contentMode".equals(key)) {
-                        help.addAll(font.split(new TranslationTextComponent(edits.mode().translationKey() + ".description"), 280));
-                        help.addAll(font.split(new TranslationTextComponent(PREFIX + "restart"), 280));
+                        help.addAll(font.split(new TranslatableComponent(edits.mode().translationKey() + ".description"), 280));
+                        help.addAll(font.split(new TranslatableComponent(PREFIX + "restart"), 280));
                     }
                     renderTooltip(matrices, help, mouseX, mouseY);
                 }
@@ -146,7 +146,7 @@ public final class BaseMetalsConfigScreen extends Screen {
         private final String option;
 
         private OptionButton(int x, int y, int width, String label, Runnable click, String option) {
-            super(x, y, width, 20, new StringTextComponent(label), button -> click.run());
+            super(x, y, width, 20, new TextComponent(label), button -> click.run());
             this.option = option;
         }
 

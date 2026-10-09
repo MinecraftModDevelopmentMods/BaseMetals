@@ -1625,5 +1625,17 @@
   "item.bucket.quartz": "Seau de quartz fondu",
   "item.bucket.wood": "Seau de bois liquéfié",
   "item.bucket.redstone": "Seau de redstone fondue",
-  "item.bucket.stone": "Seau de pierre fondue"
+  "item.bucket.stone": "Seau de pierre fondue",
+  "item.basemetals.adamantine_raw": "undefined brut",
+  "item.basemetals.antimony_raw": "undefined brut",
+  "item.basemetals.bismuth_raw": "undefined brut",
+  "item.basemetals.coldiron_raw": "undefined brut",
+  "item.basemetals.lead_raw": "undefined brut",
+  "item.basemetals.mercury_raw": "undefined brut",
+  "item.basemetals.nickel_raw": "undefined brut",
+  "item.basemetals.platinum_raw": "undefined brut",
+  "item.basemetals.silver_raw": "undefined brut",
+  "item.basemetals.starsteel_raw": "undefined brut",
+  "item.basemetals.tin_raw": "undefined brut",
+  "item.basemetals.zinc_raw": "undefined brut"
 }

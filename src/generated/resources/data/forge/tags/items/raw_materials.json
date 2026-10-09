@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:raw_materials/adamantine",
+    "#forge:raw_materials/antimony",
+    "#forge:raw_materials/bismuth",
+    "#forge:raw_materials/coldiron",
+    "#forge:raw_materials/lead",
+    "#forge:raw_materials/mercury",
+    "#forge:raw_materials/nickel",
+    "#forge:raw_materials/platinum",
+    "#forge:raw_materials/silver",
+    "#forge:raw_materials/starsteel",
+    "#forge:raw_materials/tin",
+    "#forge:raw_materials/zinc",
+    "#forge:raw_materials/iron",
+    "#forge:raw_materials/gold",
+    "#forge:raw_materials/copper"
+  ]
+}

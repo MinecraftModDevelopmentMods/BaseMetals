@@ -6,21 +6,21 @@ import com.google.gson.JsonSyntaxException;
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.config.ContentPolicy;
 
-import net.minecraft.item.Items;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.SpecialRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public final class PlateRepairRecipe extends SpecialRecipe {
+public final class PlateRepairRecipe extends CustomRecipe {
     private final Item target;
     private final Ingredient plate;
 
@@ -31,7 +31,7 @@ public final class PlateRepairRecipe extends SpecialRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inventory, World world) {
+    public boolean matches(CraftingContainer inventory, Level world) {
         if (!ContentPolicy.active().allows(target.getRegistryName().toString())) return false;
         ItemStack foundTarget = ItemStack.EMPTY;
         boolean foundPlate = false;
@@ -56,7 +56,7 @@ public final class PlateRepairRecipe extends SpecialRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInventory inventory) {
+    public ItemStack assemble(CraftingContainer inventory) {
         if (!matches(inventory, null)) {
             return ItemStack.EMPTY;
         }
@@ -95,25 +95,25 @@ public final class PlateRepairRecipe extends SpecialRecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return CrushingRecipe.PLATE_REPAIR_SERIALIZER;
     }
 
-    public static final class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>
-            implements IRecipeSerializer<PlateRepairRecipe> {
+    public static final class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>>
+            implements RecipeSerializer<PlateRepairRecipe> {
         public Serializer() { setRegistryName(BaseMetals.MOD_ID, "plate_repair"); }
         @Override public PlateRepairRecipe fromJson(ResourceLocation id, JsonObject json) {
-            ResourceLocation targetId = new ResourceLocation(JSONUtils.getAsString(json, "target"));
+            ResourceLocation targetId = new ResourceLocation(GsonHelper.getAsString(json, "target"));
             Item target = ForgeRegistries.ITEMS.getValue(targetId);
             if (target == null || target == Items.AIR) throw new JsonSyntaxException("Unknown target " + targetId);
-            return new PlateRepairRecipe(id, target, Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "plate")));
+            return new PlateRepairRecipe(id, target, Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "plate")));
         }
-        @Override public PlateRepairRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
+        @Override public PlateRepairRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
             Item target = ForgeRegistries.ITEMS.getValue(buffer.readResourceLocation());
             if (target == null || target == Items.AIR) throw new IllegalStateException("Missing target");
             return new PlateRepairRecipe(id, target, Ingredient.fromNetwork(buffer));
         }
-        @Override public void toNetwork(PacketBuffer buffer, PlateRepairRecipe recipe) {
+        @Override public void toNetwork(FriendlyByteBuf buffer, PlateRepairRecipe recipe) {
             buffer.writeResourceLocation(recipe.target.getRegistryName());
             recipe.plate.toNetwork(buffer);
         }

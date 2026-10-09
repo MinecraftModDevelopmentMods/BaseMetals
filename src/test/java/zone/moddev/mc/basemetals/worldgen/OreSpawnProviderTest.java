@@ -61,7 +61,8 @@ class OreSpawnProviderTest {
             assertEquals(16, rule.get("length").getAsInt(), entry.getKey());
             assertEquals(0.0D, rule.get("discard_chance_on_air_exposure").getAsDouble(), 0.0D,
                     entry.getKey());
-            assertTrue(ore.get("enabled").getAsBoolean(), entry.getKey());
+            assertEquals(!entry.getKey().equals("basemetals:ore/copper"),
+                    ore.get("enabled").getAsBoolean(), entry.getKey());
             assertFalse(ore.get("retrogen").getAsBoolean(), entry.getKey());
         }
     }

@@ -2,6 +2,7 @@ package zone.moddev.mc.basemetals.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import zone.moddev.mc.basemetals.BaseMetals;
 
 public final class BaseMetalsConfig {
@@ -35,7 +36,7 @@ public final class BaseMetalsConfig {
 
     private BaseMetalsConfig() {}
 
-    public static void onConfigLoading(ModConfig.Loading event) {
+    public static void onConfigLoading(ModConfigEvent.Loading event) {
         if (event.getConfig().getSpec() != SPEC || modeLoaded) return;
         loadedConfig = event.getConfig();
         String value = CONTENT_MODE.get();

@@ -1,20 +1,20 @@
 package zone.moddev.mc.basemetals.content;
 
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.RepairContainer;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AnvilMenu;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 /** Uses the vanilla repair screen and keeps the same block ID as the anvil wears out. */
 public final class BaseMetalAnvilBlock extends AnvilBlock {
@@ -27,12 +27,12 @@ public final class BaseMetalAnvilBlock extends AnvilBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getClockWise());
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<net.minecraft.block.Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
         builder.add(FACING, DAMAGE);
     }
 
@@ -47,15 +47,15 @@ public final class BaseMetalAnvilBlock extends AnvilBlock {
     }
 
     @Override
-    public net.minecraft.inventory.container.INamedContainerProvider getMenuProvider(
-            BlockState state, World world, BlockPos pos) {
-        return new net.minecraft.inventory.container.SimpleNamedContainerProvider((windowId, inventory, player) ->
-                new RepairContainer(windowId, inventory, net.minecraft.util.IWorldPosCallable.create(world, pos)) {
-                    @Override public boolean stillValid(PlayerEntity candidate) {
+    public net.minecraft.world.MenuProvider getMenuProvider(
+            BlockState state, Level world, BlockPos pos) {
+        return new net.minecraft.world.SimpleMenuProvider((windowId, inventory, player) ->
+                new AnvilMenu(windowId, inventory, net.minecraft.world.inventory.ContainerLevelAccess.create(world, pos)) {
+                    @Override public boolean stillValid(Player candidate) {
                         return world.getBlockState(pos).getBlock() == BaseMetalAnvilBlock.this
                                 && candidate.distanceToSqr(pos.getX() + 0.5D, pos.getY() + 0.5D,
                                         pos.getZ() + 0.5D) <= 64.0D;
                     }
-                }, new TranslationTextComponent(getDescriptionId()));
+                }, new TranslatableComponent(getDescriptionId()));
     }
 }

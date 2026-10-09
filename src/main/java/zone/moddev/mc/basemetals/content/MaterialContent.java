@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.Item;
 
 public final class MaterialContent {
     private final MaterialDefinition definition;

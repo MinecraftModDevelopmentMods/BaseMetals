@@ -1626,5 +1626,17 @@
   "item.bucket.quartz": "Balde de quartzo fundido",
   "item.bucket.wood": "Balde de madeira liquefeita",
   "item.bucket.redstone": "Balde de redstone fundida",
-  "item.bucket.stone": "Balde de pedra fundida"
+  "item.bucket.stone": "Balde de pedra fundida",
+  "item.basemetals.adamantine_raw": "undefined bruto",
+  "item.basemetals.antimony_raw": "undefined bruto",
+  "item.basemetals.bismuth_raw": "undefined bruto",
+  "item.basemetals.coldiron_raw": "undefined bruto",
+  "item.basemetals.lead_raw": "undefined bruto",
+  "item.basemetals.mercury_raw": "undefined bruto",
+  "item.basemetals.nickel_raw": "undefined bruto",
+  "item.basemetals.platinum_raw": "undefined bruto",
+  "item.basemetals.silver_raw": "undefined bruto",
+  "item.basemetals.starsteel_raw": "undefined bruto",
+  "item.basemetals.tin_raw": "undefined bruto",
+  "item.basemetals.zinc_raw": "undefined bruto"
 }

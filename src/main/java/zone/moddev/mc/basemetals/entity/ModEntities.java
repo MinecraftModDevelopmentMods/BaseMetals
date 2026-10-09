@@ -3,7 +3,7 @@ package zone.moddev.mc.basemetals.entity;
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.content.RegistryHandle;
 
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -30,7 +30,7 @@ public final class ModEntities {
     private static EntityType<MaterialProjectile> register(RegistryEvent.Register<EntityType<?>> event,
             String name, final RegistryHandle<EntityType<MaterialProjectile>> self) {
         EntityType<MaterialProjectile> type = EntityType.Builder
-                .<MaterialProjectile>of(MaterialProjectile::new, net.minecraft.entity.EntityClassification.MISC)
+                .<MaterialProjectile>of(MaterialProjectile::new, net.minecraft.world.entity.MobCategory.MISC)
                 .sized(0.5F, 0.5F).setTrackingRange(64).setUpdateInterval(20)
                 .setShouldReceiveVelocityUpdates(true)
                 .build(BaseMetals.MOD_ID + ":" + name);

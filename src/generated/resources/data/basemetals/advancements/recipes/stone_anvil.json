@@ -22,7 +22,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:stone_bricks"
+            "items": [
+              "minecraft:stone_bricks"
+            ]
           }
         ]
       }
@@ -42,7 +44,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:stone_slab"
+            "items": [
+              "minecraft:stone_slab"
+            ]
           }
         ]
       }

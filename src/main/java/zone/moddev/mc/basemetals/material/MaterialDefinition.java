@@ -2,7 +2,7 @@ package zone.moddev.mc.basemetals.material;
 
 import java.util.Objects;
 
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 
 /** Material statistics and form availability used by registration and recipes. */
 public final class MaterialDefinition {
@@ -84,7 +84,7 @@ public final class MaterialDefinition {
     public int armorDurabilityFactor() { return Math.max(1, (int) (2.0D * strength)); }
     public float armorToughness() { return hardness > 10.0D ? (int) (hardness / 5.0D) : 0.0F; }
 
-    public int armorProtection(EquipmentSlotType slot) {
+    public int armorProtection(EquipmentSlot slot) {
         double total = (1.25D * hardness) + 5.0D;
         double fraction;
         switch (slot) {

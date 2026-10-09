@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:raw_materials/nickel"
+          }
+        ]
+      }
+    },
+    "has_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "basemetals:nickel_raw_blasting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw",
+      "has_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "basemetals:nickel_raw_blasting"
+    ]
+  }
+}

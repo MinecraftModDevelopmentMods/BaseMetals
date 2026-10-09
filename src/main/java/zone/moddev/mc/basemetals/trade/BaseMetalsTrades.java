@@ -1,11 +1,11 @@
 package zone.moddev.mc.basemetals.trade;
 
-import net.minecraft.entity.merchant.villager.VillagerProfession;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.MerchantOffer;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,7 +16,7 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
-/** Adds the old smith offers to the three Village & Pillage smith professions. */
+/** Adds the old smith offers to the three village smith professions. */
 @Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class BaseMetalsTrades {
     private BaseMetalsTrades() {}
@@ -62,7 +62,7 @@ public final class BaseMetalsTrades {
         event.getTrades().get(level).add(selling(item, count, emeralds, level));
     }
 
-    public static VillagerTrades.ITrade selling(Item item, int count, int emeralds, int level) {
+    public static VillagerTrades.ItemListing selling(Item item, int count, int emeralds, int level) {
         return (merchant, random) -> {
             if (!BaseMetalsConfig.VILLAGER_TRADES.get()
                     || !ContentPolicy.active().allows(item.getRegistryName().toString())) return null;

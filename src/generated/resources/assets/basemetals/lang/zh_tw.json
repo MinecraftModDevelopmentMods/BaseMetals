@@ -1884,5 +1884,17 @@
   "item.bucket.obsidian": "熔融黑曜石桶",
   "item.bucket.quartz": "熔融石英桶",
   "item.bucket.wood": "液化木材桶",
-  "item.bucket.stone": "熔融石頭桶"
+  "item.bucket.stone": "熔融石頭桶",
+  "item.basemetals.adamantine_raw": "粗精金",
+  "item.basemetals.antimony_raw": "粗銻",
+  "item.basemetals.bismuth_raw": "粗鉍",
+  "item.basemetals.coldiron_raw": "粗寒鐵",
+  "item.basemetals.lead_raw": "粗鉛",
+  "item.basemetals.mercury_raw": "粗汞",
+  "item.basemetals.nickel_raw": "粗鎳",
+  "item.basemetals.platinum_raw": "粗白金",
+  "item.basemetals.silver_raw": "粗銀",
+  "item.basemetals.starsteel_raw": "粗星鋼",
+  "item.basemetals.tin_raw": "粗錫",
+  "item.basemetals.zinc_raw": "粗鋅"
 }

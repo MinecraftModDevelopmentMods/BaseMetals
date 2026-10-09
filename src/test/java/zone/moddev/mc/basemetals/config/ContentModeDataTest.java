@@ -34,6 +34,7 @@ class ContentModeDataTest {
         try (Stream<Path> paths = Files.walk(directory)) {
             files = paths.filter(p -> p.toString().endsWith(".json"))
                     .filter(p -> !p.getFileName().toString().equals("ancient_debris_crushing.json"))
+                    .filter(p -> !p.getFileName().toString().matches(".*_raw_(crushing|smelting|blasting)\\.json"))
                     .sorted(java.util.Comparator.comparing(p -> directory.relativize(p).toString().replace('\\', '/')))
                     .collect(Collectors.toList());
         }

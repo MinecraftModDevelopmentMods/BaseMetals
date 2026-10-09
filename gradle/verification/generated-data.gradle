@@ -1,95 +1,67 @@
 import groovy.json.JsonSlurper
-import groovy.xml.XmlSlurper
-import java.security.MessageDigest
-import java.util.jar.Manifest
-import java.util.zip.ZipFile
 
-def sha256 = project.ext.baseMetalsBuild.sha256
+def generateCatalogueResources = tasks.register('generateCatalogueResources', Exec) {
+    group = 'data generation'
+    description = 'Updates recipes, loot, tags and translations for Minecraft 1.17.1.'
+    commandLine 'node', 'tools/generate_117_resources.js'
+}
+
+tasks.matching { it.name == 'runData' }.configureEach { mustRunAfter generateCatalogueResources }
+tasks.named('processResources') { mustRunAfter generateCatalogueResources }
+
+def generateResources = tasks.register('generateResources') {
+    group = 'data generation'
+    description = 'Updates the saved resources, including Kiri\'s native Forge ore models.'
+    dependsOn generateCatalogueResources, 'runData'
+    doLast {
+        File models = layout.buildDirectory.dir('native-generated-resources').get().asFile
+        if (fileTree(models) { include 'assets/basemetals/models/block/*_ore.json' }.files.size() != 13) {
+            throw new GradleException('Forge did not run the Base Metals model provider')
+        }
+        copy {
+            from layout.buildDirectory.dir('native-generated-resources')
+            into 'src/generated/resources'
+            exclude '.cache/**'
+        }
+    }
+}
+
+tasks.register('generateOreModels') {
+    group = 'data generation'
+    description = 'Alias for the native resource generator.'
+    dependsOn generateResources
+}
 
 def verifyGeneratedData = tasks.register('verifyGeneratedData', Exec) {
     group = 'verification'
-    description = 'Regenerates and proves that the committed Minecraft 1.16.5 resource projection is current.'
-    commandLine 'node', 'tools/generate_116_resources.js'
-    def snapshot = {
-        Map<String, String> result = new TreeMap<>()
-        [file('src/generated/resources'),
-         file('src/main/resources/data/basemetals/orespawn/provider.json')].each { File root ->
-            if (root.isFile()) {
-                result[project.relativePath(root).replace('\\', '/')] = sha256(root)
-            } else if (root.isDirectory()) {
-                fileTree(root) { exclude '.cache/**' }.files.findAll { it.isFile() }.each { File generated ->
-                    result[project.relativePath(generated).replace('\\', '/')] = sha256(generated)
-                }
+    description = 'Checks generated catalogue resources without rewriting them.'
+    commandLine 'node', 'tools/generate_117_resources.js', '--verify'
+}
+
+tasks.register('verifyGeneratedOreModels') {
+    group = 'verification'
+    description = 'Runs native datagen into build output and checks the committed models and mining tags.'
+    dependsOn 'runData'
+    doLast {
+        File generated = layout.buildDirectory.dir('native-generated-resources').get().asFile
+        fileTree(generated) { exclude '.cache/**' }.files.findAll { it.isFile() }.each { model ->
+            String relative = generated.toPath().relativize(model.toPath()).toString()
+            File committed = file("src/generated/resources/${relative}")
+            if (!committed.isFile() || new JsonSlurper().parse(model) != new JsonSlurper().parse(committed)) {
+                throw new GradleException("Native generated resource is stale: ${relative}. Run generateResources.")
             }
         }
-        result
-    }
-    doFirst { ext.beforeGeneration = snapshot() }
-    doLast {
-        Map<String, String> afterGeneration = snapshot()
-        if (ext.beforeGeneration != afterGeneration) {
-            Set<String> beforePaths = ext.beforeGeneration.keySet()
-            Set<String> afterPaths = afterGeneration.keySet()
-            List<String> added = (afterPaths - beforePaths).toList().sort()
-            List<String> removed = (beforePaths - afterPaths).toList().sort()
-            List<String> changed = (beforePaths.intersect(afterPaths)).findAll {
-                ext.beforeGeneration[it] != afterGeneration[it]
-            }.toList().sort()
-            throw new GradleException('Generated resources were stale. Commit the generator output. ' +
-                    "Added=${added.take(20)}, removed=${removed.take(20)}, changed=${changed.take(20)}")
+        if (fileTree(generated) { include 'assets/basemetals/models/block/*_ore.json' }.files.size() != 13) {
+            throw new GradleException('Native datagen must generate all thirteen ore models')
         }
     }
 }
-def oreModelsDirectory = file('src/main/resources/assets/basemetals/models/block')
-def oreModelSnapshot = { File directory ->
-    fileTree(directory) { include '*_ore.json' }.files.collectEntries {
-        [(it.name): sha256(it)]
-    }
-}
-def generateOreModels = tasks.register('generateOreModels', JavaExec) {
-    group = 'data generation'
-    description = 'Uses vanilla host textures when an ore overlay is present, otherwise keeps the legacy model.'
-    dependsOn tasks.named('modelGeneratorClasses')
-    classpath = sourceSets.modelGenerator.runtimeClasspath
-    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
-    args file('src/main/resources').absolutePath
-}
-tasks.named('processResources') { dependsOn generateOreModels }
-def oreModelVerificationDirectory = layout.buildDirectory.dir('ore-model-verification')
-def verifyGeneratedOreModels = tasks.register('verifyGeneratedOreModels', JavaExec) {
-    group = 'verification'
-    description = 'Checks the saved ore models without rewriting them.'
-    dependsOn tasks.named('modelGeneratorClasses')
-    classpath = sourceSets.modelGenerator.runtimeClasspath
-    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
-    args file('src/main/resources').absolutePath, '--output', oreModelVerificationDirectory.get().asFile.absolutePath
 
-    doFirst {
-        File output = oreModelVerificationDirectory.get().asFile.canonicalFile
-        File buildDirectory = layout.buildDirectory.get().asFile.canonicalFile
-        if (!output.toPath().startsWith(buildDirectory.toPath()) || output.name != 'ore-model-verification') {
-            throw new GradleException("Unsafe ore-model verification directory: ${output}")
-        }
-        delete output
-    }
-    doLast {
-        File expectedModels = new File(oreModelVerificationDirectory.get().asFile, 'assets/basemetals/models/block')
-        if (oreModelSnapshot(oreModelsDirectory) != oreModelSnapshot(expectedModels)) {
-            throw new GradleException('Ore models are stale. Build the project and commit the updated JSON files.')
-        }
-    }
-}
-// Release checks must see stale models before the normal build updates them.
-generateOreModels.configure { mustRunAfter verifyGeneratedOreModels }
-tasks.named('verifyReleaseArtifacts') { dependsOn verifyGeneratedOreModels }
+tasks.named('verifyReleaseArtifacts') { dependsOn tasks.named('verifyGeneratedOreModels') }
 tasks.named('check') {
-    dependsOn tasks.named('verifyDevelopmentLaunches')
-    dependsOn verifyGeneratedData
-    dependsOn tasks.named('verifyReleaseConfiguration')
-    dependsOn tasks.named('verifyReleaseDependencies')
+    dependsOn tasks.named('verifyDevelopmentLaunches'), verifyGeneratedData
+    dependsOn tasks.named('verifyReleaseConfiguration'), tasks.named('verifyReleaseDependencies')
     dependsOn tasks.named('verifyMavenCoordinates')
 }
 
-project.ext.baseMetalsBuild.putAll([
-        generateOreModels: generateOreModels
-])
+project.ext.baseMetalsBuild.generateOreModels = tasks.named('generateOreModels')

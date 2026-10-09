@@ -3,6 +3,6 @@
     "description": "Base Metals packaged-client qualification fixture",
     "forge:resource_pack_format": 6,
     "forge:data_pack_format": 6,
-    "pack_format": 6
+    "pack_format": 7
   }
 }

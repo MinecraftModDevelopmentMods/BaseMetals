@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "forge:raw_materials/iron"
+  },
+  "result": {
+    "item": "basemetals:iron_powder",
+    "count": 1
+  }
+}

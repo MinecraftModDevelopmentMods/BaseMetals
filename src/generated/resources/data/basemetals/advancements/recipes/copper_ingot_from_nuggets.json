@@ -22,7 +22,9 @@
       "conditions": {
         "items": [
           {
-            "item": "basemetals:copper_nugget"
+            "items": [
+              "basemetals:copper_nugget"
+            ]
           }
         ]
       }

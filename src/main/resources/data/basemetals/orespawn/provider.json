@@ -95,7 +95,7 @@
     },
     "basemetals:ore/copper": {
       "block": "basemetals:copper_ore",
-      "enabled": true,
+      "enabled": false,
       "source_mod": "basemetals",
       "retrogen": false,
       "dimension_selectors": {

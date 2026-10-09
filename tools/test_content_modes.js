@@ -11,27 +11,12 @@ if (path.dirname(root) !== build || path.basename(root) !== 'content-mode-tests'
   throw new Error(`Content-mode profiles must be inside the build directory: ${root}`);
 }
 
-const version = '1.16.5';
-const forge = '36.2.34';
-const forgeMetadata = JSON.parse(fs.readFileSync(path.join(clientRuntime, 'versions', `${version}-forge-${forge}`, `${version}-forge-${forge}.json`)));
-const vanillaMetadata = JSON.parse(fs.readFileSync(path.join(clientRuntime, 'versions', version, `${version}.json`)));
-const libraries = new Map();
-const osName = process.platform === 'win32' ? 'windows' : process.platform === 'darwin' ? 'osx' : 'linux';
-for (const metadata of [vanillaMetadata, forgeMetadata]) {
-  for (const library of metadata.libraries) {
-    let allowed = !library.rules || library.rules.length === 0;
-    for (const rule of library.rules || []) {
-      if (!rule.os || (rule.os.name === osName && (!rule.os.arch || rule.os.arch === 'x86_64'))) {
-        allowed = rule.action === 'allow';
-      }
-    }
-    if (allowed) libraries.set(library.name.split(':').slice(0, 2).join(':'), path.join(clientRuntime, 'libraries', library.downloads.artifact.path));
-  }
-}
-const classpath = [...libraries.values(), path.join(clientRuntime, 'versions', version, `${version}.jar`)].join(path.delimiter);
-const versionNatives = [path.join(clientRuntime, 'natives', `${version}-forge-${forge}`),
-  path.join(clientRuntime, 'natives', `forge-${forge}`)].find(directory => fs.existsSync(directory));
-const natives = versionNatives || path.join(clientRuntime, 'natives');
+const version = '1.17.1';
+const forge = '37.1.1';
+const { serverArguments, clientLaunch } = require('./validation/forge_launcher');
+const clientConfiguration = clientLaunch(clientRuntime, version, forge);
+const forgeMetadata = clientConfiguration.metadata;
+const vanillaMetadata = clientConfiguration.vanilla;
 const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 function profile(directory, client, mode, oldConfig) {
@@ -109,7 +94,7 @@ async function scenario(test, reload = false) {
   fs.writeFileSync(path.join(server, 'server.properties'), `level-name=world\nonline-mode=false\nserver-ip=127.0.0.1\nserver-port=${port}\nview-distance=2\nspawn-protection=0\nmax-tick-time=-1\n`);
   const serverProcess = launch(['-Xms256m', '-Xmx2g', '-Dbasemetalsprobe.mode=login',
     `-Dbasemetalsprobe.modeSwitch=${!!test.cycle}`,
-    '-jar', path.join(serverRuntime, `forge-${version}-${forge}.jar`), 'nogui'], server, reload ? 'server-reload' : 'server-console');
+    ...serverArguments(serverRuntime, server, version, forge)], server, reload ? 'server-reload' : 'server-console');
   let clientProcess;
   try {
     // A reload can leave the previous latest.log in place until Forge starts.
@@ -119,7 +104,7 @@ async function scenario(test, reload = false) {
       '-Dbasemetalsclientprobe.login=true', `-Dbasemetalsclientprobe.expectedMode=${test.client === 'low_fantasy' ? 'low_fantasy' : 'high_fantasy'}`,
       `-Dbasemetalsclientprobe.modeSwitch=${!!test.cycle}`,
       `-Dbasemetalsclientprobe.expectReject=${!!test.reject}`, `-Dbasemetalsclientprobe.port=${port}`,
-      `-Djava.library.path=${natives}`, '-cp', classpath, forgeMetadata.mainClass,
+      ...clientConfiguration.args,
       ...forgeMetadata.arguments.game, '--username', 'ModeValidation', '--version', `${version}-forge-${forge}`,
       '--gameDir', client, '--assetsDir', path.join(clientRuntime,
         fs.existsSync(path.join(clientRuntime, 'assets-local')) ? 'assets-local' : 'assets'),

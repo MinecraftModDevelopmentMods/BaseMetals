@@ -6,7 +6,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:charcoal"
+            "items": [
+              "minecraft:charcoal"
+            ]
           }
         ]
       }
@@ -22,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:charcoal"
+            "items": [
+              "minecraft:charcoal"
+            ]
           }
         ]
       }

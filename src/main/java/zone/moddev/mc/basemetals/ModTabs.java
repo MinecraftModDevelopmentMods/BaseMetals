@@ -1,25 +1,25 @@
 package zone.moddev.mc.basemetals;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public final class ModTabs {
-    public static final ItemGroup BLOCKS = tab("blocks", "starsteel_block", Item.byBlock(Blocks.IRON_BLOCK));
-    public static final ItemGroup ITEMS = tab("items", "starsteel_gear", Items.IRON_INGOT);
-    public static final ItemGroup TOOLS = tab("tools", "starsteel_pickaxe", Items.IRON_PICKAXE);
-    public static final ItemGroup COMBAT = tab("combat", "starsteel_sword", Items.IRON_SWORD);
+    public static final CreativeModeTab BLOCKS = tab("blocks", "starsteel_block", Item.byBlock(Blocks.IRON_BLOCK));
+    public static final CreativeModeTab ITEMS = tab("items", "starsteel_gear", Items.IRON_INGOT);
+    public static final CreativeModeTab TOOLS = tab("tools", "starsteel_pickaxe", Items.IRON_PICKAXE);
+    public static final CreativeModeTab COMBAT = tab("combat", "starsteel_sword", Items.IRON_SWORD);
 
     private ModTabs() {}
 
-    private static ItemGroup tab(String suffix, final String iconId, final Item fallback) {
-        return new ItemGroup(BaseMetals.MOD_ID + "." + suffix) {
+    private static CreativeModeTab tab(String suffix, final String iconId, final Item fallback) {
+        return new CreativeModeTab(BaseMetals.MOD_ID + "." + suffix) {
             @Override
             @OnlyIn(Dist.CLIENT)
             public ItemStack makeIcon() {

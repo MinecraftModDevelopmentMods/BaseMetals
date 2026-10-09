@@ -34,7 +34,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.junit.jupiter.api.Test;
 
-/** Resource contract for the flattened Minecraft 1.16.5 data pack. */
+/** Resource contract for the Minecraft 1.17.1 data pack. */
 class ResourceIntegrityTest {
     private static final Path MAIN = Paths.get("src", "main", "resources");
     private static final Path GENERATED = Paths.get("src", "generated", "resources");
@@ -60,9 +60,9 @@ class ResourceIntegrityTest {
         Set<String> blocks = strings(manifest.getAsJsonArray("blocks"));
         Set<String> items = strings(manifest.getAsJsonArray("items"));
         Set<String> fluids = strings(manifest.getAsJsonArray("fluids"));
-        assertEquals("Base Metals 1.16.5 catalogue", manifest.get("source").getAsString());
+        assertEquals("Base Metals 1.17.1 catalogue", manifest.get("source").getAsString());
         assertEquals(360, blocks.size());
-        assertEquals(1115, items.size());
+        assertEquals(1127, items.size());
         assertEquals(72, fluids.size());
         assertEquals(2, manifest.getAsJsonArray("entities").size());
         assertTrue(manifest.getAsJsonArray("loot_modifier_serializers").size() == 0);
@@ -168,7 +168,8 @@ class ResourceIntegrityTest {
 
     @Test
     void fluidBucketModelsUseTheForgeFluidRenderer() throws Exception {
-        Set<String> buckets = strings(manifest().getAsJsonArray("new_items"));
+        Set<String> buckets = strings(manifest().getAsJsonArray("new_items")).stream()
+                .filter(id -> id.endsWith("_bucket")).collect(Collectors.toSet());
         assertEquals(36, buckets.size(), "Unexpected fluid bucket count");
         for (String bucket : buckets) {
             String id = path(bucket);
@@ -183,7 +184,8 @@ class ResourceIntegrityTest {
 
     @Test
     void filledBucketNamesDescribeTheirContentsInEveryLocale() throws Exception {
-        Set<String> buckets = strings(manifest().getAsJsonArray("new_items"));
+        Set<String> buckets = strings(manifest().getAsJsonArray("new_items")).stream()
+                .filter(id -> id.endsWith("_bucket")).collect(Collectors.toSet());
         List<Path> languages = files(GENERATED.resolve("assets/basemetals/lang"), ".json");
         assertEquals(18, languages.size());
 
@@ -224,12 +226,9 @@ class ResourceIntegrityTest {
         for (Path texture : files(MAIN.resolve("assets/basemetals/textures/block"), ".png")) {
             if (hasTransparentPixel(texture)) transparent.add(texture.getFileName().toString());
         }
-        Set<String> missedByJava8ImageIo = new LinkedHashSet<String>(expected);
-        missedByJava8ImageIo.removeAll(transparent);
-        assertEquals(new LinkedHashSet<String>(Arrays.asList("zinc_bars.png", "zinc_door_upper.png")),
-                missedByJava8ImageIo,
-                "Unexpected cutout textures lost transparency; the two indexed Zinc PNGs are rendered correctly "
-                        + "but Java 8 ImageIO does not expose their tRNS alpha channel");
+        Set<String> missingAlpha = new LinkedHashSet<String>(expected);
+        missingAlpha.removeAll(transparent);
+        assertTrue(missingAlpha.isEmpty(), "Cutout textures lost transparency: " + missingAlpha);
     }
 
     @Test
@@ -348,7 +347,7 @@ class ResourceIntegrityTest {
     }
 
     @Test
-    void targetTagsContainNoPost113VanillaContent() throws Exception {
+    void targetTagsUseNative117CopperAndMiningRules() throws Exception {
         Set<String> arrows = strings(read(resource("data/minecraft/tags/items/arrows.json"))
                 .getAsJsonObject().getAsJsonArray("values"));
         assertTrue(arrows.contains("basemetals:tin_arrow"));
@@ -362,9 +361,10 @@ class ResourceIntegrityTest {
         }
         Set<String> copperBlocks = strings(read(resource("data/forge/tags/blocks/ores/copper.json"))
                 .getAsJsonObject().getAsJsonArray("values"));
-        assertEquals(Collections.singleton("basemetals:copper_ore"), copperBlocks);
-        assertFalse(Files.exists(GENERATED.resolve("data/minecraft/tags/blocks/mineable")));
-        assertFalse(Files.exists(GENERATED.resolve("data/minecraft/tags/blocks/needs_stone_tool.json")));
+        assertEquals(new LinkedHashSet<>(Arrays.asList("basemetals:copper_ore", "minecraft:copper_ore",
+                "minecraft:deepslate_copper_ore")), copperBlocks);
+        assertTrue(Files.exists(GENERATED.resolve("data/minecraft/tags/blocks/mineable/pickaxe.json")));
+        assertTrue(Files.exists(GENERATED.resolve("data/minecraft/tags/blocks/needs_stone_tool.json")));
     }
 
     @Test

@@ -1,8 +1,8 @@
 # OreSpawn world generation
 
-Base Metals requires OreSpawn `[4.1.0.116051,5.0.0)` and packages provider
+Base Metals requires OreSpawn `[4.1.0.117011,5.0.0)` and packages provider
 schema 3, revision 1 at `data/basemetals/orespawn/provider.json`. Builds and
-tests use the published OreSpawn `4.1.0.116051` release, CurseForge file `9080646`.
+tests use the published OreSpawn `4.1.0.117011` release, CurseForge file `9088186`.
 
 The provider declares ores only: it has no rocks, geomes, biome rules, terrain
 dimensions, formations, fluid deposits, vanilla suppression, or strata
@@ -24,8 +24,11 @@ and `retrogen:false`.
 | Nickel | all except Nether/End | 32..95 | uniform | 1 | same |
 | Platinum | all except Nether/End | 1..31 | uniform | 0.125 | same |
 
-Minecraft 1.16.5 has no vanilla copper ore, so Base Metals copper generates
-by default. Antimony and Bismuth ores are available in creative mode and old
+Minecraft 1.17 added vanilla copper. Base Metals copper is disabled by default
+in new profiles, leaving vanilla copper enabled. Existing OreSpawn profiles and
+explicit overrides keep their chosen copper setting; this update does not change
+them. The copper row above describes the retained rule if you enable it.
+Antimony and Bismuth ores are available in creative mode and old
 saves, but do not generate unless you add rules for them in OreSpawn.
 
 The ordinary-dimension selector includes modded dimensions while excluding the

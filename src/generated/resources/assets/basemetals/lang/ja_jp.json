@@ -1906,5 +1906,17 @@
   "item.bucket.obsidian": "溶融黒曜石入りバケツ",
   "item.bucket.quartz": "溶融石英入りバケツ",
   "item.bucket.wood": "液化木材入りバケツ",
-  "item.bucket.stone": "溶融石入りバケツ"
+  "item.bucket.stone": "溶融石入りバケツ",
+  "item.basemetals.adamantine_raw": "アダマントの原石",
+  "item.basemetals.antimony_raw": "アンチモンの原石",
+  "item.basemetals.bismuth_raw": "ビスマスの原石",
+  "item.basemetals.coldiron_raw": "コールドアイアンの原石",
+  "item.basemetals.lead_raw": "鉛の原石",
+  "item.basemetals.mercury_raw": "水銀の原石",
+  "item.basemetals.nickel_raw": "ニッケルの原石",
+  "item.basemetals.platinum_raw": "プラチナの原石",
+  "item.basemetals.silver_raw": "銀の原石",
+  "item.basemetals.starsteel_raw": "スタースチールの原石",
+  "item.basemetals.tin_raw": "錫の原石",
+  "item.basemetals.zinc_raw": "亜鉛の原石"
 }

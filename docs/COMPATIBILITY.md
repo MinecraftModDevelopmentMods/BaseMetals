@@ -8,14 +8,14 @@ ores, crystals, shards, clumps, dirty dusts, and molten fluids.
 Adamantite, Adamantium, Adamant, Quicksilver, and steel-sprocket names are
 forwarding tags. Copper-consuming recipes accept `forge:ingots/copper`, except
 Base Metals' own compacting and decompacting recipes, whose output must remain
-the Base Metals item. On Minecraft 1.16.5 the copper ore, ingot, and storage
-tags contain Base Metals entries; other mods can add their equivalents through
-normal tag merging.
+the Base Metals item. Copper ore, ingot and storage tags contain both Base Metals
+and vanilla entries. Raw-material tags are separate from dust tags: processors
+can accept raw ore, but alloy blends still require powders.
 
 This version has no mod-specific plugins for Mekanism, Thermal Expansion, Tinkers'
 Construct, Ender IO, IC2, Thaumcraft, Dense Ores, VeinMiner, or Constructs
-Armory. Their version-specific 1.18 data and APIs are not valid on Forge
-36. Generic processors and tools can interoperate through Forge tags.
+Armory. Generic processors and tools can interoperate through Forge tags
+without a separate Base Metals plugin.
 
 Mineralogy is optional. When installed, OreSpawn can place the same ores in
 Mineralogy's rocks. Base Metals does not need Mineralogy to run.

@@ -1879,5 +1879,17 @@
   "item.bucket.lapis": "Ведро расплавленного лазурита",
   "item.bucket.quartz": "Ведро расплавленного кварца",
   "item.bucket.wood": "Ведро жидкой древесины",
-  "item.bucket.stone": "Ведро расплавленного камня"
+  "item.bucket.stone": "Ведро расплавленного камня",
+  "item.basemetals.adamantine_raw": "Рудное сырьё: Адамантин",
+  "item.basemetals.antimony_raw": "Рудное сырьё: Сурьма",
+  "item.basemetals.bismuth_raw": "Рудное сырьё: Висмут",
+  "item.basemetals.coldiron_raw": "Рудное сырьё: Хладо-железо",
+  "item.basemetals.lead_raw": "Рудное сырьё: Свинец",
+  "item.basemetals.mercury_raw": "Рудное сырьё: Ртуть",
+  "item.basemetals.nickel_raw": "Рудное сырьё: Никель",
+  "item.basemetals.platinum_raw": "Рудное сырьё: Платина",
+  "item.basemetals.silver_raw": "Рудное сырьё: Серебро",
+  "item.basemetals.starsteel_raw": "Рудное сырьё: Звёздная сталь",
+  "item.basemetals.tin_raw": "Рудное сырьё: Олово",
+  "item.basemetals.zinc_raw": "Рудное сырьё: Цинк"
 }
