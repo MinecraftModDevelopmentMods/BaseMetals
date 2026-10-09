@@ -1644,5 +1644,17 @@
   "item.bucket.quartz": "Secchio di quarzo fuso",
   "item.bucket.wood": "Secchio di legno liquefatto",
   "item.bucket.redstone": "Secchio di redstone fusa",
-  "item.bucket.stone": "Secchio di pietra fusa"
+  "item.bucket.stone": "Secchio di pietra fusa",
+  "item.basemetals.adamantine_raw": "undefined grezzo",
+  "item.basemetals.antimony_raw": "undefined grezzo",
+  "item.basemetals.bismuth_raw": "undefined grezzo",
+  "item.basemetals.coldiron_raw": "undefined grezzo",
+  "item.basemetals.lead_raw": "undefined grezzo",
+  "item.basemetals.mercury_raw": "undefined grezzo",
+  "item.basemetals.nickel_raw": "undefined grezzo",
+  "item.basemetals.platinum_raw": "undefined grezzo",
+  "item.basemetals.silver_raw": "undefined grezzo",
+  "item.basemetals.starsteel_raw": "undefined grezzo",
+  "item.basemetals.tin_raw": "undefined grezzo",
+  "item.basemetals.zinc_raw": "undefined grezzo"
 }

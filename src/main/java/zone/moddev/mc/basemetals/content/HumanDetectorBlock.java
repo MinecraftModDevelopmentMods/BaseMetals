@@ -2,11 +2,11 @@ package zone.moddev.mc.basemetals.content;
 
 import java.util.List;
 
-import net.minecraft.block.PressurePlateBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /** A pressure plate which responds to players only. */
 public final class HumanDetectorBlock extends PressurePlateBlock {
@@ -15,10 +15,10 @@ public final class HumanDetectorBlock extends PressurePlateBlock {
     }
 
     @Override
-    public int getSignalStrength(World world, BlockPos pos) {
-        AxisAlignedBB box = TOUCH_AABB.move(pos);
-        List<PlayerEntity> players = world.getEntitiesOfClass(PlayerEntity.class, box);
-        for (PlayerEntity player : players) {
+    public int getSignalStrength(Level world, BlockPos pos) {
+        AABB box = TOUCH_AABB.move(pos);
+        List<Player> players = world.getEntitiesOfClass(Player.class, box);
+        for (Player player : players) {
             if (!player.isSpectator() && !player.isIgnoringBlockTriggers()) return 15;
         }
         return 0;

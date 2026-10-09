@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
+const { serverArguments } = require('./forge_launcher');
 
 const spec = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 const phase = process.argv[3] || 'upgrade';
@@ -37,10 +38,12 @@ function treeDigest(directory) {
 function prepare(directory, runtime, launcher, mods) {
     if (fs.existsSync(directory)) throw new Error('Refusing to overwrite ' + directory);
     fs.mkdirSync(path.join(directory, 'mods'), { recursive: true });
-    for (const file of [launcher, 'minecraft_server.' + (phase === 'capture' ? captureVersion : '1.16.5') + '.jar']) {
-        fs.copyFileSync(path.join(runtime, file), path.join(directory, file));
+    if (phase === 'capture') {
+        for (const file of [launcher, 'minecraft_server.' + captureVersion + '.jar']) {
+            fs.copyFileSync(path.join(runtime, file), path.join(directory, file));
+        }
+        fs.cpSync(path.join(runtime, 'libraries'), path.join(directory, 'libraries'), { recursive: true });
     }
-    fs.cpSync(path.join(runtime, 'libraries'), path.join(directory, 'libraries'), { recursive: true });
     for (const mod of mods) {
         const file = typeof mod === 'string' ? mod : mod.path;
         if (mod.sha256 && digest(file).toLowerCase() !== mod.sha256.toLowerCase()) {
@@ -64,11 +67,12 @@ function prepare(directory, runtime, launcher, mods) {
 function checkUpgradeLog(log) {
     // Forge reports these removed vanilla names when it reads an older registry snapshot.
     const retiredVanillaEntries = new Set([
+        'minecraft:grass_path',
         'minecraft:zombie_pigman', 'minecraft:zombie_pigman_spawn_egg',
         'minecraft:golem_last_seen_time', 'minecraft:opened_doors',
         'minecraft:entity.zombie_pigman.ambient', 'minecraft:entity.zombie_pigman.angry',
         'minecraft:entity.zombie_pigman.death', 'minecraft:entity.zombie_pigman.hurt',
-        'minecraft:music.nether'
+        'minecraft:music.nether', 'minecraft:item.sweet_berries.pick_from_bush'
     ]);
     const acceptedEntries = new Set();
     const lines = log.split(/\r?\n/);
@@ -77,8 +81,7 @@ function checkUpgradeLog(log) {
         const line = lines[index];
         if (!/\/(?:ERROR|FATAL)\]/.test(line)) continue;
 
-        if (phase === 'upgrade' && line.includes('GameData/REGISTRIES')
-                && line.includes('Unidentified mapping from registry minecraft:')) {
+        if (phase === 'upgrade' && line.includes('Unidentified mapping from registry minecraft:')) {
             const entries = [];
             for (let next = index + 1; next < lines.length && lines[next].trim(); next++) {
                 const entry = /^\s+(minecraft:[\w.]+): \d+$/.exec(lines[next]);
@@ -92,7 +95,7 @@ function checkUpgradeLog(log) {
             }
         }
 
-        if (acceptedEntries.size && line.includes('GameData/REGISTRIES')
+        if (acceptedEntries.size
                 && line.endsWith('There are unidentified mappings in this world - we are going to attempt to process anyway')) {
             continue;
         }
@@ -106,7 +109,10 @@ function checkUpgradeLog(log) {
 async function run(directory, launcher, label, marker, properties = []) {
     console.log('Starting ' + label);
     const output = fs.createWriteStream(path.join(directory, label + '.log'));
-    const child = spawn(spec.java8, ['-Xms256m', '-Xmx2g', ...properties, '-jar', launcher, 'nogui'],
+    const executable = phase === 'capture' ? spec.java8 : spec.java16;
+    const launchArguments = phase === 'capture' ? ['-jar', launcher, 'nogui']
+        : serverArguments(spec.runtime117, directory, '1.17.1', '37.1.1');
+    const child = spawn(executable, ['-Xms256m', '-Xmx2g', ...properties, ...launchArguments],
         { cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.pipe(output, { end: false });
     child.stderr.pipe(output, { end: false });
@@ -152,8 +158,8 @@ async function run(directory, launcher, label, marker, properties = []) {
         } else {
             const source = profile.world || path.join(root, 'capture', profile.id, 'world');
             const before = treeDigest(source);
-            const launcher = 'forge-1.16.5-36.2.34.jar';
-            prepare(directory, spec.runtime116, launcher, [spec.modJar, spec.probeJar, spec.oreSpawn]);
+            const launcher = null;
+            prepare(directory, spec.runtime117, launcher, [spec.modJar, spec.probeJar, spec.oreSpawn]);
             fs.cpSync(source, path.join(directory, 'world'), { recursive: true });
             if (profile.advancementFixture) {
                 const fixture = JSON.parse(fs.readFileSync(profile.advancementFixture, 'utf8'));

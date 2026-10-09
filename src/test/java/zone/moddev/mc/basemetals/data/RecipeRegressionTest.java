@@ -87,7 +87,10 @@ class RecipeRegressionTest {
                 String[] expected = discovery.get(material).split("=", 2);
                 JsonObject predicate = acquired.getAsJsonObject("conditions").getAsJsonArray("items")
                         .get(0).getAsJsonObject();
-                assertEquals(expected[1], predicate.get(expected[0]).getAsString(), name);
+                String actual = expected[0].equals("item")
+                        ? predicate.getAsJsonArray("items").get(0).getAsString()
+                        : predicate.get(expected[0]).getAsString();
+                assertEquals(expected[1], actual, name);
                 assertEquals(1, advancement.getAsJsonArray("requirements").size(), name);
                 assertTrue(advancement.getAsJsonArray("requirements").get(0).getAsJsonArray().toString()
                         .contains("\"has_material\""), "Material discovery is not an alternative for " + name);

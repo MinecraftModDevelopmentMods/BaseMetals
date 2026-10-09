@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "forge:raw_materials/lead"
+  },
+  "result": {
+    "item": "basemetals:lead_powder",
+    "count": 1
+  }
+}

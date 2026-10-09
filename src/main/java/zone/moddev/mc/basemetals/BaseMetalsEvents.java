@@ -16,28 +16,28 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.TieredItem;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -50,12 +50,12 @@ import net.minecraftforge.event.TickEvent;
 public final class BaseMetalsEvents {
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!(event.getPlayer() instanceof ServerPlayerEntity)) return;
-        ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+        if (!(event.getPlayer() instanceof ServerPlayer)) return;
+        ServerPlayer player = (ServerPlayer) event.getPlayer();
 
         // An advancement can be earned while its recipe is disabled. Restore the
         // unlock after a mode change without resetting the player's progress.
-        for (IRecipe recipe : player.getServer().getRecipeManager().getRecipes()) {
+        for (Recipe recipe : player.getServer().getRecipeManager().getRecipes()) {
             if (!BaseMetals.MOD_ID.equals(recipe.getId().getNamespace()) || recipe.isSpecial()
                     || player.getRecipeBook().contains(recipe)) continue;
 
@@ -69,8 +69,8 @@ public final class BaseMetalsEvents {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onBreak(BlockEvent.BreakEvent event) {
-        PlayerEntity player = event.getPlayer();
-        World world = player.level;
+        Player player = event.getPlayer();
+        Level world = player.level;
         ItemStack held = player.getMainHandItem();
         if (world.isClientSide || player.isCreative() || !(held.getItem() instanceof CrackhammerItem)
                 || !event.getState().canHarvestBlock(world, event.getPos(), player)) return;
@@ -89,13 +89,13 @@ public final class BaseMetalsEvents {
         world.addFreshEntity(drop);
         player.awardStat(net.minecraft.stats.Stats.BLOCK_MINED.get(state.getBlock()));
         player.causeFoodExhaustion(0.005F);
-        held.hurtAndBreak(1, player, entity -> entity.broadcastBreakEvent(net.minecraft.util.Hand.MAIN_HAND));
+        held.hurtAndBreak(1, player, entity -> entity.broadcastBreakEvent(net.minecraft.world.InteractionHand.MAIN_HAND));
     }
 
-    private static CrushingRecipe crushing(World world, ItemStack input) {
-        Inventory inventory = new Inventory(1);
+    private static CrushingRecipe crushing(Level world, ItemStack input) {
+        SimpleContainer inventory = new SimpleContainer(1);
         inventory.setItem(0, input);
-        for (net.minecraft.item.crafting.IRecipe candidate : world.getRecipeManager().getRecipes()) {
+        for (net.minecraft.world.item.crafting.Recipe candidate : world.getRecipeManager().getRecipes()) {
             if (candidate instanceof CrushingRecipe && candidate.matches(inventory, world)) {
                 return (CrushingRecipe) candidate;
             }
@@ -105,14 +105,14 @@ public final class BaseMetalsEvents {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        PlayerEntity player = event.player;
+        Player player = event.player;
         if (event.phase != TickEvent.Phase.END || player.level.isClientSide) return;
         if (BaseMetalsConfig.STARSTEEL_REGENERATION.get() && player.tickCount % 200 == 0) {
             repairStarsteel(player.getMainHandItem());
             repairStarsteel(player.getOffhandItem());
         }
         if (player.tickCount % 20 != 0) return;
-        if (player instanceof ServerPlayerEntity) BaseMetalsAdvancements.onEquipment((ServerPlayerEntity) player);
+        if (player instanceof ServerPlayer) BaseMetalsAdvancements.onEquipment((ServerPlayer) player);
         if (BaseMetalsConfig.SPECIAL_EFFECTS.get()) applyArmorEffects(player, armorMaterials(player));
     }
 
@@ -122,11 +122,11 @@ public final class BaseMetalsEvents {
                 && stack.isDamaged()) stack.setDamageValue(Math.max(0, stack.getDamageValue() - 1));
     }
 
-    private static Map<EquipmentSlotType, String> armorMaterials(PlayerEntity player) {
-        Map<EquipmentSlotType, String> result = new EnumMap<EquipmentSlotType, String>(EquipmentSlotType.class);
-        EquipmentSlotType[] slots = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
-        for (EquipmentSlotType slot : slots) {
+    private static Map<EquipmentSlot, String> armorMaterials(Player player) {
+        Map<EquipmentSlot, String> result = new EnumMap<EquipmentSlot, String>(EquipmentSlot.class);
+        EquipmentSlot[] slots = { EquipmentSlot.HEAD, EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS, EquipmentSlot.FEET };
+        for (EquipmentSlot slot : slots) {
             ItemStack stack = player.getItemBySlot(slot);
             if (stack.getItem() instanceof ArmorItem && stack.getItem() instanceof MaterialBacked) {
                 result.put(slot, ((MaterialBacked) stack.getItem()).baseMetalsMaterial().name());
@@ -135,35 +135,35 @@ public final class BaseMetalsEvents {
         return result;
     }
 
-    private static int count(Map<EquipmentSlotType, String> armor, String material) {
+    private static int count(Map<EquipmentSlot, String> armor, String material) {
         int count = 0;
         for (String entry : armor.values()) if (material.equals(entry)) count++;
         return count;
     }
 
-    private static void applyArmorEffects(PlayerEntity player, Map<EquipmentSlotType, String> armor) {
+    private static void applyArmorEffects(Player player, Map<EquipmentSlot, String> armor) {
         int adamantine = count(armor, "adamantine");
-        if (adamantine >= 2) add(player, Effects.DAMAGE_RESISTANCE, adamantine == 4 ? 1 : 0);
+        if (adamantine >= 2) add(player, MobEffects.DAMAGE_RESISTANCE, adamantine == 4 ? 1 : 0);
         int lead = count(armor, "lead");
-        if (lead >= 2) add(player, Effects.MOVEMENT_SLOWDOWN, lead == 4 ? 1 : 0);
-        if (count(armor, "coldiron") == 4) add(player, Effects.FIRE_RESISTANCE, 0);
+        if (lead >= 2) add(player, MobEffects.MOVEMENT_SLOWDOWN, lead == 4 ? 1 : 0);
+        if (count(armor, "coldiron") == 4) add(player, MobEffects.FIRE_RESISTANCE, 0);
         if (count(armor, "aquarium") == 4 && player.isInWater()) {
-            add(player, Effects.WATER_BREATHING, 0);
-            add(player, Effects.DAMAGE_RESISTANCE, 0);
-            player.removeEffect(Effects.DIG_SLOWDOWN);
+            add(player, MobEffects.WATER_BREATHING, 0);
+            add(player, MobEffects.DAMAGE_RESISTANCE, 0);
+            player.removeEffect(MobEffects.DIG_SLOWDOWN);
         }
         if (count(armor, "mithril") == 4) {
-            for (EffectInstance effect : new ArrayList<EffectInstance>(player.getActiveEffects())) {
-                if (effect.getEffect().getCategory() == net.minecraft.potion.EffectType.HARMFUL) player.removeEffect(effect.getEffect());
+            for (MobEffectInstance effect : new ArrayList<MobEffectInstance>(player.getActiveEffects())) {
+                if (effect.getEffect().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL) player.removeEffect(effect.getEffect());
             }
         }
         int starsteel = count(armor, "starsteel");
-        if (starsteel > 0) add(player, Effects.JUMP, starsteel - 1);
-        if (starsteel >= 2) add(player, Effects.MOVEMENT_SPEED, Math.min(2, starsteel - 2));
+        if (starsteel > 0) add(player, MobEffects.JUMP, starsteel - 1);
+        if (starsteel >= 2) add(player, MobEffects.MOVEMENT_SPEED, Math.min(2, starsteel - 2));
     }
 
-    private static void add(PlayerEntity player, Effect potion, int amplifier) {
-        player.addEffect(new EffectInstance(potion, 45, amplifier, false, false, true));
+    private static void add(Player player, MobEffect potion, int amplifier) {
+        player.addEffect(new MobEffectInstance(potion, 45, amplifier, false, false, true));
     }
 
     @SubscribeEvent
@@ -182,9 +182,9 @@ public final class BaseMetalsEvents {
             event.setAmount(event.getAmount() + 4.0F);
         } else if ("coldiron".equals(material) && target.fireImmune()) {
             event.setAmount(event.getAmount() + 3.0F);
-        } else if ("mithril".equals(material) && target.getMobType() == CreatureAttribute.UNDEAD) {
-            target.addEffect(new EffectInstance(Effects.WITHER, 60, 3));
-            target.addEffect(new EffectInstance(Effects.BLINDNESS, 60, 1));
+        } else if ("mithril".equals(material) && target.getMobType() == MobType.UNDEAD) {
+            target.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 3));
+            target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 1));
         }
     }
 
@@ -197,7 +197,7 @@ public final class BaseMetalsEvents {
         for (MaterialDefinition candidate : shieldMaterials().values()) {
             if (!ContentPolicy.active().allows(candidate.name(), MaterialForm.SHIELD)) continue;
             if (candidate.hardness() <= current.hardness()) continue;
-            net.minecraft.tags.ITag<net.minecraft.item.Item> plate = ItemTags.getAllTags().getTagOrEmpty(
+            net.minecraft.tags.Tag<net.minecraft.world.item.Item> plate = ItemTags.getAllTags().getTagOrEmpty(
                     new ResourceLocation("forge", "plates/" + candidate.name()));
             if (!plate.contains(event.getRight().getItem())) continue;
             if (upgrade == null || candidate.hardness() < upgrade.hardness()
@@ -215,7 +215,7 @@ public final class BaseMetalsEvents {
 
     private static Map<String, MaterialDefinition> shieldMaterials() {
         Map<String, MaterialDefinition> result = new LinkedHashMap<String, MaterialDefinition>();
-        for (zone.moddev.mc.basemetals.content.RegistryHandle<net.minecraft.item.Item> reference
+        for (zone.moddev.mc.basemetals.content.RegistryHandle<net.minecraft.world.item.Item> reference
                 : ModContent.itemsById().values()) {
             if (reference.get() instanceof MaterialItems.Shield) {
                 MaterialDefinition material = ((MaterialItems.Shield) reference.get()).baseMetalsMaterial();
@@ -231,15 +231,15 @@ public final class BaseMetalsEvents {
     }
 
     @SubscribeEvent public void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-        if (event.getPlayer() instanceof ServerPlayerEntity)
-            BaseMetalsAdvancements.onCrafted((ServerPlayerEntity) event.getPlayer(), event.getCrafting());
+        if (event.getPlayer() instanceof ServerPlayer)
+            BaseMetalsAdvancements.onCrafted((ServerPlayer) event.getPlayer(), event.getCrafting());
     }
     @SubscribeEvent public void onItemSmelted(PlayerEvent.ItemSmeltedEvent event) {
-        if (event.getPlayer() instanceof ServerPlayerEntity)
-            BaseMetalsAdvancements.onSmelted((ServerPlayerEntity) event.getPlayer(), event.getSmelting());
+        if (event.getPlayer() instanceof ServerPlayer)
+            BaseMetalsAdvancements.onSmelted((ServerPlayer) event.getPlayer(), event.getSmelting());
     }
     @SubscribeEvent public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
-        if (event.getEntity() instanceof ServerPlayerEntity)
-            BaseMetalsAdvancements.onPlaced((ServerPlayerEntity) event.getEntity(), event.getPlacedBlock());
+        if (event.getEntity() instanceof ServerPlayer)
+            BaseMetalsAdvancements.onPlaced((ServerPlayer) event.getEntity(), event.getPlacedBlock());
     }
 }

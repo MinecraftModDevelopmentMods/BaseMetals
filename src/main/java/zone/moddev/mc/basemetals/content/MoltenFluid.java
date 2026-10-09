@@ -1,18 +1,18 @@
 package zone.moddev.mc.basemetals.content;
 
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.Item;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 /** Common flow behaviour for the molten metals. */
 public abstract class MoltenFluid extends FlowingFluid {
@@ -35,28 +35,28 @@ public abstract class MoltenFluid extends FlowingFluid {
     @Override public Item getBucket() { return content().bucket().get(); }
 
     @Override protected boolean canConvertToSource() { return false; }
-    @Override protected void beforeDestroyingBlock(IWorld world, BlockPos pos, BlockState state) {
-        net.minecraft.block.Block.dropResources(state, world, pos, world.getBlockEntity(pos));
+    @Override protected void beforeDestroyingBlock(LevelAccessor world, BlockPos pos, BlockState state) {
+        net.minecraft.world.level.block.Block.dropResources(state, world, pos, world.getBlockEntity(pos));
     }
-    @Override public int getSlopeFindDistance(IWorldReader world) { return 2; }
-    @Override public int getDropOff(IWorldReader world) { return 2; }
-    @Override public int getTickDelay(IWorldReader world) { return 30; }
+    @Override public int getSlopeFindDistance(LevelReader world) { return 2; }
+    @Override public int getDropOff(LevelReader world) { return 2; }
+    @Override public int getTickDelay(LevelReader world) { return 30; }
     @Override protected float getExplosionResistance() { return 100.0F; }
     @Override public boolean isSame(Fluid fluid) {
         return fluid == content().source().get() || fluid == content().flowing().get();
     }
-    @Override protected boolean canBeReplacedWith(FluidState state, net.minecraft.world.IBlockReader world,
+    @Override protected boolean canBeReplacedWith(FluidState state, net.minecraft.world.level.BlockGetter world,
             BlockPos pos, Fluid fluid, Direction direction) {
         return direction == Direction.DOWN && !fluid.isSame(this);
     }
     @Override public BlockState createLegacyBlock(FluidState state) {
         return content().block().get().defaultBlockState()
-                .setValue(FlowingFluidBlock.LEVEL, Integer.valueOf(getLegacyLevel(state)));
+                .setValue(LiquidBlock.LEVEL, Integer.valueOf(getLegacyLevel(state)));
     }
 
     public static final class Flowing extends MoltenFluid {
         public Flowing(String name) { super(name); }
-        @Override protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> builder) {
+        @Override protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
             super.createFluidStateDefinition(builder);
             builder.add(LEVEL);
         }

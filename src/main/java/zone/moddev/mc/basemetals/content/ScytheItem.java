@@ -8,26 +8,26 @@ import javax.annotation.Nullable;
 import zone.moddev.mc.basemetals.ModTags;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 
-public final class ScytheItem extends ToolItem implements MaterialBacked {
+public final class ScytheItem extends DiggerItem implements MaterialBacked {
     private static final ThreadLocal<Boolean> HARVESTING = new ThreadLocal<Boolean>() {
         @Override protected Boolean initialValue() { return Boolean.FALSE; }
     };
     private final MaterialDefinition material;
 
     public ScytheItem(MaterialDefinition material, Item.Properties properties) {
-        super(0.0F, 0.0F, new MaterialTier(material), Collections.<Block>emptySet(), properties);
+        super(0.0F, 0.0F, new MaterialTier(material), ModTags.SCYTHE_HARVESTABLE, properties);
         this.material = material;
     }
 
@@ -37,12 +37,12 @@ public final class ScytheItem extends ToolItem implements MaterialBacked {
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, BlockPos position, PlayerEntity player) {
-        if (player.level.isClientSide || !(player instanceof ServerPlayerEntity) || HARVESTING.get()) return false;
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos position, Player player) {
+        if (player.level.isClientSide || !(player instanceof ServerPlayer) || HARVESTING.get()) return false;
         if (!player.level.getBlockState(position).is(ModTags.SCYTHE_HARVESTABLE)) return false;
         HARVESTING.set(Boolean.TRUE);
         try {
-            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+            ServerPlayer serverPlayer = (ServerPlayer) player;
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dz = -1; dz <= 1; dz++) {
                     BlockPos target = position.offset(dx, 0, dz);
@@ -57,6 +57,6 @@ public final class ScytheItem extends ToolItem implements MaterialBacked {
         return true;
     }
 
-    @Override public void appendHoverText(ItemStack stack, @Nullable World world,
-            List<ITextComponent> tooltip, ITooltipFlag flag) { MaterialItems.addToolTooltip(material, tooltip); }
+    @Override public void appendHoverText(ItemStack stack, @Nullable Level world,
+            List<Component> tooltip, TooltipFlag flag) { MaterialItems.addToolTooltip(material, tooltip); }
 }

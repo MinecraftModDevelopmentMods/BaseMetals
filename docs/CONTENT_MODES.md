@@ -14,8 +14,8 @@ names and defaults: `specialEffects`, `starsteelRegeneration`,
 ## High Fantasy
 
 `contentMode = "high_fantasy"` is the default. All normal Base Metals recipes,
-villager trades and chest loot remain available. An older 1.13 config without
-this setting, or no config file at all, uses High Fantasy automatically.
+villager trades and chest loot remain available. An older config without this
+setting, or no config file at all, uses High Fantasy automatically.
 Unknown mode names fall back to High Fantasy and are corrected in the config.
 
 Picking up a metal ingot reveals that material's crafting recipes, including

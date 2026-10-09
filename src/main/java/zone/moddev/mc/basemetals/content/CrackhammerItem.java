@@ -9,37 +9,38 @@ import zone.moddev.mc.basemetals.ModTags;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.tags.BlockTags;
+import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.common.ToolAction;
 
-public final class CrackhammerItem extends ToolItem implements MaterialBacked {
+public final class CrackhammerItem extends DiggerItem implements MaterialBacked {
     private final MaterialDefinition material;
 
     public CrackhammerItem(MaterialDefinition material, Item.Properties properties) {
         super(material.crackhammerAttackDamage() - material.baseAttackDamage(), -3.5F,
-                new MaterialTier(material), Collections.<Block>emptySet(),
-                properties.defaultDurability(material.crackhammerDurability())
-                        .addToolType(ToolType.PICKAXE, material.toolLevel()));
+                new MaterialTier(material), BlockTags.MINEABLE_WITH_PICKAXE,
+                properties.defaultDurability(material.crackhammerDurability()));
         this.material = material;
     }
 
@@ -50,23 +51,20 @@ public final class CrackhammerItem extends ToolItem implements MaterialBacked {
                 ? material.crackhammerDestroySpeed() : 1.0F;
     }
 
-    @Override public boolean isCorrectToolForDrops(BlockState state) {
-        if (state.getHarvestTool() == ToolType.PICKAXE) return material.toolLevel() >= state.getHarvestLevel();
-        Material blockMaterial = state.getMaterial();
-        return blockMaterial == Material.STONE || blockMaterial == Material.METAL
-                || blockMaterial == Material.HEAVY_METAL;
+    @Override public boolean canPerformAction(ItemStack stack, ToolAction action) {
+        return action == ToolActions.PICKAXE_DIG;
     }
 
-    @Override public void appendHoverText(ItemStack stack, @Nullable World world,
-            List<ITextComponent> tooltip, ITooltipFlag flag) { MaterialItems.addToolTooltip(material, tooltip); }
+    @Override public void appendHoverText(ItemStack stack, @Nullable Level world,
+            List<Component> tooltip, TooltipFlag flag) { MaterialItems.addToolTooltip(material, tooltip); }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        World world = context.getLevel();
-        PlayerEntity player = context.getPlayer();
-        if (context.getClickedFace() != Direction.UP || world.isClientSide || player == null) return ActionResultType.PASS;
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
+        Player player = context.getPlayer();
+        if (context.getClickedFace() != Direction.UP || world.isClientSide || player == null) return InteractionResult.PASS;
 
-        AxisAlignedBB area = new AxisAlignedBB(context.getClickedPos().above());
+        AABB area = new AABB(context.getClickedPos().above());
         List<ItemEntity> entities = world.getEntitiesOfClass(ItemEntity.class, area);
         for (ItemEntity entity : entities) {
             ItemStack input = entity.getItem();
@@ -80,21 +78,21 @@ public final class CrackhammerItem extends ToolItem implements MaterialBacked {
             if (operations <= 0) break;
             ItemStack output = recipe.getResultItem().copy();
             input.shrink(operations);
-            if (input.isEmpty()) entity.remove(); else entity.setItem(input);
+            if (input.isEmpty()) entity.discard(); else entity.setItem(input);
             spawnOutputs(world, entity, output, operations);
             hammer.hurtAndBreak(operations, player, holder -> holder.broadcastBreakEvent(context.getHand()));
-            world.playSound(null, context.getClickedPos(), net.minecraft.util.SoundEvents.GRAVEL_BREAK,
-                    SoundCategory.BLOCKS, 0.5F, 0.5F + world.random.nextFloat() * 0.3F);
-            return ActionResultType.SUCCESS;
+            world.playSound(null, context.getClickedPos(), net.minecraft.sounds.SoundEvents.GRAVEL_BREAK,
+                    SoundSource.BLOCKS, 0.5F, 0.5F + world.random.nextFloat() * 0.3F);
+            return InteractionResult.SUCCESS;
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
     @Nullable
-    private static CrushingRecipe findRecipe(World world, ItemStack input) {
-        Inventory inventory = new Inventory(1);
+    private static CrushingRecipe findRecipe(Level world, ItemStack input) {
+        SimpleContainer inventory = new SimpleContainer(1);
         inventory.setItem(0, input);
-        for (net.minecraft.item.crafting.IRecipe candidate : world.getRecipeManager().getRecipes()) {
+        for (net.minecraft.world.item.crafting.Recipe candidate : world.getRecipeManager().getRecipes()) {
             if (candidate instanceof CrushingRecipe && candidate.matches(inventory, world)) {
                 return (CrushingRecipe) candidate;
             }
@@ -107,7 +105,7 @@ public final class CrackhammerItem extends ToolItem implements MaterialBacked {
         return isCorrectToolForDrops(((BlockItem) input.getItem()).getBlock().defaultBlockState());
     }
 
-    private static void spawnOutputs(World world, ItemEntity source, ItemStack result, int operations) {
+    private static void spawnOutputs(Level world, ItemEntity source, ItemStack result, int operations) {
         int remaining = result.getCount() * operations;
         while (remaining > 0) {
             ItemStack output = result.copy();

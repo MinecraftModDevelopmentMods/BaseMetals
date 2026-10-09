@@ -14,11 +14,12 @@ They share a small `baseMetalsBuild` map of artifact helpers and build paths.
 | `ide/intellij.gradle` | Client and server shortcuts using IntelliJ's Gradle runner. |
 
 Use Java 17 to run Gradle. ForgeGradle uses Java 25 for its Mavenizer; Minecraft
-and the mod run on Java 8. Development accepts newer Java 8 updates, while
+and the mod run on Java 16. Development accepts newer Java 16 updates, while
 release auditing requires the pinned compiler in `gradle.properties`.
+Keep a Java 8 installation available for ForgeGradle's build-time renamer.
 
-The build resolves the published OreSpawn `4.1.0.116051` release through
-`curse.maven:mmd-orespawn-245586:9080646`. `verifyReleaseDependencies` checks
+The build resolves the published OreSpawn `4.1.0.117011` release through
+`curse.maven:mmd-orespawn-245586:9088186`. `verifyReleaseDependencies` checks
 its checksum, mod metadata and configuration-screen API. No local OreSpawn
 checkout is needed.
 

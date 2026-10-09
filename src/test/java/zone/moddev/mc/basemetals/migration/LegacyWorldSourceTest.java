@@ -14,19 +14,82 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
+import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 
 class LegacyWorldSourceTest {
     @TempDir
     Path temporaryWorld;
 
     @Test
+    void protectsSavedChunksWithoutMixingDimensions() throws IOException {
+        String[] directories = {"region", "DIM-1/region", "DIM1/region", "dimensions/example/nested/cavern/region"};
+        String[] dimensions = {"minecraft:overworld", "minecraft:the_nether", "minecraft:the_end", "example:nested/cavern"};
+        for (int index = 0; index < directories.length; index++) {
+            Path directory = Files.createDirectories(temporaryWorld.resolve(directories[index]));
+            byte[] locations = new byte[4096];
+            locations[index * 4 + 3] = 1;
+            Files.write(directory.resolve("r.0.0.mca"), locations);
+        }
+
+        assertEquals(4, LegacyWorldDataHook.indexLegacyChunks(temporaryWorld.toFile()));
+        for (int dimension = 0; dimension < dimensions.length; dimension++) {
+            for (int chunk = 0; chunk < directories.length; chunk++) {
+                assertEquals(dimension == chunk, LegacyWorldDataHook.isProtectedChunk(
+                        new net.minecraft.resources.ResourceLocation(dimensions[dimension]),
+                        new net.minecraft.core.BlockPos(chunk * 16, 64, 0)));
+            }
+        }
+        assertTrue(!LegacyWorldDataHook.isProtectedChunk(new net.minecraft.resources.ResourceLocation("example:new"),
+                new net.minecraft.core.BlockPos(0, 64, 0)));
+    }
+
+    @Test
+    void removesOnlyPhantomBedEntitiesOnBaseMetalsBlocks() {
+        ListTag palette = new ListTag();
+        for (String name : new String[] {"basemetals:tin_ore", "minecraft:red_bed", "anothermod:ore"}) {
+            CompoundTag state = new CompoundTag();
+            state.putString("Name", name);
+            palette.add(state);
+        }
+        net.minecraft.util.BitStorage states = new net.minecraft.util.BitStorage(4, 4096);
+        states.set(0x112, 1);
+        states.set(0x113, 2);
+        CompoundTag section = new CompoundTag();
+        section.putByte("Y", (byte) 0);
+        section.put("Palette", palette);
+        section.putLongArray("BlockStates", states.getRaw());
+        ListTag sections = new ListTag();
+        sections.add(section);
+        ListTag entities = new ListTag();
+        for (int x = 1; x <= 3; x++) {
+            CompoundTag bed = new CompoundTag();
+            bed.putString("id", "minecraft:bed");
+            bed.putInt("x", x);
+            bed.putInt("y", 1);
+            bed.putInt("z", 1);
+            entities.add(bed);
+        }
+        CompoundTag chest = entities.getCompound(0).copy();
+        chest.putString("id", "minecraft:chest");
+        entities.add(chest);
+        CompoundTag level = new CompoundTag();
+        level.put("Sections", sections);
+        level.put("TileEntities", entities);
+
+        assertEquals(1, LegacyWorldDataHook.removePhantomBedEntities(level));
+        assertEquals(3, entities.size());
+        assertEquals(2, entities.getCompound(0).getInt("x"));
+        assertEquals("minecraft:chest", entities.getCompound(2).getString("id"));
+        assertEquals(0, LegacyWorldDataHook.removePhantomBedEntities(level));
+    }
+
+    @Test
     void removesOnlyTheRetiredVanillaProfessionIndex() {
-        CompoundNBT root = professionSnapshot("minecraft:smith");
-        CompoundNBT entity = new CompoundNBT();
+        CompoundTag root = professionSnapshot("minecraft:smith");
+        CompoundTag entity = new CompoundTag();
         entity.putInt("Profession", 3);
         root.put("VillagerProof", entity);
 
@@ -36,42 +99,42 @@ class LegacyWorldSourceTest {
         assertEquals(3, root.getCompound("VillagerProof").getInt("Profession"));
         assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(root));
 
-        CompoundNBT custom = professionSnapshot("anothermod:smith");
+        CompoundTag custom = professionSnapshot("anothermod:smith");
         assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(custom));
         assertTrue(custom.getCompound("fml").getCompound("Registries")
                 .contains("minecraft:villagerprofessions"));
 
-        CompoundNBT blocked = professionSnapshot("minecraft:smith");
+        CompoundTag blocked = professionSnapshot("minecraft:smith");
         blocked.getCompound("fml").getCompound("Registries")
                 .getCompound("minecraft:villagerprofessions").putIntArray("blocked", new int[] {7});
         assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(blocked));
 
-        CompoundNBT aliased = professionSnapshot("minecraft:smith");
-        ListNBT aliases = new ListNBT();
-        aliases.add(StringNBT.valueOf("anothermod:smith"));
+        CompoundTag aliased = professionSnapshot("minecraft:smith");
+        ListTag aliases = new ListTag();
+        aliases.add(StringTag.valueOf("anothermod:smith"));
         aliased.getCompound("fml").getCompound("Registries")
                 .getCompound("minecraft:villagerprofessions").put("aliases", aliases);
         assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(aliased));
 
-        CompoundNBT malformed = professionSnapshot("minecraft:smith");
+        CompoundTag malformed = professionSnapshot("minecraft:smith");
         malformed.getCompound("fml").getCompound("Registries")
                 .getCompound("minecraft:villagerprofessions").put("ids", aliases);
         assertTrue(!LegacyWorldDataHook.removeRetiredVanillaProfessionRegistry(malformed));
     }
 
-    private static CompoundNBT professionSnapshot(String name) {
-        CompoundNBT entry = new CompoundNBT();
+    private static CompoundTag professionSnapshot(String name) {
+        CompoundTag entry = new CompoundTag();
         entry.putString("K", name);
         entry.putInt("V", 3);
-        ListNBT ids = new ListNBT();
+        ListTag ids = new ListTag();
         ids.add(entry);
-        CompoundNBT snapshot = new CompoundNBT();
+        CompoundTag snapshot = new CompoundTag();
         snapshot.put("ids", ids);
-        CompoundNBT registries = new CompoundNBT();
+        CompoundTag registries = new CompoundTag();
         registries.put("minecraft:villagerprofessions", snapshot);
-        CompoundNBT fml = new CompoundNBT();
+        CompoundTag fml = new CompoundTag();
         fml.put("Registries", registries);
-        CompoundNBT root = new CompoundNBT();
+        CompoundTag root = new CompoundTag();
         root.put("fml", fml);
         return root;
     }
@@ -95,23 +158,23 @@ class LegacyWorldSourceTest {
     }
 
     @Test
-    void targetsNative116ChunkLoadingWithoutTheOldLeavesPatch() throws IOException {
+    void targetsNative117ChunkLoadingWithoutTheOldLeavesPatch() throws IOException {
         String coremod = new String(Files.readAllBytes(Paths.get(
-                "src/main/resources/coremods/basemetals_116_compatibility.js")), "UTF-8");
-        assertTrue(coremod.contains("net.minecraft.world.chunk.storage.ChunkLoader"));
+                "src/main/resources/coremods/basemetals_117_compatibility.js")), "UTF-8");
+        assertTrue(coremod.contains("net.minecraft.world.level.chunk.storage.ChunkStorage"));
         assertTrue(coremod.contains("Ljava/util/function/Supplier;"));
         assertTrue(coremod.contains("Lcom/mojang/serialization/DynamicOps;"));
-        assertTrue(coremod.contains("Lnet/minecraft/util/RegistryKey;"));
-        assertTrue(coremod.contains("STATE + 'II)Z'"));
+        assertTrue(coremod.contains("Lnet/minecraft/resources/ResourceKey;"));
+        assertTrue(coremod.contains("'(Lnet/minecraft/core/BlockPos;)Z'"));
         assertTrue(!coremod.contains("leaves_fixer"));
         assertTrue(!coremod.contains("fluid_renderer"));
     }
 
     @Test
     void convertsOnlyOldBaseMetalsWallConnections() {
-        CompoundNBT state = new CompoundNBT();
+        CompoundTag state = new CompoundTag();
         state.putString("Name", "basemetals:steel_wall");
-        CompoundNBT properties = new CompoundNBT();
+        CompoundTag properties = new CompoundTag();
         properties.putString("north", "true");
         properties.putString("east", "false");
         properties.putString("south", "tall");
@@ -140,28 +203,28 @@ class LegacyWorldSourceTest {
         boolean previous = active.getBoolean(null);
         try {
             active.setBoolean(null, true);
-            CompoundNBT stack = new CompoundNBT();
+            CompoundTag stack = new CompoundTag();
             stack.putString("id", "basemetals:carbon_powder");
             stack.putByte("Count", (byte) 1);
-            ListNBT items = new ListNBT();
+            ListTag items = new ListTag();
             items.add(stack);
-            CompoundNBT chest = new CompoundNBT();
+            CompoundTag chest = new CompoundTag();
             chest.putString("id", "Chest");
             chest.put("Items", items);
-            ListNBT tileEntities = new ListNBT();
+            ListTag tileEntities = new ListTag();
             tileEntities.add(chest);
-            CompoundNBT level = new CompoundNBT();
+            CompoundTag level = new CompoundTag();
             level.putInt("xPos", 12);
             level.putInt("zPos", -7);
             level.put("TileEntities", tileEntities);
-            CompoundNBT root = new CompoundNBT();
+            CompoundTag root = new CompoundTag();
             root.put("Level", level);
 
             LegacyWorldDataHook.prepareLegacyChunk(root);
-            CompoundNBT finalized = LegacyWorldDataHook.finalizeLegacyChunk(root);
+            CompoundTag finalized = LegacyWorldDataHook.finalizeLegacyChunk(root);
 
             assertEquals("full", finalized.getCompound("Level").getString("Status"));
-            CompoundNBT migratedChest = finalized.getCompound("Level")
+            CompoundTag migratedChest = finalized.getCompound("Level")
                     .getList("TileEntities", 10).getCompound(0);
             assertEquals("minecraft:chest", migratedChest.getString("id"));
             assertEquals("basemetals:coal_powder",
@@ -172,26 +235,26 @@ class LegacyWorldSourceTest {
     }
 
     private void writeLevel(String name, int dataVersion, int blockId, String blockName) throws IOException {
-        CompoundNBT entry = new CompoundNBT();
+        CompoundTag entry = new CompoundTag();
         entry.putInt("V", blockId);
         entry.putString("K", blockName);
-        ListNBT ids = new ListNBT();
+        ListTag ids = new ListTag();
         ids.add(entry);
 
-        CompoundNBT blocks = new CompoundNBT();
+        CompoundTag blocks = new CompoundTag();
         blocks.put("ids", ids);
-        CompoundNBT registries = new CompoundNBT();
+        CompoundTag registries = new CompoundTag();
         registries.put("minecraft:blocks", blocks);
-        CompoundNBT fml = new CompoundNBT();
+        CompoundTag fml = new CompoundTag();
         fml.put("Registries", registries);
-        CompoundNBT data = new CompoundNBT();
+        CompoundTag data = new CompoundTag();
         data.putInt("DataVersion", dataVersion);
-        CompoundNBT level = new CompoundNBT();
+        CompoundTag level = new CompoundTag();
         level.put("FML", fml);
         level.put("Data", data);
 
         try (FileOutputStream output = new FileOutputStream(temporaryWorld.resolve(name).toFile())) {
-            CompressedStreamTools.writeCompressed(level, output);
+            NbtIo.writeCompressed(level, output);
         }
     }
 }

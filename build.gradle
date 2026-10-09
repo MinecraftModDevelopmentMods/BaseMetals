@@ -52,7 +52,7 @@ ext.release_tag = project.mod_version
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(8)
+        languageVersion = JavaLanguageVersion.of(16)
     }
     withSourcesJar()
     withJavadocJar()
@@ -60,10 +60,10 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
     javaCompiler = javaToolchains.compilerFor {
-        languageVersion = JavaLanguageVersion.of(8)
+        languageVersion = JavaLanguageVersion.of(16)
     }
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
     options.encoding = 'UTF-8'
     options.compilerArgs.addAll(['-Xmaxerrs', '1000'])
 }
@@ -93,6 +93,7 @@ tasks.withType(AbstractArchiveTask).configureEach {
 sourceSets {
     // Build-only model generator; not part of the mod jar.
     modelGenerator {
+        java.setSrcDirs(['src/dataGenerator/java'])
         compileClasspath += files(tasks.named('compileJava').flatMap { it.destinationDirectory }) + sourceSets.main.compileClasspath
         runtimeClasspath += files(tasks.named('compileJava').flatMap { it.destinationDirectory }) + sourceSets.main.compileClasspath
     }
@@ -119,36 +120,30 @@ println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty '
 def forgeRunModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/main')
 def integrationTestModClassesDirectory = layout.buildDirectory.dir('forge-run-mod-classes/integration-test')
 def forgeMainOutputPath = forgeRunModClassesDirectory.get().asFile.absolutePath
-def mainModClasses = "${mod_id}%%${forgeMainOutputPath}${File.pathSeparator}${mod_id}%%${forgeMainOutputPath}"
+def mainModClasses = "${mod_id}%%${forgeMainOutputPath}"
 def forgeProbeOutputPath = integrationTestModClassesDirectory.get().asFile.absolutePath
-def probeModClasses = mainModClasses + "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}" +
-        "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}"
-def forge36RunTargets = [client: 'fmluserdevclient', server: 'fmluserdevserver',
+def probeModClasses = mainModClasses + "${File.pathSeparator}basemetalsprobe%%${forgeProbeOutputPath}"
+def forge37RunTargets = [client: 'fmluserdevclient', server: 'fmluserdevserver',
         data: 'fmluserdevdata', runtimeProbeServer: 'fmluserdevserver', legacyUpgradeServer: 'fmluserdevserver']
 
 minecraft {
     mappings channel: project.mapping_channel, version: project.mapping_version
     runs {
         configureEach {
-            // Slime Launcher calls this entry point after preparing assets and natives.
-            mainClass = 'net.minecraftforge.userdev.LaunchTesting'
             workingDir.convention layout.projectDirectory.dir('run')
+            jvmArgs '--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED'
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             systemProperty 'forge.logging.console.level', 'info'
             mods { basemetals { source sourceSets.main } }
-            environment 'target', forge36RunTargets[name]
-            environment 'MCP_MAPPINGS', "${mapping_channel}_${mapping_version}"
-            environment 'MCP_VERSION', mcp_version
-            environment 'FORGE_VERSION', forge_version
-            environment 'FORGE_GROUP', 'net.minecraftforge'
-            environment 'MC_VERSION', minecraft_version
             environment 'MOD_CLASSES', mainModClasses
         }
         register('client')
         register('server') { args '--nogui' }
         register('data') {
             workingDir.convention layout.projectDirectory.dir('run-data')
-            args '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/'),
+            environment 'MOD_CLASSES', "${mod_id}%%${layout.buildDirectory.dir('forge-run-mod-classes/data').get().asFile}"
+            args '--mod', project.mod_id, '--all', '--output',
+                    layout.buildDirectory.dir('native-generated-resources').get().asFile,
                     '--existing', file('src/main/resources/')
         }
         register('runtimeProbeServer') {
@@ -161,6 +156,23 @@ minecraft {
             environment 'MOD_CLASSES', probeModClasses
             systemProperty 'basemetalsprobe.mode', 'legacy-upgrade'
             args '--nogui'
+        }
+        ['runtimeProbeServer', 'legacyUpgradeServer'].each { runName ->
+            named(runName) {
+                mainClass = 'cpw.mods.bootstraplauncher.BootstrapLauncher'
+                jvmArgs '-p', '{modules}', '--add-modules', 'ALL-MODULE-PATH',
+                        '--add-opens', 'java.base/java.util.jar=cpw.mods.securejarhandler',
+                        '--add-exports', 'java.base/sun.security.util=cpw.mods.securejarhandler',
+                        '--add-exports', 'jdk.naming.dns/com.sun.jndi.dns=java.naming'
+                args '--launchTarget', 'forgeserveruserdev', '--gameDir', '.',
+                        '--fml.forgeVersion', forge_version, '--fml.mcVersion', minecraft_version,
+                        '--fml.forgeGroup', 'net.minecraftforge', '--fml.mcpVersion', mcp_version
+                systemProperty 'legacyClassPath.file', '{minecraft_classpath_file}'
+                systemProperty 'ignoreList',
+                        'bootstraplauncher,securejarhandler,asm-commons,asm-util,asm-analysis,asm-tree,asm,client-extra,fmlcore,javafmllanguage,mclanguage,forge-'
+                systemProperty 'mergeModules', 'jna-5.8.0.jar,jna-platform-58.0.jar,java-objc-bridge-1.0.0.jar'
+                environment 'MCP_MAPPINGS', '{mcp_mappings}'
+            }
         }
     }
 }
@@ -181,12 +193,23 @@ def prepareIntegrationTestModClasses = tasks.register('prepareIntegrationTestMod
     into integrationTestModClassesDirectory
 }
 
+def prepareDataGeneratorModClasses = tasks.register('prepareDataGeneratorModClasses', Sync) {
+    dependsOn tasks.named('classes'), tasks.named('modelGeneratorClasses')
+    from sourceSets.main.output
+    from sourceSets.modelGenerator.output
+    into layout.buildDirectory.dir('forge-run-mod-classes/data')
+}
+
 tasks.withType(JavaExec).configureEach { JavaExec runTask ->
-    def runName = forge36RunTargets.keySet().find { runTask.name == 'run' + it.capitalize() }
+    def runName = forge37RunTargets.keySet().find { runTask.name == 'run' + it.capitalize() }
     if (runName != null) {
         runTask.dependsOn prepareForgeRunModClasses
         if (runTask.name in ['runRuntimeProbeServer', 'runLegacyUpgradeServer']) {
             runTask.dependsOn prepareIntegrationTestModClasses
+        }
+        if (runTask.name == 'runData') {
+            runTask.dependsOn prepareDataGeneratorModClasses
+            runTask.environment 'MOD_CLASSES', "${mod_id}%%${layout.buildDirectory.dir('forge-run-mod-classes/data').get().asFile}"
         }
         runTask.doFirst {
             File runDirectory = minecraft.runs.named(runName).get().workingDir.get().asFile
@@ -275,7 +298,7 @@ tasks.named('jar', Jar) {
                 'Specification-Title': 'Base Metals', 'Specification-Vendor': project.mod_authors,
                 'Specification-Version': '1', 'Implementation-Title': 'Base Metals',
                 'Implementation-Version': project.version, 'Implementation-Vendor': project.mod_authors,
-                'Built-On-Java': '8', 'Built-On': "${project.minecraft_version}-${project.forge_version}",
+                'Built-On-Java': '16', 'Built-On': "${project.minecraft_version}-${project.forge_version}",
                 'OreSpawn-Dependency-Mode': project.orespawn_dependency_mode,
                 'Build-Target': "minecraft-${project.minecraft_version}-${project.loader_name}-" +
                         "${project.forge_version}-java-${project.java_version}"])

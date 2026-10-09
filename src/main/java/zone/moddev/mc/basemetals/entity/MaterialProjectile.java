@@ -2,23 +2,23 @@ package zone.moddev.mc.basemetals.entity;
 
 import zone.moddev.mc.basemetals.content.ModContent;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
 
-public final class MaterialProjectile extends AbstractArrowEntity implements IEntityAdditionalSpawnData {
+public final class MaterialProjectile extends AbstractArrow implements IEntityAdditionalSpawnData {
     private ItemStack ammunition = ItemStack.EMPTY;
 
-    public MaterialProjectile(EntityType<? extends AbstractArrowEntity> type, World world) {
+    public MaterialProjectile(EntityType<? extends AbstractArrow> type, Level world) {
         super(type, world);
     }
 
-    public MaterialProjectile(EntityType<? extends AbstractArrowEntity> type, World world, LivingEntity shooter, ItemStack ammunition) {
+    public MaterialProjectile(EntityType<? extends AbstractArrow> type, Level world, LivingEntity shooter, ItemStack ammunition) {
         super(type, shooter, world);
         this.ammunition = single(ammunition);
     }
@@ -39,23 +39,23 @@ public final class MaterialProjectile extends AbstractArrowEntity implements IEn
     }
 
     @Override
-    public net.minecraft.network.IPacket<?> getAddEntityPacket() {
-        return net.minecraftforge.fml.network.NetworkHooks.getEntitySpawningPacket(this);
+    public net.minecraft.network.protocol.Packet<?> getAddEntityPacket() {
+        return net.minecraftforge.fmllegacy.network.NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        if (!ammunition.isEmpty()) tag.put("Ammunition", ammunition.save(new CompoundNBT()));
+        if (!ammunition.isEmpty()) tag.put("Ammunition", ammunition.save(new CompoundTag()));
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         ammunition = tag.contains("Ammunition", 10)
                 ? ItemStack.of(tag.getCompound("Ammunition")) : ItemStack.EMPTY;
     }
 
-    @Override public void writeSpawnData(PacketBuffer buffer) { buffer.writeItem(ammunition); }
-    @Override public void readSpawnData(PacketBuffer buffer) { ammunition = buffer.readItem(); }
+    @Override public void writeSpawnData(FriendlyByteBuf buffer) { buffer.writeItem(ammunition); }
+    @Override public void readSpawnData(FriendlyByteBuf buffer) { ammunition = buffer.readItem(); }
 }

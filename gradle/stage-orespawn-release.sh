@@ -5,7 +5,7 @@ repository="${1:?Usage: stage-orespawn-release.sh <repository-directory>}"
 value() { sed -n "s/^$1=//p" gradle.properties; }
 
 if [[ "$(value orespawn_dependency_mode)" == "candidate" ]]; then
-  echo 'Publication is blocked: pin the public OreSpawn 1.16.5 release first.' >&2
+  echo 'Publication is blocked: pin the public OreSpawn 1.17.1 release first.' >&2
   exit 1
 fi
 

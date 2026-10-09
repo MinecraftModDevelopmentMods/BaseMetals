@@ -2,12 +2,12 @@ package zone.moddev.mc.basemetals.content;
 
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
-public final class MaterialTier implements IItemTier {
+public final class MaterialTier implements Tier {
     private final MaterialDefinition material;
 
     public MaterialTier(MaterialDefinition material) {

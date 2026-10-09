@@ -12,7 +12,7 @@ equipment and playerdata checks.
 
 The first run saves a registry manifest and stops the server. A second run
 checks that the original Minecraft version can reload the fixture. Only then
-should a copy be opened in Minecraft 1.16.5.
+should a copy be opened in Minecraft 1.17.1.
 
 ## Build
 
@@ -40,9 +40,11 @@ node tools/validation/test_legacy_worlds.js build/legacy-world-test-spec.json up
 Keep that specification under ignored build output. It supplies these paths:
 
 - `output`: a new, empty directory for disposable test servers and results;
-- `java8`: the Java 8 executable;
-- `runtime110` and `runtime116`: installed Forge server directories, including
-  their launcher, Minecraft server JAR and `libraries` directory;
+- `java8`: the Java 8 executable used to capture historical worlds;
+- `java16`: the Java 16 executable used to upgrade them;
+- `runtime110`: the installed historical Forge server directory;
+- `runtime117`: the installed Forge 37 server directory, including its
+  native argument files and `libraries` directory;
 - `captureJar`, `modJar` and `probeJar`: the fixture generator, packaged Base
   Metals candidate and packaged runtime probe;
 - `oreSpawn`: the release dependency, with `path` and `sha256`;
@@ -68,7 +70,7 @@ Minecraft's player-advancement manager before checking it again on reload.
 `src/integrationTest/resources/upgrade/advancement_progress_113.json` covers
 an armour achievement and both ingot- and rod-based recipe discovery.
 
-The 1.16 probe checks block identities and saved orientation/state, item
+The 1.17 probe checks block identities and saved orientation/state, item
 identity and count, durability, names, enchantments, proof NBT, worn armour,
 playerdata and converted fluid buckets. Connected faces, powered states and
 flowing-fluid levels can change normally when Minecraft ticks the world;
@@ -77,3 +79,10 @@ these are not treated as migration failures.
 `compare_world_terrain.py` compares solid vanilla terrain across the same
 world copies, including old numeric palettes and flattened palettes. It
 requires Python and `nbtlib`; it never writes either world.
+Sand and gravel can fall when the upgraded world ticks. The comparison accounts
+for each moved grain as a nearby landed block, falling entity or dropped item,
+without allowing fixed terrain to change. Run its regression tests with:
+
+```sh
+python -m unittest discover -s tools/validation -p test_world_terrain.py
+```

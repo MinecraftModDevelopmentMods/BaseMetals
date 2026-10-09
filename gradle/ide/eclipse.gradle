@@ -16,11 +16,11 @@ eclipse {
             classpath.entries.findAll { entry ->
                 String path = entry.path?.replace('\\', '/') ?: ''
                 path.startsWith('src/test/') || path.startsWith('src/integrationTest/')
-                        || path.startsWith('src/modelGenerator/') || path.endsWith('/modelGenerator')
+                        || path.startsWith('src/dataGenerator/') || path.endsWith('/modelGenerator')
             }.each { entry -> entry.entryAttributes['test'] = 'true' }
         }
     }
-    synchronizationTasks generateOreModels, 'isolateEclipseProductionRuns'
+    synchronizationTasks 'isolateEclipseProductionRuns'
 }
 idea {
     module {
@@ -48,6 +48,7 @@ def configureEclipseBuildship = tasks.register('configureEclipseBuildship') {
 }
 
 def eclipseLaunchPathBoundaries = [
+        [option: '-DlegacyClassPath.file=', suffix: ' -DignoreList', joined: true],
         [option: '--cache', suffix: ' --metadata'],
         [option: '--metadata', suffix: ' --to-srg'],
         [option: '--to-srg', suffix: ' --to-obf'],
@@ -61,13 +62,13 @@ def quoteEclipseLaunchPathArguments = { String contents ->
         String option = boundary.option
         String suffix = boundary.suffix
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(
-                java.util.regex.Pattern.quote(option + ' ') + '(.+?)' +
+                java.util.regex.Pattern.quote(option + (boundary.joined ? '' : ' ')) + '(.+?)' +
                         java.util.regex.Pattern.quote(suffix))
         java.util.regex.Matcher matcher = pattern.matcher(contents)
         if (matcher.find()) {
             String value = matcher.group(1)
             if (!(value.startsWith('&quot;') && value.endsWith('&quot;'))) {
-                String replacement = option + ' &quot;' + value + '&quot;' + suffix
+                String replacement = option + (boundary.joined ? '' : ' ') + '&quot;' + value + '&quot;' + suffix
                 contents = matcher.replaceFirst(java.util.regex.Matcher.quoteReplacement(replacement))
             }
         }
@@ -75,44 +76,33 @@ def quoteEclipseLaunchPathArguments = { String contents ->
     contents
 }
 
-def syncForge36EclipseLaunches = tasks.register('syncForge36EclipseLaunches') {
+def syncForge37EclipseLaunches = tasks.register('syncForge37EclipseLaunches') {
     group = 'ide'
-    dependsOn tasks.named('processResources')
+    dependsOn tasks.named('processResources'), tasks.named('prepareDataGeneratorModClasses')
     doLast {
         String mainClass = 'net.minecraftforge.launcher.Main'
         String mainOutput = new File(projectDir, 'bin/main').absolutePath
-        String ordinaryModClasses = "${mod_id}%%${mainOutput}${File.pathSeparator}${mod_id}%%${mainOutput}"
-        def environmentEntries = { String launchTarget ->
-            "    <mapEntry key=\"MCP_MAPPINGS\" value=\"${mapping_channel}_${mapping_version}\"/>\r\n" +
-                    "    <mapEntry key=\"MCP_VERSION\" value=\"${mcp_version}\"/>\r\n" +
-                    "    <mapEntry key=\"FORGE_VERSION\" value=\"${forge_version}\"/>\r\n" +
-                    "    <mapEntry key=\"FORGE_GROUP\" value=\"net.minecraftforge\"/>\r\n" +
-                    "    <mapEntry key=\"target\" value=\"${launchTarget}\"/>\r\n" +
-                    "    <mapEntry key=\"MC_VERSION\" value=\"${minecraft_version}\"/>\r\n"
-        }
+        String ordinaryModClasses = "${mod_id}%%${mainOutput}"
         File processedResources = layout.buildDirectory.dir('resources/main').get().asFile
         copy { from processedResources; into mainOutput }
-        [Client: 'fmluserdevclient', Server: 'fmluserdevserver', Data: 'fmluserdevdata'].each {
-                String runName, String launchTarget ->
+        ['Client', 'Server', 'Data'].each { String runName ->
+            String modClasses = runName == 'Data'
+                    ? "${mod_id}%%${layout.buildDirectory.dir('forge-run-mod-classes/data').get().asFile}"
+                    : ordinaryModClasses
             File launch = file("run${runName}.launch")
             if (!launch.isFile()) throw new GradleException("Missing generated Eclipse launch: ${launch}")
             String text = launch.getText('UTF-8')
             if (text.contains('<mapAttribute key="org.eclipse.debug.core.environmentVariables"/>')) {
                 text = text.replace('<mapAttribute key="org.eclipse.debug.core.environmentVariables"/>',
                         '<mapAttribute key="org.eclipse.debug.core.environmentVariables">\r\n' +
-                                environmentEntries(launchTarget) +
-                                "    <mapEntry key=\"MOD_CLASSES\" value=\"${ordinaryModClasses}\"/>\r\n" +
+                                "    <mapEntry key=\"MOD_CLASSES\" value=\"${modClasses}\"/>\r\n" +
                                 '</mapAttribute>')
             }
             text = text.replace('<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value=""/>',
                     "<stringAttribute key=\"org.eclipse.jdt.launching.MAIN_TYPE\" value=\"${mainClass}\"/>")
             text = text.replaceFirst(/<mapEntry key="MOD_CLASSES" value="[^"]*"\/>/,
                     java.util.regex.Matcher.quoteReplacement(
-                            "<mapEntry key=\"MOD_CLASSES\" value=\"${ordinaryModClasses}\"/>"))
-            if (!text.contains('key="target"')) {
-                text = text.replace('    <mapEntry key="MOD_CLASSES"',
-                        environmentEntries(launchTarget) + '    <mapEntry key="MOD_CLASSES"')
-            }
+                            "<mapEntry key=\"MOD_CLASSES\" value=\"${modClasses}\"/>"))
             if (!text.contains('org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE')) {
                 text = text.replace('</launchConfiguration>',
                         '    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>\r\n' +
@@ -126,13 +116,13 @@ def syncForge36EclipseLaunches = tasks.register('syncForge36EclipseLaunches') {
         }
     }
 }
-tasks.matching { it.name == 'genEclipseRuns' }.configureEach { finalizedBy syncForge36EclipseLaunches }
-tasks.matching { it.name == 'eclipse' }.configureEach { finalizedBy syncForge36EclipseLaunches }
+tasks.matching { it.name == 'genEclipseRuns' }.configureEach { finalizedBy syncForge37EclipseLaunches }
+tasks.matching { it.name == 'eclipse' }.configureEach { finalizedBy syncForge37EclipseLaunches }
 
 tasks.register('isolateEclipseProductionRuns') {
     group = 'ide'
     dependsOn tasks.named('genEclipseRuns')
-    dependsOn syncForge36EclipseLaunches
+    dependsOn syncForge37EclipseLaunches
     dependsOn configureEclipseBuildship
 }
 
@@ -144,8 +134,8 @@ tasks.register('verifyEclipseProductionClasspath') {
         Set<String> synchronizationTasks = eclipse.synchronizationTasks.getDependencies(delegate).collect {
             it.name
         } as Set
-        if (!synchronizationTasks.contains('generateOreModels')) {
-            throw new GradleException('Eclipse Gradle refresh must regenerate ore models')
+        if (synchronizationTasks.contains('generateOreModels')) {
+            throw new GradleException('Eclipse refresh must not rewrite source resources')
         }
 
         File prefs = file('.settings/org.eclipse.buildship.core.prefs')
@@ -167,14 +157,13 @@ tasks.register('verifyEclipseProductionClasspath') {
             throw new GradleException('Eclipse does not expose generated production resources')
         }
         String mainOutput = new File(projectDir, 'bin/main').absolutePath
-        String expectedModClasses = "${mod_id}%%${mainOutput}${File.pathSeparator}${mod_id}%%${mainOutput}"
         def verifyQuotedPaths = { File launch, List<Map<String, String>> boundaries ->
             String contents = launch.getText('UTF-8')
             boundaries.each { Map<String, String> boundary ->
                 String option = boundary.option
                 String suffix = boundary.suffix
                 java.util.regex.Pattern quotedPath = java.util.regex.Pattern.compile(
-                        java.util.regex.Pattern.quote(option + ' &quot;') + '(.+?)' +
+                        java.util.regex.Pattern.quote(option + (boundary.joined ? '' : ' ') + '&quot;') + '(.+?)' +
                                 java.util.regex.Pattern.quote('&quot;' + suffix))
                 java.util.regex.Matcher matcher = quotedPath.matcher(contents)
                 if (!matcher.find()) {
@@ -190,23 +179,26 @@ tasks.register('verifyEclipseProductionClasspath') {
             File launch = file(name)
             if (!launch.isFile()) throw new GradleException("Missing ${name}")
             String contents = launch.getText('UTF-8')
-            List<String> forbidden = ['src/test', 'src/integrationTest', 'src/modelGenerator', 'junit-', 'opentest4j-',
+            String expectedModClasses = name == 'runData.launch'
+                    ? "${mod_id}%%${layout.buildDirectory.dir('forge-run-mod-classes/data').get().asFile}"
+                    : "${mod_id}%%${mainOutput}"
+            List<String> forbidden = ['src/test', 'src/integrationTest', 'src/dataGenerator', 'junit-', 'opentest4j-',
                                       'basemetalsprobe', 'C:\\Users\\John']
             List<String> leaked = forbidden.findAll { contents.contains(it) }
             if (!leaked.isEmpty() || !contents.contains('ATTR_EXCLUDE_TEST_CODE')
                     || !contents.contains("PROJECT_ATTR\" value=\"${eclipseWorkspaceProjectName}\"")
                     || !contents.contains("MOD_CLASSES\" value=\"${expectedModClasses}\"")
                     || !contents.contains('MAIN_TYPE" value="net.minecraftforge.launcher.Main"')
-                    || !contents.contains('--main net.minecraftforge.userdev.LaunchTesting')) {
-                throw new GradleException("${name} is not an isolated Forge 36 launch: ${leaked}")
+                    || !contents.contains('--main cpw.mods.bootstraplauncher.BootstrapLauncher')) {
+                throw new GradleException("${name} is not an isolated Forge 37 launch: ${leaked}")
             }
         }
         List<File> allLaunches = fileTree(projectDir) { include '*.launch' }.files.sort { it.name }
         allLaunches.each { File launch ->
-            verifyQuotedPaths(launch, eclipseLaunchPathBoundaries.take(4))
+            verifyQuotedPaths(launch, eclipseLaunchPathBoundaries.take(5))
         }
         allLaunches.findAll { it.name.endsWith('Data.launch') }.each { File launch ->
-            verifyQuotedPaths(launch, eclipseLaunchPathBoundaries.drop(4))
+            verifyQuotedPaths(launch, eclipseLaunchPathBoundaries.drop(5))
         }
         String clientLaunch = file('runClient.launch').getText('UTF-8')
         def launcherMatch = clientLaunch =~ /externalArchive=&quot;([^&]+[\\\/]slime-launcher-[^&]+\.jar)&quot;/

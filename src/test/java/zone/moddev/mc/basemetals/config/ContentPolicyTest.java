@@ -42,7 +42,7 @@ class ContentPolicyTest {
             case CRACKHAMMER: return FULL.contains(material) || names("diamond stone wood").contains(material);
             default:
                 if (!material.equals("mercury")) return true;
-                return form == MaterialForm.ORE || form == MaterialForm.POWDER || form == MaterialForm.SMALLPOWDER
+                return form == MaterialForm.ORE || form == MaterialForm.RAW || form == MaterialForm.POWDER || form == MaterialForm.SMALLPOWDER
                         || form == MaterialForm.FLUID || form == MaterialForm.INGOT;
         }
     }

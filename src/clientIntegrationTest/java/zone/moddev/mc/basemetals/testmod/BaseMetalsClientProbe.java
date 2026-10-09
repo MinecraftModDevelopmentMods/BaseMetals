@@ -17,39 +17,39 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.MainMenuScreen;
-import net.minecraft.client.renderer.model.BakedQuad;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.Items;
-import net.minecraft.resources.IResource;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.Items;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.GameType;
-import net.minecraft.world.WorldSettings;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.LevelSettings;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.gen.settings.DimensionGeneratorSettings;
-import net.minecraft.util.datafix.codec.DatapackCodec;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.util.registry.Registry;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.levelgen.WorldGenSettings;
+import net.minecraft.world.level.DataPackConfig;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.Registry;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fmlclient.ConfigGuiHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.fml.client.gui.screen.ModListScreen;
-import net.minecraftforge.fml.client.gui.widget.ModListWidget;
+import net.minecraftforge.fmlclient.gui.screen.ModListScreen;
+import net.minecraftforge.fmlclient.gui.widget.ModListWidget;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import org.apache.logging.log4j.LogManager;
@@ -58,10 +58,10 @@ import zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry;
 import zone.moddev.mc.basemetals.client.BaseMetalsConfigScreen;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ContentMode;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ConfirmScreen;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.ConfirmScreen;
+import net.minecraft.client.resources.language.I18n;
 
 /** Checks models and renders a disposable world in the packaged Forge client. */
 @Mod(BaseMetalsClientProbe.MODID)
@@ -87,12 +87,11 @@ public final class BaseMetalsClientProbe {
     public static void onScreenRendered(net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent.Post event) {
         BaseMetalsClientProbe probe = instance;
         if (probe == null || !probe.pendingCreativeBucketScreenshot
-                || !(event.getGui() instanceof net.minecraft.client.gui.screen.inventory.CreativeScreen)) return;
+                || !(event.getGui() instanceof net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen)) return;
 
         Minecraft minecraft = Minecraft.getInstance();
-        try (net.minecraft.client.renderer.texture.NativeImage screenshot = net.minecraft.util.ScreenShotHelper
-                .takeScreenshot(minecraft.getWindow().getWidth(), minecraft.getWindow().getHeight(),
-                        minecraft.getMainRenderTarget())) {
+        try (com.mojang.blaze3d.platform.NativeImage screenshot = net.minecraft.client.Screenshot
+                .takeScreenshot(minecraft.getMainRenderTarget())) {
             screenshot.writeToFile(new File("creative-buckets.png"));
             LOGGER.info("BASEMETALS_CREATIVE_BUCKET_SCREENSHOT saved=creative-buckets.png");
         } catch (IOException failure) {
@@ -135,13 +134,13 @@ public final class BaseMetalsClientProbe {
                 minecraft.screen == null ? "none" : minecraft.screen.getClass().getName());
         if (++stateTicks > 3600) fail(minecraft, "Timed out in client probe state " + state);
         try {
-            if (state == 0 && minecraft.screen instanceof MainMenuScreen) {
+            if (state == 0 && minecraft.screen instanceof TitleScreen) {
                 if (Boolean.getBoolean("basemetalsclientprobe.login")) {
                     require(BaseMetalsConfig.activeMode().serializedName().equals(
                             System.getProperty("basemetalsclientprobe.expectedMode")), "startup mode differs from profile");
-                    minecraft.setScreen(new net.minecraft.client.gui.screen.ConnectingScreen(
-                            minecraft.screen, minecraft, "127.0.0.1",
-                            Integer.getInteger("basemetalsclientprobe.port", 25565)));
+                    net.minecraft.client.gui.screens.ConnectScreen.startConnecting(minecraft.screen, minecraft,
+                            net.minecraft.client.multiplayer.resolver.ServerAddress.parseString(
+                                    "127.0.0.1:" + Integer.getInteger("basemetalsclientprobe.port", 25565)), null);
                     nextState(3);
                     return;
                 }
@@ -174,14 +173,14 @@ public final class BaseMetalsClientProbe {
             return;
         }
 
-        DynamicRegistries.Impl registries = DynamicRegistries.builtin();
-        DimensionGeneratorSettings generator = DimensionGeneratorSettings.makeDefault(
+        RegistryAccess.RegistryHolder registries = RegistryAccess.builtin();
+        WorldGenSettings generator = WorldGenSettings.makeDefault(
                 registries.registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY),
                 registries.registryOrThrow(Registry.BIOME_REGISTRY),
                 registries.registryOrThrow(Registry.NOISE_GENERATOR_SETTINGS_REGISTRY))
                 .withSeed(false, java.util.OptionalLong.of(0L));
-        WorldSettings settings = new WorldSettings("Base Metals Client Smoke", GameType.CREATIVE,
-                false, Difficulty.NORMAL, true, new GameRules(), DatapackCodec.DEFAULT);
+        LevelSettings settings = new LevelSettings("Base Metals Client Smoke", GameType.CREATIVE,
+                false, Difficulty.NORMAL, true, new GameRules(), DataPackConfig.DEFAULT);
 
         minecraft.createLevel(WORLD_DIRECTORY, settings, registries, generator);
     }
@@ -189,12 +188,12 @@ public final class BaseMetalsClientProbe {
     private static void spawnProjectileRenderChecks(Minecraft minecraft) {
         java.util.UUID playerId = minecraft.player.getUUID();
         minecraft.getSingleplayerServer().execute(() -> {
-            net.minecraft.entity.player.ServerPlayerEntity player = minecraft.getSingleplayerServer()
+            net.minecraft.server.level.ServerPlayer player = minecraft.getSingleplayerServer()
                     .getPlayerList().getPlayer(playerId);
-            net.minecraft.world.server.ServerWorld world = player.getLevel();
+            net.minecraft.server.level.ServerLevel world = player.getLevel();
             if (Boolean.getBoolean("basemetalsclientprobe.reload")) {
                 java.util.Set<String> savedAmmo = new java.util.HashSet<>();
-                for (net.minecraft.entity.Entity entity : world.getAllEntities()) {
+                for (net.minecraft.world.entity.Entity entity : world.getAllEntities()) {
                     if (entity instanceof zone.moddev.mc.basemetals.entity.MaterialProjectile) {
                         savedAmmo.add(((zone.moddev.mc.basemetals.entity.MaterialProjectile) entity)
                                 .getAmmunition().getItem().getRegistryName().toString());
@@ -210,7 +209,7 @@ public final class BaseMetalsClientProbe {
                 return;
             }
 
-            net.minecraft.util.math.vector.Vector3d look = player.getLookAngle();
+            net.minecraft.world.phys.Vec3 look = player.getLookAngle();
             int index = 0;
 
             for (String material : new String[] {"gold", "steel", "adamantine"}) {
@@ -221,7 +220,7 @@ public final class BaseMetalsClientProbe {
                                     bolt ? zone.moddev.mc.basemetals.entity.ModEntities.CUSTOM_BOLT.get()
                                             : zone.moddev.mc.basemetals.entity.ModEntities.CUSTOM_ARROW.get(),
                                     world, player, new ItemStack(ModContent.item(name).get()));
-                    net.minecraft.entity.Entity entity = projectile;
+                    net.minecraft.world.entity.Entity entity = projectile;
                     entity.setPos(player.getX() + look.x * 3 + (index++ - 2.5) * 0.25,
                             player.getY() + player.getEyeHeight(), player.getZ() + look.z * 3);
                     entity.setNoGravity(true);
@@ -233,7 +232,7 @@ public final class BaseMetalsClientProbe {
 
     private static void validateCreativeCrossbows(Minecraft minecraft) {
         require(minecraft.level.isClientSide, "crossbow probe must run on the client");
-        require(minecraft.player.abilities.instabuild, "crossbow probe needs a Creative player");
+        require(minecraft.player.getAbilities().instabuild, "crossbow probe needs a Creative player");
         int shots = 0;
 
         for (String name : ModContent.itemsById().keySet()) {
@@ -244,11 +243,11 @@ public final class BaseMetalsClientProbe {
                     new ItemStack(ModContent.item(boltName).get())};
 
             for (ItemStack supply : ammunition) {
-                minecraft.player.inventory.clearContent();
+                minecraft.player.getInventory().clearContent();
                 ItemStack launcher = new ItemStack(ModContent.item(name).get());
                 ItemStack original = supply.copy();
-                minecraft.player.setItemInHand(Hand.MAIN_HAND, launcher);
-                minecraft.player.setItemInHand(Hand.OFF_HAND, supply);
+                minecraft.player.setItemInHand(InteractionHand.MAIN_HAND, launcher);
+                minecraft.player.setItemInHand(InteractionHand.OFF_HAND, supply);
                 BowItem crossbow = (BowItem) launcher.getItem();
 
                 crossbow.releaseUsing(launcher, minecraft.level, minecraft.player,
@@ -261,7 +260,7 @@ public final class BaseMetalsClientProbe {
             }
         }
 
-        minecraft.player.inventory.clearContent();
+        minecraft.player.getInventory().clearContent();
         require(shots == 108, "all 27 crossbows need four client ammunition cases");
         LOGGER.info("BASEMETALS_CLIENT_CROSSBOWS PASS shots={}", Integer.valueOf(shots));
     }
@@ -270,7 +269,7 @@ public final class BaseMetalsClientProbe {
         boolean rejected = Boolean.getBoolean("basemetalsclientprobe.expectReject");
         if (minecraft.level != null && minecraft.player != null && stateTicks > 60) {
             require(!rejected, "mismatched modes entered gameplay");
-            net.minecraft.item.crafting.IRecipe bow = minecraft.level.getRecipeManager().byKey(new ResourceLocation("basemetals", "tin_bow")).orElse(null);
+            net.minecraft.world.item.crafting.Recipe bow = minecraft.level.getRecipeManager().byKey(new ResourceLocation("basemetals", "tin_bow")).orElse(null);
             require(bow != null, "recipe IDs changed during mode synchronization");
             require(bow.isSpecial() == (BaseMetalsConfig.activeMode() == ContentMode.LOW_FANTASY),
                     "client recipe policy did not match the server");
@@ -280,7 +279,7 @@ public final class BaseMetalsClientProbe {
                         "earned recipe-book unlock did not survive the mode change");
                 for (String name : new String[] {"steel_bow", "adamantine_bow", "adamantine_crossbow", "adamantine_gear",
                         "adamantine_arrow", "adamantine_rod", "adamantine_pickaxe"}) {
-                    net.minecraft.item.crafting.IRecipe recipe = minecraft.level.getRecipeManager()
+                    net.minecraft.world.item.crafting.Recipe recipe = minecraft.level.getRecipeManager()
                             .byKey(new ResourceLocation("basemetals", name)).orElse(null);
                     require(minecraft.player.getRecipeBook().contains(recipe) != recipe.isSpecial(),
                             "material discovery did not synchronize to the client: " + name);
@@ -289,16 +288,16 @@ public final class BaseMetalsClientProbe {
                         .byKey(new ResourceLocation("basemetals", "gold_bow")).orElse(null)),
                         "mode change unlocked an unearned recipe");
             }
-            require(minecraft.player.inventory.getItem(0).getItem() == ModContent.item("tin_bow").get(),
+            require(minecraft.player.getInventory().getItem(0).getItem() == ModContent.item("tin_bow").get(),
                     "existing restricted item did not synchronize");
             finishLogin(minecraft, "connected");
-        } else if (minecraft.screen instanceof net.minecraft.client.gui.screen.DisconnectedScreen) {
+        } else if (minecraft.screen instanceof net.minecraft.client.gui.screens.DisconnectedScreen) {
             StringBuilder message = new StringBuilder();
             try {
                 for (java.lang.reflect.Field field : minecraft.screen.getClass().getDeclaredFields()) {
-                    if (net.minecraft.util.text.ITextComponent.class.isAssignableFrom(field.getType())) {
+                    if (net.minecraft.network.chat.Component.class.isAssignableFrom(field.getType())) {
                         field.setAccessible(true);
-                        message.append(((net.minecraft.util.text.ITextComponent) field.get(minecraft.screen)).getString());
+                        message.append(((net.minecraft.network.chat.Component) field.get(minecraft.screen)).getString());
                     }
                 }
             } catch (ReflectiveOperationException failure) {
@@ -329,7 +328,7 @@ public final class BaseMetalsClientProbe {
         require(ModList.get().isLoaded("basemetals"), "Base Metals is not loaded");
         require(ModList.get().isLoaded("orespawn"), "OreSpawn is not loaded");
         require(ModList.get().getModContainerById("basemetals").get()
-                .getCustomExtension(ExtensionPoint.CONFIGGUIFACTORY).isPresent(),
+                .getCustomExtension(ConfigGuiHandler.ConfigGuiFactory.class).isPresent(),
                 "Base Metals Mods-list configuration screen is missing");
         require(WorldSettingsExtensionRegistry.extensions().stream()
                 .filter(extension -> "basemetals".equals(extension.id().getNamespace())).count() == 1,
@@ -337,28 +336,45 @@ public final class BaseMetalsClientProbe {
         validateConfigScreen(minecraft);
         require(MaterialCatalogue.ALL.size() == 22, "material catalogue size");
         require(ModContent.blocksById().size() == 360, "block catalogue size");
-        require(ModContent.itemsById().size() == 1115, "item catalogue size");
+        require(ModContent.itemsById().size() == 1127, "item catalogue size");
         require(ModContent.fluids().size() == 36, "fluid catalogue size");
         require(ForgeRegistries.ITEMS.containsKey(new ResourceLocation("basemetals", "mercury_bucket")),
                 "mercury bucket registration");
         validateCreativeBuckets(minecraft);
+        int rawItems = 0;
+        for (String name : ModContent.itemsById().keySet()) {
+            if (!name.endsWith("_raw")) continue;
+
+            ItemStack stack = new ItemStack(ModContent.item(name).get());
+            BakedModel model = minecraft.getItemRenderer().getModel(stack, null, null, 0);
+            require(stack.getItem().getItemCategory() == ModTabs.ITEMS, name + " creative group");
+            require(model != minecraft.getModelManager().getMissingModel(), name + " model is missing");
+            require(model.getParticleIcon().getName().equals(new ResourceLocation("basemetals", "item/" + name)),
+                    name + " uses the wrong raw-metal sprite");
+            rawItems++;
+        }
+        require(rawItems == 12, "raw-metal item model count");
+
         for (FluidContent fluid : ModContent.fluids().values()) {
             require(fluid.bucket().get().getItemCategory() == ModTabs.ITEMS, "bucket creative group");
-            require(RenderTypeLookup.canRenderInLayer(fluid.block().get().defaultBlockState(),
+            require(ItemBlockRenderTypes.canRenderInLayer(fluid.block().get().defaultBlockState(),
                     RenderType.translucent()), "molten block render layer");
-            require(RenderTypeLookup.canRenderInLayer(fluid.source().get().defaultFluidState(),
+            require(ItemBlockRenderTypes.canRenderInLayer(fluid.source().get().defaultFluidState(),
                     RenderType.translucent()), "molten source render layer");
-            require(RenderTypeLookup.canRenderInLayer(fluid.flowing().get().defaultFluidState(),
+            require(ItemBlockRenderTypes.canRenderInLayer(fluid.flowing().get().defaultFluidState(),
                     RenderType.translucent()), "molten flowing render layer");
             validateBucketModel(minecraft, fluid.bucket().get().getRegistryName().getPath());
         }
-        for (net.minecraft.block.Block block : ForgeRegistries.BLOCKS) {
+        for (net.minecraft.world.level.block.Block block : ForgeRegistries.BLOCKS) {
             if (!"basemetals".equals(block.getRegistryName().getNamespace())) continue;
-            if (block instanceof net.minecraft.block.DoorBlock
-                    || block instanceof net.minecraft.block.TrapDoorBlock
-                    || block instanceof net.minecraft.block.PaneBlock) {
-                require(RenderTypeLookup.canRenderInLayer(block.defaultBlockState(),
+            if (block instanceof net.minecraft.world.level.block.DoorBlock
+                    || block instanceof net.minecraft.world.level.block.TrapDoorBlock
+                    || block instanceof net.minecraft.world.level.block.IronBarsBlock) {
+                require(ItemBlockRenderTypes.canRenderInLayer(block.defaultBlockState(),
                         RenderType.cutoutMipped()), "transparent block render layer: " + block);
+                require(block.getStateDefinition().getPossibleStates().stream().noneMatch(
+                        net.minecraft.world.level.block.state.BlockState::canOcclude),
+                        "transparent block hides neighbouring faces: " + block);
             }
         }
         validateOreModels(minecraft);
@@ -383,7 +399,7 @@ public final class BaseMetalsClientProbe {
         }
         require(baseMetalsIndex >= 0, "Base Metals is missing from the Mods list");
         selectMod(modsScreen, "basemetals");
-        ForgeHooksClient.drawScreen(modsScreen, new MatrixStack(), 0, 0, 0.0F);
+        ForgeHooksClient.drawScreen(modsScreen, new PoseStack(), 0, 0, 0.0F);
         Button configButton = button(modsScreen, 20);
         require(configButton.active, "Base Metals Config button is disabled in the Mods list");
         require(modsScreen.mouseClicked(configButton.x + 1, configButton.y + 1, 0),
@@ -398,10 +414,10 @@ public final class BaseMetalsClientProbe {
         require(originalMode.equals(BaseMetalsConfig.CONTENT_MODE.get())
                 && originalEffects == BaseMetalsConfig.SPECIAL_EFFECTS.get(), "Cancel changed the loaded config");
 
-        ForgeHooksClient.drawScreen(modsScreen, new MatrixStack(), 0, 0, 0.0F);
+        ForgeHooksClient.drawScreen(modsScreen, new PoseStack(), 0, 0, 0.0F);
         require(button(modsScreen, 20).active, "Config button was disabled on returning from the settings");
         modsScreen.setSelected(null);
-        ForgeHooksClient.drawScreen(modsScreen, new MatrixStack(), 0, 0, 0.0F);
+        ForgeHooksClient.drawScreen(modsScreen, new PoseStack(), 0, 0, 0.0F);
         require(!button(modsScreen, 20).active, "Config button stayed enabled with no mod selected");
         int forgeIndex = -1;
         for (int index = 0; index < ModList.get().getMods().size(); index++) {
@@ -409,7 +425,7 @@ public final class BaseMetalsClientProbe {
         }
         require(forgeIndex >= 0, "Forge is missing from the Mods list");
         selectMod(modsScreen, "forge");
-        ForgeHooksClient.drawScreen(modsScreen, new MatrixStack(), 0, 0, 0.0F);
+        ForgeHooksClient.drawScreen(modsScreen, new PoseStack(), 0, 0, 0.0F);
         require(!button(modsScreen, 20).active, "Base Metals enabled the Config button for Forge");
         click(modsScreen, 6);
         require(minecraft.screen == parent, "Mods-list Done did not return to the main menu");
@@ -490,11 +506,11 @@ public final class BaseMetalsClientProbe {
     private static void validateWallModels(Minecraft minecraft) {
         int states = 0;
         for (Block block : ForgeRegistries.BLOCKS) {
-            if (!(block instanceof net.minecraft.block.WallBlock)
+            if (!(block instanceof net.minecraft.world.level.block.WallBlock)
                     || !"basemetals".equals(block.getRegistryName().getNamespace())) continue;
 
-            for (net.minecraft.block.BlockState state : block.getStateDefinition().getPossibleStates()) {
-                IBakedModel model = minecraft.getBlockRenderer().getBlockModel(state);
+            for (net.minecraft.world.level.block.state.BlockState state : block.getStateDefinition().getPossibleStates()) {
+                BakedModel model = minecraft.getBlockRenderer().getBlockModel(state);
                 require(!"missingno".equals(model.getParticleIcon().getName().getPath()),
                         "wall model missing: " + state);
                 List<BakedQuad> quads = new ArrayList<>(model.getQuads(state, null, new Random(0)));
@@ -527,14 +543,14 @@ public final class BaseMetalsClientProbe {
             }
 
             Block block = ModContent.blocksById().get(name).get();
-            require(RenderTypeLookup.canRenderInLayer(block.defaultBlockState(), RenderType.cutoutMipped()),
+            require(ItemBlockRenderTypes.canRenderInLayer(block.defaultBlockState(), RenderType.cutoutMipped()),
                     name + " is not cutout-mipped");
             String overlay = "basemetals:block/ore_overlays/" + name;
 
-            IBakedModel blockModel = minecraft.getBlockRenderer().getBlockModel(block.defaultBlockState());
+            BakedModel blockModel = minecraft.getBlockRenderer().getBlockModel(block.defaultBlockState());
             validateOreModel(blockModel, block, name, host, overlay);
             ItemStack stack = new ItemStack(ModContent.item(name).get());
-            IBakedModel itemModel = minecraft.getItemRenderer().getModel(stack, null, null);
+            BakedModel itemModel = minecraft.getItemRenderer().getModel(stack, null, null, 0);
             validateOreModel(itemModel, null, name + " item", host, overlay);
         }
 
@@ -546,7 +562,7 @@ public final class BaseMetalsClientProbe {
                 Integer.valueOf(ores));
     }
 
-    private static void validateOreModel(IBakedModel model, Block block, String name, String host, String overlay) {
+    private static void validateOreModel(BakedModel model, Block block, String name, String host, String overlay) {
         require(host.equals(model.getParticleIcon().getName().toString()), name + " particle host");
         Random random = new Random(42L);
         require(model.getQuads(block == null ? null : block.defaultBlockState(), null, random).isEmpty(),
@@ -598,9 +614,9 @@ public final class BaseMetalsClientProbe {
     }
 
     private static void validateHostOverride(Minecraft minecraft, String host, String source) throws IOException {
-        try (IResource replacement = minecraft.getResourceManager().getResource(
+        try (Resource replacement = minecraft.getResourceManager().getResource(
                     new ResourceLocation("minecraft", "textures/block/" + host + ".png"));
-                IResource fixture = minecraft.getResourceManager().getResource(
+                Resource fixture = minecraft.getResourceManager().getResource(
                     new ResourceLocation("basemetals", "textures/block/" + source + "_ore.png"))) {
             BufferedImage actual = ImageIO.read(replacement.getInputStream());
             BufferedImage expected = ImageIO.read(fixture.getInputStream());
@@ -616,16 +632,16 @@ public final class BaseMetalsClientProbe {
     }
 
     private static void validateCreativeBuckets(Minecraft minecraft) {
-        net.minecraft.util.NonNullList<ItemStack> entries = net.minecraft.util.NonNullList.create();
+        net.minecraft.core.NonNullList<ItemStack> entries = net.minecraft.core.NonNullList.create();
         ModTabs.ITEMS.fillItemList(entries);
         List<String> missingFromTab = new ArrayList<>();
         List<String> missingFromSearch = new ArrayList<>();
 
         for (FluidContent fluid : ModContent.fluids().values()) {
-            net.minecraft.item.Item bucket = fluid.bucket().get();
+            net.minecraft.world.item.Item bucket = fluid.bucket().get();
             String id = bucket.getRegistryName().toString();
             if (entries.stream().noneMatch(stack -> stack.getItem() == bucket)) missingFromTab.add(id);
-            if (minecraft.getSearchTree(net.minecraft.client.util.SearchTreeManager.CREATIVE_NAMES)
+            if (minecraft.getSearchTree(net.minecraft.client.searchtree.SearchRegistry.CREATIVE_NAMES)
                     .search(id).stream().noneMatch(stack -> stack.getItem() == bucket)) {
                 missingFromSearch.add(id);
             }
@@ -638,25 +654,32 @@ public final class BaseMetalsClientProbe {
     }
 
     private static void validateCreativeBucketScreen(Minecraft minecraft) {
-        net.minecraft.client.gui.screen.inventory.CreativeScreen screen =
-                new net.minecraft.client.gui.screen.inventory.CreativeScreen(minecraft.player);
+        net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen screen =
+                new net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen(minecraft.player);
         minecraft.setScreen(screen);
 
         try {
-            java.lang.reflect.Method selectTab = net.minecraftforge.fml.common.ObfuscationReflectionHelper.findMethod(
-                    net.minecraft.client.gui.screen.inventory.CreativeScreen.class,
-                    "func_147050_b", net.minecraft.item.ItemGroup.class);
-            java.lang.reflect.Method refreshSearch = net.minecraftforge.fml.common.ObfuscationReflectionHelper.findMethod(
-                    net.minecraft.client.gui.screen.inventory.CreativeScreen.class, "func_147053_i");
-            java.lang.reflect.Field searchField = net.minecraftforge.fml.common.ObfuscationReflectionHelper.findField(
-                    net.minecraft.client.gui.screen.inventory.CreativeScreen.class, "field_147062_A");
+            java.lang.reflect.Method selectTab = net.minecraftforge.fml.util.ObfuscationReflectionHelper.findMethod(
+                    net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen.class,
+                    "m_98560_", net.minecraft.world.item.CreativeModeTab.class);
+            java.lang.reflect.Method refreshSearch = net.minecraftforge.fml.util.ObfuscationReflectionHelper.findMethod(
+                    net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen.class, "m_98630_");
+            java.lang.reflect.Field searchField = net.minecraftforge.fml.util.ObfuscationReflectionHelper.findField(
+                    net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen.class, "f_98510_");
 
             selectTab.invoke(screen, ModTabs.ITEMS);
             requireCreativeBuckets(screen.getMenu().items, "Base Metals Items screen");
-            selectTab.invoke(screen, net.minecraft.item.ItemGroup.TAB_SEARCH);
+            for (String name : ModContent.itemsById().keySet()) {
+                if (!name.endsWith("_raw")) continue;
 
-            net.minecraft.client.gui.widget.TextFieldWidget search =
-                    (net.minecraft.client.gui.widget.TextFieldWidget) searchField.get(screen);
+                require(screen.getMenu().items.stream().anyMatch(stack ->
+                        stack.getItem() == ModContent.item(name).get()),
+                        "Base Metals Items screen is missing " + name);
+            }
+            selectTab.invoke(screen, net.minecraft.world.item.CreativeModeTab.TAB_SEARCH);
+
+            net.minecraft.client.gui.components.EditBox search =
+                    (net.minecraft.client.gui.components.EditBox) searchField.get(screen);
             search.setValue("bucket");
             refreshSearch.invoke(screen);
             requireCreativeBuckets(screen.getMenu().items, "creative search for bucket");
@@ -682,7 +705,7 @@ public final class BaseMetalsClientProbe {
 
     private static void requireCreativeBuckets(List<ItemStack> entries, String label) {
         for (FluidContent fluid : ModContent.fluids().values()) {
-            net.minecraft.item.Item bucket = fluid.bucket().get();
+            net.minecraft.world.item.Item bucket = fluid.bucket().get();
             require(entries.stream().anyMatch(stack -> stack.getItem() == bucket),
                     label + " is missing " + bucket.getRegistryName());
         }
@@ -690,7 +713,7 @@ public final class BaseMetalsClientProbe {
 
     private static void validateBucketModel(Minecraft minecraft, String name) {
         ItemStack stack = new ItemStack(ModContent.item(name).get());
-        IBakedModel model = minecraft.getItemRenderer().getModel(stack, null, null);
+        BakedModel model = minecraft.getItemRenderer().getModel(stack, null, null, 0);
         String fluidName = name.substring(0, name.length() - "_bucket".length());
         FluidContent fluid = ModContent.fluids().get(fluidName);
         require(fluid != null, name + " has no matching fluid content");
@@ -700,7 +723,7 @@ public final class BaseMetalsClientProbe {
         int vertexColour = (colour & 0xFF00FF00) | ((colour & 0xFF) << 16) | ((colour >>> 16) & 0xFF);
         Random random = new Random(42L);
         List<BakedQuad> quads = new ArrayList<BakedQuad>(model.getQuads(null, null, random));
-        for (net.minecraft.util.Direction side : net.minecraft.util.Direction.values()) {
+        for (net.minecraft.core.Direction side : net.minecraft.core.Direction.values()) {
             quads.addAll(model.getQuads(null, side, random));
         }
         require(!quads.isEmpty(), name + " has no rendered quads");

@@ -21,7 +21,7 @@ class MechanicsContractTest {
         assertEquals("adamantine_door", MissingMappings.itemTargetPath("adamantine_door_item"));
         assertEquals("minecraft:iron_nugget", MissingMappings.itemTargetId("iron_nugget").toString());
         assertEquals("mercury", MissingMappings.blockTargetPath(
-                new net.minecraft.util.ResourceLocation("mmdlib", "liquid_mercury").getPath()));
+                new net.minecraft.resources.ResourceLocation("mmdlib", "liquid_mercury").getPath()));
         assertEquals("double_diamond_slab", MissingMappings.blockTargetPath("double_diamond_slab"));
         assertEquals("human_detector", MissingMappings.blockTargetPath("human_detector"));
         assertEquals("emerald_bow", MissingMappings.itemTargetPath("emerald_bow"));
@@ -47,9 +47,9 @@ class MechanicsContractTest {
                 {"dandelion_yellow", "yellow_dye"}};
         for (String[] alias : aliases) {
             assertEquals("minecraft:" + alias[1], MissingMappings.vanilla114Target(
-                    new net.minecraft.util.ResourceLocation("minecraft", alias[0])).toString());
+                    new net.minecraft.resources.ResourceLocation("minecraft", alias[0])).toString());
         }
-        assertNull(MissingMappings.vanilla114Target(new net.minecraft.util.ResourceLocation("anothermod", "sign")));
-        assertNull(MissingMappings.vanilla114Target(new net.minecraft.util.ResourceLocation("minecraft", "unknown")));
+        assertNull(MissingMappings.vanilla114Target(new net.minecraft.resources.ResourceLocation("anothermod", "sign")));
+        assertNull(MissingMappings.vanilla114Target(new net.minecraft.resources.ResourceLocation("minecraft", "unknown")));
     }
 }

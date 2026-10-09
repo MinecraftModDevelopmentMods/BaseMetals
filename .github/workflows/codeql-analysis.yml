@@ -3,11 +3,11 @@ name: CodeQL
 on:
   push:
     branches:
-      - master-1.16.5
+      - master-1.17.1
       - 'feature/**'
   pull_request:
     branches:
-      - master-1.16.5
+      - master-1.17.1
   schedule:
     - cron: '37 7 * * 4'
 
@@ -32,11 +32,17 @@ jobs:
           distribution: temurin
           java-version: '25.0.3+9.0.LTS'
 
-      - name: Install pinned Java 8 compilation toolchain
+      - name: Install Java 8 for the ForgeGradle renamer
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
         with:
           distribution: temurin
           java-version: '8.0.502+7'
+
+      - name: Install pinned Java 16 compilation toolchain
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '16.0.2+7'
 
       - name: Install pinned Java 17 Gradle runtime
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
@@ -60,7 +66,7 @@ jobs:
           gradle_args=(
             clean classes
             --no-daemon --stacktrace --max-workers=2
-            -Dorg.gradle.java.installations.paths="$JAVA_HOME,$JAVA_HOME_8_X64,$JAVA_HOME_25_X64"
+            -Dorg.gradle.java.installations.paths="$JAVA_HOME,$JAVA_HOME_8_X64,$JAVA_HOME_16_X64,$JAVA_HOME_25_X64"
             -Dorg.gradle.java.installations.auto-detect=false
             -Dorg.gradle.java.installations.auto-download=false
           )

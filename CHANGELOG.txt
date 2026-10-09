@@ -1,3 +1,29 @@
+Base Metals 3.1.0.117011
+
+- Bring Base Metals to Minecraft 1.17.1 and Forge 37.1.1, with Java 16 for the game.
+- Add twelve raw metals. Ordinary ore mining drops raw material, Fortune gives
+  extra drops, and Silk Touch keeps the ore block. Copper uses vanilla raw copper.
+- Keep direct hammer mining at two powders per ore. Each raw piece gives one
+  powder through ground hammering or crushing, and smelts or blasts to one ingot.
+  Raw metals cannot be used in powder blends.
+- Support vanilla raw iron, gold and copper, and crushing vanilla deepslate ores.
+- Leave Base Metals copper generation off in new OreSpawn profiles, without
+  changing saved profiles or explicit overrides. Keep the other ore rules as before.
+- Use Forge's native model providers for Kiri's ore overlays, keeping the tested
+  gap between the overlay and its vanilla background. The generateResources task
+  updates saved output; ordinary builds check it without rewriting source files.
+- Keep High/Low Fantasy, configuration screens, equipment effects, molten buckets,
+  material arrows and bolts, trades and recipes from the 1.16 release.
+- Keep the floor and walls visible through holes in trapdoors, doors and bars.
+  Their collision shapes and placement behaviour are unchanged.
+- Update old-world migration, custom anvils, IDE launches and release checks for
+  Forge 37. Test and datagen classes remain outside the published mod.
+- Remove invalid bed entities that vanilla's old-world converter can create on
+  modded blocks. Real beds and their saved contents are left alone.
+- Protect saved Nether, End and custom-dimension chunks as well as the Overworld
+  when neighbouring terrain is generated during an upgrade.
+- Pin the published OreSpawn 4.1.0.117011 release from Curse Maven.
+
 Base Metals 3.1.0.116051
 
 - Bring the 1.15.2 release to Minecraft 1.16.5 and Forge 36.2.34.

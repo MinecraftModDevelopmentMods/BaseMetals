@@ -26,8 +26,8 @@ def compileClientIntegrationTestMod = tasks.register('compileClientIntegrationTe
     source fileTree('src/clientIntegrationTest/java')
     classpath = files(sourceSets.main.output, sourceSets.main.compileClasspath)
     destinationDirectory = clientIntegrationClasses
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
     options.encoding = 'UTF-8'
 }
 def clientIntegrationTestModJar = tasks.register('clientIntegrationTestModJar', Jar) {
@@ -38,11 +38,14 @@ def clientIntegrationTestModJar = tasks.register('clientIntegrationTestModJar', 
     from 'src/clientIntegrationTest/resources'
 }
 def oreOverlayClientFixtures = layout.buildDirectory.dir('ore-overlay-client-fixtures')
-def generateOreOverlayClientFixtures = tasks.register('generateOreOverlayClientFixtures', JavaExec) {
-    dependsOn tasks.named('modelGeneratorClasses')
-    classpath = sourceSets.modelGenerator.runtimeClasspath
-    mainClass = 'zone.moddev.mc.basemetals.data.BMBlockStateProvider'
-    args file('src/main/resources').absolutePath, '--client-fixtures', oreOverlayClientFixtures.get().asFile.absolutePath
+def generateOreOverlayClientFixtures = tasks.register('generateOreOverlayClientFixtures', Copy) {
+    from('src/main/resources/assets/basemetals/textures/block') {
+        include 'tin_ore.png', 'coldiron_ore.png', 'starsteel_ore.png'
+        rename 'tin_ore.png', 'stone.png'
+        rename 'coldiron_ore.png', 'netherrack.png'
+        rename 'starsteel_ore.png', 'end_stone.png'
+    }
+    into oreOverlayClientFixtures.map { it.dir('assets/minecraft/textures/block') }
 }
 def packagedClientProbeJar = renamer.classes(clientIntegrationTestModJar) {
     map.from minecraft.dependency.toSrgFile
@@ -54,7 +57,7 @@ def packagedForgeServerRuntime = providers.gradleProperty('packagedForgeServerRu
 def packagedForgeClientRuntime = providers.gradleProperty('packagedForgeClientRuntime')
 def requireRuntimeDirectory = { Provider<String> configuredPath, String propertyName ->
     if (!configuredPath.isPresent()) {
-        throw new GradleException("Pass -P${propertyName}=<official Forge 36 runtime directory>")
+        throw new GradleException("Pass -P${propertyName}=<official Forge 37 runtime directory>")
     }
     File runtime = file(configuredPath.get()).canonicalFile
     if (!runtime.isDirectory()) {
@@ -127,23 +130,28 @@ def packagedServerProcess = tasks.register('packagedServerProcess', Exec) {
     dependsOn preparePackagedServerIntegration
     doFirst {
         File runtime = requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime')
-        File launcher = new File(runtime, "forge-${minecraft_version}-${forge_version}.jar")
-        File vanillaServer = new File(runtime, "minecraft_server.${minecraft_version}.jar")
-        File libraries = new File(runtime, 'libraries')
-        [launcher, vanillaServer, libraries].each {
-            if (!it.exists()) throw new GradleException("Incomplete official server runtime: ${it}")
-        }
+        String platform = System.getProperty('os.name').toLowerCase().contains('windows') ? 'win' : 'unix'
+        File arguments = new File(runtime,
+                "libraries/net/minecraftforge/forge/${minecraft_version}-${forge_version}/${platform}_args.txt")
+        if (!arguments.isFile()) throw new GradleException("Missing official Forge arguments: ${arguments}")
+        String resolved = arguments.getText('UTF-8')
+                .replace('libraries/', runtime.absolutePath.replace('\\', '/') + '/libraries/')
+                .replace('-DlibraryDirectory=libraries',
+                        '-DlibraryDirectory=' + runtime.absolutePath.replace('\\', '/') + '/libraries')
+        File stagedArguments = new File(packagedServerRunDirectory.get().asFile, 'forge-arguments.txt')
+        stagedArguments.setText(resolved, 'UTF-8')
         workingDir packagedServerRunDirectory.get().asFile
         commandLine javaToolchains.launcherFor {
-            languageVersion = JavaLanguageVersion.of(8)
+            languageVersion = JavaLanguageVersion.of(16)
             vendor = JvmVendorSpec.ADOPTIUM
         }.get().executablePath.asFile.absolutePath,
-                '-Xms512m', '-Xmx2g', '-Dbasemetalsprobe.sampleOres=true', '-jar', launcher.absolutePath, 'nogui'
+                '-Xms512m', '-Xmx2g', '--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED',
+                '-Dbasemetalsprobe.sampleOres=true', '@' + stagedArguments.absolutePath, 'nogui'
     }
 }
 tasks.register('packagedServerIntegrationTest') {
     group = 'verification'
-    description = 'Runs the exact release jars in an official Forge 36 dedicated-server runtime.'
+    description = 'Runs the exact release jars in an official Forge 37 dedicated-server runtime.'
     dependsOn packagedServerProcess
     doLast {
         assertPackagedRuntimePassed(packagedServerRunDirectory.get().asFile,
@@ -189,7 +197,7 @@ def preparePackagedClientIntegration = tasks.register('preparePackagedClientInte
         File overlayPack = new File(runDirectory, 'resourcepacks/basemetals-ore-overlay-fixture')
         copy { from oreOverlayClientFixtures; into overlayPack }
         new File(overlayPack, 'pack.mcmeta').setText(
-                '{"pack":{"pack_format":6,"description":"Base Metals ore overlay test fixture"}}\n', 'UTF-8')
+                '{"pack":{"pack_format":7,"description":"Base Metals ore overlay test fixture"}}\n', 'UTF-8')
         new File(runDirectory, 'options.txt').setText(
                 'fullscreen:false\nlang:en_us\nresourcePacks:["file/basemetals-ore-overlay-fixture"]\n', 'UTF-8')
     }
@@ -202,6 +210,7 @@ def packagedClientProcess = tasks.register('packagedClientProcess', Exec) {
         File runtime = requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime')
         File forgeJsonFile = new File(runtime,
                 "versions/${minecraft_version}-forge-${forge_version}/${minecraft_version}-forge-${forge_version}.json")
+        if (!forgeJsonFile.isFile()) forgeJsonFile = new File(runtime, "versions/forge-${forge_version}/forge-${forge_version}.json")
         File baseJsonFile = new File(runtime, "versions/${minecraft_version}/${minecraft_version}.json")
         File baseJar = new File(runtime, "versions/${minecraft_version}/${minecraft_version}.jar")
         File libraries = new File(runtime, 'libraries')
@@ -242,6 +251,13 @@ def packagedClientProcess = tasks.register('packagedClientProcess', Exec) {
         }
         List<File> classpathFiles = new ArrayList<>(classpathByModule.values())
         classpathFiles.add(baseJar)
+        Map<String, String> replacements = [library_directory: libraries.absolutePath,
+                classpath_separator: File.pathSeparator, version_name: forgeJson.inheritsFrom]
+        List<String> forgeJvmArguments = ((List<String>) forgeJson.arguments.jvm).collect { value ->
+            replacements.each { key, replacement -> value = value.replace('${' + key + '}', replacement) }
+            if (value.contains('${')) throw new GradleException("Unresolved Forge launch argument: ${value}")
+            value
+        }
         List<String> gameArguments = []
         gameArguments.addAll((List<String>) ((Map) forgeJson.arguments).game)
         gameArguments.addAll([
@@ -258,21 +274,25 @@ def packagedClientProcess = tasks.register('packagedClientProcess', Exec) {
         ])
         workingDir packagedClientRunDirectory.get().asFile
         commandLine javaToolchains.launcherFor {
-            languageVersion = JavaLanguageVersion.of(8)
+            languageVersion = JavaLanguageVersion.of(16)
             vendor = JvmVendorSpec.ADOPTIUM
         }.get().executablePath.asFile.absolutePath,
                 '-Xms512m', '-Xmx2g', '-Dbasemetalsclientprobe.enabled=true',
+                '--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED',
                 "-Djava.library.path=${natives.absolutePath}",
                 '-Dminecraft.launcher.brand=basemetals-validation',
                 '-Dminecraft.launcher.version=1',
                 '-cp', classpathFiles.collect { it.absolutePath }.join(File.pathSeparator),
                 (String) forgeJson.mainClass
+        List<String> launch = new ArrayList<>(commandLine)
+        launch.addAll(1, forgeJvmArguments)
+        commandLine launch
         args gameArguments
     }
 }
 tasks.register('packagedClientIntegrationTest') {
     group = 'verification'
-    description = 'Loads and renders the exact release jars in an official Forge 36 client runtime.'
+    description = 'Loads and renders the exact release jars in an official Forge 37 client runtime.'
     dependsOn packagedClientProcess
     doLast {
         File runDirectory = packagedClientRunDirectory.get().asFile
@@ -323,7 +343,7 @@ tasks.register('packagedClientReloadTest') {
 
 tasks.register('packagedRuntimeIntegrationTest') {
     group = 'verification'
-    description = 'Runs the exact Base Metals and OreSpawn jars in official Forge 36 server and client runtimes.'
+    description = 'Runs the exact Base Metals and OreSpawn jars in official Forge 37 server and client runtimes.'
     dependsOn tasks.named('packagedServerReloadTest')
     dependsOn tasks.named('packagedClientReloadTest')
 }
@@ -335,11 +355,11 @@ tasks.register('packagedMineralogyIntegrationTest', Exec) {
     timeout = java.time.Duration.ofMinutes(5)
     doFirst {
         String configuredJar = providers.gradleProperty('mineralogyTestJar').orNull
-        if (configuredJar == null) throw new GradleException('Pass -PmineralogyTestJar=<Mineralogy 1.16.5 jar>')
+        if (configuredJar == null) throw new GradleException('Pass -PmineralogyTestJar=<Mineralogy 1.17.1 jar>')
         File mineralogy = file(configuredJar)
         if (!mineralogy.isFile() || sha256(mineralogy) !=
-                '6A22C97BC74338327C62B7A9DF42499BBCB6E6DF5C06BE33EECF2662E007BE1C') {
-            throw new GradleException('Expected the qualified Mineralogy 6.1.0.116051 artifact')
+                '79B2275A0E3F3A390DC29694206D37F8D1F1D48A4935A3B3E9B096CEB8A0ACFE') {
+            throw new GradleException('Expected the qualified Mineralogy 6.1.4.117011 artifact')
         }
 
         File runDirectory = prepareBuildOwnedRunDirectory(
@@ -352,13 +372,21 @@ tasks.register('packagedMineralogyIntegrationTest', Exec) {
                 'level-name=world\nlevel-seed=8675309\nonline-mode=false\nserver-port=0\nview-distance=4\nmax-tick-time=-1\n', 'UTF-8')
         new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
         File runtime = requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime')
+        String platform = System.getProperty('os.name').toLowerCase().contains('windows') ? 'win' : 'unix'
+        File arguments = new File(runtime,
+                "libraries/net/minecraftforge/forge/${minecraft_version}-${forge_version}/${platform}_args.txt")
+        File stagedArguments = new File(runDirectory, 'forge-arguments.txt')
+        stagedArguments.setText(arguments.getText('UTF-8')
+                .replace('libraries/', runtime.absolutePath.replace('\\', '/') + '/libraries/')
+                .replace('-DlibraryDirectory=libraries',
+                        '-DlibraryDirectory=' + runtime.absolutePath.replace('\\', '/') + '/libraries'), 'UTF-8')
         workingDir runDirectory
         commandLine javaToolchains.launcherFor {
-            languageVersion = JavaLanguageVersion.of(8)
+            languageVersion = JavaLanguageVersion.of(16)
             vendor = JvmVendorSpec.ADOPTIUM
         }.get().executablePath.asFile.absolutePath,
-                '-Xms512m', '-Xmx2g', '-Dbasemetalsprobe.sampleOres=true', '-jar',
-                new File(runtime, "forge-${minecraft_version}-${forge_version}.jar").absolutePath, 'nogui'
+                '-Xms512m', '-Xmx2g', '--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED',
+                '-Dbasemetalsprobe.sampleOres=true', '@' + stagedArguments.absolutePath, 'nogui'
     }
     doLast {
         File runDirectory = file("${buildDir}/packaged-mineralogy-run")
@@ -380,7 +408,7 @@ tasks.register('contentModeIntegrationTest', Exec) {
             into fixture
         }
         File java = javaToolchains.launcherFor {
-            languageVersion = JavaLanguageVersion.of(8)
+            languageVersion = JavaLanguageVersion.of(16)
             vendor = JvmVendorSpec.ADOPTIUM
         }.get().executablePath.asFile
         commandLine 'node', file('tools/test_content_modes.js').absolutePath, java.absolutePath,

@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "forge:raw_materials/copper"
+  },
+  "result": {
+    "item": "basemetals:copper_powder",
+    "count": 1
+  }
+}

@@ -1,14 +1,14 @@
 package zone.moddev.mc.basemetals;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.resources.ResourceLocation;
 
 public final class ModTags {
-    public static final ITag<Block> SCYTHE_HARVESTABLE = BlockTags.createOptional(
+    public static final Tag<Block> SCYTHE_HARVESTABLE = BlockTags.createOptional(
             new ResourceLocation(BaseMetals.MOD_ID, "scythe_harvestable"));
-    public static final ITag<Block> CRACKHAMMER_CRUSHABLE = BlockTags.createOptional(
+    public static final Tag<Block> CRACKHAMMER_CRUSHABLE = BlockTags.createOptional(
             new ResourceLocation(BaseMetals.MOD_ID, "crackhammer_crushable"));
 
     private ModTags() {}

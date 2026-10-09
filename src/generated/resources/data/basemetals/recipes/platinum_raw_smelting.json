@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "tag": "forge:raw_materials/platinum"
+  },
+  "result": "basemetals:platinum_ingot",
+  "experience": 1.5,
+  "cookingtime": 200
+}

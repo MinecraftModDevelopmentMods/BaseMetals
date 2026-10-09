@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 
 class MaterialCatalogueTest {
     @Test
@@ -29,10 +29,10 @@ class MaterialCatalogueTest {
         assertEquals(3200, adamantine.toolDurability());
         assertEquals(200, adamantine.armorDurabilityFactor());
         assertEquals(0, adamantine.enchantability());
-        assertEquals(2, adamantine.armorProtection(EquipmentSlotType.HEAD));
-        assertEquals(8, adamantine.armorProtection(EquipmentSlotType.CHEST));
-        assertEquals(7, adamantine.armorProtection(EquipmentSlotType.LEGS));
-        assertEquals(3, adamantine.armorProtection(EquipmentSlotType.FEET));
+        assertEquals(2, adamantine.armorProtection(EquipmentSlot.HEAD));
+        assertEquals(8, adamantine.armorProtection(EquipmentSlot.CHEST));
+        assertEquals(7, adamantine.armorProtection(EquipmentSlot.LEGS));
+        assertEquals(3, adamantine.armorProtection(EquipmentSlot.FEET));
     }
 
     @Test
@@ -75,8 +75,8 @@ class MaterialCatalogueTest {
                     material.name());
             assertEquals(material.hardness() > 10.0D ? (float) (int) (material.hardness() / 5.0D) : 0.0F,
                     material.armorToughness(), material.name());
-            for (EquipmentSlotType slot : Arrays.asList(EquipmentSlotType.HEAD, EquipmentSlotType.CHEST,
-                    EquipmentSlotType.LEGS, EquipmentSlotType.FEET)) {
+            for (EquipmentSlot slot : Arrays.asList(EquipmentSlot.HEAD, EquipmentSlot.CHEST,
+                    EquipmentSlot.LEGS, EquipmentSlot.FEET)) {
                 assertTrue(material.armorProtection(slot) >= 0 && material.armorProtection(slot) <= 30,
                         material.name() + " " + slot);
             }

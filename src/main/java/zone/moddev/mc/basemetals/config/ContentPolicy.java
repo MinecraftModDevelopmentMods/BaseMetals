@@ -80,7 +80,7 @@ public final class ContentPolicy {
         if (form == MaterialForm.GEAR) return GEARS.contains(material);
         if (form == MaterialForm.ANVIL) return ANVILS.contains(material);
         if ("mercury".equals(material)) {
-            return form == MaterialForm.ORE || form == MaterialForm.POWDER || form == MaterialForm.SMALLPOWDER
+            return form == MaterialForm.ORE || form == MaterialForm.RAW || form == MaterialForm.POWDER || form == MaterialForm.SMALLPOWDER
                     || form == MaterialForm.FLUID || form == MaterialForm.INGOT;
         }
 

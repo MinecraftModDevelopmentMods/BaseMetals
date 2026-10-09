@@ -22,7 +22,9 @@
       "conditions": {
         "items": [
           {
-            "item": "basemetals:copper_block"
+            "items": [
+              "basemetals:copper_block"
+            ]
           }
         ]
       }

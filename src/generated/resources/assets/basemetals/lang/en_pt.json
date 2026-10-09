@@ -1625,5 +1625,17 @@
   "item.bucket.quartz": "Bucket of Molten Quartz",
   "item.bucket.wood": "Bucket of Liquefied Wood",
   "item.bucket.redstone": "Bucket of Molten Redstone",
-  "item.bucket.stone": "Bucket of Molten Stone"
+  "item.bucket.stone": "Bucket of Molten Stone",
+  "item.basemetals.adamantine_raw": "Raw undefined",
+  "item.basemetals.antimony_raw": "Raw undefined",
+  "item.basemetals.bismuth_raw": "Raw undefined",
+  "item.basemetals.coldiron_raw": "Raw undefined",
+  "item.basemetals.lead_raw": "Raw undefined",
+  "item.basemetals.mercury_raw": "Raw undefined",
+  "item.basemetals.nickel_raw": "Raw undefined",
+  "item.basemetals.platinum_raw": "Raw undefined",
+  "item.basemetals.silver_raw": "Raw undefined",
+  "item.basemetals.starsteel_raw": "Raw undefined",
+  "item.basemetals.tin_raw": "Raw undefined",
+  "item.basemetals.zinc_raw": "Raw undefined"
 }

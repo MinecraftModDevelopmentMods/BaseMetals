@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "tag": "forge:raw_materials/antimony"
+  },
+  "result": "basemetals:antimony_ingot",
+  "experience": 0.1,
+  "cookingtime": 100
+}

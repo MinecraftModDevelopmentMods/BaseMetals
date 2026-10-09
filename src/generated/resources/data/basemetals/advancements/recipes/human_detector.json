@@ -32,7 +32,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:brick"
+            "items": [
+              "minecraft:brick"
+            ]
           }
         ]
       }

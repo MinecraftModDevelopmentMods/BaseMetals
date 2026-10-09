@@ -1626,5 +1626,17 @@
   "item.bucket.quartz": "Cubo de cuarzo fundido",
   "item.bucket.wood": "Cubo de madera licuada",
   "item.bucket.redstone": "Cubo de redstone fundida",
-  "item.bucket.stone": "Cubo de piedra fundida"
+  "item.bucket.stone": "Cubo de piedra fundida",
+  "item.basemetals.adamantine_raw": "undefined en bruto",
+  "item.basemetals.antimony_raw": "undefined en bruto",
+  "item.basemetals.bismuth_raw": "undefined en bruto",
+  "item.basemetals.coldiron_raw": "undefined en bruto",
+  "item.basemetals.lead_raw": "undefined en bruto",
+  "item.basemetals.mercury_raw": "undefined en bruto",
+  "item.basemetals.nickel_raw": "undefined en bruto",
+  "item.basemetals.platinum_raw": "undefined en bruto",
+  "item.basemetals.silver_raw": "undefined en bruto",
+  "item.basemetals.starsteel_raw": "undefined en bruto",
+  "item.basemetals.tin_raw": "undefined en bruto",
+  "item.basemetals.zinc_raw": "undefined en bruto"
 }

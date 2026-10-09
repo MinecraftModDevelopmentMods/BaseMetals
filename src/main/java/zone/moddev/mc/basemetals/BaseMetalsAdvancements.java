@@ -10,15 +10,15 @@ import zone.moddev.mc.basemetals.content.MaterialItems;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.resources.ResourceLocation;
 
 final class BaseMetalsAdvancements {
     private static final String CRITERION = "event";
@@ -41,7 +41,7 @@ final class BaseMetalsAdvancements {
 
     private BaseMetalsAdvancements() {}
 
-    static void onCrafted(ServerPlayerEntity player, ItemStack result) {
+    static void onCrafted(ServerPlayer player, ItemStack result) {
         if (result.getItem() instanceof CrackhammerItem) award(player, "geologist");
         ResourceLocation id = result.getItem().getRegistryName();
         if (baseMetals(id) && (id.getPath().endsWith("_blend") || id.getPath().endsWith("_smallblend"))) {
@@ -49,7 +49,7 @@ final class BaseMetalsAdvancements {
         }
     }
 
-    static void onSmelted(ServerPlayerEntity player, ItemStack result) {
+    static void onSmelted(ServerPlayer player, ItemStack result) {
         ResourceLocation id = result.getItem().getRegistryName();
         if (!baseMetals(id) || !id.getPath().endsWith("_ingot")) return;
         award(player, "this_is_new");
@@ -58,32 +58,32 @@ final class BaseMetalsAdvancements {
         if (advancement != null) award(player, advancement);
     }
 
-    static void onPlaced(ServerPlayerEntity player, BlockState state) {
+    static void onPlaced(ServerPlayer player, BlockState state) {
         ResourceLocation id = state.getBlock().getRegistryName();
         if (baseMetals(id) && state.is(BlockTags.getAllTags().getTagOrEmpty(STORAGE_BLOCKS))) {
             award(player, "blocktastic");
         }
     }
 
-    static void onEquipment(ServerPlayerEntity player) {
+    static void onEquipment(ServerPlayer player) {
         if (fullArmor(player, "coldiron") && mainHandSword(player, "coldiron")) award(player, "demon_slayer");
         if (fullArmor(player, "mithril") && mainHandSword(player, "mithril")) award(player, "angel_of_death");
         if (fullArmor(player, "aquarium") && player.isInWater()) award(player, "scuba_diver");
         if (fullArmor(player, "adamantine")) award(player, "juggernaut");
-        if (material(player.getItemBySlot(EquipmentSlotType.FEET), "starsteel")) award(player, "moon_boots");
+        if (material(player.getItemBySlot(EquipmentSlot.FEET), "starsteel")) award(player, "moon_boots");
     }
 
-    private static boolean fullArmor(ServerPlayerEntity player, String material) {
-        EquipmentSlotType[] slots = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
-        for (EquipmentSlotType slot : slots) {
+    private static boolean fullArmor(ServerPlayer player, String material) {
+        EquipmentSlot[] slots = { EquipmentSlot.HEAD, EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS, EquipmentSlot.FEET };
+        for (EquipmentSlot slot : slots) {
             ItemStack stack = player.getItemBySlot(slot);
             if (!(stack.getItem() instanceof ArmorItem) || !material(stack, material)) return false;
         }
         return true;
     }
 
-    private static boolean mainHandSword(ServerPlayerEntity player, String material) {
+    private static boolean mainHandSword(ServerPlayer player, String material) {
         ItemStack stack = player.getMainHandItem();
         return stack.getItem() instanceof MaterialItems.Sword && material(stack, material);
     }
@@ -97,7 +97,7 @@ final class BaseMetalsAdvancements {
         return id != null && BaseMetals.MOD_ID.equals(id.getNamespace());
     }
 
-    static boolean award(ServerPlayerEntity player, String id) {
+    static boolean award(ServerPlayer player, String id) {
         Advancement advancement = player.getServer().getAdvancements().getAdvancement(
                 new ResourceLocation(BaseMetals.MOD_ID, id));
         if (advancement == null) return false;

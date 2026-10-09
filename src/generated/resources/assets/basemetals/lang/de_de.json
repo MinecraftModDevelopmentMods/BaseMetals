@@ -1883,5 +1883,17 @@
   "item.bucket.obsidian": "Eimer mit geschmolzenem Obsidian",
   "item.bucket.quartz": "Eimer mit geschmolzenem Quarz",
   "item.bucket.wood": "Eimer mit verflüssigtem Holz",
-  "item.bucket.stone": "Eimer mit geschmolzenem Stein"
+  "item.bucket.stone": "Eimer mit geschmolzenem Stein",
+  "item.basemetals.adamantine_raw": "Adamant-Erzbrocken",
+  "item.basemetals.antimony_raw": "Antimon-Erzbrocken",
+  "item.basemetals.bismuth_raw": "Bismuth-Erzbrocken",
+  "item.basemetals.coldiron_raw": "Kalteisen-Erzbrocken",
+  "item.basemetals.lead_raw": "Blei-Erzbrocken",
+  "item.basemetals.mercury_raw": "Quecksilber-Erzbrocken",
+  "item.basemetals.nickel_raw": "Nickel-Erzbrocken",
+  "item.basemetals.platinum_raw": "Platin-Erzbrocken",
+  "item.basemetals.silver_raw": "Silber-Erzbrocken",
+  "item.basemetals.starsteel_raw": "Sternenstahl-Erzbrocken",
+  "item.basemetals.tin_raw": "Zinn-Erzbrocken",
+  "item.basemetals.zinc_raw": "Zink-Erzbrocken"
 }

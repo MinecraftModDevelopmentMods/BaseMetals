@@ -63,30 +63,30 @@ def configuredOreSpawnIdentity = [version: project.orespawn_version.toString(),
         curseProjectId: project.orespawn_curse_project_id.toString(),
         curseFileId: project.orespawn_curse_file_id.toString(), sha256: project.orespawn_sha256.toString()]
 
-tasks.register('verifyJava8Toolchain') {
+tasks.register('verifyJava16Toolchain') {
     group = 'verification'
     dependsOn tasks.named('compileJava')
     doLast {
         def metadata = tasks.named('compileJava', JavaCompile).get().javaCompiler.get().metadata
-        if (metadata.languageVersion.asInt() != 8) {
-            throw new GradleException("Minecraft 1.16.5 requires a Java 8 JDK, found " +
+        if (metadata.languageVersion.asInt() != 16) {
+            throw new GradleException("Minecraft 1.17.1 requires a Java 16 JDK, found " +
                     "${metadata.vendor} ${metadata.javaRuntimeVersion} at ${metadata.installationPath}")
         }
-        logger.lifecycle("Java 8 development toolchain: ${metadata.vendor} ${metadata.javaRuntimeVersion}")
+        logger.lifecycle("Java 16 development toolchain: ${metadata.vendor} ${metadata.javaRuntimeVersion}")
     }
 }
 
-tasks.register('verifyReleaseJava8Toolchain') {
+tasks.register('verifyReleaseJava16Toolchain') {
     group = 'verification'
     description = 'Requires the pinned compiler for reproducible release artifacts.'
-    dependsOn tasks.named('verifyJava8Toolchain')
+    dependsOn tasks.named('verifyJava16Toolchain')
     doLast {
         def metadata = tasks.named('compileJava', JavaCompile).get().javaCompiler.get().metadata
-        if (configuredJavaToolchainVersion != '8.0.502+7'
-                || metadata.javaRuntimeVersion != '1.8.0_502-b07'
-                || !metadata.vendor.toString().toLowerCase(Locale.ROOT).contains('temurin')) {
+        if (configuredJavaToolchainVersion != '16.0.2+7'
+                || metadata.javaRuntimeVersion != '16.0.2+7'
+                || !(metadata.vendor.toString().toLowerCase(Locale.ROOT) =~ /temurin|eclipse/)) {
             throw new GradleException("Release auditing requires Eclipse Temurin ${configuredJavaToolchainVersion}; " +
-                    "ordinary build and runClient tasks accept other Java 8 updates. Found " +
+                    "ordinary build and runClient tasks accept other Java 16 updates. Found " +
                     "${metadata.vendor} ${metadata.javaRuntimeVersion} at ${metadata.installationPath}")
         }
     }
@@ -121,7 +121,7 @@ tasks.register('verifyMavenCoordinates') {
 
 tasks.register('verifyReleaseConfiguration') {
     group = 'verification'
-    dependsOn tasks.named('verifyJava8Toolchain')
+    dependsOn tasks.named('verifyJava16Toolchain')
     doLast {
         def actual = [modVersion: project.mod_version.toString(), modGroup: project.mod_group.toString(),
                 minecraftVersion: project.minecraft_version.toString(), forgeVersion: project.forge_version.toString(),
@@ -131,21 +131,21 @@ tasks.register('verifyReleaseConfiguration') {
                 loaderCode: project.loader_code.toString(), javaVersion: project.java_version.toString(),
                 gradleJavaVersion: project.gradle_java_version.toString(),
                 curseForgeProjectId: project.curseforge_project_id.toString()]
-        def expected = [modVersion: '3.1.0.116051', modGroup: expectedMavenGroup,
-                minecraftVersion: '1.16.5', forgeVersion: '36.2.34',
-                forgeInstallerSha256: '53B73DBBCC486F38726E76CE923B13381044984C83C762847C7193340F97130F',
-                mappingChannel: 'official', mappingVersion: '1.16.5',
-                mcpVersion: '20210115.111550', loaderName: 'forge', loaderCode: '1',
-                javaVersion: '8', gradleJavaVersion: '17', curseForgeProjectId: '240967']
-        if (actual != expected) throw new GradleException("Unexpected Base Metals 1.16.5 identity: ${actual}")
+        def expected = [modVersion: '3.1.0.117011', modGroup: expectedMavenGroup,
+                minecraftVersion: '1.17.1', forgeVersion: '37.1.1',
+                forgeInstallerSha256: '31F2319B1B9CA491AACCC020887240F8524A4FF2A8E0F8B795E17E889CBC043B',
+                mappingChannel: 'official', mappingVersion: '1.17.1',
+                mcpVersion: '20210706.113038', loaderName: 'forge', loaderCode: '1',
+                javaVersion: '16', gradleJavaVersion: '17', curseForgeProjectId: '240967']
+        if (actual != expected) throw new GradleException("Unexpected Base Metals 1.17.1 identity: ${actual}")
     }
 }
 
 tasks.register('verifyReleaseDependencies') {
     group = 'verification'
     doLast {
-        def expected = [version: '4.1.0.116051', curseProjectId: '245586', curseFileId: '9080646',
-                sha256: 'CDF59D83F191C5FBCD8921228DB577066A63A8FEB25CA79DB4EAEEA32D32DB04']
+        def expected = [version: '4.1.0.117011', curseProjectId: '245586', curseFileId: '9088186',
+                sha256: '1BDEDCBB179CB5A3B169E5C8A6B301E3888AE15B94108B0AEC627D705CFAD833']
         if (configuredOreSpawnIdentity != expected) {
             throw new GradleException("Unexpected OreSpawn identity: ${configuredOreSpawnIdentity}")
         }
@@ -160,11 +160,11 @@ tasks.register('verifyReleaseDependencies') {
             if (metadataEntry == null) throw new GradleException('OreSpawn mod metadata is missing')
             String metadata = zip.getInputStream(metadataEntry).getText('UTF-8')
             if (!metadata.contains('modId="orespawn"')
-                    || !metadata.contains('version="4.1.0.116051"')
-                    || !metadata.contains('versionRange="[1.16.5,1.17)"')
+                    || !metadata.contains('version="4.1.0.117011"')
+                    || !metadata.contains('versionRange="[1.17.1,1.18)"')
                     || zip.getEntry('zone/moddev/mc/orespawn/api/OreSpawnApi.class') == null
                     || zip.getEntry('zone/moddev/mc/orespawn/api/client/WorldSettingsExtensionRegistry.class') == null) {
-                throw new GradleException('Expected Minecraft 1.16.5 OreSpawn 4.1 and its configuration-screen API')
+                throw new GradleException('Expected Minecraft 1.17.1 OreSpawn 4.1 and its configuration-screen API')
             }
         }
     }
@@ -187,7 +187,9 @@ def forbiddenReleasePath = { String entryName ->
             || name.endsWith('/ore_textures.md')
             || name.startsWith('src/integrationtest/') || name.startsWith('src/clientintegrationtest/')
             || name.startsWith('src/gametest/')
-            || name.startsWith('src/modelgenerator/') || name.endsWith('/bmblockstateprovider.class')
+            || name.startsWith('src/modelgenerator/') || name.startsWith('src/datagenerator/')
+            || name.endsWith('/bmblockstateprovider.class')
+            || name.startsWith('zone/moddev/mc/basemetals/data/')
             || name.startsWith('src/integratedsmoke/') || name.startsWith('src/packagedclientsmoke/')
             || name.startsWith('src/upgradesmoke/') || name.startsWith('src/packagedserversmoke/')
             || name.contains('minecraft-mavenizer') || name.contains('/smoke/')
@@ -197,7 +199,7 @@ def forbiddenReleasePath = { String entryName ->
 
 tasks.register('verifyReleaseArtifacts') {
     group = 'verification'
-    dependsOn tasks.named('verifyReleaseJava8Toolchain')
+    dependsOn tasks.named('verifyReleaseJava16Toolchain')
     dependsOn tasks.named('verifyReleaseConfiguration')
     dependsOn tasks.named('verifyReleaseDependencies')
     dependsOn tasks.named('verifyMavenCoordinates')
@@ -216,8 +218,8 @@ tasks.register('verifyReleaseArtifacts') {
                     if (entry.name.endsWith('.class')) {
                         byte[] header = zip.getInputStream(entry).withCloseable { it.readNBytes(8) }
                         int major = ((header[6] & 0xff) << 8) | (header[7] & 0xff)
-                        if (major != 52) {
-                            throw new GradleException("${entry.name} uses bytecode major ${major}, not Java 8")
+                        if (major != 60) {
+                            throw new GradleException("${entry.name} uses bytecode major ${major}, not Java 16")
                         }
                     }
                     if (entry.name ==~ /.*\.(class|java|json|md|toml|mcmeta|html)/) {
@@ -243,7 +245,7 @@ tasks.register('verifyReleaseArtifacts') {
         new ZipFile(main).withCloseable { zip ->
             Set<String> names = zip.entries().toList().collect { it.name } as Set<String>
             ['META-INF/mods.toml', 'META-INF/MANIFEST.MF', 'META-INF/coremods.json',
-             'coremods/basemetals_116_compatibility.js', 'pack.mcmeta',
+             'coremods/basemetals_117_compatibility.js', 'pack.mcmeta',
              'data/basemetals/orespawn/provider.json', 'data/basemetals/recipes/stone_crackhammer.json',
              'data/minecraft/tags/blocks/anvil.json', 'assets/basemetals/lang/en_us.json',
              'META-INF/basemetals/docs/VERSIONS.md'].each { required ->
@@ -252,26 +254,26 @@ tasks.register('verifyReleaseArtifacts') {
             Manifest manifest = new Manifest(zip.getInputStream(zip.getEntry('META-INF/MANIFEST.MF')))
             if (manifest.mainAttributes.getValue('Maven-Artifact') != expectedMavenCoordinate
                     || manifest.mainAttributes.getValue('Build-Target') !=
-                    'minecraft-1.16.5-forge-36.2.34-java-8') {
+                    'minecraft-1.17.1-forge-37.1.1-java-16') {
                 throw new GradleException('Release manifest contains the wrong identity')
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
-            if (modsToml.contains('${') || !modsToml.contains('version="3.1.0.116051"')
-                    || !modsToml.contains('versionRange="[4.1.0.116051,5.0.0)"')
-                    || !modsToml.contains('loaderVersion="[36,)"')
-                    || !modsToml.contains('versionRange="[36,)"')
-                    || !modsToml.contains('versionRange="[1.16.5]"')) {
+            if (modsToml.contains('${') || !modsToml.contains('version="3.1.0.117011"')
+                    || !modsToml.contains('versionRange="[4.1.0.117011,5.0.0)"')
+                    || !modsToml.contains('loaderVersion="[37,38)"')
+                    || !modsToml.contains('versionRange="[37,38)"')
+                    || !modsToml.contains('versionRange="[1.17.1]"')) {
                 throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
             }
             def pack = new JsonSlurper().parse(zip.getInputStream(zip.getEntry('pack.mcmeta')))
-            if (pack.pack.pack_format != 6) {
-                throw new GradleException('Release resources must use Minecraft 1.16 pack format 6')
+            if (pack.pack.pack_format != 7) {
+                throw new GradleException('Release resources must use Minecraft 1.17 pack format 7')
             }
             def provider = new JsonSlurper().parse(zip.getInputStream(
                     zip.getEntry('data/basemetals/orespawn/provider.json')))
             if (provider.schema_version != 3 || provider.provider_revision != 1
                     || provider.provider_modid != 'basemetals' || provider.ores.size() != 11
-                    || provider.ores['basemetals:ore/copper'].enabled != true) {
+                    || provider.ores['basemetals:ore/copper'].enabled != false) {
                 throw new GradleException('OreSpawn provider contract changed')
             }
             def locales = names.findAll { it ==~ /assets\/basemetals\/lang\/.+\.json/ }

@@ -38,7 +38,7 @@ class OreSpawnSchemaValidationTest {
 	private static void validate(JsonObject schema, JsonElement value, Document document,
 			String path, boolean probe) throws Exception {
 		if (schema.has("$ref")) {
-			Reference reference = resolve(document, schema.get("$ref").getAsString());
+			ConditionReference reference = resolve(document, schema.get("$ref").getAsString());
 			validate(reference.schema, value, reference.document, path, probe);
 			return;
 		}
@@ -160,7 +160,7 @@ class OreSpawnSchemaValidationTest {
 		}
 	}
 
-	private static Reference resolve(Document current, String reference) throws Exception {
+	private static ConditionReference resolve(Document current, String reference) throws Exception {
 		String[] parts = reference.split("#", 2);
 		Document target = parts[0].isEmpty() ? current : document(SCHEMAS.resolve(parts[0]));
 		JsonElement value = target.root;
@@ -169,7 +169,7 @@ class OreSpawnSchemaValidationTest {
 				value = value.getAsJsonObject().get(token.replace("~1", "/").replace("~0", "~"));
 			}
 		}
-		return new Reference(target, value.getAsJsonObject());
+		return new ConditionReference(target, value.getAsJsonObject());
 	}
 
 	private static Document document(Path path) throws Exception {
@@ -192,10 +192,10 @@ class OreSpawnSchemaValidationTest {
 		Document(Path path, JsonObject root) { this.path = path; this.root = root; }
 	}
 
-	private static final class Reference {
+	private static final class ConditionReference {
 		final Document document;
 		final JsonObject schema;
-		Reference(Document document, JsonObject schema) { this.document = document; this.schema = schema; }
+		ConditionReference(Document document, JsonObject schema) { this.document = document; this.schema = schema; }
 	}
 
 	private static final class ValidationFailure extends RuntimeException {

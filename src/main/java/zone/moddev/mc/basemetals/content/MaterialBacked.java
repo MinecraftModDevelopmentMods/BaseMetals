@@ -2,9 +2,9 @@ package zone.moddev.mc.basemetals.content;
 
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public interface MaterialBacked {
     MaterialDefinition baseMetalsMaterial();
