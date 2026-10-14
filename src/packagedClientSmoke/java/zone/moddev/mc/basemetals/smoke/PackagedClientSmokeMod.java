@@ -10,5 +10,6 @@ public final class PackagedClientSmokeMod {
 
     public PackagedClientSmokeMod() {
         MinecraftForge.EVENT_BUS.register(IntegratedWorldSmoke.class);
+        MinecraftForge.EVENT_BUS.register(RemoteLoginSmoke.class);
     }
 }

@@ -31,6 +31,8 @@ public final class BaseMetalAmmoItem extends ArrowItem implements MaterialBacked
 
     @Override
     public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter) {
-        return new MaterialProjectile(entityType.get(), level, shooter, stack);
+        MaterialProjectile projectile = new MaterialProjectile(entityType.get(), level, shooter, stack);
+        projectile.setBaseDamage(1.0D + material.baseAttackDamage());
+        return projectile;
     }
 }

@@ -1,3 +1,20 @@
+Base Metals 3.1.0.118021
+
+- Bring raw metals, ore overlays and High/Low Fantasy modes to Minecraft 1.18.2, along with the fixes from the earlier ports.
+- Use KiriCattus' ore overlays over vanilla block textures, including resource-pack replacements.
+- Add twelve raw metals, Fortune and Silk Touch drops, raw crushing, smelting and blasting. Copper uses vanilla raw copper.
+- Add High and Low Fantasy modes and a configuration screen in both the Mods list and OreSpawn. Old configs default to High Fantasy.
+- Stop metal powders and nuggets burning in furnaces (#473).
+- Give doors distinct six-ingredient recipes, separate from trapdoors (#474).
+- Restore sixteen steel rails, material-based ranged damage, and ingot-based recipe discovery (#467).
+- Fix Obsidian and equipment recipe loops. Keep plate repair recipes out of the recipe book and preserve names and custom item data.
+- Fix thin transparent blocks hiding neighbouring faces, improve bucket names and tooltips, and make horse armour unstackable.
+- Improve old-world aliases and wall conversion, remove phantom bed entities, and protect saved terrain while allowing 1.18's new underground.
+- Require the published OreSpawn 4.1.0.118021 release. Keep the existing ore rules, height ranges and disabled-by-default Base Metals copper generation.
+- Move native model and data generation out of the production source set. The generateResources task updates the checked-in data.
+- Keep optional mods out of normal development launches. Add a separate client profile for Tinkers, Mantle and compatibility testing.
+- Fix flickering bar textures by using the correct centre-post and end pieces, without changing their collision shapes.
+
 Base Metals 3.0.1.118021
 
 - Modernize the Minecraft 1.18.2 build to ForgeGradle 7.0.34 and Gradle 9.6.1.

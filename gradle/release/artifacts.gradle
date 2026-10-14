@@ -78,9 +78,11 @@ def expectedReleaseNames = [mainReleaseName, sourcesReleaseName, javadocReleaseN
 
 def packagedServerSmokeJar = tasks.register('packagedServerSmokeJar', Jar) {
     dependsOn tasks.named(sourceSets.packagedServerSmoke.classesTaskName)
+    dependsOn tasks.named(sourceSets.upgradeSmoke.classesTaskName)
     archiveFileName = 'basemetals-server-smoke-dev.jar'
     destinationDirectory = layout.buildDirectory.dir('packaged-smoke-probes')
     from sourceSets.packagedServerSmoke.output.classesDirs
+    from sourceSets.upgradeSmoke.output.classesDirs
     from 'src/packagedServerSmoke/packaged-resources'
 }
 def packagedServerSmokeProbe = renamer.classes(packagedServerSmokeJar) {
@@ -197,7 +199,7 @@ tasks.register('verifyReleaseConfiguration') {
     dependsOn tasks.named('verifyMavenizerCompatibilityFixture')
     dependsOn tasks.named('verifyJava17Toolchain')
     doLast {
-        if (configuredReleaseIdentity.modVersion != '3.0.1.118021'
+        if (configuredReleaseIdentity.modVersion != '3.1.0.118021'
                 || configuredReleaseIdentity.modGroup != expectedMavenGroup
                 || configuredReleaseIdentity.minecraftVersion != '1.18.2'
                 || configuredReleaseIdentity.forgeVersion != '40.3.0'
@@ -218,10 +220,10 @@ tasks.register('verifyReleaseDependencies') {
     group = 'verification'
     description = 'Resolves and verifies the exact released OreSpawn qualification dependency.'
     doLast {
-        if (configuredOreSpawnIdentity.version != '4.0.16.118021'
+        if (configuredOreSpawnIdentity.version != '4.1.0.118021'
                 || configuredOreSpawnIdentity.curseProjectId != '245586'
-                || configuredOreSpawnIdentity.curseFileId != '8780769'
-                || configuredOreSpawnIdentity.sha256 != '76FD6140FE85C3D9EEA0321A0441D352A0B2643390A1090BBB1F70FE104C5717') {
+                || configuredOreSpawnIdentity.curseFileId != '9097992'
+                || configuredOreSpawnIdentity.sha256 != 'BD8D84A96DAFB7668E95D61B9D72C62AEF3440675473E41244C182C64653356F') {
             throw new GradleException('Unexpected OreSpawn release coordinates')
         }
         File artifact = configurations.orespawnRelease.resolvedConfiguration.resolvedArtifacts
@@ -243,6 +245,8 @@ def forbiddenReleasePath = { String entryName ->
             || name.startsWith('reference/')
             || name.startsWith('agent-notes/')
             || name.contains('/agent-notes/')
+            || name.startsWith('src/datagenerator/')
+            || name.startsWith('zone/moddev/mc/basemetals/data/')
             || name.startsWith('src/gametest/')
             || name.startsWith('src/integratedsmoke/')
             || name.startsWith('src/packagedclientsmoke/')
@@ -290,7 +294,7 @@ tasks.register('verifyReleaseArtifacts') {
                     'data/forge/loot_modifiers/global_loot_modifiers.json',
                     'assets/basemetals/lang/en_us.json',
                     'META-INF/basemetals/docs/VERSIONS.md',
-                    'META-INF/basemetals/docs/schemas/orespawn-4.0.16/orespawn-provider.schema.json'
+                    'META-INF/basemetals/docs/schemas/orespawn-4.1.0/orespawn-provider.schema.json'
             ].each { required ->
                 if (!names.contains(required)) throw new GradleException("Release jar is missing ${required}")
             }
@@ -304,8 +308,8 @@ tasks.register('verifyReleaseArtifacts') {
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
             if (modsToml.contains('${')
-                    || !modsToml.contains('version="3.0.1.118021"')
-                    || !modsToml.contains('versionRange="[4.0.1,5.0.0)"')) {
+                    || !modsToml.contains('version="3.1.0.118021"')
+                    || !modsToml.contains('versionRange="[4.1.0.118021,5.0.0)"')) {
                 throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
             }
             def provider = new JsonSlurper().parse(zip.getInputStream(

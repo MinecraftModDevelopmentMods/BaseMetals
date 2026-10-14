@@ -23,6 +23,21 @@ public final class MigrationGameTests {
     private MigrationGameTests() {}
 
     @GameTest(template = "empty")
+    public static void floorAndCeilingLeversKeepTheirLegacyOrientation(GameTestHelper helper) {
+        var lever = net.minecraft.world.level.block.Blocks.LEVER;
+        for (int metadata : new int[] {0, 5, 6, 7, 8, 13, 14, 15}) {
+            var expected = LegacyWorldDataHook.legacyState(lever, "", metadata);
+            var facing = (metadata & 7) == 0 || (metadata & 7) == 6
+                    ? net.minecraft.core.Direction.EAST : net.minecraft.core.Direction.NORTH;
+            require(helper, expected.getValue(net.minecraft.world.level.block.LeverBlock.FACING) == facing,
+                    "Legacy lever facing changed for metadata " + metadata);
+            require(helper, Legacy112WorldMigrator.matchesLegacyMetadata(expected, metadata),
+                    "The pre-flattening converter disagrees with the legacy hook for metadata " + metadata);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void vanillaFixesAndMmdlibStatesSurviveTheSameChunkConversion(GameTestHelper helper) {
         try {
             CompoundTag converted = Legacy112WorldMigrator.convertChunkForTest(legacyChunk(1_343), legacyIds());

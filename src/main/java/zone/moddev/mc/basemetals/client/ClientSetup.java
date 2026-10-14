@@ -42,7 +42,20 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
+        net.minecraftforge.fml.ModLoadingContext.get().registerExtensionPoint(
+                net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory.class,
+                () -> new net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory(
+                        (minecraft, parent) -> new BaseMetalsConfigScreen(parent)));
         event.enqueueWork(() -> {
+            zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry.registerConfigScreen(
+                    BaseMetals.MOD_ID, BaseMetalsConfigScreen::new);
+            ModContent.blocksById().forEach((id, block) -> {
+                if (id.endsWith("_ore")) ItemBlockRenderTypes.setRenderLayer(block.get(), RenderType.cutout());
+            });
+            ModContent.fluids().values().forEach(fluid -> {
+                ItemBlockRenderTypes.setRenderLayer(fluid.source().get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(fluid.flowing().get(), RenderType.translucent());
+            });
             ModContent.blocksById().values().stream()
                     .map(entry -> entry.get())
                     .forEach(ClientSetup::registerBlockRenderLayer);

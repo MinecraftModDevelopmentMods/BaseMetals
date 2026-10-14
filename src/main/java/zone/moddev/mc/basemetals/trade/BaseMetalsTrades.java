@@ -59,6 +59,7 @@ public final class BaseMetalsTrades {
             MaterialDefinition material, String... forms) {
         for (String form : forms) {
             Item item = ModContent.item(material.name() + "_" + form).get();
+            if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(item.getRegistryName().toString())) continue;
             event.getTrades().get(level).add(selling(item, cost));
         }
     }
@@ -69,22 +70,27 @@ public final class BaseMetalsTrades {
         if (event.getType() == VillagerProfession.ARMORER) {
             int armorCost = cost + 7 + (int) (material.hardness() / 2.0D);
             for (String form : List.of("helmet", "chestplate", "leggings", "boots")) {
+                if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows("basemetals:" + material.name() + "_" + form)) continue;
                 event.getTrades().get(advanced).add(enchanted(
                         ModContent.item(material.name() + "_" + form).get(), armorCost));
             }
         } else if (event.getType() == VillagerProfession.WEAPONSMITH) {
             int weaponCost = cost + 6 + Math.max(0, (int) (material.baseAttackDamage() / 2.0F));
             for (String form : List.of("sword", "crossbow", "bow")) {
+                if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows("basemetals:" + material.name() + "_" + form)) continue;
                 event.getTrades().get(advanced).add(enchanted(
                         ModContent.item(material.name() + "_" + form).get(), weaponCost));
             }
         } else if (event.getType() == VillagerProfession.TOOLSMITH) {
             for (String form : List.of("axe", "hoe", "shovel", "pickaxe")) {
+                if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows("basemetals:" + material.name() + "_" + form)) continue;
                 event.getTrades().get(advanced).add(enchanted(
                         ModContent.item(material.name() + "_" + form).get(), cost + 7));
             }
-            event.getTrades().get(Math.min(5, level + 2)).add(enchanted(
-                    ModContent.item(material.name() + "_crackhammer").get(), cost + 7));
+            if (zone.moddev.mc.basemetals.config.ContentPolicy.active().allows("basemetals:" + material.name() + "_crackhammer")) {
+                event.getTrades().get(Math.min(5, level + 2)).add(enchanted(
+                        ModContent.item(material.name() + "_crackhammer").get(), cost + 7));
+            }
         }
     }
 

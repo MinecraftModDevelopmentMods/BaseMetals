@@ -43,6 +43,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class UpgradeWorldSmoke {
     private static final String ENABLED_PROPERTY = "basemetals.upgradeWorldSmoke";
     private static final String LEGACY_WORLD_PROPERTY = "basemetals.legacyWorldSmoke";
+    private static final java.util.Set<net.minecraft.world.level.ChunkPos> equipmentChunks = new java.util.HashSet<>();
+    private static ServerStartedEvent pending;
+    private static int waitTicks;
+    private static boolean equipmentReady;
 
     private UpgradeWorldSmoke() {}
 
@@ -51,6 +55,12 @@ public final class UpgradeWorldSmoke {
         boolean fixture = Boolean.getBoolean(ENABLED_PROPERTY);
         boolean legacyWorld = Boolean.getBoolean(LEGACY_WORLD_PROPERTY);
         if (!fixture && !legacyWorld) return;
+
+        if (fixture && !equipmentReady) {
+            prepareEquipmentChunks(event);
+            pending = event;
+            return;
+        }
 
         Path root = event.getServer().getWorldPath(LevelResource.ROOT);
         if (legacyWorld) {
@@ -75,7 +85,8 @@ public final class UpgradeWorldSmoke {
         int checkedBuckets = 0;
         int checkedPlayerItems = 0;
         try {
-            if (!Files.isRegularFile(marker)) failures.add("missing legacy fixture marker");
+            boolean source110 = Files.isRegularFile(root.resolve("BASEMETALS_1_10_FIXTURE_COMPLETE.txt"));
+            if (!Files.isRegularFile(marker) && !source110) failures.add("missing legacy fixture marker");
             JsonObject manifest;
             try (Reader reader = Files.newBufferedReader(manifestPath, StandardCharsets.UTF_8)) {
                 manifest = JsonParser.parseReader(reader).getAsJsonObject();
@@ -93,8 +104,10 @@ public final class UpgradeWorldSmoke {
                     BlockPos pos = new BlockPos(oldState.get("x").getAsInt(), oldState.get("y").getAsInt(),
                             oldState.get("z").getAsInt());
                     String actual = String.valueOf(ForgeRegistries.BLOCKS.getKey(world.getBlockState(pos).getBlock()));
-                    boolean stateMatches = Legacy112WorldMigrator.matchesLegacyMetadata(world.getBlockState(pos),
-                            oldState.get("metadata").getAsInt());
+                    int metadata = oldState.has("saved_metadata") ? oldState.get("saved_metadata").getAsInt()
+                            : oldState.get("metadata").getAsInt();
+                    boolean stateMatches = Legacy112WorldMigrator.matchesLegacyMetadata(world.getBlockState(pos), metadata)
+                            && matchesSavedProperties(world.getBlockState(pos), oldState);
                     if (!expected.equals(actual) || !stateMatches) {
                         if (blockMismatches < 10) {
                             failures.add("block dim=" + dimension + " " + pos + " expected " + expected + " metadata="
@@ -150,12 +163,16 @@ public final class UpgradeWorldSmoke {
                             (int) Math.floor(oldItem.get("armor_z").getAsDouble()));
                     overworld.getChunkAt(armorPos);
                     List<ArmorStand> stands = overworld.getEntitiesOfClass(ArmorStand.class,
-                            new AABB(armorPos).inflate(0.75D));
+                            new AABB(armorPos.getX() - 0.75D, overworld.getMinBuildHeight(), armorPos.getZ() - 0.75D,
+                                    armorPos.getX() + 1.75D, overworld.getMaxBuildHeight(), armorPos.getZ() + 1.75D));
                     EquipmentSlot equipmentSlot = EquipmentSlot.byName(oldItem.get("armor_slot").getAsString());
                     boolean equipped = stands.stream().anyMatch(stand -> {
                         ItemStack worn = stand.getItemBySlot(equipmentSlot);
                         return expected.equals(String.valueOf(ForgeRegistries.ITEMS.getKey(worn.getItem())))
-                                && worn.getDamageValue() == expectedDamage;
+                                && worn.getDamageValue() == expectedDamage
+                                && worn.getOrCreateTagElement("basemetals_fixture").getString("proof")
+                                        .equals(oldItem.get("id").getAsString())
+                                && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, worn) == 2;
                     });
                     if (!equipped) {
                         if (itemMismatches < 10) failures.add("missing armor-stand equipment " + expected);
@@ -216,12 +233,13 @@ public final class UpgradeWorldSmoke {
                 }
             }
 
-            if (!Files.isRegularFile(root.resolve("legacy_orespawn3_basemetals.json"))) {
+            if (!source110 && !Files.isRegularFile(root.resolve("legacy_orespawn3_basemetals.json"))) {
                 failures.add("missing packaged Base Metals OS3 rule fixture");
             }
-            if (!Files.isRegularFile(root.resolve("legacy_orespawn3_orespawn.json"))) {
+            if (!source110 && !Files.isRegularFile(root.resolve("legacy_orespawn3_orespawn.json"))) {
                 failures.add("missing configured OS3 rule fixture");
             }
+            verifySavedAdvancements(event.getServer(), overworld, root);
         } catch (IOException | RuntimeException exception) {
             failures.add(exception.toString());
         }
@@ -249,6 +267,88 @@ public final class UpgradeWorldSmoke {
         return new BlockPos(xOffset + ordinal % 64, y, ordinal / 64);
     }
 
+    private static void prepareEquipmentChunks(ServerStartedEvent event) {
+        Path manifest = event.getServer().getWorldPath(LevelResource.ROOT).resolve("legacy_registry_manifest_runtime.json");
+        try {
+            for (var entry : JsonParser.parseString(Files.readString(manifest)).getAsJsonObject().getAsJsonArray("items")) {
+                var item = entry.getAsJsonObject();
+                if (!item.has("armor_stand")) continue;
+                int x = (int) Math.floor(item.get("armor_x").getAsDouble()) >> 4;
+                int z = (int) Math.floor(item.get("armor_z").getAsDouble()) >> 4;
+                equipmentChunks.add(new net.minecraft.world.level.ChunkPos(x, z));
+                event.getServer().overworld().setChunkForced(x, z, true);
+                event.getServer().overworld().getChunk(x, z);
+            }
+        } catch (IOException exception) {
+            throw new IllegalStateException("Could not read the equipment fixture", exception);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onServerTick(net.minecraftforge.event.TickEvent.ServerTickEvent event) {
+        if (event.phase != net.minecraftforge.event.TickEvent.Phase.END || pending == null || ++waitTicks < 20) return;
+        var server = pending.getServer();
+        boolean loaded = equipmentChunks.stream().allMatch(chunk -> server.overworld().areEntitiesLoaded(chunk.toLong()));
+        if (!loaded && waitTicks < 200) return;
+        if (!loaded) throw new IllegalStateException("Timed out loading upgrade equipment chunks");
+        ServerStartedEvent started = pending;
+        pending = null;
+        equipmentReady = true;
+        onServerStarted(started);
+        server.saveAllChunks(true, true, false);
+        equipmentChunks.forEach(chunk -> server.overworld().setChunkForced(chunk.x, chunk.z, false));
+    }
+
+    private static void verifySavedAdvancements(net.minecraft.server.MinecraftServer server,
+            ServerLevel world, Path root) throws IOException {
+        Path fixtureFile = root.resolve("basemetals_advancement_upgrade_fixture.json");
+        if (!Files.isRegularFile(fixtureFile)) return;
+        JsonObject fixture = JsonParser.parseString(Files.readString(fixtureFile)).getAsJsonObject();
+        var player = net.minecraftforge.common.util.FakePlayerFactory.get(world,
+                new GameProfile(UUID.fromString(fixture.get("uuid").getAsString()), "UpgradeProgress"));
+        int retained = 0;
+        for (var entry : fixture.getAsJsonObject("progress").entrySet()) {
+            if ("DataVersion".equals(entry.getKey())) continue;
+            var advancement = server.getAdvancements().getAdvancement(new ResourceLocation(entry.getKey()));
+            if (advancement == null) throw new IllegalStateException("Saved advancement missing: " + entry.getKey());
+            var progress = player.getAdvancements().getOrStartProgress(advancement);
+            if (!progress.isDone()) throw new IllegalStateException("Saved advancement is incomplete: " + entry.getKey());
+            for (var saved : entry.getValue().getAsJsonObject().getAsJsonObject("criteria").entrySet()) {
+                var criterion = progress.getCriterion(saved.getKey());
+                if (criterion == null || !criterion.isDone()) {
+                    throw new IllegalStateException("Lost advancement criterion: " + entry.getKey() + "/" + saved.getKey());
+                }
+                retained++;
+            }
+        }
+        player.getAdvancements().save();
+        BaseMetals.LOGGER.info("BASEMETALS_UPGRADE_ADVANCEMENTS PASS criteria={}", retained);
+    }
+
+    private static boolean matchesSavedProperties(net.minecraft.world.level.block.state.BlockState actual,
+            JsonObject saved) {
+        if (!saved.has("saved_properties")) return true;
+        var current = new java.util.LinkedHashMap<String, String>();
+        actual.getValues().forEach((property, value) -> current.put(property.getName(),
+                value.toString().toLowerCase(java.util.Locale.ROOT)));
+        for (var entry : saved.getAsJsonObject("saved_properties").entrySet()) {
+            String key = entry.getKey();
+            if (actual.getBlock() instanceof net.minecraft.world.level.block.SlabBlock && "half".equals(key)) key = "type";
+            if (actual.getBlock() instanceof net.minecraft.world.level.block.DoorBlock) {
+                boolean upper = "upper".equals(current.get("half"));
+                if (upper && ("facing".equals(key) || "open".equals(key))) continue;
+                if (!upper && ("hinge".equals(key) || "powered".equals(key))) continue;
+            }
+            // Neighbours, redstone and flowing fluids can change these after loading.
+            if (java.util.Set.of("variant", "shape", "powered", "level", "north", "south", "east", "west", "up", "down")
+                    .contains(key)) continue;
+            if (actual.getBlock() instanceof net.minecraft.world.level.block.ButtonBlock
+                    || actual.getBlock() instanceof net.minecraft.world.level.block.LeverBlock) continue;
+            if (!entry.getValue().getAsString().equals(current.get(key))) return false;
+        }
+        return true;
+    }
+
     private static ServerLevel level(ServerStartedEvent event, int dimension) {
         ServerLevel result = event.getServer().getLevel(switch (dimension) {
             case -1 -> Level.NETHER;
@@ -260,7 +360,7 @@ public final class UpgradeWorldSmoke {
     }
 
     private static String currentBlockId(String legacy) {
-        ResourceLocation id = new ResourceLocation(legacy);
+        ResourceLocation id = new ResourceLocation(legacy.toLowerCase(java.util.Locale.ROOT));
         if (id.getNamespace().equals("mmdlib") || id.getNamespace().equals(BaseMetals.MOD_ID)) {
             return BaseMetals.MOD_ID + ":" + MissingMappings.blockTargetPath(id.getPath());
         }
@@ -268,7 +368,7 @@ public final class UpgradeWorldSmoke {
     }
 
     private static String currentItemId(String legacy) {
-        ResourceLocation id = new ResourceLocation(legacy);
+        ResourceLocation id = new ResourceLocation(legacy.toLowerCase(java.util.Locale.ROOT));
         if (id.getNamespace().equals("mmdlib") || id.getNamespace().equals(BaseMetals.MOD_ID)) {
             return MissingMappings.itemTargetId(id.getPath()).toString();
         }

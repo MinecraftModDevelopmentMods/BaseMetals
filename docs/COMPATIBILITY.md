@@ -30,3 +30,15 @@ through Forge tags.
 
 Mineralogy is entirely optional. Base Metals never links to its Java classes;
 OreSpawn's rock-family host matching is the only integration point.
+
+## Low Fantasy
+
+Base Metals filters its own crafting, processing, trades and chest additions.
+Its conditional integration recipes follow the same material restrictions.
+Tinkers' bundled material stats do not provide bows or parts that would enable
+a restricted tool family. Explicit third-party recipes and data-pack overrides
+remain under the pack author's control.
+
+Raw metals have their own `forge:raw_materials/<metal>` tags. They are not dusts
+and cannot replace powders in alloy blends. Vanilla raw iron, gold and copper
+are supported by the crushing recipes.

@@ -13,6 +13,10 @@
     {
       "type": "forge:mod_loaded",
       "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:invar_powder"
     }
   ]
 }

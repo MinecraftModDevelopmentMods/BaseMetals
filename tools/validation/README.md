@@ -1,0 +1,33 @@
+# World upgrade checks
+
+`test_legacy_worlds.js` starts the packaged Forge 1.18.2 server against a fresh
+copy of each supplied world, then starts it again to check the saved result.
+It refuses to overwrite an existing test directory and fingerprints every
+source world before and after the test.
+
+Pass a local JSON specification containing `java17`, `runtime118`, `output`,
+`modJar`, `probeJar`, `oreSpawn` (a `path` and `sha256`), and a `profiles` list.
+Each profile needs an `id`, `world` path and expected log `marker`. Captured
+fixtures include a registry manifest so the probe can check each block state,
+inventory stack, worn item and filled bucket rather than just successful startup.
+Keep machine-specific specifications and test output outside the checkout.
+For fresh-world compatibility checks, set `fresh:true` and `fixture:false`.
+Optional `extraMods`, `contentMode`, `dataPacks` and JVM `properties` let the
+same runner check installed integrations and explicit data-pack overrides.
+
+`compare_world_terrain.py` checks fixed vanilla terrain before and after
+conversion. It accepts Minecraft's new underground floor and accounts for
+normal falling sand and gravel, but rejects ore replacing existing rock.
+It needs the Python `nbtlib` package. Run `test_world_terrain.py` to check the
+palette readers and falling-block comparison.
+
+## Client/server content modes
+
+`test_content_modes.js` launches a separate client and server for each case.
+It checks unchanged older configs, missing configs, matching Low Fantasy modes,
+and both kinds of mismatch. Existing gameplay switches must keep their values.
+
+Its local specification needs `java17`, `serverRuntime`, `clientRuntime`,
+`output`, `modJar`, `serverProbe`, `clientProbe`, and the same checksum-pinned
+`oreSpawn` object used by the world tests. The test uses localhost only and
+chooses a free port; no public Minecraft server is involved.

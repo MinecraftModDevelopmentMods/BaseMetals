@@ -50,6 +50,7 @@ def preparePackagedServerSmoke = tasks.register('preparePackagedServerSmoke') {
             from releaseJar
             from packagedServerSmokeProbe
             from configurations.orespawnRelease
+            from configurations.packagedCompatibilityMods
             into new File(runDirectory, 'mods')
         }
         new File(runDirectory, 'server.properties').setText('''\
@@ -63,6 +64,13 @@ spawn-protection=0
 max-tick-time=-1
 ''', 'UTF-8')
         new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
+        String mode = providers.gradleProperty('packagedContentMode').getOrElse('')
+        if (!mode.isEmpty()) {
+            if (!(mode in ['high_fantasy', 'low_fantasy'])) throw new GradleException("Invalid test mode: ${mode}")
+            File config = new File(runDirectory, 'config/basemetals-common.toml')
+            config.parentFile.mkdirs()
+            config.setText("contentMode=\"${mode}\"\n", 'UTF-8')
+        }
     }
 }
 
@@ -98,8 +106,8 @@ def packagedServerStartupSmoke = tasks.register('packagedServerStartupSmoke', Ex
         if (!marker.isFile()) throw new GradleException('Packaged dedicated-server completion marker is missing')
         Properties values = new Properties()
         marker.withInputStream { values.load(it) }
-        if (values.getProperty('basemetals') != '3.0.1.118021'
-                || values.getProperty('orespawn') != '4.0.16.118021'
+        if (values.getProperty('basemetals') != '3.1.0.118021'
+                || values.getProperty('orespawn') != '4.1.0.118021'
                 || values.getProperty('forge') != '40.3.0') {
             throw new GradleException("Packaged dedicated-server versions are wrong: ${values}")
         }
@@ -122,6 +130,7 @@ def preparePackagedClientSmoke = tasks.register('preparePackagedClientSmoke') {
             from releaseJar
             from packagedClientSmokeProbe
             from configurations.orespawnRelease
+            from configurations.packagedCompatibilityMods
             into new File(runDirectory, 'mods')
         }
         File probeJar = new File(runDirectory, 'mods/basemetals-client-smoke.jar')
@@ -133,6 +142,26 @@ def preparePackagedClientSmoke = tasks.register('preparePackagedClientSmoke') {
             }
         }
         new File(runDirectory, 'options.txt').setText('fullscreen:false\nlang:en_us\n', 'UTF-8')
+        if (providers.gradleProperty('packagedHostTextureProbe').isPresent()) {
+            File runtime = requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime')
+            File hostPack = new File(runDirectory, 'resourcepacks/basemetals-host-test')
+            File texture = new File(hostPack, 'assets/minecraft/textures/block/stone.png')
+            texture.parentFile.mkdirs()
+            new java.util.zip.ZipFile(new File(runtime, 'versions/1.18.2/1.18.2.jar')).withCloseable { zip ->
+                texture.bytes = zip.getInputStream(zip.getEntry('assets/minecraft/textures/block/dirt.png')).bytes
+            }
+            new File(hostPack, 'pack.mcmeta').setText(
+                    '{"pack":{"pack_format":8,"description":"Ore host replacement test"}}\n', 'UTF-8')
+            new File(runDirectory, 'options.txt').append(
+                    'resourcePacks:["vanilla","mod_resources","file/basemetals-host-test"]\n', 'UTF-8')
+        }
+        String mode = providers.gradleProperty('packagedContentMode').getOrElse('')
+        if (!mode.isEmpty()) {
+            if (!(mode in ['high_fantasy', 'low_fantasy'])) throw new GradleException("Invalid test mode: ${mode}")
+            File config = new File(runDirectory, 'config/basemetals-common.toml')
+            config.parentFile.mkdirs()
+            config.setText("contentMode=\"${mode}\"\n", 'UTF-8')
+        }
     }
 }
 
@@ -219,6 +248,7 @@ def packagedClientStartupSmoke = tasks.register('packagedClientStartupSmoke', Ex
                 '-Xms512m', '-Xmx2g',
                 '-Dbasemetals.integratedWorldSmoke=true',
                 '-Dbasemetals.integratedWorldSmokeName=basemetals-packaged-client-smoke',
+                "-Dbasemetals.hostTextureProbe=${providers.gradleProperty('packagedHostTextureProbe').isPresent()}",
                 "-Djava.library.path=${nativesDirectory.absolutePath}",
                 '-Dminecraft.launcher.brand=basemetals-validation',
                 '-Dminecraft.launcher.version=1'

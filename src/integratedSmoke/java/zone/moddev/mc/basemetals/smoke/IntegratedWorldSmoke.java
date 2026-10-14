@@ -66,6 +66,18 @@ public final class IntegratedWorldSmoke {
 
         Minecraft minecraft = Minecraft.getInstance();
         elapsedTicks++;
+        if (elapsedTicks == 1) {
+            String expectedMods = System.getProperty("basemetals.expectedSmokeMods", "");
+            if (!expectedMods.isEmpty()) {
+                var expected = new java.util.TreeSet<>(java.util.List.of(expectedMods.split(",")));
+                var actual = new java.util.TreeSet<>(net.minecraftforge.fml.ModList.get().getMods().stream()
+                        .map(net.minecraftforge.forgespi.language.IModInfo::getModId).toList());
+                if (!actual.equals(expected)) {
+                    throw new IllegalStateException("Client loaded " + actual + "; expected " + expected);
+                }
+                BaseMetals.LOGGER.info("BASEMETALS_CLIENT_PROFILE PASS mods={}", actual);
+            }
+        }
         if (!renderLayersChecked) {
             verifyBlockRenderLayers();
             renderLayersChecked = true;
@@ -80,6 +92,9 @@ public final class IntegratedWorldSmoke {
                     minecraft.getOverlay() == null ? "none" : minecraft.getOverlay().getClass().getName());
         }
         if (!creationStarted && minecraft.screen instanceof TitleScreen) {
+            ConfigScreenSmoke.verify(minecraft, minecraft.screen);
+            verifyOreOverlayModels(minecraft);
+            verifyBarsModels(minecraft);
             creationStarted = true;
             String worldName = System.getProperty(WORLD_PROPERTY, "basemetals-integrated-smoke");
             RegistryAccess.Frozen registries = RegistryAccess.BUILTIN.get();
@@ -93,6 +108,16 @@ public final class IntegratedWorldSmoke {
                     DataPackConfig.DEFAULT);
             BaseMetals.LOGGER.info("BASEMETALS_INTEGRATED_SMOKE creating world={}", worldName);
             minecraft.createLevel(worldName, levelSettings, registries, WorldGenSettings.makeDefault(registries));
+        }
+
+        if (creationStarted && minecraft.screen instanceof net.minecraft.client.gui.screens.ConfirmScreen) {
+            String title = minecraft.screen.getTitle().getString();
+            if (!title.toLowerCase(java.util.Locale.ROOT).contains("experimental")) {
+                throw new IllegalStateException("Unexpected confirmation in the disposable world: " + title);
+            }
+            // Forge marks modded registries experimental. This applies only to the new smoke-test world.
+            minecraft.screen.children().stream().filter(net.minecraft.client.gui.components.Button.class::isInstance)
+                    .map(net.minecraft.client.gui.components.Button.class::cast).findFirst().orElseThrow().onPress();
         }
 
         if (minecraft.hasSingleplayerServer() && minecraft.getSingleplayerServer() != null
@@ -136,6 +161,118 @@ public final class IntegratedWorldSmoke {
             completed = true;
             throw new IllegalStateException("BASEMETALS_INTEGRATED_SMOKE FAIL: timed out before a stable integrated world");
         }
+    }
+
+    private static void verifyOreOverlayModels(Minecraft minecraft) {
+        int ores = 0;
+        for (var entry : ModContent.blocksById().entrySet()) {
+            if (!entry.getKey().endsWith("_ore")) continue;
+            var state = entry.getValue().get().defaultBlockState();
+            var model = minecraft.getBlockRenderer().getBlockModel(state);
+            for (var face : net.minecraft.core.Direction.values()) {
+                var quads = model.getQuads(state, face, new java.util.Random(0));
+                if (quads.size() != 2) throw new IllegalStateException("Ore model lost a layer: " + entry.getKey());
+                boolean offset = quads.stream().anyMatch(quad -> {
+                    int[] vertices = quad.getVertices();
+                    for (int index = 0; index < vertices.length; index += 8) {
+                        for (int axis = 0; axis < 3; axis++) {
+                            float coordinate = Float.intBitsToFloat(vertices[index + axis]);
+                            if (coordinate < -0.003F || coordinate > 1.003F) return true;
+                        }
+                    }
+                    return false;
+                });
+                if (!offset) throw new IllegalStateException("Ore overlay is flush with its host: " + entry.getKey());
+            }
+            if (!ItemBlockRenderTypes.canRenderInLayer(state, RenderType.cutout())
+                    || ItemBlockRenderTypes.canRenderInLayer(state, RenderType.solid())) {
+                throw new IllegalStateException("Ore overlay is not cutout: " + entry.getKey());
+            }
+            ores++;
+        }
+        if (ores != 13) throw new IllegalStateException("Expected 13 ore models, found " + ores);
+        if (Boolean.getBoolean("basemetals.hostTextureProbe")) {
+            try {
+                var host = minecraft.getResourceManager().getResource(
+                        new net.minecraft.resources.ResourceLocation("minecraft:textures/block/stone.png"));
+                if (!host.getSourceName().contains("basemetals-host-test")) {
+                    throw new IllegalStateException("The ore host texture did not come from the replacement pack");
+                }
+                host.close();
+            } catch (java.io.IOException exception) {
+                throw new IllegalStateException("The replacement ore host texture is missing", exception);
+            }
+            BaseMetals.LOGGER.info("BASEMETALS_OVERLAY_HOST_PACK PASS vanilla_host=stone");
+        }
+        BaseMetals.LOGGER.info("BASEMETALS_OVERLAY_MODELS PASS ores={} model_offset=0.05", ores);
+    }
+
+    private static void verifyBarsModels(Minecraft minecraft) {
+        int patterns = 0;
+        for (var entry : ModContent.blocksById().entrySet()) {
+            if (!(entry.getValue().get() instanceof IronBarsBlock bars)) continue;
+
+            for (var state : bars.getStateDefinition().getPossibleStates()) {
+                if (state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED)) {
+                    continue;
+                }
+
+                var model = minecraft.getBlockRenderer().getBlockModel(state);
+                var quads = new java.util.ArrayList<>(model.getQuads(state, null, new java.util.Random(0)));
+                for (var face : net.minecraft.core.Direction.values()) {
+                    quads.addAll(model.getQuads(state, face, new java.util.Random(0)));
+                }
+
+                for (int first = 0; first < quads.size(); first++) {
+                    for (int second = first + 1; second < quads.size(); second++) {
+                        var a = quads.get(first);
+                        var b = quads.get(second);
+                        if (a.getDirection() != b.getDirection()) continue;
+
+                        int axis = switch (a.getDirection().getAxis()) {
+                            case X -> 0;
+                            case Y -> 1;
+                            case Z -> 2;
+                        };
+                        float[][] aBounds = quadBounds(a.getVertices());
+                        float[][] bBounds = quadBounds(b.getVertices());
+                        if (Math.abs(aBounds[0][axis] - bBounds[0][axis]) > 0.01F / 16) continue;
+
+                        boolean overlaps = true;
+                        for (int dimension = 0; dimension < 3; dimension++) {
+                            if (dimension == axis) continue;
+                            if (Math.min(aBounds[1][dimension], bBounds[1][dimension])
+                                    - Math.max(aBounds[0][dimension], bBounds[0][dimension]) < 0.000001F) {
+                                overlaps = false;
+                            }
+                        }
+
+                        if (overlaps) {
+                            throw new IllegalStateException("Overlapping baked bar faces: " + state);
+                        }
+                    }
+                }
+                patterns++;
+            }
+        }
+
+        if (patterns != 416) throw new IllegalStateException("Expected 416 bar patterns, found " + patterns);
+        BaseMetals.LOGGER.info("BASEMETALS_BARS_MODELS PASS materials=26 connection_patterns={}", patterns);
+    }
+
+    private static float[][] quadBounds(int[] vertices) {
+        float[][] bounds = {{Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY},
+                {Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY}};
+
+        for (int vertex = 0; vertex < vertices.length; vertex += 8) {
+            for (int axis = 0; axis < 3; axis++) {
+                float coordinate = Float.intBitsToFloat(vertices[vertex + axis]);
+                bounds[0][axis] = Math.min(bounds[0][axis], coordinate);
+                bounds[1][axis] = Math.max(bounds[1][axis], coordinate);
+            }
+        }
+
+        return bounds;
     }
 
     private static void verifyBlockRenderLayers() {

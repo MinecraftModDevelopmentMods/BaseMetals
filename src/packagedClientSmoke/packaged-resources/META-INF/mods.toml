@@ -10,13 +10,13 @@ displayName="Base Metals packaged client smoke"
 [[dependencies.basemetals_client_smoke]]
 modId="basemetals"
 mandatory=true
-versionRange="[3.0.1.118021]"
+versionRange="[3.1.0.118021]"
 ordering="AFTER"
 side="CLIENT"
 
 [[dependencies.basemetals_client_smoke]]
 modId="orespawn"
 mandatory=true
-versionRange="[4.0.16.118021]"
+versionRange="[4.1.0.118021]"
 ordering="AFTER"
 side="CLIENT"

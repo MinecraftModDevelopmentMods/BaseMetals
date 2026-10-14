@@ -13,14 +13,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
- * One tagged plate fully repairs one damaged armor piece or shield. As in the
- * 1.12 recipe, enchantments survive but unrelated NBT and damage do not.
+ * A matching plate fully repairs one damaged armor piece or shield without changing its item data.
  */
 public final class PlateRepairRecipe extends CustomRecipe {
     private final Item target;
@@ -34,6 +32,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingContainer container, Level level) {
+        if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(target.getRegistryName().toString())) return false;
         ItemStack foundTarget = ItemStack.EMPTY;
         boolean foundPlate = false;
         for (int slot = 0; slot < container.getContainerSize(); slot++) {
@@ -52,11 +51,13 @@ public final class PlateRepairRecipe extends CustomRecipe {
 
     @Override
     public ItemStack assemble(CraftingContainer container) {
+        if (!matches(container, null)) return ItemStack.EMPTY;
         for (int slot = 0; slot < container.getContainerSize(); slot++) {
             ItemStack stack = container.getItem(slot);
             if (stack.is(target) && stack.isDamaged()) {
-                ItemStack repaired = target.getDefaultInstance();
-                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), repaired);
+                ItemStack repaired = stack.copy();
+                repaired.setCount(1);
+                repaired.setDamageValue(0);
                 return repaired;
             }
         }

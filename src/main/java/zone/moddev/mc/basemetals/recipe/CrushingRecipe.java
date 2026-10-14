@@ -33,6 +33,8 @@ public final class CrushingRecipe implements Recipe<Container> {
             SERIALIZERS.register("legacy_smelting", LegacySmeltingRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<PlateRepairRecipe>> PLATE_REPAIR_SERIALIZER =
             SERIALIZERS.register("plate_repair", PlateRepairRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<Recipe<?>>> CONTENT_CRAFTING_SERIALIZER =
+            SERIALIZERS.register("content_crafting", () -> ContentCraftingRecipe.SERIALIZER);
 
     private final ResourceLocation id;
     private final Ingredient ingredient;

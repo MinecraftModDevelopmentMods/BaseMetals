@@ -376,6 +376,7 @@
     "basemetals:adamantine_stairs",
     "basemetals:adamantine_wall",
     "basemetals:adamantine_ore",
+    "basemetals:adamantine_raw",
     "basemetals:adamantine_ingot",
     "basemetals:adamantine_nugget",
     "basemetals:adamantine_powder",
@@ -421,6 +422,7 @@
     "basemetals:antimony_stairs",
     "basemetals:antimony_wall",
     "basemetals:antimony_ore",
+    "basemetals:antimony_raw",
     "basemetals:antimony_ingot",
     "basemetals:antimony_nugget",
     "basemetals:antimony_powder",
@@ -504,6 +506,7 @@
     "basemetals:bismuth_stairs",
     "basemetals:bismuth_wall",
     "basemetals:bismuth_ore",
+    "basemetals:bismuth_raw",
     "basemetals:bismuth_ingot",
     "basemetals:bismuth_nugget",
     "basemetals:bismuth_powder",
@@ -625,6 +628,7 @@
     "basemetals:coldiron_stairs",
     "basemetals:coldiron_wall",
     "basemetals:coldiron_ore",
+    "basemetals:coldiron_raw",
     "basemetals:coldiron_ingot",
     "basemetals:coldiron_nugget",
     "basemetals:coldiron_powder",
@@ -821,6 +825,7 @@
     "basemetals:lead_stairs",
     "basemetals:lead_wall",
     "basemetals:lead_ore",
+    "basemetals:lead_raw",
     "basemetals:lead_ingot",
     "basemetals:lead_nugget",
     "basemetals:lead_powder",
@@ -847,6 +852,7 @@
     "basemetals:lead_leggings",
     "basemetals:lead_boots",
     "basemetals:mercury_ore",
+    "basemetals:mercury_raw",
     "basemetals:mercury_ingot",
     "basemetals:mercury_nugget",
     "basemetals:mercury_powder",
@@ -901,6 +907,7 @@
     "basemetals:nickel_stairs",
     "basemetals:nickel_wall",
     "basemetals:nickel_ore",
+    "basemetals:nickel_raw",
     "basemetals:nickel_ingot",
     "basemetals:nickel_nugget",
     "basemetals:nickel_powder",
@@ -984,6 +991,7 @@
     "basemetals:platinum_stairs",
     "basemetals:platinum_wall",
     "basemetals:platinum_ore",
+    "basemetals:platinum_raw",
     "basemetals:platinum_ingot",
     "basemetals:platinum_nugget",
     "basemetals:platinum_powder",
@@ -1029,6 +1037,7 @@
     "basemetals:silver_stairs",
     "basemetals:silver_wall",
     "basemetals:silver_ore",
+    "basemetals:silver_raw",
     "basemetals:silver_ingot",
     "basemetals:silver_nugget",
     "basemetals:silver_powder",
@@ -1066,6 +1075,7 @@
     "basemetals:starsteel_stairs",
     "basemetals:starsteel_wall",
     "basemetals:starsteel_ore",
+    "basemetals:starsteel_raw",
     "basemetals:starsteel_ingot",
     "basemetals:starsteel_nugget",
     "basemetals:starsteel_powder",
@@ -1149,6 +1159,7 @@
     "basemetals:tin_stairs",
     "basemetals:tin_wall",
     "basemetals:tin_ore",
+    "basemetals:tin_raw",
     "basemetals:tin_ingot",
     "basemetals:tin_nugget",
     "basemetals:tin_powder",
@@ -1186,6 +1197,7 @@
     "basemetals:zinc_stairs",
     "basemetals:zinc_wall",
     "basemetals:zinc_ore",
+    "basemetals:zinc_raw",
     "basemetals:zinc_ingot",
     "basemetals:zinc_nugget",
     "basemetals:zinc_powder",
@@ -1561,7 +1573,8 @@
   "recipe_serializers": [
     "basemetals:crushing",
     "basemetals:legacy_smelting",
-    "basemetals:plate_repair"
+    "basemetals:plate_repair",
+    "basemetals:content_crafting"
   ],
   "loot_modifier_serializers": [
     "basemetals:add_table"
@@ -1623,6 +1636,18 @@
     "basemetals:stone"
   ],
   "new_items": [
+    "basemetals:adamantine_raw",
+    "basemetals:antimony_raw",
+    "basemetals:bismuth_raw",
+    "basemetals:coldiron_raw",
+    "basemetals:lead_raw",
+    "basemetals:mercury_raw",
+    "basemetals:nickel_raw",
+    "basemetals:platinum_raw",
+    "basemetals:silver_raw",
+    "basemetals:starsteel_raw",
+    "basemetals:tin_raw",
+    "basemetals:zinc_raw",
     "basemetals:adamantine_bucket",
     "basemetals:antimony_bucket",
     "basemetals:aquarium_bucket",
@@ -1705,7 +1730,8 @@
   "new_recipe_serializers": [
     "basemetals:crushing",
     "basemetals:legacy_smelting",
-    "basemetals:plate_repair"
+    "basemetals:plate_repair",
+    "basemetals:content_crafting"
   ],
   "new_loot_modifier_serializers": [
     "basemetals:add_table"

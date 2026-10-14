@@ -194,7 +194,18 @@ public final class MaterialItems {
         public Bow(MaterialDefinition material, Properties properties) { super(properties); this.material = material; }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
         @Override public Predicate<ItemStack> getAllSupportedProjectiles() {
-            return ARROW_ONLY;
+            return stack -> stack.getItem() instanceof net.minecraft.world.item.ArrowItem
+                    && (!(stack.getItem() instanceof BaseMetalAmmoItem ammo)
+                            || ammo.kind() == BaseMetalAmmoItem.Kind.ARROW);
+        }
+
+        @Override public Predicate<ItemStack> getSupportedHeldProjectiles() {
+            return getAllSupportedProjectiles();
+        }
+
+        @Override public AbstractArrow customArrow(AbstractArrow arrow) {
+            arrow.setBaseDamage(arrow.getBaseDamage() + material.baseAttackDamage() - 1.0D);
+            return arrow;
         }
         @Override public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
             return isMaterialRepairIngredient(repair) || super.isValidRepairItem(toRepair, repair);
@@ -242,6 +253,7 @@ public final class MaterialItems {
                     || boltItem.isInfinite(ammunition, bow, player);
             if (!level.isClientSide) {
                 AbstractArrow bolt = boltItem.createArrow(level, ammunition, player);
+                bolt.setBaseDamage(bolt.getBaseDamage() + material.baseAttackDamage() - 1.0D);
                 bolt.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F,
                         power * 3.0F, 1.0F);
                 if (power == 1.0F) bolt.setCritArrow(true);
