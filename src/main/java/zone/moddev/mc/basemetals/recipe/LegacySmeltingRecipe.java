@@ -24,6 +24,18 @@ public final class LegacySmeltingRecipe extends SmeltingRecipe {
     }
 
     @Override
+    public boolean matches(net.minecraft.world.Container inventory, net.minecraft.world.level.Level world) {
+        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(getResultItem().getItem().getRegistryName().toString())
+                && super.matches(inventory, world);
+    }
+
+    @Override
+    public ItemStack assemble(net.minecraft.world.Container inventory) {
+        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(getResultItem().getItem().getRegistryName().toString())
+                ? super.assemble(inventory) : ItemStack.EMPTY;
+    }
+
+    @Override
     public RecipeSerializer<?> getSerializer() {
         return CrushingRecipe.LEGACY_SMELTING_SERIALIZER.get();
     }

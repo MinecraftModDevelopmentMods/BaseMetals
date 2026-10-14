@@ -19,12 +19,12 @@ import com.google.gson.JsonParser;
 import org.junit.jupiter.api.Test;
 
 class OreSpawnSchemaValidationTest {
-	private static final Path SCHEMAS = Paths.get("docs", "schemas", "orespawn-4.0.16");
+	private static final Path SCHEMAS = Paths.get("docs", "schemas", "orespawn-4.1.0");
 	private static final Path PROVIDER = Paths.get("src", "main", "resources", "data",
 			"basemetals", "orespawn", "provider.json");
 
 	@Test
-	void providerValidatesAgainstThePublishedOreSpawn401Schema() {
+	void providerValidatesAgainstThePublishedOreSpawn410Schema() {
 		assertValid("orespawn-provider.schema.json", PROVIDER);
 	}
 

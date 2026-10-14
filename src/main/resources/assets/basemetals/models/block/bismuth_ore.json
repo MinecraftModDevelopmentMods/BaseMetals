@@ -1,6 +1,0 @@
-{
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "basemetals:block/bismuth_ore"
-    }
-}

@@ -24,6 +24,10 @@
     {
       "type": "forge:mod_loaded",
       "modid": "enderio_machines"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:brass_ingot"
     }
   ]
 }

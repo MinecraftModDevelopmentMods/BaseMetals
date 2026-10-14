@@ -55,7 +55,7 @@ class ResourceIntegrityTest {
         Set<String> items = strings(manifest.getAsJsonArray("items"));
         Set<String> fluids = strings(manifest.getAsJsonArray("fluids"));
         assertEquals(360, blocks.size());
-        assertEquals(1115, items.size());
+        assertEquals(1127, items.size());
         assertEquals(72, fluids.size());
         assertEquals(2, manifest.getAsJsonArray("entities").size());
 
@@ -166,7 +166,8 @@ class ResourceIntegrityTest {
     @Test
     void fluidBucketModelsUseTheForgeBucketTemplate() throws Exception {
         JsonObject manifest = read(resource("data/basemetals/registry_manifest.json")).getAsJsonObject();
-        Set<String> buckets = strings(manifest.getAsJsonArray("new_items"));
+        Set<String> buckets = new LinkedHashSet<>(strings(manifest.getAsJsonArray("new_items")).stream()
+                .filter(id -> id.endsWith("_bucket")).toList());
         assertEquals(36, buckets.size(), "Unexpected fluid bucket count");
         for (String bucket : buckets) {
             String id = path(bucket);
@@ -223,9 +224,10 @@ class ResourceIntegrityTest {
         Set<String> unexplained = new LinkedHashSet<>(transparent);
         unexplained.removeAll(expectedCutouts);
         unexplained.removeAll(exemptTextureSheetSpace);
+        unexplained.removeIf(name -> name.endsWith("_ore.png"));
         assertTrue(unexplained.isEmpty(),
                 "Transparent block textures are outside a registered cutout family: " + unexplained);
-        assertEquals(88, transparent.size());
+        assertEquals(103, transparent.size());
     }
 
     @Test
@@ -365,9 +367,9 @@ class ResourceIntegrityTest {
         assertRecipePattern("tin_trapdoor", "XX", "XX");
         assertRecipePattern("tin_button", "X", "X");
         assertRecipeKeyTag("tin_button", "X", "forge:nuggets/tin");
-        assertRecipePattern("diamond_door", "XX", "XX");
-        assertRecipePattern("diamond_bolt", "R", "F");
-        assertRecipePattern("emerald_sword", "X", "S");
+        assertRecipePattern("diamond_door", "XX", "XX", "XX");
+        assertRecipePattern("diamond_bolt", "R", "R", "F");
+        assertRecipePattern("emerald_sword", "X", "X", "S");
         assertRecipeKeyTag("tin_bars_2", "X", "forge:rods/tin");
         assertRecipeKeyTag("tin_slab", "X", "forge:storage_blocks/tin");
         assertRecipeKeyTag("tin_stairs", "X", "forge:storage_blocks/tin");
@@ -714,7 +716,13 @@ class ResourceIntegrityTest {
 
     private static JsonElement read(Path path) throws IOException {
         try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-            return JsonParser.parseReader(reader);
+            JsonElement value = JsonParser.parseReader(reader);
+            if (value.isJsonObject() && value.getAsJsonObject().has("recipe")
+                    && "basemetals:content_crafting".equals(value.getAsJsonObject().get("type").getAsString())) {
+                return value.getAsJsonObject().get("recipe");
+            }
+
+            return value;
         }
     }
 

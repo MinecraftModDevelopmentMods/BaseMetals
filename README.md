@@ -12,21 +12,21 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-The Minecraft 1.18.2 line is a native Forge/Java 17 port. Its current version is
-`3.0.1.118021`: functional version `3.0.1`, built for the `118021` target
-(Minecraft 1.18.2, Forge). It preserves the historical `basemetals` registry
-IDs while replacing MMDLib, Additional Loot Tables, and the old Base Metals
-world generator with modern Forge and data-pack systems.
+This is the Minecraft 1.18.2 Forge version, `3.1.0.118021`. It brings over the
+fixes and features from the earlier ports, including raw metals, ore texture
+overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
+their registry IDs. OreSpawn handles ore generation; MMDLib and Additional Loot
+Tables are no longer needed.
 
 ## Requirements
 
 - Minecraft `1.18.2`
 - Forge `40.3.0` or newer in the Minecraft 1.18.2 Forge 40 line
 - Java 17
-- OreSpawn `[4.0.1,5.0.0)` on both client and server
+- OreSpawn `[4.1.0.118021,5.0.0)` on both client and server
 
-This version is built and qualified against OreSpawn `4.0.16.118021`. Put
-`BaseMetals-3.0.1.118021.jar` and a compatible OreSpawn JAR in the `mods`
+This version uses OreSpawn `4.1.0.118021`. Put
+`BaseMetals-3.1.0.118021.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -39,10 +39,10 @@ Base Metals provides 22 materials:
 - Alloys: Brass, Bronze, Cupronickel, Electrum, Invar, Pewter, and Steel.
 - Fantasy materials: Adamantine, Aquarium, Cold Iron, Mithril, and Starsteel.
 
-The available forms intentionally vary by material to preserve the established
-Base Metals content. Forge tags are used throughout recipes, so compatible
-ores, ingots, powders, plates, rods, gears, and other components from different
-mods can interoperate without a Java API dependency.
+All existing items and blocks stay registered, including when Low Fantasy
+limits which items you can make. Recipes use Forge tags, so compatible ores,
+ingots, powders, plates, rods, gears and other components from different mods
+can be used together.
 
 Notable mechanics include:
 
@@ -50,14 +50,20 @@ Notable mechanics include:
   `basemetals:crushing` recipe type. They can also crush dropped items by using
   the hammer on the block beneath them; sneaking processes as much of a stack
   as the hammer's remaining durability allows.
-- Supported ore powders can be smelted into ingots, and alloy blends provide the
-  historical furnace-based alloying route.
+- Mining ores normally gives raw metal. Fortune increases the drops, and Silk
+  Touch keeps the ore block. Copper uses vanilla raw copper. A dropped raw piece
+  makes one powder when crushed; hammering an ore block directly gives two.
+- Raw metals can be smelted or blasted into ingots. Powders, not raw metals, are
+  used to make alloy blends.
 - Scythes harvest a horizontal 3x3 area while respecting normal Forge block
   break and protection events, drops, enchantments, and durability.
 - Material shields can be upgraded at an anvil with one strictly harder tagged
   plate while retaining their enchantments.
-- Base Metals bows fire its material arrows. Its legacy-style crossbows are
-  draw-and-release weapons which fire material bolts.
+- Bows fire arrows, while Base Metals' draw-and-release crossbows fire bolts.
+  Both the weapon and ammunition material contribute to the damage, before
+  enchantment bonuses. Picked-up projectiles keep their material and item data.
+- One matching plate fully repairs damaged armour or a shield in a crafting
+  grid, keeping its enchantments, name and other item data.
 - Configurable armour and melee effects give Adamantine, Aquarium, Cold Iron,
   Lead, Mithril, and Starsteel their distinctive behaviour. Held Starsteel
   equipment repairs by one durability every 200 server ticks; Starsteel armour
@@ -66,11 +72,31 @@ Notable mechanics include:
   fluids are world blocks and compatibility resources rather than a second
   Base Metals processing system.
 
-The common configuration deliberately contains only four default-enabled
-switches: special equipment effects, Starsteel regeneration, mercury immersion
-effects, and villager trades. Registries, materials, recipes, and world
-generation are stable data contracts and cannot be disabled individually by
-the common configuration.
+Ore blocks use KiriCattus' overlays on vanilla stone, netherrack and end stone,
+so they follow your resource pack's surrounding textures. Bars, doors and
+trapdoors keep their transparent gaps without hiding nearby blocks. Bar models
+also avoid overlapping faces that caused their vertical edges to flicker.
+
+## Configuration
+
+Open **Mods → Base Metals → Config** from the main menu, or use the Base Metals
+cog in OreSpawn's world-creation screen. You can also edit
+`config/basemetals-common.toml`.
+
+High Fantasy is the default and keeps all of the usual crafting options.
+Low Fantasy limits equipment to suitable materials and removes Base Metals
+bow, crossbow and fishing-rod recipes. Existing equipment still works, and
+everything remains available in Creative mode. Neither mode changes vanilla
+Minecraft recipes or ore placement.
+
+Restart Minecraft after changing the mode. A client must use the same mode
+as its server; older configuration files without this setting default to
+High Fantasy. This is a server or modpack setting, not a per-world setting.
+Ore generation is still configured in OreSpawn.
+
+The other four switches control equipment effects, held Starsteel regeneration,
+mercury immersion effects and villager trades. They are enabled by default.
+Done saves your changes; Cancel or Escape leaves the settings unchanged.
 
 ## Ore generation
 
@@ -135,6 +161,17 @@ Generate and verify Eclipse launches with:
 ./gradlew genEclipseRuns eclipse isolateEclipseProductionRuns verifyEclipseProductionClasspath
 ```
 
+Use **runClient** for normal testing with Base Metals and OreSpawn only.
+**runClientOptionalMods** adds Tinkers' Construct and Mantle for compatibility
+testing. It uses `run-optional-mods`, keeping its settings and saves separate
+from the normal client's `run` folder. Both profiles are available in Eclipse
+and through Gradle tasks.
+
+Use the Gradle **generateResources** task when changing recipes, models or
+translations. It updates the checked-in data; ordinary builds only check for
+drift. Ore models use KiriCattus' transparent overlays over vanilla textures,
+so resource packs can replace the surrounding stone, netherrack or end stone.
+
 The CI workflow also runs all required GameTests, generated-data drift checks,
 packaged client and dedicated-server smokes, release-JAR audits, dependency
 identity checks, and a second clean build to prove byte-identical release
@@ -142,7 +179,7 @@ artifacts. GameTests, smoke probes, migration fixtures, and reference sources
 are isolated from the published JAR.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.0.1.118021`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.0.118021`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

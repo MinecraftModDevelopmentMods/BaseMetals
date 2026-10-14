@@ -1,4 +1,6 @@
 import groovy.xml.XmlSlurper
+import groovy.xml.XmlParser
+import groovy.xml.XmlUtil
 
 def eclipseWorkspaceProjectName = projectDir.name
 
@@ -13,6 +15,7 @@ eclipse {
             classpath.entries.findAll { entry ->
                 String path = entry.path?.replace('\\', '/') ?: ''
                 path.startsWith('src/test/') || path.startsWith('src/gametest/')
+                        || path.startsWith('src/dataGenerator/')
                         || path.startsWith('src/integratedSmoke/') || path.startsWith('src/packagedClientSmoke/')
                         || path.startsWith('src/upgradeSmoke/')
                         || path.startsWith('src/packagedServerSmoke/')
@@ -28,6 +31,49 @@ idea {
     module {
         downloadSources = true
         downloadJavadoc = true
+    }
+}
+
+def verifyDevelopmentRunProfiles = tasks.register('verifyDevelopmentRunProfiles') {
+    group = 'verification'
+    description = 'Checks that ordinary launches use only essential runtime dependencies.'
+    doLast {
+        ['runClient.launch', 'runServer.launch', 'runClientOptionalMods.launch'].each { name ->
+            String launch = file(name).getText('UTF-8')
+            if (launch.contains('org.eclipse.buildship.core.gradleclasspathcontainer')) {
+                throw new GradleException("${name} must not load Buildship's compile-only dependencies")
+            }
+            boolean optional = name == 'runClientOptionalMods.launch'
+            if (optional != (launch.contains('TConstruct-') && launch.contains('Mantle-'))) {
+                throw new GradleException("${name} has the wrong optional-mod classpath")
+            }
+            if (!optional && launch =~ /(?i)(TConstruct|Mantle|Mekanism|cofh_core|thermal_|EnderIO)/) {
+                throw new GradleException("${name} includes an optional integration dependency")
+            }
+            if (!launch.contains('mmd-orespawn-')) {
+                throw new GradleException("${name} is missing OreSpawn")
+            }
+            String expectedDirectory = file(optional ? 'run-optional-mods' : 'run').absolutePath
+            def launchXml = new XmlSlurper(false, false).parse(file(name))
+            if (launchXml.stringAttribute.find {
+                it.@key.text() == 'org.eclipse.jdt.launching.WORKING_DIRECTORY'
+            }?.@value?.text() != expectedDirectory) {
+                throw new GradleException("${name} uses the wrong run directory")
+            }
+        }
+        ['runClient', 'runServer'].each { name ->
+            if (tasks.named(name, JavaExec).get().classpath.files.any {
+                it.name =~ /(?i)(TConstruct|Mantle|Mekanism|cofh_core|thermal_|EnderIO)/
+            }) {
+                throw new GradleException("${name} includes an optional integration dependency")
+            }
+        }
+        def optionalClient = tasks.named('runOptionalModsClient', JavaExec).get()
+        if (optionalClient.sourceSetName.get() != 'optionalMods'
+                || !optionalClient.classpath.files.any { it.name.startsWith('TConstruct-') }
+                || !optionalClient.classpath.files.any { it.name.startsWith('Mantle-') }) {
+            throw new GradleException('The optional client must load Tinkers and Mantle in its own run directory')
+        }
     }
 }
 
@@ -67,7 +113,7 @@ def syncForge40EclipseLaunches = tasks.register('syncForge40EclipseLaunches') {
             from processedResources
             into mainOutput
         }
-        ['Client', 'Server'].each { String runName ->
+        ['Client', 'Server', 'OptionalModsClient'].each { String runName ->
             File launch = file("run${runName}.launch")
             if (!launch.isFile()) throw new GradleException("Missing generated Eclipse launch ${launch}")
             String text = launch.getText('UTF-8')
@@ -124,7 +170,34 @@ def syncForge40EclipseLaunches = tasks.register('syncForge40EclipseLaunches') {
                         '    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>\r\n' +
                                 '</launchConfiguration>')
             }
+            // Buildship also exposes compile-only APIs. Use the selected runtime instead.
+            def launchXml = new XmlParser(false, false).parseText(text)
+            def classpath = launchXml.listAttribute.find {
+                it.@key == 'org.eclipse.jdt.launching.CLASSPATH'
+            }
+            def oldEntries = classpath.listEntry.collect {
+                new XmlSlurper(false, false).parseText(it.@value.toString())
+            }
+            List<File> launcherArchives = oldEntries.collect {
+                it.@externalArchive.text() ? file(it.@externalArchive.text()) : null
+            }.findAll { it != null && it.name.startsWith('slime-launcher-') }
+            def runtime = runName == 'OptionalModsClient'
+                    ? configurations.optionalModsRuntimeClasspath : configurations.runtimeClasspath
+            classpath.children().clear()
+            ([new File(mainOutput)] + runtime.files + launcherArchives).unique().sort {
+                it.absolutePath
+            }.each { archive ->
+                def entry = new Node(null, 'runtimeClasspathEntry', [
+                        externalArchive: archive.absolutePath, type: '2', path: '5'])
+                classpath.appendNode('listEntry', [value: XmlUtil.serialize(entry)])
+            }
+            oldEntries.findAll { it.@containerPath.text().startsWith('org.eclipse.jdt.launching.JRE_CONTAINER') }
+                    .each { entry -> classpath.appendNode('listEntry', [value: XmlUtil.serialize(entry)]) }
+            text = XmlUtil.serialize(launchXml).replace('\r\n', '\n')
             launch.setText(text, 'UTF-8')
+            if (runName == 'OptionalModsClient') {
+                file('runClientOptionalMods.launch').setText(text, 'UTF-8')
+            }
         }
     }
 }
@@ -133,6 +206,7 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
     group = 'verification'
     description = 'Verifies Eclipse client/server launches cannot see validation-only code.'
     dependsOn syncForge40EclipseLaunches
+    dependsOn verifyDevelopmentRunProfiles
     doLast {
         File classpath = file('.classpath')
         if (!classpath.isFile()) throw new GradleException('Eclipse .classpath was not generated')
@@ -230,10 +304,14 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
         }
         String metadata = new File(projectDir, 'bin/main/META-INF/mods.toml').getText('UTF-8')
-        if (metadata.contains('${') || !metadata.contains('version="3.0.1.118021"')) {
+        if (metadata.contains('${') || !metadata.contains('version="3.1.0.118021"')) {
             throw new GradleException('Eclipse output contains unresolved or invalid Base Metals version metadata')
         }
     }
+}
+
+verifyDevelopmentRunProfiles.configure {
+    dependsOn syncForge40EclipseLaunches
 }
 
 tasks.matching { it.name == 'genEclipseRuns' }.configureEach {

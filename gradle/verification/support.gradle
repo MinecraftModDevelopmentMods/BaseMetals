@@ -67,45 +67,40 @@ tasks.matching { it.name == 'runServer' }.configureEach {
     }
 }
 
+// Native datagen uses a disposable output tree; check never rewrites source files.
 def generatedResourcesDir = layout.projectDirectory.dir('src/generated/resources')
-def generatedSnapshotFile = layout.buildDirectory.file('tmp/generated-data-before.json')
-def generatedFingerprint = {
-    fileTree(generatedResourcesDir).matching { exclude '.cache/**' }.files
-            .findAll { it.isFile() }
-            .sort { a, b -> a.absolutePath <=> b.absolutePath }
+def generatedVerificationDir = layout.buildDirectory.dir('generated-verification')
+
+def generatedFingerprint = { File directory ->
+    fileTree(directory).matching { exclude '.cache/**' }.files
+            .findAll { it.isFile() }.sort { a, b -> a.absolutePath <=> b.absolutePath }
             .collectEntries { File resource ->
-                String relative = generatedResourcesDir.asFile.toPath().relativize(resource.toPath())
-                        .toString().replace('\\', '/')
+                String relative = directory.toPath().relativize(resource.toPath()).toString().replace('\\', '/')
                 byte[] digest = java.security.MessageDigest.getInstance('SHA-256').digest(resource.bytes)
                 [(relative): digest.encodeHex().toString()]
             }
 }
 
-def snapshotGeneratedData = tasks.register('snapshotGeneratedData') {
-    group = 'verification'
-    description = 'Snapshots generated resources before data generation.'
-    doLast {
-        File snapshot = generatedSnapshotFile.get().asFile
-        snapshot.parentFile.mkdirs()
-        snapshot.setText(groovy.json.JsonOutput.toJson(generatedFingerprint()), 'UTF-8')
-    }
-}
-
-tasks.matching { it.name == 'runData' }.configureEach {
-    mustRunAfter snapshotGeneratedData
+tasks.register('generateResources', Sync) {
+    group = 'build'
+    description = 'Updates the checked-in recipes, models, translations and tags.'
+    dependsOn 'runData'
+    from generatedVerificationDir
+    exclude '.cache/**'
+    into generatedResourcesDir
 }
 
 def verifyGeneratedData = tasks.register('verifyGeneratedData') {
     group = 'verification'
-    description = 'Fails when runData changes checked-in generated resources.'
-    dependsOn snapshotGeneratedData, 'runData'
+    description = 'Compares native datagen output with checked-in resources without modifying them.'
+    dependsOn 'runData'
     doLast {
-        Map before = new groovy.json.JsonSlurper().parse(generatedSnapshotFile.get().asFile) as Map
-        Map after = generatedFingerprint()
-        if (before != after) {
-            Set<String> changed = new TreeSet<>(before.keySet() + after.keySet())
-            changed.removeIf { before[it] == after[it] }
-            throw new GradleException("Generated-resource drift detected after runData: ${changed.join(', ')}")
+        Map committed = generatedFingerprint(generatedResourcesDir.asFile)
+        Map generated = generatedFingerprint(generatedVerificationDir.get().asFile)
+        if (committed != generated) {
+            Set<String> changed = new TreeSet<>(committed.keySet() + generated.keySet())
+            changed.removeIf { committed[it] == generated[it] }
+            throw new GradleException("Generated resources are stale. Run generateResources: ${changed.join(', ')}")
         }
     }
 }

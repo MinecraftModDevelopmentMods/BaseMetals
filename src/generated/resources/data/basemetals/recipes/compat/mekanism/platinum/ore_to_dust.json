@@ -13,6 +13,10 @@
     {
       "type": "forge:mod_loaded",
       "modid": "mekanism"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:platinum_powder"
     }
   ]
 }

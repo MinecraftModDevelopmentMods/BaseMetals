@@ -1,7 +1,7 @@
 # Migrating from Base Metals 1.10 or 1.12
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
-3.0.0 and OreSpawn 4.0.1, but do not carry MMDLib, Additional Loot Tables, the
+3.1.0 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
 OreSpawn 3 plugin, or the old native fallback generator into the 1.18 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
@@ -12,7 +12,8 @@ Any vanilla block entities which Mojang's fixer inferred from a reused mod
 numeric ID are removed at those positions. Vanilla's context-sensitive block,
 block-entity, entity, inventory, map, statistics, objective, jukebox, spawn
 egg, banner, and villager fixes still run everywhere else. The migrator reads
-the exact numeric map from an untouched legacy `level.dat` or `level.dat_old`
+the exact numeric map from an untouched legacy `level.dat`, `level.dat_old`,
+or the `basemetals-legacy-registry.dat` snapshot
 when available. If neither retains a legacy map, it uses the map captured from
 the public Base Metals 2.5.0-rc2.332 and MMDLib 1.0.0-rc2.36 runtime.
 
@@ -22,14 +23,6 @@ migrator copies the original to
 transactional. A completed scan writes
 `BASEMETALS_1_12_BLOCK_MIGRATION_COMPLETE.txt`, recording either the conversion
 summary or that no legacy content was present; subsequent starts do nothing.
-The fresh direct-upgrade fixture retained 20,553 block-state placements,
-1,038 exact chest stacks, 96 equipped armor stacks, 33 filled-fluid buckets,
-and nine player-inventory stacks across the Overworld, Nether, and End.
-Separate DataVersion-512 validation covers both public 1.10 lines. A bounded
-copy of a Cyano 2.4.0 world retained every one of 323,429 Base Metals block
-positions, 10,153 mod-block entities, and 378 Base Metals stacks. A world made
-with the public MMD 2.5.0-beta4.238 release retained all 345 registered block
-IDs and all 1,030 registered item IDs, then completed a 1.18 server start.
 
 The packaged fallback map covers the exact public 1.12 runtime. With a saved
 legacy registry map, blocks from the world's other 1.10/1.12 mods also retain
@@ -46,7 +39,7 @@ Base Metals 2.5 line. Registry paths containing uppercase characters, which
 Minecraft 1.10 still allowed, are normalized to the lowercase form required by
 modern Minecraft.
 
-Base Metals 3.0.0 preserves historical `basemetals:*` IDs, including hidden
+Base Metals 3.1.0 preserves historical `basemetals:*` IDs, including hidden
 `double_<material>_slab` blocks and molten-fluid block IDs such as
 `basemetals:adamantine`. Dedicated bucket items and flowing-fluid registry
 entries are new. Legacy `forge:bucketfilled` stacks containing Base Metals
@@ -65,9 +58,32 @@ upgrade start. Missing mappings also forward:
 - historical `mmdlib:*` Vanilla Bits blocks, items, and fluids to matching
   `basemetals:*` IDs.
 
+## Moving from 1.13 through 1.17
+
+These worlds already use named block states, so they do not need the numeric
+ID conversion. Older wall connections are converted to the current wall
+states. Item aliases, tool damage, names and enchantments are retained.
+
+Older custom dimensions using Minecraft's removed `vanilla_layered` biome
+source are converted to its 1.18 Overworld replacement. Their dimension IDs,
+seeds and noise settings are retained, including the large-biome setting.
+Modded biome sources are left alone. The original `level.dat` is backed up
+before this conversion.
+
+Minecraft 1.18 can generate new terrain below previously saved chunks.
+Base Metals lets that conversion run, while preventing ore generation from
+replacing blocks in the saved 0–255 height range. Newly generated chunks and
+the new underground area can still receive ores. The save hooks stop with an
+error if the expected Minecraft conversion methods change, rather than
+silently skipping these protections.
+
+Old inventories remain valid in either content mode. A configuration without
+`contentMode` starts in High Fantasy; Low Fantasy only restricts new acquisition.
+The mode is a server or modpack setting, not a setting stored in each world.
+
 ## OreSpawn 3 configuration
 
-OreSpawn 4.0.1 migrates OS3 files before merging provider defaults. When an
+OreSpawn 4.1 migrates OS3 files before merging provider defaults. When an
 installed provider has one rule whose output matches a legacy rule, the old
 values are written under that provider rule ID. Explicit user values,
 including enabled legacy Base Metals copper, therefore survive without a

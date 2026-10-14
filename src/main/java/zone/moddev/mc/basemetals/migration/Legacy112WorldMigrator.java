@@ -170,7 +170,7 @@ public final class Legacy112WorldMigrator {
     }
 
     private static Map<Integer, String> legacyBlockIds(Path root) throws IOException {
-        for (String fileName : List.of("level.dat", "level.dat_old")) {
+        for (String fileName : List.of("level.dat", "level.dat_old", "basemetals-legacy-registry.dat")) {
             Path file = root.resolve(fileName);
             if (!Files.isRegularFile(file)) continue;
             CompoundTag candidate = NbtIo.readCompressed(file.toFile());
@@ -724,11 +724,7 @@ public final class Legacy112WorldMigrator {
                     .setValue(ButtonBlock.POWERED, (metadata & 8) != 0);
         }
         if (block instanceof LeverBlock) {
-            int orientation = metadata & 7;
-            Direction direction = legacyLeverDirection(orientation);
-            return state.setValue(LeverBlock.FACE, attachFace(direction))
-                    .setValue(LeverBlock.FACING, horizontalAttachmentDirection(direction, orientation))
-                    .setValue(LeverBlock.POWERED, (metadata & 8) != 0);
+            return LegacyWorldDataHook.legacyState(block, "", metadata);
         }
         if (block instanceof PressurePlateBlock) {
             return state.setValue(PressurePlateBlock.POWERED, metadata == 1);
@@ -770,17 +766,6 @@ public final class Legacy112WorldMigrator {
     private static Direction legacyButtonDirection(int orientation) {
         return switch (orientation) {
             case 0 -> Direction.DOWN;
-            case 1 -> Direction.EAST;
-            case 2 -> Direction.WEST;
-            case 3 -> Direction.SOUTH;
-            case 4 -> Direction.NORTH;
-            default -> Direction.UP;
-        };
-    }
-
-    private static Direction legacyLeverDirection(int orientation) {
-        return switch (orientation) {
-            case 0, 7 -> Direction.DOWN;
             case 1 -> Direction.EAST;
             case 2 -> Direction.WEST;
             case 3 -> Direction.SOUTH;

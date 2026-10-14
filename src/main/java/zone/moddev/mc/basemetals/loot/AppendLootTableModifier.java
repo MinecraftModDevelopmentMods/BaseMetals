@@ -21,7 +21,11 @@ public final class AppendLootTableModifier extends LootModifier {
 
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        context.getLootTable(table).getRandomItemsRaw(context, generatedLoot::add);
+        context.getLootTable(table).getRandomItemsRaw(context, item -> {
+            if (zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(item.getItem().getRegistryName().toString())) {
+                generatedLoot.add(item);
+            }
+        });
         return generatedLoot;
     }
 

@@ -39,6 +39,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -61,6 +62,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -354,6 +356,39 @@ public final class BaseMetalsGameTests {
     }
 
     @GameTest(template = EMPTY)
+    public static void groundHammeringRawMetalsProducesOnePowder(GameTestHelper helper) {
+        ServerPlayer player = survivalPlayer(helper);
+        BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
+        BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(position.above()), Direction.UP, position, false);
+        var rawItems = new java.util.LinkedHashMap<String, net.minecraft.world.item.Item>();
+        ModContent.itemsById().forEach((id, item) -> {
+            if (id.endsWith("_raw")) rawItems.put(id.substring(0, id.length() - 4), item.get());
+        });
+        rawItems.put("iron", Items.RAW_IRON);
+        rawItems.put("gold", Items.RAW_GOLD);
+        rawItems.put("copper", Items.RAW_COPPER);
+
+        rawItems.forEach((material, item) -> {
+            ItemStack hammer = ModContent.item("stone_crackhammer").get().getDefaultInstance();
+            player.setItemInHand(InteractionHand.MAIN_HAND, hammer);
+            ItemEntity source = new ItemEntity(helper.getLevel(), position.getX() + 0.5D,
+                    position.getY() + 1.1D, position.getZ() + 0.5D, new ItemStack(item, 2));
+            helper.getLevel().addFreshEntity(source);
+
+            InteractionResult result = hammer.getItem().useOn(
+                    new UseOnContext(helper.getLevel(), player, InteractionHand.MAIN_HAND, hammer, hit));
+
+            require(helper, result.consumesAction(), material + " raw crushing did not consume the interaction");
+            require(helper, source.getItem().getCount() == 1, material + " raw crushing consumed more than one piece");
+            require(helper, hammer.getDamageValue() == 1, material + " raw crushing used the wrong durability");
+            requireSingleDrop(helper, position.above(), source, material + "_powder", 1);
+            helper.getLevel().getEntitiesOfClass(ItemEntity.class, new AABB(position).inflate(2.0D))
+                    .forEach(Entity::discard);
+        });
+        helper.succeed();
+    }
+
+    @GameTest(template = EMPTY)
     public static void scytheHarvestsHorizontalThreeByThreeAndPaysDurability(GameTestHelper helper) {
         ServerPlayer player = survivalPlayer(helper);
         ItemStack scythe = ModContent.item("iron_scythe").get().getDefaultInstance();
@@ -408,12 +443,12 @@ public final class BaseMetalsGameTests {
         require(helper, burnTime("wood_gear") == 300, "Wood gear has the wrong burn time");
         require(helper, burnTime("charcoal_block") == 16000, "Charcoal block has the wrong burn time");
         MaterialCatalogue.ALL.stream().filter(material -> material.hasEquipment()).forEach(material -> {
-            require(helper, burnTime(material.name() + "_powder") == 1600,
-                    material.name() + " powder lost its legacy fuel value");
-            require(helper, burnTime(material.name() + "_nugget") == 200,
-                    material.name() + " nugget lost its legacy fuel value");
-            require(helper, burnTime(material.name() + "_smallpowder") == 200,
-                    material.name() + " small powder lost its legacy fuel value");
+            require(helper, burnTime(material.name() + "_powder") == 0,
+                    material.name() + " powder must not burn");
+            require(helper, burnTime(material.name() + "_nugget") == 0,
+                    material.name() + " nugget must not burn");
+            require(helper, burnTime(material.name() + "_smallpowder") == 0,
+                    material.name() + " small powder must not burn");
         });
         for (String id : List.of(
                 "mercury_nugget", "mercury_powder", "mercury_smallpowder",
@@ -424,7 +459,7 @@ public final class BaseMetalsGameTests {
                 "obsidian_nugget", "obsidian_powder", "obsidian_smallpowder",
                 "quartz_nugget", "quartz_powder", "quartz_smallpowder",
                 "redstone_smallpowder", "lapis_smallpowder")) {
-            require(helper, burnTime(id) == -1, id + " is an ahistorical furnace fuel");
+            require(helper, burnTime(id) == 0, id + " must not burn");
         }
         helper.succeed();
     }
@@ -551,7 +586,7 @@ public final class BaseMetalsGameTests {
     }
 
     @GameTest(template = EMPTY)
-    public static void plateRepairKeepsOnlyEnchantmentsAndResetsDamage(GameTestHelper helper) {
+    public static void plateRepairKeepsAllItemDataAndResetsDamage(GameTestHelper helper) {
         var recipe = helper.getLevel().getRecipeManager().byKey(
                 new ResourceLocation(BaseMetals.MOD_ID, "adamantine_chestplate_plate_repair"));
         require(helper, recipe.isPresent(), "Adamantine chestplate plate-repair recipe did not load");
@@ -578,9 +613,9 @@ public final class BaseMetalsGameTests {
         require(helper, EnchantmentHelper.getItemEnchantmentLevel(
                 Enchantments.ALL_DAMAGE_PROTECTION, output) == 2,
                 "Plate repair lost enchantments");
-        require(helper, !output.hasCustomHoverName(), "Plate repair retained unrelated custom-name NBT");
-        require(helper, !output.getOrCreateTag().contains("LegacyCustomData"),
-                "Plate repair retained unrelated custom data");
+        require(helper, output.hasCustomHoverName(), "Plate repair lost the custom name");
+        require(helper, output.getOrCreateTag().getBoolean("LegacyCustomData"),
+                "Plate repair lost custom item data");
         helper.succeed();
     }
 
@@ -945,6 +980,83 @@ public final class BaseMetalsGameTests {
         }, width, height);
     }
 
+    @GameTest(template = EMPTY)
+    public static void oreLootSupportsRawFortuneSilkTouchAndHammering(GameTestHelper helper) {
+        ServerPlayer player = survivalPlayer(helper);
+        ItemStack pickaxe = Items.NETHERITE_PICKAXE.getDefaultInstance();
+        ItemStack silk = pickaxe.copy();
+        silk.enchant(Enchantments.SILK_TOUCH, 1);
+        ItemStack fortune = pickaxe.copy();
+        fortune.enchant(Enchantments.BLOCK_FORTUNE, 3);
+        BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
+        for (var entry : ModContent.blocksById().entrySet()) {
+            if (!entry.getKey().endsWith("_ore")) continue;
+            String material = entry.getKey().replace("_ore", "");
+            var state = entry.getValue().get().defaultBlockState();
+            ItemStack expected = material.equals("copper") ? Items.RAW_COPPER.getDefaultInstance()
+                    : ModContent.item(material + "_raw").get().getDefaultInstance();
+            var ordinary = Block.getDrops(state, helper.getLevel(), position, null, player, pickaxe);
+            require(helper, ordinary.size() == 1 && ordinary.get(0).is(expected.getItem()),
+                    material + " ordinary mining did not drop raw metal");
+            require(helper, ordinary.get(0).getCount() == 1 || material.equals("copper")
+                    && ordinary.get(0).getCount() >= 2 && ordinary.get(0).getCount() <= 3,
+                    material + " ordinary raw drop count changed");
+            var silkDrops = Block.getDrops(state, helper.getLevel(), position, null, player, silk);
+            require(helper, silkDrops.size() == 1 && silkDrops.get(0).is(state.getBlock().asItem())
+                    && silkDrops.get(0).getCount() == 1, material + " Silk Touch lost the ore block");
+            boolean increased = false;
+            for (int attempt = 0; attempt < 32; attempt++) {
+                var drops = Block.getDrops(state, helper.getLevel(), position, null, player, fortune);
+                require(helper, drops.size() == 1 && drops.get(0).is(expected.getItem()), material + " Fortune used the wrong item");
+                int count = drops.get(0).getCount();
+                require(helper, count >= 1 && count <= (material.equals("copper") ? 12 : 4), material + " Fortune drop count=" + count);
+                increased |= count > (material.equals("copper") ? 3 : 1);
+            }
+            require(helper, increased, material + " Fortune never increased raw drops");
+
+            helper.getLevel().setBlock(position, state, 3);
+            player.setItemInHand(InteractionHand.MAIN_HAND, ModContent.item("adamantine_crackhammer").get().getDefaultInstance());
+            var event = new net.minecraftforge.event.world.BlockEvent.BreakEvent(helper.getLevel(), position, state, player);
+            new BaseMetalsEvents().onBreak(event);
+            require(helper, event.isCanceled() && helper.getLevel().getBlockState(position).isAir(), material + " hammer did not harvest the ore");
+            requireSingleDrop(helper, position, null, material + "_powder", 2);
+            helper.getLevel().getEntitiesOfClass(ItemEntity.class, new AABB(position).inflate(1.0D)).forEach(Entity::discard);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = EMPTY)
+    public static void fullyDrawnWeaponsApplyMaterialDamageBeforePower(GameTestHelper helper) {
+        for (String material : List.of("gold", "steel", "adamantine")) {
+            for (boolean crossbow : List.of(false, true)) {
+                for (int power : List.of(0, 3)) {
+                    ServerPlayer player = survivalPlayer(helper);
+                    player.moveTo(helper.absolutePos(new BlockPos(1, 2, 1)), 0.0F, 0.0F);
+                    String launcher = material + (crossbow ? "_crossbow" : "_bow");
+                    String ammo = material + (crossbow ? "_bolt" : "_arrow");
+                    ItemStack weapon = ModContent.item(launcher).get().getDefaultInstance();
+                    if (power > 0) weapon.enchant(Enchantments.POWER_ARROWS, power);
+                    player.setItemInHand(InteractionHand.MAIN_HAND, weapon);
+                    player.getInventory().setItem(1, ModContent.item(ammo).get().getDefaultInstance());
+                    player.startUsingItem(InteractionHand.MAIN_HAND);
+                    weapon.getItem().releaseUsing(weapon, helper.getLevel(), player, weapon.getUseDuration() - 20);
+                    var projectiles = new ArrayList<MaterialProjectile>();
+                    helper.getLevel().getAllEntities().forEach(entity -> {
+                        if (entity instanceof MaterialProjectile arrow && arrow.getOwner() == player) projectiles.add(arrow);
+                    });
+                    double damage = ((MaterialBacked) weapon.getItem()).baseMetalsMaterial().baseAttackDamage() * 2.0D
+                            + (power == 0 ? 0 : power * 0.5D + 0.5D);
+                    require(helper, projectiles.size() == 1 && close(projectiles.get(0).getBaseDamage(), damage),
+                            launcher + " Power " + power + " did not use material damage=" + damage);
+                    require(helper, player.getInventory().getItem(1).isEmpty() && weapon.getDamageValue() == 1,
+                            launcher + " did not consume ammunition and durability");
+                    projectiles.forEach(Entity::discard);
+                }
+            }
+        }
+        helper.succeed();
+    }
+
     private static double attribute(ItemStack stack, Attribute attribute) {
         return stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(attribute).stream()
                 .mapToDouble(AttributeModifier::getAmount).sum();
@@ -952,7 +1064,7 @@ public final class BaseMetalsGameTests {
 
     private static int burnTime(String item) {
         ItemStack stack = ModContent.item(item).get().getDefaultInstance();
-        return stack.getBurnTime(RecipeType.SMELTING);
+        return net.minecraftforge.common.ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
     }
 
     private static boolean close(double left, double right) {

@@ -48,8 +48,25 @@ import zone.moddev.mc.basemetals.migration.Legacy112WorldMigrator;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 
-/** Runtime handlers are kept in one subscriber rather than proxy layers. */
+/** Forge event handlers for Base Metals. */
 public final class BaseMetalsEvents {
+    @SubscribeEvent
+    public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getPlayer() instanceof ServerPlayer player)) return;
+
+        var recipes = new ArrayList<net.minecraft.world.item.crafting.Recipe<?>>();
+
+        for (var recipe : player.server.getRecipeManager().getRecipes()) {
+            if (!recipe.getId().getNamespace().equals(BaseMetals.MOD_ID) || recipe.isSpecial()) continue;
+
+            var unlock = player.server.getAdvancements().getAdvancement(new ResourceLocation(
+                    BaseMetals.MOD_ID, "recipes/" + recipe.getId().getPath()));
+            if (unlock != null && player.getAdvancements().getOrStartProgress(unlock).isDone()) recipes.add(recipe);
+        }
+
+        player.awardRecipes(recipes);
+    }
+
     @SubscribeEvent
     public void onServerAboutToStart(ServerAboutToStartEvent event) {
         try {
@@ -200,6 +217,7 @@ public final class BaseMetalsEvents {
                         .thenComparing(MaterialDefinition::name))
                 .findFirst().orElse(null);
         if (upgrade == null) return;
+        if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows("basemetals:" + upgrade.name() + "_shield")) return;
         ItemStack output = ModContent.item(upgrade.name() + "_shield").get().getDefaultInstance();
         EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(event.getLeft()), output);
         int enchantments = EnchantmentHelper.getEnchantments(event.getLeft()).size();

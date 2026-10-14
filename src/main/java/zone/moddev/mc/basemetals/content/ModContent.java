@@ -137,6 +137,9 @@ public final class ModContent {
             String id = material.name() + "_ore";
             blocks.put("ore", registerBlock(id, () -> new Block(oreProperties(material)), true));
             items.put("ore", ITEMS_BY_ID.get(id));
+            if (!material.name().equals("copper")) {
+                items.put("raw", registerSimpleMaterialItem(material.name() + "_raw", material));
+            }
         }
         for (String form : BASIC_ITEM_FORMS) {
             items.put(form, registerSimpleMaterialItem(material.name() + "_" + form, material));
@@ -171,9 +174,9 @@ public final class ModContent {
             Supplier<net.minecraft.world.level.block.state.BlockState> stairBase) {
         Supplier<Block> factory = switch (form) {
             case "plate" -> () -> new PlateBlock(properties.get().noOcclusion());
-            case "bars" -> () -> new IronBarsBlock(properties.get().noOcclusion());
-            case "door" -> () -> new DoorBlock(properties.get().noOcclusion());
-            case "trapdoor" -> () -> new TrapDoorBlock(properties.get().noOcclusion());
+            case "bars" -> () -> new IronBarsBlock(properties.get().noOcclusion().dynamicShape());
+            case "door" -> () -> new DoorBlock(properties.get().noOcclusion().dynamicShape());
+            case "trapdoor" -> () -> new TrapDoorBlock(properties.get().noOcclusion().dynamicShape());
             case "button" -> () -> new StoneButtonBlock(properties.get().noCollission());
             case "slab" -> () -> new SlabBlock(properties.get());
             case "lever" -> () -> new LeverBlock(properties.get().noCollission());
@@ -221,7 +224,7 @@ public final class ModContent {
         items.put("rod", registerSimpleMaterialItem(material.name() + "_rod", material));
         items.put("gear", registerSimpleMaterialItem(material.name() + "_gear", material));
         items.put("horse_armor", registerItem(material.name() + "_horse_armor",
-                () -> new MaterialItems.HorseArmor(material, new Item.Properties().tab(ModTabs.COMBAT))));
+                () -> new MaterialItems.HorseArmor(material, new Item.Properties().tab(ModTabs.COMBAT).stacksTo(1))));
         items.put("helmet", registerArmor(material, EquipmentSlot.HEAD));
         items.put("chestplate", registerArmor(material, EquipmentSlot.CHEST));
         items.put("leggings", registerArmor(material, EquipmentSlot.LEGS));
@@ -364,7 +367,7 @@ public final class ModContent {
             registerArmor(material, EquipmentSlot.LEGS);
             registerArmor(material, EquipmentSlot.FEET);
             registerItem(name + "_horse_armor", () -> new MaterialItems.HorseArmor(material,
-                    new Item.Properties().tab(ModTabs.COMBAT)));
+                    new Item.Properties().tab(ModTabs.COMBAT).stacksTo(1)));
         }
         if (name.equals("emerald") || name.equals("obsidian") || name.equals("quartz")) {
             registerItem(name + "_sword", () -> new MaterialItems.Sword(material,
@@ -469,8 +472,7 @@ public final class ModContent {
 
     private static boolean isLegacyFuelMaterial(String name) {
         if (name.equals("coal") || name.equals("charcoal")) return true;
-        return MaterialCatalogue.ALL.stream()
-                .anyMatch(material -> material.name().equals(name) && material.hasEquipment());
+        return false;
     }
 
     private static RegistryObject<Item> registerItem(String id, Supplier<? extends Item> factory) {

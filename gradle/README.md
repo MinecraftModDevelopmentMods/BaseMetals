@@ -16,3 +16,18 @@ the remaining build concerns small enough to review independently.
 Applied-script order is intentional. Artifact setup publishes an immutable
 `baseMetalsRelease` map consumed by publishing and packaged-runtime checks.
 Keep machine-specific paths in Gradle properties, never in these scripts.
+
+Model and data providers live in the separate `dataGenerator` source set.
+Use `generateResources` after changing them to update the committed resources.
+`check` generates a temporary copy and reports differences without changing
+source files. Neither the providers nor test probes enter ordinary game
+launches or public jars.
+
+Normal client and server launches use an explicit runtime classpath, not
+Buildship's full dependency container. Compile-only integration APIs therefore
+remain available in the editor without loading extra mods into the game.
+
+`runClientOptionalMods` launches the `optionalMods` client with Tinkers and
+Mantle. Extra dependencies selected with `compatSmoke` affect only this
+separate profile. Use `packagedCompatSmoke` to check original mod distributions;
+this avoids remapping problems in upstream JARs such as CoFH Core.

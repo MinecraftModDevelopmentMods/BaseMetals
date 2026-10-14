@@ -1,0 +1,49 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "basemetals:block/quartz_bars",
+    "edge": "basemetals:block/quartz_bars"
+  },
+  "elements": [
+    {
+      "from": [
+        7,
+        0.001,
+        7
+      ],
+      "to": [
+        9,
+        0.001,
+        9
+      ],
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#edge"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        15.999,
+        7
+      ],
+      "to": [
+        9,
+        15.999,
+        9
+      ],
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#edge"
+        }
+      }
+    }
+  ]
+}

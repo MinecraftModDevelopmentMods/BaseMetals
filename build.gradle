@@ -87,10 +87,25 @@ tasks.withType(AbstractArchiveTask).configureEach {
     reproducibleFileOrder = true
 }
 
+tasks.withType(Jar).configureEach {
+    includeEmptyDirs = false
+}
+
 // Validation-only client code is kept out of the published mod.  ForgeGradle
 // adds this source set to the client run only when the integrated-world smoke
 // is explicitly requested.
 sourceSets {
+    optionalMods {
+        java.setSrcDirs([])
+        resources.setSrcDirs([])
+        runtimeClasspath += sourceSets.main.output
+    }
+    dataGenerator {
+        java.srcDir 'src/dataGenerator/java'
+        resources.setSrcDirs([])
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
     gameTestValidation {
         java.srcDir 'src/gametest/java'
         resources.srcDir 'src/gametest/resources'
@@ -126,6 +141,10 @@ sourceSets {
 }
 
 configurations {
+    optionalModsImplementation.extendsFrom implementation
+    dataGeneratorImplementation.extendsFrom implementation
+    dataGeneratorCompileOnly.extendsFrom compileOnly
+    dataGeneratorRuntimeOnly.extendsFrom runtimeOnly
     orespawnRelease
     gameTestValidationImplementation.extendsFrom implementation
     gameTestValidationCompileOnly.extendsFrom compileOnly
@@ -152,6 +171,9 @@ minecraft {
     runs {
         configureEach {
             workingDir.convention layout.projectDirectory.dir('run')
+            with(sourceSets.optionalMods) {
+                workingDir.set(layout.projectDirectory.dir('run-optional-mods'))
+            }
             jvmArgs '--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED'
 
             // Keep registry diagnostics available in development logs.
@@ -247,9 +269,10 @@ minecraft {
 
         data {
             workingDir.convention layout.projectDirectory.dir('run-data')
-
-            // Regenerate the checked-in resources from the material catalogue.
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            systemProperty 'basemetals.projectDir', projectDir.absolutePath
+            mods { "${mod_id}" { source sourceSets.dataGenerator } }
+            // Generate into build output. Only generateResources updates the checked-in files.
+            args '--mod', mod_id, '--all', '--output', file('build/generated-verification'), '--existing', file('src/main/resources/')
         }
     }
 }
@@ -273,15 +296,19 @@ def registerRunModOutput = { String taskName, SourceSet validationSourceSet ->
 }
 
 def productionRunMod = registerRunModOutput('prepareDevelopmentMod', null)
+def dataRunMod = registerRunModOutput('prepareDataDevelopmentMod', sourceSets.dataGenerator)
 def gameTestRunMod = registerRunModOutput('prepareGameTestDevelopmentMod', sourceSets.gameTestValidation)
 def integratedRunMod = registerRunModOutput('prepareIntegratedSmokeDevelopmentMod', sourceSets.integratedSmoke)
 def upgradeRunMod = registerRunModOutput('prepareUpgradeSmokeDevelopmentMod', sourceSets.upgradeSmoke)
 
 tasks.withType(JavaExec).configureEach { JavaExec runTask ->
     def selected = productionRunMod
-    if (runTask.name == 'runGameTestServer') {
+    if (runTask.name == 'runData') {
+        selected = dataRunMod
+    } else if (runTask.name == 'runGameTestServer') {
         selected = gameTestRunMod
-    } else if (runTask.name == 'runClient' && providers.gradleProperty('integratedWorldSmoke').isPresent()) {
+    } else if (runTask.name in ['runClient', 'runOptionalModsClient']
+            && providers.gradleProperty('integratedWorldSmoke').isPresent()) {
         selected = integratedRunMod
     } else if (runTask.name == 'runServer' && (providers.gradleProperty('upgradeWorldSmoke').isPresent()
             || providers.gradleProperty('legacyWorldSmoke').isPresent())) {
@@ -295,6 +322,12 @@ tasks.withType(JavaExec).configureEach { JavaExec runTask ->
             throw new GradleException("Could not create development mods directory: ${modsDirectory}")
         }
     }
+}
+
+tasks.register('runClientOptionalMods') {
+    group = 'forgegradle runs'
+    description = 'Runs the client with Tinkers, Mantle and any selected compatibility mods.'
+    dependsOn 'runOptionalModsClient'
 }
 
 // Generated resources are checked in; the local cache is never packaged.
