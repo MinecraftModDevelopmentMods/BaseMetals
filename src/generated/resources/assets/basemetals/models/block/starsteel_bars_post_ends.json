@@ -1,11 +1,15 @@
 {
   "ambientocclusion": false,
-  "textures": {
-    "particle": "basemetals:block/starsteel_bars",
-    "edge": "basemetals:block/starsteel_bars"
-  },
   "elements": [
     {
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#edge"
+        }
+      },
       "from": [
         7,
         0.001,
@@ -15,17 +19,17 @@
         9,
         0.001,
         9
-      ],
-      "faces": {
-        "down": {
-          "texture": "#edge"
-        },
-        "up": {
-          "texture": "#edge"
-        }
-      }
+      ]
     },
     {
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#edge"
+        }
+      },
       "from": [
         7,
         15.999,
@@ -35,15 +39,11 @@
         9,
         15.999,
         9
-      ],
-      "faces": {
-        "down": {
-          "texture": "#edge"
-        },
-        "up": {
-          "texture": "#edge"
-        }
-      }
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "edge": "basemetals:block/starsteel_bars",
+    "particle": "basemetals:block/starsteel_bars"
+  }
 }

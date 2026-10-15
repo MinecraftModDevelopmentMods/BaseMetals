@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX ",
-      "  X",
-      " S "
-    ],
+    "category": "equipment",
+    "group": "basemetals:tin_scythe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/tin"
       }
     },
+    "pattern": [
+      "XX ",
+      "  X",
+      " S "
+    ],
     "result": {
       "item": "basemetals:tin_scythe"
-    },
-    "group": "basemetals:tin_scythe"
+    }
   }
 }

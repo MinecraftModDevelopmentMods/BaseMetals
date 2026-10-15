@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.04,
   "ingredient": {
     "tag": "forge:tiny_dusts/emerald"
   },
-  "result": "basemetals:emerald_nugget",
-  "experience": 0.04,
-  "cookingtime": 200
+  "result": "basemetals:emerald_nugget"
 }

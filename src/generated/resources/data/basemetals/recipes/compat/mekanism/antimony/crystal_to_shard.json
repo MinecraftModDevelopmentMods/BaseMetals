@@ -1,16 +1,8 @@
 {
   "type": "mekanism:injecting",
-  "itemInput": {
-    "ingredient": {
-      "tag": "forge:crystals/antimony"
-    }
-  },
   "chemicalInput": {
     "amount": 1,
     "gas": "mekanism:hydrogen_chloride"
-  },
-  "output": {
-    "item": "basemetals:antimony_shard"
   },
   "conditions": [
     {
@@ -21,5 +13,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:antimony_shard"
     }
-  ]
+  ],
+  "itemInput": {
+    "ingredient": {
+      "tag": "forge:crystals/antimony"
+    }
+  },
+  "output": {
+    "item": "basemetals:antimony_shard"
+  }
 }

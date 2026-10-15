@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:invar_helmet",
     "key": {
       "X": {
         "tag": "forge:ingots/invar"
       }
     },
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:invar_helmet"
-    },
-    "group": "basemetals:invar_helmet"
+    }
   }
 }

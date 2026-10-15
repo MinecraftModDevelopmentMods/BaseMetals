@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_electrum"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_electrum"
     },
     "type=double": {
       "model": "basemetals:block/electrum_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_electrum"
     }
   }
 }

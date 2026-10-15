@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.6,
   "ingredient": {
     "item": "basemetals:silver_chestplate"
   },
   "result": {
-    "item": "basemetals:silver_ingot",
-    "count": 8
-  },
-  "experience": 0.6,
-  "cookingtime": 200
+    "count": 8,
+    "item": "basemetals:silver_ingot"
+  }
 }

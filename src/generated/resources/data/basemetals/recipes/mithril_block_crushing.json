@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/mithril"
   },
   "result": {
-    "item": "basemetals:mithril_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:mithril_powder"
   }
 }

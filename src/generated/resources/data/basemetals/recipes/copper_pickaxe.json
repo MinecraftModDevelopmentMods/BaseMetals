@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      " S ",
-      " S "
-    ],
+    "category": "equipment",
+    "group": "basemetals:copper_pickaxe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/copper"
       }
     },
+    "pattern": [
+      "XXX",
+      " S ",
+      " S "
+    ],
     "result": {
       "item": "basemetals:copper_pickaxe"
-    },
-    "group": "basemetals:copper_pickaxe"
+    }
   }
 }

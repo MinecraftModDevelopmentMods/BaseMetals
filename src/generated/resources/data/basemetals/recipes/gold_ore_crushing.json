@@ -4,7 +4,7 @@
     "tag": "forge:ores/gold"
   },
   "result": {
-    "item": "basemetals:gold_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:gold_powder"
   }
 }

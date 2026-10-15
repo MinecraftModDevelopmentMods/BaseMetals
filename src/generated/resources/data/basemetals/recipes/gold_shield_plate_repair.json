@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:gold_shield",
   "plate": {
     "tag": "forge:plates/gold"
-  }
+  },
+  "target": "basemetals:gold_shield"
 }

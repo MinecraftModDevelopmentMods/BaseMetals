@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X ",
-      "XRX",
-      " X "
-    ],
+    "category": "misc",
+    "group": "basemetals:tin_gear",
     "key": {
       "R": {
         "tag": "forge:rods/tin"
@@ -15,10 +12,14 @@
         "tag": "forge:ingots/tin"
       }
     },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
     "result": {
-      "item": "basemetals:tin_gear",
-      "count": 4
-    },
-    "group": "basemetals:tin_gear"
+      "count": 4,
+      "item": "basemetals:tin_gear"
+    }
   }
 }

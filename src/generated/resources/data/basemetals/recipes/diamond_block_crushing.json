@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/diamond"
   },
   "result": {
-    "item": "basemetals:diamond_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:diamond_powder"
   }
 }

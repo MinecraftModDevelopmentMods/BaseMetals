@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
   "ingredient": {
     "item": "basemetals:gold_crossbow"
   },
   "result": {
-    "item": "minecraft:gold_ingot",
-    "count": 4
-  },
-  "experience": 1.0,
-  "cookingtime": 200
+    "count": 4,
+    "item": "minecraft:gold_ingot"
+  }
 }

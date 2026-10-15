@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:coldiron_leggings",
   "plate": {
     "tag": "forge:plates/coldiron"
-  }
+  },
+  "target": "basemetals:coldiron_leggings"
 }

@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:aquarium_blend",
     "key": {
       "X": {
         "tag": "forge:small_blends/aquarium"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:aquarium_blend"
-    },
-    "group": "basemetals:aquarium_blend"
+    }
   }
 }

@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:pewter_ingot",
     "key": {
       "X": {
         "tag": "forge:nuggets/pewter"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:pewter_ingot"
-    },
-    "group": "basemetals:pewter_ingot"
+    }
   }
 }

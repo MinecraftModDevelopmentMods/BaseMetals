@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.2,
   "ingredient": {
     "tag": "forge:dusts/steel"
   },
-  "result": "basemetals:steel_ingot",
-  "experience": 0.2,
-  "cookingtime": 200
+  "result": "basemetals:steel_ingot"
 }

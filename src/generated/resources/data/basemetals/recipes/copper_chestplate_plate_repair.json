@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:copper_chestplate",
   "plate": {
     "tag": "forge:plates/copper"
-  }
+  },
+  "target": "basemetals:copper_chestplate"
 }

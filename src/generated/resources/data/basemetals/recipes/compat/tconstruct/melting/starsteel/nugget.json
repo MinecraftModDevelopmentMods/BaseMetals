@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 16,
-  "ingredient": {
-    "tag": "forge:nuggets/starsteel"
-  },
-  "result": {
-    "fluid": "basemetals:starsteel",
-    "amount": 10
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/starsteel"
+  },
+  "result": {
+    "amount": 10,
+    "fluid": "basemetals:starsteel"
+  },
+  "temperature": 769,
+  "time": 16
 }

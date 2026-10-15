@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.07,
   "ingredient": {
     "tag": "forge:tiny_dusts/silver"
   },
-  "result": "basemetals:silver_nugget",
-  "experience": 0.07,
-  "cookingtime": 200
+  "result": "basemetals:silver_nugget"
 }

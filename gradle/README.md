@@ -27,7 +27,8 @@ Normal client and server launches use an explicit runtime classpath, not
 Buildship's full dependency container. Compile-only integration APIs therefore
 remain available in the editor without loading extra mods into the game.
 
-`runClientOptionalMods` launches the `optionalMods` client with Tinkers and
-Mantle. Extra dependencies selected with `compatSmoke` affect only this
-separate profile. Use `packagedCompatSmoke` to check original mod distributions;
-this avoids remapping problems in upstream JARs such as CoFH Core.
+`runClientOptionalMods` uses a separate folder for optional-mod testing. No
+optional mods are added automatically: the inherited integration mods do not
+publish builds for Minecraft 1.19.4. The `compatSmoke` and `packagedCompatSmoke`
+switches reject those unsupported jars rather than loading another Minecraft
+version's mods.

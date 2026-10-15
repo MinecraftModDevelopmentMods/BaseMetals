@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.5,
   "ingredient": {
     "item": "basemetals:copper_helmet"
   },
   "result": {
-    "item": "basemetals:copper_ingot",
-    "count": 5
-  },
-  "experience": 0.5,
-  "cookingtime": 200
+    "count": 5,
+    "item": "basemetals:copper_ingot"
+  }
 }

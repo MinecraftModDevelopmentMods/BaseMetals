@@ -1,14 +1,5 @@
 {
   "type": "enderio_machines:sagmilling",
-  "energy": 2400,
-  "input": {
-    "tag": "forge:ingots/lead"
-  },
-  "outputs": [
-    {
-      "item": "basemetals:lead_powder"
-    }
-  ],
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -16,6 +7,15 @@
     },
     {
       "type": "basemetals:content_mode",
+      "item": "basemetals:lead_powder"
+    }
+  ],
+  "energy": 2400,
+  "input": {
+    "tag": "forge:ingots/lead"
+  },
+  "outputs": [
+    {
       "item": "basemetals:lead_powder"
     }
   ]

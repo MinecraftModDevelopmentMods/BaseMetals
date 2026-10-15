@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:aquarium_powder",
     "key": {
       "X": {
         "tag": "forge:tiny_dusts/aquarium"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:aquarium_powder"
-    },
-    "group": "basemetals:aquarium_powder"
+    }
   }
 }

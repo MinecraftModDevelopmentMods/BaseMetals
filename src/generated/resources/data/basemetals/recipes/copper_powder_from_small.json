@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:copper_powder",
     "key": {
       "X": {
         "tag": "forge:tiny_dusts/copper"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:copper_powder"
-    },
-    "group": "basemetals:copper_powder"
+    }
   }
 }

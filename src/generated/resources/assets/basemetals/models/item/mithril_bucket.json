@@ -1,5 +1,5 @@
 {
   "parent": "forge:item/bucket",
-  "loader": "forge:bucket",
-  "fluid": "basemetals:mithril"
+  "fluid": "basemetals:mithril",
+  "loader": "forge:fluid_container"
 }

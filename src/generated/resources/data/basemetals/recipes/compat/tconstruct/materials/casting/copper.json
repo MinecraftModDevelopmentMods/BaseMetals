@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_fluid",
-  "temperature": 769,
-  "output": "basemetals:copper",
-  "fluid": {
-    "tag": "forge:molten_copper",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "fluid": {
+    "amount": 90,
+    "tag": "forge:molten_copper"
+  },
+  "output": "basemetals:copper",
+  "temperature": 769
 }

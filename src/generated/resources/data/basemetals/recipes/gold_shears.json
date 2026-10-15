@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:gold_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/gold"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:gold_shears"
-    },
-    "group": "basemetals:gold_shears"
+    }
   }
 }

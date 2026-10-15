@@ -4,7 +4,7 @@
     "tag": "forge:ores/coldiron"
   },
   "result": {
-    "item": "basemetals:coldiron_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:coldiron_powder"
   }
 }

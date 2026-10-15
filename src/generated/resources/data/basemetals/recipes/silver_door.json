@@ -2,20 +2,21 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XX",
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:silver_door",
     "key": {
       "X": {
         "tag": "forge:ingots/silver"
       }
     },
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
     "result": {
-      "item": "basemetals:silver_door",
-      "count": 3
-    },
-    "group": "basemetals:silver_door"
+      "count": 3,
+      "item": "basemetals:silver_door"
+    }
   }
 }

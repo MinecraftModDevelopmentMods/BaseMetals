@@ -2,20 +2,21 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XX",
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:copper_door",
     "key": {
       "X": {
         "tag": "forge:ingots/copper"
       }
     },
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
     "result": {
-      "item": "basemetals:copper_door",
-      "count": 3
-    },
-    "group": "basemetals:copper_door"
+      "count": 3,
+      "item": "basemetals:copper_door"
+    }
   }
 }

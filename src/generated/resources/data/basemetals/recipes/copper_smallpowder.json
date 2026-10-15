@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:copper_smallpowder",
     "ingredients": [
       {
         "tag": "forge:dusts/copper"
       }
     ],
     "result": {
-      "item": "basemetals:copper_smallpowder",
-      "count": 9
-    },
-    "group": "basemetals:copper_smallpowder"
+      "count": 9,
+      "item": "basemetals:copper_smallpowder"
+    }
   }
 }

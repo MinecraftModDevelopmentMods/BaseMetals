@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "BBB",
-      " C ",
-      "SSS"
-    ],
+    "category": "building",
+    "group": "basemetals:stone_anvil",
     "key": {
       "B": {
         "item": "minecraft:stone_bricks"
@@ -18,9 +15,13 @@
         "item": "minecraft:stone_slab"
       }
     },
+    "pattern": [
+      "BBB",
+      " C ",
+      "SSS"
+    ],
     "result": {
       "item": "basemetals:stone_anvil"
-    },
-    "group": "basemetals:stone_anvil"
+    }
   }
 }

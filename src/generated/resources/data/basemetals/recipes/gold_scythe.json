@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX ",
-      "  X",
-      " S "
-    ],
+    "category": "equipment",
+    "group": "basemetals:gold_scythe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/gold"
       }
     },
+    "pattern": [
+      "XX ",
+      "  X",
+      " S "
+    ],
     "result": {
       "item": "basemetals:gold_scythe"
-    },
-    "group": "basemetals:gold_scythe"
+    }
   }
 }

@@ -1,14 +1,5 @@
 {
   "type": "thermal:pulverizer",
-  "energy": 4000,
-  "ingredient": {
-    "tag": "forge:ingots/mercury"
-  },
-  "result": [
-    {
-      "item": "basemetals:mercury_powder"
-    }
-  ],
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -16,6 +7,15 @@
     },
     {
       "type": "basemetals:content_mode",
+      "item": "basemetals:mercury_powder"
+    }
+  ],
+  "energy": 4000,
+  "ingredient": {
+    "tag": "forge:ingots/mercury"
+  },
+  "result": [
+    {
       "item": "basemetals:mercury_powder"
     }
   ]

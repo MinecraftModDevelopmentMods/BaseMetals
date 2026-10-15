@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_melting",
-  "input": "basemetals:lead",
-  "temperature": 769,
-  "result": {
-    "fluid": "basemetals:lead",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "input": "basemetals:lead",
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:lead"
+  },
+  "temperature": 769
 }

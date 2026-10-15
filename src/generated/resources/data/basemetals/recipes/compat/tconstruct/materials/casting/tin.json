@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_fluid",
-  "temperature": 769,
-  "output": "basemetals:tin",
-  "fluid": {
-    "tag": "forge:molten_tin",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "fluid": {
+    "amount": 90,
+    "tag": "forge:molten_tin"
+  },
+  "output": "basemetals:tin",
+  "temperature": 769
 }

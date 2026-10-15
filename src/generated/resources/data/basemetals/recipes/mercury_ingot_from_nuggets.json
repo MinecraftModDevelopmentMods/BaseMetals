@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:mercury_ingot",
     "key": {
       "X": {
         "tag": "forge:nuggets/mercury"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:mercury_ingot"
-    },
-    "group": "basemetals:mercury_ingot"
+    }
   }
 }

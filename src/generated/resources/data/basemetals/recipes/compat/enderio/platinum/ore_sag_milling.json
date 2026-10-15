@@ -1,15 +1,5 @@
 {
   "type": "enderio_machines:sagmilling",
-  "energy": 2400,
-  "input": {
-    "tag": "forge:ores/platinum"
-  },
-  "outputs": [
-    {
-      "item": "basemetals:platinum_powder",
-      "count": 2
-    }
-  ],
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -17,6 +7,16 @@
     },
     {
       "type": "basemetals:content_mode",
+      "item": "basemetals:platinum_powder"
+    }
+  ],
+  "energy": 2400,
+  "input": {
+    "tag": "forge:ores/platinum"
+  },
+  "outputs": [
+    {
+      "count": 2,
       "item": "basemetals:platinum_powder"
     }
   ]

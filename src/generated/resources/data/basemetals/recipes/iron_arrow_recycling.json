@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.05,
   "ingredient": {
     "item": "basemetals:iron_arrow"
   },
   "result": {
     "item": "minecraft:iron_nugget"
-  },
-  "experience": 0.05,
-  "cookingtime": 200
+  }
 }

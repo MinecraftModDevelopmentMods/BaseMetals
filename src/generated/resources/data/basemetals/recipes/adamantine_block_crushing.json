@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/adamantine"
   },
   "result": {
-    "item": "basemetals:adamantine_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:adamantine_powder"
   }
 }

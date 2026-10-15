@@ -1,15 +1,7 @@
 {
   "type": "tconstruct:casting_table",
-  "cooling_time": 90,
   "cast": {
     "tag": "tconstruct:casts/multi_use/gear"
-  },
-  "fluid": {
-    "tag": "forge:molten_platinum",
-    "amount": 360
-  },
-  "result": {
-    "item": "basemetals:platinum_gear"
   },
   "conditions": [
     {
@@ -20,5 +12,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:platinum_gear"
     }
-  ]
+  ],
+  "cooling_time": 90,
+  "fluid": {
+    "amount": 360,
+    "tag": "forge:molten_platinum"
+  },
+  "result": {
+    "item": "basemetals:platinum_gear"
+  }
 }

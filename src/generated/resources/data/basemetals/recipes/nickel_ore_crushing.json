@@ -4,7 +4,7 @@
     "tag": "forge:ores/nickel"
   },
   "result": {
-    "item": "basemetals:nickel_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:nickel_powder"
   }
 }

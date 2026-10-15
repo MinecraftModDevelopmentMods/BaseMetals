@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:platinum_ingot",
     "ingredients": [
       {
         "tag": "forge:storage_blocks/platinum"
       }
     ],
     "result": {
-      "item": "basemetals:platinum_ingot",
-      "count": 9
-    },
-    "group": "basemetals:platinum_ingot"
+      "count": 9,
+      "item": "basemetals:platinum_ingot"
+    }
   }
 }

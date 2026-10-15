@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "S",
-      "S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:quartz_shovel",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:gems/quartz"
       }
     },
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
     "result": {
       "item": "basemetals:quartz_shovel"
-    },
-    "group": "basemetals:quartz_shovel"
+    }
   }
 }

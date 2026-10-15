@@ -174,7 +174,7 @@ class ResourceIntegrityTest {
             JsonObject model = read(resource("assets/basemetals/models/item/" + id + ".json")).getAsJsonObject();
             assertEquals("forge:item/bucket", model.get("parent").getAsString(),
                     bucket + " has no visible bucket base or fluid mask");
-            assertEquals("forge:bucket", model.get("loader").getAsString(),
+            assertEquals("forge:fluid_container", model.get("loader").getAsString(),
                     bucket + " does not use Forge's dynamic bucket loader");
             assertEquals("basemetals:" + id.substring(0, id.length() - "_bucket".length()),
                     model.get("fluid").getAsString(), bucket + " references the wrong fluid");

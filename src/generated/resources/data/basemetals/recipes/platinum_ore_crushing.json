@@ -4,7 +4,7 @@
     "tag": "forge:ores/platinum"
   },
   "result": {
-    "item": "basemetals:platinum_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:platinum_powder"
   }
 }

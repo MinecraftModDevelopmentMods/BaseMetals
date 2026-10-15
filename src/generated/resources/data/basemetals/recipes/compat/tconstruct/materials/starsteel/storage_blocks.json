@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:starsteel",
-  "ingredient": {
-    "tag": "forge:storage_blocks/starsteel"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/starsteel"
+  },
+  "material": "basemetals:starsteel",
+  "needed": 1,
+  "value": 9
 }

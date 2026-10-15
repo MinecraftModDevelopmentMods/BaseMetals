@@ -116,7 +116,7 @@ def prepareGameTestStructures = tasks.register('prepareGameTestStructures', Copy
     group = 'verification'
     description = 'Copies the tracked SNBT fixtures into the GameTest working directory.'
     from layout.projectDirectory.dir('src/gametest/resources/gameteststructures')
-    into layout.projectDirectory.dir('run/gameteststructures')
+    into layout.projectDirectory.dir('run-gametest/gameteststructures')
 }
 
 tasks.matching { it.name == 'prepareRunGameTestServer' }.configureEach {

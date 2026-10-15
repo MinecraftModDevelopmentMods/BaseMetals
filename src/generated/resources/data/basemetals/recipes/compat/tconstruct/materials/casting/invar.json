@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_fluid",
-  "temperature": 769,
-  "output": "basemetals:invar",
-  "fluid": {
-    "tag": "forge:molten_invar",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "fluid": {
+    "amount": 90,
+    "tag": "forge:molten_invar"
+  },
+  "output": "basemetals:invar",
+  "temperature": 769
 }

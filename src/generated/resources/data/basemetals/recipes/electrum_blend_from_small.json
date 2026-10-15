@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:electrum_blend",
     "key": {
       "X": {
         "tag": "forge:small_blends/electrum"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:electrum_blend"
-    },
-    "group": "basemetals:electrum_blend"
+    }
   }
 }

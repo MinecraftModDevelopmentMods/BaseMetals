@@ -1,24 +1,24 @@
 {
   "type": "tconstruct:alloy",
-  "temperature": 769,
-  "inputs": [
-    {
-      "tag": "forge:molten_iron",
-      "amount": 180
-    },
-    {
-      "tag": "forge:molten_nickel",
-      "amount": 90
-    }
-  ],
-  "result": {
-    "fluid": "basemetals:invar",
-    "amount": 270
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "inputs": [
+    {
+      "amount": 180,
+      "tag": "forge:molten_iron"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_nickel"
+    }
+  ],
+  "result": {
+    "amount": 270,
+    "fluid": "basemetals:invar"
+  },
+  "temperature": 769
 }

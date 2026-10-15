@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:invar_block",
     "key": {
       "X": {
         "tag": "forge:ingots/invar"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:invar_block"
-    },
-    "group": "basemetals:invar_block"
+    }
   }
 }

@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 45,
-  "ingredient": {
-    "tag": "forge:ingots/lead"
-  },
-  "result": {
-    "fluid": "basemetals:lead",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/lead"
+  },
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:lead"
+  },
+  "temperature": 769,
+  "time": 45
 }

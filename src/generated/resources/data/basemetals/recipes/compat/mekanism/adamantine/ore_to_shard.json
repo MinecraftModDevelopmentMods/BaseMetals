@@ -1,17 +1,8 @@
 {
   "type": "mekanism:injecting",
-  "itemInput": {
-    "ingredient": {
-      "tag": "forge:ores/adamantine"
-    }
-  },
   "chemicalInput": {
     "amount": 1,
     "gas": "mekanism:hydrogen_chloride"
-  },
-  "output": {
-    "item": "basemetals:adamantine_shard",
-    "count": 4
   },
   "conditions": [
     {
@@ -22,5 +13,14 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:adamantine_shard"
     }
-  ]
+  ],
+  "itemInput": {
+    "ingredient": {
+      "tag": "forge:ores/adamantine"
+    }
+  },
+  "output": {
+    "count": 4,
+    "item": "basemetals:adamantine_shard"
+  }
 }

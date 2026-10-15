@@ -1,23 +1,23 @@
 {
   "type": "mekanism:dissolution",
-  "itemInput": {
-    "ingredient": {
-      "tag": "forge:ores/antimony"
-    }
-  },
-  "gasInput": {
-    "amount": 1,
-    "gas": "mekanism:sulfuric_acid"
-  },
-  "output": {
-    "amount": 1000,
-    "slurry": "basemetals:dirty_antimony",
-    "chemicalType": "slurry"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "mekanism"
     }
-  ]
+  ],
+  "gasInput": {
+    "amount": 1,
+    "gas": "mekanism:sulfuric_acid"
+  },
+  "itemInput": {
+    "ingredient": {
+      "tag": "forge:ores/antimony"
+    }
+  },
+  "output": {
+    "amount": 1000,
+    "chemicalType": "slurry",
+    "slurry": "basemetals:dirty_antimony"
+  }
 }

@@ -1,13 +1,5 @@
 {
   "type": "mekanism:crushing",
-  "input": {
-    "ingredient": {
-      "tag": "forge:ingots/platinum"
-    }
-  },
-  "output": {
-    "item": "basemetals:platinum_powder"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -17,5 +9,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:platinum_powder"
     }
-  ]
+  ],
+  "input": {
+    "ingredient": {
+      "tag": "forge:ingots/platinum"
+    }
+  },
+  "output": {
+    "item": "basemetals:platinum_powder"
+  }
 }

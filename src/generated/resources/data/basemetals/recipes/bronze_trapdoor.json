@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:bronze_trapdoor",
     "key": {
       "X": {
         "tag": "forge:ingots/bronze"
       }
     },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
     "result": {
       "item": "basemetals:bronze_trapdoor"
-    },
-    "group": "basemetals:bronze_trapdoor"
+    }
   }
 }

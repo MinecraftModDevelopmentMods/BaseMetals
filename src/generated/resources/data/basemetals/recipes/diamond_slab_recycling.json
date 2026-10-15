@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.04,
   "ingredient": {
     "item": "basemetals:diamond_slab"
   },
   "result": {
-    "item": "basemetals:diamond_nugget",
-    "count": 4
-  },
-  "experience": 0.04,
-  "cookingtime": 200
+    "count": 4,
+    "item": "basemetals:diamond_nugget"
+  }
 }

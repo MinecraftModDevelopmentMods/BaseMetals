@@ -1,24 +1,24 @@
 {
   "type": "tconstruct:alloy",
-  "temperature": 769,
-  "inputs": [
-    {
-      "tag": "forge:molten_gold",
-      "amount": 90
-    },
-    {
-      "tag": "forge:molten_silver",
-      "amount": 90
-    }
-  ],
-  "result": {
-    "fluid": "basemetals:electrum",
-    "amount": 180
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "inputs": [
+    {
+      "amount": 90,
+      "tag": "forge:molten_gold"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_silver"
+    }
+  ],
+  "result": {
+    "amount": 180,
+    "fluid": "basemetals:electrum"
+  },
+  "temperature": 769
 }

@@ -1,5 +1,15 @@
 {
   "type": "enderio_machines:alloy_smelting",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "enderio_machines"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:aquarium_ingot"
+    }
+  ],
   "energy": 6400,
   "experience": 0.3,
   "inputs": [
@@ -23,17 +33,7 @@
     }
   ],
   "result": {
-    "item": "basemetals:aquarium_ingot",
-    "count": 3
-  },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "enderio_machines"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:aquarium_ingot"
-    }
-  ]
+    "count": 3,
+    "item": "basemetals:aquarium_ingot"
+  }
 }

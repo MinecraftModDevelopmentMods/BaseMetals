@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:pewter_helmet",
   "plate": {
     "tag": "forge:plates/pewter"
-  }
+  },
+  "target": "basemetals:pewter_helmet"
 }

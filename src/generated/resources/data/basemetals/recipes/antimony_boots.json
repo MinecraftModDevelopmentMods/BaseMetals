@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X X",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:antimony_boots",
     "key": {
       "X": {
         "tag": "forge:ingots/antimony"
       }
     },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:antimony_boots"
-    },
-    "group": "basemetals:antimony_boots"
+    }
   }
 }

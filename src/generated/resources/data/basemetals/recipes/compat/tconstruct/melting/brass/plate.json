@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 45,
-  "ingredient": {
-    "tag": "forge:plates/brass"
-  },
-  "result": {
-    "fluid": "basemetals:brass",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:plates/brass"
+  },
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:brass"
+  },
+  "temperature": 769,
+  "time": 45
 }

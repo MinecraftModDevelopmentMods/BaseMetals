@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:diamond_powder",
     "key": {
       "X": {
         "tag": "forge:tiny_dusts/diamond"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:diamond_powder"
-    },
-    "group": "basemetals:diamond_powder"
+    }
   }
 }

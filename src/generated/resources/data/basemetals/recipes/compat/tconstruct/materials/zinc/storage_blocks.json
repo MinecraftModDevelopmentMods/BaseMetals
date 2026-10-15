@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:zinc",
-  "ingredient": {
-    "tag": "forge:storage_blocks/zinc"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/zinc"
+  },
+  "material": "basemetals:zinc",
+  "needed": 1,
+  "value": 9
 }

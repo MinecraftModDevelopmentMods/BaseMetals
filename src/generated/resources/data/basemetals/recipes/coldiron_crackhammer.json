@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "S",
-      "S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:coldiron_crackhammer",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:storage_blocks/coldiron"
       }
     },
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
     "result": {
       "item": "basemetals:coldiron_crackhammer"
-    },
-    "group": "basemetals:coldiron_crackhammer"
+    }
   }
 }

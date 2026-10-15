@@ -1,10 +1,10 @@
 {
   "variants": {
     "": {
-      "model": "minecraft:block/water",
       "custom": {
         "fluid": "basemetals:coal"
-      }
+      },
+      "model": "minecraft:block/water"
     }
   }
 }

@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.9,
   "ingredient": {
     "tag": "forge:dusts/mithril"
   },
-  "result": "basemetals:mithril_ingot",
-  "experience": 0.9,
-  "cookingtime": 200
+  "result": "basemetals:mithril_ingot"
 }

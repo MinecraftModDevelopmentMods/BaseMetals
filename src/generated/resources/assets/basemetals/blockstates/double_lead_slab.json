@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_lead"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_lead"
     },
     "type=double": {
       "model": "basemetals:block/lead_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_lead"
     }
   }
 }

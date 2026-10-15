@@ -11,7 +11,7 @@ import net.minecraft.world.phys.AABB;
 
 public final class HumanDetectorBlock extends PressurePlateBlock {
     public HumanDetectorBlock(Properties properties) {
-        super(Sensitivity.EVERYTHING, properties);
+        super(Sensitivity.EVERYTHING, properties, net.minecraft.world.level.block.state.properties.BlockSetType.STONE);
     }
 
     @Override

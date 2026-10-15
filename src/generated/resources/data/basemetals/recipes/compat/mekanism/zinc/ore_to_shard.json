@@ -1,17 +1,8 @@
 {
   "type": "mekanism:injecting",
-  "itemInput": {
-    "ingredient": {
-      "tag": "forge:ores/zinc"
-    }
-  },
   "chemicalInput": {
     "amount": 1,
     "gas": "mekanism:hydrogen_chloride"
-  },
-  "output": {
-    "item": "basemetals:zinc_shard",
-    "count": 4
   },
   "conditions": [
     {
@@ -22,5 +13,14 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:zinc_shard"
     }
-  ]
+  ],
+  "itemInput": {
+    "ingredient": {
+      "tag": "forge:ores/zinc"
+    }
+  },
+  "output": {
+    "count": 4,
+    "item": "basemetals:zinc_shard"
+  }
 }

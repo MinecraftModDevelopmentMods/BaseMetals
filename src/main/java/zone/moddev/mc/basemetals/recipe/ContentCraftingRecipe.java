@@ -22,7 +22,7 @@ public final class ContentCraftingRecipe {
     private ContentCraftingRecipe() {}
 
     private static boolean allowed(Recipe recipe) {
-        return ContentPolicy.active().allows(recipe.getResultItem().getItem().getRegistryName().toString());
+        return ContentPolicy.active().allows(ForgeRegistries.ITEMS.getKey(recipe.getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getItem()).toString());
     }
 
     private static Recipe wrap(Recipe recipe) {
@@ -36,8 +36,8 @@ public final class ContentCraftingRecipe {
         private final ShapedRecipe plain;
 
         private Shaped(ShapedRecipe plain) {
-            super(plain.getId(), plain.getGroup(), plain.getWidth(), plain.getHeight(),
-                    plain.getIngredients(), plain.getResultItem());
+            super(plain.getId(), plain.getGroup(), plain.category(), plain.getWidth(), plain.getHeight(),
+                    plain.getIngredients(), plain.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), plain.showNotification());
             this.plain = plain;
         }
 
@@ -47,8 +47,8 @@ public final class ContentCraftingRecipe {
         }
 
         @Override
-        public ItemStack assemble(CraftingContainer inventory) {
-            return allowed(this) ? super.assemble(inventory) : ItemStack.EMPTY;
+        public ItemStack assemble(CraftingContainer inventory, net.minecraft.core.RegistryAccess registries) {
+            return allowed(this) ? super.assemble(inventory, registries) : ItemStack.EMPTY;
         }
 
         @Override
@@ -66,7 +66,7 @@ public final class ContentCraftingRecipe {
         private final ShapelessRecipe plain;
 
         private Shapeless(ShapelessRecipe plain) {
-            super(plain.getId(), plain.getGroup(), plain.getResultItem(), plain.getIngredients());
+            super(plain.getId(), plain.getGroup(), plain.category(), plain.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), plain.getIngredients());
             this.plain = plain;
         }
 
@@ -76,8 +76,8 @@ public final class ContentCraftingRecipe {
         }
 
         @Override
-        public ItemStack assemble(CraftingContainer inventory) {
-            return allowed(this) ? super.assemble(inventory) : ItemStack.EMPTY;
+        public ItemStack assemble(CraftingContainer inventory, net.minecraft.core.RegistryAccess registries) {
+            return allowed(this) ? super.assemble(inventory, registries) : ItemStack.EMPTY;
         }
 
         @Override
@@ -91,7 +91,7 @@ public final class ContentCraftingRecipe {
         }
     }
 
-    private static final class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>>
+    private static final class Serializer
             implements RecipeSerializer<Recipe<?>> {
         private Serializer() {}
 
@@ -124,7 +124,7 @@ public final class ContentCraftingRecipe {
         @Override
         public void toNetwork(FriendlyByteBuf buffer, Recipe value) {
             Recipe plain = value instanceof Shaped ? ((Shaped) value).plain : ((Shapeless) value).plain;
-            buffer.writeResourceLocation(plain.getSerializer().getRegistryName());
+            buffer.writeResourceLocation(ForgeRegistries.RECIPE_SERIALIZERS.getKey(plain.getSerializer()));
             buffer.writeResourceLocation(plain.getId());
             writePlain(buffer, plain);
         }

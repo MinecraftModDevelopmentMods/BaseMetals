@@ -1,13 +1,6 @@
 {
   "type": "mekanism:crystallizing",
   "chemicalType": "slurry",
-  "input": {
-    "amount": 200,
-    "slurry": "basemetals:clean_zinc"
-  },
-  "output": {
-    "item": "basemetals:zinc_crystal"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -17,5 +10,12 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:zinc_crystal"
     }
-  ]
+  ],
+  "input": {
+    "amount": 200,
+    "slurry": "basemetals:clean_zinc"
+  },
+  "output": {
+    "item": "basemetals:zinc_crystal"
+  }
 }

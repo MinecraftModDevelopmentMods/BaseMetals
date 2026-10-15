@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XWX",
-      "XXX",
-      " X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:antimony_shield",
     "key": {
       "W": {
         "tag": "minecraft:planks"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/antimony"
       }
     },
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
     "result": {
       "item": "basemetals:antimony_shield"
-    },
-    "group": "basemetals:antimony_shield"
+    }
   }
 }

@@ -34,7 +34,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
@@ -129,7 +129,7 @@ public final class MaterialItems {
     public static final class Armor extends ArmorItem implements MaterialBacked {
         private final MaterialDefinition material;
         public Armor(MaterialDefinition material, EquipmentSlot slot, Properties properties) {
-            super(new MaterialArmor(material), slot, properties); this.material = material;
+            super(new MaterialArmor(material), armorType(slot), properties); this.material = material;
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
         @Override
@@ -147,6 +147,16 @@ public final class MaterialItems {
             this.material = material;
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
+    }
+
+    private static ArmorItem.Type armorType(EquipmentSlot slot) {
+        return switch (slot) {
+            case HEAD -> ArmorItem.Type.HELMET;
+            case CHEST -> ArmorItem.Type.CHESTPLATE;
+            case LEGS -> ArmorItem.Type.LEGGINGS;
+            case FEET -> ArmorItem.Type.BOOTS;
+            default -> throw new IllegalArgumentException("Not an armour slot: " + slot);
+        };
     }
 
     public static final class BurnableBlock extends BlockItem {
@@ -315,11 +325,11 @@ public final class MaterialItems {
 
     static void addToolTooltip(MaterialDefinition material, List<Component> tooltip) {
         Component component = switch (material.name()) {
-            case "adamantine" -> new TranslatableComponent("tooltip.adamantine.tool", 4);
-            case "aquarium" -> new TranslatableComponent("tooltip.aquarium.tool", 4);
-            case "coldiron" -> new TranslatableComponent("tooltip.coldiron.tool", 3);
-            case "mithril" -> new TranslatableComponent("tooltip.mithril.tool");
-            case "starsteel" -> new TranslatableComponent("tooltip.starsteel.tool", 10);
+            case "adamantine" -> net.minecraft.network.chat.Component.translatable("tooltip.adamantine.tool", 4);
+            case "aquarium" -> net.minecraft.network.chat.Component.translatable("tooltip.aquarium.tool", 4);
+            case "coldiron" -> net.minecraft.network.chat.Component.translatable("tooltip.coldiron.tool", 3);
+            case "mithril" -> net.minecraft.network.chat.Component.translatable("tooltip.mithril.tool");
+            case "starsteel" -> net.minecraft.network.chat.Component.translatable("tooltip.starsteel.tool", 10);
             default -> null;
         };
         if (component != null) tooltip.add(component);
@@ -329,7 +339,7 @@ public final class MaterialItems {
         if (material.name().equals("adamantine") || material.name().equals("aquarium")
                 || material.name().equals("coldiron") || material.name().equals("mithril")
                 || material.name().equals("starsteel")) {
-            tooltip.add(new TranslatableComponent("tooltip." + material.name() + ".armor"));
+            tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip." + material.name() + ".armor"));
         }
     }
 }

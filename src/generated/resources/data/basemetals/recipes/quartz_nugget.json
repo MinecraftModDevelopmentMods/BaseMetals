@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:quartz_nugget",
     "ingredients": [
       {
         "tag": "forge:gems/quartz"
       }
     ],
     "result": {
-      "item": "basemetals:quartz_nugget",
-      "count": 9
-    },
-    "group": "basemetals:quartz_nugget"
+      "count": 9,
+      "item": "basemetals:quartz_nugget"
+    }
   }
 }

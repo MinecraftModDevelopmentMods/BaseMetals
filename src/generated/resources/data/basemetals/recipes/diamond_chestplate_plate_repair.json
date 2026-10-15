@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "minecraft:diamond_chestplate",
   "plate": {
     "tag": "forge:plates/diamond"
-  }
+  },
+  "target": "minecraft:diamond_chestplate"
 }

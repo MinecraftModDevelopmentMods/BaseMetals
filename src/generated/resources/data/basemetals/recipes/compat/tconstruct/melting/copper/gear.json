@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 90,
-  "ingredient": {
-    "tag": "forge:gears/copper"
-  },
-  "result": {
-    "fluid": "basemetals:copper",
-    "amount": 360
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:gears/copper"
+  },
+  "result": {
+    "amount": 360,
+    "fluid": "basemetals:copper"
+  },
+  "temperature": 769,
+  "time": 90
 }

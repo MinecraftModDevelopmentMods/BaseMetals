@@ -1,13 +1,5 @@
 {
   "type": "thermal:press",
-  "ingredient": {
-    "tag": "forge:ingots/mithril"
-  },
-  "result": [
-    {
-      "item": "basemetals:mithril_plate"
-    }
-  ],
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -15,6 +7,14 @@
     },
     {
       "type": "basemetals:content_mode",
+      "item": "basemetals:mithril_plate"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/mithril"
+  },
+  "result": [
+    {
       "item": "basemetals:mithril_plate"
     }
   ]

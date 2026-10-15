@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:electrum_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/electrum"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:electrum_button"
-    },
-    "group": "basemetals:electrum_button"
+    }
   }
 }

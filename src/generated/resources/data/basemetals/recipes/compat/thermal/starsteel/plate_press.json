@@ -1,13 +1,5 @@
 {
   "type": "thermal:press",
-  "ingredient": {
-    "tag": "forge:ingots/starsteel"
-  },
-  "result": [
-    {
-      "item": "basemetals:starsteel_plate"
-    }
-  ],
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -15,6 +7,14 @@
     },
     {
       "type": "basemetals:content_mode",
+      "item": "basemetals:starsteel_plate"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/starsteel"
+  },
+  "result": [
+    {
       "item": "basemetals:starsteel_plate"
     }
   ]

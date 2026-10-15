@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "R",
-      "F"
-    ],
+    "category": "equipment",
+    "group": "basemetals:invar_bolt",
     "key": {
       "F": {
         "item": "minecraft:feather"
@@ -15,10 +12,14 @@
         "tag": "forge:rods/invar"
       }
     },
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
     "result": {
-      "item": "basemetals:invar_bolt",
-      "count": 4
-    },
-    "group": "basemetals:invar_bolt"
+      "count": 4,
+      "item": "basemetals:invar_bolt"
+    }
   }
 }

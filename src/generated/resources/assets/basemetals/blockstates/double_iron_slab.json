@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_iron"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_iron"
     },
     "type=double": {
       "model": "minecraft:block/iron_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_iron"
     }
   }
 }

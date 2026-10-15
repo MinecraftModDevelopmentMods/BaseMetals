@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:adamantine_bars",
     "key": {
       "X": {
         "tag": "forge:rods/adamantine"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:adamantine_bars",
-      "count": 4
-    },
-    "group": "basemetals:adamantine_bars"
+      "count": 4,
+      "item": "basemetals:adamantine_bars"
+    }
   }
 }

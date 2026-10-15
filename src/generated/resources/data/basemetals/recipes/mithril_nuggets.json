@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:mithril_nugget",
     "ingredients": [
       {
         "tag": "forge:ingots/mithril"
       }
     ],
     "result": {
-      "item": "basemetals:mithril_nugget",
-      "count": 9
-    },
-    "group": "basemetals:mithril_nugget"
+      "count": 9,
+      "item": "basemetals:mithril_nugget"
+    }
   }
 }

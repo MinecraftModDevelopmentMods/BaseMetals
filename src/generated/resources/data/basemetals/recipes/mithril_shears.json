@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:mithril_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/mithril"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:mithril_shears"
-    },
-    "group": "basemetals:mithril_shears"
+    }
   }
 }

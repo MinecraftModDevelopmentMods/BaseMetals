@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:bronze_wall",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/bronze"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:bronze_wall",
-      "count": 6
-    },
-    "group": "basemetals:bronze_wall"
+      "count": 6,
+      "item": "basemetals:bronze_wall"
+    }
   }
 }

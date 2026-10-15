@@ -1,15 +1,7 @@
 {
   "type": "tconstruct:casting_table",
-  "cooling_time": 45,
   "cast": {
     "tag": "tconstruct:casts/multi_use/ingot"
-  },
-  "fluid": {
-    "tag": "forge:molten_steel",
-    "amount": 90
-  },
-  "result": {
-    "item": "basemetals:steel_ingot"
   },
   "conditions": [
     {
@@ -20,5 +12,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:steel_ingot"
     }
-  ]
+  ],
+  "cooling_time": 45,
+  "fluid": {
+    "amount": 90,
+    "tag": "forge:molten_steel"
+  },
+  "result": {
+    "item": "basemetals:steel_ingot"
+  }
 }

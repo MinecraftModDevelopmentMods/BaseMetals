@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 140,
-  "ingredient": {
-    "tag": "forge:storage_blocks/invar"
-  },
-  "result": {
-    "fluid": "basemetals:invar",
-    "amount": 810
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/invar"
+  },
+  "result": {
+    "amount": 810,
+    "fluid": "basemetals:invar"
+  },
+  "temperature": 769,
+  "time": 140
 }

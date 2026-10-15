@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
   "ingredient": {
     "item": "basemetals:diamond_trapdoor"
   },
   "result": {
-    "item": "minecraft:diamond",
-    "count": 4
-  },
-  "experience": 1.0,
-  "cookingtime": 200
+    "count": 4,
+    "item": "minecraft:diamond"
+  }
 }

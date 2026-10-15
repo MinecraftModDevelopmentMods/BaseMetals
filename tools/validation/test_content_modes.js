@@ -29,6 +29,8 @@ function hash(file) {
 
 function prepare(directory, mode, probe) {
     fs.mkdirSync(path.join(directory, 'mods'), { recursive: true });
+    // A fresh 1.19 client otherwise stops at the accessibility onboarding screen.
+    fs.writeFileSync(path.join(directory, 'options.txt'), 'fullscreen:false\nonboardAccessibility:false\n');
     for (const artifact of [spec.modJar, spec.oreSpawn, probe]) {
         const file = typeof artifact === 'string' ? artifact : artifact.path;
         if (artifact.sha256 && hash(file).toLowerCase() !== artifact.sha256.toLowerCase()) {
@@ -92,8 +94,12 @@ function verifyConfig(directory, initial) {
 
 (async () => {
     const results = [];
-    const client = clientLaunch(spec.clientRuntime, '1.18.2', '40.3.0');
-    for (const [name, serverMode, clientMode, reject] of cases) {
+    const client = clientLaunch(spec.clientRuntime, '1.19.4', '45.4.0');
+    const selected = spec.cases ? cases.filter(([name]) => spec.cases.includes(name)) : cases;
+    if (!selected.length || (spec.cases && selected.length !== spec.cases.length)) {
+        throw new Error('The requested mode-test case is unknown or duplicated.');
+    }
+    for (const [name, serverMode, clientMode, reject] of selected) {
         console.log('Starting mode login: ' + name);
         const directory = path.join(output, name);
         const serverDir = path.join(directory, 'server');
@@ -106,14 +112,14 @@ function verifyConfig(directory, initial) {
             `online-mode=false\nserver-ip=127.0.0.1\nserver-port=${port}\nview-distance=3\n`
             + 'simulation-distance=3\nlevel-type=flat\ngenerate-structures=false\nmax-tick-time=-1\n');
         const server = launch(serverDir, ['-Xms256m', '-Xmx2g', '-Dbasemetals.awaitLoginSmoke=true',
-            ...serverArguments(spec.serverRuntime, serverDir, '1.18.2', '40.3.0')], 'server.log');
+            ...serverArguments(spec.serverRuntime, serverDir, '1.19.4', '45.4.0')], 'server.log');
         let player;
         try {
             await waitFor(server, 'BASEMETALS_PACKAGED_SERVER_SMOKE PASS', 240000);
             player = launch(clientDir, ['-Xms512m', '-Xmx2g', '-Dbasemetals.remoteLoginSmoke=true',
                 `-Dbasemetals.remoteAddress=127.0.0.1:${port}`, `-Dbasemetals.expectModeReject=${!!reject}`,
                 ...client.args, ...client.metadata.arguments.game,
-                '--username', 'BMValidation', '--version', '1.18.2', '--gameDir', clientDir,
+                '--username', 'BMValidation', '--version', '1.19.4', '--gameDir', clientDir,
                 '--assetsDir', path.join(spec.clientRuntime, 'assets'), '--assetIndex', client.vanilla.assetIndex.id,
                 '--uuid', '00000000000000000000000000000118', '--accessToken', '0', '--userType', 'legacy'], 'client.log');
             await waitFor(player, 'BASEMETALS_MODE_LOGIN_CLIENT PASS result=' + (reject ? 'rejected' : 'connected'), 240000);
@@ -121,6 +127,7 @@ function verifyConfig(directory, initial) {
             verifyConfig(serverDir, serverMode);
             verifyConfig(clientDir, clientMode);
             results.push({ name, result: reject ? 'rejected' : 'connected' });
+            fs.writeFileSync(path.join(output, 'results.json'), JSON.stringify(results, null, 2) + '\n');
             console.log('MODE_LOGIN PASS ' + name);
         } finally {
             if (player && !player.done) player.child.kill();

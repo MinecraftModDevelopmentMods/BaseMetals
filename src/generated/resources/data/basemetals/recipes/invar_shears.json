@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:invar_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/invar"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:invar_shears"
-    },
-    "group": "basemetals:invar_shears"
+    }
   }
 }

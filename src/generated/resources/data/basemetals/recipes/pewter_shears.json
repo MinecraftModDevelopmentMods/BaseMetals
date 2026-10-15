@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:pewter_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/pewter"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:pewter_shears"
-    },
-    "group": "basemetals:pewter_shears"
+    }
   }
 }

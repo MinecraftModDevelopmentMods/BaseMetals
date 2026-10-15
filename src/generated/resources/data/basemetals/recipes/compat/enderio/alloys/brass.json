@@ -1,5 +1,15 @@
 {
   "type": "enderio_machines:alloy_smelting",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "enderio_machines"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:brass_ingot"
+    }
+  ],
   "energy": 6400,
   "experience": 0.3,
   "inputs": [
@@ -17,17 +27,7 @@
     }
   ],
   "result": {
-    "item": "basemetals:brass_ingot",
-    "count": 4
-  },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "enderio_machines"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:brass_ingot"
-    }
-  ]
+    "count": 4,
+    "item": "basemetals:brass_ingot"
+  }
 }

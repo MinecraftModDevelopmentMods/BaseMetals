@@ -1,9 +1,9 @@
 {
   "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 1.2,
   "ingredient": {
     "tag": "forge:ores/starsteel"
   },
-  "result": "basemetals:starsteel_ingot",
-  "experience": 1.2,
-  "cookingtime": 100
+  "result": "basemetals:starsteel_ingot"
 }

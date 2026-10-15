@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X X",
-      "XXX",
-      "XXX"
-    ],
+    "category": "equipment",
+    "group": "basemetals:bismuth_chestplate",
     "key": {
       "X": {
         "tag": "forge:ingots/bismuth"
       }
     },
+    "pattern": [
+      "X X",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:bismuth_chestplate"
-    },
-    "group": "basemetals:bismuth_chestplate"
+    }
   }
 }

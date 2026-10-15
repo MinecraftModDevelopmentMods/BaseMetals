@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.9,
   "ingredient": {
     "item": "basemetals:brass_door"
   },
   "result": {
-    "item": "basemetals:brass_ingot",
-    "count": 2
-  },
-  "experience": 0.9,
-  "cookingtime": 200
+    "count": 2,
+    "item": "basemetals:brass_ingot"
+  }
 }

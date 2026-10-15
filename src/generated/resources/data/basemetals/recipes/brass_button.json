@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:brass_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/brass"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:brass_button"
-    },
-    "group": "basemetals:brass_button"
+    }
   }
 }

@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.5,
   "ingredient": {
     "item": "basemetals:platinum_shovel"
   },
   "result": {
     "item": "basemetals:platinum_ingot"
-  },
-  "experience": 1.5,
-  "cookingtime": 200
+  }
 }

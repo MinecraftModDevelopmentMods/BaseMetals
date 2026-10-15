@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 9,
-  "material": "basemetals:platinum",
-  "ingredient": {
-    "tag": "forge:nuggets/platinum"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/platinum"
+  },
+  "material": "basemetals:platinum",
+  "needed": 9,
+  "value": 1
 }

@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:antimony_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/antimony"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:antimony_button"
-    },
-    "group": "basemetals:antimony_button"
+    }
   }
 }

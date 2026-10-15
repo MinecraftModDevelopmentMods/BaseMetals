@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.2,
   "ingredient": {
     "item": "basemetals:tin_shovel"
   },
   "result": {
     "item": "basemetals:tin_ingot"
-  },
-  "experience": 0.2,
-  "cookingtime": 200
+  }
 }

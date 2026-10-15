@@ -4,7 +4,7 @@
     "tag": "forge:ores/coal"
   },
   "result": {
-    "item": "basemetals:coal_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:coal_powder"
   }
 }

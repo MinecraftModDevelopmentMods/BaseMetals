@@ -44,10 +44,7 @@ def verifyDevelopmentRunProfiles = tasks.register('verifyDevelopmentRunProfiles'
                 throw new GradleException("${name} must not load Buildship's compile-only dependencies")
             }
             boolean optional = name == 'runClientOptionalMods.launch'
-            if (optional != (launch.contains('TConstruct-') && launch.contains('Mantle-'))) {
-                throw new GradleException("${name} has the wrong optional-mod classpath")
-            }
-            if (!optional && launch =~ /(?i)(TConstruct|Mantle|Mekanism|cofh_core|thermal_|EnderIO)/) {
+            if (launch =~ /(?i)(TConstruct|Mantle|Mekanism|cofh_core|thermal_|EnderIO)/) {
                 throw new GradleException("${name} includes an optional integration dependency")
             }
             if (!launch.contains('mmd-orespawn-')) {
@@ -70,16 +67,15 @@ def verifyDevelopmentRunProfiles = tasks.register('verifyDevelopmentRunProfiles'
         }
         def optionalClient = tasks.named('runOptionalModsClient', JavaExec).get()
         if (optionalClient.sourceSetName.get() != 'optionalMods'
-                || !optionalClient.classpath.files.any { it.name.startsWith('TConstruct-') }
-                || !optionalClient.classpath.files.any { it.name.startsWith('Mantle-') }) {
-            throw new GradleException('The optional client must load Tinkers and Mantle in its own run directory')
+                || optionalClient.classpath.files.any { it.name =~ /(?i)(TConstruct|Mantle|Mekanism|cofh_core|thermal_|EnderIO)/ }) {
+            throw new GradleException('The optional client must not load APIs for another Minecraft version')
         }
     }
 }
 
-def syncForge40EclipseLaunches = tasks.register('syncForge40EclipseLaunches') {
+def syncForge45EclipseLaunches = tasks.register('syncForge45EclipseLaunches') {
     group = 'ide'
-    description = 'Normalizes Forge 40 Eclipse launches to the production-only merged output.'
+    description = 'Normalizes Forge 45 Eclipse launches to the production-only merged output.'
     dependsOn tasks.named('processResources')
     doLast {
         String mainOutput = new File(projectDir, 'bin/main').absolutePath
@@ -205,7 +201,7 @@ def syncForge40EclipseLaunches = tasks.register('syncForge40EclipseLaunches') {
 def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionClasspath') {
     group = 'verification'
     description = 'Verifies Eclipse client/server launches cannot see validation-only code.'
-    dependsOn syncForge40EclipseLaunches
+    dependsOn syncForge45EclipseLaunches
     dependsOn verifyDevelopmentRunProfiles
     doLast {
         File classpath = file('.classpath')
@@ -281,7 +277,7 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
             String expectedModClasses = "${mod_id}%%${new File(projectDir, 'bin/main').absolutePath}"
             if (!launch.contains(expectedModClasses)) {
-                throw new GradleException("Eclipse launch is not using Forge 40's merged production output: ${name}")
+                throw new GradleException("Eclipse launch is not using Forge 45's merged production output: ${name}")
             }
             ['cache', 'metadata', 'to-srg', 'to-obf'].each { flag ->
                 if (!launch.contains("--${flag} &quot;")) {
@@ -304,26 +300,26 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
         }
         String metadata = new File(projectDir, 'bin/main/META-INF/mods.toml').getText('UTF-8')
-        if (metadata.contains('${') || !metadata.contains('version="3.1.0.118021"')) {
+        if (metadata.contains('${') || !metadata.contains('version="3.1.0.119041"')) {
             throw new GradleException('Eclipse output contains unresolved or invalid Base Metals version metadata')
         }
     }
 }
 
 verifyDevelopmentRunProfiles.configure {
-    dependsOn syncForge40EclipseLaunches
+    dependsOn syncForge45EclipseLaunches
 }
 
 tasks.matching { it.name == 'genEclipseRuns' }.configureEach {
-    finalizedBy syncForge40EclipseLaunches
+    finalizedBy syncForge45EclipseLaunches
 }
 
 tasks.register('isolateEclipseProductionRuns') {
     group = 'ide'
     dependsOn tasks.named('genEclipseRuns')
-    dependsOn syncForge40EclipseLaunches
+    dependsOn syncForge45EclipseLaunches
 }
 
 tasks.matching { it.name == 'eclipse' }.configureEach {
-    finalizedBy syncForge40EclipseLaunches
+    finalizedBy syncForge45EclipseLaunches
 }

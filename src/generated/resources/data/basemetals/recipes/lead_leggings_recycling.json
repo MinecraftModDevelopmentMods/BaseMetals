@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
   "ingredient": {
     "item": "basemetals:lead_leggings"
   },
   "result": {
-    "item": "basemetals:lead_ingot",
-    "count": 7
-  },
-  "experience": 0.1,
-  "cookingtime": 200
+    "count": 7,
+    "item": "basemetals:lead_ingot"
+  }
 }

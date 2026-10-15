@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "minecraft:iron_boots",
   "plate": {
     "tag": "forge:plates/iron"
-  }
+  },
+  "target": "minecraft:iron_boots"
 }

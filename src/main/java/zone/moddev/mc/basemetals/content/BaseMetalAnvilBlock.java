@@ -3,7 +3,7 @@ package zone.moddev.mc.basemetals.content;
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -39,7 +39,7 @@ public final class BaseMetalAnvilBlock extends AnvilBlock {
     public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         return new SimpleMenuProvider((containerId, inventory, player) ->
                 new DurableAnvilMenu(containerId, inventory, level, pos),
-                new TranslatableComponent(getDescriptionId()));
+                net.minecraft.network.chat.Component.translatable(getDescriptionId()));
     }
 
     private static final class DurableAnvilMenu extends AnvilMenu {

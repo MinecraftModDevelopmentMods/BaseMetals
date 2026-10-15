@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "WWW",
-      "CXC",
-      "CRC"
-    ],
+    "category": "building",
+    "group": "minecraft:piston",
     "key": {
       "C": {
         "tag": "forge:cobblestone"
@@ -21,9 +18,13 @@
         "tag": "forge:ingots/steel"
       }
     },
+    "pattern": [
+      "WWW",
+      "CXC",
+      "CRC"
+    ],
     "result": {
       "item": "minecraft:piston"
-    },
-    "group": "minecraft:piston"
+    }
   }
 }

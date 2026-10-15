@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.01,
   "ingredient": {
     "item": "basemetals:pewter_slab"
   },
   "result": {
-    "item": "basemetals:pewter_nugget",
-    "count": 4
-  },
-  "experience": 0.01,
-  "cookingtime": 200
+    "count": 4,
+    "item": "basemetals:pewter_nugget"
+  }
 }

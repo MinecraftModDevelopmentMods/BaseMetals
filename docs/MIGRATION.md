@@ -2,7 +2,7 @@
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
 3.1.0 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
-OreSpawn 3 plugin, or the old native fallback generator into the 1.18 instance.
+OreSpawn 3 plugin, or the old native fallback generator into the 1.19.4 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
 before the 1.13 flattening. Base Metals snapshots those positions, runs
@@ -58,7 +58,7 @@ upgrade start. Missing mappings also forward:
 - historical `mmdlib:*` Vanilla Bits blocks, items, and fluids to matching
   `basemetals:*` IDs.
 
-## Moving from 1.13 through 1.17
+## Moving from 1.13 through 1.18
 
 These worlds already use named block states, so they do not need the numeric
 ID conversion. Older wall connections are converted to the current wall
@@ -69,6 +69,11 @@ source are converted to its 1.18 Overworld replacement. Their dimension IDs,
 seeds and noise settings are retained, including the large-biome setting.
 Modded biome sources are left alone. The original `level.dat` is backed up
 before this conversion.
+
+Older Forge versions also saved a numeric vanilla biome registry index. Minecraft
+now loads biomes from world data, so the obsolete Forge index is removed when it
+contains only known vanilla names. Chunk biomes are left to Minecraft's data fixer.
+Snapshots with modded or unknown biomes, overrides or aliases are retained.
 
 Minecraft 1.18 can generate new terrain below previously saved chunks.
 Base Metals lets that conversion run, while preventing ore generation from

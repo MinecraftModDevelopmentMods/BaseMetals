@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:bronze_ingot",
     "ingredients": [
       {
         "tag": "forge:storage_blocks/bronze"
       }
     ],
     "result": {
-      "item": "basemetals:bronze_ingot",
-      "count": 9
-    },
-    "group": "basemetals:bronze_ingot"
+      "count": 9,
+      "item": "basemetals:bronze_ingot"
+    }
   }
 }

@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.17,
   "ingredient": {
     "item": "basemetals:platinum_arrow"
   },
   "result": {
     "item": "basemetals:platinum_nugget"
-  },
-  "experience": 0.17,
-  "cookingtime": 200
+  }
 }

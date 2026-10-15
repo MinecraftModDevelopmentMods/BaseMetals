@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X X",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:obsidian_boots",
     "key": {
       "X": {
         "tag": "forge:ingots/obsidian"
       }
     },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:obsidian_boots"
-    },
-    "group": "basemetals:obsidian_boots"
+    }
   }
 }

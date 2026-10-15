@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_mithril"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_mithril"
     },
     "type=double": {
       "model": "basemetals:block/mithril_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_mithril"
     }
   }
 }

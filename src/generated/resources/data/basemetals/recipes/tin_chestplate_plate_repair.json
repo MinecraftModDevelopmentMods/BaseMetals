@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:tin_chestplate",
   "plate": {
     "tag": "forge:plates/tin"
-  }
+  },
+  "target": "basemetals:tin_chestplate"
 }

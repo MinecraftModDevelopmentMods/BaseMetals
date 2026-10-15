@@ -9,3 +9,6 @@ src/generated/**/*.json text eol=lf
 *.md text eol=lf
 /gradlew text eol=lf
 /gradlew.bat text eol=lf
+
+# Keep the original whitespace in checksum-verified patch files.
+/ci-fixtures/tools/*.patch whitespace=-blank-at-eol,-blank-at-eof

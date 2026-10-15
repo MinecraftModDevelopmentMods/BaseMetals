@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:coldiron_powder",
     "key": {
       "X": {
         "tag": "forge:tiny_dusts/coldiron"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:coldiron_powder"
-    },
-    "group": "basemetals:coldiron_powder"
+    }
   }
 }

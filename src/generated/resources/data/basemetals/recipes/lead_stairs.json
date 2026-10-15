@@ -2,20 +2,21 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X  ",
-      "XX ",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:lead_stairs",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/lead"
       }
     },
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:lead_stairs",
-      "count": 4
-    },
-    "group": "basemetals:lead_stairs"
+      "count": 4,
+      "item": "basemetals:lead_stairs"
+    }
   }
 }

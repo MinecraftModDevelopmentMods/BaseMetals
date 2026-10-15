@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:quartz_shears",
     "key": {
       "X": {
         "tag": "forge:gems/quartz"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:quartz_shears"
-    },
-    "group": "basemetals:quartz_shears"
+    }
   }
 }

@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.08,
   "ingredient": {
     "item": "basemetals:nickel_arrow"
   },
   "result": {
     "item": "basemetals:nickel_nugget"
-  },
-  "experience": 0.08,
-  "cookingtime": 200
+  }
 }

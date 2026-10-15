@@ -1,15 +1,7 @@
 {
   "type": "tconstruct:casting_table",
-  "cooling_time": 30,
   "cast": {
     "tag": "tconstruct:casts/multi_use/rod"
-  },
-  "fluid": {
-    "tag": "forge:molten_brass",
-    "amount": 45
-  },
-  "result": {
-    "item": "basemetals:brass_rod"
   },
   "conditions": [
     {
@@ -20,5 +12,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:brass_rod"
     }
-  ]
+  ],
+  "cooling_time": 30,
+  "fluid": {
+    "amount": 45,
+    "tag": "forge:molten_brass"
+  },
+  "result": {
+    "item": "basemetals:brass_rod"
+  }
 }

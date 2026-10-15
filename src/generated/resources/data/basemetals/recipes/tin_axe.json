@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XS",
-      " S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:tin_axe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/tin"
       }
     },
+    "pattern": [
+      "XX",
+      "XS",
+      " S"
+    ],
     "result": {
       "item": "basemetals:tin_axe"
-    },
-    "group": "basemetals:tin_axe"
+    }
   }
 }

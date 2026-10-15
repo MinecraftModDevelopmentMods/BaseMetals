@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:lead_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/lead"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:lead_button"
-    },
-    "group": "basemetals:lead_button"
+    }
   }
 }

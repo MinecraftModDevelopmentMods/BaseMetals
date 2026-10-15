@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.06,
   "ingredient": {
     "item": "basemetals:copper_bars"
   },
   "result": {
-    "item": "basemetals:copper_nugget",
-    "count": 3
-  },
-  "experience": 0.06,
-  "cookingtime": 200
+    "count": 3,
+    "item": "basemetals:copper_nugget"
+  }
 }

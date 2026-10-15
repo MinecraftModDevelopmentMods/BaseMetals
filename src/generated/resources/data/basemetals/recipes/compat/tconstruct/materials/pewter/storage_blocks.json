@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:pewter",
-  "ingredient": {
-    "tag": "forge:storage_blocks/pewter"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/pewter"
+  },
+  "material": "basemetals:pewter",
+  "needed": 1,
+  "value": 9
 }

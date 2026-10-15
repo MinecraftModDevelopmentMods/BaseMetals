@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.45,
   "ingredient": {
     "item": "basemetals:bronze_lever"
   },
   "result": {
     "item": "basemetals:bronze_ingot"
-  },
-  "experience": 0.45,
-  "cookingtime": 200
+  }
 }

@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:nickel_trapdoor",
     "key": {
       "X": {
         "tag": "forge:ingots/nickel"
       }
     },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
     "result": {
       "item": "basemetals:nickel_trapdoor"
-    },
-    "group": "basemetals:nickel_trapdoor"
+    }
   }
 }

@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_melting",
-  "input": "basemetals:electrum",
-  "temperature": 769,
-  "result": {
-    "fluid": "basemetals:electrum",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "input": "basemetals:electrum",
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:electrum"
+  },
+  "temperature": 769
 }

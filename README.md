@@ -1,7 +1,7 @@
 [![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
 [![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
-[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.18)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.18)
+[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.19.4)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.19.4)
 
 # Base Metals
 
@@ -12,21 +12,21 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.18.2 Forge version, `3.1.0.118021`. It brings over the
-fixes and features from the earlier ports, including raw metals, ore texture
+This is the Minecraft 1.19.4 Forge version, `3.1.0.119041`. It brings over the
+fixes and features from 1.18, including raw metals, ore texture
 overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
 their registry IDs. OreSpawn handles ore generation; MMDLib and Additional Loot
 Tables are no longer needed.
 
 ## Requirements
 
-- Minecraft `1.18.2`
-- Forge `40.3.0` or newer in the Minecraft 1.18.2 Forge 40 line
+- Minecraft `1.19.4`
+- Forge `45.4.0` or newer in the Minecraft 1.19.4 Forge 45 line
 - Java 17
-- OreSpawn `[4.1.0.118021,5.0.0)` on both client and server
+- OreSpawn `[4.1.0.119041,5.0.0)` on both client and server
 
-This version uses OreSpawn `4.1.0.118021`. Put
-`BaseMetals-3.1.0.118021.jar` and a compatible OreSpawn JAR in the `mods`
+This version uses OreSpawn `4.1.0.119041`. Put
+`BaseMetals-3.1.0.119041.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -121,7 +121,7 @@ default distributions, and data-pack override guidance.
 ## Updating an old world
 
 The port supports direct upgrades from Base Metals 1.10 and 1.12, including the
-original Cyano 2.4 line and the later MMD 2.5 line. The first 1.18 launch makes
+original Cyano 2.4 line and the later MMD 2.5 line. The first upgrade makes
 world-local backups before converting legacy numeric chunks, registry aliases,
 inventories, equipment, block entities, fluids, and OreSpawn 3 configuration.
 Migration stops instead of guessing when required legacy registry information
@@ -133,12 +133,11 @@ original. Read [Migration](docs/MIGRATION.md) before starting an upgraded world.
 ## Mod and data-pack compatibility
 
 Forge item, block, and fluid tags are Base Metals' public compatibility API.
-Conditional data is included for:
 
-- Mekanism 10.2
-- Thermal Expansion 9
-- Tinkers' Construct 3.7
-- Ender IO 6 alpha
+The integration data from 1.18 is retained, but Mekanism, Thermal Expansion,
+Tinkers' Construct and Ender IO do not currently publish Forge 1.19.4 builds.
+Those integrations are not qualified for this version. Use mods built for
+Minecraft 1.19.4; jars for 1.19.2 or 1.20.1 cannot be substituted.
 
 See [Compatibility](docs/COMPATIBILITY.md) for the supported processing chains,
 tag aliases, copper rules, and intentionally retired legacy integrations. See
@@ -162,10 +161,9 @@ Generate and verify Eclipse launches with:
 ```
 
 Use **runClient** for normal testing with Base Metals and OreSpawn only.
-**runClientOptionalMods** adds Tinkers' Construct and Mantle for compatibility
-testing. It uses `run-optional-mods`, keeping its settings and saves separate
-from the normal client's `run` folder. Both profiles are available in Eclipse
-and through Gradle tasks.
+**runClientOptionalMods** uses a separate `run-optional-mods` folder for
+compatibility testing. No optional mods are added automatically on 1.19.4.
+Both profiles are available in Eclipse and through Gradle tasks.
 
 Use the Gradle **generateResources** task when changing recipes, models or
 translations. It updates the checked-in data; ordinary builds only check for
@@ -179,7 +177,7 @@ artifacts. GameTests, smoke probes, migration fixtures, and reference sources
 are isolated from the published JAR.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.0.118021`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.0.119041`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

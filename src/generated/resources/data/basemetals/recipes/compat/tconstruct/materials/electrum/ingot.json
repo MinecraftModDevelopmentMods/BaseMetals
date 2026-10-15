@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 1,
-  "material": "basemetals:electrum",
-  "ingredient": {
-    "tag": "forge:ingots/electrum"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/electrum"
+  },
+  "material": "basemetals:electrum",
+  "needed": 1,
+  "value": 1
 }

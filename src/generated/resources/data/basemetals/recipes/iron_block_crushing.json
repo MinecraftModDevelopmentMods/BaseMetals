@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/iron"
   },
   "result": {
-    "item": "basemetals:iron_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:iron_powder"
   }
 }

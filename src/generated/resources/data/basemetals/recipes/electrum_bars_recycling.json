@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.11,
   "ingredient": {
     "item": "basemetals:electrum_bars"
   },
   "result": {
-    "item": "basemetals:electrum_nugget",
-    "count": 3
-  },
-  "experience": 0.11,
-  "cookingtime": 200
+    "count": 3,
+    "item": "basemetals:electrum_nugget"
+  }
 }

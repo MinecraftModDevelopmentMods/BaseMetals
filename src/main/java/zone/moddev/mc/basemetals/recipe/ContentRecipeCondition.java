@@ -18,7 +18,7 @@ public record ContentRecipeCondition(String item) implements ICondition {
     }
 
     @Override
-    public boolean test() {
+    public boolean test(ICondition.IContext context) {
         return ContentPolicy.active().allows(item);
     }
 

@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XS",
-      " S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:quartz_axe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:gems/quartz"
       }
     },
+    "pattern": [
+      "XX",
+      "XS",
+      " S"
+    ],
     "result": {
       "item": "basemetals:quartz_axe"
-    },
-    "group": "basemetals:quartz_axe"
+    }
   }
 }

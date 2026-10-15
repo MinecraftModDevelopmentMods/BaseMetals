@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "  R",
-      " RS",
-      "R S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:invar_fishing_rod",
     "key": {
       "R": {
         "tag": "forge:rods/invar"
@@ -15,9 +12,13 @@
         "item": "minecraft:string"
       }
     },
+    "pattern": [
+      "  R",
+      " RS",
+      "R S"
+    ],
     "result": {
       "item": "basemetals:invar_fishing_rod"
-    },
-    "group": "basemetals:invar_fishing_rod"
+    }
   }
 }

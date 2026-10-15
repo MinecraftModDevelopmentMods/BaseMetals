@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:adamantine",
-  "ingredient": {
-    "tag": "forge:storage_blocks/adamantine"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/adamantine"
+  },
+  "material": "basemetals:adamantine",
+  "needed": 1,
+  "value": 9
 }

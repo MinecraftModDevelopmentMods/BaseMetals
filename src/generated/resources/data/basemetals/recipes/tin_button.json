@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:tin_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/tin"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:tin_button"
-    },
-    "group": "basemetals:tin_button"
+    }
   }
 }

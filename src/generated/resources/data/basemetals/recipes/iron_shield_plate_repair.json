@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:iron_shield",
   "plate": {
     "tag": "forge:plates/iron"
-  }
+  },
+  "target": "basemetals:iron_shield"
 }

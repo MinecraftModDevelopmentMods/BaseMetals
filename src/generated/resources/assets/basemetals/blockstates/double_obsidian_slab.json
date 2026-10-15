@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_obsidian"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_obsidian"
     },
     "type=double": {
       "model": "minecraft:block/obsidian"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_obsidian"
     }
   }
 }

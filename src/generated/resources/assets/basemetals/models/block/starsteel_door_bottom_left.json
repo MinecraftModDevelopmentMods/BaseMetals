@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left",
+  "textures": {
+    "bottom": "basemetals:block/starsteel_door_lower",
+    "top": "basemetals:block/starsteel_door_upper"
+  }
+}

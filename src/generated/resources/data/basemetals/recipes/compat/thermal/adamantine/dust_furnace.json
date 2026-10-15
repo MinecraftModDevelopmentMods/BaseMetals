@@ -1,14 +1,5 @@
 {
   "type": "thermal:furnace",
-  "energy": 2000,
-  "ingredient": {
-    "tag": "forge:dusts/adamantine"
-  },
-  "result": [
-    {
-      "item": "basemetals:adamantine_ingot"
-    }
-  ],
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -16,6 +7,15 @@
     },
     {
       "type": "basemetals:content_mode",
+      "item": "basemetals:adamantine_ingot"
+    }
+  ],
+  "energy": 2000,
+  "ingredient": {
+    "tag": "forge:dusts/adamantine"
+  },
+  "result": [
+    {
       "item": "basemetals:adamantine_ingot"
     }
   ]

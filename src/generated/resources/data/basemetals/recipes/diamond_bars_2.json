@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:diamond_bars",
     "key": {
       "X": {
         "tag": "forge:rods/diamond"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:diamond_bars",
-      "count": 4
-    },
-    "group": "basemetals:diamond_bars"
+      "count": 4,
+      "item": "basemetals:diamond_bars"
+    }
   }
 }

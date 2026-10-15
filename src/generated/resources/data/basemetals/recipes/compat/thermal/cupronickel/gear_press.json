@@ -1,19 +1,5 @@
 {
   "type": "thermal:press",
-  "ingredients": [
-    {
-      "tag": "forge:ingots/cupronickel",
-      "count": 4
-    },
-    {
-      "item": "thermal:press_gear_die"
-    }
-  ],
-  "result": [
-    {
-      "item": "basemetals:cupronickel_gear"
-    }
-  ],
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -21,6 +7,20 @@
     },
     {
       "type": "basemetals:content_mode",
+      "item": "basemetals:cupronickel_gear"
+    }
+  ],
+  "ingredients": [
+    {
+      "count": 4,
+      "tag": "forge:ingots/cupronickel"
+    },
+    {
+      "item": "thermal:press_gear_die"
+    }
+  ],
+  "result": [
+    {
       "item": "basemetals:cupronickel_gear"
     }
   ]

@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:platinum",
-  "ingredient": {
-    "tag": "forge:storage_blocks/platinum"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/platinum"
+  },
+  "material": "basemetals:platinum",
+  "needed": 1,
+  "value": 9
 }

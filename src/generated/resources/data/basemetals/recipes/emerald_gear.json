@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X ",
-      "XRX",
-      " X "
-    ],
+    "category": "misc",
+    "group": "basemetals:emerald_gear",
     "key": {
       "R": {
         "tag": "forge:rods/iron"
@@ -15,10 +12,14 @@
         "tag": "forge:gems/emerald"
       }
     },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
     "result": {
-      "item": "basemetals:emerald_gear",
-      "count": 4
-    },
-    "group": "basemetals:emerald_gear"
+      "count": 4,
+      "item": "basemetals:emerald_gear"
+    }
   }
 }

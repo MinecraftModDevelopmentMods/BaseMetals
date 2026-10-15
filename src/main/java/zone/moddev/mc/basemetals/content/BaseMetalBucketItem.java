@@ -9,13 +9,11 @@ import zone.moddev.mc.basemetals.ModTabs;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -27,7 +25,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
@@ -40,13 +37,6 @@ import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 public final class BaseMetalBucketItem extends BucketItem {
     public BaseMetalBucketItem(Supplier<? extends Fluid> fluid, Properties properties) {
         super(fluid, properties);
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
-        if (tab == ModTabs.ITEMS || tab == CreativeModeTab.TAB_SEARCH) {
-            items.add(getDefaultInstance());
-        }
     }
 
     @Override
@@ -96,7 +86,7 @@ public final class BaseMetalBucketItem extends BucketItem {
             Level level, BlockPos position, @Nullable BlockHitResult hit, @Nullable ItemStack container,
             InteractionHand hand) {
         ItemStack bucket = container == null ? getDefaultInstance() : container;
-        FluidStack contents = new FluidStack(getFluid(), FluidAttributes.BUCKET_VOLUME);
+        FluidStack contents = new FluidStack(getFluid(), net.minecraftforge.fluids.FluidType.BUCKET_VOLUME);
         return FluidUtil.tryPlaceFluid(player, level, hand,
                 position, bucket, contents).isSuccess();
     }

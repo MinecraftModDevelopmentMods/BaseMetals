@@ -1,14 +1,5 @@
 {
   "type": "mekanism:enriching",
-  "input": {
-    "ingredient": {
-      "tag": "forge:ores/platinum"
-    }
-  },
-  "output": {
-    "item": "basemetals:platinum_powder",
-    "count": 2
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -18,5 +9,14 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:platinum_powder"
     }
-  ]
+  ],
+  "input": {
+    "ingredient": {
+      "tag": "forge:ores/platinum"
+    }
+  },
+  "output": {
+    "count": 2,
+    "item": "basemetals:platinum_powder"
+  }
 }

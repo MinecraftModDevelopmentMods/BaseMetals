@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 16,
-  "ingredient": {
-    "tag": "forge:nuggets/bismuth"
-  },
-  "result": {
-    "fluid": "basemetals:bismuth",
-    "amount": 10
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/bismuth"
+  },
+  "result": {
+    "amount": 10,
+    "fluid": "basemetals:bismuth"
+  },
+  "temperature": 769,
+  "time": 16
 }

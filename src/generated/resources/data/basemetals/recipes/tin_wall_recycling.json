@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.0,
   "ingredient": {
     "item": "basemetals:tin_wall"
   },
   "result": {
     "item": "basemetals:tin_block"
-  },
-  "experience": 0.0,
-  "cookingtime": 200
+  }
 }

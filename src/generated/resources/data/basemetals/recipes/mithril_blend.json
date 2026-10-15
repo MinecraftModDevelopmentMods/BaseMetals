@@ -2,6 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:mithril_blend",
     "ingredients": [
       {
         "tag": "forge:dusts/silver"
@@ -17,9 +19,8 @@
       }
     ],
     "result": {
-      "item": "basemetals:mithril_blend",
-      "count": 3
-    },
-    "group": "basemetals:mithril_blend"
+      "count": 3,
+      "item": "basemetals:mithril_blend"
+    }
   }
 }

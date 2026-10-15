@@ -62,7 +62,7 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityAd
      * projectile's first render.
      */
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

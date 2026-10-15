@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 1,
-  "material": "basemetals:starsteel",
-  "ingredient": {
-    "tag": "forge:ingots/starsteel"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/starsteel"
+  },
+  "material": "basemetals:starsteel",
+  "needed": 1,
+  "value": 1
 }

@@ -1,13 +1,5 @@
 {
   "type": "thermal:press",
-  "ingredient": {
-    "tag": "forge:ingots/silver"
-  },
-  "result": [
-    {
-      "item": "basemetals:silver_plate"
-    }
-  ],
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -15,6 +7,14 @@
     },
     {
       "type": "basemetals:content_mode",
+      "item": "basemetals:silver_plate"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/silver"
+  },
+  "result": [
+    {
       "item": "basemetals:silver_plate"
     }
   ]

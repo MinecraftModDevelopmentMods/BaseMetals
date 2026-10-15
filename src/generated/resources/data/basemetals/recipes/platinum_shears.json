@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:platinum_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/platinum"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:platinum_shears"
-    },
-    "group": "basemetals:platinum_shears"
+    }
   }
 }

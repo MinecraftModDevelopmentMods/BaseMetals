@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:electrum_plate",
     "key": {
       "X": {
         "tag": "forge:ingots/electrum"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:electrum_plate",
-      "count": 3
-    },
-    "group": "basemetals:electrum_plate"
+      "count": 3,
+      "item": "basemetals:electrum_plate"
+    }
   }
 }

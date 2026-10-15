@@ -1,5 +1,15 @@
 {
   "type": "thermal:smelter",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:pewter_ingot"
+    }
+  ],
   "energy": 6400,
   "ingredients": [
     {
@@ -38,17 +48,7 @@
   ],
   "result": [
     {
-      "item": "basemetals:pewter_ingot",
-      "count": 3
-    }
-  ],
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "thermal_expansion"
-    },
-    {
-      "type": "basemetals:content_mode",
+      "count": 3,
       "item": "basemetals:pewter_ingot"
     }
   ]

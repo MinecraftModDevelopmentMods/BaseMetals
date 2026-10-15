@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 9,
-  "material": "basemetals:starsteel",
-  "ingredient": {
-    "tag": "forge:nuggets/starsteel"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/starsteel"
+  },
+  "material": "basemetals:starsteel",
+  "needed": 9,
+  "value": 1
 }

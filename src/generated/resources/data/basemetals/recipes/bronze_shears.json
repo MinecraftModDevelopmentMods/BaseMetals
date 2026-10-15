@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:bronze_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/bronze"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:bronze_shears"
-    },
-    "group": "basemetals:bronze_shears"
+    }
   }
 }

@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XSX",
-      "XRX",
-      "XSX"
-    ],
+    "category": "building",
+    "group": "minecraft:activator_rail",
     "key": {
       "R": {
         "item": "minecraft:redstone_torch"
@@ -18,9 +15,13 @@
         "tag": "forge:ingots/steel"
       }
     },
+    "pattern": [
+      "XSX",
+      "XRX",
+      "XSX"
+    ],
     "result": {
       "item": "minecraft:activator_rail"
-    },
-    "group": "minecraft:activator_rail"
+    }
   }
 }

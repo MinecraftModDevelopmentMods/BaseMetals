@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 140,
-  "ingredient": {
-    "tag": "forge:storage_blocks/coldiron"
-  },
-  "result": {
-    "fluid": "basemetals:coldiron",
-    "amount": 810
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/coldiron"
+  },
+  "result": {
+    "amount": 810,
+    "fluid": "basemetals:coldiron"
+  },
+  "temperature": 769,
+  "time": 140
 }

@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_fluid",
-  "temperature": 769,
-  "output": "basemetals:aquarium",
-  "fluid": {
-    "tag": "forge:molten_aquarium",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "fluid": {
+    "amount": 90,
+    "tag": "forge:molten_aquarium"
+  },
+  "output": "basemetals:aquarium",
+  "temperature": 769
 }

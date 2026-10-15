@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      " S ",
-      " S "
-    ],
+    "category": "equipment",
+    "group": "basemetals:cupronickel_pickaxe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/cupronickel"
       }
     },
+    "pattern": [
+      "XXX",
+      " S ",
+      " S "
+    ],
     "result": {
       "item": "basemetals:cupronickel_pickaxe"
-    },
-    "group": "basemetals:cupronickel_pickaxe"
+    }
   }
 }

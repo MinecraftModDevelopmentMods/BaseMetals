@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:nickel_powder",
     "key": {
       "X": {
         "tag": "forge:tiny_dusts/nickel"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:nickel_powder"
-    },
-    "group": "basemetals:nickel_powder"
+    }
   }
 }

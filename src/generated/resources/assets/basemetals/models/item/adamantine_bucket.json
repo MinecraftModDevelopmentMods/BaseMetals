@@ -1,5 +1,5 @@
 {
   "parent": "forge:item/bucket",
-  "loader": "forge:bucket",
-  "fluid": "basemetals:adamantine"
+  "fluid": "basemetals:adamantine",
+  "loader": "forge:fluid_container"
 }

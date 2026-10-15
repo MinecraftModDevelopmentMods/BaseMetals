@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 90,
-  "ingredient": {
-    "tag": "forge:gears/bismuth"
-  },
-  "result": {
-    "fluid": "basemetals:bismuth",
-    "amount": 360
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:gears/bismuth"
+  },
+  "result": {
+    "amount": 360,
+    "fluid": "basemetals:bismuth"
+  },
+  "temperature": 769,
+  "time": 90
 }

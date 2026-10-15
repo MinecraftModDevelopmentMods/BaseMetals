@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:lead_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/lead"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:lead_shears"
-    },
-    "group": "basemetals:lead_shears"
+    }
   }
 }

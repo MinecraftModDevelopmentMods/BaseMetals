@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 90,
-  "ingredient": {
-    "tag": "forge:gears/zinc"
-  },
-  "result": {
-    "fluid": "basemetals:zinc",
-    "amount": 360
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:gears/zinc"
+  },
+  "result": {
+    "amount": 360,
+    "fluid": "basemetals:zinc"
+  },
+  "temperature": 769,
+  "time": 90
 }

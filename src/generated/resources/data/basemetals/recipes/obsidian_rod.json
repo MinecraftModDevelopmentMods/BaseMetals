@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "misc",
+    "group": "basemetals:obsidian_rod",
     "key": {
       "X": {
         "tag": "forge:ingots/obsidian"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
-      "item": "basemetals:obsidian_rod",
-      "count": 4
-    },
-    "group": "basemetals:obsidian_rod"
+      "count": 4,
+      "item": "basemetals:obsidian_rod"
+    }
   }
 }

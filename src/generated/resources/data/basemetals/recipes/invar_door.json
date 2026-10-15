@@ -2,20 +2,21 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XX",
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:invar_door",
     "key": {
       "X": {
         "tag": "forge:ingots/invar"
       }
     },
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
     "result": {
-      "item": "basemetals:invar_door",
-      "count": 3
-    },
-    "group": "basemetals:invar_door"
+      "count": 3,
+      "item": "basemetals:invar_door"
+    }
   }
 }

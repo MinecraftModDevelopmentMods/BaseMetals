@@ -2,20 +2,21 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X  ",
-      "XX ",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:pewter_stairs",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/pewter"
       }
     },
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:pewter_stairs",
-      "count": 4
-    },
-    "group": "basemetals:pewter_stairs"
+      "count": 4,
+      "item": "basemetals:pewter_stairs"
+    }
   }
 }

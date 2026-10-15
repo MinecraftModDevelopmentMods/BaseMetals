@@ -1,22 +1,22 @@
 {
   "parent": "basemetals:metallurgy",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "basemetals:electrum_blend"
-    },
-    "title": {
-      "translate": "advancements.basemetals.electrum_maker.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.basemetals.electrum_maker.description"
     },
     "frame": "goal",
+    "icon": {
+      "item": "basemetals:electrum_blend"
+    },
     "show_toast": true,
-    "announce_to_chat": true
-  },
-  "criteria": {
-    "event": {
-      "trigger": "minecraft:impossible"
+    "title": {
+      "translate": "advancements.basemetals.electrum_maker.title"
     }
   }
 }

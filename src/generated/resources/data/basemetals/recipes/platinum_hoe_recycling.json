@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.5,
   "ingredient": {
     "item": "basemetals:platinum_hoe"
   },
   "result": {
-    "item": "basemetals:platinum_ingot",
-    "count": 2
-  },
-  "experience": 1.5,
-  "cookingtime": 200
+    "count": 2,
+    "item": "basemetals:platinum_ingot"
+  }
 }

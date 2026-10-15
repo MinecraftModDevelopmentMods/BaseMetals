@@ -10,7 +10,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * Furnace recipe serializer which retains the counted outputs supported by the
@@ -20,19 +19,19 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public final class LegacySmeltingRecipe extends SmeltingRecipe {
     public LegacySmeltingRecipe(ResourceLocation id, String group, Ingredient ingredient,
             ItemStack result, float experience, int cookingTime) {
-        super(id, group, ingredient, result, experience, cookingTime);
+        super(id, group, net.minecraft.world.item.crafting.CookingBookCategory.MISC, ingredient, result, experience, cookingTime);
     }
 
     @Override
     public boolean matches(net.minecraft.world.Container inventory, net.minecraft.world.level.Level world) {
-        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(getResultItem().getItem().getRegistryName().toString())
+        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(getResultItem(world.registryAccess()).getItem()).toString())
                 && super.matches(inventory, world);
     }
 
     @Override
-    public ItemStack assemble(net.minecraft.world.Container inventory) {
-        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(getResultItem().getItem().getRegistryName().toString())
-                ? super.assemble(inventory) : ItemStack.EMPTY;
+    public ItemStack assemble(net.minecraft.world.Container inventory, net.minecraft.core.RegistryAccess registries) {
+        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(getResultItem(registries).getItem()).toString())
+                ? super.assemble(inventory, registries) : ItemStack.EMPTY;
     }
 
     @Override
@@ -40,7 +39,7 @@ public final class LegacySmeltingRecipe extends SmeltingRecipe {
         return CrushingRecipe.LEGACY_SMELTING_SERIALIZER.get();
     }
 
-    public static final class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
+    public static final class Serializer
             implements RecipeSerializer<LegacySmeltingRecipe> {
         @Override
         public LegacySmeltingRecipe fromJson(ResourceLocation id, JsonObject json) {
@@ -67,7 +66,7 @@ public final class LegacySmeltingRecipe extends SmeltingRecipe {
         public void toNetwork(FriendlyByteBuf buffer, LegacySmeltingRecipe recipe) {
             buffer.writeUtf(recipe.getGroup());
             recipe.getIngredients().get(0).toNetwork(buffer);
-            buffer.writeItem(recipe.getResultItem());
+            buffer.writeItem(recipe.getResultItem(net.minecraft.core.RegistryAccess.EMPTY));
             buffer.writeFloat(recipe.getExperience());
             buffer.writeVarInt(recipe.getCookingTime());
         }

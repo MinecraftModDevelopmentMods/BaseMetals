@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:electrum_bars",
     "key": {
       "X": {
         "tag": "forge:rods/electrum"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:electrum_bars",
-      "count": 4
-    },
-    "group": "basemetals:electrum_bars"
+      "count": 4,
+      "item": "basemetals:electrum_bars"
+    }
   }
 }

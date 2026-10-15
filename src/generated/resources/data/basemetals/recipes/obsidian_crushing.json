@@ -4,7 +4,7 @@
     "item": "minecraft:obsidian"
   },
   "result": {
-    "item": "basemetals:obsidian_powder",
-    "count": 4
+    "count": 4,
+    "item": "basemetals:obsidian_powder"
   }
 }

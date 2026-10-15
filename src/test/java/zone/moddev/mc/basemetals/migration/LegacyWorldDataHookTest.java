@@ -15,6 +15,59 @@ class LegacyWorldDataHookTest {
     @TempDir Path world;
 
     @Test
+    void obsoleteVanillaBiomeSnapshotIsRemovedWithoutChangingSavedBiomesOrOtherRegistries() {
+        CompoundTag root = biomeSnapshot("minecraft:plains", "minecraft:mountains");
+        CompoundTag data = new CompoundTag();
+        data.putString("biome", "minecraft:plains");
+        root.put("Data", data);
+        CompoundTag blocks = new CompoundTag();
+        blocks.putInt("marker", 42);
+        root.getCompound("fml").getCompound("Registries").put("minecraft:block", blocks);
+        assertTrue(LegacyWorldDataHook.removeObsoleteVanillaBiomeSnapshot(root));
+        assertEquals(data, root.getCompound("Data"));
+        assertEquals(blocks, root.getCompound("fml").getCompound("Registries").getCompound("minecraft:block"));
+        assertFalse(LegacyWorldDataHook.removeObsoleteVanillaBiomeSnapshot(root));
+    }
+
+    @Test
+    void moddedUnknownAndOverriddenBiomeSnapshotsAreNotRemoved() {
+        for (String name : new String[] {"example:forest", "minecraft:custom_forest"}) {
+            CompoundTag root = biomeSnapshot("minecraft:plains", name);
+            CompoundTag before = root.copy();
+            assertFalse(LegacyWorldDataHook.removeObsoleteVanillaBiomeSnapshot(root));
+            assertEquals(before, root);
+        }
+        for (String list : new String[] {"aliases", "overrides", "dummied"}) {
+            CompoundTag root = biomeSnapshot("minecraft:plains");
+            ListTag entries = new ListTag();
+            entries.add(new CompoundTag());
+            root.getCompound("fml").getCompound("Registries").getCompound("minecraft:worldgen/biome").put(list, entries);
+            CompoundTag before = root.copy();
+            assertFalse(LegacyWorldDataHook.removeObsoleteVanillaBiomeSnapshot(root));
+            assertEquals(before, root);
+        }
+    }
+
+    private static CompoundTag biomeSnapshot(String... names) {
+        CompoundTag root = new CompoundTag();
+        CompoundTag fml = new CompoundTag();
+        CompoundTag registries = new CompoundTag();
+        CompoundTag snapshot = new CompoundTag();
+        ListTag ids = new ListTag();
+        for (String name : names) {
+            CompoundTag id = new CompoundTag();
+            id.putString("K", name);
+            id.putInt("V", ids.size());
+            ids.add(id);
+        }
+        snapshot.put("ids", ids);
+        registries.put("minecraft:worldgen/biome", snapshot);
+        fml.put("Registries", registries);
+        root.put("fml", fml);
+        return root;
+    }
+
+    @Test
     void oldCustomOverworldDimensionsUseTheNativeBiomeSourceReplacement() {
         CompoundTag root = dimensionFixture("minecraft:vanilla_layered", "minecraft:overworld");
         CompoundTag generator = dimensionGenerator(root);

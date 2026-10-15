@@ -1,17 +1,9 @@
 {
   "type": "tconstruct:casting_table",
-  "cooling_time": 30,
   "cast": {
     "tag": "tconstruct:casts/single_use/rod"
   },
   "cast_consumed": true,
-  "fluid": {
-    "tag": "forge:molten_copper",
-    "amount": 45
-  },
-  "result": {
-    "item": "basemetals:copper_rod"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -21,5 +13,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:copper_rod"
     }
-  ]
+  ],
+  "cooling_time": 30,
+  "fluid": {
+    "amount": 45,
+    "tag": "forge:molten_copper"
+  },
+  "result": {
+    "item": "basemetals:copper_rod"
+  }
 }

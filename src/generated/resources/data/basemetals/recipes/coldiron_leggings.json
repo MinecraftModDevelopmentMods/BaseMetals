@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "X X",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:coldiron_leggings",
     "key": {
       "X": {
         "tag": "forge:ingots/coldiron"
       }
     },
+    "pattern": [
+      "XXX",
+      "X X",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:coldiron_leggings"
-    },
-    "group": "basemetals:coldiron_leggings"
+    }
   }
 }

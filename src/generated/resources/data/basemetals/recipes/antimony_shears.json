@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:antimony_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/antimony"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:antimony_shears"
-    },
-    "group": "basemetals:antimony_shears"
+    }
   }
 }

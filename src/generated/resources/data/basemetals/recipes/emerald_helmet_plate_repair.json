@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:emerald_helmet",
   "plate": {
     "tag": "forge:plates/emerald"
-  }
+  },
+  "target": "basemetals:emerald_helmet"
 }

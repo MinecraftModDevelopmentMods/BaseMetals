@@ -26,6 +26,7 @@ public final class BaseMetals {
     public BaseMetals() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModContent.register(modBus);
+        modBus.addListener(ModTabs::register);
         modBus.addListener(BaseMetalsConfig::onConfigLoading);
         modBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) -> {
             zone.moddev.mc.basemetals.network.ContentModeNetwork.register();

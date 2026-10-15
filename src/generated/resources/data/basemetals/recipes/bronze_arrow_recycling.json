@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.05,
   "ingredient": {
     "item": "basemetals:bronze_arrow"
   },
   "result": {
     "item": "basemetals:bronze_nugget"
-  },
-  "experience": 0.05,
-  "cookingtime": 200
+  }
 }

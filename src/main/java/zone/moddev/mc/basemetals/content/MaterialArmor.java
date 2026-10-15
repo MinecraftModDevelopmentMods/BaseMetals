@@ -24,10 +24,10 @@ public final class MaterialArmor implements ArmorMaterial {
     }
 
     public MaterialDefinition material() { return material; }
-    @Override public int getDurabilityForSlot(EquipmentSlot slot) {
-        return DURABILITY[slot.getIndex()] * material.armorDurabilityFactor();
+    @Override public int getDurabilityForType(net.minecraft.world.item.ArmorItem.Type type) {
+        return DURABILITY[type.getSlot().getIndex()] * material.armorDurabilityFactor();
     }
-    @Override public int getDefenseForSlot(EquipmentSlot slot) { return material.armorProtection(slot); }
+    @Override public int getDefenseForType(net.minecraft.world.item.ArmorItem.Type type) { return material.armorProtection(type.getSlot()); }
     @Override public int getEnchantmentValue() { return material.enchantability(); }
     @Override public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_IRON; }
     @Override public Ingredient getRepairIngredient() { return repair.get(); }

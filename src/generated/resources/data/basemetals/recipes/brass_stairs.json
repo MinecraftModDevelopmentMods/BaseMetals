@@ -2,20 +2,21 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X  ",
-      "XX ",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:brass_stairs",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/brass"
       }
     },
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:brass_stairs",
-      "count": 4
-    },
-    "group": "basemetals:brass_stairs"
+      "count": 4,
+      "item": "basemetals:brass_stairs"
+    }
   }
 }

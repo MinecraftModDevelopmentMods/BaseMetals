@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:steel_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/steel"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:steel_button"
-    },
-    "group": "basemetals:steel_button"
+    }
   }
 }

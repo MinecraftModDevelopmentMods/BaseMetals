@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XWX",
-      "XXX",
-      " X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:bismuth_shield",
     "key": {
       "W": {
         "tag": "minecraft:planks"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/bismuth"
       }
     },
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
     "result": {
       "item": "basemetals:bismuth_shield"
-    },
-    "group": "basemetals:bismuth_shield"
+    }
   }
 }

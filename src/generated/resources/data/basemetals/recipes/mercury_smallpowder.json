@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:mercury_smallpowder",
     "ingredients": [
       {
         "tag": "forge:dusts/mercury"
       }
     ],
     "result": {
-      "item": "basemetals:mercury_smallpowder",
-      "count": 9
-    },
-    "group": "basemetals:mercury_smallpowder"
+      "count": 9,
+      "item": "basemetals:mercury_smallpowder"
+    }
   }
 }

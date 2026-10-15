@@ -1,5 +1,9 @@
 package zone.moddev.mc.basemetals.config;
 
+import java.io.IOException;
+import java.util.Map;
+
+import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -57,6 +61,23 @@ public final class BaseMetalsConfig {
     public static void save() {
         if (loadedConfig == null) throw new IllegalStateException("Base Metals configuration has not loaded");
         loadedConfig.save();
+    }
+
+    public static void saveEdits(ConfigEdits edits) {
+        if (loadedConfig == null) throw new IllegalStateException("Base Metals configuration has not loaded");
+
+        try {
+            ConfigFileEdits.save(loadedConfig.getConfigData(), loadedConfig.getFullPath(), Map.of(
+                    "contentMode", edits.mode().serializedName(),
+                    "specialEffects", edits.option(0),
+                    "starsteelRegeneration", edits.option(1),
+                    "mercuryImmersionEffects", edits.option(2),
+                    "villagerTrades", edits.option(3)));
+            ((CommentedFileConfig) loadedConfig.getConfigData()).load();
+            SPEC.afterReload();
+        } catch (IOException exception) {
+            throw new IllegalStateException("Could not save Base Metals settings", exception);
+        }
     }
 
     public static <T> void set(ForgeConfigSpec.ConfigValue<T> property, T value) {

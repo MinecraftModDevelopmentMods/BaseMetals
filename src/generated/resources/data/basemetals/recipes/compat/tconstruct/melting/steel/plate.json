@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 45,
-  "ingredient": {
-    "tag": "forge:plates/steel"
-  },
-  "result": {
-    "fluid": "basemetals:steel",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:plates/steel"
+  },
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:steel"
+  },
+  "temperature": 769,
+  "time": 45
 }

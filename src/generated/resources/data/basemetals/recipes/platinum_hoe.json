@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      " S",
-      " S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:platinum_hoe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/platinum"
       }
     },
+    "pattern": [
+      "XX",
+      " S",
+      " S"
+    ],
     "result": {
       "item": "basemetals:platinum_hoe"
-    },
-    "group": "basemetals:platinum_hoe"
+    }
   }
 }

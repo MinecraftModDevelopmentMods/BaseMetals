@@ -1,5 +1,15 @@
 {
   "type": "thermal:smelter",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:electrum_ingot"
+    }
+  ],
   "energy": 6400,
   "ingredients": [
     {
@@ -27,17 +37,7 @@
   ],
   "result": [
     {
-      "item": "basemetals:electrum_ingot",
-      "count": 2
-    }
-  ],
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "thermal_expansion"
-    },
-    {
-      "type": "basemetals:content_mode",
+      "count": 2,
       "item": "basemetals:electrum_ingot"
     }
   ]

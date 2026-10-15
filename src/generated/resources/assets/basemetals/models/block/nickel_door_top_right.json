@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_right",
+  "textures": {
+    "bottom": "basemetals:block/nickel_door_lower",
+    "top": "basemetals:block/nickel_door_upper"
+  }
+}

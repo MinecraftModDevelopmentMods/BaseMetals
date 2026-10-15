@@ -4,7 +4,7 @@
     "item": "minecraft:sugar_cane"
   },
   "result": {
-    "item": "minecraft:sugar",
-    "count": 2
+    "count": 2,
+    "item": "minecraft:sugar"
   }
 }

@@ -1,15 +1,7 @@
 {
   "type": "tconstruct:casting_table",
-  "cooling_time": 16,
   "cast": {
     "tag": "tconstruct:casts/multi_use/nugget"
-  },
-  "fluid": {
-    "tag": "forge:molten_antimony",
-    "amount": 10
-  },
-  "result": {
-    "item": "basemetals:antimony_nugget"
   },
   "conditions": [
     {
@@ -20,5 +12,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:antimony_nugget"
     }
-  ]
+  ],
+  "cooling_time": 16,
+  "fluid": {
+    "amount": 10,
+    "tag": "forge:molten_antimony"
+  },
+  "result": {
+    "item": "basemetals:antimony_nugget"
+  }
 }

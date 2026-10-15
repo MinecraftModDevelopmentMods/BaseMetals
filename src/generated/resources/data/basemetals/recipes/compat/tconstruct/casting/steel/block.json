@@ -1,13 +1,5 @@
 {
   "type": "tconstruct:casting_basin",
-  "cooling_time": 141,
-  "fluid": {
-    "tag": "forge:molten_steel",
-    "amount": 810
-  },
-  "result": {
-    "item": "basemetals:steel_block"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -17,5 +9,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:steel_block"
     }
-  ]
+  ],
+  "cooling_time": 141,
+  "fluid": {
+    "amount": 810,
+    "tag": "forge:molten_steel"
+  },
+  "result": {
+    "item": "basemetals:steel_block"
+  }
 }

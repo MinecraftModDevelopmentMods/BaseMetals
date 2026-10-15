@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.2,
   "ingredient": {
     "item": "basemetals:tin_chestplate"
   },
   "result": {
-    "item": "basemetals:tin_ingot",
-    "count": 8
-  },
-  "experience": 0.2,
-  "cookingtime": 200
+    "count": 8,
+    "item": "basemetals:tin_ingot"
+  }
 }

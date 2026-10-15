@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "misc",
+    "group": "basemetals:diamond_rod",
     "key": {
       "X": {
         "tag": "forge:gems/diamond"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
-      "item": "basemetals:diamond_rod",
-      "count": 4
-    },
-    "group": "basemetals:diamond_rod"
+      "count": 4,
+      "item": "basemetals:diamond_rod"
+    }
   }
 }

@@ -48,14 +48,10 @@ public final class TinkersCompat {
     private static boolean hasExplicitOverride(ResourceManager resources, MaterialId material) {
         ResourceLocation file = new ResourceLocation(material.getNamespace(),
                 "tinkering/materials/stats/" + material.getPath() + ".json");
-        try {
-            String bundledPack = net.minecraftforge.resource.ResourcePackLoader.getPackFor(BaseMetals.MOD_ID)
-                    .orElseThrow(() -> new IllegalStateException("Base Metals' data pack is missing"))
-                    .getName();
-            return resources.getResources(file).stream()
-                    .anyMatch(resource -> !bundledPack.equals(resource.getSourceName()));
-        } catch (IOException exception) {
-            throw new IllegalStateException("Could not read Tinkers material overrides for " + material, exception);
-        }
+        String bundledPack = net.minecraftforge.resource.ResourcePackLoader.getPackFor(BaseMetals.MOD_ID)
+                .orElseThrow(() -> new IllegalStateException("Base Metals' data pack is missing"))
+                .packId();
+        return resources.getResourceStack(file).stream()
+                .anyMatch(resource -> !bundledPack.equals(resource.sourcePackId()));
     }
 }

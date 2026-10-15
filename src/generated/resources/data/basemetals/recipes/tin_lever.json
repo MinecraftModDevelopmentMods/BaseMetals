@@ -2,10 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:tin_lever",
     "key": {
       "R": {
         "tag": "forge:rods/tin"
@@ -14,9 +12,12 @@
         "tag": "forge:ingots/tin"
       }
     },
+    "pattern": [
+      "R",
+      "X"
+    ],
     "result": {
       "item": "basemetals:tin_lever"
-    },
-    "group": "basemetals:tin_lever"
+    }
   }
 }

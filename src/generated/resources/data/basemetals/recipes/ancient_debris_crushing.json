@@ -4,7 +4,7 @@
     "tag": "forge:ores/netherite_scrap"
   },
   "result": {
-    "item": "minecraft:netherite_scrap",
-    "count": 2
+    "count": 2,
+    "item": "minecraft:netherite_scrap"
   }
 }

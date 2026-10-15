@@ -4,7 +4,7 @@
     "tag": "forge:ores/iron"
   },
   "result": {
-    "item": "basemetals:iron_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:iron_powder"
   }
 }

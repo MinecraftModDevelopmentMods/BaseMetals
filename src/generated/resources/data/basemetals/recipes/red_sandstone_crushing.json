@@ -4,7 +4,7 @@
     "item": "minecraft:red_sandstone"
   },
   "result": {
-    "item": "minecraft:red_sand",
-    "count": 4
+    "count": 4,
+    "item": "minecraft:red_sand"
   }
 }

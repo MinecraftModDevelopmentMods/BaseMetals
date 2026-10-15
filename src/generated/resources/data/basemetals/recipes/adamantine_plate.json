@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:adamantine_plate",
     "key": {
       "X": {
         "tag": "forge:ingots/adamantine"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:adamantine_plate",
-      "count": 3
-    },
-    "group": "basemetals:adamantine_plate"
+      "count": 3,
+      "item": "basemetals:adamantine_plate"
+    }
   }
 }

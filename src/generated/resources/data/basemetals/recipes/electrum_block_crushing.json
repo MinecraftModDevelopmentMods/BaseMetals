@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/electrum"
   },
   "result": {
-    "item": "basemetals:electrum_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:electrum_powder"
   }
 }

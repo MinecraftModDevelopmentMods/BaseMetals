@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X ",
-      "XRX",
-      " X "
-    ],
+    "category": "misc",
+    "group": "basemetals:antimony_gear",
     "key": {
       "R": {
         "tag": "forge:rods/antimony"
@@ -15,10 +12,14 @@
         "tag": "forge:ingots/antimony"
       }
     },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
     "result": {
-      "item": "basemetals:antimony_gear",
-      "count": 4
-    },
-    "group": "basemetals:antimony_gear"
+      "count": 4,
+      "item": "basemetals:antimony_gear"
+    }
   }
 }
