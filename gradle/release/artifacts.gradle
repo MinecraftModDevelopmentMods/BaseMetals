@@ -6,6 +6,7 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 
 // Normalize archive text as well as the working tree, including generated Javadocs.
 tasks.withType(Jar).configureEach {
+    filteringCharset = 'UTF-8'
     filesMatching(['**/*.java', '**/*.json', '**/*.lang', '**/*.mcmeta', '**/*.md',
                    '**/*.txt', '**/*.cfg', '**/*.properties', '**/*.xml', '**/*.html',
                    '**/*.css', '**/*.js', '**/element-list', '**/package-list']) {
@@ -16,6 +17,7 @@ tasks.withType(Jar).configureEach {
 
 // Expand the release identity into Forge metadata and package public documentation.
 tasks.named('processResources', ProcessResources).configure {
+    filteringCharset = 'UTF-8'
     var replaceProperties = [
             minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
             forge_version: forge_version, forge_version_range: forge_version_range,
@@ -342,6 +344,20 @@ tasks.register('verifyReleaseArtifacts') {
             def locales = names.findAll { it ==~ /assets\/basemetals\/lang\/.+\.json/ }
             if (locales.size() != 18) {
                 throw new GradleException("Release jar must contain all 18 language files, found ${locales.size()}")
+            }
+            locales.each { path ->
+                File sourceFile = sourceSets.main.resources.srcDirs
+                        .collect { new File(it, path) }.find { it.isFile() }
+                if (sourceFile == null) {
+                    throw new GradleException("No source language file for ${path}")
+                }
+                String source = sourceFile.getText('UTF-8')
+                        .replace('\r\n', '\n').replace('\r', '\n')
+                if (!source.endsWith('\n')) source += '\n'
+                String packaged = zip.getInputStream(zip.getEntry(path)).getText('UTF-8')
+                if (packaged != source) {
+                    throw new GradleException("Release jar changed translated text in ${path}")
+                }
             }
             if (names.any { it.endsWith('.class') && (it.contains('/gametest/')
                     || it.contains('/smoke/') || it.startsWith('com/mcmoddev/')) }) {
