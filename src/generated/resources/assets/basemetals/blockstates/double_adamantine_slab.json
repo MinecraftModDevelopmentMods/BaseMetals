@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_adamantine"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_adamantine"
     },
     "type=double": {
       "model": "basemetals:block/adamantine_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_adamantine"
     }
   }
 }

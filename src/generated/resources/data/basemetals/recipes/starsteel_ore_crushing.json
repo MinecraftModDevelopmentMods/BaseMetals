@@ -4,7 +4,7 @@
     "tag": "forge:ores/starsteel"
   },
   "result": {
-    "item": "basemetals:starsteel_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:starsteel_powder"
   }
 }

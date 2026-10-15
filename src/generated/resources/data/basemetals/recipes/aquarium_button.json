@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:aquarium_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/aquarium"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:aquarium_button"
-    },
-    "group": "basemetals:aquarium_button"
+    }
   }
 }

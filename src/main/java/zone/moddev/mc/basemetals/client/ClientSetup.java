@@ -5,20 +5,12 @@ import zone.moddev.mc.basemetals.content.MaterialItems;
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.entity.ModEntities;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.client.searchtree.MutableSearchTree;
-import net.minecraft.client.searchtree.SearchRegistry;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.FishingRodItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.IronBarsBlock;
@@ -26,7 +18,6 @@ import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -43,8 +34,8 @@ public final class ClientSetup {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         net.minecraftforge.fml.ModLoadingContext.get().registerExtensionPoint(
-                net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory.class,
-                () -> new net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory(
+                net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory(
                         (minecraft, parent) -> new BaseMetalsConfigScreen(parent)));
         event.enqueueWork(() -> {
             zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry.registerConfigScreen(
@@ -84,39 +75,6 @@ public final class ClientSetup {
                 }
             });
         });
-    }
-
-    @SubscribeEvent
-    public static void loadComplete(FMLLoadCompleteEvent event) {
-        event.enqueueWork(ClientSetup::ensureBucketSearchIndex);
-    }
-
-    private static void ensureBucketSearchIndex() {
-        Minecraft minecraft = Minecraft.getInstance();
-        MutableSearchTree<ItemStack> names = minecraft.getSearchTree(SearchRegistry.CREATIVE_NAMES);
-        MutableSearchTree<ItemStack> tags = minecraft.getSearchTree(SearchRegistry.CREATIVE_TAGS);
-        if (names == null || tags == null || ModContent.fluids().values().stream().allMatch(fluid -> {
-            Item bucket = fluid.bucket().get();
-            return names.search("basemetals:" + bucket.getRegistryName().getPath())
-                    .stream().anyMatch(stack -> stack.is(bucket));
-        })) {
-            return;
-        }
-
-        NonNullList<ItemStack> searchable = NonNullList.create();
-        for (Item item : Registry.ITEM) {
-            item.fillItemCategory(CreativeModeTab.TAB_SEARCH, searchable);
-        }
-        names.clear();
-        tags.clear();
-        searchable.forEach(stack -> {
-            names.add(stack);
-            tags.add(stack);
-        });
-        names.refresh();
-        tags.refresh();
-        BaseMetals.LOGGER.info(
-                "Rebuilt the creative search index after detecting missing Base Metals fluid buckets");
     }
 
     private static void registerBlockRenderLayer(Block block) {

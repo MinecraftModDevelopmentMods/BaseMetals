@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "S",
-      "S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:antimony_shovel",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/antimony"
       }
     },
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
     "result": {
       "item": "basemetals:antimony_shovel"
-    },
-    "group": "basemetals:antimony_shovel"
+    }
   }
 }

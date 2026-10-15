@@ -60,11 +60,11 @@ public final class ForwardPortGameTests {
                     : ModContent.item(material.name() + "_raw").get().getDefaultInstance();
             var crushed = helper.getLevel().getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
                     new SimpleContainer(raw), helper.getLevel()).orElseThrow();
-            require(helper, crushed.getResultItem().getCount() == 1, material.name() + " raw material was doubled");
+            require(helper, crushed.getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getCount() == 1, material.name() + " raw material was doubled");
             var ore = helper.getLevel().getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
                     new SimpleContainer(ModContent.item(material.name() + "_ore").get().getDefaultInstance()),
                     helper.getLevel()).orElseThrow();
-            require(helper, ore.getResultItem().getCount() == 2, material.name() + " ore hammer yield changed");
+            require(helper, ore.getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getCount() == 2, material.name() + " ore hammer yield changed");
             checked++;
         }
         require(helper, checked == 13, "Expected all 13 ore-bearing materials");

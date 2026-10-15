@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XWX",
-      "XXX",
-      " X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:aquarium_shield",
     "key": {
       "W": {
         "tag": "minecraft:planks"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/aquarium"
       }
     },
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
     "result": {
       "item": "basemetals:aquarium_shield"
-    },
-    "group": "basemetals:aquarium_shield"
+    }
   }
 }

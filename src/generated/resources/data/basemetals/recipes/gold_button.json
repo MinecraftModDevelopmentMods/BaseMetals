@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:gold_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/gold"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:gold_button"
-    },
-    "group": "basemetals:gold_button"
+    }
   }
 }

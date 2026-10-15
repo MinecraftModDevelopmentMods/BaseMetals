@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:obsidian_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/obsidian"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:obsidian_shears"
-    },
-    "group": "basemetals:obsidian_shears"
+    }
   }
 }

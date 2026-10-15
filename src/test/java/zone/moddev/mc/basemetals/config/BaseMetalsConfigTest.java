@@ -8,11 +8,18 @@ import org.junit.jupiter.api.Test;
 class BaseMetalsConfigTest {
     @Test
     void oldConfigsDefaultToHighFantasyAndKeepTheFourGameplaySwitches() {
-        assertEquals(5, BaseMetalsConfig.SPEC.getValues().size());
-        assertEquals(ContentMode.HIGH_FANTASY, ContentMode.parse(BaseMetalsConfig.CONTENT_MODE.get()));
-        assertTrue(BaseMetalsConfig.SPECIAL_EFFECTS.get());
-        assertTrue(BaseMetalsConfig.STARSTEEL_REGENERATION.get());
-        assertTrue(BaseMetalsConfig.MERCURY_EFFECTS.get());
-        assertTrue(BaseMetalsConfig.VILLAGER_TRADES.get());
+        var configuration = com.electronwill.nightconfig.core.CommentedConfig.inMemory();
+        BaseMetalsConfig.SPEC.correct(configuration);
+        BaseMetalsConfig.SPEC.setConfig(configuration);
+        try {
+            assertEquals(5, BaseMetalsConfig.SPEC.getValues().size());
+            assertEquals(ContentMode.HIGH_FANTASY, ContentMode.parse(BaseMetalsConfig.CONTENT_MODE.get()));
+            assertTrue(BaseMetalsConfig.SPECIAL_EFFECTS.get());
+            assertTrue(BaseMetalsConfig.STARSTEEL_REGENERATION.get());
+            assertTrue(BaseMetalsConfig.MERCURY_EFFECTS.get());
+            assertTrue(BaseMetalsConfig.VILLAGER_TRADES.get());
+        } finally {
+            BaseMetalsConfig.SPEC.setConfig(null);
+        }
     }
 }

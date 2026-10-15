@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.08,
   "ingredient": {
     "item": "basemetals:coldiron_bolt"
   },
   "result": {
-    "item": "basemetals:coldiron_nugget",
-    "count": 2
-  },
-  "experience": 0.08,
-  "cookingtime": 200
+    "count": 2,
+    "item": "basemetals:coldiron_nugget"
+  }
 }

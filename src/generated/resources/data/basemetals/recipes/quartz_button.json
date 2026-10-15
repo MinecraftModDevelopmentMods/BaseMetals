@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:quartz_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/quartz"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:quartz_button"
-    },
-    "group": "basemetals:quartz_button"
+    }
   }
 }

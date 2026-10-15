@@ -2,6 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:brass_blend",
     "ingredients": [
       {
         "tag": "forge:dusts/copper"
@@ -17,9 +19,8 @@
       }
     ],
     "result": {
-      "item": "basemetals:brass_blend",
-      "count": 4
-    },
-    "group": "basemetals:brass_blend"
+      "count": 4,
+      "item": "basemetals:brass_blend"
+    }
   }
 }

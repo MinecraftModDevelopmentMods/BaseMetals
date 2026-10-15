@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_cupronickel"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_cupronickel"
     },
     "type=double": {
       "model": "basemetals:block/cupronickel_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_cupronickel"
     }
   }
 }

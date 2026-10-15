@@ -2,10 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:copper_lever",
     "key": {
       "R": {
         "tag": "forge:rods/copper"
@@ -14,9 +12,12 @@
         "tag": "forge:ingots/copper"
       }
     },
+    "pattern": [
+      "R",
+      "X"
+    ],
     "result": {
       "item": "basemetals:copper_lever"
-    },
-    "group": "basemetals:copper_lever"
+    }
   }
 }

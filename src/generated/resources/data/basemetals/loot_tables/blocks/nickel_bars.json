@@ -2,19 +2,19 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "basemetals:nickel_bars",
-          "functions": []
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [],
+          "name": "basemetals:nickel_bars"
+        }
+      ],
+      "rolls": 1
     }
   ]
 }

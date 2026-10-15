@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 9,
-  "material": "basemetals:brass",
-  "ingredient": {
-    "tag": "forge:nuggets/brass"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/brass"
+  },
+  "material": "basemetals:brass",
+  "needed": 9,
+  "value": 1
 }

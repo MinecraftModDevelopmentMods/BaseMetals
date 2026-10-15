@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:copper_slab",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/copper"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:copper_slab",
-      "count": 6
-    },
-    "group": "basemetals:copper_slab"
+      "count": 6,
+      "item": "basemetals:copper_slab"
+    }
   }
 }

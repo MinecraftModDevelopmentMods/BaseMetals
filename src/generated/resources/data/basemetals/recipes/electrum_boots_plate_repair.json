@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:electrum_boots",
   "plate": {
     "tag": "forge:plates/electrum"
-  }
+  },
+  "target": "basemetals:electrum_boots"
 }

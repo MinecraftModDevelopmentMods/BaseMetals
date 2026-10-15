@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "minecraft:coal_block",
     "key": {
       "X": {
         "tag": "forge:dusts/coal"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "minecraft:coal_block"
-    },
-    "group": "minecraft:coal_block"
+    }
   }
 }

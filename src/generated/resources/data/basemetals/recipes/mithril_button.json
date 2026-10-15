@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:mithril_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/mithril"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:mithril_button"
-    },
-    "group": "basemetals:mithril_button"
+    }
   }
 }

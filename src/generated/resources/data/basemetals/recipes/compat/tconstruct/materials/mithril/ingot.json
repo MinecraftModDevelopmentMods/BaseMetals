@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 1,
-  "material": "basemetals:mithril",
-  "ingredient": {
-    "tag": "forge:ingots/mithril"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/mithril"
+  },
+  "material": "basemetals:mithril",
+  "needed": 1,
+  "value": 1
 }

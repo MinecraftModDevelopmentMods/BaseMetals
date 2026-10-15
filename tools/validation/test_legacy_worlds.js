@@ -70,6 +70,7 @@ function checkUpgradeLog(log) {
         'minecraft:grass_path',
         'minecraft:zombie_pigman', 'minecraft:zombie_pigman_spawn_egg',
         'minecraft:golem_last_seen_time', 'minecraft:opened_doors',
+        'minecraft:nitwit', 'minecraft:unemployed',
         'minecraft:entity.zombie_pigman.ambient', 'minecraft:entity.zombie_pigman.angry',
         'minecraft:entity.zombie_pigman.death', 'minecraft:entity.zombie_pigman.hurt',
         'minecraft:music.nether', 'minecraft:item.sweet_berries.pick_from_bush'
@@ -122,7 +123,7 @@ async function run(directory, launcher, label, marker, properties = []) {
     const output = fs.createWriteStream(path.join(directory, label + '.log'));
     const executable = phase === 'capture' ? spec.java8 : spec.java17;
     const launchArguments = phase === 'capture' ? ['-jar', launcher, 'nogui']
-        : serverArguments(spec.runtime118, directory, '1.18.2', '40.3.0');
+        : serverArguments(spec.serverRuntime, directory, '1.19.4', '45.4.0');
     const child = spawn(executable, ['-Xms256m', '-Xmx2g', ...properties, ...launchArguments],
         { cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.pipe(output, { end: false });
@@ -170,7 +171,7 @@ async function run(directory, launcher, label, marker, properties = []) {
             const source = profile.world || path.join(root, 'capture', profile.id, 'world');
             const before = profile.fresh ? null : treeDigest(source);
             const launcher = null;
-            prepare(directory, spec.runtime118, launcher,
+            prepare(directory, spec.serverRuntime, launcher,
                 [spec.modJar, spec.probeJar, spec.oreSpawn, ...(profile.extraMods || [])]);
             if (!profile.fresh) fs.cpSync(source, path.join(directory, 'world'), { recursive: true });
             if (profile.contentMode) {
@@ -201,6 +202,7 @@ async function run(directory, launcher, label, marker, properties = []) {
             if (before !== after) throw new Error('Source fixture changed: ' + source);
             if (!profile.fresh) results.push(profile.id + ' source_sha256=' + before + ' unchanged=true');
         }
+        fs.writeFileSync(path.join(root, phase + '-results.txt'), results.join('\n') + '\n');
         fs.writeFileSync(path.join(root, phase + '-results.txt'), results.join('\n') + '\n');
     }
 })().catch(error => { console.error(error); process.exitCode = 1; });

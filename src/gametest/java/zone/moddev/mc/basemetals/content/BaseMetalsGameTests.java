@@ -26,7 +26,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -76,7 +76,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
@@ -183,12 +183,8 @@ public final class BaseMetalsGameTests {
             BucketItem bucket = (BucketItem) fluid.bucket().get();
             require(helper, bucket.getFluid() == fluid.source().get(),
                     id + " bucket does not retain its source fluid");
-            for (CreativeModeTab tab : List.of(ModTabs.ITEMS, CreativeModeTab.TAB_SEARCH)) {
-                NonNullList<ItemStack> visible = NonNullList.create();
-                bucket.fillItemCategory(tab, visible);
-                require(helper, visible.stream().anyMatch(stack -> stack.is(bucket)),
-                        id + " bucket is absent from " + tab.getRecipeFolderName());
-            }
+            // Forge's creative-content rebuild is client-only. The packaged client checks visibility and search.
+            require(helper, "items".equals(ModTabs.category(bucket)), id + " bucket has the wrong creative category");
 
             helper.getLevel().setBlock(position, Blocks.AIR.defaultBlockState(), 3);
             require(helper, bucket.emptyContents(null, helper.getLevel(), position, null,
@@ -279,7 +275,7 @@ public final class BaseMetalsGameTests {
         require(helper, recipe.orElseThrow().getId().equals(
                 new ResourceLocation(BaseMetals.MOD_ID, "stone_crackhammer")),
                 "The legacy stone crackhammer pattern matched the wrong recipe");
-        ItemStack output = recipe.orElseThrow().assemble(crafting);
+        ItemStack output = recipe.orElseThrow().assemble(crafting, net.minecraft.core.RegistryAccess.EMPTY);
         require(helper, output.is(ModContent.item("stone_crackhammer").get()),
                 "The legacy middle-column pattern returned the wrong item");
         helper.succeed();
@@ -564,7 +560,7 @@ public final class BaseMetalsGameTests {
         for (int level = 1; level <= 5; level++) trades.put(level, new ArrayList<>());
         BaseMetalsTrades.add(new VillagerTradesEvent(trades, VillagerProfession.ARMORER));
         boolean found = trades.values().stream().flatMap(List::stream)
-                .map(listing -> listing.getOffer(null, new Random(0L)))
+                .map(listing -> listing.getOffer(null, net.minecraft.util.RandomSource.create(0L)))
                 .anyMatch(offer -> offer != null
                         && offer.getResult().is(ModContent.item("mercury_ingot").get())
                         && offer.getResult().getCount() == 12);
@@ -574,13 +570,13 @@ public final class BaseMetalsGameTests {
 
     @GameTest(template = EMPTY)
     public static void creativeTabsRetainTheirLegacyStarsteelIcons(GameTestHelper helper) {
-        require(helper, ModTabs.BLOCKS.makeIcon().is(ModContent.item("starsteel_block").get()),
+        require(helper, ModTabs.BLOCKS.getIconItem().is(ModContent.item("starsteel_block").get()),
                 "Blocks tab did not retain the Starsteel block icon");
-        require(helper, ModTabs.ITEMS.makeIcon().is(ModContent.item("starsteel_gear").get()),
+        require(helper, ModTabs.ITEMS.getIconItem().is(ModContent.item("starsteel_gear").get()),
                 "Items tab did not retain the Starsteel gear icon");
-        require(helper, ModTabs.TOOLS.makeIcon().is(ModContent.item("starsteel_pickaxe").get()),
+        require(helper, ModTabs.TOOLS.getIconItem().is(ModContent.item("starsteel_pickaxe").get()),
                 "Tools tab did not retain the Starsteel pickaxe icon");
-        require(helper, ModTabs.COMBAT.makeIcon().is(ModContent.item("starsteel_sword").get()),
+        require(helper, ModTabs.COMBAT.getIconItem().is(ModContent.item("starsteel_sword").get()),
                 "Combat tab did not retain the Starsteel sword icon");
         helper.succeed();
     }
@@ -596,7 +592,7 @@ public final class BaseMetalsGameTests {
         ItemStack damaged = ModContent.item("adamantine_chestplate").get().getDefaultInstance();
         damaged.setDamageValue(20);
         damaged.enchant(Enchantments.ALL_DAMAGE_PROTECTION, 2);
-        damaged.setHoverName(new TextComponent("Old name"));
+        damaged.setHoverName(net.minecraft.network.chat.Component.literal("Old name"));
         damaged.getOrCreateTag().putBoolean("LegacyCustomData", true);
         crafting.setItem(0, damaged);
         crafting.setItem(1, ModContent.item("adamantine_plate").get().getDefaultInstance());
@@ -606,7 +602,7 @@ public final class BaseMetalsGameTests {
         if (!(recipe.orElseThrow() instanceof PlateRepairRecipe repair)) return;
         require(helper, repair.matches(crafting, helper.getLevel()),
                 "Plate-repair recipe rejected a damaged item and matching plate");
-        ItemStack output = repair.assemble(crafting);
+        ItemStack output = repair.assemble(crafting, net.minecraft.core.RegistryAccess.EMPTY);
         require(helper, output.is(ModContent.item("adamantine_chestplate").get()),
                 "Plate repair returned the wrong armor item");
         require(helper, output.getDamageValue() == 0, "Plate repair did not fully restore durability");
@@ -625,7 +621,7 @@ public final class BaseMetalsGameTests {
         ItemStack shield = ModContent.item("copper_shield").get().getDefaultInstance();
         shield.setDamageValue(10);
         shield.enchant(Enchantments.UNBREAKING, 2);
-        shield.setHoverName(new TextComponent("Old shield"));
+        shield.setHoverName(net.minecraft.network.chat.Component.literal("Old shield"));
         shield.getOrCreateTag().putBoolean("LegacyCustomData", true);
         AnvilUpdateEvent event = new AnvilUpdateEvent(shield,
                 ModContent.item("iron_plate").get().getDefaultInstance(), "", 0, player);
@@ -748,7 +744,7 @@ public final class BaseMetalsGameTests {
         LivingEntity target = helper.spawnWithNoFreeWill(EntityType.IRON_GOLEM, 2.0F, 1.0F, 2.0F);
         player.setItemInHand(InteractionHand.MAIN_HAND,
                 ModContent.item("adamantine_sword").get().getDefaultInstance());
-        LivingHurtEvent hurt = new LivingHurtEvent(target, DamageSource.playerAttack(player), 3.0F);
+        LivingHurtEvent hurt = new LivingHurtEvent(target, player.damageSources().playerAttack(player), 3.0F);
         events.onLivingHurt(hurt);
         require(helper, hurt.getAmount() == 7.0F,
                 "Adamantine melee bonus was not applied to a high-health target");
@@ -803,7 +799,7 @@ public final class BaseMetalsGameTests {
         LivingEntity aquatic = helper.spawnWithNoFreeWill(EntityType.COD, 2.0F, 1.0F, 2.0F);
         player.setItemInHand(InteractionHand.MAIN_HAND,
                 ModContent.item("aquarium_sword").get().getDefaultInstance());
-        LivingHurtEvent aquariumHit = new LivingHurtEvent(aquatic, DamageSource.playerAttack(player), 3.0F);
+        LivingHurtEvent aquariumHit = new LivingHurtEvent(aquatic, player.damageSources().playerAttack(player), 3.0F);
         events.onLivingHurt(aquariumHit);
         require(helper, aquariumHit.getAmount() == 7.0F,
                 "Aquarium melee bonus did not use the target's water-breathing identity");
@@ -811,7 +807,7 @@ public final class BaseMetalsGameTests {
         LivingEntity blaze = helper.spawnWithNoFreeWill(EntityType.BLAZE, 3.0F, 1.0F, 2.0F);
         player.setItemInHand(InteractionHand.MAIN_HAND,
                 ModContent.item("coldiron_sword").get().getDefaultInstance());
-        LivingHurtEvent coldIronHit = new LivingHurtEvent(blaze, DamageSource.playerAttack(player), 3.0F);
+        LivingHurtEvent coldIronHit = new LivingHurtEvent(blaze, player.damageSources().playerAttack(player), 3.0F);
         events.onLivingHurt(coldIronHit);
         require(helper, coldIronHit.getAmount() == 6.0F,
                 "Cold Iron melee bonus did not use the target's fire immunity");
@@ -819,7 +815,7 @@ public final class BaseMetalsGameTests {
         LivingEntity undead = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, 4.0F, 1.0F, 2.0F);
         player.setItemInHand(InteractionHand.MAIN_HAND,
                 ModContent.item("mithril_sword").get().getDefaultInstance());
-        LivingHurtEvent mithrilHit = new LivingHurtEvent(undead, DamageSource.playerAttack(player), 3.0F);
+        LivingHurtEvent mithrilHit = new LivingHurtEvent(undead, player.damageSources().playerAttack(player), 3.0F);
         events.onLivingHurt(mithrilHit);
         require(helper, effectAmplifier(undead, MobEffects.WITHER) == 3,
                 "Mithril did not apply Wither IV to undead");
@@ -859,11 +855,11 @@ public final class BaseMetalsGameTests {
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(
                 CrushingRecipe.TYPE.get(), new SimpleContainer(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No crushing recipe loaded for " + input);
-        ItemStack result = recipe.orElseThrow().getResultItem();
+        ItemStack result = recipe.orElseThrow().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
         ResourceLocation expectedId = expectedItem.contains(":")
                 ? new ResourceLocation(expectedItem)
                 : new ResourceLocation(BaseMetals.MOD_ID, expectedItem);
-        require(helper, ForgeRegistries.ITEMS.getKey(recipe.orElseThrow().getResultItem().getItem()).equals(
+        require(helper, ForgeRegistries.ITEMS.getKey(recipe.orElseThrow().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getItem()).equals(
                 expectedId), input + " crushed to the wrong output");
         require(helper, result.getCount() == expectedCount,
                 input + " crushed to " + result.getCount() + " items instead of " + expectedCount);
@@ -885,7 +881,7 @@ public final class BaseMetalsGameTests {
                 RecipeType.SMELTING, new SimpleContainer(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No furnace recipe loaded for " + input);
         if (recipe.isEmpty()) return;
-        ItemStack result = recipe.orElseThrow().getResultItem();
+        ItemStack result = recipe.orElseThrow().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
         ResourceLocation actualItem = ForgeRegistries.ITEMS.getKey(result.getItem());
         require(helper, actualItem.equals(new ResourceLocation(expectedItem)),
                 input + " smelted to " + actualItem + " instead of " + expectedItem);
@@ -899,9 +895,9 @@ public final class BaseMetalsGameTests {
                 RecipeType.SMELTING, new SimpleContainer(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No furnace recipe loaded for " + input);
         if (recipe.isEmpty()) return;
-        ItemStack result = recipe.orElseThrow().getResultItem();
+        ItemStack result = recipe.orElseThrow().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
         TagKey<net.minecraft.world.item.Item> tag = TagKey.create(
-                Registry.ITEM_REGISTRY, new ResourceLocation(expectedTag));
+                net.minecraft.core.registries.Registries.ITEM, new ResourceLocation(expectedTag));
         ResourceLocation actualItem = ForgeRegistries.ITEMS.getKey(result.getItem());
         require(helper, result.is(tag),
                 input + " smelted to " + actualItem + ", which is outside #" + expectedTag);
@@ -974,6 +970,8 @@ public final class BaseMetalsGameTests {
     private static CraftingContainer craftingContainer(int width, int height) {
         return new CraftingContainer(new AbstractContainerMenu(null, -1) {
             @Override
+            public ItemStack quickMoveStack(Player player, int slot) { return ItemStack.EMPTY; }
+            @Override
             public boolean stillValid(Player player) {
                 return true;
             }
@@ -1016,7 +1014,7 @@ public final class BaseMetalsGameTests {
 
             helper.getLevel().setBlock(position, state, 3);
             player.setItemInHand(InteractionHand.MAIN_HAND, ModContent.item("adamantine_crackhammer").get().getDefaultInstance());
-            var event = new net.minecraftforge.event.world.BlockEvent.BreakEvent(helper.getLevel(), position, state, player);
+            var event = new net.minecraftforge.event.level.BlockEvent.BreakEvent(helper.getLevel(), position, state, player);
             new BaseMetalsEvents().onBreak(event);
             require(helper, event.isCanceled() && helper.getLevel().getBlockState(position).isAir(), material + " hammer did not harvest the ore");
             requireSingleDrop(helper, position, null, material + "_powder", 2);

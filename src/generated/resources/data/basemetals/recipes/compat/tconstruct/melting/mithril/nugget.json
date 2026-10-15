@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 16,
-  "ingredient": {
-    "tag": "forge:nuggets/mithril"
-  },
-  "result": {
-    "fluid": "basemetals:mithril",
-    "amount": 10
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/mithril"
+  },
+  "result": {
+    "amount": 10,
+    "fluid": "basemetals:mithril"
+  },
+  "temperature": 769,
+  "time": 16
 }

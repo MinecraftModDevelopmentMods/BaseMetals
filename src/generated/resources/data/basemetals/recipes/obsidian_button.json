@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:obsidian_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/obsidian"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:obsidian_button"
-    },
-    "group": "basemetals:obsidian_button"
+    }
   }
 }

@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 140,
-  "ingredient": {
-    "tag": "forge:storage_blocks/electrum"
-  },
-  "result": {
-    "fluid": "basemetals:electrum",
-    "amount": 810
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/electrum"
+  },
+  "result": {
+    "amount": 810,
+    "fluid": "basemetals:electrum"
+  },
+  "temperature": 769,
+  "time": 140
 }

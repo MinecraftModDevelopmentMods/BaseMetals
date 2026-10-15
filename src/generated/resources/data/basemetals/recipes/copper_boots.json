@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X X",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:copper_boots",
     "key": {
       "X": {
         "tag": "forge:ingots/copper"
       }
     },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:copper_boots"
-    },
-    "group": "basemetals:copper_boots"
+    }
   }
 }

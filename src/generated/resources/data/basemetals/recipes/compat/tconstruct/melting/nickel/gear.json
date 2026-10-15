@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 90,
-  "ingredient": {
-    "tag": "forge:gears/nickel"
-  },
-  "result": {
-    "fluid": "basemetals:nickel",
-    "amount": 360
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:gears/nickel"
+  },
+  "result": {
+    "amount": 360,
+    "fluid": "basemetals:nickel"
+  },
+  "temperature": 769,
+  "time": 90
 }

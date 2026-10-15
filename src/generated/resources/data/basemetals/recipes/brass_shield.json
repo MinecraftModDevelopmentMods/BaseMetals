@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XWX",
-      "XXX",
-      " X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:brass_shield",
     "key": {
       "W": {
         "tag": "minecraft:planks"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/brass"
       }
     },
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
     "result": {
       "item": "basemetals:brass_shield"
-    },
-    "group": "basemetals:brass_shield"
+    }
   }
 }

@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 140,
-  "ingredient": {
-    "tag": "forge:storage_blocks/zinc"
-  },
-  "result": {
-    "fluid": "basemetals:zinc",
-    "amount": 810
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/zinc"
+  },
+  "result": {
+    "amount": 810,
+    "fluid": "basemetals:zinc"
+  },
+  "temperature": 769,
+  "time": 140
 }

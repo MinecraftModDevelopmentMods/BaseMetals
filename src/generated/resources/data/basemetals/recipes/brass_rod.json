@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "misc",
+    "group": "basemetals:brass_rod",
     "key": {
       "X": {
         "tag": "forge:ingots/brass"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
-      "item": "basemetals:brass_rod",
-      "count": 4
-    },
-    "group": "basemetals:brass_rod"
+      "count": 4,
+      "item": "basemetals:brass_rod"
+    }
   }
 }

@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:antimony_leggings",
   "plate": {
     "tag": "forge:plates/antimony"
-  }
+  },
+  "target": "basemetals:antimony_leggings"
 }

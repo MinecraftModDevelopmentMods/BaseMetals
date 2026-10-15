@@ -2,10 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:starsteel_lever",
     "key": {
       "R": {
         "tag": "forge:rods/starsteel"
@@ -14,9 +12,12 @@
         "tag": "forge:ingots/starsteel"
       }
     },
+    "pattern": [
+      "R",
+      "X"
+    ],
     "result": {
       "item": "basemetals:starsteel_lever"
-    },
-    "group": "basemetals:starsteel_lever"
+    }
   }
 }

@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 45,
-  "ingredient": {
-    "tag": "forge:plates/bismuth"
-  },
-  "result": {
-    "fluid": "basemetals:bismuth",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:plates/bismuth"
+  },
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:bismuth"
+  },
+  "temperature": 769,
+  "time": 45
 }

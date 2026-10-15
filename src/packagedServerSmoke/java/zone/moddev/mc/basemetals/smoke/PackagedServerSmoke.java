@@ -38,7 +38,7 @@ public final class PackagedServerSmoke {
     public void onServerStarted(ServerStartedEvent event) throws IOException {
         String baseMetals = version("basemetals");
         String oreSpawn = version("orespawn");
-        if (!"3.1.0.118021".equals(baseMetals) || !"4.1.0.118021".equals(oreSpawn)) {
+        if (!"3.1.0.119041".equals(baseMetals) || !"4.1.0.119041".equals(oreSpawn)) {
             throw new IllegalStateException("PACKAGED_SERVER_SMOKE FAIL versions basemetals="
                     + baseMetals + " orespawn=" + oreSpawn);
         }
@@ -96,16 +96,16 @@ public final class PackagedServerSmoke {
     private static void verifyIntegrationRecipes(net.minecraft.server.MinecraftServer server) throws IOException {
         var policy = zone.moddev.mc.basemetals.config.ContentPolicy.active();
         int checked = 0;
-        for (var resource : server.getResourceManager().listResources("recipes/compat", id -> id.endsWith(".json"))) {
+        for (var resource : server.getResourceManager().listResources("recipes/compat", id -> id.getPath().endsWith(".json")).keySet()) {
             if (!resource.getNamespace().equals("basemetals")) continue;
             String path = resource.getPath();
             String mod = path.contains("/thermal/") ? "thermal_expansion"
                     : path.contains("/tconstruct/") ? "tconstruct"
                     : path.contains("/mekanism/") ? "mekanism" : "enderio";
             if (!ModList.get().isLoaded(mod)) continue;
-            try (var input = server.getResourceManager().getResource(resource)) {
+            try (var input = server.getResourceManager().getResource(resource).orElseThrow().open()) {
                 var json = com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(
-                        input.getInputStream(), StandardCharsets.UTF_8)).getAsJsonObject();
+                        input, StandardCharsets.UTF_8)).getAsJsonObject();
                 boolean enabled = true;
                 for (var condition : json.getAsJsonArray("conditions")) {
                     var object = condition.getAsJsonObject();
@@ -129,9 +129,8 @@ public final class PackagedServerSmoke {
                 != zone.moddev.mc.orespawn.api.ProviderStatus.ACTIVE) {
             throw new IllegalStateException("Base Metals' OreSpawn provider is not active");
         }
-        for (var dimension : java.util.List.of(net.minecraft.world.level.Level.OVERWORLD,
-                net.minecraft.world.level.Level.NETHER, net.minecraft.world.level.Level.END)) {
-            var level = server.getLevel(dimension);
+        for (var level : server.getAllLevels()) {
+            var dimension = level.dimension();
             var counts = new java.util.TreeMap<String, Integer>();
             for (int chunkX = 0; chunkX < 3; chunkX++) {
                 for (int chunkZ = 0; chunkZ < 3; chunkZ++) {

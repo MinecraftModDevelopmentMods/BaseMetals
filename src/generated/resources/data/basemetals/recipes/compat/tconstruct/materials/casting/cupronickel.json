@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_fluid",
-  "temperature": 769,
-  "output": "basemetals:cupronickel",
-  "fluid": {
-    "tag": "forge:molten_cupronickel",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "fluid": {
+    "amount": 90,
+    "tag": "forge:molten_cupronickel"
+  },
+  "output": "basemetals:cupronickel",
+  "temperature": 769
 }

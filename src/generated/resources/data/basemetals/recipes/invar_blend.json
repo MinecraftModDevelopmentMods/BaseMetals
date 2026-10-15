@@ -2,6 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:invar_blend",
     "ingredients": [
       {
         "tag": "forge:dusts/iron"
@@ -14,9 +16,8 @@
       }
     ],
     "result": {
-      "item": "basemetals:invar_blend",
-      "count": 3
-    },
-    "group": "basemetals:invar_blend"
+      "count": 3,
+      "item": "basemetals:invar_blend"
+    }
   }
 }

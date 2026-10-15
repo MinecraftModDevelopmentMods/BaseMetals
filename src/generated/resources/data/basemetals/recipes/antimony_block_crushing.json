@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/antimony"
   },
   "result": {
-    "item": "basemetals:antimony_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:antimony_powder"
   }
 }

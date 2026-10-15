@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:bismuth_helmet",
   "plate": {
     "tag": "forge:plates/bismuth"
-  }
+  },
+  "target": "basemetals:bismuth_helmet"
 }

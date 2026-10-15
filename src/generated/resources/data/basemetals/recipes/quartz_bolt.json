@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "R",
-      "F"
-    ],
+    "category": "equipment",
+    "group": "basemetals:quartz_bolt",
     "key": {
       "F": {
         "item": "minecraft:feather"
@@ -15,10 +12,14 @@
         "tag": "forge:rods/quartz"
       }
     },
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
     "result": {
-      "item": "basemetals:quartz_bolt",
-      "count": 4
-    },
-    "group": "basemetals:quartz_bolt"
+      "count": 4,
+      "item": "basemetals:quartz_bolt"
+    }
   }
 }

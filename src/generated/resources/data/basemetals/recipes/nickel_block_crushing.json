@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/nickel"
   },
   "result": {
-    "item": "basemetals:nickel_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:nickel_powder"
   }
 }

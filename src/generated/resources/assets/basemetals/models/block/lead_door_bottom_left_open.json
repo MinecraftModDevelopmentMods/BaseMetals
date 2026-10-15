@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left_open",
+  "textures": {
+    "bottom": "basemetals:block/lead_door_lower",
+    "top": "basemetals:block/lead_door_upper"
+  }
+}

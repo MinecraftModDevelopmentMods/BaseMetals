@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:quartz_trapdoor",
     "key": {
       "X": {
         "tag": "forge:gems/quartz"
       }
     },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
     "result": {
       "item": "basemetals:quartz_trapdoor"
-    },
-    "group": "basemetals:quartz_trapdoor"
+    }
   }
 }

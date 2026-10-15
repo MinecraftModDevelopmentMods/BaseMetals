@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_invar"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_invar"
     },
     "type=double": {
       "model": "basemetals:block/invar_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_invar"
     }
   }
 }

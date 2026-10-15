@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 90,
-  "ingredient": {
-    "tag": "forge:gears/lead"
-  },
-  "result": {
-    "fluid": "basemetals:lead",
-    "amount": 360
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:gears/lead"
+  },
+  "result": {
+    "amount": 360,
+    "fluid": "basemetals:lead"
+  },
+  "temperature": 769,
+  "time": 90
 }

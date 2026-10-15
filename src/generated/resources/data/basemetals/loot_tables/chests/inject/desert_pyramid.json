@@ -1,7 +1,7 @@
 {
+  "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:empty",
@@ -9,363 +9,363 @@
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 10,
+              "treasure": true
+            }
+          ],
           "name": "minecraft:iron_axe",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "minecraft:iron_boots",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "minecraft:iron_chestplate",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "minecraft:iron_helmet",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "minecraft:iron_hoe",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "minecraft:iron_leggings",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "minecraft:iron_pickaxe",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "minecraft:iron_shovel",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "minecraft:iron_sword",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:iron_crackhammer",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_axe",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_boots",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_chestplate",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_helmet",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_hoe",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_leggings",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_pickaxe",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_shovel",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_sword",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:bronze_crackhammer",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:steel_axe",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:steel_boots",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:steel_chestplate",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:steel_helmet",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:steel_hoe",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:steel_leggings",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:steel_pickaxe",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:steel_shovel",
-          "weight": 3,
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
-        },
-        {
-          "type": "minecraft:item",
+          ],
           "name": "basemetals:steel_sword",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": 10,
-              "treasure": true
-            }
-          ]
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:steel_crackhammer",
-          "weight": 3,
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
               "levels": 10,
               "treasure": true
             }
-          ]
+          ],
+          "name": "basemetals:steel_crackhammer",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -567,13 +567,10 @@
           "name": "basemetals:aquarium_crackhammer",
           "weight": 3
         }
-      ]
+      ],
+      "rolls": 1
     },
     {
-      "rolls": {
-        "min": 1,
-        "max": 2
-      },
       "bonus_rolls": 1,
       "entries": [
         {
@@ -582,90 +579,93 @@
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 4,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "minecraft:gold_ingot",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 4
-              }
-            }
-          ]
+          "weight": 3
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 6,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "basemetals:silver_ingot",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 6
-              }
-            }
-          ]
+          "weight": 3
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 4,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "basemetals:nickel_ingot",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 4
-              }
-            }
-          ]
+          "weight": 3
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 4,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "basemetals:electrum_ingot",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 4
-              }
-            }
-          ]
+          "weight": 3
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 12,
+                "min": 3
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "basemetals:steel_ingot",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 3,
-                "max": 12
-              }
-            }
-          ]
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:invar_ingot",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
               "count": {
-                "min": 1,
-                "max": 4
-              }
+                "max": 4,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
             }
-          ]
+          ],
+          "name": "basemetals:invar_ingot",
+          "weight": 3
         }
-      ]
+      ],
+      "rolls": {
+        "max": 2,
+        "min": 1
+      }
     }
-  ],
-  "type": "minecraft:chest"
+  ]
 }

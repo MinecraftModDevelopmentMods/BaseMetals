@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:nickel",
-  "ingredient": {
-    "tag": "forge:storage_blocks/nickel"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/nickel"
+  },
+  "material": "basemetals:nickel",
+  "needed": 1,
+  "value": 9
 }

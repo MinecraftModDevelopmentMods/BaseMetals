@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:brass_ingot",
     "ingredients": [
       {
         "tag": "forge:storage_blocks/brass"
       }
     ],
     "result": {
-      "item": "basemetals:brass_ingot",
-      "count": 9
-    },
-    "group": "basemetals:brass_ingot"
+      "count": 9,
+      "item": "basemetals:brass_ingot"
+    }
   }
 }

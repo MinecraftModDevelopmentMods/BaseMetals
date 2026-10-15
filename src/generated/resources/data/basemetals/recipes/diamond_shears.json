@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:diamond_shears",
     "key": {
       "X": {
         "tag": "forge:gems/diamond"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:diamond_shears"
-    },
-    "group": "basemetals:diamond_shears"
+    }
   }
 }

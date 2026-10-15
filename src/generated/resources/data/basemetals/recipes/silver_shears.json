@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:silver_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/silver"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:silver_shears"
-    },
-    "group": "basemetals:silver_shears"
+    }
   }
 }

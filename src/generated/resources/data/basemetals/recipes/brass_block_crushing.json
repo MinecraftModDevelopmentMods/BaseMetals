@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/brass"
   },
   "result": {
-    "item": "basemetals:brass_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:brass_powder"
   }
 }

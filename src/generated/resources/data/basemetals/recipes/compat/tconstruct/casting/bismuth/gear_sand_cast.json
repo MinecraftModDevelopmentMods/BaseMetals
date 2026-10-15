@@ -1,17 +1,9 @@
 {
   "type": "tconstruct:casting_table",
-  "cooling_time": 90,
   "cast": {
     "tag": "tconstruct:casts/single_use/gear"
   },
   "cast_consumed": true,
-  "fluid": {
-    "tag": "forge:molten_bismuth",
-    "amount": 360
-  },
-  "result": {
-    "item": "basemetals:bismuth_gear"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -21,5 +13,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:bismuth_gear"
     }
-  ]
+  ],
+  "cooling_time": 90,
+  "fluid": {
+    "amount": 360,
+    "tag": "forge:molten_bismuth"
+  },
+  "result": {
+    "item": "basemetals:bismuth_gear"
+  }
 }

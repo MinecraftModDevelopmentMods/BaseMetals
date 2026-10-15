@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.05,
   "ingredient": {
     "tag": "forge:tiny_dusts/iron"
   },
-  "result": "minecraft:iron_nugget",
-  "experience": 0.05,
-  "cookingtime": 200
+  "result": "minecraft:iron_nugget"
 }

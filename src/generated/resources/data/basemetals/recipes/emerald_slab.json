@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:emerald_slab",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/emerald"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:emerald_slab",
-      "count": 6
-    },
-    "group": "basemetals:emerald_slab"
+      "count": 6,
+      "item": "basemetals:emerald_slab"
+    }
   }
 }

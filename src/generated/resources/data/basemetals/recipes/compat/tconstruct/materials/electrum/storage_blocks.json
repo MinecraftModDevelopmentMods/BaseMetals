@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:electrum",
-  "ingredient": {
-    "tag": "forge:storage_blocks/electrum"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/electrum"
+  },
+  "material": "basemetals:electrum",
+  "needed": 1,
+  "value": 9
 }

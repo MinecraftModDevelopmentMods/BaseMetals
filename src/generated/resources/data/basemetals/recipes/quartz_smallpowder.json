@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:quartz_smallpowder",
     "ingredients": [
       {
         "tag": "forge:dusts/quartz"
       }
     ],
     "result": {
-      "item": "basemetals:quartz_smallpowder",
-      "count": 9
-    },
-    "group": "basemetals:quartz_smallpowder"
+      "count": 9,
+      "item": "basemetals:quartz_smallpowder"
+    }
   }
 }

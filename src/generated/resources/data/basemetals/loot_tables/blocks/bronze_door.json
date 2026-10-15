@@ -2,26 +2,26 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "basemetals:bronze_door",
-          "functions": []
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         },
         {
-          "condition": "minecraft:block_state_property",
           "block": "basemetals:bronze_door",
+          "condition": "minecraft:block_state_property",
           "properties": {
             "half": "lower"
           }
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [],
+          "name": "basemetals:bronze_door"
+        }
+      ],
+      "rolls": 1
     }
   ]
 }

@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:pewter_smallblend",
     "ingredients": [
       {
         "tag": "forge:blends/pewter"
       }
     ],
     "result": {
-      "item": "basemetals:pewter_smallblend",
-      "count": 9
-    },
-    "group": "basemetals:pewter_smallblend"
+      "count": 9,
+      "item": "basemetals:pewter_smallblend"
+    }
   }
 }

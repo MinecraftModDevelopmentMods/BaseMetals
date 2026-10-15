@@ -2,19 +2,19 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "basemetals:mithril_trapdoor",
-          "functions": []
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [],
+          "name": "basemetals:mithril_trapdoor"
+        }
+      ],
+      "rolls": 1
     }
   ]
 }

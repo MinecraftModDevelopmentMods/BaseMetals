@@ -2,17 +2,18 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:copper_pressure_plate",
     "key": {
       "X": {
         "tag": "forge:ingots/copper"
       }
     },
+    "pattern": [
+      "XX"
+    ],
     "result": {
       "item": "basemetals:copper_pressure_plate"
-    },
-    "group": "basemetals:copper_pressure_plate"
+    }
   }
 }

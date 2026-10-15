@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:coldiron_nugget",
     "ingredients": [
       {
         "tag": "forge:ingots/coldiron"
       }
     ],
     "result": {
-      "item": "basemetals:coldiron_nugget",
-      "count": 9
-    },
-    "group": "basemetals:coldiron_nugget"
+      "count": 9,
+      "item": "basemetals:coldiron_nugget"
+    }
   }
 }

@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 30,
-  "ingredient": {
-    "tag": "forge:rods/starsteel"
-  },
-  "result": {
-    "fluid": "basemetals:starsteel",
-    "amount": 45
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:rods/starsteel"
+  },
+  "result": {
+    "amount": 45,
+    "fluid": "basemetals:starsteel"
+  },
+  "temperature": 769,
+  "time": 30
 }

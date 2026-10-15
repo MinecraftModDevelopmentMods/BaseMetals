@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 9,
-  "material": "basemetals:mithril",
-  "ingredient": {
-    "tag": "forge:nuggets/mithril"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/mithril"
+  },
+  "material": "basemetals:mithril",
+  "needed": 9,
+  "value": 1
 }

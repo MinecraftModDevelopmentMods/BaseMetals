@@ -1,22 +1,22 @@
 {
   "parent": "basemetals:this_is_new",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "basemetals:iron_crackhammer"
-    },
-    "title": {
-      "translate": "advancements.basemetals.geologist.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.basemetals.geologist.description"
     },
     "frame": "task",
+    "icon": {
+      "item": "basemetals:iron_crackhammer"
+    },
     "show_toast": true,
-    "announce_to_chat": true
-  },
-  "criteria": {
-    "event": {
-      "trigger": "minecraft:impossible"
+    "title": {
+      "translate": "advancements.basemetals.geologist.title"
     }
   }
 }

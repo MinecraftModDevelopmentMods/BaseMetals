@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X X",
-      "XXX",
-      "XXX"
-    ],
+    "category": "equipment",
+    "group": "basemetals:quartz_chestplate",
     "key": {
       "X": {
         "tag": "forge:gems/quartz"
       }
     },
+    "pattern": [
+      "X X",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:quartz_chestplate"
-    },
-    "group": "basemetals:quartz_chestplate"
+    }
   }
 }

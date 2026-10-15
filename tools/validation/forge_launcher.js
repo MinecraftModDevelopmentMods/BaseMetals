@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// Forge 40 supplies the module-path launch arguments in its installed metadata.
+// Use Forge's installed arguments rather than duplicating its module-path setup.
 function serverArguments(runtime, directory, version, forge) {
     const platform = process.platform === 'win32' ? 'win' : 'unix';
     const source = path.join(runtime, 'libraries/net/minecraftforge/forge',
@@ -41,7 +41,8 @@ function clientLaunch(runtime, version, forge) {
             if (allowed) {
                 const artifact = path.join(runtime, 'libraries', library.downloads.artifact.path);
                 if (!fs.existsSync(artifact)) throw new Error('Missing client library: ' + artifact);
-                libraries.set(library.name.split(':').slice(0, 2).join(':'), artifact);
+                const coordinates = library.name.split(':');
+                libraries.set(coordinates.slice(0, 2).join(':') + ':' + (coordinates[3] || ''), artifact);
             }
         }
     }

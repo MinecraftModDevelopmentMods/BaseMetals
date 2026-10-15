@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_melting",
-  "input": "basemetals:aquarium",
-  "temperature": 769,
-  "result": {
-    "fluid": "basemetals:aquarium",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "input": "basemetals:aquarium",
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:aquarium"
+  },
+  "temperature": 769
 }

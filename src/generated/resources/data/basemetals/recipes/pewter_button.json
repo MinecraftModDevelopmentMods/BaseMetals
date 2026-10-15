@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:pewter_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/pewter"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:pewter_button"
-    },
-    "group": "basemetals:pewter_button"
+    }
   }
 }

@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
   "ingredient": {
     "item": "basemetals:electrum_axe"
   },
   "result": {
-    "item": "basemetals:electrum_ingot",
-    "count": 3
-  },
-  "experience": 1.0,
-  "cookingtime": 200
+    "count": 3,
+    "item": "basemetals:electrum_ingot"
+  }
 }

@@ -7,7 +7,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -18,40 +18,40 @@ public final class MissingMappings {
     private MissingMappings() {}
 
     @SubscribeEvent
-    public static void blocks(RegistryEvent.MissingMappings<Block> event) {
-        for (RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings()) {
-            ResourceLocation vanillaTarget = vanilla114Target(mapping.key);
+    public static void blocks(MissingMappingsEvent event) {
+        for (MissingMappingsEvent.Mapping<Block> mapping : event.getAllMappings(ForgeRegistries.Keys.BLOCKS)) {
+            ResourceLocation vanillaTarget = vanilla114Target(mapping.getKey());
             if (vanillaTarget != null) {
                 Block target = ForgeRegistries.BLOCKS.getValue(vanillaTarget);
                 if (target != null) mapping.remap(target);
                 continue;
             }
-            if (!isLegacyNamespace(mapping.key.getNamespace())) continue;
-            RegistryObject<? extends Block> target = ModContent.blocksById().get(blockTargetPath(mapping.key.getPath()));
+            if (!isLegacyNamespace(mapping.getKey().getNamespace())) continue;
+            RegistryObject<? extends Block> target = ModContent.blocksById().get(blockTargetPath(mapping.getKey().getPath()));
             if (target != null) mapping.remap(target.get());
         }
     }
 
     @SubscribeEvent
-    public static void items(RegistryEvent.MissingMappings<Item> event) {
-        for (RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings()) {
-            ResourceLocation vanillaTarget = vanilla114Target(mapping.key);
+    public static void items(MissingMappingsEvent event) {
+        for (MissingMappingsEvent.Mapping<Item> mapping : event.getAllMappings(ForgeRegistries.Keys.ITEMS)) {
+            ResourceLocation vanillaTarget = vanilla114Target(mapping.getKey());
             if (vanillaTarget != null) {
                 Item target = ForgeRegistries.ITEMS.getValue(vanillaTarget);
                 if (target != null) mapping.remap(target);
                 continue;
             }
-            if (!isLegacyNamespace(mapping.key.getNamespace())) continue;
-            Item target = ForgeRegistries.ITEMS.getValue(itemTargetId(mapping.key.getPath()));
+            if (!isLegacyNamespace(mapping.getKey().getNamespace())) continue;
+            Item target = ForgeRegistries.ITEMS.getValue(itemTargetId(mapping.getKey().getPath()));
             if (target != null) mapping.remap(target);
         }
     }
 
     @SubscribeEvent
-    public static void fluids(RegistryEvent.MissingMappings<Fluid> event) {
-        for (var mapping : event.getAllMappings()) {
-            if (!isLegacyNamespace(mapping.key.getNamespace())) continue;
-            var target = ModContent.fluids().get(fluidTargetPath(mapping.key.getPath()));
+    public static void fluids(MissingMappingsEvent event) {
+        for (var mapping : event.getAllMappings(ForgeRegistries.Keys.FLUIDS)) {
+            if (!isLegacyNamespace(mapping.getKey().getNamespace())) continue;
+            var target = ModContent.fluids().get(fluidTargetPath(mapping.getKey().getPath()));
             if (target != null) mapping.remap(target.source().get());
         }
     }

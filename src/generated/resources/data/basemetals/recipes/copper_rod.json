@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "misc",
+    "group": "basemetals:copper_rod",
     "key": {
       "X": {
         "tag": "forge:ingots/copper"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
-      "item": "basemetals:copper_rod",
-      "count": 4
-    },
-    "group": "basemetals:copper_rod"
+      "count": 4,
+      "item": "basemetals:copper_rod"
+    }
   }
 }

@@ -1,17 +1,8 @@
 {
   "type": "mekanism:injecting",
-  "itemInput": {
-    "ingredient": {
-      "tag": "forge:ores/nickel"
-    }
-  },
   "chemicalInput": {
     "amount": 1,
     "gas": "mekanism:hydrogen_chloride"
-  },
-  "output": {
-    "item": "basemetals:nickel_shard",
-    "count": 4
   },
   "conditions": [
     {
@@ -22,5 +13,14 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:nickel_shard"
     }
-  ]
+  ],
+  "itemInput": {
+    "ingredient": {
+      "tag": "forge:ores/nickel"
+    }
+  },
+  "output": {
+    "count": 4,
+    "item": "basemetals:nickel_shard"
+  }
 }

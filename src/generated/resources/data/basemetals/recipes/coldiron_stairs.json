@@ -2,20 +2,21 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X  ",
-      "XX ",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:coldiron_stairs",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/coldiron"
       }
     },
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:coldiron_stairs",
-      "count": 4
-    },
-    "group": "basemetals:coldiron_stairs"
+      "count": 4,
+      "item": "basemetals:coldiron_stairs"
+    }
   }
 }

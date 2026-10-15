@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.08,
   "ingredient": {
     "item": "basemetals:nickel_bars"
   },
   "result": {
-    "item": "basemetals:nickel_nugget",
-    "count": 3
-  },
-  "experience": 0.08,
-  "cookingtime": 200
+    "count": 3,
+    "item": "basemetals:nickel_nugget"
+  }
 }

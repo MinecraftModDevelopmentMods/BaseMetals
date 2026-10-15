@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      " S",
-      " S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:invar_hoe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/invar"
       }
     },
+    "pattern": [
+      "XX",
+      " S",
+      " S"
+    ],
     "result": {
       "item": "basemetals:invar_hoe"
-    },
-    "group": "basemetals:invar_hoe"
+    }
   }
 }

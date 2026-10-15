@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.9,
   "ingredient": {
     "item": "basemetals:mithril_door"
   },
   "result": {
-    "item": "basemetals:mithril_ingot",
-    "count": 2
-  },
-  "experience": 0.9,
-  "cookingtime": 200
+    "count": 2,
+    "item": "basemetals:mithril_ingot"
+  }
 }

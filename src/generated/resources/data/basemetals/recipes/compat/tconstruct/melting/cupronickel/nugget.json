@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 16,
-  "ingredient": {
-    "tag": "forge:nuggets/cupronickel"
-  },
-  "result": {
-    "fluid": "basemetals:cupronickel",
-    "amount": 10
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/cupronickel"
+  },
+  "result": {
+    "amount": 10,
+    "fluid": "basemetals:cupronickel"
+  },
+  "temperature": 769,
+  "time": 16
 }

@@ -7,7 +7,7 @@ import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import zone.moddev.mc.basemetals.content.ModContent;
@@ -23,15 +23,18 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
 public final class BMBlockStateProvider extends BlockStateProvider {
     private static final float OVERLAY_OFFSET = 0.05F;
 
-    public BMBlockStateProvider(DataGenerator generator, ExistingFileHelper existingFiles) {
+    public BMBlockStateProvider(net.minecraft.data.PackOutput generator, ExistingFileHelper existingFiles) {
         super(generator, "basemetals", existingFiles);
     }
+
+    @Override
+    public String getName() { return "Ore overlays: basemetals"; }
 
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         if (event.includeClient()) {
-            event.getGenerator().addProvider(new BMBlockStateProvider(
-                    event.getGenerator(), event.getExistingFileHelper()));
+            event.getGenerator().addProvider(true, new BMBlockStateProvider(
+                    event.getGenerator().getPackOutput(), event.getExistingFileHelper()));
         }
     }
 

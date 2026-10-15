@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:bronze_powder",
     "key": {
       "X": {
         "tag": "forge:tiny_dusts/bronze"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:bronze_powder"
-    },
-    "group": "basemetals:bronze_powder"
+    }
   }
 }

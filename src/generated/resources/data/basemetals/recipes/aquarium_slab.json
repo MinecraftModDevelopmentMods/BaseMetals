@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:aquarium_slab",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/aquarium"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:aquarium_slab",
-      "count": 6
-    },
-    "group": "basemetals:aquarium_slab"
+      "count": 6,
+      "item": "basemetals:aquarium_slab"
+    }
   }
 }

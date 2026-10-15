@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "S",
-      "W"
-    ],
+    "category": "building",
+    "group": "minecraft:tripwire_hook",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -18,9 +15,13 @@
         "tag": "forge:ingots/steel"
       }
     },
+    "pattern": [
+      "X",
+      "S",
+      "W"
+    ],
     "result": {
       "item": "minecraft:tripwire_hook"
-    },
-    "group": "minecraft:tripwire_hook"
+    }
   }
 }

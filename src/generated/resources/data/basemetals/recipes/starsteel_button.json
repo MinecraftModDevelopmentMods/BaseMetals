@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:starsteel_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/starsteel"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:starsteel_button"
-    },
-    "group": "basemetals:starsteel_button"
+    }
   }
 }

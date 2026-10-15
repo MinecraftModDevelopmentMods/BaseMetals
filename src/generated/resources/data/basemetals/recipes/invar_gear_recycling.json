@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.3,
   "ingredient": {
     "item": "basemetals:invar_gear"
   },
   "result": {
     "item": "basemetals:invar_ingot"
-  },
-  "experience": 0.3,
-  "cookingtime": 200
+  }
 }

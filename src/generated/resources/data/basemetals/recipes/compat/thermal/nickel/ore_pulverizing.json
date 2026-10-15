@@ -1,15 +1,5 @@
 {
   "type": "thermal:pulverizer",
-  "energy": 4000,
-  "ingredient": {
-    "tag": "forge:ores/nickel"
-  },
-  "result": [
-    {
-      "item": "basemetals:nickel_powder",
-      "count": 2
-    }
-  ],
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -17,6 +7,16 @@
     },
     {
       "type": "basemetals:content_mode",
+      "item": "basemetals:nickel_powder"
+    }
+  ],
+  "energy": 4000,
+  "ingredient": {
+    "tag": "forge:ores/nickel"
+  },
+  "result": [
+    {
+      "count": 2,
       "item": "basemetals:nickel_powder"
     }
   ]

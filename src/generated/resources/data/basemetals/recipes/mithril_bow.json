@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " RS",
-      "R S",
-      " RS"
-    ],
+    "category": "equipment",
+    "group": "basemetals:mithril_bow",
     "key": {
       "R": {
         "tag": "forge:rods/mithril"
@@ -15,9 +12,13 @@
         "item": "minecraft:string"
       }
     },
+    "pattern": [
+      " RS",
+      "R S",
+      " RS"
+    ],
     "result": {
       "item": "basemetals:mithril_bow"
-    },
-    "group": "basemetals:mithril_bow"
+    }
   }
 }

@@ -2,17 +2,18 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:starsteel_pressure_plate",
     "key": {
       "X": {
         "tag": "forge:ingots/starsteel"
       }
     },
+    "pattern": [
+      "XX"
+    ],
     "result": {
       "item": "basemetals:starsteel_pressure_plate"
-    },
-    "group": "basemetals:starsteel_pressure_plate"
+    }
   }
 }

@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X ",
-      "XRX",
-      " X "
-    ],
+    "category": "misc",
+    "group": "basemetals:diamond_gear",
     "key": {
       "R": {
         "tag": "forge:rods/diamond"
@@ -15,10 +12,14 @@
         "tag": "forge:gems/diamond"
       }
     },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
     "result": {
-      "item": "basemetals:diamond_gear",
-      "count": 4
-    },
-    "group": "basemetals:diamond_gear"
+      "count": 4,
+      "item": "basemetals:diamond_gear"
+    }
   }
 }

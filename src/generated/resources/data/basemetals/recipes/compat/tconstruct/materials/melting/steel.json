@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_melting",
-  "input": "basemetals:steel",
-  "temperature": 769,
-  "result": {
-    "fluid": "basemetals:steel",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "input": "basemetals:steel",
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:steel"
+  },
+  "temperature": 769
 }

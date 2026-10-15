@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "minecraft:diamond_boots",
   "plate": {
     "tag": "forge:plates/diamond"
-  }
+  },
+  "target": "minecraft:diamond_boots"
 }

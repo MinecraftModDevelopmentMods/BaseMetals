@@ -1,5 +1,5 @@
 {
   "parent": "forge:item/bucket",
-  "loader": "forge:bucket",
-  "fluid": "basemetals:platinum"
+  "fluid": "basemetals:platinum",
+  "loader": "forge:fluid_container"
 }

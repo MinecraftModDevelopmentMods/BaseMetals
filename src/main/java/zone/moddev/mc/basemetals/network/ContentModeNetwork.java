@@ -8,7 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraftforge.network.HandshakeHandler;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
@@ -58,10 +58,10 @@ public final class ContentModeNetwork {
 
         ContentMode clientMode = BaseMetalsConfig.activeMode();
         if (message.mode != clientMode) {
-            context.getNetworkManager().disconnect(new TranslatableComponent(
+            context.getNetworkManager().disconnect(net.minecraft.network.chat.Component.translatable(
                     "config.basemetals.connection.mismatch",
-                    new TranslatableComponent(message.mode.translationKey()),
-                    new TranslatableComponent(clientMode.translationKey())));
+                    net.minecraft.network.chat.Component.translatable(message.mode.translationKey()),
+                    net.minecraft.network.chat.Component.translatable(clientMode.translationKey())));
             return;
         }
 

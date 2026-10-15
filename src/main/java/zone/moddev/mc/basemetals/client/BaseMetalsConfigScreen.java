@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.network.chat.TextComponent;
+
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraftforge.common.ForgeConfigSpec;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ConfigEdits;
@@ -34,7 +34,7 @@ public final class BaseMetalsConfigScreen extends Screen {
     private OptionButton modeButton;
 
     public BaseMetalsConfigScreen(Screen parent) {
-        super(new TranslatableComponent(PREFIX + "title"));
+        super(net.minecraft.network.chat.Component.translatable(PREFIX + "title"));
         this.parent = parent;
         this.edits = new ConfigEdits(ContentMode.parse(BaseMetalsConfig.CONTENT_MODE.get()),
                 VALUES[0].get(), VALUES[1].get(), VALUES[2].get(), VALUES[3].get());
@@ -83,18 +83,18 @@ public final class BaseMetalsConfigScreen extends Screen {
     }
 
     private void initLabels() {
-        modeButton.setMessage(new TextComponent(modeLabel()));
+        modeButton.setMessage(net.minecraft.network.chat.Component.literal(modeLabel()));
 
         for (int index = 0; index < optionButtons.size(); index++) {
-            optionButtons.get(index).setMessage(new TextComponent(optionLabel(index)));
+            optionButtons.get(index).setMessage(net.minecraft.network.chat.Component.literal(optionLabel(index)));
         }
     }
 
     private void done() {
         if (edits.modeChanged()) {
             minecraft.setScreen(new ConfirmScreen(this::confirmResult,
-                    new TranslatableComponent(PREFIX + "confirm.title"),
-                    new TranslatableComponent(PREFIX + "confirm.message")));
+                    net.minecraft.network.chat.Component.translatable(PREFIX + "confirm.title"),
+                    net.minecraft.network.chat.Component.translatable(PREFIX + "confirm.message")));
         } else {
             saveAndClose();
         }
@@ -131,10 +131,10 @@ public final class BaseMetalsConfigScreen extends Screen {
                 String key = ((OptionButton) child).option;
                 if (key != null) {
                     List<FormattedCharSequence> help = new ArrayList<>(font.split(
-                            new TranslatableComponent(PREFIX + key + ".tooltip"), 280));
+                            net.minecraft.network.chat.Component.translatable(PREFIX + key + ".tooltip"), 280));
                     if ("contentMode".equals(key)) {
-                        help.addAll(font.split(new TranslatableComponent(edits.mode().translationKey() + ".description"), 280));
-                        help.addAll(font.split(new TranslatableComponent(PREFIX + "restart"), 280));
+                        help.addAll(font.split(net.minecraft.network.chat.Component.translatable(edits.mode().translationKey() + ".description"), 280));
+                        help.addAll(font.split(net.minecraft.network.chat.Component.translatable(PREFIX + "restart"), 280));
                     }
                     renderTooltip(matrices, help, mouseX, mouseY);
                 }
@@ -146,7 +146,7 @@ public final class BaseMetalsConfigScreen extends Screen {
         private final String option;
 
         private OptionButton(int x, int y, int width, String label, Runnable click, String option) {
-            super(x, y, width, 20, new TextComponent(label), button -> click.run());
+            super(x, y, width, 20, net.minecraft.network.chat.Component.literal(label), button -> click.run(), DEFAULT_NARRATION);
             this.option = option;
         }
 

@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X",
-      "S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:bronze_sword",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/bronze"
       }
     },
+    "pattern": [
+      "X",
+      "X",
+      "S"
+    ],
     "result": {
       "item": "basemetals:bronze_sword"
-    },
-    "group": "basemetals:bronze_sword"
+    }
   }
 }

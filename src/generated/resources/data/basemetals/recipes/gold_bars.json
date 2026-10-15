@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:gold_bars",
     "key": {
       "X": {
         "tag": "forge:ingots/gold"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:gold_bars",
-      "count": 16
-    },
-    "group": "basemetals:gold_bars"
+      "count": 16,
+      "item": "basemetals:gold_bars"
+    }
   }
 }

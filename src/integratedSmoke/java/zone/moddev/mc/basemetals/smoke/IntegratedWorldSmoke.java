@@ -65,6 +65,10 @@ public final class IntegratedWorldSmoke {
         }
 
         Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.screen instanceof net.minecraft.client.gui.screens.AccessibilityOnboardingScreen) {
+            minecraft.screen.onClose();
+            return;
+        }
         elapsedTicks++;
         if (elapsedTicks == 1) {
             String expectedMods = System.getProperty("basemetals.expectedSmokeMods", "");
@@ -78,8 +82,8 @@ public final class IntegratedWorldSmoke {
                 BaseMetals.LOGGER.info("BASEMETALS_CLIENT_PROFILE PASS mods={}", actual);
             }
         }
-        if (!renderLayersChecked) {
-            verifyBlockRenderLayers();
+        if (!renderLayersChecked && minecraft.screen instanceof TitleScreen) {
+            verifyBlockRenderLayers(minecraft);
             renderLayersChecked = true;
         }
         if (!creativeBucketsChecked) {
@@ -97,7 +101,6 @@ public final class IntegratedWorldSmoke {
             verifyBarsModels(minecraft);
             creationStarted = true;
             String worldName = System.getProperty(WORLD_PROPERTY, "basemetals-integrated-smoke");
-            RegistryAccess.Frozen registries = RegistryAccess.BUILTIN.get();
             LevelSettings levelSettings = new LevelSettings(
                     "Base Metals Integrated Smoke",
                     GameType.CREATIVE,
@@ -105,9 +108,11 @@ public final class IntegratedWorldSmoke {
                     Difficulty.NORMAL,
                     true,
                     new GameRules(),
-                    DataPackConfig.DEFAULT);
+                    net.minecraft.world.level.WorldDataConfiguration.DEFAULT);
             BaseMetals.LOGGER.info("BASEMETALS_INTEGRATED_SMOKE creating world={}", worldName);
-            minecraft.createLevel(worldName, levelSettings, registries, WorldGenSettings.makeDefault(registries));
+            minecraft.createWorldOpenFlows().createFreshLevel(worldName, levelSettings,
+                    new net.minecraft.world.level.levelgen.WorldOptions(0L, true, false),
+                    net.minecraft.world.level.levelgen.presets.WorldPresets::createNormalWorldDimensions);
         }
 
         if (creationStarted && minecraft.screen instanceof net.minecraft.client.gui.screens.ConfirmScreen) {
@@ -170,7 +175,7 @@ public final class IntegratedWorldSmoke {
             var state = entry.getValue().get().defaultBlockState();
             var model = minecraft.getBlockRenderer().getBlockModel(state);
             for (var face : net.minecraft.core.Direction.values()) {
-                var quads = model.getQuads(state, face, new java.util.Random(0));
+                var quads = model.getQuads(state, face, net.minecraft.util.RandomSource.create(0));
                 if (quads.size() != 2) throw new IllegalStateException("Ore model lost a layer: " + entry.getKey());
                 boolean offset = quads.stream().anyMatch(quad -> {
                     int[] vertices = quad.getVertices();
@@ -184,8 +189,9 @@ public final class IntegratedWorldSmoke {
                 });
                 if (!offset) throw new IllegalStateException("Ore overlay is flush with its host: " + entry.getKey());
             }
-            if (!ItemBlockRenderTypes.canRenderInLayer(state, RenderType.cutout())
-                    || ItemBlockRenderTypes.canRenderInLayer(state, RenderType.solid())) {
+            var layers = model.getRenderTypes(state, net.minecraft.util.RandomSource.create(0),
+                    net.minecraftforge.client.model.data.ModelData.EMPTY);
+            if (!layers.contains(RenderType.cutout()) || layers.contains(RenderType.solid())) {
                 throw new IllegalStateException("Ore overlay is not cutout: " + entry.getKey());
             }
             ores++;
@@ -195,11 +201,10 @@ public final class IntegratedWorldSmoke {
             try {
                 var host = minecraft.getResourceManager().getResource(
                         new net.minecraft.resources.ResourceLocation("minecraft:textures/block/stone.png"));
-                if (!host.getSourceName().contains("basemetals-host-test")) {
+                if (!host.orElseThrow().sourcePackId().contains("basemetals-host-test")) {
                     throw new IllegalStateException("The ore host texture did not come from the replacement pack");
                 }
-                host.close();
-            } catch (java.io.IOException exception) {
+            } catch (java.util.NoSuchElementException exception) {
                 throw new IllegalStateException("The replacement ore host texture is missing", exception);
             }
             BaseMetals.LOGGER.info("BASEMETALS_OVERLAY_HOST_PACK PASS vanilla_host=stone");
@@ -218,9 +223,9 @@ public final class IntegratedWorldSmoke {
                 }
 
                 var model = minecraft.getBlockRenderer().getBlockModel(state);
-                var quads = new java.util.ArrayList<>(model.getQuads(state, null, new java.util.Random(0)));
+                var quads = new java.util.ArrayList<>(model.getQuads(state, null, net.minecraft.util.RandomSource.create(0)));
                 for (var face : net.minecraft.core.Direction.values()) {
-                    quads.addAll(model.getQuads(state, face, new java.util.Random(0)));
+                    quads.addAll(model.getQuads(state, face, net.minecraft.util.RandomSource.create(0)));
                 }
 
                 for (int first = 0; first < quads.size(); first++) {
@@ -275,7 +280,7 @@ public final class IntegratedWorldSmoke {
         return bounds;
     }
 
-    private static void verifyBlockRenderLayers() {
+    private static void verifyBlockRenderLayers(Minecraft minecraft) {
         int bars = 0;
         int doors = 0;
         int trapdoors = 0;
@@ -292,11 +297,12 @@ public final class IntegratedWorldSmoke {
                 expected = RenderType.cutout();
                 trapdoors++;
             }
-            if (expected != null
-                    && (!ItemBlockRenderTypes.canRenderInLayer(block.defaultBlockState(), expected)
-                    || ItemBlockRenderTypes.canRenderInLayer(block.defaultBlockState(), RenderType.solid()))) {
+            var state = block.defaultBlockState();
+            var layers = minecraft.getBlockRenderer().getBlockModel(state).getRenderTypes(state,
+                    net.minecraft.util.RandomSource.create(0), net.minecraftforge.client.model.data.ModelData.EMPTY);
+            if (expected != null && (!layers.contains(expected) || layers.contains(RenderType.solid()))) {
                 throw new IllegalStateException("BASEMETALS_INTEGRATED_SMOKE FAIL: wrong render layer for "
-                        + block.getRegistryName());
+                        + net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(block));
             }
         }
         if (bars != 26 || doors != 26 || trapdoors != 26) {
@@ -312,8 +318,24 @@ public final class IntegratedWorldSmoke {
     private static void verifyCreativeBuckets(Minecraft minecraft) {
         NonNullList<ItemStack> itemsTab = NonNullList.create();
         NonNullList<ItemStack> searchTab = NonNullList.create();
-        ModTabs.ITEMS.fillItemList(itemsTab);
-        CreativeModeTab.TAB_SEARCH.fillItemList(searchTab);
+        net.minecraft.world.item.CreativeModeTabs.tryRebuildTabContents(
+                net.minecraft.world.flag.FeatureFlags.VANILLA_SET, true,
+                RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY));
+        itemsTab.addAll(ModTabs.ITEMS.getDisplayItems());
+        searchTab.addAll(net.minecraft.world.item.CreativeModeTabs.searchTab().getDisplayItems());
+        var shown = new java.util.HashSet<net.minecraft.world.item.Item>();
+        for (var tab : java.util.List.of(ModTabs.BLOCKS, ModTabs.ITEMS, ModTabs.TOOLS, ModTabs.COMBAT)) {
+            tab.getDisplayItems().forEach(stack -> shown.add(stack.getItem()));
+        }
+        var indexed = minecraft.getSearchTree(SearchRegistry.CREATIVE_NAMES).search("basemetals:")
+                .stream().map(ItemStack::getItem).collect(java.util.stream.Collectors.toSet());
+        ModContent.itemsById().forEach((id, item) -> {
+            boolean expected = !ModContent.fluids().containsKey(id);
+            if (shown.contains(item.get()) != expected || indexed.contains(item.get()) != expected) {
+                throw new IllegalStateException("Creative visibility changed for " + id);
+            }
+        });
+        BaseMetals.LOGGER.info("BASEMETALS_CREATIVE_INVENTORY PASS visible={} hidden_fluid_blocks=36", shown.size());
         java.util.List<ItemStack> bucketSearch = minecraft
                 .getSearchTree(SearchRegistry.CREATIVE_NAMES).search("bucket");
         for (var fluid : ModContent.fluids().entrySet()) {
@@ -329,7 +351,7 @@ public final class IntegratedWorldSmoke {
                                 + " indexed_bucket_results=" + bucketSearch.size());
             }
             var model = minecraft.getItemRenderer().getModel(bucketStack, null, null, 0);
-            if (model.getQuads(null, null, new java.util.Random(0L)).isEmpty()) {
+            if (model.getQuads(null, null, net.minecraft.util.RandomSource.create(0)).isEmpty()) {
                 throw new IllegalStateException(
                         "BASEMETALS_INTEGRATED_SMOKE FAIL: invisible bucket model " + fluid.getKey());
             }
@@ -346,7 +368,7 @@ public final class IntegratedWorldSmoke {
                     instanceof MaterialProjectileRenderer)) {
                 throw new IllegalStateException(
                         "BASEMETALS_INTEGRATED_SMOKE FAIL: projectile still uses a billboard renderer "
-                                + type.getRegistryName());
+                                + net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getKey(type));
             }
         }
         BaseMetals.LOGGER.info("BASEMETALS_INTEGRATED_SMOKE projectile renderers PASS");

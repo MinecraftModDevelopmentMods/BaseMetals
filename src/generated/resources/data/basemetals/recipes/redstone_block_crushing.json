@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/redstone"
   },
   "result": {
-    "item": "minecraft:redstone",
-    "count": 9
+    "count": 9,
+    "item": "minecraft:redstone"
   }
 }

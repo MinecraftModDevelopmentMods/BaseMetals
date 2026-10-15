@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:cupronickel_leggings",
   "plate": {
     "tag": "forge:plates/cupronickel"
-  }
+  },
+  "target": "basemetals:cupronickel_leggings"
 }

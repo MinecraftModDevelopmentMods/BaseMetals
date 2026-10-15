@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:adamantine_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/adamantine"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:adamantine_button"
-    },
-    "group": "basemetals:adamantine_button"
+    }
   }
 }

@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "N",
-      "R",
-      "F"
-    ],
+    "category": "equipment",
+    "group": "basemetals:steel_arrow",
     "key": {
       "F": {
         "item": "minecraft:feather"
@@ -18,10 +15,14 @@
         "tag": "forge:rods/steel"
       }
     },
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
     "result": {
-      "item": "basemetals:steel_arrow",
-      "count": 4
-    },
-    "group": "basemetals:steel_arrow"
+      "count": 4,
+      "item": "basemetals:steel_arrow"
+    }
   }
 }

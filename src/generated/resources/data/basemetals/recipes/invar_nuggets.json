@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:invar_nugget",
     "ingredients": [
       {
         "tag": "forge:ingots/invar"
       }
     ],
     "result": {
-      "item": "basemetals:invar_nugget",
-      "count": 9
-    },
-    "group": "basemetals:invar_nugget"
+      "count": 9,
+      "item": "basemetals:invar_nugget"
+    }
   }
 }

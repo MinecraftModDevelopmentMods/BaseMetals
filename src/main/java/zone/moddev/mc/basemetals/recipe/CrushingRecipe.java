@@ -18,11 +18,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public final class CrushingRecipe implements Recipe<Container> {
     public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(
-            Registry.RECIPE_TYPE_REGISTRY, BaseMetals.MOD_ID);
+            net.minecraft.core.registries.Registries.RECIPE_TYPE, BaseMetals.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(
             ForgeRegistries.RECIPE_SERIALIZERS, BaseMetals.MOD_ID);
     public static final RegistryObject<RecipeType<CrushingRecipe>> TYPE = TYPES
@@ -47,9 +46,9 @@ public final class CrushingRecipe implements Recipe<Container> {
     }
 
     @Override public boolean matches(Container container, Level level) { return ingredient.test(container.getItem(0)); }
-    @Override public ItemStack assemble(Container container) { return result.copy(); }
+    @Override public ItemStack assemble(Container container, net.minecraft.core.RegistryAccess registries) { return result.copy(); }
     @Override public boolean canCraftInDimensions(int width, int height) { return width * height >= 1; }
-    @Override public ItemStack getResultItem() { return result.copy(); }
+    @Override public ItemStack getResultItem(net.minecraft.core.RegistryAccess registries) { return result.copy(); }
     @Override public ResourceLocation getId() { return id; }
     @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER.get(); }
     @Override public RecipeType<?> getType() { return TYPE.get(); }
@@ -63,7 +62,7 @@ public final class CrushingRecipe implements Recipe<Container> {
         }
     }
 
-    public static final class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
+    public static final class Serializer
             implements RecipeSerializer<CrushingRecipe> {
         @Override
         public CrushingRecipe fromJson(ResourceLocation id, JsonObject json) {

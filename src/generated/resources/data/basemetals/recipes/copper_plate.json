@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:copper_plate",
     "key": {
       "X": {
         "tag": "forge:ingots/copper"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:copper_plate",
-      "count": 3
-    },
-    "group": "basemetals:copper_plate"
+      "count": 3,
+      "item": "basemetals:copper_plate"
+    }
   }
 }

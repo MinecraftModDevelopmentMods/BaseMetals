@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "GRR",
-      " SR",
-      "R G"
-    ],
+    "category": "equipment",
+    "group": "basemetals:electrum_crossbow",
     "key": {
       "G": {
         "tag": "forge:gears/electrum"
@@ -18,9 +15,13 @@
         "item": "minecraft:string"
       }
     },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
     "result": {
       "item": "basemetals:electrum_crossbow"
-    },
-    "group": "basemetals:electrum_crossbow"
+    }
   }
 }

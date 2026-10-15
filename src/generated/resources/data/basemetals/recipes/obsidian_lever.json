@@ -2,10 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:obsidian_lever",
     "key": {
       "R": {
         "tag": "forge:rods/obsidian"
@@ -14,9 +12,12 @@
         "tag": "forge:ingots/obsidian"
       }
     },
+    "pattern": [
+      "R",
+      "X"
+    ],
     "result": {
       "item": "basemetals:obsidian_lever"
-    },
-    "group": "basemetals:obsidian_lever"
+    }
   }
 }

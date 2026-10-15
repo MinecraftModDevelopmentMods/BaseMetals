@@ -2,17 +2,18 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:diamond_pressure_plate",
     "key": {
       "X": {
         "tag": "forge:gems/diamond"
       }
     },
+    "pattern": [
+      "XX"
+    ],
     "result": {
       "item": "basemetals:diamond_pressure_plate"
-    },
-    "group": "basemetals:diamond_pressure_plate"
+    }
   }
 }

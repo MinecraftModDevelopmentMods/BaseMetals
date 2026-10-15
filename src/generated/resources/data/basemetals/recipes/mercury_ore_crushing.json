@@ -4,7 +4,7 @@
     "tag": "forge:ores/mercury"
   },
   "result": {
-    "item": "basemetals:mercury_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:mercury_powder"
   }
 }

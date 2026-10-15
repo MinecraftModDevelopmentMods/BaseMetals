@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "N",
-      "R",
-      "F"
-    ],
+    "category": "equipment",
+    "group": "basemetals:zinc_arrow",
     "key": {
       "F": {
         "item": "minecraft:feather"
@@ -18,10 +15,14 @@
         "tag": "forge:rods/zinc"
       }
     },
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
     "result": {
-      "item": "basemetals:zinc_arrow",
-      "count": 4
-    },
-    "group": "basemetals:zinc_arrow"
+      "count": 4,
+      "item": "basemetals:zinc_arrow"
+    }
   }
 }

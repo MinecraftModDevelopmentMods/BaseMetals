@@ -2,10 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:quartz_lever",
     "key": {
       "R": {
         "tag": "forge:rods/quartz"
@@ -14,9 +12,12 @@
         "tag": "forge:gems/quartz"
       }
     },
+    "pattern": [
+      "R",
+      "X"
+    ],
     "result": {
       "item": "basemetals:quartz_lever"
-    },
-    "group": "basemetals:quartz_lever"
+    }
   }
 }

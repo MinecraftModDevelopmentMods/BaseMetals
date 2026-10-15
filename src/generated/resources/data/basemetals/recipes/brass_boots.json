@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X X",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:brass_boots",
     "key": {
       "X": {
         "tag": "forge:ingots/brass"
       }
     },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:brass_boots"
-    },
-    "group": "basemetals:brass_boots"
+    }
   }
 }

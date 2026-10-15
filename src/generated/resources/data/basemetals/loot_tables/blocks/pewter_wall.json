@@ -2,19 +2,19 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "basemetals:pewter_wall",
-          "functions": []
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [],
+          "name": "basemetals:pewter_wall"
+        }
+      ],
+      "rolls": 1
     }
   ]
 }

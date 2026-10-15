@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.06,
   "ingredient": {
     "tag": "forge:tiny_dusts/copper"
   },
-  "result": "basemetals:copper_nugget",
-  "experience": 0.06,
-  "cookingtime": 200
+  "result": "basemetals:copper_nugget"
 }

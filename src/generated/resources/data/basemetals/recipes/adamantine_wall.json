@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:adamantine_wall",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/adamantine"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:adamantine_wall",
-      "count": 6
-    },
-    "group": "basemetals:adamantine_wall"
+      "count": 6,
+      "item": "basemetals:adamantine_wall"
+    }
   }
 }

@@ -1,17 +1,8 @@
 {
   "type": "mekanism:purifying",
-  "itemInput": {
-    "ingredient": {
-      "tag": "forge:ores/starsteel"
-    }
-  },
   "chemicalInput": {
     "amount": 1,
     "gas": "mekanism:oxygen"
-  },
-  "output": {
-    "item": "basemetals:starsteel_clump",
-    "count": 3
   },
   "conditions": [
     {
@@ -22,5 +13,14 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:starsteel_clump"
     }
-  ]
+  ],
+  "itemInput": {
+    "ingredient": {
+      "tag": "forge:ores/starsteel"
+    }
+  },
+  "output": {
+    "count": 3,
+    "item": "basemetals:starsteel_clump"
+  }
 }

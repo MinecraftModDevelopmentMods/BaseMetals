@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      " S ",
-      " S "
-    ],
+    "category": "equipment",
+    "group": "basemetals:coldiron_pickaxe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/coldiron"
       }
     },
+    "pattern": [
+      "XXX",
+      " S ",
+      " S "
+    ],
     "result": {
       "item": "basemetals:coldiron_pickaxe"
-    },
-    "group": "basemetals:coldiron_pickaxe"
+    }
   }
 }

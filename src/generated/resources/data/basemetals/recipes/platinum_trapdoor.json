@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:platinum_trapdoor",
     "key": {
       "X": {
         "tag": "forge:ingots/platinum"
       }
     },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
     "result": {
       "item": "basemetals:platinum_trapdoor"
-    },
-    "group": "basemetals:platinum_trapdoor"
+    }
   }
 }

@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 16,
-  "ingredient": {
-    "tag": "forge:nuggets/antimony"
-  },
-  "result": {
-    "fluid": "basemetals:antimony",
-    "amount": 10
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/antimony"
+  },
+  "result": {
+    "amount": 10,
+    "fluid": "basemetals:antimony"
+  },
+  "temperature": 769,
+  "time": 16
 }

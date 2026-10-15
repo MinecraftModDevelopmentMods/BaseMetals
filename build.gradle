@@ -8,13 +8,27 @@ plugins {
 }
 
 ext.mavenizerCompatibilityJar = layout.projectDirectory.file(
-        'ci-fixtures/tools/minecraft-mavenizer-0.5.21-orespawn-1.18.jar')
+        'ci-fixtures/tools/minecraft-mavenizer-0.5.21-orespawn-compat.jar')
 ext.mavenizerCompatibilitySha256 =
-        '28A6697BDF6D9500EC0AF9C1C949B9F3ED7DDFDA649CB5CAC4BEEA2E9567570A'
+        '341B3FB10ABA6EA7DC612FBE519DC290A1C81867AED5DD320ACD783688AC49DE'
 
-// ForgeGradle 7's Mavenizer recompilation rejects a redundant accessor emitted
-// by Forge 40's 1.18.2 decompiler. This checksum-sealed build-only derivative
-// removes that accessor; Base Metals itself remains Java 17 bytecode.
+ext.mavenizerFixtureChecksums = [
+        'minecraft-mavenizer-0.5.21-orespawn-compat.jar': mavenizerCompatibilitySha256,
+        'minecraft-source-compatibility.json': '33A3217261EBB8F37D45F50BD2F8CE70B221C014A5C15F4C5F8F9091AD6D1EC8',
+        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': 'D856190DEF5574716C5E4F4379912C451B1F5952B0B111576651A98EECF58544',
+        'LICENSE-MAVENIZER.txt': '20C17D8B8C48A600800DFD14F95D5CB9FF47066A9641DDEAB48DC54AEC96E331'
+]
+// Mavenizer runs during configuration, so verify its inputs before configuring Forge.
+mavenizerFixtureChecksums.each { name, expected ->
+    File fixture = file("ci-fixtures/tools/${name}")
+    if (!fixture.isFile() || java.security.MessageDigest.getInstance('SHA-256')
+            .digest(fixture.bytes).encodeHex().toString().toUpperCase(Locale.ROOT) != expected) {
+        throw new GradleException("Missing or altered Mavenizer fixture: ${name}")
+    }
+}
+
+// OreSpawn's sealed Mavenizer fixture fixes duplicate record accessors in
+// Forge 45's decompiled sources. It is build tooling, not part of the mod.
 fgtools.configure('mavenizer') {
     classpath.from(mavenizerCompatibilityJar)
     mainClass.set('net.minecraftforge.mcmaven.cli.Main')
@@ -165,7 +179,8 @@ configurations {
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    // Official mappings are part of the qualified 1.18.2 release identity.
+    if (gradle.startParameter.offline) mavenizerArguments.add('--cache-only')
+    // Use the official mappings for the selected Minecraft target.
     mappings channel: mapping_channel, version: mapping_version
 
     runs {
@@ -219,6 +234,7 @@ minecraft {
         client {
             systemProperty 'forge.enabledGameTestNamespaces', mod_id
             if (providers.gradleProperty('integratedWorldSmoke').isPresent()) {
+                workingDir.set(layout.projectDirectory.dir('run-integrated-smoke'))
                 systemProperty 'basemetals.integratedWorldSmoke', 'true'
                 systemProperty 'basemetals.integratedWorldSmokeName',
                         providers.gradleProperty('integratedWorldSmokeName').getOrElse('basemetals-integrated-smoke')
@@ -259,6 +275,7 @@ minecraft {
 
         // Runs the isolated validation source set and exits when the suite completes.
         gameTestServer {
+            workingDir.set(layout.projectDirectory.dir('run-gametest'))
             systemProperty 'forge.enabledGameTestNamespaces', mod_id
             mods {
                 "${mod_id}" {
@@ -277,7 +294,7 @@ minecraft {
     }
 }
 
-// Forge 40 expects each mod's classes and resources under one physical root.
+// Forge expects each mod's classes and resources under one physical root.
 // These merged development outputs also keep validation-only classes out of
 // ordinary client/server runs and every distributable archive.
 def registerRunModOutput = { String taskName, SourceSet validationSourceSet ->
@@ -326,7 +343,7 @@ tasks.withType(JavaExec).configureEach { JavaExec runTask ->
 
 tasks.register('runClientOptionalMods') {
     group = 'forgegradle runs'
-    description = 'Runs the client with Tinkers, Mantle and any selected compatibility mods.'
+    description = 'Runs the client in a separate folder for optional-mod testing.'
     dependsOn 'runOptionalModsClient'
 }
 

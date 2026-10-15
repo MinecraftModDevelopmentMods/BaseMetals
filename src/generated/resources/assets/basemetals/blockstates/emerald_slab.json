@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_emerald"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_emerald"
     },
     "type=double": {
       "model": "minecraft:block/emerald_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_emerald"
     }
   }
 }

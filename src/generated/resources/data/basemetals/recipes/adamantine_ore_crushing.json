@@ -4,7 +4,7 @@
     "tag": "forge:ores/adamantine"
   },
   "result": {
-    "item": "basemetals:adamantine_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:adamantine_powder"
   }
 }

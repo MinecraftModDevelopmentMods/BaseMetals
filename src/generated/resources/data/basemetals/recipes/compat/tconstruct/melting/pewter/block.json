@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 140,
-  "ingredient": {
-    "tag": "forge:storage_blocks/pewter"
-  },
-  "result": {
-    "fluid": "basemetals:pewter",
-    "amount": 810
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/pewter"
+  },
+  "result": {
+    "amount": 810,
+    "fluid": "basemetals:pewter"
+  },
+  "temperature": 769,
+  "time": 140
 }

@@ -1,17 +1,8 @@
 {
   "type": "mekanism:injecting",
-  "itemInput": {
-    "ingredient": {
-      "tag": "forge:ores/starsteel"
-    }
-  },
   "chemicalInput": {
     "amount": 1,
     "gas": "mekanism:hydrogen_chloride"
-  },
-  "output": {
-    "item": "basemetals:starsteel_shard",
-    "count": 4
   },
   "conditions": [
     {
@@ -22,5 +13,14 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:starsteel_shard"
     }
-  ]
+  ],
+  "itemInput": {
+    "ingredient": {
+      "tag": "forge:ores/starsteel"
+    }
+  },
+  "output": {
+    "count": 4,
+    "item": "basemetals:starsteel_shard"
+  }
 }

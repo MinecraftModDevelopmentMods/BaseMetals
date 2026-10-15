@@ -4,7 +4,7 @@
     "item": "minecraft:sandstone_slab"
   },
   "result": {
-    "item": "minecraft:sand",
-    "count": 2
+    "count": 2,
+    "item": "minecraft:sand"
   }
 }

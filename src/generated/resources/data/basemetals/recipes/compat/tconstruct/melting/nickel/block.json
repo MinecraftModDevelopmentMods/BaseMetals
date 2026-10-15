@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 140,
-  "ingredient": {
-    "tag": "forge:storage_blocks/nickel"
-  },
-  "result": {
-    "fluid": "basemetals:nickel",
-    "amount": 810
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/nickel"
+  },
+  "result": {
+    "amount": 810,
+    "fluid": "basemetals:nickel"
+  },
+  "temperature": 769,
+  "time": 140
 }

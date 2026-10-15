@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "entries": [
     "basemetals:abandoned_mineshaft",
     "basemetals:desert_pyramid",
@@ -13,5 +12,6 @@
     "basemetals:village_armorer",
     "basemetals:village_toolsmith",
     "basemetals:village_weaponsmith"
-  ]
+  ],
+  "replace": false
 }

@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
   "ingredient": {
     "item": "basemetals:bismuth_gear"
   },
   "result": {
     "item": "basemetals:bismuth_ingot"
-  },
-  "experience": 0.1,
-  "cookingtime": 200
+  }
 }

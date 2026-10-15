@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:charcoal_powder",
     "key": {
       "X": {
         "tag": "forge:tiny_dusts/charcoal"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:charcoal_powder"
-    },
-    "group": "basemetals:charcoal_powder"
+    }
   }
 }

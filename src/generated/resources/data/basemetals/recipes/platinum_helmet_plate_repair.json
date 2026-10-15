@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:platinum_helmet",
   "plate": {
     "tag": "forge:plates/platinum"
-  }
+  },
+  "target": "basemetals:platinum_helmet"
 }

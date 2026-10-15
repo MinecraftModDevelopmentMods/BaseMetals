@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X X",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:electrum_boots",
     "key": {
       "X": {
         "tag": "forge:ingots/electrum"
       }
     },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:electrum_boots"
-    },
-    "group": "basemetals:electrum_boots"
+    }
   }
 }

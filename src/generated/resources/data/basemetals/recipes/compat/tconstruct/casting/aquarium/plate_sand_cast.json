@@ -1,17 +1,9 @@
 {
   "type": "tconstruct:casting_table",
-  "cooling_time": 45,
   "cast": {
     "tag": "tconstruct:casts/single_use/plate"
   },
   "cast_consumed": true,
-  "fluid": {
-    "tag": "forge:molten_aquarium",
-    "amount": 90
-  },
-  "result": {
-    "item": "basemetals:aquarium_plate"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -21,5 +13,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:aquarium_plate"
     }
-  ]
+  ],
+  "cooling_time": 45,
+  "fluid": {
+    "amount": 90,
+    "tag": "forge:molten_aquarium"
+  },
+  "result": {
+    "item": "basemetals:aquarium_plate"
+  }
 }

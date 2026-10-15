@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X X",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:aquarium_boots",
     "key": {
       "X": {
         "tag": "forge:ingots/aquarium"
       }
     },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:aquarium_boots"
-    },
-    "group": "basemetals:aquarium_boots"
+    }
   }
 }

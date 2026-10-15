@@ -1,13 +1,5 @@
 {
   "type": "mekanism:crushing",
-  "input": {
-    "ingredient": {
-      "tag": "forge:clumps/nickel"
-    }
-  },
-  "output": {
-    "item": "basemetals:nickel_powder_dirty"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
@@ -17,5 +9,13 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:nickel_powder_dirty"
     }
-  ]
+  ],
+  "input": {
+    "ingredient": {
+      "tag": "forge:clumps/nickel"
+    }
+  },
+  "output": {
+    "item": "basemetals:nickel_powder_dirty"
+  }
 }

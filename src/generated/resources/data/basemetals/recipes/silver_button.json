@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:silver_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/silver"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:silver_button"
-    },
-    "group": "basemetals:silver_button"
+    }
   }
 }

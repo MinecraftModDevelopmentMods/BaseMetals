@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 45,
-  "ingredient": {
-    "tag": "forge:ingots/platinum"
-  },
-  "result": {
-    "fluid": "basemetals:platinum",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/platinum"
+  },
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:platinum"
+  },
+  "temperature": 769,
+  "time": 45
 }

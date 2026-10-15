@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:invar_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/invar"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:invar_button"
-    },
-    "group": "basemetals:invar_button"
+    }
   }
 }

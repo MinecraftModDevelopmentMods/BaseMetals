@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:brass_plate",
     "key": {
       "X": {
         "tag": "forge:ingots/brass"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:brass_plate",
-      "count": 3
-    },
-    "group": "basemetals:brass_plate"
+      "count": 3,
+      "item": "basemetals:brass_plate"
+    }
   }
 }

@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X ",
-      "XRX",
-      " X "
-    ],
+    "category": "misc",
+    "group": "basemetals:starsteel_gear",
     "key": {
       "R": {
         "tag": "forge:rods/starsteel"
@@ -15,10 +12,14 @@
         "tag": "forge:ingots/starsteel"
       }
     },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
     "result": {
-      "item": "basemetals:starsteel_gear",
-      "count": 4
-    },
-    "group": "basemetals:starsteel_gear"
+      "count": 4,
+      "item": "basemetals:starsteel_gear"
+    }
   }
 }

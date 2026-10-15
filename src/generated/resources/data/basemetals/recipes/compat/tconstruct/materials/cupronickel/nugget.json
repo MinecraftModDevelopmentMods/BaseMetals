@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 9,
-  "material": "basemetals:cupronickel",
-  "ingredient": {
-    "tag": "forge:nuggets/cupronickel"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/cupronickel"
+  },
+  "material": "basemetals:cupronickel",
+  "needed": 9,
+  "value": 1
 }

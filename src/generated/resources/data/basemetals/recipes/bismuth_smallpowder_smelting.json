@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.01,
   "ingredient": {
     "tag": "forge:tiny_dusts/bismuth"
   },
-  "result": "basemetals:bismuth_nugget",
-  "experience": 0.01,
-  "cookingtime": 200
+  "result": "basemetals:bismuth_nugget"
 }

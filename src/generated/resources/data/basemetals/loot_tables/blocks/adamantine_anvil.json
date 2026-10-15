@@ -2,27 +2,27 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "basemetals:adamantine_anvil",
-          "functions": [
-            {
-              "function": "minecraft:copy_state",
-              "block": "basemetals:adamantine_anvil",
-              "properties": [
-                "damage"
-              ]
-            }
-          ]
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "block": "basemetals:adamantine_anvil",
+              "function": "minecraft:copy_state",
+              "properties": [
+                "damage"
+              ]
+            }
+          ],
+          "name": "basemetals:adamantine_anvil"
+        }
+      ],
+      "rolls": 1
     }
   ]
 }

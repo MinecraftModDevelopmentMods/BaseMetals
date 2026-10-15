@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 30,
-  "ingredient": {
-    "tag": "forge:rods/electrum"
-  },
-  "result": {
-    "fluid": "basemetals:electrum",
-    "amount": 45
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:rods/electrum"
+  },
+  "result": {
+    "amount": 45,
+    "fluid": "basemetals:electrum"
+  },
+  "temperature": 769,
+  "time": 30
 }

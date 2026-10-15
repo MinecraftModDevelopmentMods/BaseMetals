@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.6,
   "ingredient": {
     "item": "basemetals:silver_pressure_plate"
   },
   "result": {
-    "item": "basemetals:silver_ingot",
-    "count": 2
-  },
-  "experience": 0.6,
-  "cookingtime": 200
+    "count": 2,
+    "item": "basemetals:silver_ingot"
+  }
 }

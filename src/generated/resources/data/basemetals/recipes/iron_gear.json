@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X ",
-      "XRX",
-      " X "
-    ],
+    "category": "misc",
+    "group": "basemetals:iron_gear",
     "key": {
       "R": {
         "tag": "forge:rods/iron"
@@ -15,10 +12,14 @@
         "tag": "forge:ingots/iron"
       }
     },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
     "result": {
-      "item": "basemetals:iron_gear",
-      "count": 4
-    },
-    "group": "basemetals:iron_gear"
+      "count": 4,
+      "item": "basemetals:iron_gear"
+    }
   }
 }

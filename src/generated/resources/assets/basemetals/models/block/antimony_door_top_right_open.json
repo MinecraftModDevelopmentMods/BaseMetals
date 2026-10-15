@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_right_open",
+  "textures": {
+    "bottom": "basemetals:block/antimony_door_lower",
+    "top": "basemetals:block/antimony_door_upper"
+  }
+}

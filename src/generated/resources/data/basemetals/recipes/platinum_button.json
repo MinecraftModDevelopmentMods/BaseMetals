@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:platinum_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/platinum"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:platinum_button"
-    },
-    "group": "basemetals:platinum_button"
+    }
   }
 }

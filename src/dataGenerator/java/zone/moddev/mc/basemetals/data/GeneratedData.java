@@ -24,7 +24,7 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.resources.ResourceLocation;
 
 /** Small catalogue-driven generator for server data and compatibility manifests. */
@@ -59,27 +59,35 @@ final class GeneratedData implements DataProvider {
 
     private final Path output;
     private final Path legacyReference;
+    private final List<java.util.concurrent.CompletableFuture<?>> pendingWrites = new ArrayList<>();
 
-    GeneratedData(DataGenerator generator) {
+    GeneratedData(net.minecraft.data.PackOutput generator) {
         this.output = generator.getOutputFolder();
         this.legacyReference = Path.of(System.getProperty("basemetals.projectDir")).resolve("reference/1.12");
     }
 
     @Override
-    public void run(HashCache cache) throws IOException {
-        writeFluidBlockstates(cache);
-        writeLoot(cache);
-        writeTags(cache);
-        writeRecipes(cache);
-        writeRawProcessing(cache);
-        writeTinkersMaterials(cache);
-        writeAdvancements(cache);
-        writeChestLoot(cache);
-        writeLanguages(cache);
-        writeManifest(cache);
+    public java.util.concurrent.CompletableFuture<?> run(CachedOutput cache) {
+        pendingWrites.clear();
+        try {
+            writeFluidBlockstates(cache);
+            writeLoot(cache);
+            writeTags(cache);
+            writeRecipes(cache);
+            writeRawProcessing(cache);
+            writeTinkersMaterials(cache);
+            writeAdvancements(cache);
+            writeChestLoot(cache);
+            writeLanguages(cache);
+            writeManifest(cache);
+        } catch (IOException exception) {
+            return java.util.concurrent.CompletableFuture.failedFuture(exception);
+        }
+        return java.util.concurrent.CompletableFuture.allOf(
+                pendingWrites.toArray(java.util.concurrent.CompletableFuture[]::new));
     }
 
-    private void writeFluidBlockstates(HashCache cache) throws IOException {
+    private void writeFluidBlockstates(CachedOutput cache) throws IOException {
         for (String name : ModContent.fluids().keySet()) {
             JsonObject custom = new JsonObject();
             custom.addProperty("fluid", BaseMetals.MOD_ID + ":" + name);
@@ -96,7 +104,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void writeLoot(HashCache cache) throws IOException {
+    private void writeLoot(CachedOutput cache) throws IOException {
         for (String id : ModContent.blocksById().keySet()) {
             if (ModContent.fluids().containsKey(id)) continue;
             if (id.endsWith("_ore")) {
@@ -143,7 +151,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void writeTags(HashCache cache) throws IOException {
+    private void writeTags(CachedOutput cache) throws IOException {
         List<String> allBlockDrops = new ArrayList<>();
         for (String id : ModContent.blocksById().keySet()) {
             if (!ModContent.fluids().containsKey(id)) allBlockDrops.add("basemetals:" + id);
@@ -252,7 +260,7 @@ final class GeneratedData implements DataProvider {
         writeCompatibilityTags(cache);
     }
 
-    private void writeVanillaBitsTags(HashCache cache) throws IOException {
+    private void writeVanillaBitsTags(CachedOutput cache) throws IOException {
         Map<String, String> vanillaIngot = Map.of(
                 "diamond", "minecraft:diamond", "emerald", "minecraft:emerald",
                 "gold", "minecraft:gold_ingot", "iron", "minecraft:iron_ingot",
@@ -363,7 +371,7 @@ final class GeneratedData implements DataProvider {
         return List.copyOf(values);
     }
 
-    private void writeHarvestTierTags(HashCache cache) throws IOException {
+    private void writeHarvestTierTags(CachedOutput cache) throws IOException {
         Map<Integer, LinkedHashSet<String>> byTier = new LinkedHashMap<>();
         byTier.put(1, new LinkedHashSet<>());
         byTier.put(2, new LinkedHashSet<>());
@@ -397,7 +405,7 @@ final class GeneratedData implements DataProvider {
                 byTier.get(3).stream().sorted().toList());
     }
 
-    private void writeCompatibilityTags(HashCache cache) throws IOException {
+    private void writeCompatibilityTags(CachedOutput cache) throws IOException {
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             tag(cache, "forge", "fluids/molten_" + material.name(), List.of(
                     "basemetals:" + material.name(),
@@ -411,7 +419,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void writeRecipes(HashCache cache) throws IOException {
+    private void writeRecipes(CachedOutput cache) throws IOException {
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             String name = material.name();
             String ingot = "basemetals:" + name + "_ingot";
@@ -494,7 +502,7 @@ final class GeneratedData implements DataProvider {
         writeCompatibilityRecipes(cache);
     }
 
-    private void equipmentRecipes(HashCache cache, String name, String metal) throws IOException {
+    private void equipmentRecipes(CachedOutput cache, String name, String metal) throws IOException {
         Map<Character, String> tool = Map.of('X', metal, 'S', WOODEN_ROD);
         shaped(cache, name + "_pickaxe", List.of("XXX", " S ", " S "), tool, "basemetals:" + name + "_pickaxe", 1);
         shaped(cache, name + "_axe", List.of("XX", "XS", " S"), tool, "basemetals:" + name + "_axe", 1);
@@ -532,7 +540,7 @@ final class GeneratedData implements DataProvider {
                 Map.of('X', metal, 'W', "#minecraft:planks"), "basemetals:" + name + "_shield", 1);
     }
 
-    private void decorativeRecipes(HashCache cache, String name, String metal, String block) throws IOException {
+    private void decorativeRecipes(CachedOutput cache, String name, String metal, String block) throws IOException {
         shaped(cache, name + "_bars", List.of("XXX", "XXX"), Map.of('X', metal), "basemetals:" + name + "_bars", 16);
         shaped(cache, name + "_bars_2", List.of("XXX"), Map.of('X', "#forge:rods/" + name),
                 "basemetals:" + name + "_bars", 4);
@@ -549,7 +557,7 @@ final class GeneratedData implements DataProvider {
                 Map.of('R', "#forge:rods/" + name, 'X', metal), "basemetals:" + name + "_lever", 1);
     }
 
-    private void vanillaBitsRecipes(HashCache cache) throws IOException {
+    private void vanillaBitsRecipes(CachedOutput cache) throws IOException {
         Map<String, String> materials = Map.of(
                 "diamond", "#forge:gems/diamond", "emerald", "#forge:gems/emerald",
                 "gold", "#forge:ingots/gold", "iron", "#forge:ingots/iron",
@@ -601,7 +609,7 @@ final class GeneratedData implements DataProvider {
         vanillaCrushingRecipes(cache);
     }
 
-    private void vanillaCrushingRecipes(HashCache cache) throws IOException {
+    private void vanillaCrushingRecipes(CachedOutput cache) throws IOException {
         // Default MMDLib 1.12 ore-dictionary behaviour, extended through
         // Forge's 1.18 ore tags so normal and deepslate ores share a recipe.
         for (String name : List.of("coal", "diamond", "emerald", "gold", "iron")) {
@@ -688,7 +696,7 @@ final class GeneratedData implements DataProvider {
         crushing(cache, "slime_block_crushing", "minecraft:slime_block", "minecraft:slime_ball", 9);
     }
 
-    private void vanillaEquipmentRecipes(HashCache cache, String name, String material) throws IOException {
+    private void vanillaEquipmentRecipes(CachedOutput cache, String name, String material) throws IOException {
         if (hasItem(name + "_crackhammer")) shaped(cache, name + "_crackhammer", List.of("X", "S", "S"),
                 Map.of('X', "#forge:storage_blocks/" + name, 'S', WOODEN_ROD),
                 "basemetals:" + name + "_crackhammer", 1);
@@ -728,7 +736,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void equipmentRecipesForVanillaTools(HashCache cache, String name, String material) throws IOException {
+    private void equipmentRecipesForVanillaTools(CachedOutput cache, String name, String material) throws IOException {
         Map<Character, String> tool = Map.of('X', material, 'S', WOODEN_ROD);
         shaped(cache, name + "_pickaxe", List.of("XXX", " S ", " S "), tool, "basemetals:" + name + "_pickaxe", 1);
         shaped(cache, name + "_axe", List.of("XX", "XS", " S"), tool, "basemetals:" + name + "_axe", 1);
@@ -741,7 +749,7 @@ final class GeneratedData implements DataProvider {
         shaped(cache, name + "_boots", List.of("X X", "X X"), Map.of('X', material), "basemetals:" + name + "_boots", 1);
     }
 
-    private void vanillaDecorativeRecipes(HashCache cache, String name, String material,
+    private void vanillaDecorativeRecipes(CachedOutput cache, String name, String material,
             String block) throws IOException {
         if (hasItem(name + "_bars")) shaped(cache, name + "_bars", List.of("XXX", "XXX"), Map.of('X', material), "basemetals:" + name + "_bars", 16);
         if (hasItem(name + "_bars") && hasItem(name + "_rod")) {
@@ -765,7 +773,7 @@ final class GeneratedData implements DataProvider {
                 Map.of('R', "#forge:rods/" + name, 'X', material), "basemetals:" + name + "_lever", 1);
     }
 
-    private void vanillaPowderRecipes(HashCache cache) throws IOException {
+    private void vanillaPowderRecipes(CachedOutput cache) throws IOException {
         for (String name : List.of("coal", "charcoal", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
             shaped(cache, name + "_powder_from_small", List.of("XXX", "XXX", "XXX"),
                     Map.of('X', "#forge:tiny_dusts/" + name), "basemetals:" + name + "_powder", 1);
@@ -814,7 +822,7 @@ final class GeneratedData implements DataProvider {
                 "basemetals:redstone_smallpowder", 9);
     }
 
-    private void legacyRecyclingRecipes(HashCache cache, String name, String ingot, String nugget,
+    private void legacyRecyclingRecipes(CachedOutput cache, String name, String ingot, String nugget,
             String block, float ingotExperience, float nuggetExperience) throws IOException {
         legacyRecycle(cache, name, "button", nugget, 2, nuggetExperience);
         legacyRecycle(cache, name, "rod", nugget, 4, nuggetExperience);
@@ -845,7 +853,7 @@ final class GeneratedData implements DataProvider {
         legacyRecycle(cache, name, "crackhammer", block, 1, 0.0F);
     }
 
-    private void legacyRecycle(HashCache cache, String name, String form, String result,
+    private void legacyRecycle(CachedOutput cache, String name, String form, String result,
             int count, float experience) throws IOException {
         String item = name + "_" + form;
         if (hasItem(item)) {
@@ -876,7 +884,7 @@ final class GeneratedData implements DataProvider {
         };
     }
 
-    private void plateRepairRecipes(HashCache cache) throws IOException {
+    private void plateRepairRecipes(CachedOutput cache) throws IOException {
         List<String> materials = new ArrayList<>(MaterialCatalogue.ALL.stream()
                 .map(MaterialDefinition::name)
                 .filter(name -> !List.of("aquarium", "invar", "mercury", "mithril").contains(name))
@@ -896,7 +904,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void legacySpecialRecipes(HashCache cache) throws IOException {
+    private void legacySpecialRecipes(CachedOutput cache) throws IOException {
         String steel = "#forge:ingots/steel";
         shaped(cache, "activator_rail", List.of("XSX", "XRX", "XSX"),
                 Map.of('X', steel, 'S', WOODEN_ROD, 'R', "minecraft:redstone_torch"),
@@ -947,7 +955,7 @@ final class GeneratedData implements DataProvider {
                 "basemetals:quartz_nugget", 9);
     }
 
-    private void anvilRecipes(HashCache cache) throws IOException {
+    private void anvilRecipes(CachedOutput cache) throws IOException {
         shaped(cache, "stone_anvil", List.of("BBB", " C ", "SSS"),
                 Map.of('B', "minecraft:stone_bricks", 'C', "#forge:stone", 'S', "minecraft:stone_slab"),
                 "basemetals:stone_anvil", 1);
@@ -962,7 +970,7 @@ final class GeneratedData implements DataProvider {
         return ModContent.itemsById().containsKey(id);
     }
 
-    private void alloyRecipes(HashCache cache) throws IOException {
+    private void alloyRecipes(CachedOutput cache) throws IOException {
         alloy(cache, "aquarium", 3, "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/zinc", "#forge:dusts/prismarine");
         alloy(cache, "brass", 4, "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/zinc");
         alloy(cache, "bronze", 4, "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/tin");
@@ -977,18 +985,18 @@ final class GeneratedData implements DataProvider {
         alloy(cache, "steel", 8, steel.toArray(String[]::new));
     }
 
-    private void alloy(HashCache cache, String name, int count, String... ingredients) throws IOException {
+    private void alloy(CachedOutput cache, String name, int count, String... ingredients) throws IOException {
         shapeless(cache, name + "_blend", List.of(ingredients), "basemetals:" + name + "_blend", count);
     }
 
-    private void writeCompatibilityRecipes(HashCache cache) throws IOException {
+    private void writeCompatibilityRecipes(CachedOutput cache) throws IOException {
         writeMekanismRecipes(cache);
         writeThermalRecipes(cache);
         writeTinkersRecipes(cache);
         writeEnderIoRecipes(cache);
     }
 
-    private void writeMekanismRecipes(HashCache cache) throws IOException {
+    private void writeMekanismRecipes(CachedOutput cache) throws IOException {
         for (String name : PROCESSING_MATERIALS) {
             String root = "compat/mekanism/" + name + "/";
             mekanismItemToItem(cache, root + "dirty_dust_to_dust", "mekanism:enriching",
@@ -1018,7 +1026,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void mekanismItemToItem(HashCache cache, String id, String type, String input,
+    private void mekanismItemToItem(CachedOutput cache, String id, String type, String input,
             String outputItem, int count) throws IOException {
         JsonObject root = object("type", type);
         root.add("input", object("ingredient", ingredient(input)));
@@ -1026,7 +1034,7 @@ final class GeneratedData implements DataProvider {
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
-    private void mekanismItemChemicalToItem(HashCache cache, String id, String type, String input,
+    private void mekanismItemChemicalToItem(CachedOutput cache, String id, String type, String input,
             String gas, int gasAmount, String outputItem, int count) throws IOException {
         JsonObject root = object("type", type);
         root.add("itemInput", object("ingredient", ingredient(input)));
@@ -1035,14 +1043,14 @@ final class GeneratedData implements DataProvider {
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
-    private void mekanismCrystallizing(HashCache cache, String id, String material) throws IOException {
+    private void mekanismCrystallizing(CachedOutput cache, String id, String material) throws IOException {
         JsonObject root = object("type", "mekanism:crystallizing", "chemicalType", "slurry");
         root.add("input", object("amount", 200, "slurry", "basemetals:clean_" + material));
         root.add("output", result("basemetals:" + material + "_crystal", 1));
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
-    private void mekanismWashing(HashCache cache, String id, String material) throws IOException {
+    private void mekanismWashing(CachedOutput cache, String id, String material) throws IOException {
         JsonObject root = object("type", "mekanism:washing");
         root.add("fluidInput", object("amount", 5, "tag", "minecraft:water"));
         root.add("slurryInput", object("amount", 1, "slurry", "basemetals:dirty_" + material));
@@ -1050,7 +1058,7 @@ final class GeneratedData implements DataProvider {
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
-    private void mekanismDissolution(HashCache cache, String id, String material) throws IOException {
+    private void mekanismDissolution(CachedOutput cache, String id, String material) throws IOException {
         JsonObject root = object("type", "mekanism:dissolution");
         root.add("itemInput", object("ingredient", ingredient("#forge:ores/" + material)));
         root.add("gasInput", object("amount", 1, "gas", "mekanism:sulfuric_acid"));
@@ -1059,7 +1067,7 @@ final class GeneratedData implements DataProvider {
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
-    private void writeThermalRecipes(HashCache cache) throws IOException {
+    private void writeThermalRecipes(CachedOutput cache) throws IOException {
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             String name = material.name();
             String root = "compat/thermal/" + name + "/";
@@ -1091,7 +1099,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void thermalItemMachine(HashCache cache, String id, String type, String input,
+    private void thermalItemMachine(CachedOutput cache, String id, String type, String input,
             String output, int count, int energy) throws IOException {
         JsonObject root = object("type", type, "energy", energy);
         root.add("ingredient", ingredient(input));
@@ -1099,7 +1107,7 @@ final class GeneratedData implements DataProvider {
         saveConditionalRecipe(cache, root, id, "thermal_expansion");
     }
 
-    private void thermalCrucible(HashCache cache, String id, String material) throws IOException {
+    private void thermalCrucible(CachedOutput cache, String id, String material) throws IOException {
         JsonObject root = object("type", "thermal:crucible", "energy", 2000);
         root.add("ingredient", ingredient("#forge:ingots/" + material));
         JsonArray results = new JsonArray();
@@ -1108,7 +1116,7 @@ final class GeneratedData implements DataProvider {
         saveConditionalRecipe(cache, root, id, "thermal_expansion");
     }
 
-    private void thermalPress(HashCache cache, String id, String input, String die,
+    private void thermalPress(CachedOutput cache, String id, String input, String die,
             int count, String output) throws IOException {
         JsonObject root = object("type", "thermal:press");
         if (die == null) {
@@ -1136,7 +1144,7 @@ final class GeneratedData implements DataProvider {
         JsonObject result = object("count", component.count()); result.add("value", accepted); return result;
     }
 
-    private void writeEnderIoRecipes(HashCache cache) throws IOException {
+    private void writeEnderIoRecipes(CachedOutput cache) throws IOException {
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             String name = material.name();
             enderSag(cache, "compat/enderio/" + name + "/ingot_sag_milling",
@@ -1161,14 +1169,14 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void enderSag(HashCache cache, String id, String input, String output, int count) throws IOException {
+    private void enderSag(CachedOutput cache, String id, String input, String output, int count) throws IOException {
         JsonObject root = object("type", "enderio_machines:sagmilling", "energy", 2400);
         root.add("input", ingredient(input));
         JsonArray outputs = new JsonArray(); outputs.add(result(output, count)); root.add("outputs", outputs);
         saveConditionalRecipe(cache, root, id, "enderio_machines");
     }
 
-    private void writeTinkersRecipes(HashCache cache) throws IOException {
+    private void writeTinkersRecipes(CachedOutput cache) throws IOException {
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             String name = material.name();
             int temperature = 769;
@@ -1208,7 +1216,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void tinkerMelting(HashCache cache, String material, String form, int amount,
+    private void tinkerMelting(CachedOutput cache, String material, String form, int amount,
             int temperature) throws IOException {
         String tagFamily = switch (form) {
             case "block" -> "storage_blocks";
@@ -1224,7 +1232,7 @@ final class GeneratedData implements DataProvider {
         saveConditionalRecipe(cache, root, "compat/tconstruct/melting/" + material + "/" + form, "tconstruct");
     }
 
-    private void tinkerCasting(HashCache cache, String material, String form, int amount,
+    private void tinkerCasting(CachedOutput cache, String material, String form, int amount,
             int temperature, String cast) throws IOException {
         for (boolean reusable : List.of(true, false)) {
             JsonObject root = object("type", "tconstruct:casting_table",
@@ -1238,14 +1246,14 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void tinkerBlockCasting(HashCache cache, String material, int temperature) throws IOException {
+    private void tinkerBlockCasting(CachedOutput cache, String material, int temperature) throws IOException {
         JsonObject root = object("type", "tconstruct:casting_basin", "cooling_time", 141);
         root.add("fluid", object("tag", "forge:molten_" + material, "amount", 810));
         root.add("result", result("basemetals:" + material + "_block", 1));
         saveConditionalRecipe(cache, root, "compat/tconstruct/casting/" + material + "/block", "tconstruct");
     }
 
-    private void writeTinkersMaterials(HashCache cache) throws IOException {
+    private void writeTinkersMaterials(CachedOutput cache) throws IOException {
         int order = 0;
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             if (!material.hasEquipment()) continue;
@@ -1292,7 +1300,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void tinkerMaterialIngredient(HashCache cache, String material, String family,
+    private void tinkerMaterialIngredient(CachedOutput cache, String material, String family,
             int value, int needed) throws IOException {
         String normalized = family.equals("ingot") || family.equals("nugget") ? family + "s" : family;
         JsonObject root = object("type", "tconstruct:material", "value", value, "needed", needed,
@@ -1311,7 +1319,7 @@ final class GeneratedData implements DataProvider {
         };
     }
 
-    private void saveConditionalRecipe(HashCache cache, JsonObject recipe, String id,
+    private void saveConditionalRecipe(CachedOutput cache, JsonObject recipe, String id,
             String modId) throws IOException {
         JsonArray conditions = new JsonArray();
         conditions.add(object("type", "forge:mod_loaded", "modid", modId));
@@ -1340,7 +1348,7 @@ final class GeneratedData implements DataProvider {
 
     private record AlloyComponent(String ingredient, int count) {}
 
-    private void writeAdvancements(HashCache cache) throws IOException {
+    private void writeAdvancements(CachedOutput cache) throws IOException {
         for (String id : ADVANCEMENTS) {
             JsonObject root = new JsonObject();
             String parent = advancementParent(id);
@@ -1361,7 +1369,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void writeLanguages(HashCache cache) throws IOException {
+    private void writeLanguages(CachedOutput cache) throws IOException {
         Path legacyRoot = findLegacyLanguageRoot();
         Path translations = legacyReference.getParent().getParent().resolve("tools/translations");
         JsonObject configText = JsonParser.parseString(Files.readString(translations.resolve("config.json"))).getAsJsonObject();
@@ -1458,7 +1466,7 @@ final class GeneratedData implements DataProvider {
         if (!language.has(key)) language.addProperty(key, value);
     }
 
-    private void writeChestLoot(HashCache cache) throws IOException {
+    private void writeChestLoot(CachedOutput cache) throws IOException {
         Map<String, String> targets = new LinkedHashMap<>();
         targets.put("abandoned_mineshaft", "minecraft:chests/abandoned_mineshaft");
         targets.put("desert_pyramid", "minecraft:chests/desert_pyramid");
@@ -1529,7 +1537,7 @@ final class GeneratedData implements DataProvider {
         }
     }
 
-    private void writeManifest(HashCache cache) throws IOException {
+    private void writeManifest(CachedOutput cache) throws IOException {
         List<String> blocks = ModContent.blocksById().keySet().stream().map(id -> "basemetals:" + id).toList();
         List<String> items = ModContent.itemsById().keySet().stream().map(id -> "basemetals:" + id).toList();
         List<String> buckets = ModContent.fluids().keySet().stream()
@@ -1551,7 +1559,7 @@ final class GeneratedData implements DataProvider {
 
         JsonObject root = new JsonObject();
         root.addProperty("format", 1);
-        root.addProperty("source", "Base Metals 1.18 catalogue");
+        root.addProperty("source", "Base Metals 1.19.4 catalogue");
         root.add("blocks", array(blocks));
         root.add("items", array(items));
         root.add("fluids", array(ModContent.fluids().keySet().stream().flatMap(id ->
@@ -1585,24 +1593,24 @@ final class GeneratedData implements DataProvider {
         return result;
     }
 
-    private void itemTag(HashCache cache, String family, String material, List<String> values) throws IOException {
+    private void itemTag(CachedOutput cache, String family, String material, List<String> values) throws IOException {
         tag(cache, "forge", "items/" + family + "/" + material, values);
     }
-    private void blockTag(HashCache cache, String family, String material, List<String> values) throws IOException {
+    private void blockTag(CachedOutput cache, String family, String material, List<String> values) throws IOException {
         tag(cache, "forge", "blocks/" + family + "/" + material, values);
     }
-    private void tag(HashCache cache, String namespace, String path, List<String> values) throws IOException {
+    private void tag(CachedOutput cache, String namespace, String path, List<String> values) throws IOException {
         JsonObject root = new JsonObject(); root.addProperty("replace", false); root.add("values", array(values));
         save(cache, root, "data/" + namespace + "/tags/" + path + ".json");
     }
-    private void uncheckedTag(HashCache cache, String namespace, String path, List<String> values) {
+    private void uncheckedTag(CachedOutput cache, String namespace, String path, List<String> values) {
         try { tag(cache, namespace, path, values); } catch (IOException e) { throw new RuntimeException(e); }
     }
     private static void addAggregate(Map<String, List<String>> aggregate, String path, String value) {
         aggregate.computeIfAbsent(path, ignored -> new ArrayList<>()).add(value);
     }
 
-    private void shaped(HashCache cache, String id, List<String> pattern, Map<Character, String> keys,
+    private void shaped(CachedOutput cache, String id, List<String> pattern, Map<Character, String> keys,
             String result, int count) throws IOException {
         JsonObject root = object("type", "minecraft:crafting_shaped");
         root.add("pattern", array(pattern));
@@ -1612,13 +1620,13 @@ final class GeneratedData implements DataProvider {
         root.add("key", key); root.add("result", result(result, count));
         save(cache, root, "data/basemetals/recipes/" + id + ".json");
     }
-    private void shapeless(HashCache cache, String id, List<String> ingredients, String result, int count) throws IOException {
+    private void shapeless(CachedOutput cache, String id, List<String> ingredients, String result, int count) throws IOException {
         JsonObject root = object("type", "minecraft:crafting_shapeless");
         JsonArray values = new JsonArray(); ingredients.forEach(value -> values.add(ingredient(value)));
         root.add("ingredients", values); root.add("result", result(result, count));
         save(cache, root, "data/basemetals/recipes/" + id + ".json");
     }
-    private void smelting(HashCache cache, String id, String input, String result, float xp, int time,
+    private void smelting(CachedOutput cache, String id, String input, String result, float xp, int time,
             String type) throws IOException {
         if (result.equals("basemetals:mercury_nugget")) {
             legacySmelting(cache, id, input, result, 1, xp, time);
@@ -1628,19 +1636,19 @@ final class GeneratedData implements DataProvider {
                 "experience", xp, "cookingtime", time);
         save(cache, root, "data/basemetals/recipes/" + id + ".json");
     }
-    private void legacySmelting(HashCache cache, String id, String input, String result, int count,
+    private void legacySmelting(CachedOutput cache, String id, String input, String result, int count,
             float xp, int time) throws IOException {
         JsonObject root = object("type", "basemetals:legacy_smelting",
                 "ingredient", ingredient(input), "result", result(result, count),
                 "experience", xp, "cookingtime", time);
         save(cache, root, "data/basemetals/recipes/" + id + ".json");
     }
-    private void crushing(HashCache cache, String id, String input, String result, int count) throws IOException {
+    private void crushing(CachedOutput cache, String id, String input, String result, int count) throws IOException {
         JsonObject root = object("type", "basemetals:crushing", "ingredient", ingredient(input),
                 "result", result(result, count));
         save(cache, root, "data/basemetals/recipes/" + id + ".json");
     }
-    private void plateRepair(HashCache cache, String id, String target, String plate) throws IOException {
+    private void plateRepair(CachedOutput cache, String id, String target, String plate) throws IOException {
         JsonObject root = object("type", "basemetals:plate_repair", "target", target,
                 "plate", ingredient(plate));
         save(cache, root, "data/basemetals/recipes/" + id + ".json");
@@ -1707,15 +1715,24 @@ final class GeneratedData implements DataProvider {
         }
         return result.toString();
     }
-    private void save(HashCache cache, JsonObject value, String relative) throws IOException {
+    private void save(CachedOutput cache, JsonObject value, String relative) throws IOException {
         if (relative.startsWith("data/basemetals/recipes/") && value.has("type")
                 && value.get("type").getAsString().startsWith("minecraft:crafting_")) {
             String id = relative.substring("data/basemetals/recipes/".length(), relative.length() - 5);
+            String result = value.getAsJsonObject("result").get("item").getAsString();
+            net.minecraft.world.item.Item item = net.minecraftforge.registries.ForgeRegistries.ITEMS
+                    .getValue(new ResourceLocation(result));
+            String category = switch (zone.moddev.mc.basemetals.ModTabs.category(item)) {
+                case "blocks" -> "building";
+                case "tools", "combat" -> "equipment";
+                default -> "misc";
+            };
+            value.addProperty("category", category);
             value.addProperty("group", value.getAsJsonObject("result").get("item").getAsString());
             writeCraftingUnlock(cache, id, value);
             value = object("type", "basemetals:content_crafting", "recipe", value);
         }
-        DataProvider.save(GSON, cache, value, output.resolve(relative));
+        pendingWrites.add(DataProvider.saveStable(cache, value, output.resolve(relative)));
     }
 
     private static String materialName(JsonObject language, String material) {
@@ -1725,7 +1742,7 @@ final class GeneratedData implements DataProvider {
         return language.get(key).getAsString();
     }
 
-    private void writeOreLoot(HashCache cache, String ore) throws IOException {
+    private void writeOreLoot(CachedOutput cache, String ore) throws IOException {
         String material = ore.substring(0, ore.length() - 4);
         String raw = material.equals("copper") ? "minecraft:raw_copper" : "basemetals:" + material + "_raw";
         JsonArray functions = new JsonArray();
@@ -1752,7 +1769,7 @@ final class GeneratedData implements DataProvider {
                 "data/basemetals/loot_tables/blocks/" + ore + ".json");
     }
 
-    private void writeRawProcessing(HashCache cache) throws IOException {
+    private void writeRawProcessing(CachedOutput cache) throws IOException {
         List<String> rawMaterials = new ArrayList<>(List.of("iron", "gold", "copper"));
         MaterialCatalogue.ALL.stream().filter(material -> material.hasOre() && !material.name().equals("copper"))
                 .map(MaterialDefinition::name).forEach(rawMaterials::add);
@@ -1779,7 +1796,7 @@ final class GeneratedData implements DataProvider {
         tag(cache, "forge", "items/raw_materials", rawMaterials.stream().map(name -> "#forge:raw_materials/" + name).toList());
     }
 
-    private void writeCraftingUnlock(HashCache cache, String id, JsonObject recipe) throws IOException {
+    private void writeCraftingUnlock(CachedOutput cache, String id, JsonObject recipe) throws IOException {
         String material = id.substring(0, id.contains("_") ? id.indexOf('_') : id.length());
         if (List.of("activator_rail", "detector_rail", "flint_and_steel", "human_detector", "minecart",
                 "piston", "rail", "tripwire_hook").contains(id)) material = "steel";
@@ -1817,7 +1834,7 @@ final class GeneratedData implements DataProvider {
         writeUnlock(cache, id, criteria);
     }
 
-    private void writeUnlock(HashCache cache, String id, JsonObject criteria) throws IOException {
+    private void writeUnlock(CachedOutput cache, String id, JsonObject criteria) throws IOException {
         JsonArray requirements = new JsonArray();
         requirements.add(array(criteria.keySet()));
         save(cache, object("parent", "minecraft:recipes/root", "criteria", criteria,

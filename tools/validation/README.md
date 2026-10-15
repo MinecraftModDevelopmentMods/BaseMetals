@@ -1,11 +1,11 @@
 # World upgrade checks
 
-`test_legacy_worlds.js` starts the packaged Forge 1.18.2 server against a fresh
+`test_legacy_worlds.js` starts the packaged Forge 1.19.4 server against a fresh
 copy of each supplied world, then starts it again to check the saved result.
 It refuses to overwrite an existing test directory and fingerprints every
 source world before and after the test.
 
-Pass a local JSON specification containing `java17`, `runtime118`, `output`,
+Pass a local JSON specification containing `java17`, `serverRuntime`, `output`,
 `modJar`, `probeJar`, `oreSpawn` (a `path` and `sha256`), and a `profiles` list.
 Each profile needs an `id`, `world` path and expected log `marker`. Captured
 fixtures include a registry manifest so the probe can check each block state,
@@ -20,6 +20,14 @@ conversion. It accepts Minecraft's new underground floor and accounts for
 normal falling sand and gravel, but rejects ore replacing existing rock.
 It needs the Python `nbtlib` package. Run `test_world_terrain.py` to check the
 palette readers and falling-block comparison.
+
+`compare_current_world.py` compares Base Metals block states, stored items,
+equipment and advancement progress in flattened saves. It reads both older
+chunk entity lists and the separate entity files used by newer Minecraft.
+Flying projectiles are excluded from the static item count because they can
+hit targets during the test; their ammunition save/load and pickup behaviour
+are covered by the runtime tests. Run all comparison-tool regressions with
+`python -m unittest discover -s tools/validation -p 'test_*.py'`.
 
 ## Client/server content modes
 

@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 1,
-  "material": "basemetals:adamantine",
-  "ingredient": {
-    "tag": "forge:ingots/adamantine"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/adamantine"
+  },
+  "material": "basemetals:adamantine",
+  "needed": 1,
+  "value": 1
 }

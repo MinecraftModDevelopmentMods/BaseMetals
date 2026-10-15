@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:adamantine_helmet",
   "plate": {
     "tag": "forge:plates/adamantine"
-  }
+  },
+  "target": "basemetals:adamantine_helmet"
 }

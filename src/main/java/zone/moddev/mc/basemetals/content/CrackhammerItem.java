@@ -77,7 +77,7 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
                     : requested;
             int operations = Math.min(requested, durability);
             if (operations == 0) break;
-            ItemStack output = recipe.get().getResultItem().copy();
+            ItemStack output = recipe.get().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).copy();
             input.shrink(operations);
             if (input.isEmpty()) entity.discard(); else entity.setItem(input);
             spawnOutputs(context.getLevel(), entity, output, operations);

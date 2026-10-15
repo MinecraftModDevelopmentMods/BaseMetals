@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "S",
-      "S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:electrum_crackhammer",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:storage_blocks/electrum"
       }
     },
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
     "result": {
       "item": "basemetals:electrum_crackhammer"
-    },
-    "group": "basemetals:electrum_crackhammer"
+    }
   }
 }

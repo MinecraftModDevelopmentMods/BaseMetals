@@ -26,12 +26,14 @@ public final class RemoteLoginSmoke {
     public static void tick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END || completed || !Boolean.getBoolean("basemetals.remoteLoginSmoke")) return;
         Minecraft minecraft = Minecraft.getInstance();
-        if (++ticks > 3600) throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: timed out");
+        if (++ticks > 3600) throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: timed out at "
+                + (minecraft.screen == null ? "gameplay" : minecraft.screen.getClass().getName()));
         boolean reject = Boolean.getBoolean("basemetals.expectModeReject");
         if (!connecting && minecraft.screen instanceof TitleScreen) {
             connecting = true;
-            ConnectScreen.startConnecting(minecraft.screen, minecraft,
-                    ServerAddress.parseString(System.getProperty("basemetals.remoteAddress")), null);
+            String address = System.getProperty("basemetals.remoteAddress");
+            ConnectScreen.startConnecting(minecraft.screen, minecraft, ServerAddress.parseString(address),
+                    new net.minecraft.client.multiplayer.ServerData("Base Metals smoke", address, false));
         }
         if (minecraft.player != null && minecraft.level != null) {
             if (reject) throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: mismatched modes entered gameplay");

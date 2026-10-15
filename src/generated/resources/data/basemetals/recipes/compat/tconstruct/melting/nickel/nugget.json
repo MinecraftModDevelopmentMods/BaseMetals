@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 16,
-  "ingredient": {
-    "tag": "forge:nuggets/nickel"
-  },
-  "result": {
-    "fluid": "basemetals:nickel",
-    "amount": 10
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/nickel"
+  },
+  "result": {
+    "amount": 10,
+    "fluid": "basemetals:nickel"
+  },
+  "temperature": 769,
+  "time": 16
 }

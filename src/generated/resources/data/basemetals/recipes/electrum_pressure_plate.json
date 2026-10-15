@@ -2,17 +2,18 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:electrum_pressure_plate",
     "key": {
       "X": {
         "tag": "forge:ingots/electrum"
       }
     },
+    "pattern": [
+      "XX"
+    ],
     "result": {
       "item": "basemetals:electrum_pressure_plate"
-    },
-    "group": "basemetals:electrum_pressure_plate"
+    }
   }
 }

@@ -35,18 +35,51 @@ function initializeCoreMod() {
                 for (var i = 0; i < node.methods.size(); ++i) {
                     var method = node.methods.get(i);
                     if (method.desc !== '(Lcom/mojang/serialization/DynamicOps;' +
-                            'Lnet/minecraft/world/level/DataPackConfig;' +
+                            'Lnet/minecraft/world/level/WorldDataConfiguration;' +
+                            'Lnet/minecraft/core/Registry;' +
                             'Lcom/mojang/serialization/Lifecycle;' +
-                            'Ljava/io/File;Lcom/mojang/datafixers/DataFixer;)' +
-                            'Lnet/minecraft/world/level/storage/PrimaryLevelData;') continue;
+                            'Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;)' +
+                            'Lcom/mojang/datafixers/util/Pair;') continue;
                     var prefix = new InsnList();
-                    prefix.add(new VarInsnNode(Opcodes.ALOAD, 3));
+                    prefix.add(new VarInsnNode(Opcodes.ALOAD, 4));
+                    prefix.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, 'java/nio/file/Path',
+                            'toFile', '()Ljava/io/File;', true));
                     prefix.add(new MethodInsnNode(Opcodes.INVOKESTATIC, HOOK,
                             'prepareLegacyWorld', '(Ljava/io/File;)V', false));
                     method.instructions.insert(prefix);
                     patched = true;
                 }
                 if (!patched) throw new Error('Base Metals could not attach its legacy level.dat reader');
+                return node;
+            }
+        },
+        'basemetals_legacy_forge_snapshot': {
+            'target': { 'type': 'CLASS', 'name': 'net.minecraft.world.level.storage.LevelStorageSource$LevelStorageAccess' },
+            'transformer': function(node) {
+                var patched = false;
+                for (var i = 0; i < node.methods.size(); ++i) {
+                    var method = node.methods.get(i);
+                    if (method.desc !== '(Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;)Ljava/lang/String;') continue;
+                    var readsSnapshot = false;
+                    for (var instruction = method.instructions.getFirst(); instruction !== null;
+                            instruction = instruction.getNext()) {
+                        if (instruction instanceof MethodInsnNode
+                                && instruction.owner === 'net/minecraftforge/common/ForgeHooks'
+                                && instruction.name === 'readAdditionalLevelSaveData') readsSnapshot = true;
+                    }
+                    if (!readsSnapshot) continue;
+
+                    // Forge reads its saved registry index before vanilla converts level.dat.
+                    var prefix = new InsnList();
+                    prefix.add(new VarInsnNode(Opcodes.ALOAD, 1));
+                    prefix.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, 'java/nio/file/Path',
+                            'toFile', '()Ljava/io/File;', true));
+                    prefix.add(new MethodInsnNode(Opcodes.INVOKESTATIC, HOOK,
+                            'prepareLegacyWorld', '(Ljava/io/File;)V', false));
+                    method.instructions.insert(prefix);
+                    patched = true;
+                }
+                if (!patched) throw new Error('Base Metals could not prepare the saved Forge registry snapshot');
                 return node;
             }
         },

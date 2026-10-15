@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 9,
-  "material": "basemetals:aquarium",
-  "ingredient": {
-    "tag": "forge:nuggets/aquarium"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/aquarium"
+  },
+  "material": "basemetals:aquarium",
+  "needed": 9,
+  "value": 1
 }

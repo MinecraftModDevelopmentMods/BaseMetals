@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XS",
-      " S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:cupronickel_axe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/cupronickel"
       }
     },
+    "pattern": [
+      "XX",
+      "XS",
+      " S"
+    ],
     "result": {
       "item": "basemetals:cupronickel_axe"
-    },
-    "group": "basemetals:cupronickel_axe"
+    }
   }
 }

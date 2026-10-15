@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "minecraft:quartz",
     "key": {
       "X": {
         "tag": "forge:nuggets/quartz"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "minecraft:quartz"
-    },
-    "group": "minecraft:quartz"
+    }
   }
 }

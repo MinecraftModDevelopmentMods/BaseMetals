@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left",
+  "textures": {
+    "bottom": "basemetals:block/zinc_door_lower",
+    "top": "basemetals:block/zinc_door_upper"
+  }
+}

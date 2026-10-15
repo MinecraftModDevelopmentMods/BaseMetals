@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:bismuth_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/bismuth"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:bismuth_button"
-    },
-    "group": "basemetals:bismuth_button"
+    }
   }
 }

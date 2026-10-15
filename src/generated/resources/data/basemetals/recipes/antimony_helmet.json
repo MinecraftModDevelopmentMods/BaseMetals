@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:antimony_helmet",
     "key": {
       "X": {
         "tag": "forge:ingots/antimony"
       }
     },
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:antimony_helmet"
-    },
-    "group": "basemetals:antimony_helmet"
+    }
   }
 }

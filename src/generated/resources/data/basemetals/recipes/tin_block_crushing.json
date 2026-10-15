@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/tin"
   },
   "result": {
-    "item": "basemetals:tin_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:tin_powder"
   }
 }

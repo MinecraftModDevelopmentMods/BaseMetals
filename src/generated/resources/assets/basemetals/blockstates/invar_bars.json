@@ -6,94 +6,94 @@
       }
     },
     {
-      "when": {
-        "north": "false",
-        "east": "false",
-        "south": "false",
-        "west": "false"
-      },
       "apply": {
         "model": "basemetals:block/invar_bars_post"
+      },
+      "when": {
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "west": "false"
       }
     },
     {
-      "when": {
-        "north": "true",
-        "east": "false",
-        "south": "false",
-        "west": "false"
-      },
       "apply": {
         "model": "basemetals:block/invar_bars_cap"
-      }
-    },
-    {
-      "when": {
-        "north": "true"
       },
-      "apply": {
-        "model": "basemetals:block/invar_bars_side"
-      }
-    },
-    {
       "when": {
-        "north": "false",
-        "east": "true",
+        "east": "false",
+        "north": "true",
         "south": "false",
         "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "basemetals:block/invar_bars_side"
       },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
       "apply": {
         "model": "basemetals:block/invar_bars_cap",
         "y": 90
+      },
+      "when": {
+        "east": "true",
+        "north": "false",
+        "south": "false",
+        "west": "false"
       }
     },
     {
-      "when": {
-        "east": "true"
-      },
       "apply": {
         "model": "basemetals:block/invar_bars_side",
         "y": 90
+      },
+      "when": {
+        "east": "true"
       }
     },
     {
-      "when": {
-        "north": "false",
-        "east": "false",
-        "south": "true",
-        "west": "false"
-      },
       "apply": {
         "model": "basemetals:block/invar_bars_cap_alt"
+      },
+      "when": {
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "west": "false"
       }
     },
     {
-      "when": {
-        "south": "true"
-      },
       "apply": {
         "model": "basemetals:block/invar_bars_side_alt"
+      },
+      "when": {
+        "south": "true"
       }
     },
     {
-      "when": {
-        "north": "false",
-        "east": "false",
-        "south": "false",
-        "west": "true"
-      },
       "apply": {
         "model": "basemetals:block/invar_bars_cap_alt",
         "y": 90
+      },
+      "when": {
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "west": "true"
       }
     },
     {
-      "when": {
-        "west": "true"
-      },
       "apply": {
         "model": "basemetals:block/invar_bars_side_alt",
         "y": 90
+      },
+      "when": {
+        "west": "true"
       }
     }
   ]

@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 9,
-  "material": "basemetals:coldiron",
-  "ingredient": {
-    "tag": "forge:nuggets/coldiron"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/coldiron"
+  },
+  "material": "basemetals:coldiron",
+  "needed": 9,
+  "value": 1
 }

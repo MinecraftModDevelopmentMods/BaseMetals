@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:emerald_trapdoor",
     "key": {
       "X": {
         "tag": "forge:gems/emerald"
       }
     },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
     "result": {
       "item": "basemetals:emerald_trapdoor"
-    },
-    "group": "basemetals:emerald_trapdoor"
+    }
   }
 }

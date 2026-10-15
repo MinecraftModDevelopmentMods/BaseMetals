@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "misc",
+    "group": "basemetals:emerald_rod",
     "key": {
       "X": {
         "tag": "forge:gems/emerald"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
-      "item": "basemetals:emerald_rod",
-      "count": 4
-    },
-    "group": "basemetals:emerald_rod"
+      "count": 4,
+      "item": "basemetals:emerald_rod"
+    }
   }
 }

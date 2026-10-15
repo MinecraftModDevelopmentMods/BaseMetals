@@ -1,28 +1,28 @@
 {
   "type": "tconstruct:alloy",
-  "temperature": 769,
-  "inputs": [
-    {
-      "tag": "forge:molten_tin",
-      "amount": 90
-    },
-    {
-      "tag": "forge:molten_copper",
-      "amount": 90
-    },
-    {
-      "tag": "forge:molten_lead",
-      "amount": 90
-    }
-  ],
-  "result": {
-    "fluid": "basemetals:pewter",
-    "amount": 270
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "inputs": [
+    {
+      "amount": 90,
+      "tag": "forge:molten_tin"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_copper"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_lead"
+    }
+  ],
+  "result": {
+    "amount": 270,
+    "fluid": "basemetals:pewter"
+  },
+  "temperature": 769
 }

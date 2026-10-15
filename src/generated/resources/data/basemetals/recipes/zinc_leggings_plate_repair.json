@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:zinc_leggings",
   "plate": {
     "tag": "forge:plates/zinc"
-  }
+  },
+  "target": "basemetals:zinc_leggings"
 }

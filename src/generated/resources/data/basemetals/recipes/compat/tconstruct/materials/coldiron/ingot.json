@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 1,
-  "material": "basemetals:coldiron",
-  "ingredient": {
-    "tag": "forge:ingots/coldiron"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/coldiron"
+  },
+  "material": "basemetals:coldiron",
+  "needed": 1,
+  "value": 1
 }

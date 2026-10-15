@@ -2,27 +2,27 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "basemetals:steel_anvil",
-          "functions": [
-            {
-              "function": "minecraft:copy_state",
-              "block": "basemetals:steel_anvil",
-              "properties": [
-                "damage"
-              ]
-            }
-          ]
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "block": "basemetals:steel_anvil",
+              "function": "minecraft:copy_state",
+              "properties": [
+                "damage"
+              ]
+            }
+          ],
+          "name": "basemetals:steel_anvil"
+        }
+      ],
+      "rolls": 1
     }
   ]
 }

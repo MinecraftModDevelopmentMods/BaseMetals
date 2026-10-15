@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:aquarium_plate",
     "key": {
       "X": {
         "tag": "forge:ingots/aquarium"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:aquarium_plate",
-      "count": 3
-    },
-    "group": "basemetals:aquarium_plate"
+      "count": 3,
+      "item": "basemetals:aquarium_plate"
+    }
   }
 }

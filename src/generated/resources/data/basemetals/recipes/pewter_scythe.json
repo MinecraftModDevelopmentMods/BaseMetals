@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX ",
-      "  X",
-      " S "
-    ],
+    "category": "equipment",
+    "group": "basemetals:pewter_scythe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/pewter"
       }
     },
+    "pattern": [
+      "XX ",
+      "  X",
+      " S "
+    ],
     "result": {
       "item": "basemetals:pewter_scythe"
-    },
-    "group": "basemetals:pewter_scythe"
+    }
   }
 }

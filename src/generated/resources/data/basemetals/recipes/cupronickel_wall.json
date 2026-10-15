@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:cupronickel_wall",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/cupronickel"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:cupronickel_wall",
-      "count": 6
-    },
-    "group": "basemetals:cupronickel_wall"
+      "count": 6,
+      "item": "basemetals:cupronickel_wall"
+    }
   }
 }

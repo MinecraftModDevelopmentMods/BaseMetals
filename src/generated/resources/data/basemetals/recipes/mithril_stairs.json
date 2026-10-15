@@ -2,20 +2,21 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X  ",
-      "XX ",
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:mithril_stairs",
     "key": {
       "X": {
         "tag": "forge:storage_blocks/mithril"
       }
     },
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:mithril_stairs",
-      "count": 4
-    },
-    "group": "basemetals:mithril_stairs"
+      "count": 4,
+      "item": "basemetals:mithril_stairs"
+    }
   }
 }

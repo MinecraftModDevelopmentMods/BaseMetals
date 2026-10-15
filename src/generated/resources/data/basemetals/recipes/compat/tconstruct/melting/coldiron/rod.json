@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 30,
-  "ingredient": {
-    "tag": "forge:rods/coldiron"
-  },
-  "result": {
-    "fluid": "basemetals:coldiron",
-    "amount": 45
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:rods/coldiron"
+  },
+  "result": {
+    "amount": 45,
+    "fluid": "basemetals:coldiron"
+  },
+  "temperature": 769,
+  "time": 30
 }

@@ -152,7 +152,7 @@ public final class Legacy112WorldMigrator {
         CompoundTag data = level.getCompound("Data");
         if (!data.contains("Player", Tag.TAG_COMPOUND)) return;
         int version = data.getInt("DataVersion");
-        CompoundTag corrected = NbtUtils.update(DataFixers.getDataFixer(), DataFixTypes.PLAYER,
+        CompoundTag corrected = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
                 data.getCompound("Player"), version);
         for (String key : List.copyOf(loaded.getAllKeys())) loaded.remove(key);
         loaded.merge(corrected);
@@ -312,7 +312,7 @@ public final class Legacy112WorldMigrator {
             return new ChunkConversion(false, 0, 0, 0, 0, 0, chunk);
         }
 
-        CompoundTag fixed = NbtUtils.update(DataFixers.getDataFixer(), DataFixTypes.CHUNK,
+        CompoundTag fixed = DataFixTypes.CHUNK.update(DataFixers.getDataFixer(),
                 chunk, sourceVersion, PALETTED_PRE_PROTOCHUNK_DATA_VERSION);
         fixed.putInt("DataVersion", PALETTED_PRE_PROTOCHUNK_DATA_VERSION);
         if (!savedBlocks.isEmpty()) {
@@ -389,7 +389,7 @@ public final class Legacy112WorldMigrator {
 
         CompoundTag player = legacyData.getCompound("Player").copy();
         ItemMigration migration = convertLegacyItems(player);
-        CompoundTag fixedPlayer = NbtUtils.update(DataFixers.getDataFixer(), DataFixTypes.PLAYER,
+        CompoundTag fixedPlayer = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
                 player, legacyVersion);
         currentData.put("Player", fixedPlayer);
 

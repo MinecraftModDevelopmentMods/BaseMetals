@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.2,
   "ingredient": {
     "item": "basemetals:steel_hoe"
   },
   "result": {
-    "item": "basemetals:steel_ingot",
-    "count": 2
-  },
-  "experience": 0.2,
-  "cookingtime": 200
+    "count": 2,
+    "item": "basemetals:steel_ingot"
+  }
 }

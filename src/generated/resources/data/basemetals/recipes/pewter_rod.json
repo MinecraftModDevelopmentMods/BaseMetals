@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "misc",
+    "group": "basemetals:pewter_rod",
     "key": {
       "X": {
         "tag": "forge:ingots/pewter"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
-      "item": "basemetals:pewter_rod",
-      "count": 4
-    },
-    "group": "basemetals:pewter_rod"
+      "count": 4,
+      "item": "basemetals:pewter_rod"
+    }
   }
 }

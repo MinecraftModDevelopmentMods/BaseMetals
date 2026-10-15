@@ -4,7 +4,7 @@
     "item": "minecraft:sea_lantern"
   },
   "result": {
-    "item": "minecraft:prismarine_crystals",
-    "count": 5
+    "count": 5,
+    "item": "minecraft:prismarine_crystals"
   }
 }

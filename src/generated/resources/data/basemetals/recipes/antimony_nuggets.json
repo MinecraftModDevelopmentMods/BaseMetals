@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:antimony_nugget",
     "ingredients": [
       {
         "tag": "forge:ingots/antimony"
       }
     ],
     "result": {
-      "item": "basemetals:antimony_nugget",
-      "count": 9
-    },
-    "group": "basemetals:antimony_nugget"
+      "count": 9,
+      "item": "basemetals:antimony_nugget"
+    }
   }
 }

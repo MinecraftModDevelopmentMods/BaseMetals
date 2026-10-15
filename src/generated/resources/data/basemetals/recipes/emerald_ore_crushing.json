@@ -4,7 +4,7 @@
     "tag": "forge:ores/emerald"
   },
   "result": {
-    "item": "basemetals:emerald_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:emerald_powder"
   }
 }

@@ -4,7 +4,7 @@
     "tag": "forge:storage_blocks/charcoal"
   },
   "result": {
-    "item": "basemetals:charcoal_powder",
-    "count": 9
+    "count": 9,
+    "item": "basemetals:charcoal_powder"
   }
 }

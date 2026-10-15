@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 45,
-  "ingredient": {
-    "tag": "forge:ingots/starsteel"
-  },
-  "result": {
-    "fluid": "basemetals:starsteel",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/starsteel"
+  },
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:starsteel"
+  },
+  "temperature": 769,
+  "time": 45
 }

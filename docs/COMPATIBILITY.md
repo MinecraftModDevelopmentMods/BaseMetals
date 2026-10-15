@@ -12,7 +12,10 @@ must remain the Base Metals item. Copper ore and storage tags contain both
 vanilla and Base Metals entries; Base Metals copper ore smelts to the Base
 Metals ingot.
 
-Conditional resources are included for:
+The integration data below is carried over from 1.18. These mods do not publish Forge
+1.19.4 builds, so their integrations are not qualified on this branch. Do not
+load a jar for another Minecraft version to test them. Their APIs are
+compile-only dependencies and never enter the normal development runtime.
 
 - Mekanism 10.2: dirty and clean slurries plus the complete ore-processing
   sequence for Adamantine, Antimony, Bismuth, Cold Iron, Nickel, Platinum,
@@ -25,7 +28,7 @@ Conditional resources are included for:
 - Ender IO 6 alpha: SAG Mill and Alloy Smelter recipes.
 
 IC2, Thaumcraft, Dense Ores, VeinMiner, and Constructs Armory do not have direct
-1.18 integrations. Their generic tools and ore processors can still interoperate
+integrations in this version. Their generic tools and ore processors can still interoperate
 through Forge tags.
 
 Mineralogy is entirely optional. Base Metals never links to its Java classes;

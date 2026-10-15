@@ -1,11 +1,11 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.0,
   "ingredient": {
     "item": "basemetals:obsidian_wall"
   },
   "result": {
     "item": "minecraft:obsidian"
-  },
-  "experience": 0.0,
-  "cookingtime": 200
+  }
 }

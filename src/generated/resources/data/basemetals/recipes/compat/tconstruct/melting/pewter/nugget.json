@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 16,
-  "ingredient": {
-    "tag": "forge:nuggets/pewter"
-  },
-  "result": {
-    "fluid": "basemetals:pewter",
-    "amount": 10
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/pewter"
+  },
+  "result": {
+    "amount": 10,
+    "fluid": "basemetals:pewter"
+  },
+  "temperature": 769,
+  "time": 16
 }

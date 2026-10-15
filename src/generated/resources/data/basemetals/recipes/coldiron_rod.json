@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "misc",
+    "group": "basemetals:coldiron_rod",
     "key": {
       "X": {
         "tag": "forge:ingots/coldiron"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
-      "item": "basemetals:coldiron_rod",
-      "count": 4
-    },
-    "group": "basemetals:coldiron_rod"
+      "count": 4,
+      "item": "basemetals:coldiron_rod"
+    }
   }
 }

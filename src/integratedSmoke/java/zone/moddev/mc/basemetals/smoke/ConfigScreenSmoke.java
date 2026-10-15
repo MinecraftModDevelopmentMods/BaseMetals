@@ -7,7 +7,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraftforge.client.ConfigGuiHandler;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.fml.ModList;
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.client.BaseMetalsConfigScreen;
@@ -21,7 +21,7 @@ final class ConfigScreenSmoke {
 
     static void verify(Minecraft minecraft, Screen parent) {
         var mod = ModList.get().getModContainerById(BaseMetals.MOD_ID).orElseThrow().getModInfo();
-        Screen forgeScreen = ConfigGuiHandler.getGuiFactoryFor(mod).orElseThrow().apply(minecraft, parent);
+        Screen forgeScreen = ConfigScreenHandler.getScreenFactoryFor(mod).orElseThrow().apply(minecraft, parent);
         require(forgeScreen instanceof BaseMetalsConfigScreen, "Forge Config button has the wrong screen");
 
         var extensions = WorldSettingsExtensionRegistry.extensions().stream()

@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:lead",
-  "ingredient": {
-    "tag": "forge:storage_blocks/lead"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/lead"
+  },
+  "material": "basemetals:lead",
+  "needed": 1,
+  "value": 9
 }

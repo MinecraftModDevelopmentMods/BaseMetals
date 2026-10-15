@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      " S",
-      " S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:nickel_hoe",
     "key": {
       "S": {
         "tag": "forge:rods/wooden"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/nickel"
       }
     },
+    "pattern": [
+      "XX",
+      " S",
+      " S"
+    ],
     "result": {
       "item": "basemetals:nickel_hoe"
-    },
-    "group": "basemetals:nickel_hoe"
+    }
   }
 }

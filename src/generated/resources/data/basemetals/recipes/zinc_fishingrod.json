@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "  R",
-      " RS",
-      "R S"
-    ],
+    "category": "equipment",
+    "group": "basemetals:zinc_fishing_rod",
     "key": {
       "R": {
         "tag": "forge:rods/zinc"
@@ -15,9 +12,13 @@
         "item": "minecraft:string"
       }
     },
+    "pattern": [
+      "  R",
+      " RS",
+      "R S"
+    ],
     "result": {
       "item": "basemetals:zinc_fishing_rod"
-    },
-    "group": "basemetals:zinc_fishing_rod"
+    }
   }
 }

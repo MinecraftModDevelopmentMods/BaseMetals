@@ -8,11 +8,11 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuilder;
+import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 import zone.moddev.mc.basemetals.content.CompatibilityDoubleSlabBlock;
 import zone.moddev.mc.basemetals.content.BaseMetalAnvilBlock;
@@ -42,14 +42,14 @@ public final class BaseMetalsDataGenerators {
     public static void gather(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         if (event.includeClient()) {
-            generator.addProvider(new States(generator, event.getExistingFileHelper()));
-            generator.addProvider(new Items(generator, event.getExistingFileHelper()));
+            generator.addProvider(true, new States(generator.getPackOutput(), event.getExistingFileHelper()));
+            generator.addProvider(true, new Items(generator.getPackOutput(), event.getExistingFileHelper()));
         }
-        generator.addProvider(new GeneratedData(generator));
+        generator.addProvider(true, new GeneratedData(generator.getPackOutput()));
     }
 
     private static final class States extends BlockStateProvider {
-        private States(DataGenerator generator, ExistingFileHelper helper) {
+        private States(net.minecraft.data.PackOutput generator, ExistingFileHelper helper) {
             super(generator, BaseMetals.MOD_ID, helper);
         }
 
@@ -63,8 +63,7 @@ public final class BaseMetalsDataGenerators {
                 } else if (block instanceof IronBarsBlock bars) {
                     barsBlock(bars, id);
                 } else if (block instanceof DoorBlock door) {
-                    doorBlock(door, existing(id + "_bottom"), existing(id + "_bottom_rh"),
-                            existing(id + "_top"), existing(id + "_top_rh"));
+                    doorBlock(door, modLoc("block/" + id + "_lower"), modLoc("block/" + id + "_upper"));
                 } else if (block instanceof TrapDoorBlock trapdoor) {
                     trapdoorBlock(trapdoor, existing(id + "_bottom"), existing(id + "_top"),
                             existing(id + "_open"), true);
@@ -203,7 +202,7 @@ public final class BaseMetalsDataGenerators {
 
     /** Models for the few new/forwarded IDs not already present in the 1.12 assets. */
     private static final class Items extends ItemModelProvider {
-        private Items(DataGenerator generator, ExistingFileHelper helper) {
+        private Items(net.minecraft.data.PackOutput generator, ExistingFileHelper helper) {
             super(generator, BaseMetals.MOD_ID, helper);
         }
 
@@ -218,7 +217,7 @@ public final class BaseMetalsDataGenerators {
 
             ModContent.fluids().forEach((name, fluid) -> getBuilder(name + "_bucket")
                     .parent(getExistingFile(new net.minecraft.resources.ResourceLocation("forge", "item/bucket")))
-                    .customLoader(DynamicBucketModelBuilder::begin)
+                    .customLoader(DynamicFluidContainerModelBuilder::begin)
                     .fluid(fluid.source().get()));
 
             ModContent.fluids().forEach((name, fluid) -> getBuilder(name)

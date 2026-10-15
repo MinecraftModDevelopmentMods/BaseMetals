@@ -1,5 +1,5 @@
 {
-    "parent": "block/door_top_rh",
+    "parent": "minecraft:block/door_top_right",
     "textures": {
         "bottom": "basemetals:block/steel_door_lower",
         "top": "basemetals:block/steel_door_upper"

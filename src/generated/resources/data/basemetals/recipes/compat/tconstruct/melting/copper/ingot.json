@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 45,
-  "ingredient": {
-    "tag": "forge:ingots/copper"
-  },
-  "result": {
-    "fluid": "basemetals:copper",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/copper"
+  },
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:copper"
+  },
+  "temperature": 769,
+  "time": 45
 }

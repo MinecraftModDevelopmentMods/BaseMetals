@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.5,
   "ingredient": {
     "item": "basemetals:platinum_chestplate"
   },
   "result": {
-    "item": "basemetals:platinum_ingot",
-    "count": 8
-  },
-  "experience": 1.5,
-  "cookingtime": 200
+    "count": 8,
+    "item": "basemetals:platinum_ingot"
+  }
 }

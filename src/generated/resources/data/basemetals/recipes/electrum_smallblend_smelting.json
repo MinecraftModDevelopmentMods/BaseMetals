@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.11,
   "ingredient": {
     "tag": "forge:small_blends/electrum"
   },
-  "result": "basemetals:electrum_nugget",
-  "experience": 0.11,
-  "cookingtime": 200
+  "result": "basemetals:electrum_nugget"
 }

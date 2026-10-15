@@ -2,10 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:silver_lever",
     "key": {
       "R": {
         "tag": "forge:rods/silver"
@@ -14,9 +12,12 @@
         "tag": "forge:ingots/silver"
       }
     },
+    "pattern": [
+      "R",
+      "X"
+    ],
     "result": {
       "item": "basemetals:silver_lever"
-    },
-    "group": "basemetals:silver_lever"
+    }
   }
 }

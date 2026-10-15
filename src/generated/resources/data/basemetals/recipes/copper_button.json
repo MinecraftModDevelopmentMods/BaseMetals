@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:copper_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/copper"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:copper_button"
-    },
-    "group": "basemetals:copper_button"
+    }
   }
 }

@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:coldiron_button",
     "key": {
       "X": {
         "tag": "forge:nuggets/coldiron"
       }
     },
+    "pattern": [
+      "X",
+      "X"
+    ],
     "result": {
       "item": "basemetals:coldiron_button"
-    },
-    "group": "basemetals:coldiron_button"
+    }
   }
 }

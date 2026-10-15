@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X",
-      "X "
-    ],
+    "category": "equipment",
+    "group": "basemetals:zinc_shears",
     "key": {
       "X": {
         "tag": "forge:ingots/zinc"
       }
     },
+    "pattern": [
+      " X",
+      "X "
+    ],
     "result": {
       "item": "basemetals:zinc_shears"
-    },
-    "group": "basemetals:zinc_shears"
+    }
   }
 }

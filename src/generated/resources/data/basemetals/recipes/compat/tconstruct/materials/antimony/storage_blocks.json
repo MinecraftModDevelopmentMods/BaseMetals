@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:antimony",
-  "ingredient": {
-    "tag": "forge:storage_blocks/antimony"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/antimony"
+  },
+  "material": "basemetals:antimony",
+  "needed": 1,
+  "value": 9
 }

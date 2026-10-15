@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.StoneButtonBlock;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -37,7 +37,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -48,6 +49,7 @@ public final class ModContent {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BaseMetals.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BaseMetals.MOD_ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, BaseMetals.MOD_ID);
+    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, BaseMetals.MOD_ID);
 
     private static final Map<String, RegistryObject<? extends Block>> BLOCKS_BY_ID = new LinkedHashMap<>();
     private static final Map<String, RegistryObject<Item>> ITEMS_BY_ID = new LinkedHashMap<>();
@@ -90,6 +92,7 @@ public final class ModContent {
         BLOCKS.register(bus);
         ITEMS.register(bus);
         FLUIDS.register(bus);
+        FLUID_TYPES.register(bus);
     }
 
     public static Map<String, MaterialContent> materials() {
@@ -175,13 +178,13 @@ public final class ModContent {
         Supplier<Block> factory = switch (form) {
             case "plate" -> () -> new PlateBlock(properties.get().noOcclusion());
             case "bars" -> () -> new IronBarsBlock(properties.get().noOcclusion().dynamicShape());
-            case "door" -> () -> new DoorBlock(properties.get().noOcclusion().dynamicShape());
-            case "trapdoor" -> () -> new TrapDoorBlock(properties.get().noOcclusion().dynamicShape());
-            case "button" -> () -> new StoneButtonBlock(properties.get().noCollission());
+            case "door" -> () -> new DoorBlock(properties.get().noOcclusion().dynamicShape(), doorType(material));
+            case "trapdoor" -> () -> new TrapDoorBlock(properties.get().noOcclusion().dynamicShape(), doorType(material));
+            case "button" -> () -> new ButtonBlock(properties.get().noCollission(), BlockSetType.STONE, 20, false);
             case "slab" -> () -> new SlabBlock(properties.get());
             case "lever" -> () -> new LeverBlock(properties.get().noCollission());
             case "pressure_plate" -> () -> new PressurePlateBlock(
-                    PressurePlateBlock.Sensitivity.MOBS, properties.get());
+                    PressurePlateBlock.Sensitivity.MOBS, properties.get(), BlockSetType.STONE);
             case "stairs" -> () -> new StairBlock(stairBase, properties.get());
             case "wall" -> () -> new WallBlock(properties.get());
             default -> () -> new Block(properties.get());
@@ -189,42 +192,46 @@ public final class ModContent {
         return registerBlock(id, factory, item);
     }
 
+    private static BlockSetType doorType(MaterialDefinition material) {
+        return material.name().equals("quartz") ? BlockSetType.STONE : BlockSetType.IRON;
+    }
+
     private static void registerEquipment(MaterialDefinition material, Map<String, RegistryObject<Item>> items) {
-        Item.Properties tool = new Item.Properties().tab(ModTabs.TOOLS).durability(material.toolDurability());
-        Item.Properties combat = new Item.Properties().tab(ModTabs.COMBAT);
+        Item.Properties tool = new Item.Properties().durability(material.toolDurability());
+        Item.Properties combat = new Item.Properties();
         items.put("pickaxe", registerItem(material.name() + "_pickaxe", () -> new MaterialItems.Pickaxe(material, tool)));
         items.put("axe", registerItem(material.name() + "_axe", () -> new MaterialItems.Axe(material,
-                new Item.Properties().tab(ModTabs.TOOLS))));
+                new Item.Properties())));
         items.put("shovel", registerItem(material.name() + "_shovel", () -> new MaterialItems.Shovel(material,
-                new Item.Properties().tab(ModTabs.TOOLS))));
+                new Item.Properties())));
         items.put("hoe", registerItem(material.name() + "_hoe", () -> new MaterialItems.Hoe(material,
-                new Item.Properties().tab(ModTabs.TOOLS))));
+                new Item.Properties())));
         items.put("sword", registerItem(material.name() + "_sword", () -> new MaterialItems.Sword(material,
-                new Item.Properties().tab(ModTabs.COMBAT))));
+                new Item.Properties())));
         items.put("crackhammer", registerItem(material.name() + "_crackhammer", () -> new CrackhammerItem(material,
-                new Item.Properties().tab(ModTabs.TOOLS))));
+                new Item.Properties())));
         items.put("scythe", registerItem(material.name() + "_scythe", () -> new ScytheItem(material,
-                new Item.Properties().tab(ModTabs.TOOLS))));
+                new Item.Properties())));
         items.put("shears", registerItem(material.name() + "_shears", () -> new MaterialItems.Shears(material,
-                new Item.Properties().tab(ModTabs.TOOLS).durability(material.toolDurability()))));
+                new Item.Properties().durability(material.toolDurability()))));
         items.put("fishing_rod", registerItem(material.name() + "_fishing_rod", () -> new MaterialItems.FishingRod(material,
-                new Item.Properties().tab(ModTabs.TOOLS).durability(material.toolDurability()))));
+                new Item.Properties().durability(material.toolDurability()))));
         items.put("bow", registerItem(material.name() + "_bow", () -> new MaterialItems.Bow(material,
                 combat.durability(material.toolDurability()))));
         items.put("crossbow", registerItem(material.name() + "_crossbow", () -> new MaterialItems.Crossbow(material,
-                new Item.Properties().tab(ModTabs.COMBAT).durability(material.toolDurability()))));
+                new Item.Properties().durability(material.toolDurability()))));
         items.put("shield", registerItem(material.name() + "_shield", () -> new MaterialItems.Shield(material,
-                new Item.Properties().tab(ModTabs.COMBAT).durability(material.shieldDurability()))));
+                new Item.Properties().durability(material.shieldDurability()))));
         items.put("arrow", registerItem(material.name() + "_arrow", () -> new BaseMetalAmmoItem(material,
                 BaseMetalAmmoItem.Kind.ARROW, ModEntities.CUSTOM_ARROW::get,
-                new Item.Properties().tab(ModTabs.COMBAT))));
+                new Item.Properties())));
         items.put("bolt", registerItem(material.name() + "_bolt", () -> new BaseMetalAmmoItem(material,
                 BaseMetalAmmoItem.Kind.BOLT, ModEntities.CUSTOM_BOLT::get,
-                new Item.Properties().tab(ModTabs.COMBAT))));
+                new Item.Properties())));
         items.put("rod", registerSimpleMaterialItem(material.name() + "_rod", material));
         items.put("gear", registerSimpleMaterialItem(material.name() + "_gear", material));
         items.put("horse_armor", registerItem(material.name() + "_horse_armor",
-                () -> new MaterialItems.HorseArmor(material, new Item.Properties().tab(ModTabs.COMBAT).stacksTo(1))));
+                () -> new MaterialItems.HorseArmor(material, new Item.Properties().stacksTo(1))));
         items.put("helmet", registerArmor(material, EquipmentSlot.HEAD));
         items.put("chestplate", registerArmor(material, EquipmentSlot.CHEST));
         items.put("leggings", registerArmor(material, EquipmentSlot.LEGS));
@@ -240,7 +247,7 @@ public final class ModContent {
             default -> throw new IllegalArgumentException("Not armor: " + slot);
         };
         return registerItem(id, () -> new MaterialItems.Armor(material, slot,
-                new Item.Properties().tab(ModTabs.COMBAT)));
+                new Item.Properties()));
     }
 
     private static void registerVanillaBits() {
@@ -249,7 +256,7 @@ public final class ModContent {
                 () -> new Block(BlockBehaviour.Properties.of(Material.STONE)
                         .sound(SoundType.SAND).requiresCorrectToolForDrops().strength(5.0F)), false);
         registerItem("charcoal_block", () -> new MaterialItems.BurnableBlock(
-                charcoalBlock.get(), 16000, new Item.Properties().tab(ModTabs.BLOCKS)));
+                charcoalBlock.get(), 16000, new Item.Properties()));
         registerVanillaDecorative("diamond", vanilla.get("diamond"),
                 List.of("bars", "door", "trapdoor", "button", "slab", "lever", "pressure_plate", "stairs", "wall"));
         registerVanillaDecorative("emerald", vanilla.get("emerald"),
@@ -271,10 +278,10 @@ public final class ModContent {
         for (String name : List.of("diamond", "emerald", "gold", "iron", "obsidian", "quartz", "stone", "wood")) {
             MaterialDefinition material = vanilla.get(name);
             registerItem(name + "_crackhammer", () -> new CrackhammerItem(material,
-                    new Item.Properties().tab(ModTabs.TOOLS)));
+                    new Item.Properties()));
             registerSimpleMaterialItem(name + "_gear", material);
             registerItem(name + "_scythe", () -> new ScytheItem(material,
-                    new Item.Properties().tab(ModTabs.TOOLS)));
+                    new Item.Properties()));
         }
         for (String name : List.of("coal", "charcoal", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
             MaterialDefinition material = vanilla.get(name);
@@ -339,39 +346,39 @@ public final class ModContent {
     private static void registerVanillaCombatAndUtility(MaterialDefinition material) {
         String name = material.name();
         registerItem(name + "_arrow", () -> new BaseMetalAmmoItem(material, BaseMetalAmmoItem.Kind.ARROW,
-                ModEntities.CUSTOM_ARROW::get, new Item.Properties().tab(ModTabs.COMBAT)));
+                ModEntities.CUSTOM_ARROW::get, new Item.Properties()));
         registerItem(name + "_bolt", () -> new BaseMetalAmmoItem(material, BaseMetalAmmoItem.Kind.BOLT,
-                ModEntities.CUSTOM_BOLT::get, new Item.Properties().tab(ModTabs.COMBAT)));
+                ModEntities.CUSTOM_BOLT::get, new Item.Properties()));
         registerItem(name + "_bow", () -> new MaterialItems.Bow(material,
-                new Item.Properties().tab(ModTabs.COMBAT).durability(material.toolDurability())));
+                new Item.Properties().durability(material.toolDurability())));
         registerItem(name + "_crossbow", () -> new MaterialItems.Crossbow(material,
-                new Item.Properties().tab(ModTabs.COMBAT).durability(material.toolDurability())));
+                new Item.Properties().durability(material.toolDurability())));
         registerItem(name + "_fishing_rod", () -> new MaterialItems.FishingRod(material,
-                new Item.Properties().tab(ModTabs.TOOLS).durability(material.toolDurability())));
+                new Item.Properties().durability(material.toolDurability())));
         registerSimpleMaterialItem(name + "_rod", material);
         if (!name.equals("iron")) {
             registerItem(name + "_shears", () -> new MaterialItems.Shears(material,
-                    new Item.Properties().tab(ModTabs.TOOLS).durability(material.toolDurability())));
+                    new Item.Properties().durability(material.toolDurability())));
         }
         registerItem(name + "_shield", () -> new MaterialItems.Shield(material,
-                new Item.Properties().tab(ModTabs.COMBAT).durability(material.shieldDurability())));
+                new Item.Properties().durability(material.shieldDurability())));
         // Preserve IDs which were added for vanilla materials by MMDLib. The
         // vanilla equipment itself remains the canonical tool/armor where present.
         if (name.equals("emerald") || name.equals("obsidian") || name.equals("quartz")) {
-            registerItem(name + "_axe", () -> new MaterialItems.Axe(material, new Item.Properties().tab(ModTabs.TOOLS)));
-            registerItem(name + "_pickaxe", () -> new MaterialItems.Pickaxe(material, new Item.Properties().tab(ModTabs.TOOLS)));
-            registerItem(name + "_shovel", () -> new MaterialItems.Shovel(material, new Item.Properties().tab(ModTabs.TOOLS)));
-            registerItem(name + "_hoe", () -> new MaterialItems.Hoe(material, new Item.Properties().tab(ModTabs.TOOLS)));
+            registerItem(name + "_axe", () -> new MaterialItems.Axe(material, new Item.Properties()));
+            registerItem(name + "_pickaxe", () -> new MaterialItems.Pickaxe(material, new Item.Properties()));
+            registerItem(name + "_shovel", () -> new MaterialItems.Shovel(material, new Item.Properties()));
+            registerItem(name + "_hoe", () -> new MaterialItems.Hoe(material, new Item.Properties()));
             registerArmor(material, EquipmentSlot.HEAD);
             registerArmor(material, EquipmentSlot.CHEST);
             registerArmor(material, EquipmentSlot.LEGS);
             registerArmor(material, EquipmentSlot.FEET);
             registerItem(name + "_horse_armor", () -> new MaterialItems.HorseArmor(material,
-                    new Item.Properties().tab(ModTabs.COMBAT).stacksTo(1)));
+                    new Item.Properties().stacksTo(1)));
         }
         if (name.equals("emerald") || name.equals("obsidian") || name.equals("quartz")) {
             registerItem(name + "_sword", () -> new MaterialItems.Sword(material,
-                    new Item.Properties().tab(ModTabs.COMBAT)));
+                    new Item.Properties()));
         }
     }
 
@@ -408,15 +415,14 @@ public final class ModContent {
                 mercury ? "block/mercury_still" : "block/molten_metal_still");
         ResourceLocation flow = new ResourceLocation(BaseMetals.MOD_ID,
                 mercury ? "block/mercury_flow" : "block/molten_metal_flow");
+        RegistryObject<FluidType> type = FLUID_TYPES.register(name, () -> new MetalFluidType(
+                FluidType.Properties.create().density(mercury ? 13594 : 2000)
+                        .viscosity(mercury ? 2000 : 10000).temperature(769)
+                        .lightLevel(mercury ? 0 : 10).descriptionId("fluid.basemetals." + name)
+                        .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
+                        .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA), still, flow, colour));
         ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
-                () -> source[0].get(), () -> flowing[0].get(),
-                FluidAttributes.builder(still, flow)
-                        .color(0xFF000000 | colour)
-                        .density(mercury ? 13594 : 2000)
-                        .viscosity(mercury ? 2000 : 10000)
-                        .temperature(769)
-                        .luminosity(mercury ? 0 : 10)
-                        .sound(SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA))
+                type, () -> source[0].get(), () -> flowing[0].get())
                 .bucket(() -> bucket[0].get())
                 .block(() -> block[0].get())
                 .slopeFindDistance(2)
@@ -426,13 +432,13 @@ public final class ModContent {
         source[0] = FLUIDS.register(name, () -> new ForgeFlowingFluid.Source(properties));
         flowing[0] = FLUIDS.register("flowing_" + name, () -> new ForgeFlowingFluid.Flowing(properties));
         block[0] = BLOCKS.register(name, () -> new MoltenMetalBlock(() -> source[0].get(),
-                BlockBehaviour.Properties.of(Material.LAVA).noCollission().strength(100.0F).noDrops(), mercury));
+                BlockBehaviour.Properties.of(Material.LAVA).noCollission().strength(100.0F).noLootTable(), mercury));
         BLOCKS_BY_ID.put(name, block[0]);
         // Forge 1.12 registered an ItemBlock under every molten block ID. Keep
         // those hidden inventory IDs so old stacks can survive a world upgrade.
         registerItem(name, () -> new BlockItem(block[0].get(), new Item.Properties()));
         bucket[0] = registerItem(name + "_bucket", () -> new BaseMetalBucketItem(() -> source[0].get(),
-                new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ModTabs.ITEMS)));
+                new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
         FLUID_CONTENT.put(name, new FluidContent(source[0], flowing[0], block[0], bucket[0]));
     }
 
@@ -445,19 +451,14 @@ public final class ModContent {
         RegistryObject<Block> block = BLOCKS.register(id, factory);
         BLOCKS_BY_ID.put(id, block);
         if (hasItem) {
-            registerItem(id, () -> new BlockItem(block.get(), new Item.Properties().tab(ModTabs.BLOCKS)));
+            registerItem(id, () -> new BlockItem(block.get(), new Item.Properties()));
         }
         return block;
     }
 
     private static RegistryObject<Item> registerSimpleMaterialItem(String id, MaterialDefinition material) {
-        return registerSimpleMaterialItem(id, material, ModTabs.ITEMS);
-    }
-
-    private static RegistryObject<Item> registerSimpleMaterialItem(String id, MaterialDefinition material,
-            net.minecraft.world.item.CreativeModeTab tab) {
         return registerItem(id, () -> new MaterialItems.Basic(material, burnTime(id),
-                new Item.Properties().tab(tab)));
+                new Item.Properties()));
     }
 
     private static int burnTime(String id) {

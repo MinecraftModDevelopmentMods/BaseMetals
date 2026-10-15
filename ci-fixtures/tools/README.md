@@ -1,23 +1,25 @@
-# Forge 1.18.2 Mavenizer compatibility fixture
+# Forge 1.19.4 Mavenizer compatibility fixture
 
-`minecraft-mavenizer-0.5.21-orespawn-1.18.jar` is a build-only derivative of
+`minecraft-mavenizer-0.5.21-orespawn-compat.jar` is a build-only derivative of
 MinecraftForge MinecraftMavenizer `0.5.21`, source commit
 `6968241ce7a0a902cdc1c534b976e8373a423091`.
 
-Forge 40's 1.18.2 decompiler emits a redundant explicit `Holder.Direct#value`
-record accessor. The complete patched Minecraft source tree is rejected by
-modern `javac`; removing that method is safe because the record generates the
-same public accessor automatically. The derivative also honors
+Forge 45's decompiler emits eight duplicate record accessors in Holder.Direct,
+OptionInstance and MemoryCondition. The target-specific rules in
+`minecraft-source-compatibility.json` remove only those accessors; Java
+generates the same public methods automatically. Missing or ambiguous source
+matches stop the build. The derivative also honors
 `ORESPAWN_MAVENIZER_OFFLINE=true` by adding Mavenizer's native `--offline`
 argument. This closes ForgeGradle 7's failure to propagate Gradle offline mode
 to the subprocess; it does not alter normal online builds.
 
-`minecraft-1.18-holder-accessor.patch` documents the complete two-file source
-change.
+`minecraft-mavenizer-0.5.21-orespawn-compat.patch` contains OreSpawn's source
+changes. Apply it to the pinned upstream commit with `git am` to rebuild the
+fixture using Temurin 25.0.3+9 and the upstream Gradle 9.1.0 wrapper.
 
 The fixture is used only while ForgeGradle prepares the development dependency.
 It is checksum-verified by the build and excluded from every Base Metals artifact.
 MinecraftMavenizer remains licensed LGPL-2.1-only; see `LICENSE-MAVENIZER.txt`.
 
 SHA-256:
-`28A6697BDF6D9500EC0AF9C1C949B9F3ED7DDFDA649CB5CAC4BEEA2E9567570A`
+`341B3FB10ABA6EA7DC612FBE519DC290A1C81867AED5DD320ACD783688AC49DE`

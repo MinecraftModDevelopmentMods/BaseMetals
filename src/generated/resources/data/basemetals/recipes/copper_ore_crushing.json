@@ -4,7 +4,7 @@
     "tag": "forge:ores/copper"
   },
   "result": {
-    "item": "basemetals:copper_powder",
-    "count": 2
+    "count": 2,
+    "item": "basemetals:copper_powder"
   }
 }

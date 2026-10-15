@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 1,
-  "needed": 1,
-  "material": "basemetals:pewter",
-  "ingredient": {
-    "tag": "forge:ingots/pewter"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/pewter"
+  },
+  "material": "basemetals:pewter",
+  "needed": 1,
+  "value": 1
 }

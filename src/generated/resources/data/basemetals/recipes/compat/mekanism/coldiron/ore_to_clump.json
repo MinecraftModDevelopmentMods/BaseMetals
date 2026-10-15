@@ -1,17 +1,8 @@
 {
   "type": "mekanism:purifying",
-  "itemInput": {
-    "ingredient": {
-      "tag": "forge:ores/coldiron"
-    }
-  },
   "chemicalInput": {
     "amount": 1,
     "gas": "mekanism:oxygen"
-  },
-  "output": {
-    "item": "basemetals:coldiron_clump",
-    "count": 3
   },
   "conditions": [
     {
@@ -22,5 +13,14 @@
       "type": "basemetals:content_mode",
       "item": "basemetals:coldiron_clump"
     }
-  ]
+  ],
+  "itemInput": {
+    "ingredient": {
+      "tag": "forge:ores/coldiron"
+    }
+  },
+  "output": {
+    "count": 3,
+    "item": "basemetals:coldiron_clump"
+  }
 }

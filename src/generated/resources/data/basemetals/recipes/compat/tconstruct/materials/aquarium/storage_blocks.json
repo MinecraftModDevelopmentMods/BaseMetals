@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material",
-  "value": 9,
-  "needed": 1,
-  "material": "basemetals:aquarium",
-  "ingredient": {
-    "tag": "forge:storage_blocks/aquarium"
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/aquarium"
+  },
+  "material": "basemetals:aquarium",
+  "needed": 1,
+  "value": 9
 }

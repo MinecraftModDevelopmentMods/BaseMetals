@@ -59,7 +59,7 @@ public final class BaseMetalsTrades {
             MaterialDefinition material, String... forms) {
         for (String form : forms) {
             Item item = ModContent.item(material.name() + "_" + form).get();
-            if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(item.getRegistryName().toString())) continue;
+            if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item).toString())) continue;
             event.getTrades().get(level).add(selling(item, cost));
         }
     }

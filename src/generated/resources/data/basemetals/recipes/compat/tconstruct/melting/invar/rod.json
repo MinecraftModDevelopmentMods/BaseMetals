@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 30,
-  "ingredient": {
-    "tag": "forge:rods/invar"
-  },
-  "result": {
-    "fluid": "basemetals:invar",
-    "amount": 45
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:rods/invar"
+  },
+  "result": {
+    "amount": 45,
+    "fluid": "basemetals:invar"
+  },
+  "temperature": 769,
+  "time": 30
 }

@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "  X",
-      "XWX",
-      "XXX"
-    ],
+    "category": "equipment",
+    "group": "basemetals:obsidian_horse_armor",
     "key": {
       "W": {
         "tag": "minecraft:wool"
@@ -15,9 +12,13 @@
         "tag": "forge:ingots/obsidian"
       }
     },
+    "pattern": [
+      "  X",
+      "XWX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:obsidian_horse_armor"
-    },
-    "group": "basemetals:obsidian_horse_armor"
+    }
   }
 }

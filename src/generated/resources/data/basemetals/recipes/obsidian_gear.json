@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X ",
-      "XRX",
-      " X "
-    ],
+    "category": "misc",
+    "group": "basemetals:obsidian_gear",
     "key": {
       "R": {
         "tag": "forge:rods/obsidian"
@@ -15,10 +12,14 @@
         "tag": "forge:ingots/obsidian"
       }
     },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
     "result": {
-      "item": "basemetals:obsidian_gear",
-      "count": 4
-    },
-    "group": "basemetals:obsidian_gear"
+      "count": 4,
+      "item": "basemetals:obsidian_gear"
+    }
   }
 }

@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX"
-    ],
+    "category": "building",
+    "group": "basemetals:pewter_plate",
     "key": {
       "X": {
         "tag": "forge:ingots/pewter"
       }
     },
+    "pattern": [
+      "XXX"
+    ],
     "result": {
-      "item": "basemetals:pewter_plate",
-      "count": 3
-    },
-    "group": "basemetals:pewter_plate"
+      "count": 3,
+      "item": "basemetals:pewter_plate"
+    }
   }
 }

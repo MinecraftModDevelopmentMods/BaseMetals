@@ -1,15 +1,15 @@
 {
   "type": "tconstruct:material_melting",
-  "input": "basemetals:adamantine",
-  "temperature": 769,
-  "result": {
-    "fluid": "basemetals:adamantine",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "input": "basemetals:adamantine",
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:adamantine"
+  },
+  "temperature": 769
 }

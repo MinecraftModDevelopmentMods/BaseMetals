@@ -11,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public final class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(
-            ForgeRegistries.ENTITIES, BaseMetals.MOD_ID);
+            ForgeRegistries.ENTITY_TYPES, BaseMetals.MOD_ID);
     public static final RegistryObject<EntityType<MaterialProjectile>> CUSTOM_ARROW = ENTITIES.register(
             "custom_arrow", () -> EntityType.Builder.<MaterialProjectile>of(MaterialProjectile::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20)

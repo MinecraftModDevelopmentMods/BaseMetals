@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 30,
-  "ingredient": {
-    "tag": "forge:rods/bronze"
-  },
-  "result": {
-    "fluid": "basemetals:bronze",
-    "amount": 45
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:rods/bronze"
+  },
+  "result": {
+    "amount": 45,
+    "fluid": "basemetals:bronze"
+  },
+  "temperature": 769,
+  "time": 30
 }

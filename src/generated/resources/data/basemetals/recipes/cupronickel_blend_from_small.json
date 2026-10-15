@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "XXX",
-      "XXX"
-    ],
+    "category": "misc",
+    "group": "basemetals:cupronickel_blend",
     "key": {
       "X": {
         "tag": "forge:small_blends/cupronickel"
       }
     },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:cupronickel_blend"
-    },
-    "group": "basemetals:cupronickel_blend"
+    }
   }
 }

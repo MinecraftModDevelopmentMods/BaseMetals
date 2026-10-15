@@ -2,15 +2,16 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:cupronickel_nugget",
     "ingredients": [
       {
         "tag": "forge:ingots/cupronickel"
       }
     ],
     "result": {
-      "item": "basemetals:cupronickel_nugget",
-      "count": 9
-    },
-    "group": "basemetals:cupronickel_nugget"
+      "count": 9,
+      "item": "basemetals:cupronickel_nugget"
+    }
   }
 }

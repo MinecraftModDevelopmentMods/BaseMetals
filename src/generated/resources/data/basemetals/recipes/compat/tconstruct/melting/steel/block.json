@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 140,
-  "ingredient": {
-    "tag": "forge:storage_blocks/steel"
-  },
-  "result": {
-    "fluid": "basemetals:steel",
-    "amount": 810
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/steel"
+  },
+  "result": {
+    "amount": 810,
+    "fluid": "basemetals:steel"
+  },
+  "temperature": 769,
+  "time": 140
 }

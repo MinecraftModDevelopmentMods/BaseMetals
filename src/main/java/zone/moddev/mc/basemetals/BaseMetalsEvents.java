@@ -39,7 +39,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
@@ -52,7 +52,7 @@ import net.minecraftforge.event.server.ServerAboutToStartEvent;
 public final class BaseMetalsEvents {
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!(event.getPlayer() instanceof ServerPlayer player)) return;
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
         var recipes = new ArrayList<net.minecraft.world.item.crafting.Recipe<?>>();
 
@@ -81,7 +81,7 @@ public final class BaseMetalsEvents {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onBreak(BlockEvent.BreakEvent event) {
-        if (!(event.getWorld() instanceof ServerLevel level) || !(event.getPlayer() instanceof ServerPlayer player)) {
+        if (!(event.getLevel() instanceof ServerLevel level) || !(event.getPlayer() instanceof ServerPlayer player)) {
             return;
         }
         ItemStack held = player.getMainHandItem();
@@ -96,7 +96,7 @@ public final class BaseMetalsEvents {
                         true, level.getFluidState(event.getPos()));
                 if (!removed) return;
                 event.getState().getBlock().destroy(level, event.getPos(), event.getState());
-                ItemStack result = recipe.get().getResultItem().copy();
+                ItemStack result = recipe.get().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).copy();
                 ItemEntity entity = new ItemEntity(level, event.getPos().getX() + 0.5D,
                         event.getPos().getY() + 0.5D, event.getPos().getZ() + 0.5D, result);
                 entity.setDefaultPickUpDelay();
@@ -179,11 +179,11 @@ public final class BaseMetalsEvents {
 
     @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
-        if (!BaseMetalsConfig.SPECIAL_EFFECTS.get() || event.getEntityLiving().level.isClientSide
+        if (!BaseMetalsConfig.SPECIAL_EFFECTS.get() || event.getEntity().level.isClientSide
                 || !(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         ItemStack held = attacker.getMainHandItem();
         if (!(held.getItem() instanceof MaterialBacked backed) || !(held.getItem() instanceof TieredItem)) return;
-        LivingEntity target = event.getEntityLiving();
+        LivingEntity target = event.getEntity();
         switch (backed.baseMetalsMaterial().name()) {
             case "adamantine" -> {
                 if (target.getMaxHealth() > 20.0F) event.setAmount(event.getAmount() + 4.0F);
@@ -244,14 +244,14 @@ public final class BaseMetalsEvents {
 
     @SubscribeEvent
     public void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-        if (event.getPlayer() instanceof ServerPlayer player) {
+        if (event.getEntity() instanceof ServerPlayer player) {
             BaseMetalsAdvancements.onCrafted(player, event.getCrafting());
         }
     }
 
     @SubscribeEvent
     public void onItemSmelted(PlayerEvent.ItemSmeltedEvent event) {
-        if (event.getPlayer() instanceof ServerPlayer player) {
+        if (event.getEntity() instanceof ServerPlayer player) {
             BaseMetalsAdvancements.onSmelted(player, event.getSmelting());
         }
     }

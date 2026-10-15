@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " X ",
-      "XRX",
-      " X "
-    ],
+    "category": "misc",
+    "group": "basemetals:bismuth_gear",
     "key": {
       "R": {
         "tag": "forge:rods/bismuth"
@@ -15,10 +12,14 @@
         "tag": "forge:ingots/bismuth"
       }
     },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
     "result": {
-      "item": "basemetals:bismuth_gear",
-      "count": 4
-    },
-    "group": "basemetals:bismuth_gear"
+      "count": 4,
+      "item": "basemetals:bismuth_gear"
+    }
   }
 }

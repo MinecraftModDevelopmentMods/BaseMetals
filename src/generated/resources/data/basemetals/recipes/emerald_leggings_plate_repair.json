@@ -1,7 +1,7 @@
 {
   "type": "basemetals:plate_repair",
-  "target": "basemetals:emerald_leggings",
   "plate": {
     "tag": "forge:plates/emerald"
-  }
+  },
+  "target": "basemetals:emerald_leggings"
 }

@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XX",
-      "XX"
-    ],
+    "category": "building",
+    "group": "basemetals:mithril_trapdoor",
     "key": {
       "X": {
         "tag": "forge:ingots/mithril"
       }
     },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
     "result": {
       "item": "basemetals:mithril_trapdoor"
-    },
-    "group": "basemetals:mithril_trapdoor"
+    }
   }
 }

@@ -1,18 +1,18 @@
 {
   "type": "tconstruct:melting",
-  "temperature": 769,
-  "time": 45,
-  "ingredient": {
-    "tag": "forge:plates/adamantine"
-  },
-  "result": {
-    "fluid": "basemetals:adamantine",
-    "amount": 90
-  },
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "tconstruct"
     }
-  ]
+  ],
+  "ingredient": {
+    "tag": "forge:plates/adamantine"
+  },
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:adamantine"
+  },
+  "temperature": 769,
+  "time": 45
 }

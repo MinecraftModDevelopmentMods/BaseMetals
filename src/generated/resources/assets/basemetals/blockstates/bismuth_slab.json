@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "basemetals:block/upper_slab_bismuth"
-    },
     "type=bottom": {
       "model": "basemetals:block/half_slab_bismuth"
     },
     "type=double": {
       "model": "basemetals:block/bismuth_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_bismuth"
     }
   }
 }

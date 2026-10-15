@@ -2,10 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:nickel_lever",
     "key": {
       "R": {
         "tag": "forge:rods/nickel"
@@ -14,9 +12,12 @@
         "tag": "forge:ingots/nickel"
       }
     },
+    "pattern": [
+      "R",
+      "X"
+    ],
     "result": {
       "item": "basemetals:nickel_lever"
-    },
-    "group": "basemetals:nickel_lever"
+    }
   }
 }

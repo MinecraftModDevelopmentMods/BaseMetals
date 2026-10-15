@@ -2,10 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "X"
-    ],
+    "category": "building",
+    "group": "basemetals:emerald_lever",
     "key": {
       "R": {
         "tag": "forge:rods/emerald"
@@ -14,9 +12,12 @@
         "tag": "forge:gems/emerald"
       }
     },
+    "pattern": [
+      "R",
+      "X"
+    ],
     "result": {
       "item": "basemetals:emerald_lever"
-    },
-    "group": "basemetals:emerald_lever"
+    }
   }
 }

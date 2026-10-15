@@ -2,19 +2,20 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "X X",
-      "XXX",
-      "XXX"
-    ],
+    "category": "equipment",
+    "group": "basemetals:emerald_chestplate",
     "key": {
       "X": {
         "tag": "forge:gems/emerald"
       }
     },
+    "pattern": [
+      "X X",
+      "XXX",
+      "XXX"
+    ],
     "result": {
       "item": "basemetals:emerald_chestplate"
-    },
-    "group": "basemetals:emerald_chestplate"
+    }
   }
 }

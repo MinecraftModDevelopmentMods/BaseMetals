@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * A matching plate fully repairs one damaged armor piece or shield without changing its item data.
@@ -25,14 +24,14 @@ public final class PlateRepairRecipe extends CustomRecipe {
     private final Ingredient plate;
 
     public PlateRepairRecipe(ResourceLocation id, Item target, Ingredient plate) {
-        super(id);
+        super(id, net.minecraft.world.item.crafting.CraftingBookCategory.MISC);
         this.target = target;
         this.plate = plate;
     }
 
     @Override
     public boolean matches(CraftingContainer container, Level level) {
-        if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(target.getRegistryName().toString())) return false;
+        if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(ForgeRegistries.ITEMS.getKey(target).toString())) return false;
         ItemStack foundTarget = ItemStack.EMPTY;
         boolean foundPlate = false;
         for (int slot = 0; slot < container.getContainerSize(); slot++) {
@@ -50,7 +49,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container) {
+    public ItemStack assemble(CraftingContainer container, net.minecraft.core.RegistryAccess registries) {
         if (!matches(container, null)) return ItemStack.EMPTY;
         for (int slot = 0; slot < container.getContainerSize(); slot++) {
             ItemStack stack = container.getItem(slot);
@@ -70,7 +69,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(net.minecraft.core.RegistryAccess registries) {
         return target.getDefaultInstance();
     }
 
@@ -84,7 +83,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
         return CrushingRecipe.PLATE_REPAIR_SERIALIZER.get();
     }
 
-    public static final class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
+    public static final class Serializer
             implements RecipeSerializer<PlateRepairRecipe> {
         @Override
         public PlateRepairRecipe fromJson(ResourceLocation id, JsonObject json) {
@@ -108,7 +107,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, PlateRepairRecipe recipe) {
-            buffer.writeResourceLocation(recipe.target.getRegistryName());
+            buffer.writeResourceLocation(ForgeRegistries.ITEMS.getKey(recipe.target));
             recipe.plate.toNetwork(buffer);
         }
     }

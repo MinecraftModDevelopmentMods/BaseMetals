@@ -2,18 +2,19 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "XXX",
-      "X X"
-    ],
+    "category": "equipment",
+    "group": "basemetals:brass_helmet",
     "key": {
       "X": {
         "tag": "forge:ingots/brass"
       }
     },
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
     "result": {
       "item": "basemetals:brass_helmet"
-    },
-    "group": "basemetals:brass_helmet"
+    }
   }
 }

@@ -1,12 +1,12 @@
 {
   "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.3,
   "ingredient": {
     "item": "basemetals:invar_helmet"
   },
   "result": {
-    "item": "basemetals:invar_ingot",
-    "count": 5
-  },
-  "experience": 0.3,
-  "cookingtime": 200
+    "count": 5,
+    "item": "basemetals:invar_ingot"
+  }
 }

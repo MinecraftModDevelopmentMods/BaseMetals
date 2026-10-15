@@ -3,11 +3,11 @@ name: CodeQL
 on:
   push:
     branches:
-      - master-1.18
+      - master-1.19.4
       - 'feature/**'
   pull_request:
     branches:
-      - master-1.18
+      - master-1.19.4
 
 permissions:
   actions: read

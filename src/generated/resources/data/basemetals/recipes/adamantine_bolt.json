@@ -2,11 +2,8 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "pattern": [
-      "R",
-      "R",
-      "F"
-    ],
+    "category": "equipment",
+    "group": "basemetals:adamantine_bolt",
     "key": {
       "F": {
         "item": "minecraft:feather"
@@ -15,10 +12,14 @@
         "tag": "forge:rods/adamantine"
       }
     },
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
     "result": {
-      "item": "basemetals:adamantine_bolt",
-      "count": 4
-    },
-    "group": "basemetals:adamantine_bolt"
+      "count": 4,
+      "item": "basemetals:adamantine_bolt"
+    }
   }
 }
