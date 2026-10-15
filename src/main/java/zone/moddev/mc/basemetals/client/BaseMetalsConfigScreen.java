@@ -107,9 +107,7 @@ public final class BaseMetalsConfigScreen extends Screen {
 
     private void saveAndClose() {
         if (edits.changed()) {
-            BaseMetalsConfig.set(BaseMetalsConfig.CONTENT_MODE, edits.mode().serializedName());
-            for (int index = 0; index < VALUES.length; index++) BaseMetalsConfig.set(VALUES[index], edits.option(index));
-            BaseMetalsConfig.save();
+            BaseMetalsConfig.saveEdits(edits);
         }
 
         onClose();

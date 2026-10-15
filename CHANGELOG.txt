@@ -4,6 +4,7 @@ Base Metals 3.1.0.119041
 - Keep raw metals, Kiri's ore overlays, High/Low Fantasy modes and the fixes from 1.18.
 - Use the new creative tabs and fluid types. Filled molten-metal buckets remain visible and searchable.
 - Update door models, recipes, loot, configuration screens and save conversion for the newer Minecraft APIs.
+- Save configuration-screen changes together so quick edits aren't lost.
 - Remove obsolete vanilla biome registry snapshots during upgrades, with a backup. Keep modded biome snapshots untouched.
 - Require the published OreSpawn 4.1.0.119041 release, keeping the same ore rules and copper defaults.
 - Keep unsupported optional-mod jars out of development launches. Their integration data is retained for future compatibility work.

@@ -20,6 +20,11 @@ final class ConfigScreenSmoke {
     private ConfigScreenSmoke() {}
 
     static void verify(Minecraft minecraft, Screen parent) {
+        for (int attempt = 0; attempt < 8; attempt++) verifyOnce(minecraft, parent);
+        BaseMetals.LOGGER.info("BASEMETALS_CONFIG_SCREEN_SMOKE PASS Forge OreSpawn Done Cancel Undo Defaults restart");
+    }
+
+    private static void verifyOnce(Minecraft minecraft, Screen parent) {
         var mod = ModList.get().getModContainerById(BaseMetals.MOD_ID).orElseThrow().getModInfo();
         Screen forgeScreen = ConfigScreenHandler.getScreenFactoryFor(mod).orElseThrow().apply(minecraft, parent);
         require(forgeScreen instanceof BaseMetalsConfigScreen, "Forge Config button has the wrong screen");
@@ -64,10 +69,10 @@ final class ConfigScreenSmoke {
         require(!originalMode.equals(BaseMetalsConfig.CONTENT_MODE.get()), "Done did not save the mode edit");
         require(BaseMetalsConfig.activeMode() == activeMode, "A GUI edit changed the running content mode");
 
-        BaseMetalsConfig.set(BaseMetalsConfig.CONTENT_MODE, originalMode);
-        BaseMetalsConfig.set(BaseMetalsConfig.SPECIAL_EFFECTS, originalEffects);
-        BaseMetalsConfig.save();
-        BaseMetals.LOGGER.info("BASEMETALS_CONFIG_SCREEN_SMOKE PASS Forge OreSpawn Done Cancel Undo Defaults restart");
+        BaseMetalsConfig.saveEdits(new zone.moddev.mc.basemetals.config.ConfigEdits(
+                ContentMode.parse(originalMode), originalEffects,
+                BaseMetalsConfig.STARSTEEL_REGENERATION.get(), BaseMetalsConfig.MERCURY_EFFECTS.get(),
+                BaseMetalsConfig.VILLAGER_TRADES.get()));
     }
 
     private static List<Button> buttons(Screen screen) {
