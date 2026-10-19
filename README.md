@@ -10,9 +10,9 @@ Base Metals adds metals, alloys, equipment, building blocks, and the crackhammer
 Crush ores into powder, smelt the powder into ingots, or combine it into alloy
 blends. The metals also work with supported processing and tool-building mods.
 
-This branch builds **2.6.0.112021** for Minecraft 1.12.2 and Forge. It keeps the
-existing block and item names for saved worlds, fixes long-standing gameplay
-issues, and adds an optional Low Fantasy content mode. See the
+This branch builds **2.6.1.112021** for Minecraft 1.12.2 and Forge. This update
+fixes missing blocks and items when upgrading older Base Metals worlds. It
+also keeps the gameplay fixes and optional Low Fantasy mode from 2.6.0. See the
 [changelog](CHANGELOG.txt) for the release changes.
 
 ## Installation
@@ -30,6 +30,20 @@ Install these mods on both the client and server:
 Put the jars in the instance's `mods` folder. Minecraft 1.12.2 runs on Java 8.
 Back up your worlds and configuration before upgrading. MMD OreSpawn is the
 world-generation library, not the unrelated creature mod with a similar name.
+
+## Older worlds
+
+Older Base Metals mercury blocks, carbon powder, iron nuggets and metal door
+items load under their current names. This also covers chunks first visited
+after the upgraded world has already been saved and restarted. Stack counts,
+damage, enchantments, names and other item data are retained.
+
+Keep the corresponding materials enabled during the upgrade. The fix cannot
+restore items already lost in an earlier save; use a backup from before the
+loss instead.
+
+Test a complete copy of the world first. Containers and entities supplied by
+other mods still need their own compatible versions and upgrade support.
 
 ## Metals and alloys
 
@@ -129,7 +143,7 @@ The [build-script guide](gradle/README.md) explains the supporting scripts.
 The [release guide](docs/releasing.md) covers publication from the MMD Actions tab.
 
 Release artifacts use the Maven coordinates
-`zone.moddev.mc.basemetals:BaseMetals:2.6.0.112021`. Java packages remain under
+`zone.moddev.mc.basemetals:BaseMetals:2.6.1.112021`. Java packages remain under
 `com.mcmoddev.basemetals`; this release does not move saved registry names.
 
 Report bugs through the [issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

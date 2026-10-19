@@ -1,0 +1,80 @@
+def runtime = project.ext.baseMetalsPackagedForge
+File runDirectory = layout.buildDirectory.dir('packaged-forge-legacy-run').get().asFile
+File marker = new File(runDirectory, 'legacy-probe.properties')
+
+def prepare = tasks.register('preparePackagedLegacySave') {
+    dependsOn runtime.releaseJar, runtime.packagedLegacyRuntimeProbeJar,
+            tasks.named('verifyReleaseDependencies')
+    doLast {
+        // Never point the cleanup or fixture writer at a player's save.
+        if (!runDirectory.canonicalFile.toPath().startsWith(layout.buildDirectory.get().asFile.canonicalFile.toPath())) {
+            throw new GradleException('The legacy fixture must stay inside build/')
+        }
+        runtime.stagePackagedForgeBase(runDirectory)
+        copy {
+            from layout.buildDirectory.file("libs/BaseMetals-${project.version}.jar")
+            from layout.buildDirectory.file('runtime-probes/basemetals-legacy-runtime-probe.jar')
+            from runtime.originalArtifact(configurations.legacyDependencyArtifacts,
+                    runtime.dependencySpecs.mmdlib.coordinate)
+            from runtime.originalArtifact(configurations.legacyDependencyArtifacts,
+                    runtime.dependencySpecs.orespawn4.coordinate)
+            into new File(runDirectory, 'mods')
+        }
+        File properties = new File(runDirectory, 'server.properties')
+        properties.setText(properties.getText('UTF-8').replace('level-type=default', 'level-type=flat'), 'UTF-8')
+    }
+}
+
+def previous = prepare
+['Seed', 'First', 'Reload', 'Delayed', 'Stable'].each { phase ->
+    def dependency = previous
+    def boot = tasks.register("packagedLegacySave${phase}", Exec) {
+        dependsOn dependency
+        workingDir runDirectory
+        timeout = java.time.Duration.ofMinutes(3)
+        ignoreExitValue = true
+        doFirst {
+            marker.delete()
+            // File-backed output survives assertion failures and process timeouts.
+            File console = new File(runDirectory, "${phase.toLowerCase()}-console.txt")
+            standardOutput = new FileOutputStream(console)
+            errorOutput = standardOutput
+            commandLine runtime.java8Launcher.get().executablePath.asFile,
+                    '-Xmx2G', '-Dforge.logging.console.level=info',
+                    '-Dbasemetals.legacyProbe.ciFixture=true',
+                    "-Dbasemetals.legacyProbe.phase=${phase.toLowerCase()}",
+                    "-Dbasemetals.legacyProbe.marker=${marker.absolutePath}",
+                    '-jar', new File(runDirectory,
+                            "forge-${project.minecraft_version}-${project.forge_version}-universal.jar"), 'nogui'
+        }
+        doLast {
+            standardOutput.close()
+            if (executionResult.get().exitValue != 0 || !marker.isFile()) {
+                throw new GradleException("Legacy save ${phase} failed; see ${runDirectory}")
+            }
+            Properties result = new Properties()
+            marker.withInputStream { result.load(it) }
+            if (result.getProperty('phase') != phase.toLowerCase() || result.getProperty('passed') != 'true') {
+                throw new GradleException("Invalid legacy save result: ${result}")
+            }
+            def failures = runtime.runtimeLogFailures(runDirectory)
+            if (!failures.isEmpty() || !fileTree(runDirectory) { include 'crash-reports/*.txt' }.isEmpty()) {
+                throw new GradleException("Legacy save ${phase} logged runtime failures: ${failures.take(10)}")
+            }
+        }
+    }
+
+    previous = tasks.register("verifyLegacySave${phase}", JavaExec) {
+        dependsOn boot
+        javaLauncher = runtime.java8Launcher
+        classpath = sourceSets.test.runtimeClasspath
+        mainClass = 'com.mcmoddev.basemetals.test.LegacySaveFixture'
+        args phase == 'Seed' ? 'prepare' : phase.toLowerCase(), runDirectory.absolutePath
+    }
+}
+
+tasks.register('packagedForgeLegacyMigrationTest') {
+    group = 'verification'
+    description = 'Checks old registry names on first load, reload, and a later visit to an unopened chunk.'
+    dependsOn previous
+}

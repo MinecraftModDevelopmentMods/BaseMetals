@@ -82,7 +82,7 @@ tasks.register('verifyReleaseConfiguration') {
     description = 'Validates the complete Base Metals 1.12 release identity and dependency contract.'
     dependsOn tasks.named('verifyReleaseToolchains')
     doLast {
-        if (project.mod_version != '2.6.0.112021'
+        if (project.mod_version != '2.6.1.112021'
                 || project.minecraft_version != '1.12.2'
                 || project.forge_version != '14.23.5.2859'
                 || project.mappings_channel != 'stable'
@@ -130,7 +130,7 @@ tasks.register('verifyReleaseConfiguration') {
             throw new GradleException('Unexpected published OreSpawn 4.1 CurseForge artifact identity')
         }
         String source = file('src/main/java/com/mcmoddev/basemetals/BaseMetals.java').getText('UTF-8')
-        if (!source.contains('VERSION = "2.6.0.112021"')
+        if (!source.contains('VERSION = "2.6.1.112021"')
                 || !source.contains('certificateFingerprint = ""')
                 || !source.contains('required-after:orespawn@[4.1.0.112021,5.0.0)')) {
             throw new GradleException('Base Metals source version or unsigned fingerprint contract drifted')

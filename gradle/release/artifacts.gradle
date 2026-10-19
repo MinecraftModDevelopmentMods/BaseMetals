@@ -165,6 +165,8 @@ tasks.register('verifyReleaseArtifacts') {
 				'com/mcmoddev/basemetals/recipe/PolicyCrusherRecipe.class',
                 'com/mcmoddev/basemetals/recipe/PolicyRecipe.class',
                 'com/mcmoddev/basemetals/worldgen/BaseMetalsWorldgenProvider.class',
+                'com/mcmoddev/basemetals/LegacyMappings.class',
+                'com/mcmoddev/basemetals/LegacyStackFix.class',
                 'assets/mmdlib/lang/en_us.lang',
                 'assets/mmdlib/lang/es_es.lang'
         ]

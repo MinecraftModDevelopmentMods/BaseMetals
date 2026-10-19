@@ -19,6 +19,8 @@ of that main path:
 - `verification/packaged-forge-dependencies.gradle` checks required OreSpawn
   behavior and preservation of an existing override.
 - `verification/packaged-forge-migration.gradle` covers OreSpawn 3 migration.
+- `verification/packaged-forge-legacy-saves.gradle` checks old Base Metals IDs
+  on first load, reload, and a later visit to a previously unopened chunk.
 - `verification/packaged-forge-cofh.gradle` covers the optional CoFH World
   coexistence profile.
 - `verification/packaged-forge-tinkers.gradle` covers Tinkers, TAIGA,
@@ -38,3 +40,14 @@ variables from another script's scope.
 
 When adding a task, put it beside the workflow it supports. Keep task names
 stable because CI and the release dispatcher call them directly.
+
+CI runs `packagedForgeLegacyMigrationTest` against the packaged release jar.
+It creates a small disposable Anvil save with the twenty historical item
+names and the old Mercury block name. The test checks item counts, damage,
+names, enchantments and custom data after each restart. A distant region must
+remain byte-for-byte unchanged until the test visits it; its items must then
+convert and survive another restart. No private world backup is needed.
+
+For a local run, supply `-PpackagedForgeRuntimeRoot=<Forge installation>` as
+with the other packaged-server tests. The fixture, logs and results stay in
+`build/packaged-forge-legacy-run`; they are not release artifacts.

@@ -9,6 +9,7 @@ tasks.register('verifyWorkflowContracts') {
                         'master-1.12', 'feature/**', 'Cold Forge bootstrap',
                         'Build, test, and audit', 'stage-legacy-dependencies.sh',
                         'packagedForgeRuntimeTest', 'prepareEclipse',
+                        'packagedForgeLegacyMigrationTest',
                         'Verify reproducible release archives'
                 ],
                 'codeql-analysis.yml': [
