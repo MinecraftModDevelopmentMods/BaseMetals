@@ -145,7 +145,7 @@ public final class BaseMetalsRuntimeProbe {
 		final String mmdLibVersion = version("mmdlib");
 		final String oreSpawnVersion = version("orespawn");
 
-		require("2.6.0.112021".equals(baseMetalsVersion),
+		require("2.6.1.112021".equals(baseMetalsVersion),
 				"Unexpected Base Metals version " + baseMetalsVersion);
 		// MMDLib rc2.36 still reports "rc2" in its mod metadata.
 		require("1.0.0-rc2".equals(mmdLibVersion),

@@ -45,7 +45,7 @@ public final class BaseMetals {
 	protected static final String NAME = "Base Metals";
 
 	/** Release version in the shared MMD major.minor.patch.target format. */
-	protected static final String VERSION = "2.6.0.112021";
+	protected static final String VERSION = "2.6.1.112021";
 
 	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL
 			+ "BaseMetals/master/update.json";
@@ -104,13 +104,13 @@ public final class BaseMetals {
 
 	/** Restores historical block IDs when Forge loads an older save. */
 	@SubscribeEvent
-	public void onRemapBlock(final RegistryEvent.MissingMappings<Block> event) {
+	public static void onRemapBlock(final RegistryEvent.MissingMappings<Block> event) {
 		proxy.onRemapBlock(event);
 	}
 
 	/** Restores historical item IDs when Forge loads an older save. */
 	@SubscribeEvent
-	public void onRemapItem(final RegistryEvent.MissingMappings<Item> event) {
+	public static void onRemapItem(final RegistryEvent.MissingMappings<Item> event) {
 		proxy.onRemapItem(event);
 	}
 }

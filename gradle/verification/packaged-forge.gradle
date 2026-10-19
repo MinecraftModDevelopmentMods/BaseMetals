@@ -29,6 +29,31 @@ tasks.register('packagedRuntimeProbes') {
     dependsOn packagedRuntimeProbeJar
 }
 
+tasks.register('legacyRuntimeProbeJar', Jar) {
+    group = 'verification'
+    description = 'Builds the test-only legacy-save registry and inventory probe.'
+    dependsOn tasks.named('testClasses')
+    archiveBaseName = 'basemetals-legacy-runtime-probe'
+    archiveVersion = ''
+    archiveClassifier = 'deobf'
+    destinationDirectory = layout.buildDirectory.dir('runtime-probes-dev')
+    from(sourceSets.test.output) {
+        include 'com/mcmoddev/basemetals/test/BaseMetalsLegacyRuntimeProbe*.class'
+        include 'com/mcmoddev/basemetals/test/LegacySaveFixture.class'
+    }
+}
+
+def packagedLegacyRuntimeProbeJar = renamer.classes(tasks.named('legacyRuntimeProbeJar', Jar)) {
+    map.from minecraft.dependency.toSrgFile
+    archiveClassifier = null
+    output = layout.buildDirectory.file('runtime-probes/basemetals-legacy-runtime-probe.jar')
+}
+
+tasks.register('packagedLegacyRuntimeProbe') {
+    group = 'verification'
+    dependsOn packagedLegacyRuntimeProbeJar
+}
+
 tasks.register('tinkersRuntimeProbeJar', Jar) {
     group = 'verification'
     description = 'Builds the mapped test-only Tinkers/TAIGA compatibility probe.'
@@ -372,6 +397,7 @@ ext.baseMetalsPackagedForge = [
         releaseJar                          : releaseJar,
         java8Launcher                       : java8Launcher,
         packagedRuntimeProbeJar             : packagedRuntimeProbeJar,
+        packagedLegacyRuntimeProbeJar       : packagedLegacyRuntimeProbeJar,
         packagedTinkersRuntimeProbeJar      : packagedTinkersRuntimeProbeJar,
         packagedClientConfigRuntimeProbeJar : packagedClientConfigRuntimeProbeJar,
         packagedForgeRuntimeRoot            : packagedForgeRuntimeRoot,
@@ -384,6 +410,7 @@ ext.baseMetalsPackagedForge = [
 
 apply from: 'gradle/verification/packaged-forge-dependencies.gradle'
 apply from: 'gradle/verification/packaged-forge-migration.gradle'
+apply from: 'gradle/verification/packaged-forge-legacy-saves.gradle'
 apply from: 'gradle/verification/packaged-forge-cofh.gradle'
 apply from: 'gradle/verification/packaged-forge-tinkers.gradle'
 apply from: 'gradle/verification/packaged-advancements.gradle'

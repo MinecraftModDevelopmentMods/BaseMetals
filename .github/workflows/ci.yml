@@ -145,6 +145,7 @@ jobs:
           gradle_args=(
             clean check build javadoc verifyReleaseDependencies verifyReleaseArtifacts
             writeReleaseChecksums prepareEclipse packagedForgeRuntimeTest
+            packagedForgeLegacyMigrationTest
             -PlegacyDependencyVerificationRepository="${{ steps.dependencies.outputs.repository }}"
             -PpackagedForgeRuntimeRoot="${{ steps.forge.outputs.runtime }}"
             --no-daemon --stacktrace --max-workers=2
@@ -177,9 +178,9 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-2.6.0.112021.jar
-            build/libs/BaseMetals-2.6.0.112021-sources.jar
-            build/libs/BaseMetals-2.6.0.112021-javadoc.jar
+            build/libs/BaseMetals-2.6.1.112021.jar
+            build/libs/BaseMetals-2.6.1.112021-sources.jar
+            build/libs/BaseMetals-2.6.1.112021-javadoc.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 
@@ -196,4 +197,6 @@ jobs:
             build/packaged-forge-*-run/logs/**
             build/packaged-forge-*-run/*-console.txt
             build/packaged-forge-*-run/crash-reports/**
+            build/packaged-forge-legacy-run/*-save.properties
+            build/packaged-forge-legacy-run/legacy-*.properties
             build/problems/**

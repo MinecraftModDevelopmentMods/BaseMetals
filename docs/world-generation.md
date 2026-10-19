@@ -1,6 +1,6 @@
 # Base Metals world generation
 
-Base Metals 2.6.0 requires OreSpawn 4.1.0.112021 or newer in the 4.x line.
+Base Metals 2.6 requires OreSpawn 4.1.0.112021 or newer in the 4.x line.
 OreSpawn is the only Base Metals ore generator. Base Metals does not register a
 fallback generator.
 
