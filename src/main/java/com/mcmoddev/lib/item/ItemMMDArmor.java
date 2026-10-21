@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.items.MMDToolEffects;
+import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;

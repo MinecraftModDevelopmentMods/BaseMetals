@@ -2,7 +2,7 @@ package com.mcmoddev.lib.item;
 
 import java.util.Locale;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.common.item.IHorseArmor;
 import com.mcmoddev.lib.material.MMDMaterial;
 

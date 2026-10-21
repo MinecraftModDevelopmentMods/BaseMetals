@@ -10,7 +10,7 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.util.VillagerTradeHelper;
+import zone.moddev.mc.basemetals.util.VillagerTradeHelper;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;

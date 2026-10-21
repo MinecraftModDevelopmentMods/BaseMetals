@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierFakeDiamond;
 import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierLeadPlated;
 import com.mcmoddev.lib.integration.plugins.tinkers.modifiers.ModifierToxic;

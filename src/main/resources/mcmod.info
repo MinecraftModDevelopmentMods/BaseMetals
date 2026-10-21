@@ -11,6 +11,7 @@
   "credits": "Cyanobacterium (aka DrCyano) For starting the project & geologists everywhere. SeqSEE for helping with shields.",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "requiredMods": ["orespawn@[4.1.2.110021,5.0.0)"],
+  "dependencies": ["orespawn@[4.1.2.110021,5.0.0)"]
 }
 ]

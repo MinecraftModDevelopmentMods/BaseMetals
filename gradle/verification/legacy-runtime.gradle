@@ -1,0 +1,97 @@
+// These mods are test tools, never part of the game or the public artifact.
+sourceSets {
+    migrationProbe {
+        java.srcDirs = ['tools/validation/legacy110/migration-probe']
+        java.include 'review/Legacy110Probe.java', 'review/GolemCompatibilityProbe.java'
+        compileClasspath = sourceSets.main.compileClasspath
+    }
+    launchProbe {
+        java.srcDirs = ['tools/validation/legacy110/launch-probe']
+        java.include 'review/launch/DevLaunchProbe.java'
+        compileClasspath = sourceSets.main.compileClasspath
+    }
+    oreSpawnProbe {
+        java.srcDirs = ['tools/validation/legacy110/orespawn-probe']
+        compileClasspath = sourceSets.main.compileClasspath
+    }
+    captureProbe {
+        java.srcDirs = ['tools/validation/legacy110/capture-probe']
+        compileClasspath = sourceSets.main.compileClasspath
+    }
+}
+
+def captureJar = tasks.register('captureProbeJar', Jar) {
+    archiveFileName = 'legacy-capture.jar'
+    destinationDirectory = layout.buildDirectory.dir('test-mods')
+    from sourceSets.captureProbe.output
+}
+def packagedCapture = renamer.classes(captureJar) {
+    map.from minecraft.dependency.toSrgFile
+    output = layout.buildDirectory.file('test-mods/legacy-capture-packaged.jar')
+}
+
+tasks.register('oreSpawnProbeJar', Jar) {
+    group = 'verification'
+    description = 'Builds the isolated OreSpawn configuration and world-upgrade checks.'
+    dependsOn tasks.named('oreSpawnProbeClasses')
+    archiveFileName = 'orespawn-probe.jar'
+    destinationDirectory = layout.buildDirectory.dir('test-mods')
+    from sourceSets.oreSpawnProbe.output
+}
+
+tasks.register('launchProbeJar', Jar) {
+    group = 'verification'
+    description = 'Builds the isolated menu/world probe used with generated launch profiles.'
+    dependsOn tasks.named('launchProbeClasses')
+    archiveFileName = 'launch-probe.jar'
+    destinationDirectory = layout.buildDirectory.dir('test-mods')
+    from sourceSets.launchProbe.output
+}
+
+tasks.register('compileLegacyConsumer', JavaCompile) {
+    onlyIf { providers.gradleProperty('legacyBaselineJar').isPresent() }
+    source 'tools/validation/legacy110/fixtures/LegacyMmdConsumer.java'
+    classpath = sourceSets.main.compileClasspath + files(providers.gradleProperty('legacyBaselineJar').getOrElse([]))
+    destinationDirectory = layout.buildDirectory.dir('legacy-consumer')
+}
+tasks.register('migrationProbeJar', Jar) {
+    group = 'verification'
+    description = 'Builds the isolated server probes used on disposable legacy worlds.'
+    dependsOn tasks.named('migrationProbeClasses'), tasks.named('compileLegacyConsumer')
+    archiveFileName = 'legacy110-probe.jar'
+    destinationDirectory = layout.buildDirectory.dir('test-mods')
+    from sourceSets.migrationProbe.output
+    if (providers.gradleProperty('legacyBaselineJar').isPresent()) {
+        from layout.buildDirectory.dir('legacy-consumer')
+    }
+}
+
+['launch', 'oreSpawn'].each { name ->
+    def mapped = tasks.named(name + 'ProbeJar', Jar)
+    def packaged = renamer.classes(mapped) {
+        map.from minecraft.dependency.toSrgFile
+        output = layout.buildDirectory.file("test-mods/${name == 'launch' ? 'launch' : 'orespawn'}-probe-packaged.jar")
+    }
+    tasks.register('packaged' + name.capitalize() + 'ProbeJar') {
+        group = 'verification'
+        description = 'Maps the probe for a packaged Forge server; ordinary IDE launches use the mapped development copy.'
+        dependsOn packaged
+    }
+}
+
+tasks.register('packagedForgeRuntimeTest', Exec) {
+    group = 'verification'
+    description = 'Tests OS1/OS3 imports, overrides, reloads and the vanilla takeover switch.'
+    dependsOn 'verifyReleaseArtifacts', 'packagedLaunchProbeJar', 'packagedOreSpawnProbeJar',
+            'migrationProbeJar', packagedCapture
+    doFirst {
+        def runtime = providers.gradleProperty('packagedForgeRuntimeRoot')
+        if (!runtime.isPresent()) throw new GradleException('Set packagedForgeRuntimeRoot to a prepared Forge server.')
+        def java8 = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(8) }.get()
+        commandLine providers.gradleProperty('pythonExecutable').getOrElse('python3'),
+                'tools/validation/legacy110/run_ci_checks.py',
+                '--java', java8.executablePath.asFile.absolutePath,
+                '--template', file(runtime.get()).absolutePath,
+                '--output', layout.buildDirectory.dir('packaged-forge-checks').get().asFile.absolutePath
+    }
+}

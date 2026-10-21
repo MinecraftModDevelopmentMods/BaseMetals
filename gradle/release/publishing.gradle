@@ -1,0 +1,96 @@
+import groovy.xml.XmlSlurper
+
+def releaseJar = project.ext.baseMetalsRelease.jar
+def expectedReleaseFiles = project.ext.baseMetalsRelease.expectedFiles
+def preparedReleaseDir = project.ext.baseMetalsRelease.preparedDirectory
+
+// A normal build does not publish anything; publishing needs credentials.
+def mavenUploadUrl = providers.environmentVariable('MAVEN_UPLOAD_URL')
+        .map { it.trim() }.filter { !it.isEmpty() }
+        .orElse('https://invalid.invalid/missing-maven-upload-url')
+def mavenUploadUsername = providers.environmentVariable('MAVEN_UPLOAD_USERNAME')
+def mavenUploadPassword = providers.environmentVariable('MAVEN_UPLOAD_PASSWORD')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.group.toString()
+            artifactId = base.archivesName.get()
+            version = project.version.toString()
+            if (preparedReleaseDir.isPresent()) {
+                File prepared = file(preparedReleaseDir.get())
+                artifact(new File(prepared, expectedReleaseFiles[0]))
+                artifact(new File(prepared, expectedReleaseFiles[1])) { classifier = 'sources' }
+                artifact(new File(prepared, expectedReleaseFiles[2])) { classifier = 'javadoc' }
+            } else {
+                artifact(releaseJar)
+                artifact(tasks.named('sourcesJar'))
+                artifact(tasks.named('javadocJar'))
+            }
+            pom {
+                name = 'Base Metals'
+                description = 'Metals, alloys, equipment and Crack Hammer processing for Minecraft 1.10.2.'
+                url = 'https://github.com/MinecraftModDevelopmentMods/BaseMetals'
+                licenses {
+                    license {
+                        name = 'GNU Lesser General Public License, Version 2.1'
+                        url = 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/MinecraftModDevelopmentMods/BaseMetals.git'
+                    developerConnection = 'scm:git:ssh://git@github.com/MinecraftModDevelopmentMods/BaseMetals.git'
+                    url = 'https://github.com/MinecraftModDevelopmentMods/BaseMetals'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'release'
+            url = uri(mavenUploadUrl.get())
+            credentials {
+                username = mavenUploadUsername.orNull ?: ''
+                password = mavenUploadPassword.orNull ?: ''
+            }
+        }
+    }
+}
+
+tasks.register('validateMavenReleaseCredentials') {
+    group = 'publishing'
+    doLast {
+        if (!providers.environmentVariable('MAVEN_UPLOAD_URL').getOrElse('').trim()
+                || !mavenUploadUsername.getOrElse('').trim() || !mavenUploadPassword.getOrElse('').trim()) {
+            throw new GradleException('MAVEN_UPLOAD_URL, MAVEN_UPLOAD_USERNAME, and MAVEN_UPLOAD_PASSWORD are required')
+        }
+        URI target = uri(providers.environmentVariable('MAVEN_UPLOAD_URL').get())
+        if (target.scheme != 'https' || !target.host || target.host == 'invalid.invalid'
+                || !mavenUploadUsername.get().trim() || !mavenUploadPassword.get().trim()) {
+            throw new GradleException('Maven release publication requires an HTTPS repository and non-empty credentials')
+        }
+    }
+}
+
+tasks.withType(PublishToMavenRepository).configureEach {
+    dependsOn tasks.named('validateMavenReleaseCredentials')
+    dependsOn 'verifyMavenCoordinates'
+    if (preparedReleaseDir.isPresent()) {
+        dependsOn tasks.named('verifyPreparedReleaseArtifacts')
+    } else {
+        dependsOn tasks.named('verifyReleaseArtifacts')
+    }
+}
+
+tasks.register('verifyMavenCoordinates') {
+    group = 'verification'
+    dependsOn tasks.named('generatePomFileForMavenJavaPublication')
+    doLast {
+        def pom = new XmlSlurper(false, false).parse(layout.buildDirectory.file('publications/mavenJava/pom-default.xml').get().asFile)
+        def actual = [pom.groupId.text(), pom.artifactId.text(), pom.version.text()]
+        def expected = ['zone.moddev.mc.basemetals', 'BaseMetals', project.version.toString()]
+        if (actual != expected) throw new GradleException("Wrong Maven coordinate: ${actual.join(':')}")
+    }
+}
+
+tasks.named('check') { dependsOn tasks.named('verifyMavenCoordinates') }

@@ -2,7 +2,7 @@ package com.mcmoddev.lib.integration.plugins;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;

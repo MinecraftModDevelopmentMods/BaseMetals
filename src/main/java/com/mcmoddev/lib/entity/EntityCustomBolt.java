@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.entity;
 
-import com.mcmoddev.basemetals.data.MaterialNames;
+import zone.moddev.mc.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 

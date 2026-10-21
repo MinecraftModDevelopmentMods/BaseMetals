@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.block.BlockMMDAnvil;
 import com.mcmoddev.lib.block.BlockMMDBars;
 import com.mcmoddev.lib.block.BlockMMDBlock;

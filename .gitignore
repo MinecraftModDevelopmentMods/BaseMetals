@@ -31,3 +31,42 @@ libs/*
 !/libs/README.txt
 
 .DS_Store
+[Dd]esktop.ini
+[Tt]humbs.db
+
+# Local working notes and generated validation reports
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+agent-notes/
+.agents/
+.codex/
+.claude/
+.gemini/
+development.md
+registry_audit.md
+validation.md
+validation-*.md
+ore_textures.md
+agent-report*.md
+codex-report*.md
+
+# Generated test evidence and Python bytecode
+__pycache__/
+*.py[cod]
+logs/
+crash-reports/
+run-*/
+*.log
+*.hprof
+*.jfr
+
+# Standalone server installs and disposable validation worlds
+/libraries/
+/forge-*.jar
+/minecraft_server*.jar
+/world/
+/saves/
+.verification*/
+.validation*/
+validation-reports/
