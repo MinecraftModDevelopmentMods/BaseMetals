@@ -31,6 +31,8 @@ libs/*
 !/libs/README.txt
 
 .DS_Store
+[Dd]esktop.ini
+[Tt]humbs.db
 
 # Local working notes and generated validation reports
 AGENTS.md

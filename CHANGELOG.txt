@@ -34,5 +34,7 @@
 - Connect this target to the shared release action, using one verified bundle
   for Maven, CurseForge and GitHub. Keep publication behind explicit confirmation.
 - Normalize changed text files to LF and fix the stray import whitespace.
+- Leave Windows folder metadata out of downloads and use UTF-8 for sources
+  and Javadocs on every platform.
 
 2.5.0 for 1.10.2

@@ -34,12 +34,15 @@ tasks.withType(Javadoc).configureEach {
     failOnError = false
     options.encoding = 'UTF-8'
     options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('docencoding', 'UTF-8')
+    options.addStringOption('charset', 'UTF-8')
     options.addBooleanOption('notimestamp', true)
 }
 tasks.withType(AbstractArchiveTask).configureEach {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
     includeEmptyDirs = false
+    exclude '**/desktop.ini', '**/Thumbs.db', '**/.DS_Store'
 }
 // Mapped dependency bytes no longer match their original signatures. Keep the
 // verified downloads intact and strip signatures only from renamed copies.
@@ -47,7 +50,7 @@ tasks.withType(net.minecraftforge.renamer.gradle.RenameJar).configureEach {
     additionalArgs.addAll('--strip-sigs', 'ALL', '--disable-abstract-param')
 }
 
-def textPatterns = ['cfg', 'info', 'java', 'json', 'lang', 'mcmeta', 'md', 'properties', 'txt', 'xml']
+def textPatterns = ['cfg', 'css', 'html', 'info', 'java', 'js', 'json', 'lang', 'mcmeta', 'md', 'properties', 'txt', 'xml']
         .collect { "**/*.${it}".toString() }
 def normalizeText = { details ->
     details.filter(FixCrLfFilter, eol: FixCrLfFilter.CrLf.newInstance('lf'),
@@ -141,6 +144,7 @@ renamer.mappings.from minecraft.dependency.toSrgFile
 
 tasks.named('processResources', ProcessResources) {
     filteringCharset = 'UTF-8'
+    exclude '**/desktop.ini', '**/Thumbs.db', '**/.DS_Store'
     inputs.property 'version', project.version
     inputs.property 'mcversion', project.minecraft_version
     filesMatching('mcmod.info') { expand version: project.version, mcversion: project.minecraft_version }
@@ -158,7 +162,10 @@ tasks.named('jar', Jar) {
             'FMLCorePluginContainsFMLMod': 'true', 'FMLCorePlugin': project.coreplugin)
 }
 ['sourcesJar', 'javadocJar'].each { name ->
-    tasks.named(name, Jar) { filesMatching(textPatterns, normalizeText) }
+    tasks.named(name, Jar) {
+        filteringCharset = 'UTF-8'
+        filesMatching(textPatterns, normalizeText)
+    }
 }
 
 ext.baseMetalsBuild = [developmentOutput: developmentOutput].asImmutable()

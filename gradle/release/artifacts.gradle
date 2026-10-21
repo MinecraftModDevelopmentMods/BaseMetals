@@ -68,6 +68,7 @@ def auditJars = { File directory ->
                     if (path.startsWith('review/') || path.contains('probe') || path.contains('fixture')
                             || path.contains('agent-notes') || path.contains('agents.md') || path.contains('.codex')
                             || path.contains('.agents') || path.contains('claude') || path.contains('gemini')
+                            || path.tokenize('/').any { it in ['desktop.ini', 'thumbs.db', '.ds_store'] }
                             || path.startsWith('tools/') || path.startsWith('reference/')
                             || path.startsWith('com/mcmoddev/lib/oregen/')
                             || path.startsWith('com/mcmoddev/orespawn/')
@@ -78,6 +79,13 @@ def auditJars = { File directory ->
                     def date = entry.timeLocal
                     if (!entry.directory && !(date.toString() in ['1980-01-01T00:00', '1980-02-01T00:00'])) {
                         throw new GradleException("Volatile archive timestamp: ${entry.name}")
+                    }
+                    if (!entry.directory && path ==~ /.*\.(java|html|css|js|json|lang|mcmeta|md|txt|xml|cfg|info|properties)/) {
+                        def decoder = java.nio.charset.StandardCharsets.UTF_8.newDecoder()
+                                .onMalformedInput(java.nio.charset.CodingErrorAction.REPORT)
+                                .onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT)
+                        String content = decoder.decode(java.nio.ByteBuffer.wrap(zip.getInputStream(entry).bytes)).toString()
+                        if (content.contains('\r')) throw new GradleException("Non-LF text in ${entry.name}")
                     }
                     if (!entry.directory && path ==~ /.*\.(class|java|html|json|info|xml|properties|txt|md|lang|cfg)/) {
                         String content = new String(zip.getInputStream(entry).bytes,
