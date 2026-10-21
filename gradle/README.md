@@ -23,12 +23,23 @@ Use `generateResources` after changing them to update the committed resources.
 source files. Neither the providers nor test probes enter ordinary game
 launches or public jars.
 
+The scythe's harvestable-block tag lives in `src/main/resources`. Its explicit
+block list preserves the older harvesting behaviour, while vanilla crop,
+flower, sapling and leaf tags include suitable new plants.
+
 Normal client and server launches use an explicit runtime classpath, not
 Buildship's full dependency container. Compile-only integration APIs therefore
 remain available in the editor without loading extra mods into the game.
 
-`runClientOptionalMods` uses a separate folder for optional-mod testing. No
-optional mods are added automatically: the inherited integration mods do not
-publish builds for Minecraft 1.19.4. The `compatSmoke` and `packagedCompatSmoke`
-switches reject those unsupported jars rather than loading another Minecraft
-version's mods.
+`runClientOptionalMods` uses a separate folder and loads the pinned 1.20.1
+integration mods marked `development` in `gradle/optional-mods.json`. Their downloaded jars
+are checked by `verifyOptionalRuntimeDependencies`. Ordinary client and server
+launches still load only essential mods.
+
+Use `compatSmoke` for development-runtime integration tests or
+`packagedCompatSmoke` for the packaged server tests. Neither switch is needed
+for ordinary development.
+
+Thermal and Ender IO are covered by packaged client/server tests. Their embedded
+dependencies still use SRG names after development remapping, so they are not
+included in the IDE profile.

@@ -1,9 +1,9 @@
 {
-  "type": "enderio_machines:alloy_smelting",
+  "type": "enderio:alloy_smelting",
   "conditions": [
     {
       "type": "forge:mod_loaded",
-      "modid": "enderio_machines"
+      "modid": "enderio"
     },
     {
       "type": "basemetals:content_mode",

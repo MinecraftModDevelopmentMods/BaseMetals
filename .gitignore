@@ -55,8 +55,8 @@ classes
 !/libs/README.txt
 
 .DS_Store
-Thumbs.db
-Desktop.ini
+[Tt]humbs.db
+[Dd]esktop.ini
 
 # python
 __pycache__/

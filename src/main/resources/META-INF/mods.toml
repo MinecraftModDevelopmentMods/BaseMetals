@@ -14,7 +14,7 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
 modId="orespawn"
 mandatory=true
-versionRange="[4.1.0.119041,5.0.0)"
+versionRange="[4.1.0.120011,5.0.0)"
 ordering="AFTER"
 side="BOTH"
 
@@ -42,7 +42,7 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="thermal_expansion"
 mandatory=false
-versionRange="[9,10)"
+versionRange="[11,12)"
 ordering="AFTER"
 side="BOTH"
 
@@ -54,11 +54,9 @@ ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
-modId="enderio_machines"
+modId="enderio"
 mandatory=false
-# Maven qualifier ordering places commit-suffixed 6.0.0 alpha builds below
-# the bare 6.0.0-alpha token. This range admits the intended major-6 alpha
-# line while still rejecting every other Ender IO major version.
+# Ender IO 6 uses prerelease version suffixes, including its supported beta builds.
 versionRange="(5,7)"
 ordering="AFTER"
 side="BOTH"

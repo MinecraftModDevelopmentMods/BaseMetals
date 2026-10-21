@@ -194,7 +194,7 @@ tasks.register('verifyMavenCoordinates') {
 
 tasks.register('verifyMavenizerCompatibilityFixture') {
     group = 'verification'
-    description = 'Verifies the checksum-sealed Forge 1.19.4 Mavenizer compatibility fixture.'
+    description = 'Verifies the checksum-sealed Forge 1.20.1 Mavenizer compatibility fixture.'
     inputs.file project.ext.mavenizerCompatibilityJar
     doLast {
         File fixture = project.ext.mavenizerCompatibilityJar.asFile
@@ -208,23 +208,23 @@ tasks.register('verifyMavenizerCompatibilityFixture') {
 
 tasks.register('verifyReleaseConfiguration') {
     group = 'verification'
-    description = 'Verifies the exact Base Metals 1.19.4 release identity.'
+    description = 'Verifies the exact Base Metals 1.20.1 release identity.'
     dependsOn tasks.named('verifyMavenizerCompatibilityFixture')
     dependsOn tasks.named('verifyJava17Toolchain')
     doLast {
-        if (configuredReleaseIdentity.modVersion != '3.1.0.119041'
+        if (configuredReleaseIdentity.modVersion != '3.1.0.120011'
                 || configuredReleaseIdentity.modGroup != expectedMavenGroup
-                || configuredReleaseIdentity.minecraftVersion != '1.19.4'
-                || configuredReleaseIdentity.forgeVersion != '45.4.0'
-                || configuredReleaseIdentity.forgeInstallerSha256 != '6643BB8C21F409CC528FF656DAF60C206D304CC77BF529BBBAB4B336004DFC53'
+                || configuredReleaseIdentity.minecraftVersion != '1.20.1'
+                || configuredReleaseIdentity.forgeVersion != '47.4.10'
+                || configuredReleaseIdentity.forgeInstallerSha256 != '1912760B4CB6B803D8A826DE603C9076B1DA71EC2765E9A1F8C1CA78F65278E3'
                 || configuredReleaseIdentity.mappingChannel != 'official'
-                || configuredReleaseIdentity.mappingVersion != '1.19.4'
+                || configuredReleaseIdentity.mappingVersion != '1.20.1'
                 || configuredReleaseIdentity.loaderName != 'forge'
                 || configuredReleaseIdentity.loaderCode != '1'
                 || configuredReleaseIdentity.javaVersion != '17'
                 || configuredReleaseIdentity.gradleJavaVersion != '17'
                 || configuredReleaseIdentity.curseForgeProjectId != '240967') {
-            throw new GradleException('Unexpected Base Metals 1.19.4 release identity')
+            throw new GradleException('Unexpected Base Metals 1.20.1 release identity')
         }
     }
 }
@@ -233,10 +233,10 @@ tasks.register('verifyReleaseDependencies') {
     group = 'verification'
     description = 'Resolves and verifies the exact released OreSpawn qualification dependency.'
     doLast {
-        if (configuredOreSpawnIdentity.version != '4.1.0.119041'
+        if (configuredOreSpawnIdentity.version != '4.1.0.120011'
                 || configuredOreSpawnIdentity.curseProjectId != '245586'
-                || configuredOreSpawnIdentity.curseFileId != '9171353'
-                || configuredOreSpawnIdentity.sha256 != '1B2ECAA546E7FFB35863AC1D9FF92504471EE857045DCD01A068C5CA7F53CFFD') {
+                || configuredOreSpawnIdentity.curseFileId != '9175609'
+                || configuredOreSpawnIdentity.sha256 != 'E6BDE47C1BB0BF4D08396F1D1FD5B1D2D3F8A5DF09905F279D39E2601D7FE4B0') {
             throw new GradleException('Unexpected OreSpawn release coordinates')
         }
         File artifact = configurations.orespawnRelease.resolvedConfiguration.resolvedArtifacts
@@ -325,14 +325,14 @@ tasks.register('verifyReleaseArtifacts') {
             if (manifest.mainAttributes.getValue('Maven-Artifact') != expectedMavenCoordinate) {
                 throw new GradleException('Release manifest contains the wrong Maven coordinate')
             }
-            String expectedBuildTarget = 'minecraft-1.19.4-forge-45.4.0-java-17'
+            String expectedBuildTarget = 'minecraft-1.20.1-forge-47.4.10-java-17'
             if (manifest.mainAttributes.getValue('Build-Target') != expectedBuildTarget) {
                 throw new GradleException('Release manifest contains the wrong stable build target')
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
             if (modsToml.contains('${')
-                    || !modsToml.contains('version="3.1.0.119041"')
-                    || !modsToml.contains('versionRange="[4.1.0.119041,5.0.0)"')) {
+                    || !modsToml.contains('version="3.1.0.120011"')
+                    || !modsToml.contains('versionRange="[4.1.0.120011,5.0.0)"')) {
                 throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
             }
             def provider = new JsonSlurper().parse(zip.getInputStream(

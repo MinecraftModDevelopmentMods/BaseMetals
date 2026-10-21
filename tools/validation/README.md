@@ -1,6 +1,6 @@
 # World upgrade checks
 
-`test_legacy_worlds.js` starts the packaged Forge 1.19.4 server against a fresh
+`test_legacy_worlds.js` starts the packaged Forge 1.20.1 server against a fresh
 copy of each supplied world, then starts it again to check the saved result.
 It refuses to overwrite an existing test directory and fingerprints every
 source world before and after the test.

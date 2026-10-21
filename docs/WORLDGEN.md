@@ -1,7 +1,9 @@
 # OreSpawn world generation
 
-Base Metals requires OreSpawn `[4.0.1,5.0.0)` and packages provider schema 3,
-revision 1 at `data/basemetals/orespawn/provider.json`. Development, CI, and release qualification use the exact OreSpawn `4.1.0.119041` artifact; the provider is also checked against the vendored 4.1.0 public schema snapshot.
+Base Metals requires OreSpawn `[4.1.0.120011,5.0.0)` and packages provider schema 3,
+revision 1 at `data/basemetals/orespawn/provider.json`. Builds and tests use the
+published OreSpawn `4.1.0.120011` release. The provider is checked against the
+included 4.1.0 schema.
 
 The provider declares ores only: it has no rocks, geomes, biome rules, terrain
 dimensions, formations, fluid deposits, vanilla suppression, or strata

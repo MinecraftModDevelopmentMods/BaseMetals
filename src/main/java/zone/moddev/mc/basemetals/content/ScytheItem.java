@@ -33,11 +33,11 @@ public final class ScytheItem extends DiggerItem implements MaterialBacked {
 
     @Override
     public boolean onBlockStartBreak(ItemStack stack, BlockPos position, Player player) {
-        if (player.level.isClientSide || !(player instanceof ServerPlayer serverPlayer)
+        if (player.level().isClientSide || !(player instanceof ServerPlayer serverPlayer)
                 || HARVESTING.get()) {
             return false;
         }
-        if (!player.level.getBlockState(position).is(ModTags.SCYTHE_HARVESTABLE)) {
+        if (!player.level().getBlockState(position).is(ModTags.SCYTHE_HARVESTABLE)) {
             return false;
         }
 
@@ -46,7 +46,7 @@ public final class ScytheItem extends DiggerItem implements MaterialBacked {
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dz = -1; dz <= 1; dz++) {
                     BlockPos target = position.offset(dx, 0, dz);
-                    if (player.level.getBlockState(target).is(ModTags.SCYTHE_HARVESTABLE)) {
+                    if (player.level().getBlockState(target).is(ModTags.SCYTHE_HARVESTABLE)) {
                         serverPlayer.gameMode.destroyBlock(target);
                     }
                 }

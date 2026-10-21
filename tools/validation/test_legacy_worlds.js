@@ -71,6 +71,10 @@ function checkUpgradeLog(log) {
         'minecraft:zombie_pigman', 'minecraft:zombie_pigman_spawn_egg',
         'minecraft:golem_last_seen_time', 'minecraft:opened_doors',
         'minecraft:nitwit', 'minecraft:unemployed',
+        'minecraft:pottery_shard_archer', 'minecraft:pottery_shard_arms_up',
+        'minecraft:pottery_shard_prize', 'minecraft:pottery_shard_skull',
+        'minecraft:item.brush.brush_sand_completed', 'minecraft:item.brush.brushing',
+        'minecraft:music.overworld.jungle_and_forest',
         'minecraft:entity.zombie_pigman.ambient', 'minecraft:entity.zombie_pigman.angry',
         'minecraft:entity.zombie_pigman.death', 'minecraft:entity.zombie_pigman.hurt',
         'minecraft:music.nether', 'minecraft:item.sweet_berries.pick_from_bush'
@@ -123,7 +127,7 @@ async function run(directory, launcher, label, marker, properties = []) {
     const output = fs.createWriteStream(path.join(directory, label + '.log'));
     const executable = phase === 'capture' ? spec.java8 : spec.java17;
     const launchArguments = phase === 'capture' ? ['-jar', launcher, 'nogui']
-        : serverArguments(spec.serverRuntime, directory, '1.19.4', '45.4.0');
+        : serverArguments(spec.serverRuntime, directory, '1.20.1', '47.4.10');
     const child = spawn(executable, ['-Xms256m', '-Xmx2g', ...properties, ...launchArguments],
         { cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.pipe(output, { end: false });
@@ -202,7 +206,6 @@ async function run(directory, launcher, label, marker, properties = []) {
             if (before !== after) throw new Error('Source fixture changed: ' + source);
             if (!profile.fresh) results.push(profile.id + ' source_sha256=' + before + ' unchanged=true');
         }
-        fs.writeFileSync(path.join(root, phase + '-results.txt'), results.join('\n') + '\n');
         fs.writeFileSync(path.join(root, phase + '-results.txt'), results.join('\n') + '\n');
     }
 })().catch(error => { console.error(error); process.exitCode = 1; });

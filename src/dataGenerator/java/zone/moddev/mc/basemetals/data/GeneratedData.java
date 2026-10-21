@@ -166,7 +166,6 @@ final class GeneratedData implements DataProvider {
         // AnvilBlock.damage is hard-coded to the three vanilla blocks in 1.18.
         // Tagging a custom anvil makes any damaging fall delete it immediately.
         // BaseMetalAnvilBlock supplies the menu and durability handling itself.
-        tag(cache, "basemetals", "blocks/scythe_harvestable", scytheHarvestableBlocks());
         tag(cache, "basemetals", "blocks/crackhammer_crushable", crackhammerCrushableBlocks());
         writeHarvestTierTags(cache);
         tag(cache, "forge", "blocks/netherrack", List.of("minecraft:netherrack"));
@@ -317,31 +316,6 @@ final class GeneratedData implements DataProvider {
         }
         tag(cache, "forge", "items/storage_blocks/charcoal", List.of("basemetals:charcoal_block"));
         tag(cache, "forge", "blocks/storage_blocks/charcoal", List.of("basemetals:charcoal_block"));
-    }
-
-    private static List<String> scytheHarvestableBlocks() {
-        LinkedHashSet<String> values = new LinkedHashSet<>(List.of(
-                "#minecraft:leaves", "#minecraft:saplings", "#minecraft:flowers", "#minecraft:crops"));
-        java.util.Set<net.minecraft.world.level.material.Material> materials = java.util.Set.of(
-                net.minecraft.world.level.material.Material.WEB,
-                net.minecraft.world.level.material.Material.LEAVES,
-                net.minecraft.world.level.material.Material.PLANT,
-                net.minecraft.world.level.material.Material.WATER_PLANT,
-                net.minecraft.world.level.material.Material.REPLACEABLE_PLANT,
-                net.minecraft.world.level.material.Material.REPLACEABLE_FIREPROOF_PLANT,
-                net.minecraft.world.level.material.Material.REPLACEABLE_WATER_PLANT,
-                net.minecraft.world.level.material.Material.VEGETABLE,
-                net.minecraft.world.level.material.Material.CACTUS,
-                net.minecraft.world.level.material.Material.BAMBOO,
-                net.minecraft.world.level.material.Material.BAMBOO_SAPLING,
-                net.minecraft.world.level.material.Material.MOSS);
-        net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues().stream()
-                .filter(block -> materials.contains(block.defaultBlockState().getMaterial()))
-                .map(net.minecraftforge.registries.ForgeRegistries.BLOCKS::getKey)
-                .filter(java.util.Objects::nonNull)
-                .map(ResourceLocation::toString)
-                .forEach(values::add);
-        return List.copyOf(values);
     }
 
     private static List<String> crackhammerCrushableBlocks() {
@@ -1155,7 +1129,7 @@ final class GeneratedData implements DataProvider {
             }
         }
         for (Map.Entry<String, List<AlloyComponent>> alloy : ALLOYS.entrySet()) {
-            JsonObject root = object("type", "enderio_machines:alloy_smelting", "energy", 6400,
+            JsonObject root = object("type", "enderio:alloy_smelting", "energy", 6400,
                     "experience", 0.3F);
             JsonArray inputs = new JsonArray();
             for (AlloyComponent component : alloy.getValue()) {
@@ -1165,15 +1139,19 @@ final class GeneratedData implements DataProvider {
             root.add("inputs", inputs);
             root.add("result", result("basemetals:" + alloy.getKey() + "_ingot",
                     ALLOY_OUTPUTS.get(alloy.getKey())));
-            saveConditionalRecipe(cache, root, "compat/enderio/alloys/" + alloy.getKey(), "enderio_machines");
+            saveConditionalRecipe(cache, root, "compat/enderio/alloys/" + alloy.getKey(), "enderio");
         }
     }
 
     private void enderSag(CachedOutput cache, String id, String input, String output, int count) throws IOException {
-        JsonObject root = object("type", "enderio_machines:sagmilling", "energy", 2400);
+        JsonObject root = object("type", "enderio:sag_milling", "energy", 2400);
         root.add("input", ingredient(input));
-        JsonArray outputs = new JsonArray(); outputs.add(result(output, count)); root.add("outputs", outputs);
-        saveConditionalRecipe(cache, root, id, "enderio_machines");
+        JsonObject product = object("chance", 1.0F, "optional", false);
+        product.add("item", result(output, count));
+        JsonArray outputs = new JsonArray();
+        outputs.add(product);
+        root.add("outputs", outputs);
+        saveConditionalRecipe(cache, root, id, "enderio");
     }
 
     private void writeTinkersRecipes(CachedOutput cache) throws IOException {
@@ -1264,7 +1242,6 @@ final class GeneratedData implements DataProvider {
             save(cache, definition, "data/basemetals/tinkering/materials/definition/" + name + ".json");
 
             JsonObject stats = new JsonObject();
-            stats.add("tconstruct:extra", new JsonObject());
             stats.add("tconstruct:handle", object("durability", 1.0F, "miningSpeed", 1.0F,
                     "attackSpeed", 1.0F, "attackDamage", 1.0F));
             stats.add("tconstruct:head", object("durability", material.toolDurability(),
@@ -1338,7 +1315,9 @@ final class GeneratedData implements DataProvider {
         if (value.isJsonArray()) {
             value.getAsJsonArray().forEach(entry -> collectItemOutputs(entry, outputs));
         } else if (value.isJsonObject() && value.getAsJsonObject().has("item")) {
-            outputs.add(value.getAsJsonObject().get("item").getAsString());
+            var item = value.getAsJsonObject().get("item");
+            if (item.isJsonPrimitive()) outputs.add(item.getAsString());
+            else collectItemOutputs(item, outputs);
         }
     }
 
@@ -1559,7 +1538,7 @@ final class GeneratedData implements DataProvider {
 
         JsonObject root = new JsonObject();
         root.addProperty("format", 1);
-        root.addProperty("source", "Base Metals 1.19.4 catalogue");
+        root.addProperty("source", "Base Metals 1.20.1 catalogue");
         root.add("blocks", array(blocks));
         root.add("items", array(items));
         root.add("fluids", array(ModContent.fluids().keySet().stream().flatMap(id ->

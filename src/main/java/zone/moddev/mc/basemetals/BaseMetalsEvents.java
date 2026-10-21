@@ -112,7 +112,7 @@ public final class BaseMetalsEvents {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if (event.phase != TickEvent.Phase.END || player.level.isClientSide) return;
+        if (event.phase != TickEvent.Phase.END || player.level().isClientSide) return;
         if (BaseMetalsConfig.STARSTEEL_REGENERATION.get() && player.tickCount % 200 == 0) {
             repairStarsteel(player.getMainHandItem());
             repairStarsteel(player.getOffhandItem());
@@ -179,7 +179,7 @@ public final class BaseMetalsEvents {
 
     @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
-        if (!BaseMetalsConfig.SPECIAL_EFFECTS.get() || event.getEntity().level.isClientSide
+        if (!BaseMetalsConfig.SPECIAL_EFFECTS.get() || event.getEntity().level().isClientSide
                 || !(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         ItemStack held = attacker.getMainHandItem();
         if (!(held.getItem() instanceof MaterialBacked backed) || !(held.getItem() instanceof TieredItem)) return;
