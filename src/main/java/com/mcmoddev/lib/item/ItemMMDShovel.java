@@ -2,7 +2,7 @@ package com.mcmoddev.lib.item;
 
 import java.util.List;
 
-import com.mcmoddev.basemetals.items.MMDToolEffects;
+import zone.moddev.mc.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
 import com.mcmoddev.lib.material.MMDMaterial;

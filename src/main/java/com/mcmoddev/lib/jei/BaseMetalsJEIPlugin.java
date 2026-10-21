@@ -2,7 +2,7 @@ package com.mcmoddev.lib.jei;
 
 import java.util.stream.Collectors;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
 

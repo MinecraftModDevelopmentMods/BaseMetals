@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;

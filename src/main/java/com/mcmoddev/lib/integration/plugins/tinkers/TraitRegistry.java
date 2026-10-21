@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 
 import slimeknights.tconstruct.library.traits.ITrait;
 

@@ -1,1 +1,38 @@
+2.5.1.110021 for 1.10.2
+
+- Require OreSpawn 4.1.2.110021 or a compatible newer 4.x release, with Forge
+  12.18.3.2511 or later. Development uses the checksum-verified public release.
+- Replace the old OreSpawn plugin and internal fallback generator with a native
+  OreSpawn provider. Keep the eleven ore rules and their historical distributions.
+- Let OreSpawn import existing OS1 and OS3 configuration files, preserving custom
+  and disabled rules. Existing world profiles remain authoritative.
+- Keep existing OreSpawn 4 provider settings when importing older files for the
+  first time, using the fix in the required OreSpawn release.
+- Respect OreSpawn's Manage Vanilla Ores switch after importing old rules.
+  With it off, Minecraft places its own ores. With it on, the imported settings
+  replace the matching vanilla/default pass without generating the ores twice.
+  Existing terrain and saved settings are left alone.
+- Retire the using_orespawn and fallback_orespawn switches. Ore generation is
+  now configured in OreSpawn, including when another mod places the ores.
+- Keep door items, coal powder and liquid Mercury when upgrading from the original
+  Cyano release. Old item names continue to work after restarting, including items
+  stored in chunks that have not been opened yet.
+- Leave Base Metals iron nuggets unchanged; Minecraft 1.10 has no vanilla equivalent.
+- Support all eighteen Base Metal Golems from the unchanged 6.02.1 add-on,
+  including golems saved by the original Cyano release.
+- Move Base Metals' Java packages and Maven group to zone.moddev.mc.basemetals.
+  Existing MMD add-ons keep using the same classes through a name adapter;
+  saved IDs, configuration names and the bundled library API are unchanged.
+- Use the same Major.Minor.Patch.Target version format as the newer branches.
+- Update to ForgeGradle 7 and Gradle 9.6.1 while keeping Java 8 game compatibility.
+  Eclipse launches now quote paths with spaces, use processed resources and leave
+  optional integration APIs and test mods off the normal runtime classpath.
+- Pin and checksum the old integration dependencies, and add repeatable main,
+  sources and Javadoc jars with release-artifact checks.
+- Add build, CodeQL and wrapper checks for master-1.10.2, with automated
+  Cyano/MMD save upgrades, OreSpawn configuration imports and vanilla takeover tests.
+- Connect this target to the shared release action, using one verified bundle
+  for Maven, CurseForge and GitHub. Keep publication behind explicit confirmation.
+- Normalize changed text files to LF and fix the stray import whitespace.
+
 2.5.0 for 1.10.2

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;

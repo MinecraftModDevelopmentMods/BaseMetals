@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.Lists;
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;

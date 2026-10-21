@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.nei;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 
 import codechicken.nei.api.IConfigureNEI;
 

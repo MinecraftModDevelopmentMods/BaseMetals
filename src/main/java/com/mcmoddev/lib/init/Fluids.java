@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.mcmoddev.basemetals.data.MaterialNames;
+import zone.moddev.mc.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.fluids.CustomFluid;

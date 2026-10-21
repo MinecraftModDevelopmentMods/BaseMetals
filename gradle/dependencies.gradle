@@ -1,0 +1,70 @@
+import groovy.json.JsonSlurper
+import java.security.MessageDigest
+
+def specs = new JsonSlurper().parse(file('gradle/dependencies.json'))
+def mapped = specs.collectEntries { [(it.id): renamer.dependency(it.coordinate)] }
+
+configurations {
+    legacyModArtifacts { canBeConsumed = false; transitive = false }
+    java8LauncherArtifact { canBeConsumed = false; transitive = false }
+}
+dependencies {
+    implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+    java8LauncherArtifact 'net.minecraftforge:slime-launcher:0.2.2'
+    compileOnly 'org.lwjgl.lwjgl:lwjgl_util:2.9.4-nightly-20150209'
+    specs.each { spec ->
+        if (spec.runtime) implementation mapped[spec.id]
+        else compileOnly mapped[spec.id]
+        legacyModArtifacts spec.coordinate
+    }
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+}
+
+// Forge 1.10's mod scanner cannot read Java 11 multi-release entries. They are
+// unused on Java 8, so omit them from the development launcher copy.
+tasks.register('prepareJava8Launcher', Jar) {
+    dependsOn configurations.java8LauncherArtifact
+    archiveFileName = 'slime-launcher-0.2.2-java8.jar'
+    destinationDirectory = layout.buildDirectory.dir('development-dependencies')
+    from { zipTree(configurations.java8LauncherArtifact.singleFile) }
+    exclude 'META-INF/versions/**', 'META-INF/MANIFEST.MF', 'META-INF/*.SF', 'META-INF/*.RSA', 'META-INF/*.DSA'
+}
+
+// Verify the original files, not renamed copies whose bytes depend on mappings.
+tasks.register('verifyReleaseDependencies') {
+    group = 'verification'
+    description = 'Checks every pinned integration API against its SHA-256.'
+    inputs.file 'gradle/dependencies.json'
+    doLast {
+        def artifacts = configurations.legacyModArtifacts.resolvedConfiguration.resolvedArtifacts
+        def orespawn = specs.find { it.id == 'orespawn' }
+        if (orespawn.coordinate != 'curse.maven:mmd-orespawn-245586:9276430'
+                || orespawn.sha256 != '4D4975421FEEBF17505056306D06B0344D7A4553B6275885D7C5C5065B0348A6') {
+            throw new GradleException('Use the verified OreSpawn 4.1.2.110021 release.')
+        }
+        specs.each { spec ->
+            def parts = spec.coordinate.split(':')
+            def artifact = artifacts.find { it.moduleVersion.id.group == parts[0]
+                    && it.name == parts[1] && it.moduleVersion.id.version == parts[2] }
+            if (artifact == null) throw new GradleException("Missing ${spec.coordinate}")
+            String actual = MessageDigest.getInstance('SHA-256').digest(artifact.file.bytes).encodeHex().toString()
+            if (!actual.equalsIgnoreCase(spec.sha256)) {
+                throw new GradleException("Checksum mismatch for ${spec.coordinate}: ${actual}")
+            }
+            if (spec.id == 'orespawn') {
+                new java.util.jar.JarFile(artifact.file).withCloseable { jar ->
+                    def metadata = new JsonSlurper().parse(jar.getInputStream(jar.getJarEntry('mcmod.info')))
+                    if (!metadata.any { it.modid == 'orespawn' && it.version == project.orespawn_version }
+                            || jar.getJarEntry('zone/moddev/mc/orespawn/api/OreSpawnApi.class') == null
+                            || jar.manifest.mainAttributes.getValue('OreSpawn-API-Version') != '1') {
+                        throw new GradleException('Wrong OreSpawn identity or public API.')
+                    }
+                }
+            }
+        }
+    }
+}
+tasks.named('compileJava') { dependsOn tasks.named('verifyReleaseDependencies') }
+tasks.named('check') { dependsOn tasks.named('verifyReleaseDependencies') }

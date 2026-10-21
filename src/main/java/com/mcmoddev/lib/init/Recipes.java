@@ -4,8 +4,8 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.mcmoddev.basemetals.BaseMetals;
-import com.mcmoddev.basemetals.data.MaterialNames;
+import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.IMMDObject;

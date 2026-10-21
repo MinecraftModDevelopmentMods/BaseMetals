@@ -1,6 +1,6 @@
 package com.mcmoddev.lib.integration.plugins;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.integration.IIntegration;
 import com.mcmoddev.lib.util.ConfigBase.Options;
 

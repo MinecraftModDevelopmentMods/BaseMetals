@@ -1,4 +1,7 @@
-# Base Metals 1.10.2 [![Build Status](https://ci.mcmoddev.com/job/Base%20Metals%201.10.2/badge/icon)](https://ci.mcmoddev.com/job/Base%20Metals%201.10.2/) [![CurseForge](http://cf.way2muchnoise.eu/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals) [![Versions](http://cf.way2muchnoise.eu/versions/base-metals.svg)](https://minecraft.curseforge.com/projects/base-metals)
+# Base Metals 1.10.2
+
+[![Build](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.10.2)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.10.2)
+[![CodeQL](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/codeql-analysis.yml/badge.svg?branch=master-1.10.2)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/codeql-analysis.yml?query=branch%3Amaster-1.10.2)
 
 ## Base Metals Mod
 
@@ -10,7 +13,7 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 
 ## Metals and Alloys
 
-###Natural Metals
+### Natural Metals
 
 **Antimony**: 
 
@@ -34,7 +37,7 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 
 
 
-###Metal Alloys
+### Metal Alloys
 *Metal alloys are made by crafting together the powdered forms of the required metals, and then smelting the resulting alloy blend in a furnace.*
 
 **Brass**: This alloy of copper and zinc (3:1 ratio) is soft, but has a beautiful golden color.
@@ -50,7 +53,7 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 **Steel**: This alloy of iron and carbon (8:1 ratio) is as hard as iron and much more durable.
 
 
-###Fantasy Metals
+### Fantasy Metals
 
 **Adamantine**: (found in the Nether): Adamantine is a rare magical metal that is as strong as diamond, maybe even stronger. Armor made from Adamantine grants resistance to damage and tools made from adamantine are extra effective against monsters that have more than 10 hearts of health.
 
@@ -72,22 +75,75 @@ Also known as a sledgehammer, this tool is designed for pulverizing rocks. Using
 
 ## Requirements
 
-This mod requires that you install Minecraft Forge version 1.10.2-12.18.3.2185 or later (earlier versions of Forge for Minecraft 1.10.2 may work, but no guarantees).
+Install Forge `12.18.3.2511` or later and
+[MMD OreSpawn `4.1.2.110021`](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9276430)
+or a newer compatible 4.x release for Minecraft 1.10.2. Base Metals no longer
+includes its own fallback ore generator.
+
+OreSpawn handles ore placement and imports old OreSpawn configuration files.
+The eleven ore defaults are unchanged. See [ore generation and upgrades](docs/ORE_GENERATION.md)
+for configuration locations and advice for existing worlds.
+
+## Building and running from source
+
+This branch uses ForgeGradle 7 and the Gradle wrapper, like the newer branches.
+Minecraft and the mod still run on Java 8. Gradle uses Java 17, while the initial
+Minecraft setup also needs Java 25 for Mavenizer.
+
+Import the inner `BaseMetals` directory as an existing Gradle project. Use the
+wrapper, then run `prepareEclipse` and choose `runClient` or `runServer`.
+Optional integration mods are compile-time APIs, not ordinary launch dependencies.
+See [the build guide](docs/BUILDING.md) for toolchains, checks and legacy-world tests.
+
+Source for this version lives on `master-1.10.2`. Releases use the shared
+**Release Base Metals** action after the branch's build and compatibility checks
+pass. Normal builds and tags do not publish anything.
 
 
 
 ## Installing
 
-After you have successfully installed Forge, simply place the file *basemetals-#.#.#.jar* in your *mods* folder. You can get the basemetals-#.#.jar file from the Releases tab of this repository page.
+Install Forge and OreSpawn, then put `BaseMetals-2.5.1.110021.jar` in your
+`mods` folder. Downloads are available on CurseForge and the repository's
+Releases page once the version is published.
 
-##NEI
+## NEI
 
 The Crack Hammer recipes from this mod will appear in NEI if you have NEI installed. Hooray!
+
+## Upgrading an existing 1.10 world
+
+Back up your world before updating any mods. This build recognizes the original
+Cyano names for door items, coal powder and liquid Mercury, including items in
+chunks you visit later. Base Metals iron nuggets keep their existing identity.
+
+Mods that use Cyano's old Java API may need their own updates. Restoring saved
+items cannot, by itself, repair those Java references. Base Metal Golems
+`6.02.1`, with Extra Golems `6.02`, is supported by a small compatibility layer:
+its eighteen golems use the existing Base Metals blocks and ingots. Neither
+add-on needs changing, and neither is required when playing without golems.
+
+This release uses version `2.5.1.110021`. The final six digits identify Minecraft
+1.10.2 on Forge, following the same version format as the newer branches.
+The mod ID, saved block and item names, resources and configuration names remain
+`basemetals`; moving the Java packages does not rename anything in your world.
 
 
 ## Mod API
 
-Check the developer releases to download the files *basemetals-#.#.#-deobf.jar*, *basemetals-#.#.#-sources.jar*, *basemetals-#.#.#-javadoc.jar*. In your Eclipse project (and *build.gradle* file), add *basemetals-#.#.#-deobf.jar* as a library dependency. All items and blocks can be conveniently accessed via classes in the *com.mcmoddev.basemetals.init* package. New recipes for the Crack Hammer can be added via the *com.mcmoddev.lib.registry.CrusherRecipeRegistry* class.
+New integrations should use `zone.moddev.mc.basemetals.init` for materials,
+blocks and items. Maven builds use
+`zone.moddev.mc.basemetals:BaseMetals:2.5.1.110021`. Crack Hammer recipes still
+use `com.mcmoddev.lib.registry.CrusherRecipeRegistry`; the bundled library API
+has not moved.
+
+An early-loading adapter redirects compiled references to the former
+`com.mcmoddev.basemetals` classes to their new names. They share the same mod
+instance, material objects and registries, rather than registering a second
+copy. This covers class references and literal reflection names, not arbitrary
+class names assembled by an add-on at runtime. The Cyano compatibility layer
+only supplies the block and ingot fields used by Base Metal Golems; it is not a
+replacement for the complete Cyano API.
 
 
 ## Q&A

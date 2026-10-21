@@ -1,0 +1,174 @@
+import groovy.json.JsonSlurper
+import java.security.MessageDigest
+import java.util.jar.Manifest
+import java.util.zip.ZipFile
+
+def releaseJar = renamer.classes(tasks.named('jar', Jar)) {
+    map.from minecraft.dependency.toSrgFile
+    archiveClassifier = null
+    output = layout.buildDirectory.file("libs/BaseMetals-${project.version}.jar")
+}
+['apiElements', 'runtimeElements'].each { name ->
+    configurations.named(name) { artifacts.clear() }
+    artifacts.add(name, releaseJar)
+}
+tasks.named('assemble') { dependsOn releaseJar, tasks.named('sourcesJar'), tasks.named('javadocJar') }
+
+tasks.register('verifyJava8Toolchain') {
+    group = 'verification'
+    description = 'Checks Java 8 compatibility; exact compiler versions are required only for release builds.'
+    doLast {
+        def compiler = javaToolchains.compilerFor { languageVersion = JavaLanguageVersion.of(8) }.get().metadata
+        if (compiler.languageVersion.asInt() != 8) throw new GradleException('Minecraft 1.10 requires Java 8.')
+        if (providers.gradleProperty('releaseBuild').getOrElse('false').toBoolean()
+                && (compiler.javaRuntimeVersion != '1.8.0_502-b07'
+                || System.getProperty('java.runtime.version') != '17.0.1+12')) {
+            throw new GradleException('Release builds require Temurin 8u502-b07 and Gradle on 17.0.1+12.')
+        }
+        if (providers.gradleProperty('releaseBuild').getOrElse('false').toBoolean()) {
+            def mavenizer = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(25) }.get().metadata
+            if (mavenizer.javaRuntimeVersion != '25.0.3+9-LTS') {
+                throw new GradleException('Release setup requires Mavenizer on Temurin 25.0.3+9.')
+            }
+        }
+    }
+}
+
+tasks.register('verifyReleaseConfiguration') {
+    group = 'verification'
+    dependsOn tasks.named('verifyJava8Toolchain')
+    doLast {
+        if (project.group != 'zone.moddev.mc.basemetals' || project.version != '2.5.1.110021'
+                || project.minecraft_version != '1.10.2' || project.forge_version != '12.18.3.2511'
+                || project.mappings_channel != 'stable' || project.mappings_version != '29-1.10.2') {
+            throw new GradleException('Base Metals target, mappings or Maven identity changed.')
+        }
+        String source = file('src/main/java/zone/moddev/mc/basemetals/BaseMetals.java').getText('UTF-8')
+        if (!source.contains('VERSION = "' + project.version + '"') || !source.contains('MODID = "basemetals"')) {
+            throw new GradleException('The mod identity differs from the build metadata.')
+        }
+        if (project.orespawn_version != '4.1.2.110021'
+                || project.orespawn_version_range != '[4.1.2.110021,5.0.0)'
+                || !source.contains('required-after:orespawn@' + project.orespawn_version_range)
+                || !source.contains('required-after:Forge@[12.18.3.2511,)')) {
+            throw new GradleException('The OreSpawn or Forge runtime requirement changed.')
+        }
+    }
+}
+
+def expectedFiles = ['', '-sources', '-javadoc'].collect { "BaseMetals-${project.version}${it}.jar".toString() }.asImmutable()
+def preparedDirectory = providers.gradleProperty('preparedReleaseDir')
+def auditJars = { File directory ->
+        ['','-sources','-javadoc'].each { suffix ->
+            File jar = new File(directory, "BaseMetals-${project.version}${suffix}.jar")
+            if (!jar.isFile() || jar.length() == 0) throw new GradleException("Missing ${jar.name}")
+            new ZipFile(jar).withCloseable { zip ->
+                zip.entries().each { entry ->
+                    String path = entry.name.toLowerCase(Locale.ROOT)
+                    if (path.startsWith('review/') || path.contains('probe') || path.contains('fixture')
+                            || path.contains('agent-notes') || path.contains('agents.md') || path.contains('.codex')
+                            || path.contains('.agents') || path.contains('claude') || path.contains('gemini')
+                            || path.startsWith('tools/') || path.startsWith('reference/')
+                            || path.startsWith('com/mcmoddev/lib/oregen/')
+                            || path.startsWith('com/mcmoddev/orespawn/')
+                            || path == 'assets/basemetals/orespawn/basemetals.json'
+                            || path.startsWith('org/junit/') || path.startsWith('net/minecraft/')) {
+                        throw new GradleException("Non-production entry in ${jar.name}: ${entry.name}")
+                    }
+                    def date = entry.timeLocal
+                    if (!entry.directory && !(date.toString() in ['1980-01-01T00:00', '1980-02-01T00:00'])) {
+                        throw new GradleException("Volatile archive timestamp: ${entry.name}")
+                    }
+                    if (!entry.directory && path ==~ /.*\.(class|java|html|json|info|xml|properties|txt|md|lang|cfg)/) {
+                        String content = new String(zip.getInputStream(entry).bytes,
+                                java.nio.charset.StandardCharsets.ISO_8859_1)
+                        if (content.contains(project.projectDir.absolutePath)
+                                || content.contains('/home/runner/work/')) {
+                            throw new GradleException("Local build path in ${entry.name}")
+                        }
+                    }
+                    if (entry.name.endsWith('.class')) {
+                        byte[] data = zip.getInputStream(entry).bytes
+                        int major = ((data[6] & 255) << 8) | (data[7] & 255)
+                        if (major != 52) throw new GradleException("Not Java 8 bytecode: ${entry.name}")
+                        String constants = new String(data, java.nio.charset.StandardCharsets.ISO_8859_1)
+                        if (constants.contains(project.projectDir.absolutePath)) {
+                            throw new GradleException("Local path in ${entry.name}")
+                        }
+                    }
+                }
+                if (suffix == '') {
+                    def manifest = new Manifest(zip.getInputStream(zip.getEntry('META-INF/MANIFEST.MF'))).mainAttributes
+                    if (manifest.getValue('Maven-Artifact') != "${project.group}:BaseMetals:${project.version}"
+                            || manifest.getValue('FMLCorePlugin') != project.coreplugin
+                            || manifest.keySet().any { it.toString().toLowerCase().contains('timestamp') }) {
+                        throw new GradleException('Incorrect release manifest.')
+                    }
+                    def info = new JsonSlurper().parse(zip.getInputStream(zip.getEntry('mcmod.info')))[0]
+                    if (info.modid != 'basemetals' || info.version != project.version || info.mcversion != '1.10.2') {
+                        throw new GradleException('Incorrect processed mcmod.info.')
+                    }
+                    int classes = zip.entries().count { it.name.endsWith('.class') }
+                    if (classes != 218 || zip.getEntry('cyano/basemetals/init/Blocks.class') == null
+                            || zip.getEntry('META-INF/basemetals-legacy-api.list') == null) {
+                        throw new GradleException('The compatibility-layer class inventory changed.')
+                    }
+                }
+            }
+        }
+}
+
+tasks.register('verifyReleaseArtifacts') {
+    group = 'verification'
+    description = 'Audits the shipped jars for Java 8 bytecode, metadata and test isolation.'
+    dependsOn tasks.named('assemble'), tasks.named('verifyReleaseConfiguration'), tasks.named('verifyReleaseDependencies')
+    doLast { auditJars(layout.buildDirectory.dir('libs').get().asFile) }
+}
+
+tasks.register('writeReleaseChecksums') {
+    group = 'verification'
+    dependsOn tasks.named('verifyReleaseArtifacts')
+    doLast {
+        File directory = layout.buildDirectory.dir('libs').get().asFile
+        List<String> lines = ['','-sources','-javadoc'].collect { suffix ->
+            File jar = new File(directory, "BaseMetals-${project.version}${suffix}.jar")
+            MessageDigest.getInstance('SHA-256').digest(jar.bytes).encodeHex().toString() + '  ' + jar.name
+        }
+        File sums = layout.buildDirectory.file('release/SHA256SUMS').get().asFile
+        sums.parentFile.mkdirs()
+        sums.setText(lines.join('\n') + '\n', 'UTF-8')
+    }
+}
+tasks.named('check') { dependsOn tasks.named('verifyReleaseConfiguration') }
+
+tasks.register('verifyPreparedReleaseArtifacts') {
+    group = 'verification'
+    description = 'Verifies a previously built bundle without rebuilding its jars.'
+    doLast {
+        if (!preparedDirectory.isPresent()) throw new GradleException('Set preparedReleaseDir to the immutable release bundle.')
+        File directory = file(preparedDirectory.get())
+        Set<String> expected = (expectedFiles + ['SHA256SUMS', 'CHANGELOG.txt']) as Set
+        if (!directory.isDirectory() || directory.listFiles().collect { it.name }.toSet() != expected) {
+            throw new GradleException('The prepared release must contain exactly three jars, SHA256SUMS and CHANGELOG.txt.')
+        }
+        List<String> lines = new File(directory, 'SHA256SUMS').readLines('UTF-8')
+        if (lines.size() != 3) throw new GradleException('The prepared checksum list must contain exactly three files.')
+        Set<String> checked = [] as Set
+        lines.each { line ->
+            def match = line =~ /^([a-fA-F0-9]{64})  (BaseMetals-[^\/\\]+\.jar)$/
+            if (!match.matches() || !expectedFiles.contains(match[0][2]) || !checked.add(match[0][2])) {
+                throw new GradleException('Invalid or duplicate prepared checksum entry.')
+            }
+            File jar = new File(directory, match[0][2])
+            String actual = MessageDigest.getInstance('SHA-256').digest(jar.bytes).encodeHex().toString()
+            if (!actual.equalsIgnoreCase(match[0][1])) throw new GradleException("Prepared checksum mismatch: ${jar.name}")
+        }
+        if (!new File(directory, 'CHANGELOG.txt').getText('UTF-8').startsWith(project.version.toString() + ' for 1.10.2')) {
+            throw new GradleException('The prepared changelog belongs to a different release.')
+        }
+        auditJars(directory)
+    }
+}
+
+ext.baseMetalsRelease = [jar: releaseJar, expectedFiles: expectedFiles,
+        preparedDirectory: preparedDirectory].asImmutable()

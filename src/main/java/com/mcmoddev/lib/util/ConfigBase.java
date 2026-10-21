@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.mcmoddev.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 

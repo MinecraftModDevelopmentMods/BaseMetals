@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.mcmoddev.basemetals.items.MMDToolEffects;
+import zone.moddev.mc.basemetals.items.MMDToolEffects;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.IMMDObject;
