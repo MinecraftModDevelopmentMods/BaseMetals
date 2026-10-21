@@ -41,7 +41,9 @@ class IntegrationContentPolicyTest {
         if (value == null) return;
         if (value.isJsonArray()) value.getAsJsonArray().forEach(entry -> collect(entry, outputs));
         else if (value.isJsonObject() && value.getAsJsonObject().has("item")) {
-            outputs.add(value.getAsJsonObject().get("item").getAsString());
+            var item = value.getAsJsonObject().get("item");
+            if (item.isJsonPrimitive()) outputs.add(item.getAsString());
+            else collect(item, outputs);
         }
     }
 }

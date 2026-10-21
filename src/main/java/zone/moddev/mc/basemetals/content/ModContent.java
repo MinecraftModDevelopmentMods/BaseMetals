@@ -31,7 +31,8 @@ import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -68,12 +69,12 @@ public final class ModContent {
 
     static {
         MaterialCatalogue.ALL.forEach(ModContent::registerMaterial);
-        registerAnvil("stone_anvil", BlockBehaviour.Properties.of(Material.STONE)
+        registerAnvil("stone_anvil", BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                 .sound(SoundType.STONE).strength(5.0F, 10.0F));
         registerAnvil("steel_anvil", metalProperties(MaterialCatalogue.get("steel")));
         registerAnvil("adamantine_anvil", metalProperties(MaterialCatalogue.get("adamantine")));
         HUMAN_DETECTOR = registerBlock("human_detector",
-                () -> new HumanDetectorBlock(BlockBehaviour.Properties.of(Material.METAL)
+                () -> new HumanDetectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                         .sound(SoundType.METAL).strength(5.0F).noCollission()), true);
         registerVanillaBits();
         MaterialCatalogue.ALL.forEach(material -> registerFluid(material.name(), material.colour(),
@@ -253,7 +254,7 @@ public final class ModContent {
     private static void registerVanillaBits() {
         Map<String, MaterialDefinition> vanilla = vanillaDefinitions();
         RegistryObject<Block> charcoalBlock = registerBlock("charcoal_block",
-                () -> new Block(BlockBehaviour.Properties.of(Material.STONE)
+                () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                         .sound(SoundType.SAND).requiresCorrectToolForDrops().strength(5.0F)), false);
         registerItem("charcoal_block", () -> new MaterialItems.BurnableBlock(
                 charcoalBlock.get(), 16000, new Item.Properties()));
@@ -323,9 +324,9 @@ public final class ModContent {
                 || name.equals("obsidian") || name.equals("quartz");
         boolean lockedGemDoor = gem && !name.equals("quartz")
                 && (form.equals("door") || form.equals("trapdoor"));
-        Material blockMaterial = name.equals("gold") || name.equals("iron") || lockedGemDoor
-                ? Material.METAL : Material.STONE;
-        return BlockBehaviour.Properties.of(blockMaterial)
+        MapColor mapColour = name.equals("gold") || name.equals("iron") || lockedGemDoor
+                ? MapColor.METAL : MapColor.STONE;
+        return BlockBehaviour.Properties.of().mapColor(mapColour)
                 .sound(gem ? SoundType.GLASS : SoundType.METAL)
                 .requiresCorrectToolForDrops()
                 .strength(material.blockHardness(), material.blastResistance());
@@ -432,7 +433,8 @@ public final class ModContent {
         source[0] = FLUIDS.register(name, () -> new ForgeFlowingFluid.Source(properties));
         flowing[0] = FLUIDS.register("flowing_" + name, () -> new ForgeFlowingFluid.Flowing(properties));
         block[0] = BLOCKS.register(name, () -> new MoltenMetalBlock(() -> source[0].get(),
-                BlockBehaviour.Properties.of(Material.LAVA).noCollission().strength(100.0F).noLootTable(), mercury));
+                BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).liquid().replaceable()
+                        .pushReaction(PushReaction.DESTROY).noCollission().strength(100.0F).noLootTable(), mercury));
         BLOCKS_BY_ID.put(name, block[0]);
         // Forge 1.12 registered an ItemBlock under every molten block ID. Keep
         // those hidden inventory IDs so old stacks can survive a world upgrade.
@@ -484,13 +486,13 @@ public final class ModContent {
     }
 
     private static BlockBehaviour.Properties metalProperties(MaterialDefinition material) {
-        return BlockBehaviour.Properties.of(Material.METAL)
+        return BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                 .sound(SoundType.METAL).requiresCorrectToolForDrops()
                 .strength(material.blockHardness(), material.blastResistance());
     }
 
     private static BlockBehaviour.Properties oreProperties(MaterialDefinition material) {
-        return BlockBehaviour.Properties.of(Material.STONE)
+        return BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                 .sound(SoundType.STONE).requiresCorrectToolForDrops()
                 .strength(material.oreHardness(), material.blastResistance());
     }

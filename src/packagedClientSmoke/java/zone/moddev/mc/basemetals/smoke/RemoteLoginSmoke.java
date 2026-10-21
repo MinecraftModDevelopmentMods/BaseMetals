@@ -18,6 +18,7 @@ public final class RemoteLoginSmoke {
     private static boolean connecting;
     private static boolean completed;
     private static int ticks;
+    private static int titleTicks;
     private static int joinedTicks;
 
     private RemoteLoginSmoke() {}
@@ -30,10 +31,13 @@ public final class RemoteLoginSmoke {
                 + (minecraft.screen == null ? "gameplay" : minecraft.screen.getClass().getName()));
         boolean reject = Boolean.getBoolean("basemetals.expectModeReject");
         if (!connecting && minecraft.screen instanceof TitleScreen) {
+            // Wait until the loading overlay is gone, as a player would have to.
+            if (minecraft.getOverlay() != null || ++titleTicks < 20) return;
+
             connecting = true;
             String address = System.getProperty("basemetals.remoteAddress");
             ConnectScreen.startConnecting(minecraft.screen, minecraft, ServerAddress.parseString(address),
-                    new net.minecraft.client.multiplayer.ServerData("Base Metals smoke", address, false));
+                    new net.minecraft.client.multiplayer.ServerData("Base Metals smoke", address, false), false);
         }
         if (minecraft.player != null && minecraft.level != null) {
             if (reject) throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: mismatched modes entered gameplay");

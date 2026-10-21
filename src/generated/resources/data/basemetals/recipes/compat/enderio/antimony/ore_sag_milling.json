@@ -1,9 +1,9 @@
 {
-  "type": "enderio_machines:sagmilling",
+  "type": "enderio:sag_milling",
   "conditions": [
     {
       "type": "forge:mod_loaded",
-      "modid": "enderio_machines"
+      "modid": "enderio"
     },
     {
       "type": "basemetals:content_mode",
@@ -16,8 +16,12 @@
   },
   "outputs": [
     {
-      "count": 2,
-      "item": "basemetals:antimony_powder"
+      "chance": 1.0,
+      "item": {
+        "count": 2,
+        "item": "basemetals:antimony_powder"
+      },
+      "optional": false
     }
   ]
 }

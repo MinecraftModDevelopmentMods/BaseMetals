@@ -1,3 +1,14 @@
+Base Metals 3.1.0.120011
+
+- Port the 1.19.4 version to Minecraft 1.20.1 and Forge 47.4.10.
+- Keep raw metals, Kiri's ore overlays, filled buckets, High/Low Fantasy modes and the earlier fixes.
+- Update creative tabs, configuration drawing, loot and networking for the newer APIs.
+- Fix an intermittent Forge login stall by keeping socket read changes on Netty's event loop.
+- Use the published OreSpawn 4.1.0.120011 release, with the same ore rules and copper defaults.
+- Update optional integrations for their 1.20.1 APIs and keep them in a separate development profile.
+- Preserve existing blocks, items, configuration keys and old-world conversion backups.
+- Build sources and Javadocs as UTF-8 on every platform.
+
 Base Metals 3.1.0.119041
 
 - Port the 1.18 version to Minecraft 1.19.4 and Forge 45.4.0.

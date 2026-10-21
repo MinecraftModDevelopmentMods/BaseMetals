@@ -1,10 +1,10 @@
-# Forge 1.19.4 Mavenizer compatibility fixture
+# Forge 1.20.1 Mavenizer compatibility fixture
 
 `minecraft-mavenizer-0.5.21-orespawn-compat.jar` is a build-only derivative of
 MinecraftForge MinecraftMavenizer `0.5.21`, source commit
 `6968241ce7a0a902cdc1c534b976e8373a423091`.
 
-Forge 45's decompiler emits eight duplicate record accessors in Holder.Direct,
+Forge 47's decompiler emits eight duplicate record accessors in Holder.Direct,
 OptionInstance and MemoryCondition. The target-specific rules in
 `minecraft-source-compatibility.json` remove only those accessors; Java
 generates the same public methods automatically. Missing or ambiguous source
@@ -22,4 +22,4 @@ It is checksum-verified by the build and excluded from every Base Metals artifac
 MinecraftMavenizer remains licensed LGPL-2.1-only; see `LICENSE-MAVENIZER.txt`.
 
 SHA-256:
-`341B3FB10ABA6EA7DC612FBE519DC290A1C81867AED5DD320ACD783688AC49DE`
+`416DCA4797BC55826F0DDCF03FDC405F1990FC15C2133FA27A1F143BF7976177`

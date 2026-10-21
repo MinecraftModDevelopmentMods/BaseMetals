@@ -44,8 +44,11 @@ def verifyDevelopmentRunProfiles = tasks.register('verifyDevelopmentRunProfiles'
                 throw new GradleException("${name} must not load Buildship's compile-only dependencies")
             }
             boolean optional = name == 'runClientOptionalMods.launch'
-            if (launch =~ /(?i)(TConstruct|Mantle|Mekanism|cofh_core|thermal_|EnderIO)/) {
+            if (!optional && launch =~ /(?i)(tconstruct|tinkers-construct|mantle|mekanism|cofh[_-]core|thermal[_-]|ender[-_]?io)/) {
                 throw new GradleException("${name} includes an optional integration dependency")
+            }
+            if (optional && optionalDevelopmentArtifacts.any { !launch.contains("${it.module}-${it.file}") }) {
+                throw new GradleException("${name} is missing a pinned optional dependency")
             }
             if (!launch.contains('mmd-orespawn-')) {
                 throw new GradleException("${name} is missing OreSpawn")
@@ -60,27 +63,30 @@ def verifyDevelopmentRunProfiles = tasks.register('verifyDevelopmentRunProfiles'
         }
         ['runClient', 'runServer'].each { name ->
             if (tasks.named(name, JavaExec).get().classpath.files.any {
-                it.name =~ /(?i)(TConstruct|Mantle|Mekanism|cofh_core|thermal_|EnderIO)/
+                it.name =~ /(?i)(tconstruct|tinkers-construct|mantle|mekanism|cofh[_-]core|thermal[_-]|ender[-_]?io)/
             }) {
                 throw new GradleException("${name} includes an optional integration dependency")
             }
         }
         def optionalClient = tasks.named('runOptionalModsClient', JavaExec).get()
         if (optionalClient.sourceSetName.get() != 'optionalMods'
-                || optionalClient.classpath.files.any { it.name =~ /(?i)(TConstruct|Mantle|Mekanism|cofh_core|thermal_|EnderIO)/ }) {
-            throw new GradleException('The optional client must not load APIs for another Minecraft version')
+                || optionalDevelopmentArtifacts.any { expected ->
+                    !optionalClient.classpath.files.any { it.name.contains("${expected.module}-${expected.file}") }
+                }) {
+            throw new GradleException('The optional client must load the pinned 1.20.1 dependencies')
         }
     }
 }
 
-def syncForge45EclipseLaunches = tasks.register('syncForge45EclipseLaunches') {
+def syncForge47EclipseLaunches = tasks.register('syncForge47EclipseLaunches') {
     group = 'ide'
-    description = 'Normalizes Forge 45 Eclipse launches to the production-only merged output.'
+    description = 'Normalizes Forge 47 Eclipse launches to the production-only merged output.'
     dependsOn tasks.named('processResources')
     doLast {
         String mainOutput = new File(projectDir, 'bin/main').absolutePath
         String modClasses = "${mod_id}%%${mainOutput}"
-        String eclipseGradleJavaHome = System.getenv('JAVA_HOME') ?: System.getProperty('java.home')
+        String eclipseGradleJavaHome = new File(
+                System.getenv('JAVA_HOME') ?: System.getProperty('java.home')).canonicalPath
         def escapePreference = { String value -> value.replace('\\', '\\\\').replace(':', '\\:') }
         File buildshipPreferences = file('.settings/org.eclipse.buildship.core.prefs')
         if (!buildshipPreferences.parentFile.isDirectory() && !buildshipPreferences.parentFile.mkdirs()) {
@@ -168,6 +174,11 @@ def syncForge45EclipseLaunches = tasks.register('syncForge45EclipseLaunches') {
             }
             // Buildship also exposes compile-only APIs. Use the selected runtime instead.
             def launchXml = new XmlParser(false, false).parseText(text)
+            def vmArguments = launchXml.stringAttribute.find {
+                it.@key == 'org.eclipse.jdt.launching.VM_ARGUMENTS'
+            }
+            vmArguments.@value = vmArguments.@value.toString().replaceAll(
+                    /(?<!")(-Dmixin\.env\.refMapRemappingFile=[^"]*?)(?= -D|$)/, '"$1"')
             def classpath = launchXml.listAttribute.find {
                 it.@key == 'org.eclipse.jdt.launching.CLASSPATH'
             }
@@ -201,7 +212,7 @@ def syncForge45EclipseLaunches = tasks.register('syncForge45EclipseLaunches') {
 def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionClasspath') {
     group = 'verification'
     description = 'Verifies Eclipse client/server launches cannot see validation-only code.'
-    dependsOn syncForge45EclipseLaunches
+    dependsOn syncForge47EclipseLaunches
     dependsOn verifyDevelopmentRunProfiles
     doLast {
         File classpath = file('.classpath')
@@ -277,7 +288,7 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
             String expectedModClasses = "${mod_id}%%${new File(projectDir, 'bin/main').absolutePath}"
             if (!launch.contains(expectedModClasses)) {
-                throw new GradleException("Eclipse launch is not using Forge 45's merged production output: ${name}")
+                throw new GradleException("Eclipse launch is not using Forge 47's merged production output: ${name}")
             }
             ['cache', 'metadata', 'to-srg', 'to-obf'].each { flag ->
                 if (!launch.contains("--${flag} &quot;")) {
@@ -287,6 +298,10 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             if (!launch.contains('&quot;-DlegacyClassPath.file=')
                     || !launch.contains('minecraft_classpath.txt&quot; -DignoreList=')) {
                 throw new GradleException("Eclipse launch does not quote -DlegacyClassPath.file: ${name}")
+            }
+            if (!launch.contains('&quot;-Dmixin.env.refMapRemappingFile=')
+                    || !launch.contains('optional-refmaps.srg&quot;')) {
+                throw new GradleException("Eclipse launch does not quote its mixin mapping path: ${name}")
             }
         }
         File processed = layout.buildDirectory.dir('resources/main').get().asFile
@@ -300,26 +315,26 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
         }
         String metadata = new File(projectDir, 'bin/main/META-INF/mods.toml').getText('UTF-8')
-        if (metadata.contains('${') || !metadata.contains('version="3.1.0.119041"')) {
+        if (metadata.contains('${') || !metadata.contains('version="3.1.0.120011"')) {
             throw new GradleException('Eclipse output contains unresolved or invalid Base Metals version metadata')
         }
     }
 }
 
 verifyDevelopmentRunProfiles.configure {
-    dependsOn syncForge45EclipseLaunches
+    dependsOn syncForge47EclipseLaunches
 }
 
 tasks.matching { it.name == 'genEclipseRuns' }.configureEach {
-    finalizedBy syncForge45EclipseLaunches
+    finalizedBy syncForge47EclipseLaunches
 }
 
 tasks.register('isolateEclipseProductionRuns') {
     group = 'ide'
     dependsOn tasks.named('genEclipseRuns')
-    dependsOn syncForge45EclipseLaunches
+    dependsOn syncForge47EclipseLaunches
 }
 
 tasks.matching { it.name == 'eclipse' }.configureEach {
-    finalizedBy syncForge45EclipseLaunches
+    finalizedBy syncForge47EclipseLaunches
 }

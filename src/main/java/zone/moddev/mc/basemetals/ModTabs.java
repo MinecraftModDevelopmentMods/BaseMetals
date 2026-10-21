@@ -1,12 +1,14 @@
 package zone.moddev.mc.basemetals;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraft.core.registries.Registries;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import zone.moddev.mc.basemetals.content.BaseMetalAmmoItem;
 import zone.moddev.mc.basemetals.content.CrackhammerItem;
 import zone.moddev.mc.basemetals.content.MaterialItems;
@@ -14,23 +16,23 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.content.ScytheItem;
 
 public final class ModTabs {
-    public static CreativeModeTab BLOCKS;
-    public static CreativeModeTab ITEMS;
-    public static CreativeModeTab TOOLS;
-    public static CreativeModeTab COMBAT;
+    private static final DeferredRegister<CreativeModeTab> TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, BaseMetals.MOD_ID);
+
+    public static final RegistryObject<CreativeModeTab> BLOCKS = tab("blocks", "starsteel_block", Items.IRON_BLOCK);
+    public static final RegistryObject<CreativeModeTab> ITEMS = tab("items", "starsteel_gear", Items.IRON_INGOT);
+    public static final RegistryObject<CreativeModeTab> TOOLS = tab("tools", "starsteel_pickaxe", Items.IRON_PICKAXE);
+    public static final RegistryObject<CreativeModeTab> COMBAT = tab("combat", "starsteel_sword", Items.IRON_SWORD);
 
     private ModTabs() {}
 
-    public static void register(CreativeModeTabEvent.Register event) {
-        BLOCKS = tab(event, "blocks", "starsteel_block", Items.IRON_BLOCK);
-        ITEMS = tab(event, "items", "starsteel_gear", Items.IRON_INGOT);
-        TOOLS = tab(event, "tools", "starsteel_pickaxe", Items.IRON_PICKAXE);
-        COMBAT = tab(event, "combat", "starsteel_sword", Items.IRON_SWORD);
+    public static void register(IEventBus bus) {
+        TABS.register(bus);
     }
 
-    private static CreativeModeTab tab(CreativeModeTabEvent.Register event, String category,
+    private static RegistryObject<CreativeModeTab> tab(String category,
             String iconId, Item fallback) {
-        return event.registerCreativeModeTab(new ResourceLocation(BaseMetals.MOD_ID, category), builder -> builder
+        return TABS.register(category, () -> CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.basemetals." + category))
                 .icon(() -> ModContent.itemsById().containsKey(iconId)
                         ? ModContent.item(iconId).get().getDefaultInstance() : fallback.getDefaultInstance())
@@ -39,7 +41,7 @@ public final class ModTabs {
                     if (!ModContent.fluids().containsKey(id) && category.equals(category(entry.get()))) {
                         output.accept(entry.get());
                     }
-                })));
+                })).build());
     }
 
     public static String category(Item item) {

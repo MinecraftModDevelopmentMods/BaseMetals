@@ -27,20 +27,21 @@ public final class ContentModeNetwork {
         channel = NetworkRegistry.newSimpleChannel(new ResourceLocation("basemetals", "content_mode"),
                 () -> "1", "1"::equals, "1"::equals);
 
+        // Forge updates login state on the main thread, including acknowledgements.
         channel.messageBuilder(ModeMessage.class, 0)
                 .encoder((message, buffer) -> buffer.writeUtf(message.mode.serializedName()))
                 .decoder(ModeMessage::read)
                 .loginIndex(message -> message.loginIndex, (message, index) -> message.loginIndex = index)
                 .buildLoginPacketList(local -> Collections.singletonList(
                         Pair.of("Base Metals content mode", new ModeMessage(BaseMetalsConfig.activeMode()))))
-                .consumer(ContentModeNetwork::receive)
+                .consumerMainThread(ContentModeNetwork::receive)
                 .add();
 
         channel.messageBuilder(Acknowledgement.class, 1)
                 .encoder((message, buffer) -> {})
                 .decoder(buffer -> new Acknowledgement())
                 .loginIndex(message -> message.loginIndex, (message, index) -> message.loginIndex = index)
-                .consumer(HandshakeHandler.indexFirst((handshake, message, context) ->
+                .consumerMainThread(HandshakeHandler.indexFirst((handshake, message, context) ->
                         context.get().setPacketHandled(true)))
                 .add();
     }

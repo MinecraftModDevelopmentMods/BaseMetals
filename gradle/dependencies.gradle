@@ -1,8 +1,22 @@
+import groovy.json.JsonSlurper
+import java.security.MessageDigest
+
 ext.orespawnModule = "mmd-orespawn-${project.orespawn_curse_project_id}"
 def orespawnVerificationRepository = project.findProperty('orespawnVerificationRepository')
 configurations.create('packagedCompatibilityMods')
-def mantleDevelopment = renamer.dependency('slimeknights.mantle:Mantle:1.19.2-1.10.49')
-def tinkersDevelopment = renamer.dependency('slimeknights.tconstruct:TConstruct:1.19.2-3.8.5.63')
+configurations.create('optionalModsRelease')
+ext.optionalModArtifacts = new JsonSlurper().parse(file('gradle/optional-mods.json'))
+ext.optionalDevelopmentArtifacts = optionalModArtifacts.findAll { it.development }
+def optionalDevelopmentDependencies = optionalDevelopmentArtifacts.collectEntries { artifact ->
+    def dependency = renamer.dependency("curse.maven:${artifact.module}:${artifact.file}") {
+        // CoFH uses the valid *() wildcard, which Renamer cannot parse.
+        // Keep its AT file intact; Forge remaps SRG access rules when loading it.
+        if (artifact.modId == 'cofh_core') {
+            accessTransformers.set(false)
+        }
+    }
+    [(artifact.modId): dependency]
+}
 repositories {
     minecraft.mavenizer(it)
     maven fg.forgeMaven
@@ -28,6 +42,17 @@ repositories {
         }
     }
 
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'OptionalModsCurseMaven'
+                url = uri('https://www.cursemaven.com')
+                metadataSources { artifact() }
+            }
+        }
+        filter { optionalModArtifacts.each { includeModule('curse.maven', it.module) } }
+    }
+
     maven { url = uri('https://modmaven.dev/') }
     maven { url = uri('https://dvs1.progwml6.com/files/maven/') }
     maven { url = uri('https://maven.covers1624.net/') }
@@ -38,22 +63,30 @@ dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
 
     // OreSpawn remains an ordinary hard mod dependency in metadata and is
-    // never shaded into Base Metals. Use the published 1.19.4 release in
+    // never shaded into Base Metals. Use the published 1.20.1 release in
     // development so clean checkouts exercise the same artifact as players.
     implementation renamer.dependency("curse.maven:mmd-orespawn-${orespawn_curse_project_id}:${orespawn_curse_file_id}")
     orespawnRelease "curse.maven:mmd-orespawn-${orespawn_curse_project_id}:${orespawn_curse_file_id}"
 
     // API only: Mekanism remains optional at runtime. Its public slurry
     // registry is required to provide the eight historical processing chains.
-    compileOnly 'mekanism:Mekanism:1.19.2-10.3.9.13:api'
-    compileOnly mantleDevelopment
-    compileOnly tinkersDevelopment
+    compileOnly 'mekanism:Mekanism:1.20.1-10.4.16.80:api'
+    compileOnly optionalDevelopmentDependencies.mantle
+    compileOnly optionalDevelopmentDependencies.tconstruct
 
-    // These mods have no published Forge 1.19.4 build. Keep their APIs compile-only;
-    // loading jars for another Minecraft version would break the development client.
-    if (providers.gradleProperty('compatSmoke').isPresent()
-            || providers.gradleProperty('packagedCompatSmoke').isPresent()) {
-        throw new GradleException('Optional-mod runtime qualification needs a published Forge 1.19.4 build')
+    // Only the separate optional-mod profile and explicit compatibility tests load these mods.
+    optionalModArtifacts.each { artifact ->
+        String coordinate = "curse.maven:${artifact.module}:${artifact.file}"
+        optionalModsRelease coordinate
+        if (artifact.development) {
+            optionalModsRuntimeOnly optionalDevelopmentDependencies[artifact.modId]
+            if (providers.gradleProperty('compatSmoke').isPresent()) {
+                runtimeOnly optionalDevelopmentDependencies[artifact.modId]
+            }
+        }
+        if (providers.gradleProperty('packagedCompatSmoke').isPresent()) {
+            packagedCompatibilityMods coordinate
+        }
     }
 
     testImplementation platform('org.junit:junit-bom:5.10.2')
@@ -64,6 +97,44 @@ dependencies {
 
 renamer.mappings.from minecraft.dependency.toSrgFile
 
+// Optional mods ship SRG mixin references; development runs use official names.
+def developmentMixinMappings = renamer.convert('optionalMixinMappings') {
+    // Mixin 0.8 reads classic SRG entries, not TSRG, from this file.
+    map.from minecraft.dependency.toSrgFile
+    format.set('srg')
+    reverse.set(true)
+    output.set(layout.buildDirectory.file('mappings/optional-refmaps.srg'))
+}
+minecraft.runs.configureEach {
+    systemProperties(developmentMixinMappings.flatMap { it.output }.map { mappings ->
+        ['mixin.env.remapRefMap': 'true', 'mixin.env.refMapRemappingFile': mappings.asFile.absolutePath]
+    })
+}
+
 configurations.named('testRuntimeClasspath') {
     exclude group: 'curse.maven', module: orespawnModule
+}
+
+tasks.register('verifyOptionalRuntimeDependencies') {
+    group = 'verification'
+    description = 'Checks the exact published jars used by the optional-mod profile.'
+    inputs.file 'gradle/optional-mods.json'
+    doLast {
+        def resolved = configurations.optionalModsRelease.resolvedConfiguration.resolvedArtifacts
+        optionalModArtifacts.each { expected ->
+            File artifact = resolved.find {
+                it.moduleVersion.id.name == expected.module && it.moduleVersion.id.version == expected.file
+            }?.file
+            if (artifact == null || MessageDigest.getInstance('SHA-256').digest(artifact.bytes)
+                    .encodeHex().toString().toUpperCase(Locale.ROOT) != expected.sha256) {
+                throw new GradleException("Missing or altered optional dependency: ${expected.module}:${expected.file}")
+            }
+        }
+    }
+}
+
+tasks.named('check') { dependsOn tasks.named('verifyOptionalRuntimeDependencies') }
+
+tasks.matching { it.name == 'runOptionalModsClient' }.configureEach {
+    dependsOn tasks.named('verifyOptionalRuntimeDependencies')
 }

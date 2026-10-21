@@ -19,7 +19,7 @@ def packagedClientRunDirectory = layout.buildDirectory.dir('packaged-client-run'
 
 def requireRuntimeDirectory = { Provider<String> configuredPath, String propertyName ->
     if (!configuredPath.isPresent()) {
-        throw new GradleException("Pass -P${propertyName}=<official Forge 45 runtime directory>")
+        throw new GradleException("Pass -P${propertyName}=<official Forge 47 runtime directory>")
     }
     File runtime = file(configuredPath.get())
     if (!runtime.isDirectory()) throw new GradleException("${propertyName} does not name a directory: ${runtime}")
@@ -42,6 +42,9 @@ def preparePackagedServerSmoke = tasks.register('preparePackagedServerSmoke') {
     dependsOn releaseJar
     dependsOn packagedServerSmokeProbe
     dependsOn tasks.named('verifyReleaseDependencies')
+    if (providers.gradleProperty('packagedCompatSmoke').isPresent()) {
+        dependsOn tasks.named('verifyOptionalRuntimeDependencies')
+    }
     doLast {
         File runDirectory = packagedServerRunDirectory.get().asFile
         delete runDirectory
@@ -81,8 +84,8 @@ def packagedServerStartupSmoke = tasks.register('packagedServerStartupSmoke', Ex
     doFirst {
         File runtime = requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime')
         File libraries = new File(runtime, 'libraries')
-        File forgeDirectory = new File(libraries, 'net/minecraftforge/forge/1.19.4-45.4.0')
-        File launcher = new File(forgeDirectory, 'forge-1.19.4-45.4.0-server.jar')
+        File forgeDirectory = new File(libraries, 'net/minecraftforge/forge/1.20.1-47.4.10')
+        File launcher = new File(forgeDirectory, 'forge-1.20.1-47.4.10-server.jar')
         File sourceArguments = new File(forgeDirectory,
                 System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')
                         ? 'win_args.txt' : 'unix_args.txt')
@@ -106,9 +109,9 @@ def packagedServerStartupSmoke = tasks.register('packagedServerStartupSmoke', Ex
         if (!marker.isFile()) throw new GradleException('Packaged dedicated-server completion marker is missing')
         Properties values = new Properties()
         marker.withInputStream { values.load(it) }
-        if (values.getProperty('basemetals') != '3.1.0.119041'
-                || values.getProperty('orespawn') != '4.1.0.119041'
-                || values.getProperty('forge') != '45.4.0') {
+        if (values.getProperty('basemetals') != '3.1.0.120011'
+                || values.getProperty('orespawn') != '4.1.0.120011'
+                || values.getProperty('forge') != '47.4.10') {
             throw new GradleException("Packaged dedicated-server versions are wrong: ${values}")
         }
         verifyPackagedLog(runDirectory, 'BASEMETALS_PACKAGED_SERVER_SMOKE PASS',
@@ -122,6 +125,9 @@ def preparePackagedClientSmoke = tasks.register('preparePackagedClientSmoke') {
     dependsOn releaseJar
     dependsOn packagedClientSmokeProbe
     dependsOn tasks.named('verifyReleaseDependencies')
+    if (providers.gradleProperty('packagedCompatSmoke').isPresent()) {
+        dependsOn tasks.named('verifyOptionalRuntimeDependencies')
+    }
     doLast {
         File runDirectory = packagedClientRunDirectory.get().asFile
         delete runDirectory
@@ -147,11 +153,11 @@ def preparePackagedClientSmoke = tasks.register('preparePackagedClientSmoke') {
             File hostPack = new File(runDirectory, 'resourcepacks/basemetals-host-test')
             File texture = new File(hostPack, 'assets/minecraft/textures/block/stone.png')
             texture.parentFile.mkdirs()
-            new java.util.zip.ZipFile(new File(runtime, 'versions/1.19.4/1.19.4.jar')).withCloseable { zip ->
+            new java.util.zip.ZipFile(new File(runtime, 'versions/1.20.1/1.20.1.jar')).withCloseable { zip ->
                 texture.bytes = zip.getInputStream(zip.getEntry('assets/minecraft/textures/block/dirt.png')).bytes
             }
             new File(hostPack, 'pack.mcmeta').setText(
-                    '{"pack":{"pack_format":13,"description":"Ore host replacement test"}}\n', 'UTF-8')
+                    '{"pack":{"pack_format":15,"description":"Ore host replacement test"}}\n', 'UTF-8')
             new File(runDirectory, 'options.txt').append(
                     'resourcePacks:["vanilla","mod_resources","file/basemetals-host-test"]\n', 'UTF-8')
         }
@@ -171,13 +177,13 @@ def packagedClientStartupSmoke = tasks.register('packagedClientStartupSmoke', Ex
     dependsOn preparePackagedClientSmoke
     doFirst {
         File runtime = requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime')
-        String forgeVersionId = ['1.19.4-forge-45.4.0', 'forge-45.4.0'].find { candidate ->
+        String forgeVersionId = ['1.20.1-forge-47.4.10', 'forge-47.4.10'].find { candidate ->
             new File(runtime, "versions/${candidate}/${candidate}.json").isFile()
         }
-        if (forgeVersionId == null) throw new GradleException('Official client runtime has no Forge 45.4.0 profile')
+        if (forgeVersionId == null) throw new GradleException('Official client runtime has no Forge 47.4.10 profile')
         File forgeJsonFile = new File(runtime, "versions/${forgeVersionId}/${forgeVersionId}.json")
-        File baseJsonFile = new File(runtime, 'versions/1.19.4/1.19.4.json')
-        File baseJar = new File(runtime, 'versions/1.19.4/1.19.4.jar')
+        File baseJsonFile = new File(runtime, 'versions/1.20.1/1.20.1.json')
+        File baseJar = new File(runtime, 'versions/1.20.1/1.20.1.jar')
         File nativesDirectory = new File(runtime, "natives/${forgeVersionId}")
         [forgeJsonFile, baseJsonFile, baseJar, new File(runtime, 'libraries'),
                 new File(runtime, 'assets'), nativesDirectory].each {
@@ -254,6 +260,12 @@ def packagedClientStartupSmoke = tasks.register('packagedClientStartupSmoke', Ex
                 '-Dminecraft.launcher.brand=basemetals-validation',
                 '-Dminecraft.launcher.version=1'
         ]
+        List<String> expectedMods = ['minecraft', 'forge', 'basemetals', 'orespawn', 'basemetals_client_smoke']
+        if (providers.gradleProperty('packagedCompatSmoke').isPresent()) {
+            expectedMods.addAll(optionalModArtifacts.collect { it.modId })
+            command.add('-Dbasemetals.allowExtraSmokeMods=true')
+        }
+        command.add("-Dbasemetals.expectedSmokeMods=${expectedMods.join(',')}")
         command.addAll(forgeJvmArguments)
         command.addAll(['-cp', classpathFiles.collect { it.absolutePath }.join(File.pathSeparator),
                         (String) forgeJson.mainClass])

@@ -2,7 +2,7 @@ package zone.moddev.mc.basemetals.client;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.FormattedCharSequence;
 
 
@@ -119,10 +119,10 @@ public final class BaseMetalsConfigScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack matrices, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(matrices);
-        drawCenteredString(matrices, font, title, width / 2, 12, 0xFFFFFF);
-        super.render(matrices, mouseX, mouseY, partialTicks);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        renderBackground(graphics);
+        graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFF);
+        super.render(graphics, mouseX, mouseY, partialTicks);
 
         for (net.minecraft.client.gui.components.events.GuiEventListener child : children()) {
             if (child instanceof OptionButton && ((OptionButton) child).isHoveredOrFocused()) {
@@ -134,7 +134,7 @@ public final class BaseMetalsConfigScreen extends Screen {
                         help.addAll(font.split(net.minecraft.network.chat.Component.translatable(edits.mode().translationKey() + ".description"), 280));
                         help.addAll(font.split(net.minecraft.network.chat.Component.translatable(PREFIX + "restart"), 280));
                     }
-                    renderTooltip(matrices, help, mouseX, mouseY);
+                    graphics.renderTooltip(font, help, mouseX, mouseY);
                 }
             }
         }

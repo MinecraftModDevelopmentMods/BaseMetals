@@ -22,7 +22,7 @@ public final class MekanismCompat {
             "nickel", "platinum", "starsteel", "zinc");
 
     private static final DeferredRegister<Slurry> SLURRIES = DeferredRegister.create(
-            MekanismAPI.slurryRegistryName(), BaseMetals.MOD_ID);
+            MekanismAPI.SLURRY_REGISTRY_NAME, BaseMetals.MOD_ID);
     private static final Map<String, RegistryObject<Slurry>> DIRTY = new LinkedHashMap<>();
     private static final Map<String, RegistryObject<Slurry>> CLEAN = new LinkedHashMap<>();
 
@@ -31,9 +31,9 @@ public final class MekanismCompat {
             int colour = MaterialCatalogue.get(name).colour();
             ResourceLocation oreTag = new ResourceLocation("forge", "ores/" + name);
             DIRTY.put(name, SLURRIES.register("dirty_" + name,
-                    () -> new Slurry(SlurryBuilder.dirty().color(colour).ore(oreTag))));
+                    () -> new Slurry(SlurryBuilder.dirty().tint(colour).ore(oreTag))));
             CLEAN.put(name, SLURRIES.register("clean_" + name,
-                    () -> new Slurry(SlurryBuilder.clean().color(colour).ore(oreTag))));
+                    () -> new Slurry(SlurryBuilder.clean().tint(colour).ore(oreTag))));
         }
     }
 

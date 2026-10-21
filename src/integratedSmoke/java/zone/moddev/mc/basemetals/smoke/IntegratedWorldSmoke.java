@@ -76,7 +76,8 @@ public final class IntegratedWorldSmoke {
                 var expected = new java.util.TreeSet<>(java.util.List.of(expectedMods.split(",")));
                 var actual = new java.util.TreeSet<>(net.minecraftforge.fml.ModList.get().getMods().stream()
                         .map(net.minecraftforge.forgespi.language.IModInfo::getModId).toList());
-                if (!actual.equals(expected)) {
+                boolean allowDependencies = Boolean.getBoolean("basemetals.allowExtraSmokeMods");
+                if (allowDependencies ? !actual.containsAll(expected) : !actual.equals(expected)) {
                     throw new IllegalStateException("Client loaded " + actual + "; expected " + expected);
                 }
                 BaseMetals.LOGGER.info("BASEMETALS_CLIENT_PROFILE PASS mods={}", actual);
@@ -86,16 +87,12 @@ public final class IntegratedWorldSmoke {
             verifyBlockRenderLayers(minecraft);
             renderLayersChecked = true;
         }
-        if (!creativeBucketsChecked) {
-            verifyCreativeBuckets(minecraft);
-            creativeBucketsChecked = true;
-        }
         if (!creationStarted && elapsedTicks % 200 == 0) {
             BaseMetals.LOGGER.info("BASEMETALS_INTEGRATED_SMOKE waiting for title screen current={} overlay={}",
                     minecraft.screen == null ? "none" : minecraft.screen.getClass().getName(),
                     minecraft.getOverlay() == null ? "none" : minecraft.getOverlay().getClass().getName());
         }
-        if (!creationStarted && minecraft.screen instanceof TitleScreen) {
+        if (!creationStarted && minecraft.screen instanceof TitleScreen && minecraft.getOverlay() == null) {
             ConfigScreenSmoke.verify(minecraft, minecraft.screen);
             verifyOreOverlayModels(minecraft);
             verifyBarsModels(minecraft);
@@ -129,6 +126,11 @@ public final class IntegratedWorldSmoke {
                 && minecraft.level != null && minecraft.player != null) {
             ServerLevel serverLevel = minecraft.getSingleplayerServer().getLevel(minecraft.level.dimension());
             if (serverLevel != null && serverLevel.getServer().isRunning()) {
+                if (!creativeBucketsChecked) {
+                    // Other mods may use server settings while building creative tooltips.
+                    verifyCreativeBuckets(minecraft);
+                    creativeBucketsChecked = true;
+                }
                 if (!projectileRenderersChecked) {
                     verifyProjectileRenderers(minecraft);
                     projectileRenderersChecked = true;
@@ -321,10 +323,10 @@ public final class IntegratedWorldSmoke {
         net.minecraft.world.item.CreativeModeTabs.tryRebuildTabContents(
                 net.minecraft.world.flag.FeatureFlags.VANILLA_SET, true,
                 RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY));
-        itemsTab.addAll(ModTabs.ITEMS.getDisplayItems());
+        itemsTab.addAll(ModTabs.ITEMS.get().getDisplayItems());
         searchTab.addAll(net.minecraft.world.item.CreativeModeTabs.searchTab().getDisplayItems());
         var shown = new java.util.HashSet<net.minecraft.world.item.Item>();
-        for (var tab : java.util.List.of(ModTabs.BLOCKS, ModTabs.ITEMS, ModTabs.TOOLS, ModTabs.COMBAT)) {
+        for (var tab : java.util.List.of(ModTabs.BLOCKS.get(), ModTabs.ITEMS.get(), ModTabs.TOOLS.get(), ModTabs.COMBAT.get())) {
             tab.getDisplayItems().forEach(stack -> shown.add(stack.getItem()));
         }
         var indexed = minecraft.getSearchTree(SearchRegistry.CREATIVE_NAMES).search("basemetals:")

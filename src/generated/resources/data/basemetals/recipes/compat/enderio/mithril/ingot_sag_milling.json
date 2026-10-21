@@ -1,9 +1,9 @@
 {
-  "type": "enderio_machines:sagmilling",
+  "type": "enderio:sag_milling",
   "conditions": [
     {
       "type": "forge:mod_loaded",
-      "modid": "enderio_machines"
+      "modid": "enderio"
     },
     {
       "type": "basemetals:content_mode",
@@ -16,7 +16,11 @@
   },
   "outputs": [
     {
-      "item": "basemetals:mithril_powder"
+      "chance": 1.0,
+      "item": {
+        "item": "basemetals:mithril_powder"
+      },
+      "optional": false
     }
   ]
 }

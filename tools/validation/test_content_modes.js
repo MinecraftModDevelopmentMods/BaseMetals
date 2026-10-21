@@ -29,7 +29,7 @@ function hash(file) {
 
 function prepare(directory, mode, probe) {
     fs.mkdirSync(path.join(directory, 'mods'), { recursive: true });
-    // A fresh 1.19 client otherwise stops at the accessibility onboarding screen.
+    // Skip first-run accessibility setup in the automated client.
     fs.writeFileSync(path.join(directory, 'options.txt'), 'fullscreen:false\nonboardAccessibility:false\n');
     for (const artifact of [spec.modJar, spec.oreSpawn, probe]) {
         const file = typeof artifact === 'string' ? artifact : artifact.path;
@@ -94,7 +94,7 @@ function verifyConfig(directory, initial) {
 
 (async () => {
     const results = [];
-    const client = clientLaunch(spec.clientRuntime, '1.19.4', '45.4.0');
+    const client = clientLaunch(spec.clientRuntime, '1.20.1', '47.4.10');
     const selected = spec.cases ? cases.filter(([name]) => spec.cases.includes(name)) : cases;
     if (!selected.length || (spec.cases && selected.length !== spec.cases.length)) {
         throw new Error('The requested mode-test case is unknown or duplicated.');
@@ -110,16 +110,18 @@ function verifyConfig(directory, initial) {
         fs.writeFileSync(path.join(serverDir, 'eula.txt'), 'eula=true\n');
         fs.writeFileSync(path.join(serverDir, 'server.properties'),
             `online-mode=false\nserver-ip=127.0.0.1\nserver-port=${port}\nview-distance=3\n`
-            + 'simulation-distance=3\nlevel-type=flat\ngenerate-structures=false\nmax-tick-time=-1\n');
+            + 'simulation-distance=3\nlevel-type=minecraft:flat\n'
+            + 'generator-settings={"layers":[{"block":"minecraft:bedrock","height":1},{"block":"minecraft:dirt","height":2},{"block":"minecraft:grass_block","height":1}],"biome":"minecraft:plains"}\n'
+            + 'generate-structures=false\nmax-tick-time=-1\n');
         const server = launch(serverDir, ['-Xms256m', '-Xmx2g', '-Dbasemetals.awaitLoginSmoke=true',
-            ...serverArguments(spec.serverRuntime, serverDir, '1.19.4', '45.4.0')], 'server.log');
+            ...serverArguments(spec.serverRuntime, serverDir, '1.20.1', '47.4.10')], 'server.log');
         let player;
         try {
             await waitFor(server, 'BASEMETALS_PACKAGED_SERVER_SMOKE PASS', 240000);
             player = launch(clientDir, ['-Xms512m', '-Xmx2g', '-Dbasemetals.remoteLoginSmoke=true',
                 `-Dbasemetals.remoteAddress=127.0.0.1:${port}`, `-Dbasemetals.expectModeReject=${!!reject}`,
                 ...client.args, ...client.metadata.arguments.game,
-                '--username', 'BMValidation', '--version', '1.19.4', '--gameDir', clientDir,
+                '--username', 'BMValidation', '--version', '1.20.1', '--gameDir', clientDir,
                 '--assetsDir', path.join(spec.clientRuntime, 'assets'), '--assetIndex', client.vanilla.assetIndex.id,
                 '--uuid', '00000000000000000000000000000118', '--accessToken', '0', '--userType', 'legacy'], 'client.log');
             await waitFor(player, 'BASEMETALS_MODE_LOGIN_CLIENT PASS result=' + (reject ? 'rejected' : 'connected'), 240000);

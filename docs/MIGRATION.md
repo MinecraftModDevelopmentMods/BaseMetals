@@ -2,7 +2,7 @@
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
 3.1.0 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
-OreSpawn 3 plugin, or the old native fallback generator into the 1.19.4 instance.
+OreSpawn 3 plugin, or the old native fallback generator into the 1.20.1 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
 before the 1.13 flattening. Base Metals snapshots those positions, runs
@@ -58,7 +58,7 @@ upgrade start. Missing mappings also forward:
 - historical `mmdlib:*` Vanilla Bits blocks, items, and fluids to matching
   `basemetals:*` IDs.
 
-## Moving from 1.13 through 1.18
+## Moving from 1.13 through 1.19
 
 These worlds already use named block states, so they do not need the numeric
 ID conversion. Older wall connections are converted to the current wall

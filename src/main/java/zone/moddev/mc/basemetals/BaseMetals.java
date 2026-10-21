@@ -26,12 +26,14 @@ public final class BaseMetals {
     public BaseMetals() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModContent.register(modBus);
-        modBus.addListener(ModTabs::register);
+        ModTabs.register(modBus);
         modBus.addListener(BaseMetalsConfig::onConfigLoading);
         modBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) -> {
-            zone.moddev.mc.basemetals.network.ContentModeNetwork.register();
-            event.enqueueWork(() -> net.minecraftforge.common.crafting.CraftingHelper.register(
-                    new zone.moddev.mc.basemetals.recipe.ContentRecipeCondition.Serializer()));
+            event.enqueueWork(() -> {
+                zone.moddev.mc.basemetals.network.ContentModeNetwork.register();
+                net.minecraftforge.common.crafting.CraftingHelper.register(
+                        new zone.moddev.mc.basemetals.recipe.ContentRecipeCondition.Serializer());
+            });
         });
         CrushingRecipe.TYPES.register(modBus);
         CrushingRecipe.SERIALIZERS.register(modBus);

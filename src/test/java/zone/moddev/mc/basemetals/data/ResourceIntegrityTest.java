@@ -322,7 +322,7 @@ class ResourceIntegrityTest {
         assertConditionalRecipe("compat/mekanism/adamantine/ore_to_dirty_slurry", "mekanism");
         assertConditionalRecipe("compat/thermal/alloys/bronze", "thermal_expansion");
         assertConditionalRecipe("compat/tconstruct/alloys/bronze", "tconstruct");
-        assertConditionalRecipe("compat/enderio/alloys/bronze", "enderio_machines");
+        assertConditionalRecipe("compat/enderio/alloys/bronze", "enderio");
     }
 
     @Test

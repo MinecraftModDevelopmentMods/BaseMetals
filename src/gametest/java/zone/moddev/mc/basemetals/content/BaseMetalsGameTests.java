@@ -570,13 +570,13 @@ public final class BaseMetalsGameTests {
 
     @GameTest(template = EMPTY)
     public static void creativeTabsRetainTheirLegacyStarsteelIcons(GameTestHelper helper) {
-        require(helper, ModTabs.BLOCKS.getIconItem().is(ModContent.item("starsteel_block").get()),
+        require(helper, ModTabs.BLOCKS.get().getIconItem().is(ModContent.item("starsteel_block").get()),
                 "Blocks tab did not retain the Starsteel block icon");
-        require(helper, ModTabs.ITEMS.getIconItem().is(ModContent.item("starsteel_gear").get()),
+        require(helper, ModTabs.ITEMS.get().getIconItem().is(ModContent.item("starsteel_gear").get()),
                 "Items tab did not retain the Starsteel gear icon");
-        require(helper, ModTabs.TOOLS.getIconItem().is(ModContent.item("starsteel_pickaxe").get()),
+        require(helper, ModTabs.TOOLS.get().getIconItem().is(ModContent.item("starsteel_pickaxe").get()),
                 "Tools tab did not retain the Starsteel pickaxe icon");
-        require(helper, ModTabs.COMBAT.getIconItem().is(ModContent.item("starsteel_sword").get()),
+        require(helper, ModTabs.COMBAT.get().getIconItem().is(ModContent.item("starsteel_sword").get()),
                 "Combat tab did not retain the Starsteel sword icon");
         helper.succeed();
     }
@@ -968,7 +968,7 @@ public final class BaseMetalsGameTests {
     }
 
     private static CraftingContainer craftingContainer(int width, int height) {
-        return new CraftingContainer(new AbstractContainerMenu(null, -1) {
+        return new net.minecraft.world.inventory.TransientCraftingContainer(new AbstractContainerMenu(null, -1) {
             @Override
             public ItemStack quickMoveStack(Player player, int slot) { return ItemStack.EMPTY; }
             @Override
