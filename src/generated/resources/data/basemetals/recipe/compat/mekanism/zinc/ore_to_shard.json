@@ -15,6 +15,7 @@
     "chemical": "mekanism:hydrogen_chloride"
   },
   "item_input": {
+    "count": 1,
     "tag": "c:ores/zinc"
   },
   "output": {

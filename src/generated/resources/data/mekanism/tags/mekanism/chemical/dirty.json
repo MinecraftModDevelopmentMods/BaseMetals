@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:dirty_adamantine",
+    "basemetals:dirty_antimony",
+    "basemetals:dirty_bismuth",
+    "basemetals:dirty_coldiron",
+    "basemetals:dirty_nickel",
+    "basemetals:dirty_platinum",
+    "basemetals:dirty_starsteel",
+    "basemetals:dirty_zinc"
+  ]
+}

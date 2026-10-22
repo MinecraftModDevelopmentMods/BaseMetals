@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_axe",
+    "basemetals:antimony_axe",
+    "basemetals:aquarium_axe",
+    "basemetals:bismuth_axe",
+    "basemetals:brass_axe",
+    "basemetals:bronze_axe",
+    "basemetals:coldiron_axe",
+    "basemetals:copper_axe",
+    "basemetals:cupronickel_axe",
+    "basemetals:electrum_axe",
+    "basemetals:emerald_axe",
+    "basemetals:invar_axe",
+    "basemetals:lead_axe",
+    "basemetals:mithril_axe",
+    "basemetals:nickel_axe",
+    "basemetals:obsidian_axe",
+    "basemetals:pewter_axe",
+    "basemetals:platinum_axe",
+    "basemetals:quartz_axe",
+    "basemetals:silver_axe",
+    "basemetals:starsteel_axe",
+    "basemetals:steel_axe",
+    "basemetals:tin_axe",
+    "basemetals:zinc_axe"
+  ]
+}

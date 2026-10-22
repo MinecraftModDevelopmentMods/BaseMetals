@@ -147,7 +147,7 @@ final class GeneratedData implements DataProvider {
             pool.add("conditions", conditions);
             JsonObject root = object("type", "minecraft:block");
             JsonArray pools = new JsonArray(); pools.add(pool); root.add("pools", pools);
-            save(cache, root, "data/basemetals/loot_tables/blocks/" + id + ".json");
+            save(cache, root, "data/basemetals/loot_table/blocks/" + id + ".json");
         }
     }
 
@@ -406,6 +406,12 @@ final class GeneratedData implements DataProvider {
     }
 
     private void writeCompatibilityTags(CachedOutput cache) throws IOException {
+        // Chemical registry tags use the registry namespace as part of their directory.
+        for (String state : List.of("dirty", "clean")) {
+            tag(cache, "mekanism", "mekanism/chemical/" + state,
+                    PROCESSING_MATERIALS.stream()
+                            .map(material -> "basemetals:" + state + "_" + material).toList());
+        }
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             tag(cache, "forge", "fluids/molten_" + material.name(), List.of(
                     "basemetals:" + material.name(),
@@ -1024,6 +1030,14 @@ final class GeneratedData implements DataProvider {
                     "#c:ores/" + name, 1, 1000);
             mekanismDissolution(cache, root + "raw_to_dirty_slurry", name,
                     "#c:raw_materials/" + name, 3, 2000);
+            mekanismItemToItem(cache, root + "raw_to_dust", "mekanism:enriching",
+                    "#c:raw_materials/" + name, 3, "basemetals:" + name + "_powder", 4);
+            mekanismItemChemicalToItem(cache, root + "raw_to_clump", "mekanism:purifying",
+                    "#c:raw_materials/" + name, 1, "mekanism:oxygen", 1,
+                    "basemetals:" + name + "_clump", 2);
+            mekanismItemChemicalToItem(cache, root + "raw_to_shard", "mekanism:injecting",
+                    "#c:raw_materials/" + name, 3, "mekanism:hydrogen_chloride", 1,
+                    "basemetals:" + name + "_shard", 8);
             mekanismItemToItem(cache, root + "ingot_to_dust", "mekanism:crushing",
                     "#c:ingots/" + name, "basemetals:" + name + "_powder", 1);
         }
@@ -1031,16 +1045,30 @@ final class GeneratedData implements DataProvider {
 
     private void mekanismItemToItem(CachedOutput cache, String id, String type, String input,
             String outputItem, int count) throws IOException {
+        mekanismItemToItem(cache, id, type, input, 1, outputItem, count);
+    }
+
+    private void mekanismItemToItem(CachedOutput cache, String id, String type, String input,
+            int inputCount, String outputItem, int count) throws IOException {
         JsonObject root = object("type", type);
-        root.add("input", ingredient(input));
+        JsonObject itemInput = ingredient(input);
+        itemInput.addProperty("count", inputCount);
+        root.add("input", itemInput);
         root.add("output", object("id", outputItem, "count", count));
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
     private void mekanismItemChemicalToItem(CachedOutput cache, String id, String type, String input,
             String chemical, int amount, String outputItem, int count) throws IOException {
+        mekanismItemChemicalToItem(cache, id, type, input, 1, chemical, amount, outputItem, count);
+    }
+
+    private void mekanismItemChemicalToItem(CachedOutput cache, String id, String type, String input,
+            int inputCount, String chemical, int amount, String outputItem, int count) throws IOException {
         JsonObject root = object("type", type, "per_tick_usage", true);
-        root.add("item_input", ingredient(input));
+        JsonObject itemInput = ingredient(input);
+        itemInput.addProperty("count", inputCount);
+        root.add("item_input", itemInput);
         root.add("chemical_input", object("amount", amount, "chemical", chemical));
         root.add("output", object("id", outputItem, "count", count));
         saveConditionalRecipe(cache, root, id, "mekanism");
@@ -1388,6 +1416,16 @@ final class GeneratedData implements DataProvider {
                 Map.entry("ru_ru", "Рудное сырьё: %s"), Map.entry("zh_cn", "粗%s"), Map.entry("zh_tw", "粗%s"));
         for (String locale : LOCALES) {
             JsonObject language = readLegacyLanguage(legacyRoot.resolve(locale + ".lang"));
+            // Retain the original translated values under the unified chemical registry keys.
+            for (String material : PROCESSING_MATERIALS) {
+                String legacyName = Character.toUpperCase(material.charAt(0)) + material.substring(1);
+                for (String state : List.of("clean", "dirty")) {
+                    String oldKey = "gas." + (state.equals("clean") ? "cleanGas" : "gas") + legacyName;
+                    if (language.has(oldKey)) {
+                        language.add("chemical.basemetals." + state + "_" + material, language.remove(oldKey));
+                    }
+                }
+            }
             ModContent.blocksById().keySet().forEach(id -> addIfAbsent(language, "block.basemetals." + id,
                     ModContent.fluids().containsKey(id) ? "Molten " + title(id) : title(id)));
             ModContent.itemsById().keySet().forEach(id -> addIfAbsent(language, "item.basemetals." + id,
@@ -1400,9 +1438,9 @@ final class GeneratedData implements DataProvider {
                 addIfAbsent(language, "material.basemetals." + material.name(), title(material.name()));
             }
             for (String material : PROCESSING_MATERIALS) {
-                addIfAbsent(language, "slurry.basemetals.dirty_" + material,
+                addIfAbsent(language, "chemical.basemetals.dirty_" + material,
                         "Dirty " + title(material) + " Slurry");
-                addIfAbsent(language, "slurry.basemetals.clean_" + material,
+                addIfAbsent(language, "chemical.basemetals.clean_" + material,
                         "Clean " + title(material) + " Slurry");
             }
             for (String advancement : ADVANCEMENTS) {
@@ -1504,7 +1542,7 @@ final class GeneratedData implements DataProvider {
             modifier.addProperty("table", "basemetals:chests/inject/" + target.getKey());
             save(cache, modifier, "data/basemetals/loot_modifiers/" + target.getKey() + ".json");
             save(cache, legacyChestTable(templates.get(target.getKey())),
-                    "data/basemetals/loot_tables/chests/inject/" + target.getKey() + ".json");
+                    "data/basemetals/loot_table/chests/inject/" + target.getKey() + ".json");
         }
         JsonObject root = new JsonObject(); root.addProperty("replace", false); root.add("entries", global);
         save(cache, root, "data/forge/loot_modifiers/global_loot_modifiers.json");
@@ -1774,9 +1812,10 @@ final class GeneratedData implements DataProvider {
         functions.add(object("function", "minecraft:explosion_decay"));
         JsonObject rawEntry = object("type", "minecraft:item", "name", raw, "functions", functions);
         JsonArray enchantments = new JsonArray();
-        enchantments.add(object("enchantment", "minecraft:silk_touch", "levels", object("min", 1)));
+        enchantments.add(object("enchantments", "minecraft:silk_touch", "levels", object("min", 1)));
         JsonArray conditions = new JsonArray();
-        conditions.add(object("condition", "minecraft:match_tool", "predicate", object("enchantments", enchantments)));
+        conditions.add(object("condition", "minecraft:match_tool", "predicate",
+                object("predicates", object("minecraft:enchantments", enchantments))));
         JsonArray children = new JsonArray();
         children.add(object("type", "minecraft:item", "name", "basemetals:" + ore, "conditions", conditions));
         children.add(rawEntry);
@@ -1785,7 +1824,7 @@ final class GeneratedData implements DataProvider {
         JsonArray pools = new JsonArray();
         pools.add(object("name", "basemetals_" + ore, "rolls", 1, "entries", entries));
         save(cache, object("type", "minecraft:block", "pools", pools),
-                "data/basemetals/loot_tables/blocks/" + ore + ".json");
+                "data/basemetals/loot_table/blocks/" + ore + ".json");
     }
 
     private void writeRawProcessing(CachedOutput cache) throws IOException {

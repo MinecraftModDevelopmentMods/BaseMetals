@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_crossbow",
+    "basemetals:antimony_crossbow",
+    "basemetals:aquarium_crossbow",
+    "basemetals:bismuth_crossbow",
+    "basemetals:brass_crossbow",
+    "basemetals:bronze_crossbow",
+    "basemetals:coldiron_crossbow",
+    "basemetals:copper_crossbow",
+    "basemetals:cupronickel_crossbow",
+    "basemetals:diamond_crossbow",
+    "basemetals:electrum_crossbow",
+    "basemetals:emerald_crossbow",
+    "basemetals:gold_crossbow",
+    "basemetals:invar_crossbow",
+    "basemetals:iron_crossbow",
+    "basemetals:lead_crossbow",
+    "basemetals:mithril_crossbow",
+    "basemetals:nickel_crossbow",
+    "basemetals:obsidian_crossbow",
+    "basemetals:pewter_crossbow",
+    "basemetals:platinum_crossbow",
+    "basemetals:quartz_crossbow",
+    "basemetals:silver_crossbow",
+    "basemetals:starsteel_crossbow",
+    "basemetals:steel_crossbow",
+    "basemetals:tin_crossbow",
+    "basemetals:zinc_crossbow"
+  ]
+}

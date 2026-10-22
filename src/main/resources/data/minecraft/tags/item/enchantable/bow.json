@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_bow",
+    "basemetals:antimony_bow",
+    "basemetals:aquarium_bow",
+    "basemetals:bismuth_bow",
+    "basemetals:brass_bow",
+    "basemetals:bronze_bow",
+    "basemetals:coldiron_bow",
+    "basemetals:copper_bow",
+    "basemetals:cupronickel_bow",
+    "basemetals:diamond_bow",
+    "basemetals:electrum_bow",
+    "basemetals:emerald_bow",
+    "basemetals:gold_bow",
+    "basemetals:invar_bow",
+    "basemetals:iron_bow",
+    "basemetals:lead_bow",
+    "basemetals:mithril_bow",
+    "basemetals:nickel_bow",
+    "basemetals:obsidian_bow",
+    "basemetals:pewter_bow",
+    "basemetals:platinum_bow",
+    "basemetals:quartz_bow",
+    "basemetals:silver_bow",
+    "basemetals:starsteel_bow",
+    "basemetals:steel_bow",
+    "basemetals:tin_bow",
+    "basemetals:zinc_bow"
+  ]
+}

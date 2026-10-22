@@ -12,18 +12,20 @@
                 {
                   "condition": "minecraft:match_tool",
                   "predicate": {
-                    "enchantments": [
-                      {
-                        "enchantment": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
+                    "predicates": {
+                      "minecraft:enchantments": [
+                        {
+                          "enchantments": "minecraft:silk_touch",
+                          "levels": {
+                            "min": 1
+                          }
                         }
-                      }
-                    ]
+                      ]
+                    }
                   }
                 }
               ],
-              "name": "basemetals:mercury_ore"
+              "name": "basemetals:antimony_ore"
             },
             {
               "type": "minecraft:item",
@@ -37,12 +39,12 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "basemetals:mercury_raw"
+              "name": "basemetals:antimony_raw"
             }
           ]
         }
       ],
-      "name": "basemetals_mercury_ore",
+      "name": "basemetals_antimony_ore",
       "rolls": 1
     }
   ]

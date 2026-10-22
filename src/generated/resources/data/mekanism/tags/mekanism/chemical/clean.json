@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:clean_adamantine",
+    "basemetals:clean_antimony",
+    "basemetals:clean_bismuth",
+    "basemetals:clean_coldiron",
+    "basemetals:clean_nickel",
+    "basemetals:clean_platinum",
+    "basemetals:clean_starsteel",
+    "basemetals:clean_zinc"
+  ]
+}

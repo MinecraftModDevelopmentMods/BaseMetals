@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:platinum_powder"
+    }
+  ],
+  "type": "mekanism:enriching",
+  "input": {
+    "count": 3,
+    "tag": "c:raw_materials/platinum"
+  },
+  "output": {
+    "count": 4,
+    "id": "basemetals:platinum_powder"
+  }
+}

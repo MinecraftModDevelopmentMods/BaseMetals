@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_sword",
+    "basemetals:antimony_sword",
+    "basemetals:aquarium_sword",
+    "basemetals:bismuth_sword",
+    "basemetals:brass_sword",
+    "basemetals:bronze_sword",
+    "basemetals:coldiron_sword",
+    "basemetals:copper_sword",
+    "basemetals:cupronickel_sword",
+    "basemetals:electrum_sword",
+    "basemetals:emerald_sword",
+    "basemetals:invar_sword",
+    "basemetals:lead_sword",
+    "basemetals:mithril_sword",
+    "basemetals:nickel_sword",
+    "basemetals:obsidian_sword",
+    "basemetals:pewter_sword",
+    "basemetals:platinum_sword",
+    "basemetals:quartz_sword",
+    "basemetals:silver_sword",
+    "basemetals:starsteel_sword",
+    "basemetals:steel_sword",
+    "basemetals:tin_sword",
+    "basemetals:zinc_sword"
+  ]
+}

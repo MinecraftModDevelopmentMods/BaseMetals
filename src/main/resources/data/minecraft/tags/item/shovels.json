@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_shovel",
+    "basemetals:antimony_shovel",
+    "basemetals:aquarium_shovel",
+    "basemetals:bismuth_shovel",
+    "basemetals:brass_shovel",
+    "basemetals:bronze_shovel",
+    "basemetals:coldiron_shovel",
+    "basemetals:copper_shovel",
+    "basemetals:cupronickel_shovel",
+    "basemetals:electrum_shovel",
+    "basemetals:emerald_shovel",
+    "basemetals:invar_shovel",
+    "basemetals:lead_shovel",
+    "basemetals:mithril_shovel",
+    "basemetals:nickel_shovel",
+    "basemetals:obsidian_shovel",
+    "basemetals:pewter_shovel",
+    "basemetals:platinum_shovel",
+    "basemetals:quartz_shovel",
+    "basemetals:silver_shovel",
+    "basemetals:starsteel_shovel",
+    "basemetals:steel_shovel",
+    "basemetals:tin_shovel",
+    "basemetals:zinc_shovel"
+  ]
+}

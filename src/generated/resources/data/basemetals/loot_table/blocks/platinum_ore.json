@@ -12,30 +12,24 @@
                 {
                   "condition": "minecraft:match_tool",
                   "predicate": {
-                    "enchantments": [
-                      {
-                        "enchantment": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
+                    "predicates": {
+                      "minecraft:enchantments": [
+                        {
+                          "enchantments": "minecraft:silk_touch",
+                          "levels": {
+                            "min": 1
+                          }
                         }
-                      }
-                    ]
+                      ]
+                    }
                   }
                 }
               ],
-              "name": "basemetals:copper_ore"
+              "name": "basemetals:platinum_ore"
             },
             {
               "type": "minecraft:item",
               "functions": [
-                {
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "max": 3,
-                    "min": 2
-                  },
-                  "function": "minecraft:set_count"
-                },
                 {
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:ore_drops",
@@ -45,12 +39,12 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "minecraft:raw_copper"
+              "name": "basemetals:platinum_raw"
             }
           ]
         }
       ],
-      "name": "basemetals_copper_ore",
+      "name": "basemetals_platinum_ore",
       "rolls": 1
     }
   ]
