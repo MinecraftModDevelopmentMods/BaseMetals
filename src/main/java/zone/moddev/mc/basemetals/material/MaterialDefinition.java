@@ -53,6 +53,13 @@ public record MaterialDefinition(
         return (float) (2.0D * hardness);
     }
 
+    /** Gameplay viscosity, weighted by block hardness and required harvest tier. */
+    public int moltenViscosity() {
+        double viscosity = 10000.0D + 250.0D * blockHardness()
+                + 1500.0D * Math.max(0, requiredHarvestLevel());
+        return (int) Math.round(Math.clamp(viscosity, 10000.0D, 20000.0D));
+    }
+
     public float oreHardness() {
         return (float) (0.5D * hardness);
     }

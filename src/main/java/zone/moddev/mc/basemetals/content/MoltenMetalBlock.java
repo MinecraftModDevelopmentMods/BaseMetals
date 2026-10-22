@@ -25,7 +25,14 @@ public final class MoltenMetalBlock extends LiquidBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         super.entityInside(state, level, pos, entity);
-        if (mercury && !level.isClientSide && BaseMetalsConfig.MERCURY_EFFECTS.get()
+        if (level.isClientSide) return;
+        if (!mercury) {
+            // Temperature is descriptive; apply the actual contact heat here.
+            // Vanilla lava damage respects fire immunity and Fire Resistance.
+            entity.lavaHurt();
+            return;
+        }
+        if (BaseMetalsConfig.MERCURY_EFFECTS.get()
                 && entity instanceof LivingEntity living && level.random.nextInt(32) == 0) {
             living.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 30 * 20, 2));
         }

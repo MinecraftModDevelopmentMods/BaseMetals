@@ -77,12 +77,14 @@ public final class ModContent {
                         .sound(SoundType.METAL).strength(5.0F).noCollission()), true);
         registerVanillaBits();
         MaterialCatalogue.ALL.forEach(material -> registerFluid(material.name(), material.colour(),
-                material.name().equals("mercury")));
+                material.name().equals("mercury"), material.moltenViscosity()));
         Map<String, MaterialDefinition> vanillaFluids = vanillaDefinitions();
         for (String name : List.of("charcoal", "coal", "diamond", "emerald", "ender", "gold", "iron",
                 "lapis", "obsidian", "prismarine", "quartz", "wood", "redstone", "stone")) {
             int colour = vanillaFluids.containsKey(name) ? vanillaFluids.get(name).colour() : 0xFFFFFF;
-            registerFluid(name, colour, false);
+            int viscosity = vanillaFluids.containsKey(name)
+                    ? vanillaFluids.get(name).moltenViscosity() : 15000;
+            registerFluid(name, colour, false, viscosity);
         }
     }
 
@@ -408,7 +410,7 @@ public final class ModContent {
                 hardness, strength, magic, colour, false));
     }
 
-    private static void registerFluid(String name, int colour, boolean mercury) {
+    private static void registerFluid(String name, int colour, boolean mercury, int viscosity) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, name);
         DeferredHolder<Fluid, BaseFlowingFluid.Source> source = DeferredHolder.create(Registries.FLUID, id);
         DeferredHolder<Fluid, BaseFlowingFluid.Flowing> flowing = DeferredHolder.create(
@@ -422,7 +424,9 @@ public final class ModContent {
                 mercury ? "block/mercury_flow" : "block/molten_metal_flow");
         DeferredHolder<FluidType, MetalFluidType> type = FLUID_TYPES.register(name, () -> new MetalFluidType(
                 FluidType.Properties.create().density(mercury ? 13594 : 2000)
-                        .viscosity(mercury ? 2000 : 10000).temperature(769)
+                        .viscosity(mercury ? 2000 : viscosity)
+                        .temperature(mercury ? 300 : 1300)
+                        .motionScale(mercury ? 0.014D : 0.007D)
                         .lightLevel(mercury ? 0 : 10).descriptionId("fluid.basemetals." + name)
                         .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
                         .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA), still, flow, colour));
@@ -437,7 +441,9 @@ public final class ModContent {
         FLUIDS.register(name, () -> new BaseFlowingFluid.Source(properties));
         FLUIDS.register("flowing_" + name, () -> new BaseFlowingFluid.Flowing(properties));
         registerBlock(name, () -> new MoltenMetalBlock(source,
-                BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).noCollission().strength(100.0F).noLootTable(), mercury), false);
+                BlockBehaviour.Properties.of().mapColor(mercury ? MapColor.METAL : MapColor.FIRE)
+                        .noCollission().strength(100.0F).noLootTable()
+                        .lightLevel(state -> mercury ? 0 : 10), mercury), false);
         // Forge 1.12 registered an ItemBlock under every molten block ID. Keep
         // those hidden inventory IDs so old stacks can survive a world upgrade.
         registerItem(name, () -> new BlockItem(block.get(), new Item.Properties()));
