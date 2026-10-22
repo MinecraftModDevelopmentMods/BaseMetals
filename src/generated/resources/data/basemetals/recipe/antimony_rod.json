@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:antimony_rod",
+    "key": {
+      "X": {
+        "tag": "c:ingots/antimony"
+      }
+    },
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:antimony_rod"
+    }
+  }
+}

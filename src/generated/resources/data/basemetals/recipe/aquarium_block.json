@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:aquarium_block",
+    "key": {
+      "X": {
+        "tag": "c:ingots/aquarium"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "basemetals:aquarium_block"
+    }
+  }
+}

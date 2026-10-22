@@ -1,0 +1,46 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:pewter_ingot"
+    }
+  ],
+  "type": "thermal:smelter",
+  "energy": 6400,
+  "ingredients": [
+    {
+      "count": 1,
+      "value": [
+        {
+          "tag": "c:dusts/tin"
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "value": [
+        {
+          "tag": "c:dusts/copper"
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "value": [
+        {
+          "tag": "c:dusts/lead"
+        }
+      ]
+    }
+  ],
+  "result": [
+    {
+      "count": 3,
+      "item": "basemetals:pewter_ingot"
+    }
+  ]
+}

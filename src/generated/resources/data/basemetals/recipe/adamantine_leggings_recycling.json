@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "basemetals:adamantine_leggings"
+  },
+  "result": {
+    "count": 7,
+    "id": "basemetals:adamantine_ingot"
+  }
+}

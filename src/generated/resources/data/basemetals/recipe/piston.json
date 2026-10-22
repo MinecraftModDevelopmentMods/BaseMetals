@@ -1,0 +1,30 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "minecraft:piston",
+    "key": {
+      "C": {
+        "tag": "c:cobblestones"
+      },
+      "R": {
+        "tag": "c:dusts/redstone"
+      },
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "X": {
+        "tag": "c:ingots/steel"
+      }
+    },
+    "pattern": [
+      "WWW",
+      "CXC",
+      "CRC"
+    ],
+    "result": {
+      "id": "minecraft:piston"
+    }
+  }
+}

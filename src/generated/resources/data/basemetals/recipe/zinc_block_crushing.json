@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:storage_blocks/zinc"
+  },
+  "result": {
+    "count": 9,
+    "id": "basemetals:zinc_powder"
+  }
+}

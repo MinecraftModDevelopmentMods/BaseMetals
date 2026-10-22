@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:quartz_helmet",
+    "key": {
+      "X": {
+        "tag": "c:gems/quartz"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:quartz_helmet"
+    }
+  }
+}

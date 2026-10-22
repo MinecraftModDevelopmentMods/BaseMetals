@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:ores/adamantine"
+  },
+  "result": {
+    "count": 2,
+    "id": "basemetals:adamantine_powder"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:steel_block",
+    "key": {
+      "X": {
+        "tag": "c:ingots/steel"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "basemetals:steel_block"
+    }
+  }
+}

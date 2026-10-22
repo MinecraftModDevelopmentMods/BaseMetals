@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:zinc_scythe",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/zinc"
+      }
+    },
+    "pattern": [
+      "XX ",
+      "  X",
+      " S "
+    ],
+    "result": {
+      "id": "basemetals:zinc_scythe"
+    }
+  }
+}

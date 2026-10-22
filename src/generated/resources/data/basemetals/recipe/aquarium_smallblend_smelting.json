@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.17,
+  "ingredient": {
+    "tag": "c:small_blends/aquarium"
+  },
+  "result": {
+    "id": "basemetals:aquarium_nugget"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:tin_helmet",
+    "key": {
+      "X": {
+        "tag": "c:ingots/tin"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:tin_helmet"
+    }
+  }
+}

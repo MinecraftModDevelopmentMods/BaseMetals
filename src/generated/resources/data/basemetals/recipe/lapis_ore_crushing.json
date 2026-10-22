@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:ores/lapis"
+  },
+  "result": {
+    "count": 8,
+    "id": "minecraft:lapis_lazuli"
+  }
+}

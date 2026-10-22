@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:brass_shears",
+    "key": {
+      "X": {
+        "tag": "c:ingots/brass"
+      }
+    },
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "result": {
+      "id": "basemetals:brass_shears"
+    }
+  }
+}

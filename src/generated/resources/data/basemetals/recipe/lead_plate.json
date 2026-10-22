@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:lead_plate",
+    "key": {
+      "X": {
+        "tag": "c:ingots/lead"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 3,
+      "id": "basemetals:lead_plate"
+    }
+  }
+}

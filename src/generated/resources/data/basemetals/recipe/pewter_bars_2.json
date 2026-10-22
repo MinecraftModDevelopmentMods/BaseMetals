@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:pewter_bars",
+    "key": {
+      "X": {
+        "tag": "c:rods/pewter"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:pewter_bars"
+    }
+  }
+}

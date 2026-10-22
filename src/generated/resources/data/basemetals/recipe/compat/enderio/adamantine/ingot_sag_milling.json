@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_machines"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:adamantine_powder"
+    }
+  ],
+  "type": "enderio_machines:sagmilling",
+  "energy": 2400,
+  "input": {
+    "tag": "c:ingots/adamantine"
+  },
+  "outputs": [
+    {
+      "item": "basemetals:adamantine_powder"
+    }
+  ]
+}

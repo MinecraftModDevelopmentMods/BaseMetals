@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:bismuth_slab",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/bismuth"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 6,
+      "id": "basemetals:bismuth_slab"
+    }
+  }
+}

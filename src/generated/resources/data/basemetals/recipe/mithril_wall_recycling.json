@@ -1,0 +1,11 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "basemetals:mithril_wall"
+  },
+  "result": {
+    "id": "basemetals:mithril_block"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:bismuth_hoe",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/bismuth"
+      }
+    },
+    "pattern": [
+      "XX",
+      " S",
+      " S"
+    ],
+    "result": {
+      "id": "basemetals:bismuth_hoe"
+    }
+  }
+}

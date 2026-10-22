@@ -1,0 +1,25 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:tin_bolt",
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "R": {
+        "tag": "c:rods/tin"
+      }
+    },
+    "pattern": [
+      "R",
+      "R",
+      "F"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:tin_bolt"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:silver_arrow",
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "c:nuggets/silver"
+      },
+      "R": {
+        "tag": "c:rods/silver"
+      }
+    },
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:silver_arrow"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:zinc_gear",
+    "key": {
+      "R": {
+        "tag": "c:rods/zinc"
+      },
+      "X": {
+        "tag": "c:ingots/zinc"
+      }
+    },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:zinc_gear"
+    }
+  }
+}

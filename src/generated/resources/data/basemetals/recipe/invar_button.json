@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:invar_button",
+    "key": {
+      "X": {
+        "tag": "c:nuggets/invar"
+      }
+    },
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:invar_button"
+    }
+  }
+}

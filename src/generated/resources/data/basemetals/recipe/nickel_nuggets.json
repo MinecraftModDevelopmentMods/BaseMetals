@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:nickel_nugget",
+    "ingredients": [
+      {
+        "tag": "c:ingots/nickel"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:nickel_nugget"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:starsteel_gear"
+    }
+  ],
+  "type": "thermal:press",
+  "ingredients": [
+    {
+      "count": 4,
+      "tag": "c:ingots/starsteel"
+    },
+    {
+      "item": "thermal:press_gear_die"
+    }
+  ],
+  "result": [
+    {
+      "item": "basemetals:starsteel_gear"
+    }
+  ]
+}

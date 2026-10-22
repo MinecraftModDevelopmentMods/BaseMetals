@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:electrum_smallblend",
+    "ingredients": [
+      {
+        "tag": "c:blends/electrum"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:electrum_smallblend"
+    }
+  }
+}

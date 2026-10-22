@@ -1,0 +1,28 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:cupronickel_arrow",
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "c:nuggets/cupronickel"
+      },
+      "R": {
+        "tag": "c:rods/cupronickel"
+      }
+    },
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:cupronickel_arrow"
+    }
+  }
+}

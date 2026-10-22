@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:electrum_plate",
+    "key": {
+      "X": {
+        "tag": "c:ingots/electrum"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 3,
+      "id": "basemetals:electrum_plate"
+    }
+  }
+}

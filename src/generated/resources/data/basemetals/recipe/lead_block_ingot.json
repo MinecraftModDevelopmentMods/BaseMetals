@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:lead_ingot",
+    "ingredients": [
+      {
+        "tag": "c:storage_blocks/lead"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:lead_ingot"
+    }
+  }
+}

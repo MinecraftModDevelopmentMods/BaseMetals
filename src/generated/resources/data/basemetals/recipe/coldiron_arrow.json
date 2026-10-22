@@ -1,0 +1,28 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:coldiron_arrow",
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "c:nuggets/coldiron"
+      },
+      "R": {
+        "tag": "c:rods/coldiron"
+      }
+    },
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:coldiron_arrow"
+    }
+  }
+}

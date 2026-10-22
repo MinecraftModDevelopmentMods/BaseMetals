@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:melting",
+  "ingredient": {
+    "tag": "c:plates/invar"
+  },
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:invar"
+  },
+  "temperature": 769,
+  "time": 45
+}

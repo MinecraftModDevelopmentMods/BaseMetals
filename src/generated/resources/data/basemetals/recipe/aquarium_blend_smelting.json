@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "ingredient": {
+    "tag": "c:blends/aquarium"
+  },
+  "result": {
+    "id": "basemetals:aquarium_ingot"
+  }
+}

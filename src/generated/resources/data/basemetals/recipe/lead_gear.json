@@ -1,0 +1,25 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:lead_gear",
+    "key": {
+      "R": {
+        "tag": "c:rods/lead"
+      },
+      "X": {
+        "tag": "c:ingots/lead"
+      }
+    },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:lead_gear"
+    }
+  }
+}

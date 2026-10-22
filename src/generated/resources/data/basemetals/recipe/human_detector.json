@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:human_detector",
+    "key": {
+      "G": {
+        "tag": "c:gears"
+      },
+      "X": {
+        "item": "minecraft:brick"
+      }
+    },
+    "pattern": [
+      "XX",
+      "GG"
+    ],
+    "result": {
+      "id": "basemetals:human_detector"
+    }
+  }
+}

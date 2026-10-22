@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "basemetals:brass_bars"
+  },
+  "result": {
+    "count": 3,
+    "id": "basemetals:brass_nugget"
+  }
+}

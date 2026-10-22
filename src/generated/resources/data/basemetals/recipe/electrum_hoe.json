@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:electrum_hoe",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/electrum"
+      }
+    },
+    "pattern": [
+      "XX",
+      " S",
+      " S"
+    ],
+    "result": {
+      "id": "basemetals:electrum_hoe"
+    }
+  }
+}

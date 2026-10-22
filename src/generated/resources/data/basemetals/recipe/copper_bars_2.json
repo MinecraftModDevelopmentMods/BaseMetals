@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:copper_bars",
+    "key": {
+      "X": {
+        "tag": "c:rods/copper"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:copper_bars"
+    }
+  }
+}

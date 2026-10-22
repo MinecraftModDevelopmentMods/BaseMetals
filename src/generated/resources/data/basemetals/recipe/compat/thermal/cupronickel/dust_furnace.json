@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:cupronickel_ingot"
+    }
+  ],
+  "type": "thermal:furnace",
+  "energy": 2000,
+  "ingredient": {
+    "tag": "c:dusts/cupronickel"
+  },
+  "result": [
+    {
+      "item": "basemetals:cupronickel_ingot"
+    }
+  ]
+}

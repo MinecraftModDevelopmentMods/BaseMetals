@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:copper_gear"
+    }
+  ],
+  "type": "thermal:press",
+  "ingredients": [
+    {
+      "count": 4,
+      "tag": "c:ingots/copper"
+    },
+    {
+      "item": "thermal:press_gear_die"
+    }
+  ],
+  "result": [
+    {
+      "item": "basemetals:copper_gear"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:platinum_lever",
+    "key": {
+      "R": {
+        "tag": "c:rods/platinum"
+      },
+      "X": {
+        "tag": "c:ingots/platinum"
+      }
+    },
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:platinum_lever"
+    }
+  }
+}

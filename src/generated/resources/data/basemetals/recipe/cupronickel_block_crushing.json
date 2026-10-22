@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:storage_blocks/cupronickel"
+  },
+  "result": {
+    "count": 9,
+    "id": "basemetals:cupronickel_powder"
+  }
+}

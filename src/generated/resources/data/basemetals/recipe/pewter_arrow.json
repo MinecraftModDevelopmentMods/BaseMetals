@@ -1,0 +1,28 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:pewter_arrow",
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "c:nuggets/pewter"
+      },
+      "R": {
+        "tag": "c:rods/pewter"
+      }
+    },
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:pewter_arrow"
+    }
+  }
+}

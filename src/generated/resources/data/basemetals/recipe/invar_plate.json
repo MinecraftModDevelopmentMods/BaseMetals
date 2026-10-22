@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:invar_plate",
+    "key": {
+      "X": {
+        "tag": "c:ingots/invar"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 3,
+      "id": "basemetals:invar_plate"
+    }
+  }
+}

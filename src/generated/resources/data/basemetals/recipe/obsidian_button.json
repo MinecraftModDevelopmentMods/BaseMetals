@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:obsidian_button",
+    "key": {
+      "X": {
+        "tag": "c:nuggets/obsidian"
+      }
+    },
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:obsidian_button"
+    }
+  }
+}

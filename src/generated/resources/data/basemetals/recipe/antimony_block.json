@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:antimony_block",
+    "key": {
+      "X": {
+        "tag": "c:ingots/antimony"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "basemetals:antimony_block"
+    }
+  }
+}

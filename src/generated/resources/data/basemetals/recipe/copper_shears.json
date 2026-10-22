@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:copper_shears",
+    "key": {
+      "X": {
+        "tag": "c:ingots/copper"
+      }
+    },
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "result": {
+      "id": "basemetals:copper_shears"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "basemetals:quartz_helmet"
+  },
+  "result": {
+    "count": 5,
+    "id": "minecraft:quartz"
+  }
+}

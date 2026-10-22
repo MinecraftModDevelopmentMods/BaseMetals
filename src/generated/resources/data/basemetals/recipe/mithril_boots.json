@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:mithril_boots",
+    "key": {
+      "X": {
+        "tag": "c:ingots/mithril"
+      }
+    },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:mithril_boots"
+    }
+  }
+}

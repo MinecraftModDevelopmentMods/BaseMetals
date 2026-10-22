@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:charcoal_block",
+    "key": {
+      "X": {
+        "tag": "c:dusts/charcoal"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "basemetals:charcoal_block"
+    }
+  }
+}

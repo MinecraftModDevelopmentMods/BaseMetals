@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.5,
+  "ingredient": {
+    "tag": "c:dusts/copper"
+  },
+  "result": {
+    "id": "basemetals:copper_ingot"
+  }
+}

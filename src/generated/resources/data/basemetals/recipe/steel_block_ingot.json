@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:steel_ingot",
+    "ingredients": [
+      {
+        "tag": "c:storage_blocks/steel"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:steel_ingot"
+    }
+  }
+}

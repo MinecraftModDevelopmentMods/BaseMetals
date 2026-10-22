@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:coldiron_powder"
+    }
+  ],
+  "type": "thermal:pulverizer",
+  "energy": 4000,
+  "ingredient": {
+    "tag": "c:ingots/coldiron"
+  },
+  "result": [
+    {
+      "item": "basemetals:coldiron_powder"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:iron_powder",
+    "key": {
+      "X": {
+        "tag": "c:tiny_dusts/iron"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "basemetals:iron_powder"
+    }
+  }
+}

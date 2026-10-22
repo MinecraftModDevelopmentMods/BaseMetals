@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:platinum_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/platinum"
+      },
+      "R": {
+        "tag": "c:rods/platinum"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:platinum_crossbow"
+    }
+  }
+}

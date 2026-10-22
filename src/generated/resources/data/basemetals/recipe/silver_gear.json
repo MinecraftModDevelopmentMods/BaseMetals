@@ -1,0 +1,25 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:silver_gear",
+    "key": {
+      "R": {
+        "tag": "c:rods/silver"
+      },
+      "X": {
+        "tag": "c:ingots/silver"
+      }
+    },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:silver_gear"
+    }
+  }
+}

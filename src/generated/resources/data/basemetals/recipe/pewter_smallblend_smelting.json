@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.01,
+  "ingredient": {
+    "tag": "c:small_blends/pewter"
+  },
+  "result": {
+    "id": "basemetals:pewter_nugget"
+  }
+}

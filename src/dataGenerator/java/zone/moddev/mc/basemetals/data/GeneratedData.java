@@ -359,7 +359,7 @@ final class GeneratedData implements DataProvider {
             values.add("#c:storage_blocks/" + name);
         }
         values.addAll(List.of(
-                "#c:stone", "#c:cobblestone", "#c:gravel",
+                "#c:stones", "#c:cobblestones", "#c:gravels",
                 "minecraft:stone_bricks", "minecraft:stone_slab", "minecraft:stone_brick_slab",
                 "minecraft:mossy_cobblestone", "minecraft:cobblestone_wall",
                 "minecraft:mossy_cobblestone_wall", "minecraft:sandstone",
@@ -595,7 +595,7 @@ final class GeneratedData implements DataProvider {
                         "basemetals:" + name + "_crackhammer", 1);
             }
             if (hasItem(name + "_scythe")) {
-                String scytheMaterial = name.equals("stone") ? "#c:stone" : material;
+                String scytheMaterial = name.equals("stone") ? "#c:stones" : material;
                 shaped(cache, name + "_scythe", List.of("XX ", "  X", " S "),
                         Map.of('X', scytheMaterial, 'S', WOODEN_ROD),
                         "basemetals:" + name + "_scythe", 1);
@@ -652,17 +652,17 @@ final class GeneratedData implements DataProvider {
         crushing(cache, "quartz_nugget_crushing", "#c:nuggets/quartz",
                 "basemetals:quartz_smallpowder", 1);
 
-        crushing(cache, "stone_crushing", "#c:stone", "minecraft:cobblestone", 1);
+        crushing(cache, "stone_crushing", "#c:stones", "minecraft:cobblestone", 1);
         crushing(cache, "stone_bricks_crushing", "minecraft:stone_bricks", "minecraft:cobblestone", 1);
         crushing(cache, "stone_slab_crushing", "minecraft:stone_slab", "minecraft:cobblestone_slab", 1);
         crushing(cache, "stone_brick_slab_crushing", "minecraft:stone_brick_slab",
                 "minecraft:cobblestone_slab", 1);
-        crushing(cache, "cobblestone_crushing", "#c:cobblestone", "minecraft:gravel", 1);
+        crushing(cache, "cobblestone_crushing", "#c:cobblestones", "minecraft:gravel", 1);
         crushing(cache, "mossy_cobblestone_crushing", "minecraft:mossy_cobblestone", "minecraft:gravel", 1);
         crushing(cache, "cobblestone_wall_crushing", "minecraft:cobblestone_wall", "minecraft:gravel", 1);
         crushing(cache, "mossy_cobblestone_wall_crushing", "minecraft:mossy_cobblestone_wall",
                 "minecraft:gravel", 1);
-        crushing(cache, "gravel_crushing", "#c:gravel", "minecraft:sand", 1);
+        crushing(cache, "gravel_crushing", "#c:gravels", "minecraft:sand", 1);
         crushing(cache, "sandstone_crushing", "minecraft:sandstone", "minecraft:sand", 4);
         crushing(cache, "sandstone_slab_crushing", "minecraft:sandstone_slab", "minecraft:sand", 2);
         crushing(cache, "glass_crushing", "minecraft:glass", "minecraft:sand", 1);
@@ -917,7 +917,7 @@ final class GeneratedData implements DataProvider {
         shaped(cache, "minecart", List.of("X X", "XXX"),
                 Map.of('X', steel), "minecraft:minecart", 1);
         shaped(cache, "piston", List.of("WWW", "CXC", "CRC"),
-                Map.of('W', "#minecraft:planks", 'C', "#c:cobblestone",
+                Map.of('W', "#minecraft:planks", 'C', "#c:cobblestones",
                         'X', steel, 'R', "#c:dusts/redstone"),
                 "minecraft:piston", 1);
         shaped(cache, "tripwire_hook", List.of("X", "S", "W"),
@@ -957,7 +957,7 @@ final class GeneratedData implements DataProvider {
 
     private void anvilRecipes(CachedOutput cache) throws IOException {
         shaped(cache, "stone_anvil", List.of("BBB", " C ", "SSS"),
-                Map.of('B', "minecraft:stone_bricks", 'C', "#c:stone", 'S', "minecraft:stone_slab"),
+                Map.of('B', "minecraft:stone_bricks", 'C', "#c:stones", 'S', "minecraft:stone_slab"),
                 "basemetals:stone_anvil", 1);
         for (String material : List.of("steel", "adamantine")) {
             shaped(cache, material + "_anvil", List.of("BBB", " B ", "III"),
@@ -1020,7 +1020,10 @@ final class GeneratedData implements DataProvider {
             mekanismItemChemicalToItem(cache, root + "ore_to_shard", "mekanism:injecting",
                     "#c:ores/" + name, "mekanism:hydrogen_chloride", 1,
                     "basemetals:" + name + "_shard", 4);
-            mekanismDissolution(cache, root + "ore_to_dirty_slurry", name);
+            mekanismDissolution(cache, root + "ore_to_dirty_slurry", name,
+                    "#c:ores/" + name, 1, 1000);
+            mekanismDissolution(cache, root + "raw_to_dirty_slurry", name,
+                    "#c:raw_materials/" + name, 3, 2000);
             mekanismItemToItem(cache, root + "ingot_to_dust", "mekanism:crushing",
                     "#c:ingots/" + name, "basemetals:" + name + "_powder", 1);
         }
@@ -1029,41 +1032,43 @@ final class GeneratedData implements DataProvider {
     private void mekanismItemToItem(CachedOutput cache, String id, String type, String input,
             String outputItem, int count) throws IOException {
         JsonObject root = object("type", type);
-        root.add("input", object("ingredient", ingredient(input)));
-        root.add("output", result(outputItem, count));
+        root.add("input", ingredient(input));
+        root.add("output", object("id", outputItem, "count", count));
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
     private void mekanismItemChemicalToItem(CachedOutput cache, String id, String type, String input,
-            String gas, int gasAmount, String outputItem, int count) throws IOException {
-        JsonObject root = object("type", type);
-        root.add("itemInput", object("ingredient", ingredient(input)));
-        root.add("chemicalInput", object("amount", gasAmount, "gas", gas));
-        root.add("output", result(outputItem, count));
+            String chemical, int amount, String outputItem, int count) throws IOException {
+        JsonObject root = object("type", type, "per_tick_usage", true);
+        root.add("item_input", ingredient(input));
+        root.add("chemical_input", object("amount", amount, "chemical", chemical));
+        root.add("output", object("id", outputItem, "count", count));
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
     private void mekanismCrystallizing(CachedOutput cache, String id, String material) throws IOException {
-        JsonObject root = object("type", "mekanism:crystallizing", "chemicalType", "slurry");
-        root.add("input", object("amount", 200, "slurry", "basemetals:clean_" + material));
-        root.add("output", result("basemetals:" + material + "_crystal", 1));
+        JsonObject root = object("type", "mekanism:crystallizing");
+        root.add("input", object("amount", 200, "chemical", "basemetals:clean_" + material));
+        root.add("output", object("id", "basemetals:" + material + "_crystal"));
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
     private void mekanismWashing(CachedOutput cache, String id, String material) throws IOException {
         JsonObject root = object("type", "mekanism:washing");
-        root.add("fluidInput", object("amount", 5, "tag", "minecraft:water"));
-        root.add("slurryInput", object("amount", 1, "slurry", "basemetals:dirty_" + material));
-        root.add("output", object("amount", 1, "slurry", "basemetals:clean_" + material));
+        root.add("fluid_input", object("amount", 5, "tag", "minecraft:water"));
+        root.add("chemical_input", object("amount", 1, "chemical", "basemetals:dirty_" + material));
+        root.add("output", object("amount", 1, "id", "basemetals:clean_" + material));
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
-    private void mekanismDissolution(CachedOutput cache, String id, String material) throws IOException {
-        JsonObject root = object("type", "mekanism:dissolution");
-        root.add("itemInput", object("ingredient", ingredient("#c:ores/" + material)));
-        root.add("gasInput", object("amount", 1, "gas", "mekanism:sulfuric_acid"));
-        root.add("output", object("amount", 1000, "slurry", "basemetals:dirty_" + material,
-                "chemicalType", "slurry"));
+    private void mekanismDissolution(CachedOutput cache, String id, String material,
+            String input, int inputCount, int slurryAmount) throws IOException {
+        JsonObject root = object("type", "mekanism:dissolution", "per_tick_usage", true);
+        JsonObject itemInput = ingredient(input);
+        itemInput.addProperty("count", inputCount);
+        root.add("item_input", itemInput);
+        root.add("chemical_input", object("amount", 1, "chemical", "mekanism:sulfuric_acid"));
+        root.add("output", object("amount", slurryAmount, "id", "basemetals:dirty_" + material));
         saveConditionalRecipe(cache, root, id, "mekanism");
     }
 
@@ -1138,7 +1143,7 @@ final class GeneratedData implements DataProvider {
             String material = tag.substring("forge:dusts/".length());
             if (MaterialCatalogue.BY_NAME.containsKey(material)
                     || material.equals("iron") || material.equals("gold")) {
-                accepted.add(object("tag", "forge:ingots/" + material));
+                accepted.add(object("tag", "c:ingots/" + material));
             }
         }
         JsonObject result = object("count", component.count()); result.add("value", accepted); return result;
@@ -1239,7 +1244,7 @@ final class GeneratedData implements DataProvider {
                     "cooling_time", Math.max(16, (int) Math.sqrt(amount) * 5));
             root.add("cast", ingredient("#tconstruct:casts/" + (reusable ? "multi_use/" : "single_use/") + cast));
             if (!reusable) root.addProperty("cast_consumed", true);
-            root.add("fluid", object("tag", "forge:molten_" + material, "amount", amount));
+            root.add("fluid", object("tag", "c:molten_" + material, "amount", amount));
             root.add("result", result("basemetals:" + material + "_" + form, 1));
             saveConditionalRecipe(cache, root, "compat/tconstruct/casting/" + material + "/" + form
                     + (reusable ? "_gold_cast" : "_sand_cast"), "tconstruct");
@@ -1248,7 +1253,7 @@ final class GeneratedData implements DataProvider {
 
     private void tinkerBlockCasting(CachedOutput cache, String material, int temperature) throws IOException {
         JsonObject root = object("type", "tconstruct:casting_basin", "cooling_time", 141);
-        root.add("fluid", object("tag", "forge:molten_" + material, "amount", 810));
+        root.add("fluid", object("tag", "c:molten_" + material, "amount", 810));
         root.add("result", result("basemetals:" + material + "_block", 1));
         saveConditionalRecipe(cache, root, "compat/tconstruct/casting/" + material + "/block", "tconstruct");
     }
@@ -1295,7 +1300,7 @@ final class GeneratedData implements DataProvider {
             saveConditionalRecipe(cache, melting, "compat/tconstruct/materials/melting/" + name, "tconstruct");
             JsonObject casting = object("type", "tconstruct:material_fluid", "temperature", 769,
                     "output", "basemetals:" + name);
-            casting.add("fluid", object("tag", "forge:molten_" + name, "amount", 90));
+            casting.add("fluid", object("tag", "c:molten_" + name, "amount", 90));
             saveConditionalRecipe(cache, casting, "compat/tconstruct/materials/casting/" + name, "tconstruct");
         }
     }
@@ -1322,14 +1327,14 @@ final class GeneratedData implements DataProvider {
     private void saveConditionalRecipe(CachedOutput cache, JsonObject recipe, String id,
             String modId) throws IOException {
         JsonArray conditions = new JsonArray();
-        conditions.add(object("type", "forge:mod_loaded", "modid", modId));
+        conditions.add(object("type", "neoforge:mod_loaded", "modid", modId));
         java.util.Set<String> outputs = new java.util.LinkedHashSet<>();
         for (String key : List.of("result", "output", "outputs")) {
             collectItemOutputs(recipe.get(key), outputs);
         }
         outputs.stream().filter(item -> item.startsWith("basemetals:"))
                 .forEach(item -> conditions.add(object("type", "basemetals:content_mode", "item", item)));
-        recipe.add("conditions", conditions);
+        recipe.add("neoforge:conditions", conditions);
         save(cache, recipe, "data/basemetals/recipe/" + id + ".json");
     }
 
@@ -1337,8 +1342,10 @@ final class GeneratedData implements DataProvider {
         if (value == null) return;
         if (value.isJsonArray()) {
             value.getAsJsonArray().forEach(entry -> collectItemOutputs(entry, outputs));
-        } else if (value.isJsonObject() && value.getAsJsonObject().has("item")) {
-            outputs.add(value.getAsJsonObject().get("item").getAsString());
+        } else if (value.isJsonObject()) {
+            JsonObject output = value.getAsJsonObject();
+            if (output.has("item")) outputs.add(output.get("item").getAsString());
+            else if (output.has("id") && !output.has("amount")) outputs.add(output.get("id").getAsString());
         }
     }
 
@@ -1600,6 +1607,10 @@ final class GeneratedData implements DataProvider {
         tag(cache, "forge", "blocks/" + family + "/" + material, values);
     }
     private void tag(CachedOutput cache, String namespace, String path, List<String> values) throws IOException {
+        if (namespace.equals("forge")) namespace = "c";
+        if (path.startsWith("items/")) path = "item/" + path.substring("items/".length());
+        else if (path.startsWith("blocks/")) path = "block/" + path.substring("blocks/".length());
+        else if (path.startsWith("fluids/")) path = "fluid/" + path.substring("fluids/".length());
         JsonObject root = new JsonObject(); root.addProperty("replace", false); root.add("values", array(values));
         save(cache, root, "data/" + namespace + "/tags/" + path + ".json");
     }
@@ -1632,7 +1643,7 @@ final class GeneratedData implements DataProvider {
             legacySmelting(cache, id, input, result, 1, xp, time);
             return;
         }
-        JsonObject root = object("type", type, "ingredient", ingredient(input), "result", result,
+        JsonObject root = object("type", type, "ingredient", ingredient(input), "result", object("id", result),
                 "experience", xp, "cookingtime", time);
         save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
@@ -1716,10 +1727,18 @@ final class GeneratedData implements DataProvider {
         return result.toString();
     }
     private void save(CachedOutput cache, JsonObject value, String relative) throws IOException {
+        if (relative.startsWith("data/basemetals/recipe/") && value.has("result")
+                && value.get("result").isJsonObject()) {
+            String type = value.get("type").getAsString();
+            JsonObject result = value.getAsJsonObject("result");
+            if ((type.startsWith("minecraft:") || type.startsWith("basemetals:")) && result.has("item")) {
+                result.add("id", result.remove("item"));
+            }
+        }
         if (relative.startsWith("data/basemetals/recipe/") && value.has("type")
                 && value.get("type").getAsString().startsWith("minecraft:crafting_")) {
             String id = relative.substring("data/basemetals/recipe/".length(), relative.length() - 5);
-            String result = value.getAsJsonObject("result").get("item").getAsString();
+            String result = value.getAsJsonObject("result").get("id").getAsString();
             net.minecraft.world.item.Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM
                     .get(ResourceLocation.parse(result));
             String category = switch (zone.moddev.mc.basemetals.ModTabs.category(item)) {
@@ -1728,7 +1747,7 @@ final class GeneratedData implements DataProvider {
                 default -> "misc";
             };
             value.addProperty("category", category);
-            value.addProperty("group", value.getAsJsonObject("result").get("item").getAsString());
+            value.addProperty("group", value.getAsJsonObject("result").get("id").getAsString());
             writeCraftingUnlock(cache, id, value);
             value = object("type", "basemetals:content_crafting", "recipe", value);
         }
@@ -1803,7 +1822,7 @@ final class GeneratedData implements DataProvider {
         String discovery = switch (material) {
             case "diamond", "emerald", "quartz" -> "#c:gems/" + material;
             case "coal", "charcoal" -> "minecraft:" + material;
-            case "stone" -> "#c:stone";
+            case "stone" -> "#c:stones";
             case "wood" -> "#minecraft:logs";
             case "redstone" -> "#c:dusts/redstone";
             default -> "#c:ingots/" + material;

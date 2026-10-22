@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:nuggets/electrum"
+  },
+  "result": {
+    "id": "basemetals:electrum_smallpowder"
+  }
+}

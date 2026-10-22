@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:lead_crackhammer",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:storage_blocks/lead"
+      }
+    },
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
+    "result": {
+      "id": "basemetals:lead_crackhammer"
+    }
+  }
+}

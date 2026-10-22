@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:diamond_crackhammer",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:storage_blocks/diamond"
+      }
+    },
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
+    "result": {
+      "id": "basemetals:diamond_crackhammer"
+    }
+  }
+}

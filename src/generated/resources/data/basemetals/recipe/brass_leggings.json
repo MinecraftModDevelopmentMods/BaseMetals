@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:brass_leggings",
+    "key": {
+      "X": {
+        "tag": "c:ingots/brass"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "X X",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:brass_leggings"
+    }
+  }
+}

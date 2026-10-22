@@ -1,0 +1,22 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:platinum_stairs",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/platinum"
+      }
+    },
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:platinum_stairs"
+    }
+  }
+}

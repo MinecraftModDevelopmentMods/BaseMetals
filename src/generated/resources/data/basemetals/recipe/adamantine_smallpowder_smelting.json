@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.01,
+  "ingredient": {
+    "tag": "c:tiny_dusts/adamantine"
+  },
+  "result": {
+    "id": "basemetals:adamantine_nugget"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.2,
+  "ingredient": {
+    "tag": "c:dusts/starsteel"
+  },
+  "result": {
+    "id": "basemetals:starsteel_ingot"
+  }
+}

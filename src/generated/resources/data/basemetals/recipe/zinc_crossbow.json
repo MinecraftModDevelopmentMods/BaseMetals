@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:zinc_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/zinc"
+      },
+      "R": {
+        "tag": "c:rods/zinc"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:zinc_crossbow"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:adamantine_axe",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/adamantine"
+      }
+    },
+    "pattern": [
+      "XX",
+      "XS",
+      " S"
+    ],
+    "result": {
+      "id": "basemetals:adamantine_axe"
+    }
+  }
+}

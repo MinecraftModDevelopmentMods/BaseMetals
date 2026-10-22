@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:coldiron_boots",
+    "key": {
+      "X": {
+        "tag": "c:ingots/coldiron"
+      }
+    },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:coldiron_boots"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:coldiron_sword",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/coldiron"
+      }
+    },
+    "pattern": [
+      "X",
+      "X",
+      "S"
+    ],
+    "result": {
+      "id": "basemetals:coldiron_sword"
+    }
+  }
+}

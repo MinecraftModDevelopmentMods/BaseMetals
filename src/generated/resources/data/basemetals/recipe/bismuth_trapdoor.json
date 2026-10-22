@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:bismuth_trapdoor",
+    "key": {
+      "X": {
+        "tag": "c:ingots/bismuth"
+      }
+    },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "result": {
+      "id": "basemetals:bismuth_trapdoor"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:brass_trapdoor",
+    "key": {
+      "X": {
+        "tag": "c:ingots/brass"
+      }
+    },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "result": {
+      "id": "basemetals:brass_trapdoor"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:nuggets/starsteel"
+  },
+  "result": {
+    "id": "basemetals:starsteel_smallpowder"
+  }
+}

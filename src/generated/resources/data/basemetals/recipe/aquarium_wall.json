@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:aquarium_wall",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/aquarium"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "count": 6,
+      "id": "basemetals:aquarium_wall"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:bismuth_plate",
+    "key": {
+      "X": {
+        "tag": "c:ingots/bismuth"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 3,
+      "id": "basemetals:bismuth_plate"
+    }
+  }
+}

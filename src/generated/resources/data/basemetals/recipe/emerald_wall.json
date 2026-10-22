@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:emerald_wall",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/emerald"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "count": 6,
+      "id": "basemetals:emerald_wall"
+    }
+  }
+}

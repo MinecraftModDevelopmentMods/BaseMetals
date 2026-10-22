@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "thermal_expansion"
+    }
+  ],
+  "type": "thermal:crucible",
+  "energy": 2000,
+  "ingredient": {
+    "tag": "c:ingots/adamantine"
+  },
+  "result": [
+    {
+      "amount": 90,
+      "fluid": "basemetals:adamantine"
+    }
+  ]
+}

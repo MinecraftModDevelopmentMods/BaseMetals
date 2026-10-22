@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:cupronickel_ingot",
+    "key": {
+      "X": {
+        "tag": "c:nuggets/cupronickel"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "basemetals:cupronickel_ingot"
+    }
+  }
+}

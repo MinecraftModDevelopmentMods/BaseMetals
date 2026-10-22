@@ -1,0 +1,15 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:material_melting",
+  "input": "basemetals:zinc",
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:zinc"
+  },
+  "temperature": 769
+}

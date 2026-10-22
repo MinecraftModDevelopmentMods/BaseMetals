@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:silver_trapdoor",
+    "key": {
+      "X": {
+        "tag": "c:ingots/silver"
+      }
+    },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "result": {
+      "id": "basemetals:silver_trapdoor"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:lead_nugget",
+    "ingredients": [
+      {
+        "tag": "c:ingots/lead"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:lead_nugget"
+    }
+  }
+}

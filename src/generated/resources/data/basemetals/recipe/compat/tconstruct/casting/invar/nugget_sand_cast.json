@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:invar_nugget"
+    }
+  ],
+  "type": "tconstruct:casting_table",
+  "cast": {
+    "tag": "tconstruct:casts/single_use/nugget"
+  },
+  "cast_consumed": true,
+  "cooling_time": 16,
+  "fluid": {
+    "amount": 10,
+    "tag": "c:molten_invar"
+  },
+  "result": {
+    "item": "basemetals:invar_nugget"
+  }
+}

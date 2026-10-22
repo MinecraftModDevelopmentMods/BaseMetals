@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "result": {
+    "count": 4,
+    "id": "basemetals:obsidian_powder"
+  }
+}

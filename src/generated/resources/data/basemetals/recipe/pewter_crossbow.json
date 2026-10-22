@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:pewter_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/pewter"
+      },
+      "R": {
+        "tag": "c:rods/pewter"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:pewter_crossbow"
+    }
+  }
+}

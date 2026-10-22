@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:raw_materials/antimony"
+  },
+  "result": {
+    "id": "basemetals:antimony_powder"
+  }
+}

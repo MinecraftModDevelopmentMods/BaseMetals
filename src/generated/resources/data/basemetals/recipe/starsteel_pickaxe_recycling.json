@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.2,
+  "ingredient": {
+    "item": "basemetals:starsteel_pickaxe"
+  },
+  "result": {
+    "count": 3,
+    "id": "basemetals:starsteel_ingot"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:brass_bars",
+    "key": {
+      "X": {
+        "tag": "c:rods/brass"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:brass_bars"
+    }
+  }
+}

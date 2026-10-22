@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:invar_wall",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/invar"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "count": 6,
+      "id": "basemetals:invar_wall"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:emerald_pressure_plate",
+    "key": {
+      "X": {
+        "tag": "c:gems/emerald"
+      }
+    },
+    "pattern": [
+      "XX"
+    ],
+    "result": {
+      "id": "basemetals:emerald_pressure_plate"
+    }
+  }
+}

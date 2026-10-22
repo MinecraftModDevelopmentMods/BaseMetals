@@ -1,0 +1,22 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:coldiron_door",
+    "key": {
+      "X": {
+        "tag": "c:ingots/coldiron"
+      }
+    },
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
+    "result": {
+      "count": 3,
+      "id": "basemetals:coldiron_door"
+    }
+  }
+}

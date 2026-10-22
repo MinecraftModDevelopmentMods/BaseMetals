@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:cupronickel_bars",
+    "key": {
+      "X": {
+        "tag": "c:rods/cupronickel"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:cupronickel_bars"
+    }
+  }
+}

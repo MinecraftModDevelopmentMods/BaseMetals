@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:platinum_smallpowder",
+    "ingredients": [
+      {
+        "tag": "c:dusts/platinum"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:platinum_smallpowder"
+    }
+  }
+}

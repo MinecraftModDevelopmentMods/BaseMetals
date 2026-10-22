@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:iron_smallpowder",
+    "ingredients": [
+      {
+        "tag": "c:dusts/iron"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:iron_smallpowder"
+    }
+  }
+}

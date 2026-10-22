@@ -1,0 +1,28 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:brass_arrow",
+    "key": {
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "N": {
+        "tag": "c:nuggets/brass"
+      },
+      "R": {
+        "tag": "c:rods/brass"
+      }
+    },
+    "pattern": [
+      "N",
+      "R",
+      "F"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:brass_arrow"
+    }
+  }
+}

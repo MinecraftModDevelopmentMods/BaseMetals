@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:alloy",
+  "inputs": [
+    {
+      "amount": 90,
+      "tag": "forge:molten_gold"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_silver"
+    }
+  ],
+  "result": {
+    "amount": 180,
+    "fluid": "basemetals:electrum"
+  },
+  "temperature": 769
+}

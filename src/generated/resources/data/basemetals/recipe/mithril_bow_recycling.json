@@ -1,0 +1,11 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.9,
+  "ingredient": {
+    "item": "basemetals:mithril_bow"
+  },
+  "result": {
+    "id": "basemetals:mithril_ingot"
+  }
+}

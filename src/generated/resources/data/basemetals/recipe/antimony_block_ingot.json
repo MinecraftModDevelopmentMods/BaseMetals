@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:antimony_ingot",
+    "ingredients": [
+      {
+        "tag": "c:storage_blocks/antimony"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:antimony_ingot"
+    }
+  }
+}

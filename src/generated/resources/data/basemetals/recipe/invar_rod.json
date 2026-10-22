@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:invar_rod",
+    "key": {
+      "X": {
+        "tag": "c:ingots/invar"
+      }
+    },
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:invar_rod"
+    }
+  }
+}

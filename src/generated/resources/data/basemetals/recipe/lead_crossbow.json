@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:lead_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/lead"
+      },
+      "R": {
+        "tag": "c:rods/lead"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:lead_crossbow"
+    }
+  }
+}

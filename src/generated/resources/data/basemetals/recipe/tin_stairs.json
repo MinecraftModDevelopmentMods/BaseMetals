@@ -1,0 +1,22 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:tin_stairs",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/tin"
+      }
+    },
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:tin_stairs"
+    }
+  }
+}

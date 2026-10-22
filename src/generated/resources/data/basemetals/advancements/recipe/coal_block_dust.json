@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:recipe/root",
+  "criteria": {
+    "has_ingredient_1": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:dusts/coal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_material": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:coal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_recipe": {
+      "conditions": {
+        "recipe": "basemetals:coal_block_dust"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_material",
+      "has_recipe",
+      "has_ingredient_1"
+    ]
+  ],
+  "rewards": {
+    "recipe": [
+      "basemetals:coal_block_dust"
+    ]
+  }
+}

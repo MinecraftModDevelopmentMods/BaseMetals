@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:mithril_wall",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/mithril"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "count": 6,
+      "id": "basemetals:mithril_wall"
+    }
+  }
+}

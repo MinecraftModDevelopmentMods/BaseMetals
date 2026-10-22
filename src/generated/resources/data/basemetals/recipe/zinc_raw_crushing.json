@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:raw_materials/zinc"
+  },
+  "result": {
+    "id": "basemetals:zinc_powder"
+  }
+}

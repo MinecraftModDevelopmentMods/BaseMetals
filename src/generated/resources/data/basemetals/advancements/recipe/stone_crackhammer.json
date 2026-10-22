@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:recipe/root",
+  "criteria": {
+    "has_ingredient_1": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:rods/wooden"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_ingredient_2": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:stone_bricks"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_material": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:stones"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_recipe": {
+      "conditions": {
+        "recipe": "basemetals:stone_crackhammer"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_material",
+      "has_recipe",
+      "has_ingredient_1",
+      "has_ingredient_2"
+    ]
+  ],
+  "rewards": {
+    "recipe": [
+      "basemetals:stone_crackhammer"
+    ]
+  }
+}

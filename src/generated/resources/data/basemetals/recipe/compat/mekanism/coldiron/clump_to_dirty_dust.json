@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:coldiron_powder_dirty"
+    }
+  ],
+  "type": "mekanism:crushing",
+  "input": {
+    "tag": "c:clumps/coldiron"
+  },
+  "output": {
+    "count": 1,
+    "id": "basemetals:coldiron_powder_dirty"
+  }
+}

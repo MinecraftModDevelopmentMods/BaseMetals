@@ -1,0 +1,11 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "ingredient": {
+    "item": "basemetals:aquarium_lever"
+  },
+  "result": {
+    "id": "basemetals:aquarium_ingot"
+  }
+}

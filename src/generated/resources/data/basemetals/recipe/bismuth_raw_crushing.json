@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:raw_materials/bismuth"
+  },
+  "result": {
+    "id": "basemetals:bismuth_powder"
+  }
+}

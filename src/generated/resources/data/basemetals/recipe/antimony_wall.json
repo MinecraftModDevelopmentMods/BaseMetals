@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:antimony_wall",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/antimony"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "count": 6,
+      "id": "basemetals:antimony_wall"
+    }
+  }
+}

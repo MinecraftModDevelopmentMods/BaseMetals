@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:lead_scythe",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/lead"
+      }
+    },
+    "pattern": [
+      "XX ",
+      "  X",
+      " S "
+    ],
+    "result": {
+      "id": "basemetals:lead_scythe"
+    }
+  }
+}

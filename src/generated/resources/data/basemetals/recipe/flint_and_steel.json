@@ -1,0 +1,19 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "minecraft:flint_and_steel",
+    "ingredients": [
+      {
+        "tag": "c:ingots/steel"
+      },
+      {
+        "item": "minecraft:flint"
+      }
+    ],
+    "result": {
+      "id": "minecraft:flint_and_steel"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_arrow",
+    "basemetals:antimony_arrow",
+    "basemetals:aquarium_arrow",
+    "basemetals:bismuth_arrow",
+    "basemetals:brass_arrow",
+    "basemetals:bronze_arrow",
+    "basemetals:coldiron_arrow",
+    "basemetals:copper_arrow",
+    "basemetals:cupronickel_arrow",
+    "basemetals:electrum_arrow",
+    "basemetals:invar_arrow",
+    "basemetals:lead_arrow",
+    "basemetals:mithril_arrow",
+    "basemetals:nickel_arrow",
+    "basemetals:pewter_arrow",
+    "basemetals:platinum_arrow",
+    "basemetals:silver_arrow",
+    "basemetals:starsteel_arrow",
+    "basemetals:steel_arrow",
+    "basemetals:tin_arrow",
+    "basemetals:zinc_arrow",
+    "basemetals:diamond_arrow",
+    "basemetals:emerald_arrow",
+    "basemetals:gold_arrow",
+    "basemetals:iron_arrow",
+    "basemetals:obsidian_arrow",
+    "basemetals:quartz_arrow"
+  ]
+}

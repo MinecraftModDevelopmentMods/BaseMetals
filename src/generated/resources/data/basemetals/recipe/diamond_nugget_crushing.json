@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:nuggets/diamond"
+  },
+  "result": {
+    "id": "basemetals:diamond_smallpowder"
+  }
+}

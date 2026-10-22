@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:lead_lever",
+    "key": {
+      "R": {
+        "tag": "c:rods/lead"
+      },
+      "X": {
+        "tag": "c:ingots/lead"
+      }
+    },
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:lead_lever"
+    }
+  }
+}

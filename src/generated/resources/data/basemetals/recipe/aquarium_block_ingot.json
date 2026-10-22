@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:aquarium_ingot",
+    "ingredients": [
+      {
+        "tag": "c:storage_blocks/aquarium"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:aquarium_ingot"
+    }
+  }
+}

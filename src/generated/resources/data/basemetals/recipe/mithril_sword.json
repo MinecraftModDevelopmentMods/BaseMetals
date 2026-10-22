@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:mithril_sword",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/mithril"
+      }
+    },
+    "pattern": [
+      "X",
+      "X",
+      "S"
+    ],
+    "result": {
+      "id": "basemetals:mithril_sword"
+    }
+  }
+}

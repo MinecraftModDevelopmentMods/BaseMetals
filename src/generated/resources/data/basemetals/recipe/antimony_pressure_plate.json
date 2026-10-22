@@ -1,0 +1,19 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:antimony_pressure_plate",
+    "key": {
+      "X": {
+        "tag": "c:ingots/antimony"
+      }
+    },
+    "pattern": [
+      "XX"
+    ],
+    "result": {
+      "id": "basemetals:antimony_pressure_plate"
+    }
+  }
+}

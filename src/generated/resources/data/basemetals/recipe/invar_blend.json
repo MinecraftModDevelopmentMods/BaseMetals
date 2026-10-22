@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:invar_blend",
+    "ingredients": [
+      {
+        "tag": "c:dusts/iron"
+      },
+      {
+        "tag": "c:dusts/iron"
+      },
+      {
+        "tag": "c:dusts/nickel"
+      }
+    ],
+    "result": {
+      "count": 3,
+      "id": "basemetals:invar_blend"
+    }
+  }
+}

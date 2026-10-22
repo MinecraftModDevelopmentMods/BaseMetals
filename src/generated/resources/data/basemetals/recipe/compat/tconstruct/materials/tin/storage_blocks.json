@@ -1,0 +1,15 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:material",
+  "ingredient": {
+    "tag": "c:storage_blocks/tin"
+  },
+  "material": "basemetals:tin",
+  "needed": 1,
+  "value": 9
+}

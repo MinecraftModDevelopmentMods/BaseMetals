@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:cupronickel_horse_armor",
+    "key": {
+      "W": {
+        "tag": "minecraft:wool"
+      },
+      "X": {
+        "tag": "c:ingots/cupronickel"
+      }
+    },
+    "pattern": [
+      "  X",
+      "XWX",
+      "XXX"
+    ],
+    "result": {
+      "id": "basemetals:cupronickel_horse_armor"
+    }
+  }
+}

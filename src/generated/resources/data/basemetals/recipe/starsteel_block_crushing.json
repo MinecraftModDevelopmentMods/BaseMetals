@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:storage_blocks/starsteel"
+  },
+  "result": {
+    "count": 9,
+    "id": "basemetals:starsteel_powder"
+  }
+}

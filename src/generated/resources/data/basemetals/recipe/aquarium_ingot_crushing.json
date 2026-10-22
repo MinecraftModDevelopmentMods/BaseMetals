@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:ingots/aquarium"
+  },
+  "result": {
+    "id": "basemetals:aquarium_powder"
+  }
+}

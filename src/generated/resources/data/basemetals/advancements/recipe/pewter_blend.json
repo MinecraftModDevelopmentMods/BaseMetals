@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipe/root",
+  "criteria": {
+    "has_ingredient_1": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:dusts/tin"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_ingredient_2": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:dusts/copper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_ingredient_3": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:dusts/lead"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_material": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:ingots/pewter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_recipe": {
+      "conditions": {
+        "recipe": "basemetals:pewter_blend"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_material",
+      "has_recipe",
+      "has_ingredient_1",
+      "has_ingredient_2",
+      "has_ingredient_3"
+    ]
+  ],
+  "rewards": {
+    "recipe": [
+      "basemetals:pewter_blend"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "basemetals:mithril_slab"
+  },
+  "result": {
+    "count": 4,
+    "id": "basemetals:mithril_nugget"
+  }
+}

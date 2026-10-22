@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:ingots/obsidian"
+  },
+  "result": {
+    "id": "basemetals:obsidian_powder"
+  }
+}

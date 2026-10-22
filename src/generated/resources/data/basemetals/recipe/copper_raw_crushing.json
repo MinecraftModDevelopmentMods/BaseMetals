@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:raw_materials/copper"
+  },
+  "result": {
+    "id": "basemetals:copper_powder"
+  }
+}

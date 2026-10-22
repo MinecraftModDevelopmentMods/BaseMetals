@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:lead_plate"
+    }
+  ],
+  "type": "tconstruct:casting_table",
+  "cast": {
+    "tag": "tconstruct:casts/multi_use/plate"
+  },
+  "cooling_time": 45,
+  "fluid": {
+    "amount": 90,
+    "tag": "c:molten_lead"
+  },
+  "result": {
+    "item": "basemetals:lead_plate"
+  }
+}

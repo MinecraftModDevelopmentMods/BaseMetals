@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "ingredient": {
+    "tag": "c:raw_materials/coldiron"
+  },
+  "result": {
+    "id": "basemetals:coldiron_ingot"
+  }
+}

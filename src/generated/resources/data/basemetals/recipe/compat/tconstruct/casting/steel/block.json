@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:steel_block"
+    }
+  ],
+  "type": "tconstruct:casting_basin",
+  "cooling_time": 141,
+  "fluid": {
+    "amount": 810,
+    "tag": "c:molten_steel"
+  },
+  "result": {
+    "item": "basemetals:steel_block"
+  }
+}

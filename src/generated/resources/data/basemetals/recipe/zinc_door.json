@@ -1,0 +1,22 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:zinc_door",
+    "key": {
+      "X": {
+        "tag": "c:ingots/zinc"
+      }
+    },
+    "pattern": [
+      "XX",
+      "XX",
+      "XX"
+    ],
+    "result": {
+      "count": 3,
+      "id": "basemetals:zinc_door"
+    }
+  }
+}

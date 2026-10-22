@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "tag": "c:ores/zinc"
+  },
+  "result": {
+    "id": "basemetals:zinc_ingot"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "item": "minecraft:sandstone"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:sand"
+  }
+}

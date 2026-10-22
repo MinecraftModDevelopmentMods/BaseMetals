@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:bronze_rod",
+    "key": {
+      "X": {
+        "tag": "c:ingots/bronze"
+      }
+    },
+    "pattern": [
+      "X",
+      "X"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:bronze_rod"
+    }
+  }
+}

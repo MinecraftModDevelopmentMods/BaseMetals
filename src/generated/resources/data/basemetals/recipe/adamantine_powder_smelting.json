@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "tag": "c:dusts/adamantine"
+  },
+  "result": {
+    "id": "basemetals:adamantine_ingot"
+  }
+}

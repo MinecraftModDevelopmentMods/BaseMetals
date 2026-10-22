@@ -1,0 +1,25 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "minecraft:rail",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/steel"
+      }
+    },
+    "pattern": [
+      "X X",
+      "XSX",
+      "X X"
+    ],
+    "result": {
+      "count": 16,
+      "id": "minecraft:rail"
+    }
+  }
+}

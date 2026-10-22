@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:mithril_lever",
+    "key": {
+      "R": {
+        "tag": "c:rods/mithril"
+      },
+      "X": {
+        "tag": "c:ingots/mithril"
+      }
+    },
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:mithril_lever"
+    }
+  }
+}

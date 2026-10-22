@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "ingredient": {
+    "item": "basemetals:platinum_pickaxe"
+  },
+  "result": {
+    "count": 3,
+    "id": "basemetals:platinum_ingot"
+  }
+}

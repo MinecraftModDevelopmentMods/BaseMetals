@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:electrum_lever",
+    "key": {
+      "R": {
+        "tag": "c:rods/electrum"
+      },
+      "X": {
+        "tag": "c:ingots/electrum"
+      }
+    },
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:electrum_lever"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.2,
+  "ingredient": {
+    "item": "basemetals:starsteel_trapdoor"
+  },
+  "result": {
+    "count": 4,
+    "id": "basemetals:starsteel_ingot"
+  }
+}

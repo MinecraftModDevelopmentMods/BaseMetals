@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:starsteel_nugget",
+    "ingredients": [
+      {
+        "tag": "c:ingots/starsteel"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:starsteel_nugget"
+    }
+  }
+}

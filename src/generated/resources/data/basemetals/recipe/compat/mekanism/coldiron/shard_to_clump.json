@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:coldiron_clump"
+    }
+  ],
+  "type": "mekanism:purifying",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "mekanism:oxygen"
+  },
+  "item_input": {
+    "tag": "c:shards/coldiron"
+  },
+  "output": {
+    "count": 1,
+    "id": "basemetals:coldiron_clump"
+  },
+  "per_tick_usage": true
+}

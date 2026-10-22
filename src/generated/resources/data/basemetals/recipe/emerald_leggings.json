@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:emerald_leggings",
+    "key": {
+      "X": {
+        "tag": "c:gems/emerald"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "X X",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:emerald_leggings"
+    }
+  }
+}

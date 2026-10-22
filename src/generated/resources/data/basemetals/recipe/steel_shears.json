@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:steel_shears",
+    "key": {
+      "X": {
+        "tag": "c:ingots/steel"
+      }
+    },
+    "pattern": [
+      " X",
+      "X "
+    ],
+    "result": {
+      "id": "basemetals:steel_shears"
+    }
+  }
+}

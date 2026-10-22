@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipe/root",
+  "criteria": {
+    "has_ingredient_1": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:rods/quartz"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_material": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:gems/quartz"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_recipe": {
+      "conditions": {
+        "recipe": "basemetals:quartz_fishingrod"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_material",
+      "has_recipe",
+      "has_ingredient_1"
+    ]
+  ],
+  "rewards": {
+    "recipe": [
+      "basemetals:quartz_fishingrod"
+    ]
+  }
+}

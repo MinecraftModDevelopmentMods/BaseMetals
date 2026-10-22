@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:antimony_smallpowder",
+    "ingredients": [
+      {
+        "tag": "c:dusts/antimony"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:antimony_smallpowder"
+    }
+  }
+}

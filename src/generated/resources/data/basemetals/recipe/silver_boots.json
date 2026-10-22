@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:silver_boots",
+    "key": {
+      "X": {
+        "tag": "c:ingots/silver"
+      }
+    },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:silver_boots"
+    }
+  }
+}

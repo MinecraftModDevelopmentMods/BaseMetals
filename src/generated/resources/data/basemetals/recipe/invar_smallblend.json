@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:invar_smallblend",
+    "ingredients": [
+      {
+        "tag": "c:blends/invar"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:invar_smallblend"
+    }
+  }
+}

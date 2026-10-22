@@ -1,0 +1,15 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:material",
+  "ingredient": {
+    "tag": "c:nuggets/electrum"
+  },
+  "material": "basemetals:electrum",
+  "needed": 9,
+  "value": 1
+}

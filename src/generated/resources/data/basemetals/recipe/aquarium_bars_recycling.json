@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.17,
+  "ingredient": {
+    "item": "basemetals:aquarium_bars"
+  },
+  "result": {
+    "count": 3,
+    "id": "basemetals:aquarium_nugget"
+  }
+}

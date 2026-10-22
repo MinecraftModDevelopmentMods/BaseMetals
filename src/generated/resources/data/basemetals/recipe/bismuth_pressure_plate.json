@@ -1,0 +1,19 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:bismuth_pressure_plate",
+    "key": {
+      "X": {
+        "tag": "c:ingots/bismuth"
+      }
+    },
+    "pattern": [
+      "XX"
+    ],
+    "result": {
+      "id": "basemetals:bismuth_pressure_plate"
+    }
+  }
+}

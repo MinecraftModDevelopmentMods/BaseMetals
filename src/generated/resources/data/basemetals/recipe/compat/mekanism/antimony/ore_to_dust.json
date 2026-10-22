@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:antimony_powder"
+    }
+  ],
+  "type": "mekanism:enriching",
+  "input": {
+    "tag": "c:ores/antimony"
+  },
+  "output": {
+    "count": 2,
+    "id": "basemetals:antimony_powder"
+  }
+}

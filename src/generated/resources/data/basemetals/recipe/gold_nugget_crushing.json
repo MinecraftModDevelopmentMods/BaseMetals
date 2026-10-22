@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:nuggets/gold"
+  },
+  "result": {
+    "id": "basemetals:gold_smallpowder"
+  }
+}

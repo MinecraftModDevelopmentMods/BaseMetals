@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:diamond_smallpowder",
+    "ingredients": [
+      {
+        "tag": "c:dusts/diamond"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:diamond_smallpowder"
+    }
+  }
+}

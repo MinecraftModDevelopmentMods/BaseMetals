@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:nuggets/aquarium"
+  },
+  "result": {
+    "id": "basemetals:aquarium_smallpowder"
+  }
+}

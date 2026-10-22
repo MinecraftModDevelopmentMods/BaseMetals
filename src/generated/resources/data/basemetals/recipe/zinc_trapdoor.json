@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:zinc_trapdoor",
+    "key": {
+      "X": {
+        "tag": "c:ingots/zinc"
+      }
+    },
+    "pattern": [
+      "XX",
+      "XX"
+    ],
+    "result": {
+      "id": "basemetals:zinc_trapdoor"
+    }
+  }
+}

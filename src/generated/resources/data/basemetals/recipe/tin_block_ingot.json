@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:tin_ingot",
+    "ingredients": [
+      {
+        "tag": "c:storage_blocks/tin"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:tin_ingot"
+    }
+  }
+}

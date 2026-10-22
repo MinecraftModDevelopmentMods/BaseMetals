@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:coldiron_ingot",
+    "ingredients": [
+      {
+        "tag": "c:storage_blocks/coldiron"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:coldiron_ingot"
+    }
+  }
+}

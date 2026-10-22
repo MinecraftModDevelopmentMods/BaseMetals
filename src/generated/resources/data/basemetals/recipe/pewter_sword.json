@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:pewter_sword",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/pewter"
+      }
+    },
+    "pattern": [
+      "X",
+      "X",
+      "S"
+    ],
+    "result": {
+      "id": "basemetals:pewter_sword"
+    }
+  }
+}

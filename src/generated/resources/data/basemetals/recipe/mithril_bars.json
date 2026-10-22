@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:mithril_bars",
+    "key": {
+      "X": {
+        "tag": "c:ingots/mithril"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "count": 16,
+      "id": "basemetals:mithril_bars"
+    }
+  }
+}

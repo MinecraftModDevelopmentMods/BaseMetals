@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:adamantine_smallpowder",
+    "ingredients": [
+      {
+        "tag": "c:dusts/adamantine"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:adamantine_smallpowder"
+    }
+  }
+}

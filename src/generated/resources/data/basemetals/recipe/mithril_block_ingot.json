@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:mithril_ingot",
+    "ingredients": [
+      {
+        "tag": "c:storage_blocks/mithril"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:mithril_ingot"
+    }
+  }
+}

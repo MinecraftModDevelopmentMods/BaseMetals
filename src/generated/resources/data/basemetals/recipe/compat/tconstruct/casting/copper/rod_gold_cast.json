@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:copper_rod"
+    }
+  ],
+  "type": "tconstruct:casting_table",
+  "cast": {
+    "tag": "tconstruct:casts/multi_use/rod"
+  },
+  "cooling_time": 30,
+  "fluid": {
+    "amount": 45,
+    "tag": "c:molten_copper"
+  },
+  "result": {
+    "item": "basemetals:copper_rod"
+  }
+}

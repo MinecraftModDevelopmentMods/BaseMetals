@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.3,
+  "ingredient": {
+    "tag": "c:dusts/invar"
+  },
+  "result": {
+    "id": "basemetals:invar_ingot"
+  }
+}

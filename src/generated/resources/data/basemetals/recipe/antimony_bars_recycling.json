@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.01,
+  "ingredient": {
+    "item": "basemetals:antimony_bars"
+  },
+  "result": {
+    "count": 3,
+    "id": "basemetals:antimony_nugget"
+  }
+}

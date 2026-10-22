@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:brass_shovel",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/brass"
+      }
+    },
+    "pattern": [
+      "X",
+      "S",
+      "S"
+    ],
+    "result": {
+      "id": "basemetals:brass_shovel"
+    }
+  }
+}

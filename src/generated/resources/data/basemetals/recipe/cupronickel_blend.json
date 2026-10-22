@@ -1,0 +1,26 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:cupronickel_blend",
+    "ingredients": [
+      {
+        "tag": "c:dusts/copper"
+      },
+      {
+        "tag": "c:dusts/copper"
+      },
+      {
+        "tag": "c:dusts/copper"
+      },
+      {
+        "tag": "c:dusts/nickel"
+      }
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:cupronickel_blend"
+    }
+  }
+}

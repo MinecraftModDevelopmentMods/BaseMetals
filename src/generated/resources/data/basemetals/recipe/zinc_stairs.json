@@ -1,0 +1,22 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:zinc_stairs",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/zinc"
+      }
+    },
+    "pattern": [
+      "X  ",
+      "XX ",
+      "XXX"
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:zinc_stairs"
+    }
+  }
+}

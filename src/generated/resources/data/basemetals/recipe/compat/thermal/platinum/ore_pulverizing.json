@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:platinum_powder"
+    }
+  ],
+  "type": "thermal:pulverizer",
+  "energy": 4000,
+  "ingredient": {
+    "tag": "c:ores/platinum"
+  },
+  "result": [
+    {
+      "count": 2,
+      "item": "basemetals:platinum_powder"
+    }
+  ]
+}

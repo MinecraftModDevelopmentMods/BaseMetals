@@ -1,0 +1,26 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:mithril_blend",
+    "ingredients": [
+      {
+        "tag": "c:dusts/silver"
+      },
+      {
+        "tag": "c:dusts/silver"
+      },
+      {
+        "tag": "c:dusts/coldiron"
+      },
+      {
+        "tag": "c:ingots/mercury"
+      }
+    ],
+    "result": {
+      "count": 3,
+      "id": "basemetals:mithril_blend"
+    }
+  }
+}

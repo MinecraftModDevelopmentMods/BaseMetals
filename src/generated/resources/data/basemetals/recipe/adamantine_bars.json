@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:adamantine_bars",
+    "key": {
+      "X": {
+        "tag": "c:ingots/adamantine"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "count": 16,
+      "id": "basemetals:adamantine_bars"
+    }
+  }
+}

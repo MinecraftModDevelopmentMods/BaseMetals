@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:emerald_shield",
+    "key": {
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "X": {
+        "tag": "c:gems/emerald"
+      }
+    },
+    "pattern": [
+      "XWX",
+      "XXX",
+      " X "
+    ],
+    "result": {
+      "id": "basemetals:emerald_shield"
+    }
+  }
+}

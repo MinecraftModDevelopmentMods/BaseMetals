@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:melting",
+  "ingredient": {
+    "tag": "c:rods/bronze"
+  },
+  "result": {
+    "amount": 45,
+    "fluid": "basemetals:bronze"
+  },
+  "temperature": 769,
+  "time": 30
+}

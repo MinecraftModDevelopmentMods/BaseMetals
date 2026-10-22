@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:silver_nugget",
+    "ingredients": [
+      {
+        "tag": "c:ingots/silver"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:silver_nugget"
+    }
+  }
+}

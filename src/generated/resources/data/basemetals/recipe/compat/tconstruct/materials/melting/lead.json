@@ -1,0 +1,15 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:material_melting",
+  "input": "basemetals:lead",
+  "result": {
+    "amount": 90,
+    "fluid": "basemetals:lead"
+  },
+  "temperature": 769
+}

@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "minecraft:minecart",
+    "key": {
+      "X": {
+        "tag": "c:ingots/steel"
+      }
+    },
+    "pattern": [
+      "X X",
+      "XXX"
+    ],
+    "result": {
+      "id": "minecraft:minecart"
+    }
+  }
+}

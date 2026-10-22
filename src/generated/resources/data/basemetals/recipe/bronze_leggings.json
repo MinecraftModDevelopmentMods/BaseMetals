@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:bronze_leggings",
+    "key": {
+      "X": {
+        "tag": "c:ingots/bronze"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "X X",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:bronze_leggings"
+    }
+  }
+}

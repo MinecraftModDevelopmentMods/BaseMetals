@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:nuggets/emerald"
+  },
+  "result": {
+    "id": "basemetals:emerald_smallpowder"
+  }
+}

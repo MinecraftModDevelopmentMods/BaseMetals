@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.6,
+  "ingredient": {
+    "tag": "c:dusts/cupronickel"
+  },
+  "result": {
+    "id": "basemetals:cupronickel_ingot"
+  }
+}

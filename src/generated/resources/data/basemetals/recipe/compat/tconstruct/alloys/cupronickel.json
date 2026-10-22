@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:alloy",
+  "inputs": [
+    {
+      "amount": 270,
+      "tag": "forge:molten_copper"
+    },
+    {
+      "amount": 90,
+      "tag": "forge:molten_nickel"
+    }
+  ],
+  "result": {
+    "amount": 360,
+    "fluid": "basemetals:cupronickel"
+  },
+  "temperature": 769
+}

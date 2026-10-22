@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:storage_blocks/pewter"
+  },
+  "result": {
+    "count": 9,
+    "id": "basemetals:pewter_powder"
+  }
+}

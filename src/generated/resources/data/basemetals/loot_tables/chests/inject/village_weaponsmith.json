@@ -1,0 +1,375 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 450
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_axe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_boots",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_chestplate",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_helmet",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_hoe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_leggings",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_pickaxe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_shovel",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_sword",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:iron_crackhammer",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_axe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_boots",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_chestplate",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_helmet",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_hoe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_leggings",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_pickaxe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_shovel",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_sword",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:tin_crackhammer",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_axe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_boots",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_chestplate",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_helmet",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_hoe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_leggings",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_pickaxe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_shovel",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_sword",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:copper_crackhammer",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_axe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_boots",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_chestplate",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_helmet",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_hoe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_leggings",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_pickaxe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_shovel",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_sword",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:bronze_crackhammer",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_axe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_boots",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_chestplate",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_helmet",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_hoe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_leggings",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_pickaxe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_shovel",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_sword",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "basemetals:steel_crackhammer",
+          "weight": 3
+        }
+      ],
+      "rolls": 1
+    },
+    {
+      "bonus_rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 189
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 6,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:iron_ingot",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 6,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "basemetals:tin_ingot",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 6,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "basemetals:lead_ingot",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 6,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "basemetals:zinc_ingot",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 6,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "basemetals:copper_ingot",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 6,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "basemetals:brass_ingot",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "max": 6,
+                "min": 1
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "basemetals:bronze_ingot",
+          "weight": 3
+        }
+      ],
+      "rolls": {
+        "max": 4,
+        "min": 1
+      }
+    }
+  ]
+}

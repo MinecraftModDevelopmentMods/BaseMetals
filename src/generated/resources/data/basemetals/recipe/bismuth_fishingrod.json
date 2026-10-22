@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:bismuth_fishing_rod",
+    "key": {
+      "R": {
+        "tag": "c:rods/bismuth"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "  R",
+      " RS",
+      "R S"
+    ],
+    "result": {
+      "id": "basemetals:bismuth_fishing_rod"
+    }
+  }
+}

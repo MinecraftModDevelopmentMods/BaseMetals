@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:nuggets/mercury"
+  },
+  "result": {
+    "id": "basemetals:mercury_smallpowder"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:invar_ingot"
+    }
+  ],
+  "type": "thermal:smelter",
+  "energy": 6400,
+  "ingredients": [
+    {
+      "count": 2,
+      "value": [
+        {
+          "tag": "c:dusts/iron"
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "value": [
+        {
+          "tag": "c:dusts/nickel"
+        }
+      ]
+    }
+  ],
+  "result": [
+    {
+      "count": 3,
+      "item": "basemetals:invar_ingot"
+    }
+  ]
+}

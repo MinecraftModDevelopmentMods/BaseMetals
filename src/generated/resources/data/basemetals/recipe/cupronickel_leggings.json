@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:cupronickel_leggings",
+    "key": {
+      "X": {
+        "tag": "c:ingots/cupronickel"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "X X",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:cupronickel_leggings"
+    }
+  }
+}

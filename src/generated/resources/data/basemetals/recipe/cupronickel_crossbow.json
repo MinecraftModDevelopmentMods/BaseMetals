@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:cupronickel_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/cupronickel"
+      },
+      "R": {
+        "tag": "c:rods/cupronickel"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:cupronickel_crossbow"
+    }
+  }
+}

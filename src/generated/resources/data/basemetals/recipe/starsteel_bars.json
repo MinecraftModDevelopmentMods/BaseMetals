@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:starsteel_bars",
+    "key": {
+      "X": {
+        "tag": "c:ingots/starsteel"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "count": 16,
+      "id": "basemetals:starsteel_bars"
+    }
+  }
+}

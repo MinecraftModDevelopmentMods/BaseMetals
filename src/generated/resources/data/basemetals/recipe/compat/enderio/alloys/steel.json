@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_machines"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:steel_ingot"
+    }
+  ],
+  "type": "enderio_machines:alloy_smelting",
+  "energy": 6400,
+  "experience": 0.3,
+  "inputs": [
+    {
+      "count": 8,
+      "ingredient": {
+        "tag": "c:dusts/iron"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:dusts/coal"
+      }
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "basemetals:steel_ingot"
+  }
+}

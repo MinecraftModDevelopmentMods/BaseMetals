@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.08,
+  "ingredient": {
+    "item": "basemetals:nickel_slab"
+  },
+  "result": {
+    "count": 4,
+    "id": "basemetals:nickel_nugget"
+  }
+}

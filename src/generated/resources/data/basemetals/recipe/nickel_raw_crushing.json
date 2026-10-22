@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:raw_materials/nickel"
+  },
+  "result": {
+    "id": "basemetals:nickel_powder"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:aquarium_smallpowder",
+    "ingredients": [
+      {
+        "tag": "c:dusts/aquarium"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:aquarium_smallpowder"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:diamond_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/diamond"
+      },
+      "R": {
+        "tag": "c:rods/diamond"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:diamond_crossbow"
+    }
+  }
+}

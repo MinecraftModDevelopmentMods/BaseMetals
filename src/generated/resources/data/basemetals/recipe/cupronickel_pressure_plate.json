@@ -1,0 +1,19 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:cupronickel_pressure_plate",
+    "key": {
+      "X": {
+        "tag": "c:ingots/cupronickel"
+      }
+    },
+    "pattern": [
+      "XX"
+    ],
+    "result": {
+      "id": "basemetals:cupronickel_pressure_plate"
+    }
+  }
+}

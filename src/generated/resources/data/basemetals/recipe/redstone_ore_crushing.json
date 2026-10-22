@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:ores/redstone"
+  },
+  "result": {
+    "count": 8,
+    "id": "minecraft:redstone"
+  }
+}

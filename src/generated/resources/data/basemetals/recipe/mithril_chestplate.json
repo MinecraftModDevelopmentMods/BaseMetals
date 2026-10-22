@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:mithril_chestplate",
+    "key": {
+      "X": {
+        "tag": "c:ingots/mithril"
+      }
+    },
+    "pattern": [
+      "X X",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "basemetals:mithril_chestplate"
+    }
+  }
+}

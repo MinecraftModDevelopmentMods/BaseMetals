@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:starsteel_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/starsteel"
+      },
+      "R": {
+        "tag": "c:rods/starsteel"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:starsteel_crossbow"
+    }
+  }
+}

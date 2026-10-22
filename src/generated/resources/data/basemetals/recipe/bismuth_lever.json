@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:bismuth_lever",
+    "key": {
+      "R": {
+        "tag": "c:rods/bismuth"
+      },
+      "X": {
+        "tag": "c:ingots/bismuth"
+      }
+    },
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:bismuth_lever"
+    }
+  }
+}

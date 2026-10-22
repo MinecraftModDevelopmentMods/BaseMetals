@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:aquarium_leggings",
+    "key": {
+      "X": {
+        "tag": "c:ingots/aquarium"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "X X",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:aquarium_leggings"
+    }
+  }
+}

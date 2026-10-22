@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipe/root",
+  "criteria": {
+    "has_raw": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:raw_materials/antimony"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_recipe": {
+      "conditions": {
+        "recipe": "basemetals:antimony_raw_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_raw",
+      "has_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipe": [
+      "basemetals:antimony_raw_smelting"
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:mithril_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/mithril"
+      },
+      "R": {
+        "tag": "c:rods/mithril"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:mithril_crossbow"
+    }
+  }
+}

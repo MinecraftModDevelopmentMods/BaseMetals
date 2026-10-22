@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:pewter_lever",
+    "key": {
+      "R": {
+        "tag": "c:rods/pewter"
+      },
+      "X": {
+        "tag": "c:ingots/pewter"
+      }
+    },
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:pewter_lever"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "thermal_expansion"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:brass_ingot"
+    }
+  ],
+  "type": "thermal:smelter",
+  "energy": 6400,
+  "ingredients": [
+    {
+      "count": 3,
+      "value": [
+        {
+          "tag": "c:dusts/copper"
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "value": [
+        {
+          "tag": "c:dusts/zinc"
+        }
+      ]
+    }
+  ],
+  "result": [
+    {
+      "count": 4,
+      "item": "basemetals:brass_ingot"
+    }
+  ]
+}

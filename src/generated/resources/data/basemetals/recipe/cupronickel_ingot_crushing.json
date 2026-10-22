@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:ingots/cupronickel"
+  },
+  "result": {
+    "id": "basemetals:cupronickel_powder"
+  }
+}

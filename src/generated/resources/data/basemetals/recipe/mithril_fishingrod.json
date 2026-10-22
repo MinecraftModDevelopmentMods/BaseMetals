@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:mithril_fishing_rod",
+    "key": {
+      "R": {
+        "tag": "c:rods/mithril"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "  R",
+      " RS",
+      "R S"
+    ],
+    "result": {
+      "id": "basemetals:mithril_fishing_rod"
+    }
+  }
+}

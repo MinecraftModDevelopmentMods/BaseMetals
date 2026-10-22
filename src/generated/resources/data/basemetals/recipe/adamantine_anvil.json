@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:adamantine_anvil",
+    "key": {
+      "B": {
+        "tag": "c:storage_blocks/adamantine"
+      },
+      "I": {
+        "tag": "c:ingots/adamantine"
+      }
+    },
+    "pattern": [
+      "BBB",
+      " B ",
+      "III"
+    ],
+    "result": {
+      "id": "basemetals:adamantine_anvil"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:cupronickel_smallblend",
+    "ingredients": [
+      {
+        "tag": "c:blends/cupronickel"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:cupronickel_smallblend"
+    }
+  }
+}

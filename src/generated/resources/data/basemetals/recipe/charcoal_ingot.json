@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "minecraft:charcoal",
+    "key": {
+      "X": {
+        "tag": "c:nuggets/charcoal"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "minecraft:charcoal"
+    }
+  }
+}

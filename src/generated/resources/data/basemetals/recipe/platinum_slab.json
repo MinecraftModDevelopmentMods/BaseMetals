@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:platinum_slab",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/platinum"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 6,
+      "id": "basemetals:platinum_slab"
+    }
+  }
+}

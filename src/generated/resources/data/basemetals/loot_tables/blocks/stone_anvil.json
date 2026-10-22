@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "block": "basemetals:stone_anvil",
+              "function": "minecraft:copy_state",
+              "properties": [
+                "damage"
+              ]
+            }
+          ],
+          "name": "basemetals:stone_anvil"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

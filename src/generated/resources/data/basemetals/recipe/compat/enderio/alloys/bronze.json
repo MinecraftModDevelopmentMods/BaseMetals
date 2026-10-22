@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_machines"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:bronze_ingot"
+    }
+  ],
+  "type": "enderio_machines:alloy_smelting",
+  "energy": 6400,
+  "experience": 0.3,
+  "inputs": [
+    {
+      "count": 3,
+      "ingredient": {
+        "tag": "c:dusts/copper"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:dusts/tin"
+      }
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "basemetals:bronze_ingot"
+  }
+}

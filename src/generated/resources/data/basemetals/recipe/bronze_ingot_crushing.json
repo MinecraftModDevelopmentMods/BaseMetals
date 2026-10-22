@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:ingots/bronze"
+  },
+  "result": {
+    "id": "basemetals:bronze_powder"
+  }
+}

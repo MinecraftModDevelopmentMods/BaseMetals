@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipe/root",
+  "criteria": {
+    "has_raw": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:raw_materials/silver"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_recipe": {
+      "conditions": {
+        "recipe": "basemetals:silver_raw_blasting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_raw",
+      "has_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipe": [
+      "basemetals:silver_raw_blasting"
+    ]
+  }
+}

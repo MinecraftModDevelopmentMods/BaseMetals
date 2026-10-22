@@ -1,0 +1,7 @@
+{
+  "type": "basemetals:plate_repair",
+  "plate": {
+    "tag": "c:plates/electrum"
+  },
+  "target": "basemetals:electrum_shield"
+}

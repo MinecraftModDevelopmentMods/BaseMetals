@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "#c:ores/adamantine",
+    "#c:ores/antimony",
+    "#c:ores/bismuth",
+    "#c:ores/coldiron",
+    "#c:ores/copper",
+    "#c:ores/lead",
+    "#c:ores/mercury",
+    "#c:ores/nickel",
+    "#c:ores/platinum",
+    "#c:ores/silver",
+    "#c:ores/starsteel",
+    "#c:ores/tin",
+    "#c:ores/zinc"
+  ]
+}

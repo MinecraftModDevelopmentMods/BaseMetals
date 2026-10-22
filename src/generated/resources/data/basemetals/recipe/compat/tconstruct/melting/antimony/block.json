@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:melting",
+  "ingredient": {
+    "tag": "c:storage_blocks/antimony"
+  },
+  "result": {
+    "amount": 810,
+    "fluid": "basemetals:antimony"
+  },
+  "temperature": 769,
+  "time": 140
+}

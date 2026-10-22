@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "basemetals:lead_chestplate"
+  },
+  "result": {
+    "count": 8,
+    "id": "basemetals:lead_ingot"
+  }
+}

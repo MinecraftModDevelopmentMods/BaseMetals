@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:pewter_boots",
+    "key": {
+      "X": {
+        "tag": "c:ingots/pewter"
+      }
+    },
+    "pattern": [
+      "X X",
+      "X X"
+    ],
+    "result": {
+      "id": "basemetals:pewter_boots"
+    }
+  }
+}

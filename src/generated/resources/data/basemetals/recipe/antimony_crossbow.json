@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:antimony_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/antimony"
+      },
+      "R": {
+        "tag": "c:rods/antimony"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:antimony_crossbow"
+    }
+  }
+}

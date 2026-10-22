@@ -1,0 +1,25 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:obsidian_gear",
+    "key": {
+      "R": {
+        "tag": "c:rods/obsidian"
+      },
+      "X": {
+        "tag": "c:ingots/obsidian"
+      }
+    },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:obsidian_gear"
+    }
+  }
+}

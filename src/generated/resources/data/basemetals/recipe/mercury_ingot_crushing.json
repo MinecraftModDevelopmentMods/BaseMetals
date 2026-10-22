@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:ingots/mercury"
+  },
+  "result": {
+    "id": "basemetals:mercury_powder"
+  }
+}

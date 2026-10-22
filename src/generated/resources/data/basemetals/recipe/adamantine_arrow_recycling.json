@@ -1,0 +1,11 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.01,
+  "ingredient": {
+    "item": "basemetals:adamantine_arrow"
+  },
+  "result": {
+    "id": "basemetals:adamantine_nugget"
+  }
+}

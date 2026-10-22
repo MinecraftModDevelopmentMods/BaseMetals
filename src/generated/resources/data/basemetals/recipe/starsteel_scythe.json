@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:starsteel_scythe",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:ingots/starsteel"
+      }
+    },
+    "pattern": [
+      "XX ",
+      "  X",
+      " S "
+    ],
+    "result": {
+      "id": "basemetals:starsteel_scythe"
+    }
+  }
+}

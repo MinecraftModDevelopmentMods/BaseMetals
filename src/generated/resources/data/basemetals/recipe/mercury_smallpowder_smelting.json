@@ -1,0 +1,11 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.01,
+  "ingredient": {
+    "tag": "c:tiny_dusts/mercury"
+  },
+  "result": {
+    "id": "basemetals:mercury_nugget"
+  }
+}

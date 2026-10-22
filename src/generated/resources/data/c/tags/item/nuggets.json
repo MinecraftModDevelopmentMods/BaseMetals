@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "#c:nuggets/adamantine",
+    "#c:nuggets/antimony",
+    "#c:nuggets/aquarium",
+    "#c:nuggets/bismuth",
+    "#c:nuggets/brass",
+    "#c:nuggets/bronze",
+    "#c:nuggets/coldiron",
+    "#c:nuggets/copper",
+    "#c:nuggets/cupronickel",
+    "#c:nuggets/electrum",
+    "#c:nuggets/invar",
+    "#c:nuggets/lead",
+    "#c:nuggets/mercury",
+    "#c:nuggets/mithril",
+    "#c:nuggets/nickel",
+    "#c:nuggets/pewter",
+    "#c:nuggets/platinum",
+    "#c:nuggets/silver",
+    "#c:nuggets/starsteel",
+    "#c:nuggets/steel",
+    "#c:nuggets/tin",
+    "#c:nuggets/zinc"
+  ]
+}

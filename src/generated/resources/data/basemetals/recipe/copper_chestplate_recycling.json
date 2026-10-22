@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.5,
+  "ingredient": {
+    "item": "basemetals:copper_chestplate"
+  },
+  "result": {
+    "count": 8,
+    "id": "basemetals:copper_ingot"
+  }
+}

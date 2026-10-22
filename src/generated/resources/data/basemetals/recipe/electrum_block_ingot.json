@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:electrum_ingot",
+    "ingredients": [
+      {
+        "tag": "c:storage_blocks/electrum"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:electrum_ingot"
+    }
+  }
+}

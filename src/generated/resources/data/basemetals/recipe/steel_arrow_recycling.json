@@ -1,0 +1,11 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.02,
+  "ingredient": {
+    "item": "basemetals:steel_arrow"
+  },
+  "result": {
+    "id": "basemetals:steel_nugget"
+  }
+}

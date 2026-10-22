@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:pewter_smallpowder",
+    "ingredients": [
+      {
+        "tag": "c:dusts/pewter"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:pewter_smallpowder"
+    }
+  }
+}

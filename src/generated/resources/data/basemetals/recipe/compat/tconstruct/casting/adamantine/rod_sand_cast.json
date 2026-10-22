@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:adamantine_rod"
+    }
+  ],
+  "type": "tconstruct:casting_table",
+  "cast": {
+    "tag": "tconstruct:casts/single_use/rod"
+  },
+  "cast_consumed": true,
+  "cooling_time": 30,
+  "fluid": {
+    "amount": 45,
+    "tag": "c:molten_adamantine"
+  },
+  "result": {
+    "item": "basemetals:adamantine_rod"
+  }
+}

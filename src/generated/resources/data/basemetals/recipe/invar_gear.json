@@ -1,0 +1,25 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:invar_gear",
+    "key": {
+      "R": {
+        "tag": "c:rods/invar"
+      },
+      "X": {
+        "tag": "c:ingots/invar"
+      }
+    },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:invar_gear"
+    }
+  }
+}

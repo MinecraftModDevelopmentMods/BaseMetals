@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:silver_chestplate",
+    "key": {
+      "X": {
+        "tag": "c:ingots/silver"
+      }
+    },
+    "pattern": [
+      "X X",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "basemetals:silver_chestplate"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "item": "minecraft:dark_prismarine"
+  },
+  "result": {
+    "count": 8,
+    "id": "minecraft:prismarine_shard"
+  }
+}

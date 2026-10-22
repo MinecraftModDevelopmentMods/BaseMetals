@@ -1,0 +1,39 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio_machines"
+    },
+    {
+      "type": "basemetals:content_mode",
+      "item": "basemetals:mithril_ingot"
+    }
+  ],
+  "type": "enderio_machines:alloy_smelting",
+  "energy": 6400,
+  "experience": 0.3,
+  "inputs": [
+    {
+      "count": 2,
+      "ingredient": {
+        "tag": "c:dusts/silver"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:dusts/coldiron"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:ingots/mercury"
+      }
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "basemetals:mithril_ingot"
+  }
+}

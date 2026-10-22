@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:copper_ingot",
+    "ingredients": [
+      {
+        "item": "basemetals:copper_block"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:copper_ingot"
+    }
+  }
+}

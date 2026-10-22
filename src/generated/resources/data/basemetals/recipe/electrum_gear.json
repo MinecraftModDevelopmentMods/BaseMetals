@@ -1,0 +1,25 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:electrum_gear",
+    "key": {
+      "R": {
+        "tag": "c:rods/electrum"
+      },
+      "X": {
+        "tag": "c:ingots/electrum"
+      }
+    },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:electrum_gear"
+    }
+  }
+}

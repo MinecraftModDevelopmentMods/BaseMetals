@@ -1,0 +1,15 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:material_fluid",
+  "fluid": {
+    "amount": 90,
+    "tag": "c:molten_coldiron"
+  },
+  "output": "basemetals:coldiron",
+  "temperature": 769
+}

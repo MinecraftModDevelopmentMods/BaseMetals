@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "tag": "c:tiny_dusts/brass"
+  },
+  "result": {
+    "id": "basemetals:brass_nugget"
+  }
+}

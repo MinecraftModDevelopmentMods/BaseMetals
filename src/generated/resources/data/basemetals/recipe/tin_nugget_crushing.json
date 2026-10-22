@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "tag": "c:nuggets/tin"
+  },
+  "result": {
+    "id": "basemetals:tin_smallpowder"
+  }
+}

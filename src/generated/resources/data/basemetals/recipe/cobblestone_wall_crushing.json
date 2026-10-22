@@ -1,0 +1,9 @@
+{
+  "type": "basemetals:crushing",
+  "ingredient": {
+    "item": "minecraft:cobblestone_wall"
+  },
+  "result": {
+    "id": "minecraft:gravel"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:coldiron_slab",
+    "key": {
+      "X": {
+        "tag": "c:storage_blocks/coldiron"
+      }
+    },
+    "pattern": [
+      "XXX"
+    ],
+    "result": {
+      "count": 6,
+      "id": "basemetals:coldiron_slab"
+    }
+  }
+}

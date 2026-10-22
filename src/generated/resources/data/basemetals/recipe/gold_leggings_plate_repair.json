@@ -1,0 +1,7 @@
+{
+  "type": "basemetals:plate_repair",
+  "plate": {
+    "tag": "c:plates/gold"
+  },
+  "target": "minecraft:golden_leggings"
+}

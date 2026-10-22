@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "#c:plates/adamantine",
+    "#c:plates/antimony",
+    "#c:plates/aquarium",
+    "#c:plates/bismuth",
+    "#c:plates/brass",
+    "#c:plates/bronze",
+    "#c:plates/coldiron",
+    "#c:plates/copper",
+    "#c:plates/cupronickel",
+    "#c:plates/electrum",
+    "#c:plates/invar",
+    "#c:plates/lead",
+    "#c:plates/mithril",
+    "#c:plates/nickel",
+    "#c:plates/pewter",
+    "#c:plates/platinum",
+    "#c:plates/silver",
+    "#c:plates/starsteel",
+    "#c:plates/steel",
+    "#c:plates/tin",
+    "#c:plates/zinc",
+    "#c:plates/diamond",
+    "#c:plates/emerald",
+    "#c:plates/gold",
+    "#c:plates/iron"
+  ]
+}

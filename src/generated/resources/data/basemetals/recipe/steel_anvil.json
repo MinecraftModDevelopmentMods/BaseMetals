@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:steel_anvil",
+    "key": {
+      "B": {
+        "tag": "c:storage_blocks/steel"
+      },
+      "I": {
+        "tag": "c:ingots/steel"
+      }
+    },
+    "pattern": [
+      "BBB",
+      " B ",
+      "III"
+    ],
+    "result": {
+      "id": "basemetals:steel_anvil"
+    }
+  }
+}

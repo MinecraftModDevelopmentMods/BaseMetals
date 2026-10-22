@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.02,
+  "ingredient": {
+    "tag": "c:tiny_dusts/quartz"
+  },
+  "result": {
+    "id": "basemetals:quartz_nugget"
+  }
+}

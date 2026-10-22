@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:starsteel_ingot",
+    "ingredients": [
+      {
+        "tag": "c:storage_blocks/starsteel"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:starsteel_ingot"
+    }
+  }
+}

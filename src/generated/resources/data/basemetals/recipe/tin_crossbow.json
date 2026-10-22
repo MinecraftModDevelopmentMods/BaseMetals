@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:tin_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/tin"
+      },
+      "R": {
+        "tag": "c:rods/tin"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:tin_crossbow"
+    }
+  }
+}

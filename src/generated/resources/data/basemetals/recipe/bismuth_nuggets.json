@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:bismuth_nugget",
+    "ingredients": [
+      {
+        "tag": "c:ingots/bismuth"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:bismuth_nugget"
+    }
+  }
+}

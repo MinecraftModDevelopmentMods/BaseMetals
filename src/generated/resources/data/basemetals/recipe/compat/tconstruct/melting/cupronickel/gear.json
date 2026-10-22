@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:melting",
+  "ingredient": {
+    "tag": "c:gears/cupronickel"
+  },
+  "result": {
+    "amount": 360,
+    "fluid": "basemetals:cupronickel"
+  },
+  "temperature": 769,
+  "time": 90
+}
